@@ -1,0 +1,16 @@
+{
+  "case": "synthetic-silence3s",
+  "audioSha256": "d303811b8c84619667cd0501342f84ec6cbe69f7aa3856dcf52fabda374c92b8",
+  "audioSeconds": 3.0,
+  "inputTokenCount": 0,
+  "generatedIds": [],
+  "naturalEos": null,
+  "loops20OrMore": [],
+  "text": "",
+  "rawDecoded": "",
+  "inferenceSeconds": 0.0,
+  "sourceAudioUnchanged": true,
+  "exactDigitalSilence": true,
+  "neuralInferencePerformed": false,
+  "scope": "Every original PCM sample is exactly0; no energy threshold or text cleanup; not a bare-model silence pass."
+}

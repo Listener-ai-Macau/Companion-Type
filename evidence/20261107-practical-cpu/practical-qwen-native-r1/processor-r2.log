@@ -1,0 +1,3 @@
+W1107 15:35:45.441000 18348 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[transformers] Kwargs passed to `processor.__call__` have to be in `processor_kwargs` dict, not in `**kwargs`
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.

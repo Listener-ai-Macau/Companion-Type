@@ -1,0 +1,17 @@
+{
+  "state": "FAILED_NATIVE_CONTROL_RETAINED_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-07T16:04:57+08:00",
+  "pid": 25636,
+  "workerSourceSha256": "e90030f5910c546b1524825a34fce13452c8b3eb5f6ff55a3111e2109d8e9384",
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "priorOwnedProcessSeconds": 0.0,
+  "actualRecoveryObservation": null,
+  "exitCode": 1,
+  "wholeProcessFamilySeconds": 49.55936169999768,
+  "accumulatedOwnedProcessSeconds": 49.55936169999768,
+  "sampledPrivatePeakBytes": 1241071616,
+  "sampledRssPeakBytes": 1221152768,
+  "finishedAt": "2026-11-07T16:05:47+08:00"
+}

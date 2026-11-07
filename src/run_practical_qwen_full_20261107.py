@@ -4,8 +4,8 @@ from datetime import datetime
 import argparse,hashlib,json,os,psutil,shutil,subprocess,sys,time,traceback
 from practical_io_20261107 import atomic_json,stop_owned_family
 from moss_windows_resource_limits_20261104 import SystemRamPressure
-p=argparse.ArgumentParser();p.add_argument('--resume-after-low-ram',action='store_true');a=p.parse_args()
-R=Path('C:/Users/Billy/Desktop/Denzic/Companion');base=R/'docs/handoffs/20261107-model-generation-recovery';parent=base/'practical-qwen-native-r1';C=parent/'full';C.mkdir(exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--resume-after-low-ram',action='store_true');p.add_argument('--parent');a=p.parse_args()
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');base=R/'docs/handoffs/20261107-model-generation-recovery';parent=Path(a.parent) if a.parent else base/'practical-qwen-native-r1';C=parent/'full';C.mkdir(exist_ok=True)
 PY='E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe';SC='E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 def sha(p):

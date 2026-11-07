@@ -1,0 +1,10 @@
+{
+  "atRecorded": "2026-11-07T15:34:18.855907+08:00",
+  "state": "FATAL_NATIVE_PREPROCESSOR_ALLOCATION_BEFORE_NEURAL_WEIGHTS",
+  "observedExitCode": 1,
+  "observedOutput": "W1107 15:32:03.574000 torch distributed redirects unsupported on Windows warning; transformers warns processor arguments should be in processor_kwargs; OpenBLAS error: Memory allocation still failed after 10 retries, giving up.",
+  "neuralWeightsLoaded": false,
+  "qualityScoreAvailable": false,
+  "causeNotYetMeasured": true,
+  "sourceSha256": "a8b9dc31608a6e504a2ed880792764ca5845c929a8203d2d0aa39bb491a0028e"
+}

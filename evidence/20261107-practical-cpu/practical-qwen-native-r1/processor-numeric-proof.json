@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-07T15:40:23+08:00",
+  "state": "PASS_SUPPORTED_GPU_FEATURES_INDEPENDENT_NUMPY_REFERENCE",
+  "results": [
+    {
+      "case": "synthetic-silence3s",
+      "maximumAbsoluteDifference": 2.384185791015625e-07,
+      "meanAbsoluteDifference": 2.384185791015625e-07,
+      "tolerance": 0.0002,
+      "shape": [
+        1,
+        128,
+        300
+      ],
+      "pass": true,
+      "allOriginalSamplesIncluded": true,
+      "maskValidFrames": 300
+    },
+    {
+      "case": "public-compat30s",
+      "maximumAbsoluteDifference": 1.1444091796875e-05,
+      "meanAbsoluteDifference": 1.0692871654782721e-07,
+      "tolerance": 0.0002,
+      "shape": [
+        1,
+        128,
+        3000
+      ],
+      "pass": true,
+      "allOriginalSamplesIncluded": true,
+      "maskValidFrames": 3000
+    }
+  ],
+  "sourceSha256": "f48673650f47d6f5698ca2979de0362df6572a17f8327ffcf5cf0fd1929f5b50",
+  "neuralInferenceAdded": 0,
+  "featureMathChanged": false,
+  "referenceLabelsUsed": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 29132,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 87617536,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

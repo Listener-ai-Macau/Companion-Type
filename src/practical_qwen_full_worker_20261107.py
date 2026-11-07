@@ -17,10 +17,17 @@ P=read(C.parent/'protocol.json');case=read(C/'audio-only.json')[a.index]
 proof=read(C.parent/'short-native-state.json');assert proof['state']=='PASS_OFFICIAL_NATIVE_SHORT_EXECUTION_FULL_QUALITY_UNMEASURED'
 assert proof['sourceSha256']==sha(Path(__file__).with_name('practical_qwen_native_worker_20261107.py'))
 assert proof['modelRevision']==P['revision'] and proof['transformersVersion']=='5.22.1'
+assert P['featureDevice']=='selected_gpu' and P['textPostprocessing']=='direct_tokenizer_skip_special_tokens_only_no_cleanup_no_repetition_fix'
+loader_proof=read(P['streamedLoaderControl']);assert loader_proof['state']=='PASS_STANDARD_AND_STREAMED_TINY_QWEN_EXACT_LOGITS_AND_GENERATION'
+assert loader_proof['weightRoundtrip']['loaderSourceSha256']==sha(Path(__file__).with_name('practical_qwen_streamed_loader_20261107.py'))
 assert not any('reference' in k.lower() for k in case)
 assert P['backend']=='official_native_transformers' and P['dtype']=='bfloat16' and P['attnImplementation']=='eager' and P['maxNewTokens']==512 and not P['doSample'] and P['prompt'] is None and P['windowSamples']==480000
 out=C/'transcripts'/case['meeting'];out.mkdir(parents=True,exist_ok=a.resume);chunks=out/'windows';chunks.mkdir(exist_ok=a.resume)
 limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);tick=time.perf_counter();target=out/'state.json'
+import numpy as np
+from practical_qwen_input_20261107 import is_exact_digital_silence
+assert P['digitalSilencePolicy']=='skip_only_exact_zero_no_threshold_no_nonzero_cut'
+assert sha(Path(__file__).with_name('practical_qwen_input_20261107.py'))==P['digitalSilenceGuardSourceSha256']
 binding={'audioSha256':case['audioSha256'],'protocolSha256':sha(C.parent/'protocol.json'),'workerSourceSha256':sha(__file__),'officialShortWorkerSourceSha256':proof['sourceSha256']}
 state={'state':'PREPARING_OFFICIAL_NATIVE_FULL_ASR','pid':os.getpid(),'startedAt':now(),'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'modelLoaded':False,'newNeuralWindows':0,'reusedWindows':0,'referencePassedToWorker':False,'speakerJournalPending':True,'priorAttemptSeconds':0.}
 if a.resume:
@@ -45,10 +52,19 @@ try:
         for index,start in enumerate(range(0,count,size)):
             if (C/'stop.request').exists() or (C.parent/'stop.request').exists():raise InterruptedError('Own full task explicitly stopped')
             end=min(count,start+size);file=chunks/('%06d.raw.json'%index)
+            fresh_zero=False
+            if not file.exists():
+                assert not state.get('completedCacheOnly'),'Completed raw cache missing; no new model may be loaded'
+                audio.setpos(start);pcm=np.frombuffer(audio.readframes(end-start),dtype='<i2');assert len(pcm)==end-start
+                if is_exact_digital_silence(pcm):
+                    raw={'index':index,'startSample':start,'endSample':end,'text':'','tokens':[],'timestamps':[],'generatedIds':[],'rawDecoded':'','naturalEos':None,'inferenceSeconds':0.,'exactDigitalSilence':True,'neuralInferencePerformed':False}
+                    canonical=json.dumps(raw,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+                    atomic_json(file,{'binding':binding,'raw':raw,'rawSha256':hashlib.sha256(canonical).hexdigest()});fresh_zero=True
             if file.exists():
-                assert a.resume;packet=read(file);assert packet['binding']==binding
+                assert a.resume or fresh_zero;packet=read(file);assert packet['binding']==binding
                 raw=packet['raw'];assert hashlib.sha256(json.dumps(raw,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()==packet['rawSha256']
-                assert raw['index']==index and raw['startSample']==start and raw['endSample']==end;state['reusedWindows']+=1
+                assert raw['index']==index and raw['startSample']==start and raw['endSample']==end
+                if not fresh_zero:state['reusedWindows']+=1
             else:
                 assert not state.get('completedCacheOnly'),'Completed raw ASR missing; refuse implicit neural rerun'
                 if model is None:
@@ -63,7 +79,10 @@ try:
                     assert transformers.__version__=='5.22.1'
                     state.update(state='LOADING_OFFICIAL_NATIVE_FULL_ASR',gpu=info.name,transformersVersion=transformers.__version__);save();t=time.perf_counter()
                     processor=AutoProcessor.from_pretrained(P['modelRoot'],local_files_only=True)
-                    model=AutoModelForMultimodalLM.from_pretrained(P['modelRoot'],local_files_only=True,dtype=torch.bfloat16,device_map={'':0},attn_implementation='eager').eval()
+                    from practical_qwen_streamed_loader_20261107 import load_model
+                    weight=next(item for item in P['files'] if Path(item['file']).name=='model.safetensors')
+                    model,weight_receipt=load_model(P['modelRoot'],torch=torch,device='cuda:0',expected_sha256=weight['sha256'])
+                    atomic_json(out/'weight-roundtrip.json',weight_receipt)
                     state.update(modelLoaded=True,modelLoadSeconds=time.perf_counter()-t);save()
                     class StopOnlyThisTask(StoppingCriteria):
                         def __call__(self,input_ids,scores,**kwargs):
@@ -71,11 +90,11 @@ try:
                             return False
                     import numpy as np
                 audio.setpos(start);samples=np.frombuffer(audio.readframes(end-start),dtype='<i2').astype(np.float32)/32768;assert len(samples)==end-start
-                inputs=processor.apply_transcription_request(audio=samples,language='Chinese',audio_kwargs={'sampling_rate':16000}).to('cuda:0',model.dtype)
+                inputs=processor.apply_transcription_request(audio=samples,language='Chinese',processor_kwargs={'audio_kwargs':{'sampling_rate':16000,'device':'cuda:0'}}).to('cuda:0',model.dtype)
                 length=inputs['input_ids'].shape[1];torch.cuda.synchronize();t=time.perf_counter()
                 with torch.inference_mode():ids=model.generate(**inputs,max_new_tokens=512,do_sample=False,stopping_criteria=StoppingCriteriaList([StopOnlyThisTask()]))
                 torch.cuda.synchronize();seconds=time.perf_counter()-t;generated=ids[0,length:].cpu().tolist();eos=model.generation_config.eos_token_id;eos=[eos] if isinstance(eos,int) else eos
-                raw={'index':index,'startSample':start,'endSample':end,'text':processor.decode(generated,return_format='transcription_only'),'tokens':[],'timestamps':[],'generatedIds':generated,'rawDecoded':processor.decode(generated,skip_special_tokens=False),'naturalEos':bool(generated and generated[-1] in eos),'inferenceSeconds':seconds}
+                raw={'index':index,'startSample':start,'endSample':end,'text':processor.tokenizer.decode(generated,skip_special_tokens=True,clean_up_tokenization_spaces=False),'tokens':[],'timestamps':[],'generatedIds':generated,'rawDecoded':processor.decode(generated,skip_special_tokens=False),'naturalEos':bool(generated and generated[-1] in eos),'inferenceSeconds':seconds}
                 canonical=json.dumps(raw,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
                 atomic_json(file,{'binding':binding,'raw':raw,'rawSha256':hashlib.sha256(canonical).hexdigest()});state['newNeuralWindows']+=1
                 assert raw['naturalEos'],'Generation hit the limit; retain raw partial output, do not silently label final'
@@ -84,7 +103,11 @@ try:
                     assert generated==short['generatedIds'] and raw['text']==short['text'],'Identical original first30s must match passed short native control exactly'
                     state['first30sNativeShortExactIdsAndText']=True
                 time.sleep(P['cooperativePauseSeconds'])
-            assert raw['naturalEos'],'An incomplete cached native decode cannot silently become a final window'
+            if raw.get('exactDigitalSilence'):
+                audio.setpos(start);assert is_exact_digital_silence(np.frombuffer(audio.readframes(end-start),dtype='<i2'))
+                assert raw['text']=='' and raw['generatedIds']==[] and raw['naturalEos'] is None
+                state['exactDigitalZeroWindows']=state.get('exactDigitalZeroWindows',0)+1
+            else:assert raw['naturalEos'],'An incomplete cached native decode cannot silently become a final window'
             if case['meeting']=='S_R004S03C01' and index==0:
                 short=read(C.parent/'S-original-first30s-output.json')
                 assert raw['generatedIds']==short['generatedIds'] and raw['text']==short['text']

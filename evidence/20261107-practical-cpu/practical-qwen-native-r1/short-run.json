@@ -1,0 +1,24 @@
+{
+  "state": "FAILED_NATIVE_CONTROL_RETAINED_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-07T15:48:30+08:00",
+  "pid": 6156,
+  "workerSourceSha256": "7201754344ec25c83a3013663d05f867c730141e2f741be79d7f20fc59f92239",
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "priorOwnedProcessSeconds": 19.455849999998463,
+  "actualRecoveryObservation": {
+    "previousAvailableBytes": 1134809088,
+    "priorOwnPeakPrivateBytes": 638177280,
+    "currentAvailableBytes": 2985213952,
+    "actualWindowsLowRamNow": false,
+    "sameWorkerAndModel": true,
+    "noFixedFreeRamFloor": true
+  },
+  "exitCode": 1,
+  "wholeProcessFamilySeconds": 14.857044600008521,
+  "accumulatedOwnedProcessSeconds": 34.312894600006985,
+  "sampledPrivatePeakBytes": 641777664,
+  "sampledRssPeakBytes": 705974272,
+  "finishedAt": "2026-11-07T15:48:45+08:00"
+}

@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-07T15:55:38+08:00",
+  "state": "STREAMED_LOADER_CONTROL_FAILED_RETAINED",
+  "syntheticOnly": true,
+  "publishedNeuralWeightsLoaded": false,
+  "accuracyMeasured": false,
+  "error": "AssertionError()",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\check_practical_qwen_streamed_loader_20261107.py\", line 28, in <module>\n    streamed,receipt=load_model(cache,torch=torch,device='cuda:0',expected_sha256=digest)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_streamed_loader_20261107.py\", line 34, in load_model\n    assert model.generation_config.repetition_penalty==1.0 and model.generation_config.no_repeat_ngram_size==0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "limits": {
+    "pid": 15328,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 586846208,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

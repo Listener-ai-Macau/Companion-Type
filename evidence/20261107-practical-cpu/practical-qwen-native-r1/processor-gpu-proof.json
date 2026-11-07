@@ -1,0 +1,86 @@
+{
+  "at": "2026-11-07T15:38:59+08:00",
+  "state": "PASS_AUTHOR_GPU_PROCESSOR_NO_NEURAL_WEIGHTS_NUMERIC_CHECK_PENDING",
+  "modelLoaded": false,
+  "neuralInferenceAdded": 0,
+  "referenceOpened": false,
+  "results": [
+    {
+      "case": "synthetic-silence3s",
+      "seconds": 4.178435000008903,
+      "inputShapes": {
+        "input_ids": [
+          1,
+          57
+        ],
+        "attention_mask": [
+          1,
+          57
+        ],
+        "input_features": [
+          1,
+          128,
+          300
+        ],
+        "input_features_mask": [
+          1,
+          300
+        ]
+      },
+      "sampleCount": 48000,
+      "features": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\processor-control\\synthetic-silence3s-features.npy"
+    },
+    {
+      "case": "public-compat30s",
+      "seconds": 0.012400099978549406,
+      "inputShapes": {
+        "input_ids": [
+          1,
+          408
+        ],
+        "attention_mask": [
+          1,
+          408
+        ],
+        "input_features": [
+          1,
+          128,
+          3000
+        ],
+        "input_features_mask": [
+          1,
+          3000
+        ]
+      },
+      "sampleCount": 480000,
+      "features": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\processor-control\\public-compat30s-features.npy"
+    }
+  ],
+  "sourceSha256": "13f31430c0b5525208b1ff63fb2c4c7d791389f62532733afd03d75d97bac93c",
+  "stage": "FINISHED_OR_EXITED",
+  "limits": {
+    "pid": 13128,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 916123648,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "featureConfig": {
+    "nFft": 400,
+    "hopLength": 160,
+    "nSamples": 480000,
+    "nWindow": 50,
+    "dither": 0.0
+  },
+  "officialGpuPathUnmodified": true,
+  "qualityQualified": false
+}

@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-07T15:35:37+08:00",
+  "state": "PREPARING_NATIVE_INPUT_ONLY",
+  "neuralModelLoaded": false,
+  "neuralInferenceAdded": 0,
+  "referenceOpened": false,
+  "syntheticAudioOnly": true,
+  "stage": "AFTER_PROCESSOR_BUILT_BEFORE_INPUT_PREPARATION",
+  "updatedAt": "2026-11-07T15:35:47+08:00",
+  "limits": {
+    "pid": 18348,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 641298432,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

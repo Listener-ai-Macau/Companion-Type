@@ -1,0 +1,15 @@
+{
+  "state": "STOPPED_OWN_NATIVE_CONTROL",
+  "at": "2026-11-07T15:41:20+08:00",
+  "pid": 18976,
+  "workerSourceSha256": "7201754344ec25c83a3013663d05f867c730141e2f741be79d7f20fc59f92239",
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "reason": "actual_low_ram",
+  "exitCode": 15,
+  "wholeProcessFamilySeconds": 19.455849999998463,
+  "sampledPrivatePeakBytes": 638177280,
+  "sampledRssPeakBytes": 704847872,
+  "finishedAt": "2026-11-07T15:41:39+08:00"
+}

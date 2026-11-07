@@ -1,0 +1,38 @@
+{
+  "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+  "tensorCount": 611,
+  "dataBytesCopied": 1564852224,
+  "maximumTransferChunkBytes": 16777216,
+  "scratchBytes": 16777216,
+  "roundtripBufferBytes": 16777216,
+  "roundtripCpuBufferReused": true,
+  "fileSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
+  "deviceRoundtripSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
+  "selectedSourceBytesSha256": "3e4d3451ff7f7aa5fc9d1845bcc1aa15329f271e77ad9896292368da2660132b",
+  "selectedDeviceBytesSha256": "3e4d3451ff7f7aa5fc9d1845bcc1aa15329f271e77ad9896292368da2660132b",
+  "selectedPrefixes": null,
+  "sourceTensorCount": 611,
+  "skippedTensorCount": 0,
+  "targetDevice": "cuda:0",
+  "mmapUsed": false,
+  "wholeCpuStateDictCreated": false,
+  "seconds": 13.488198499981081,
+  "modelClass": "Qwen3ASRForConditionalGeneration",
+  "allExpectedParametersLoaded": true,
+  "missingOnlyTiedLmHead": true,
+  "missingKeys": [
+    "lm_head.weight"
+  ],
+  "tiedOutputEmbeddingPreserved": true,
+  "computedBuffersPreserved": [
+    "model.audio_tower.positional_embedding.positional_embedding",
+    "model.language_model.rotary_emb.inv_freq",
+    "model.language_model.rotary_emb.original_inv_freq"
+  ],
+  "wholeModelToEmptyUsed": false,
+  "generationConfigFromOfficialFiles": true,
+  "loadSeconds": 13.71154689998366,
+  "streamReaderSourceSha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
+  "loaderSourceSha256": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+  "modelMathChanged": false
+}

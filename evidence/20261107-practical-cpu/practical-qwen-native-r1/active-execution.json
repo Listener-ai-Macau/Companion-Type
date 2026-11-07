@@ -1,0 +1,5 @@
+{
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3",
+  "previousControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-streamed-r2",
+  "reason": "Same native model executed speech without loops, but bare exact-zero silence hallucinates. Add exact-zero-only pre-inference guard and verify nonzero speech unchanged; no threshold/VAD removal."
+}

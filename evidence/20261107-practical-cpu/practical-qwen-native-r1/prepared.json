@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-07T15:40:25+08:00",
+  "state": "PINNED_OFFICIAL_NATIVE_HF_MODEL_READY_NO_INFERENCE",
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\protocol.json",
+  "oldFailureBoundary": "Previous Qwen1.7B community mixed-precision ONNX+sherpa repeated. Not retrying that graph/decoder or deleting repeats. This uses an official Qwen-hosted native checkpoint and existing Transformers5.22.1 implementation, greedy unfiltered generation, no repetition penalty or reference prompt. Native HIP long-decoder crash history remains unresolved; no long run before short control.",
+  "weightsBytes": 1576379761,
+  "modelLicenseTag": "apache-2.0",
+  "noGlobalPackagesInstalled": true,
+  "source": "https://huggingface.co/Qwen/Qwen3-ASR-0.6B-hf/tree/7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+  "fullQualityQualified": false
+}

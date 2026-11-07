@@ -28,6 +28,11 @@ try:
     else:
         assert len(inventory)==1 and matches[0]['ordinal']==0,'Launcher must expose only freshly identified dedicated GPU'
         device='cuda:0';torch.cuda.set_device(0);P=read(C/'protocol.json')
+        assert P['featureDevice']=='selected_gpu' and P['textPostprocessing']=='direct_tokenizer_skip_special_tokens_only_no_cleanup_no_repetition_fix'
+        assert read(P['supportedGpuFeatureNumericProof'])['state']=='PASS_SUPPORTED_GPU_FEATURES_INDEPENDENT_NUMPY_REFERENCE'
+        loader_proof=read(P['streamedLoaderControl'])
+        assert loader_proof['state']=='PASS_STANDARD_AND_STREAMED_TINY_QWEN_EXACT_LOGITS_AND_GENERATION'
+        assert loader_proof['weightRoundtrip']['loaderSourceSha256']==sha(Path(__file__).with_name('practical_qwen_streamed_loader_20261107.py'))
         assert P['backend']=='official_native_transformers' and P['prompt'] is None and P['dtype']=='bfloat16' and P['attnImplementation']=='eager' and P['maxNewTokens']==512 and not P['doSample']
         for file in P['files']:assert sha(file['file'])==file['sha256']
         import transformers
@@ -35,7 +40,10 @@ try:
         assert transformers.__version__=='5.22.1'
         state.update(state='LOADING_OFFICIAL_NATIVE_QWEN_ASR',transformersVersion=transformers.__version__,modelRevision=P['revision'],selectedGpu=matches[0]);save()
         started=time.perf_counter();processor=AutoProcessor.from_pretrained(P['modelRoot'],local_files_only=True)
-        model=AutoModelForMultimodalLM.from_pretrained(P['modelRoot'],local_files_only=True,dtype=torch.bfloat16,device_map={'':0},attn_implementation='eager').eval()
+        from practical_qwen_streamed_loader_20261107 import load_model
+        weight=next(file for file in P['files'] if Path(file['file']).name=='model.safetensors')
+        model,weight_receipt=load_model(P['modelRoot'],torch=torch,device=device,expected_sha256=weight['sha256'])
+        atomic_json(C/'short-weight-roundtrip.json',weight_receipt)
         state.update(modelLoaded=True,modelLoadSeconds=time.perf_counter()-started,state='RUNNING_FROZEN_NATIVE_SHORT_CASES');save()
         from transformers import StoppingCriteria,StoppingCriteriaList
         class StopOnlyThisTask(StoppingCriteria):
@@ -43,6 +51,9 @@ try:
                 if (C/'stop.request').exists():raise InterruptedError('Explicit stop; original audio/raw output retained')
                 return False
         import numpy as np
+        from practical_qwen_input_20261107 import is_exact_digital_silence
+        assert P['digitalSilencePolicy']=='skip_only_exact_zero_no_threshold_no_nonzero_cut'
+        assert sha(Path(__file__).with_name('practical_qwen_input_20261107.py'))==P['digitalSilenceGuardSourceSha256']
         for case in read(C/'short-audio-only.json'):
             assert not any('reference' in k.lower() for k in case)
             assert sha(case['audio'])==case['audioSha256']
@@ -50,13 +61,18 @@ try:
                 assert f.getframerate()==16000 and f.getsampwidth()==2 and f.getnchannels()==1
                 samples=np.frombuffer(f.readframes(f.getnframes()),dtype='<i2').astype(np.float32)/32768
             assert len(samples)/16000==case['audioSeconds']
-            inputs=processor.apply_transcription_request(audio=samples,language='Chinese',audio_kwargs={'sampling_rate':16000}).to(device,model.dtype)
+            if is_exact_digital_silence(samples):
+                result={'case':case['id'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'inputTokenCount':0,'generatedIds':[],'naturalEos':None,'loops20OrMore':[],'text':'','rawDecoded':'','inferenceSeconds':0.,'sourceAudioUnchanged':True,'exactDigitalSilence':True,'neuralInferencePerformed':False,'scope':'Every original PCM sample is exactly0; no energy threshold or text cleanup; not a bare-model silence pass.'}
+                atomic_json(C/(case['id']+'-output.json'),result);state['results'].append(result);save();continue
+            inputs=processor.apply_transcription_request(audio=samples,language='Chinese',processor_kwargs={'audio_kwargs':{'sampling_rate':16000,'device':device}}).to(device,model.dtype)
             input_length=inputs['input_ids'].shape[1];torch.cuda.synchronize();started=time.perf_counter()
             with torch.inference_mode():ids=model.generate(**inputs,max_new_tokens=512,do_sample=False,stopping_criteria=StoppingCriteriaList([StopOnlyThisTask()]))
             torch.cuda.synchronize();seconds=time.perf_counter()-started;generated=ids[0,input_length:].cpu().tolist()
             eos=model.generation_config.eos_token_id;eos_ids=[eos] if isinstance(eos,int) else eos
             natural_eos=bool(generated and generated[-1] in eos_ids)
-            text=processor.decode(generated,return_format='transcription_only')
+            # The high-level parsed decoder silently collapses repeats. Keep
+            # every generated word; failed decoding must remain measurable.
+            text=processor.tokenizer.decode(generated,skip_special_tokens=True,clean_up_tokenization_spaces=False)
             raw=processor.decode(generated,skip_special_tokens=False)
             loops=[]
             for size in range(1,9):
@@ -64,6 +80,7 @@ try:
                     block=generated[offset:offset+size]
                     if generated[offset:offset+size*20]==block*20:loops.append({'offset':offset,'blockTokens':size});break
             result={'case':case['id'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'inputTokenCount':input_length,'generatedIds':generated,'naturalEos':natural_eos,'loops20OrMore':loops,'text':text,'rawDecoded':raw,'inferenceSeconds':seconds,'sourceAudioUnchanged':sha(case['audio'])==case['audioSha256'],'qualityQualified':False}
+            previous=read(P['speechControlBeforeGuard']);assert case['audioSha256']==previous['audioSha256'] and generated==previous['generatedIds'] and text==previous['text'],'Nonzero speech must remain identical after an exact-zero-only input guard'
             atomic_json(C/(case['id']+'-output.json'),result);state['results'].append(result);save()
             assert natural_eos and not loops,'Short execution control failed; preserve raw IDs, do not remove repeats or launch whole meetings'
             if case['id']!='synthetic-silence3s':assert text.strip(),'No text for original public speech control'

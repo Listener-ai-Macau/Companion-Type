@@ -1,0 +1,43 @@
+{
+  "startedAt": "2026-11-07T15:41:20+08:00",
+  "state": "LOADING_OFFICIAL_NATIVE_QWEN_ASR",
+  "pid": 25580,
+  "sourceSha256": "7201754344ec25c83a3013663d05f867c730141e2f741be79d7f20fc59f92239",
+  "referenceOpened": false,
+  "trainingPerformed": false,
+  "modelLoaded": false,
+  "results": [],
+  "limits": {
+    "pid": 25580,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 472551424,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "devices": [
+    {
+      "ordinal": 0,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "totalMemory": 17163091968
+    }
+  ],
+  "transformersVersion": "5.22.1",
+  "modelRevision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+  "selectedGpu": {
+    "ordinal": 0,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  }
+}

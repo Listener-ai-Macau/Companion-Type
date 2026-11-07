@@ -1,6 +1,6 @@
 {
   "at": "2026-11-07T15:21:13+08:00",
-  "state": "RESUMING_OWNED_PUBLIC_DOWNLOAD_VERIFIED_RANGES",
+  "state": "COMPLETE_PINNED_PUBLIC_WEIGHTS_SHA256_VERIFIED",
   "terminatedOwnPreparerPid": 17364,
   "reason": "Reuse the existing prefix; four bounded network streams after a successful206range probe, no proxy/routing changes. This is download preparation, not a model failure or inference.",
   "revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
@@ -8,5 +8,43 @@
   "prefixSha256": "653e9bc5d2acf040a616009b93a9773de510fd4cfcfbda14e310653aad2f6c69",
   "expectedBytes": 1564928088,
   "expectedSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
-  "inferenceStarted": false
+  "inferenceStarted": false,
+  "completedRanges": [
+    {
+      "index": 0,
+      "start": 517996544,
+      "end": 779729429,
+      "bytes": 261732886,
+      "sha256": "c8df12307db46942681f06a24774ffcaa9816688763ef678cc946124ed380130",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\model\\qwen-model-range-0.part"
+    },
+    {
+      "index": 1,
+      "start": 779729430,
+      "end": 1041462315,
+      "bytes": 261732886,
+      "sha256": "fab694696c912e5599e7684048a2f3efe5e0a588c6fa3cc0b83b0c2080cd11f0",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\model\\qwen-model-range-1.part"
+    },
+    {
+      "index": 2,
+      "start": 1041462316,
+      "end": 1303195201,
+      "bytes": 261732886,
+      "sha256": "fc92f950ec48ec97384dc5cdfbb1fb3cdba6bbaa02bb753f6584b8d87f704835",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\model\\qwen-model-range-2.part"
+    },
+    {
+      "index": 3,
+      "start": 1303195202,
+      "end": 1564928087,
+      "bytes": 261732886,
+      "sha256": "f1fbab61231ae8b72b8aace8a686cb40adccdd20c2e43158ee75ef9f2fc0f712",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\model\\qwen-model-range-3.part"
+    }
+  ],
+  "finishedAt": "2026-11-07T15:38:28+08:00",
+  "finalFile": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-asr-20261107\\model\\model.safetensors",
+  "finalSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
+  "redundantVerifiedFragmentsRemoved": true
 }
