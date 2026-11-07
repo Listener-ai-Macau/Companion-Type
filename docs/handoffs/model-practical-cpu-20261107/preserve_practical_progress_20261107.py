@@ -119,7 +119,7 @@ record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
 if qwen_current.name=='practical-qwen-native17-r5':
-    qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json')}
+    qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json'),'independentPack':optional(qwen_current/'model-pack.json'),'independentBusyProof':optional(qwen_current/'independent-command-busy-proof.json'),'independentCommandProof':optional(qwen_current/'independent-command-proof.json')}
     record['state']='NATIVE17_'+(qwen['checkpoint17']['pilotRun'] or qwen['checkpoint17']['ready'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
     record['next']='原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。'
 if qwen_current.name=='practical-qwen-bounded-r4':
@@ -136,7 +136,7 @@ if qwen['review.json']:
     record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']
 if qwen['next-direction.json']:record['next']=qwen['next-direction.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
+paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*bounded*20261107.py')]
 head=ship(M,paths,'Preserve complete text and bounded speaker pipeline '+a.phase);record.update(sourceAndEvidenceCommit=head,remoteReadbackConfirmed=True)
