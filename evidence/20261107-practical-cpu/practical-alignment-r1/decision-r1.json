@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-07T19:38:57+08:00",
+  "state": "REJECT_FULL_POSITIVE_INTERVAL_IDENTITY_PROMOTION_REGRESSION_RETAINED",
+  "reviewSha256": "f2b7d46422f92219ae40b64e39d4f6da9cb243ed054935d781aeb019d51f2f3d",
+  "postprocessorSourceSha256": "c5472b5ce6d0c4869806992b90c767f2d40f1af044da5151e96e2461f5de743f",
+  "observedCpCer": {
+    "S": 0.1485885885885886,
+    "L": 0.5195942830797603
+  },
+  "priorSenseVoiceCpCer": {
+    "S": 0.102583,
+    "L": 0.409751
+  },
+  "priorComparisonIsNotSameAsrTextControlled": true,
+  "issue": "80ms discrete timestamp classes can produce equal start/end for short units. The new full-positive-interval admission excludes346/824 units; their onset may still be usable as an explicitly approximate point. This is a source-integration hypothesis, not proven model improvement.",
+  "next": "先用同一已保存字级预测、原字和FP16分人结果做0神经回退定位：固定采用历史onset_attribution起点±60ms规则，起点在原叶内才可用；零时长仅作为起点估计，不冒充词长，边界/重叠/空隙仍未知。两完整会统一，不调阈值，不重跑ASR/对齐/分人。先比较逐人诊断，再决定保留，全部正式质量与售卖门继续。",
+  "qualityQualified": false
+}

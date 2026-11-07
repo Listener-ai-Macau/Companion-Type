@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T19:31:51+08:00",
+  "at": "2026-11-07T19:38:58+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "RUNNING_NATIVE_ALIGNMENT_TINY-LOADER_QUALITY_AND_SALE_OPEN",
+  "state": "COMPLETE_SEQUENTIAL_NATIVE_ALIGNMENT_REVIEW_REQUIRED_QUALITY_AND_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8051,7 +8051,7 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "原QM04/QM05/RM-OVERLAP继续：低能量切分本轮未到严格5%，按预定规则停止额外复杂整会；保留同一1.7B固定30秒及作者边界实测，不扫窗口/阈值、不继续盲增模型。下一项对已有原字做独立词级时间对齐，再接已验证FP16分人，分别核验非重叠/短句/逐人/重叠内容，依据真实错误来源才选择降噪、目标人分离或领域适配。准确率5%/事实纪要/跨域独立集/双端实卡/售卖门继续OPEN。",
+  "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。",
   "lastOwnerQuote": "需要继续推进啊, 现在是在正确方向吗",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
@@ -9383,26 +9383,395 @@
       "defaultProductChanged": false
     },
     "run.json": {
-      "state": "RUNNING_NATIVE_ALIGNMENT_TINY-LOADER",
+      "state": "COMPLETE_SEQUENTIAL_NATIVE_ALIGNMENT_REVIEW_REQUIRED",
       "startedAt": "2026-11-07T19:31:42+08:00",
       "pid": 3384,
       "priorAttemptReceipts": [],
-      "results": [],
+      "results": [
+        {
+          "stage": "tiny-loader",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 19.280060199991567,
+          "privatePeakBytes": 1066414080
+        },
+        {
+          "stage": "pilot",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 34.424161300004926,
+          "privatePeakBytes": 1156694016
+        },
+        {
+          "stage": "full",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 248.23296410002513,
+          "privatePeakBytes": 1165897728
+        }
+      ],
       "automaticModelFailureRetries": 0,
       "qualityQualified": false,
-      "activePid": 24216,
-      "stage": "tiny-loader"
+      "stage": "full",
+      "finishedAt": "2026-11-07T19:36:44+08:00"
     },
     "tiny-loader-proof.json": {
       "at": "2026-11-07T19:31:43+08:00",
-      "state": "PREPARING_TINY_NATIVE_CLASSIFIER_LOADING_CONTROL",
+      "state": "PASS_STANDARD_AND_STREAMED_TINY_ALIGNER_EXACT_LOGITS",
       "syntheticOnly": true,
       "publishedNeuralWeightsLoaded": false,
-      "accuracyMeasured": false
+      "accuracyMeasured": false,
+      "sameLogits": true,
+      "samePredictedTimestampClasses": true,
+      "weightRoundtrip": {
+        "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+        "tensorCount": 54,
+        "dataBytesCopied": 81664,
+        "maximumTransferChunkBytes": 8192,
+        "scratchBytes": 16777216,
+        "roundtripBufferBytes": 16777216,
+        "roundtripCpuBufferReused": true,
+        "fileSha256": "6451a43f2719d6030b110bcb2ba457a5cee6fedc7f8bdc768bb972c7d48a9abc",
+        "deviceRoundtripSha256": "6451a43f2719d6030b110bcb2ba457a5cee6fedc7f8bdc768bb972c7d48a9abc",
+        "selectedSourceBytesSha256": "9de3661642f5799d3a876caea05f1abe951129758279660af6f3787110f52c7b",
+        "selectedDeviceBytesSha256": "9de3661642f5799d3a876caea05f1abe951129758279660af6f3787110f52c7b",
+        "selectedPrefixes": null,
+        "sourceTensorCount": 54,
+        "skippedTensorCount": 0,
+        "targetDevice": "cuda:0",
+        "mmapUsed": false,
+        "wholeCpuStateDictCreated": false,
+        "seconds": 0.03900019999127835,
+        "modelClass": "Qwen3ASRForTokenClassification",
+        "allExpectedParametersLoaded": true,
+        "missingKeys": [],
+        "unexpectedKeys": [],
+        "noLanguageGenerationHead": true,
+        "computedBuffersPreserved": [
+          "model.audio_tower.positional_embedding.positional_embedding",
+          "model.language_model.rotary_emb.inv_freq",
+          "model.language_model.rotary_emb.original_inv_freq"
+        ],
+        "wholeModelToEmptyUsed": false,
+        "loadSeconds": 0.079645799996797,
+        "modelMathChanged": false,
+        "loaderSourceSha256": "5f31f7dece1798af66982dfcf9583f20d770dd487cb124842c66f96f1976d0f8",
+        "streamReaderSourceSha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+      },
+      "sourceSha256": "a35a86464d4a08293a118816ea605e11f9547ad1c2109a1751b7ad95f7fb0d95",
+      "wholePretrainedAccuracyQualified": false,
+      "limits": {
+        "pid": 17464,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 1064583168,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
     },
-    "pilot-state.json": null,
-    "full-state.json": null,
-    "review.json": null
+    "pilot-state.json": {
+      "state": "COMPLETE_NATIVE_ALIGNMENT_PILOT_NOT_TIME_QUALIFIED",
+      "pid": 24972,
+      "startedAt": "2026-11-07T19:32:01+08:00",
+      "phase": "pilot",
+      "binding": {
+        "protocolSha256": "e90f35e39c011456948e38c5ee916c017f35f295c06fd0bb75f59f5518427123",
+        "planSha256": "6fa8f96272dcf83baf8114f774d26ed4bd08fbd2bc318a98066f875cd1953050",
+        "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508"
+      },
+      "modelLoaded": true,
+      "newNeuralCalls": 1,
+      "reusedNodes": 0,
+      "completedLeaves": 1,
+      "referencePassedToWorker": false,
+      "speakerLabelsPassedToWorker": false,
+      "qualityQualified": false,
+      "limits": {
+        "pid": 24972,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 1154695168,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      },
+      "totalLeaves": 1,
+      "meeting": "S_R004S03C01",
+      "leaf": "000000-root",
+      "gpu": "AMD Radeon RX 6800 XT",
+      "modelLoadSeconds": 16.03165980000631,
+      "allOriginalCharactersPreserved": true,
+      "asrNeuralCalls": 0,
+      "finishedAt": "2026-11-07T19:32:33+08:00",
+      "wholeWorkerSeconds": 32.05031830002554
+    },
+    "full-state.json": {
+      "state": "COMPLETE_NATIVE_ALIGNMENT_FULL_NOT_TIME_QUALIFIED",
+      "pid": 840,
+      "startedAt": "2026-11-07T19:32:36+08:00",
+      "phase": "full",
+      "binding": {
+        "protocolSha256": "e90f35e39c011456948e38c5ee916c017f35f295c06fd0bb75f59f5518427123",
+        "planSha256": "6fa8f96272dcf83baf8114f774d26ed4bd08fbd2bc318a98066f875cd1953050",
+        "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508"
+      },
+      "modelLoaded": true,
+      "newNeuralCalls": 155,
+      "reusedNodes": 1,
+      "completedLeaves": 158,
+      "referencePassedToWorker": false,
+      "speakerLabelsPassedToWorker": false,
+      "qualityQualified": false,
+      "limits": {
+        "pid": 840,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 1169723392,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      },
+      "totalLeaves": 158,
+      "meeting": "L_R003S01C02",
+      "leaf": "000078-root",
+      "gpu": "AMD Radeon RX 6800 XT",
+      "modelLoadSeconds": 15.682330900017405,
+      "allOriginalCharactersPreserved": true,
+      "asrNeuralCalls": 0,
+      "finishedAt": "2026-11-07T19:36:42+08:00",
+      "wholeWorkerSeconds": 245.96094260000973
+    },
+    "review.json": {
+      "at": "2026-11-07T19:37:00+08:00",
+      "state": "FULL_NATIVE_ALIGNMENT_AND_ANONYMOUS_ATTRIBUTION_MEASURED_NOT_QUALIFIED",
+      "results": [
+        {
+          "meeting": "S_R004S03C01",
+          "audioSeconds": 2327.119,
+          "sourceTextByteContentUnchanged": true,
+          "rawChronologicalCerUnchanged": 0.05765765765765766,
+          "standardAnonymousCpCerDiagnostic": {
+            "metric": "cpCER",
+            "audioSeconds": 2327.119,
+            "referenceCharacters": 8325,
+            "referenceSpeakers": 5,
+            "predictedTextStreams": 6,
+            "edits": {
+              "replace": 206,
+              "delete": 564,
+              "insert": 467
+            },
+            "totalEdits": 1237,
+            "characterErrorRate": 0.1485885885885886,
+            "anonymousAssignmentForEvaluationOnly": [
+              {
+                "referenceSpeaker": "001-M",
+                "hypothesisSpeaker": "0",
+                "edits": 275
+              },
+              {
+                "referenceSpeaker": "002-F",
+                "hypothesisSpeaker": "1",
+                "edits": 40
+              },
+              {
+                "referenceSpeaker": "003-F",
+                "hypothesisSpeaker": "4",
+                "edits": 102
+              },
+              {
+                "referenceSpeaker": "004-F",
+                "hypothesisSpeaker": "2",
+                "edits": 150
+              },
+              {
+                "referenceSpeaker": "005-F",
+                "hypothesisSpeaker": "3",
+                "edits": 241
+              },
+              {
+                "referenceSpeaker": null,
+                "hypothesisSpeaker": "__unconfirmed__",
+                "edits": 429
+              }
+            ],
+            "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+          },
+          "unknownForcedUnmatchedDiagnostic": {
+            "totalEdits": 1237,
+            "cer": 0.1485885885885886,
+            "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+          },
+          "unconfirmedText": {
+            "characters": 429,
+            "fractionOfRecognizedCharacters": 0.05213903743315508,
+            "neverRealIdentityOrOwnerClaim": true
+          },
+          "alignmentUnits": 8222,
+          "positiveInBoundPredictedTimeUnits": 7876,
+          "invalidOrZeroDurationTimeUnits": 346,
+          "authorMonotonicRepairChangedTimestamps": 163,
+          "allOriginalCharactersAndPunctuationPreserved": true,
+          "knownAnonymousSpeakerIds": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "overlapUnitsExplicitlyUnknown": 17,
+          "newAsrNeuralCalls": 0,
+          "newSpeakerNeuralCalls": 0,
+          "alignmentInferenceSeconds": 30.62949320001644,
+          "trueWordTimeAccuracyMeasured": false,
+          "timeConstrainedPerSpeakerCerMeasured": false,
+          "bothOverlappingVoicesRecovered": false,
+          "actualSharedRustProductDocumentPassed": true,
+          "qualityQualified": false
+        },
+        {
+          "meeting": "L_R003S01C02",
+          "audioSeconds": 2362.945,
+          "sourceTextByteContentUnchanged": true,
+          "rawChronologicalCerUnchanged": 0.23155832180728447,
+          "standardAnonymousCpCerDiagnostic": {
+            "metric": "cpCER",
+            "audioSeconds": 2362.945,
+            "referenceCharacters": 8676,
+            "referenceSpeakers": 6,
+            "predictedTextStreams": 7,
+            "edits": {
+              "replace": 681,
+              "delete": 2112,
+              "insert": 1715
+            },
+            "totalEdits": 4508,
+            "characterErrorRate": 0.5195942830797603,
+            "anonymousAssignmentForEvaluationOnly": [
+              {
+                "referenceSpeaker": "002-F",
+                "hypothesisSpeaker": "1",
+                "edits": 649
+              },
+              {
+                "referenceSpeaker": "003-F",
+                "hypothesisSpeaker": "__unconfirmed__",
+                "edits": 1564
+              },
+              {
+                "referenceSpeaker": "004-M",
+                "hypothesisSpeaker": "2",
+                "edits": 334
+              },
+              {
+                "referenceSpeaker": "005-M",
+                "hypothesisSpeaker": "5",
+                "edits": 712
+              },
+              {
+                "referenceSpeaker": "006-M",
+                "hypothesisSpeaker": "4",
+                "edits": 1088
+              },
+              {
+                "referenceSpeaker": "007-M",
+                "hypothesisSpeaker": "0",
+                "edits": 90
+              },
+              {
+                "referenceSpeaker": null,
+                "hypothesisSpeaker": "3",
+                "edits": 71
+              }
+            ],
+            "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+          },
+          "unknownForcedUnmatchedDiagnostic": {
+            "totalEdits": 4881,
+            "cer": 0.5625864453665284,
+            "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+          },
+          "unconfirmedText": {
+            "characters": 1739,
+            "fractionOfRecognizedCharacters": 0.21004952288923784,
+            "neverRealIdentityOrOwnerClaim": true
+          },
+          "alignmentUnits": 8274,
+          "positiveInBoundPredictedTimeUnits": 7450,
+          "invalidOrZeroDurationTimeUnits": 824,
+          "authorMonotonicRepairChangedTimestamps": 653,
+          "allOriginalCharactersAndPunctuationPreserved": true,
+          "knownAnonymousSpeakerIds": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "overlapUnitsExplicitlyUnknown": 793,
+          "newAsrNeuralCalls": 0,
+          "newSpeakerNeuralCalls": 0,
+          "alignmentInferenceSeconds": 26.77802360005444,
+          "trueWordTimeAccuracyMeasured": false,
+          "timeConstrainedPerSpeakerCerMeasured": false,
+          "bothOverlappingVoicesRecovered": false,
+          "actualSharedRustProductDocumentPassed": true,
+          "qualityQualified": false
+        }
+      ],
+      "modelId": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+      "revision": "c07281df297b9905d24a508279258cccf987a064",
+      "ownedStageProcessFamilySecondsIncludingInterruptions": {
+        "tiny-loader": 19.280060199991567,
+        "pilot": 34.424161300004926,
+        "full": 248.23296410002513
+      },
+      "timeScope": "Alignment only, existing ASR and speaker inference not rerun. Tiny random loader control separate. Pilot node reused by full stage, interrupted attempts included. Not recording-to-minutes latency.",
+      "noWordTimeGroundTruthAndNoTcpCerClaim": true,
+      "qualityQualified": false,
+      "defaultProductChanged": false,
+      "finalHoldoutOpened": false,
+      "installedWindowsAndroidCardPassed": false,
+      "customerTrialPerformed": false,
+      "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。",
+      "qualification": "NOT_QUALIFIED: predicted word intervals and anonymous attribution measured on exposed full development meetings. No verified word-time accuracy, simultaneous voices recovered, final holdout, factual minutes or installed phone/card acceptance.",
+      "posthocResourceLimits": {
+        "pid": 24964,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 536870912,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 140955648,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    }
   },
   "native17ConcurrentCacheProof": {
     "at": "2026-11-07T19:23:51+08:00",

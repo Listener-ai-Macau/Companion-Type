@@ -1,11 +1,30 @@
 {
-  "state": "RUNNING_NATIVE_ALIGNMENT_TINY-LOADER",
+  "state": "COMPLETE_SEQUENTIAL_NATIVE_ALIGNMENT_REVIEW_REQUIRED",
   "startedAt": "2026-11-07T19:31:42+08:00",
   "pid": 3384,
   "priorAttemptReceipts": [],
-  "results": [],
+  "results": [
+    {
+      "stage": "tiny-loader",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 19.280060199991567,
+      "privatePeakBytes": 1066414080
+    },
+    {
+      "stage": "pilot",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 34.424161300004926,
+      "privatePeakBytes": 1156694016
+    },
+    {
+      "stage": "full",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 248.23296410002513,
+      "privatePeakBytes": 1165897728
+    }
+  ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
-  "activePid": 24216,
-  "stage": "tiny-loader"
+  "stage": "full",
+  "finishedAt": "2026-11-07T19:36:44+08:00"
 }

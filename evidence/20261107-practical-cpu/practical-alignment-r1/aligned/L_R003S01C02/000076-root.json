@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "e90f35e39c011456948e38c5ee916c017f35f295c06fd0bb75f59f5518427123",
+    "planSha256": "6fa8f96272dcf83baf8114f774d26ed4bd08fbd2bc318a98066f875cd1953050",
+    "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+    "sourceNodeSha256": "d519013443ea88cb559422d7a87d9d60ce75cf2913130e3f042850a41854f77a",
+    "meeting": "L_R003S01C02"
+  },
+  "payload": {
+    "originalText": "哎。",
+    "originalStartSample": 36480000,
+    "originalEndSample": 36960000,
+    "rawTimestampClassIds": [
+      2,
+      2
+    ],
+    "timestampClassMilliseconds": 80,
+    "authorMonotonicRepairChangedTimestamps": 0,
+    "units": [
+      {
+        "alignmentUnit": "哎",
+        "textStartCodepoint": 0,
+        "textEndCodepoint": 2,
+        "text": "哎。",
+        "textStartUtf16": 0,
+        "textEndUtf16": 2,
+        "predictedStartSeconds": 0.16,
+        "predictedEndSeconds": 0.16,
+        "absoluteStartSeconds": null,
+        "absoluteEndSeconds": null,
+        "positiveAndInOriginalLeafBounds": false,
+        "timestampVerifiedAgainstTruth": false
+      }
+    ],
+    "allOriginalCharactersPreserved": true,
+    "inferenceSeconds": 0.219642499985639,
+    "inputNotTruncated": true,
+    "validMelFrames": 3000,
+    "neuralInferencePerformed": true,
+    "unresolvedTimeUnits": 1,
+    "noAsrOrReferenceWordsSubstituted": true,
+    "wordTimeAccuracyQualified": false
+  },
+  "payloadSha256": "6231f6837138086243ee28dc7d92f5fe48c75b7f230d0dd119009be0c7d8b55b"
+}

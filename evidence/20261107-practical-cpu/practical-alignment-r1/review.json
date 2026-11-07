@@ -1,0 +1,212 @@
+{
+  "at": "2026-11-07T19:37:00+08:00",
+  "state": "FULL_NATIVE_ALIGNMENT_AND_ANONYMOUS_ATTRIBUTION_MEASURED_NOT_QUALIFIED",
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "sourceTextByteContentUnchanged": true,
+      "rawChronologicalCerUnchanged": 0.05765765765765766,
+      "standardAnonymousCpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2327.119,
+        "referenceCharacters": 8325,
+        "referenceSpeakers": 5,
+        "predictedTextStreams": 6,
+        "edits": {
+          "replace": 206,
+          "delete": 564,
+          "insert": 467
+        },
+        "totalEdits": 1237,
+        "characterErrorRate": 0.1485885885885886,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "001-M",
+            "hypothesisSpeaker": "0",
+            "edits": 275
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": "1",
+            "edits": 40
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": "4",
+            "edits": 102
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "hypothesisSpeaker": "2",
+            "edits": 150
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "hypothesisSpeaker": "3",
+            "edits": 241
+          },
+          {
+            "referenceSpeaker": null,
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 429
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unknownForcedUnmatchedDiagnostic": {
+        "totalEdits": 1237,
+        "cer": 0.1485885885885886,
+        "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+      },
+      "unconfirmedText": {
+        "characters": 429,
+        "fractionOfRecognizedCharacters": 0.05213903743315508,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "alignmentUnits": 8222,
+      "positiveInBoundPredictedTimeUnits": 7876,
+      "invalidOrZeroDurationTimeUnits": 346,
+      "authorMonotonicRepairChangedTimestamps": 163,
+      "allOriginalCharactersAndPunctuationPreserved": true,
+      "knownAnonymousSpeakerIds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "overlapUnitsExplicitlyUnknown": 17,
+      "newAsrNeuralCalls": 0,
+      "newSpeakerNeuralCalls": 0,
+      "alignmentInferenceSeconds": 30.62949320001644,
+      "trueWordTimeAccuracyMeasured": false,
+      "timeConstrainedPerSpeakerCerMeasured": false,
+      "bothOverlappingVoicesRecovered": false,
+      "actualSharedRustProductDocumentPassed": true,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "audioSeconds": 2362.945,
+      "sourceTextByteContentUnchanged": true,
+      "rawChronologicalCerUnchanged": 0.23155832180728447,
+      "standardAnonymousCpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2362.945,
+        "referenceCharacters": 8676,
+        "referenceSpeakers": 6,
+        "predictedTextStreams": 7,
+        "edits": {
+          "replace": 681,
+          "delete": 2112,
+          "insert": 1715
+        },
+        "totalEdits": 4508,
+        "characterErrorRate": 0.5195942830797603,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": "1",
+            "edits": 649
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 1564
+          },
+          {
+            "referenceSpeaker": "004-M",
+            "hypothesisSpeaker": "2",
+            "edits": 334
+          },
+          {
+            "referenceSpeaker": "005-M",
+            "hypothesisSpeaker": "5",
+            "edits": 712
+          },
+          {
+            "referenceSpeaker": "006-M",
+            "hypothesisSpeaker": "4",
+            "edits": 1088
+          },
+          {
+            "referenceSpeaker": "007-M",
+            "hypothesisSpeaker": "0",
+            "edits": 90
+          },
+          {
+            "referenceSpeaker": null,
+            "hypothesisSpeaker": "3",
+            "edits": 71
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unknownForcedUnmatchedDiagnostic": {
+        "totalEdits": 4881,
+        "cer": 0.5625864453665284,
+        "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+      },
+      "unconfirmedText": {
+        "characters": 1739,
+        "fractionOfRecognizedCharacters": 0.21004952288923784,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "alignmentUnits": 8274,
+      "positiveInBoundPredictedTimeUnits": 7450,
+      "invalidOrZeroDurationTimeUnits": 824,
+      "authorMonotonicRepairChangedTimestamps": 653,
+      "allOriginalCharactersAndPunctuationPreserved": true,
+      "knownAnonymousSpeakerIds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "overlapUnitsExplicitlyUnknown": 793,
+      "newAsrNeuralCalls": 0,
+      "newSpeakerNeuralCalls": 0,
+      "alignmentInferenceSeconds": 26.77802360005444,
+      "trueWordTimeAccuracyMeasured": false,
+      "timeConstrainedPerSpeakerCerMeasured": false,
+      "bothOverlappingVoicesRecovered": false,
+      "actualSharedRustProductDocumentPassed": true,
+      "qualityQualified": false
+    }
+  ],
+  "modelId": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+  "revision": "c07281df297b9905d24a508279258cccf987a064",
+  "ownedStageProcessFamilySecondsIncludingInterruptions": {
+    "tiny-loader": 19.280060199991567,
+    "pilot": 34.424161300004926,
+    "full": 248.23296410002513
+  },
+  "timeScope": "Alignment only, existing ASR and speaker inference not rerun. Tiny random loader control separate. Pilot node reused by full stage, interrupted attempts included. Not recording-to-minutes latency.",
+  "noWordTimeGroundTruthAndNoTcpCerClaim": true,
+  "qualityQualified": false,
+  "defaultProductChanged": false,
+  "finalHoldoutOpened": false,
+  "installedWindowsAndroidCardPassed": false,
+  "customerTrialPerformed": false,
+  "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。",
+  "qualification": "NOT_QUALIFIED: predicted word intervals and anonymous attribution measured on exposed full development meetings. No verified word-time accuracy, simultaneous voices recovered, final holdout, factual minutes or installed phone/card acceptance.",
+  "posthocResourceLimits": {
+    "pid": 24964,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 140955648,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

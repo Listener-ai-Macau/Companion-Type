@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-07T19:33:35+08:00",
+  "state": "FROZEN_POSTHOC_ATTRIBUTION_NO_NEW_ALIGNMENT_OUTPUTS_READ",
+  "speakerJournals": {
+    "S_R004S03C01": {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+      "sha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+      "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\completed-state.json",
+      "producerSha256": "7b6cbaf0eb236e63c6c1dc6eb586ff158a24a9d1534b79cf7214fce85ac6cc38"
+    },
+    "L_R003S01C02": {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+      "sha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+      "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\completed-state.json",
+      "producerSha256": "08ad84d1bf1c3e44366f491f68880e7d916a36045fe405ada076e5d1b3306fb2"
+    }
+  },
+  "helperSourceSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+  "uncertaintyMarginSeconds": 0.06,
+  "rule": "For each positive in-bound predicted word interval, require exactly one anonymous predicted speaker with continuous coverage throughout the entire interval plus the inherited60ms margin. Overlap, gaps, speaker changes and invalid/zero-duration intervals stay unknown. No majority/primary-person guess, no person-count hint, no per-meeting threshold selection.",
+  "fallbackDisplayTime": "Invalid predicted times retain original word and unknown person; display range is explicitly approximate and bounded inside its source leaf, not verified word duration.",
+  "rawTextMustRemainIdentical": true,
+  "standardCpCerAndForcedUnmatchedDiagnosticReportedSeparately": true,
+  "trueWordTimeGroundTruthAvailable": false,
+  "noSpeakerLabelsOrReferencePassedToAligner": true,
+  "qualityQualified": false
+}
