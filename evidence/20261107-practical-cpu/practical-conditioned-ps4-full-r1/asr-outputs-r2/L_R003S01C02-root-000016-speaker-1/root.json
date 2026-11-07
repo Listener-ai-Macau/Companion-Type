@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "0b6d6195f45b4e37d6e953a3fb31bc4681d4f21f266dcb949bb40c058943d40b",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "现在业主家每家都是两两三辆车，两三辆，都为了上班方便，车多。对。",
+    "generatedIds": [
+      99601,
+      104348,
+      45629,
+      73157,
+      45629,
+      100132,
+      77540,
+      111489,
+      110623,
+      3837,
+      111489,
+      100408,
+      3837,
+      71268,
+      100012,
+      102547,
+      101147,
+      3837,
+      39953,
+      42140,
+      1773,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "现在业主家每家都是两两三辆车，两三辆，都为了上班方便，车多。对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.445606299996143
+  },
+  "rawSha256": "01e909f4ce80d1ac35e3671ea270809c5ad6f096ab5aa14a271526fdcefeb7f7"
+}

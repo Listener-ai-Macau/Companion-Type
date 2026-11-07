@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "0c834cfcce63ce762dacc641ea1957e8a35a882b1d096ee25d599834fb4ced02",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "啊，没问题，是不是？你现在还就是说，这个第一说，嗯，一个就是栽培技术、管理技术。",
+    "generatedIds": [
+      103924,
+      3837,
+      114815,
+      3837,
+      104074,
+      11319,
+      113254,
+      97706,
+      99486,
+      36587,
+      3837,
+      99487,
+      99363,
+      36587,
+      3837,
+      106287,
+      3837,
+      46944,
+      99486,
+      110898,
+      99361,
+      5373,
+      39352,
+      99361,
+      1773,
+      151645
+    ],
+    "rawDecoded": "啊，没问题，是不是？你现在还就是说，这个第一说，嗯，一个就是栽培技术、管理技术。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.288271400000667
+  },
+  "rawSha256": "7774638348b107f73fd969fda604048c5405224079a305f8c97223cf79922ee6"
+}

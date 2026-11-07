@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "785a6498579ea516103a0565b9d0c45c71fdcd7b74ccd2ea10756bb6ed9f183e",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "春天的时候种植，春天种植的时候死的还是不多，成活率百分之九十九，还差不多。嗯。嗯，非常好。",
+    "generatedIds": [
+      105303,
+      103920,
+      104178,
+      3837,
+      105303,
+      104178,
+      103920,
+      99561,
+      9370,
+      99998,
+      102459,
+      3837,
+      12857,
+      75606,
+      95355,
+      108473,
+      99609,
+      100993,
+      3837,
+      97706,
+      104926,
+      1773,
+      106287,
+      1773,
+      106287,
+      3837,
+      108014,
+      1773,
+      151645
+    ],
+    "rawDecoded": "春天的时候种植，春天种植的时候死的还是不多，成活率百分之九十九，还差不多。嗯。嗯，非常好。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.081981199997244
+  },
+  "rawSha256": "2ec26fe425803e229350acdfe8c0ae7a66df137a06826569a50872c42c29d84c"
+}

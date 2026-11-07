@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "c03e5081e2bc41f4b6895a68ca7aa165e4f7ad4cf79a1ae37331f3ace12c7707",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。",
+    "generatedIds": [
+      112768,
+      11319,
+      104288,
+      3837,
+      43288,
+      27733,
+      34187,
+      80158,
+      75606,
+      34187,
+      3837,
+      43288,
+      39352,
+      105140,
+      3837,
+      117487,
+      103924,
+      5373,
+      116625,
+      103924,
+      5373,
+      118158,
+      103924,
+      3837,
+      30534,
+      39352,
+      105140,
+      1773,
+      151645
+    ],
+    "rawDecoded": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.924030299996957
+  },
+  "rawSha256": "e710685dac8f11f4d899dcd411be4c8ddaab61d9a4f85681277c08f4e4d0dde0"
+}

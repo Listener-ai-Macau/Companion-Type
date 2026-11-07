@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "6122945e6b95445bda8346537d644a771d9306c1b404745afab751efc85ea597",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "嗯，现在还就是说这个地方，嗯，一个就是栽培技术，管理技术。嗯。",
+    "generatedIds": [
+      106287,
+      3837,
+      99601,
+      97706,
+      99486,
+      36587,
+      99487,
+      100371,
+      3837,
+      106287,
+      3837,
+      46944,
+      99486,
+      110898,
+      99361,
+      3837,
+      39352,
+      99361,
+      1773,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，现在还就是说这个地方，嗯，一个就是栽培技术，管理技术。嗯。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.550663899979554
+  },
+  "rawSha256": "70fb74b8bc0babd269eecc74d83f67fb0e38bd25dabb0af620aaa9bb3a171c2d"
+}

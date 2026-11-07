@@ -1,0 +1,81 @@
+{
+  "id": "L_R003S01C02-root-000025-speaker-3",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 25,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 3,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000025-speaker-3.wav",
+  "audioSha256": "c03e5081e2bc41f4b6895a68ca7aa165e4f7ad4cf79a1ae37331f3ace12c7707",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "11ceea19f64d9c2e2fa56e7cc0612f68c57a86845e07298e3fce1af73c9c4039",
+  "enrollmentSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+  "mixtureAuthorPeakNormalization": 0.130035400390625,
+  "enrollmentAuthorPeakNormalization": 0.072113037109375,
+  "floatOutputSha256": "eacc3f0d05130dbbb8c30076d5481f2c8f4bda137ee4679141780a1444cfaed4",
+  "floatOutputPeak": 0.16829705238342285,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.5589831999968737,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.12801596522331238,
+      "1": 0.4586358666419983,
+      "2": 0.19758909940719604,
+      "3": 0.661944568157196,
+      "4": 0.20982903242111206,
+      "5": 0.4218972623348236
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。",
+      "generatedIds": [
+        112768,
+        11319,
+        104288,
+        3837,
+        43288,
+        27733,
+        34187,
+        80158,
+        75606,
+        34187,
+        3837,
+        43288,
+        39352,
+        105140,
+        3837,
+        117487,
+        103924,
+        5373,
+        116625,
+        103924,
+        5373,
+        118158,
+        103924,
+        3837,
+        30534,
+        39352,
+        105140,
+        1773,
+        151645
+      ],
+      "rawDecoded": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.924030299996957
+    }
+  ]
+}

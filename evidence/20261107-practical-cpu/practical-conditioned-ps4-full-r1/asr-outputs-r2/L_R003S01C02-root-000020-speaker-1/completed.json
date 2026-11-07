@@ -1,0 +1,74 @@
+{
+  "id": "L_R003S01C02-root-000020-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 20,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000020-speaker-1.wav",
+  "audioSha256": "ee57f3780eae7ebce063d064720111bf9301f1ee1fe73104aba1d81faa9882c5",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "8a45bc1841dcf78b2cb5f1820a71b3f8f51d0fc448a0d701f01a88f720ac44a1",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.182586669921875,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "89a1d4f6da4728e4678590b3fe3090ea0c2b145983c8650ae034e1010774471f",
+  "floatOutputPeak": 0.23730577528476715,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3791465999966022,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.14882485568523407,
+      "1": 0.5525492429733276,
+      "2": 0.1888357698917389,
+      "3": 0.4380742609500885,
+      "4": 0.23955757915973663,
+      "5": 0.2809097468852997
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "嗯，这也是解决方案之一。对，这也是一个方案之一。这是。对，对。嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "嗯，这也是解决方案之一。对，这也是一个方案之一。这是。对，对。嗯。",
+      "generatedIds": [
+        106287,
+        3837,
+        104624,
+        104520,
+        100653,
+        1773,
+        32664,
+        3837,
+        104624,
+        46944,
+        100389,
+        100653,
+        1773,
+        100346,
+        1773,
+        32664,
+        3837,
+        32664,
+        1773,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "嗯，这也是解决方案之一。对，这也是一个方案之一。这是。对，对。嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 4.5585431000217795
+    }
+  ]
+}

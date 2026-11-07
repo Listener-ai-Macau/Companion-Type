@@ -1,0 +1,74 @@
+{
+  "id": "L_R003S01C02-root-000032-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 32,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000032-speaker-1.wav",
+  "audioSha256": "90ef87df07f0a876bd94dffab2db35cb69c6d0e894c6c4e292e186af85112e96",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "9c7b4e98c61f488a34a205ec215288db4da700c49d82f89e10ef25a02c61876c",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.128936767578125,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "d981c2234c1c9e33140dd37640b2741f0668e0850875798eb76643e26dbdd0cc",
+  "floatOutputPeak": 0.4229971766471863,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.414436899998691,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.11039048433303833,
+      "1": 0.6051512360572815,
+      "2": 0.23495152592658997,
+      "3": 0.4280005097389221,
+      "4": 0.14239725470542908,
+      "5": 0.2903468608856201
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "反正还是尽量多说呗。对。嗯。嗯。嗯。嗯。嗯。嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "反正还是尽量多说呗。对。嗯。嗯。嗯。嗯。嗯。嗯。",
+      "generatedIds": [
+        105785,
+        99998,
+        104638,
+        42140,
+        36587,
+        111382,
+        1773,
+        32664,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "反正还是尽量多说呗。对。嗯。嗯。嗯。嗯。嗯。嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 4.539722899993649
+    }
+  ]
+}

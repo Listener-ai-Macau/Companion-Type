@@ -1,0 +1,48 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "e6db72a9a2795a5cc51b3a2e66fa210c6530a6d8e991ad861c5a59c37d015761",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。",
+    "generatedIds": [
+      49828,
+      89012,
+      101086,
+      100158,
+      1773,
+      106287,
+      3837,
+      32664,
+      3837,
+      32664,
+      3837,
+      32664,
+      1773,
+      106287,
+      1773,
+      32664,
+      1773,
+      110030,
+      96050,
+      43268,
+      3837,
+      99107,
+      9370,
+      1773,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.700577399984468
+  },
+  "rawSha256": "99f04df84e4464968affd4f3db95dc8a1ec5765b9f2d5fded030f3517132c054"
+}

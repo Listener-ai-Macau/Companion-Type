@@ -1,0 +1,79 @@
+{
+  "id": "L_R003S01C02-root-000027-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 27,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000027-speaker-1.wav",
+  "audioSha256": "e6db72a9a2795a5cc51b3a2e66fa210c6530a6d8e991ad861c5a59c37d015761",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "5d1d8e45fffa9f0b08621a4358d47b6d8426f066a907489a558eab96a76ec06f",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.148651123046875,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "9bf0936f5af5ef82423163f8aae2cef0bcba95ffcf9d728f06421897f899affb",
+  "floatOutputPeak": 0.415927529335022,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.5348429000005126,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.1208210214972496,
+      "1": 0.6457512974739075,
+      "2": 0.28611016273498535,
+      "3": 0.5188742280006409,
+      "4": 0.20685231685638428,
+      "5": 0.3164981007575989
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。",
+      "generatedIds": [
+        49828,
+        89012,
+        101086,
+        100158,
+        1773,
+        106287,
+        3837,
+        32664,
+        3837,
+        32664,
+        3837,
+        32664,
+        1773,
+        106287,
+        1773,
+        32664,
+        1773,
+        110030,
+        96050,
+        43268,
+        3837,
+        99107,
+        9370,
+        1773,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.700577399984468
+    }
+  ]
+}
