@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-07T22:32:25+08:00",
+  "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
+  "ownerQuote": "好的, 1234推进一下",
+  "originalTask": "RM-OVERLAP with QM04/QM05; no second task tree",
+  "steps": [
+    {
+      "step": 1,
+      "state": "ASSEMBLY_LINEAGE_AND_PROFILE_CAUSES_AUDITED_REMAINING_ACOUSTIC_VS_ASR_OPEN",
+      "result": "All159 unique per-lane accepted audio spans reconstruct2109 final rows exactly, with no repeated accepted source input.47different-lane pairs in33roots already share>=8characters before merge; longest65chars. Waveform similarity diagnostics retained without filtering.9long enrollments have no annotated other voice;8still fail separate-clip activity criteria. No claim of clean-source/listening proof."
+    },
+    {
+      "step": 2,
+      "state": "THREE_MEETING_SHORT_CONTROLS_FROZEN_AND_COVERAGE_AUDITED",
+      "result": "13original30s clips/390s from3real exposed meetings/2corpora,67all-profile queries,15automatic enrollments disjoint from every test clip. AMI has real3+overlap; original Mandarin predicted-triple clip did not. One additional reference-curated Mandarin30s root27 with1.900779s real3+overlap is frozen for future diagnostic coverage only, not used to tune/retest the rejected candidate."
+    },
+    {
+      "step": 3,
+      "state": "ONE_CAUSALLY_DIFFERENT_LEARNED_ACTIVITY_CANDIDATE_RUN_AND_REJECTED",
+      "result": "Matching released nomo-pvad/ERes2NetV2, strict557/583/557tensor loads and GPU values passed. Same unmodified author fbank moved to GPU after CPU primitive alone reproduced native allocation failure; independent NumPy control max error<0.000190. Fixed0.7 threshold and all67raw-mixture queries: all3meetings fail the predeclared short criteria. Author fixture target-first/non-target-later behavior reproduced separately, no meeting result overwritten."
+    },
+    {
+      "step": 4,
+      "state": "FULL_RUN_NOT_EXECUTED_BECAUSE_PREDECLARED_SHORT_GATE_FAILED",
+      "result": "No additional whole-meeting activity/separation/ASR run, no product/default/word filtering. Stop condition enforced; final<5%/cross-meeting and integration remain unfulfilled."
+    }
+  ],
+  "modelActivityProcessFamilySecondsIncludingFirstFailedPreparation": 131.741529299994,
+  "authorFixtureProcessFamilySecondsSeparate": 18.21808510000119,
+  "sampledMainPrivatePeakBytes": 1142104064,
+  "noSecondCandidateStarted": true,
+  "noNeuralModelRemainingActiveClaimRequiresProcessReadback": true,
+  "ordinaryAsrAndDefaultUnchanged": true,
+  "actualProductAccuracyImprovementDelivered": false,
+  "qualified": false,
+  "next": "原RM-OVERLAP：停止被拒PS4/整段或局部声纹门及nomo默认目标活动配置的扩展与扫参；保留NativeFP16分人研究基线和普通ASR，不把这次活动检测当文字/纪要改善。已排除本次合并重复输入，多个原始人物轨已产生长段相同文字，分离共享声源/目标缺席与残留触发ASR仍需联合解决。下一项先核对真实远场会议训练数据与可复现训练实现，区分训练/开发/最终集（不拿本轮已见L/S/AMI或补齐三人片训练），再为目标活动/分离中已证失败模块选择定向适配方案；nomo官方示例可复现但会议域跨三场失败，只有9个长且无标注他人声登记中8个仍失败的证据，不把延长登记或换同类权重当主线。补齐的中文真实三人重叠30s仅为后续曝光诊断样例，不重跑失败候选、不当独立验收。没有不同因果依据不启动备选、不从零训练。普通严格<5%、复杂逐人/短句/重叠文字、跨域、事实、双端实卡与售卖门继续OPEN。"
+}

@@ -1,0 +1,64 @@
+"""Prepare one matching published activity/enrollment pair, no inference."""
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,urllib.request,time,traceback
+from practical_io_20261107 import atomic_json
+from moss_windows_resource_limits_20261104 import WorkerLimits
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';B=R/'docs/handoffs/20261107-model-generation-recovery';C=B/'practical-target-activity-r1';prior=B/'practical-ps4-local-presence-r1'
+E=Path('E:/CodexData/Companion/.model-cache/nomo-target-activity-20261107');E.mkdir(exist_ok=True)
+read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));limits=WorkerLimits(cpu_percent=5,memory_bytes=256*1024**2)
+assert not (C/'model-ready.json').exists();availability=read(prior/'source-availability.json');commit=availability['commit'];root=M/'upstream-tse'/('nomo-'+commit);root.mkdir(exist_ok=True)
+def urlopen(url):return urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Companion-bounded-public-activity-research'}),timeout=20)
+def digest(path,kind='sha256'):
+    with Path(path).open('rb') as stream:return hashlib.file_digest(stream,kind).hexdigest()
+def gitblob(path):
+    h=hashlib.sha1();h.update(b'blob '+str(path.stat().st_size).encode()+b'\0')
+    with path.open('rb') as f:
+        for chunk in iter(lambda:f.read(256*1024),b''):h.update(chunk)
+    return h.hexdigest()
+receipts=[];state={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'PREPARING_ONE_PUBLISHED_ACTIVITY_PAIR_NO_NEURAL_CALLS','neuralCalls':0,'productChanged':False,'files':receipts};started=time.perf_counter()
+def download(url,dest,size=None,blob=None,sha256=None):
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    if not dest.exists():
+        temp=dest.with_name(dest.name+'.part')
+        if temp.exists():
+            archived=temp.with_name(temp.name+'.failed-'+str(time.time_ns()));temp.rename(archived)
+        with urlopen(url) as response,temp.open('xb') as out:
+            for chunk in iter(lambda:response.read(256*1024),b''):out.write(chunk)
+        assert size is None or temp.stat().st_size==size
+        assert blob is None or gitblob(temp)==blob
+        assert sha256 is None or digest(temp)==sha256
+        temp.rename(dest)
+    assert size is None or dest.stat().st_size==size
+    assert blob is None or gitblob(dest)==blob
+    assert sha256 is None or digest(dest)==sha256
+    receipt={'file':str(dest),'url':url,'size':dest.stat().st_size,'sha256':digest(dest),'gitBlobSha1':blob};receipts.append(receipt);atomic_json(C/'model-preparation-state.json',state);return receipt
+try:
+    tree=read(prior/'published-nomo-tree.json');files={r['path']:r for r in tree['tree'] if r['type']=='blob'}
+    selected=[name for name in files if name.endswith('.py') or name in ['LICENSE','README.md','THIRD_PARTY_NOTICES.md','weights/WEIGHTS_LICENSE.md','VERSION','requirements.txt']]
+    for name in selected:
+        row=files[name];download('https://raw.githubusercontent.com/tuya/nomo-pvad/'+commit+'/'+name,root/name,row['size'],row['sha'])
+    row=files['weights/nomo_pvad.pt'];weight=E/'nomo_pvad.pt';download('https://raw.githubusercontent.com/tuya/nomo-pvad/'+commit+'/weights/nomo_pvad.pt',weight,row['size'],row['sha'])
+    matched=availability['matchedEnrollmentModel'];enrollment=E/'eres2netv2';enrollment.mkdir(exist_ok=True)
+    download('https://www.modelscope.cn/api/v1/models/'+matched['repository']+'/repo?Revision='+matched['Revision']+'&FilePath='+matched['Path'],enrollment/matched['Path'],matched['Size'],sha256=matched['Sha256'])
+    metadata=C/'modelscope-source-tree.json'
+    if metadata.exists():ms=read(metadata)
+    else:
+        with urlopen('https://api.github.com/repos/modelscope/modelscope/commits/master') as response:head=json.load(response)['sha']
+        with urlopen('https://api.github.com/repos/modelscope/modelscope/git/trees/'+head+'?recursive=1') as response:tree=json.load(response)
+        assert not tree['truncated'];needed=['LICENSE','modelscope/models/audio/sv/ERes2NetV2.py','modelscope/models/audio/sv/fusion.py','modelscope/models/audio/sv/pooling_layers.py']
+        ms={'commit':head,'files':[r for r in tree['tree'] if r['path'] in needed]};assert len(ms['files'])==len(needed);atomic_json(metadata,ms)
+    msroot=M/'upstream-tse'/('modelscope-eres2netv2-'+ms['commit']);msroot.mkdir(exist_ok=True)
+    for row in ms['files']:download('https://raw.githubusercontent.com/modelscope/modelscope/'+ms['commit']+'/'+row['path'],msroot/row['path'],row['size'],row['sha'])
+    assert 'Apache' in (msroot/'LICENSE').read_text(encoding='utf8')
+    frontend=read(B/'practical-conditioned-ps4-full-r1/audio-frontend-source.json')
+    for row in frontend['files']:assert digest(row['file'])==row['sha256']
+    state.update(state='PUBLISHED_ACTIVITY_PAIR_PREPARED_NOT_YET_LOADED',sourceRoot=str(root),modelscopeRoot=str(msroot),weight=str(weight),enrollmentDirectory=str(enrollment),
+        nomoCommit=commit,modelscopeCommit=ms['commit'],enrollmentMetadata=matched,audioFrontendSource=str(B/'practical-conditioned-ps4-full-r1/audio-frontend-source.json'),
+        compatibility='Matching native ModelScope ERes2NetV2192d full model for enrollment and released fine-tuned target-activity trunk. No PS4 or base-ERes embeddings reused.',
+        dependencyPackaging='Unmodified ModelScope source includes unrelated SDK registry wrapper imports. The isolated loader may execute only the exact native nn.Module class ASTs plus exact upstream fusion/pooling modules; class/parameter coverage must be verified and the packaging scope disclosed.',
+        knownRisk='Author technical report URL returned404 on2026-11-07. No independently verified far-field/overlap accuracy or public training recipe; only a bounded causal pilot is justified.',
+        qualityQualified=False,limits=limits.query());atomic_json(C/'model-ready.json',state)
+except BaseException as error:state.update(state='ACTIVITY_PAIR_PREPARATION_FAILED_RETAINED',error=repr(error),traceback=traceback.format_exc());raise
+finally:
+    state.update(wholePreparationSeconds=time.perf_counter()-started,finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'));atomic_json(C/'model-preparation-state.json',state);print(json.dumps({k:v for k,v in state.items() if k!='files'},ensure_ascii=False),flush=True)

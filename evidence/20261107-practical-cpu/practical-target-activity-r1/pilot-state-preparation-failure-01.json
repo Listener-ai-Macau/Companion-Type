@@ -1,0 +1,16 @@
+{
+  "state": "PREPARING_MATCHED_TARGET_ACTIVITY",
+  "pid": 14012,
+  "stage": "pilot",
+  "startedAt": "2026-11-07T22:09:06+08:00",
+  "binding": {
+    "protocolSha256": "44102b2de81e3fed93d289a18a18126f56f72cd6d9e7ab2d39bfa354e0a8da52",
+    "workerSourceSha256": "0e5bb00ca55cb6d5225a1b5880e7cc917ed869b2ee7814e155873c376738f9c3",
+    "modelReadySha256": "623d43da0267ded0cd916f8e5fa9a2bf758ee165b120d81bb272bc84fae177f2"
+  },
+  "newNeuralCalls": 0,
+  "reusedOutputs": 0,
+  "completedInputs": 0,
+  "referenceOrTextPassedToModel": false,
+  "qualityQualified": false
+}

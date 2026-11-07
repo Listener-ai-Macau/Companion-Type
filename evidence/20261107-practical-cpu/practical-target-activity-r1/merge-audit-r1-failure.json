@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-07T22:00:42.338126+08:00",
+  "state": "DIAGNOSTIC_ASSERTION_FAILED_NO_PRODUCT_CHANGE",
+  "sourceSha256": "5b036c65c00109dbcc30a27d2ada0ee0c6127b013bb8d8a15bf8ddc6ae4c4855",
+  "reason": "Original per-word rows may legitimately repeat the same token within one ASR leaf. The first audit used leaf+text as identity and mistook these distinct timed word events for duplicate assembly inputs. Preserve them; include original source-row index/time identity.",
+  "neuralCalls": 0,
+  "productOutputsChanged": false
+}

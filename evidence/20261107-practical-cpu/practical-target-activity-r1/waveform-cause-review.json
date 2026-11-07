@@ -1,0 +1,1813 @@
+{
+  "at": "2026-11-07T22:25:33+08:00",
+  "state": "SEPARATED_AUDIO_SIMILARITY_DIAGNOSTIC_ONLY",
+  "groups": {
+    "longSharedText": {
+      "pairCount": 47,
+      "medianZeroLagCorrelation": 0.35253110385357467,
+      "minimum": 0.07943721029477196,
+      "maximum": 0.9894143284270678
+    },
+    "withoutLongSharedText": {
+      "pairCount": 120,
+      "medianZeroLagCorrelation": 0.1720728907832949,
+      "minimum": 0.053489714671699856,
+      "maximum": 0.9426637626778561
+    }
+  },
+  "longestSharedTextPairs": [
+    {
+      "rootIndex": 51,
+      "left": "L_R003S01C02-root-000051-speaker-1",
+      "right": "L_R003S01C02-root-000051-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.18992176937180044,
+      "leftRms": 0.10031010403575132,
+      "rightRms": 0.01924727867503249,
+      "sharedNormalizedCharacters": 65,
+      "sharedRawText": "到早晨五六点那么早的时候就业主就反映这个事儿了就说那个哎就说早晨一开门一出来就碰到那个人就在那到处乱翻然后有的业主就反映这个事儿了"
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-2",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.2519543161049154,
+      "leftRms": 0.024495977324845725,
+      "rightRms": 0.047691295896619045,
+      "sharedNormalizedCharacters": 31,
+      "sharedRawText": "今天把各位都叫过来啊主要咱讨论一下咱这个呃咱这个小区如何把咱这"
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-1",
+      "right": "L_R003S01C02-root-000057-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.6787512491179688,
+      "leftRms": 0.04576795276683496,
+      "rightRms": 0.024478152528850158,
+      "sharedNormalizedCharacters": 31,
+      "sharedRawText": "对对对对这个把之前的东西不要外放有些有些事儿你说也避免这个生人"
+    },
+    {
+      "rootIndex": 13,
+      "left": "L_R003S01C02-root-000013-speaker-1",
+      "right": "L_R003S01C02-root-000013-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.23638265389572138,
+      "leftRms": 0.024318396169485987,
+      "rightRms": 0.09685966208694519,
+      "sharedNormalizedCharacters": 30,
+      "sharedRawText": "的困扰好吧你要是刨开这一部分咱们的小区的车位还是比较充足的它"
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-1",
+      "right": "L_R003S01C02-root-000035-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.8634723513001492,
+      "leftRms": 0.04784220803238338,
+      "rightRms": 0.0358850993882335,
+      "sharedNormalizedCharacters": 26,
+      "sharedRawText": "扫的不干净啊扫的不对蹲蹲的不干净然后人家业主也是投诉"
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-4",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.45743382961737217,
+      "leftRms": 0.05900842994452612,
+      "rightRms": 0.03870835472767583,
+      "sharedNormalizedCharacters": 25,
+      "sharedRawText": "这个嗯这块儿那个咱们刚才讨论的都是咱自身的问题对吧"
+    },
+    {
+      "rootIndex": 30,
+      "left": "L_R003S01C02-root-000030-speaker-1",
+      "right": "L_R003S01C02-root-000030-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.2059502017453786,
+      "leftRms": 0.1031686540346789,
+      "rightRms": 0.021098036417616983,
+      "sharedNormalizedCharacters": 23,
+      "sharedRawText": "还有卫生这一块是吧卫生这一块到时候就说你都得呃"
+    },
+    {
+      "rootIndex": 70,
+      "left": "L_R003S01C02-root-000070-speaker-1",
+      "right": "L_R003S01C02-root-000070-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.972258211733121,
+      "leftRms": 0.030979887278395336,
+      "rightRms": 0.02771509866056097,
+      "sharedNormalizedCharacters": 21,
+      "sharedRawText": "对对对对对对对嗯对看看能清理的就清理清理嗯"
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-2",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.07943721029477196,
+      "leftRms": 0.07105170464666376,
+      "rightRms": 0.0501006814385132,
+      "sharedNormalizedCharacters": 20,
+      "sharedRawText": "车位的话是吧车位是有限的这个就是说还是说"
+    },
+    {
+      "rootIndex": 12,
+      "left": "L_R003S01C02-root-000012-speaker-1",
+      "right": "L_R003S01C02-root-000012-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.755864267158319,
+      "leftRms": 0.02355525911095603,
+      "rightRms": 0.06153604159207551,
+      "sharedNormalizedCharacters": 19,
+      "sharedRawText": "人家是业主你凭什么让人家进对吧人家一个"
+    }
+  ],
+  "allPairs": [
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-0",
+      "right": "L_R003S01C02-root-000000-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.3299973160989923,
+      "leftRms": 0.020734737017526296,
+      "rightRms": 0.022083434738519942,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-0",
+      "right": "L_R003S01C02-root-000000-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.6592598796853834,
+      "leftRms": 0.020734737017526296,
+      "rightRms": 0.024495977324845725,
+      "sharedNormalizedCharacters": 11,
+      "sharedRawText": "零六零幺四零幺九零幺八"
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-0",
+      "right": "L_R003S01C02-root-000000-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.39239907430123655,
+      "leftRms": 0.020734737017526296,
+      "rightRms": 0.02207722016780566,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-0",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.17029228871037988,
+      "leftRms": 0.020734737017526296,
+      "rightRms": 0.047691295896619045,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-1",
+      "right": "L_R003S01C02-root-000000-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.44239171874393474,
+      "leftRms": 0.022083434738519942,
+      "rightRms": 0.024495977324845725,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-1",
+      "right": "L_R003S01C02-root-000000-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.8089734881271183,
+      "leftRms": 0.022083434738519942,
+      "rightRms": 0.02207722016780566,
+      "sharedNormalizedCharacters": 8,
+      "sharedRawText": "零六零幺三零幺九"
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-1",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.12152930509085817,
+      "leftRms": 0.022083434738519942,
+      "rightRms": 0.047691295896619045,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-2",
+      "right": "L_R003S01C02-root-000000-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.4893429434410658,
+      "leftRms": 0.024495977324845725,
+      "rightRms": 0.02207722016780566,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-2",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.2519543161049154,
+      "leftRms": 0.024495977324845725,
+      "rightRms": 0.047691295896619045,
+      "sharedNormalizedCharacters": 31,
+      "sharedRawText": "今天把各位都叫过来啊主要咱讨论一下咱这个呃咱这个小区如何把咱这"
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-3",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.13256031886797134,
+      "leftRms": 0.02207722016780566,
+      "rightRms": 0.047691295896619045,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 6,
+      "left": "L_R003S01C02-root-000006-speaker-2",
+      "right": "L_R003S01C02-root-000006-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.11907490992919785,
+      "leftRms": 0.056935304908769295,
+      "rightRms": 0.042907409575693625,
+      "sharedNormalizedCharacters": 18,
+      "sharedRawText": "管理上面在监督上面或者说就是存在咱们"
+    },
+    {
+      "rootIndex": 11,
+      "left": "L_R003S01C02-root-000011-speaker-1",
+      "right": "L_R003S01C02-root-000011-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.12111785900971932,
+      "leftRms": 0.08749967093026252,
+      "rightRms": 0.055481674518460616,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 12,
+      "left": "L_R003S01C02-root-000012-speaker-1",
+      "right": "L_R003S01C02-root-000012-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.755864267158319,
+      "leftRms": 0.02355525911095603,
+      "rightRms": 0.06153604159207551,
+      "sharedNormalizedCharacters": 19,
+      "sharedRawText": "人家是业主你凭什么让人家进对吧人家一个"
+    },
+    {
+      "rootIndex": 13,
+      "left": "L_R003S01C02-root-000013-speaker-1",
+      "right": "L_R003S01C02-root-000013-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.23638265389572138,
+      "leftRms": 0.024318396169485987,
+      "rightRms": 0.09685966208694519,
+      "sharedNormalizedCharacters": 30,
+      "sharedRawText": "的困扰好吧你要是刨开这一部分咱们的小区的车位还是比较充足的它"
+    },
+    {
+      "rootIndex": 14,
+      "left": "L_R003S01C02-root-000014-speaker-1",
+      "right": "L_R003S01C02-root-000014-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.11483136699585096,
+      "leftRms": 0.07498905237341215,
+      "rightRms": 0.04859757733192243,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 14,
+      "left": "L_R003S01C02-root-000014-speaker-1",
+      "right": "L_R003S01C02-root-000014-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.08766211926129994,
+      "leftRms": 0.07498905237341215,
+      "rightRms": 0.02155456189842549,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 14,
+      "left": "L_R003S01C02-root-000014-speaker-2",
+      "right": "L_R003S01C02-root-000014-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.06951624531150163,
+      "leftRms": 0.04859757733192243,
+      "rightRms": 0.02155456189842549,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-1",
+      "right": "L_R003S01C02-root-000015-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.08000399870684297,
+      "leftRms": 0.03945870085160521,
+      "rightRms": 0.0957321700730833,
+      "sharedNormalizedCharacters": 13,
+      "sharedRawText": "小区是吧这个地方的话都可以"
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-1",
+      "right": "L_R003S01C02-root-000015-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.9720082511320712,
+      "leftRms": 0.03945870085160521,
+      "rightRms": 0.037926810431620286,
+      "sharedNormalizedCharacters": 16,
+      "sharedRawText": "进来的小区是吧这个地方的话都可以"
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-2",
+      "right": "L_R003S01C02-root-000015-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.0912713222349221,
+      "leftRms": 0.0957321700730833,
+      "rightRms": 0.037926810431620286,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "对于我们管理的话那绝对是一种"
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-1",
+      "right": "L_R003S01C02-root-000016-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.053489714671699856,
+      "leftRms": 0.04347506394739573,
+      "rightRms": 0.07105170464666376,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-1",
+      "right": "L_R003S01C02-root-000016-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.0801764745487705,
+      "leftRms": 0.04347506394739573,
+      "rightRms": 0.044762686979503495,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-1",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.07174923111366185,
+      "leftRms": 0.04347506394739573,
+      "rightRms": 0.0501006814385132,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-2",
+      "right": "L_R003S01C02-root-000016-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.11043754497196852,
+      "leftRms": 0.07105170464666376,
+      "rightRms": 0.044762686979503495,
+      "sharedNormalizedCharacters": 13,
+      "sharedRawText": "是有限的这个就是说还是说到"
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-2",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.07943721029477196,
+      "leftRms": 0.07105170464666376,
+      "rightRms": 0.0501006814385132,
+      "sharedNormalizedCharacters": 20,
+      "sharedRawText": "车位的话是吧车位是有限的这个就是说还是说"
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-4",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.8180553091915049,
+      "leftRms": 0.044762686979503495,
+      "rightRms": 0.0501006814385132,
+      "sharedNormalizedCharacters": 17,
+      "sharedRawText": "的话这边车位就是咱不是说比较难解决"
+    },
+    {
+      "rootIndex": 17,
+      "left": "L_R003S01C02-root-000017-speaker-1",
+      "right": "L_R003S01C02-root-000017-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.3110148119824584,
+      "leftRms": 0.021176435251041355,
+      "rightRms": 0.066980389635486,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 18,
+      "left": "L_R003S01C02-root-000018-speaker-1",
+      "right": "L_R003S01C02-root-000018-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.19148731631584967,
+      "leftRms": 0.019932119084983924,
+      "rightRms": 0.09582433028011592,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 20,
+      "left": "L_R003S01C02-root-000020-speaker-1",
+      "right": "L_R003S01C02-root-000020-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.2039686560931504,
+      "leftRms": 0.01363692262656704,
+      "rightRms": 0.05618932151698202,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 21,
+      "left": "L_R003S01C02-root-000021-speaker-1",
+      "right": "L_R003S01C02-root-000021-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1910907013933259,
+      "leftRms": 0.02579170937282339,
+      "rightRms": 0.11223135754534051,
+      "sharedNormalizedCharacters": 9,
+      "sharedRawText": "个呃智能停车场啊每"
+    },
+    {
+      "rootIndex": 23,
+      "left": "L_R003S01C02-root-000023-speaker-1",
+      "right": "L_R003S01C02-root-000023-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.2994657740655908,
+      "leftRms": 0.012759063925903967,
+      "rightRms": 0.09922250491175812,
+      "sharedNormalizedCharacters": 15,
+      "sharedRawText": "这个这个质量成活成活率不能保证"
+    },
+    {
+      "rootIndex": 24,
+      "left": "L_R003S01C02-root-000024-speaker-1",
+      "right": "L_R003S01C02-root-000024-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.20005631692846884,
+      "leftRms": 0.03880929816656528,
+      "rightRms": 0.08053367922259977,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 25,
+      "left": "L_R003S01C02-root-000025-speaker-3",
+      "right": "L_R003S01C02-root-000025-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.36866786787029887,
+      "leftRms": 0.008941126750440872,
+      "rightRms": 0.09097639270888527,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 26,
+      "left": "L_R003S01C02-root-000026-speaker-1",
+      "right": "L_R003S01C02-root-000026-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.12795588852002515,
+      "leftRms": 0.019485241386012382,
+      "rightRms": 0.034707090407902645,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 26,
+      "left": "L_R003S01C02-root-000026-speaker-1",
+      "right": "L_R003S01C02-root-000026-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.8444662927604035,
+      "leftRms": 0.019485241386012382,
+      "rightRms": 0.028844720010645326,
+      "sharedNormalizedCharacters": 13,
+      "sharedRawText": "嗯一个就是栽培技术管理技术"
+    },
+    {
+      "rootIndex": 26,
+      "left": "L_R003S01C02-root-000026-speaker-3",
+      "right": "L_R003S01C02-root-000026-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.10336371901912297,
+      "leftRms": 0.034707090407902645,
+      "rightRms": 0.028844720010645326,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-1",
+      "right": "L_R003S01C02-root-000027-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.11849663682845044,
+      "leftRms": 0.0173072267249899,
+      "rightRms": 0.06464413526847149,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-1",
+      "right": "L_R003S01C02-root-000027-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.4873073891495216,
+      "leftRms": 0.0173072267249899,
+      "rightRms": 0.018395970866731535,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-1",
+      "right": "L_R003S01C02-root-000027-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.2390456020313708,
+      "leftRms": 0.0173072267249899,
+      "rightRms": 0.06359823620530572,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-2",
+      "right": "L_R003S01C02-root-000027-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.08979342464194974,
+      "leftRms": 0.06464413526847149,
+      "rightRms": 0.018395970866731535,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-2",
+      "right": "L_R003S01C02-root-000027-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.09275468570763282,
+      "leftRms": 0.06464413526847149,
+      "rightRms": 0.06359823620530572,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 27,
+      "left": "L_R003S01C02-root-000027-speaker-3",
+      "right": "L_R003S01C02-root-000027-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.5944579819165169,
+      "leftRms": 0.018395970866731535,
+      "rightRms": 0.06359823620530572,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 28,
+      "left": "L_R003S01C02-root-000028-speaker-1",
+      "right": "L_R003S01C02-root-000028-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.15480297169441598,
+      "leftRms": 0.03326389805827876,
+      "rightRms": 0.06288529640205187,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 28,
+      "left": "L_R003S01C02-root-000028-speaker-1",
+      "right": "L_R003S01C02-root-000028-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.19706633467978604,
+      "leftRms": 0.03326389805827876,
+      "rightRms": 0.06550675954514663,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 28,
+      "left": "L_R003S01C02-root-000028-speaker-2",
+      "right": "L_R003S01C02-root-000028-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.10464456715609045,
+      "leftRms": 0.06288529640205187,
+      "rightRms": 0.06550675954514663,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 29,
+      "left": "L_R003S01C02-root-000029-speaker-2",
+      "right": "L_R003S01C02-root-000029-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.14409807779791828,
+      "leftRms": 0.014101350184611504,
+      "rightRms": 0.01693278423440427,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 29,
+      "left": "L_R003S01C02-root-000029-speaker-2",
+      "right": "L_R003S01C02-root-000029-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.1445198669892479,
+      "leftRms": 0.014101350184611504,
+      "rightRms": 0.10104777199096836,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 29,
+      "left": "L_R003S01C02-root-000029-speaker-3",
+      "right": "L_R003S01C02-root-000029-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.35253110385357467,
+      "leftRms": 0.01693278423440427,
+      "rightRms": 0.10104777199096836,
+      "sharedNormalizedCharacters": 17,
+      "sharedRawText": "咱咱咱凭什么撤呀就是说他就是说管理"
+    },
+    {
+      "rootIndex": 30,
+      "left": "L_R003S01C02-root-000030-speaker-1",
+      "right": "L_R003S01C02-root-000030-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.2059502017453786,
+      "leftRms": 0.1031686540346789,
+      "rightRms": 0.021098036417616983,
+      "sharedNormalizedCharacters": 23,
+      "sharedRawText": "还有卫生这一块是吧卫生这一块到时候就说你都得呃"
+    },
+    {
+      "rootIndex": 30,
+      "left": "L_R003S01C02-root-000030-speaker-1",
+      "right": "L_R003S01C02-root-000030-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.149478288469922,
+      "leftRms": 0.1031686540346789,
+      "rightRms": 0.06521632111766756,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 30,
+      "left": "L_R003S01C02-root-000030-speaker-3",
+      "right": "L_R003S01C02-root-000030-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.5404047990348667,
+      "leftRms": 0.021098036417616983,
+      "rightRms": 0.06521632111766756,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 31,
+      "left": "L_R003S01C02-root-000031-speaker-0",
+      "right": "L_R003S01C02-root-000031-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.06109669188663273,
+      "leftRms": 0.0331988279706273,
+      "rightRms": 0.06541129171967452,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 31,
+      "left": "L_R003S01C02-root-000031-speaker-0",
+      "right": "L_R003S01C02-root-000031-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.15226507915331422,
+      "leftRms": 0.0331988279706273,
+      "rightRms": 0.02792895121620707,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 31,
+      "left": "L_R003S01C02-root-000031-speaker-1",
+      "right": "L_R003S01C02-root-000031-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.15976138267719825,
+      "leftRms": 0.06541129171967452,
+      "rightRms": 0.02792895121620707,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "说着说有的那个业主那个素质也"
+    },
+    {
+      "rootIndex": 32,
+      "left": "L_R003S01C02-root-000032-speaker-1",
+      "right": "L_R003S01C02-root-000032-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.3328493821805724,
+      "leftRms": 0.02262619491774428,
+      "rightRms": 0.02511713175028842,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 32,
+      "left": "L_R003S01C02-root-000032-speaker-1",
+      "right": "L_R003S01C02-root-000032-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.13362837619887075,
+      "leftRms": 0.02262619491774428,
+      "rightRms": 0.08167241007238588,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 32,
+      "left": "L_R003S01C02-root-000032-speaker-3",
+      "right": "L_R003S01C02-root-000032-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.15409708442401554,
+      "leftRms": 0.02511713175028842,
+      "rightRms": 0.08167241007238588,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 33,
+      "left": "L_R003S01C02-root-000033-speaker-1",
+      "right": "L_R003S01C02-root-000033-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.35758989722574175,
+      "leftRms": 0.04280930540329993,
+      "rightRms": 0.03368742674478381,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 33,
+      "left": "L_R003S01C02-root-000033-speaker-1",
+      "right": "L_R003S01C02-root-000033-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.12392448786064916,
+      "leftRms": 0.04280930540329993,
+      "rightRms": 0.08715953732256214,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 33,
+      "left": "L_R003S01C02-root-000033-speaker-3",
+      "right": "L_R003S01C02-root-000033-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.1885655723363943,
+      "leftRms": 0.03368742674478381,
+      "rightRms": 0.08715953732256214,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 34,
+      "left": "L_R003S01C02-root-000034-speaker-1",
+      "right": "L_R003S01C02-root-000034-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.4671115410263516,
+      "leftRms": 0.041596574644006686,
+      "rightRms": 0.013631982565816327,
+      "sharedNormalizedCharacters": 11,
+      "sharedRawText": "了你都得及时把它清理了"
+    },
+    {
+      "rootIndex": 34,
+      "left": "L_R003S01C02-root-000034-speaker-1",
+      "right": "L_R003S01C02-root-000034-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.11762076920361031,
+      "leftRms": 0.041596574644006686,
+      "rightRms": 0.025932583500997485,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 34,
+      "left": "L_R003S01C02-root-000034-speaker-3",
+      "right": "L_R003S01C02-root-000034-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.2656455311127254,
+      "leftRms": 0.013631982565816327,
+      "rightRms": 0.025932583500997485,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-0",
+      "right": "L_R003S01C02-root-000035-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.14156938595498456,
+      "leftRms": 0.02923233458769396,
+      "rightRms": 0.04784220803238338,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-0",
+      "right": "L_R003S01C02-root-000035-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.13870258294223067,
+      "leftRms": 0.02923233458769396,
+      "rightRms": 0.0358850993882335,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-0",
+      "right": "L_R003S01C02-root-000035-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.09512660827092746,
+      "leftRms": 0.02923233458769396,
+      "rightRms": 0.044997037284538625,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-1",
+      "right": "L_R003S01C02-root-000035-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.8634723513001492,
+      "leftRms": 0.04784220803238338,
+      "rightRms": 0.0358850993882335,
+      "sharedNormalizedCharacters": 26,
+      "sharedRawText": "扫的不干净啊扫的不对蹲蹲的不干净然后人家业主也是投诉"
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-1",
+      "right": "L_R003S01C02-root-000035-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.0862002240242954,
+      "leftRms": 0.04784220803238338,
+      "rightRms": 0.044997037284538625,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-3",
+      "right": "L_R003S01C02-root-000035-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1149250210792357,
+      "leftRms": 0.0358850993882335,
+      "rightRms": 0.044997037284538625,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 36,
+      "left": "L_R003S01C02-root-000036-speaker-1",
+      "right": "L_R003S01C02-root-000036-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9531773316411479,
+      "leftRms": 0.03682407352153027,
+      "rightRms": 0.03498997694412342,
+      "sharedNormalizedCharacters": 10,
+      "sharedRawText": "对把暖别给冻死了是吧"
+    },
+    {
+      "rootIndex": 36,
+      "left": "L_R003S01C02-root-000036-speaker-1",
+      "right": "L_R003S01C02-root-000036-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1479878583042313,
+      "leftRms": 0.03682407352153027,
+      "rightRms": 0.08794434855830541,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 36,
+      "left": "L_R003S01C02-root-000036-speaker-3",
+      "right": "L_R003S01C02-root-000036-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.15784578821231726,
+      "leftRms": 0.03498997694412342,
+      "rightRms": 0.08794434855830541,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 37,
+      "left": "L_R003S01C02-root-000037-speaker-3",
+      "right": "L_R003S01C02-root-000037-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.27908890042068885,
+      "leftRms": 0.004833507917259135,
+      "rightRms": 0.027217086386318215,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 38,
+      "left": "L_R003S01C02-root-000038-speaker-1",
+      "right": "L_R003S01C02-root-000038-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.2259798853336437,
+      "leftRms": 0.024591171152858776,
+      "rightRms": 0.12484969487656793,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 42,
+      "left": "L_R003S01C02-root-000042-speaker-2",
+      "right": "L_R003S01C02-root-000042-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1661600397823411,
+      "leftRms": 0.12156589370664268,
+      "rightRms": 0.026891355008119545,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "的时候一定得让他们有这个意识"
+    },
+    {
+      "rootIndex": 44,
+      "left": "L_R003S01C02-root-000044-speaker-2",
+      "right": "L_R003S01C02-root-000044-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.08558577177428286,
+      "leftRms": 0.08609251346077147,
+      "rightRms": 0.04896036402084092,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 46,
+      "left": "L_R003S01C02-root-000046-speaker-2",
+      "right": "L_R003S01C02-root-000046-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.5169905436012631,
+      "leftRms": 0.00985697319595579,
+      "rightRms": 0.09006176544597905,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 49,
+      "left": "L_R003S01C02-root-000049-speaker-1",
+      "right": "L_R003S01C02-root-000049-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.22429790623269724,
+      "leftRms": 0.022324374132650253,
+      "rightRms": 0.09349209695699641,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "只能就是说跟他们说嗯因为咱们"
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-1",
+      "right": "L_R003S01C02-root-000050-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.3587622112471617,
+      "leftRms": 0.03749915977078981,
+      "rightRms": 0.048853902079145264,
+      "sharedNormalizedCharacters": 13,
+      "sharedRawText": "所以说再一个还我想从技术上"
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-1",
+      "right": "L_R003S01C02-root-000050-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.21856794220123893,
+      "leftRms": 0.03749915977078981,
+      "rightRms": 0.0651874824907573,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "进去了所以说再一个还我想从技"
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-3",
+      "right": "L_R003S01C02-root-000050-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.2558890594431385,
+      "leftRms": 0.048853902079145264,
+      "rightRms": 0.0651874824907573,
+      "sharedNormalizedCharacters": 11,
+      "sharedRawText": "所以说再一个还我想从技"
+    },
+    {
+      "rootIndex": 51,
+      "left": "L_R003S01C02-root-000051-speaker-1",
+      "right": "L_R003S01C02-root-000051-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.18992176937180044,
+      "leftRms": 0.10031010403575132,
+      "rightRms": 0.01924727867503249,
+      "sharedNormalizedCharacters": 65,
+      "sharedRawText": "到早晨五六点那么早的时候就业主就反映这个事儿了就说那个哎就说早晨一开门一出来就碰到那个人就在那到处乱翻然后有的业主就反映这个事儿了"
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-1",
+      "right": "L_R003S01C02-root-000052-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.09190922713413464,
+      "leftRms": 0.07010549107814336,
+      "rightRms": 0.0341229273346137,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-1",
+      "right": "L_R003S01C02-root-000052-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.20260450041830955,
+      "leftRms": 0.07010549107814336,
+      "rightRms": 0.031099691016524687,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-1",
+      "right": "L_R003S01C02-root-000052-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.10942405556111025,
+      "leftRms": 0.07010549107814336,
+      "rightRms": 0.019101265311742912,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-1",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.1871762340224541,
+      "leftRms": 0.07010549107814336,
+      "rightRms": 0.03307587955480016,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-2",
+      "right": "L_R003S01C02-root-000052-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.1537194347519295,
+      "leftRms": 0.0341229273346137,
+      "rightRms": 0.031099691016524687,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-2",
+      "right": "L_R003S01C02-root-000052-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.28772340428262594,
+      "leftRms": 0.0341229273346137,
+      "rightRms": 0.019101265311742912,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-2",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.2589935693314307,
+      "leftRms": 0.0341229273346137,
+      "rightRms": 0.03307587955480016,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-3",
+      "right": "L_R003S01C02-root-000052-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.16791329167513086,
+      "leftRms": 0.031099691016524687,
+      "rightRms": 0.019101265311742912,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-3",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.717376054930521,
+      "leftRms": 0.031099691016524687,
+      "rightRms": 0.03307587955480016,
+      "sharedNormalizedCharacters": 8,
+      "sharedRawText": "有的就是专门就是"
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-4",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.61900204298925,
+      "leftRms": 0.019101265311742912,
+      "rightRms": 0.03307587955480016,
+      "sharedNormalizedCharacters": 10,
+      "sharedRawText": "的呀这个看看是不是咱"
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-0",
+      "right": "L_R003S01C02-root-000053-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.19906264311246155,
+      "leftRms": 0.03181652636285494,
+      "rightRms": 0.0713482621068312,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-0",
+      "right": "L_R003S01C02-root-000053-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.25134576380698503,
+      "leftRms": 0.03181652636285494,
+      "rightRms": 0.02939301354753184,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-0",
+      "right": "L_R003S01C02-root-000053-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.17418946309600455,
+      "leftRms": 0.03181652636285494,
+      "rightRms": 0.06463247856342896,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-1",
+      "right": "L_R003S01C02-root-000053-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.22537489699682156,
+      "leftRms": 0.0713482621068312,
+      "rightRms": 0.02939301354753184,
+      "sharedNormalizedCharacters": 10,
+      "sharedRawText": "咱这物业的工作也不是"
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-1",
+      "right": "L_R003S01C02-root-000053-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.18090659768329276,
+      "leftRms": 0.0713482621068312,
+      "rightRms": 0.06463247856342896,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-3",
+      "right": "L_R003S01C02-root-000053-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.42881025085144797,
+      "leftRms": 0.02939301354753184,
+      "rightRms": 0.06463247856342896,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 54,
+      "left": "L_R003S01C02-root-000054-speaker-1",
+      "right": "L_R003S01C02-root-000054-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.18742339397354835,
+      "leftRms": 0.030327617736102798,
+      "rightRms": 0.024578346349507858,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 54,
+      "left": "L_R003S01C02-root-000054-speaker-1",
+      "right": "L_R003S01C02-root-000054-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.15798648643982374,
+      "leftRms": 0.030327617736102798,
+      "rightRms": 0.06036230210758295,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 54,
+      "left": "L_R003S01C02-root-000054-speaker-3",
+      "right": "L_R003S01C02-root-000054-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.6078525148306057,
+      "leftRms": 0.024578346349507858,
+      "rightRms": 0.06036230210758295,
+      "sharedNormalizedCharacters": 14,
+      "sharedRawText": "过两天你不说了就就就就成那样"
+    },
+    {
+      "rootIndex": 55,
+      "left": "L_R003S01C02-root-000055-speaker-2",
+      "right": "L_R003S01C02-root-000055-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.14869607319841574,
+      "leftRms": 0.11082038097514703,
+      "rightRms": 0.03071878117080353,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 55,
+      "left": "L_R003S01C02-root-000055-speaker-2",
+      "right": "L_R003S01C02-root-000055-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.10529041573618755,
+      "leftRms": 0.11082038097514703,
+      "rightRms": 0.04689358232757101,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 55,
+      "left": "L_R003S01C02-root-000055-speaker-3",
+      "right": "L_R003S01C02-root-000055-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.698481796887704,
+      "leftRms": 0.03071878117080353,
+      "rightRms": 0.04689358232757101,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 56,
+      "left": "L_R003S01C02-root-000056-speaker-1",
+      "right": "L_R003S01C02-root-000056-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.19051849264324192,
+      "leftRms": 0.023852451483627978,
+      "rightRms": 0.10911062486491165,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 56,
+      "left": "L_R003S01C02-root-000056-speaker-1",
+      "right": "L_R003S01C02-root-000056-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9385703200619875,
+      "leftRms": 0.023852451483627978,
+      "rightRms": 0.02141314783421996,
+      "sharedNormalizedCharacters": 9,
+      "sharedRawText": "个电动车呀嗯哦对嗯"
+    },
+    {
+      "rootIndex": 56,
+      "left": "L_R003S01C02-root-000056-speaker-2",
+      "right": "L_R003S01C02-root-000056-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.1905319916550105,
+      "leftRms": 0.10911062486491165,
+      "rightRms": 0.02141314783421996,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-1",
+      "right": "L_R003S01C02-root-000057-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.11183553500108406,
+      "leftRms": 0.04576795276683496,
+      "rightRms": 0.10465586779562748,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-1",
+      "right": "L_R003S01C02-root-000057-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.6787512491179688,
+      "leftRms": 0.04576795276683496,
+      "rightRms": 0.024478152528850158,
+      "sharedNormalizedCharacters": 31,
+      "sharedRawText": "对对对对这个把之前的东西不要外放有些有些事儿你说也避免这个生人"
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-2",
+      "right": "L_R003S01C02-root-000057-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.167193517495771,
+      "leftRms": 0.10465586779562748,
+      "rightRms": 0.024478152528850158,
+      "sharedNormalizedCharacters": 8,
+      "sharedRawText": "加强咱们这方面的"
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.16134069135798007,
+      "leftRms": 0.01498953232274829,
+      "rightRms": 0.029288397280484404,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9044962936613555,
+      "leftRms": 0.01498953232274829,
+      "rightRms": 0.01855652902733281,
+      "sharedNormalizedCharacters": 9,
+      "sharedRawText": "然后对对说到头里了"
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.24197880162919952,
+      "leftRms": 0.01498953232274829,
+      "rightRms": 0.05900842994452612,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.3031441480710816,
+      "leftRms": 0.01498953232274829,
+      "rightRms": 0.03870835472767583,
+      "sharedNormalizedCharacters": 11,
+      "sharedRawText": "还是在于这个业主咱们哎"
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-2",
+      "right": "L_R003S01C02-root-000058-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.13171810936200468,
+      "leftRms": 0.029288397280484404,
+      "rightRms": 0.01855652902733281,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-2",
+      "right": "L_R003S01C02-root-000058-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.13243419543666762,
+      "leftRms": 0.029288397280484404,
+      "rightRms": 0.05900842994452612,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-2",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.12901724270678466,
+      "leftRms": 0.029288397280484404,
+      "rightRms": 0.03870835472767583,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-3",
+      "right": "L_R003S01C02-root-000058-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.21616446683945326,
+      "leftRms": 0.01855652902733281,
+      "rightRms": 0.05900842994452612,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-3",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.26698641803698786,
+      "leftRms": 0.01855652902733281,
+      "rightRms": 0.03870835472767583,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-4",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.45743382961737217,
+      "leftRms": 0.05900842994452612,
+      "rightRms": 0.03870835472767583,
+      "sharedNormalizedCharacters": 25,
+      "sharedRawText": "这个嗯这块儿那个咱们刚才讨论的都是咱自身的问题对吧"
+    },
+    {
+      "rootIndex": 59,
+      "left": "L_R003S01C02-root-000059-speaker-1",
+      "right": "L_R003S01C02-root-000059-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9426637626778561,
+      "leftRms": 0.016588968371713794,
+      "rightRms": 0.0144756477572539,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 59,
+      "left": "L_R003S01C02-root-000059-speaker-1",
+      "right": "L_R003S01C02-root-000059-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.2453565389510123,
+      "leftRms": 0.016588968371713794,
+      "rightRms": 0.08893180939884901,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 59,
+      "left": "L_R003S01C02-root-000059-speaker-3",
+      "right": "L_R003S01C02-root-000059-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.26983609781547013,
+      "leftRms": 0.0144756477572539,
+      "rightRms": 0.08893180939884901,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-1",
+      "right": "L_R003S01C02-root-000060-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.10621048726756498,
+      "leftRms": 0.06876789736729096,
+      "rightRms": 0.024350698439029945,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-1",
+      "right": "L_R003S01C02-root-000060-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.2311299028869317,
+      "leftRms": 0.06876789736729096,
+      "rightRms": 0.01278468962876117,
+      "sharedNormalizedCharacters": 17,
+      "sharedRawText": "对对对不能把什么责任都揽到自己身上"
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-1",
+      "right": "L_R003S01C02-root-000060-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.07810123178941343,
+      "leftRms": 0.06876789736729096,
+      "rightRms": 0.06291885466620555,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-2",
+      "right": "L_R003S01C02-root-000060-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.0792221765054213,
+      "leftRms": 0.024350698439029945,
+      "rightRms": 0.01278468962876117,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-2",
+      "right": "L_R003S01C02-root-000060-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.0933721137350098,
+      "leftRms": 0.024350698439029945,
+      "rightRms": 0.06291885466620555,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-3",
+      "right": "L_R003S01C02-root-000060-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.25959777279554036,
+      "leftRms": 0.01278468962876117,
+      "rightRms": 0.06291885466620555,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-1",
+      "right": "L_R003S01C02-root-000061-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.888273860636581,
+      "leftRms": 0.01912355284676974,
+      "rightRms": 0.018062904209964478,
+      "sharedNormalizedCharacters": 12,
+      "sharedRawText": "历史都没有对是对对对咱就"
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-1",
+      "right": "L_R003S01C02-root-000061-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.24474262817894038,
+      "leftRms": 0.01912355284676974,
+      "rightRms": 0.038654105446079674,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-1",
+      "right": "L_R003S01C02-root-000061-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.3565634653479542,
+      "leftRms": 0.01912355284676974,
+      "rightRms": 0.0649586172718461,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-3",
+      "right": "L_R003S01C02-root-000061-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.25035101253924613,
+      "leftRms": 0.018062904209964478,
+      "rightRms": 0.038654105446079674,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-3",
+      "right": "L_R003S01C02-root-000061-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.3303788026638655,
+      "leftRms": 0.018062904209964478,
+      "rightRms": 0.0649586172718461,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-4",
+      "right": "L_R003S01C02-root-000061-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.380381825905428,
+      "leftRms": 0.038654105446079674,
+      "rightRms": 0.0649586172718461,
+      "sharedNormalizedCharacters": 17,
+      "sharedRawText": "人家气就走了一些这个防盗意识都没有"
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-0",
+      "right": "L_R003S01C02-root-000062-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.36952313187886704,
+      "leftRms": 0.00621418231393471,
+      "rightRms": 0.015504414475932638,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-0",
+      "right": "L_R003S01C02-root-000062-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.5304097092301092,
+      "leftRms": 0.00621418231393471,
+      "rightRms": 0.021912333563277448,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-0",
+      "right": "L_R003S01C02-root-000062-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.3231423910964395,
+      "leftRms": 0.00621418231393471,
+      "rightRms": 0.030991208692089958,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-0",
+      "right": "L_R003S01C02-root-000062-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.37248002666876834,
+      "leftRms": 0.00621418231393471,
+      "rightRms": 0.02812449902114872,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-1",
+      "right": "L_R003S01C02-root-000062-speaker-2",
+      "zeroLagCenteredWaveformCorrelation": 0.13590491900345245,
+      "leftRms": 0.015504414475932638,
+      "rightRms": 0.021912333563277448,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-1",
+      "right": "L_R003S01C02-root-000062-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.13555684758543307,
+      "leftRms": 0.015504414475932638,
+      "rightRms": 0.030991208692089958,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-1",
+      "right": "L_R003S01C02-root-000062-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.6557983845980997,
+      "leftRms": 0.015504414475932638,
+      "rightRms": 0.02812449902114872,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-2",
+      "right": "L_R003S01C02-root-000062-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.25288887696802304,
+      "leftRms": 0.021912333563277448,
+      "rightRms": 0.030991208692089958,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-2",
+      "right": "L_R003S01C02-root-000062-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.23184527723405063,
+      "leftRms": 0.021912333563277448,
+      "rightRms": 0.02812449902114872,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-4",
+      "right": "L_R003S01C02-root-000062-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.63934339049458,
+      "leftRms": 0.030991208692089958,
+      "rightRms": 0.02812449902114872,
+      "sharedNormalizedCharacters": 9,
+      "sharedRawText": "了安全你没有点那个"
+    },
+    {
+      "rootIndex": 63,
+      "left": "L_R003S01C02-root-000063-speaker-0",
+      "right": "L_R003S01C02-root-000063-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.23384481469571486,
+      "leftRms": 0.08619175391885002,
+      "rightRms": 0.0220604019030074,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 64,
+      "left": "L_R003S01C02-root-000064-speaker-0",
+      "right": "L_R003S01C02-root-000064-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.258845495327112,
+      "leftRms": 0.08796398192290995,
+      "rightRms": 0.0043776545028222395,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-0",
+      "right": "L_R003S01C02-root-000065-speaker-1",
+      "zeroLagCenteredWaveformCorrelation": 0.0861448033985855,
+      "leftRms": 0.014790407507054274,
+      "rightRms": 0.01286285711303982,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-0",
+      "right": "L_R003S01C02-root-000065-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.08967531472339536,
+      "leftRms": 0.014790407507054274,
+      "rightRms": 0.012653337089757365,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-0",
+      "right": "L_R003S01C02-root-000065-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.08025327318851443,
+      "leftRms": 0.014790407507054274,
+      "rightRms": 0.059342412368943456,
+      "sharedNormalizedCharacters": 12,
+      "sharedRawText": "比如嗯这个人住四楼四零三"
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-1",
+      "right": "L_R003S01C02-root-000065-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9722873857351961,
+      "leftRms": 0.01286285711303982,
+      "rightRms": 0.012653337089757365,
+      "sharedNormalizedCharacters": 16,
+      "sharedRawText": "嗯嗯叫保安多巡逻叫叫保安多操点心"
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-1",
+      "right": "L_R003S01C02-root-000065-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.11957425089022244,
+      "leftRms": 0.01286285711303982,
+      "rightRms": 0.059342412368943456,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-3",
+      "right": "L_R003S01C02-root-000065-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.12292627281545708,
+      "leftRms": 0.012653337089757365,
+      "rightRms": 0.059342412368943456,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 66,
+      "left": "L_R003S01C02-root-000066-speaker-1",
+      "right": "L_R003S01C02-root-000066-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1046298824112806,
+      "leftRms": 0.05292996132186011,
+      "rightRms": 0.06856575602650558,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 67,
+      "left": "L_R003S01C02-root-000067-speaker-1",
+      "right": "L_R003S01C02-root-000067-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.14077358475234208,
+      "leftRms": 0.015579692748459906,
+      "rightRms": 0.0780299369164608,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 69,
+      "left": "L_R003S01C02-root-000069-speaker-3",
+      "right": "L_R003S01C02-root-000069-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.27438466553419183,
+      "leftRms": 0.011185289271531403,
+      "rightRms": 0.10242169075752364,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 70,
+      "left": "L_R003S01C02-root-000070-speaker-1",
+      "right": "L_R003S01C02-root-000070-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.972258211733121,
+      "leftRms": 0.030979887278395336,
+      "rightRms": 0.02771509866056097,
+      "sharedNormalizedCharacters": 21,
+      "sharedRawText": "对对对对对对对嗯对看看能清理的就清理清理嗯"
+    },
+    {
+      "rootIndex": 70,
+      "left": "L_R003S01C02-root-000070-speaker-1",
+      "right": "L_R003S01C02-root-000070-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.18197368471210612,
+      "leftRms": 0.030979887278395336,
+      "rightRms": 0.09953789923243202,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 70,
+      "left": "L_R003S01C02-root-000070-speaker-3",
+      "right": "L_R003S01C02-root-000070-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.1738534928562099,
+      "leftRms": 0.02771509866056097,
+      "rightRms": 0.09953789923243202,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 71,
+      "left": "L_R003S01C02-root-000071-speaker-1",
+      "right": "L_R003S01C02-root-000071-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.23587173230140746,
+      "leftRms": 0.015520678249671545,
+      "rightRms": 0.12878266327927607,
+      "sharedNormalizedCharacters": 8,
+      "sharedRawText": "是咱那个没有及时"
+    },
+    {
+      "rootIndex": 72,
+      "left": "L_R003S01C02-root-000072-speaker-3",
+      "right": "L_R003S01C02-root-000072-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.10807004477187607,
+      "leftRms": 0.038522938418561636,
+      "rightRms": 0.0810349335924356,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 72,
+      "left": "L_R003S01C02-root-000072-speaker-3",
+      "right": "L_R003S01C02-root-000072-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.11566198285531669,
+      "leftRms": 0.038522938418561636,
+      "rightRms": 0.07770389259545533,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 72,
+      "left": "L_R003S01C02-root-000072-speaker-4",
+      "right": "L_R003S01C02-root-000072-speaker-5",
+      "zeroLagCenteredWaveformCorrelation": 0.9894143284270678,
+      "leftRms": 0.0810349335924356,
+      "rightRms": 0.07770389259545533,
+      "sharedNormalizedCharacters": 16,
+      "sharedRawText": "门禁卡就专卡专用比如你这个栋楼了"
+    },
+    {
+      "rootIndex": 73,
+      "left": "L_R003S01C02-root-000073-speaker-3",
+      "right": "L_R003S01C02-root-000073-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.16063737334722622,
+      "leftRms": 0.012791301233671065,
+      "rightRms": 0.12518370123232275,
+      "sharedNormalizedCharacters": 13,
+      "sharedRawText": "让他们看看是呃如何来把咱的"
+    },
+    {
+      "rootIndex": 74,
+      "left": "L_R003S01C02-root-000074-speaker-1",
+      "right": "L_R003S01C02-root-000074-speaker-3",
+      "zeroLagCenteredWaveformCorrelation": 0.9298415214553477,
+      "leftRms": 0.009699621479126565,
+      "rightRms": 0.01127847576098182,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 74,
+      "left": "L_R003S01C02-root-000074-speaker-1",
+      "right": "L_R003S01C02-root-000074-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.219386615542571,
+      "leftRms": 0.009699621479126565,
+      "rightRms": 0.04586658113112129,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    },
+    {
+      "rootIndex": 74,
+      "left": "L_R003S01C02-root-000074-speaker-3",
+      "right": "L_R003S01C02-root-000074-speaker-4",
+      "zeroLagCenteredWaveformCorrelation": 0.22245712135532972,
+      "leftRms": 0.01127847576098182,
+      "rightRms": 0.04586658113112129,
+      "sharedNormalizedCharacters": 0,
+      "sharedRawText": null
+    }
+  ],
+  "scope": "Zero-lag centered waveform correlation over each unmodified30s pair. Strong similarity plus independently emitted long matching text supports shared acoustic content in those outputs. It is not clean-source SI-SDR, separation quality ground truth, or proof that all excess words came from leakage; low correlation does not rule out leakage/reverberation/ASR additions.",
+  "newNeuralCalls": 0,
+  "noTextOrAudioChanged": true,
+  "noCorrelationCutoffUsedToFilterAnything": true,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 19592,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 66297856,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

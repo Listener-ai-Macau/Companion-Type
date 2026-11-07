@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-07T22:26:39+08:00",
+  "state": "EXPOSED_MANDARIN_TRIPLE_COVERAGE_SUPPLEMENT_FROZEN_NO_INFERENCE",
+  "findings": [
+    {
+      "meeting": "L_R003S01C02",
+      "fullReferenceTripleSeconds": 9.217611328203304,
+      "firstEligibleDisjoint30sRoot": 27,
+      "supplementEligible": true,
+      "referenceTripleSecondsInSupplement": 1.9007788741647573
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "fullReferenceTripleSeconds": 0,
+      "firstEligibleDisjoint30sRoot": null,
+      "supplementEligible": false
+    }
+  ],
+  "reason": "Posthoc coverage found the old predicted Mandarin triple clip had zero true3-person overlap; AMI controls contain true triple overlap. Do not call a predicted category ground truth.",
+  "selection": "For each exposed Mandarin development recording, first complete30s root with>=0.5s lexical reference3+ overlap, disjoint from all13 frozen test clips and all15 automatic enrollments. Reference-assisted benchmark curation is disclosed; not a blind/unseen test and not training data.",
+  "referenceLabelsNotInAudioOnlyManifest": true,
+  "original13ClipAnd67QueryResultsUnchanged": true,
+  "rejectedCandidateNotRerunOnSupplement": true,
+  "newNeuralCalls": 0,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 4120,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 54988800,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

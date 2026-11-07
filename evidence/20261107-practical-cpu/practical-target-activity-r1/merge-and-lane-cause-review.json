@@ -1,0 +1,1337 @@
+{
+  "at": "2026-11-07T22:00:44+08:00",
+  "state": "MERGE_LINEAGE_MATCHES_ONCE_PREMERGE_DUPLICATION_CANDIDATES_LOCALIZED",
+  "fullCandidateReviewSha256": "7cfa8ac81832780f236e0f765208a8b82a23a0659ab30e14b228af9975b6dd1f",
+  "inputLaneCount": 159,
+  "reconstructedOutputRows": 2109,
+  "all159LanesHaveUniqueContiguousAcceptedSourceCoverage": true,
+  "allRowsEqualPersistedFullCandidate": true,
+  "noRepeatedInputIdentityInsertedByMerge": true,
+  "differentAsrLanePairsSharingAtLeast8NormalizedCharacters": 47,
+  "rootsWithSuchPairs": 33,
+  "sharedTextPairs": [
+    {
+      "rootIndex": 51,
+      "left": "L_R003S01C02-root-000051-speaker-1",
+      "right": "L_R003S01C02-root-000051-speaker-3",
+      "longestSharedNormalizedCharacters": 65,
+      "sharedRawAsrText": "到早晨五六点那么早的时候就业主就反映这个事儿了就说那个哎就说早晨一开门一出来就碰到那个人就在那到处乱翻然后有的业主就反映这个事儿了",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-2",
+      "right": "L_R003S01C02-root-000000-speaker-4",
+      "longestSharedNormalizedCharacters": 31,
+      "sharedRawAsrText": "今天把各位都叫过来啊主要咱讨论一下咱这个呃咱这个小区如何把咱这",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-1",
+      "right": "L_R003S01C02-root-000057-speaker-3",
+      "longestSharedNormalizedCharacters": 31,
+      "sharedRawAsrText": "对对对对这个把之前的东西不要外放有些有些事儿你说也避免这个生人",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 13,
+      "left": "L_R003S01C02-root-000013-speaker-1",
+      "right": "L_R003S01C02-root-000013-speaker-5",
+      "longestSharedNormalizedCharacters": 30,
+      "sharedRawAsrText": "的困扰好吧你要是刨开这一部分咱们的小区的车位还是比较充足的它",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 35,
+      "left": "L_R003S01C02-root-000035-speaker-1",
+      "right": "L_R003S01C02-root-000035-speaker-3",
+      "longestSharedNormalizedCharacters": 26,
+      "sharedRawAsrText": "扫的不干净啊扫的不对蹲蹲的不干净然后人家业主也是投诉",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-4",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "longestSharedNormalizedCharacters": 25,
+      "sharedRawAsrText": "这个嗯这块儿那个咱们刚才讨论的都是咱自身的问题对吧",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 30,
+      "left": "L_R003S01C02-root-000030-speaker-1",
+      "right": "L_R003S01C02-root-000030-speaker-3",
+      "longestSharedNormalizedCharacters": 23,
+      "sharedRawAsrText": "还有卫生这一块是吧卫生这一块到时候就说你都得呃",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 70,
+      "left": "L_R003S01C02-root-000070-speaker-1",
+      "right": "L_R003S01C02-root-000070-speaker-3",
+      "longestSharedNormalizedCharacters": 21,
+      "sharedRawAsrText": "对对对对对对对嗯对看看能清理的就清理清理嗯",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-2",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "longestSharedNormalizedCharacters": 20,
+      "sharedRawAsrText": "车位的话是吧车位是有限的这个就是说还是说",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 12,
+      "left": "L_R003S01C02-root-000012-speaker-1",
+      "right": "L_R003S01C02-root-000012-speaker-5",
+      "longestSharedNormalizedCharacters": 19,
+      "sharedRawAsrText": "人家是业主你凭什么让人家进对吧人家一个",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 6,
+      "left": "L_R003S01C02-root-000006-speaker-2",
+      "right": "L_R003S01C02-root-000006-speaker-4",
+      "longestSharedNormalizedCharacters": 18,
+      "sharedRawAsrText": "管理上面在监督上面或者说就是存在咱们",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-4",
+      "right": "L_R003S01C02-root-000016-speaker-5",
+      "longestSharedNormalizedCharacters": 17,
+      "sharedRawAsrText": "的话这边车位就是咱不是说比较难解决",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 29,
+      "left": "L_R003S01C02-root-000029-speaker-3",
+      "right": "L_R003S01C02-root-000029-speaker-5",
+      "longestSharedNormalizedCharacters": 17,
+      "sharedRawAsrText": "咱咱咱凭什么撤呀就是说他就是说管理",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 60,
+      "left": "L_R003S01C02-root-000060-speaker-1",
+      "right": "L_R003S01C02-root-000060-speaker-3",
+      "longestSharedNormalizedCharacters": 17,
+      "sharedRawAsrText": "对对对不能把什么责任都揽到自己身上",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-4",
+      "right": "L_R003S01C02-root-000061-speaker-5",
+      "longestSharedNormalizedCharacters": 17,
+      "sharedRawAsrText": "人家气就走了一些这个防盗意识都没有",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-1",
+      "right": "L_R003S01C02-root-000015-speaker-5",
+      "longestSharedNormalizedCharacters": 16,
+      "sharedRawAsrText": "进来的小区是吧这个地方的话都可以",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-1",
+      "right": "L_R003S01C02-root-000065-speaker-3",
+      "longestSharedNormalizedCharacters": 16,
+      "sharedRawAsrText": "嗯嗯叫保安多巡逻叫叫保安多操点心",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 72,
+      "left": "L_R003S01C02-root-000072-speaker-4",
+      "right": "L_R003S01C02-root-000072-speaker-5",
+      "longestSharedNormalizedCharacters": 16,
+      "sharedRawAsrText": "门禁卡就专卡专用比如你这个栋楼了",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 23,
+      "left": "L_R003S01C02-root-000023-speaker-1",
+      "right": "L_R003S01C02-root-000023-speaker-5",
+      "longestSharedNormalizedCharacters": 15,
+      "sharedRawAsrText": "这个这个质量成活成活率不能保证",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-2",
+      "right": "L_R003S01C02-root-000015-speaker-5",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "对于我们管理的话那绝对是一种",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 31,
+      "left": "L_R003S01C02-root-000031-speaker-1",
+      "right": "L_R003S01C02-root-000031-speaker-3",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "说着说有的那个业主那个素质也",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 42,
+      "left": "L_R003S01C02-root-000042-speaker-2",
+      "right": "L_R003S01C02-root-000042-speaker-4",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "的时候一定得让他们有这个意识",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 49,
+      "left": "L_R003S01C02-root-000049-speaker-1",
+      "right": "L_R003S01C02-root-000049-speaker-5",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "只能就是说跟他们说嗯因为咱们",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-1",
+      "right": "L_R003S01C02-root-000050-speaker-5",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "进去了所以说再一个还我想从技",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 54,
+      "left": "L_R003S01C02-root-000054-speaker-3",
+      "right": "L_R003S01C02-root-000054-speaker-5",
+      "longestSharedNormalizedCharacters": 14,
+      "sharedRawAsrText": "过两天你不说了就就就就成那样",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 15,
+      "left": "L_R003S01C02-root-000015-speaker-1",
+      "right": "L_R003S01C02-root-000015-speaker-2",
+      "longestSharedNormalizedCharacters": 13,
+      "sharedRawAsrText": "小区是吧这个地方的话都可以",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 16,
+      "left": "L_R003S01C02-root-000016-speaker-2",
+      "right": "L_R003S01C02-root-000016-speaker-4",
+      "longestSharedNormalizedCharacters": 13,
+      "sharedRawAsrText": "是有限的这个就是说还是说到",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 26,
+      "left": "L_R003S01C02-root-000026-speaker-1",
+      "right": "L_R003S01C02-root-000026-speaker-5",
+      "longestSharedNormalizedCharacters": 13,
+      "sharedRawAsrText": "嗯一个就是栽培技术管理技术",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-1",
+      "right": "L_R003S01C02-root-000050-speaker-3",
+      "longestSharedNormalizedCharacters": 13,
+      "sharedRawAsrText": "所以说再一个还我想从技术上",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 73,
+      "left": "L_R003S01C02-root-000073-speaker-3",
+      "right": "L_R003S01C02-root-000073-speaker-4",
+      "longestSharedNormalizedCharacters": 13,
+      "sharedRawAsrText": "让他们看看是呃如何来把咱的",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 61,
+      "left": "L_R003S01C02-root-000061-speaker-1",
+      "right": "L_R003S01C02-root-000061-speaker-3",
+      "longestSharedNormalizedCharacters": 12,
+      "sharedRawAsrText": "历史都没有对是对对对咱就",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 65,
+      "left": "L_R003S01C02-root-000065-speaker-0",
+      "right": "L_R003S01C02-root-000065-speaker-4",
+      "longestSharedNormalizedCharacters": 12,
+      "sharedRawAsrText": "比如嗯这个人住四楼四零三",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-0",
+      "right": "L_R003S01C02-root-000000-speaker-2",
+      "longestSharedNormalizedCharacters": 11,
+      "sharedRawAsrText": "零六零幺四零幺九零幺八",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 34,
+      "left": "L_R003S01C02-root-000034-speaker-1",
+      "right": "L_R003S01C02-root-000034-speaker-3",
+      "longestSharedNormalizedCharacters": 11,
+      "sharedRawAsrText": "了你都得及时把它清理了",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 50,
+      "left": "L_R003S01C02-root-000050-speaker-3",
+      "right": "L_R003S01C02-root-000050-speaker-5",
+      "longestSharedNormalizedCharacters": 11,
+      "sharedRawAsrText": "所以说再一个还我想从技",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-5",
+      "longestSharedNormalizedCharacters": 11,
+      "sharedRawAsrText": "还是在于这个业主咱们哎",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 36,
+      "left": "L_R003S01C02-root-000036-speaker-1",
+      "right": "L_R003S01C02-root-000036-speaker-3",
+      "longestSharedNormalizedCharacters": 10,
+      "sharedRawAsrText": "对把暖别给冻死了是吧",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-4",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "longestSharedNormalizedCharacters": 10,
+      "sharedRawAsrText": "的呀这个看看是不是咱",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 53,
+      "left": "L_R003S01C02-root-000053-speaker-1",
+      "right": "L_R003S01C02-root-000053-speaker-3",
+      "longestSharedNormalizedCharacters": 10,
+      "sharedRawAsrText": "咱这物业的工作也不是",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 21,
+      "left": "L_R003S01C02-root-000021-speaker-1",
+      "right": "L_R003S01C02-root-000021-speaker-4",
+      "longestSharedNormalizedCharacters": 9,
+      "sharedRawAsrText": "个呃智能停车场啊每",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 56,
+      "left": "L_R003S01C02-root-000056-speaker-1",
+      "right": "L_R003S01C02-root-000056-speaker-3",
+      "longestSharedNormalizedCharacters": 9,
+      "sharedRawAsrText": "个电动车呀嗯哦对嗯",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 58,
+      "left": "L_R003S01C02-root-000058-speaker-1",
+      "right": "L_R003S01C02-root-000058-speaker-3",
+      "longestSharedNormalizedCharacters": 9,
+      "sharedRawAsrText": "然后对对说到头里了",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 62,
+      "left": "L_R003S01C02-root-000062-speaker-4",
+      "right": "L_R003S01C02-root-000062-speaker-5",
+      "longestSharedNormalizedCharacters": 9,
+      "sharedRawAsrText": "了安全你没有点那个",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 0,
+      "left": "L_R003S01C02-root-000000-speaker-1",
+      "right": "L_R003S01C02-root-000000-speaker-3",
+      "longestSharedNormalizedCharacters": 8,
+      "sharedRawAsrText": "零六零幺三零幺九",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 52,
+      "left": "L_R003S01C02-root-000052-speaker-3",
+      "right": "L_R003S01C02-root-000052-speaker-5",
+      "longestSharedNormalizedCharacters": 8,
+      "sharedRawAsrText": "有的就是专门就是",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 57,
+      "left": "L_R003S01C02-root-000057-speaker-2",
+      "right": "L_R003S01C02-root-000057-speaker-3",
+      "longestSharedNormalizedCharacters": 8,
+      "sharedRawAsrText": "加强咱们这方面的",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    },
+    {
+      "rootIndex": 71,
+      "left": "L_R003S01C02-root-000071-speaker-1",
+      "right": "L_R003S01C02-root-000071-speaker-4",
+      "longestSharedNormalizedCharacters": 8,
+      "sharedRawAsrText": "是咱那个没有及时",
+      "emittedByDifferentAsrLanesBeforeMerge": true,
+      "notProofOfAcousticLeakageOrLegitimateRepetitionByItself": true
+    }
+  ],
+  "wholeRootTargetAbsentExamples": [
+    {
+      "id": "L_R003S01C02-root-000025-speaker-3",
+      "rootIndex": 25,
+      "predictedSpeaker": 3,
+      "referencePersonForPosthocAuditOnly": "003-F",
+      "referenceTargetActivitySeconds": 0.0,
+      "referenceTargetAbsentInThisRoot": true,
+      "recognizedCharacters": 30,
+      "insertedCharacters": 21,
+      "replacedCharacters": 9,
+      "wholeLaneOwnAnchorCosine": 0.661944568157196,
+      "waveRms": 0.008941128747564106,
+      "rawAsrPreview": "八十？我觉得，这动了就活了，这管理到位，修剪啊、施肥啊、浇水啊，要管理到位。",
+      "allOriginalWordsAndAudioRetained": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-1",
+      "rootIndex": 62,
+      "predictedSpeaker": 1,
+      "referencePersonForPosthocAuditOnly": "002-F",
+      "referenceTargetActivitySeconds": 0.0,
+      "referenceTargetAbsentInThisRoot": true,
+      "recognizedCharacters": 25,
+      "insertedCharacters": 23,
+      "replacedCharacters": 0,
+      "wholeLaneOwnAnchorCosine": 0.6390276551246643,
+      "waveRms": 0.0155044326584959,
+      "rawAsrPreview": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。",
+      "allOriginalWordsAndAudioRetained": true
+    },
+    {
+      "id": "L_R003S01C02-root-000064-speaker-3",
+      "rootIndex": 64,
+      "predictedSpeaker": 3,
+      "referencePersonForPosthocAuditOnly": "003-F",
+      "referenceTargetActivitySeconds": 0.0,
+      "referenceTargetAbsentInThisRoot": true,
+      "recognizedCharacters": 2,
+      "insertedCharacters": 1,
+      "replacedCharacters": 1,
+      "wholeLaneOwnAnchorCosine": 0.6017941236495972,
+      "waveRms": 0.004377661778765573,
+      "rawAsrPreview": "不行。",
+      "allOriginalWordsAndAudioRetained": true
+    },
+    {
+      "id": "L_R003S01C02-root-000069-speaker-3",
+      "rootIndex": 69,
+      "predictedSpeaker": 3,
+      "referencePersonForPosthocAuditOnly": "003-F",
+      "referenceTargetActivitySeconds": 0.0,
+      "referenceTargetAbsentInThisRoot": true,
+      "recognizedCharacters": 9,
+      "insertedCharacters": 7,
+      "replacedCharacters": 0,
+      "wholeLaneOwnAnchorCosine": 0.6685826182365417,
+      "waveRms": 0.011185294979111783,
+      "rawAsrPreview": "嗯，对。嗯。嗯。对。对。对。对。对。",
+      "allOriginalWordsAndAudioRetained": true
+    },
+    {
+      "id": "L_R003S01C02-root-000073-speaker-3",
+      "rootIndex": 73,
+      "predictedSpeaker": 3,
+      "referencePersonForPosthocAuditOnly": "003-F",
+      "referenceTargetActivitySeconds": 0.0,
+      "referenceTargetAbsentInThisRoot": true,
+      "recognizedCharacters": 102,
+      "insertedCharacters": 102,
+      "replacedCharacters": 0,
+      "wholeLaneOwnAnchorCosine": 0.690647304058075,
+      "waveRms": 0.01279130898830714,
+      "rawAsrPreview": "然后，再我们再管理上把资金的指令，再管理其他资金啊，是计划如何执行，只能几句话。对，咱目前咱只有自己打主意，最大责任。这个啊，咱们发现问题，然后干嘛？我们对接的今天一些商场，甚至啊，我们准备让他们看看是呃如何来把咱的思维再提高一下。",
+      "allOriginalWordsAndAudioRetained": true
+    }
+  ],
+  "allLaneSourceCoverage": [
+    {
+      "id": "L_R003S01C02-root-000000-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000000-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000000-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000000-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000000-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000006-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000006-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000011-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000011-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000012-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000012-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000013-speaker-1",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000013-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000014-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000014-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000014-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000015-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000015-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000015-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000016-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000016-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000016-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000016-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000017-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000017-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000018-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000018-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000019-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000020-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000020-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000021-speaker-1",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000021-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000023-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000023-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000024-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000024-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000025-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000025-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000026-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000026-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000026-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000027-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000027-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000027-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000027-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000028-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000028-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000028-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000030-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000030-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000030-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000034-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000034-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000034-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000035-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000035-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000035-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000035-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000036-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000036-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000036-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000037-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000037-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000038-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000038-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000042-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000042-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000044-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000044-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000046-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000046-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000049-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000049-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000050-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000050-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000050-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000051-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000051-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000052-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000052-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000052-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000052-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000052-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000053-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000053-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000053-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000053-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000054-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000054-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000054-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000055-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000055-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000055-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000056-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000056-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000056-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000057-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000057-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000057-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000058-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000058-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000058-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000058-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000058-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000059-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000059-speaker-3",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000059-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000060-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000060-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000060-speaker-3",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000060-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000061-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000061-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000061-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000061-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-2",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000062-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000063-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000063-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000064-speaker-0",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000064-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000065-speaker-0",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000065-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000065-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000065-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000066-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000066-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000067-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000067-speaker-4",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000069-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000069-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000070-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000070-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000070-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000071-speaker-1",
+      "acceptedLeaves": 3,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000071-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000072-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000072-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000072-speaker-5",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000073-speaker-3",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000073-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000074-speaker-1",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000074-speaker-3",
+      "acceptedLeaves": 2,
+      "continuousNonoverlappingAudioCoverage": true
+    },
+    {
+      "id": "L_R003S01C02-root-000074-speaker-4",
+      "acceptedLeaves": 1,
+      "continuousNonoverlappingAudioCoverage": true
+    }
+  ],
+  "conclusions": [
+    "The observed assembly reconstructs exactly from unique input leaves; it does not insert an accepted source leaf twice. This narrows the inspected merge-duplication hypothesis only.",
+    "Long shared sequences already exist in different raw per-person ASR outputs before final assembly. This supports investigating separation/target-presence/ASR residual behavior. It does not license transcript deduplication.",
+    "Nonzero separated audio and nonempty ASR when a mapped target is absent do not alone distinguish acoustic cross-talk from ASR hallucination. No listening/clean-source proof is claimed.",
+    "Independent target activity is the next separable hypothesis. Ordinary ASR and all prior failed outputs remain unchanged."
+  ],
+  "newNeuralCalls": 0,
+  "referenceUsedForPosthocDiagnosisOnly": true,
+  "wordsRemovedOrOutputsChanged": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 28588,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 103071744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

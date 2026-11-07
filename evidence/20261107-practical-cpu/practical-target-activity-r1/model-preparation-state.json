@@ -1,0 +1,205 @@
+{
+  "at": "2026-11-07T22:05:35+08:00",
+  "state": "PUBLISHED_ACTIVITY_PAIR_PREPARED_NOT_YET_LOADED",
+  "neuralCalls": 0,
+  "productChanged": false,
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\LICENSE",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/LICENSE",
+      "size": 11357,
+      "sha256": "3359ea11b3bdde09d47f03740e257cdcefbb1a0161878cb792aa5863e5d83269",
+      "gitBlobSha1": "a4f8e3ccc09fd4e3deb0ce195763d4f70f76ed12"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\README.md",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/README.md",
+      "size": 9141,
+      "sha256": "0b4695e44fc91659b6af937c46c1720c5eef85eed587792b535904efe7c8d5af",
+      "gitBlobSha1": "a8349d3bec0162e9a13448dbea733ff5eb80e545"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\THIRD_PARTY_NOTICES.md",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/THIRD_PARTY_NOTICES.md",
+      "size": 1181,
+      "sha256": "a7f4a0a76e235e47b5d16e02de3d5058c6facac8fd63919d10d0f8c3ccbef4fa",
+      "gitBlobSha1": "81155cfe85ff4272d5cc4a0e7c90444ff9958b71"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\VERSION",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/VERSION",
+      "size": 4,
+      "sha256": "1523e9e982ff804c6d979e1bb2c6f3d7bae35307e8ce458bffc0d12a442b98da",
+      "gitBlobSha1": "9459d4ba2a0d3cc475f89ed03a13a1517c04798e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\core\\__init__.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/core/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\core\\eres2netv2_backbone.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/core/eres2netv2_backbone.py",
+      "size": 4442,
+      "sha256": "1e339eda5cf7988c81554a9bbdca3c6341337122c453c66fe3a15bd3179cf6ca",
+      "gitBlobSha1": "905cc0119e8bb0ea0e9685e7e7752f34bfcc7136"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\core\\film.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/core/film.py",
+      "size": 1922,
+      "sha256": "242d24d9156adbf2c5ec6789f2fc1ad9c804bc8d3402e5dfa6a22ad181d37a86",
+      "gitBlobSha1": "7e7d263ff5f1898168cb18ade91248a4ecb85ae6"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\core\\frame_adapter.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/core/frame_adapter.py",
+      "size": 3865,
+      "sha256": "e78c598386d4283e2f6418bf5994e032e4a559901eb7b2b0ceebb275791f37ca",
+      "gitBlobSha1": "e2b2b174c97fe190ebfcf8a1c40b73b5a8810c0b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\core\\model.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/core/model.py",
+      "size": 7256,
+      "sha256": "13ed185ba2c237ff1bc07ba83bf22ce3ce08a995a9c3304b0bb9048492d26e09",
+      "gitBlobSha1": "eef54550702e05a80b144813a881ee25c1d35021"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\infer.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/infer.py",
+      "size": 4692,
+      "sha256": "b8741936580226568b912cbf594914a9bd6cebd71b063cb53611dbe18fb89daa",
+      "gitBlobSha1": "21065270b0991d5c027706305507d4e682af6096"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\nomo_pvad.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/nomo_pvad.py",
+      "size": 8390,
+      "sha256": "8350f41b8df6dba2f0ac48d1d24c1d211a470a83daf7d6ca4934dd8f711b9ec2",
+      "gitBlobSha1": "cbff33a56013500872eb9b7265b5ccd76208686c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\requirements.txt",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/requirements.txt",
+      "size": 101,
+      "sha256": "2e559034df1cbb9436759c0c4b4ef1f8063e5e409a63f29a3d86e731807799a9",
+      "gitBlobSha1": "214a863dfd5eccf527dff223f0e4a17a0196b279"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\scripts\\check_release.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/scripts/check_release.py",
+      "size": 3424,
+      "sha256": "3b76920dc366707a44f3be2feb0c32df545c452744589d5563ae581b40a1b3af",
+      "gitBlobSha1": "ab9d4efcf0f90a14598af2d02e7289b7ff8798db"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\scripts\\publish_release.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/scripts/publish_release.py",
+      "size": 3406,
+      "sha256": "466ea102322f948274e80817a658073595548bb12694f33f45f37b59b76bd58a",
+      "gitBlobSha1": "22c495c80699982afd6df4346fe63014edd6e6f1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\scripts\\smoke_infer.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/scripts/smoke_infer.py",
+      "size": 1519,
+      "sha256": "6e87d6d21d1c310f0a23d88ddf1a9b01417c5969bbe12824f4e2c7c0dad62e20",
+      "gitBlobSha1": "c175e2f6d1aaab80d7143d8ee6dd7231ab5a800e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\tests\\test_release.py",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/tests/test_release.py",
+      "size": 7815,
+      "sha256": "dca8c5b347ce709914bd50bee759c98b576560acfabb2bb348f535fb8439088d",
+      "gitBlobSha1": "418a2b86125cb3a74511c9895b4affe983f0864b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc\\weights\\WEIGHTS_LICENSE.md",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/weights/WEIGHTS_LICENSE.md",
+      "size": 942,
+      "sha256": "353cfb4d2f402455353a9d5c453f3e67f66534c62561063e8bfdf5d85a99539b",
+      "gitBlobSha1": "0626ee6bec4af6b8c60beafb9b76fd532180e42e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\nomo_pvad.pt",
+      "url": "https://raw.githubusercontent.com/tuya/nomo-pvad/cb828468d183424fd574984f00b3ffbcce0be9bc/weights/nomo_pvad.pt",
+      "size": 36576677,
+      "sha256": "0acf2f3e75409b172771663fd1bee31af2760dba4e25b1353d2c26726b6412d1",
+      "gitBlobSha1": "530bf062ea68977a5f74c3c93eb10ec0bd155709"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\eres2netv2\\pretrained_eres2netv2.ckpt",
+      "url": "https://www.modelscope.cn/api/v1/models/iic/speech_eres2netv2_sv_zh-cn_16k-common/repo?Revision=1cf80d41fb3435bd3d8df185b5c423333b2db42a&FilePath=pretrained_eres2netv2.ckpt",
+      "size": 71768231,
+      "sha256": "0eb4057106b2573dd7b132cf0c36273ab29afd192c1610f80baa9c556dbb963c",
+      "gitBlobSha1": null
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\modelscope-eres2netv2-6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd\\LICENSE",
+      "url": "https://raw.githubusercontent.com/modelscope/modelscope/6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd/LICENSE",
+      "size": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "gitBlobSha1": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\modelscope-eres2netv2-6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd\\modelscope\\models\\audio\\sv\\ERes2NetV2.py",
+      "url": "https://raw.githubusercontent.com/modelscope/modelscope/6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd/modelscope/models/audio/sv/ERes2NetV2.py",
+      "size": 11941,
+      "sha256": "bcff9d6dd0061e73aa13aca4749a59de45462c4d9db4d0a64b1c69d73f5183af",
+      "gitBlobSha1": "d842a09484bb2c4f76f43ae1086eaf7bb75a2210"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\modelscope-eres2netv2-6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd\\modelscope\\models\\audio\\sv\\fusion.py",
+      "url": "https://raw.githubusercontent.com/modelscope/modelscope/6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd/modelscope/models/audio/sv/fusion.py",
+      "size": 904,
+      "sha256": "7aa7ce95fa112d77a42995a35675ebea25403e2695a245e20de61238315caa19",
+      "gitBlobSha1": "615529bdbf40f2aed3049f423e9ce42b238dbb8b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\modelscope-eres2netv2-6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd\\modelscope\\models\\audio\\sv\\pooling_layers.py",
+      "url": "https://raw.githubusercontent.com/modelscope/modelscope/6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd/modelscope/models/audio/sv/pooling_layers.py",
+      "size": 3630,
+      "sha256": "d61d848cdc165604e448651c6d80b769867f408907afa9a7ee43bc97fb6509ce",
+      "gitBlobSha1": "7f45b748f766ea96c0bf25754cea719ac9a5dedf"
+    }
+  ],
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\nomo-cb828468d183424fd574984f00b3ffbcce0be9bc",
+  "modelscopeRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\modelscope-eres2netv2-6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd",
+  "weight": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\nomo_pvad.pt",
+  "enrollmentDirectory": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\eres2netv2",
+  "nomoCommit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+  "modelscopeCommit": "6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd",
+  "enrollmentMetadata": {
+    "repository": "iic/speech_eres2netv2_sv_zh-cn_16k-common",
+    "Path": "pretrained_eres2netv2.ckpt",
+    "Revision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+    "Sha256": "0eb4057106b2573dd7b132cf0c36273ab29afd192c1610f80baa9c556dbb963c",
+    "Size": 71768231
+  },
+  "audioFrontendSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1\\audio-frontend-source.json",
+  "compatibility": "Matching native ModelScope ERes2NetV2192d full model for enrollment and released fine-tuned target-activity trunk. No PS4 or base-ERes embeddings reused.",
+  "dependencyPackaging": "Unmodified ModelScope source includes unrelated SDK registry wrapper imports. The isolated loader may execute only the exact native nn.Module class ASTs plus exact upstream fusion/pooling modules; class/parameter coverage must be verified and the packaging scope disclosed.",
+  "knownRisk": "Author technical report URL returned404 on2026-11-07. No independently verified far-field/overlap accuracy or public training recipe; only a bounded causal pilot is justified.",
+  "qualityQualified": false,
+  "limits": {
+    "pid": 7092,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 22163456,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "wholePreparationSeconds": 19.228037799999584,
+  "finishedAt": "2026-11-07T22:05:54+08:00"
+}

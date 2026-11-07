@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-07T22:29:01+08:00",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\author-examples\\enroll.wav",
+      "gitBlobSha1": "1ffd43991295caeb26b2208f45b9158affa46a33",
+      "sha256": "72720f008c1f123ca23b0d5229c72bc05e6b368b659b971ea19522d724f04112",
+      "size": 157058
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\author-examples\\test.wav",
+      "gitBlobSha1": "c1eb7881710734df631bcecf6082a6788f02988f",
+      "sha256": "58655fda0da3a0eaa2a291e07d696a0d5f0e828eba9e34d58056701ff2709075",
+      "size": 181202
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-target-activity-r1\\author-sanity\\author-examples-README.md",
+      "gitBlobSha1": "d9d8734e83947e02f229403cff575e5b751ae6c1",
+      "sha256": "8c6aa67d09e506bbf8a14afa8f255815c9bff5517c12ab540550361db4fca784",
+      "size": 375
+    }
+  ],
+  "metadata": {
+    "enroll": {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\author-examples\\enroll.wav",
+      "samples": 78507,
+      "seconds": 4.9066875
+    },
+    "test": {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nomo-target-activity-20261107\\author-examples\\test.wav",
+      "samples": 90579,
+      "seconds": 5.6611875
+    }
+  },
+  "authorFixtureIsNotRealMeetingAcceptance": true
+}

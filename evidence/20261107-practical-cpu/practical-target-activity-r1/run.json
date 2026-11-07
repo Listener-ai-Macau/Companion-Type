@@ -1,0 +1,26 @@
+{
+  "state": "COMPLETE_SHORT_ACTIVITY_CANDIDATE_REVIEW_REQUIRED",
+  "pid": 17888,
+  "startedAt": "2026-11-07T22:16:42+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-target-activity-r1\\attempt-0001.json"
+  ],
+  "results": [
+    {
+      "stage": "pilot",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 50.65119879998383,
+      "privatePeakBytes": 1142104064
+    },
+    {
+      "stage": "short",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 74.98745079999208,
+      "privatePeakBytes": 996237312
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "lastAvailableBytes": 5514592256,
+  "finishedAt": "2026-11-07T22:18:47+08:00"
+}

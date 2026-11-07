@@ -1,0 +1,37 @@
+{
+  "commit": "6ac899ed17aee369a2ed2cf9fa9655e64c40d0dd",
+  "files": [
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "size": 11358,
+      "url": "https://api.github.com/repos/modelscope/modelscope/git/blobs/d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    {
+      "path": "modelscope/models/audio/sv/ERes2NetV2.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d842a09484bb2c4f76f43ae1086eaf7bb75a2210",
+      "size": 11941,
+      "url": "https://api.github.com/repos/modelscope/modelscope/git/blobs/d842a09484bb2c4f76f43ae1086eaf7bb75a2210"
+    },
+    {
+      "path": "modelscope/models/audio/sv/fusion.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "615529bdbf40f2aed3049f423e9ce42b238dbb8b",
+      "size": 904,
+      "url": "https://api.github.com/repos/modelscope/modelscope/git/blobs/615529bdbf40f2aed3049f423e9ce42b238dbb8b"
+    },
+    {
+      "path": "modelscope/models/audio/sv/pooling_layers.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f45b748f766ea96c0bf25754cea719ac9a5dedf",
+      "size": 3630,
+      "url": "https://api.github.com/repos/modelscope/modelscope/git/blobs/7f45b748f766ea96c0bf25754cea719ac9a5dedf"
+    }
+  ]
+}

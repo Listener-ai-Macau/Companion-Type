@@ -1,0 +1,198 @@
+{
+  "at": "2026-11-07T22:02:55+08:00",
+  "state": "CROSS_MEETING_RAW_MIXTURE_CONTROLS_FROZEN_BEFORE_NEW_NEURAL_INFERENCE",
+  "selectionRule": "From prior frozen predicted activity, first distinct full30s roots for>=20s one-person/no-overlap,>=2s overlap/<0.1s triple,>=0.5s triple,>=1 predicted0.25-2s turn with>=2 people. Add first distinct roots with>=3s predicted speech to cover missing predicted profiles. All same-meeting automatic profiles are queried on every clip, including absent ones. Enrollment is central<=10s of longest predicted solo outside every selected clip,>=3s after60ms guards; no GT enrollment or profile reselection.",
+  "meetings": [
+    {
+      "meeting": "L_R003S01C02",
+      "predictedPeople": 6,
+      "cases": [
+        {
+          "kind": "ordinary",
+          "rootIndex": 1,
+          "predictedPeople": [
+            4
+          ]
+        },
+        {
+          "kind": "two-speaker-overlap",
+          "rootIndex": 12,
+          "predictedPeople": [
+            1,
+            5
+          ]
+        },
+        {
+          "kind": "three-plus-overlap",
+          "rootIndex": 31,
+          "predictedPeople": [
+            0,
+            1,
+            3
+          ]
+        },
+        {
+          "kind": "short-turn",
+          "rootIndex": 0,
+          "predictedPeople": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "kind": "predicted-person-coverage",
+          "rootIndex": 3,
+          "predictedPeople": [
+            2,
+            4
+          ]
+        }
+      ],
+      "missingPredictedCategories": [],
+      "automaticAnchorsUnder10Seconds": [
+        {
+          "speaker": 3,
+          "seconds": 9.78
+        }
+      ],
+      "anchorsDisjointFromEveryTestClip": true
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "predictedPeople": 5,
+      "cases": [
+        {
+          "kind": "ordinary",
+          "rootIndex": 1,
+          "predictedPeople": [
+            0
+          ]
+        },
+        {
+          "kind": "two-speaker-overlap",
+          "rootIndex": 16,
+          "predictedPeople": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "short-turn",
+          "rootIndex": 0,
+          "predictedPeople": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "kind": "predicted-person-coverage",
+          "rootIndex": 61,
+          "predictedPeople": [
+            1,
+            3
+          ]
+        },
+        {
+          "kind": "predicted-person-coverage",
+          "rootIndex": 46,
+          "predictedPeople": [
+            3,
+            4
+          ]
+        }
+      ],
+      "missingPredictedCategories": [
+        "three-plus-overlap"
+      ],
+      "automaticAnchorsUnder10Seconds": [],
+      "anchorsDisjointFromEveryTestClip": true
+    },
+    {
+      "meeting": "EN2002a",
+      "predictedPeople": 4,
+      "cases": [
+        {
+          "kind": "two-speaker-overlap",
+          "rootIndex": 8,
+          "predictedPeople": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "kind": "three-plus-overlap",
+          "rootIndex": 0,
+          "predictedPeople": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "kind": "short-turn",
+          "rootIndex": 1,
+          "predictedPeople": [
+            0,
+            2,
+            3
+          ]
+        }
+      ],
+      "missingPredictedCategories": [
+        "ordinary"
+      ],
+      "automaticAnchorsUnder10Seconds": [
+        {
+          "speaker": 0,
+          "seconds": 5.63
+        },
+        {
+          "speaker": 1,
+          "seconds": 5.25
+        },
+        {
+          "speaker": 2,
+          "seconds": 7.95
+        },
+        {
+          "speaker": 3,
+          "seconds": 6.13
+        }
+      ],
+      "anchorsDisjointFromEveryTestClip": true
+    }
+  ],
+  "cases": 13,
+  "totalOriginalAudioSeconds": 390.0,
+  "targetQueries": 67,
+  "referencesOpenedDuringSelection": false,
+  "scope": "Exposed real development meetings,2corpora. Short controls are not complete-meeting qualification or an unseen test. Reference names/count/activity do not enter worker input. Actual category coverage must be audited separately; a predicted category is not declared ground truth.",
+  "baseline": "Same frozen native FP16 anonymous activity, same fixed whole-meeting reference mapping, compared only posthoc on identical clips.",
+  "candidatePolicy": "One learned target-presence candidate on original mixtures only. No ASR/separation rerun and no word filtering. A failed short gate prevents full-meeting candidate expansion. No threshold/window sweep.",
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 15316,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 13398016,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

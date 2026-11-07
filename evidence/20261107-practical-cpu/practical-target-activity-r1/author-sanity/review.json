@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-07T22:32:25+08:00",
+  "state": "AUTHOR_FIXTURE_QUALITATIVE_SEQUENCE_REPRODUCED_MEETING_FAILURE_REMAINS",
+  "threshold": 0.7,
+  "selfEnrollmentMeanTargetProbability": 0.7946432014146159,
+  "testChunks": 36,
+  "acceptedChunkIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "acceptedPrefixSeconds": 2.24,
+  "first14ChunkMeanTargetProbability": 0.9616284881319318,
+  "remainingChunkMeanTargetProbability": 0.17037163624031978,
+  "interpretation": "Fixed0.7 accepts the opening14chunks and rejects the remainder, matching the author README target-first/non-target-later ordering. Exact labeled transition/silence truth is not provided; no numeric detection accuracy is claimed. This supports basic model/feature/identity compatibility but does not exclude every implementation issue or rescue the failed real-meeting result.",
+  "twoFixtureQueriesAndOneEnrollmentForwardOnly": true,
+  "sourceIsAuthorFixtureNotRealMeetingQualification": true,
+  "noThresholdChanged": true,
+  "qualityQualified": false,
+  "run": {
+    "state": "COMPLETE_AUTHOR_FIXTURE_COMPATIBILITY_REVIEW_REQUIRED",
+    "startedAt": "2026-11-07T22:29:02+08:00",
+    "automaticRetries": 0,
+    "privatePeakBytes": 1119367168,
+    "qualityQualified": false,
+    "exitCode": 0,
+    "wholeProcessFamilySeconds": 18.21808510000119,
+    "finishedAt": "2026-11-07T22:29:20+08:00"
+  }
+}

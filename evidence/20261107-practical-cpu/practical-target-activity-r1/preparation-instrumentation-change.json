@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-07T22:16:40+08:00",
+  "state": "NATIVE_CPU_FRONTEND_FAILURE_ISOLATED_GPU_ARITHMETIC_VERIFIED",
+  "priorWorkerSha256": "0e5bb00ca55cb6d5225a1b5880e7cc917ed869b2ee7814e155873c376738f9c3",
+  "cpuFeatureFailureReproducedWithoutModels": true,
+  "gpuFeatureNumericallyVerified": true,
+  "completedNeuralCallsBeforeFix": 0,
+  "strictNativeModelAndEncoderLoadingAlreadyPassed": true,
+  "correction": "The interim instrumentation note incorrectly assumed no loader proof. The original native-model and GPU weight-byte proof did exist; the process aborted while first computing CPU acoustic features. No enrollment vectors or activity outputs existed. Interim retry was rejected before launch. All original source/protocol hashes recovered exactly and retained.",
+  "change": "Only run the same unmodified author feature function on selected GPU input. Independent NumPy controls max-error<0.000190; no model/data/threshold/gate/resource-limit change."
+}

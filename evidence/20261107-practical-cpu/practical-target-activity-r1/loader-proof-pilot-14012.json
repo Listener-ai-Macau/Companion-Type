@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "44102b2de81e3fed93d289a18a18126f56f72cd6d9e7ab2d39bfa354e0a8da52",
+    "workerSourceSha256": "0e5bb00ca55cb6d5225a1b5880e7cc917ed869b2ee7814e155873c376738f9c3",
+    "modelReadySha256": "623d43da0267ded0cd916f8e5fa9a2bf758ee165b120d81bb272bc84fae177f2"
+  },
+  "nativeClassAstSha256": "8176ad48764790f21f8eef9a5e13e7b7f29218f1afa48b7187f7c4a952b04fdb",
+  "nativeClassSourceUnmodified": true,
+  "unrelatedModelScopeSdkRegistryNotExecuted": true,
+  "strictLoads": [
+    {
+      "class": "ERes2NetV2",
+      "tensorCount": 557,
+      "everyTensorValueEqual": true,
+      "allParametersRequired": true,
+      "loadedStateSha256": "e1e4edc991f37e8b57ea4e3de8756486155b088d9c0e6ccaecc1a97d76ecf062"
+    },
+    {
+      "class": "NomoPVADNet",
+      "tensorCount": 583,
+      "everyTensorValueEqual": true,
+      "allParametersRequired": true,
+      "loadedStateSha256": "89afec037f0f6c1ac376a9583f8de1556380f299dae8db05c8f5459f3ec8d84d"
+    },
+    {
+      "class": "ERes2NetV2",
+      "tensorCount": 557,
+      "everyTensorValueEqual": true,
+      "allParametersRequired": true,
+      "loadedStateSha256": "e1e4edc991f37e8b57ea4e3de8756486155b088d9c0e6ccaecc1a97d76ecf062"
+    }
+  ],
+  "gpuModelAndEnrollmentStateBytesVerified": true,
+  "matchedEmbeddingSpace": true,
+  "gpu": "AMD Radeon RX 6800 XT",
+  "limits": {
+    "pid": 14012,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 671678464,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
