@@ -11,7 +11,12 @@ import static com.denzic.companion.mobile.SystemUpdatePackage.*;
 public final class SystemUpdateClient {
     private SystemUpdateClient(){}
     public static final UUID SERVICE=UUID.fromString("1b55f597-f09c-4c7f-9529-adfa64983b06"),CONTROL=UUID.fromString("206c5e29-c64d-4392-8180-66463788533c"),DATA=UUID.fromString("fbc4b0fb-6102-4bd1-abe4-e5e90a9a7e12"),STATUS=UUID.fromString("e571544a-7c41-4650-b0d6-ccebfe1db489"),IDENTITY=UUID.fromString("e571544a-7c41-4650-b0d6-ccebfe1db48a"),READINESS=UUID.fromString("8f7a7001-7b7d-4f3d-9d6f-6c2d1b7c0000"),READINESS_SERVICE=UUID.fromString("8f7a0007-7b7d-4f3d-9d6f-6c2d1b7c0000");
-    public interface Connector{RecordingClient.Link connect()throws IOException;}
+    public interface Connector{
+        RecordingClient.Link connect()throws IOException;
+        /** Read-only post-install probes may use a shorter unavailable-device
+         * wait. Existing transports retain their connection behavior. */
+        default RecordingClient.Link connectForVerification()throws IOException{return connect();}
+    }
     public interface Progress{void update(String phase,long accepted,long total)throws IOException;default void identity(String uid)throws IOException{}default void metrics(String json){}}
     /** Bounded host-side metadata. These counters never change durable receipts,
      * admission or installation decisions, and allocate no device RAM/Flash. */
@@ -197,7 +202,7 @@ public final class SystemUpdateClient {
         }catch(IOException error){if(link!=null&&beginSent&&!finishAttempted)try{link.write(CONTROL,control(4,0,0,0,0));}catch(IOException ignored){}throw error;}
         finally{if(link!=null)link.close();}
         metrics.stage="verifying";metrics.verifyStart=System.nanoTime();progress.metrics(metrics.json());progress.update("verifying",pack.image.length,pack.image.length);sleep(10000);long deadline=System.nanoTime()+180_000_000_000L;String last=finishError==null?"":finishError.getMessage();
-        while(System.nanoTime()<deadline){metrics.verifyAttempts++;try(RecordingClient.Link current=connector.connect()){
+        while(System.nanoTime()<deadline){metrics.verifyAttempts++;try(RecordingClient.Link current=connector.connectForVerification()){
             if(!identity.equals(uid(current)))throw new IOException("升级后设备身份不一致，未确认成功");
             if(pack.installed(current.read(IDENTITY))){metrics.installed=true;metrics.stage="complete";progress.update("complete",pack.image.length,pack.image.length);return;}
             last="尚未看到匹配的新程序、资源与临时空间释放";
@@ -206,6 +211,6 @@ public final class SystemUpdateClient {
     }
     public static boolean verify(Connector connector,SystemUpdatePackage pack,String expectedUid)throws IOException{
         if(expectedUid==null||!expectedUid.matches("[0-9a-f]{24}"))throw new IOException("没有本次升级前的设备身份，不能确认结果。");
-        try(RecordingClient.Link link=connector.connect()){if(!expectedUid.equals(uid(link)))throw new IOException("设备身份不同，不能确认原升级结果。");return pack.installed(link.read(IDENTITY));}
+        try(RecordingClient.Link link=connector.connectForVerification()){if(!expectedUid.equals(uid(link)))throw new IOException("设备身份不同，不能确认原升级结果。");return pack.installed(link.read(IDENTITY));}
     }
 }

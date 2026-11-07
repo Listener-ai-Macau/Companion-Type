@@ -99,8 +99,11 @@ public final class AndroidGattLink implements RecordingClient.Link {
         return connectWithInitialRetry(context,device,139,true);
     }
     private static AndroidGattLink connectWithInitialRetry(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock)throws IOException {
+        return connectWithInitialRetry(context,device,minimumMtu,synchronizeClock,15_000);
+    }
+    private static AndroidGattLink connectWithInitialRetry(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,long connectionWaitMs)throws IOException {
         java.util.concurrent.atomic.AtomicReference<BluetoothDevice> rediscovered=new java.util.concurrent.atomic.AtomicReference<>();
-        try{return InitialConnectionRetry.open(()->connect(context,rediscovered.get()==null?device:rediscovered.get(),minimumMtu,synchronizeClock,rediscovered.get()!=null),millis->{
+        try{return InitialConnectionRetry.open(()->connect(context,rediscovered.get()==null?device:rediscovered.get(),minimumMtu,synchronizeClock,rediscovered.get()!=null,connectionWaitMs),millis->{
             android.util.Log.w("CompanionBle","Initial GATT133 refused before connection; closed client, retrying once");
             rediscovered.set(AndroidDevices.refreshSelected(context,device,millis));
         });}catch(RuntimeException died){throw recoverablePlatformFailure(died);}
@@ -108,7 +111,18 @@ public final class AndroidGattLink implements RecordingClient.Link {
     /** Upgrade uses the same bonded GATT owner with no recording negotiation or
      * clock write. Read-back verification must not modify the new application. */
     public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connectWithInitialRetry(context,device,23,false);}
-    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,boolean rediscovered) throws IOException {
+    public static SystemUpdateClient.Connector updateConnector(Context context,BluetoothDevice device){
+        return new SystemUpdateClient.Connector(){
+            public RecordingClient.Link connect()throws IOException{return connectForUpdate(context,device);}
+            public RecordingClient.Link connectForVerification()throws IOException{
+                // Boot installation is deliberately unavailable to GATT. Do
+                // not spend another15s blind wait after advertising returns.
+                // Every failed attempt still disconnects/closes its exact owner.
+                return connectWithInitialRetry(context,device,23,false,2_000);
+            }
+        };
+    }
+    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,boolean rediscovered,long connectionWaitMs) throws IOException {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
@@ -133,7 +147,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             link.gatt=device.connectGatt(context.getApplicationContext(),false,link.callbacks,BluetoothDevice.TRANSPORT_LE);
             if(link.gatt==null)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection could not start");
             link.traceStage="wait_connection";
-            Event connection=link.waitOperation("connection",null,15_000);if(connection.state!=BluetoothProfile.STATE_CONNECTED)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection not established");
+            Event connection=link.waitOperation("connection",null,connectionWaitMs);if(connection.state!=BluetoothProfile.STATE_CONNECTED)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection not established");
             link.traceStage="mtu";
             if(!link.gatt.requestMtu(517))throw new RecordingSyncRunner.LinkFailure("Bluetooth MTU request refused");link.waitOperation("mtu",null,15_000);
             if(link.mtu<minimumMtu)throw new RecordingSyncRunner.ActionRequired("蓝牙连接容量不足，请重新连接或换用兼容的手机；原录音仍保留");
