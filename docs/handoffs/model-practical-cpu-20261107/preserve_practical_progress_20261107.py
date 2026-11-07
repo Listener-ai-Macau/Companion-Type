@@ -152,13 +152,15 @@ if record['nativeAlignment']['onset-decision.json']:
     record['state']=record['nativeAlignment']['onset-decision.json']['state']+'_QUALITY_AND_SALE_OPEN'
     record['next']=record['nativeAlignment']['onset-decision.json']['next']
 ps4_root=base/'practical-conditioned-ps4-r1'
-record['conditionedTargetSpeakerExtraction']={name:optional(ps4_root/name) for name in ['model-ready.json','input-selection.json','protocol.json','protocol-r2.json','run.json','run-r2.json','separation-state.json','separation-state-r2.json','asr-state-r2.json','preparation-failure-1.json','audio-frontend-source.json','review.json']}
+record['conditionedTargetSpeakerExtraction']={name:optional(ps4_root/name) for name in ['model-ready.json','input-selection.json','protocol.json','protocol-r2.json','run.json','run-r2.json','separation-state.json','separation-state-r2.json','asr-state-r2.json','preparation-failure-1.json','audio-frontend-source.json','review.json','activity-cause-r1-correction.json','activity-cause-review-r2.json','root-cause-review.json','identity-policy.json','identity-run.json','identity-state.json','verified-routing-policy.json','verified-review.json']}
 ps4=record['conditionedTargetSpeakerExtraction']
 if ps4['model-ready.json']:
     record['state']=(ps4['run-r2.json'] or ps4['run.json'] or ps4['model-ready.json'])['state']+'_QUALITY_AND_SALE_OPEN'
     record['next']='原RM-OVERLAP/复杂多人优先：完成已冻结PS4匹配声纹编码器的真实先提取再逐路转写；普通S根1与复杂L根29/31由旧预测活动选择，6人各自同场最长单人片作登记，无参考词/人数。修缺少音频前端的0推理依赖失败后，仅补官方TorchAudio2.11纯Python源码到隔离进程；模型/样本/保留条件不变，不重跑旧VoxLock/固定8槽TSSEP。全部8路转写完再以完整原会议评分，严格固定分人映射/未知不匹配和单人无回退决定是否扩展，不按片挑轨/扫窗口或阈值。原5%/独立集/事实/双端实卡/售卖门继续。'
 if ps4['review.json']:
     record['state']=ps4['review.json']['state'];record['next']=ps4['review.json']['next']
+if ps4['verified-review.json']:
+    record['state']=ps4['verified-review.json']['state'];record['next']=ps4['verified-review.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker','upstream-tse']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
