@@ -1,7 +1,11 @@
 import unittest
-from practical_transcript_20261107 import align_window,onset_attribution,token_text_spans
+from practical_transcript_20261107 import align_window,onset_attribution,token_text_spans,normalized_journal
 
 class PracticalAttribution(unittest.TestCase):
+    def test_display_ids_are_consecutive_without_mutating_native_identity(self):
+        original={'segments':[{'start':2.,'end':3.,'speaker':7},{'start':0.,'end':1.,'speaker':3},{'start':4.,'end':5.,'speaker':7}]}
+        output,mapping=normalized_journal(original)
+        self.assertEqual(mapping,{3:0,7:1});self.assertEqual([r['speaker'] for r in output['segments']],[1,0,1]);self.assertEqual(original['segments'][0]['speaker'],7)
     def test_different_people_inside_one_wide_window(self):
         raw={'index':0,'startSample':0,'endSample':3*16000,'text':'甲乙','tokens':['甲','乙'],'timestamps':[.5,1.5]}
         out=align_window(raw,[{'start':0.,'end':1.,'speaker':0},{'start':1.,'end':3.,'speaker':1}],audio_seconds=3)

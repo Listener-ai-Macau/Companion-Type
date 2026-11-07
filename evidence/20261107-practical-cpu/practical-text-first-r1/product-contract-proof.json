@@ -1,0 +1,28 @@
+[
+  {
+    "meeting": "L_R003S01C02",
+    "result": {
+      "allWithinAudio": true,
+      "approximateRows": 79,
+      "characters": 8385,
+      "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+      "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+      "unknownSpeakerRows": 79,
+      "utterances": 79
+    },
+    "modelOutputSha256": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+  },
+  {
+    "meeting": "S_R004S03C01",
+    "result": {
+      "allWithinAudio": true,
+      "approximateRows": 78,
+      "characters": 8871,
+      "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+      "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+      "unknownSpeakerRows": 78,
+      "utterances": 78
+    },
+    "modelOutputSha256": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "state": "PASS_NATIVE_SHORT_DIARIZATION_WITH_BOUNDED_VOTES",
+  "workerSourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+  "ioSourceSha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+  "allNativeSegmentsTimesAndNumericSpeakerIdsExactlyEqual": true,
+  "rttmSha256": "17762c550b722123b0648a1b17973a033964b3da52934cc717d95c7da6763e67",
+  "nativeActiveSpeakers": 5,
+  "segments": 7,
+  "newNeuralItemsForCorrectedReconstruction": 0,
+  "whyR1Changed": "Author cutree labels clusters by first observation and stops at height>=threshold. SciPy label numbering alone changes vote tie outcomes; fixed to the published convention, not threshold tuning. Neural caches reused.",
+  "scope": "Actual30s model compatibility only, no human reference/accuracy or full-meeting memory guarantee."
+}

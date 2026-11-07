@@ -1,0 +1,53 @@
+{
+  "state": "COMPLETE_BOUNDED_SPEAKER_BATCH_REVIEW_REQUIRED",
+  "startedAt": "2026-11-07T11:23:15+08:00",
+  "pid": 5940,
+  "results": [
+    {
+      "meeting": "public30s-integration-control",
+      "stage": "segment",
+      "exitCode": 0,
+      "workerState": "COMPLETE_SEGMENTATION_CACHE",
+      "wholeProcessFamilySeconds": 2.0327063000004273,
+      "privatePeakBytes": 85008384,
+      "rssPeakBytes": 98267136,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-smoke-r1\\results\\public30s-integration-control\\segment-state.json",
+      "newNeuralItems": 21,
+      "reusedCachedPrefix": 0
+    },
+    {
+      "meeting": "public30s-integration-control",
+      "stage": "embed",
+      "exitCode": 0,
+      "workerState": "COMPLETE_EMBEDDING_CACHE",
+      "wholeProcessFamilySeconds": 5.071705099981045,
+      "privatePeakBytes": 155201536,
+      "rssPeakBytes": 180838400,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-smoke-r1\\results\\public30s-integration-control\\embed-state.json",
+      "newNeuralItems": 39,
+      "reusedCachedPrefix": 0
+    },
+    {
+      "meeting": "public30s-integration-control",
+      "stage": "reconstruct",
+      "exitCode": 0,
+      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 5.066474100021878,
+      "privatePeakBytes": 46366720,
+      "rssPeakBytes": 67833856,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-smoke-r1\\results\\public30s-integration-control\\reconstruct-state.json",
+      "newNeuralItems": 0,
+      "reusedCachedPrefix": null
+    }
+  ],
+  "referencePassedToInference": false,
+  "automaticRetries": 0,
+  "protocolSha256": "19ac1af20926de0f18a5543ea814b3209a5dba8d18c1df9c06ba8b9194230aad",
+  "sourceSha256": {
+    "bounded_speaker_20261107.py": "64cc93549869267cf128f3b8f122a24b0e90d7f86dedfefae457569d405b179e",
+    "run_bounded_speaker_20261107.py": "6f891b4a8cb21c54ddaea6436b5d736880b138eec03a8d97176f269684345aa5",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+  },
+  "finishedAt": "2026-11-07T11:23:28+08:00"
+}

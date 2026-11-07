@@ -1,0 +1,41 @@
+{
+  "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+  "stage": "reconstruct",
+  "pid": 24568,
+  "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "referenceRead": false,
+  "gpuUsed": false,
+  "sourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+  "newNeuralItems": 0,
+  "memoryLayout": {
+    "expandedWindowMatricesAllocated": false,
+    "voteDtype": "uint8",
+    "voteBytes": 14224,
+    "avoidedDenseRelabelBytes": 395808,
+    "globalSpeakerClusters": 8,
+    "voteUpperBound": 11
+  },
+  "limits": {
+    "pid": 24568,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 48230400,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "meeting": "public30s-integration-control",
+  "audioSeconds": 30.0,
+  "predictedSpeakers": 5,
+  "segments": 7,
+  "rttmSha256": "17762c550b722123b0648a1b17973a033964b3da52934cc717d95c7da6763e67",
+  "finishedAt": "2026-11-07T11:25:47+08:00",
+  "wholeWorkerSeconds": 0.6925420000043232
+}

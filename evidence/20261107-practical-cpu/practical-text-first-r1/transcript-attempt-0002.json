@@ -1,0 +1,56 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "startedAt": "2026-11-07T11:09:37+08:00",
+  "pid": 23648,
+  "automaticRetries": 0,
+  "referencePassedToInference": false,
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 189.23153819999425,
+      "privatePeakBytes": 448167936,
+      "rssPeakBytes": 430329856,
+      "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\L_R003S01C02",
+      "priorAttemptProcessFamilySeconds": 51.41437849999056,
+      "accumulatedProcessFamilySeconds": 240.6459166999848,
+      "scoringExitCode": 0,
+      "chronologicalDiagnosticCer": 0.2676348547717842,
+      "cpCerDiagnostic": 1.2411249423697557,
+      "unconfirmedTextFraction": 1.0
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 35.07965920001152,
+      "privatePeakBytes": 441380864,
+      "rssPeakBytes": 444915712,
+      "workerState": null,
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\S_R004S03C01",
+      "priorAttemptProcessFamilySeconds": 0,
+      "accumulatedProcessFamilySeconds": 35.07965920001152
+    }
+  ],
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcript-attempt-0001.json"
+  ],
+  "resourceRecoveryObservation": {
+    "previousLastAvailableBytes": 916992000,
+    "priorModelPrivatePeakBytes": 445591552,
+    "currentAvailableBytes": 2623229952,
+    "actualWindowsLowRam": false,
+    "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+  },
+  "speakerJournalPending": true,
+  "sourceSha256": {
+    "practical_transcript_20261107.py": "9cfc07bcf778b616608bb796302fc87c51ad9d2014c0230ade08dc15dcacfe30",
+    "practical_transcript_worker_20261107.py": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+    "run_practical_transcript_20261107.py": "4034d7f91b63b97a1442836903a4dfc00f209a5f9a4509c3a2f444e918c6a0f1",
+    "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+    "test_practical_transcript_20261107.py": "e53ad3b918028d3f1421737afc86841965dbf73c66e5f0037bd7ca19d2b6e146",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "protocolSha256": "1094b0bfecd10578ed68b38d5b8f08b6b0979c6c41c7a27d8265e65e9c4801dc",
+  "finishedAt": "2026-11-07T11:13:30+08:00"
+}

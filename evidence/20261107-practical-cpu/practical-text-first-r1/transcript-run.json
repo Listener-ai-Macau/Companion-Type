@@ -1,0 +1,60 @@
+{
+  "state": "TWO_COMPLETE_TEXT_ONLY_MEETINGS_SCORED_SPEAKERS_PENDING",
+  "startedAt": "2026-11-07T11:15:47+08:00",
+  "pid": 2136,
+  "automaticRetries": 0,
+  "referencePassedToInference": false,
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 0,
+      "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\L_R003S01C02",
+      "reusedCompletedMeetingWithoutLaunchingModel": true,
+      "priorAttemptProcessFamilySeconds": 240.6459166999848,
+      "accumulatedProcessFamilySeconds": 240.6459166999848,
+      "scoringExitCode": 0,
+      "chronologicalDiagnosticCer": 0.2676348547717842,
+      "cpCerDiagnostic": 1.2411249423697557,
+      "unconfirmedTextFraction": 1.0
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 241.5700472000026,
+      "privatePeakBytes": 448417792,
+      "rssPeakBytes": 449847296,
+      "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\S_R004S03C01",
+      "priorAttemptProcessFamilySeconds": 35.07965920001152,
+      "accumulatedProcessFamilySeconds": 276.6497064000141,
+      "scoringExitCode": 0,
+      "chronologicalDiagnosticCer": 0.076996996996997,
+      "cpCerDiagnostic": 1.417057057057057,
+      "unconfirmedTextFraction": 1.0
+    }
+  ],
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcript-attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcript-attempt-0002.json"
+  ],
+  "resourceRecoveryObservation": {
+    "previousLastAvailableBytes": 821919744,
+    "priorModelPrivatePeakBytes": 441380864,
+    "currentAvailableBytes": 3675860992,
+    "actualWindowsLowRam": false,
+    "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+  },
+  "speakerJournalPending": true,
+  "sourceSha256": {
+    "practical_transcript_20261107.py": "9cfc07bcf778b616608bb796302fc87c51ad9d2014c0230ade08dc15dcacfe30",
+    "practical_transcript_worker_20261107.py": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+    "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+    "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+    "test_practical_transcript_20261107.py": "e53ad3b918028d3f1421737afc86841965dbf73c66e5f0037bd7ca19d2b6e146",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "protocolSha256": "1094b0bfecd10578ed68b38d5b8f08b6b0979c6c41c7a27d8265e65e9c4801dc",
+  "finishedAt": "2026-11-07T11:19:51+08:00"
+}

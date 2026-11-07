@@ -1,0 +1,29 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "startedAt": "2026-11-07T11:02:46+08:00",
+  "pid": 28484,
+  "automaticRetries": 0,
+  "referencePassedToInference": false,
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 51.41437849999056,
+      "privatePeakBytes": 445591552,
+      "rssPeakBytes": 445026304,
+      "workerState": null,
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\L_R003S01C02"
+    }
+  ],
+  "speakerJournalPending": true,
+  "sourceSha256": {
+    "practical_transcript_20261107.py": "9cfc07bcf778b616608bb796302fc87c51ad9d2014c0230ade08dc15dcacfe30",
+    "practical_transcript_worker_20261107.py": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+    "run_practical_transcript_20261107.py": "1b92ffa62784c9701e18ae77930975562aee7cedf970d646a3c95a1b0a43f054",
+    "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+    "test_practical_transcript_20261107.py": "e53ad3b918028d3f1421737afc86841965dbf73c66e5f0037bd7ca19d2b6e146",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "protocolSha256": "1094b0bfecd10578ed68b38d5b8f08b6b0979c6c41c7a27d8265e65e9c4801dc",
+  "finishedAt": "2026-11-07T11:03:38+08:00"
+}

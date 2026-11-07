@@ -4,7 +4,7 @@ from datetime import datetime
 import argparse,hashlib,json,os,time,traceback,wave
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1')
 from moss_windows_resource_limits_20261104 import WorkerLimits
-from practical_transcript_20261107 import align_window
+from practical_transcript_20261107 import align_window,normalized_journal
 from practical_io_20261107 import atomic_json
 p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',type=int,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--text-only',action='store_true');a=p.parse_args()
 C=Path(a.control);read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));case=read(C/'audio-only.json')[a.index];protocol=read(C/'asr-protocol.json')
@@ -26,12 +26,13 @@ write(out/'state.json',state)
 try:
     assert sha(case['audio'])==case['audioSha256']
     journal_file=C/'results'/case['meeting']/'speaker-journal.json'
-    journal={'segments':[]};journal_sha=None
+    journal={'segments':[]};journal_sha=None;speaker_display_map={}
     if not a.text_only:
         journal=read(journal_file);producer=read(journal_file.parent/'completed-state.json')
         assert producer['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED' and producer['finishedAt']
         assert journal['audioSha256']==case['audioSha256'] and journal['audioSeconds']==case['audioSeconds']
         journal_sha=sha(journal_file);assert journal_sha==protocol['speakerJournals'][case['meeting']]
+        journal,speaker_display_map=normalized_journal(journal)
     binding={'audioSha256':case['audioSha256'],'protocolSha256':sha(C/'asr-protocol.json'),'journalSha256':journal_sha,'workerSha256':sha(__file__),'attributionSha256':sha(Path(__file__).with_name('practical_transcript_20261107.py'))}
     raw_binding={'audioSha256':case['audioSha256'],'modelFiles':protocol['modelFiles'],'runtimeVersion':protocol['runtimeVersion'],'nativeExtensionSha256':protocol['nativeExtensionSha256'],'windowSamples':protocol['maximumWindowSamples'],'language':'zh','useItn':True,'provider':'cpu','numThreads':1}
     canonical=lambda obj:json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf8')
@@ -81,9 +82,10 @@ try:
     assert raw_windows and raw_windows[0]['startSample']==0 and raw_windows[-1]['endSample']==count
     assert all(x['endSample']==y['startSample'] for x,y in zip(raw_windows,raw_windows[1:]))
     assert ''.join(r['text'] for r in raw_windows)==''.join(r['text'] for r in utterances)
-    document={'isFinal':True,'text':'\n'.join(r['text'] for r in utterances),'utterances':[{k:r[k] for k in ['text','startMs','endMs','speaker','approximateTiming']} for r in utterances]}
+    document={'isFinal':True,'text':'\n'.join(r['text'] for r in raw_windows),'utterances':[{k:r[k] for k in ['text','startMs','endMs','speaker','approximateTiming']} for r in utterances]}
     write(out/'model-output.json',document)
     review={'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'binding':binding,'allOriginalAudioSamplesCoveredOnce':True,'rawWindowCount':len(raw_windows),'rawWindowText':'\n'.join(r['text'] for r in raw_windows),'allTextPreservedThroughAttribution':True,'tokenEstimates':estimated_tokens,'utterancesWithAttribution':utterances,'unconfirmedTokens':sum(r['speaker'] is None for r in estimated_tokens),'overlapTokensRequiringRecovery':sum(r['overlapDetectedNearOnset'] for r in estimated_tokens),'scope':'Completed baseline, not quality qualified. Full original audio retained. Native token onsets only; unknown boundaries/overlaps must be reviewed, both overlapping voices are not recovered. No real names/roles or verified word duration.'}
+    review['nativeToConsecutiveDisplaySpeakerIds']=speaker_display_map
     write(out/'attribution-review.json',review)
     state.update(state='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED',speakerJournalPending=a.text_only,modelLoaded=rec is not None,allAudioSamplesCoveredOnce=True,allAsrTextPreserved=True,unconfirmedTokens=review['unconfirmedTokens'],overlapTokensRequiringRecovery=review['overlapTokensRequiringRecovery'],modelOutputSha256=sha(out/'model-output.json'),attributionReviewSha256=sha(out/'attribution-review.json'))
 except BaseException as error:

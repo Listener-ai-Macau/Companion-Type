@@ -36,27 +36,33 @@ def main():
     journal=current/'results'/meeting/'completed-state.json' if current else None
     if journal is None or not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':
         previous=current
-        current=root/('attempt-%04d'%(len(task['attempts'])+1));current.mkdir(exist_ok=False)
+        ordinal=len(task['attempts'])+1
+        while (root/('attempt-%04d'%ordinal)).exists():ordinal+=1
+        current=root/('attempt-%04d'%ordinal);current.mkdir(exist_ok=False)
         case={'meeting':meeting,'audio':str(audio),**binding};case.pop('modelPackSha256')
-        atomic_json(current/'audio-only.json',[case]);atomic_json(current/'protocol.json',pack['diarization'])
+        atomic_json(current/'audio-only.json',[case]);atomic_json(current/'protocol.json',{**pack['diarization'],'boundedCacheRoot':str(current/'speaker-cache')})
         task['attempts'].append({'control':str(current),'startedAt':now(),'stages':[]})
         if previous and (previous/'transcripts'/meeting).exists():
             destination=current/'transcripts'/meeting
             assert previous.resolve().is_relative_to(root) and destination.resolve().is_relative_to(root)
             destination.parent.mkdir(exist_ok=True);shutil.copytree(previous/'transcripts'/meeting,destination)
             task['attempts'][-1]['rawTranscriptReusedFrom']=str(previous/'transcripts'/meeting)
+        if previous and (previous/'speaker-cache').exists():
+            assert previous.resolve().is_relative_to(root) and current.resolve().is_relative_to(root)
+            shutil.copytree(previous/'speaker-cache',current/'speaker-cache')
+            task['attempts'][-1]['speakerFeatureCacheReusedFrom']=str(previous/'speaker-cache')
     attempt=task['attempts'][-1];atomic_json(state_path,task)
     pressure=SystemRamPressure();child=None;process=None
-    def run_stage(module,phase,resume=False,text_only=False):
+    def run_stage(module,phase,resume=False,text_only=False,extra_args=()):
         nonlocal child,process
         for member in psutil.process_iter(['cmdline']):
-            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
+            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py','bounded_speaker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass
         if pressure.low():raise RuntimeError('Windows低内存保护触发，当前任务已保留。')
         if (current/'stop.request').exists() or (root/'stop.request').exists():raise InterruptedError('当前任务已请求停止，原音和已保存结果保留。')
         task.update(state=phase,updatedAt=now());atomic_json(state_path,task);tick=time.perf_counter();private_peak=0
         log=current/(phase+'-'+str(len(attempt['stages']))+'.log')
-        command=[sys.executable,str(Path(__file__).with_name(module)),'--control',str(current),'--index','0']+(['--resume'] if resume else [])+(['--text-only'] if text_only else [])
+        command=[sys.executable,str(Path(__file__).with_name(module)),'--control',str(current),'--index','0']+(['--resume'] if resume else [])+(['--text-only'] if text_only else [])+list(extra_args)
         with log.open('xb') as stream:
             child=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
             process=psutil.Process(child.pid);process.cpu_affinity([12,13]);task['activePid']=child.pid;atomic_json(state_path,task)
@@ -81,7 +87,11 @@ def main():
         draft=current/'text-draft.json'
         if not draft.exists():atomic_json(draft,read(completed.parent/'model-output.json'))
         task['textDraft']=str(draft);task.setdefault('textDraftReadyAt',now());atomic_json(state_path,task)
-        if not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':run_stage('practical_cpu_worker_20261107.py','DIARIZING')
+        if not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':
+            if seconds>10:
+                for stage in ['segment','embed','reconstruct']:
+                    run_stage('bounded_speaker_20261107.py','SPEAKERS_'+stage.upper(),extra_args=('--stage',stage))
+            else:run_stage('practical_cpu_worker_20261107.py','DIARIZING')
         assert read(journal)['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED'
         assert read(journal)['audioSha256']==binding['audioSha256'] and read(journal)['audioSeconds']==seconds
         assert checksum(journal.parent/'predicted.rttm')==read(journal)['rttmSha256']

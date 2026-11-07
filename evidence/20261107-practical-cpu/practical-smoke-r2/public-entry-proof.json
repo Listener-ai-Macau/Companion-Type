@@ -1,0 +1,55 @@
+{
+  "state": "PASS_PUBLIC_FRESH_30S_COMMAND_AND_RAW_ONLY_RETAG",
+  "publicAudioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "freshStages": [
+    {
+      "phase": "TRANSCRIBING_DRAFT",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 6.063998199999332,
+      "privatePeakBytes": 436494336,
+      "finishedAt": "2026-11-07T11:31:06+08:00"
+    },
+    {
+      "phase": "SPEAKERS_SEGMENT",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 2.0274257000128273,
+      "privatePeakBytes": 85118976,
+      "finishedAt": "2026-11-07T11:31:09+08:00"
+    },
+    {
+      "phase": "SPEAKERS_EMBED",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 5.055806499993196,
+      "privatePeakBytes": 224186368,
+      "finishedAt": "2026-11-07T11:31:15+08:00"
+    },
+    {
+      "phase": "SPEAKERS_RECONSTRUCT",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 2.027289899997413,
+      "privatePeakBytes": 47054848,
+      "finishedAt": "2026-11-07T11:31:18+08:00"
+    },
+    {
+      "phase": "TRANSCRIBING",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 1.019839900021907,
+      "privatePeakBytes": 1531904,
+      "finishedAt": "2026-11-07T11:31:20+08:00"
+    }
+  ],
+  "textDraftReadyAt": "2026-11-07T11:31:06+08:00",
+  "priorHistoricalOutputSha256": "a4ae35d51bd38894144fc4889c3268da4ee59acd5fd4f358ac7470f60eaf19a3",
+  "currentOutputSha256": "1d2ef9b1b47a848af73b4743075ebed55df35721e62f69a8def8e510f73e2301",
+  "formatAndDisplayIdsChanged": true,
+  "cachedRetagModelLoaded": false,
+  "cachedRetagNewNeuralWindows": 0,
+  "allAsrWordsPreserved": true,
+  "sharedProductContract": {
+    "exitCode": 0,
+    "stdout": "{\"allWithinAudio\":true,\"approximateRows\":10,\"characters\":63,\"scope\":\"Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.\",\"state\":\"PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY\",\"unknownSpeakerRows\":4,\"utterances\":10}\n",
+    "stderr": ""
+  },
+  "qualityQualified": false,
+  "installedAppChanged": false
+}

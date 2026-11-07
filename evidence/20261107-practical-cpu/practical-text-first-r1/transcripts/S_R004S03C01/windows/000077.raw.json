@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "modelFiles": {
+      "model.int8.onnx": {
+        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\model.int8.onnx",
+        "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+      },
+      "tokens.txt": {
+        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\tokens.txt",
+        "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+      }
+    },
+    "runtimeVersion": "1.13.4",
+    "nativeExtensionSha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
+    "windowSamples": 480000,
+    "language": "zh",
+    "useItn": true,
+    "provider": "cpu",
+    "numThreads": 1
+  },
+  "originalNeuralWorkerSha256": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37233904,
+    "text": "5。",
+    "tokens": [
+      "5",
+      "。"
+    ],
+    "timestamps": [
+      6.539999961853027,
+      16.979999542236328
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"5。\", \"timestamps\": [6.54, 16.98], \"durations\": [], \"tokens\":[\"5\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 1.25641309999628
+  },
+  "rawSha256": "150a511c91e4d952a0334888141dcfac50e0314f09e6cee88ddb79604b947d85"
+}

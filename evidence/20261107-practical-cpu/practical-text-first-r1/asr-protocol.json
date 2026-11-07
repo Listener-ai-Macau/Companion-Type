@@ -1,0 +1,17 @@
+{
+  "runtimeVersion": "1.13.4",
+  "nativeExtensionSha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
+  "modelFiles": {
+    "model.int8.onnx": {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\model.int8.onnx",
+      "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+    },
+    "tokens.txt": {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\tokens.txt",
+      "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+    }
+  },
+  "maximumWindowSamples": 480000,
+  "speakerJournals": {},
+  "scope": "Full original text first; speaker processing is currently incomplete. No guessed attribution or reference input."
+}

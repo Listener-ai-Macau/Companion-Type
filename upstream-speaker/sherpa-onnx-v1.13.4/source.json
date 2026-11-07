@@ -1,0 +1,11 @@
+{
+  "upstream": "https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.4",
+  "purpose": "Pinned source for dense per-window ReLabel allocation and operator parity; copied upstream source, not local compiled runtime. See actual extension SHA in protocol.",
+  "files": {
+    "fast-clustering.cc": "345cecd50337d5fce979acb5ecd5c6b6ba2201c385515ea2c72e9b042dfdee3a",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "math.h": "ea88907fdc5f2d237bf22eb089098abd35cb3a1c714a8846f0ca2011fbaf12d6",
+    "offline-speaker-diarization-pyannote-impl.h": "cff29b1f8ee107fd4f37ad7d3b609048fa11c62db2643c5db2d3f89d13b8c158",
+    "offline-speaker-segmentation-pyannote-model.cc": "887bbc3fde1fbec47378631f94e3cd0f0879a0d40f29deec3d86e319e503dde5"
+  }
+}

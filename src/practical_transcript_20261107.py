@@ -4,6 +4,12 @@ Onsets are model estimates. No true word durations or real names are inferred.
 """
 import math
 
+def normalized_journal(journal):
+    """Display consecutive anonymous IDs; preserve native IDs in provenance."""
+    ordered=sorted(journal['segments'],key=lambda row:(row['start'],row['end'],row['speaker']))
+    mapping={value:index for index,value in enumerate(dict.fromkeys(row['speaker'] for row in ordered))}
+    return {**journal,'segments':[{**row,'speaker':mapping[row['speaker']]} for row in journal['segments']]},mapping
+
 def token_text_spans(text,tokens):
     pieces=[str(t).replace('▁',' ').removesuffix('@@') for t in tokens]
     visible=[(i,c) for i,c in enumerate(text) if not c.isspace()]

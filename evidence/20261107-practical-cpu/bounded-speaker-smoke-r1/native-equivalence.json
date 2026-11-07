@@ -1,0 +1,19 @@
+{
+  "state": "NATIVE_SHORT_EQUIVALENCE_FAILED",
+  "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "allSegmentsAndTimesEqualAfterAnonymousPermutation": false,
+  "nativeSegments": 7,
+  "portedSegments": 7,
+  "nativeSpeakers": 5,
+  "portedSpeakers": 5,
+  "speakerMappingForComparisonOnly": {
+    "0": 0,
+    "5": 3,
+    "7": 4,
+    "3": 5,
+    "1": 7
+  },
+  "workerSourceSha256": "64cc93549869267cf128f3b8f122a24b0e90d7f86dedfefae457569d405b179e",
+  "ioSourceSha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+  "scope": "Actual public30s model comparison only, not reference/accuracy/generalization or whole-meeting RAM proof."
+}

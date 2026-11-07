@@ -1,0 +1,43 @@
+{
+  "meeting": "public30s-integration-control",
+  "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "audioSeconds": 30.0,
+  "segments": [
+    {
+      "start": 1.026593804359436,
+      "end": 1.3809688091278076,
+      "speaker": 0
+    },
+    {
+      "start": 6.274718761444092,
+      "end": 7.877843856811523,
+      "speaker": 0
+    },
+    {
+      "start": 12.467844009399414,
+      "end": 13.463469505310059,
+      "speaker": 3
+    },
+    {
+      "start": 14.560344696044922,
+      "end": 15.60659408569336,
+      "speaker": 4
+    },
+    {
+      "start": 17.462844848632812,
+      "end": 18.28972053527832,
+      "speaker": 3
+    },
+    {
+      "start": 18.28972053527832,
+      "end": 19.55534553527832,
+      "speaker": 5
+    },
+    {
+      "start": 22.592845916748047,
+      "end": 29.967220306396484,
+      "speaker": 7
+    }
+  ],
+  "scope": "Bounded CPU port, numerical/native short control only. Anonymous model activity; no ASR/real names/roles or qualified overlap word recovery."
+}
