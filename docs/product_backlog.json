@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41625,10 +41625,10 @@
           "currentStatus": "OPEN",
           "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。",
           "ps4ConditionedComponentScreen20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1",
             "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "review": {
               "at": "2026-11-07T20:12:49+08:00",
               "state": "PS4_REAL_COMPONENT_SCREEN_FAILED_NOT_ADOPTED",
@@ -42421,10 +42421,10 @@
             "allExistingFormalGatesRetained": true
           },
           "ps4FullRoutedDevelopment20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1",
             "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "review": {
               "at": "2026-11-07T21:17:32+08:00",
               "state": "FULL_COMPLEX_ROUTED_CANDIDATE_NOT_ADOPTED_TOTAL_REGRESSION",
@@ -42804,10 +42804,10 @@
             "qualityQualified": false
           },
           "ps4TimeLocalIdentityFalsification20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1",
             "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "summary": {
               "TP": 1414,
               "FN": 141,
@@ -42824,10 +42824,10 @@
             "qualityQualified": false
           },
           "boundedOriginalMixtureActivity20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-target-activity-r1",
             "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "actualRawMixtureClips": 13,
             "targetQueries": 67,
             "allPredeclaredShortCriteriaPassed": false,
@@ -42854,7 +42854,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -42871,7 +42871,7 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
             "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
             "noNewQualityScoreUnlessFullCompleted": true,
@@ -43028,7 +43028,7 @@
             "defaultProductChanged": false
           },
           "native17OrdinaryDevelopment20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "stage": {
               "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
               "rawChronologicalCerBaseline06": 0.06438438438438439,
@@ -43324,23 +43324,23 @@
               "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
               "noTrainingReferenceHotwordsOrFillerErDeletion": true
             },
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "ordinary5PercentGateClosed": false,
             "qualityQualified": false
           },
           "authorBoundaryDevelopment20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\review.json",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "ordinaryFullDevelopmentBelow5": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "defaultProductChanged": false
           },
           "native17AlignedSpeakerContent20261107": {
-            "at": "2026-11-07T22:33:27+08:00",
+            "at": "2026-11-07T22:39:11+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\onset-review.json",
-            "modelEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+            "modelEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
             "results": [
               {
                 "meeting": "S_R004S03C01",
@@ -143698,7 +143698,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "原RM-OVERLAP：停止被拒PS4/整段或局部声纹门及nomo默认目标活动配置的扩展与扫参；保留NativeFP16分人研究基线和普通ASR，不把这次活动检测当文字/纪要改善。已排除本次合并重复输入，多个原始人物轨已产生长段相同文字，分离共享声源/目标缺席与残留触发ASR仍需联合解决。下一项先核对真实远场会议训练数据与可复现训练实现，区分训练/开发/最终集（不拿本轮已见L/S/AMI或补齐三人片训练），再为目标活动/分离中已证失败模块选择定向适配方案；nomo官方示例可复现但会议域跨三场失败，只有9个长且无标注他人声登记中8个仍失败的证据，不把延长登记或换同类权重当主线。补齐的中文真实三人重叠30s仅为后续曝光诊断样例，不重跑失败候选、不当独立验收。没有不同因果依据不启动备选、不从零训练。普通严格<5%、复杂逐人/短句/重叠文字、跨域、事实、双端实卡与售卖门继续OPEN。",
+          "next": "原RM-OVERLAP：四步短筛选已执行并拒绝候选，第4步整场条件未成立。继续定向适配准备：已核实真实会议的文本/讲话活动标注可用于训练目标活动，混音通道不能当逐人干净分离标签；已核实nomo公开代码仅推理且forward禁用梯度，不能直接把推理脚本叫微调。下一项准备发布方正式训练split中的独立真实会议与可训练小型活动模块，先核实人员/房间/会话划分并保持当前L/S/AMI与最终未见集只作评价，先梯度和CPU5%/private2GiB/单模型资源小检再训练。冻结声纹/主干、先适配条件融合与活动头的可行性需实际验证，不能预先承诺效果；分离改进另需正确的监督/代理目标，保留其未解决状态。停止既败PS4/声纹门/nomo默认配置扩展，不扫阈值、不追加同类名单、不从零训练。原普通模型/原字/原音、严格<5%、复杂逐人/重叠文字、跨域/纪要事实/双端实卡/售卖门继续OPEN。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -145022,8 +145022,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T22:33:27+08:00",
-              "phase": "finished",
+              "at": "2026-11-07T22:39:11+08:00",
+              "phase": "running",
               "ownerQuote": "好的, 1234推进一下",
               "stockCpuR1": {
                 "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -153074,7 +153074,7 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "原RM-OVERLAP：停止被拒PS4/整段或局部声纹门及nomo默认目标活动配置的扩展与扫参；保留NativeFP16分人研究基线和普通ASR，不把这次活动检测当文字/纪要改善。已排除本次合并重复输入，多个原始人物轨已产生长段相同文字，分离共享声源/目标缺席与残留触发ASR仍需联合解决。下一项先核对真实远场会议训练数据与可复现训练实现，区分训练/开发/最终集（不拿本轮已见L/S/AMI或补齐三人片训练），再为目标活动/分离中已证失败模块选择定向适配方案；nomo官方示例可复现但会议域跨三场失败，只有9个长且无标注他人声登记中8个仍失败的证据，不把延长登记或换同类权重当主线。补齐的中文真实三人重叠30s仅为后续曝光诊断样例，不重跑失败候选、不当独立验收。没有不同因果依据不启动备选、不从零训练。普通严格<5%、复杂逐人/短句/重叠文字、跨域、事实、双端实卡与售卖门继续OPEN。",
+              "next": "原RM-OVERLAP：四步短筛选已执行并拒绝候选，第4步整场条件未成立。继续定向适配准备：已核实真实会议的文本/讲话活动标注可用于训练目标活动，混音通道不能当逐人干净分离标签；已核实nomo公开代码仅推理且forward禁用梯度，不能直接把推理脚本叫微调。下一项准备发布方正式训练split中的独立真实会议与可训练小型活动模块，先核实人员/房间/会话划分并保持当前L/S/AMI与最终未见集只作评价，先梯度和CPU5%/private2GiB/单模型资源小检再训练。冻结声纹/主干、先适配条件融合与活动头的可行性需实际验证，不能预先承诺效果；分离改进另需正确的监督/代理目标，保留其未解决状态。停止既败PS4/声纹门/nomo默认配置扩展，不扫阈值、不追加同类名单、不从零训练。原普通模型/原字/原音、严格<5%、复杂逐人/重叠文字、跨域/纪要事实/双端实卡/售卖门继续OPEN。",
               "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
@@ -168226,6 +168226,32 @@
                     "finishedAt": "2026-11-07T22:29:20+08:00"
                   }
                 },
+                "training-feasibility.json": {
+                  "at": "2026-11-07T22:39:11+08:00",
+                  "state": "REAL_MEETING_ACTIVITY_ADAPTATION_PREREQUISITES_IDENTIFIED_NOT_TRAINING",
+                  "source": "https://www.openslr.org/111/",
+                  "publishedData": {
+                    "name": "AISHELL-4",
+                    "licenseAsDeclared": "CC BY-SA4.0",
+                    "realMeetingSpeechActivityAndTranscripts": true,
+                    "publishedTrainArchives": {
+                      "large": "7.0G",
+                      "medium": "25G",
+                      "small": "14G"
+                    }
+                  },
+                  "dataTaskMatch": "Speech-activity annotations can supervise target-present/absent/overlap activity on a chosen original microphone channel. A mixed channel is not clean per-speaker waveform ground truth for separation.",
+                  "sourceTrainingGap": "Pinned nomo release provides inference, not training recipe. core/model.py decorates forward with torch.no_grad; a trainable adaptation path and supervised loss must be implemented and gradient-checked before any training claim.",
+                  "localPreparedTrainingManifestVerified": false,
+                  "localLookup": "No matching train manifests/TextGrid/archive names were returned by the bounded project-cache filename lookup. This is not proof that no training files exist elsewhere; no verified independent training manifest is available for this batch.",
+                  "plannedSmallAdaptation": "Investigate freezing matched speaker encoder/acoustic trunk and adapting speaker conditioning/activity head with explicit negative targets, short speech, overlap and real far-field supervision. No parameter-count/memory/speed/performance claim until a measured gradient/resource pilot.",
+                  "splitPolicy": "Use publisher official split/session/room/person metadata when obtained; local speaker labels or filenames alone do not prove distinct physical speakers. Current exposed development recordings and supplementary triple clip must not become training data; final holdout stays unopened.",
+                  "newArchiveDownloadedBytes": 0,
+                  "newTrainingRuns": 0,
+                  "newModelCandidates": 0,
+                  "qualityQualified": false,
+                  "next": "原RM-OVERLAP：四步短筛选已执行并拒绝候选，第4步整场条件未成立。继续定向适配准备：已核实真实会议的文本/讲话活动标注可用于训练目标活动，混音通道不能当逐人干净分离标签；已核实nomo公开代码仅推理且forward禁用梯度，不能直接把推理脚本叫微调。下一项准备发布方正式训练split中的独立真实会议与可训练小型活动模块，先核实人员/房间/会话划分并保持当前L/S/AMI与最终未见集只作评价，先梯度和CPU5%/private2GiB/单模型资源小检再训练。冻结声纹/主干、先适配条件融合与活动头的可行性需实际验证，不能预先承诺效果；分离改进另需正确的监督/代理目标，保留其未解决状态。停止既败PS4/声纹门/nomo默认配置扩展，不扫阈值、不追加同类名单、不从零训练。原普通模型/原字/原音、严格<5%、复杂逐人/重叠文字、跨域/纪要事实/双端实卡/售卖门继续OPEN。"
+                },
                 "decision.json": {
                   "at": "2026-11-07T22:32:25+08:00",
                   "state": "SHORT_ACTIVITY_CANDIDATE_REJECTED_NO_FULL_EXPANSION",
@@ -168261,10 +168287,15 @@
                   "ordinaryAsrAndDefaultUnchanged": true,
                   "actualProductAccuracyImprovementDelivered": false,
                   "qualified": false,
-                  "next": "原RM-OVERLAP：停止被拒PS4/整段或局部声纹门及nomo默认目标活动配置的扩展与扫参；保留NativeFP16分人研究基线和普通ASR，不把这次活动检测当文字/纪要改善。已排除本次合并重复输入，多个原始人物轨已产生长段相同文字，分离共享声源/目标缺席与残留触发ASR仍需联合解决。下一项先核对真实远场会议训练数据与可复现训练实现，区分训练/开发/最终集（不拿本轮已见L/S/AMI或补齐三人片训练），再为目标活动/分离中已证失败模块选择定向适配方案；nomo官方示例可复现但会议域跨三场失败，只有9个长且无标注他人声登记中8个仍失败的证据，不把延长登记或换同类权重当主线。补齐的中文真实三人重叠30s仅为后续曝光诊断样例，不重跑失败候选、不当独立验收。没有不同因果依据不启动备选、不从零训练。普通严格<5%、复杂逐人/短句/重叠文字、跨域、事实、双端实卡与售卖门继续OPEN。"
+                  "next": "原RM-OVERLAP：四步短筛选已执行并拒绝候选，第4步整场条件未成立。继续定向适配准备：已核实真实会议的文本/讲话活动标注可用于训练目标活动，混音通道不能当逐人干净分离标签；已核实nomo公开代码仅推理且forward禁用梯度，不能直接把推理脚本叫微调。下一项准备发布方正式训练split中的独立真实会议与可训练小型活动模块，先核实人员/房间/会话划分并保持当前L/S/AMI与最终未见集只作评价，先梯度和CPU5%/private2GiB/单模型资源小检再训练。冻结声纹/主干、先适配条件融合与活动头的可行性需实际验证，不能预先承诺效果；分离改进另需正确的监督/代理目标，保留其未解决状态。停止既败PS4/声纹门/nomo默认配置扩展，不扫阈值、不追加同类名单、不从零训练。原普通模型/原字/原音、严格<5%、复杂逐人/重叠文字、跨域/纪要事实/双端实卡/售卖门继续OPEN。",
+                  "trainingFeasibility": {
+                    "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-target-activity-r1\\training-feasibility.json",
+                    "state": "REAL_MEETING_ACTIVITY_ADAPTATION_PREREQUISITES_IDENTIFIED_NOT_TRAINING",
+                    "newTrainingRuns": 0
+                  }
                 }
               },
-              "sourceAndEvidenceCommit": "18806a1beb864860cbe86a7f5edc110d18ce187a",
+              "sourceAndEvidenceCommit": "b63d1f243f309fa9925f47f8a325939bd1180f9a",
               "remoteReadbackConfirmed": true
             }
           }

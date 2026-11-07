@@ -179,7 +179,7 @@ if presence['next-direction.json']:
     method=presence['next-direction.json'].get('ownerMethodReview')
     if method:record['ownerQuote']=method['ownerQuote']
 activity_root=base/'practical-target-activity-r1'
-activity={name:optional(activity_root/name) for name in ['merge-and-lane-cause-review.json','waveform-cause-review.json','control-selection.json','protocol.json','model-ready.json','run.json','review.json','enrollment-cause-review.json','mandarin-triple-supplement.json','author-sanity/review.json','decision.json']}
+activity={name:optional(activity_root/name) for name in ['merge-and-lane-cause-review.json','waveform-cause-review.json','control-selection.json','protocol.json','model-ready.json','run.json','review.json','enrollment-cause-review.json','mandarin-triple-supplement.json','author-sanity/review.json','training-feasibility.json','decision.json']}
 record['boundedOriginalMixtureTargetActivity']=activity
 if activity['protocol.json']:
     record['state']=(activity['run.json'] or activity['protocol.json'])['state'];record['next']='原RM-OVERLAP：按冻结跨会议短对照验证单一学习式目标活动候选，不改普通ASR/分离/文字，先技术接入再评分；短门不过不扩整场，不扫阈值。'
