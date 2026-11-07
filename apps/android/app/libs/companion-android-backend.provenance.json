@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T11:45:55+08:00",
-  "aarSha256": "616b66174a02aa9a95cfbadaa231c42f66471eda741858990ae80d9b47f62580",
-  "backendSourceCommit": "2a24144e1e933c2ef8bbc89df141be9e724dc69c",
+  "at": "2026-11-07T11:56:44+08:00",
+  "aarSha256": "02469020e146b79968d6693108e1225eb1bfcd0875fcd39a3317e25ffe510b95",
+  "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Only after initial pre-command133, rediscover the exact selected address within the existing1s retry budget and preserve ScanResult device for the single retry. Paired/private validation and no command replay retained. First attempt remains direct typed LE; unavailable optional scan retains original retry. Ordinary physical acceptance pending; JNI/assets/models unchanged.",
-  "javaSourceCommit": "2a24144e1e933c2ef8bbc89df141be9e724dc69c",
+  "scope": "After initial pre-command133, one exact-address filtered rediscovery within existing1s retry delay, independent of missing/custom name. Preserve scanned device for one retry, no bond clear or command replay. Direct first attempt and permissions/private validation retained; ordinary physical acceptance pending. Native/assets/models unchanged.",
+  "javaSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device087\\build\\inherited-provenance086.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device088\\build\\inherited-provenance087.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -181,5 +181,13 @@
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
     "com/denzic/companion/mobile/AndroidGattLink.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo086": true
+  "allNonClassAarEntriesByteIdenticalTo086": true,
+  "javaClassesChangedFrom087": [
+    "com/denzic/companion/mobile/AndroidDevices$1.class",
+    "com/denzic/companion/mobile/AndroidDevices$Scan$1.class",
+    "com/denzic/companion/mobile/AndroidDevices$Scan.class",
+    "com/denzic/companion/mobile/AndroidDevices.class",
+    "com/denzic/companion/mobile/DeviceNames.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo087": true
 }
