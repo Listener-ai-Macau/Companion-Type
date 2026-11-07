@@ -41455,7 +41455,7 @@
           "M_R003S01C01",
           "L_R003S01C02"
         ],
-        "currentQualification": "NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state OFFICIAL_NATIVE_ASR_COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED_SALE_OPEN. Overlap words/facts/installed mobile-card/final holdout/sale still open."
+        "currentQualification": "NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state AUTHOR_BOUNDARY_FROZEN_AUTHOR_BOUNDARY_COMPARISON_PREPARED_NO_NEW_INFERENCE_SALE_OPEN. Overlap words/facts/installed mobile-card/final holdout/sale still open."
       },
       "executionOrder": [
         "QM04",
@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T18:49:35+08:00",
+            "at": "2026-11-07T19:00:51+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "78034db60a5ce225e536c5f4218c5752ae8c3ec2",
+            "modelEvidenceCommit": "ce45d4dd8fe874c272e2d714f65e9d4fb214bfaa",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41641,7 +41641,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T18:49:35+08:00",
+            "at": "2026-11-07T19:00:51+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -41658,9 +41658,9 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T18:49:35+08:00",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
-            "state": "OFFICIAL_NATIVE_ASR_COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED_SALE_OPEN",
+            "at": "2026-11-07T19:00:51+08:00",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
+            "state": "AUTHOR_BOUNDARY_FROZEN_AUTHOR_BOUNDARY_COMPARISON_PREPARED_NO_NEW_INFERENCE_SALE_OPEN",
             "noNewQualityScoreUnlessFullCompleted": true,
             "review": null,
             "allSpeakersUnknownUntilValidatedAlignmentAndAttribution": true,
@@ -131527,7 +131527,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "沿CP09-02/CP23-10：先取得真实短录回收的目标/对齐/擦除耗时归因，修复含物理回执平均50KiB/s；不重复已失败的自制直连控制器，不移动计时终点。早期0x3E需真实失败空口/HCI对应；原应用/静态预算仍开放，受影响修复后再做当前版最终长录并传。709普通OTA53.201KiB/s、118.581秒、传后90.861秒本样本通过，不再列为未测。明确硬件/声学/生产/屏幕block及Windows原依赖保持。",
+      "next": "当前先用已有NOR和consume目标的只读关联区分709短录回收的真实块大小/地址。709实测SFDP32K=true已排除不支持；旧末次4K没有目标归因，不继续盲调分配或手机HIGH。拿到该证据后修原CP23-10短录50，随后CP09-02真实首次失败空口、原预算和最终长录；明确block不变。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134103,15 +134103,15 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T18:46:54+08:00",
-        "state": "IDLE_709095_SCOPED_ACCEPTANCE_SAVED_SHORT50_EARLY_RADIO_RESOURCE_OPEN",
+        "at": "2026-11-07T18:57:36+08:00",
+        "state": "OFFLINE710_CACHED_CONSUME_TARGET_CORRELATION",
         "phoneInstalled": "0.1.95",
         "firmwareInstalled": 66709,
         "phoneSourceCommit": "48c13c773c7c1a48fe83517c036fda0eb5376327",
         "backendSourceCommit": "166bce153cae32847912490d1f748a672f147ab9",
         "firmwareSource": "3304485e7a2c061133a44b3811c2bff25d9027ad",
-        "boardLease": false,
-        "boardItem": null,
+        "boardLease": true,
+        "boardItem": "Companion710短录物理回收实际归因",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
@@ -134119,9 +134119,9 @@
         "systemHciReportRunning": false,
         "ownLatestSession": 323,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66709\\progress.json",
-        "firmwareBuildSession": null,
-        "firmwareCandidate": 66709,
-        "candidateSourceCommit": "3304485e7a2c061133a44b3811c2bff25d9027ad",
+        "firmwareBuildSession": 26753,
+        "firmwareCandidate": 66710,
+        "candidateSourceCommit": null,
         "externalSnifferSession": null
       },
       "offlineCpuCandidate700": {
@@ -134335,9 +134335,9 @@
         ]
       },
       "lastOwnerRequest": {
-        "at": "2026-11-07T16:43:05+08:00",
-        "text": "继续看看怎么修复一下, 需要抓包器吗；已经接好了, 在拓展坞, 手机旁边；我还按下了reset按钮",
-        "handling": "Continue original CP09-02/CP23-10. Actual PCA10059 C06430228A01 identified and app-only official sniffer4.1.1 loaded; nowCOM14. No Companion reset/flash. Phone HCI captured; source094 prepares HIGH earlier during STOP, real any-length50 acceptance pending."
+        "at": "2026-11-07T18:57:36+08:00",
+        "text": "继续修短录音收取速度、偶发首次连接失败、资源占用及最终长录验收，修好了再售卖。",
+        "handling": "Continue original CP09-02/CP23-10 at61.44MHz, any-length50 including physical reclaim unchanged. No sale qualification until measured gates pass; explicit hardware blocks retained."
       },
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
@@ -136155,7 +136155,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": false,
+        "currentBoardLeaseHeld": true,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -141622,11 +141622,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "OFFICIAL_NATIVE_ASR_COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED_SALE_OPEN",
+          "status": "AUTHOR_BOUNDARY_FROZEN_AUTHOR_BOUNDARY_COMPARISON_PREPARED_NO_NEW_INFERENCE_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。",
+          "next": "原QM04：固定1.7B权重，验证作者低能量边界规则在本机约30秒预算下是否降低固定30秒截断的错误；不采用作者20分钟默认块长、不删语音/语气词，不喂参考。数学等价与原音逐样本覆盖已验，先30秒原生ID一致/最长约35秒不截断的真实短控，再完整S严格<5%才继续同完整L，否则保留结果停止复杂、不扫参数。独立接口、逐人/重叠/纪要事实/跨域独立集/手机实卡/售卖门继续OPEN。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -142950,7 +142950,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T18:49:35+08:00",
+              "at": "2026-11-07T19:00:51+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -145759,7 +145759,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "OFFICIAL_NATIVE_ASR_COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED_SALE_OPEN",
+              "state": "AUTHOR_BOUNDARY_FROZEN_AUTHOR_BOUNDARY_COMPARISON_PREPARED_NO_NEW_INFERENCE_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -151002,7 +151002,7 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。",
+              "next": "原QM04：固定1.7B权重，验证作者低能量边界规则在本机约30秒预算下是否降低固定30秒截断的错误；不采用作者20分钟默认块长、不删语音/语气词，不喂参考。数学等价与原音逐样本覆盖已验，先30秒原生ID一致/最长约35秒不截断的真实短控，再完整S严格<5%才继续同完整L，否则保留结果停止复杂、不扫参数。独立接口、逐人/重叠/纪要事实/跨域独立集/手机实卡/售卖门继续OPEN。",
               "lastOwnerQuote": "需要继续推进啊, 现在是在正确方向吗",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
@@ -151138,83 +151138,21 @@
                 "finalHoldoutOpened": false
               },
               "officialNativeAsrControl": {
-                "download-range-receipt.json": {
-                  "state": "COMPLETE_PINNED_PUBLIC_WEIGHTS_SHA256_VERIFIED",
-                  "at": "2026-11-07T17:49:03+08:00",
-                  "pid": 23328,
-                  "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
-                  "expectedBytes": 4076193080,
-                  "expectedSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
-                  "inferenceStarted": false,
-                  "modelWeightsReady": true,
-                  "ranges": [
-                    {
-                      "index": 2,
-                      "start": 2038096540,
-                      "end": 3057144809,
-                      "bytes": 1019048270,
-                      "resumedPrefixBytes": 0,
-                      "sha256": "38dd00b4ff37f67f363389e7cfda3af9dda419a76554a01e7a641230b522c192",
-                      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-2.part"
-                    },
-                    {
-                      "index": 1,
-                      "start": 1019048270,
-                      "end": 2038096539,
-                      "bytes": 1019048270,
-                      "resumedPrefixBytes": 0,
-                      "sha256": "c81de872457a7b36fc8b707a95b51e5641562db887c5e8ce880460886aa58105",
-                      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-1.part"
-                    },
-                    {
-                      "index": 0,
-                      "start": 0,
-                      "end": 1019048269,
-                      "bytes": 1019048270,
-                      "resumedPrefixBytes": 0,
-                      "sha256": "b536c86dc89a1af05858bef6d376c39bd1440c6cafa0e68bfd8db09c18c117f0",
-                      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-0.part"
-                    },
-                    {
-                      "index": 3,
-                      "start": 3057144810,
-                      "end": 4076193079,
-                      "bytes": 1019048270,
-                      "resumedPrefixBytes": 0,
-                      "sha256": "d54700523fd6b8d3b0b7cc659226b02aea6b84239f5e7803ccbc3f3770fd209f",
-                      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-3.part"
-                    }
-                  ],
-                  "finishedAt": "2026-11-07T17:50:11+08:00",
-                  "limits": {
-                    "pid": 23328,
-                    "cpuRate": 500,
-                    "cpuControlFlags": 5,
-                    "cpuPercentMaximum": 5.0,
-                    "inLimitedJob": true,
-                    "jobPrivateCommitLimitBytes": 268435456,
-                    "jobMemoryLimitEnabled": true,
-                    "jobPeakPrivateCommitBytes": 26300416,
-                    "cpuPriorityClass": 64,
-                    "memoryPagePriority": 1,
-                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
-                    "gpuPriorityClass": 0,
-                    "gpuUtilizationHardCapped": false,
-                    "scope": "This worker and its descendants only; no global or other-app changes."
-                  },
-                  "redundantVerifiedFragmentsRemoved": true
-                },
+                "download-range-receipt.json": null,
                 "prepared.json": {
-                  "state": "PINNED_NATIVE17_FILES_AND_EXECUTION_READY_NO_INFERENCE",
-                  "at": "2026-11-07T17:48:56+08:00",
+                  "state": "FROZEN_AUTHOR_BOUNDARY_COMPARISON_PREPARED_NO_NEW_INFERENCE",
+                  "at": "2026-11-07T18:40:58+08:00",
                   "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
-                  "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
                   "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
-                  "weightBytes": 4076193080,
-                  "modelWeightsReady": true,
+                  "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+                  "weightsReusedWithoutRedownload": true,
+                  "fullSpanCounts": {
+                    "S_R004S03C01": 79,
+                    "L_R003S01C02": 80
+                  },
+                  "fullNative17ComplexStillSeparateOngoingComparison": true,
                   "inferenceStarted": false,
-                  "qualityQualified": false,
-                  "executionProtocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75"
+                  "qualityQualified": false
                 },
                 "hip-inventory.json": {
                   "startedAt": "2026-11-07T17:47:17+08:00",
@@ -151267,214 +151205,18 @@
                 },
                 "short-run.json": null,
                 "short-native-state.json": null,
-                "full/run.json": {
-                  "state": "COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED",
-                  "pid": 26376,
-                  "startedAt": "2026-11-07T18:12:32+08:00",
-                  "priorAttemptReceipts": [
-                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\full\\full-attempt-0001.json"
-                  ],
-                  "results": [
-                    {
-                      "meeting": "S_R004S03C01",
-                      "exitCode": 0,
-                      "wholeProcessFamilySeconds": 553.7182878000021,
-                      "accumulatedProcessFamilySeconds": 1438.5105152000033,
-                      "sampledPrivatePeakBytes": 1243738112,
-                      "scoringExitCode": 0,
-                      "qualityReview": {
-                        "at": "2026-11-07T18:21:47+08:00",
-                        "meeting": "S_R004S03C01",
-                        "audioSeconds": 2327.119,
-                        "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
-                        "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
-                        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
-                        "referenceCharacters": 8325,
-                        "hypothesisCharacters": 8228,
-                        "chronologicalTextDiagnostic": {
-                          "edits": {
-                            "replace": 223,
-                            "delete": 177,
-                            "insert": 80
-                          },
-                          "cer": 0.05765765765765766,
-                          "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
-                        },
-                        "anonymousStreamCpCerDiagnostic": {
-                          "metric": "cpCER",
-                          "audioSeconds": 2327.119,
-                          "referenceCharacters": 8325,
-                          "referenceSpeakers": 5,
-                          "predictedTextStreams": 1,
-                          "edits": {
-                            "replace": 35,
-                            "delete": 5965,
-                            "insert": 5868
-                          },
-                          "totalEdits": 11868,
-                          "characterErrorRate": 1.4255855855855857,
-                          "anonymousAssignmentForEvaluationOnly": [
-                            {
-                              "referenceSpeaker": "001-M",
-                              "hypothesisSpeaker": null,
-                              "edits": 1983
-                            },
-                            {
-                              "referenceSpeaker": "002-F",
-                              "hypothesisSpeaker": null,
-                              "edits": 650
-                            },
-                            {
-                              "referenceSpeaker": "003-F",
-                              "hypothesisSpeaker": null,
-                              "edits": 1681
-                            },
-                            {
-                              "referenceSpeaker": "004-F",
-                              "hypothesisSpeaker": "__unconfirmed__",
-                              "edits": 5945
-                            },
-                            {
-                              "referenceSpeaker": "005-F",
-                              "hypothesisSpeaker": null,
-                              "edits": 1609
-                            }
-                          ],
-                          "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
-                        },
-                        "unconfirmedSpeakerText": {
-                          "characters": 8228,
-                          "fractionOfRecognizedCharacters": 1.0,
-                          "neverRealIdentityOrOwnerClaim": true
-                        },
-                        "confirmedAttributionCerDiagnostic": {
-                          "totalEdits": 16553,
-                          "cer": 1.9883483483483484,
-                          "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
-                        },
-                        "speakerActivityReview": null,
-                        "speakerJournalPending": true,
-                        "identityMetricsApplicable": false,
-                        "allAudioSamplesCoveredOnce": true,
-                        "allRawAsrTextPreserved": true,
-                        "nativeTokenOnsetsAreApproximate": true,
-                        "overlapBothVoicesRecovered": false,
-                        "qualified": false,
-                        "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
-                      },
-                      "actualProductDocumentContractPassed": true
-                    },
-                    {
-                      "meeting": "L_R003S01C02",
-                      "exitCode": 0,
-                      "wholeProcessFamilySeconds": 1474.7604900000151,
-                      "accumulatedProcessFamilySeconds": 1474.7604900000151,
-                      "sampledPrivatePeakBytes": 1278500864,
-                      "scoringExitCode": 0,
-                      "qualityReview": {
-                        "at": "2026-11-07T18:46:23+08:00",
-                        "meeting": "L_R003S01C02",
-                        "audioSeconds": 2362.945,
-                        "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
-                        "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
-                        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
-                        "referenceCharacters": 8676,
-                        "hypothesisCharacters": 8279,
-                        "chronologicalTextDiagnostic": {
-                          "edits": {
-                            "replace": 722,
-                            "delete": 842,
-                            "insert": 445
-                          },
-                          "cer": 0.23155832180728447,
-                          "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
-                        },
-                        "anonymousStreamCpCerDiagnostic": {
-                          "metric": "cpCER",
-                          "audioSeconds": 2362.945,
-                          "referenceCharacters": 8676,
-                          "referenceSpeakers": 6,
-                          "predictedTextStreams": 1,
-                          "edits": {
-                            "replace": 350,
-                            "delete": 5601,
-                            "insert": 5204
-                          },
-                          "totalEdits": 11155,
-                          "characterErrorRate": 1.2857307514983864,
-                          "anonymousAssignmentForEvaluationOnly": [
-                            {
-                              "referenceSpeaker": "002-F",
-                              "hypothesisSpeaker": null,
-                              "edits": 1581
-                            },
-                            {
-                              "referenceSpeaker": "003-F",
-                              "hypothesisSpeaker": null,
-                              "edits": 331
-                            },
-                            {
-                              "referenceSpeaker": "004-M",
-                              "hypothesisSpeaker": null,
-                              "edits": 1470
-                            },
-                            {
-                              "referenceSpeaker": "005-M",
-                              "hypothesisSpeaker": null,
-                              "edits": 1821
-                            },
-                            {
-                              "referenceSpeaker": "006-M",
-                              "hypothesisSpeaker": "__unconfirmed__",
-                              "edits": 5646
-                            },
-                            {
-                              "referenceSpeaker": "007-M",
-                              "hypothesisSpeaker": null,
-                              "edits": 306
-                            }
-                          ],
-                          "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
-                        },
-                        "unconfirmedSpeakerText": {
-                          "characters": 8279,
-                          "fractionOfRecognizedCharacters": 1.0,
-                          "neverRealIdentityOrOwnerClaim": true
-                        },
-                        "confirmedAttributionCerDiagnostic": {
-                          "totalEdits": 16955,
-                          "cer": 1.9542415859843245,
-                          "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
-                        },
-                        "speakerActivityReview": null,
-                        "speakerJournalPending": true,
-                        "identityMetricsApplicable": false,
-                        "allAudioSamplesCoveredOnce": true,
-                        "allRawAsrTextPreserved": true,
-                        "nativeTokenOnsetsAreApproximate": true,
-                        "overlapBothVoicesRecovered": false,
-                        "qualified": false,
-                        "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
-                      },
-                      "actualProductDocumentContractPassed": true
-                    }
-                  ],
-                  "referencePassedToWorker": false,
-                  "qualityQualified": false,
-                  "automaticModelFailureRetries": 0,
-                  "finishedAt": "2026-11-07T18:46:23+08:00"
-                },
+                "full/run.json": null,
                 "cache-recovery-proof.json": null,
                 "concurrency-proof.json": null,
                 "execution-stop-rule.json": null,
                 "followthrough-final-observation.json": null,
                 "review.json": null,
                 "next-direction.json": null,
-                "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+                "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
                 "activeExecution": {
-                  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+                  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
                   "previousControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-streamed-r2",
-                  "reason": "Next frozen checkpoint-capacity comparison;0.6B full results retained, no1.7B quality claim before actual inference."
+                  "reason": "Completed native1.7B full comparison and independent API; next frozen author-boundary short control, no new quality result yet."
                 },
                 "initialLoaderFailure": {
                   "state": "FAILED_NATIVE_CONTROL_RETAINED_NO_AUTOMATIC_RETRY",
@@ -151656,61 +151398,83 @@
                   "noisySilenceSolved": false,
                   "qualityQualified": false
                 },
-                "checkpoint17": {
-                  "ready": {
-                    "state": "PINNED_NATIVE17_ALL_FILES_VERIFIED_NO_INFERENCE",
-                    "at": "2026-11-07T17:50:11+08:00",
-                    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
-                    "weightSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
-                    "inferenceStarted": false,
+                "authorBoundaryControl": {
+                  "pilotRun": null,
+                  "pilotState": null,
+                  "comparisonRule": {
+                    "declaredAt": "2026-11-07T18:40:58+08:00",
+                    "state": "FROZEN_BEFORE_AUTHOR_BOUNDARY_NEURAL_INFERENCE",
+                    "baselineControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+                    "ordinaryMeeting": "S_R004S03C01",
+                    "baselineStrictCer": 0.05765765765765766,
+                    "requiredCerExclusiveMax": 0.05,
+                    "rule": "Accuracy-first: only if complete ordinary strict CER<5% continue the same full complex meeting. Otherwise retain the actual gain/regression and stop complex inference; no threshold/window sweep or per-meeting policy choosing. All other quality/sale gates remain open.",
+                    "whyDifferent": "Author uses low-energy cuts, while the controlled0.6B/1.7B comparisons used fixed30s cuts. This tests one specific input-boundary hypothesis, not another checkpoint/training/repetition penalty. The author1200s default is not attempted under this machine budget.",
+                    "referenceOrAsrTextUsedToSelectSpans": false,
                     "qualityQualified": false
                   },
-                  "pilotRun": {
-                    "state": "COMPLETE_BOUNDED_NATIVE_PILOT_REVIEW_REQUIRED",
-                    "pid": 5848,
-                    "startedAt": "2026-11-07T17:53:24+08:00",
-                    "priorAttemptReceipts": [],
-                    "results": [
+                  "boundaryMathProof": {
+                    "at": "2026-11-07T18:33:41+08:00",
+                    "state": "PASS_BOUNDED_WAV_AUTHOR_BOUNDARY_MATH_ONLY_NO_ASR_QUALITY_RESULT",
+                    "upstreamRevision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+                    "upstreamSourceSha256": "b37fb4140e6d9be85f2ecb1552ed16136eb98a57f44b402f8b0b213cb6df2a82",
+                    "portSourceSha256": "708ff9bcaa37b4b70789635601830cba04b4fb60ea763501509dfd39d62eca82",
+                    "controls": [
                       {
-                        "meeting": "pilot",
-                        "exitCode": 0,
-                        "wholeProcessFamilySeconds": 123.97364320000634,
-                        "accumulatedProcessFamilySeconds": 123.97364320000634,
-                        "sampledPrivatePeakBytes": 1243369472
+                        "label": "synthetic-pcm-boundary-math-not-speech-quality",
+                        "samples": 1488000,
+                        "spanCount": 4,
+                        "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
+                      },
+                      {
+                        "label": "short-upstream-early-return-no-padding",
+                        "samples": 4000,
+                        "spanCount": 1,
+                        "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
+                      },
+                      {
+                        "label": "public-original120s-boundary-math-not-asr-quality",
+                        "samples": 1920000,
+                        "spanCount": 4,
+                        "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
                       }
                     ],
-                    "referencePassedToWorker": false,
+                    "localTargetSeconds": 30.0,
+                    "authorDefaultAsrTargetSeconds": 1200.0,
+                    "searchExpandSeconds": 5.0,
+                    "energyWindowMilliseconds": 100.0,
+                    "sameBoundaryRuleDifferentMemoryBudget": true,
+                    "allOriginalSamplesCoveredOnce": true,
+                    "noiseOrSpeechRemoved": false,
+                    "fullPublicSpans": [
+                      {
+                        "meeting": "S_R004S03C01",
+                        "spans": 79,
+                        "minSeconds": 0.4891875,
+                        "maxSeconds": 34.80675,
+                        "paddingSamples": 173
+                      },
+                      {
+                        "meeting": "L_R003S01C02",
+                        "spans": 80,
+                        "minSeconds": 11.5794375,
+                        "maxSeconds": 34.86775,
+                        "paddingSamples": 0
+                      }
+                    ],
+                    "modelInferenceAdded": 0,
+                    "activeNative17NeuralProtocolChanged": false,
+                    "referencesOpened": false,
                     "qualityQualified": false,
-                    "automaticModelFailureRetries": 0,
-                    "finishedAt": "2026-11-07T17:55:28+08:00"
-                  },
-                  "pilotState": {
-                    "state": "PASS_BOUNDED_NATIVE_PILOT_FULL_QUALITY_UNMEASURED",
-                    "pid": 5076,
-                    "startedAt": "2026-11-07T17:53:25+08:00",
-                    "binding": {
-                      "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
-                      "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
-                      "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
-                      "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9"
-                    },
-                    "phase": "pilot",
-                    "modelLoaded": true,
-                    "newNeuralCalls": 3,
-                    "inheritedRootNodes": 0,
-                    "reusedNodeFiles": 0,
-                    "completedCacheOnly": false,
-                    "referencePassedToWorker": false,
-                    "speakerJournalPending": true,
                     "limits": {
-                      "pid": 5076,
+                      "pid": 22456,
                       "cpuRate": 500,
                       "cpuControlFlags": 5,
                       "cpuPercentMaximum": 5.0,
                       "inLimitedJob": true,
-                      "jobPrivateCommitLimitBytes": 2147483648,
+                      "jobPrivateCommitLimitBytes": 268435456,
                       "jobMemoryLimitEnabled": true,
-                      "jobPeakPrivateCommitBytes": 1283616768,
+                      "jobPeakPrivateCommitBytes": 36159488,
                       "cpuPriorityClass": 64,
                       "memoryPagePriority": 1,
                       "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -151718,151 +151482,136 @@
                       "gpuUtilizationHardCapped": false,
                       "scope": "This worker and its descendants only; no global or other-app changes."
                     },
-                    "gpu": "AMD Radeon RX 6800 XT",
-                    "modelLoadSeconds": 44.54926420000265,
-                    "ordinaryExactGeneratedIdsAndText": true,
-                    "ordinaryComparisonScope": "Fresh1.7B default versus bounded stop, not equality to0.6B checkpoint output.",
-                    "prior06FailureReproduced": false,
-                    "recoveredLeafCount": 1,
-                    "recoveredText": "内嘛，对吧？对对对，你看着有了，你都得及时把它清理喽，扫喽。这这都是咱们自己的这个管理方式问题了。对。嗯，关于宠物这块儿，你还真没有太好的办法，太好的办法去跟业主沟通。嗯，对，嗯，像这干活的，到时候有几个人在那勤巡逻一点，要不那个他底下这扫垃圾这工作人员他偷懒儿，都有时候楼道里边儿人家业主。",
-                    "exactZeroPipelineGuardPassed": true,
-                    "bareModelSilenceNotMeasured": true,
-                    "allOriginalSamplesCoveredByAcceptedLeavesOnce": true,
-                    "repeatedWordsDeleted": false,
-                    "qualityQualified": false,
-                    "finishedAt": "2026-11-07T17:55:27+08:00",
-                    "wholeWorkerSeconds": 121.93565040000249
+                    "scope": "Exact mathematical boundary equality on public120s and synthetic non-speech controls. Full real-meeting manifests prepared without neural scoring. No evidence yet of lower CER; not the authors1200s end-to-end configuration or a completed new quality experiment."
                   },
-                  "comparisonRule": {
-                    "declaredAt": "2026-11-07T17:48:56+08:00",
-                    "state": "FROZEN_BEFORE_NEW_CHECKPOINT_INFERENCE",
-                    "baselineControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-bounded-r4",
-                    "ordinaryMeeting": "S_R004S03C01",
-                    "baselineStrictCer": 0.06438438438438439,
-                    "rule": "If complete ordinary strict CER is not lower than6.43844%, stop further complex inference and reject default adoption. If better, finish the same full complex meeting before deciding. Text5%/person-aligned overlap/facts/independent set/mobile-card/sale remain open. No per-meeting model selection or reference-conditioned prompts.",
-                    "whatChanged": "Official native checkpoint0.6B→1.7B only; retain greedy/BF16/eager/Chinese/no-context/30s roots and frozen bounded recovery. Old mixed-precision community ONNX path and failed MOSS long native decoder are not retried.",
-                    "qualityQualified": false
-                  },
-                  "priorComplete06Review": {
-                    "at": "2026-11-07T17:38:30+08:00",
-                    "state": "BOUNDED_NATIVE_TWO_FULL_MEETINGS_COMPLETE_ACCURACY_AND_SALE_OPEN",
-                    "modelId": "Qwen/Qwen3-ASR-0.6B-hf",
-                    "revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
-                    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+                  "priorNative17Review": {
+                    "at": "2026-11-07T18:58:22+08:00",
+                    "state": "NATIVE17_FULL_COMPARISON_COMPLETE_QUALITY_AND_SALE_OPEN",
+                    "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+                    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+                    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+                    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
                     "results": [
                       {
                         "meeting": "S_R004S03C01",
                         "audioSeconds": 2327.119,
                         "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
-                        "rawChronologicalCerBeforeNativeVerbatim": 0.076996996996997,
-                        "rawChronologicalCerVerbatim": 0.06954954954954955,
-                        "rawChronologicalCerNativeQwen": 0.06438438438438439,
-                        "strictEditsBefore": 641,
-                        "strictEditsVerbatim": 579,
-                        "editsNativeQwen": 536,
+                        "rawChronologicalCerBaseline06": 0.06438438438438439,
+                        "rawChronologicalCerNativeQwen": 0.05765765765765766,
+                        "editsBaseline06": 536,
+                        "editsNative17": 480,
                         "editsByType": {
-                          "replace": 276,
-                          "delete": 191,
-                          "insert": 69
+                          "replace": 223,
+                          "delete": 177,
+                          "insert": 80
                         },
                         "referenceCharacters": 8325,
-                        "metricScope": "Full chronological strict text CER. Complex meeting value is only mixed-text diagnostic because overlapping reference order is not unique. No per-speaker/time-constrained or non-overlap-only qualification.",
-                        "rootWindows": 78,
-                        "acceptedLeafCount": 78,
+                        "referenceAndStrictScorerIdentical": true,
+                        "ordinaryOrComplexChronologicalMetricOnly": true,
+                        "nonOverlapOnlyOrPerSpeakerCerMeasured": false,
+                        "allAudioCoveredByAcceptedLeavesOnce": true,
+                        "allAcceptedLeafWordsPreserved": true,
                         "recoveredRootIndices": [],
-                        "failedRawNodeCount": 0,
-                        "allSamplesCoveredByAcceptedLeavesOnce": true,
-                        "everyAcceptedLeafRawWordPreserved": true,
-                        "failedParentRawRetainedSeparately": true,
-                        "originalOrdinaryWholeDocumentIdentical": true,
-                        "acceptedLeafInferenceSecondsIncludingInheritedRoots": 901.8815097999759,
-                        "newCommittedInferenceSecondsIncludingFailedNodes": 0,
-                        "originalR3KnownOwnedAsrProcessFamilySeconds": 1227.8013023000094,
-                        "boundedFullKnownOwnedProcessFamilySeconds": 6.113036700000521,
-                        "knownCombinedAsrProcessFamilySecondsIncludingInterruptedAttempts": 1233.91433900001,
-                        "resourceWaitManualEngineeringScoringTransferMinutesExcluded": true,
-                        "workerJobPrivateCommitPeakBytes": 26947584,
-                        "actualProductDocumentContractPassed": true,
-                        "modelOutputSha256": "f8275c4a8fed5117ce510bca95a780493585e14f323568e59ee52e0fa768c9ea",
-                        "allSpeakersUnconfirmed": true,
+                        "acceptedLeafCount": 78,
+                        "failedRawNodesRetained": 0,
+                        "committedInferenceSecondsIncludingFailedNodes": 1235.6909063999774,
+                        "acceptedLeafInferenceSeconds": 1235.6909063999774,
+                        "knownOwnedAsrProcessFamilySecondsIncludingInterruptions": 1438.5105152000033,
+                        "knownOwnedAsrRtf": 0.6181508187591623,
+                        "workerJobPrivateCommitPeakBytes": 1284050944,
+                        "fullWeightTensorCount": 707,
+                        "allFullWeightBytesGpuRoundtripVerified": true,
+                        "otherCheckpointNeuralOutputsReused": false,
+                        "actualSharedProductDocumentContractPassed": true,
+                        "allTextSpeakersUnknown": true,
                         "wordAlignmentMeasured": false,
-                        "overlapBothVoicesRecovered": false,
+                        "bothOverlappingVoicesRecovered": false,
+                        "modelOutputSha256": "c5738dac1b90f42d31cfb4353c4517b8aa93df81f797add05ee0552df346c53d",
                         "qualityQualified": false
                       },
                       {
                         "meeting": "L_R003S01C02",
                         "audioSeconds": 2362.945,
                         "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
-                        "rawChronologicalCerBeforeNativeVerbatim": 0.2676348547717842,
-                        "rawChronologicalCerVerbatim": 0.2612955278930383,
-                        "rawChronologicalCerNativeQwen": 0.23420931304748732,
-                        "strictEditsBefore": 2322,
-                        "strictEditsVerbatim": 2267,
-                        "editsNativeQwen": 2032,
+                        "rawChronologicalCerBaseline06": 0.23420931304748732,
+                        "rawChronologicalCerNativeQwen": 0.23155832180728447,
+                        "editsBaseline06": 2032,
+                        "editsNative17": 2009,
                         "editsByType": {
-                          "replace": 807,
-                          "delete": 797,
-                          "insert": 428
+                          "replace": 722,
+                          "delete": 842,
+                          "insert": 445
                         },
                         "referenceCharacters": 8676,
-                        "metricScope": "Full chronological strict text CER. Complex meeting value is only mixed-text diagnostic because overlapping reference order is not unique. No per-speaker/time-constrained or non-overlap-only qualification.",
-                        "rootWindows": 79,
-                        "acceptedLeafCount": 80,
+                        "referenceAndStrictScorerIdentical": true,
+                        "ordinaryOrComplexChronologicalMetricOnly": true,
+                        "nonOverlapOnlyOrPerSpeakerCerMeasured": false,
+                        "allAudioCoveredByAcceptedLeavesOnce": true,
+                        "allAcceptedLeafWordsPreserved": true,
                         "recoveredRootIndices": [
-                          34
+                          52
                         ],
-                        "failedRawNodeCount": 1,
-                        "allSamplesCoveredByAcceptedLeavesOnce": true,
-                        "everyAcceptedLeafRawWordPreserved": true,
-                        "failedParentRawRetainedSeparately": true,
-                        "originalOrdinaryWholeDocumentIdentical": null,
-                        "acceptedLeafInferenceSecondsIncludingInheritedRoots": 864.5569548998901,
-                        "newCommittedInferenceSecondsIncludingFailedNodes": 496.984193299897,
-                        "originalR3KnownOwnedAsrProcessFamilySeconds": 611.5318159000017,
-                        "boundedFullKnownOwnedProcessFamilySeconds": 628.4056701999798,
-                        "knownCombinedAsrProcessFamilySecondsIncludingInterruptedAttempts": 1239.9374860999815,
-                        "resourceWaitManualEngineeringScoringTransferMinutesExcluded": true,
-                        "workerJobPrivateCommitPeakBytes": 1246883840,
-                        "actualProductDocumentContractPassed": true,
-                        "modelOutputSha256": "388cd23347308543615b2be330290e650fa7c8042a8632e6e6127fd2a1e4994e",
-                        "allSpeakersUnconfirmed": true,
+                        "acceptedLeafCount": 80,
+                        "failedRawNodesRetained": 1,
+                        "committedInferenceSecondsIncludingFailedNodes": 1338.240509900119,
+                        "acceptedLeafInferenceSeconds": 1326.6459836001159,
+                        "knownOwnedAsrProcessFamilySecondsIncludingInterruptions": 1474.7604900000151,
+                        "knownOwnedAsrRtf": 0.6241196853925991,
+                        "workerJobPrivateCommitPeakBytes": 1284194304,
+                        "fullWeightTensorCount": 707,
+                        "allFullWeightBytesGpuRoundtripVerified": true,
+                        "otherCheckpointNeuralOutputsReused": false,
+                        "actualSharedProductDocumentContractPassed": true,
+                        "allTextSpeakersUnknown": true,
                         "wordAlignmentMeasured": false,
-                        "overlapBothVoicesRecovered": false,
+                        "bothOverlappingVoicesRecovered": false,
+                        "modelOutputSha256": "1c37e298213dac10217dbcf50f2874e5fa7bad8d0cc4d56943405be0dde70a0e",
                         "qualityQualified": false
                       }
                     ],
-                    "bothChronologicalTextComparisonsImprovedVersusVerbatim": true,
-                    "ordinaryFullChronologicalTextBelow5Percent": false,
-                    "decision": "Bounded failure recovery completes the entire complex meeting, retaining original failed30s raw nodes and exact ordinary full Document. Keep as an opt-in research candidate only. Accuracy5%, aligned people/overlap words and sale acceptance remain open; no default promotion.",
-                    "next": "原QM04准确率优先继续：本轮解决固定30秒复读造成的未完成，普通完整S仍6.43844%>5%。保留独立原生候选及全部失败、固定两整会/严格评分和现有CPU5%/private2GiB预算；下一项验证有公开会议依据的更强原生ASR能力，不靠删语气词、数字改写、参考热词或按已见会议挑后端达标。实际词级对齐后才回填FP16分人，重叠必须分别恢复每人内容，不能给30秒块整段贴人物。复杂逐人/跨域/纪要事实/手机实卡/最终未见集/售卖门保持OPEN。",
-                    "sourceOfPriorFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\review.json",
-                    "pilot": {
+                    "completeMeetingCount": 2,
+                    "ordinaryFullChronologicalCerBelow5Percent": false,
+                    "decision": "Retain native1.7B as an opt-in research candidate: ordinary strict full text beats the predeclared0.6B baseline. Report each complex diagnostic separately; no installed default, aligned-identity, overlap-content or sale promotion.",
+                    "next": "沿原QM04/QM05/RM-OVERLAP继续：保留1.7B真实整会结果，普通严格5%只按本场实际成绩记录。下一项用独立官方词级对齐模型处理已有识别原文，保留每个原字并核验真实时间，再接FP16分人，分别测全会逐人/非重叠/重叠错误，不能把30秒块贴成一个人或拿混音分数当重叠通过。普通不足5%继续原准确率项；复杂分离逐路/事实纪要/跨域独立集/双端实卡/售卖门全保留。",
+                    "predeclaredComparisonRule": {
+                      "declaredAt": "2026-11-07T17:48:56+08:00",
+                      "state": "FROZEN_BEFORE_NEW_CHECKPOINT_INFERENCE",
+                      "baselineControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-bounded-r4",
+                      "ordinaryMeeting": "S_R004S03C01",
+                      "baselineStrictCer": 0.06438438438438439,
+                      "rule": "If complete ordinary strict CER is not lower than6.43844%, stop further complex inference and reject default adoption. If better, finish the same full complex meeting before deciding. Text5%/person-aligned overlap/facts/independent set/mobile-card/sale remain open. No per-meeting model selection or reference-conditioned prompts.",
+                      "whatChanged": "Official native checkpoint0.6B→1.7B only; retain greedy/BF16/eager/Chinese/no-context/30s roots and frozen bounded recovery. Old mixed-precision community ONNX path and failed MOSS long native decoder are not retried.",
+                      "qualityQualified": false
+                    },
+                    "sharedPilotOwnedProcessFamilySeconds": 123.97364320000634,
+                    "timeScope": "Known owned full-ASR attempts include load/interrupted work. Shared short pilot separate. Resource waits/manual engineering/scoring/transfer/word-alignment/minutes are excluded; not stop-recording-to-final-summary latency.",
+                    "nativePilot": {
                       "state": "PASS_BOUNDED_NATIVE_PILOT_FULL_QUALITY_UNMEASURED",
-                      "pid": 12496,
-                      "startedAt": "2026-11-07T17:23:30+08:00",
+                      "pid": 5076,
+                      "startedAt": "2026-11-07T17:53:25+08:00",
                       "binding": {
-                        "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
-                        "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
-                        "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
-                        "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa"
+                        "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+                        "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+                        "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+                        "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9"
                       },
                       "phase": "pilot",
                       "modelLoaded": true,
                       "newNeuralCalls": 3,
-                      "inheritedRootNodes": 2,
+                      "inheritedRootNodes": 0,
                       "reusedNodeFiles": 0,
                       "completedCacheOnly": false,
                       "referencePassedToWorker": false,
                       "speakerJournalPending": true,
                       "limits": {
-                        "pid": 12496,
+                        "pid": 5076,
                         "cpuRate": 500,
                         "cpuControlFlags": 5,
                         "cpuPercentMaximum": 5.0,
                         "inLimitedJob": true,
                         "jobPrivateCommitLimitBytes": 2147483648,
                         "jobMemoryLimitEnabled": true,
-                        "jobPeakPrivateCommitBytes": 1243611136,
+                        "jobPeakPrivateCommitBytes": 1283616768,
                         "cpuPriorityClass": 64,
                         "memoryPagePriority": 1,
                         "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -151871,115 +151620,157 @@
                         "scope": "This worker and its descendants only; no global or other-app changes."
                       },
                       "gpu": "AMD Radeon RX 6800 XT",
-                      "modelLoadSeconds": 14.992228400020394,
+                      "modelLoadSeconds": 44.54926420000265,
                       "ordinaryExactGeneratedIdsAndText": true,
-                      "failedParentRawRetained": true,
-                      "recoveredLeafCount": 2,
-                      "recoveredText": "内嘛，对不对？对对对。嗯，你总看着有了，你都得及时把它清理喽，扫喽。这都是咱们自己的这个管理方式问题啊。对。嗯，关于宠物这块儿，你还真没有。\n太好的办法，嗯嗯，嗯，像这干活的，到时候有接人儿在内勤巡逻一点儿，要不那个他底下这扫垃圾这工作人员他偷懒儿，都有时候楼道里边人家业主。",
+                      "ordinaryComparisonScope": "Fresh1.7B default versus bounded stop, not equality to0.6B checkpoint output.",
+                      "prior06FailureReproduced": false,
+                      "recoveredLeafCount": 1,
+                      "recoveredText": "内嘛，对吧？对对对，你看着有了，你都得及时把它清理喽，扫喽。这这都是咱们自己的这个管理方式问题了。对。嗯，关于宠物这块儿，你还真没有太好的办法，太好的办法去跟业主沟通。嗯，对，嗯，像这干活的，到时候有几个人在那勤巡逻一点，要不那个他底下这扫垃圾这工作人员他偷懒儿，都有时候楼道里边儿人家业主。",
+                      "exactZeroPipelineGuardPassed": true,
+                      "bareModelSilenceNotMeasured": true,
                       "allOriginalSamplesCoveredByAcceptedLeavesOnce": true,
                       "repeatedWordsDeleted": false,
                       "qualityQualified": false,
-                      "finishedAt": "2026-11-07T17:24:26+08:00",
-                      "wholeWorkerSeconds": 56.21614189998945
+                      "finishedAt": "2026-11-07T17:55:27+08:00",
+                      "wholeWorkerSeconds": 121.93565040000249
                     },
-                    "completedCacheProof": {
-                      "at": "2026-11-07T17:32:06+08:00",
-                      "state": "PASS_BOUNDED_COMPLETE_CACHE_IDENTICAL_ZERO_MODEL_STICKY_NODE_REFUSAL",
-                      "sourceMeeting": "S_R004S03C01",
-                      "sourceOutputSha256": "f8275c4a8fed5117ce510bca95a780493585e14f323568e59ee52e0fa768c9ea",
-                      "modelLoadedInControls": false,
-                      "newNeuralCalls": 0,
-                      "completeReopenExactDocumentAndNodeBytes": true,
-                      "missingCommittedNodeRefusedTwice": true,
-                      "noReferenceProvided": true,
-                      "originalExperimentUnchanged": true,
-                      "heldNodeRawPreserved": true,
+                    "independentCommandProof": {
+                      "at": "2026-11-07T18:57:41+08:00",
+                      "state": "PASS_INDEPENDENT_NATIVE_INPUT_CANCEL_RESUME_CACHE_AND_SHARED_DOCUMENT",
+                      "audioSeconds": 60.0,
+                      "publicOriginalSourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                      "publicInputSha256": "9405f586f3e4908725aa278a21e06654e7abae99c63240850d09c945b533c4c5",
+                      "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
+                      "modelPackSha256": "a3726424dc74f929c44433d35387f883e5dd1bd16242d60733b5427ffd29dcc2",
+                      "outputSha256": "bf129c791bffab0e3509a6d277925b2456a1c02278851f1a9fc9e3776e96233e",
+                      "actualCancellationAfterCommittedFirstRoot": true,
+                      "firstRootRawBytesReusedUnchanged": true,
+                      "independentNativeIdsAndTextMatchResearchOnSameAudio": true,
+                      "actualSharedRustProductDocumentPassed": true,
+                      "completeCacheZeroModelExactOutput": true,
+                      "missingCommittedNodeRefusedTwiceZeroModel": true,
+                      "restoredOriginalNodeReopensZeroModel": true,
+                      "originalAudioUnchanged": true,
+                      "knownOwnedWorkerAttempts": [
+                        {
+                          "startedAt": "2026-11-07T18:50:11+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0001.log",
+                          "wholeProcessFamilySeconds": 62.833705299999565,
+                          "privatePeakBytes": 1238175744,
+                          "interrupted": true,
+                          "exitCode": 15,
+                          "finishedAt": "2026-11-07T18:51:13+08:00",
+                          "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:51:15+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0002.log",
+                          "wholeProcessFamilySeconds": 55.471261600003345,
+                          "privatePeakBytes": 1087918080,
+                          "interrupted": true,
+                          "exitCode": 15,
+                          "finishedAt": "2026-11-07T18:52:10+08:00",
+                          "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:56:11+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0003.log",
+                          "wholeProcessFamilySeconds": 79.50375920001534,
+                          "privatePeakBytes": 1238736896,
+                          "cacheOnlyExpected": false,
+                          "exitCode": 0,
+                          "finishedAt": "2026-11-07T18:57:31+08:00"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:57:32+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0004.log",
+                          "wholeProcessFamilySeconds": 1.0254825000010896,
+                          "privatePeakBytes": 1445888,
+                          "cacheOnlyExpected": true,
+                          "exitCode": 0,
+                          "finishedAt": "2026-11-07T18:57:33+08:00"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:57:35+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0005.log",
+                          "wholeProcessFamilySeconds": 1.0206046999956015,
+                          "privatePeakBytes": 1638400,
+                          "cacheOnlyExpected": true,
+                          "exitCode": 1,
+                          "finishedAt": "2026-11-07T18:57:36+08:00",
+                          "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:57:37+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0006.log",
+                          "wholeProcessFamilySeconds": 1.018027499987511,
+                          "privatePeakBytes": 581632,
+                          "cacheOnlyExpected": true,
+                          "exitCode": 1,
+                          "finishedAt": "2026-11-07T18:57:38+08:00",
+                          "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+                        },
+                        {
+                          "startedAt": "2026-11-07T18:57:39+08:00",
+                          "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0007.log",
+                          "wholeProcessFamilySeconds": 1.0187988999823574,
+                          "privatePeakBytes": 1626112,
+                          "cacheOnlyExpected": true,
+                          "exitCode": 0,
+                          "finishedAt": "2026-11-07T18:57:40+08:00"
+                        }
+                      ],
+                      "controlEvents": [
+                        {
+                          "label": "independent-real-resume-after-resource-3",
+                          "exitCode": 0,
+                          "wholeControllerFamilySeconds": 80.89987220001058,
+                          "cancelRequestedAfterFirstCommittedRoot": false
+                        },
+                        {
+                          "label": "independent-complete-cache-reopen",
+                          "exitCode": 0,
+                          "wholeControllerFamilySeconds": 2.409045699983835,
+                          "cancelRequestedAfterFirstCommittedRoot": false
+                        },
+                        {
+                          "label": "independent-missing-node-refusal",
+                          "exitCode": 1,
+                          "wholeControllerFamilySeconds": 2.408750400005374,
+                          "cancelRequestedAfterFirstCommittedRoot": false
+                        },
+                        {
+                          "label": "independent-missing-node-refusal-again",
+                          "exitCode": 1,
+                          "wholeControllerFamilySeconds": 2.407951700006379,
+                          "cancelRequestedAfterFirstCommittedRoot": false
+                        },
+                        {
+                          "label": "independent-restored-node-cache-reopen",
+                          "exitCode": 0,
+                          "wholeControllerFamilySeconds": 2.408296199981123,
+                          "cancelRequestedAfterFirstCommittedRoot": false
+                        }
+                      ],
+                      "continuedExistingFixtureAfterRealLowRam": true,
+                      "privateAudioUploaded": false,
+                      "privateTaskPublished": false,
+                      "publicFixtureOnly": true,
+                      "installedAppOrPhoneCardPassed": false,
                       "qualityQualified": false
                     },
-                    "realConcurrencyProof": {
-                      "at": "2026-11-07T17:28:24+08:00",
-                      "state": "PASS_REAL_COMMAND_REFUSES_CONCURRENT_NATIVE_ASR_BEFORE_NEURAL_LAUNCH",
-                      "publicAudio": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\public61-from-S.wav",
-                      "modelPack": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-command-r1\\model-pack.json",
-                      "commandExitCode": 1,
-                      "taskState": "INCOMPLETE_RETAINED_RESUMABLE",
-                      "refusal": "AssertionError('已有模型正在处理，请待该任务结束后继续。')",
-                      "newNeuralStages": 0,
-                      "originalFullRunNotStopped": true,
-                      "otherApplicationsTouched": false,
-                      "referencesProvided": false,
-                      "adapterSourceSha256": "3898f00eb79e28ba5dd5919fd59eda3a5e8235ee134ff6645e757ece9e1891d8",
-                      "qualityQualified": false
-                    },
-                    "sharedPilotOwnedProcessFamilySeconds": 58.71164809999755,
-                    "timeScope": "Per-meeting sums include known interrupted owned ASR attempts; shared pilot shown separately. The one externally aborted R3 controller has censored duration, excluded from known sums. Wall gaps include manual engineering and actual memory recovery; neither is product summary latency.",
                     "qualityQualified": false,
                     "defaultProductChanged": false,
-                    "installedWindowsOrAndroidBackendChanged": false,
-                    "cardAcousticOrPhoneAcceptance": false,
-                    "realCustomerTrialPerformed": false,
                     "finalHoldoutOpened": false,
-                    "referenceNeverPassedToInference": true,
-                    "modelWeightsOrPromptsChanged": false,
-                    "decodeRecoveryAndConditionalInputCutsChanged": true,
-                    "posthocRepeatedWordRemoval": false,
-                    "fillerOrErRemovedToScore": false,
-                    "qualification": "NOT_QUALIFIED: exposed development full text only. Strict5%/person-aligned text/separated overlap/factual minutes/cross-corpus final holdout/installed phone-card and sale remain unqualified. Prior AMI31.0766% speaker failure is retained."
-                  },
-                  "ordinaryStage": {
-                    "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
-                    "rawChronologicalCerBaseline06": 0.06438438438438439,
-                    "rawChronologicalCerNative17": 0.05765765765765766,
-                    "referenceCharacters": 8325,
-                    "editsNative17": 480,
-                    "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
-                    "qualityQualified": false,
-                    "speakerWordAlignmentMeasured": false
-                  },
-                  "independentPack": {
-                    "version": 1,
-                    "backend": "qwen-native-bounded",
-                    "createdAt": "2026-11-07T18:04:03+08:00",
-                    "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
-                    "pinnedFiles": {
-                      "protocol.json": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
-                      "native-protocol.json": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
-                      "seed-manifest.json": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
-                      "audio-only.json": "c6a436d9fca9f6d18feb6662e9c080c2b0fcfd1bba5d786fe4a05f125f49b198",
-                      "pilot-extra-audio-only.json": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
-                      "pilot/state.json": "6d341d6d5e5d17cf07ce08a0065d3472653fe58f91ceed7874bf9a7cbc52ffcc",
-                      "model-ready.json": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
-                      "hip-inventory.json": "354df12137fbc0e09480a8984a66428e34c588d2fa9bccb8d66b32d625a992d9"
-                    },
-                    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
-                    "pythonExecutable": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
-                    "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
-                    "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
-                    "capabilities": {
-                      "localAsr": true,
-                      "wordTimestamps": false,
-                      "speakerAttribution": false,
-                      "overlapVoiceSeparation": false,
-                      "minutes": false
-                    },
-                    "qualityQualified": false,
-                    "installedAppDefaultChanged": false,
-                    "scope": "Explicit local research candidate pack. A passed short control is not full quality, phone/card or sale qualification. Private task contents never enter public evidence."
-                  },
-                  "independentBusyProof": {
-                    "state": "PASS_INDEPENDENT_NATIVE_COMMAND_REFUSES_REAL_CONCURRENT_MODEL_ZERO_NEURAL_CHILDREN",
-                    "exitCode": 1,
-                    "refusal": "AssertionError('已有模型正在处理，请待该任务结束后继续。')",
-                    "neuralChildrenLaunched": 0,
-                    "publicAudioOnly": true,
-                    "privateDataUploaded": false,
-                    "originalFullRunNotStopped": true,
-                    "qualityQualified": false
-                  },
-                  "independentCommandProof": null
+                    "realCustomerTrialPerformed": false,
+                    "installedWindowsAndroidOrCardAcceptance": false,
+                    "factualMinutesMeasured": false,
+                    "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
+                    "noTrainingReferenceHotwordsOrFillerErDeletion": true
+                  }
                 }
               },
-              "sourceAndEvidenceCommit": "78034db60a5ce225e536c5f4218c5752ae8c3ec2",
+              "sourceAndEvidenceCommit": "ce45d4dd8fe874c272e2d714f65e9d4fb214bfaa",
               "remoteReadbackConfirmed": true
             }
           }
