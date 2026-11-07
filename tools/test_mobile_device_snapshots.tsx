@@ -4,8 +4,7 @@ import {act,create} from 'react-test-renderer';
 const g=globalThis as any;
 g.document={querySelectorAll:()=>[],querySelector:()=>null,getElementById:()=>null};
 g.localStorage={getItem:()=>null,setItem:()=>{}};
-const ownedIntervals=new Set<ReturnType<typeof setInterval>>();
-g.window={setTimeout,clearTimeout,setInterval:(fn:any,ms:number)=>{const id=setInterval(fn,ms);ownedIntervals.add(id);return id;},clearInterval:(id:any)=>{ownedIntervals.delete(id);clearInterval(id);},requestAnimationFrame:(fn:any)=>{fn();return 0;},matchMedia:()=>({matches:false})};
+g.window={setTimeout,clearTimeout,setInterval,clearInterval,requestAnimationFrame:(fn:any)=>{fn();return 0;},matchMedia:()=>({matches:false})};
 const {App}=await import('../apps/mobile/src/App');
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
 const old={index:0,session:'41',segment:0,segments:1,bytes:2000,durationMs:1000,complete:true};
@@ -135,4 +134,3 @@ await controlReplyAcrossCompletion(false);await controlReplyAcrossCompletion(tru
 console.log('PASS_CONTROL_REPLY_SURVIVES_BOTH_COMPLETION_ORDERINGS_OTHER_DEVICE_STILL_CLEARS');
 console.log('PASS_REAL_MOBILE_COMPONENT_COMBINED_CATALOG_CONTROL_ACK_FOLLOWUP_FAILURE_NO_REPLAY_AND_LEGACY_BRIDGE');
 console.log('PASS_COMPLETED_EXACT_DEVICE_UID_EPOCH_SESSION_ROW_REMOVED_PAUSE_OTHER_DEVICE_EPOCH_LEGACY_RETAINED_NATIVE_INDICES_UNCHANGED');
-for(const id of ownedIntervals)clearInterval(id);
