@@ -1,0 +1,7 @@
+{
+  "recordedAt": "2026-11-07T12:30:53+08:00",
+  "error": "ggml_backend_dev_name not exported from ggml.dll",
+  "fix": "Bind documented device-property symbols from bundled ggml-base.dll; registry count/get stay in ggml.dll",
+  "neuralModelsLoaded": 0,
+  "correctedNativeDeviceEnumerationPassed": true
+}

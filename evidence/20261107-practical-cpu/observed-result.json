@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-07T12:18:26+08:00",
-  "phase": "finished",
+  "at": "2026-11-07T12:30:53+08:00",
+  "phase": "prepared",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
     "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -1566,7 +1566,8 @@
     "qualityQualified": false,
     "speakerControllerExitCode": 0,
     "speakerBatchState": "COMPLETE_BOUNDED_SPEAKER_BATCH_REVIEW_REQUIRED",
-    "finishedAt": "2026-11-07T12:18:26+08:00"
+    "finishedAt": "2026-11-07T12:18:26+08:00",
+    "preservationExitCode": 0
   },
   "boundedSpeakerReviews": [
     {
@@ -2807,13 +2808,13 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED",
+  "state": "NATIVE8_INCOMPLETE_RETAINED_NO_AUTOMATIC_RETRY",
   "candidateAssessment": {
-    "at": "2026-11-07T12:18:28+08:00",
+    "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
     "sourceChainState": "COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED",
     "existingGateContractVersion": "companion.real-meeting-model-gates.v1",
-    "gateContractBacklogSha256": "fa63aab8f194aa4180897e6a0bd4ca266d568054e1b47aeaf7170baad835a95a",
+    "gateContractBacklogSha256": "554d0681725063dc43ca63c4e71c9694f977b5d805cd41bbd244af286da1cd74",
     "fullMeetingCount": 2,
     "minimumFullMeetingsForQualification": 3,
     "neverDefaultBackendPromotion": true,
@@ -4089,8 +4090,114 @@
     "modelCandidateNotQualified": true,
     "routeReason": "Current full official complete-link result fragmented6 reference speakers into190 active groups, DER78.0445%. Test one pretrained8-channel end-to-end diarizer rather than per-meeting threshold fitting. Same full development meetings and original quality gates; not overlap-word separation or ASR<5%."
   },
-  "native8ShortRun": null,
+  "native8ShortRun": {
+    "state": "NATIVE8_INCOMPLETE_RETAINED_NO_AUTOMATIC_RETRY",
+    "pid": 4896,
+    "startedAt": "2026-11-07T12:19:25+08:00",
+    "results": [
+      {
+        "meeting": "public61-native8-control",
+        "phase": "activity",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 81.81832900000154,
+        "privatePeakBytes": 1517481984
+      },
+      {
+        "meeting": "public61-native8-control",
+        "phase": "cli-control",
+        "exitCode": 1,
+        "workerState": "FAILED_NATIVE_CLI_COMPATIBILITY",
+        "wholeProcessFamilySeconds": 78.75262409998686,
+        "privatePeakBytes": 1514500096
+      }
+    ],
+    "automaticRetries": 0,
+    "referencePassedToWorker": false,
+    "protocolSha256": "2060d7d99dbb06923c364298e4179b2d29e719682b6dad5e7fddb5ef696fc1cd",
+    "workerSourceSha256": "1dcfb847c021f7d0c4c3a471bd1f97b8aff57f5c90558b447c61921a2be80fa1",
+    "finishedAt": "2026-11-07T12:22:07+08:00"
+  },
   "native8FullRun": null,
   "boundedFullFirstMeetingRejected": true,
+  "native8VulkanShortRun": null,
+  "native8VulkanFullRun": null,
+  "native8GeometryCorrection": {
+    "recordedAt": "2026-11-07T12:30:53+08:00",
+    "state": "EXPLICIT_GEOMETRY_FIX_READY_NOT_A_QUALITY_GAIN",
+    "oldCpuControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-smoke-r1",
+    "originalExactCompatibilityGateFailed": true,
+    "observedDifference": "One onset22.600s vs22.580s; IDs/counts otherwise same. Original rows and error retained.",
+    "releasedV3OfflinePreset": {
+      "spkcache_len": 264,
+      "fifo_len": 0,
+      "chunk_len": 264,
+      "right_context": 1,
+      "update_period": 188,
+      "left_context": 1
+    },
+    "oldWrapperLeftContextOverride": 0,
+    "oldProtocolDeclaredButNotAppliedGeometry": {
+      "spkcache_len": 264,
+      "fifo_len": 40,
+      "chunk_len": 340,
+      "right_context": 40,
+      "update_period": 300,
+      "left_context": 0
+    },
+    "fix": "Use all6 explicit geometry fields consistently in both official C ABI and native CLI, with no preset overriding them. Keep the exact compatibility gate; no tolerance relaxation or threshold sweep.",
+    "nativeGpuEnumeration": {
+      "state": "PASS_ACTUAL_NATIVE_VULKAN_RX6800XT_ENUMERATION_NO_INFERENCE",
+      "devices": [
+        {
+          "registryIndex": 0,
+          "name": "Vulkan0",
+          "description": "AMD Radeon RX 6800 XT",
+          "type": 1,
+          "gpuOrdinal": 0
+        },
+        {
+          "registryIndex": 1,
+          "name": "Vulkan1",
+          "description": "AMD Radeon 780M Graphics",
+          "type": 2,
+          "gpuOrdinal": 1
+        },
+        {
+          "registryIndex": 2,
+          "name": "CPU",
+          "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+          "type": 0
+        }
+      ],
+      "selected": {
+        "registryIndex": 0,
+        "name": "Vulkan0",
+        "description": "AMD Radeon RX 6800 XT",
+        "type": 1,
+        "gpuOrdinal": 0
+      },
+      "inferencePerformed": false,
+      "limits": {
+        "pid": 29528,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 43716608,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    },
+    "cpuPrivateJobPeakBytes": 1647734784,
+    "noWholeMeetingNative8InferenceYet": true,
+    "modelWeightsAndQualityGatesUnchanged": true
+  },
   "next": "原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。"
 }

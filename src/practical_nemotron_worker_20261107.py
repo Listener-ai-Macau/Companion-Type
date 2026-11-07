@@ -44,15 +44,23 @@ def main():
     try:
         assert sha(case['audio'])==case['audioSha256'] and sha(P['model'])==P['modelSha256'] and sha(P['nativeLibrary'])==P['nativeLibrarySha256']
         assert all(sha(Path(P['nativeLibrary']).parent/name)==digest for name,digest in P['nativeFiles'].items())
-        assert P['preset']=='v3-offline' and P['probabilityThreshold']==.5 and P['postProcessing']=='uniform_frame_threshold_no_pad_no_duration_filter'
+        assert P['preset']=='author-offline-explicit' and P['probabilityThreshold']==.5 and P['postProcessing']=='uniform_frame_threshold_no_pad_no_duration_filter'
         folder=Path(P['nativeLibrary']).parent;directory_cookie=os.add_dll_directory(str(folder));os.chdir(folder)
+        gpu=-1
+        if P['backend']=='vulkan':
+            assert sha(Path(__file__).with_name('practical_native_devices_20261107.py'))==P['deviceSelectorSourceSha256']
+            from practical_native_devices_20261107 import devices,select_6800xt
+            inventory=devices(folder);selected=select_6800xt(inventory);gpu=selected['gpuOrdinal'];state.update(nativeDeviceInventory=inventory,selectedNativeDevice=selected)
+        else:assert P['backend']=='cpu'
         lib=ct.CDLL(P['nativeLibrary']);void=ct.c_void_p;fptr=ct.POINTER(ct.c_float)
         signatures={'nemo_speech_asr_last_error':([],ct.c_char_p),'nemo_speech_diar_create':([ct.POINTER(ModelConfig),ct.POINTER(void)],ct.c_int),'nemo_speech_diar_destroy':([void],None),'nemo_speech_diar_stream_open':([void,ct.POINTER(void)],ct.c_int),'nemo_speech_diar_stream_push_f32':([void,fptr,ct.c_size_t,ct.c_int32],ct.c_int),'nemo_speech_diar_stream_finish':([void],ct.c_int),'nemo_speech_diar_stream_close':([void],None),'nemo_speech_diar_num_speakers':([void],ct.c_int32),'nemo_speech_diar_seconds_per_frame':([void],ct.c_double),'nemo_speech_diar_frame_count':([void],ct.c_int64),'nemo_speech_diar_frame_probs_start':([void],ct.c_int64),'nemo_speech_diar_frame_probs':([void,fptr,ct.c_size_t],ct.c_int)}
         for name,(params,result) in signatures.items():fn=getattr(lib,name);fn.argtypes=params;fn.restype=result
         def check(code):
             if code:raise RuntimeError('Native status '+str(code)+': '+(lib.nemo_speech_asr_last_error() or b'').decode('utf8',errors='replace'))
-        config=ModelConfig(size=ct.sizeof(ModelConfig),model_path=P['model'].encode('utf8'),gpu=-1,preset=P['preset'].encode('ascii'),left_context_frames=0)
+        geometry=P['streamingGeometry'];assert geometry=={'spkcache_len':264,'fifo_len':40,'chunk_len':340,'right_context':40,'update_period':300,'left_context':0}
+        config=ModelConfig(size=ct.sizeof(ModelConfig),model_path=P['model'].encode('utf8'),gpu=gpu,preset=None,chunk_frames=geometry['chunk_len'],right_context_frames=geometry['right_context'],left_context_frames=geometry['left_context'],fifo_frames=geometry['fifo_len'],spkcache_frames=geometry['spkcache_len'],update_period_frames=geometry['update_period'])
         check(lib.nemo_speech_diar_create(ct.byref(config),ct.byref(model)));speakers=lib.nemo_speech_diar_num_speakers(model);cadence=lib.nemo_speech_diar_seconds_per_frame(model);assert speakers==8 and abs(cadence-.01)<1e-8
+        state.update(gpuUsed=gpu>=0,backend=P['backend'],appliedExplicitGeometry=geometry)
         check(lib.nemo_speech_diar_stream_open(model,ct.byref(stream)))
         import numpy as np
         with wave.open(case['audio'],'rb') as source:
@@ -71,6 +79,7 @@ def main():
                 if (C/'stop.request').exists():raise InterruptedError('Explicit stop requested; probabilities and original audio retained')
                 data=np.frombuffer(source.readframes(min(block,count-submitted)),dtype='<i2').astype(np.float32)/32768.;assert len(data)>0
                 check(lib.nemo_speech_diar_stream_push_f32(stream,data.ctypes.data_as(fptr),len(data),16000));submitted+=len(data);state['newNeuralPushes']+=1;collect()
+                if submitted<count:time.sleep(P['interPushIdleSeconds'])
             check(lib.nemo_speech_diar_stream_finish(stream));collect();assert submitted==count and done>=math.floor(case['audioSeconds']/cadence)
         rows=probability_segments(array,done,cadence,case['audioSeconds'],P['probabilityThreshold']);assert rows
         atomic_json(out/'speaker-journal.json',{'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'segments':rows,'scope':'Official native Q8 eight-channel activity; one continuous cached stream, uniform0.5 frame threshold. Anonymous IDs only, not separated words or real names/roles. No reference input.'})

@@ -10,7 +10,12 @@ out=C/'results'/case['meeting'];target=out/'native-cli-control.json';assert not 
 try:
     exe=Path(P['nativeExe']);assert hashlib.sha256(exe.read_bytes()).hexdigest()==P['nativeExeSha256']
     assert all(hashlib.sha256((exe.parent/name).read_bytes()).hexdigest()==digest for name,digest in P['nativeFiles'].items())
-    command=[str(exe),'diarize',case['audio'],'--model',P['model'],'--device','cpu','--preset','v3-offline','--no-batching','--format','json','--onset','0.5','--offset','0.5','--pad-onset','0','--pad-offset','0','--min-duration-on','0','--min-duration-off','0','--output',str(out/'native-cli-output.json')]
+    device='cpu'
+    if P['backend']=='vulkan':
+        from practical_native_devices_20261107 import devices,select_6800xt
+        cookie=os.add_dll_directory(str(exe.parent));inventory=devices(exe.parent);selected=select_6800xt(inventory);device='vulkan:'+str(selected['gpuOrdinal']);state.update(gpuUsed=True,selectedNativeDevice=selected)
+    g=P['streamingGeometry']
+    command=[str(exe),'diarize',case['audio'],'--model',P['model'],'--device',device,'--diar-chunk',str(g['chunk_len']),'--diar-rc',str(g['right_context']),'--diar-lc',str(g['left_context']),'--diar-fifo',str(g['fifo_len']),'--diar-spkcache',str(g['spkcache_len']),'--diar-update-period',str(g['update_period']),'--no-batching','--format','json','--onset','0.5','--offset','0.5','--pad-onset','0','--pad-offset','0','--min-duration-on','0','--min-duration-off','0','--output',str(out/'native-cli-output.json')]
     env={k:v for k,v in os.environ.items() if not k.startswith('NEMO_SPEECH_')};env.update(OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1')
     with (out/'native-cli.log').open('xb') as log:code=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,env=env,cwd=exe.parent,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.IDLE_PRIORITY_CLASS).returncode
     assert code==0,'Official native CLI failed, see retained log'

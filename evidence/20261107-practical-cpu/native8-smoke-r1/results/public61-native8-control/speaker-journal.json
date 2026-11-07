@@ -1,0 +1,43 @@
+{
+  "meeting": "public61-native8-control",
+  "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+  "audioSeconds": 61.0,
+  "segments": [
+    {
+      "start": 6.259999860078096,
+      "end": 7.819999825209379,
+      "speaker": 0
+    },
+    {
+      "start": 12.439999721944332,
+      "end": 13.449999699369073,
+      "speaker": 1
+    },
+    {
+      "start": 14.529999675229192,
+      "end": 15.619999650865793,
+      "speaker": 2
+    },
+    {
+      "start": 17.42999961040914,
+      "end": 18.369999589398503,
+      "speaker": 2
+    },
+    {
+      "start": 18.78999958001077,
+      "end": 19.579999562352896,
+      "speaker": 3
+    },
+    {
+      "start": 22.599999494850636,
+      "end": 39.599999114871025,
+      "speaker": 0
+    },
+    {
+      "start": 40.39999909698963,
+      "end": 61.0,
+      "speaker": 0
+    }
+  ],
+  "scope": "Official native Q8 eight-channel activity; one continuous cached stream, uniform0.5 frame threshold. Anonymous IDs only, not separated words or real names/roles. No reference input."
+}

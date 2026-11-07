@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-07T12:26:27+08:00",
+  "state": "OFFICIAL_VULKAN_RUNTIME_PREPARED_NO_INFERENCE",
+  "runtime": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-vulkan\\nemo-speech-0.3.0-windows-x86_64-vulkan\\bin\\nemo-speech.exe",
+  "runtimeSha256": "bc0f3938f48bae0d744400e342fd90167cd2f770fef87c117e24a32201e1f775",
+  "archive": {
+    "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\nemo-speech-0.3.0-windows-x86_64-vulkan.zip",
+    "sha256": "72b3b8b41bfe2be0320eff4e9d310594e4f99deefcde4a157799a039656963ce",
+    "bytes": 22417032,
+    "source": "https://github.com/NVIDIA/NeMo-Speech.cpp/releases/download/v0.3.0/nemo-speech-0.3.0-windows-x86_64-vulkan.zip"
+  },
+  "backend": "Vulkan, not the failed Windows HIP decoder",
+  "gpuSelectionRequired": "Actual native registry must uniquely identify RX6800XT; no fallback to integrated780M",
+  "inferencePerformed": false
+}
