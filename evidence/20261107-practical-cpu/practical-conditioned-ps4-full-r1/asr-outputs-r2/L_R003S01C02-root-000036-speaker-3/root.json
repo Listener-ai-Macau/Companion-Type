@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "b81fbaf2ce976b8e4470a1cf85290c7715202b78bfc16247754247bf58719c3b",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "比较嗯，成功率比较高的。对，对对，温大温小，对，把暖别给冻死了是吧？",
+    "generatedIds": [
+      99792,
+      106287,
+      3837,
+      113923,
+      99792,
+      100964,
+      1773,
+      32664,
+      3837,
+      32664,
+      32664,
+      3837,
+      99416,
+      26288,
+      99416,
+      30709,
+      3837,
+      32664,
+      3837,
+      99360,
+      99856,
+      62922,
+      89012,
+      101462,
+      105382,
+      20412,
+      100003,
+      11319,
+      151645
+    ],
+    "rawDecoded": "比较嗯，成功率比较高的。对，对对，温大温小，对，把暖别给冻死了是吧？<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.087585599976592
+  },
+  "rawSha256": "94644dabf2cac70f32faa15c31619825bf7d7f6f94504b26905b5affe20f8c62"
+}

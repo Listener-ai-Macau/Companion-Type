@@ -1,0 +1,81 @@
+{
+  "id": "L_R003S01C02-root-000036-speaker-3",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 36,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 3,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000036-speaker-3.wav",
+  "audioSha256": "b81fbaf2ce976b8e4470a1cf85290c7715202b78bfc16247754247bf58719c3b",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "06b44dd765147e3b316fb6d5ee662a463b8d132318539a2527df7f0bc387fb83",
+  "enrollmentSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+  "mixtureAuthorPeakNormalization": 0.071197509765625,
+  "enrollmentAuthorPeakNormalization": 0.072113037109375,
+  "floatOutputSha256": "8114d70176bea241ef3a0980e14fc33989f5e1e7548c054e755c855d4efd58ef",
+  "floatOutputPeak": 0.4618994891643524,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3088814000075217,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.14514662325382233,
+      "1": 0.46123191714286804,
+      "2": 0.18289244174957275,
+      "3": 0.730570912361145,
+      "4": 0.2835531234741211,
+      "5": 0.3625267744064331
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "比较嗯，成功率比较高的。对，对对，温大温小，对，把暖别给冻死了是吧？",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "比较嗯，成功率比较高的。对，对对，温大温小，对，把暖别给冻死了是吧？",
+      "generatedIds": [
+        99792,
+        106287,
+        3837,
+        113923,
+        99792,
+        100964,
+        1773,
+        32664,
+        3837,
+        32664,
+        32664,
+        3837,
+        99416,
+        26288,
+        99416,
+        30709,
+        3837,
+        32664,
+        3837,
+        99360,
+        99856,
+        62922,
+        89012,
+        101462,
+        105382,
+        20412,
+        100003,
+        11319,
+        151645
+      ],
+      "rawDecoded": "比较嗯，成功率比较高的。对，对对，温大温小，对，把暖别给冻死了是吧？<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 6.087585599976592
+    }
+  ]
+}

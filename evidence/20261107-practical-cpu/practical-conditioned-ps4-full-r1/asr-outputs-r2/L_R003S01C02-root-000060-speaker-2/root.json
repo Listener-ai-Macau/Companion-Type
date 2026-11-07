@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "75c3061982df8b8df89ee4e8f4a85169aa90daa21ab6ab2cf62e6a76decfd672",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "对，哎，对，百密一疏，他不可能做的。对吧？对。",
+    "generatedIds": [
+      32664,
+      3837,
+      110030,
+      3837,
+      32664,
+      3837,
+      99271,
+      27641,
+      14777,
+      100900,
+      3837,
+      42411,
+      102340,
+      100854,
+      1773,
+      32664,
+      100003,
+      11319,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对，哎，对，百密一疏，他不可能做的。对吧？对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.487030100019183
+  },
+  "rawSha256": "b70962de08504179d1578c486bd54d7549f1cc4fa291cab3d53a8d5aa2992956"
+}

@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "c679b462bf09a3698dce176701a301d74cfe1dcf56e17bd614912fc95abf8481",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "比较嗯，成果比较高的。对，对对，围挡围起来，对，把暖别给冻死了是吧？",
+    "generatedIds": [
+      99792,
+      106287,
+      3837,
+      100735,
+      99792,
+      100964,
+      1773,
+      32664,
+      3837,
+      32664,
+      32664,
+      3837,
+      99455,
+      100890,
+      99455,
+      99793,
+      3837,
+      32664,
+      3837,
+      99360,
+      99856,
+      62922,
+      89012,
+      101462,
+      105382,
+      20412,
+      100003,
+      11319,
+      151645
+    ],
+    "rawDecoded": "比较嗯，成果比较高的。对，对对，围挡围起来，对，把暖别给冻死了是吧？<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.906463800027268
+  },
+  "rawSha256": "d9fa1a68e33302a567ee64f63e5883352a5fc430d02375109e0c913d30067fdd"
+}

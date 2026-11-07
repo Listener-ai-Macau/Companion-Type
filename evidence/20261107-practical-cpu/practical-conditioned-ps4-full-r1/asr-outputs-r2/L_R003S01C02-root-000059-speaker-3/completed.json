@@ -1,0 +1,95 @@
+{
+  "id": "L_R003S01C02-root-000059-speaker-3",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 59,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 3,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000059-speaker-3.wav",
+  "audioSha256": "7756e72b1edc7ff275d5c9b13c97fcc36a6f198100e1b8541092aa8fc8590478",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "ae44cfbeac0bc6e6376d28853d2a11bb459c626ce452cb59e168403b007be5ec",
+  "enrollmentSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+  "mixtureAuthorPeakNormalization": 0.107391357421875,
+  "enrollmentAuthorPeakNormalization": 0.072113037109375,
+  "floatOutputSha256": "a57a432808df98f330d2b1e4e76f68e618454fc637dd98b4fd63f1a0005aca36",
+  "floatOutputPeak": 0.17333844304084778,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3424142000149004,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.18076252937316895,
+      "1": 0.4578465521335602,
+      "2": 0.24618841707706451,
+      "3": 0.7420732975006104,
+      "4": 0.33385100960731506,
+      "5": 0.40978193283081055
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "对，对，对，对，嗯，嗯，嗯。\n对，现在二十四。对。对对嗯，咱对对。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 240000,
+      "text": "对，对，对，对，嗯，嗯，嗯。",
+      "generatedIds": [
+        32664,
+        3837,
+        32664,
+        3837,
+        32664,
+        3837,
+        32664,
+        3837,
+        106287,
+        3837,
+        106287,
+        3837,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "对，对，对，对，嗯，嗯，嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.9625364000094123
+    },
+    {
+      "startSample": 240000,
+      "endSample": 480000,
+      "text": "对，现在二十四。对。对对嗯，咱对对。",
+      "generatedIds": [
+        32664,
+        3837,
+        99601,
+        113346,
+        1773,
+        32664,
+        1773,
+        32664,
+        32664,
+        106287,
+        3837,
+        102177,
+        32664,
+        32664,
+        1773,
+        151645
+      ],
+      "rawDecoded": "对，现在二十四。对。对对嗯，咱对对。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.317455800017342
+    }
+  ]
+}
