@@ -4,6 +4,7 @@ mod cop1;
 #[path = "../../../../third_party/denzic-platform/host_audio/host/rust/src/opus_decoder.rs"]
 mod opus_decoder;
 mod parts;
+mod audio_publish;
 #[cfg(feature="mobile-documents")]
 #[path = "../../../windows/src-tauri/src/backend/meeting_document_export.rs"]
 mod meeting_document_export;
@@ -234,7 +235,7 @@ pub fn decode_session(segments:&[Segment],output:&Path)->Result<Decoded,String> 
         })?;
         let data=(written*2) as u32;file.seek(SeekFrom::Start(0)).map_err(|e|e.to_string())?;file.write_all(&wav_header(data)).map_err(|e|e.to_string())?;file.sync_all().map_err(|e|e.to_string())?;
         // Publish without replacing a previous recording, even if another writer races us.
-        fs::hard_link(&temporary,output).map_err(|e|format!("save decoded recording: {e}"))?;
+        audio_publish::without_replacement(&temporary,output).map_err(|e|format!("save decoded recording: {e}"))?;
         Ok(Decoded{path:output.to_path_buf(),samples:written,capture_complete,bookmarks})
     })();
     drop(file);let _=fs::remove_file(&temporary);result

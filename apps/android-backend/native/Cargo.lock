@@ -147,6 +147,7 @@ dependencies = [
  "crc32fast",
  "futures",
  "jni",
+ "libc",
  "libloading",
  "regex",
  "reqwest",
