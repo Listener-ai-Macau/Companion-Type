@@ -1,0 +1,360 @@
+{
+  "at": "2026-11-08T09:37:08+08:00",
+  "state": "CODEC_SPATIAL_DIFFERENCE_AND_PREDICTED_GATE_COVERAGE_AUDITED",
+  "sourceReviewSha256": "e4d8f1b4049b0e138789ec5b0c3a5b7eda72309dd9d614242bcf7c8500699c0d",
+  "codecDiagnostics": [
+    {
+      "case": "L_R003S01C02-root-000012",
+      "sampleFramesEqual": true,
+      "rawChannelsDistinct": true,
+      "decodedChannelsDistinct": true,
+      "rawChannelCorrelation": 0.9567021289934922,
+      "decodedChannelCorrelation": 0.9669457681489406,
+      "pcmErrorRmsPerChannel": [
+        91.3281039143118,
+        92.23932567534125
+      ],
+      "powerWeightedInterchannelPhaseAbsoluteErrorRadians": 0.08534600927832382,
+      "measuredTimeFrequencyBins": 248856,
+      "measurement": "100..7500Hz,5sblocks,native1024Blackman/256STFT; raw cross-power>1e-4blockmaximum. Fixed diagnostic only, no codec-selection or accuracy gate."
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "sampleFramesEqual": true,
+      "rawChannelsDistinct": true,
+      "decodedChannelsDistinct": true,
+      "rawChannelCorrelation": 0.9684215870382684,
+      "decodedChannelCorrelation": 0.9730728374214495,
+      "pcmErrorRmsPerChannel": [
+        92.48813316898192,
+        92.77352878784983
+      ],
+      "powerWeightedInterchannelPhaseAbsoluteErrorRadians": 0.08450492557242714,
+      "measuredTimeFrequencyBins": 206869,
+      "measurement": "100..7500Hz,5sblocks,native1024Blackman/256STFT; raw cross-power>1e-4blockmaximum. Fixed diagnostic only, no codec-selection or accuracy gate."
+    },
+    {
+      "case": "S_R004S03C01-root-000001",
+      "sampleFramesEqual": true,
+      "rawChannelsDistinct": true,
+      "decodedChannelsDistinct": true,
+      "rawChannelCorrelation": 0.9850293303647338,
+      "decodedChannelCorrelation": 0.9873822214252883,
+      "pcmErrorRmsPerChannel": [
+        54.497680875733906,
+        54.36835115480022
+      ],
+      "powerWeightedInterchannelPhaseAbsoluteErrorRadians": 0.0403002994382027,
+      "measuredTimeFrequencyBins": 115541,
+      "measurement": "100..7500Hz,5sblocks,native1024Blackman/256STFT; raw cross-power>1e-4blockmaximum. Fixed diagnostic only, no codec-selection or accuracy gate."
+    }
+  ],
+  "predictedGateCoverage": [
+    {
+      "case": "L_R003S01C02-root-000012",
+      "referencePersonForPosthocAudit": "002-F",
+      "predictedSlot": 1,
+      "predictedActiveSeconds": 21.91000018082559,
+      "referenceTargetSeconds": 21.38454172387236,
+      "coveredTargetSeconds": 21.36328414587416,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 359.8015,
+          "end": 365.12205,
+          "text": "那你都进来了，你就没地儿停放了，那就会堵住别人的车了。",
+          "withinClipSeconds": 5.1220500000000015,
+          "predictedTargetCoverageSeconds": 5.1220500000000015,
+          "predictedTargetCoverageFraction": 1.0,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 365.65991,
+          "end": 373.20069,
+          "text": "那物业有的也是，那个业主也是难淘的不行。在物业有时候这个问题，这个工作也不是特别好做。",
+          "withinClipSeconds": 7.540779999999984,
+          "predictedTargetCoverageSeconds": 7.540779999999984,
+          "predictedTargetCoverageFraction": 1.0,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 373.73406,
+          "end": 377.6691856265078,
+          "text": "那业主骂，业主给吵在大门口儿，你不让他进，",
+          "withinClipSeconds": 3.9351256265077836,
+          "predictedTargetCoverageSeconds": 3.9351256265077836,
+          "predictedTargetCoverageFraction": 1.0,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 381.1287339026354,
+          "end": 385.91532,
+          "text": "那他没有车位呀，他就一个车位，他家两辆车三辆车，咋整",
+          "withinClipSeconds": 4.786586097364591,
+          "predictedTargetCoverageSeconds": 4.765328519366392,
+          "predictedTargetCoverageFraction": 0.9955589270587021,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "L_R003S01C02-root-000012",
+      "referencePersonForPosthocAudit": "005-M",
+      "predictedSlot": 5,
+      "predictedActiveSeconds": 9.350008508190513,
+      "referenceTargetSeconds": 5.659616740449792,
+      "coveredTargetSeconds": 5.510129649780595,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 376.47502683068706,
+          "end": 381.1989785376837,
+          "text": "那个不用，不用那个人家是业主，你凭什么不让人家进",
+          "withinClipSeconds": 4.7239517069966155,
+          "predictedTargetCoverageSeconds": 4.708986952890939,
+          "predictedTargetCoverageFraction": 0.9968321534524766,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 381.56884875647484,
+          "end": 382.504513789928,
+          "text": "对吧",
+          "withinClipSeconds": 0.9356650334531764,
+          "predictedTargetCoverageSeconds": 0.8011426968896558,
+          "predictedTargetCoverageFraction": 0.8562281032699801,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "referencePersonForPosthocAudit": "002-F",
+      "predictedSlot": 1,
+      "predictedActiveSeconds": 1.699999962002039,
+      "referenceTargetSeconds": 5.653861575782685,
+      "coveredTargetSeconds": 1.6680953080541485,
+      "fullyContainedCompletelyRemovedCharacters": 8,
+      "utterances": [
+        {
+          "start": 810.1698646087528,
+          "end": 811.77115823723,
+          "text": "给给指导一下",
+          "withinClipSeconds": 1.6012936284771513,
+          "predictedTargetCoverageSeconds": 0,
+          "predictedTargetCoverageFraction": 0.0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 813.4478068599884,
+          "end": 813.901375,
+          "text": "嗯",
+          "withinClipSeconds": 0.45356814001161183,
+          "predictedTargetCoverageSeconds": 0.029999999329447746,
+          "predictedTargetCoverageFraction": 0.0661422103604537,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 814.785358008481,
+          "end": 815.196,
+          "text": "对",
+          "withinClipSeconds": 0.4106419915190145,
+          "predictedTargetCoverageSeconds": 0,
+          "predictedTargetCoverageFraction": 0.0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 816.0852316598331,
+          "end": 816.4996841283801,
+          "text": "对",
+          "withinClipSeconds": 0.41445246854698325,
+          "predictedTargetCoverageSeconds": 0,
+          "predictedTargetCoverageFraction": 0.0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 820.681886310991,
+          "end": 821.1306875,
+          "text": "对",
+          "withinClipSeconds": 0.448801189009032,
+          "predictedTargetCoverageSeconds": 0.31809533822899994,
+          "predictedTargetCoverageFraction": 0.7087667012009595,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 822.8842318576145,
+          "end": 825.2093360158334,
+          "text": "该该剪该剪的就剪剪",
+          "withinClipSeconds": 2.325104158218892,
+          "predictedTargetCoverageSeconds": 1.3199999704957008,
+          "predictedTargetCoverageFraction": 0.5677164895300283,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "referencePersonForPosthocAudit": "003-F",
+      "predictedSlot": 3,
+      "predictedActiveSeconds": 1.2399999722838402,
+      "referenceTargetSeconds": 1.4138852173113037,
+      "coveredTargetSeconds": 1.127740452095054,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 811.0364470429876,
+          "end": 811.9441875,
+          "text": "嗯对",
+          "withinClipSeconds": 0.9077404570124372,
+          "predictedTargetCoverageSeconds": 0.887740457459472,
+          "predictedTargetCoverageFraction": 0.9779672709324984,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 818.3270427397011,
+          "end": 818.8331875,
+          "text": "嗯",
+          "withinClipSeconds": 0.5061447602988665,
+          "predictedTargetCoverageSeconds": 0.23999999463558197,
+          "predictedTargetCoverageFraction": 0.4741726349075859,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "referencePersonForPosthocAudit": "004-M",
+      "predictedSlot": 2,
+      "predictedActiveSeconds": 12.449999721720815,
+      "referenceTargetSeconds": 12.601731664088902,
+      "coveredTargetSeconds": 12.346712969315604,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 824.0432683359111,
+          "end": 836.645,
+          "text": "就是绿化部门的事儿对吧，咱们把绿化部门儿这个工作做好以后，人家在日常当中工作当中真正。是吧能够把工作做好的话，这些问题都是可以得到解决。",
+          "withinClipSeconds": 12.601731664088902,
+          "predictedTargetCoverageSeconds": 12.346712969315604,
+          "predictedTargetCoverageFraction": 0.9797632022668739,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "referencePersonForPosthocAudit": "005-M",
+      "predictedSlot": 5,
+      "predictedActiveSeconds": 14.790000339969993,
+      "referenceTargetSeconds": 15.663338689813031,
+      "coveredTargetSeconds": 11.498320394912412,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 809.71,
+          "end": 822.665,
+          "text": "咱们自己咱们自己也得有人啊，对吧，咱们不能<$>种可以找对吧，种完之后啊管理呢，剪枝儿",
+          "withinClipSeconds": 12.664999999999964,
+          "predictedTargetCoverageSeconds": 10.969981649890542,
+          "predictedTargetCoverageFraction": 0.8661651519850433,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 822.989598810187,
+          "end": 825.9879375,
+          "text": "嗯修剪，施肥，加水",
+          "withinClipSeconds": 2.9983386898130675,
+          "predictedTargetCoverageSeconds": 0.5283387450218697,
+          "predictedTargetCoverageFraction": 0.17621049510414355,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R004S03C01-root-000001",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "predictedActiveSeconds": 29.210000017657876,
+      "referenceTargetSeconds": 28.639459999999993,
+      "coveredTargetSeconds": 28.318549114647503,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 27.34688,
+          "end": 39.93091,
+          "text": "呃，咱<sil>超市啊近期的销售啊。嗯<sil>比往期的要好。呃，明显的客流量也，呃客流量也多啦。呃，咱这个销售这个<sil>呃营业额也上去了。",
+          "withinClipSeconds": 9.930909999999997,
+          "predictedTargetCoverageSeconds": 9.609999114647508,
+          "predictedTargetCoverageFraction": 0.9676856516318757,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 40.41787,
+          "end": 50.86206,
+          "text": "嗯<sil>这都是大家或者在座的嗯努力的出现的状况。估计工作各位在下也出了，在下边儿也出了不少的呃力气。",
+          "withinClipSeconds": 10.444189999999999,
+          "predictedTargetCoverageSeconds": 10.444189999999999,
+          "predictedTargetCoverageFraction": 1.0,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 50.89106,
+          "end": 59.15542,
+          "text": "啊，也做了很多的这个呃营销这些方案。呃希望大家以后啊要继续保持咱这种工作状态。",
+          "withinClipSeconds": 8.264359999999996,
+          "predictedTargetCoverageSeconds": 8.264359999999996,
+          "predictedTargetCoverageFraction": 1.0,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": true
+    }
+  ],
+  "flacLosslessBitIdentityAlreadyVerified": true,
+  "newModelCalls": 0,
+  "generatedTextChanged": false,
+  "referenceOnlyUsedForPosthocCoverage": true,
+  "noPerPersonWinnerSelected": true,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 18960,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 144846848,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-08T09:38:31+08:00",
+  "state": "ONE_CAUSAL_REMOVE_POST_GSS_HARD_GATE_CONTROL_FROZEN",
+  "workerSourceSha256": "09402c85887cf9f53abaa91727d5aeb232fbd8d39bc8ff603f93079734f6905a",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "audioOnlySha256": "34fe7604047cc8016e8a79be8f639ebb4f4671749b22bfb11cbbb1c9e8906756",
+  "helperSources": {
+    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107",
+    "practical_target_voice_router_20261107.py": "b416999fe9dd6769a81ef46a7a51394a9432b6bad1aceb76b66945c9942e8afb"
+  },
+  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "derivedAudioRoot": "E:/CodexData/Companion/.model-cache/ps4-target-extraction-20261107/full-L-extracted",
+  "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+  "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+  "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+  "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+  "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+  "trainingOverlapWithThesePublicRecordingsUnknown": true,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "modelStagesSequential": true,
+  "parentProtocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+  "audioFrontendManifestSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+  "preparationFailure": "Original model attempt stopped on missing torchaudio before weights or any inference. Pinned unmodified official Python frontend added only to separation-worker path; standard PCM wave I/O and native Torch are unchanged. No model/audio/retention/scoring setting changed.",
+  "componentParentVerifiedReviewSha256": "021474ee010a417f9d238d87563020ba77a7cc3829d734db2700efa3672186aa",
+  "seedManifestSha256": "a2ca387cb66b2e806b6b055a2482695375bac1445e24c686e44405b474d0112a",
+  "globalAnchorsSha256": "eefd80617a89918661178867aad3da5e1650ff5feb22e974d69106e8cf3f7cd7",
+  "fullRoutePlanSha256": "e42d537c4635de487aee4ef310d009a3a6c114124f4349cee561b39ee4340bc9",
+  "fullRoute": "Every predicted-overlap root, all predicted-active enrolled people, same native encoder top1 self-identity check against all6 frozen automatic anchors. All rejected raw lanes retained; no hard time-activity masking. If no lane admitted in a root, retain its full original transcript. Other roots retain original whole output. Same thresholds/model/ASR as routed component, no per-root winner selection.",
+  "fullRetentionRule": "Report full-L fixed global DER mapping/unknown-unmatched and standard cpCER, all-person errors, short utterance and overlap-context categories separately. Any total regression rejects this whole candidate, no per-root model cherry-picking. Ordinary source route stays byte-identical. Short-person regression and absent/unregistered speakers remain explicit even if total improves; no formal5% or sale pass from this one development meeting.",
+  "asrWorkerSourceSha256": "b6be579aa3f3c28bc9d57327625839592f23b4941b9b4237740756df5a6178f8",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\audio-only.json",
+      "sha256": "2dfae2a59d86fb175dc9c9da1be6de0b307919c4c57f32337bef5f7d60cb270e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\numpy-backend.json",
+      "sha256": "751e8850959cd498a895b56dfea5a489ff5821bded4ba2a4bd74b381eea23c6c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\numpy-numerical-proof.json",
+      "sha256": "2856fad90297b663daddb54be24ddb5dfe116f9e4c42c58b7e3f379f068121fc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\dual_mic_gss_worker_20261108.py",
+      "sha256": "09402c85887cf9f53abaa91727d5aeb232fbd8d39bc8ff603f93079734f6905a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_gss_numpy_backend_20261108.py",
+      "sha256": "4af5abad0ee8ffb370d73a9d4268e1045237b5c9cb3b309fc47c745c057ada11"
+    }
+  ],
+  "algorithm": "PinnedGSS10fad18 native equations via explicit validated NumPy CPU backend;1024Blackman/256hop/fullfade,20GSSiterations+1post,15scontext eachside,noiseclass,referencechannel0fixed,MVDRSouden+BAN,WPEoff,postfilterNone. No algorithm/iteration/channel-pair search.",
+  "conditions": [
+    "mono_activity: originalchannel0 plus fixed predicted activity gate",
+    "dual_pcm: originalchannels0/1 GSS plus same gate",
+    "dual_opus: host32kbpsstereoOpus decodedPCM GSS plus same gate"
+  ],
+  "activity": "Existing full nativeFP16 diarization only. The identical predicted lexical-segment sample mask is applied to every overlap arm, including the mono baseline, after spatial processing. This is a bounded segmentation-controlled research screen, not a new production hard-gating policy; all missed words outside the prediction are charged. No reference/oracle activities or words enter processing.",
+  "ordinary": "Sroot1 bypasses gate/GSS, rawmono and rawdualPCM are byte-identical; compressed first channel is separately recognized. Same-audio recognition is reused within this run.",
+  "recognition": "Exact prior native1.7B inference AST, same512tokens/BF16/greedy/Chinese/no-context/bounded recovery. All raw generations retained; no filler, duplication or reference-word filtering.",
+  "primaryComparison": "Score every person/root with fixed whole-meeting identity mapping and midpoint-in-clip reference. Compare new rawdual versus mono_activity to assess added spatial processing under matched predicted gating; also report previous singlemicPS4cached6lanes. The new mono baseline is not a claim about best possible single-mic neural separation. Codec effect is rawdual versus decodedOpusdual under identical GSS/settings.",
+  "retention": "No default promotion from this exposed90s/one Mandarin corpus screen. Require lower total overlap edits without hiding per-person omissions and ordinary raw-path regression; any failure stops full expansion and parameter/codec sweeps. Report codec loss and true triple separately; geometry differs from current device.",
+  "asrInferenceAstMatchesOriginal": true,
+  "scope": "Exposed local causal ablation only. Reference audit identified hard gate loss, but no reference time or word changes the new audio. Report all6people and additions/deletions, retaining the first21row comparison unchanged.",
+  "causalChange": "Remove only final predicted waveform zeroing from all6existing rawdual target outputs. Reuse identical GSS float arrays; same PCM gain,sample grid,ASR generation. No new separation/activity/training, no selected-person winner.",
+  "triggerEvidence": {
+    "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\codec-and-gate-audit.json",
+    "sha256": "8f6b5eff69c4abfffd41c4ac7c37092caf24bf3251ce7d72be44cb913b4155f7"
+  },
+  "stop": "One causal removal test only. Do not mix gated/ungated text per person or tune voice/cutoff/codec. If restored content brings unacceptable extra words, stop this branch and retain both failures."
+}

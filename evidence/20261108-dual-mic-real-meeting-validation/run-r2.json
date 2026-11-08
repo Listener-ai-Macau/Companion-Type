@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_PS4_ASR",
+  "state": "COMPLETE_DUAL_MIC_SPATIAL_CODEC_SCREEN_REVIEW_REQUIRED",
   "pid": 21348,
   "startedAt": "2026-11-08T09:26:42+08:00",
   "priorAttemptReceipts": [],
@@ -15,10 +15,16 @@
       "exitCode": 0,
       "wholeProcessFamilySeconds": 7.108935399999609,
       "privatePeakBytes": 327315456
+    },
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 319.9678211999999,
+      "privatePeakBytes": 1248374784
     }
   ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
   "stage": "asr",
-  "activePid": 29292
+  "finishedAt": "2026-11-08T09:34:32+08:00"
 }

@@ -1,0 +1,18 @@
+{
+  "state": "COMPLETE_DUAL_MIC_SPATIAL_CODEC_SCREEN_REVIEW_REQUIRED",
+  "pid": 24740,
+  "startedAt": "2026-11-08T09:38:33+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 205.7813900000183,
+      "privatePeakBytes": 1246662656
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "asr",
+  "finishedAt": "2026-11-08T09:41:59+08:00"
+}

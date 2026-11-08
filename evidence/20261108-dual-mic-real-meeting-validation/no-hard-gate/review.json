@@ -1,0 +1,191 @@
+{
+  "at": "2026-11-08T09:42:38+08:00",
+  "state": "REMOVE_HARD_GATE_REJECTED_ADDITIONAL_SPEECH_ERRORS",
+  "sourceMainReviewSha256": "e4d8f1b4049b0e138789ec5b0c3a5b7eda72309dd9d614242bcf7c8500699c0d",
+  "scope": "One causal removal of post-GSS predicted waveform zeroing on all6rawdual lanes. No fresh separation, no reference-guided audio, no per-person winner selection.",
+  "totals": {
+    "gated": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 268,
+      "substitute": 18,
+      "delete": 21,
+      "insert": 33,
+      "total": 72
+    },
+    "ungated": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 708,
+      "substitute": 29,
+      "delete": 4,
+      "insert": 456,
+      "total": 489
+    }
+  },
+  "perPerson": [
+    {
+      "case": "L_R003S01C02-root-000012",
+      "rootIndex": 12,
+      "referencePerson": "002-F",
+      "gated": {
+        "referenceCharacters": 104,
+        "hypothesisCharacters": 103,
+        "substitute": 6,
+        "delete": 2,
+        "insert": 1,
+        "total": 9
+      },
+      "ungated": {
+        "referenceCharacters": 104,
+        "hypothesisCharacters": 134,
+        "substitute": 9,
+        "delete": 1,
+        "insert": 31,
+        "total": 41
+      },
+      "ungatedText": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂业主给吵在大门口，不让他进。不用那个，业人家是业主，你凭什么让人家进？那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？人家一个车位就是说，咱们这个车位。",
+      "gatedText": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂业主给吵在大门口，你不让他进。那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？他。",
+      "totalEditDelta": 32,
+      "deletionDelta": -1,
+      "insertionDelta": 30
+    },
+    {
+      "case": "L_R003S01C02-root-000012",
+      "rootIndex": 12,
+      "referencePerson": "005-M",
+      "gated": {
+        "referenceCharacters": 24,
+        "hypothesisCharacters": 44,
+        "substitute": 2,
+        "delete": 1,
+        "insert": 21,
+        "total": 24
+      },
+      "ungated": {
+        "referenceCharacters": 24,
+        "hypothesisCharacters": 134,
+        "substitute": 3,
+        "delete": 0,
+        "insert": 110,
+        "total": 113
+      },
+      "ungatedText": "但你都进来了，你就没地儿停放了，这就会堵住别人的车了。这物业有的也是那个业主也是难逃的不行。咱物业有时候这个问题，这工作也不是特别好做。业主骂，业主给吵在大门口，不让让进。不用那个一，人家是业主，你凭什么不让人家进？那他没有车位呀，他就一个车位，他加两辆车、三辆车咋整？人家一个车位就是说，咱们这个车位。",
+      "gatedText": "那个不用，不用那个，一人家是业主，你凭什么让人家进？那他们有车位呀。人家一个车位，就是说，咱们这个车位。",
+      "totalEditDelta": 89,
+      "deletionDelta": -1,
+      "insertionDelta": 89
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "rootIndex": 27,
+      "referencePerson": "002-F",
+      "gated": {
+        "referenceCharacters": 19,
+        "hypothesisCharacters": 5,
+        "substitute": 1,
+        "delete": 14,
+        "insert": 0,
+        "total": 15
+      },
+      "ungated": {
+        "referenceCharacters": 19,
+        "hypothesisCharacters": 108,
+        "substitute": 15,
+        "delete": 0,
+        "insert": 89,
+        "total": 104
+      },
+      "ungatedText": "咱们自己想，咱们自己也得有人啊，对吧？你不能，嗯，你种可以找，是吧？种完之后管理呢？你剪枝儿，呃修剪啊，剪树枝，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+      "gatedText": "对，该该签的。",
+      "totalEditDelta": 89,
+      "deletionDelta": -14,
+      "insertionDelta": 89
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "rootIndex": 27,
+      "referencePerson": "004-M",
+      "gated": {
+        "referenceCharacters": 63,
+        "hypothesisCharacters": 65,
+        "substitute": 0,
+        "delete": 1,
+        "insert": 3,
+        "total": 4
+      },
+      "ungated": {
+        "referenceCharacters": 63,
+        "hypothesisCharacters": 116,
+        "substitute": 0,
+        "delete": 1,
+        "insert": 54,
+        "total": 55
+      },
+      "ungatedText": "咱们寻找一下，咱们自己得有人，知道吧？能不能不是，能能种可以找，是吧？种完之后管理，嗯，接着，再再联系。这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+      "gatedText": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+      "totalEditDelta": 51,
+      "deletionDelta": 0,
+      "insertionDelta": 51
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "rootIndex": 27,
+      "referencePerson": "003-F",
+      "gated": {
+        "referenceCharacters": 3,
+        "hypothesisCharacters": 2,
+        "substitute": 1,
+        "delete": 1,
+        "insert": 0,
+        "total": 2
+      },
+      "ungated": {
+        "referenceCharacters": 3,
+        "hypothesisCharacters": 110,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 107,
+        "total": 107
+      },
+      "ungatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，是吧？种完之后管理呢？你兼职儿，这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+      "gatedText": "哦，对。",
+      "totalEditDelta": 105,
+      "deletionDelta": -1,
+      "insertionDelta": 107
+    },
+    {
+      "case": "L_R003S01C02-root-000027",
+      "rootIndex": 27,
+      "referencePerson": "005-M",
+      "gated": {
+        "referenceCharacters": 43,
+        "hypothesisCharacters": 49,
+        "substitute": 8,
+        "delete": 2,
+        "insert": 8,
+        "total": 18
+      },
+      "ungated": {
+        "referenceCharacters": 43,
+        "hypothesisCharacters": 106,
+        "substitute": 2,
+        "delete": 2,
+        "insert": 65,
+        "total": 69
+      },
+      "ungatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，对吧？种完之后啊，管理呢，你剪枝儿，呃，修剪、施肥、加水，对吧？嗯。咱把绿化部分这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些个你都是得得到奖励的。嗯，但是咱们这个绿化。",
+      "gatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，对吧？种完之后啊，管理呢？你剪枝，嗯。应该去。嗯，但是咱们这个树啊。",
+      "totalEditDelta": 51,
+      "deletionDelta": 0,
+      "insertionDelta": 57
+    }
+  ],
+  "allSixPeopleScored": true,
+  "newGssCalls": 0,
+  "newAsrCalls": 6,
+  "asrOwnedSeconds": 205.7813900000183,
+  "newModelsOrTraining": 0,
+  "generatedTextFiltered": false,
+  "originalMainComparisonChanged": false,
+  "notProductGatePassed": true,
+  "qualityQualified": false
+}

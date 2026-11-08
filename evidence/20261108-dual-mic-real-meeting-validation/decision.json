@@ -1,0 +1,172 @@
+{
+  "at": "2026-11-08T09:45:17+08:00",
+  "state": "REAL_DUAL_INPUT_LOCAL_GAIN_CODEC_LOSS_AND_ACTIVITY_LIMIT_IDENTIFIED",
+  "ownerRequest": "那你看看验证一下咯  开始看看怎么继续推进吧",
+  "ownerCompressionQuestion": "然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
+  "actualValidation": "Processed real original channels0/1 from pinned complete lossless AISHELL-4 sources, prior predicted nativeFP16 speaker journal, one fixed GSS reference and unchanged native1.7B ASR. Compared matched mono activity-only, rawdual spatial separation and decodedhostOpusdual; then one evidence-triggered no-hard-gate control on all6existing target lanes.",
+  "dataScope": "90s original roots: two30s overlapping excerpts of one exposed Mandarin meeting, including the disclosed1.900779s triple supplement, plus30sordinary from another meeting. Spatial estimation uses15scontext eachside. This is not cross-corpus/general meeting qualification.",
+  "mainComparison": {
+    "referenceCharactersInOverlapClips": 256,
+    "matchedMonoActivityOnly": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 267,
+      "substitute": 25,
+      "delete": 23,
+      "insert": 34,
+      "total": 82
+    },
+    "rawDualGuided": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 268,
+      "substitute": 18,
+      "delete": 21,
+      "insert": 33,
+      "total": 72
+    },
+    "decodedOpusDualGuided": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 259,
+      "substitute": 26,
+      "delete": 26,
+      "insert": 29,
+      "total": 81
+    },
+    "rawDualErrorReductionVersusMatchedMono": 0.12195121951219512,
+    "cachedPreviousSingleMicPs4": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 323,
+      "substitute": 43,
+      "delete": 32,
+      "insert": 99,
+      "total": 174
+    },
+    "cachedPs4IsDifferentSegmentationAndMethod": true,
+    "perRootSpatialEditImprovement": [
+      {
+        "root": "L_R003S01C02-root-000012",
+        "mono": 38,
+        "rawDual": 33
+      },
+      {
+        "root": "L_R003S01C02-root-000027",
+        "mono": 44,
+        "rawDual": 39
+      }
+    ],
+    "perPersonDeltas": [
+      {
+        "root": 12,
+        "person": "002-F",
+        "rawDualMinusMatchedMonoEdits": 0,
+        "rawDualMinusMatchedMonoDeletions": 0
+      },
+      {
+        "root": 12,
+        "person": "005-M",
+        "rawDualMinusMatchedMonoEdits": -5,
+        "rawDualMinusMatchedMonoDeletions": 0
+      },
+      {
+        "root": 27,
+        "person": "002-F",
+        "rawDualMinusMatchedMonoEdits": -1,
+        "rawDualMinusMatchedMonoDeletions": -1
+      },
+      {
+        "root": 27,
+        "person": "003-F",
+        "rawDualMinusMatchedMonoEdits": 0,
+        "rawDualMinusMatchedMonoDeletions": 0
+      },
+      {
+        "root": 27,
+        "person": "004-M",
+        "rawDualMinusMatchedMonoEdits": -1,
+        "rawDualMinusMatchedMonoDeletions": -1
+      },
+      {
+        "root": 27,
+        "person": "005-M",
+        "rawDualMinusMatchedMonoEdits": -3,
+        "rawDualMinusMatchedMonoDeletions": 0
+      }
+    ],
+    "noMatchedMonoPersonTotalRegressedInThisScreen": true
+  },
+  "compressionConclusion": {
+    "losslessSourceFlacDecodedPcmExactlyPreviousChannel0": true,
+    "flacRoundtripPcmExactlyEqualAllThreeClips": true,
+    "lossyOpusControl": "Hostlibopus32kbpsstereo,20msCBR,lowdelay,complexity0; all input channels/timeline decoded before analysis. Not current-board monoCELT bitstream.",
+    "rawDualOverlapEdits": 72,
+    "opusDualOverlapEdits": 81,
+    "rawDualOverlapDeletions": 21,
+    "opusDualOverlapDeletions": 26,
+    "ordinaryRawEdits": 22,
+    "ordinaryOpusEdits": 26,
+    "meaning": "DecodedPCM is necessary but cannot recreate information discarded by lossy coding. In this fixed screen compression increased errors. FLAC/source compression was lossless and cannot explain the older baseline errors. Phase and amplitude both change; this does not isolate phase as the sole cause."
+  },
+  "activityFailure": {
+    "posthocFullyContainedRemovedChars": 8,
+    "case": "Lroot27reference002-F has only1.6681of5.6539targetseconds inside its predicted activity; eight entirely interior reference characters have no retained audio under the hard gate.",
+    "noHardGateTotals": {
+      "gated": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 268,
+        "substitute": 18,
+        "delete": 21,
+        "insert": 33,
+        "total": 72
+      },
+      "ungated": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 708,
+        "substitute": 29,
+        "delete": 4,
+        "insert": 456,
+        "total": 489
+      }
+    },
+    "noHardGateDecision": "REMOVE_HARD_GATE_REJECTED_ADDITIONAL_SPEECH_ERRORS",
+    "interpretation": "Gating can erase missed target speech, while removing it restores some content but admits extensive other-speaker text. Neither posthoc word deletion nor selecting gated/ungated text per person is acceptable. Existing activity prediction and target isolation remain actual unresolved gates."
+  },
+  "retained": "Preserve rawdual as one promising research direction, protect current ordinary and product defaults, retain all27generated condition rows and oldPS4/small-head failures. Do not install the hard-gated or ungated prototype as a finished meeting backend.",
+  "methodAndRuntime": {
+    "algorithm": "One pinned GSS NumPyCPU reference of author formulas;20iterations+1post,1024/256Blackman,15scontext,fixedrefchannel0,MVDR+BAN,WPEoff. No parameter,codecrate or channel-pair sweep.",
+    "independentNumericalProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\numpy-numerical-proof.json",
+    "nativeGpuParityMeasured": false,
+    "recognizerInferenceAstUnchanged": true,
+    "newTrainingRuns": 0,
+    "newModelFamilies": 0,
+    "newSpatialCalls": 4,
+    "mainAsrCalls": 20,
+    "extraNoGateAsrCalls": 6,
+    "mainOwnedStageSeconds": {
+      "separation": 143.3577879999939,
+      "inventory": 7.108935399999609,
+      "asr": 319.9678211999999
+    },
+    "extraNoGateAsrOwnedSeconds": 205.7813900000183,
+    "timingScope": "Sum of this owned finite experiment process families, all compared conditions included; excludes manual analysis/source download/preparation/publishing. Not stop-recording-to-summary latency or a whole-meeting speed claim.",
+    "cpuPercentLimit": 5,
+    "privateCommitLimitBytes": 2147483648,
+    "maximumRecordedJobPrivateBytes": 1768947712,
+    "gpuUtilizationHardCapped": false,
+    "currentOwnedWorkers": [],
+    "resourcePauseResumeNotExercisedInThisRun": true
+  },
+  "limitations": [
+    "Fixed midpoint-utterance clip edit counts retain/report edge-straddling references; not strict full-recordingCER or pure-overlapCER.",
+    "Two microphones from a larger public array do not verify the close recorder ports, synchronization/calibration or encoded transport.",
+    "New mono_activity is an activity-only comparison, not state-of-the-art single-mic separation;oldPS4 is reported separately.",
+    "The research common hard activity gate exposes false-negative limitations and is not adopted as a product rule.",
+    "Host stereo codec result is limited to this frozen setting; recording capacity, battery and microphone phase preservation still require product engineering.",
+    "No phone/card installation, customer hearing trial, final-holdout opening or sale qualification occurred."
+  ],
+  "next": "继续原RM-OVERLAP：保留这版原始双路GSS作为研究候选，固定算法/ASR/编码设置，到另一个房间或另一场未用于本轮决策的真实多人会议复验，重点单列弱声、短插话和3+重叠的逐人漏话与串话。说话人活动的漏判/误判须独立评分，不能用硬静音或逐人挑文字掩盖；本次取消硬门控支路已拒绝，不再追加同片段参数/模型试跑。当前实板长录结束并释放后才验证实卡双路原音与解码相位，再按真实收益确定存储/传输/双端重构。严格<5%、纪要事实、双端实卡及售卖门继续OPEN。",
+  "productDefaultChanged": false,
+  "newHardwareAccess": false,
+  "finalHoldoutOpened": false,
+  "strictWordErrorGatePassed": false,
+  "saleGatePassed": false,
+  "qualityQualified": false
+}

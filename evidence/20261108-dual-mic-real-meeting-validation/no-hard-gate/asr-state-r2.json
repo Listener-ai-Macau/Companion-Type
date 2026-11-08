@@ -1,0 +1,36 @@
+{
+  "state": "COMPLETE_DUAL_MIC_FIXED_ASR_NOT_PRODUCT",
+  "pid": 6796,
+  "startedAt": "2026-11-08T09:38:33+08:00",
+  "stage": "asr",
+  "binding": {
+    "protocolSha256": "101f30ab2f7b3b70d7927b8911b6007127ccab8c066c6fb62d855f2cd833e7c8",
+    "audioOnlySha256": "34fe7604047cc8016e8a79be8f639ebb4f4671749b22bfb11cbbb1c9e8906756",
+    "workerSourceSha256": "b6be579aa3f3c28bc9d57327625839592f23b4941b9b4237740756df5a6178f8"
+  },
+  "newNeuralCalls": 6,
+  "reusedOutputs": 0,
+  "completedInputs": 6,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 6796,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1281236992,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "modelLoaded": true,
+  "finishedAt": "2026-11-08T09:41:54+08:00",
+  "wholeWorkerSeconds": 201.29154430000926
+}

@@ -1,5 +1,5 @@
 {
-  "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
+  "state": "COMPLETE_DUAL_MIC_FIXED_ASR_NOT_PRODUCT",
   "pid": 29848,
   "startedAt": "2026-11-08T09:29:12+08:00",
   "stage": "asr",
@@ -8,9 +8,9 @@
     "audioOnlySha256": "2dfae2a59d86fb175dc9c9da1be6de0b307919c4c57f32337bef5f7d60cb270e",
     "workerSourceSha256": "74cbea02ecbf81169bfae86351dfc2d1a42a30cdb0192a3f0610599197b405b1"
   },
-  "newNeuralCalls": 19,
+  "newNeuralCalls": 20,
   "reusedOutputs": 1,
-  "completedInputs": 20,
+  "completedInputs": 21,
   "referencePassedToWorker": false,
   "qualityQualified": false,
   "limits": {
@@ -30,5 +30,7 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "gpu": "AMD Radeon RX 6800 XT",
-  "modelLoaded": true
+  "modelLoaded": true,
+  "finishedAt": "2026-11-08T09:34:29+08:00",
+  "wholeWorkerSeconds": 316.5397191999946
 }
