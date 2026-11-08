@@ -1,7 +1,7 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "d6faa7ca6c2d3b897f887e780fba9912bcef56b6ef9cf722295b6b14a7be3918",
-  "backendSourceCommit": "8611474d0fc7826b21ed1bc04efed11f855efdea",
+  "aarSha256": "4f0ee89748334c49fd95e6ee58535b8480096947bc81e4f01feb654c8f9a0914",
+  "backendSourceCommit": "57e53daa46c5d7f9d2ebfc4a7208ba80edee3ec7",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -23,7 +23,7 @@
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
   "scope": "Negotiated durable range reclamation in the actual receiver and bounded initial133 recovery. Native audio/models/web assets unchanged; physical speed and resource gates remain unqualified.",
-  "javaSourceCommit": "8611474d0fc7826b21ed1bc04efed11f855efdea",
+  "javaSourceCommit": "57e53daa46c5d7f9d2ebfc4a7208ba80edee3ec7",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -323,5 +323,9 @@
     "com/denzic/companion/mobile/RangeConsume$Session.class",
     "com/denzic/companion/mobile/RangeConsume.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo102": true
+  "allNonClassAarEntriesByteIdenticalTo102": true,
+  "javaClassesChangedFrom103": [
+    "com/denzic/companion/mobile/RangeConsume.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo103": true
 }
