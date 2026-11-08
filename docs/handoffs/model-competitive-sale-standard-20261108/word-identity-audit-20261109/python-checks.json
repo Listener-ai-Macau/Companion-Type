@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-09T07:40:16+08:00",
+  "result": "PASS_5_RELEVANT_WORD_CONSERVATION_TESTS",
+  "observedOutput": "Ran5tests,OK,0.006seconds",
+  "testSourceSha256": "297cf405c168fd058ed75c2ff35c1af013f338eddc50f563f4cc81e285bdca01",
+  "moduleSourceSha256": "88ad2db7adcdc0e9326b9a5bebe7f2c97c081a1a2c3d9924a3e9adbc23748b34",
+  "scope": "Missing sentence, duplicate-span ambiguous voice, no neighboring voice borrowing, zero-duration retention, scoped recovery does not relabel normal words."
+}

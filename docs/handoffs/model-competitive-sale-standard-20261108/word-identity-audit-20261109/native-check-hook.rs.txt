@@ -1,0 +1,42 @@
+
+// Check-only suffix in the isolated mirror. Everything before this suffix is
+// an unchanged byte-for-byte copy of the actual production provider module.
+pub fn check_word_recovery_from_actual_response(document: &serde_json::Value) -> serde_json::Value {
+ let object=result_object(document).unwrap();
+ let raw=object["text"].as_str().unwrap();
+ let raw_utterances=object["utterances"].as_array().unwrap();
+ let missing=raw_utterances.iter().filter(|u|u.get("text").and_then(serde_json::Value::as_str).is_none()).count();
+ assert_eq!(missing,1);
+ let complete=extract_text(document).unwrap();
+ let utterances=extract_utterances(document);
+ assert_eq!(utterances.len(),raw_utterances.len());
+ let recovered=utterance_text(&raw_utterances[50]).unwrap();
+ assert_eq!(text_signature(&recovered).chars().count(),94);
+ assert_eq!(text_signature(&complete).chars().count(),text_signature(raw).chars().count()+94);
+ assert!(complete.contains(&recovered));
+ assert_eq!(utterances[50].text,recovered);
+ assert_eq!(utterances[50].start_ms,241882);
+ assert_eq!(utterances[50].end_ms,261542);
+ assert_eq!(utterances[50].speaker.as_deref(),Some("0"));
+ // Explicit formatted sentence wins over spelled-out number tokens.
+ let formatted=serde_json::json!({"result":{"text":"2026年预算100元。","utterances":[{"text":"2026年预算100元。","start_time":0,"end_time":10,"words":[{"text":"二零二六年预算一百元","start_time":0,"end_time":10}]}]}});
+ assert_eq!(extract_text(&formatted).as_deref(),Some("2026年预算100元。"));
+ assert_eq!(extract_utterances(&formatted)[0].text,"2026年预算100元。");
+ // A partial token list must not invent an incomplete replacement.
+ let malformed=serde_json::json!({"result":{"text":"现有正文","utterances":[{"words":[{"text":"甲"},{"start_time":1}]}]}});
+ assert!(utterance_text(&malformed["result"]["utterances"][0]).is_none());
+ assert_eq!(extract_text(&malformed).as_deref(),Some("现有正文"));
+ let conflict=serde_json::json!({"result":{"text":"独立正文","utterances":[{"text":"甲"},{"words":[{"text":"乙"}]}]}});
+ assert_eq!(extract_text(&conflict).as_deref(),Some("独立正文"));
+ let only_tokens=serde_json::json!({"result":{"utterances":[{"words":[{"text":"甲"},{"text":"乙"}]}]}});
+ assert_eq!(extract_text(&only_tokens).as_deref(),Some("甲乙"));
+ let empty=serde_json::json!({"result":{"text":"","utterances":[]}});
+ assert_eq!(extract_text(&empty).as_deref(),Some(""));
+ let provider=VolcengineSaucAsr::new(VolcengineCredentials{app_id:"test-app".into(),access_token:"test-key".into(),resource_id:"volc.bigasr.sauc.duration".into()});
+ let config=provider.cache_configuration();
+ assert_eq!(config["response_parser"],"utterance-text-or-complete-word-tokens-v2");
+ assert_eq!(config["payload"]["request"]["enable_nonstream"],true);
+ assert_eq!(config["payload"]["request"]["ssd_version"],"200");
+ let mut old=config.clone();old.as_object_mut().unwrap().remove("response_parser");assert_ne!(config,old);
+ serde_json::json!({"state":"PASS_REAL_RESPONSE_WORD_TEXT_RECOVERY_AND_REGRESSIONS","text":complete,"utterances":utterances,"recoveredActualCharacters":94,"originalUtteranceCount":raw_utterances.len(),"recoveredUtteranceCount":missing,"formattedTextPreserved":true,"malformedTokensRefused":true,"unexplainedTopTextPreserved":true,"emptyProbePreserved":true,"cacheParserPolicyChanged":true})
+}

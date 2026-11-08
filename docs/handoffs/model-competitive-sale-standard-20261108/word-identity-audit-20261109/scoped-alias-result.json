@@ -1,0 +1,198 @@
+{
+  "at": "2026-11-09T07:34:30+08:00",
+  "state": "SCOPED_RECOVERED_WORD_ALIAS_DIAGNOSTIC_GAIN_NOT_QUALIFIED",
+  "legacyDroppedWordsCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 172,
+      "delete": 238,
+      "insert": 122
+    },
+    "totalEdits": 532,
+    "characterErrorRate": 0.3631399317406143,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 141
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "5",
+        "edits": 97
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 113
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "recoveredSourceCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 8,
+    "edits": {
+      "replace": 182,
+      "delete": 217,
+      "insert": 195
+    },
+    "totalEdits": 594,
+    "characterErrorRate": 0.40546075085324235,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 141
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "0",
+        "edits": 99
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 113
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "5",
+        "edits": 60
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "candidateCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 8,
+    "edits": {
+      "replace": 176,
+      "delete": 166,
+      "insert": 144
+    },
+    "totalEdits": 486,
+    "characterErrorRate": 0.331740614334471,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 99
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "5",
+        "edits": 97
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 90
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "0",
+        "edits": 19
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "allActualWordsOnceUnchanged": true,
+  "normalWordIdentitiesUnchanged": true,
+  "recoveredSourceCharacters": 94,
+  "sourceTokens": 1419,
+  "assignmentReasons": {
+    "original_recognizer_identity_preserved": 1349,
+    "recovered_word_identity_unresolved_original_label_retained": 16,
+    "recovered_word_single_voice_with_observed_alias": 54
+  },
+  "identityReassignedTokens": 54,
+  "wordRecoveryMixedTextDiagnostic": {
+    "referenceCharacters": 1465,
+    "hypothesisCharacters": 1443,
+    "edits": {
+      "replace": 128,
+      "delete": 151,
+      "insert": 129
+    },
+    "cer": 0.2784982935153584,
+    "scope": "Chronological mixed text with ambiguous overlap ordering; not per-person or pure-overlap qualification."
+  },
+  "actualNativeSourceReplayed": true,
+  "nativeJournalFullMeetingContext": true,
+  "newModelOrNetworkCalls": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false
+}

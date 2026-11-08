@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-09T07:24:52+08:00",
+  "state": "FROZEN_CACHED_WORD_ATTRIBUTION_DIAGNOSTIC",
+  "finalResponseSha256": "2467cbbb43a8ab1afd8de15947b2adb046b5e0da52dccd122f006c4c25e9e8f7",
+  "sourceJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "joinSourceSha256": "0c1cf1f9f842da6e5aaff9ee4d460d120dd1b7f248004bedaedaa2034e6c17e5",
+  "samePcmProven": true,
+  "sourceOffsetSeconds": 1559.9,
+  "nativeJournalContext": "Native journal previously predicted from whole39m23s meeting; cloud response from selected5m02s window. Retrospective engineering diagnostic, not same-context benchmark or independent validation.",
+  "policy": "Each existing word once, unchanged. Use unique largest duration of predicted voice overlap; ties/no voice/zero duration explicitly unattributed, never duplicate into both people. No nearest-neighbor borrowing, threshold search, reference identities or words.",
+  "referenceUse": "Scoring and named error audit only, after output is produced; no labels supplied to join.",
+  "newModelInference": false,
+  "newNetworkRequests": false,
+  "saleQualified": false
+}

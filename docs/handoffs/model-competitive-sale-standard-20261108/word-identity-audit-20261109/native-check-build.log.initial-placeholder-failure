@@ -1,0 +1,122 @@
+error: unknown character escape: `U`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:600
+  |
+3 | ....unwrap()).unwrap();println!("PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-s...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `B`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:606
+  |
+3 | ...p()).unwrap();println!("PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standar...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `D`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:612
+  |
+3 | ...nwrap();println!("PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\asyn...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `D`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:620
+  |
+3 | ...println!("PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speake...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `C`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:627
+  |
+3 | ...!("PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contr...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `d`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:637
+  |
+3 | ...AL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\pre...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `h`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:642
+  |
+3 | ...OVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-f...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `2`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:651
+  |
+3 | ...\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-resp...
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `a`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:686
+  |
+3 | ...on\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: unknown character escape: `p`
+ --> E:\CodexData\Companion\.model-cache\competitive-sale-standard-20261108\native-word-recovery-20261109\check.rs:3:712
+  |
+3 | ...competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                        ^ unknown character escape
+  |
+  = help: for more information, visit <https://doc.rust-lang.org/reference/tokens.html#literals>
+help: if you meant to write a literal backslash (perhaps escaping in a regular expression), consider a raw string literal
+  |
+3 | fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!(r"PASS_REAL_PROVIDER_C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json_WORD_RECOVERY");}
+  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 +
+
+error: aborting due to 10 previous errors
+

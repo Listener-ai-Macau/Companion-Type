@@ -1,0 +1,3 @@
+#![allow(dead_code,unused_imports)]
+mod backend {pub mod volcengine;}
+fn main(){let data=std::fs::read_to_string(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\async-speaker-contract-r2\prefix-final-response.json").unwrap();let value:serde_json::Value=serde_json::from_str(&data).unwrap();let result=backend::volcengine::check_word_recovery_from_actual_response(&value);std::fs::write(r"C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261108-competitive-sale-standard\word-identity-audit-20261109\native-recovered-transcript.json",serde_json::to_vec_pretty(&result).unwrap()).unwrap();println!("PASS_REAL_PROVIDER_RESPONSE_WORD_RECOVERY");}
