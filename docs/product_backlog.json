@@ -42838,9 +42838,9 @@
             "qualityQualified": false
           },
           "targetActivityAdaptation20261108": {
-            "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+            "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
-            "sourceAndEvidenceCommit": "d618e7cba61566f28de815be5f60182112ec2547",
+            "sourceAndEvidenceCommit": "982b9d3ae258d4ad5c3e6b9b01a2770c6519473b",
             "newProductQualification": false,
             "currentOrdinaryAndAllOtherGatesRetained": true
           }
@@ -132912,7 +132912,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-08T08:20:08+08:00",
+      "updatedAt": "2026-11-08T08:28:28+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133398,7 +133398,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "先用732现有观察器区分PDM/Opus自身计算与IRQ等待，不再仅凭微小算术或更换执行位置试刷；730Quad已撤回，731仅152B/2%指令收益未称物理通过。732只临时归因，不作为正常资源/性能合格；读完整观测后集中修复并装观察器OFF高于732版本再做当前门。原任意长度50和同owner准备、声学/电源等block保留。",
+      "next": "等733真实thread/IRQ观察构建完成，确认宏/源码/物理布局后再领取板、普通手机OTA、仅自身新录音，停录后现有UART问号读完整分段账本，再普通手机收原音/全WAV/物理回收。732错误观测准备已拒绝未刷；不能用忙碌比例数据代替归因或重新设CPU百分比门。最终必须正常观察OFF高版本及原资源门，当前板728保持正常；原失败/block不变。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135993,24 +135993,24 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-08T08:20:08+08:00",
-        "state": "OFFLINE732_EXISTING_IRQ_OBSERVER_BUILD_RUNNING",
+        "at": "2026-11-08T08:28:28+08:00",
+        "state": "TEMPORARY733_THREAD_IRQ_PHONE_OTA_RUNNING",
         "phoneInstalled": "0.1.98",
         "firmwareInstalled": 66728,
         "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
         "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
         "firmwareSource": "2920e98fc756033d298d7f642352e6a89807b22d",
-        "boardLease": false,
-        "boardItem": null,
+        "boardLease": true,
+        "boardItem": "Companion733现有线程IRQ归因观测",
         "liveRecording": false,
         "liveReceive": false,
-        "liveUpgrade": false,
+        "liveUpgrade": true,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 342,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\progress.json",
-        "firmwareBuildSession": 19217,
-        "firmwareCandidate": 66732,
+        "evidence": "E:/CodexData/Companion/.build-cache/full-media66733/ordinary-phone098/result.json",
+        "firmwareBuildSession": null,
+        "firmwareCandidate": 66733,
         "candidateSourceCommit": "9069a88f6ff686521c9f9c70806b6f4213e7b86e",
         "externalSnifferSession": null,
         "phoneCandidate": null,
@@ -138967,12 +138967,26 @@
       },
       "irqAttribution732": {
         "at": "2026-11-08T08:20:08+08:00",
-        "state": "EXISTING_CPU_OBSERVER_TEMPORARY_BUILD_RUNNING",
+        "state": "REJECTED_BEFORE_INSTALL_WRONG_OBSERVER_SELECTION",
         "sourceCommit": "9069a88f6ff686521c9f9c70806b6f4213e7b86e",
         "purpose": "Separate PDM/Opus actual thread work from IRQ envelope using existing observer; not CPU-percent acceptance or normal-image qualification. No new observer code or normal resource budget expansion.",
         "returnRequirement": "ObserverOFF normal version higher than732, original application/static/stack budgets; boot antirollback prevents installing731 after732.",
         "installed": false,
-        "wholeSaleQualified": false
+        "wholeSaleQualified": false,
+        "reason": "Selected compactCPU duty observer, not existing thread/IRQ residence profile. Corrected current build entry explicit mutually exclusive option; preparation failure only, not product fix. Actual728 metadata query idle/old34/free4608000/17 passed."
+      },
+      "irqAttribution733": {
+        "at": "2026-11-08T08:28:28+08:00",
+        "state": "CORRECT_THREAD_IRQ_PROFILE_PHONE_OTA_RUNNING",
+        "sourceCommit": "9069a88f6ff686521c9f9c70806b6f4213e7b86e",
+        "normalizationCandidate": 66731,
+        "installed": false,
+        "normalResourcesQualified": false,
+        "returnObserverOffVersionGreaterThan": 66733,
+        "applicationBytes": 419804,
+        "staticBytes": 66928,
+        "stackBytes": 21504,
+        "phoneEndpointRepair": "ADB forwarding missing before first UI navigation; noOTA had started. Active harness now rebinds exact current appPID before CDP use; no app/board/pairing mutation."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144553,7 +144567,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "需要你向着正确方向推进",
-          "status": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+          "status": "RUNNING_SMALL_ADAPTATION_FEATURES",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -169159,11 +169173,11 @@
             }
           },
           "ownerTargetActivityAdaptation20261108": {
-            "at": "2026-11-08T08:24:00+08:00",
+            "at": "2026-11-08T08:30:07+08:00",
             "ownerQuote": "需要你向着正确方向推进",
             "precedingOwnerQuestion": "接下来什么才是正确的效率高得方式去做这个, 已经很久了这个项目 , 有希望做好吗",
             "phase": "checkpoint",
-            "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+            "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
             "sourcePolicy": {
               "at": "2026-11-08T08:10:19+08:00",
@@ -169273,9 +169287,9 @@
             },
             "audioPreparation": {
               "at": "2026-11-08T08:14:29+08:00",
-              "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+              "state": "COMPLETE_INDEPENDENT_REAL_TRAINING_AUDIO_PREPARATION",
               "newNeuralCalls": 0,
-              "completedExcerpts": 110,
+              "completedExcerpts": 114,
               "sources": [
                 {
                   "meeting": "20200707_L_R001S08C01",
@@ -169294,10 +169308,59 @@
                   "totalFramesFromFlacHeader": 31099752,
                   "expectedWholeFileSha256NotVerifiedByPartialRanges": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
                   "downloadedNewRangeBytes": 36438016
+                },
+                {
+                  "meeting": "20200623_S_R001S01C01",
+                  "samplerate": 16000,
+                  "channels": 8,
+                  "subtype": "PCM_16",
+                  "totalFramesFromFlacHeader": 31185216,
+                  "expectedWholeFileSha256NotVerifiedByPartialRanges": "7bd547327820c60b156afa3c483e81860925f69ca8f29e42df35cd29255eb073",
+                  "downloadedNewRangeBytes": 33554432
                 }
-              ]
+              ],
+              "rawAudioUploaded": false,
+              "selectedQueries": 96,
+              "selectedProfiles": 18,
+              "firstAudioPrefixMatchesOfficialOpenSlr": true,
+              "qualityQualified": false,
+              "finishedAt": "2026-11-08T08:24:16+08:00",
+              "wholePreparationSeconds": 587.2212814000086,
+              "limits": {
+                "pid": 22048,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 536870912,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 35315712,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              }
             },
-            "run": null,
+            "run": {
+              "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
+              "pid": 19312,
+              "startedAt": "2026-11-08T08:27:48+08:00",
+              "priorAttemptReceipts": [],
+              "results": [
+                {
+                  "stage": "inventory",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 9.142489100020612,
+                  "privatePeakBytes": 332111872
+                }
+              ],
+              "automaticModelFailureRetries": 0,
+              "qualityQualified": false,
+              "lastAvailableBytes": 5546225664,
+              "activePid": 9104
+            },
             "gradientProof": null,
             "trainingHistory": null,
             "selectedCheckpoint": null,
@@ -169308,7 +169371,7 @@
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "next": "继续原RM-OVERLAP：完成独立真实训练与另房间验证数据，冻结原模型主干，只验证条件活动小模块的梯度/资源与跨会议效果；没有实际收益不扩整场，不替换产品默认。原普通<5%、复杂逐路文字/分离/纪要事实/双端实卡/售卖门保留。",
-            "sourceAndEvidenceCommit": "d618e7cba61566f28de815be5f60182112ec2547",
+            "sourceAndEvidenceCommit": "982b9d3ae258d4ad5c3e6b9b01a2770c6519473b",
             "remoteReadbackConfirmed": true
           }
         },

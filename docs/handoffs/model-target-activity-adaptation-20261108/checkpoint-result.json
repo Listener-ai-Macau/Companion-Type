@@ -1,9 +1,9 @@
 {
-  "at": "2026-11-08T08:24:00+08:00",
+  "at": "2026-11-08T08:30:07+08:00",
   "ownerQuote": "需要你向着正确方向推进",
   "precedingOwnerQuestion": "接下来什么才是正确的效率高得方式去做这个, 已经很久了这个项目 , 有希望做好吗",
   "phase": "checkpoint",
-  "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+  "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
   "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
   "sourcePolicy": {
     "at": "2026-11-08T08:10:19+08:00",
@@ -113,9 +113,9 @@
   },
   "audioPreparation": {
     "at": "2026-11-08T08:14:29+08:00",
-    "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+    "state": "COMPLETE_INDEPENDENT_REAL_TRAINING_AUDIO_PREPARATION",
     "newNeuralCalls": 0,
-    "completedExcerpts": 110,
+    "completedExcerpts": 114,
     "sources": [
       {
         "meeting": "20200707_L_R001S08C01",
@@ -134,10 +134,59 @@
         "totalFramesFromFlacHeader": 31099752,
         "expectedWholeFileSha256NotVerifiedByPartialRanges": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
         "downloadedNewRangeBytes": 36438016
+      },
+      {
+        "meeting": "20200623_S_R001S01C01",
+        "samplerate": 16000,
+        "channels": 8,
+        "subtype": "PCM_16",
+        "totalFramesFromFlacHeader": 31185216,
+        "expectedWholeFileSha256NotVerifiedByPartialRanges": "7bd547327820c60b156afa3c483e81860925f69ca8f29e42df35cd29255eb073",
+        "downloadedNewRangeBytes": 33554432
       }
-    ]
+    ],
+    "rawAudioUploaded": false,
+    "selectedQueries": 96,
+    "selectedProfiles": 18,
+    "firstAudioPrefixMatchesOfficialOpenSlr": true,
+    "qualityQualified": false,
+    "finishedAt": "2026-11-08T08:24:16+08:00",
+    "wholePreparationSeconds": 587.2212814000086,
+    "limits": {
+      "pid": 22048,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 35315712,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
   },
-  "run": null,
+  "run": {
+    "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
+    "pid": 19312,
+    "startedAt": "2026-11-08T08:27:48+08:00",
+    "priorAttemptReceipts": [],
+    "results": [
+      {
+        "stage": "inventory",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 9.142489100020612,
+        "privatePeakBytes": 332111872
+      }
+    ],
+    "automaticModelFailureRetries": 0,
+    "qualityQualified": false,
+    "lastAvailableBytes": 5546225664,
+    "activePid": 9104
+  },
   "gradientProof": null,
   "trainingHistory": null,
   "selectedCheckpoint": null,
@@ -148,6 +197,6 @@
   "finalHoldoutOpened": false,
   "qualityQualified": false,
   "next": "继续原RM-OVERLAP：完成独立真实训练与另房间验证数据，冻结原模型主干，只验证条件活动小模块的梯度/资源与跨会议效果；没有实际收益不扩整场，不替换产品默认。原普通<5%、复杂逐路文字/分离/纪要事实/双端实卡/售卖门保留。",
-  "sourceAndEvidenceCommit": "d618e7cba61566f28de815be5f60182112ec2547",
+  "sourceAndEvidenceCommit": "982b9d3ae258d4ad5c3e6b9b01a2770c6519473b",
   "remoteReadbackConfirmed": true
 }
