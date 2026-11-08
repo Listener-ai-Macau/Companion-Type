@@ -42855,6 +42855,12 @@
             "sourceAndEvidenceCommit": "753abe67654f464b5c59dea24251ffd57a526e73",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation",
             "qualified": false
+          },
+          "independentDualMicValidation20261108": {
+            "state": "RUNNING_NATIVE_FULL_CHANNEL",
+            "sourceAndEvidenceCommit": "46db4aea43550a3e341defc1eed95c30fd251126",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings",
+            "qualified": false
           }
         },
         {
@@ -132924,7 +132930,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-08T09:04:15+08:00",
+      "updatedAt": "2026-11-08T09:54:01+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133410,7 +133416,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "734两小时边录边传正在后台，不并发刷写/重启或占用BLE；先等当前版本正常长录与全部原音/全WAV/物理回收/音频时序、资源门结果。60s/300s样本编码P95均4500us，峰5989/5398us，PDM2860/2808us、foreground保守7ms、故障0；300s57.237KiB/s、STOP至完整原音全WAV14.057<=22.178s。均只算受影响样本通过，任意长度含回收50旧反例仍FAIL，手机START至UI2.601s/旧变动和首次CSN1查询超时保留，原block不动；整机不能售卖宣告。",
+      "next": "先构建正常736，在原资源/61.44MHz下普通手机OTA。先用约5分钟真实边录边传检验encode/PDM峰、完整原音/全WAV/回收，避免仅顺序停录收取通过就盲跑2h。若并发峰仍FAIL继续修源；只有受影响短并发门通过、候选稳定后才跑最终7200秒。735只读空白证明候选留独立目录未装，不与当前修峰混合。任何长度含回收50及原明确block保持，整机尚未售卖资格。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135830,10 +135836,10 @@
         }
       },
       "metricAcceptance": {
-        "at": "2026-11-08T00:59:32+08:00",
+        "at": "2026-11-08T09:54:01+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "720097真实333录7363.5秒/并传7200.328秒，60段15472076B和3个完整WAV/误差20ms通过，正常2h非预期断链0、采音异常0、栈4344/guard0/low0；整项仍FAIL：编码P95/峰5.5/7.307ms、PDM峰3.197ms、采音间隔tick8保守9ms>8。先定位同步时处理/调度并修源头，保持61.44MHz/音质/原资源预算，不恢复CPU百分比门。自动恢复7.109<=10秒，同任务/前缀保留且空口新own连接确认；旧脚本额外waiting状态判据FAIL保留并单独复核通过，不把UI状态当产品门槛。098入口修复源码7529d5a8已实装，后端/JNI不变、333全部120文件SHA不变，普通手机入口/冷连待下一板卡轮次。短332任何长度含物理回收50继续FAIL；原电源/声学/生产/屏幕block保持。",
-        "verdict": "FAIL_AUDIO_REALTIME_AND_ANY_LENGTH50_OPEN",
+        "currentFacts": "当前已完成734自身346并发诊断：录2429.78秒、连接同步2276.515秒，5105788B全部原音/全WAV/物理回收，断链/重连/采音异常0；P95 5000us过，峰6454us和PDM3217us失败，foreground保守8ms过，栈空4336/guard0/low0。计划2h被主动提前收尾取并发计数，时长不足不归为设备故障，最终2h门仍未做完。正常736双路径radio空档/3ms DMA紧迫准入修复已编译409156/66232，普通手机OTA中；735空闲只读缓存留独立工作树未装。短332任意长度50原失败和原block保持。",
+        "verdict": "FAIL_CONCURRENT_ENCODE_PDM_PEAKS_AND_ANY_LENGTH50_OPEN",
         "result": "NOT_QUALIFIED",
         "functionalOtaResult": "PASS_CURRENT097_OTA718_NATIVE_EXACT_IDENTITY_SAMPLE",
         "ownerQuotes": [
@@ -135874,8 +135880,8 @@
           },
           "stack_guard_faults": {
             "value": 0,
-            "status": "PASS_CURRENT720_LONG333",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long720\\progress.json"
+            "status": "PASS_CURRENT734_CONCURRENT346",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long734-diagnostic\\timing-verdict.json"
           },
           "old_catalog_changed_count": {
             "value": 0,
@@ -135923,14 +135929,14 @@
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
           },
           "capture_service_gap_upper_ms": {
-            "value": 9,
-            "status": "FAIL_CURRENT720_LONG333_MAX8",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long720\\progress.json"
+            "value": 8,
+            "status": "PASS_CURRENT734_CONCURRENT346",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long734-diagnostic\\timing-verdict.json"
           },
           "audio_fault_count": {
             "value": 0,
-            "status": "PASS_CURRENT720_LONG333",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long720\\progress.json"
+            "status": "PASS_CURRENT734_CONCURRENT346",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long734-diagnostic\\timing-verdict.json"
           },
           "radio_restore_private_directory_seconds": {
             "value": 7.109000000025844,
@@ -135992,7 +135998,30 @@
         "sourceSummary": "FW706/phone093 current, real UI invalidation fixed.092501.84秒同场续传/无线恢复完整通过。093十秒24.504/24.730仍FAIL任意长度50含回收，分阶段耗时见收据；没有提高MCU频率或新增固件占用。",
         "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-measurements.json",
         "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66716\\current096\\short2\\dynamic-verdict.json",
-        "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only."
+        "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only.",
+        "latestAudioTiming": {
+          "firmware": 66734,
+          "session": 346,
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long734-diagnostic\\timing-verdict.json",
+          "validMask": 15,
+          "mediaReady": true,
+          "running": false,
+          "encodeSamples": 121489,
+          "pdmSamples": 242978,
+          "encodeP95UpperMs": 5.0,
+          "encodePeakUpperMs": 6.454,
+          "pdmP95UpperMs": 3.0,
+          "pdmPeakUpperMs": 3.217,
+          "encodeP95UpperUs": 5000,
+          "encodePeakUpperUs": 6454,
+          "pdmP95UpperUs": 3000,
+          "pdmPeakUpperUs": 3217,
+          "wireUnits": "CONSERVATIVE_UPPER_MICROSECONDS_SCHEMA2",
+          "p95Result": "PASS",
+          "encodePeakResult": "FAIL",
+          "pdmPeakResult": "FAIL",
+          "wholeSaleQualified": false
+        }
       },
       "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
       "lastOwnerAssistance": {
@@ -136005,8 +136034,8 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-08T09:04:15+08:00",
-        "state": "NORMAL734_TWO_HOUR_ORDINARY_PHONE_LIVE_RUN_IN_PROGRESS",
+        "at": "2026-11-08T09:54:01+08:00",
+        "state": "NORMAL736_PHONE_OTA_RUNNING_BOARD734_IDLE_BEFORE_INSTALL",
         "phoneInstalled": "0.1.98",
         "firmwareInstalled": 66734,
         "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
@@ -136014,23 +136043,23 @@
         "firmwareSource": "25e108f976da624979fd7dae9e85c07349790a42",
         "boardLease": true,
         "boardItem": "Companion733现有线程IRQ归因观测",
-        "liveRecording": true,
-        "liveReceive": true,
-        "liveUpgrade": false,
+        "liveRecording": false,
+        "liveReceive": false,
+        "liveUpgrade": true,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 346,
-        "evidence": "E:/CodexData/Companion/.build-cache/long734/progress.json",
+        "evidence": "E:/CodexData/Companion/.build-cache/full-media66736/ordinary-phone098/result.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66734,
-        "candidateSourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+        "firmwareCandidate": 66736,
+        "candidateSourceCommit": "88537c9a9054b88b69ea7122a34bd568c3589c7f",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
         "backendCandidateSource": null,
         "phoneBuildSession": null,
         "normalRestoreCandidate": null,
-        "longControllerSession": 19579
+        "longControllerSession": null
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -139018,7 +139047,7 @@
       },
       "radioWindow734": {
         "at": "2026-11-08T08:44:23+08:00",
-        "state": "TWO_SCOPED_NORMAL_SAMPLES_PASS_TWO_HOUR_LIVE_IN_PROGRESS",
+        "state": "SEQUENTIAL_SAMPLES_PASS_BUT_CONCURRENT346_PEAKS_FAIL",
         "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
         "applicationBytes": 408940,
         "staticBytes": 66232,
@@ -139098,8 +139127,8 @@
         "anyLength50Solved": false
       },
       "long734Current": {
-        "at": "2026-11-08T09:04:15+08:00",
-        "state": "NORMAL_LIVE_SYNC_IN_PROGRESS",
+        "at": "2026-11-08T09:47:51+08:00",
+        "state": "AGENT_SHORTENED_CONCURRENT_DIAGNOSTIC_COMPLETE_NOT_FINAL_7200",
         "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
         "firmware": 66734,
         "phoneVersion": "0.1.98",
@@ -139111,7 +139140,49 @@
         "wholeSaleQualified": false,
         "session": 346,
         "firstDurableSegmentBytes": 260918,
-        "firstNativeReceiptConfirmedAt": "2026-11-08T09:00:13+08:00"
+        "firstNativeReceiptConfirmedAt": "2026-11-08T09:00:13+08:00",
+        "recordingDurationSeconds": 2429.78,
+        "liveSyncObservedSeconds": 2276.514999999985,
+        "sourceBytes": 5105788,
+        "wholeOriginalWavAndPhysicalReceipts": true,
+        "unexpectedDisconnections": 0,
+        "reconnectSequences": 0,
+        "audioFaults": 0,
+        "encodeP95UpperUs": 5000,
+        "encodePeakUpperUs": 6454,
+        "pdmPeakUpperUs": 3217,
+        "captureForegroundConservativeUpperMs": 8,
+        "minimumFreeStackBytes": 4336,
+        "original34Unchanged": true,
+        "freeBytes": 4608000,
+        "allocatableSegments": 17,
+        "timingVerdict": "FAIL_ENCODE_AND_PDM_PEAKS",
+        "finalTwoHourQualification": "NOT_COMPLETED_AGENT_STOPPED_EARLY_TO_READ_CONCURRENT_COUNTERS",
+        "stopReason": "Ordinary UI supervisor early stop request; no forced disconnect/reset. Do not label requested shortening as a device fault, or count shortened run as2h pass."
+      },
+      "readonlyBlank735": {
+        "at": "2026-11-08T09:47:51+08:00",
+        "state": "ISOLATED_OFFLINE_PROTOTYPE_HOST_PASS_NOT_BUILT_NOT_INSTALLED_HELD_FOR_CONCURRENT_TIMING_PRIORITY",
+        "sourceWorktree": "E:/CodexData/Companion/.build-cache/prefix735-source",
+        "basedOn": "25e108f976da624979fd7dae9e85c07349790a42",
+        "scope": "Read-only idle FF proof of exactly the original predicted next allocation; physical program/erase invalidates first; reset loses proof, real allocator ownership and rotation untouched; no format/partition/new audio buffer or erase deferral.",
+        "hostEvidence": "E:/CodexData/Companion/.build-cache/prefix735-source/.cache/recording-core-20261011/blank735-product-attempt8/result.json",
+        "failuresRetained": "Initial old driver runner lacks recording include/ignored fixture; custom correct include actual driver passes. New test field first corrected to future; first READY encoder was not canceled before product_fresh; proper lifecycle now cancels and releases. Manual space.valid loss injection restored its prior flag before continuing. All attempts retained, not claimed board bugs. First-free candidate preference rejected for wear concentration; now original rotation/hint is unchanged.",
+        "physicalTimingQualified": false,
+        "anyLength50Solved": false
+      },
+      "radioWindow736": {
+        "at": "2026-11-08T09:47:51+08:00",
+        "state": "NORMAL_BUILD_ORIGINAL_BUDGET_PASS_PHONE_OTA_RUNNING",
+        "purpose": "Concurrent346 peak failure. Encode next-radio gap7ms/maxwait10ms. Optional HAL conversion admission callback keeps DMA event queued while waiting for3.5ms radio gap, but hardware remaining<=3ms always admits. No new raw buffer; normal observersOFF. Existing overflow/stale/deadline accounting and processing stopwatch endpoints unchanged.",
+        "softwareTests": "Production policy and exact HAL helper queue/IRQ/stale/priming/urgency tests;50 unchanged stable-copy PCM/ownership cases pass. First harness global mask shadow rejected then fixed by fake_primask rename, original failure retained.",
+        "physicalTimingQualified": false,
+        "sourceCommit": "88537c9a9054b88b69ea7122a34bd568c3589c7f",
+        "applicationBytes": 409156,
+        "staticBytes": 66232,
+        "stackReservedBytes": 21504,
+        "appDeltaFrom734": 216,
+        "staticDeltaFrom734": 0
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144692,11 +144763,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "REAL_DUAL_INPUT_LOCAL_GAIN_CODEC_LOSS_AND_ACTIVITY_LIMIT_IDENTIFIED",
+          "status": "RUNNING_NATIVE_FULL_CHANNEL",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原RM-OVERLAP：保留这版原始双路GSS作为研究候选，固定算法/ASR/编码设置，到另一个房间或另一场未用于本轮决策的真实多人会议复验，重点单列弱声、短插话和3+重叠的逐人漏话与串话。说话人活动的漏判/误判须独立评分，不能用硬静音或逐人挑文字掩盖；本次取消硬门控支路已拒绝，不再追加同片段参数/模型试跑。当前实板长录结束并释放后才验证实卡双路原音与解码相位，再按真实收益确定存储/传输/双端重构。严格<5%、纪要事实、双端实卡及售卖门继续OPEN。",
+          "next": "Two untouched meetings full per-mic journals, then fixed rawdualGSS/matchedmono and complete per-person scoring. No two-system DOVER-Lap voting, no parameter/model sweep; keep ordinary, <5%, facts, dual-host/card and sale gates open.",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -174760,6 +174831,164 @@
             "state": "REAL_DUAL_INPUT_LOCAL_GAIN_CODEC_LOSS_AND_ACTIVITY_LIMIT_IDENTIFIED",
             "next": "继续原RM-OVERLAP：保留这版原始双路GSS作为研究候选，固定算法/ASR/编码设置，到另一个房间或另一场未用于本轮决策的真实多人会议复验，重点单列弱声、短插话和3+重叠的逐人漏话与串话。说话人活动的漏判/误判须独立评分，不能用硬静音或逐人挑文字掩盖；本次取消硬门控支路已拒绝，不再追加同片段参数/模型试跑。当前实板长录结束并释放后才验证实卡双路原音与解码相位，再按真实收益确定存储/传输/双端重构。严格<5%、纪要事实、双端实卡及售卖门继续OPEN。",
             "sourceAndEvidenceCommit": "753abe67654f464b5c59dea24251ffd57a526e73",
+            "remoteReadbackConfirmed": true
+          },
+          "ownerIndependentDualMicValidation20261108": {
+            "at": "2026-11-08T10:06:51+08:00",
+            "phase": "checkpoint",
+            "ownerOriginal": "那你继续研究一下, 可以考虑占用更多的资源, 然后继续修到可售卖版本",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings",
+            "direction": {
+              "state": "FROZEN_INDEPENDENT_REAL_MEETING_VALIDATION",
+              "owner": "那你继续研究一下, 可以考虑占用更多的资源, 然后继续修到可售卖版本",
+              "priorWorkPoint": "Raw dual-channel guided separation72 vs mono82 edits on two exposed overlap clips; lossless decode preserves bits, lossyOpus81 edits; no-hard-gate489 edits rejected. Not general accuracy or product qualification.",
+              "next": "Two untouched meetings full per-mic journals, then fixed rawdualGSS/matchedmono and complete per-person scoring. No two-system DOVER-Lap voting, no parameter/model sweep; keep ordinary, <5%, facts, dual-host/card and sale gates open.",
+              "cpuPercent": 10,
+              "privateCommitBytes": 2147483648,
+              "sourceWorkerSha256": "dd5e263357629e03e548a701971ce632fccab2d6f89527e60a90e134c6775b4c",
+              "protocolSha256": "e56a3830a720a76a6f79ad48000bbf29c90f585a67ccc5b0b2fae0ba0bfbe104",
+              "newTrainingRuns": 0,
+              "productDefaultChanged": false,
+              "hardwareAccess": false,
+              "qualityQualified": false,
+              "twoSystemFusionRejected": {
+                "source": "https://github.com/desh2608/dover-lap/blob/0166e2df83bc1cc32cd81fa278cc728276ca396a/README.md",
+                "reason": "Author says intended for more than two systems; equal two-system conflict assigns both labels and almost certainly degrades performance. Per-mic disagreement will be audited, not naively fused."
+              }
+            },
+            "preparation": {
+              "state": "COMPLETE_TWO_FULL_PUBLIC_MEETINGS_FOUR_PHYSICAL_CHANNEL_INPUTS",
+              "startedAt": "2026-11-08T10:04:17.498758+08:00",
+              "selectedMeetings": [
+                "M_R003S02C01",
+                "S_R003S01C01"
+              ],
+              "selection": "First unused medium-room session02 and small-room session01 by filename; exclude prior M_R003S01C01 clips and reserved L_R003S03C02. Not selected using quality outcomes.",
+              "revision": "aada72727856313b19d4a030383c426364931dbf",
+              "referencePayloadRead": false,
+              "sourceDownloads": [
+                {
+                  "meeting": "M_R003S02C01",
+                  "path": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01.flac",
+                  "sha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+                  "bytes": 258267458,
+                  "preparationSeconds": 22.938162299979012
+                },
+                {
+                  "meeting": "S_R003S01C01",
+                  "path": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01.flac",
+                  "sha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+                  "bytes": 255177109,
+                  "preparationSeconds": 20.754792299994733
+                }
+              ],
+              "audioOnly": [
+                {
+                  "corpus": "AISHELL-4-official-test",
+                  "meeting": "M_R003S02C01-mic0",
+                  "originalMeeting": "M_R003S02C01",
+                  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-mic0.wav",
+                  "audioSha256": "632606c564ffa61da17f0a68597703f35408562ae64eea8073654f532d73116f",
+                  "audioSeconds": 2321.259,
+                  "sourceSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+                  "sourceChannel": 0,
+                  "sourceFrames": 37140144,
+                  "sourceSampleRate": 16000,
+                  "sourceChannels": 8,
+                  "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+                },
+                {
+                  "corpus": "AISHELL-4-official-test",
+                  "meeting": "M_R003S02C01-mic1",
+                  "originalMeeting": "M_R003S02C01",
+                  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-mic1.wav",
+                  "audioSha256": "47d3c9b95d1965d093dcd87a7cc716dbda598c849327949f950b92c54045ef50",
+                  "audioSeconds": 2321.259,
+                  "sourceSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+                  "sourceChannel": 1,
+                  "sourceFrames": 37140144,
+                  "sourceSampleRate": 16000,
+                  "sourceChannels": 8,
+                  "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+                },
+                {
+                  "corpus": "AISHELL-4-official-test",
+                  "meeting": "S_R003S01C01-mic0",
+                  "originalMeeting": "S_R003S01C01",
+                  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-mic0.wav",
+                  "audioSha256": "ac0af6bb4b07c2738c709cf4538d3af9fbf8620323a6323dc69494c17c2ec83c",
+                  "audioSeconds": 2220.529,
+                  "sourceSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+                  "sourceChannel": 0,
+                  "sourceFrames": 35528464,
+                  "sourceSampleRate": 16000,
+                  "sourceChannels": 8,
+                  "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+                },
+                {
+                  "corpus": "AISHELL-4-official-test",
+                  "meeting": "S_R003S01C01-mic1",
+                  "originalMeeting": "S_R003S01C01",
+                  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-mic1.wav",
+                  "audioSha256": "00e5ff715c56ed1c7926c5b7e0175a910a51b1909276585c6359b43ad755a516",
+                  "audioSeconds": 2220.529,
+                  "sourceSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+                  "sourceChannel": 1,
+                  "sourceFrames": 35528464,
+                  "sourceSampleRate": 16000,
+                  "sourceChannels": 8,
+                  "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+                }
+              ],
+              "finishedAt": "2026-11-08T10:05:01.270455+08:00",
+              "limits": {
+                "pid": 16536,
+                "cpuRate": 1000,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 10.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 536870912,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 36716544,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              }
+            },
+            "nativeRun": {
+              "state": "RUNNING_NATIVE_FULL_CHANNEL",
+              "pid": 16076,
+              "startedAt": "2026-11-08T10:05:54+08:00",
+              "results": [
+                {
+                  "meeting": "M_R003S02C01-mic0",
+                  "out": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\M_R003S02C01-mic0\\attempt-1",
+                  "exitCode": 0,
+                  "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+                  "wholeProcessFamilySeconds": 31.496180799993454,
+                  "privatePeakBytes": 1780068352
+                }
+              ],
+              "referencePayloadRead": false,
+              "protocolSha256": "e56a3830a720a76a6f79ad48000bbf29c90f585a67ccc5b0b2fae0ba0bfbe104",
+              "automaticModelRetries": 0,
+              "activeMeeting": "M_R003S02C01-mic1",
+              "attempt": 1,
+              "activePid": 23772
+            },
+            "run": null,
+            "review": null,
+            "decision": null,
+            "newTrainingRuns": 0,
+            "productDefaultChanged": false,
+            "qualityQualified": false,
+            "finalHoldoutOpened": false,
+            "state": "RUNNING_NATIVE_FULL_CHANNEL",
+            "next": "Two untouched meetings full per-mic journals, then fixed rawdualGSS/matchedmono and complete per-person scoring. No two-system DOVER-Lap voting, no parameter/model sweep; keep ordinary, <5%, facts, dual-host/card and sale gates open.",
+            "sourceAndEvidenceCommit": "46db4aea43550a3e341defc1eed95c30fd251126",
             "remoteReadbackConfirmed": true
           }
         },
