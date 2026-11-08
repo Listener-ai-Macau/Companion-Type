@@ -1,7 +1,7 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "3638f0328d909848fb07cf727d19844b983e8f933a8510c1329360e0e0c39e86",
-  "backendSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
+  "aarSha256": "8a93dbf09fb36497751457190bcb8e2ff9cc80d5d2dc21e698ee1eed3a49af7c",
+  "backendSourceCommit": "6b8c0ddeb366985239a5527249f325fd854d0a89",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "0810c03733d65adc3cf3de2f54769d58f878dc97",
@@ -16,8 +16,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Fresh originals under16 physical sectors use one existing terminal CRA2, removing3..7-sector prefix transactions that measurably serialized after payload. Old pending/confirmed prefix proofs and long-range concurrency still reconcile exactly. Native0810 audio/control fixes, models/web assets unchanged; actual first receive speed not yet qualified.",
-  "javaSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
+  "scope": "Prefer495B negotiated values under current WBA251B data-PDU budget:495+7B framing fits two data payloads versus509+7 needing three. Preserve107 one terminal short reclaim, small MTU/legacy reader, native0810 fixes and exact originals. Source-model42 negotiation cases and affected range recovery pass; physical speed not yet measured.",
+  "javaSourceCommit": "6b8c0ddeb366985239a5527249f325fd854d0a89",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
   "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt.",
@@ -40,5 +40,13 @@
   "javaClassesChangedFrom106": [
     "com/denzic/companion/mobile/RangeConsume.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo106": true
+  "allNonClassAarEntriesByteIdenticalTo106": true,
+  "javaClassesChangedFrom107": [
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire$Descriptor.class",
+    "com/denzic/companion/mobile/RecorderWire$Peer.class",
+    "com/denzic/companion/mobile/RecorderWire.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo107": true
 }
