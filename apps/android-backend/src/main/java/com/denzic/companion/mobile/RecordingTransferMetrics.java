@@ -17,6 +17,19 @@ final class RecordingTransferMetrics {
     private boolean stoppedBatchHintRequested,stoppedBatchHintAccepted;
     private boolean centralHighPriorityRequested,centralHighPriorityRequestAccepted;
     private boolean reconnectPending;
+    private boolean rangeReclaimNegotiated;
+    private int rangeProofRequests,rangePhysicalReceipts,rangePhysicalSectors;
+    private long rangeCheckpointNanos,rangeExchangeNanos,rangeReceiptPersistenceNanos;
+    private final StringBuilder rangeTrace=new StringBuilder();
+    synchronized void rangeNegotiated(){rangeReclaimNegotiated=true;}
+    synchronized void rangePrepared(int first,int end,long nanos){
+        rangeProofRequests++;rangeCheckpointNanos+=nanos;
+        if(rangeProofRequests<=8){if(rangeTrace.length()>0)rangeTrace.append(',');rangeTrace.append("{\"first\":").append(first).append(",\"end\":").append(end).append(",\"checkpointNanos\":").append(nanos).append('}');}
+    }
+    synchronized void rangeConfirmed(int first,int end,long exchange,long persistence){
+        rangePhysicalReceipts++;rangePhysicalSectors+=end-first;rangeExchangeNanos+=exchange;rangeReceiptPersistenceNanos+=persistence;
+        if(rangePhysicalReceipts<=8){if(rangeTrace.length()>0)rangeTrace.append(',');rangeTrace.append("{\"first\":").append(first).append(",\"end\":").append(end).append(",\"exchangeNanos\":").append(exchange).append(",\"receiptPersistenceNanos\":").append(persistence).append('}');}
+    }
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
 
@@ -123,6 +136,8 @@ final class RecordingTransferMetrics {
             ",\"directoryRequests\":"+directoryRequests+",\"directoryPages\":"+directoryPages+",\"streamDirectoryRequests\":"+streamDirectoryRequests+
             ",\"stoppedBatchHintRequested\":"+stoppedBatchHintRequested+",\"stoppedBatchHintAccepted\":"+stoppedBatchHintAccepted+
             ",\"centralHighPriorityRequested\":"+centralHighPriorityRequested+",\"centralHighPriorityRequestAccepted\":"+centralHighPriorityRequestAccepted+
+            ",\"rangeReclaimNegotiated\":"+rangeReclaimNegotiated+",\"rangeProofRequests\":"+rangeProofRequests+",\"rangePhysicalReceipts\":"+rangePhysicalReceipts+",\"rangePhysicalSectors\":"+rangePhysicalSectors+
+            ",\"rangeCheckpointNanos\":"+rangeCheckpointNanos+",\"rangeExchangeNanos\":"+rangeExchangeNanos+",\"rangeReceiptPersistenceNanos\":"+rangeReceiptPersistenceNanos+",\"firstRangeEvents\":["+rangeTrace+"]"+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
             ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+

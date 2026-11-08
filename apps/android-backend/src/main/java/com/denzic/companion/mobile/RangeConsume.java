@@ -16,6 +16,8 @@ final class RangeConsume {
     private final RecordingClient.Link link;
     private final RangeCheckpoint.DirectorySync sync;
     private final LongSupplier nonce;
+    private volatile RecordingTransferMetrics metrics;
+    void observe(RecordingTransferMetrics metrics){this.metrics=metrics;if(metrics!=null)metrics.rangeNegotiated();}
     RangeConsume(RecorderWire.Peer peer,RecordingClient.Link link,RangeCheckpoint.DirectorySync sync,LongSupplier nonce){
         this.peer=peer;this.link=link;this.sync=sync;this.nonce=nonce;
     }
@@ -86,10 +88,13 @@ final class RangeConsume {
                 this.checkpoint=checkpoint;
                 thread=new Thread(()->{
                     try{
+                        long began=System.nanoTime();
                         Status result=exchange(descriptor,checkpoint.nonce,checkpoint);
                         if(result.pending||result.nonce!=checkpoint.nonce||result.first!=checkpoint.firstSector||result.end!=checkpoint.endSector)
                             throw new IOException("device did not confirm the exact physical range; saved proof retained");
+                        long replied=System.nanoTime();
                         checkpoint.confirmOwned(directory,sync);
+                        RecordingTransferMetrics m=metrics;if(m!=null)m.rangeConfirmed(checkpoint.firstSector,checkpoint.endSector,replied-began,System.nanoTime()-replied);
                     }catch(IOException e){error=e;}catch(RuntimeException e){error=new IOException("range confirmation failed; saved source retained",e);}
                     finally{finished.countDown();}
                 },"Companion-range-confirmation");
@@ -138,7 +143,9 @@ final class RangeConsume {
             int available=receiver.completeBytesReceived()?usedSectors:(int)((receiver.resumeOffset()/248+1)/16);
             if(available<=frontier)return;
             long token;do{token=nonce.getAsLong();}while(token==lastNonce);
+            long began=System.nanoTime();
             RangeCheckpoint saved=receiver.checkpointRange(directory,frontier,available,token,sync);
+            RecordingTransferMetrics m=metrics;if(m!=null)m.rangePrepared(frontier,available,System.nanoTime()-began);
             lastNonce=token;pending=new Pending(saved);
         }
         void finish(SegmentReceiver receiver)throws IOException {

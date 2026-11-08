@@ -80,6 +80,7 @@ public final class RecordingClient implements Closeable {
             durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
             durableConsume.observe(transferMetrics);
             rangeConsume=ranges?new RangeConsume(peer,link,directorySync==null?AndroidDirectorySync::sync:directorySync::sync,this::nonce):null;
+            if(rangeConsume!=null)rangeConsume.observe(transferMetrics);
             ready=true;
         } finally {if(!ready)link.close();}
     }
@@ -110,6 +111,7 @@ public final class RecordingClient implements Closeable {
     synchronized void attachTransferMetrics(RecordingTransferMetrics metrics,RecorderWire.Descriptor selected)throws IOException {
         ensureOpen();if(metrics==null||transferMetrics!=null)throw new IOException("connection already belongs to a transfer");
         peer.validate(selected);transferMetrics=metrics;durableConsume.observe(metrics);
+        if(rangeConsume!=null)rangeConsume.observe(metrics);
         // The immutable complete session was just enumerated on this same
         // authenticated connection. Mutations and pending receipts invalidate
         // reuse; live sessions and all newly opened links read a fresh list.
