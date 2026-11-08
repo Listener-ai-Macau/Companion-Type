@@ -110,7 +110,7 @@ try:
         for epoch in range(start_epoch,P['epochs']):
             adapter.train();training=[r for r in inputs if r['role']=='train'];random.Random(P['seed']+epoch).shuffle(training);optimizer.zero_grad(set_to_none=True);epoch_loss=0.
             for i,item in enumerate(training):
-                logits,truth=forward(item);loss=torch.nn.functional.cross_entropy(logits,truth);assert torch.isfinite(loss);(loss/P['gradientAccumulation']).backward();epoch_loss+=float(loss)
+                logits,truth=forward(item);loss=torch.nn.functional.cross_entropy(logits,truth);assert torch.isfinite(loss);(loss/P['gradientAccumulation']).backward();epoch_loss+=float(loss.detach())
                 if (i+1)%P['gradientAccumulation']==0 or i+1==len(training):
                     norm=torch.nn.utils.clip_grad_norm_(adapter.trainable_parameters(),P['gradientClipNorm']);assert torch.isfinite(norm);optimizer.step();optimizer.zero_grad(set_to_none=True);time.sleep(1)
                 state['completedInputs']=epoch*len(training)+i+1;save('TRAINING_FIXED_SMALL_CONDITIONED_HEAD')
@@ -118,9 +118,12 @@ try:
             val=validate();checkpoint=folder/('head-epoch-%02d.pt'%(epoch+1));assert not checkpoint.exists();torch.save(adapter.head_state_dict(),checkpoint)
             row={'epoch':epoch+1,'trainingLoss':epoch_loss/len(training),'validationLoss':val,'checkpoint':str(checkpoint),'checkpointSha256':sha(checkpoint)};history.append(row);atomic_json(C/'training-history.json',{'binding':binding,'epochs':history,'checkpointSelectionUsesOnlySeparateRoomValidationLoss':True,'old13ControlsNeverUsedForCheckpointSelection':True})
             temp=resume.with_suffix('.tmp');torch.save({'binding':binding,'head':adapter.head_state_dict(),'optimizer':optimizer.state_dict(),'epoch':epoch+1,'history':history,'pythonRandomState':random.getstate(),'torchCpuRandomState':torch.get_rng_state(),'torchGpuRandomState':torch.cuda.get_rng_state()},temp);os.replace(temp,resume);state['completedEpochs']=epoch+1;save('COMPLETED_DURABLE_TRAINING_EPOCH')
-        best=min(history,key=lambda r:r['validationLoss']);assert best['checkpoint'] is not None,'No adapted checkpoint improves separate-room validation loss: retain base and stop adaptation evaluation'
-        atomic_json(C/'best-checkpoint.json',{**best,'binding':binding,'baselineValidationLoss':history[0]['validationLoss'],'selectedOnlyBySeparateRoomLoss':True,'headOnly':True,'backboneUnchanged':True,'qualityQualified':False})
-        state.update(state='COMPLETE_SMALL_HEAD_TRAINING_HELDOUT_ROOM_SELECTED',trainingEpochs=len(history)-1)
+        best=min(history,key=lambda r:r['validationLoss'])
+        selection={**best,'binding':binding,'baselineValidationLoss':history[0]['validationLoss'],'selectedOnlyBySeparateRoomLoss':True,'headOnly':True,'backboneUnchanged':True,'adaptedCheckpointImprovesSeparateRoomLoss':best['checkpoint'] is not None,'qualityQualified':False}
+        atomic_json(C/'training-selection-review.json',selection)
+        if best['checkpoint'] is not None:
+            atomic_json(C/'best-checkpoint.json',selection);state.update(state='COMPLETE_SMALL_HEAD_TRAINING_HELDOUT_ROOM_SELECTED',trainingEpochs=len(history)-1)
+        else:state.update(state='COMPLETE_SMALL_HEAD_NO_SEPARATE_ROOM_VALIDATION_GAIN',trainingEpochs=len(history)-1)
     else:
         best=read(C/'best-checkpoint.json');assert best['binding']==binding and sha(best['checkpoint'])==best['checkpointSha256'];adapter=MeetingActivityAdapter(pair.model).eval();adapter.load_head_state(torch.load(best['checkpoint'],map_location='cpu',weights_only=True));adapter.eval()
         features={r['id']:r for r in read(C/'feature-manifest.json')['items']};vectors=read(C/'old-evaluation-vector-reuse.json')['vectors'];outdir=C/'evaluation/outputs';outdir.mkdir(parents=True,exist_ok=True);outputs=[];evaluation_binding={'protocolSha256':sha(C/'evaluation/protocol.json'),'adaptationProtocolSha256':binding['protocolSha256'],'headSha256':best['checkpointSha256']}
