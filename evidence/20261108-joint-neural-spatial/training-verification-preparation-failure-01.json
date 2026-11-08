@@ -1,0 +1,6 @@
+{
+  "state": "VALIDATOR_IMPORT_MEMORY_LIMIT_FAILURE_BEFORE_DATA_CHECKS",
+  "error": "MemoryError loading soundfile/NumPy under512MiB job before BLAS thread limit set. Apply the same single-thread library environment as data preparer; no runtime install or data/model change.",
+  "sourceFixed": true,
+  "newModelCalls": 0
+}

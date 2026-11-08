@@ -1,0 +1,16 @@
+{
+  "state": "IMMUTABLE_PROTOCOL_DESCRIPTIVE_COPY_FIELDS_CLARIFIED",
+  "originalProtocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+  "originalProtocolUnmodified": true,
+  "actualRootCount": 4,
+  "inheritedRootCount": 6,
+  "actualActivityGate": false,
+  "actualConditions": [
+    "neural_mono",
+    "neural_spatial"
+  ],
+  "actualPrimaryComparison": "Two fixed complex roots vs matched neuralmono and cached automaticGSS216 edits, plus two ordinary controls.",
+  "evidence": "purpose.json, spatial-audio-only.json, implementation-verification.json, every output receipt and actual worker source. Original copied descriptive activity/ordinary/primaryComparison fields did not control processing.",
+  "preparationSourceFixedForFutureRuns": true,
+  "modelCallsRerun": 0
+}

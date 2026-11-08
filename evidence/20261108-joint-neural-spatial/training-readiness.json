@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_TEXT_ALIGNED_REAL_TRAINING_INPUT_PILOT_NOT_TRAINED_MODEL",
+  "pairs": 214,
+  "counts": {
+    "train/present_solo": 54,
+    "train/present_overlap": 56,
+    "train/absent_other_speech": 56,
+    "validation/present_solo": 16,
+    "validation/present_overlap": 16,
+    "validation/absent_other_speech": 16
+  },
+  "audioSecondsIncludingRepeatedQueryPairs": 1406.9658750000008,
+  "distinctSourceAudioWindows": 207,
+  "trainingMeetings": [
+    "20200707_L_R001S08C01",
+    "20200708_L_R002S01C01"
+  ],
+  "validationMeetings": [
+    "20200623_S_R001S01C01"
+  ],
+  "originalBenchmarkAndFinalHoldoutUsedForTraining": false,
+  "physicalSpeakerIndependenceEstablished": false,
+  "completeTargetSentencesInsideQuery": true,
+  "cleanTargetWaveformsForRealOverlap": false,
+  "newTrainingRuns": 0,
+  "modelAccuracyImprovementDemonstrated": false,
+  "readiness": "Ready as bounded text-supervised TSE training/gradient input pilot. Not enough for a general production model; expand real training sessions/rooms and define actual waveform or differentiable ASR-proxy supervision before a substantive training run. Do not repeat the old4s-frame-head microtraining or treat a train-loss drop as acceptance."
+}

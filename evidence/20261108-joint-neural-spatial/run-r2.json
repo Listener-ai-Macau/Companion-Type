@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_JOINT_ASR",
+  "state": "COMPLETE_SINGLE_JOINT_CANDIDATE_REVIEW_REQUIRED",
   "pid": 22312,
   "startedAt": "2026-11-08T11:02:42+08:00",
   "results": [
@@ -23,6 +23,13 @@
       "wholeProcessFamilySeconds": 6.1256899000145495,
       "privatePeakBytes": 369131520,
       "rssPeakBytes": 355667968
+    },
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 509.8286075000069,
+      "privatePeakBytes": 1247531008,
+      "rssPeakBytes": 1242832896
     }
   ],
   "priorAttemptReceipts": [
@@ -33,5 +40,5 @@
   "controllerSha256": "862bf484fd17640b595fbae3602a852aee39aa817515080f81cf76338f79243c",
   "qualityQualified": false,
   "stage": "asr",
-  "activePid": 3184
+  "finishedAt": "2026-11-08T11:12:07+08:00"
 }

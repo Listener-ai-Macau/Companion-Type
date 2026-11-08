@@ -1,0 +1,1033 @@
+{
+  "at": "2026-11-08T11:12:26.440059+08:00",
+  "state": "JOINT_CANDIDATE_REJECTED_DO_NOT_TUNE_OR_EXPAND",
+  "allOutputRowsVerified": 26,
+  "allRawGenerationHashesAndBindingsVerified": true,
+  "allFrozenCasesAndPeopleScored": true,
+  "metric": "Fixed full-meeting-identity-mapped character edit counts on prediction-selected30s windows; whole midpoint-selected reference utterances, straddling boundaries disclosed. Not strict full-meetingCER or pure-overlapCER.",
+  "overlapTotals": {
+    "neural_mono": {
+      "referenceCharacters": 335,
+      "hypothesisCharacters": 701,
+      "substitute": 77,
+      "delete": 15,
+      "insert": 381,
+      "total": 473
+    },
+    "neural_spatial": {
+      "referenceCharacters": 335,
+      "hypothesisCharacters": 1669,
+      "substitute": 47,
+      "delete": 8,
+      "insert": 1342,
+      "total": 1397
+    }
+  },
+  "ordinaryTotals": {
+    "neural_mono": {
+      "referenceCharacters": 237,
+      "hypothesisCharacters": 230,
+      "substitute": 11,
+      "delete": 8,
+      "insert": 1,
+      "total": 20
+    },
+    "neural_spatial": {
+      "referenceCharacters": 237,
+      "hypothesisCharacters": 230,
+      "substitute": 11,
+      "delete": 8,
+      "insert": 1,
+      "total": 20
+    }
+  },
+  "perMeetingOverlapTotals": {
+    "M_R003S02C01": {
+      "neural_mono": {
+        "referenceCharacters": 129,
+        "hypothesisCharacters": 319,
+        "substitute": 22,
+        "delete": 6,
+        "insert": 196,
+        "total": 224
+      },
+      "neural_spatial": {
+        "referenceCharacters": 129,
+        "hypothesisCharacters": 765,
+        "substitute": 17,
+        "delete": 3,
+        "insert": 639,
+        "total": 659
+      }
+    },
+    "S_R003S01C01": {
+      "neural_mono": {
+        "referenceCharacters": 206,
+        "hypothesisCharacters": 382,
+        "substitute": 55,
+        "delete": 9,
+        "insert": 185,
+        "total": 249
+      },
+      "neural_spatial": {
+        "referenceCharacters": 206,
+        "hypothesisCharacters": 904,
+        "substitute": 30,
+        "delete": 5,
+        "insert": 703,
+        "total": 738
+      }
+    }
+  },
+  "perRoot": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "kind": "predicted-triple",
+      "meeting": "M_R003S02C01",
+      "totals": {
+        "neural_mono": {
+          "referenceCharacters": 129,
+          "hypothesisCharacters": 319,
+          "substitute": 22,
+          "delete": 6,
+          "insert": 196,
+          "total": 224
+        },
+        "neural_spatial": {
+          "referenceCharacters": 129,
+          "hypothesisCharacters": 765,
+          "substitute": 17,
+          "delete": 3,
+          "insert": 639,
+          "total": 659
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "M_R003S02C01-root-000001",
+      "kind": "ordinary-regression",
+      "meeting": "M_R003S02C01",
+      "totals": {
+        "neural_mono": {
+          "referenceCharacters": 123,
+          "hypothesisCharacters": 119,
+          "substitute": 8,
+          "delete": 5,
+          "insert": 1,
+          "total": 14
+        },
+        "neural_spatial": {
+          "referenceCharacters": 123,
+          "hypothesisCharacters": 119,
+          "substitute": 8,
+          "delete": 5,
+          "insert": 1,
+          "total": 14
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "kind": "predicted-triple",
+      "meeting": "S_R003S01C01",
+      "totals": {
+        "neural_mono": {
+          "referenceCharacters": 206,
+          "hypothesisCharacters": 382,
+          "substitute": 55,
+          "delete": 9,
+          "insert": 185,
+          "total": 249
+        },
+        "neural_spatial": {
+          "referenceCharacters": 206,
+          "hypothesisCharacters": 904,
+          "substitute": 30,
+          "delete": 5,
+          "insert": 703,
+          "total": 738
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "S_R003S01C01-root-000001",
+      "kind": "ordinary-regression",
+      "meeting": "S_R003S01C01",
+      "totals": {
+        "neural_mono": {
+          "referenceCharacters": 114,
+          "hypothesisCharacters": 111,
+          "substitute": 3,
+          "delete": 3,
+          "insert": 0,
+          "total": 6
+        },
+        "neural_spatial": {
+          "referenceCharacters": 114,
+          "hypothesisCharacters": 111,
+          "substitute": 3,
+          "delete": 3,
+          "insert": 0,
+          "total": 6
+        }
+      },
+      "missingPredictedReferencePeople": []
+    }
+  ],
+  "perPerson": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "看看过来以后看哪些消哪一些消费水平，咱不能说，也是咱，说下咱搞活动的也这些活动，你要抓住这客户的一些心理。&嗯&啊学生过来以后，他肯定是事事先看好的就是就就盯着你价位的。你价位你这越低，我就来你这儿来拿，你不低我就走。这是年轻人就是就是",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 0,
+      "conditions": {
+        "neural_mono": {
+          "text": "看看过来以后，看那些消那一些消费水平，咱不能说，就是咱说下咱都搞活动那些这些活动，要抓住客户这些心理。你看学生过来以后，他肯定是是事先看好哎，就是就就盯着你价位呢，你价位你是越低，我就来你这拿，你是低，我就走。这是年轻人就是就是一些心理，但是老。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 106,
+            "hypothesisCharacters": 109,
+            "substitute": 13,
+            "delete": 5,
+            "insert": 8,
+            "total": 26
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗，分期付款。看看过来以后，看那些消，那一些消费水平，咱不能说，就是咱说下咱搞活动的这些活动，要抓住这客户的一些心理。嗯。你看学生过来以后，他肯定是是事先看好的，就是就就盯着你价位呢，你价位你是越低，我就来你那。对他有时候转好几家了。我就走了。对对。这是年轻人就是就是一些心理，像老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 106,
+            "hypothesisCharacters": 129,
+            "substitute": 14,
+            "delete": 2,
+            "insert": 25,
+            "total": 41
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "002-M",
+      "referenceText": "",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 1,
+      "conditions": {
+        "neural_mono": {
+          "text": "看看过来以后，看那些教那一些教规水平，咱不能说，要是咱说下咱搞活动这些，这些活动，你要抓住客户一些心理。你看学生过来以后，他肯定是是时间看好的，就是就就盯着你价位的，你价位你这越低，我就来你这拿，你我就走。这是年轻人就是就是一些心理，像老。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 106,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 106,
+            "total": 106
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗，分期付款。看看过来以后，看那些消，那一些消费水平，咱不能说，就是咱说下咱搞活动的这些活动，要抓住这客户的一些心理。嗯。你看学生过来以后，他肯定是是事先看好的，就是就就盯着你价位呢，你价位你是越低，我就来你那。对他有时候转好几家了，对。这是年轻人就是就是一些心理，像老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 124,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 124,
+            "total": 124
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "003-F",
+      "referenceText": "",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 2,
+      "conditions": {
+        "neural_mono": {
+          "text": "期货吧，股票，什么期货？嗯。嗯。对他有时候赚好几件儿了，过来了。对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 26,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 26,
+            "total": 26
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗分期付款。看看过来以后，看那些消一些消费水平，咱不能说，就是咱说咱搞活动的这些活动，要抓住些客户的一些心理。嗯。你看学生过来以后，他肯定是是首先看我们的，就是就就盯着你价位的，你价位你是越低，我就来你那。对他有时候转好几家了，才过来了。对对。这是年轻人，就是就是一些心理，但老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 128,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 128,
+            "total": 128
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "004-F",
+      "referenceText": "对分期付款花呗对他有时候转好几家儿啦过来来",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 1529.4440898343917,
+          "end": 1531.1938366360976,
+          "text": "对分期付款花呗"
+        }
+      ],
+      "predictedSlot": 3,
+      "conditions": {
+        "neural_mono": {
+          "text": "期货吧，股票，什么期货吧？嗯。对他有时候赚好几家了，他过来了，对对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 21,
+            "hypothesisCharacters": 27,
+            "substitute": 9,
+            "delete": 1,
+            "insert": 7,
+            "total": 17
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗分期付款。看看过来以后，看那些消一些消费水平，咱不能说，就是咱说咱搞活动的这些活动，要抓住些客户的一些心理。嗯。你看学生过来以后，他肯定是是事先看我的，就是就就盯着你价位呢，你价位你是越低，我就来你那。对他有时候转好几家了，才过来了，对对。这是年轻人就是就是一些心理，但是老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 21,
+            "hypothesisCharacters": 128,
+            "substitute": 3,
+            "delete": 1,
+            "insert": 108,
+            "total": 112
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "005-F",
+      "referenceText": "嗯对",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 4,
+      "conditions": {
+        "neural_mono": {
+          "text": "寄货款，花呗分期付款。嗯。对他有时候转好几家了，才过来了。对对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 2,
+            "hypothesisCharacters": 26,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 24,
+            "total": 24
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗分期付款。看看过来以后，看那些消一些消费水平，咱不能说，就是咱说咱搞活动的这些活动，要抓住些客户的一些心理。嗯。你看学生过来以后，他肯定是是首先看我们的，就是就就盯着你价位的，你价位你是越低，我就来你那。对他有时候转好几家了，才过来了对。对。这是年轻人就是就是一些心理，但是老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 2,
+            "hypothesisCharacters": 129,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 127,
+            "total": 127
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "006-F",
+      "referenceText": "",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 5,
+      "conditions": {
+        "neural_mono": {
+          "text": "寄付款，花呗分期付款。嗯。对他有时候赚好几件了才过来的。对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 25,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 25,
+            "total": 25
+          }
+        },
+        "neural_spatial": {
+          "text": "分期付款，花呗分期付款。看看过来以后，看那些消一些消费水平，咱不能说，就是咱说咱搞活动的这些活动，要抓住这客户的一些心理。嗯。你看学生过来以后，他肯定是是首先看我们的，就是就就盯着你价位的，你价位你是越低，我就来你。对他有时候转好几家了，才过来了，对。这是年轻人，就是就是一些心理，但是老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 0,
+            "hypothesisCharacters": 127,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 127,
+            "total": 127
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000001",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 1,
+      "kind": "ordinary-regression",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "把各个部门儿呃出现的问题啊咱再进行一次，你们也进行汇报一下。我这边儿也了解你们大体的一些基本情况我才能针对你们所出出的问题才能才能才能解决。呃<sil>呃然后呢咱们商场这块儿也。呃看看有什么呃大的好的这个<sil>这个活动呃<sil>还有一些促销的手手段能留住咱咱这个呃<sil>挽留大家客流量。",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 29.60528,
+          "end": 37.7653,
+          "text": "把各个部门儿呃出现的问题啊咱再进行一次，你们也进行汇报一下。我这边儿也了解你们大体的一些基本情况"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "neural_mono": {
+          "text": "各个部门儿呃出现的问题啊，咱也进行一次，你们也进行汇报一下，我这边也了解你们大体的一些基本情况，我才能针对你们所出出的问题，咱能咱能咱能解决。呃，然后呢，咱们商场这块儿也看看有什么呃大的好的这个这个活动，呃，还有一些促销的手段手段，能留住的这一个呃挽留的客流量。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 123,
+            "hypothesisCharacters": 119,
+            "substitute": 8,
+            "delete": 5,
+            "insert": 1,
+            "total": 14
+          }
+        },
+        "neural_spatial": {
+          "text": "各个部门儿呃出现的问题啊，咱也进行一次，你们也进行汇报一下，我这边也了解你们大体的一些基本情况，我才能针对你们所出出的问题，咱能咱能咱能解决。呃，然后呢，咱们商场这块儿也看看有什么呃大的好的这个这个活动，呃，还有一些促销的手段手段，能留住的这一个呃挽留的客流量。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 123,
+            "hypothesisCharacters": 119,
+            "substitute": 8,
+            "delete": 5,
+            "insert": 1,
+            "total": 14
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "嗯<sil>进行处理，对对这个包到一块儿对也可以贴一个标签儿对所以看你有的你弄一大袋子，他会他，一顿他吃不完，他有的时候，他回去想吃两种菜",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 1704.91271,
+          "end": 1710.54306,
+          "text": "所以看你有的你弄一大袋子，他会他，一顿他吃不完，他有的时候，他回去想吃两种菜"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "neural_mono": {
+          "text": "呃，进行处理，对，这个进行，对，这个进行，对，包到一块儿，对，对，对，对他，你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 59,
+            "hypothesisCharacters": 57,
+            "substitute": 18,
+            "delete": 4,
+            "insert": 2,
+            "total": 24
+          }
+        },
+        "neural_spatial": {
+          "text": "呃，进行处理。对对，两三种菜。对。两道现在对咱们就应该是两三种菜。这个。这个。油菜啦，豆制品啦，是吧？对，这个就是。几种东西放到一块儿，把它。对，包到一块儿。包到一块儿。比如说两个香菇啦，一把油麦啦。那就在一个袋子里面。对，一比如说哈，我再放一个金针菇啦。就跟套餐一样，包在一个这种包装里面，贴一个标签。哎，对对对。六元一袋儿，六元，六元六元一袋儿，就是种类比较多。种类多一点，反而好卖。啊，是。对，但你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 59,
+            "hypothesisCharacters": 194,
+            "substitute": 7,
+            "delete": 3,
+            "insert": 138,
+            "total": 148
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "002-F",
+      "referenceText": "对包到一块儿比如说两个香菇啦，一把儿油麦啦对。也也让他们再放一些金针菇啦啊五元一袋儿啊，六六元六元一袋儿就是品种比较多啊",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 1,
+      "conditions": {
+        "neural_mono": {
+          "text": "呃，进行处理。对对，两三种菜。对。咱们现在对咱们就应该是两三种菜，豆芽菜啦、豆制品啦，是吧？对对对对。品种多，味儿了，对。包到一块儿。包到一块儿。对。就就跟炒菜一样，包到一块儿。六元一袋儿。六元六元一袋儿，就是。品种比较多。啊。你看有的是一大袋子，他会在，就他吃不完，他有的时候他会是想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 57,
+            "hypothesisCharacters": 119,
+            "substitute": 30,
+            "delete": 2,
+            "insert": 64,
+            "total": 96
+          }
+        },
+        "neural_spatial": {
+          "text": "呃，进行处理。对对，两三种菜。对。两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对，这个就品种多到一块儿了，咱对，包到一块儿，包到一块儿。比如说两个香菇啦，一把油麦啦。那就在一个袋子里面。对，一比如说还有再放一个金针菇啦。就就跟套餐一样，包在一个真空包装里面。一个标签。哎，对对对。六元一袋儿，六元六元六元一袋儿，就是品种比较多。啊。种类多一点，反而好卖。哦，是。对，但你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 57,
+            "hypothesisCharacters": 189,
+            "substitute": 10,
+            "delete": 1,
+            "insert": 133,
+            "total": 144
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "003-M",
+      "referenceText": "放到一块儿把它那就在一个袋子里面啊是",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 2,
+      "conditions": {
+        "neural_mono": {
+          "text": "嗯，放到一块儿吧，它，它就在一个袋子里面，对，就是，一个贴一个标签儿，就，哦，是。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 18,
+            "hypothesisCharacters": 31,
+            "substitute": 3,
+            "delete": 0,
+            "insert": 13,
+            "total": 16
+          }
+        },
+        "neural_spatial": {
+          "text": "呃，进行处理。对对，两三种菜。对。两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对这个这个。放到一块儿，把它。对，放到一块儿。放到一块儿。比如说两个香菇啦，一把油麦啦。那就在一个袋子里面。对，一比如说哈，再放一个金针菇啦。就跟套餐一样，包在一个，五元一袋儿，那个对，六元一袋儿，就是品种比较多。种类多一点，反而好卖。哦，是。对，但你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 18,
+            "hypothesisCharacters": 170,
+            "substitute": 1,
+            "delete": 0,
+            "insert": 152,
+            "total": 153
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "004-F",
+      "referenceText": "对对两三种菜，两到现在对咱们就应该是两三种菜绿叶菜啦，豆制品啦是吧",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 3,
+      "conditions": {
+        "neural_mono": {
+          "text": "对对，两三种菜，两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对，包到一块儿，比如说两个香菇啦，一把油麦啦，对，一比如说还要再放一个金针菇啦，啊，五五元一袋儿，六六元六元一袋儿，就是品种比较多，啊。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 31,
+            "hypothesisCharacters": 88,
+            "substitute": 1,
+            "delete": 0,
+            "insert": 57,
+            "total": 58
+          }
+        },
+        "neural_spatial": {
+          "text": "呃，进行处理。对对，两三种菜。对。两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对，这个这个。放到一块儿，把它。对，包到一块儿。包到一块儿。比如说两个香菇啦，一把油麦啦。那就在一个袋子里面。对，一比如说哈，再放一个金针菇啦。就就跟套餐一样，包在一个真空包装里面，贴一个标签。哎，对对对。六元一袋儿，就是品种比较多。种类多一点，反而好卖。啊，哦，是。对，但你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 31,
+            "hypothesisCharacters": 179,
+            "substitute": 1,
+            "delete": 0,
+            "insert": 148,
+            "total": 149
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "005-M",
+      "referenceText": "品种多对这样就就跟套餐一样，包在一个，包装里边儿哎，对对对对量种类多一点儿，反而好卖一些嗯",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 4,
+      "conditions": {
+        "neural_mono": {
+          "text": "呃，进行处理，再增加三种菜。对。然后，现在对咱们今天这种三种菜，这个豆制品是吧？对，这个品种多一些。对，这样对。包到一块儿。对，就就就跟套餐一样，包在一个真空包装一个。哎，对对对对，这样种类多一点，反而好卖一些。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 41,
+            "hypothesisCharacters": 87,
+            "substitute": 3,
+            "delete": 3,
+            "insert": 49,
+            "total": 55
+          }
+        },
+        "neural_spatial": {
+          "text": "呃，进行处理。对对，两三种菜。对。两道，现在对咱们最应该是两三种菜，豆制品啦，是吧？对这个品种多一些。对，这样对。包到一块儿，对，包到一块儿。比如说两个香菇啦，一把油麦啦。那都在一个袋子里面。对，一比如说哈，再放一个金针菇。就就跟套餐一样，包在一个真空包装里面。对，一袋儿就一个标签，一袋儿六元一袋儿，就是。品种比较多一点，反正好卖。哦，是。对，但你看有的你弄一大袋子，他会他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 41,
+            "hypothesisCharacters": 172,
+            "substitute": 11,
+            "delete": 1,
+            "insert": 132,
+            "total": 144
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000001",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 1,
+      "kind": "ordinary-regression",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "包括一些工作上遇到一些问题，呃<sil>呃<sil>这个你的产品或者一些呃遇到哪些呃呃问题。这个产品需要上线哪些新产品呃，员工之间，你们下属员工嗯的呃，这个工作情况还有你们的一些建议，包括一些呃有什么新的想法啦还有一些新的产品啦嗯<sil>都<sil>简单说一下，主要就是两方面，第一",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 29.25256,
+          "end": 36.07257,
+          "text": "包括一些工作上遇到一些问题，呃<sil>呃<sil>这个你的产品或者一些"
+        },
+        {
+          "start": 56.53133,
+          "end": 60.00134,
+          "text": "都<sil>简单说一下，主要就是两方面，第一"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "neural_mono": {
+          "text": "一些工作上遇到一些问题，呃呃，这个你的产品或者一些呃遇到哪些呃呃问题，这个产品需要上些哪些新产品，啊，员工之间，你们下边员工的呃这个工作情况，还有你们的一些建议，包括一些呃有什么新的想法啦，还有一些新的产品啦，嗯，都简单说一下，主要就是两方面，第一。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 114,
+            "hypothesisCharacters": 111,
+            "substitute": 3,
+            "delete": 3,
+            "insert": 0,
+            "total": 6
+          }
+        },
+        "neural_spatial": {
+          "text": "一些工作上遇到一些问题，呃呃，这个你的产品或者一些呃遇到哪些呃呃问题，这个产品需要上些哪些新产品，啊，员工之间，你们下边员工的呃这个工作情况，还有你们的一些建议，包括一些呃有什么新的想法啦，还有一些新的产品啦，嗯，都简单说一下，主要就是两方面，第一。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 114,
+            "hypothesisCharacters": 111,
+            "substitute": 3,
+            "delete": 3,
+            "insert": 0,
+            "total": 6
+          }
+        }
+      }
+    }
+  ],
+  "overlapRootRegressions": [
+    "M_R003S02C01-root-000051",
+    "S_R003S01C01-root-000056"
+  ],
+  "participantDeletionRegressions": [],
+  "ordinaryRawTextSameAcrossArms": true,
+  "standardFullJournalReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\journal-review.json",
+  "actualReferenceClipCoverage": [
+    {
+      "id": "M_R003S02C01-root-000051",
+      "selectedKind": "predicted-triple",
+      "trueSingleSeconds": 23.925604584221674,
+      "trueOverlapSeconds": 4.736533864242574,
+      "trueTripleOrMoreSeconds": 1.0152851812365498,
+      "trueSilenceSeconds": 1.3378615515357524,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "M_R003S02C01-root-000033",
+      "selectedKind": "predicted-overlap",
+      "trueSingleSeconds": 17.508044097316088,
+      "trueOverlapSeconds": 12.26114108725642,
+      "trueTripleOrMoreSeconds": 2.165096638455907,
+      "trueSilenceSeconds": 0.23081481542749316,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "M_R003S02C01-root-000001",
+      "selectedKind": "ordinary-regression",
+      "trueSingleSeconds": 29.365000000000002,
+      "trueOverlapSeconds": 0.0,
+      "trueTripleOrMoreSeconds": 0.0,
+      "trueSilenceSeconds": 0.634999999999998,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000056",
+      "selectedKind": "predicted-triple",
+      "trueSingleSeconds": 20.35518286553406,
+      "trueOverlapSeconds": 9.36182060272722,
+      "trueTripleOrMoreSeconds": 2.1836111057994003,
+      "trueSilenceSeconds": 0.28299653173871775,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000067",
+      "selectedKind": "predicted-overlap",
+      "trueSingleSeconds": 20.661238109574697,
+      "trueOverlapSeconds": 7.529607779083335,
+      "trueTripleOrMoreSeconds": 0.14333864286800235,
+      "trueSilenceSeconds": 1.809154111341968,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000001",
+      "selectedKind": "ordinary-regression",
+      "trueSingleSeconds": 29.541249999999998,
+      "trueOverlapSeconds": 0.0,
+      "trueTripleOrMoreSeconds": 0.0,
+      "trueSilenceSeconds": 0.458750000000002,
+      "selectionChangedAfterSeeingTruth": false
+    }
+  ],
+  "sameRecognizerInferenceAst": true,
+  "newSpatialAlgorithmCalls": 11,
+  "newAsrCalls": 24,
+  "sameAudioReuses": 2,
+  "timings": {
+    "separation": 0,
+    "inventory": 5.075290400010999,
+    "asr": 509.8286075000069
+  },
+  "maximumRecordedJobPrivateBytes": 1280991232,
+  "cpuLimitPercent": 10,
+  "privateLimitBytes": 2147483648,
+  "twoWayLabelFusionPerformed": false,
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false,
+  "newTrainingRuns": 0,
+  "newHardwareAccess": false,
+  "qualityQualified": false,
+  "broadPromotionAllowed": false,
+  "cachedAutomaticGssBaselineTotal": 216,
+  "cachedRawGssPerPersonComparison": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "001-M",
+      "oldRawGss": {
+        "referenceCharacters": 106,
+        "hypothesisCharacters": 108,
+        "substitute": 7,
+        "delete": 5,
+        "insert": 7,
+        "total": 19
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 106,
+        "hypothesisCharacters": 129,
+        "substitute": 14,
+        "delete": 2,
+        "insert": 25,
+        "total": 41
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "002-M",
+      "oldRawGss": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 0,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 0,
+        "total": 0
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 124,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 124,
+        "total": 124
+      },
+      "referenceIsEmpty": true
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "003-F",
+      "oldRawGss": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 0,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 0,
+        "total": 0
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 128,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 128,
+        "total": 128
+      },
+      "referenceIsEmpty": true
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "004-F",
+      "oldRawGss": {
+        "referenceCharacters": 21,
+        "hypothesisCharacters": 26,
+        "substitute": 3,
+        "delete": 1,
+        "insert": 6,
+        "total": 10
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 21,
+        "hypothesisCharacters": 128,
+        "substitute": 3,
+        "delete": 1,
+        "insert": 108,
+        "total": 112
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "005-F",
+      "oldRawGss": {
+        "referenceCharacters": 2,
+        "hypothesisCharacters": 1,
+        "substitute": 0,
+        "delete": 1,
+        "insert": 0,
+        "total": 1
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 2,
+        "hypothesisCharacters": 129,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 127,
+        "total": 127
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "personForScoringOnly": "006-F",
+      "oldRawGss": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 0,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 0,
+        "total": 0
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 0,
+        "hypothesisCharacters": 127,
+        "substitute": 0,
+        "delete": 0,
+        "insert": 127,
+        "total": 127
+      },
+      "referenceIsEmpty": true
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "personForScoringOnly": "001-M",
+      "oldRawGss": {
+        "referenceCharacters": 59,
+        "hypothesisCharacters": 59,
+        "substitute": 7,
+        "delete": 8,
+        "insert": 8,
+        "total": 23
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 59,
+        "hypothesisCharacters": 194,
+        "substitute": 7,
+        "delete": 3,
+        "insert": 138,
+        "total": 148
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "personForScoringOnly": "002-F",
+      "oldRawGss": {
+        "referenceCharacters": 57,
+        "hypothesisCharacters": 0,
+        "substitute": 0,
+        "delete": 57,
+        "insert": 0,
+        "total": 57
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 57,
+        "hypothesisCharacters": 189,
+        "substitute": 10,
+        "delete": 1,
+        "insert": 133,
+        "total": 144
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "personForScoringOnly": "003-M",
+      "oldRawGss": {
+        "referenceCharacters": 18,
+        "hypothesisCharacters": 26,
+        "substitute": 1,
+        "delete": 0,
+        "insert": 8,
+        "total": 9
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 18,
+        "hypothesisCharacters": 170,
+        "substitute": 1,
+        "delete": 0,
+        "insert": 152,
+        "total": 153
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "personForScoringOnly": "004-F",
+      "oldRawGss": {
+        "referenceCharacters": 31,
+        "hypothesisCharacters": 114,
+        "substitute": 2,
+        "delete": 0,
+        "insert": 83,
+        "total": 85
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 31,
+        "hypothesisCharacters": 179,
+        "substitute": 1,
+        "delete": 0,
+        "insert": 148,
+        "total": 149
+      },
+      "referenceIsEmpty": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "personForScoringOnly": "005-M",
+      "oldRawGss": {
+        "referenceCharacters": 41,
+        "hypothesisCharacters": 41,
+        "substitute": 2,
+        "delete": 5,
+        "insert": 5,
+        "total": 12
+      },
+      "newNeuralSpatial": {
+        "referenceCharacters": 41,
+        "hypothesisCharacters": 172,
+        "substitute": 11,
+        "delete": 1,
+        "insert": 132,
+        "total": 144
+      },
+      "referenceIsEmpty": false
+    }
+  ],
+  "cachedBaselineDeletionRegressions": [],
+  "everyRootBeatsCachedBaseline": false,
+  "previouslyMissingPersonRecovered": true,
+  "previouslyMissingPerson": {
+    "case": "S_R003S01C01-root-000056",
+    "personForScoringOnly": "002-F",
+    "oldRawGss": {
+      "referenceCharacters": 57,
+      "hypothesisCharacters": 0,
+      "substitute": 0,
+      "delete": 57,
+      "insert": 0,
+      "total": 57
+    },
+    "newNeuralSpatial": {
+      "referenceCharacters": 57,
+      "hypothesisCharacters": 189,
+      "substitute": 10,
+      "delete": 1,
+      "insert": 133,
+      "total": 144
+    },
+    "referenceIsEmpty": false
+  },
+  "absentTargetInsertions": {
+    "neural_mono": 157,
+    "neural_spatial": 379
+  },
+  "asrCallsByAttempt": [
+    {
+      "startedAt": "2026-11-08T11:03:38+08:00",
+      "newNeuralCalls": 24,
+      "cachedOutputOrRawReuses": 2
+    }
+  ],
+  "newTargetCueCalls": 22,
+  "candidateRetainedForExpansionOnly": false,
+  "referenceNeverPassedToProcessingWorkers": true
+}

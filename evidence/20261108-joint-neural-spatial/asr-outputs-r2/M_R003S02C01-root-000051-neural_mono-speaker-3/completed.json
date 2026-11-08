@@ -1,0 +1,72 @@
+{
+  "id": "M_R003S02C01-root-000051-neural_mono-speaker-3",
+  "binding": {
+    "protocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+    "audioOnlySha256": "dfded453218219bcfd6c9a1041a220129560045b00b9af3f272271fabccd75fa",
+    "workerSourceSha256": "9edebae668740f64443d8b02bdec8aec0bcac3df42801dfc37dc69270920ff69"
+  },
+  "meeting": "M_R003S02C01",
+  "rootIndex": 51,
+  "kind": "predicted-triple",
+  "predictedSpeaker": 3,
+  "arm": "neural_mono",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\target-audio\\M_R003S02C01-root-000051-neural_mono-speaker-3.wav",
+  "audioSha256": "3a99c164041c6c593dd5a6594e7121d13af0610d3ee07a2c1ef1ab18e4ffeb23",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "2a0a8b7d85264bc47b0ca0e3ff2d093952d4801c5dc5df4ec7227466c73a766c",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": false,
+  "voiceAdmissionApplied": false,
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.055261820554733276,
+  "durablePublication": {
+    "audioSha256": "3a99c164041c6c593dd5a6594e7121d13af0610d3ee07a2c1ef1ab18e4ffeb23",
+    "existingIdenticalPcmRecovered": false,
+    "allSamplesVerified": true,
+    "existingAudioOverwritten": false
+  },
+  "sampleTimelineRetained": true,
+  "ordinaryBypass": false,
+  "text": "期货吧，股票，什么期货吧？嗯。对他有时候赚好几家了，他过来了，对对。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "期货吧，股票，什么期货吧？嗯。对他有时候赚好几家了，他过来了，对对。",
+      "generatedIds": [
+        104713,
+        100003,
+        3837,
+        104023,
+        3837,
+        99245,
+        104713,
+        100003,
+        11319,
+        106287,
+        1773,
+        105921,
+        104854,
+        102223,
+        52801,
+        99195,
+        45629,
+        34187,
+        3837,
+        42411,
+        38182,
+        101161,
+        3837,
+        32664,
+        32664,
+        1773,
+        151645
+      ],
+      "rawDecoded": "期货吧，股票，什么期货吧？嗯。对他有时候赚好几家了，他过来了，对对。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.298447000008309
+    }
+  ]
+}
