@@ -164,6 +164,7 @@ final class DurableConsume {
         }
         if(metrics!=null)metrics.consumeStage(d,2);
         writeNew(directory,confirmed(directory,d),request);
+        RangeCheckpoint.wholeConfirmed(directory,d,syncDirectory::sync);
     }
     private void send(Path directory,RecorderWire.Descriptor d)throws IOException {
         awaitReceipt(directory,d,request(d));

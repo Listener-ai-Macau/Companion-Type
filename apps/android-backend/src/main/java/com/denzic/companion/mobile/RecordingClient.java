@@ -45,7 +45,7 @@ public final class RecordingClient implements Closeable {
     private boolean stoppedBatchHintAttempted,stoppedBatchHintAccepted;
     private long stoppedBatchHintPrimedUntil;
     private RecorderWire.Descriptor handedOffSelection;
-    private final boolean consumePullOverlap;
+    private final boolean consumePullOverlap,queuedReclaim;
     private final RangeConsume rangeConsume;
     private RecordingTransferMetrics transferMetrics;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
@@ -65,21 +65,23 @@ public final class RecordingClient implements Closeable {
             link.subscribe(RECORDING_CONTROL);link.subscribe(RECORDING_LIST);link.subscribe(RECORDING_PULL);
             peer=readPublishedPeer(link);
             byte[] request=peer.negotiate(nonce(),link.mtu());link.write(RECORDING_CONTROL,request);
-            byte[] legacy=request.clone();legacy[3]&=0x3f;RecorderWire.put32(legacy,28,RecorderWire.crc(legacy,0,28));
-            byte[] withoutRanges=request.clone();withoutRanges[3]&=(byte)0xbf;RecorderWire.put32(withoutRanges,28,RecorderWire.crc(withoutRanges,0,28));
-            boolean overlap=false,ranges=false;
+            byte[] legacy=request.clone();legacy[3]&=0x1f;RecorderWire.put32(legacy,28,RecorderWire.crc(legacy,0,28));
+            byte[] withoutRanges=request.clone();withoutRanges[3]&=(byte)0x9f;RecorderWire.put32(withoutRanges,28,RecorderWire.crc(withoutRanges,0,28));
+            byte[] withoutQueue=request.clone();withoutQueue[3]&=(byte)0xdf;RecorderWire.put32(withoutQueue,28,RecorderWire.crc(withoutQueue,0,28));
+            boolean overlap=false,ranges=false,queued=false;
             long deadline=System.nanoTime()+8_000_000_000L;
             while(true){
                 long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording negotiation timed out");
                 byte[] reply=link.await(RECORDING_CONTROL,remaining);
-                if(Arrays.equals(request,reply)){overlap=(request[3]&0x80)!=0;ranges=overlap&&(request[3]&0x40)!=0;break;}
+                if(Arrays.equals(request,reply)){overlap=(request[3]&0x80)!=0;ranges=overlap&&(request[3]&0x40)!=0;queued=ranges&&(request[3]&0x20)!=0;break;}
+                if(Arrays.equals(withoutQueue,reply)){overlap=(withoutQueue[3]&0x80)!=0;ranges=overlap&&(withoutQueue[3]&0x40)!=0;break;}
                 if(Arrays.equals(withoutRanges,reply)){overlap=(withoutRanges[3]&0x80)!=0;break;}
                 if(Arrays.equals(legacy,reply))break;
             }
-            consumePullOverlap=overlap;
+            consumePullOverlap=overlap;queuedReclaim=queued;
             durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
             durableConsume.observe(transferMetrics);
-            rangeConsume=ranges?new RangeConsume(peer,link,directorySync==null?AndroidDirectorySync::sync:directorySync::sync,this::nonce):null;
+            rangeConsume=ranges?new RangeConsume(peer,link,directorySync==null?AndroidDirectorySync::sync:directorySync::sync,this::nonce,queued):null;
             if(rangeConsume!=null)rangeConsume.observe(transferMetrics);
             ready=true;
         } finally {if(!ready)link.close();}
@@ -309,7 +311,14 @@ public final class RecordingClient implements Closeable {
         try(TransferPriorityScope priority=TransferPriorityScope.open(link,!matches.isEmpty())){
         if(transferMetrics!=null&&priority.requested)transferMetrics.centralPriority(priority.accepted);
         if(!matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0)preferStoppedBatch();
-        if(consumePullOverlap&&!matches.isEmpty()){
+        if(queuedReclaim&&matches.size()==1&&(((matches.get(0).encodedLength+247)/248+1)*256+4095)/4096<16){
+            RecorderWire.Descriptor d=matches.get(0);final DurableConsume.Pending[] early={null};
+            try{
+                download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,1,received,total),true,
+                    verified->early[0]=durableConsume.begin(privateDirectory,verified));
+                early[0].finish();if(transferMetrics!=null)transferMetrics.confirmed(d);
+            }finally{if(early[0]!=null)early[0].close();}
+        }else if(consumePullOverlap&&!matches.isEmpty()){
             download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total),true);
             for(int i=0;i<matches.size();i++){
                 try(DurableConsume.Pending pending=durableConsume.begin(privateDirectory,matches.get(i))){
@@ -359,6 +368,10 @@ public final class RecordingClient implements Closeable {
         return download(recordingId,privateDirectory,progress,false);
     }
     private Path download(long recordingId,Path privateDirectory,Progress progress,boolean prepareReclaim) throws IOException {
+        return download(recordingId,privateDirectory,progress,prepareReclaim,null);
+    }
+    private interface OriginalReady {void ready(RecorderWire.Descriptor descriptor)throws IOException;}
+    private Path download(long recordingId,Path privateDirectory,Progress progress,boolean prepareReclaim,OriginalReady ready) throws IOException {
         ensureOpen();if(current==null)throw new IOException("read the recording directory first");
         RecorderWire.Descriptor found=null;for(RecorderWire.Descriptor d:current)if(d.recordingId==recordingId){found=d;break;}
         if(found==null)throw new IOException("recording is not in the current directory");
@@ -387,8 +400,14 @@ public final class RecordingClient implements Closeable {
                         if(ranges!=null)ranges.progress(receiver);
                     }
                 }
+                if(ranges!=null&&ranges.pipelined()&&ready!=null){
+                    ranges.prepareTerminal(receiver);
+                    Path finished=receiver.finishRetainingLock();if(measured!=null)measured.verified();
+                    ready.ready(found); // queues CRA2 behind physically pending ranges
+                    ranges.finish(receiver);return finished;
+                }
                 if(ranges!=null)ranges.finish(receiver);
-                Path finished=receiver.finish();if(measured!=null)measured.verified();return finished;
+                Path finished=receiver.finish();if(measured!=null)measured.verified();if(ready!=null)ready.ready(found);return finished;
                 }
             } catch(SegmentReceiver.IntegrityMismatch error) {if(transferMetrics!=null)transferMetrics.integrityRetry();if(attempt!=0)throw error;}
         }

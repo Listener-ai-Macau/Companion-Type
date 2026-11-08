@@ -12,6 +12,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.CRC32;
 
 /** Durable partial-source handoff for the range-reclaim refactor.
@@ -43,7 +45,8 @@ final class RangeCheckpoint {
     private static IOException invalid(){return new IOException("recording range checkpoint is invalid; saved source retained");}
     private static Path path(Path dir,RecorderWire.Descriptor d){return dir.resolve(SegmentReceiver.key(d)+".range");}
     private static boolean exists(Path p){return Files.exists(p,LinkOption.NOFOLLOW_LINKS);}
-    static boolean exists(Path dir,RecorderWire.Descriptor d){return exists(path(dir,d));}
+    static boolean exists(Path dir,RecorderWire.Descriptor d)throws IOException{return exists(path(dir,d))||!queued(dir,d).isEmpty();}
+    static boolean legacyPending(Path dir,RecorderWire.Descriptor d)throws IOException{return exists(path(dir,d))&&!read(dir,d).confirmed;}
     private static long get(byte[] p,int at,int n){long v=0;for(int i=0;i<n;i++)v|=(p[at+i]&255L)<<(i*8);return v;}
     private static void put(byte[] p,int at,long v,int n){for(int i=0;i<n;i++)p[at+i]=(byte)(v>>>(i*8));}
     private static long crc(byte[] p,int n){CRC32 c=new CRC32();c.update(p,0,n);return c.getValue();}
@@ -58,7 +61,10 @@ final class RangeCheckpoint {
     static RangeCheckpoint read(Path dir,RecorderWire.Descriptor expected)throws IOException {
         Path file=path(dir,expected);
         if(!Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS)||Files.size(file)!=BYTES)throw invalid();
-        byte[] p=Files.readAllBytes(file);
+        return decode(Files.readAllBytes(file),expected);
+    }
+    private static RangeCheckpoint decode(byte[] p,RecorderWire.Descriptor expected)throws IOException {
+        if(p.length!=BYTES)throw invalid();
         if(!Arrays.equals(Arrays.copyOf(p,5),new byte[]{'C','R','H','1',1})||p[5]<0||p[5]>1||
                 get(p,6,2)!=BYTES||get(p,204,4)!=0||get(p,208,4)!=crc(p,208)||
                 !Arrays.equals(Arrays.copyOfRange(p,212,216),new byte[]{'C','R','G','E'}))throw invalid();
@@ -82,11 +88,14 @@ final class RangeCheckpoint {
      * damaged prefix must never trigger the legacy discard-and-start-over path:
      * some of its device sectors may already have been physically reclaimed. */
     static void verifySavedPrefix(Path dir,RecorderWire.Descriptor d)throws IOException {
-        if(!exists(dir,d))return;
-        RangeCheckpoint c=read(dir,d);byte[][] hashes=hashes(source(dir,d),d,c.firstSector,
-            Math.min(d.encodedLength,((long)c.endSector*16-1)*248),c.prefixBytes);
-        if(!MessageDigest.isEqual(c.prefixSha,hashes[0])||!MessageDigest.isEqual(c.rangeSha,hashes[1]))
-            throw new IOException("saved recording prefix is damaged; range recovery cannot restart from zero");
+        List<RangeCheckpoint> proofs=queued(dir,d);
+        if(exists(path(dir,d)))proofs.add(read(dir,d));
+        for(RangeCheckpoint c:proofs){
+            byte[][] hashes=hashes(source(dir,d),d,c.firstSector,
+                Math.min(d.encodedLength,((long)c.endSector*16-1)*248),c.prefixBytes);
+            if(!MessageDigest.isEqual(c.prefixSha,hashes[0])||!MessageDigest.isEqual(c.rangeSha,hashes[1]))
+                throw new IOException("saved recording prefix is damaged; range recovery cannot restart from zero");
+        }
     }
     private static byte[][] hashes(Path file,RecorderWire.Descriptor d,int first,long rangeEnd,long end)throws IOException {
         long begin=Math.max(0,((long)first*16-1)*248);
@@ -110,11 +119,18 @@ final class RangeCheckpoint {
         try(FileChannel c=FileChannel.open(file,StandardOpenOption.WRITE)){c.force(true);}
     }
     private void publish(Path dir,DirectorySync sync)throws IOException {
+        publish(dir,path(dir,descriptor),sync,true);
+    }
+    private void publish(Path dir,Path destination,DirectorySync sync,boolean replace)throws IOException {
         Path temp=dir.resolve(".range-"+UUID.randomUUID()+".tmp");
         Files.createFile(temp);
         try {
             try(RandomAccessFile f=new RandomAccessFile(temp.toFile(),"rw")){f.write(encode());f.getFD().sync();}
-            Files.move(temp,path(dir,descriptor),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+            if(replace)Files.move(temp,destination,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+            else{
+                if(exists(destination))throw invalid();
+                Files.move(temp,destination,StandardCopyOption.ATOMIC_MOVE);
+            }
             sync.sync(dir);
         }finally{Files.deleteIfExists(temp);}
     }
@@ -127,11 +143,23 @@ final class RangeCheckpoint {
     }
     private static RangeCheckpoint save(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,
             DirectorySync sync,long acceptedBytes,byte[] acceptedSha,boolean owned)throws IOException {
+        return save(dir,d,first,end,nonce,sync,acceptedBytes,acceptedSha,owned,null,false);
+    }
+    static RangeCheckpoint saveQueuedOwned(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,
+            DirectorySync sync,long acceptedBytes,byte[] acceptedSha,RangeCheckpoint previous)throws IOException {
+        return save(dir,d,first,end,nonce,sync,acceptedBytes,acceptedSha,true,previous,true);
+    }
+    private static RangeCheckpoint save(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,
+            DirectorySync sync,long acceptedBytes,byte[] acceptedSha,boolean owned,RangeCheckpoint preceding,boolean queue)throws IOException {
         if(sync==null)throw new IllegalArgumentException("directory sync required");
         long limit=Math.min(d.encodedLength,((long)end*16-1)*248);
         // Validate the proposed bounds before opening source or replacing proof.
         new RangeCheckpoint(d,nonce,first,end,limit,new byte[32],new byte[32],false);
-        if(exists(dir,d)){
+        if(queue){
+            RangeCheckpoint previous=preceding;
+            if(previous==null&&first!=0&&exists(path(dir,d)))previous=read(dir,d);
+            if(previous==null?first!=0:(!previous.descriptor.sameContent(d)||previous.endSector!=first||previous.nonce==nonce))throw invalid();
+        }else if(exists(path(dir,d))){
             RangeCheckpoint previous=read(dir,d);
             if(!owned)verifySavedPrefix(dir,d);
             if(!previous.confirmed){
@@ -170,7 +198,52 @@ final class RangeCheckpoint {
         force(file);force(meta);sync.sync(dir);
         Path parent=dir.toAbsolutePath().getParent();if(parent==null)throw invalid();sync.sync(parent);
         RangeCheckpoint result=new RangeCheckpoint(saved,nonce,first,end,prefix,hashes[0],hashes[1],false);
-        result.publish(dir,sync);return result;
+        if(queue)result.publish(dir,queuedPath(dir,d,nonce),sync,false);else result.publish(dir,sync);return result;
+    }
+    private static Path queuedPath(Path dir,RecorderWire.Descriptor d,long nonce){return dir.resolve(SegmentReceiver.key(d)+".queued-"+Long.toUnsignedString(nonce,16));}
+    static List<RangeCheckpoint> queued(Path dir,RecorderWire.Descriptor d)throws IOException {
+        List<RangeCheckpoint> result=new ArrayList<>();if(!Files.isDirectory(dir))return result;
+        String prefix=SegmentReceiver.key(d)+".queued-";
+        try(java.nio.file.DirectoryStream<Path> files=Files.newDirectoryStream(dir,prefix+"*")){
+            for(Path file:files){
+                if(!Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS)||Files.size(file)!=BYTES)throw invalid();
+                RangeCheckpoint p=decode(Files.readAllBytes(file),d);
+                if(p.confirmed||!file.getFileName().toString().equals(prefix+Long.toUnsignedString(p.nonce,16)))throw invalid();
+                result.add(p);
+            }
+        }
+        result.sort(java.util.Comparator.comparingInt(p->p.firstSector));
+        for(int i=1;i<result.size();i++)if(result.get(i-1).endSector!=result.get(i).firstSector||result.get(i-1).nonce==result.get(i).nonce)throw invalid();
+        if(result.size()>3)throw invalid();return result;
+    }
+    static RangeCheckpoint confirmedFrontier(Path dir,RecorderWire.Descriptor d)throws IOException {
+        if(!exists(path(dir,d)))return null;RangeCheckpoint p=read(dir,d);if(!p.confirmed)throw invalid();return p;
+    }
+    void confirmQueued(Path dir,DirectorySync sync)throws IOException {
+        Path own=queuedPath(dir,descriptor,nonce);
+        if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!Arrays.equals(Files.readAllBytes(own),encode()))throw invalid();
+        RangeCheckpoint previous=confirmedFrontier(dir,descriptor);
+        if(previous!=null&&previous.endSector>firstSector&&!(previous.endSector==endSector&&previous.nonce==nonce))throw invalid();
+        new RangeCheckpoint(descriptor,nonce,firstSector,endSector,prefixBytes,prefixSha,rangeSha,true).publish(dir,sync);
+        Files.delete(own);sync.sync(dir);
+    }
+    void resyncQueued(Path dir,DirectorySync sync)throws IOException {
+        Path own=queuedPath(dir,descriptor,nonce);
+        if(!Files.isRegularFile(own,LinkOption.NOFOLLOW_LINKS)||!Arrays.equals(Files.readAllBytes(own),encode()))throw invalid();
+        force(source(dir,descriptor));force(dir.resolve(SegmentReceiver.key(descriptor)+".meta"));force(own);sync.sync(dir);
+        Path parent=dir.toAbsolutePath().getParent();if(parent==null)throw invalid();sync.sync(parent);
+    }
+    static void wholeConfirmed(Path dir,RecorderWire.Descriptor d,DirectorySync sync)throws IOException {
+        // Full original validation and a durable exact CRA2 receipt precede
+        // this call. Obsolete range metadata cannot block that saved original.
+        String prefix=SegmentReceiver.key(d)+".queued-";boolean removed=false;
+        try(java.nio.file.DirectoryStream<Path> files=Files.newDirectoryStream(dir,prefix+"*")){
+            for(Path file:files)if(Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS)&&
+                    file.getFileName().toString().substring(prefix.length()).matches("[0-9a-f]{1,8}")){
+                Files.delete(file);removed=true;
+            }
+        }
+        if(removed)sync.sync(dir);
     }
     /** Caller invokes this ONLY for an exact device physical-DONE receipt. */
     void confirm(Path dir,DirectorySync sync)throws IOException {

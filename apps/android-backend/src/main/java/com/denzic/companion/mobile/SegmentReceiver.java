@@ -32,9 +32,12 @@ public final class SegmentReceiver implements Closeable {
     private long offset,sequence;
     private long boundaryBytes;
     private byte[] boundarySha;
-    private boolean closed;
+    private boolean closed,published;
 
-    private static String hex(byte[] data) {StringBuilder b=new StringBuilder(data.length*2);for(byte x:data)b.append(String.format(java.util.Locale.ROOT,"%02x",x&255));return b.toString();}
+    private static final char[] HEX="0123456789abcdef".toCharArray();
+    private static String hex(byte[] data) {
+        char[] out=new char[data.length*2];for(int i=0;i<data.length;i++){int value=data[i]&255;out[i*2]=HEX[value>>>4];out[i*2+1]=HEX[value&15];}return new String(out);
+    }
     static String sessionPrefix(RecorderWire.Descriptor d) {return hex(d.uid())+"-"+Long.toUnsignedString(d.epoch,16)+"-"+Long.toUnsignedString(d.sessionId,16)+"-";}
     static String key(RecorderWire.Descriptor d) {return sessionPrefix(d)+d.segmentIndex+"-"+d.recordingId+"-"+hex(d.sha256());}
     private static MessageDigest digest() {try{return MessageDigest.getInstance("SHA-256");}catch(NoSuchAlgorithmException e){throw new AssertionError(e);}}
@@ -112,7 +115,15 @@ public final class SegmentReceiver implements Closeable {
      * mutate the captured prefix and need not wait for filesystem sync. */
     RangeCheckpoint.Save prepareRangeCheckpoint(Path directory,int firstSector,int endSector,long nonce,
             RangeCheckpoint.DirectorySync sync)throws IOException {
-        if(closed)throw new IOException("receiver is closed");
+        return prepareRangeCheckpoint(directory,firstSector,endSector,nonce,sync,null,false);
+    }
+    RangeCheckpoint.Save prepareQueuedRangeCheckpoint(Path directory,int firstSector,int endSector,long nonce,
+            RangeCheckpoint.DirectorySync sync,java.util.function.Supplier<RangeCheckpoint> previous)throws IOException {
+        return prepareRangeCheckpoint(directory,firstSector,endSector,nonce,sync,previous,true);
+    }
+    private RangeCheckpoint.Save prepareRangeCheckpoint(Path directory,int firstSector,int endSector,long nonce,
+            RangeCheckpoint.DirectorySync sync,java.util.function.Supplier<RangeCheckpoint> previous,boolean queue)throws IOException {
+        if(closed||published)throw new IOException("receiver is closed");
         long end=Math.min(descriptor.encodedLength,((long)endSector*16-1)*248);
         if(end>offset)throw new IOException("recording range is not fully received");
         if(!part.getParent().toAbsolutePath().normalize().equals(directory.toAbsolutePath().normalize()))
@@ -122,7 +133,8 @@ public final class SegmentReceiver implements Closeable {
         else if(end==boundaryBytes)prefix=boundarySha;
         else if(end==offset)try{prefix=((MessageDigest)sha.clone()).digest();}catch(CloneNotSupportedException unsupported){/* full readback fallback retains correctness */}
         final byte[] acceptedSha=prefix==null?null:prefix.clone();
-        return ()->RangeCheckpoint.saveOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,acceptedSha);
+        return queue?()->RangeCheckpoint.saveQueuedOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,acceptedSha,previous.get()):
+            ()->RangeCheckpoint.saveOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,acceptedSha);
     }
     private void rememberBoundary(MessageDigest digest,byte[] payload,int length,long start){
         long sector=((start+length)/248+1)/16;
@@ -134,15 +146,21 @@ public final class SegmentReceiver implements Closeable {
     }
 
     public void accept(byte[] notification) throws IOException {
-        if(closed||completeBytesReceived())throw new IOException("receiver is not accepting chunks");
+        if(closed||published||completeBytesReceived())throw new IOException("receiver is not accepting chunks");
         byte[] payload=RecorderWire.packet(descriptor,notification,sequence,offset);
         file.write(payload);rememberBoundary(sha,payload,payload.length,offset);sha.update(payload);crc.update(payload);offset+=payload.length;sequence++;
     }
 
     /** Verify full encoded bytes and publish a local copy; this does not prove playback or clear the device. */
     public Path finish() throws IOException {
-        if(closed||!completeBytesReceived())throw new IOException("recording is incomplete; partial file retained");
-        if(existingComplete){close();return complete;}
+        return finish(true);
+    }
+    /** Publish the same fully synced original while retaining the descriptor
+     * lock until queued range receipts and the terminal handoff have settled. */
+    Path finishRetainingLock()throws IOException{return finish(false);}
+    private Path finish(boolean release)throws IOException {
+        if(closed||published||!completeBytesReceived())throw new IOException("recording is incomplete; partial file retained");
+        if(existingComplete){if(release)close();else published=true;return complete;}
         if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(sha.digest(),descriptor.sha256())) {
             if(RangeCheckpoint.exists(part.getParent(),descriptor))
                 throw new IOException("recording integrity mismatch after partial reclamation; saved source retained, automatic restart disabled");
@@ -154,8 +172,9 @@ public final class SegmentReceiver implements Closeable {
         try {
             if(Files.exists(complete))throw new IOException("existing recording preserved");
             Files.move(part,complete,StandardCopyOption.ATOMIC_MOVE);
+            published=true;
             return complete;
-        } finally {close();}
+        } finally {if(release||!published)close();}
     }
     @Override public void close() throws IOException {
         if(closed)return;closed=true;IOException problem=null;

@@ -16,10 +16,14 @@ final class RangeConsume {
     private final RecordingClient.Link link;
     private final RangeCheckpoint.DirectorySync sync;
     private final LongSupplier nonce;
+    private final boolean queued;
     private volatile RecordingTransferMetrics metrics;
     void observe(RecordingTransferMetrics metrics){this.metrics=metrics;if(metrics!=null)metrics.rangeNegotiated();}
     RangeConsume(RecorderWire.Peer peer,RecordingClient.Link link,RangeCheckpoint.DirectorySync sync,LongSupplier nonce){
-        this.peer=peer;this.link=link;this.sync=sync;this.nonce=nonce;
+        this(peer,link,sync,nonce,false);
+    }
+    RangeConsume(RecorderWire.Peer peer,RecordingClient.Link link,RangeCheckpoint.DirectorySync sync,LongSupplier nonce,boolean queued){
+        this.peer=peer;this.link=link;this.sync=sync;this.nonce=nonce;this.queued=queued;
     }
     static long binding(RecorderWire.Descriptor d){
         byte[] p=d.wireBytes();p[95]=2;RecorderWire.put32(p,108,RecorderWire.crc(p,0,108));
@@ -62,7 +66,7 @@ final class RangeConsume {
         if(previous==0?(first!=0||end!=0||p[48]!=0):(end<=first||end>used))throw new IOException("invalid physical range frontier");
         return new Status(previous,first,end,p[48]==1);
     }
-    private Status exchange(RecorderWire.Descriptor d,long token,RangeCheckpoint checkpoint)throws IOException {
+    Status exchange(RecorderWire.Descriptor d,long token,RangeCheckpoint checkpoint)throws IOException {
         link.write(RecordingClient.RECORDING_CONSUME,request(d,token,checkpoint));
         long deadline=System.nanoTime()+15_000_000_000L;
         while(true){
@@ -72,7 +76,13 @@ final class RangeConsume {
             if(result!=null)return result;
         }
     }
-    final class Session implements Closeable {
+    interface Session extends Closeable {
+        void progress(SegmentReceiver receiver)throws IOException;
+        void finish(SegmentReceiver receiver)throws IOException;
+        default boolean pipelined(){return false;}
+        default void prepareTerminal(SegmentReceiver receiver)throws IOException{finish(receiver);}
+    }
+    final class SerialSession implements Session {
         private final Path directory;
         private final RecorderWire.Descriptor descriptor;
         private final int quantum;
@@ -111,7 +121,7 @@ final class RangeConsume {
                 thread.setDaemon(true);thread.start();
             }
         }
-        Session(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
+        SerialSession(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
             this.directory=directory;descriptor=d;
             long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
             quantum=used<8?1:8;
@@ -144,7 +154,7 @@ final class RangeConsume {
         }
         /** Called only after the actual PULL was written, or to reconcile a
          * previously complete cached file (which cannot qualify as fresh rate). */
-        void progress(SegmentReceiver receiver)throws IOException {
+        public void progress(SegmentReceiver receiver)throws IOException {
             if(closed)throw new IOException("range receiver is closed");
             settle(false);if(pending!=null||completeCopy)return;
             if(resume!=null){RangeCheckpoint saved=resume;resume=null;pending=new Pending(saved);return;}
@@ -161,7 +171,7 @@ final class RangeConsume {
             RangeCheckpoint.Save save=receiver.prepareRangeCheckpoint(directory,frontier,available,token,sync);
             lastNonce=token;pending=new Pending(save,began);
         }
-        void finish(SegmentReceiver receiver)throws IOException {
+        public void finish(SegmentReceiver receiver)throws IOException {
             if(!receiver.completeBytesReceived())throw new IOException("recording range receiver is incomplete");
             receiver.verifyOriginal();
             // Settle only proofs already issued (including a durable proof
@@ -182,6 +192,13 @@ final class RangeConsume {
     }
     Session open(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
         long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
+        if(used==1&&!RangeCheckpoint.exists(directory,d)){
+            RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();return null;
+        }
+        if(used<16&&queued&&!RangeCheckpoint.legacyPending(directory,d))try{
+            return new QueuedRangeSession(this,link,sync,nonce,metrics,directory,d,receiver);
+        }catch(Refused busy){if(RangeCheckpoint.exists(directory,d))throw busy;return null;}
+        if(!RangeCheckpoint.queued(directory,d).isEmpty())throw new IOException("queued recording ranges require their original supported receiver; saved source retained");
         if(used<16&&!RangeCheckpoint.exists(directory,d)){
             // Field361/362:3..7-sector prefix transactions finish after the
             // last payload and then still require final CRA2. Restore one
@@ -191,7 +208,7 @@ final class RangeConsume {
             RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();
             return null;
         }
-        try{return new Session(directory,d,receiver);}
+        try{return new SerialSession(directory,d,receiver);}
         catch(Refused busy){
             // A read-only probe may find live capture or its existing NOR
             // owner. Preserve the established live/whole-consume path; no
