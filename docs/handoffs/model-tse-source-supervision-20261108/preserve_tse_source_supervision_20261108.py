@@ -46,7 +46,7 @@ for attempt in range(8):
     break
 else:raise RuntimeError('Original backlog busy; source already preserved')
 if args.phase=='complete':
-    decision=record['decision'];assert decision;marker='原RM-OVERLAP目标原声监督20261108';log=R/'docs/development_log.md';assert marker not in log.read_text(encoding='utf8');brief={k:v for k,v in decision.items() if k in ['state','completedWeightUpdates','trainingTargetQueries','naturalValidationQueriesEachCondition','retainedForNextStageOnly','newQualityQualification','next']}
+    decision=record['decision'];assert decision;marker='原RM-OVERLAP目标原声监督20261108';log=R/'docs/development_log.md';assert marker not in log.read_text(encoding='utf8');brief={k:v for k,v in decision.items() if k in ['state','completedWeightUpdates','trainingTargetQueries','naturalValidationQueriesEachCondition','retainedForNextStageOnly','newQualityQualification','wordSafetyFindings','speakerReferencePriorityEvidence','trainingFamilySeconds','trainingPeakPrivateBytes','naturalAsrFamilySecondsIncludingRecovery','next']}
     with log.open('a',encoding='utf8') as f:f.write('\n\n## '+record['at']+'｜'+marker+'\n\n承接Owner“好的,开始吧”。'+json.dumps(brief,ensure_ascii=False)+'。原声分量与新自然会议、目标、完整训练/自由转写结果及失败见'+str(C/'decision.json')+'；模型源码/参数/证据提交'+head+'已远端核验。上一轮静音退化及所有原门保留，合成混音不冒充自然会议，未达标不进入产品。\n')
 dest=S/'docs/handoffs/model-tse-source-supervision-20261108';dest.mkdir(exist_ok=True)
 for file in [path,R/'docs/development_log.md']:shutil.copyfile(file,S/'docs'/file.name)
