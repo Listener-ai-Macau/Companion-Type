@@ -1,7 +1,7 @@
 {
   "at": "2026-11-08T22:19:47+08:00",
   "ownerQuote": "你觉得像我们这种水平的模型能达到竞品的那种感觉吗？能可以达到这种公开售卖的这个标准。",
-  "state": "COMPETITIVE_SALE_STANDARD_REVIEWED_CURRENT_MODELS_NOT_QUALIFIED",
+  "state": "METRICS_REVIEWED_PUBLIC_COMPLEX_SERVICE_DIAGNOSTIC_NOT_QUALIFIED",
   "judgment": "目前不能按复杂多人/重叠会议能力公开售卖。达到有竞争力产品有可行路径，但尚无同音实测证据证明已达到竞品；不承诺现有本地候选能独自解决所有复杂场景。",
   "route": "以最终原文、逐人内容和纪要事实为产品主线，使用可替换成熟组件；保留本地普通语音基线，复杂多人先建立成熟方案同音对照，再决定最小差距的适配。原本地重叠目标保持独立未完成；可选联网增强先验证质量/成本/知情选择，不改成静默默认上传。",
   "rejectedRoutes": [
@@ -58,7 +58,7 @@
     "hardestKnownProfileMeetingAccuracy": 0.5526315789473685,
     "knownProfileAccuracyIsNotAutomaticDiarizationOrFullMeetingCer": true,
     "historical3612PercentScope": "原QM04验收记录将61分钟3.6120%列为拼接开发结果，不可宣称独立完整复杂会议已经通过。",
-    "currentApplicationAdapters": "Windows源码已有本地Paraformer、显式选择的火山ASR和兼容ASR接口；双端有AI纪要接口。这是代码能力检查，不是已配置服务可用性/质量或云端复杂重叠通过证明。",
+    "currentApplicationAdapters": "既有Windows适配器代码已查；读取其明确兼容的旧服务目标，在内存中使用凭据，一秒静音服务检查通过，固定公开真实会议困难窗已完成实际调用；未升级服务、未读/传私人录音、未改产品默认。仍不是实际竞品应用成绩。",
     "privateCredentialsReadOrPrinted": false,
     "liveCompetitorComparisonRun": false
   },
@@ -86,13 +86,243 @@
   ],
   "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
   "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-  "next": "先核实既有成熟ASR服务的可用性并做同一完整公开开发会议的固定对照，分开定位分人、漏词、转写与纪要事实差距；无现成服务/竞品账户时保留未测，继续原最难会议002/003/007参考身份复核，不等账户、不扩大训练。成熟方案只有同音实测达原门才作为候选；离线/可选联网分开验收。固定多段参考库保留、128步训练候选拒绝，原<5%、自动分人、真实重叠、事实、双端实卡和售卖门全部保留。",
+  "next": "现有服务37段均返回同一人物0：先对照官方多人能力契约及既有Windows请求/资源/输出路径定位，不能按这次人物塌缩把所有商业模型判差；没有可证实变化不重发五分钟或扩展整会。原最难002/003/007身份条件复核继续，只有能保护目标内容的最小修复才做下一次验证。 保留普通严格CER<5%、分人DER<=10%、真实重叠逐人<5%、事实、双端实卡及售卖门；固定多段参考库保留、128步退化候选拒绝。",
   "qualityQualified": false,
   "saleQualified": false,
-  "newModelTrainingOrInference": false,
+  "newModelTrainingOrInference": true,
   "productDefaultChanged": false,
   "privateRecordingsUploaded": false,
   "finalHoldoutOpened": false,
-  "thisBatchIsDecisionAndProtocolNotCapabilityImprovement": true,
-  "preparationFailureRetained": "首次保存脚本读取原合同误用qualificationSet键，KeyError后在任何原待办/日志/远端写入前退出；核对实际qualification键后修正，未影响模型或质量门。"
+  "thisBatchIsDecisionAndProtocolNotCapabilityImprovement": false,
+  "preparationFailureRetained": "首次保存脚本读取原合同误用qualificationSet键，KeyError后在任何原待办/日志/远端写入前退出；核对实际qualification键后修正，未影响模型或质量门。",
+  "sourceAndEvidenceCommit": "512a8643ec420e860ae3bdf3b7d8034d98993b58",
+  "remoteReadbackConfirmed": true,
+  "metricReview20261108": {
+    "at": "2026-11-08T22:42:08+08:00",
+    "ownerQuote": "你判断一下我们那个指标是不是一个合理的指标，然后就跟着我们那个指标去继续优化就好。感觉这个东西还是主要是靠软件去优化吧。",
+    "judgment": "指标方向合理，保留全部原数值。分清研发阶段、固定验收集结果和未来使用保证；软件主攻身份/内容/事实，不把音量变小或文档数量当进展。",
+    "items": [
+      {
+        "id": "QM04",
+        "decision": "普通真实会议严格CER<5%是合理且继续追求的质量目标；每场及逐人统计，单场/拼接/短片达到不代表通用。",
+        "guard": "保留插删替和关键字段，阅读去语气词与原始逐字稿分开，不能为评分删原词。"
+      },
+      {
+        "id": "QM05",
+        "decision": "自动分人DER<=10%为正式目标，<=15%仅阶段；保持原零宽容、含重叠口径。",
+        "guard": "同口径才比较；已知声纹命中率不是自动分人，人数正确也不抵消漏掉整位发言者或短回应。"
+      },
+      {
+        "id": "RM-OVERLAP",
+        "decision": "真实重叠逐人CER<5%属于有挑战的研发/验收目标，不是行业普遍保证。数值不降低，失败保持开放；双人/三人分开。",
+        "guard": "重点看漏掉多少真实词、是否串人和整路消失；减少插入但增加真实讲话删除不能以平均总分晋级。"
+      },
+      {
+        "id": "QM06",
+        "decision": "原事实覆盖>=95%、决定/负责人/期限/金额/否定100%正确及关键无根据结论0，解释为固定人工事实验收集要求，不是对任意未来会议的零错误承诺。",
+        "guard": "姓名/角色/期限无依据保持未知，建议不变决定；对原音事实核对，忠于错误转写仍失败。"
+      },
+      {
+        "id": "QM07-LONG",
+        "decision": "初始长会RTF<=1只是研发起步门；1小时等1小时不能据此宣称有竞品般会后速度。准确达标后再确定目标设备的产品等待指标。",
+        "guard": "分开实时流与离线文件，停录后等待与文件就绪后总处理；按原规则样本不足20不报P95。当前近实时发送的服务对照不是极速批处理测速。"
+      },
+      {
+        "id": "QM09",
+        "decision": "原至少3场>=30分钟、跨房间、独立留出及双端/实卡链为最低工程资格，不证明所有客户场景通用。",
+        "guard": "当前刻意选择困难窗口只诊断，不是完整会议，不代表真实卡近双麦或无噪声/任意距离。原留出未打开。"
+      }
+    ],
+    "supplementaryUsabilityMeasure": "在有实际用户验收时记录一场会需要修改的关键事实数、修订耗时和是否完成其目的；暂未实测，不设虚构时长成绩或用AI模拟修订代替真人负担。",
+    "hardwareBoundary": "主要优化工作在软件：稳定解码/分人/分离/转写/事实校验与使用流程。采音仍需不丢样、不削波并完整传回原音；软件不承诺恢复根本未采到的信息。双麦数目本身不证明可分离。",
+    "sources": [
+      {
+        "url": "https://pyannote.github.io/pyannote-metrics/reference.html",
+        "supports": "DER明确支持collar和skip_overlap，比较必须固定边界/重叠口径。"
+      },
+      {
+        "url": "https://github.com/fgnt/meeteval",
+        "supports": "会议转写分别有cpWER/tcpWER等评估；单一混合文字错误率不能验证谁在何时说了什么。中文按原字符口径执行，缺少真实词时标不补造。"
+      }
+    ],
+    "originalThresholdsChanged": false,
+    "currentSaleQualificationChanged": false
+  },
+  "existingServiceProbe": {
+    "at": "2026-11-08T22:28:19+08:00",
+    "audio": "one_second_generated_zero_pcm16_16000_mono",
+    "privateAudioReadOrUploaded": false,
+    "credentialsLoggedOrPersisted": false,
+    "redirectsAllowed": false,
+    "retryCount": 0,
+    "accuracyMeasured": false,
+    "saleQualified": false,
+    "productSettingsChanged": false,
+    "state": "EXISTING_SERVICE_SILENCE_PROBE_PASSED",
+    "responsePackets": 2,
+    "providerGeneration": "bigmodel",
+    "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+    "wholeProcessProbeSeconds": 1.6117876000062097
+  },
+  "publicStressDiagnostic": {
+    "at": "2026-11-08T22:42:02+08:00",
+    "state": "PUBLIC_COMPLEX_WINDOW_DIAGNOSTIC_NOT_QUALIFIED",
+    "protocolSha256": "e6f409f6c03a3ca9962259f1d3c26de23bdd09012fc65d3018e6edd4a519393a",
+    "finalResponseSha256": "a7761470f2276f1d7cd325e476fb2e18d9a4702eca596d000c0681a50c8177e2",
+    "providerGeneration": "bigmodel",
+    "audioSeconds": 302.05,
+    "sourceMeeting": "L_R003S01C02",
+    "sourceStartSeconds": 1559.9,
+    "sourceEndSeconds": 1861.95,
+    "referencePeople": 6,
+    "referenceOverlapSeconds": 61.46009017863207,
+    "referenceOverlapFraction": 0.2034765442100052,
+    "utterances": 37,
+    "usableTimedUtterances": 37,
+    "unknownIdentityUtterances": [],
+    "invalidUtterances": [],
+    "strictChineseNormalization": "Retain words/fillers/numeral spelling; remove only source angle tags, punctuation/symbols/whitespace and case per existing scorer. Provider original ITN true retained; no answer-based numeral correction.",
+    "cpCer": {
+      "metric": "cpCER",
+      "audioSeconds": 302.05,
+      "referenceCharacters": 1465,
+      "referenceSpeakers": 6,
+      "predictedTextStreams": 1,
+      "edits": {
+        "replace": 69,
+        "delete": 1062,
+        "insert": 566
+      },
+      "totalEdits": 1697,
+      "characterErrorRate": 1.1583617747440274,
+      "anonymousAssignmentForEvaluationOnly": [
+        {
+          "referenceSpeaker": "002-F",
+          "hypothesisSpeaker": null,
+          "edits": 353
+        },
+        {
+          "referenceSpeaker": "003-F",
+          "hypothesisSpeaker": null,
+          "edits": 105
+        },
+        {
+          "referenceSpeaker": "004-M",
+          "hypothesisSpeaker": "0",
+          "edits": 664
+        },
+        {
+          "referenceSpeaker": "005-M",
+          "hypothesisSpeaker": null,
+          "edits": 235
+        },
+        {
+          "referenceSpeaker": "006-M",
+          "hypothesisSpeaker": null,
+          "edits": 325
+        },
+        {
+          "referenceSpeaker": "007-M",
+          "hypothesisSpeaker": null,
+          "edits": 15
+        }
+      ],
+      "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+    },
+    "perReferencePerson": {
+      "002-F": {
+        "anonymousHypothesis": null,
+        "referenceCharacters": 353,
+        "substitutions": 0,
+        "deletions": 353,
+        "insertions": 0,
+        "totalEdits": 353,
+        "cer": 1.0
+      },
+      "003-F": {
+        "anonymousHypothesis": null,
+        "referenceCharacters": 105,
+        "substitutions": 0,
+        "deletions": 105,
+        "insertions": 0,
+        "totalEdits": 105,
+        "cer": 1.0
+      },
+      "004-M": {
+        "anonymousHypothesis": "0",
+        "referenceCharacters": 432,
+        "substitutions": 69,
+        "deletions": 29,
+        "insertions": 566,
+        "totalEdits": 664,
+        "cer": 1.537037037037037
+      },
+      "005-M": {
+        "anonymousHypothesis": null,
+        "referenceCharacters": 235,
+        "substitutions": 0,
+        "deletions": 235,
+        "insertions": 0,
+        "totalEdits": 235,
+        "cer": 1.0
+      },
+      "006-M": {
+        "anonymousHypothesis": null,
+        "referenceCharacters": 325,
+        "substitutions": 0,
+        "deletions": 325,
+        "insertions": 0,
+        "totalEdits": 325,
+        "cer": 1.0
+      },
+      "007-M": {
+        "anonymousHypothesis": null,
+        "referenceCharacters": 15,
+        "substitutions": 0,
+        "deletions": 15,
+        "insertions": 0,
+        "totalEdits": 15,
+        "cer": 1.0
+      }
+    },
+    "speechActivityDer": "NOT_MEASURED_sentence_bounds_are_not_independent_voice_activity",
+    "pureOverlapWordCer": "NOT_MEASURED_reference_has_utterance_not_word_timing",
+    "tcpCer": "NOT_MEASURED_reference_word_timing_unavailable",
+    "fullMeetingQualified": false,
+    "crossMeetingQualified": false,
+    "saleQualified": false,
+    "finalHoldoutOpened": false,
+    "actualCompetitorProductTested": false,
+    "localVsCloudPairedImprovementProven": false,
+    "timing": {
+      "wholeProcessSeconds": 328.4898156999843,
+      "rtf": 1.0875345661313833,
+      "inputPacing": "100ms packets paced near real time; this is not an offline bulk-processing or post-meeting-ready latency benchmark",
+      "privatePeakBytes": 23445504
+    },
+    "strictWindowCerBelow5": false,
+    "mixedChronologicalDiagnostic": {
+      "referenceCharacters": 1465,
+      "hypothesisCharacters": 969,
+      "substitutions": 74,
+      "deletions": 523,
+      "insertions": 27,
+      "cer": 0.425938566552901,
+      "limits": "Single chronological reference concatenation only; ordering during overlap is ambiguous. This does not score speaker attribution or pure overlap recovery and cannot close a gate."
+    },
+    "identityContractDiagnostic": {
+      "returnedLabels": [
+        "0"
+      ],
+      "allUtterancesSameLabel": true,
+      "requestedSpeakerInfo": true,
+      "validAutomaticMultispeakerOutputProven": false,
+      "cause": "If all labels collapse, separate the request/resource/output contract from acoustic quality before changing a model. This does not establish that all vendor models lack diarization. cpCER includes identity collapse and may exceed100% because unmatched streams count deletions/insertions."
+    },
+    "decision": "本次请求已要求人物信息，但37段全部返回同一人物0；先定位现有请求/资源能力/输出契约，不能把这条链路当有效多人主线，也不能据此宣称供应商所有模型差。联合cpCER含人物塌缩影响，不是普通ASR字错率。原音与响应保留，不扩展更长会议。"
+  },
+  "previousWorkpointBeforeStressDiagnostic": "先核实既有成熟ASR服务的可用性并做同一完整公开开发会议的固定对照，分开定位分人、漏词、转写与纪要事实差距；无现成服务/竞品账户时保留未测，继续原最难会议002/003/007参考身份复核，不等账户、不扩大训练。成熟方案只有同音实测达原门才作为候选；离线/可选联网分开验收。固定多段参考库保留、128步训练候选拒绝，原<5%、自动分人、真实重叠、事实、双端实卡和售卖门全部保留。",
+  "newLocalTrainingOrInference": false,
+  "newConfiguredServiceInference": true,
+  "capabilityImprovementProven": false
 }

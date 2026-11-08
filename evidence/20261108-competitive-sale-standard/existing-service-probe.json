@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-08T22:28:19+08:00",
+  "audio": "one_second_generated_zero_pcm16_16000_mono",
+  "privateAudioReadOrUploaded": false,
+  "credentialsLoggedOrPersisted": false,
+  "redirectsAllowed": false,
+  "retryCount": 0,
+  "accuracyMeasured": false,
+  "saleQualified": false,
+  "productSettingsChanged": false,
+  "state": "EXISTING_SERVICE_SILENCE_PROBE_PASSED",
+  "responsePackets": 2,
+  "providerGeneration": "bigmodel",
+  "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+  "wholeProcessProbeSeconds": 1.6117876000062097
+}
