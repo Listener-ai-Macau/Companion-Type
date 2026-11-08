@@ -145953,7 +145953,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。",
+          "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -259502,7 +259502,7 @@
             ],
             "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
             "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-            "next": "保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。",
+            "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
             "qualityQualified": false,
             "saleQualified": false,
             "newModelTrainingOrInference": true,
@@ -259990,6 +259990,81 @@
               "finalHoldoutOpened": false,
               "next": "保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。",
               "modelEvidenceCommit": "ebe0cc68122ba82a44ea853cd85e2050e02d1d07",
+              "remoteReadbackConfirmed": true
+            },
+            "bestBaselineAndCompetitiveEvidence20261109": {
+              "at": "2026-11-09T07:47:17+08:00",
+              "ownerQuote": "接下来应该怎么搞、现在最好的版本怎么样、正常竞品错字率多少；30%多不可用。",
+              "judgment": "Agree complex-meeting chain is not sale-ready.33.17% is a short-window joint text/speaker diagnostic on existing cloud service plus cached full-meeting diarization, not the best local Qwen engine score. Pure local complex full-text diagnostic23.16% confirms real content failure too; metric differences are not an excuse.",
+              "localEngineToRetain": "Qwen3-ASR1.7B native; fixed30s version retains comparable full outputs on both exposed meetings. Low-energy-boundary5.54% is a single-meeting candidate, not a qualified universal best pipeline.",
+              "localVersion": "Qwen/Qwen3-ASR-1.7B-hf",
+              "localRevision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+              "bestSingleCompleteMeeting": {
+                "meeting": "S_R004S03C01",
+                "audioSeconds": 2327.119,
+                "strictChronologicalCer": 0.055375375375375374,
+                "referenceCharacters": 8325,
+                "edits": 461,
+                "automaticLowEnergyBoundaryNoReferenceSelection": true,
+                "complexMeetingRunForThisCandidate": false,
+                "qualityQualified": false
+              },
+              "fixed30sBaselines": [
+                {
+                  "meeting": "S_R004S03C01",
+                  "audioSeconds": 2327.119,
+                  "chronologicalCer": 0.05765765765765766,
+                  "referenceCharacters": 8325,
+                  "edits": 480,
+                  "anonymousSpeakersNotQualified": true
+                },
+                {
+                  "meeting": "L_R003S01C02",
+                  "audioSeconds": 2362.945,
+                  "chronologicalCer": 0.23155832180728447,
+                  "referenceCharacters": 8676,
+                  "edits": 2009,
+                  "anonymousSpeakersNotQualified": true
+                }
+              ],
+              "recentComplexComposition": {
+                "cpCer": 0.331740614334471,
+                "source": "Existing configured Volcengine service plus cached native journal; not a new localQwen result.",
+                "audioSeconds": 302.05,
+                "nativeDiarizationHadFullMeetingContext": true,
+                "qualityQualified": false
+              },
+              "historical3612Percent": "拼接开发样本范围不足，不能覆盖完整复杂多人失败。",
+              "competitorEvidence": [
+                {
+                  "source": "https://dev.plaud.ai/transcription-api/",
+                  "image": "https://dev.plaud.ai/assets/numbers.1-Cw2-vrFf.png",
+                  "finding": "Official Plaud Embedded chart shows Plaud Transcribe2.0 at93.8%. Visible page does not fully specify language/sample/scoring for this chart; do not reinterpret as6.2% strict Chinese meeting CER or our own measurement.",
+                  "type": "vendor_published_chart_not_our_same_audio_test"
+                },
+                {
+                  "source": "https://support.notta.ai/hc/en-us/articles/21715123760027-What-is-the-accuracy-of-transcription-voice-recognition-rate",
+                  "finding": "Help article updated2025-02-06 gives rough recognition rate>=90% for orderly formal meetings and50..80% for casual discussions; not standardized CER or a universal2026 measurement.",
+                  "type": "vendor_rough_expectation"
+                },
+                {
+                  "source": "https://support.notta.ai/hc/en-us/articles/21714926170139-Can-Notta-identify-different-speakers-if-they-speak-at-the-same-time",
+                  "finding": "Notta explicitly says simultaneous voices increase recognition errors and recommends turn-taking.",
+                  "type": "vendor_limitation"
+                },
+                {
+                  "source": "https://arxiv.org/html/2601.21337v1",
+                  "finding": "Qwen author report tables3/A1: Qwen3-ASR1.7B Chinese CER2.71% AISHELL2,5.88% WenetSpeech meeting. Model/ASR benchmark only, not full diarized Chinese overlap recovery or Plaud/Notta application. Authors ran commercial baselines; not independent laboratory evidence.",
+                  "type": "primary_model_report_not_competitor_product"
+                }
+              ],
+              "actualPlaudOrNottaAccountBenchmarkPerformed": false,
+              "thresholdsChanged": false,
+              "newInferenceOrTraining": false,
+              "previousWorkpoint": "保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。",
+              "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
+              "saleQualified": false,
+              "modelEvidenceCommit": "b212bd6253a28e112868ce3b3e4bcb98305d7fab",
               "remoteReadbackConfirmed": true
             }
           }
