@@ -1,0 +1,18 @@
+{
+  "state": "RUNNING_PS4_ASR",
+  "pid": 7812,
+  "startedAt": "2026-11-08T08:49:45+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 5.065454800002044,
+      "privatePeakBytes": 344539136
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "asr",
+  "activePid": 7964
+}

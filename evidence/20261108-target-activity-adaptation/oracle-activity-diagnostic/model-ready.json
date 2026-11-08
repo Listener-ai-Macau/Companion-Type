@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-07T19:56:07+08:00",
+  "state": "PINNED_PS4_AUTHOR_SOURCE_AND_WEIGHTS_VERIFIED_NO_INFERENCE",
+  "modelId": "TaurenMountain/PS4",
+  "revision": "8feb7a1b3da1264659f155c42bfb40a5be88d730",
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730",
+  "weight": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\checkpoint_epoch037.pt",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\README.md",
+      "bytes": 6247,
+      "sha256": "dded29647c1465b77b09c98ce8b6ae96d82e30a2721d4094d5889dcc224dc0cf"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\checkpoint_epoch037.pt",
+      "bytes": 282746518,
+      "sha256": "3d5621c89e4af7d6a42180604aa191962636826b244c86cc3ac5bc2508064196"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\inference.py",
+      "bytes": 33406,
+      "sha256": "172f22339c79c29e46b1e213e91f822fb46b13d95cd3c90bfc93b8b007ea004e"
+    }
+  ],
+  "publicSourceUrl": "https://huggingface.co/TaurenMountain/PS4/tree/8feb7a1b3da1264659f155c42bfb40a5be88d730",
+  "sourceLicenseDeclared": "Apache-2.0 model card; upstream components retain their licenses",
+  "trainingDomain": "Author reports real AISHELL4/AliMeeting/AMI/CHiME6; exact overlap with our exposed recordings unknown. This is a development screen, not independent generalization acceptance.",
+  "whyDifferent": "Complete author BSRNN+native ECAPA cue encoder fine-tuned with real-conversation/ASR proxy objectives. Not old VoxLock or fixed8-slot TSSEP transfer; actual enrollment audio uses the matching checkpoint encoder.",
+  "inferenceStarted": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 240,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17076224,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

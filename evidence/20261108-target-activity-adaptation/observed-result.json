@@ -1,9 +1,9 @@
 {
-  "at": "2026-11-08T08:44:16+08:00",
+  "at": "2026-11-08T08:51:27+08:00",
   "ownerQuote": "需要你向着正确方向推进",
   "precedingOwnerQuestion": "接下来什么才是正确的效率高得方式去做这个, 已经很久了这个项目 , 有希望做好吗",
-  "phase": "complete",
-  "state": "BOUNDED_REAL_MEETING_HEAD_ADAPTATION_REJECTED_BASELINE_RETAINED",
+  "phase": "checkpoint",
+  "state": "RUNNING_PS4_ASR",
   "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
   "sourcePolicy": {
     "at": "2026-11-08T08:10:19+08:00",
@@ -3162,23 +3162,71 @@
   "originalOrdinaryAsrChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "next": "继续原RM-OVERLAP，先做分离主干的标注辅助上限诊断，保持同一真实会议原音/目标声纹/固定文字评分：仅用参考时间标注提供正确说话人活动，单独报告为oracle研究对照，比较逐人漏字、串话与插入，绝不冒充产品准确率或直接过滤产品文字。只有活动已知正确时仍分不开，才进入有干净源监督的分离主干适配；若正确活动能解决，再针对活动模块准备更广的真实训练与独立验证。当前小头支路停止，不继续同权重/阈值/轮数试跑。普通原字/原音/模型默认及全部<5%/事实/双端实卡/售卖门保留。",
-  "retainedUnqualifiedHeadArtifacts": [
-    {
-      "trial": "initial",
-      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-target-activity-adaptation\\initial-validation-selected-head.bin",
-      "sha256": "34ce40f69d762f5b04b7ac98b27204d4975ac3d744c7ab900a18b7d007206e27",
-      "bytes": 16955931,
-      "baseSourceCheckpointRequired": true,
-      "qualified": false
+  "oracleActivityDiagnostic": {
+    "preparation": {
+      "at": "2026-11-08T08:49:29+08:00",
+      "state": "FROZEN_REFERENCE_WAVEFORM_GATE_CAUSAL_DIAGNOSTIC_NOT_PRODUCT",
+      "protocolSha256": "340243c0ddfc9a60e023a07a01e59e70a748d5f4627779e44990b4c992287565",
+      "sourceOriginalFullWorkerSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c",
+      "generatedWorkerSha256": "d392143e25488af8f28dd73b16db7ea97a94eccd31de0767ae7d8572819ba341",
+      "workerInferAstMatchesOriginal": true,
+      "roots": [
+        {
+          "rootIndex": 12,
+          "referenceTripleSeconds": 0,
+          "availableSeparatedPeople": [
+            "002-F",
+            "005-M"
+          ],
+          "actualReferencePeople": [
+            "002-F",
+            "005-M"
+          ],
+          "rootBoundaryStraddlingReferenceRows": 3
+        },
+        {
+          "rootIndex": 27,
+          "referenceTripleSeconds": 1.9007788741647573,
+          "availableSeparatedPeople": [
+            "002-F",
+            "004-M",
+            "003-F",
+            "005-M"
+          ],
+          "actualReferencePeople": [
+            "002-F",
+            "003-F",
+            "004-M",
+            "005-M"
+          ],
+          "rootBoundaryStraddlingReferenceRows": 2
+        }
+      ],
+      "conditions": 12,
+      "newModels": 0,
+      "finalHoldoutOpened": false,
+      "next": "运行固定六路的双音频门控诊断，原生成函数不变；逐人比较全部文字，不作产品成绩。"
     },
-    {
-      "trial": "paired-control",
-      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-target-activity-adaptation\\paired-control-validation-selected-head.bin",
-      "sha256": "a3c1fc91170eb28514772ef306990fadb51a910b15a97ccb2603e41c291a25b9",
-      "bytes": 16955931,
-      "baseSourceCheckpointRequired": true,
-      "qualified": false
-    }
-  ]
+    "run": {
+      "state": "RUNNING_PS4_ASR",
+      "pid": 7812,
+      "startedAt": "2026-11-08T08:49:45+08:00",
+      "priorAttemptReceipts": [],
+      "results": [
+        {
+          "stage": "inventory",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 5.065454800002044,
+          "privatePeakBytes": 344539136
+        }
+      ],
+      "automaticModelFailureRetries": 0,
+      "qualityQualified": false,
+      "stage": "asr",
+      "activePid": 7964
+    },
+    "review": null
+  },
+  "next": "继续原RM-OVERLAP：运行已冻结活动标注辅助的混音/分离音频对照，保持生成和文字评分，不能把oracle研究成绩当作产品成绩。",
+  "retainedUnqualifiedHeadArtifacts": []
 }

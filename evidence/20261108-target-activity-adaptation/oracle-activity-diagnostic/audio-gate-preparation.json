@@ -1,0 +1,64 @@
+{
+  "state": "COMPLETE_REFERENCE_ACTIVITY_WAVEFORM_GATE_NOT_PRODUCT",
+  "rootSelection": [
+    12,
+    27
+  ],
+  "roots": [
+    {
+      "rootIndex": 12,
+      "referenceTripleSeconds": 0,
+      "availableSeparatedPeople": [
+        "002-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 3
+    },
+    {
+      "rootIndex": 27,
+      "referenceTripleSeconds": 1.9007788741647573,
+      "availableSeparatedPeople": [
+        "002-F",
+        "004-M",
+        "003-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "003-F",
+        "004-M",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 2
+    }
+  ],
+  "lanes": 6,
+  "waveformConditions": 12,
+  "noReferenceWordsInAudioOnlyManifest": true,
+  "gate": "Zero samples outside lexical target reference intervals; floor/ceil sample coverage, no context extension, original timeline. Both original mixture and already extracted voice use the exact same mask.",
+  "limitations": "Human utterance boundaries can clip phonetic context; existing predicted target inventory can miss a real person. This isolates this downstream gate on six existing lanes, not an absolute separation upper bound or a speaker-conditioned separation network. No clean per-person waveform reference is available.",
+  "originalInputsAndSourceAsrUnchanged": true,
+  "separationCalls": 0,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 12168,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 62664704,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-08T08:49:29+08:00",
+  "state": "FROZEN_REFERENCE_WAVEFORM_GATE_CAUSAL_DIAGNOSTIC_NOT_PRODUCT",
+  "protocolSha256": "340243c0ddfc9a60e023a07a01e59e70a748d5f4627779e44990b4c992287565",
+  "sourceOriginalFullWorkerSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c",
+  "generatedWorkerSha256": "d392143e25488af8f28dd73b16db7ea97a94eccd31de0767ae7d8572819ba341",
+  "workerInferAstMatchesOriginal": true,
+  "roots": [
+    {
+      "rootIndex": 12,
+      "referenceTripleSeconds": 0,
+      "availableSeparatedPeople": [
+        "002-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 3
+    },
+    {
+      "rootIndex": 27,
+      "referenceTripleSeconds": 1.9007788741647573,
+      "availableSeparatedPeople": [
+        "002-F",
+        "004-M",
+        "003-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "003-F",
+        "004-M",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 2
+    }
+  ],
+  "conditions": 12,
+  "newModels": 0,
+  "finalHoldoutOpened": false,
+  "next": "运行固定六路的双音频门控诊断，原生成函数不变；逐人比较全部文字，不作产品成绩。"
+}
