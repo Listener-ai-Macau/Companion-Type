@@ -7,6 +7,7 @@ from websockets.exceptions import InvalidStatusCode
 from probe_existing_companion_asr_20261108 import existing_provider,NoRedirect,ProbeFailure,frame,parse
 import uuid
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=R/'docs/handoffs/20261108-competitive-sale-standard'
+if '--second-pass' in sys.argv:C=C/'async-speaker-contract-r2'
 sys.path.insert(0,str(R/'model-research/src'))
 from moss_windows_resource_limits_20261104 import WorkerLimits
 limits=WorkerLimits(cpu_percent=5,memory_bytes=1024**3)
@@ -30,9 +31,12 @@ async def run():
  if seed:headers['X-Api-App-Id']=app
  request={'model_name':'bigmodel','enable_itn':True,'enable_punc':True,'show_utterances':True,'enable_speaker_info':True,'result_type':'full'}
  if seed:request.update(reqid=ident,sequence=1,additions={'with_speaker_info':'True'})
- else:request['enable_nonstream']=False
+ else:
+  request['enable_nonstream']=False
+  if P.get('asyncSpeakerContractRepair'):request.update(enable_nonstream=True,ssd_version='200')
+ state['wireRequestWithoutCredentials']=request.copy()
  audio={'format':'pcm','rate':16000,'bits':16,'channel':1};audio.update({'sample_rate':16000} if seed else {'codec':'raw'})
- config=json.dumps({'user':{'uid':ident},'audio':audio,'request':request},separators=(',',':')).encode();ended=asyncio.Event()
+ config=json.dumps({'user':{'uid':ident},'audio':audio,'request':request},separators=(',',':')).encode();ended=asyncio.Event();save()
  async with NoRedirect(endpoint,extra_headers=headers,open_timeout=8,close_timeout=2,max_size=4*1024**2,compression=None) as ws:
   await ws.send(frame(1,0 if seed else 1,1,config,None if seed else 1))
   async def receive():

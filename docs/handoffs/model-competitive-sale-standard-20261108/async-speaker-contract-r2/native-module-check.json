@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-08T22:50:36+08:00",
+  "state": "ACTUAL_PROVIDER_MODULE_CHECK_PASSED",
+  "compileExitCode": 0,
+  "sourceSha256": "a6480d3d37ab5763b29bccf2e855652ebe6fa5ec96af369bb2c43c02ddcee081",
+  "fullAppTestPassed": false,
+  "previousFullAppCompileFailure": "Rustc allocation failure inside bounded2GiB full-app test build; original log preserved. No increased memory pressure or repeated full build.",
+  "installed": false,
+  "sourceModuleRewrittenForHarness": false,
+  "runExitCode": 0,
+  "output": "PASS_ACTUAL_PROVIDER_REQUEST_AND_CACHE_CONTRACT_SEED_UNCHANGED",
+  "wallSeconds": 9.989461600023787
+}

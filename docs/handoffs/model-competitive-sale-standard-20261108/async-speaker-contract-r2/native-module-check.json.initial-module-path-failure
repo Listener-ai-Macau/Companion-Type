@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-08T22:49:36+08:00",
+  "state": "ACTUAL_PROVIDER_MODULE_CHECK_FAILED",
+  "compileExitCode": 1,
+  "sourceSha256": "a6480d3d37ab5763b29bccf2e855652ebe6fa5ec96af369bb2c43c02ddcee081",
+  "fullAppTestPassed": false,
+  "previousFullAppCompileFailure": "Rustc allocation failure inside bounded2GiB full-app test build; original log preserved. No increased memory pressure or repeated full build.",
+  "installed": false,
+  "sourceModuleRewrittenForHarness": false,
+  "wallSeconds": 1.1215178999991622
+}

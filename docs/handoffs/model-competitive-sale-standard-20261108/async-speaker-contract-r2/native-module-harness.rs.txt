@@ -1,0 +1,19 @@
+#![allow(dead_code,unused_imports)]
+mod backend { pub mod volcengine; }
+fn main() {
+ use backend::volcengine::{VolcengineSaucAsr,VolcengineCredentials};
+ let build=|resource:&str|VolcengineSaucAsr::new(VolcengineCredentials{app_id:"test-app".into(),access_token:"test-key".into(),resource_id:resource.into()}).cache_configuration();
+ let current=build("volc.bigasr.sauc.duration");
+ assert!(current["endpoint"].as_str().unwrap().ends_with("bigmodel_async"));
+ assert_eq!(current["payload"]["request"]["enable_speaker_info"],true);
+ assert_eq!(current["payload"]["request"]["show_utterances"],true);
+ assert_eq!(current["payload"]["request"]["enable_nonstream"],true);
+ assert_eq!(current["payload"]["request"]["ssd_version"],"200");
+ let mut old=current.clone();old["payload"]["request"]["enable_nonstream"]=serde_json::json!(false);old["payload"]["request"].as_object_mut().unwrap().remove("ssd_version");
+ assert_ne!(current,old);
+ let seed=build("volc.seedasr.sauc.duration");
+ assert!(seed["endpoint"].as_str().unwrap().ends_with("bigmodel_nostream"));
+ assert!(seed["payload"]["request"].get("enable_nonstream").is_none());
+ assert_eq!(seed["payload"]["request"]["enable_speaker_info"],true);
+ println!("PASS_ACTUAL_PROVIDER_REQUEST_AND_CACHE_CONTRACT_SEED_UNCHANGED");
+}

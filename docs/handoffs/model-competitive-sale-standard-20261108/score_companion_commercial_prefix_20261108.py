@@ -5,6 +5,7 @@ from collections import Counter
 import hashlib,json,sys,os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1')
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=R/'docs/handoffs/20261108-competitive-sale-standard'
+if '--second-pass' in sys.argv:C=C/'async-speaker-contract-r2'
 sys.path.insert(0,str(R/'model-research/src'))
 from moss_windows_resource_limits_20261104 import WorkerLimits
 limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3)
