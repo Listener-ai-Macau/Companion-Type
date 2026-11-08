@@ -1,0 +1,27 @@
+{
+  "state": "COMPLETE_MULTI_REFERENCE_DIAGNOSTIC",
+  "pid": 13628,
+  "completedInputs": 292,
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "singleReferenceCachedInferenceBitIdentical": true,
+  "resultState": "MULTI_REFERENCE_KNOWN_PROFILE_GAIN_REQUIRES_WORD_AND_UNSEEN_MEETING_VALIDATION",
+  "finishedAt": "2026-11-08T15:18:30.323585+08:00",
+  "wholeWorkerSeconds": 23.32186090000323,
+  "limits": {
+    "pid": 13628,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1015300096,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

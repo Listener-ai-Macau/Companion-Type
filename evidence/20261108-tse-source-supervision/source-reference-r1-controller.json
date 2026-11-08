@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 16312,
+  "startedAt": "2026-11-08T15:18:05+08:00",
+  "worker": "tse_source_supervision_reference_worker_20261108.py",
+  "runId": "source-reference-r1",
+  "protocolSha256": "3966197454a89254dcbe7db476547c17074b4060ad42706284ed192e0f880de7",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1008058368,
+  "rssPeakBytes": 1012281344,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "COMPLETE_MULTI_REFERENCE_DIAGNOSTIC",
+  "finishedAt": "2026-11-08T15:18:31+08:00",
+  "wholeProcessFamilySeconds": 25.326163299992913
+}

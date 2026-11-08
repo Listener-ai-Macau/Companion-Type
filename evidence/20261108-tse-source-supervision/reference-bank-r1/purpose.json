@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-08T15:15:13.426399+08:00",
+  "state": "FROZEN_THREE_REFERENCE_MEAN_NO_WEIGHT_UPDATES",
+  "parentRejectedDecisionSha256": "85b1ffa2a7823cf6eb60fe149a706c000cfe393eab3ccc93221289c5a25b1c57",
+  "difference": "Single-reference voice matching is only50% in one training session. Use original profile plus at mosttwo deterministic disjoint8s references for every person, raw-embedding arithmetic mean. No score-driven clip selection, exclusion of difficult identities, model changes or training. All223 disjoint component utterances remain the fixed diagnostic set.",
+  "scope": "Known-profile enrollment diagnostic, not automatic speaker clustering, word accuracy or sale qualification. No component being evaluated may enter a reference.",
+  "maximumReferencesPerPerson": 3,
+  "qualityQualified": false
+}

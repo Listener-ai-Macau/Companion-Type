@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-08T15:26:17.320045+08:00",
+  "state": "PREPARATION_FAILED_MISSING_CFFI_BACKEND_IN_CLEAN_SCORING_RUNTIME",
+  "error": "ModuleNotFoundError: _cffi_backend",
+  "oldSourceSha256": "edd374bbaeddd294b4431458df1b7a18141eb2e52175c104b8531e9cd06ae3dd",
+  "newModelCalls": 0,
+  "qualityResultAvailable": false,
+  "correction": "Reuse existing CPython311 CFFI backend directory; keep clean runtime NumPy and all frozen feature/prototype rules."
+}

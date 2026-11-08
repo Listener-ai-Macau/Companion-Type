@@ -1,0 +1,4621 @@
+{
+  "state": "MULTI_REFERENCE_KNOWN_PROFILE_GAIN_REQUIRES_WORD_AND_UNSEEN_MEETING_VALIDATION",
+  "totals": {
+    "single": {
+      "examples": 223,
+      "correct": 193,
+      "top1Accuracy": 0.8654708520179372
+    },
+    "multiple": {
+      "examples": 223,
+      "correct": 203,
+      "top1Accuracy": 0.9103139013452914
+    }
+  },
+  "perMeeting": {
+    "20200707_L_R001S08C01": {
+      "single": {
+        "examples": 38,
+        "correct": 19,
+        "top1Accuracy": 0.5
+      },
+      "multiple": {
+        "examples": 38,
+        "correct": 21,
+        "top1Accuracy": 0.5526315789473685
+      }
+    },
+    "20200708_L_R002S01C01": {
+      "single": {
+        "examples": 68,
+        "correct": 64,
+        "top1Accuracy": 0.9411764705882353
+      },
+      "multiple": {
+        "examples": 68,
+        "correct": 67,
+        "top1Accuracy": 0.9852941176470589
+      }
+    },
+    "20200709_L_R002S01C01": {
+      "single": {
+        "examples": 68,
+        "correct": 67,
+        "top1Accuracy": 0.9852941176470589
+      },
+      "multiple": {
+        "examples": 68,
+        "correct": 68,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200805_S_R001S01C01": {
+      "single": {
+        "examples": 49,
+        "correct": 43,
+        "top1Accuracy": 0.8775510204081632
+      },
+      "multiple": {
+        "examples": 49,
+        "correct": 47,
+        "top1Accuracy": 0.9591836734693877
+      }
+    }
+  },
+  "perPerson": {
+    "20200707_L_R001S08C01--001-M": {
+      "single": {
+        "examples": 1,
+        "correct": 1,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 1,
+        "correct": 1,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200707_L_R001S08C01--002-M": {
+      "single": {
+        "examples": 3,
+        "correct": 0,
+        "top1Accuracy": 0.0
+      },
+      "multiple": {
+        "examples": 3,
+        "correct": 0,
+        "top1Accuracy": 0.0
+      }
+    },
+    "20200707_L_R001S08C01--003-M": {
+      "single": {
+        "examples": 9,
+        "correct": 4,
+        "top1Accuracy": 0.4444444444444444
+      },
+      "multiple": {
+        "examples": 9,
+        "correct": 3,
+        "top1Accuracy": 0.3333333333333333
+      }
+    },
+    "20200707_L_R001S08C01--004-M": {
+      "single": {
+        "examples": 4,
+        "correct": 4,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 4,
+        "correct": 3,
+        "top1Accuracy": 0.75
+      }
+    },
+    "20200707_L_R001S08C01--005-F": {
+      "single": {
+        "examples": 4,
+        "correct": 3,
+        "top1Accuracy": 0.75
+      },
+      "multiple": {
+        "examples": 4,
+        "correct": 3,
+        "top1Accuracy": 0.75
+      }
+    },
+    "20200707_L_R001S08C01--006-F": {
+      "single": {
+        "examples": 4,
+        "correct": 4,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 4,
+        "correct": 4,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200707_L_R001S08C01--007-M": {
+      "single": {
+        "examples": 13,
+        "correct": 3,
+        "top1Accuracy": 0.23076923076923078
+      },
+      "multiple": {
+        "examples": 13,
+        "correct": 7,
+        "top1Accuracy": 0.5384615384615384
+      }
+    },
+    "20200708_L_R002S01C01--001-M": {
+      "single": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200708_L_R002S01C01--002-M": {
+      "single": {
+        "examples": 31,
+        "correct": 31,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 31,
+        "correct": 31,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200708_L_R002S01C01--003-M": {
+      "single": {
+        "examples": 9,
+        "correct": 8,
+        "top1Accuracy": 0.8888888888888888
+      },
+      "multiple": {
+        "examples": 9,
+        "correct": 8,
+        "top1Accuracy": 0.8888888888888888
+      }
+    },
+    "20200708_L_R002S01C01--004-M": {
+      "single": {
+        "examples": 3,
+        "correct": 2,
+        "top1Accuracy": 0.6666666666666666
+      },
+      "multiple": {
+        "examples": 3,
+        "correct": 3,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200708_L_R002S01C01--005-F": {
+      "single": {
+        "examples": 3,
+        "correct": 2,
+        "top1Accuracy": 0.6666666666666666
+      },
+      "multiple": {
+        "examples": 3,
+        "correct": 3,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200708_L_R002S01C01--006-F": {
+      "single": {
+        "examples": 5,
+        "correct": 4,
+        "top1Accuracy": 0.8
+      },
+      "multiple": {
+        "examples": 5,
+        "correct": 5,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200708_L_R002S01C01--007-F": {
+      "single": {
+        "examples": 6,
+        "correct": 6,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 6,
+        "correct": 6,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--001-M": {
+      "single": {
+        "examples": 5,
+        "correct": 5,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 5,
+        "correct": 5,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--002-M": {
+      "single": {
+        "examples": 16,
+        "correct": 16,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 16,
+        "correct": 16,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--003-M": {
+      "single": {
+        "examples": 9,
+        "correct": 9,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 9,
+        "correct": 9,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--004-F": {
+      "single": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--006-F": {
+      "single": {
+        "examples": 16,
+        "correct": 15,
+        "top1Accuracy": 0.9375
+      },
+      "multiple": {
+        "examples": 16,
+        "correct": 16,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200709_L_R002S01C01--007-F": {
+      "single": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 11,
+        "correct": 11,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200805_S_R001S01C01--001-M": {
+      "single": {
+        "examples": 9,
+        "correct": 9,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 9,
+        "correct": 9,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200805_S_R001S01C01--002-F": {
+      "single": {
+        "examples": 6,
+        "correct": 6,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 6,
+        "correct": 6,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200805_S_R001S01C01--004-F": {
+      "single": {
+        "examples": 16,
+        "correct": 12,
+        "top1Accuracy": 0.75
+      },
+      "multiple": {
+        "examples": 16,
+        "correct": 14,
+        "top1Accuracy": 0.875
+      }
+    },
+    "20200805_S_R001S01C01--005-M": {
+      "single": {
+        "examples": 14,
+        "correct": 12,
+        "top1Accuracy": 0.8571428571428571
+      },
+      "multiple": {
+        "examples": 14,
+        "correct": 14,
+        "top1Accuracy": 1.0
+      }
+    },
+    "20200805_S_R001S01C01--006-F": {
+      "single": {
+        "examples": 4,
+        "correct": 4,
+        "top1Accuracy": 1.0
+      },
+      "multiple": {
+        "examples": 4,
+        "correct": 4,
+        "top1Accuracy": 1.0
+      }
+    }
+  },
+  "perComponent": [
+    {
+      "componentId": "20200707_L_R001S08C01--001-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6239761114120483,
+          "ownMinusOtherMargin": 0.13162240386009216
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6239761114120483,
+          "ownMinusOtherMargin": 0.0930517315864563
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.5154319405555725,
+          "ownMinusOtherMargin": -0.1459091305732727
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.6225572824478149,
+          "ownMinusOtherMargin": -0.11105889081954956
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.3635179102420807,
+          "ownMinusOtherMargin": -0.23885348439216614
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.6205865144729614,
+          "ownMinusOtherMargin": -0.03012704849243164
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.2917572259902954,
+          "ownMinusOtherMargin": -0.08761721849441528
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.4441075325012207,
+          "ownMinusOtherMargin": -0.023906946182250977
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--001-M",
+          "correct": false,
+          "ownCosine": 0.3234219253063202,
+          "ownMinusOtherMargin": -0.07299745082855225
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.41605883836746216,
+          "ownMinusOtherMargin": -0.05316972732543945
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.5600710511207581,
+          "ownMinusOtherMargin": -0.05812472105026245
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.6328689455986023,
+          "ownMinusOtherMargin": -0.048542022705078125
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7253194451332092,
+          "ownMinusOtherMargin": 0.35880210995674133
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7039656639099121,
+          "ownMinusOtherMargin": 0.09993410110473633
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6365720629692078,
+          "ownMinusOtherMargin": 0.1922919750213623
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.6473429799079895,
+          "ownMinusOtherMargin": -0.04073035717010498
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-004",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.5552006363868713,
+          "ownMinusOtherMargin": -0.0332220196723938
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.5835742950439453,
+          "ownMinusOtherMargin": -0.05450773239135742
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-005",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.404677152633667,
+          "ownMinusOtherMargin": -0.2810167074203491
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.4978451728820801,
+          "ownMinusOtherMargin": -0.12486594915390015
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-006",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.3655723035335541,
+          "ownMinusOtherMargin": -0.2839386761188507
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.4816819429397583,
+          "ownMinusOtherMargin": -0.06273972988128662
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-007",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.5365499258041382,
+          "ownMinusOtherMargin": 0.031018078327178955
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.696793258190155,
+          "ownMinusOtherMargin": 0.06409037113189697
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-008",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6505199074745178,
+          "ownMinusOtherMargin": 0.23215392231941223
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6038005948066711,
+          "ownMinusOtherMargin": 0.04739201068878174
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.595292329788208,
+          "ownMinusOtherMargin": 0.14005225896835327
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": false,
+          "ownCosine": 0.595292329788208,
+          "ownMinusOtherMargin": -0.002498149871826172
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.6189398765563965,
+          "ownMinusOtherMargin": 0.23881080746650696
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.6189398765563965,
+          "ownMinusOtherMargin": 0.16067048907279968
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.5515971779823303,
+          "ownMinusOtherMargin": 0.20113211870193481
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.5515971779823303,
+          "ownMinusOtherMargin": 0.22836241126060486
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.6439924836158752,
+          "ownMinusOtherMargin": 0.17111685872077942
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--004-M",
+          "correct": true,
+          "ownCosine": 0.6439924836158752,
+          "ownMinusOtherMargin": 0.18067827820777893
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.7597489356994629,
+          "ownMinusOtherMargin": 0.1371273398399353
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.8177490830421448,
+          "ownMinusOtherMargin": 0.10365837812423706
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.29422178864479065,
+          "ownMinusOtherMargin": 0.023185312747955322
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.3470221161842346,
+          "ownMinusOtherMargin": 0.05509829521179199
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": false,
+          "ownCosine": 0.5322068333625793,
+          "ownMinusOtherMargin": -0.21852445602416992
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": false,
+          "ownCosine": 0.6182228326797485,
+          "ownMinusOtherMargin": -0.17013907432556152
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.6920281648635864,
+          "ownMinusOtherMargin": 0.0875808596611023
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--005-F",
+          "correct": true,
+          "ownCosine": 0.7275415062904358,
+          "ownMinusOtherMargin": 0.03949248790740967
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6663509011268616,
+          "ownMinusOtherMargin": 0.20082634687423706
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6760470271110535,
+          "ownMinusOtherMargin": 0.10976701974868774
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.4433095157146454,
+          "ownMinusOtherMargin": 0.07791134715080261
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.44406765699386597,
+          "ownMinusOtherMargin": 0.0669432282447815
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.4211881160736084,
+          "ownMinusOtherMargin": 0.21418623626232147
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.4637131989002228,
+          "ownMinusOtherMargin": 0.1855495274066925
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7787459492683411,
+          "ownMinusOtherMargin": 0.19143706560134888
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7469030618667603,
+          "ownMinusOtherMargin": 0.07738125324249268
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.2882744371891022,
+          "ownMinusOtherMargin": -0.16293933987617493
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.5872557163238525,
+          "ownMinusOtherMargin": 0.04909795522689819
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.4399144649505615,
+          "ownMinusOtherMargin": -0.13843238353729248
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.5159473419189453,
+          "ownMinusOtherMargin": -0.01558607816696167
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.4293549060821533,
+          "ownMinusOtherMargin": -0.033226191997528076
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.5141354203224182,
+          "ownMinusOtherMargin": 0.042407989501953125
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.3240063786506653,
+          "ownMinusOtherMargin": -0.39630240201950073
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.6101779341697693,
+          "ownMinusOtherMargin": -0.18647104501724243
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-004",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.4641783535480499,
+          "ownMinusOtherMargin": -0.0543082058429718
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.5058714151382446,
+          "ownMinusOtherMargin": -0.055009424686431885
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-005",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.678670346736908,
+          "ownMinusOtherMargin": 0.09442877769470215
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.7052294611930847,
+          "ownMinusOtherMargin": 0.05570036172866821
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-006",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.6095185279846191,
+          "ownMinusOtherMargin": -0.0362699031829834
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.6098787784576416,
+          "ownMinusOtherMargin": -0.0173681378364563
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-007",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.6045929789543152,
+          "ownMinusOtherMargin": 0.0005099773406982422
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.6645239591598511,
+          "ownMinusOtherMargin": 0.009691774845123291
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-008",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.19181029498577118,
+          "ownMinusOtherMargin": -0.2748916298151016
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.3904568552970886,
+          "ownMinusOtherMargin": -0.0931578278541565
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-009",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.4906294643878937,
+          "ownMinusOtherMargin": 0.03672036528587341
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.5167282819747925,
+          "ownMinusOtherMargin": 0.005663633346557617
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-010",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.30935561656951904,
+          "ownMinusOtherMargin": -0.3862343430519104
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.5815826058387756,
+          "ownMinusOtherMargin": -0.13926082849502563
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-011",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--002-M",
+          "correct": false,
+          "ownCosine": 0.45909589529037476,
+          "ownMinusOtherMargin": -0.03327205777168274
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.5607874989509583,
+          "ownMinusOtherMargin": 0.00715106725692749
+        }
+      }
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-012",
+      "meeting": "20200707_L_R001S08C01",
+      "personForEvaluationOnly": "007-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200707_L_R001S08C01--003-M",
+          "correct": false,
+          "ownCosine": 0.36518916487693787,
+          "ownMinusOtherMargin": -0.14570996165275574
+        },
+        "multiple": {
+          "predictedProfileId": "20200707_L_R001S08C01--007-M",
+          "correct": true,
+          "ownCosine": 0.5702675580978394,
+          "ownMinusOtherMargin": 0.00434422492980957
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.757799506187439,
+          "ownMinusOtherMargin": 0.4049101173877716
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7759279012680054,
+          "ownMinusOtherMargin": 0.4340260326862335
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6273364424705505,
+          "ownMinusOtherMargin": 0.24429163336753845
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6297089457511902,
+          "ownMinusOtherMargin": 0.22650587558746338
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7306278347969055,
+          "ownMinusOtherMargin": 0.3165149688720703
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8121547102928162,
+          "ownMinusOtherMargin": 0.37117794156074524
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7715950608253479,
+          "ownMinusOtherMargin": 0.352090060710907
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8558632731437683,
+          "ownMinusOtherMargin": 0.4492345452308655
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7367241382598877,
+          "ownMinusOtherMargin": 0.27312135696411133
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8326151967048645,
+          "ownMinusOtherMargin": 0.3365364670753479
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.48522254824638367,
+          "ownMinusOtherMargin": 0.07371401786804199
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.5032693147659302,
+          "ownMinusOtherMargin": 0.07743173837661743
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.751610279083252,
+          "ownMinusOtherMargin": 0.32192906737327576
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8311545848846436,
+          "ownMinusOtherMargin": 0.38442692160606384
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7742091417312622,
+          "ownMinusOtherMargin": 0.2931595742702484
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7988008856773376,
+          "ownMinusOtherMargin": 0.3086587190628052
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.39256834983825684,
+          "ownMinusOtherMargin": 0.1029869019985199
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.367361456155777,
+          "ownMinusOtherMargin": 0.07175102829933167
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-009",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.4210444390773773,
+          "ownMinusOtherMargin": 0.22664904594421387
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.43750813603401184,
+          "ownMinusOtherMargin": 0.24727381765842438
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-010",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7003224492073059,
+          "ownMinusOtherMargin": 0.31353792548179626
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7899469137191772,
+          "ownMinusOtherMargin": 0.3899849057197571
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7090000510215759,
+          "ownMinusOtherMargin": 0.3656908869743347
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7642669677734375,
+          "ownMinusOtherMargin": 0.3776175379753113
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8074623942375183,
+          "ownMinusOtherMargin": 0.3853888213634491
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8525103330612183,
+          "ownMinusOtherMargin": 0.4153643250465393
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7802256345748901,
+          "ownMinusOtherMargin": 0.3443399965763092
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8358622193336487,
+          "ownMinusOtherMargin": 0.3807785212993622
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8134253025054932,
+          "ownMinusOtherMargin": 0.43490147590637207
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8640600442886353,
+          "ownMinusOtherMargin": 0.4298025071620941
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6564383506774902,
+          "ownMinusOtherMargin": 0.2583681046962738
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7099343538284302,
+          "ownMinusOtherMargin": 0.2807973325252533
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8116793036460876,
+          "ownMinusOtherMargin": 0.3796921968460083
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7963035106658936,
+          "ownMinusOtherMargin": 0.37044447660446167
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8032123446464539,
+          "ownMinusOtherMargin": 0.39764276146888733
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8652888536453247,
+          "ownMinusOtherMargin": 0.4398598074913025
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8198422789573669,
+          "ownMinusOtherMargin": 0.4300692677497864
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8928111791610718,
+          "ownMinusOtherMargin": 0.45959901809692383
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6628562211990356,
+          "ownMinusOtherMargin": 0.31027787923812866
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.679439127445221,
+          "ownMinusOtherMargin": 0.3266492486000061
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-009",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8189080357551575,
+          "ownMinusOtherMargin": 0.3671899437904358
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8523640632629395,
+          "ownMinusOtherMargin": 0.35257041454315186
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-010",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.805590033531189,
+          "ownMinusOtherMargin": 0.39123958349227905
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8416555523872375,
+          "ownMinusOtherMargin": 0.39741426706314087
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-011",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7547551989555359,
+          "ownMinusOtherMargin": 0.26440829038619995
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7987418174743652,
+          "ownMinusOtherMargin": 0.2876787781715393
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-012",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.800080418586731,
+          "ownMinusOtherMargin": 0.26257240772247314
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8406586647033691,
+          "ownMinusOtherMargin": 0.2673947811126709
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-013",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8148319721221924,
+          "ownMinusOtherMargin": 0.3593595027923584
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8385449051856995,
+          "ownMinusOtherMargin": 0.3925285339355469
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-014",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7367074489593506,
+          "ownMinusOtherMargin": 0.2934684753417969
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.769493043422699,
+          "ownMinusOtherMargin": 0.3298797607421875
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-015",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8221397995948792,
+          "ownMinusOtherMargin": 0.35010233521461487
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8285878300666809,
+          "ownMinusOtherMargin": 0.3556525707244873
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-016",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6024855375289917,
+          "ownMinusOtherMargin": 0.20698478817939758
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6919500231742859,
+          "ownMinusOtherMargin": 0.2753496468067169
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-017",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7396350502967834,
+          "ownMinusOtherMargin": 0.39197200536727905
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7953253984451294,
+          "ownMinusOtherMargin": 0.4016887843608856
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-018",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6769598126411438,
+          "ownMinusOtherMargin": 0.2750934660434723
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6900745034217834,
+          "ownMinusOtherMargin": 0.2443428933620453
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-019",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8471687436103821,
+          "ownMinusOtherMargin": 0.3629732131958008
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8496984243392944,
+          "ownMinusOtherMargin": 0.37447747588157654
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-020",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8230071663856506,
+          "ownMinusOtherMargin": 0.43492043018341064
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8706164360046387,
+          "ownMinusOtherMargin": 0.44671323895454407
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-021",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8193004727363586,
+          "ownMinusOtherMargin": 0.3663772940635681
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8646173477172852,
+          "ownMinusOtherMargin": 0.37340015172958374
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-022",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8076249361038208,
+          "ownMinusOtherMargin": 0.3480202853679657
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.848554253578186,
+          "ownMinusOtherMargin": 0.36378586292266846
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-023",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.793377161026001,
+          "ownMinusOtherMargin": 0.4198009967803955
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8147011995315552,
+          "ownMinusOtherMargin": 0.43340444564819336
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-024",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8438491821289062,
+          "ownMinusOtherMargin": 0.43032610416412354
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8737794756889343,
+          "ownMinusOtherMargin": 0.3965044319629669
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-025",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.6724151372909546,
+          "ownMinusOtherMargin": 0.3228222131729126
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7200570702552795,
+          "ownMinusOtherMargin": 0.31475362181663513
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-026",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7647952437400818,
+          "ownMinusOtherMargin": 0.35661208629608154
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8309306502342224,
+          "ownMinusOtherMargin": 0.394403338432312
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-027",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8039844632148743,
+          "ownMinusOtherMargin": 0.4074622094631195
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8318849802017212,
+          "ownMinusOtherMargin": 0.42420995235443115
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-028",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7511404156684875,
+          "ownMinusOtherMargin": 0.3246243894100189
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7770668268203735,
+          "ownMinusOtherMargin": 0.374505877494812
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-029",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7635276913642883,
+          "ownMinusOtherMargin": 0.2636718153953552
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7809442281723022,
+          "ownMinusOtherMargin": 0.2685397267341614
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-030",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7372438311576843,
+          "ownMinusOtherMargin": 0.345945805311203
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7629517912864685,
+          "ownMinusOtherMargin": 0.36183100938796997
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--002-M",
+          "correct": false,
+          "ownCosine": 0.2642989754676819,
+          "ownMinusOtherMargin": -0.03661981225013733
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": false,
+          "ownCosine": 0.20874235033988953,
+          "ownMinusOtherMargin": -0.0800924003124237
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.598307192325592,
+          "ownMinusOtherMargin": 0.09421944618225098
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6736772656440735,
+          "ownMinusOtherMargin": 0.10123676061630249
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.660944402217865,
+          "ownMinusOtherMargin": 0.1414949893951416
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7418151497840881,
+          "ownMinusOtherMargin": 0.13094639778137207
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.3084047734737396,
+          "ownMinusOtherMargin": 0.07841354608535767
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.3144465982913971,
+          "ownMinusOtherMargin": 0.08134181797504425
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.47158581018447876,
+          "ownMinusOtherMargin": 0.02690395712852478
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.5243439078330994,
+          "ownMinusOtherMargin": 0.050064027309417725
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.5653467774391174,
+          "ownMinusOtherMargin": 0.03988152742385864
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6676529049873352,
+          "ownMinusOtherMargin": 0.05526655912399292
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.4550485610961914,
+          "ownMinusOtherMargin": 0.10374507308006287
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.5227996110916138,
+          "ownMinusOtherMargin": 0.19219818711280823
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.6807544827461243,
+          "ownMinusOtherMargin": 0.17930543422698975
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8002350926399231,
+          "ownMinusOtherMargin": 0.20769399404525757
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.4109265208244324,
+          "ownMinusOtherMargin": 0.050508052110672
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.3807630240917206,
+          "ownMinusOtherMargin": 0.008989900350570679
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--003-M",
+          "correct": false,
+          "ownCosine": 0.3142828345298767,
+          "ownMinusOtherMargin": -0.0029070675373077393
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": true,
+          "ownCosine": 0.32931825518608093,
+          "ownMinusOtherMargin": 0.010237812995910645
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": true,
+          "ownCosine": 0.5143382549285889,
+          "ownMinusOtherMargin": 0.020801693201065063
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": true,
+          "ownCosine": 0.5772602558135986,
+          "ownMinusOtherMargin": 0.07696545124053955
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "004-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": true,
+          "ownCosine": 0.6750821471214294,
+          "ownMinusOtherMargin": 0.18878501653671265
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--004-M",
+          "correct": true,
+          "ownCosine": 0.7580528855323792,
+          "ownMinusOtherMargin": 0.25982773303985596
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": false,
+          "ownCosine": 0.2708211839199066,
+          "ownMinusOtherMargin": -0.051486581563949585
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": true,
+          "ownCosine": 0.3413837254047394,
+          "ownMinusOtherMargin": 0.008939802646636963
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": true,
+          "ownCosine": 0.7169168591499329,
+          "ownMinusOtherMargin": 0.1771063208580017
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": true,
+          "ownCosine": 0.8127423524856567,
+          "ownMinusOtherMargin": 0.24755382537841797
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "005-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": true,
+          "ownCosine": 0.49046212434768677,
+          "ownMinusOtherMargin": 0.1680801510810852
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": true,
+          "ownCosine": 0.4285701811313629,
+          "ownMinusOtherMargin": 0.10317784547805786
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--005-F",
+          "correct": false,
+          "ownCosine": 0.45040902495384216,
+          "ownMinusOtherMargin": -0.05665537714958191
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.5153460502624512,
+          "ownMinusOtherMargin": 0.04604595899581909
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7671534419059753,
+          "ownMinusOtherMargin": 0.1626434326171875
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8417201042175293,
+          "ownMinusOtherMargin": 0.20095396041870117
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.686498761177063,
+          "ownMinusOtherMargin": 0.2785203158855438
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7156412601470947,
+          "ownMinusOtherMargin": 0.21942654252052307
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7578478455543518,
+          "ownMinusOtherMargin": 0.22267860174179077
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8420165777206421,
+          "ownMinusOtherMargin": 0.26655304431915283
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7374255061149597,
+          "ownMinusOtherMargin": 0.23569190502166748
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7771987318992615,
+          "ownMinusOtherMargin": 0.29680103063583374
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6127073764801025,
+          "ownMinusOtherMargin": 0.4660070687532425
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7268529534339905,
+          "ownMinusOtherMargin": 0.5554429441690445
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7009268999099731,
+          "ownMinusOtherMargin": 0.48879824578762054
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7892730832099915,
+          "ownMinusOtherMargin": 0.5580432265996933
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6755086779594421,
+          "ownMinusOtherMargin": 0.41243690252304077
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.798672080039978,
+          "ownMinusOtherMargin": 0.5091454684734344
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.73726487159729,
+          "ownMinusOtherMargin": 0.5364152491092682
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8682063221931458,
+          "ownMinusOtherMargin": 0.6386155188083649
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6819219589233398,
+          "ownMinusOtherMargin": 0.4467122256755829
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8115191459655762,
+          "ownMinusOtherMargin": 0.5213490724563599
+        }
+      }
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.34461021423339844,
+          "ownMinusOtherMargin": 0.060672372579574585
+        },
+        "multiple": {
+          "predictedProfileId": "20200708_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.3599366843700409,
+          "ownMinusOtherMargin": 0.015720784664154053
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.4688850939273834,
+          "ownMinusOtherMargin": 0.19103991985321045
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.48624560236930847,
+          "ownMinusOtherMargin": 0.20403921604156494
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.5319604873657227,
+          "ownMinusOtherMargin": 0.1466832458972931
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.5852172374725342,
+          "ownMinusOtherMargin": 0.15757882595062256
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7037876844406128,
+          "ownMinusOtherMargin": 0.2411310374736786
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7236713767051697,
+          "ownMinusOtherMargin": 0.20682293176651
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6826282739639282,
+          "ownMinusOtherMargin": 0.13068467378616333
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7173377275466919,
+          "ownMinusOtherMargin": 0.14529567956924438
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8031980991363525,
+          "ownMinusOtherMargin": 0.3606915771961212
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8014917969703674,
+          "ownMinusOtherMargin": 0.30869051814079285
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7973346710205078,
+          "ownMinusOtherMargin": 0.40878623723983765
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8548151850700378,
+          "ownMinusOtherMargin": 0.4057936668395996
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7928078174591064,
+          "ownMinusOtherMargin": 0.4134420156478882
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8405362367630005,
+          "ownMinusOtherMargin": 0.42443129420280457
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8311746716499329,
+          "ownMinusOtherMargin": 0.411507785320282
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8693146109580994,
+          "ownMinusOtherMargin": 0.40639185905456543
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7958835363388062,
+          "ownMinusOtherMargin": 0.3907697796821594
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8355940580368042,
+          "ownMinusOtherMargin": 0.3632315993309021
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.769035279750824,
+          "ownMinusOtherMargin": 0.29982951283454895
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8134031295776367,
+          "ownMinusOtherMargin": 0.31628817319869995
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8136658668518066,
+          "ownMinusOtherMargin": 0.4120636582374573
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.833467960357666,
+          "ownMinusOtherMargin": 0.3584834039211273
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7844941020011902,
+          "ownMinusOtherMargin": 0.33410874009132385
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8206005096435547,
+          "ownMinusOtherMargin": 0.3070525527000427
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7860710620880127,
+          "ownMinusOtherMargin": 0.3751141130924225
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8218182921409607,
+          "ownMinusOtherMargin": 0.39445602893829346
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7389376759529114,
+          "ownMinusOtherMargin": 0.3558976650238037
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8066219091415405,
+          "ownMinusOtherMargin": 0.36335328221321106
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7670875787734985,
+          "ownMinusOtherMargin": 0.4248679280281067
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8398612141609192,
+          "ownMinusOtherMargin": 0.44407838582992554
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7462666034698486,
+          "ownMinusOtherMargin": 0.3650968372821808
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8052095174789429,
+          "ownMinusOtherMargin": 0.3440605103969574
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-011",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.724223792552948,
+          "ownMinusOtherMargin": 0.36906203627586365
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.747099757194519,
+          "ownMinusOtherMargin": 0.3664335012435913
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-012",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7997172474861145,
+          "ownMinusOtherMargin": 0.36183276772499084
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8640506267547607,
+          "ownMinusOtherMargin": 0.35001152753829956
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-013",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.768697202205658,
+          "ownMinusOtherMargin": 0.38130083680152893
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8277764320373535,
+          "ownMinusOtherMargin": 0.4179046154022217
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-014",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7802686095237732,
+          "ownMinusOtherMargin": 0.39929479360580444
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.7993112802505493,
+          "ownMinusOtherMargin": 0.3704869747161865
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-015",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "002-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8173139095306396,
+          "ownMinusOtherMargin": 0.4613493084907532
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--002-M",
+          "correct": true,
+          "ownCosine": 0.8423600196838379,
+          "ownMinusOtherMargin": 0.41558706760406494
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8630820512771606,
+          "ownMinusOtherMargin": 0.47263288497924805
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8838223814964294,
+          "ownMinusOtherMargin": 0.4775986075401306
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.842465341091156,
+          "ownMinusOtherMargin": 0.378847599029541
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.9048667550086975,
+          "ownMinusOtherMargin": 0.42849549651145935
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7623742818832397,
+          "ownMinusOtherMargin": 0.40039077401161194
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.762172281742096,
+          "ownMinusOtherMargin": 0.3930854797363281
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8169019222259521,
+          "ownMinusOtherMargin": 0.3617667257785797
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8879947662353516,
+          "ownMinusOtherMargin": 0.41005051136016846
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7590116858482361,
+          "ownMinusOtherMargin": 0.3830583095550537
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.774919867515564,
+          "ownMinusOtherMargin": 0.3557787537574768
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7403066158294678,
+          "ownMinusOtherMargin": 0.3063942492008209
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8299381136894226,
+          "ownMinusOtherMargin": 0.34774693846702576
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7090542912483215,
+          "ownMinusOtherMargin": 0.38469505310058594
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7769641280174255,
+          "ownMinusOtherMargin": 0.43944481015205383
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8248363733291626,
+          "ownMinusOtherMargin": 0.329715371131897
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.9008495807647705,
+          "ownMinusOtherMargin": 0.3651961088180542
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "003-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.7475048303604126,
+          "ownMinusOtherMargin": 0.4028647840023041
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--003-M",
+          "correct": true,
+          "ownCosine": 0.8038516640663147,
+          "ownMinusOtherMargin": 0.4138212502002716
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6780776381492615,
+          "ownMinusOtherMargin": 0.24701550602912903
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7602089643478394,
+          "ownMinusOtherMargin": 0.2694723904132843
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6718988418579102,
+          "ownMinusOtherMargin": 0.22132331132888794
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.8086625933647156,
+          "ownMinusOtherMargin": 0.30006110668182373
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.645025372505188,
+          "ownMinusOtherMargin": 0.2074270248413086
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6592733860015869,
+          "ownMinusOtherMargin": 0.19698572158813477
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6393086910247803,
+          "ownMinusOtherMargin": 0.1621716022491455
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7618972659111023,
+          "ownMinusOtherMargin": 0.24331456422805786
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7149940133094788,
+          "ownMinusOtherMargin": 0.2598554491996765
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7805618643760681,
+          "ownMinusOtherMargin": 0.2864726483821869
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5967612862586975,
+          "ownMinusOtherMargin": 0.08513444662094116
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6870428323745728,
+          "ownMinusOtherMargin": 0.16204291582107544
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.636744499206543,
+          "ownMinusOtherMargin": 0.1844695508480072
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6874215006828308,
+          "ownMinusOtherMargin": 0.18823808431625366
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6473370790481567,
+          "ownMinusOtherMargin": 0.18306156992912292
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7315413355827332,
+          "ownMinusOtherMargin": 0.20880401134490967
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6751611232757568,
+          "ownMinusOtherMargin": 0.1377527117729187
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7434570789337158,
+          "ownMinusOtherMargin": 0.1572614312171936
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.42488735914230347,
+          "ownMinusOtherMargin": 0.10820820927619934
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.48494359850883484,
+          "ownMinusOtherMargin": 0.11573690176010132
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6235952377319336,
+          "ownMinusOtherMargin": 0.15222060680389404
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7916693687438965,
+          "ownMinusOtherMargin": 0.27161288261413574
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6253604292869568,
+          "ownMinusOtherMargin": 0.22195205092430115
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6562420129776001,
+          "ownMinusOtherMargin": 0.22217988967895508
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7719408869743347,
+          "ownMinusOtherMargin": 0.30248820781707764
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8318303823471069,
+          "ownMinusOtherMargin": 0.36261922121047974
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7450287342071533,
+          "ownMinusOtherMargin": 0.20465177297592163
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8041037321090698,
+          "ownMinusOtherMargin": 0.26939624547958374
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7568694949150085,
+          "ownMinusOtherMargin": 0.263170063495636
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8002833724021912,
+          "ownMinusOtherMargin": 0.2709445357322693
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7742283940315247,
+          "ownMinusOtherMargin": 0.28557199239730835
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8329225182533264,
+          "ownMinusOtherMargin": 0.325278639793396
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7977781891822815,
+          "ownMinusOtherMargin": 0.2617141008377075
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8587767481803894,
+          "ownMinusOtherMargin": 0.28805744647979736
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6114057898521423,
+          "ownMinusOtherMargin": 0.16151666641235352
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6789747476577759,
+          "ownMinusOtherMargin": 0.24005654454231262
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7226188778877258,
+          "ownMinusOtherMargin": 0.2820299565792084
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7407525181770325,
+          "ownMinusOtherMargin": 0.24985048174858093
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7775218486785889,
+          "ownMinusOtherMargin": 0.266193687915802
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8374170064926147,
+          "ownMinusOtherMargin": 0.32672369480133057
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8636919856071472,
+          "ownMinusOtherMargin": 0.3109995722770691
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8919734358787537,
+          "ownMinusOtherMargin": 0.311312735080719
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8321297764778137,
+          "ownMinusOtherMargin": 0.2579037547111511
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8663083910942078,
+          "ownMinusOtherMargin": 0.2704915404319763
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-011",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7645885348320007,
+          "ownMinusOtherMargin": 0.2318969964981079
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7921403050422668,
+          "ownMinusOtherMargin": 0.2657617926597595
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-012",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8481656312942505,
+          "ownMinusOtherMargin": 0.28124064207077026
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8965505957603455,
+          "ownMinusOtherMargin": 0.32723385095596313
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-013",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7139608263969421,
+          "ownMinusOtherMargin": 0.19162476062774658
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.78413987159729,
+          "ownMinusOtherMargin": 0.24181455373764038
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-014",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8081914782524109,
+          "ownMinusOtherMargin": 0.3074444532394409
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8673464059829712,
+          "ownMinusOtherMargin": 0.34648656845092773
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-015",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--001-M",
+          "correct": false,
+          "ownCosine": 0.36509397625923157,
+          "ownMinusOtherMargin": -0.15592476725578308
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.47091469168663025,
+          "ownMinusOtherMargin": 0.024747788906097412
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8257094025611877,
+          "ownMinusOtherMargin": 0.2821040153503418
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8450522422790527,
+          "ownMinusOtherMargin": 0.2549922466278076
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7900570631027222,
+          "ownMinusOtherMargin": 0.39676281809806824
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8052923083305359,
+          "ownMinusOtherMargin": 0.35481804609298706
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7339584231376648,
+          "ownMinusOtherMargin": 0.2590658962726593
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8132933378219604,
+          "ownMinusOtherMargin": 0.2818378210067749
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8018302321434021,
+          "ownMinusOtherMargin": 0.209278404712677
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8156022429466248,
+          "ownMinusOtherMargin": 0.14921528100967407
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.5592120885848999,
+          "ownMinusOtherMargin": 0.19385388493537903
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6302642822265625,
+          "ownMinusOtherMargin": 0.24641656875610352
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7790536880493164,
+          "ownMinusOtherMargin": 0.24028241634368896
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7817155718803406,
+          "ownMinusOtherMargin": 0.20727211236953735
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8175832033157349,
+          "ownMinusOtherMargin": 0.4088796079158783
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7913302183151245,
+          "ownMinusOtherMargin": 0.3329976797103882
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7987286448478699,
+          "ownMinusOtherMargin": 0.3931448459625244
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8000481724739075,
+          "ownMinusOtherMargin": 0.3152320981025696
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.7724267840385437,
+          "ownMinusOtherMargin": 0.26992321014404297
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8530843257904053,
+          "ownMinusOtherMargin": 0.3239895701408386
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6925809979438782,
+          "ownMinusOtherMargin": 0.258535772562027
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.6761159896850586,
+          "ownMinusOtherMargin": 0.19595542550086975
+        }
+      }
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "personForEvaluationOnly": "007-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.856277585029602,
+          "ownMinusOtherMargin": 0.40140876173973083
+        },
+        "multiple": {
+          "predictedProfileId": "20200709_L_R002S01C01--007-F",
+          "correct": true,
+          "ownCosine": 0.8611059188842773,
+          "ownMinusOtherMargin": 0.3735305070877075
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.5834663510322571,
+          "ownMinusOtherMargin": 0.2834862470626831
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6372798085212708,
+          "ownMinusOtherMargin": 0.32585883140563965
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6353901028633118,
+          "ownMinusOtherMargin": 0.30007416009902954
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7213686108589172,
+          "ownMinusOtherMargin": 0.3774825632572174
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7685999870300293,
+          "ownMinusOtherMargin": 0.3603041470050812
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8408859968185425,
+          "ownMinusOtherMargin": 0.42238423228263855
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.775215208530426,
+          "ownMinusOtherMargin": 0.4532109200954437
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8591546416282654,
+          "ownMinusOtherMargin": 0.5174538791179657
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8698795437812805,
+          "ownMinusOtherMargin": 0.5020312070846558
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8630557656288147,
+          "ownMinusOtherMargin": 0.4881925582885742
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7467570900917053,
+          "ownMinusOtherMargin": 0.3525119423866272
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8354281187057495,
+          "ownMinusOtherMargin": 0.46680012345314026
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.812044620513916,
+          "ownMinusOtherMargin": 0.4856035113334656
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8314197659492493,
+          "ownMinusOtherMargin": 0.4967181086540222
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.6791462302207947,
+          "ownMinusOtherMargin": 0.37262260913848877
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.7405211329460144,
+          "ownMinusOtherMargin": 0.41250303387641907
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "001-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8068215250968933,
+          "ownMinusOtherMargin": 0.47857505083084106
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": true,
+          "ownCosine": 0.8477193713188171,
+          "ownMinusOtherMargin": 0.5239645838737488
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.43949639797210693,
+          "ownMinusOtherMargin": 0.21005913615226746
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.44238385558128357,
+          "ownMinusOtherMargin": 0.21377035975456238
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.6961272358894348,
+          "ownMinusOtherMargin": 0.3828946650028229
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.807059109210968,
+          "ownMinusOtherMargin": 0.5154035687446594
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.5111532807350159,
+          "ownMinusOtherMargin": 0.3179984837770462
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.6331126093864441,
+          "ownMinusOtherMargin": 0.43086589872837067
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.7212527394294739,
+          "ownMinusOtherMargin": 0.44964686036109924
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.8442517518997192,
+          "ownMinusOtherMargin": 0.5524782836437225
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.8369580507278442,
+          "ownMinusOtherMargin": 0.4464329183101654
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.8799819946289062,
+          "ownMinusOtherMargin": 0.5061085224151611
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "002-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.8186283707618713,
+          "ownMinusOtherMargin": 0.5281383991241455
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--002-F",
+          "correct": true,
+          "ownCosine": 0.8633130192756653,
+          "ownMinusOtherMargin": 0.5785987973213196
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.19398480653762817,
+          "ownMinusOtherMargin": 0.022680044174194336
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": false,
+          "ownCosine": 0.17605067789554596,
+          "ownMinusOtherMargin": -0.06779508292675018
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": false,
+          "ownCosine": 0.5013605356216431,
+          "ownMinusOtherMargin": -0.03377044200897217
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6240749955177307,
+          "ownMinusOtherMargin": 0.10603219270706177
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5574570894241333,
+          "ownMinusOtherMargin": 0.03631407022476196
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.647881269454956,
+          "ownMinusOtherMargin": 0.13948512077331543
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7546536326408386,
+          "ownMinusOtherMargin": 0.259072870016098
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.8249691724777222,
+          "ownMinusOtherMargin": 0.35157662630081177
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6528775095939636,
+          "ownMinusOtherMargin": 0.016766071319580078
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7992417216300964,
+          "ownMinusOtherMargin": 0.1834930181503296
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6324651837348938,
+          "ownMinusOtherMargin": 0.09739148616790771
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.7475503087043762,
+          "ownMinusOtherMargin": 0.21196693181991577
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.43289613723754883,
+          "ownMinusOtherMargin": 0.1101846992969513
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5248590111732483,
+          "ownMinusOtherMargin": 0.21813160181045532
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5518454909324646,
+          "ownMinusOtherMargin": 0.1237628161907196
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6945096254348755,
+          "ownMinusOtherMargin": 0.2541016936302185
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5123750567436218,
+          "ownMinusOtherMargin": 0.0923159122467041
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6451812386512756,
+          "ownMinusOtherMargin": 0.22376888990402222
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-009",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": false,
+          "ownCosine": 0.5409287810325623,
+          "ownMinusOtherMargin": -0.14544391632080078
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6773592233657837,
+          "ownMinusOtherMargin": 0.011658787727355957
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-010",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": false,
+          "ownCosine": 0.48231980204582214,
+          "ownMinusOtherMargin": -0.07963421940803528
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5770216584205627,
+          "ownMinusOtherMargin": 0.006723165512084961
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-011",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": false,
+          "ownCosine": 0.5015421509742737,
+          "ownMinusOtherMargin": -0.12721538543701172
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": false,
+          "ownCosine": 0.6083831191062927,
+          "ownMinusOtherMargin": -0.054313600063323975
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-012",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.5662634968757629,
+          "ownMinusOtherMargin": 0.09120258688926697
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6774928569793701,
+          "ownMinusOtherMargin": 0.1754794716835022
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-013",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6615639328956604,
+          "ownMinusOtherMargin": 0.11134868860244751
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.8305968046188354,
+          "ownMinusOtherMargin": 0.2674156427383423
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-014",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6417611837387085,
+          "ownMinusOtherMargin": 0.05856168270111084
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.6985716223716736,
+          "ownMinusOtherMargin": 0.1227462887763977
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-015",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "004-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.8187235593795776,
+          "ownMinusOtherMargin": 0.2964685559272766
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--004-F",
+          "correct": true,
+          "ownCosine": 0.8775284886360168,
+          "ownMinusOtherMargin": 0.3546903729438782
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7345724701881409,
+          "ownMinusOtherMargin": 0.3084492087364197
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7909913063049316,
+          "ownMinusOtherMargin": 0.36631008982658386
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.476061075925827,
+          "ownMinusOtherMargin": 0.05977228283882141
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.573572039604187,
+          "ownMinusOtherMargin": 0.10319042205810547
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.5782580375671387,
+          "ownMinusOtherMargin": 0.14901575446128845
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6342071294784546,
+          "ownMinusOtherMargin": 0.1635403335094452
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7021572589874268,
+          "ownMinusOtherMargin": 0.23477938771247864
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7366656064987183,
+          "ownMinusOtherMargin": 0.27282580733299255
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6212630867958069,
+          "ownMinusOtherMargin": 0.226668119430542
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6412392854690552,
+          "ownMinusOtherMargin": 0.27503058314323425
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": false,
+          "ownCosine": 0.49957528710365295,
+          "ownMinusOtherMargin": -0.007817000150680542
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.5572603940963745,
+          "ownMinusOtherMargin": 0.044468581676483154
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.5325080156326294,
+          "ownMinusOtherMargin": 0.2706088423728943
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6414943337440491,
+          "ownMinusOtherMargin": 0.33303800225257874
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7357978224754333,
+          "ownMinusOtherMargin": 0.18996798992156982
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7832104563713074,
+          "ownMinusOtherMargin": 0.2295030951499939
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--001-M",
+          "correct": false,
+          "ownCosine": 0.3017096221446991,
+          "ownMinusOtherMargin": -0.05090650916099548
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.3684579133987427,
+          "ownMinusOtherMargin": 0.0007387101650238037
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-009",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6739736795425415,
+          "ownMinusOtherMargin": 0.3648926615715027
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7258351445198059,
+          "ownMinusOtherMargin": 0.45255497097969055
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-010",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6855379343032837,
+          "ownMinusOtherMargin": 0.17035937309265137
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7347614765167236,
+          "ownMinusOtherMargin": 0.22362494468688965
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-011",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.42138758301734924,
+          "ownMinusOtherMargin": 0.10040083527565002
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.4194711744785309,
+          "ownMinusOtherMargin": 0.07459279894828796
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-012",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.4823773205280304,
+          "ownMinusOtherMargin": 0.046029627323150635
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.5594698190689087,
+          "ownMinusOtherMargin": 0.06787574291229248
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-013",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "005-M",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.6705789566040039,
+          "ownMinusOtherMargin": 0.3547559082508087
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--005-M",
+          "correct": true,
+          "ownCosine": 0.7598960995674133,
+          "ownMinusOtherMargin": 0.48332422971725464
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7838830947875977,
+          "ownMinusOtherMargin": 0.27821260690689087
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.8295368552207947,
+          "ownMinusOtherMargin": 0.26005566120147705
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7582775354385376,
+          "ownMinusOtherMargin": 0.18872493505477905
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.7788106203079224,
+          "ownMinusOtherMargin": 0.18152755498886108
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.512385904788971,
+          "ownMinusOtherMargin": 0.1773337721824646
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.5550580024719238,
+          "ownMinusOtherMargin": 0.2005864977836609
+        }
+      }
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "personForEvaluationOnly": "006-F",
+      "conditions": {
+        "single": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6425062417984009,
+          "ownMinusOtherMargin": 0.21026673913002014
+        },
+        "multiple": {
+          "predictedProfileId": "20200805_S_R001S01C01--006-F",
+          "correct": true,
+          "ownCosine": 0.6767879128456116,
+          "ownMinusOtherMargin": 0.22951564192771912
+        }
+      }
+    }
+  ],
+  "referenceCountDistribution": {
+    "1": 2,
+    "3": 21,
+    "2": 2
+  },
+  "references": 69,
+  "fixedRawEmbeddingMeanNoWeightsTuned": true,
+  "singleReferenceCachedInferenceBitIdentical": true,
+  "allOriginalModelParameterBytesUnchanged": true,
+  "everyMeetingNonregression": true,
+  "retainedForNextValidationOnly": true,
+  "scope": "Known identity references from annotation, all query audio excluded. Same four previously observed source sessions; no claim of unseen meeting, automatic diarization or word accuracy.",
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

@@ -1,0 +1,1821 @@
+{
+  "state": "ORACLE_LABELED_OTHER_QUERY_PROTOTYPE_CAUSAL_DIAGNOSTIC_ONLY",
+  "perMeeting": {
+    "20200707_L_R001S08C01": {
+      "examples": 38,
+      "correct": 16,
+      "accuracy": 0.42105263157894735
+    },
+    "20200708_L_R002S01C01": {
+      "examples": 68,
+      "correct": 61,
+      "accuracy": 0.8970588235294118
+    },
+    "20200709_L_R002S01C01": {
+      "examples": 68,
+      "correct": 68,
+      "accuracy": 1.0
+    },
+    "20200805_S_R001S01C01": {
+      "examples": 49,
+      "correct": 48,
+      "accuracy": 0.9795918367346939
+    }
+  },
+  "perComponent": [
+    {
+      "componentId": "20200707_L_R001S08C01--001-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--001-M",
+      "predictedProfileId": "20200707_L_R001S08C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": [
+        "20200707_L_R001S08C01--001-M"
+      ]
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--002-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--002-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--002-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--002-M",
+      "predictedProfileId": "20200707_L_R001S08C01--001-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-004",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-005",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-006",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-007",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--003-M--component-008",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--003-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--004-M",
+      "predictedProfileId": "20200707_L_R001S08C01--004-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--004-M",
+      "predictedProfileId": "20200707_L_R001S08C01--004-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--004-M",
+      "predictedProfileId": "20200707_L_R001S08C01--004-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--004-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--004-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--005-F",
+      "predictedProfileId": "20200707_L_R001S08C01--005-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--005-F",
+      "predictedProfileId": "20200707_L_R001S08C01--006-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--005-F",
+      "predictedProfileId": "20200707_L_R001S08C01--006-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--005-F--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--005-F",
+      "predictedProfileId": "20200707_L_R001S08C01--005-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--006-F",
+      "predictedProfileId": "20200707_L_R001S08C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--006-F",
+      "predictedProfileId": "20200707_L_R001S08C01--005-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--006-F",
+      "predictedProfileId": "20200707_L_R001S08C01--005-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--006-F--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--006-F",
+      "predictedProfileId": "20200707_L_R001S08C01--005-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-000",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-001",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-002",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-003",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--002-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-004",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-005",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-006",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-007",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-008",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--002-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-009",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-010",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--002-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-011",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--007-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200707_L_R001S08C01--007-M--component-012",
+      "meeting": "20200707_L_R001S08C01",
+      "correctProfileId": "20200707_L_R001S08C01--007-M",
+      "predictedProfileId": "20200707_L_R001S08C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-009",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--001-M--component-010",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--001-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-009",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-010",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-011",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-012",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-013",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-014",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-015",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-016",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-017",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-018",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-019",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-020",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-021",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-022",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-023",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-024",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-025",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-026",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-027",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-028",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-029",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--002-M--component-030",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--002-M",
+      "predictedProfileId": "20200708_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--004-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-006",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-007",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--003-M--component-008",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--003-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--004-M",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--004-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--004-M--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--004-M",
+      "predictedProfileId": "20200708_L_R002S01C01--003-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--005-F",
+      "predictedProfileId": "20200708_L_R002S01C01--005-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--005-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--005-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--005-F",
+      "predictedProfileId": "20200708_L_R002S01C01--001-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--006-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--006-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--006-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--006-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--006-F--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--006-F",
+      "predictedProfileId": "20200708_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-000",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-001",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-002",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-003",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-004",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200708_L_R002S01C01--007-F--component-005",
+      "meeting": "20200708_L_R002S01C01",
+      "correctProfileId": "20200708_L_R002S01C01--007-F",
+      "predictedProfileId": "20200708_L_R002S01C01--005-F",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--001-M",
+      "predictedProfileId": "20200709_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--001-M",
+      "predictedProfileId": "20200709_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--001-M",
+      "predictedProfileId": "20200709_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--001-M",
+      "predictedProfileId": "20200709_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--001-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--001-M",
+      "predictedProfileId": "20200709_L_R002S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-011",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-012",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-013",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-014",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--002-M--component-015",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--002-M",
+      "predictedProfileId": "20200709_L_R002S01C01--002-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--003-M--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--003-M",
+      "predictedProfileId": "20200709_L_R002S01C01--003-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--004-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--004-F",
+      "predictedProfileId": "20200709_L_R002S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-011",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-012",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-013",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-014",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--006-F--component-015",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--006-F",
+      "predictedProfileId": "20200709_L_R002S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-000",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-001",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-002",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-003",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-004",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-005",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-006",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-007",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-008",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-009",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200709_L_R002S01C01--007-F--component-010",
+      "meeting": "20200709_L_R002S01C01",
+      "correctProfileId": "20200709_L_R002S01C01--007-F",
+      "predictedProfileId": "20200709_L_R002S01C01--007-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--001-M--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--001-M",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--002-F--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--002-F",
+      "predictedProfileId": "20200805_S_R001S01C01--002-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--001-M",
+      "correct": false,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-009",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-010",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-011",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-012",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-013",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-014",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--004-F--component-015",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--004-F",
+      "predictedProfileId": "20200805_S_R001S01C01--004-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-004",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-005",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-006",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-007",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-008",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-009",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-010",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-011",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-012",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--005-M--component-013",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--005-M",
+      "predictedProfileId": "20200805_S_R001S01C01--005-M",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-000",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--006-F",
+      "predictedProfileId": "20200805_S_R001S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-001",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--006-F",
+      "predictedProfileId": "20200805_S_R001S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-002",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--006-F",
+      "predictedProfileId": "20200805_S_R001S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    },
+    {
+      "componentId": "20200805_S_R001S01C01--006-F--component-003",
+      "meeting": "20200805_S_R001S01C01",
+      "correctProfileId": "20200805_S_R001S01C01--006-F",
+      "predictedProfileId": "20200805_S_R001S01C01--006-F",
+      "correct": true,
+      "originalProfileFallbacks": []
+    }
+  ],
+  "queryExcludedFromOwnPrototype": true,
+  "otherQueriesGroundTruthLabelsUsedForPrototype": true,
+  "notIndependentEnrollmentValidation": true,
+  "notDeployableAutomaticSpeakerInference": true,
+  "noLabelCorrectionsMade": true,
+  "newModelCalls": 0,
+  "newWeightUpdates": 0,
+  "qualityQualified": false
+}

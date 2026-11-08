@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-08T15:25:29.334827+08:00",
+  "state": "FROZEN_RAW_DUAL_REFERENCE_INFORMATION_DIAGNOSTIC",
+  "sourceReferencePlanSha256": "c2c4ced1c0222967f598cc1ad916a8b77ca926d29f0b065c4b11e77c4518b015",
+  "embeddingCacheSha256": "3aaf3345cc65ebd7dd53b132299cacf2f5939bd42950e3cab2268e48883aba30",
+  "feature": "Periodic Hann512/hop128 complex interchannel coherence, summed crosspower divided by geometric sum-power, full257 frequency bins, concatenate real/imaginary. No geometry/delay labels or learnt projection.",
+  "prototype": "Arithmetic mean of all existing up-to3 independent references per known identity; no query enters any prototype.",
+  "conditions": [
+    "frozen_voice_only",
+    "raw_two_channel_coherence_only",
+    "equal_weight_voice_and_coherence",
+    "analytic_no_spatial_information_control"
+  ],
+  "fusionWeightsFixedBeforeMeasurement": [
+    0.5,
+    0.5
+  ],
+  "newModelCalls": 0,
+  "newWeightUpdates": 0,
+  "scope": "All223 single-speaker source components, already observed four source meetings and known-identity enrollments. Not natural overlap separation, automatic diarization, unseen-meeting or actual close-mic recording-card validation.",
+  "qualityQualified": false
+}
