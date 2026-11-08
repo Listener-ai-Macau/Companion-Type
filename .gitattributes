@@ -31,3 +31,13 @@ evidence/20261108-dual-mic-independent-meetings/** -text -whitespace
 src/*joint_neural_spatial*20261108.py -text
 
 evidence/20261108-joint-neural-spatial/** -text -whitespace
+
+src/companion_tse_*20261108.py -text
+
+src/*tse_supervised*20261108.py -text
+
+src/configure_tse_*20261108.py -text
+
+evidence/20261108-tse-supervised-adaptation/** -text -whitespace
+
+trained/20261108-tse-supervised-adaptation/*.safetensors -text -diff

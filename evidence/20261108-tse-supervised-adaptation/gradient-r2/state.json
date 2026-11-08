@@ -1,0 +1,128 @@
+{
+  "state": "PASS_TRAINING_GRAPH_PARITY_LABELS_GRADIENTS_AND_FROZEN_TEACHER",
+  "pid": 17004,
+  "startedAt": "2026-11-08T11:57:21.764087+08:00",
+  "newWeightUpdates": 0,
+  "protocolSha256": "a4a75bbd0a031a29d885ac2ff13bdd5c4f0406c53eca635c412cc7d6c9a4bde0",
+  "checks": {
+    "featureForwardParity": [
+      {
+        "samples": 8000,
+        "maximumAbsoluteError": 0.0,
+        "sameBf16Values": true,
+        "sameAttentionMask": true,
+        "gradientAbsoluteSum": 5.915700912475586
+      },
+      {
+        "samples": 32123,
+        "maximumAbsoluteError": 0.0,
+        "sameBf16Values": true,
+        "sameAttentionMask": true,
+        "gradientAbsoluteSum": 7.72781229019165
+      },
+      {
+        "samples": 60000,
+        "maximumAbsoluteError": 0.0,
+        "sameBf16Values": true,
+        "sameAttentionMask": true,
+        "gradientAbsoluteSum": 7.4367780685424805
+      }
+    ],
+    "independentDirectionalFiniteDifferences": [
+      {
+        "numeric": -0.00745760612353612,
+        "analytic": -0.007457594330445581,
+        "absoluteError": 1.179309053883637e-08
+      },
+      {
+        "numeric": -0.015056400799734599,
+        "analytic": -0.015056223814714631,
+        "absoluteError": 1.769850199676709e-07
+      },
+      {
+        "numeric": -0.007389860406980044,
+        "analytic": -0.0073898419841016945,
+        "absoluteError": 1.8422878349591554e-08
+      }
+    ],
+    "zeroSpatialAdapters": {
+      "pairedOutputExactlyOriginal": true,
+      "monoFallbackExactlyOriginal": true,
+      "newSpatialParameters": 98688,
+      "trainableActualSeparationParameters": 21525768
+    },
+    "teacherForcingLabels": {
+      "officialNativeLoss": 3.5997819900512695,
+      "selectedTargetOnlyLoss": 3.5997819900512695,
+      "prefixLabelsIgnored": true,
+      "targetTokens": 9,
+      "correctOneTokenCausalShift": true
+    },
+    "gradientCases": [
+      {
+        "id": "20200708_L_R002S01C01-005-F-present_solo-1",
+        "category": "present_solo",
+        "teacherCe": 3.5997819900512695,
+        "waveformLoss": 0.928946316242218,
+        "waveformScope": {
+          "kind": "noisy_original_target_during_nonoverlapping_annotation",
+          "supervisedSamples": 32641
+        },
+        "waveformGradientAbsoluteSum": 11742.23046875,
+        "separationParameterGroupsWithGradient": 562,
+        "spatialGradientNormSum": 48.38222116231918,
+        "teacherAndSpeakerEncoderFrozen": true
+      },
+      {
+        "id": "20200707_L_R001S08C01-003-M-absent_other_speech-0",
+        "category": "absent_other_speech",
+        "teacherCe": 30.72569465637207,
+        "waveformLoss": 0.7714088559150696,
+        "waveformScope": {
+          "kind": "annotated_lexical_target_absent",
+          "supervisedSamples": 32001
+        },
+        "waveformGradientAbsoluteSum": 416074.75,
+        "separationParameterGroupsWithGradient": 562,
+        "spatialGradientNormSum": 1608.9138278961182,
+        "teacherAndSpeakerEncoderFrozen": true
+      },
+      {
+        "id": "20200707_L_R001S08C01-001-M-present_overlap-3",
+        "category": "present_overlap",
+        "teacherCe": 15.617759704589844,
+        "waveformLoss": 0.7085869312286377,
+        "waveformScope": {
+          "kind": "only_target_inactive_samples_supervised_no_clean_overlap_target",
+          "supervisedSamples": 25818
+        },
+        "waveformGradientAbsoluteSum": 21199.80078125,
+        "separationParameterGroupsWithGradient": 562,
+        "spatialGradientNormSum": 91.16167676448822,
+        "teacherAndSpeakerEncoderFrozen": true
+      }
+    ]
+  },
+  "qualityQualified": false,
+  "limits": {
+    "pid": 17004,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1797836800,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "gradientCases": 3,
+  "trainingQualityQualified": false,
+  "finishedAt": "2026-11-08T11:58:55.173070+08:00",
+  "wholeWorkerSeconds": 93.40884849999566
+}

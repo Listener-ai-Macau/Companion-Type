@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-08T11:53:29.304896+08:00",
+  "state": "FROZEN_REAL_TSE_GRADIENT_AND_PARITY_CHECKS_NO_WEIGHT_UPDATES",
+  "seed": 20261108,
+  "workerSha256": "675216bc55534a575b1482594c56e1f7fe997f70776c3b0f385a75ed83bcc54b",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_training_20261108.py",
+      "sha256": "020f4d18418ab50576368c96efd5f4eb5cbcbb9910dc3cc4a589c5bc9c8b94ab"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_model_io_20261108.py",
+      "sha256": "067e6530fcaa7a7587c84e9fd3c8565c3b3f9e9d6c374bd096461612dd4b5fed"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tse_supervised_gradient_worker_20261108.py",
+      "sha256": "675216bc55534a575b1482594c56e1f7fe997f70776c3b0f385a75ed83bcc54b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_streamed_loader_20261107.py",
+      "sha256": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_progress_reader_20261108.py",
+      "sha256": "f41eb139103396d6b8ff954c1cce6e0f09122c239fd6ad356a18f7941dfa90eb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\training-pair-manifest.json",
+      "sha256": "92aad141420e71a620f274b284a04234e3a459174d9ab3ab0fbe4762853c0c74"
+    }
+  ],
+  "dataManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\training-pair-manifest.json",
+  "dataManifestSha256": "92aad141420e71a620f274b284a04234e3a459174d9ab3ab0fbe4762853c0c74",
+  "extractorReady": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\model-ready.json",
+  "extractorReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "audioFrontend": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\audio-frontend-source.json",
+  "audioFrontendSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+  "asrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+  "asrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "probeCases": [
+    "20200708_L_R002S01C01-005-F-present_solo-1",
+    "20200707_L_R001S08C01-003-M-absent_other_speech-0",
+    "20200707_L_R001S08C01-001-M-present_overlap-3"
+  ],
+  "featureMaximumAbsoluteError": 1e-06,
+  "finiteDifferenceEpsilon": 1e-05,
+  "finiteDifferenceAbsoluteTolerance": 1e-07,
+  "finiteDifferenceRelativeTolerance": 0.001,
+  "teacherLossAbsoluteTolerance": 2e-05,
+  "cpuPercentMaximum": 10,
+  "privateCommitLimitBytes": 2147483648,
+  "referenceUse": "Supervised official TRAIN samples only. True transcripts/activity enter losses, never deployment inputs. Existing benchmark/finalholdout excluded.",
+  "architecture": "Exact complete PS4 base plus zero-initialized per-band spatial projection of interchannel cosIPD/sinIPD/loglevel. Full separation backbone/mask trainable, speaker encoder and ASR teacher frozen. Mono path supported.",
+  "preparationStop": "No optimizer step until feature parity, independent finite differences, native CE label-shift parity, base zero-adapter exact-output parity and nonzero finite target/separation/spatial gradients all pass. A failed graph is a preparation failure, not a model score.",
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false
+}

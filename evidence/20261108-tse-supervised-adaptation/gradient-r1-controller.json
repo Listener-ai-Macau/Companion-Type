@@ -1,0 +1,16 @@
+{
+  "state": "FAILED_TSE_STAGE_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 17860,
+  "startedAt": "2026-11-08T11:53:29+08:00",
+  "worker": "tse_supervised_gradient_worker_20261108.py",
+  "runId": "gradient-r1",
+  "protocolSha256": "27ee5546782c080e4e882c2feabdb3fe0595467ec4dfb8ae4c46ae391620b3e2",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1212874752,
+  "rssPeakBytes": 1185886208,
+  "qualityQualified": false,
+  "exitCode": 1,
+  "workerState": "CHECKING_FEATURE_DIRECTIONAL_DERIVATIVES",
+  "finishedAt": "2026-11-08T11:54:23+08:00",
+  "wholeProcessFamilySeconds": 53.379039299994474
+}

@@ -1,0 +1,75 @@
+{
+  "state": "CPU_NUMERIC_CHECK_RUNTIME_FAILURE_BEFORE_MODEL_UPDATES",
+  "failedController": {
+    "state": "FAILED_TSE_STAGE_RETAINED_NO_AUTOMATIC_RETRY",
+    "pid": 17860,
+    "startedAt": "2026-11-08T11:53:29+08:00",
+    "worker": "tse_supervised_gradient_worker_20261108.py",
+    "runId": "gradient-r1",
+    "protocolSha256": "27ee5546782c080e4e882c2feabdb3fe0595467ec4dfb8ae4c46ae391620b3e2",
+    "automaticModelRetries": 0,
+    "privatePeakBytes": 1212874752,
+    "rssPeakBytes": 1185886208,
+    "qualityQualified": false,
+    "exitCode": 1,
+    "workerState": "CHECKING_FEATURE_DIRECTIONAL_DERIVATIVES",
+    "finishedAt": "2026-11-08T11:54:23+08:00",
+    "wholeProcessFamilySeconds": 53.379039299994474
+  },
+  "lastPartialChecks": {
+    "state": "CHECKING_FEATURE_DIRECTIONAL_DERIVATIVES",
+    "pid": 10404,
+    "startedAt": "2026-11-08T11:53:35.844046+08:00",
+    "newWeightUpdates": 0,
+    "protocolSha256": "27ee5546782c080e4e882c2feabdb3fe0595467ec4dfb8ae4c46ae391620b3e2",
+    "checks": {
+      "featureForwardParity": [
+        {
+          "samples": 8000,
+          "maximumAbsoluteError": 0.0,
+          "sameBf16Values": true,
+          "sameAttentionMask": true,
+          "gradientAbsoluteSum": 5.915700912475586
+        },
+        {
+          "samples": 32123,
+          "maximumAbsoluteError": 0.0,
+          "sameBf16Values": true,
+          "sameAttentionMask": true,
+          "gradientAbsoluteSum": 7.72781229019165
+        },
+        {
+          "samples": 60000,
+          "maximumAbsoluteError": 0.0,
+          "sameBf16Values": true,
+          "sameAttentionMask": true,
+          "gradientAbsoluteSum": 7.4367780685424805
+        }
+      ]
+    },
+    "qualityQualified": false,
+    "limits": {
+      "pid": 10404,
+      "cpuRate": 1000,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 10.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 1334886400,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "gpu": "AMD Radeon RX 6800 XT"
+  },
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\gradient-r1.log",
+  "causeObserved": "OpenBLAS memory allocation failure during CPU double-precision finite differences; GPU forward-parity controls had passed. Reuse GPU route, do not raise global RAM or close user apps.",
+  "oldSourceSha256": "675216bc55534a575b1482594c56e1f7fe997f70776c3b0f385a75ed83bcc54b",
+  "newSourceSha256": "4194b79628c51a509ee3f3d87b967c0342bcf662d592f1535dbf81f238095479",
+  "oldProtocolRetained": true,
+  "newWeightUpdates": 0
+}

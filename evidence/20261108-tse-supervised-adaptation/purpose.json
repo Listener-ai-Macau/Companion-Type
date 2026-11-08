@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-08T11:53:29.304896+08:00",
+  "state": "FROZEN_REAL_TSE_GRADIENT_AND_PARITY_CHECKS_NO_WEIGHT_UPDATES",
+  "owner": "那继续吧, 按照合理的开发方式来做开发",
+  "previousDecision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\decision.json",
+  "previousSourceAndEvidenceCommit": "b38b97522126d784a777435faa9b15916246aee6",
+  "change": "Stop pure postprocessing. Implement actual differentiable target-word training, annotated target-absence/single-speaker waveform supervision and zero-impact spatial residuals, then one fixed training trial only after graph and data checks.",
+  "trainingPilot": {
+    "trainPairs": 166,
+    "validationPairs": 48,
+    "trainSourceMeetings": 2,
+    "validationSourceMeetings": 1,
+    "notGeneralCorpus": true,
+    "physicalSpeakerIndependenceUnknown": true
+  },
+  "next": "先完成真实GPU梯度/原模型一致性核验；通过后冻结一轮训练和验证协议，训练期间只更新分离骨干和空间分支，不改识别器或在验证集调参。小试点不能作为通用或售卖合格。",
+  "qualityQualified": false,
+  "newWeightUpdates": 0
+}

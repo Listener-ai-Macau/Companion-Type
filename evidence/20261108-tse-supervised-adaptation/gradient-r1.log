@@ -1,0 +1,9 @@
+W1108 11:53:48.318000 10404 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tse_supervised_gradient_worker_20261108.py:27: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at B:\src\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  expected=official['input_features'].to('cuda:0');error=float((features-expected).abs().max());assert error<=P['featureMaximumAbsoluteError'];assert torch.equal(features.to(torch.bfloat16),expected.to(torch.bfloat16)) and torch.equal(mask.cpu(),official['attention_mask']);g=torch.autograd.grad(features.square().mean(),wave)[0];assert torch.isfinite(g).all() and float(g.abs().sum())>0
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
