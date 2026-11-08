@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T10:06:51+08:00",
+  "at": "2026-11-08T10:12:07+08:00",
   "phase": "checkpoint",
   "ownerOriginal": "那你继续研究一下, 可以考虑占用更多的资源, 然后继续修到可售卖版本",
   "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings",
@@ -124,7 +124,7 @@
     }
   },
   "nativeRun": {
-    "state": "RUNNING_NATIVE_FULL_CHANNEL",
+    "state": "COMPLETE_FOUR_FULL_CHANNEL_JOURNALS_UNQUALIFIED",
     "pid": 16076,
     "startedAt": "2026-11-08T10:05:54+08:00",
     "results": [
@@ -135,24 +135,71 @@
         "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
         "wholeProcessFamilySeconds": 31.496180799993454,
         "privatePeakBytes": 1780068352
+      },
+      {
+        "meeting": "M_R003S02C01-mic1",
+        "out": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\M_R003S02C01-mic1\\attempt-1",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 28.428165299992543,
+        "privatePeakBytes": 1779466240
+      },
+      {
+        "meeting": "S_R003S01C01-mic0",
+        "out": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\S_R003S01C01-mic0\\attempt-1",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 27.37867289999849,
+        "privatePeakBytes": 1780187136
+      },
+      {
+        "meeting": "S_R003S01C01-mic1",
+        "out": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\S_R003S01C01-mic1\\attempt-1",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 26.355013299995335,
+        "privatePeakBytes": 1779150848
       }
     ],
     "referencePayloadRead": false,
     "protocolSha256": "e56a3830a720a76a6f79ad48000bbf29c90f585a67ccc5b0b2fae0ba0bfbe104",
     "automaticModelRetries": 0,
-    "activeMeeting": "M_R003S02C01-mic1",
+    "activeMeeting": "S_R003S01C01-mic1",
     "attempt": 1,
-    "activePid": 23772
+    "finishedAt": "2026-11-08T10:07:48+08:00"
   },
-  "run": null,
+  "run": {
+    "state": "RUNNING_PS4_ASR",
+    "pid": 18376,
+    "startedAt": "2026-11-08T10:08:57+08:00",
+    "priorAttemptReceipts": [],
+    "results": [
+      {
+        "stage": "separation",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 119.84454619997996,
+        "privatePeakBytes": 1744990208
+      },
+      {
+        "stage": "inventory",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 7.119088000006741,
+        "privatePeakBytes": 328839168
+      }
+    ],
+    "automaticModelFailureRetries": 0,
+    "qualityQualified": false,
+    "stage": "asr",
+    "activePid": 17260
+  },
   "review": null,
   "decision": null,
   "newTrainingRuns": 0,
   "productDefaultChanged": false,
   "qualityQualified": false,
   "finalHoldoutOpened": false,
-  "state": "RUNNING_NATIVE_FULL_CHANNEL",
+  "state": "RUNNING_PS4_ASR",
   "next": "Two untouched meetings full per-mic journals, then fixed rawdualGSS/matchedmono and complete per-person scoring. No two-system DOVER-Lap voting, no parameter/model sweep; keep ordinary, <5%, facts, dual-host/card and sale gates open.",
-  "sourceAndEvidenceCommit": "46db4aea43550a3e341defc1eed95c30fd251126",
+  "sourceAndEvidenceCommit": "17c0ec7e577b1a4ee90ca1a8f1c6c7c6a5863b3f",
   "remoteReadbackConfirmed": true
 }
