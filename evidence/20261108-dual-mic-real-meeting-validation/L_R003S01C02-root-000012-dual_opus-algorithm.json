@@ -1,0 +1,25 @@
+{
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "workerSourceSha256": "09402c85887cf9f53abaa91727d5aeb232fbd8d39bc8ff603f93079734f6905a"
+  },
+  "algorithmSeconds": 24.626734799996484,
+  "contextPeople": [
+    1,
+    5
+  ],
+  "rootPeople": [
+    1,
+    5
+  ],
+  "iterations": 20,
+  "postIterations": 1,
+  "referenceChannel": 0,
+  "WPE": false,
+  "postfilter": null,
+  "posteriorShape": [
+    3,
+    3753,
+    513
+  ]
+}

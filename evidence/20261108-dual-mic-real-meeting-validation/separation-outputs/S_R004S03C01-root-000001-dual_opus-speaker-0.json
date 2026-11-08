@@ -1,0 +1,26 @@
+{
+  "id": "S_R004S03C01-root-000001-dual_opus-speaker-0",
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "workerSourceSha256": "09402c85887cf9f53abaa91727d5aeb232fbd8d39bc8ff603f93079734f6905a"
+  },
+  "meeting": "S_R004S03C01",
+  "rootIndex": 1,
+  "predictedSpeaker": 0,
+  "arm": "dual_opus",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\S_R004S03C01-root-000001-dual_opus-speaker-0.wav",
+  "audioSha256": "5fa2f60b93334e7c873c1f967069c17c1d9e38bdfa18ae12a077e9a7295658a1",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "193a5cc4d196ac86b2a8778ca50cff84790e4f975ff8e7d406f73eba4f53dde7",
+  "sourceCompressedDecodedSha256": "cd6df307e175bc85bc2a925ea33c1849434f7cfceef96e6c6a229acf3ea9b53c",
+  "predictedJournalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": false,
+  "predictedActiveSamples": null,
+  "ungatedDerivedAudio": null,
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.1004638671875,
+  "ordinaryBypass": true,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false
+}

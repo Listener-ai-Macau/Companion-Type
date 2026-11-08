@@ -1,0 +1,62 @@
+{
+  "at": "2026-11-08T09:23:00+08:00",
+  "state": "REAL_DUAL_PCM_AND_CODEC_INPUTS_FROZEN_NO_MODEL",
+  "sources": [
+    {
+      "meeting": "L_R003S01C02",
+      "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02.flac",
+      "losslessSourceSha256": "93125b2c8f9f73c042ccd63178d1fec6db2d3047af4078834da7c6c1aa118e72",
+      "sourceWholePayloadMatchesPinnedLfs": true,
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "microphoneChannelsUsed": [
+        0,
+        1
+      ],
+      "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+      "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.flac",
+      "losslessSourceSha256": "c21ce5ce455b87926ca6b486431db2889de5d14be91b55f8cffea31cd94c1262",
+      "sourceWholePayloadMatchesPinnedLfs": true,
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "microphoneChannelsUsed": [
+        0,
+        1
+      ],
+      "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+      "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+    }
+  ],
+  "clips": 3,
+  "uniqueOriginalRootSeconds": 90,
+  "newAudioDownloaded": false,
+  "ffmpegVersion": [
+    "ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "built with gcc 15.2.0 (Rev13, Built by MSYS2 project)",
+    "configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-cairo --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libsvtjpegxs --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint --enable-whisper"
+  ],
+  "sameRootChannel0PcmAsPriorTests": true,
+  "losslessFlacPcmRoundtripVerified": true,
+  "referenceGeometryNotMatchedToDevice": true,
+  "newModels": 0,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 22952,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 311427072,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

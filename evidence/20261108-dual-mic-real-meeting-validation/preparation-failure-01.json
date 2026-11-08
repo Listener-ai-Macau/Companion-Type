@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-08T09:22:54+08:00",
+  "state": "SCORING_RUNTIME_LACKS_CFFI_FOR_EXISTING_SOUNDFILE",
+  "stage": "audio-preparation-before-any-output",
+  "error": "ModuleNotFoundError: _cffi_backend",
+  "newModelCalls": 0,
+  "fix": "Use the already verified main Python plus existing audio-tools for lossless extraction; numerical scoring remains isolated. No package or driver installation."
+}

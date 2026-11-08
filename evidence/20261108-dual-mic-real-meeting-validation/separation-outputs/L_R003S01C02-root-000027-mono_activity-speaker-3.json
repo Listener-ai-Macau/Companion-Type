@@ -1,0 +1,26 @@
+{
+  "id": "L_R003S01C02-root-000027-mono_activity-speaker-3",
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "workerSourceSha256": "09402c85887cf9f53abaa91727d5aeb232fbd8d39bc8ff603f93079734f6905a"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 27,
+  "predictedSpeaker": 3,
+  "arm": "mono_activity",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\L_R003S01C02-root-000027-mono_activity-speaker-3.wav",
+  "audioSha256": "0a6b8e44307c373b2a8314df23c94fe83df1a00a93a5963c7fe0a6030c244920",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "cc1c098858557338b9ad6b0551fd8657c4a73e4269eded4516fb6923a2cbfae7",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 19843,
+  "ungatedDerivedAudio": null,
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.085723876953125,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false
+}

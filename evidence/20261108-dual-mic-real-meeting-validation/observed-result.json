@@ -1,0 +1,149 @@
+{
+  "at": "2026-11-08T09:31:34+08:00",
+  "phase": "checkpoint",
+  "ownerOriginal": "那你看看验证一下咯  开始看看怎么继续推进吧",
+  "ownerCompressionQuestion": "然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
+  "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation",
+  "protocol": {
+    "state": "FROZEN_REAL_MEETING_PREDICTED_ACTIVITY_SPATIAL_AND_CODEC_SCREEN",
+    "roots": [
+      "L12",
+      "L27",
+      "S1"
+    ],
+    "conditions": 3,
+    "expectedOutputRows": 21,
+    "newSeparationAlgorithms": 1,
+    "newModelFamilies": 0,
+    "trainingRuns": 0,
+    "asrInferenceAstMatchesOriginal": true,
+    "referenceActivityUsed": false,
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36"
+  },
+  "audioPreparation": {
+    "at": "2026-11-08T09:23:00+08:00",
+    "state": "REAL_DUAL_PCM_AND_CODEC_INPUTS_FROZEN_NO_MODEL",
+    "sources": [
+      {
+        "meeting": "L_R003S01C02",
+        "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02.flac",
+        "losslessSourceSha256": "93125b2c8f9f73c042ccd63178d1fec6db2d3047af4078834da7c6c1aa118e72",
+        "sourceWholePayloadMatchesPinnedLfs": true,
+        "revision": "aada72727856313b19d4a030383c426364931dbf",
+        "microphoneChannelsUsed": [
+          0,
+          1
+        ],
+        "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+        "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+      },
+      {
+        "meeting": "S_R004S03C01",
+        "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.flac",
+        "losslessSourceSha256": "c21ce5ce455b87926ca6b486431db2889de5d14be91b55f8cffea31cd94c1262",
+        "sourceWholePayloadMatchesPinnedLfs": true,
+        "revision": "aada72727856313b19d4a030383c426364931dbf",
+        "microphoneChannelsUsed": [
+          0,
+          1
+        ],
+        "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+        "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+      }
+    ],
+    "clips": 3,
+    "uniqueOriginalRootSeconds": 90,
+    "newAudioDownloaded": false,
+    "ffmpegVersion": [
+      "ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "built with gcc 15.2.0 (Rev13, Built by MSYS2 project)",
+      "configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-cairo --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libsvtjpegxs --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint --enable-whisper"
+    ],
+    "sameRootChannel0PcmAsPriorTests": true,
+    "losslessFlacPcmRoundtripVerified": true,
+    "referenceGeometryNotMatchedToDevice": true,
+    "newModels": 0,
+    "finalHoldoutOpened": false,
+    "qualityQualified": false,
+    "limits": {
+      "pid": 22952,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 311427072,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "numericalProof": {
+    "at": "2026-11-08T09:23:49+08:00",
+    "state": "PASS_PINNED_GSS_NUMPY_NUMERICAL_CONTROLS",
+    "neuralCalls": 0,
+    "qualityQualified": false,
+    "numpyVersion": "2.4.6",
+    "stftInverseMaxAbsoluteError": 5.551115123125783e-16,
+    "pcm16RoundtripExactlyEqual": true,
+    "full20IterationBatchVersusFrequencyLoopMaxError": 4.779510121011299e-14,
+    "independentInverseCovarianceLogDensityMaxError": 1.2212453270876722e-15,
+    "independentWeightedOuterProductPsdMaxError": 1.3323093219486658e-15,
+    "independentFixedReferenceMvdrMaxError": 2.2205636045467026e-16,
+    "nativeGpuParityClaimed": false,
+    "realMeetingAccuracyMeasured": false,
+    "seconds": 0.4146363000036217,
+    "limits": {
+      "pid": 7828,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 57196544,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "run": {
+    "state": "RUNNING_PS4_ASR",
+    "pid": 21348,
+    "startedAt": "2026-11-08T09:26:42+08:00",
+    "priorAttemptReceipts": [],
+    "results": [
+      {
+        "stage": "separation",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 143.3577879999939,
+        "privatePeakBytes": 1770885120
+      },
+      {
+        "stage": "inventory",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 7.108935399999609,
+        "privatePeakBytes": 327315456
+      }
+    ],
+    "automaticModelFailureRetries": 0,
+    "qualityQualified": false,
+    "stage": "asr",
+    "activePid": 29292
+  },
+  "review": null,
+  "decision": null,
+  "productDefaultChanged": false,
+  "newHardwareAccess": false,
+  "newTrainingRuns": 0,
+  "qualityQualified": false,
+  "state": "RUNNING_PS4_ASR",
+  "next": "继续原RM-OVERLAP：固定同一原音/预测活动/ASR，对照单路活动分段、原始双路GSS和Opus解码双路GSS，全部逐人评分后决定保留或停止；不扫模型/窗口/码率、不占实板，原普通/严格<5%/纪要事实/双端实卡/售卖门保留。"
+}

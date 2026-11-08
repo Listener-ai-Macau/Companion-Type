@@ -19,3 +19,7 @@ evidence/*target-activity*/** -text -whitespace
 src/*multichannel*20261108.py -text
 src/*dual_mic*20261108.py -text
 evidence/20261108-dual-mic-architecture-review/** -text -whitespace
+
+src/*gss*20261108.py -text
+upstream-spatial/** -text -whitespace
+evidence/20261108-dual-mic-real-meeting-validation/** -text -whitespace

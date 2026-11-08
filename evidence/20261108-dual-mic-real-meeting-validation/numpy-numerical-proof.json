@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-08T09:23:49+08:00",
+  "state": "PASS_PINNED_GSS_NUMPY_NUMERICAL_CONTROLS",
+  "neuralCalls": 0,
+  "qualityQualified": false,
+  "numpyVersion": "2.4.6",
+  "stftInverseMaxAbsoluteError": 5.551115123125783e-16,
+  "pcm16RoundtripExactlyEqual": true,
+  "full20IterationBatchVersusFrequencyLoopMaxError": 4.779510121011299e-14,
+  "independentInverseCovarianceLogDensityMaxError": 1.2212453270876722e-15,
+  "independentWeightedOuterProductPsdMaxError": 1.3323093219486658e-15,
+  "independentFixedReferenceMvdrMaxError": 2.2205636045467026e-16,
+  "nativeGpuParityClaimed": false,
+  "realMeetingAccuracyMeasured": false,
+  "seconds": 0.4146363000036217,
+  "limits": {
+    "pid": 7828,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 57196544,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

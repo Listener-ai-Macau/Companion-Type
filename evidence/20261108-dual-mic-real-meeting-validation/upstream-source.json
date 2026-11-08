@@ -1,0 +1,201 @@
+{
+  "repository": "https://github.com/desh2608/gss",
+  "commit": "10fad18cae85e2e4342c77421abc70c9c5da23ed",
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed",
+  "files": [
+    {
+      "path": "LICENSE",
+      "gitBlobSha1": "1b0f464466f318cf8ae3d04005724f695d24922c",
+      "sha256": "5658d3e38fcd75f27608d9ba7ee83a2c1a04cc7a76334509907b41c87b92fc8b",
+      "bytes": 1121
+    },
+    {
+      "path": "README.md",
+      "gitBlobSha1": "02b5fad957a7e09caa0dfae20477c3abb4f6c6a7",
+      "sha256": "0ddcf3e8e4db7847b7abc45365ee03759ee9ee0846b58c0495ab8b593ef5c6ee",
+      "bytes": 10848
+    },
+    {
+      "path": "gss/__init__.py",
+      "gitBlobSha1": "bb67a43fa4e5791ab58e7e40260bc3df8b6bc7cc",
+      "sha256": "2b490dcb6e959ba03ed55e65493de2972eb256c34b51b8aa93a0190c59b69c92",
+      "bytes": 20
+    },
+    {
+      "path": "gss/beamformer/__init__.py",
+      "gitBlobSha1": "80401869587149fadb1c39267436e5091ea138fa",
+      "sha256": "ca1018c4ff2eab3f17aad5d1dfce50963859b9b62d6173e0c1b13fca69c2b434",
+      "bytes": 39
+    },
+    {
+      "path": "gss/beamformer/beamform.py",
+      "gitBlobSha1": "945d3618dc4489b9749bac1b7b30f98d983e0da6",
+      "sha256": "c62cd33cd2277935a4cbd66c0a8dfbc9ad815892e40a2d79f5d55010470c0865",
+      "bytes": 6326
+    },
+    {
+      "path": "gss/beamformer/souden_mvdr.py",
+      "gitBlobSha1": "30a7e97596001a3603fa6c9113b8a1323bbc79b8",
+      "sha256": "0b48b9cc30e4075bb168c0ba903a18ba359062ca3d9b683c7ba064f532a01a1b",
+      "bytes": 2989
+    },
+    {
+      "path": "gss/beamformer/utils.py",
+      "gitBlobSha1": "f231e76bb726f954ab094eddd7bfca786f700e56",
+      "sha256": "10fa7d5b7435d32d729bd3f8a77a53ed54b457d7e50baa320b1186aeedc55028",
+      "bytes": 5327
+    },
+    {
+      "path": "gss/bin/__init__.py",
+      "gitBlobSha1": "9bd7f65ad15ba71a0208aaff4dfd6479a228a6d3",
+      "sha256": "a1fe42a74f05619f85d202e48f5202b05b0ae83fa3264e51538d763c56194644",
+      "bytes": 28
+    },
+    {
+      "path": "gss/bin/gss.py",
+      "gitBlobSha1": "ed22879fdf9daab31ede25f88daf5a76874da3de",
+      "sha256": "2fe61a1fde80e9d17da39ee5c9451c5a8af0316ac6f9424d97f03a7a2f9f1064",
+      "bytes": 308
+    },
+    {
+      "path": "gss/bin/modes/__init__.py",
+      "gitBlobSha1": "f04e6e9a6bc7cf0efec051b0287eaf40983d3d81",
+      "sha256": "73b9a7632a8aa4a942b4e973191964cb9081a3417604b23e6e152b6997373aad",
+      "bytes": 68
+    },
+    {
+      "path": "gss/bin/modes/cli_base.py",
+      "gitBlobSha1": "74dee03a9d643a8877bde0c414c8a30b200e4008",
+      "sha256": "9cf3521e04cea788ca2416c32066a74d901d3be6ce60db472b6e227a24146d5d",
+      "bytes": 308
+    },
+    {
+      "path": "gss/bin/modes/enhance.py",
+      "gitBlobSha1": "edd711f6ff1f8b632ea746f1b3fe7304b948a092",
+      "sha256": "705e0927096dd27614dc22a2666d28c1c27300fd44148e8a4fca31118965933d",
+      "bytes": 10459
+    },
+    {
+      "path": "gss/bin/modes/utils.py",
+      "gitBlobSha1": "6d995ec574e7f96aaa87b390130fb6faf35b5bf0",
+      "sha256": "b50ae39ec5fd933fb3a310450e9f927cf71d99a1ec54da090604af225608025a",
+      "bytes": 3764
+    },
+    {
+      "path": "gss/cacgmm/__init__.py",
+      "gitBlobSha1": "a3eda3a3ef022426b52df8a2293a222eb01e5e6a",
+      "sha256": "1e01fc11f1d7b36675aabf6d735eb5372a89b7e376c1aac0340d4c122d33d45f",
+      "bytes": 180
+    },
+    {
+      "path": "gss/cacgmm/cacg.py",
+      "gitBlobSha1": "699ce57c264dcefce8937738d6943a6513541e62",
+      "sha256": "c278018f665bbe08d27450d2df3e117cf851de12375443587b18e0029027f784",
+      "bytes": 4274
+    },
+    {
+      "path": "gss/cacgmm/cacg_trainer.py",
+      "gitBlobSha1": "3e442218fd5927e26ba0bcef37885960aaa43dc7",
+      "sha256": "24290f18f76c8915a3d51d41615698887498b1d8e0c5a758bdf8a5080c8d5106",
+      "bytes": 4240
+    },
+    {
+      "path": "gss/cacgmm/cacgmm.py",
+      "gitBlobSha1": "6f462fd517de28803ea69e7ab6b534a420335ba7",
+      "sha256": "dcc46c325d71fe1861828d5330a919155e480f60a79273553e98deaed89b1e9b",
+      "bytes": 3072
+    },
+    {
+      "path": "gss/cacgmm/cacgmm_trainer.py",
+      "gitBlobSha1": "41a51c98aa0808ee16f121c7cc68edf095b7e85e",
+      "sha256": "a3ecae7552203930392b6b5a75a26608aa238e3ae8b7ced2fcd30021f4c50c11",
+      "bytes": 7329
+    },
+    {
+      "path": "gss/cacgmm/utils.py",
+      "gitBlobSha1": "6dba3f959f384e77432116e43b2f7d29da290510",
+      "sha256": "065fea8ce2271a7ccb04f58faddb34ab6d94531ccaecd9b908a0f977a48f615e",
+      "bytes": 3274
+    },
+    {
+      "path": "gss/core/__init__.py",
+      "gitBlobSha1": "b4a73213b3d08976cdf635ba445db4eed658e3ef",
+      "sha256": "624feb5f19c39539b4fd98784e0f7abe421d576ae61940cf85493e94c6ead850",
+      "bytes": 145
+    },
+    {
+      "path": "gss/core/activity.py",
+      "gitBlobSha1": "49eb7a54b3c60505292cfd653a4292d43adb0f8a",
+      "sha256": "67351282a67ebc8c2c2c351654e9bd500b114b355fdcf9b02fed9cc7eeb2f0bb",
+      "bytes": 1276
+    },
+    {
+      "path": "gss/core/beamformer.py",
+      "gitBlobSha1": "25a0314464578abcbf81fd5e4a459715ce71483e",
+      "sha256": "ad578329c49dde80855d398d13a250ee5bc18b61bcc0fbde5ee4ec9f98f00a3b",
+      "bytes": 529
+    },
+    {
+      "path": "gss/core/enhancer.py",
+      "gitBlobSha1": "4f3962f4917f318e27d619956969e3643cdd1e6a",
+      "sha256": "2e4ce14a9bd82e15471fa38e702aceb126db381d6642797f77b29bdaba208099",
+      "bytes": 13571
+    },
+    {
+      "path": "gss/core/gss.py",
+      "gitBlobSha1": "205861954e4f9730992b96a112a1643599164dc4",
+      "sha256": "22a56720db745c65be9cedf7c25980f4a3eac12a84ad1729e710071dd2f8a669",
+      "bytes": 1461
+    },
+    {
+      "path": "gss/core/stft_module.py",
+      "gitBlobSha1": "5dfc1d9e5c429ef81c00439b8cfe1bbf324a0381",
+      "sha256": "877ef33c65668fd9c1f08efeb076f3325cbcf5b4c50d60e51c6a4b1efc239f67",
+      "bytes": 6282
+    },
+    {
+      "path": "gss/core/wpe.py",
+      "gitBlobSha1": "a64abe71e893b88ec4eec9aaf0d3e0d9122db18e",
+      "sha256": "a80b41121a7d6a340160cd5e0607ef0ea43d36a9c8f7e1b6374963f3fb532423",
+      "bytes": 427
+    },
+    {
+      "path": "gss/utils/__init__.py",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "gss/utils/data_utils.py",
+      "gitBlobSha1": "2b0b4176ca3e30343baeee1ef302b818cc6ed76c",
+      "sha256": "de38cf984e300592e39571585b1f2be0b28f1f4e02a887cfe448f36e272a2a36",
+      "bytes": 10335
+    },
+    {
+      "path": "gss/utils/numpy_utils.py",
+      "gitBlobSha1": "f4b19232269e4b93592d5383c91f4d3bd88729d2",
+      "sha256": "20105bc1acfa2d802fca6325a6179850826441a542dd13902f7dcb64fa639928",
+      "bytes": 5169
+    },
+    {
+      "path": "gss/wpe/__init__.py",
+      "gitBlobSha1": "85c89a6edf55aa8c39db2a3c80776f1bad4e9999",
+      "sha256": "f33daacee77ccfcd323929e105a48184eeb241e6ecb2e067ad574c53252c3ef2",
+      "bytes": 21
+    },
+    {
+      "path": "gss/wpe/wpe.py",
+      "gitBlobSha1": "dc300e908c180b4db7095b57963aa62f440c38c6",
+      "sha256": "37d4ba884a341a86238e9e0d0e85bea27d07380206959fbe341651fdda9a8be2",
+      "bytes": 5747
+    },
+    {
+      "path": "setup.py",
+      "gitBlobSha1": "81e7634156093739950adeae8a9fef6a39dad8a3",
+      "sha256": "ba3aa81a7062104cff4f228b8d211955ff6d7eac673be35fa7508b6763d2b974",
+      "bytes": 1385
+    }
+  ],
+  "downloadedWeightBytes": 0,
+  "executedUpstreamInstall": false
+}
