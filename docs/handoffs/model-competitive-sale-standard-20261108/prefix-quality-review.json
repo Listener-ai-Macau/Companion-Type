@@ -1,0 +1,157 @@
+{
+  "at": "2026-11-08T22:42:02+08:00",
+  "state": "PUBLIC_COMPLEX_WINDOW_DIAGNOSTIC_NOT_QUALIFIED",
+  "protocolSha256": "e6f409f6c03a3ca9962259f1d3c26de23bdd09012fc65d3018e6edd4a519393a",
+  "finalResponseSha256": "a7761470f2276f1d7cd325e476fb2e18d9a4702eca596d000c0681a50c8177e2",
+  "providerGeneration": "bigmodel",
+  "audioSeconds": 302.05,
+  "sourceMeeting": "L_R003S01C02",
+  "sourceStartSeconds": 1559.9,
+  "sourceEndSeconds": 1861.95,
+  "referencePeople": 6,
+  "referenceOverlapSeconds": 61.46009017863207,
+  "referenceOverlapFraction": 0.2034765442100052,
+  "utterances": 37,
+  "usableTimedUtterances": 37,
+  "unknownIdentityUtterances": [],
+  "invalidUtterances": [],
+  "strictChineseNormalization": "Retain words/fillers/numeral spelling; remove only source angle tags, punctuation/symbols/whitespace and case per existing scorer. Provider original ITN true retained; no answer-based numeral correction.",
+  "cpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 1,
+    "edits": {
+      "replace": 69,
+      "delete": 1062,
+      "insert": 566
+    },
+    "totalEdits": 1697,
+    "characterErrorRate": 1.1583617747440274,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": null,
+        "edits": 353
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": null,
+        "edits": 105
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "0",
+        "edits": 664
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": null,
+        "edits": 235
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": null,
+        "edits": 325
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": null,
+        "edits": 15
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "perReferencePerson": {
+    "002-F": {
+      "anonymousHypothesis": null,
+      "referenceCharacters": 353,
+      "substitutions": 0,
+      "deletions": 353,
+      "insertions": 0,
+      "totalEdits": 353,
+      "cer": 1.0
+    },
+    "003-F": {
+      "anonymousHypothesis": null,
+      "referenceCharacters": 105,
+      "substitutions": 0,
+      "deletions": 105,
+      "insertions": 0,
+      "totalEdits": 105,
+      "cer": 1.0
+    },
+    "004-M": {
+      "anonymousHypothesis": "0",
+      "referenceCharacters": 432,
+      "substitutions": 69,
+      "deletions": 29,
+      "insertions": 566,
+      "totalEdits": 664,
+      "cer": 1.537037037037037
+    },
+    "005-M": {
+      "anonymousHypothesis": null,
+      "referenceCharacters": 235,
+      "substitutions": 0,
+      "deletions": 235,
+      "insertions": 0,
+      "totalEdits": 235,
+      "cer": 1.0
+    },
+    "006-M": {
+      "anonymousHypothesis": null,
+      "referenceCharacters": 325,
+      "substitutions": 0,
+      "deletions": 325,
+      "insertions": 0,
+      "totalEdits": 325,
+      "cer": 1.0
+    },
+    "007-M": {
+      "anonymousHypothesis": null,
+      "referenceCharacters": 15,
+      "substitutions": 0,
+      "deletions": 15,
+      "insertions": 0,
+      "totalEdits": 15,
+      "cer": 1.0
+    }
+  },
+  "speechActivityDer": "NOT_MEASURED_sentence_bounds_are_not_independent_voice_activity",
+  "pureOverlapWordCer": "NOT_MEASURED_reference_has_utterance_not_word_timing",
+  "tcpCer": "NOT_MEASURED_reference_word_timing_unavailable",
+  "fullMeetingQualified": false,
+  "crossMeetingQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "actualCompetitorProductTested": false,
+  "localVsCloudPairedImprovementProven": false,
+  "timing": {
+    "wholeProcessSeconds": 328.4898156999843,
+    "rtf": 1.0875345661313833,
+    "inputPacing": "100ms packets paced near real time; this is not an offline bulk-processing or post-meeting-ready latency benchmark",
+    "privatePeakBytes": 23445504
+  },
+  "strictWindowCerBelow5": false,
+  "mixedChronologicalDiagnostic": {
+    "referenceCharacters": 1465,
+    "hypothesisCharacters": 969,
+    "substitutions": 74,
+    "deletions": 523,
+    "insertions": 27,
+    "cer": 0.425938566552901,
+    "limits": "Single chronological reference concatenation only; ordering during overlap is ambiguous. This does not score speaker attribution or pure overlap recovery and cannot close a gate."
+  },
+  "identityContractDiagnostic": {
+    "returnedLabels": [
+      "0"
+    ],
+    "allUtterancesSameLabel": true,
+    "requestedSpeakerInfo": true,
+    "validAutomaticMultispeakerOutputProven": false,
+    "cause": "If all labels collapse, separate the request/resource/output contract from acoustic quality before changing a model. This does not establish that all vendor models lack diarization. cpCER includes identity collapse and may exceed100% because unmatched streams count deletions/insertions."
+  },
+  "decision": "本次请求已要求人物信息，但37段全部返回同一人物0；先定位现有请求/资源能力/输出契约，不能把这条链路当有效多人主线，也不能据此宣称供应商所有模型差。联合cpCER含人物塌缩影响，不是普通ASR字错率。原音与响应保留，不扩展更长会议。"
+}

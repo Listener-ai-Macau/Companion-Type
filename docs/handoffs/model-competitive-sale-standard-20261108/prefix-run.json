@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-11-08T22:33:36+08:00",
+  "pid": 13820,
+  "state": "COMPLETE_PUBLIC_PREFIX_REFERENCE_ASR_REVIEW_REQUIRED",
+  "protocolSha256": "e6f409f6c03a3ca9962259f1d3c26de23bdd09012fc65d3018e6edd4a519393a",
+  "audioSeconds": 302.05,
+  "sentAudioSeconds": 302.05,
+  "responsePackets": 525,
+  "privatePeakBytes": 23445504,
+  "privateAudioUploaded": false,
+  "saleQualified": false,
+  "retryCount": 0,
+  "wallSeconds": 328.4898156999843,
+  "providerGeneration": "bigmodel",
+  "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+  "finishedAt": "2026-11-08T22:39:04+08:00"
+}

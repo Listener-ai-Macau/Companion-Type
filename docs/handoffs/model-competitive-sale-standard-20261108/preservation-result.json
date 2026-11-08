@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-08T22:20:25+08:00",
+  "state": "COMPETITIVE_SALE_STANDARD_REVIEWED_CURRENT_MODELS_NOT_QUALIFIED",
+  "modelCommit": "512a8643ec420e860ae3bdf3b7d8034d98993b58",
+  "mainCommit": "c72710d924de3cb42f2e73b32692402689fcff12",
+  "remoteReadbackConfirmed": true,
+  "originalQualityTargetsUnchanged": true,
+  "oldTimelinePrefixPreserved": true,
+  "modelWorktreeClean": true,
+  "mainWorktreeClean": true,
+  "next": "先核实既有成熟ASR服务的可用性并做同一完整公开开发会议的固定对照，分开定位分人、漏词、转写与纪要事实差距；无现成服务/竞品账户时保留未测，继续原最难会议002/003/007参考身份复核，不等账户、不扩大训练。成熟方案只有同音实测达原门才作为候选；离线/可选联网分开验收。固定多段参考库保留、128步训练候选拒绝，原<5%、自动分人、真实重叠、事实、双端实卡和售卖门全部保留。",
+  "saleQualified": false,
+  "newModelCapabilityClaimed": false
+}

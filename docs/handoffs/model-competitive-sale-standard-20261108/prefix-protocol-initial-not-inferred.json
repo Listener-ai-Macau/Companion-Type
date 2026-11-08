@@ -1,0 +1,23 @@
+{
+  "frozenAt": "2026-11-08T22:32:29+08:00",
+  "state": "FROZEN_PUBLIC_REAL_MEETING_PREFIX_DIAGNOSTIC",
+  "sourceMeeting": "L_R003S01C02",
+  "sourceAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+  "sourceAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\L_R003S01C02-prefix.wav",
+  "audioSha256": "71b086799e14dac1fb3c0cc9a1a8e9b921e1797a52115bc4a76fbfa1c1dff2ac",
+  "audioSeconds": 305.2086875,
+  "sourceStartSeconds": 0,
+  "sourceEndSeconds": 305.2086875,
+  "selection": "Earliest end of a lexical interval in[300,330]s with no crossing reference speech and >=50ms common gap, selected before vendor recognition. Time boundary only; no text/people count supplied. Not a full meeting.",
+  "referencePassedToProvider": false,
+  "hotwords": [],
+  "denoising": false,
+  "physicalCardCapture": false,
+  "modelOrThresholdSelectionAllowedFromResult": true,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "requestPolicy": "Mirror existing Windows SAUC adapter,100ms real-time-paced packets,anonymous speaker info and original ITN enabled; no service upgrade, no endpoint/resource sweep, no automatic retry.",
+  "providerReference": "Existing configured Volcengine service; not a measurement of latest vendor model or competitor product.",
+  "originalWholeMeetingAcceptanceUnchanged": true
+}
