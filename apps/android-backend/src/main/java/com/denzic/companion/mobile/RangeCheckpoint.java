@@ -82,11 +82,12 @@ final class RangeCheckpoint {
      * some of its device sectors may already have been physically reclaimed. */
     static void verifySavedPrefix(Path dir,RecorderWire.Descriptor d)throws IOException {
         if(!exists(dir,d))return;
-        RangeCheckpoint c=read(dir,d);byte[][] hashes=hashes(source(dir,d),d,c.firstSector,c.prefixBytes);
+        RangeCheckpoint c=read(dir,d);byte[][] hashes=hashes(source(dir,d),d,c.firstSector,
+            Math.min(d.encodedLength,((long)c.endSector*16-1)*248),c.prefixBytes);
         if(!MessageDigest.isEqual(c.prefixSha,hashes[0])||!MessageDigest.isEqual(c.rangeSha,hashes[1]))
             throw new IOException("saved recording prefix is damaged; range recovery cannot restart from zero");
     }
-    private static byte[][] hashes(Path file,RecorderWire.Descriptor d,int first,long end)throws IOException {
+    private static byte[][] hashes(Path file,RecorderWire.Descriptor d,int first,long rangeEnd,long end)throws IOException {
         long begin=Math.max(0,((long)first*16-1)*248);
         MessageDigest prefix=sha(),range=sha();byte[] buffer=new byte[32768];
         try(RandomAccessFile f=new RandomAccessFile(file.toFile(),"r")){
@@ -95,7 +96,9 @@ final class RangeCheckpoint {
             while(at<end){
                 int n=f.read(buffer,0,(int)Math.min(buffer.length,end-at));if(n<0)throw invalid();
                 prefix.update(buffer,0,n);
-                int start=(int)Math.max(0,Math.min(n,begin-at));if(start<n)range.update(buffer,start,n-start);
+                int start=(int)Math.max(0,Math.min(n,begin-at));
+                int stop=(int)Math.max(start,Math.min(n,rangeEnd-at));
+                if(start<stop)range.update(buffer,start,stop-start);
                 at+=n;
             }
         }
@@ -115,13 +118,21 @@ final class RangeCheckpoint {
         }finally{Files.deleteIfExists(temp);}
     }
     static RangeCheckpoint save(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,DirectorySync sync)throws IOException {
+        return save(dir,d,first,end,nonce,sync,0,null,false);
+    }
+    static RangeCheckpoint saveOwned(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,
+            DirectorySync sync,long acceptedBytes,byte[] acceptedSha)throws IOException {
+        return save(dir,d,first,end,nonce,sync,acceptedBytes,acceptedSha,true);
+    }
+    private static RangeCheckpoint save(Path dir,RecorderWire.Descriptor d,int first,int end,long nonce,
+            DirectorySync sync,long acceptedBytes,byte[] acceptedSha,boolean owned)throws IOException {
         if(sync==null)throw new IllegalArgumentException("directory sync required");
         long limit=Math.min(d.encodedLength,((long)end*16-1)*248);
         // Validate the proposed bounds before opening source or replacing proof.
         new RangeCheckpoint(d,nonce,first,end,limit,new byte[32],new byte[32],false);
         if(exists(dir,d)){
             RangeCheckpoint previous=read(dir,d);
-            verifySavedPrefix(dir,d);
+            if(!owned)verifySavedPrefix(dir,d);
             if(!previous.confirmed){
                 if(previous.nonce==nonce&&previous.firstSector==first&&previous.endSector==end){
                     // The prior atomic rename may have succeeded immediately
@@ -140,18 +151,36 @@ final class RangeCheckpoint {
         RecorderWire.Descriptor saved=RecorderWire.Descriptor.decode(Files.readAllBytes(meta));
         if(!saved.sameContent(d)||(saved.startedUnixSeconds!=0&&d.startedUnixSeconds!=0&&
                 saved.startedUnixSeconds!=d.startedUnixSeconds))throw invalid();
-        byte[][] hashes=hashes(file,d,first,limit);
+        long prefix=owned?acceptedBytes:limit;
+        byte[][] hashes;
+        if(acceptedSha!=null){
+            // The live receiver's incremental SHA already covers every byte
+            // under this same file lock. Read only the newly handed-off range,
+            // rather than rehashing the entire growing prefix for every4K.
+            MessageDigest range=sha();byte[] buffer=new byte[32768];
+            try(RandomAccessFile f=new RandomAccessFile(file.toFile(),"r")){
+                long begin=Math.max(0,((long)first*16-1)*248);
+                if(prefix<limit||prefix>f.length()||f.length()>d.encodedLength)throw invalid();
+                f.seek(begin);long left=limit-begin;
+                while(left>0){int n=f.read(buffer,0,(int)Math.min(buffer.length,left));if(n<0)throw invalid();range.update(buffer,0,n);left-=n;}
+            }
+            hashes=new byte[][]{acceptedSha,range.digest()};
+        }else hashes=hashes(file,d,first,limit,prefix);
         force(file);force(meta);sync.sync(dir);
         Path parent=dir.toAbsolutePath().getParent();if(parent==null)throw invalid();sync.sync(parent);
-        RangeCheckpoint result=new RangeCheckpoint(saved,nonce,first,end,limit,hashes[0],hashes[1],false);
+        RangeCheckpoint result=new RangeCheckpoint(saved,nonce,first,end,prefix,hashes[0],hashes[1],false);
         result.publish(dir,sync);return result;
     }
     /** Caller invokes this ONLY for an exact device physical-DONE receipt. */
     void confirm(Path dir,DirectorySync sync)throws IOException {
+        confirm(dir,sync,false);
+    }
+    void confirmOwned(Path dir,DirectorySync sync)throws IOException {confirm(dir,sync,true);}
+    private void confirm(Path dir,DirectorySync sync,boolean owned)throws IOException {
         RangeCheckpoint current=read(dir,descriptor);
         if(current.nonce!=nonce||current.firstSector!=firstSector||current.endSector!=endSector||
                 !MessageDigest.isEqual(current.rangeSha,rangeSha)||!MessageDigest.isEqual(current.prefixSha,prefixSha))throw invalid();
-        verifySavedPrefix(dir,descriptor);
+        if(!owned)verifySavedPrefix(dir,descriptor);
         if(!current.confirmed)new RangeCheckpoint(descriptor,nonce,firstSector,endSector,prefixBytes,prefixSha,rangeSha,true).publish(dir,sync);
     }
 }

@@ -32,8 +32,8 @@ public final class RecorderWire {
         private final byte[] uid;
         public final long epoch;
         public final int capacity, maxValueBytes;
-        private final boolean overlapProbe,streamDirectory;
-        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe,boolean streamDirectory) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;this.streamDirectory=streamDirectory;}
+        private final boolean overlapProbe,streamDirectory,rangeProbe;
+        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe,boolean streamDirectory,boolean rangeProbe) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;this.streamDirectory=streamDirectory;this.rangeProbe=rangeProbe;}
         public byte[] uid() {return uid.clone();}
         boolean stoppedBatchHintSupported(){return streamDirectory;}
         byte[] stoppedBatchHint(long nonce)throws IOException {
@@ -57,7 +57,7 @@ public final class RecorderWire {
             // Product-private extension, like the existing FW801+ unlimited
             // contract. It is enabled only by the exact negotiation echo;
             // unchanged CRV2 flags keep old Windows/phone readers compatible.
-            return new Peer(uid,epoch,capacity,max,u32(status,4)>=66697L,u32(status,4)>=66703L);
+            return new Peer(uid,epoch,capacity,max,u32(status,4)>=66697L,u32(status,4)>=66703L,u32(status,4)>=66743L);
         }
         public byte[] negotiate(long nonce,int mtu) throws IOException {
             if(nonce<=0||nonce>0xffffffffL)throw invalid("invalid negotiation nonce");
@@ -65,6 +65,7 @@ public final class RecorderWire {
             byte[] p=new byte[32];p[0]=2;p[1]=0x22;
             if(maxValueBytes>248){int value=Math.min(maxValueBytes,mtu-3);if(value<136)throw invalid("MTU too small");put16(p,2,value);}
             if(overlapProbe)p[3]|=(byte)0x80;
+            if(rangeProbe)p[3]|=0x40;
             put32(p,4,nonce);System.arraycopy(uid,0,p,8,12);put64(p,20,epoch);put32(p,28,crc(p,0,28));return p;
         }
         public void validate(Descriptor d) throws IOException {

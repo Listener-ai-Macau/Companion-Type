@@ -30,6 +30,8 @@ public final class SegmentReceiver implements Closeable {
     private final CRC32 crc=new CRC32();
     private final boolean existingComplete;
     private long offset,sequence;
+    private long boundaryBytes;
+    private byte[] boundarySha;
     private boolean closed;
 
     private static String hex(byte[] data) {StringBuilder b=new StringBuilder(data.length*2);for(byte x:data)b.append(String.format(java.util.Locale.ROOT,"%02x",x&255));return b.toString();}
@@ -77,7 +79,7 @@ public final class SegmentReceiver implements Closeable {
             if(!alreadyComplete) {
                 f=new RandomAccessFile(part.toFile(),"rw");long size=f.length();
                 if(size>descriptor.encodedLength) {f.close();f=null;Files.move(part,damagedPath(".part"),StandardCopyOption.ATOMIC_MOVE);f=new RandomAccessFile(part.toFile(),"rw");size=0;}
-                byte[] buffer=new byte[32768];long read=0;while(read<size){int n=f.read(buffer,0,(int)Math.min(buffer.length,size-read));if(n<0)throw new IOException("partial recording changed while reading");h.update(buffer,0,n);crc.update(buffer,0,n);read+=n;}f.seek(size);this.offset=size;
+                byte[] buffer=new byte[32768];long read=0;while(read<size){int n=f.read(buffer,0,(int)Math.min(buffer.length,size-read));if(n<0)throw new IOException("partial recording changed while reading");rememberBoundary(h,buffer,n,read);h.update(buffer,0,n);crc.update(buffer,0,n);read+=n;}f.seek(size);this.offset=size;
             }
         } catch(IOException|RuntimeException e){if(f!=null)f.close();held.release();lc.close();lf.close();throw e;}
         this.file=f;this.lockFile=lf;this.lockChannel=lc;this.lock=held;this.sha=h;this.existingComplete=alreadyComplete;
@@ -85,6 +87,18 @@ public final class SegmentReceiver implements Closeable {
     public long resumeOffset() {return offset;}
     public long nextSequence() {return sequence;}
     public boolean completeBytesReceived() {return offset==descriptor.encodedLength;}
+    void verifyOriginal()throws IOException {
+        if(closed||!completeBytesReceived())throw new IOException("recording is incomplete; saved source retained");
+        if(existingComplete)return;
+        byte[] actual;
+        try{actual=((MessageDigest)sha.clone()).digest();}
+        catch(CloneNotSupportedException unsupported){
+            if(!RecordingLibrary.verified(part,descriptor))throw new IOException("recording integrity mismatch; saved source retained");
+            return;
+        }
+        if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(actual,descriptor.sha256()))
+            throw new IOException("recording integrity mismatch; saved source retained");
+    }
 
     /** Future negotiated range consumer only; ordinary download never calls
      * this. The existing receiver lock stays held until physical confirmation. */
@@ -95,13 +109,25 @@ public final class SegmentReceiver implements Closeable {
         if(end>offset)throw new IOException("recording range is not fully received");
         if(!part.getParent().toAbsolutePath().normalize().equals(directory.toAbsolutePath().normalize()))
             throw new IOException("recording range belongs to a different directory");
-        return RangeCheckpoint.save(directory,descriptor,firstSector,endSector,nonce,sync);
+        byte[] prefix=null;
+        if(existingComplete&&end==descriptor.encodedLength)prefix=descriptor.sha256();
+        else if(end==boundaryBytes)prefix=boundarySha;
+        else if(end==offset)try{prefix=((MessageDigest)sha.clone()).digest();}catch(CloneNotSupportedException unsupported){/* full readback fallback retains correctness */}
+        return RangeCheckpoint.saveOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,prefix);
+    }
+    private void rememberBoundary(MessageDigest digest,byte[] payload,int length,long start){
+        long sector=((start+length)/248+1)/16;
+        long end=sector==0?0:(sector*16-1)*248;
+        if(end<=start)return;
+        boundaryBytes=end;boundarySha=null;
+        try{MessageDigest copy=(MessageDigest)digest.clone();copy.update(payload,0,(int)(end-start));boundarySha=copy.digest();}
+        catch(CloneNotSupportedException unsupported){/* checkpoint uses exact readback */}
     }
 
     public void accept(byte[] notification) throws IOException {
         if(closed||completeBytesReceived())throw new IOException("receiver is not accepting chunks");
         byte[] payload=RecorderWire.packet(descriptor,notification,sequence,offset);
-        file.write(payload);sha.update(payload);crc.update(payload);offset+=payload.length;sequence++;
+        file.write(payload);rememberBoundary(sha,payload,payload.length,offset);sha.update(payload);crc.update(payload);offset+=payload.length;sequence++;
     }
 
     /** Verify full encoded bytes and publish a local copy; this does not prove playback or clear the device. */

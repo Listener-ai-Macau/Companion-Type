@@ -46,6 +46,7 @@ public final class RecordingClient implements Closeable {
     private long stoppedBatchHintPrimedUntil;
     private RecorderWire.Descriptor handedOffSelection;
     private final boolean consumePullOverlap;
+    private final RangeConsume rangeConsume;
     private RecordingTransferMetrics transferMetrics;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
 
@@ -64,18 +65,21 @@ public final class RecordingClient implements Closeable {
             link.subscribe(RECORDING_CONTROL);link.subscribe(RECORDING_LIST);link.subscribe(RECORDING_PULL);
             peer=readPublishedPeer(link);
             byte[] request=peer.negotiate(nonce(),link.mtu());link.write(RECORDING_CONTROL,request);
-            byte[] legacy=request.clone();legacy[3]&=0x7f;RecorderWire.put32(legacy,28,RecorderWire.crc(legacy,0,28));
-            boolean overlap=false;
+            byte[] legacy=request.clone();legacy[3]&=0x3f;RecorderWire.put32(legacy,28,RecorderWire.crc(legacy,0,28));
+            byte[] withoutRanges=request.clone();withoutRanges[3]&=(byte)0xbf;RecorderWire.put32(withoutRanges,28,RecorderWire.crc(withoutRanges,0,28));
+            boolean overlap=false,ranges=false;
             long deadline=System.nanoTime()+8_000_000_000L;
             while(true){
                 long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording negotiation timed out");
                 byte[] reply=link.await(RECORDING_CONTROL,remaining);
-                if(Arrays.equals(request,reply)){overlap=(request[3]&0x80)!=0;break;}
-                if((request[3]&0x80)!=0&&Arrays.equals(legacy,reply))break;
+                if(Arrays.equals(request,reply)){overlap=(request[3]&0x80)!=0;ranges=overlap&&(request[3]&0x40)!=0;break;}
+                if(Arrays.equals(withoutRanges,reply)){overlap=(withoutRanges[3]&0x80)!=0;break;}
+                if(Arrays.equals(legacy,reply))break;
             }
             consumePullOverlap=overlap;
             durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
             durableConsume.observe(transferMetrics);
+            rangeConsume=ranges?new RangeConsume(peer,link,directorySync==null?AndroidDirectorySync::sync:directorySync::sync,this::nonce):null;
             ready=true;
         } finally {if(!ready)link.close();}
     }
@@ -360,6 +364,10 @@ public final class RecordingClient implements Closeable {
             ensureOpen();
             try(SegmentReceiver receiver=new SegmentReceiver(privateDirectory,found)){
                 RecordingTransferMetrics.Segment measured=transferMetrics==null?null:transferMetrics.segment(found,receiver.resumeOffset());
+                // Only explicitly negotiated destructive sync uses this lane.
+                // A normal download still retains every device byte.
+                if(prepareReclaim&&rangeConsume!=null)durableConsume.prepareSubscription();
+                try(RangeConsume.Session ranges=prepareReclaim&&rangeConsume!=null?rangeConsume.open(privateDirectory,found,receiver):null){
                 if(!receiver.completeBytesReceived()){
                     if(transferMetrics!=null)transferMetrics.window(measured);
                     link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
@@ -368,14 +376,18 @@ public final class RecordingClient implements Closeable {
                     // the measured window. No consume is sent before the exact
                     // original, metadata and pending proof are durable.
                     if(prepareReclaim)durableConsume.prepareSubscription();
+                    if(ranges!=null)ranges.progress(receiver);
                     while(!receiver.completeBytesReceived()){
                         if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
                         receiver.accept(link.await(RECORDING_PULL,15_000));
                         if(measured!=null)measured.accepted(receiver.resumeOffset());
                         if(progress!=null)progress.onBytes(receiver.resumeOffset(),found.encodedLength);
+                        if(ranges!=null)ranges.progress(receiver);
                     }
                 }
+                if(ranges!=null)ranges.finish(receiver);
                 Path finished=receiver.finish();if(measured!=null)measured.verified();return finished;
+                }
             } catch(SegmentReceiver.IntegrityMismatch error) {if(transferMetrics!=null)transferMetrics.integrityRetry();if(attempt!=0)throw error;}
         }
     }

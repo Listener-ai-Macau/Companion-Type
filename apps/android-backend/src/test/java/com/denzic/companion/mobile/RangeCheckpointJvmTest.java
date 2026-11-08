@@ -71,6 +71,7 @@ public final class RangeCheckpointJvmTest {
 
         for(int mode=0;mode<3;mode++){
             Path broken=dir(d);String key=SegmentReceiver.key(d);
+            if(mode==2)Files.write(broken.resolve(key+".part"),Arrays.copyOf(data,4000));
             try(SegmentReceiver receiver=new SegmentReceiver(broken,d)){
                 receiver.checkpointRange(broken,0,1,300,p->{});
             }
