@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-08T09:10:34+08:00",
+  "state": "SPEAKER_FIRST_DUAL_MIC_REFACTOR_RECOMMENDED_INPUT_PREREQUISITE_VERIFIED",
+  "ownerOriginal": "可能不要这样子优化而是要做重构吧, 仔细研究一下, 感觉单麦做这种东西好做嘛, 现在有双麦, 按照这个看看能不能区分不同说话人, 先区分后撰写",
+  "ownerCorrection": "转写",
+  "sourceAndEvidenceCommit": "129e5d3900b57aadbe375fcd1f851c55eae6218b",
+  "remoteReadbackConfirmed": true,
+  "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\review.json",
+  "inputIntegrityReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\input-integrity-review.json",
+  "previousModelWorkpoint": {
+    "state": "ACTIVITY_AND_TARGET_CONTENT_FAILURES_SEPARATED_NO_PRODUCT_PROMOTION",
+    "next": "继续原RM-OVERLAP，优先取得小批真实中文近场耳麦/远场混音配对，核对同一会议、说话人/声道、时间对齐和耳麦串音，再用每个人的参考音检查当前分离到底丢了什么。已核实AliMeeting官方提供近远场，AMI可作第二语料。完成配对参考验证前不扩大训练、不再重跑两个失败活动小头或换同类权重。数据可靠后只适配被实测定位的模块，并以未训练会议逐人漏字/串话/插入、普通语音不退步决定去留；最后再做完整会议、纪要事实和双端实卡。",
+    "kept": true
+  },
+  "normalStoredChannels": 1,
+  "channelAwareResearchInputImplemented": true,
+  "realArchivedPairsChecked": 2,
+  "currentDeviceSpeakerSeparationQualified": false,
+  "productDefaultChanged": false,
+  "newModelsOrTraining": 0,
+  "newBoardAccess": false,
+  "next": "继续原RM-OVERLAP，优先验证“保留双麦原音→说话人活动→引导式空间分离→逐人转写”的最小真实会议对照。已完成双路无损研究输入；先建立恰好两路、同步/几何明确的公开会议输入并与单路公平比较，GSS参考实现需先解决本机轻量数值执行可行性。当前实板长录期间不占用或重刷，后续在正常空闲边界补当前实板双人重叠样本。看到逐人实际收益后才推进双声道固件/格式/双端整体重构，不把研究入口完成当效果合格。",
+  "qualityQualified": false
+}

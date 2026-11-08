@@ -42843,6 +42843,12 @@
             "sourceAndEvidenceCommit": "01ed022d1a603f2586d3ba2f31a44426887b890a",
             "newProductQualification": false,
             "currentOrdinaryAndAllOtherGatesRetained": true
+          },
+          "dualMicArchitectureReview20261108": {
+            "state": "SPEAKER_FIRST_DUAL_MIC_REFACTOR_RECOMMENDED_INPUT_PREREQUISITE_VERIFIED",
+            "sourceAndEvidenceCommit": "129e5d3900b57aadbe375fcd1f851c55eae6218b",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\review.json",
+            "qualified": false
           }
         },
         {
@@ -132912,24 +132918,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-08T08:50:57+08:00",
+      "updatedAt": "2026-11-08T09:04:15+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66728,
+        "firmwareVersion": 66734,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "2920e98fc756033d298d7f642352e6a89807b22d",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\after-ota.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\actual\\runtime\\after342-board.json",
+        "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\after-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\actual\\runtime\\after345retry-board.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "CURRENT_FUNCTIONAL_FIRMWARE_INSTALLED_NOT_WHOLE_QUALIFIED",
+        "sourceRootAvailability": "NORMAL734_FUNCTIONAL_AND_SCOPED_TIMING_PASS_TWO_HOUR_LIVE_IN_PROGRESS_NOT_WHOLE_QUALIFIED",
         "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133398,7 +133404,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "734初轮60秒实板P95/峰/PDM全部在门内但峰仅余11us，不能叫稳定关闭。现普通手机5分钟真实录音中(session尚待STOP精确绑定)，保持原START/STOP/零缓存/完整原音全WAV/物理回收端点，不并发占板；完成后读当前runtime，若稀有峰/故障失败继续定位。任意短长50原失败保留，未宣售卖。",
+      "next": "734两小时边录边传正在后台，不并发刷写/重启或占用BLE；先等当前版本正常长录与全部原音/全WAV/物理回收/音频时序、资源门结果。60s/300s样本编码P95均4500us，峰5989/5398us，PDM2860/2808us、foreground保守7ms、故障0；300s57.237KiB/s、STOP至完整原音全WAV14.057<=22.178s。均只算受影响样本通过，任意长度含回收50旧反例仍FAIL，手机START至UI2.601s/旧变动和首次CSN1查询超时保留，原block不动；整机不能售卖宣告。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133658,14 +133664,14 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66728,
+        "version": 66734,
         "installed": true,
-        "sourceCommit": "2920e98fc756033d298d7f642352e6a89807b22d",
-        "appBytes": 408564,
-        "staticBytes": 66224,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\candidate.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\after-ota.json",
-        "reason": "Restore exact726 source content after727 RAM execution trial worsened encoderP95 to7000us/peak7547us. Remove2776B RAM cost; retain verified dirty-run reserve and compact foreground. P95/first-start variability/any-length50 remain open; no new unrelated feature or performance claim.",
+        "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+        "appBytes": 408940,
+        "staticBytes": 66232,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\after-ota.json",
+        "reason": "Exact normal-mode PDM normalization plus bounded cooperative controller quiet-window Opus admission; observerOFF. Real60s and300s encode/PDM/foreground gates within limits; actual same-version two-hour live validation in progress. Any-length50 and other unclosed gates remain.",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
@@ -135993,8 +135999,8 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-08T08:50:57+08:00",
-        "state": "NORMAL734_OWN344_COMPLETE_ORDINARY_PHONE_FIVE_MINUTE_RECORDING",
+        "at": "2026-11-08T09:04:15+08:00",
+        "state": "NORMAL734_TWO_HOUR_ORDINARY_PHONE_LIVE_RUN_IN_PROGRESS",
         "phoneInstalled": "0.1.98",
         "firmwareInstalled": 66734,
         "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
@@ -136003,12 +136009,12 @@
         "boardLease": true,
         "boardItem": "Companion733现有线程IRQ归因观测",
         "liveRecording": true,
-        "liveReceive": false,
+        "liveReceive": true,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 344,
-        "evidence": "E:/CodexData/Companion/.build-cache/radio734/ordinary098/five-minute/job.json",
+        "ownLatestSession": 346,
+        "evidence": "E:/CodexData/Companion/.build-cache/long734/progress.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": 66734,
         "candidateSourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
@@ -136017,7 +136023,8 @@
         "phoneCandidateSource": null,
         "backendCandidateSource": null,
         "phoneBuildSession": null,
-        "normalRestoreCandidate": 66734
+        "normalRestoreCandidate": null,
+        "longControllerSession": 19579
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -139005,7 +139012,7 @@
       },
       "radioWindow734": {
         "at": "2026-11-08T08:44:23+08:00",
-        "state": "ONE_NORMAL_60S_SAMPLE_TIMING_ALL_WITHIN_GATES_PHONE300S_IN_PROGRESS",
+        "state": "TWO_SCOPED_NORMAL_SAMPLES_PASS_TWO_HOUR_LIVE_IN_PROGRESS",
         "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
         "applicationBytes": 408940,
         "staticBytes": 66232,
@@ -139037,7 +139044,68 @@
         "wholeTimingIssueClosed": false,
         "phoneFiveMinuteUiStartReadySeconds": 2.6012681,
         "phoneUiStartScope": "Includes ordinary phone control path, not substituted for exact secured firmware positive-PCM callback; retain slow UI sample, do not mark start stable closed.",
-        "helperFailure": "before344receive invoked active mode while recorder was already stopped; expected-busy assertion rejected. All original raw operands saved; later idle after344 parsing/full directory validation completed. No firmware fault inferred or raw discarded."
+        "helperFailure": "before344receive invoked active mode while recorder was already stopped; expected-busy assertion rejected. All original raw operands saved; later idle after344 parsing/full directory validation completed. No firmware fault inferred or raw discarded.",
+        "ownSession345": {
+          "durationSeconds": 300.58,
+          "remainingEncodedBytes": 631990,
+          "confirmedKiBpsIncludingPhysicalReclaim": 57.23733614299605,
+          "stopToFullSourceAndWavVerifiedSeconds": 14.057026099999959,
+          "dynamicMaximumSeconds": 22.178035736083984,
+          "wavDurationErrorMs": 20,
+          "encodeP95UpperUs": 4500,
+          "encodePeakUpperUs": 5398,
+          "pdmPeakUpperUs": 2808,
+          "foregroundConservativeUpperMs": 7,
+          "faults": 0,
+          "minimumStackFreeBytes": 4464,
+          "coreHz": 61439820,
+          "original34Unchanged": true,
+          "freeBytes": 4608000,
+          "allocatableSegments": 17
+        },
+        "post345OneCapacityReplyTimeoutRetained": true
+      },
+      "baselineBefore734": {
+        "firmwareVersion": 66728,
+        "uiGeneration": 85,
+        "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+        "sourceCommit": "2920e98fc756033d298d7f642352e6a89807b22d",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\after-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66728\\actual\\runtime\\after342-board.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "CURRENT_FUNCTIONAL_FIRMWARE_INSTALLED_NOT_WHOLE_QUALIFIED",
+        "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "sameOwnerPrefixReview734": {
+        "state": "SOURCE_REVIEW_ONLY_NOT_IMPLEMENTED",
+        "capacityLoss729StillRejected": true,
+        "finding": "Current comp_segment_audio_recover_poll requires every page after valid prefix to be erased; old dirty tail returns CORRUPT. Merely returning READY after first64KiB breaks power-loss recovery. A capacity-preserving same-owner progressive design needs durable verified frontier bound to new owner plus writer bounds and recovery interpretation; no bypass or confidence from host continuity alone.",
+        "source": "firmware-recovery/app/companion_pendant/recording/companion_segment_audio.c:418",
+        "anyLength50Solved": false
+      },
+      "long734Current": {
+        "at": "2026-11-08T09:04:15+08:00",
+        "state": "NORMAL_LIVE_SYNC_IN_PROGRESS",
+        "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+        "firmware": 66734,
+        "phoneVersion": "0.1.98",
+        "targetLiveSyncSeconds": 7200,
+        "path": "E:/CodexData/Companion/.build-cache/long734",
+        "forcedRecoveryInjection": false,
+        "ordinaryStartConfirmedAt": "2026-11-08T08:57:42+08:00",
+        "countsOrQualificationBeforeResult": false,
+        "wholeSaleQualified": false,
+        "session": 346,
+        "firstDurableSegmentBytes": 260918,
+        "firstNativeReceiptConfirmedAt": "2026-11-08T09:00:13+08:00"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144617,12 +144685,12 @@
             "failure": "First full meeting exited 0xC0000005 in native AMD runtime before any output token; no new full meeting quality score."
           },
           "at": "2026-11-04T19:26:19+08:00",
-          "ownerQuote": "需要你向着正确方向推进",
-          "status": "ACTIVITY_AND_TARGET_CONTENT_FAILURES_SEPARATED_NO_PRODUCT_PROMOTION",
+          "ownerQuote": "可能不要这样子优化而是要做重构吧, 仔细研究一下, 感觉单麦做这种东西好做嘛, 现在有双麦, 按照这个看看能不能区分不同说话人, 先区分后撰写；更正：先区分后转写",
+          "status": "SPEAKER_FIRST_DUAL_MIC_REFACTOR_RECOMMENDED_INPUT_PREREQUISITE_VERIFIED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原RM-OVERLAP，优先取得小批真实中文近场耳麦/远场混音配对，核对同一会议、说话人/声道、时间对齐和耳麦串音，再用每个人的参考音检查当前分离到底丢了什么。已核实AliMeeting官方提供近远场，AMI可作第二语料。完成配对参考验证前不扩大训练、不再重跑两个失败活动小头或换同类权重。数据可靠后只适配被实测定位的模块，并以未训练会议逐人漏字/串话/插入、普通语音不退步决定去留；最后再做完整会议、纪要事实和双端实卡。",
+          "next": "继续原RM-OVERLAP，优先验证“保留双麦原音→说话人活动→引导式空间分离→逐人转写”的最小真实会议对照。已完成双路无损研究输入；先建立恰好两路、同步/几何明确的公开会议输入并与单路公平比较，GSS参考实现需先解决本机轻量数值执行可行性。当前实板长录期间不占用或重刷，后续在正常空闲边界补当前实板双人重叠样本。看到逐人实际收益后才推进双声道固件/格式/双端整体重构，不把研究入口完成当效果合格。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -173464,6 +173532,30 @@
             ],
             "sourceAndEvidenceCommit": "01ed022d1a603f2586d3ba2f31a44426887b890a",
             "remoteReadbackConfirmed": true
+          },
+          "ownerDualMicArchitectureReview20261108": {
+            "at": "2026-11-08T09:10:34+08:00",
+            "state": "SPEAKER_FIRST_DUAL_MIC_REFACTOR_RECOMMENDED_INPUT_PREREQUISITE_VERIFIED",
+            "ownerOriginal": "可能不要这样子优化而是要做重构吧, 仔细研究一下, 感觉单麦做这种东西好做嘛, 现在有双麦, 按照这个看看能不能区分不同说话人, 先区分后撰写",
+            "ownerCorrection": "转写",
+            "sourceAndEvidenceCommit": "129e5d3900b57aadbe375fcd1f851c55eae6218b",
+            "remoteReadbackConfirmed": true,
+            "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\review.json",
+            "inputIntegrityReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\input-integrity-review.json",
+            "previousModelWorkpoint": {
+              "state": "ACTIVITY_AND_TARGET_CONTENT_FAILURES_SEPARATED_NO_PRODUCT_PROMOTION",
+              "next": "继续原RM-OVERLAP，优先取得小批真实中文近场耳麦/远场混音配对，核对同一会议、说话人/声道、时间对齐和耳麦串音，再用每个人的参考音检查当前分离到底丢了什么。已核实AliMeeting官方提供近远场，AMI可作第二语料。完成配对参考验证前不扩大训练、不再重跑两个失败活动小头或换同类权重。数据可靠后只适配被实测定位的模块，并以未训练会议逐人漏字/串话/插入、普通语音不退步决定去留；最后再做完整会议、纪要事实和双端实卡。",
+              "kept": true
+            },
+            "normalStoredChannels": 1,
+            "channelAwareResearchInputImplemented": true,
+            "realArchivedPairsChecked": 2,
+            "currentDeviceSpeakerSeparationQualified": false,
+            "productDefaultChanged": false,
+            "newModelsOrTraining": 0,
+            "newBoardAccess": false,
+            "next": "继续原RM-OVERLAP，优先验证“保留双麦原音→说话人活动→引导式空间分离→逐人转写”的最小真实会议对照。已完成双路无损研究输入；先建立恰好两路、同步/几何明确的公开会议输入并与单路公平比较，GSS参考实现需先解决本机轻量数值执行可行性。当前实板长录期间不占用或重刷，后续在正常空闲边界补当前实板双人重叠样本。看到逐人实际收益后才推进双声道固件/格式/双端整体重构，不把研究入口完成当效果合格。",
+            "qualityQualified": false
           }
         },
         "ownerRx6800xtConnected20261104": {
