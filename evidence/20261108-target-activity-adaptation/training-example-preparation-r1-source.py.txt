@@ -1,0 +1,67 @@
+"""Real supervised pilot data, fixed rooms/sessions, no previous test training."""
+import os
+os.environ.update(OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1')
+from pathlib import Path
+from datetime import datetime
+from collections import defaultdict
+import json,hashlib,math,random
+from practical_io_20261107 import atomic_json
+from moss_windows_resource_limits_20261104 import WorkerLimits
+from reference_textgrid_20261104 import read_reference_intervals
+from full_meeting_transcript_metrics_20261103 import normalize
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=R/'docs/handoffs/20261108-target-activity-adaptation';read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));limits=WorkerLimits(cpu_percent=5,memory_bytes=512*1024**2)
+assert not (C/'training-labels.json').exists();sources=read(C/'selected-training-sources.json');inputs=[];labels=[];anchors=[];summaries=[];rng=random.Random(20261108)
+def merge(spans):
+    out=[]
+    for a,b in sorted(spans):
+        if b<=a:continue
+        if out and a<=out[-1][1]:out[-1]=(out[-1][0],max(out[-1][1],b))
+        else:out.append((a,b))
+    return out
+def overlap(spans,lo,hi):return sum(max(0.,min(hi,b)-max(lo,a)) for a,b in spans)
+for source in sources:
+    assert hashlib.sha256(Path(source['reference']).read_bytes()).hexdigest()==source['referenceSha256']
+    allrows=read_reference_intervals(source['reference']);rows=[r for r in allrows if normalize(r['text'])];duration=max(r['end'] for r in allrows);people=sorted({r['speaker'] for r in rows});truth={p:merge((r['start'],r['end']) for r in rows if r['speaker']==p) for p in people}
+    others={p:merge((a,b) for q,spans in truth.items() if q!=p for a,b in spans) for p in people};buckets={category:defaultdict(list) for category in ['absent','solo','overlap','short']}
+    for root in range(math.floor(duration/4)):
+        lo=root*4.;hi=lo+4
+        for person in people:
+            amount=overlap(truth[person],lo,hi);other=overlap(others[person],lo,hi)
+            both=sum(max(0.,min(hi,b,d)-max(lo,a,c)) for a,b in truth[person] for c,d in others[person])
+            short=any(r['speaker']==person and .15<=r['end']-r['start']<2 and r['start']>=lo and r['end']<=hi for r in rows)
+            category='absent' if amount==0 and other>=1 else 'short' if 0<amount<=2 and short else 'overlap' if both>0 else 'solo' if amount>=1 else None
+            if category:buckets[category][person].append({'rootIndex':root,'person':person,'category':category,'targetSeconds':amount,'overlapTargetSeconds':both})
+    chosen=[]
+    for category,groups in buckets.items():
+        for values in groups.values():rng.shuffle(values)
+        candidates=[]
+        while len(candidates)<8 and any(groups.values()):
+            for person in people:
+                if groups[person] and len(candidates)<8:candidates.append(groups[person].pop())
+        chosen.extend(candidates)
+    assert len(chosen)==32,'Missing a supervised category: preserve gap instead of inventing examples'
+    excluded=[(c['rootIndex']*4.,c['rootIndex']*4.+4.) for c in chosen]
+    for person in people:
+        pure=[]
+        for a,b in truth[person]:
+            spans=[(a,b)]
+            for left,right in others[person]+excluded:
+                spans=[piece for lo,hi in spans for piece in [(lo,min(hi,left)),(max(lo,right),hi)] if piece[1]>piece[0]]
+            pure.extend((lo,hi) for lo,hi in spans if hi-lo>=3.12)
+        assert pure,(source['meeting'],person,'No disjoint supervised enrollment')
+        lo,hi=max(pure,key=lambda v:(v[1]-v[0],-v[0]));length=min(10.,hi-lo-.12);center=(lo+hi)/2;start=round((center-length/2)*16000)
+        anchors.append({'id':source['meeting']+'-profile-'+person,'meeting':source['meeting'],'sourceRole':source['role'],'person':person,'startSample':start,'endSample':start+round(length*16000),'sampleRate':16000,'selectedFromSupervisionForTrainingOrAdaptationValidationOnly':True})
+    for index,c in enumerate(chosen):
+        key=source['meeting']+'-case-%03d'%index;lo=c['rootIndex']*4.;hi=lo+4
+        inputs.append({'id':key,'meeting':source['meeting'],'role':source['role'],'person':c['person'],'category':c['category'],'startSample':round(lo*16000),'endSample':round(hi*16000),'sampleRate':16000,'sourceRootIndex':c['rootIndex']})
+        labels.append({'id':key,'role':source['role'],'activityLabels':[int(overlap(truth[c['person']],lo+i*.16,min(hi,lo+(i+1)*.16))>0) for i in range(25)],'targetSeconds':c['targetSeconds'],'overlapTargetSeconds':c['overlapTargetSeconds']})
+    summaries.append({'role':source['role'],'meeting':source['meeting'],'people':len(people),'cases':len(chosen),'unique4sAudioWindows':len({c['rootIndex'] for c in chosen}),'categories':{k:sum(c['category']==k for c in chosen) for k in buckets},'profileSeconds':[round((a['endSample']-a['startSample'])/16000,3) for a in anchors if a['meeting']==source['meeting']]})
+atomic_json(C/'training-inputs-only.json',inputs);atomic_json(C/'supervised-enrollment-plan.json',anchors);atomic_json(C/'training-labels.json',labels)
+atomic_json(C/'data-selection.json',{'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'REAL_TRAINING_AND_SEPARATE_ROOM_ADAPTATION_VALIDATION_PILOT_FROZEN','seed':20261108,'meetings':summaries,
+    'selection':'4s original mono-channel-zero excerpts;8examples/category/meeting, round-robin speakers after deterministic within-speaker shuffle. Categories absent(other speech>=1s), short(target<=2s and contained0.15-2s utterance), overlap(any target/other overlap), solo(target>=1s). All are original recorded mixtures, no artificial speech mixing or denoising.',
+    'enrollment':'Longest annotated target-only span outside every selected query window in that same session, center<=10s with60ms boundary guards,>=3s. Supervision is allowed only for training/adaptation-validation construction. Previous67-query deployment controls keep their original automatic profiles.',
+    'labels':'25native160ms grid cells per4s; any lexical target activity in a cell is1. Same source annotation/normalization conventions retained. Labels are supervised training truth, never supplied to deployment inference.',
+    'notGeneralizationProof':'Small supervised pilot, two large-room training tags and a distinct small-room session for validation. Physical speaker independence is not established; published train/eval has one shared participant. Original exposed development recordings and final holdout remain excluded from training.',
+    'plannedRun':'First verify identical eval outputs, frozen weights, nonzero finite head gradients and bounded resources on real training examples; no synthetic accuracy claims. Only then one frozen training run. Do not select epochs or thresholds on the prior13development controls.',
+    'newTrainingRuns':0,'qualityQualified':False,'limits':limits.query()})
+print(json.dumps({'state':'REAL_SUPERVISED_PILOT_PLAN_FROZEN','sources':summaries,'examples':len(inputs),'profiles':len(anchors)},ensure_ascii=False),flush=True)

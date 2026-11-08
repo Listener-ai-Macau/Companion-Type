@@ -1,0 +1,1525 @@
+{
+  "id": "AISHELL/AISHELL-4",
+  "sha": "aada72727856313b19d4a030383c426364931dbf",
+  "gated": false,
+  "cardData": {
+    "license": "apache-2.0"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes"
+    },
+    {
+      "rfilename": "README.md"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S01C02.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S01C02.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S02C02.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S02C02.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S03C02.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S03C02.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S04C02.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R003S04C02.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S01C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S01C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S02C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S02C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S03C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S03C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S06C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/L_R004S06C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S01C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S01C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S02C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S02C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S04C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S04C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S05C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/M_R003S05C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S01C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S01C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S02C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S02C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S03C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S03C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S04C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R003S04C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S01C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S01C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S02C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S02C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S03C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S03C01.rttm"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S04C01.TextGrid"
+    },
+    {
+      "rfilename": "test/TextGrid/S_R004S04C01.rttm"
+    },
+    {
+      "rfilename": "test/wav/L_R003S01C02.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R003S02C02.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R003S03C02.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R003S04C02.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R004S01C01.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R004S02C01.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R004S03C01.flac"
+    },
+    {
+      "rfilename": "test/wav/L_R004S06C01.flac"
+    },
+    {
+      "rfilename": "test/wav/M_R003S01C01.flac"
+    },
+    {
+      "rfilename": "test/wav/M_R003S02C01.flac"
+    },
+    {
+      "rfilename": "test/wav/M_R003S04C01.flac"
+    },
+    {
+      "rfilename": "test/wav/M_R003S05C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R003S01C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R003S02C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R003S03C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R003S04C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R004S01C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R004S02C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R004S03C01.flac"
+    },
+    {
+      "rfilename": "test/wav/S_R004S04C01.flac"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200706_L_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200707_L_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S01C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S02C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S03C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S07C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200708_L_R002S08C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S01C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S03C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S06C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S07C01.rttm"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_L/TextGrid/20200709_L_R002S08C01.rttm"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200706_L_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200707_L_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200708_L_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_L/wav/20200709_L_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200616_M_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200617_M_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200618_M_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200620_M_R002S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200621_M_R002S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S06C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S07C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200622_M_R002S08C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S01C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S02C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S03C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S04C01.rttm"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_M/TextGrid/20200703_M_R002S05C01.rttm"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200616_M_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200617_M_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200618_M_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200620_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200620_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200620_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200620_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200620_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200621_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200622_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200703_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200704_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200705_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200710_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200712_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200713_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S01C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S02C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S03C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S04C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S05C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S06C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S07C01.flac"
+    },
+    {
+      "rfilename": "train_M/wav/20200714_M_R002S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200623_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200624_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200630_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200701_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200702_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S08C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200805_S_R001S08C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S01C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S01C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S05C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S05C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S07C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200806_S_R001S07C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S02C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S02C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S03C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S03C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S04C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S04C01.rttm"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S06C01.TextGrid"
+    },
+    {
+      "rfilename": "train_S/TextGrid/20200807_S_R001S06C01.rttm"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200623_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200624_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200630_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200701_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200702_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200805_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200805_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200805_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200805_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200806_S_R001S01C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200806_S_R001S05C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200806_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S02C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S03C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S04C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S06C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S07C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200807_S_R001S08C01.flac"
+    },
+    {
+      "rfilename": "train_S/wav/20200808_S_R001S02C01.flac"
+    }
+  ]
+}

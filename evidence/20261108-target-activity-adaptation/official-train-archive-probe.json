@@ -1,0 +1,173 @@
+{
+  "at": "2026-11-08T08:03:18.994756+08:00",
+  "source": "https://openslr.magicdatatech.com/resources/111/train_L.tar.gz",
+  "status": 206,
+  "headers": {
+    "Date": "Sun, 08 Nov 2026 00:02:32 GMT",
+    "Content-Type": "application/x-gzip",
+    "Content-Length": "2097152",
+    "Connection": "close",
+    "Server": "Apache/2.4.38 (Debian)",
+    "Last-Modified": "Fri, 25 Jun 2021 06:41:46 GMT",
+    "ETag": "\"1a5051535-5c5916ef47e80\"",
+    "Accept-Ranges": "bytes",
+    "Content-Range": "bytes 0-2097151/7063541045",
+    "Strict-Transport-Security": "max-age=31536000"
+  },
+  "downloadedBytes": 2097152,
+  "sha256": "d16d3fe2b7b72d873b0df76bd59442415fc6135f0f2b2c90abbe3a05b1d57e51",
+  "entries": [
+    {
+      "name": "train_L",
+      "size": 0,
+      "isFile": false
+    },
+    {
+      "name": "train_L/TextGrid",
+      "size": 0,
+      "isFile": false
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S08C01.rttm",
+      "size": 37489,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S07C01.TextGrid",
+      "size": 137516,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200708_L_R002S08C01.rttm",
+      "size": 40925,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S01C01.rttm",
+      "size": 40939,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S01C01.TextGrid",
+      "size": 154537,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S02C01.rttm",
+      "size": 32362,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S02C01.TextGrid",
+      "size": 133543,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S03C01.rttm",
+      "size": 36176,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S03C01.TextGrid",
+      "size": 138428,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S04C01.rttm",
+      "size": 40755,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S04C01.TextGrid",
+      "size": 156337,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S05C01.rttm",
+      "size": 24969,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S05C01.TextGrid",
+      "size": 104792,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S06C01.rttm",
+      "size": 38369,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S06C01.TextGrid",
+      "size": 146507,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S07C01.rttm",
+      "size": 26749,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S07C01.TextGrid",
+      "size": 110334,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200706_L_R001S08C01.TextGrid",
+      "size": 141238,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S01C01.rttm",
+      "size": 50678,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+      "size": 187392,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S02C01.rttm",
+      "size": 31786,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S02C01.TextGrid",
+      "size": 129139,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S03C01.rttm",
+      "size": 32705,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S03C01.TextGrid",
+      "size": 130397,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S04C01.rttm",
+      "size": 35768,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S04C01.TextGrid",
+      "size": 137890,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S05C01.rttm",
+      "size": 31613,
+      "isFile": true
+    },
+    {
+      "name": "train_L/TextGrid/20200707_L_R001S05C01.TextGrid",
+      "size": 128683,
+      "isFile": true
+    }
+  ],
+  "noFullArchiveOrModelsDownloaded": true,
+  "irrelevantTransportCookieRemoved": true
+}

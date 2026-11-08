@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-08T08:14:29+08:00",
+  "state": "PREPARING_REAL_TRAINING_AUDIO_RANGES",
+  "newNeuralCalls": 0,
+  "completedExcerpts": 95,
+  "sources": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "samplerate": 16000,
+      "channels": 8,
+      "subtype": "PCM_16",
+      "totalFramesFromFlacHeader": 31722717,
+      "expectedWholeFileSha256NotVerifiedByPartialRanges": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+      "downloadedNewRangeBytes": 35651584
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "samplerate": 16000,
+      "channels": 8,
+      "subtype": "PCM_16",
+      "totalFramesFromFlacHeader": 31099752,
+      "expectedWholeFileSha256NotVerifiedByPartialRanges": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+      "downloadedNewRangeBytes": 36438016
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "at": "2026-11-08T08:13:18+08:00",
+  "state": "REAL_TRAINING_AND_SEPARATE_ROOM_ADAPTATION_VALIDATION_PILOT_FROZEN",
+  "seed": 20261108,
+  "meetings": [
+    {
+      "role": "train",
+      "meeting": "20200707_L_R001S08C01",
+      "people": 7,
+      "cases": 32,
+      "unique4sAudioWindows": 32,
+      "categories": {
+        "absent": 8,
+        "solo": 8,
+        "overlap": 8,
+        "short": 8
+      },
+      "profileSeconds": [
+        10.0,
+        10.0,
+        10.0,
+        8.04,
+        10.0,
+        10.0,
+        10.0
+      ]
+    },
+    {
+      "role": "train",
+      "meeting": "20200708_L_R002S01C01",
+      "people": 7,
+      "cases": 32,
+      "unique4sAudioWindows": 32,
+      "categories": {
+        "absent": 8,
+        "solo": 8,
+        "overlap": 8,
+        "short": 8
+      },
+      "profileSeconds": [
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ]
+    },
+    {
+      "role": "validation",
+      "meeting": "20200623_S_R001S01C01",
+      "people": 4,
+      "cases": 32,
+      "unique4sAudioWindows": 32,
+      "categories": {
+        "absent": 8,
+        "solo": 8,
+        "overlap": 8,
+        "short": 8
+      },
+      "profileSeconds": [
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ]
+    }
+  ],
+  "selection": "4s original mono-channel-zero excerpts;8examples/category/meeting, round-robin speakers after deterministic within-speaker shuffle. Categories absent(other speech>=1s), short(target<=2s and contained0.15-2s utterance), overlap(any target/other overlap), solo(target>=1s). All are original recorded mixtures, no artificial speech mixing or denoising.",
+  "enrollment": "Longest annotated target-only span outside every selected query window in that same session, center<=10s with60ms boundary guards,>=3s. Supervision is allowed only for training/adaptation-validation construction. Previous67-query deployment controls keep their original automatic profiles.",
+  "labels": "25native160ms grid cells per4s; any lexical target activity in a cell is1. Same source annotation/normalization conventions retained. Labels are supervised training truth, never supplied to deployment inference.",
+  "notGeneralizationProof": "Small supervised pilot, two large-room training tags and a distinct small-room session for validation. Physical speaker independence is not established; published train/eval has one shared participant. Original exposed development recordings and final holdout remain excluded from training.",
+  "plannedRun": "First verify identical eval outputs, frozen weights, nonzero finite head gradients and bounded resources on real training examples; no synthetic accuracy claims. Only then one frozen training run. Do not select epochs or thresholds on the prior13development controls.",
+  "newTrainingRuns": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 22364,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 54710272,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

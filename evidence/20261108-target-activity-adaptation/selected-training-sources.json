@@ -1,0 +1,50 @@
+[
+  {
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "sourcePath": "train_L/wav/20200707_L_R001S08C01.flac",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S08C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "fileSize": 240679407,
+    "expectedWholeFileLfsSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S08C01.TextGrid",
+    "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+    "mirrorReferenceRawSha256": "f8fca6b81557206bf3f8941f64b26abe809cab01693f28a6120cdcd6ca1b0efd",
+    "referenceBytesEqualOfficialArchivePrefix": false,
+    "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+    "sourceSubset": "train_L",
+    "roomTagForBookkeepingOnly": "R001"
+  },
+  {
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "sourcePath": "train_L/wav/20200708_L_R002S01C01.flac",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200708_L_R002S01C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "fileSize": 226430788,
+    "expectedWholeFileLfsSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S01C01.TextGrid",
+    "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+    "mirrorReferenceRawSha256": "b03f7b4e83b6e5f91735b86f2e2aa344a2357b0604b7a3b4839b529e53815fd3",
+    "referenceBytesEqualOfficialArchivePrefix": false,
+    "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+    "sourceSubset": "train_L",
+    "roomTagForBookkeepingOnly": "R002"
+  },
+  {
+    "role": "validation",
+    "meeting": "20200623_S_R001S01C01",
+    "sourcePath": "train_S/wav/20200623_S_R001S01C01.flac",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200623_S_R001S01C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "fileSize": 260430672,
+    "expectedWholeFileLfsSha256": "7bd547327820c60b156afa3c483e81860925f69ca8f29e42df35cd29255eb073",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S01C01.TextGrid",
+    "referenceSha256": "02751bb69425fa220cb9781189c839cbc2b7b881a7fb6e75c7bffbdbfde7655f",
+    "mirrorReferenceRawSha256": "ad60fe03c988ff472aea63abacd846a9a9a90142942167a3bc350ae206d48885",
+    "referenceBytesEqualOfficialArchivePrefix": false,
+    "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+    "sourceSubset": "train_S",
+    "roomTagForBookkeepingOnly": "R001"
+  }
+]

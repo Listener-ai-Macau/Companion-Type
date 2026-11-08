@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-08T08:10:19+08:00",
+  "state": "INDEPENDENT_TRAINING_MEETING_SOURCES_PINNED_AUDIO_NOT_YET_PREPARED",
+  "primaryOrigin": "https://www.openslr.org/111/",
+  "transportMirror": "AISHELL/AISHELL-4 at pinned Hugging Face revision; namespace ownership alone is not used as provenance proof.",
+  "originalLicenseRetained": "OpenSLR declares CC BY-SA4.0. Mirror card says Apache2.0; that difference is recorded and not treated as proof of relicensing.",
+  "sourceValidation": "Selected TextGrids compare with official OpenSLR training archive annotation text, ignoring only CRLF/LF transport differences; original official bytes are kept and both hashes recorded. The first selected FLAC size equals the official tar member. Byte-range payloads remain pinned to mirror revision/LFS expected whole-file SHA; a partially read file is not claimed whole-file SHA verified.",
+  "split": "Two distinct training sessions/room tags from the published train_L subset; one train_S session reserved for adaptation validation. Do not claim complete physical-speaker independence from tier labels. Paper reports no train/test room overlap but one shared participant. Current exposed L/S/AMI and final heldout meeting are excluded from all training sources.",
+  "paper": "https://arxiv.org/html/2104.03603v4",
+  "finalHoldoutOpened": false,
+  "newTrainingRuns": 0,
+  "qualityQualified": false
+}
