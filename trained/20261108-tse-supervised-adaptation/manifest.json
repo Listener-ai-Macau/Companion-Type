@@ -1,9 +1,9 @@
 {
   "state": "COMPLETE_EXACT_TRAINING_CHECKPOINT",
-  "completedSteps": 32,
+  "completedSteps": 166,
   "protocolSha256": "971b2c9955aa54cb0790dfe30797cf7fa12fb1ac5f4125dfc47450028a079dad",
-  "trainableWeights": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoints-r4\\step-0032\\trainable-3818179c2bed4760a5481f5defbc2ebe.safetensors",
-  "trainableWeightsSha256": "13f8518bc8b451994d37f13200b157ed48fc6e16a6dbc0df89a346d2a687a91a",
+  "trainableWeights": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoints-r4\\step-0166\\trainable-006a2de63108424eaa4723d2ac449966.safetensors",
+  "trainableWeightsSha256": "adb6eae156cb0601808a549d55d09718d5c5470e316eb8e3ce04534cbcf9b9c0",
   "optimizerStateFormat": "bounded-safetensors-v1",
   "optimizerStateSchema": {
     "0": {

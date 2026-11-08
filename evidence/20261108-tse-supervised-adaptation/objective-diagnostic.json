@@ -1,0 +1,723 @@
+{
+  "at": "2026-11-08T12:44:37.507504+08:00",
+  "state": "POST_REJECTION_OBJECTIVE_SILENCE_SHORTCUT_DIAGNOSTIC",
+  "trainingReviewSha256": "f2175cab7fab0e1942d73ebb71a945439f1dc643edea0b8e8d581d50683acaf6",
+  "originalRejectionMadeBeforeThisDiagnostic": true,
+  "categories": {
+    "present_solo": {
+      "examples": 16,
+      "meanZeroOutputWaveformLoss": 0.6727613491444231,
+      "meanBaselineWaveformLoss": 1.1550154760479927,
+      "meanAdaptedWaveformLoss": 0.693454104475677,
+      "meanOutputRmsAfterDividedByBefore": 0.06583733544589185,
+      "meanOutputAmplitudeReductionFraction": 0.9341626645541081,
+      "targetActiveMeanOutputToOriginalMixtureRms": {
+        "baseline": 0.7299367879658285,
+        "adapted": 0.047021199668235834
+      }
+    },
+    "present_overlap": {
+      "examples": 16,
+      "meanZeroOutputWaveformLoss": 0.0,
+      "meanBaselineWaveformLoss": 0.0905144609278068,
+      "meanAdaptedWaveformLoss": 0.002853890856840735,
+      "meanOutputRmsAfterDividedByBefore": 0.051506395600660865,
+      "meanOutputAmplitudeReductionFraction": 0.9484936043993392,
+      "targetActiveMeanOutputToOriginalMixtureRms": {
+        "baseline": 0.6580159855531013,
+        "adapted": 0.031551656673093745
+      }
+    },
+    "absent_other_speech": {
+      "examples": 16,
+      "meanZeroOutputWaveformLoss": 0.0,
+      "meanBaselineWaveformLoss": 0.305977203999646,
+      "meanAdaptedWaveformLoss": 0.011414288957894314,
+      "meanOutputRmsAfterDividedByBefore": 0.041545449913368004,
+      "meanOutputAmplitudeReductionFraction": 0.9584545500866319,
+      "targetActiveMeanOutputToOriginalMixtureRms": null
+    }
+  },
+  "perExample": [
+    {
+      "id": "20200623_S_R001S01C01-001-M-absent_other_speech-0",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.06986512988805771,
+      "adaptedWaveformLoss": 0.0028616213239729404,
+      "baselineOutputRmsRatio": 0.08210864663124084,
+      "adaptedOutputRmsRatio": 0.002898191101849079,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-absent_other_speech-1",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.08055950701236725,
+      "adaptedWaveformLoss": 0.0030327884014695883,
+      "baselineOutputRmsRatio": 0.1102277860045433,
+      "adaptedOutputRmsRatio": 0.003207721281796694,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-absent_other_speech-2",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.40804123878479004,
+      "adaptedWaveformLoss": 0.010449092835187912,
+      "baselineOutputRmsRatio": 0.3988041281700134,
+      "adaptedOutputRmsRatio": 0.01066663395613432,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-absent_other_speech-3",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.7621566653251648,
+      "adaptedWaveformLoss": 0.008231841959059238,
+      "baselineOutputRmsRatio": 0.7876631617546082,
+      "adaptedOutputRmsRatio": 0.008062133565545082,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_overlap-0",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.07237975299358368,
+      "adaptedWaveformLoss": 0.0011799698695540428,
+      "baselineOutputRmsRatio": 1.047081708908081,
+      "adaptedOutputRmsRatio": 0.012832241132855415,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 1.041950810797199,
+        "adapted": 0.012636462921254381
+      },
+      "teacherCeBefore": 5.09724235534668,
+      "teacherCeAfter": 4.414099216461182
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_overlap-1",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.020212924107909203,
+      "adaptedWaveformLoss": 0.0011800151551142335,
+      "baselineOutputRmsRatio": 0.7904735803604126,
+      "adaptedOutputRmsRatio": 0.012145698070526123,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.8384732920901539,
+        "adapted": 0.0126426093233091
+      },
+      "teacherCeBefore": 5.302189826965332,
+      "teacherCeAfter": 4.882978439331055
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_overlap-2",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.023659395053982735,
+      "adaptedWaveformLoss": 0.0007083259406499565,
+      "baselineOutputRmsRatio": 0.9549543261528015,
+      "adaptedOutputRmsRatio": 0.08149763196706772,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9762473587582029,
+        "adapted": 0.08345166644175699
+      },
+      "teacherCeBefore": 1.590620756149292,
+      "teacherCeAfter": 2.5410714149475098
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_overlap-3",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.023456620052456856,
+      "adaptedWaveformLoss": 0.00046547860256396234,
+      "baselineOutputRmsRatio": 0.5133254528045654,
+      "adaptedOutputRmsRatio": 0.0029881431255489588,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.5436185494902627,
+        "adapted": 0.002983545610758234
+      },
+      "teacherCeBefore": 3.597494125366211,
+      "teacherCeAfter": 4.07936429977417
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_solo-0",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.975726000319009,
+      "baselineWaveformLoss": 1.7502448558807373,
+      "adaptedWaveformLoss": 0.9884840250015259,
+      "baselineOutputRmsRatio": 0.9373177886009216,
+      "adaptedOutputRmsRatio": 0.027231905609369278,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.939994592625782,
+        "adapted": 0.027292168920365976
+      },
+      "teacherCeBefore": 1.576432228088379,
+      "teacherCeAfter": 1.2558560371398926
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_solo-1",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.9636345535711283,
+      "baselineWaveformLoss": 1.9244457483291626,
+      "adaptedWaveformLoss": 1.0015264749526978,
+      "baselineOutputRmsRatio": 1.0209970474243164,
+      "adaptedOutputRmsRatio": 0.05729566514492035,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 1.0081001648728998,
+        "adapted": 0.05748720994054773
+      },
+      "teacherCeBefore": 1.3469035625457764,
+      "teacherCeAfter": 0.5440563559532166
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_solo-2",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.9763628664349722,
+      "baselineWaveformLoss": 1.7861387729644775,
+      "adaptedWaveformLoss": 1.0342482328414917,
+      "baselineOutputRmsRatio": 0.9707750082015991,
+      "adaptedOutputRmsRatio": 0.10562477260828018,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9672949234054254,
+        "adapted": 0.10589770635135085
+      },
+      "teacherCeBefore": 2.8108017444610596,
+      "teacherCeAfter": 3.01450514793396
+    },
+    {
+      "id": "20200623_S_R001S01C01-001-M-present_solo-3",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.9807023371998871,
+      "baselineWaveformLoss": 1.840112328529358,
+      "adaptedWaveformLoss": 0.9943839907646179,
+      "baselineOutputRmsRatio": 0.9720677137374878,
+      "adaptedOutputRmsRatio": 0.024595679715275764,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9688647292494064,
+        "adapted": 0.024616008370573695
+      },
+      "teacherCeBefore": 0.9471747875213623,
+      "teacherCeAfter": 0.9241764545440674
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-absent_other_speech-0",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.8816543817520142,
+      "adaptedWaveformLoss": 0.04500678926706314,
+      "baselineOutputRmsRatio": 0.9269480109214783,
+      "adaptedOutputRmsRatio": 0.056850820779800415,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-absent_other_speech-1",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.7652084231376648,
+      "adaptedWaveformLoss": 0.07579223811626434,
+      "baselineOutputRmsRatio": 0.8436675071716309,
+      "adaptedOutputRmsRatio": 0.09342655539512634,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-absent_other_speech-2",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.731894850730896,
+      "adaptedWaveformLoss": 0.010743795894086361,
+      "baselineOutputRmsRatio": 0.7927518486976624,
+      "adaptedOutputRmsRatio": 0.015973281115293503,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-absent_other_speech-3",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.5743455290794373,
+      "adaptedWaveformLoss": 0.0030689516570419073,
+      "baselineOutputRmsRatio": 0.6746557950973511,
+      "adaptedOutputRmsRatio": 0.004023524466902018,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_overlap-0",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.019868360832333565,
+      "adaptedWaveformLoss": 0.0008342087967321277,
+      "baselineOutputRmsRatio": 0.8900800347328186,
+      "adaptedOutputRmsRatio": 0.14663463830947876,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9428130684684592,
+        "adapted": 0.15555696785161513
+      },
+      "teacherCeBefore": 1.72685968875885,
+      "teacherCeAfter": 2.0851311683654785
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_overlap-1",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.006476381793618202,
+      "adaptedWaveformLoss": 0.00010529747669352219,
+      "baselineOutputRmsRatio": 0.9471124410629272,
+      "adaptedOutputRmsRatio": 0.08816228061914444,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9433593118408882,
+        "adapted": 0.08820247843993134
+      },
+      "teacherCeBefore": 2.1480979919433594,
+      "teacherCeAfter": 1.8029159307479858
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_overlap-2",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.12205106019973755,
+      "adaptedWaveformLoss": 0.002715617185458541,
+      "baselineOutputRmsRatio": 0.1886853277683258,
+      "adaptedOutputRmsRatio": 0.0033361506648361683,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.20420624851804794,
+        "adapted": 0.0034789709355945875
+      },
+      "teacherCeBefore": 14.751622200012207,
+      "teacherCeAfter": 12.618544578552246
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_overlap-3",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.34706494212150574,
+      "adaptedWaveformLoss": 0.006055059377104044,
+      "baselineOutputRmsRatio": 0.7356348037719727,
+      "adaptedOutputRmsRatio": 0.011646369472146034,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.7112061244040481,
+        "adapted": 0.012118001933511082
+      },
+      "teacherCeBefore": 19.315475463867188,
+      "teacherCeAfter": 20.962589263916016
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_solo-0",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.8575562088238808,
+      "baselineWaveformLoss": 1.401995301246643,
+      "adaptedWaveformLoss": 0.8912078738212585,
+      "baselineOutputRmsRatio": 0.7812118530273438,
+      "adaptedOutputRmsRatio": 0.07686521112918854,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.8094538192792758,
+        "adapted": 0.08036080582257706
+      },
+      "teacherCeBefore": 0.7005488276481628,
+      "teacherCeAfter": 1.3650721311569214
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_solo-1",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.20289384871093027,
+      "baselineWaveformLoss": 0.29975825548171997,
+      "adaptedWaveformLoss": 0.2061903029680252,
+      "baselineOutputRmsRatio": 0.22037208080291748,
+      "adaptedOutputRmsRatio": 0.010335088707506657,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.5866817162441639,
+        "adapted": 0.027659586699169396
+      },
+      "teacherCeBefore": 3.5507266521453857,
+      "teacherCeAfter": 0.6473457217216492
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_solo-2",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.4243844692042248,
+      "baselineWaveformLoss": 0.7372002005577087,
+      "adaptedWaveformLoss": 0.42892327904701233,
+      "baselineOutputRmsRatio": 0.4994232654571533,
+      "adaptedOutputRmsRatio": 0.016388943418860435,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.6431579078548539,
+        "adapted": 0.025016769398634828
+      },
+      "teacherCeBefore": 12.347975730895996,
+      "teacherCeAfter": 10.687529563903809
+    },
+    {
+      "id": "20200623_S_R001S01C01-003-M-present_solo-3",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.10575396357938238,
+      "baselineWaveformLoss": 0.4848966598510742,
+      "adaptedWaveformLoss": 0.13052815198898315,
+      "baselineOutputRmsRatio": 0.5134023427963257,
+      "adaptedOutputRmsRatio": 0.048824410885572433,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.06216231507743249,
+        "adapted": 0.003565332939491349
+      },
+      "teacherCeBefore": 10.0022611618042,
+      "teacherCeAfter": 10.769438743591309
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-absent_other_speech-0",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.041152164340019226,
+      "adaptedWaveformLoss": 0.0021229954436421394,
+      "baselineOutputRmsRatio": 0.03906942903995514,
+      "adaptedOutputRmsRatio": 0.0019558740314096212,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-absent_other_speech-1",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.06833567470312119,
+      "adaptedWaveformLoss": 0.004583448637276888,
+      "baselineOutputRmsRatio": 0.06061246618628502,
+      "adaptedOutputRmsRatio": 0.004075972829014063,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-absent_other_speech-2",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.03335775434970856,
+      "adaptedWaveformLoss": 0.002468645107001066,
+      "baselineOutputRmsRatio": 0.03163375332951546,
+      "adaptedOutputRmsRatio": 0.0022681416012346745,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-absent_other_speech-3",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.3505406677722931,
+      "adaptedWaveformLoss": 0.005706345196813345,
+      "baselineOutputRmsRatio": 0.3551480174064636,
+      "adaptedOutputRmsRatio": 0.005614626687020063,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_overlap-0",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.153737872838974,
+      "adaptedWaveformLoss": 0.003651534905657172,
+      "baselineOutputRmsRatio": 0.44647690653800964,
+      "adaptedOutputRmsRatio": 0.009783323854207993,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.8776519717922315,
+        "adapted": 0.020188756444808404
+      },
+      "teacherCeBefore": 8.035030364990234,
+      "teacherCeAfter": 12.193817138671875
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_overlap-1",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.08871593326330185,
+      "adaptedWaveformLoss": 0.0027788032311946154,
+      "baselineOutputRmsRatio": 0.19212523102760315,
+      "adaptedOutputRmsRatio": 0.012382895685732365,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.4945616454449992,
+        "adapted": 0.041579868887117497
+      },
+      "teacherCeBefore": 14.264552116394043,
+      "teacherCeAfter": 10.872714042663574
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_overlap-2",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.04239171743392944,
+      "adaptedWaveformLoss": 0.004594210535287857,
+      "baselineOutputRmsRatio": 0.12524332106113434,
+      "adaptedOutputRmsRatio": 0.005462068133056164,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.26376525540352136,
+        "adapted": 0.006022307406580708
+      },
+      "teacherCeBefore": 7.93943452835083,
+      "teacherCeAfter": 13.587413787841797
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_overlap-3",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.12546105682849884,
+      "adaptedWaveformLoss": 0.0046571996062994,
+      "baselineOutputRmsRatio": 0.2844352722167969,
+      "adaptedOutputRmsRatio": 0.006787439808249474,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.40147647098737177,
+        "adapted": 0.006929691631101017
+      },
+      "teacherCeBefore": 16.023555755615234,
+      "teacherCeAfter": 13.546554565429688
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_solo-0",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.907776997022084,
+      "baselineWaveformLoss": 1.7175743579864502,
+      "adaptedWaveformLoss": 0.9764009118080139,
+      "baselineOutputRmsRatio": 1.069959044456482,
+      "adaptedOutputRmsRatio": 0.16303011775016785,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 1.0546142959714742,
+        "adapted": 0.16728137608002572
+      },
+      "teacherCeBefore": 5.654257774353027,
+      "teacherCeAfter": 4.317808151245117
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_solo-1",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.974223517392981,
+      "baselineWaveformLoss": 1.7245709896087646,
+      "adaptedWaveformLoss": 1.016359567642212,
+      "baselineOutputRmsRatio": 0.965600311756134,
+      "adaptedOutputRmsRatio": 0.08583516627550125,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.9694790415264783,
+        "adapted": 0.08620104862954836
+      },
+      "teacherCeBefore": 2.3620314598083496,
+      "teacherCeAfter": 2.358703374862671
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_solo-2",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.9436097004766978,
+      "baselineWaveformLoss": 1.3261967897415161,
+      "adaptedWaveformLoss": 0.9481057524681091,
+      "baselineOutputRmsRatio": 0.6597752571105957,
+      "adaptedOutputRmsRatio": 0.014128881506621838,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.6709176918268202,
+        "adapted": 0.014364274289956187
+      },
+      "teacherCeBefore": 2.234370470046997,
+      "teacherCeAfter": 1.7394777536392212
+    },
+    {
+      "id": "20200623_S_R001S01C01-004-M-present_solo-3",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.9805192427387415,
+      "baselineWaveformLoss": 1.5168958902359009,
+      "adaptedWaveformLoss": 0.9987465143203735,
+      "baselineOutputRmsRatio": 0.8748012185096741,
+      "adaptedOutputRmsRatio": 0.05515945330262184,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.8783985907111073,
+        "adapted": 0.05542575360556375
+      },
+      "teacherCeBefore": 3.489635705947876,
+      "teacherCeAfter": 3.337263822555542
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-absent_other_speech-0",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.046764589846134186,
+      "adaptedWaveformLoss": 0.0029110033065080643,
+      "baselineOutputRmsRatio": 0.043621525168418884,
+      "adaptedOutputRmsRatio": 0.0027851287741214037,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-absent_other_speech-1",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.02618430368602276,
+      "adaptedWaveformLoss": 0.001589420484378934,
+      "baselineOutputRmsRatio": 0.0251327995210886,
+      "adaptedOutputRmsRatio": 0.0014524118741974235,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-absent_other_speech-2",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.033631496131420135,
+      "adaptedWaveformLoss": 0.002293631201609969,
+      "baselineOutputRmsRatio": 0.0334477461874485,
+      "adaptedOutputRmsRatio": 0.002262590918689966,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-absent_other_speech-3",
+      "category": "absent_other_speech",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.02194288745522499,
+      "adaptedWaveformLoss": 0.001766014494933188,
+      "baselineOutputRmsRatio": 0.02109028585255146,
+      "adaptedOutputRmsRatio": 0.0016171300085261464,
+      "targetActiveOutputToOriginalMixtureRms": {},
+      "teacherCeBefore": null,
+      "teacherCeAfter": null
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_overlap-0",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.09702529013156891,
+      "adaptedWaveformLoss": 0.006176425144076347,
+      "baselineOutputRmsRatio": 0.187425434589386,
+      "adaptedOutputRmsRatio": 0.008253668434917927,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.2690200314048141,
+        "adapted": 0.006847102234227221
+      },
+      "teacherCeBefore": 8.459749221801758,
+      "teacherCeAfter": 9.211455345153809
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_overlap-1",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.1756601780653,
+      "adaptedWaveformLoss": 0.005101533140987158,
+      "baselineOutputRmsRatio": 0.26277583837509155,
+      "adaptedOutputRmsRatio": 0.006213131360709667,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.5766585665037199,
+        "adapted": 0.007471137586243208
+      },
+      "teacherCeBefore": 20.75727653503418,
+      "teacherCeAfter": 19.004066467285156
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_overlap-2",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.07195807248353958,
+      "adaptedWaveformLoss": 0.0025293976068496704,
+      "baselineOutputRmsRatio": 0.46665632724761963,
+      "adaptedOutputRmsRatio": 0.006925681140273809,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.7147013423844124,
+        "adapted": 0.008772799069324586
+      },
+      "teacherCeBefore": 7.204300880432129,
+      "teacherCeAfter": 4.75380802154541
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_overlap-3",
+      "category": "present_overlap",
+      "zeroOutputWaveformLoss": 0.0,
+      "baselineWaveformLoss": 0.05811181664466858,
+      "adaptedWaveformLoss": 0.0029291771352291107,
+      "baselineOutputRmsRatio": 0.6573442220687866,
+      "adaptedOutputRmsRatio": 0.03253047168254852,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.7285457205612867,
+        "adapted": 0.035944140052366395
+      },
+      "teacherCeBefore": 5.4047088623046875,
+      "teacherCeAfter": 6.137709140777588
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_solo-0",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.33070958881582607,
+      "baselineWaveformLoss": 0.49095842242240906,
+      "adaptedWaveformLoss": 0.33405470848083496,
+      "baselineOutputRmsRatio": 0.30581286549568176,
+      "adaptedOutputRmsRatio": 0.005118694622069597,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.15454251879526576,
+        "adapted": 0.004649322036657866
+      },
+      "teacherCeBefore": 19.571666717529297,
+      "teacherCeAfter": 12.933425903320312
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_solo-1",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.06990241126603376,
+      "baselineWaveformLoss": 0.12624284625053406,
+      "adaptedWaveformLoss": 0.07258012890815735,
+      "baselineOutputRmsRatio": 0.11900915950536728,
+      "adaptedOutputRmsRatio": 0.008286913856863976,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.8539973395180848,
+        "adapted": 0.06005147310433164
+      },
+      "teacherCeBefore": 13.069402694702148,
+      "teacherCeAfter": 12.64050006866455
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_solo-2",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.3622970020436839,
+      "baselineWaveformLoss": 0.5974337458610535,
+      "adaptedWaveformLoss": 0.3657699525356293,
+      "baselineOutputRmsRatio": 0.35840392112731934,
+      "adaptedOutputRmsRatio": 0.005126249510794878,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.5453457305710311,
+        "adapted": 0.005250189645343412
+      },
+      "teacherCeBefore": 13.445696830749512,
+      "teacherCeAfter": 11.666729927062988
+    },
+    {
+      "id": "20200623_S_R001S01C01-006-M-present_solo-3",
+      "category": "present_solo",
+      "zeroOutputWaveformLoss": 0.7081288787113049,
+      "baselineWaveformLoss": 0.7555824518203735,
+      "adaptedWaveformLoss": 0.7077558040618896,
+      "baselineOutputRmsRatio": 0.5451937913894653,
+      "adaptedOutputRmsRatio": 0.008125867694616318,
+      "targetActiveOutputToOriginalMixtureRms": {
+        "baseline": 0.5659832299237548,
+        "adapted": 0.007220168857635313
+      },
+      "teacherCeBefore": 3.1412343978881836,
+      "teacherCeAfter": 2.8425655364990234
+    }
+  ],
+  "measuredFact": "After/before mean output RMS is strongly reduced in present-solo, present-overlap and absent cases. No word accuracy inferred from loss or amplitude.",
+  "mathematicalFact": "The configured waveform term is exactly zero for an all-zero output on every absent and overlap example. On overlap it supervises only inactive intervals; positive target preservation relies solely on recognizer CE. Zero-output solo waveform loss is explicitly measured as a control.",
+  "interpretation": "Observed broad attenuation is consistent with a silence shortcut in the combined supervision. This does not prove the pretrained backbone cannot extract speakers, nor that ASR guidance is always invalid. Do not repair by a validation-tuned output gain or threshold.",
+  "nextMethod": "Use known target audio components from controlled mixtures of separate real nonoverlapping TRAIN utterances (clearly distinguish synthesized mixtures from natural overlap), add target-present waveform/source consistency supervision with negative-target cases, and freeze a new source-meeting validation split before the next trial. Do not tune learning rate or select a step on these48 examples. Preserve the untouched final holdout.",
+  "newModelCalls": 0,
+  "newWeightUpdates": 0,
+  "referencesUsedForDiagnosticOnly": true,
+  "qualityQualified": false
+}
