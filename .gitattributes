@@ -14,3 +14,8 @@ upstream-tse/** -text -whitespace
 # Preserve hash-bound target-activity sources and immutable evidence bytes.
 src/*target_activity*.py -text
 evidence/*target-activity*/** -text -whitespace
+
+# Preserve the dual-microphone input and architecture evidence bindings.
+src/*multichannel*20261108.py -text
+src/*dual_mic*20261108.py -text
+evidence/20261108-dual-mic-architecture-review/** -text -whitespace

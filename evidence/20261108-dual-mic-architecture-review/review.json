@@ -1,0 +1,231 @@
+{
+  "at": "2026-11-08T09:08:48+08:00",
+  "state": "SPEAKER_FIRST_DUAL_MIC_REFACTOR_RECOMMENDED_INPUT_PREREQUISITE_VERIFIED",
+  "ownerOriginal": "可能不要这样子优化而是要做重构吧, 仔细研究一下, 感觉单麦做这种东西好做嘛, 现在有双麦, 按照这个看看能不能区分不同说话人, 先区分后撰写",
+  "ownerCorrection": "转写",
+  "interpretedRequirement": "Reassess the architecture around available dual microphones: identify who speaks when, use this to separate overlapping speech, then transcribe each speaker. Pause failed activity-head tuning; preserve the ordinary baseline.",
+  "previousModelWorkpoint": {
+    "state": "ACTIVITY_AND_TARGET_CONTENT_FAILURES_SEPARATED_NO_PRODUCT_PROMOTION",
+    "next": "继续原RM-OVERLAP，优先取得小批真实中文近场耳麦/远场混音配对，核对同一会议、说话人/声道、时间对齐和耳麦串音，再用每个人的参考音检查当前分离到底丢了什么。已核实AliMeeting官方提供近远场，AMI可作第二语料。完成配对参考验证前不扩大训练、不再重跑两个失败活动小头或换同类权重。数据可靠后只适配被实测定位的模块，并以未训练会议逐人漏字/串话/插入、普通语音不退步决定去留；最后再做完整会议、纪要事实和双端实卡。",
+    "kept": true
+  },
+  "recommendation": "Refactor the audio input and processing stages around preserved synchronized microphone channels. First evaluate a diarization-first guided multi-channel separator before investing in further model training. This is a feasibility recommendation, not evidence that two microphones already meet accuracy targets.",
+  "keyFindings": [
+    "Normal board recording currently reaches the host as a one-channel stream. The second microphone cannot be recovered from that mono recording.",
+    "Two microphone signals both contain every audible person; microphone indices are not speaker identities. Multiple meeting participants can be diarized from one channel, while overlapping content is much harder.",
+    "The current pipeline crosses mono boundaries in capture selection, codec/header/profile, import-ASR derivative and model commands. Changing one model or merely changing channels metadata cannot implement dual-mic separation.",
+    "Existing raw synchronous pair observation demonstrates a possible independent capture boundary on historical hardware; it is a finite diagnostic, not continuous stereo storage or product delivery.",
+    "Perfect downstream activity zeroing tested this morning is not internally guided spatial source separation. Its negative result does not disprove GSS or a multi-channel redesign.",
+    "Archived layout estimate is approximately31.8mm between component centers, not a measured current acoustic-port distance. Near spacing supplies limited angular diversity and front/back ambiguity; two microphones do not guarantee separation of3+simultaneous speakers."
+  ],
+  "architecture": [
+    {
+      "stage": "recording_input",
+      "contract": "Immutable original paired channels, common sample grid/channel IDs, recorded clock/geometry/calibration and codec identity. No early downmix or independent nonlinear phase-changing preprocessing."
+    },
+    {
+      "stage": "speaker_activity",
+      "contract": "Global anonymous people and overlapping activity intervals/confidence from voice identity plus available spatial cues. Preserve uncertainty; do not require a perfect hard decision or equate direction to a real identity."
+    },
+    {
+      "stage": "target_audio",
+      "contract": "Nonoverlap may use the original reference channel. Overlap uses the activity estimate inside multi-channel separation/beamforming; preserve original samples and provenance. GSS-style training-free reference first, subject to actual two-channel benefit."
+    },
+    {
+      "stage": "per_speaker_asr",
+      "contract": "Feed each extracted target to the protected existing recognizer. Retain raw outputs; align globally to reconcile speaker/lane permutations and timing. A fixed output lane is not a permanent person."
+    },
+    {
+      "stage": "document_and_minutes",
+      "contract": "Reuse stable shared Document; attach time/person/source evidence for minutes and roles. Unconfirmed names/roles remain unconfirmed. Model implementations stay replaceable and separate from recording/management/UI."
+    }
+  ],
+  "refactorScope": [
+    "Capture paired frames once, retain both with common sequence/sample offset; measure actual second-channel DSP/codec CPU,stack,RAM and energy before continuous firmware enablement.",
+    "Version the mono-only storage/transport/codec contract; preserve old sessions/clients. Distinguish sample frames from interleaved sample elements, retain both channels through gaps/reconnect and exact segment recovery.",
+    "Keep original multi-channel assets distinct from the mono ASR derivative in both host backends; expose one channel-aware model-independent input contract.",
+    "Evaluate original PCM before compressed dual input. Measure whether codec preserves useful phase and delay; ordinary low-bitrate stereo may erase the information that spatial separation needs.",
+    "Keep existing mono path available; any dual candidate must improve per-person errors without harming ordinary speech. No default switch or firmware installation before this evidence."
+  ],
+  "resourceTradeoff": {
+    "calculationOnly": true,
+    "PCM16_16k_twoChannelBytesPerSecond": 64000,
+    "existingMono16kbpsPayloadBytesPerHour": 7200000,
+    "twoIndependent16kbpsPayloadBytesPerHour": 14400000,
+    "note": "Two16kbpsstreams are14.4MB/h before framing versus7.2MB/h mono. With16MiB NOR, two-hour offline retention cannot be assumed. Codec choice, compression, storage and real-time transfer require joint evaluation; CPU and battery cost are not inferred from these byte calculations."
+  },
+  "historicalSpatialEvidence": {
+    "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-10-28\\companion-upper-delivery-20261028\\work\\isolated-sources-p692\\analysis.json",
+    "state": "ACTUAL_SEPARATE_RENDER_SOURCE_DIRECT_MICROPHONE_RESPONSES",
+    "medianSourceSpatialSimilarity": 0.9966140730510195,
+    "eligibleBandPowerFractions": [
+      0.05423068224716746,
+      0.07519824754647846
+    ],
+    "meaning": "In that old isolated-playback setup the two source spatial signatures were nearly identical in a limited stable band. No geometry or true simultaneous-person proof. Do not repeat fixed FIR/null tuning or call it a universal dual-mic impossibility."
+  },
+  "sourceAudit": [
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+      "repoHeadAtReview": "25e108f976da624979fd7dae9e85c07349790a42",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\app\\companion_pendant\\recording\\wba_pdm_capture.h",
+      "sha256": "d294df029a7d0e1cb0865f4cd98bf7c8d507569352aa66ef2e7c7144ba0e3f04",
+      "finding": "PDM pair has two channels; ordinary callback emits mono; separate synchronous pre-beamforming pair observer is optional."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+      "repoHeadAtReview": "25e108f976da624979fd7dae9e85c07349790a42",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\app\\companion_pendant\\recording\\wba_pdm_capture.c",
+      "sha256": "8a580b43ebb8800f4fd1c26abc055d0d971e9544b7dcec71516f8c481bda1760",
+      "finding": "LEFT/RIGHT/average/beamform choices emit a single selected stream. Raw pair observer can expose both only before this reduction."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+      "repoHeadAtReview": "25e108f976da624979fd7dae9e85c07349790a42",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\app\\companion_pendant\\recording\\wba_microphone_profile.h",
+      "sha256": "14fe625f567cfe331f7d9b7e4108a96c065b98958a425cd2be23b46eefa76e9b",
+      "finding": "Uncalibrated normal voice and meeting profiles select LEFT and selected_only when no pair observer is attached."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+      "repoHeadAtReview": "25e108f976da624979fd7dae9e85c07349790a42",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\app\\companion_pendant\\recording\\companion_opus16_rt.c",
+      "sha256": "b237526dfd163be760303a709b76acb8648a59a3cdf9beee99328bc06e8f1a3d",
+      "finding": "opus_encoder_init channels=1 and COP header channels=1. Normal16k mode is16kbps; changing a header cannot create a spatial recording."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+      "repoHeadAtReview": "25e108f976da624979fd7dae9e85c07349790a42",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\app\\companion_pendant\\recording\\companion_recording_audio_profile.h",
+      "sha256": "90a2a6bab535287f355729a5ba75c32938d8c3e4b02eed445102a4ff0e6a6836",
+      "finding": "APM1 prelude encodes/requires one output channel; filtered_mask=3 describes processing provenance, not two stored audio channels."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+      "repoHeadAtReview": "2da7c4e357fcba229f09b37b1d1f4b6fd780bf5e",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\backend\\import_audio.rs",
+      "sha256": "05ead2bca96e8be432b12ffaa9f384c5bd0a21897880e98dfb3945190e9e2f13",
+      "finding": "Original import is retained. ASR derivative is downmixed and may invert a strongly anti-correlated right channel. This derivative must not be reused as the phase-preserving spatial input."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-android-backend",
+      "repoHeadAtReview": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-android-backend\\apps\\android-backend\\native\\src\\long_transcription.rs",
+      "sha256": "63071718b162246af6b0cc657933ec696b993c1cfa40c4cb1c94b250565b7606",
+      "finding": "Current mobile ASR path validates16k mono. This is the complete recovered Android backend, not the old incomplete software050 Android tree."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research",
+      "repoHeadAtReview": "01ed022d1a603f2586d3ba2f31a44426887b890a",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_meeting_20261107.py",
+      "sha256": "61fe8b0f97c71ac6a97ca4f95a9f095fb7aa0904a637f4ac7e0db8203d0a464b",
+      "finding": "Standalone model provider currently accepts only normalized16k mono."
+    },
+    {
+      "repo": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+      "repoHeadAtReview": "2da7c4e357fcba229f09b37b1d1f4b6fd780bf5e",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\packages\\meeting-transcript\\src\\lib.rs",
+      "sha256": "f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684",
+      "finding": "Existing stable shared Document is a suitable downstream boundary; channel-aware input can evolve independently of UI/minutes output."
+    }
+  ],
+  "primaryReferences": [
+    {
+      "url": "https://github.com/desh2608/gss",
+      "type": "author implementation",
+      "relevance": "Multi-channel original recording plus RTTM speaker boundaries -> per-target enhancement. Uses speaker activity inside CACGMM/GSS and beamforming, not merely zeroing audio outside annotated intervals. A training-free reference architecture; not yet verified on our two close microphones."
+    },
+    {
+      "url": "https://arxiv.org/abs/2212.05271",
+      "type": "author paper",
+      "relevance": "Reproducible GSS/ASR recipes for AMI,AliMeeting,LibriCSS; microphone-count and context dependence mean multi-mic results cannot be copied to our dual-mic device."
+    },
+    {
+      "url": "https://github.com/espnet/espnet/blob/master/egs2/chime8_task1/README.md",
+      "type": "official challenge recipe",
+      "relevance": "Diarization -> channel selection/GSS -> ASR is an established full pipeline. Its Pyannote/CuPy installation is not an automatic choice for this machine or existing model defaults."
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/research/publication/vararray-array-geometry-agnostic-continuous-speech-separation/",
+      "type": "author research",
+      "relevance": "Inter-channel correlation/phase can improve continuous meeting separation; separation-first CSS remains an alternative architecture, not a new checkpoint being run here."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-sdk-microphone",
+      "type": "manufacturer engineering guidance",
+      "relevance": "Documents an example40mm two-mic linear array and amplitude/phase/port matching. These are Microsoft Audio Stack recommendations, not universal pass/fail limits or proof our device meets them."
+    },
+    {
+      "url": "https://www.st.com/resource/en/user_manual/dm00391112-getting-started-with-acousticbf-real-time-beam-forming-middleware-stmicroelectronics.pdf",
+      "type": "manufacturer manual",
+      "relevance": "Two-mic directional beamforming is feasible under a specified geometry/calibration. A fixed-direction virtual microphone is not a complete multi-speaker meeting separator."
+    },
+    {
+      "url": "https://datatracker.ietf.org/doc/html/rfc6716#section-4.3",
+      "type": "codec standard",
+      "relevance": "CELT intensity stereo discards left/right differences in selected bands. A stereo channel count or audible stereo alone does not prove spatial information survives coding; compare decoded spatial separation to original PCM first."
+    },
+    {
+      "url": "https://docs.cupy.dev/en/stable/install.html#using-cupy-on-amd-gpu-experimental",
+      "type": "official runtime documentation",
+      "relevance": "GSS author GPU path uses CuPy; current AMD support is experimental and includes eigen-solver limitations. Windows RX6800XT with working PyTorch does not establish native CuPy/GSS compatibility. No driver/CUDA install is triggered."
+    }
+  ],
+  "newImplementation": {
+    "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_multichannel_input_20261108.py",
+    "sha256": "da6f73355845ce173697b91ac6d3cf3fdb10f750170a92328d9633e8ea13badf",
+    "scope": "Independent research input preserves per-microphone PCM and sample positions. No neural call, downmix, polarity change or product backend installation.",
+    "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-architecture-review\\input-integrity-review.json",
+    "verificationSha256": "758016550ffd0b3b1cd8532f4b41f744600125c65c97b324e9dca16b77ff15bc"
+  },
+  "hardwareBoundary": {
+    "recordedCurrentFirmware": 66734,
+    "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+    "runningWorkAtReview": {
+      "at": "2026-11-08T09:04:15+08:00",
+      "state": "NORMAL734_TWO_HOUR_ORDINARY_PHONE_LIVE_RUN_IN_PROGRESS",
+      "phoneInstalled": "0.1.98",
+      "firmwareInstalled": 66734,
+      "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
+      "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
+      "firmwareSource": "25e108f976da624979fd7dae9e85c07349790a42",
+      "boardLease": true,
+      "boardItem": "Companion733现有线程IRQ归因观测",
+      "liveRecording": true,
+      "liveReceive": true,
+      "liveUpgrade": false,
+      "activeExternalSniffer": false,
+      "systemHciReportRunning": false,
+      "ownLatestSession": 346,
+      "evidence": "E:/CodexData/Companion/.build-cache/long734/progress.json",
+      "firmwareBuildSession": null,
+      "firmwareCandidate": 66734,
+      "candidateSourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
+      "externalSnifferSession": null,
+      "phoneCandidate": null,
+      "phoneCandidateSource": null,
+      "backendCandidateSource": null,
+      "phoneBuildSession": null,
+      "normalRestoreCandidate": null,
+      "longControllerSession": 19579
+    },
+    "newBoardAccess": false,
+    "newFirmwareBuild": false,
+    "newInstallation": false,
+    "scope": "Other ordinary long recording continues unchanged. No claim that an old capture UID proves current assembled microphone geometry or current paired capture."
+  },
+  "validationOrder": [
+    "First preserve independent synchronous raw channels; validate clipping, channel order, gain/polarity, clock drift and actual acoustic geometry.",
+    "Use matched real meetings for single-channel versus exactly two-channel comparison. If public array geometry differs, report it as algorithm evidence only; current-board two-person overlap remains necessary.",
+    "Keep predicted-activity end-to-end result separate from an explicitly labeled oracle-activity diagnostic; activity must influence spatial mask/beamforming, not reference word selection.",
+    "Report per-person word errors and omissions, speaker confusion, duplication, short turns and true2/3+overlap, plus ordinary speech regression and actual CPU/RAM/time.",
+    "Only a reproducible short gain triggers full independent meetings and then Windows/Android/card integration. Original strict<5% and minutes-fact/sale gates remain open."
+  ],
+  "next": "继续原RM-OVERLAP，优先验证“保留双麦原音→说话人活动→引导式空间分离→逐人转写”的最小真实会议对照。已完成双路无损研究输入；先建立恰好两路、同步/几何明确的公开会议输入并与单路公平比较，GSS参考实现需先解决本机轻量数值执行可行性。当前实板长录期间不占用或重刷，后续在正常空闲边界补当前实板双人重叠样本。看到逐人实际收益后才推进双声道固件/格式/双端整体重构，不把研究入口完成当效果合格。",
+  "actualNewAccuracyMeasured": false,
+  "newModelsOrTraining": 0,
+  "productDefaultChanged": false,
+  "currentDeviceDualMicSpeakerSeparationQualified": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false
+}
