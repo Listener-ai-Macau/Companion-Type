@@ -18,6 +18,8 @@ final class RecordingTransferMetrics {
     private boolean centralHighPriorityRequested,centralHighPriorityRequestAccepted;
     private boolean reconnectPending;
     private boolean rangeReclaimNegotiated;
+    private boolean rangeShortWholeFallback;
+    synchronized void rangeShortWholeFallback(){rangeShortWholeFallback=true;}
     private int rangeProofRequests,rangePhysicalReceipts,rangePhysicalSectors;
     private long rangeCheckpointNanos,rangeExchangeNanos,rangeReceiptPersistenceNanos;
     private final StringBuilder rangeTrace=new StringBuilder();
@@ -137,6 +139,7 @@ final class RecordingTransferMetrics {
             ",\"stoppedBatchHintRequested\":"+stoppedBatchHintRequested+",\"stoppedBatchHintAccepted\":"+stoppedBatchHintAccepted+
             ",\"centralHighPriorityRequested\":"+centralHighPriorityRequested+",\"centralHighPriorityRequestAccepted\":"+centralHighPriorityRequestAccepted+
             ",\"rangeReclaimNegotiated\":"+rangeReclaimNegotiated+",\"rangeProofRequests\":"+rangeProofRequests+",\"rangePhysicalReceipts\":"+rangePhysicalReceipts+",\"rangePhysicalSectors\":"+rangePhysicalSectors+
+            ",\"rangeShortWholeFallback\":"+rangeShortWholeFallback+
             ",\"rangeCheckpointNanos\":"+rangeCheckpointNanos+",\"rangeExchangeNanos\":"+rangeExchangeNanos+",\"rangeReceiptPersistenceNanos\":"+rangeReceiptPersistenceNanos+",\"firstRangeEvents\":["+rangeTrace+"]"+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+

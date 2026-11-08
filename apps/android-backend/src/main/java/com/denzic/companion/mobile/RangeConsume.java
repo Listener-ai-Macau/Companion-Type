@@ -141,6 +141,10 @@ final class RangeConsume {
             if(resume!=null){RangeCheckpoint saved=resume;resume=null;pending=new Pending(saved);return;}
             if(receiver.completeBytesReceived()&&!fullVerified)return;
             int available=receiver.completeBytesReceived()?usedSectors:(int)((receiver.resumeOffset()/248+1)/16);
+            // Keep full32K erase runs intact. Sending each4K as soon as it
+            // arrives destroys block coalescing and can make physical reclaim
+            // slower than the radio, even when the two overlap.
+            if(!fullVerified)available=available/8*8;
             if(available<=frontier)return;
             long token;do{token=nonce.getAsLong();}while(token==lastNonce);
             long began=System.nanoTime();
@@ -163,6 +167,14 @@ final class RangeConsume {
         }
     }
     Session open(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
+        long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
+        if(used<8&&!RangeCheckpoint.exists(directory,d)){
+            // The established whole-consume path can erase one aligned32K
+            // block after this short original is durable. Preserve existing
+            // partial proofs: those must still reconcile their exact frontier.
+            RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();
+            return null;
+        }
         try{return new Session(directory,d,receiver);}
         catch(Refused busy){
             // A read-only probe may find live capture or its existing NOR

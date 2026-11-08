@@ -334,7 +334,7 @@ public final class RecordingClient implements Closeable {
             RecorderWire.Descriptor first=session.segments.get(0).descriptor;
             if(first.sessionId==selected.sessionId&&first.epoch==selected.epoch&&Arrays.equals(first.uid(),selected.uid())){
                 if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("local recording is damaged; originals retained");
-                RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+                RecordingLibrary.verifiedPrefix(session,selected);
                 if(transferMetrics!=null&&session.state==RecordingLibrary.SessionState.COMPLETE)transferMetrics.completed();
                 return session;
             }

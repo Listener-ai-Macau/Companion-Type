@@ -62,6 +62,7 @@ public final class RangeConsumeClientJvmTest {
             RangeCheckpoint saved=RangeCheckpoint.read(directory,device.d);
             check(saved.nonce==RecorderWire.u32(p,44)&&!saved.confirmed);
             int first=u16(p,48),end=u16(p,50),begin=first==0?0:(first*16-1)*248;
+            if(requests==1&&device.bytes.length==40000&&device.end==0)check(first==0&&end==8);
             int limit=Math.min(device.bytes.length,(end*16-1)*248);
             try{check(Arrays.equals(MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(device.bytes,begin,limit)),Arrays.copyOfRange(p,56,88)));}
             catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
@@ -84,7 +85,7 @@ public final class RangeConsumeClientJvmTest {
             if(id.equals(RecordingClient.RECORDING_CONTROL))return control.clone();
             if(id.equals(RecordingClient.RECORDING_CONSUME))return rangeReply(range.clone());
             check(id.equals(RecordingClient.RECORDING_PULL)&&pulled);
-            if(expectRange&&!legacy&&!busy&&device.end==0&&offset>=4000&&requests==0){
+            if(expectRange&&!legacy&&!busy&&device.end==0&&offset>=31600&&requests==0){
                 try{check(requested.await(2,TimeUnit.SECONDS));}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException(e);}
             }
             int n=Math.min(400,device.bytes.length-offset);boolean last=offset+n==device.bytes.length;int header=last?56:20;
@@ -107,12 +108,15 @@ public final class RangeConsumeClientJvmTest {
     }
     public static void main(String[] args)throws Exception {
         for(int i=0;i<RangeCheckpointJvmTest.data.length;i++)RangeCheckpointJvmTest.data[i]=(byte)(i*37+13);
-        byte[] data=RangeCheckpointJvmTest.data;RecorderWire.Descriptor d=RangeCheckpointJvmTest.descriptor();
+        byte[] data=new byte[40000];for(int i=0;i<data.length;i++)data[i]=(byte)(i*37+13);
+        byte[] wire=RangeCheckpointJvmTest.descriptor().wireBytes();put(wire,48,data.length,4);
+        put(wire,52,RecorderWire.crc(data,0,data.length),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(data),0,wire,56,32);
+        put(wire,108,RecorderWire.crc(wire,0,108),4);RecorderWire.Descriptor d=RecorderWire.Descriptor.decode(wire);
         for(int mode=0;mode<4;mode++){
             Path dir=Files.createTempDirectory("companion-range-client-");Device device=new Device(d,data);
             Link link=new Link(device,dir,mode==1,mode==2,false);link.expectRange=mode==0;Path file=download(link,d,mode!=3);
             check(Arrays.equals(Files.readAllBytes(file),data));
-            if(mode==0){check(link.queries==1&&link.requests>=2&&link.receipts==link.requests&&device.end==3&&RangeCheckpoint.read(dir,d).confirmed);}
+            if(mode==0){check(link.queries==1&&link.requests>=2&&link.receipts==link.requests&&device.end==11&&RangeCheckpoint.read(dir,d).confirmed);}
             else check(link.requests==0&&(!Files.exists(dir.resolve(SegmentReceiver.key(d)+".range"))));
         }
         Path dir=Files.createTempDirectory("companion-range-reconnect-");Device device=new Device(d,data);
@@ -121,7 +125,22 @@ public final class RangeConsumeClientJvmTest {
         catch(RecordingSyncRunner.LinkFailure expected){}
         check(failed.requests==1&&RangeCheckpoint.exists(dir,d)&&!RangeCheckpoint.read(dir,d).confirmed);
         Link resumed=new Link(device,dir,false,false,false);Path file=download(resumed,d,true);
-        check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==3);
+        check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==11);
+        // A new short original keeps the existing single-block whole path;
+        // an old partially reclaimed short original must reconcile its proof.
+        RecorderWire.Descriptor shortD=RangeCheckpointJvmTest.descriptor();byte[] shortData=RangeCheckpointJvmTest.data;
+        Path shortDir=Files.createTempDirectory("companion-short-whole-");Device shortDevice=new Device(shortD,shortData);
+        Link shortLink=new Link(shortDevice,shortDir,false,false,false);shortLink.expectRange=false;
+        check(Arrays.equals(Files.readAllBytes(download(shortLink,shortD,true)),shortData)&&shortLink.queries==0&&shortLink.requests==0);
+        RecordingLibrary.Session checked=RecordingLibrary.sessions(shortDir,shortD).get(0);
+        check(RecordingLibrary.verifiedPrefix(checked,shortD).segments.size()==1);
+        Path shortFile=shortDir.resolve(SegmentReceiver.key(shortD)+".cop1");byte[] damaged=shortData.clone();damaged[0]^=1;Files.write(shortFile,damaged);
+        try{RecordingLibrary.verifiedPrefix(RecordingLibrary.sessions(shortDir,shortD).get(0),shortD);throw new AssertionError("damaged inventory accepted");}catch(IOException expected){}
+        Path oldDir=Files.createTempDirectory("companion-old-short-range-");Files.write(oldDir.resolve(SegmentReceiver.key(shortD)+".part"),shortData);
+        try(SegmentReceiver receiver=new SegmentReceiver(oldDir,shortD)){receiver.checkpointRange(oldDir,0,1,99,p->{});}
+        Device oldDevice=new Device(shortD,shortData);oldDevice.nonce=99;oldDevice.end=1;
+        Link oldLink=new Link(oldDevice,oldDir,false,false,false);oldLink.expectRange=false;
+        check(Arrays.equals(Files.readAllBytes(download(oldLink,shortD,true)),shortData)&&oldLink.queries==1&&oldLink.requests==1&&oldDevice.end==3);
         System.out.println("PASS_ACTUAL_CLIENT_RANGE_FLOW concurrent_audio_and_receipt=1 durable_source_before_request=1 exact_original_after_reconnect=1 lost_receipt_reconciled=1 legacy_busy_and_copy_only_paths_preserved=1 no_metric_start_or_byte_padding_changes=1");
     }
 }

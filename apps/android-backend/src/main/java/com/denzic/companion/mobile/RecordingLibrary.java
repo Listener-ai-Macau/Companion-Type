@@ -195,6 +195,15 @@ public final class RecordingLibrary {
     static Session verifiedPrefix(Path directory,RecorderWire.Descriptor selected) throws IOException {
         for(Session session:sessions(directory,selected)) {
             if(session.segments.isEmpty()||!identity(session.segments.get(0).descriptor).equals(identity(selected)))continue;
+            return verifiedPrefix(session,selected);
+        }
+        throw new IOException("selected recording is not saved on this phone; device copy retained");
+    }
+    /** Reuse this same freshly verified immutable inventory, without a
+     * second directory walk and second hash of every original segment. */
+    static Session verifiedPrefix(Session session,RecorderWire.Descriptor selected)throws IOException {
+            if(session.segments.isEmpty()||!identity(session.segments.get(0).descriptor).equals(identity(selected)))
+                throw new IOException("selected recording is not saved on this phone; device copy retained");
             List<Entry> prefix=new ArrayList<>();long offset=0;
             for(Entry entry:session.segments) {
                 RecorderWire.Descriptor d=entry.descriptor;
@@ -206,8 +215,6 @@ public final class RecordingLibrary {
             if(prefix.size()!=selected.segmentIndex+1 || !prefix.get(prefix.size()-1).descriptor.sameContent(selected))
                 throw new IOException("selected recording is not durably saved; device copy retained");
             return new Session((selected.flags&2)!=0&&(selected.flags&4)==0?SessionState.COMPLETE:SessionState.INCOMPLETE,prefix);
-        }
-        throw new IOException("selected recording is not saved on this phone; device copy retained");
     }
 
     /** Checks every complete copy against its device descriptor; never modifies files. */
