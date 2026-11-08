@@ -981,7 +981,12 @@ fn build_first_frame_payload(connect_id: &str, seed_v2: bool) -> Value {
     } else {
         json!({
             "model_name": "bigmodel",
-            "enable_nonstream": false,
+            // The async route requires the second pass and large-model SSD
+            // together for speaker labels. A speaker-info flag on its own can
+            // return every utterance as speaker 0 on a real multi-person file.
+            // https://docs.volcengine.com/docs/doubao-voice/large-model-streaming-automatic-speech-recognition-api-1?lang=en
+            "enable_nonstream": true,
+            "ssd_version": "200",
             "enable_itn": true,
             "enable_punc": true,
             "show_utterances": true,
@@ -1577,6 +1582,25 @@ mod tests {
             assert!(payload["request"].get("voiceprints").is_none());
             assert!(payload["request"].get("ssd_mode").is_none());
         }
+    }
+
+    #[test]
+    fn async_speaker_request_requires_second_pass_and_large_model_ssd() {
+        let provider = VolcengineSaucAsr::new(VolcengineCredentials {
+            app_id: "test-app".into(), access_token: "test-key".into(),
+            resource_id: "volc.bigasr.sauc.duration".into(),
+        });
+        let payload = provider.session_payload("meeting-speakers");
+        assert_eq!(payload["request"]["enable_nonstream"], true);
+        assert_eq!(payload["request"]["ssd_version"], "200");
+        let current = provider.cache_configuration();
+        assert_eq!(current["payload"]["request"], payload["request"]);
+        let mut old = current.clone();
+        old["payload"]["request"]["enable_nonstream"] = serde_json::json!(false);
+        old["payload"]["request"].as_object_mut().unwrap().remove("ssd_version");
+        assert_ne!(current, old, "cached single-speaker results must not shadow the corrected request");
+        let seed = build_first_frame_payload("seed-meeting", true);
+        assert!(seed["request"].get("enable_nonstream").is_none(), "the separate nostream route retains its transport contract");
     }
 
     #[test]
