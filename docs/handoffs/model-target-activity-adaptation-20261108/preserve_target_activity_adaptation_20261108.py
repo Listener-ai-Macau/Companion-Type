@@ -32,8 +32,8 @@ record={'at':now,'ownerQuote':'需要你向着正确方向推进','precedingOwne
     'gradientProof':optional(C/'gradient-proof.json'),'trainingHistory':optional(C/'training-history.json'),'selectedCheckpoint':optional(C/'best-checkpoint.json'),'evaluation':optional(C/'evaluation/review.json'),'decision':optional(C/'decision.json'),
     'pairedControl':{'run':optional(C/'paired-control/run.json'),'preparation':optional(C/'paired-control/control-preparation.json'),'trainingHistory':optional(C/'paired-control/training-history.json'),'selectedCheckpoint':optional(C/'paired-control/best-checkpoint.json'),'evaluation':optional(C/'paired-control/evaluation/review.json'),'technicalRecovery':optional(C/'paired-control/explicit-directory-recovery.json')},
     'defaultProductChanged':False,'originalOrdinaryAsrChanged':False,'finalHoldoutOpened':False,'qualityQualified':False}
-oracle=C/'oracle-activity-diagnostic';record['oracleActivityDiagnostic']={'preparation':optional(oracle/'preparation.json'),'run':optional(oracle/'run-r2.json'),'review':optional(oracle/'review.json')}
-oracle_point=record['oracleActivityDiagnostic']['review'] or record['oracleActivityDiagnostic']['run'] or record['oracleActivityDiagnostic']['preparation']
+oracle=C/'oracle-activity-diagnostic';record['oracleActivityDiagnostic']={'preparation':optional(oracle/'preparation.json'),'run':optional(oracle/'run-r2.json'),'review':optional(oracle/'review.json'),'residualAudit':optional(oracle/'residual-boundary-audit.json'),'directionDecision':optional(oracle/'direction-decision.json')}
+oracle_point=record['oracleActivityDiagnostic']['directionDecision'] or record['oracleActivityDiagnostic']['review'] or record['oracleActivityDiagnostic']['run'] or record['oracleActivityDiagnostic']['preparation']
 if oracle_point:record['state']=oracle_point['state']
 record['next']=(oracle_point or record['decision'] or {}).get('next','继续原RM-OVERLAP：运行已冻结活动标注辅助的混音/分离音频对照，保持生成和文字评分，不能把oracle研究成绩当作产品成绩。')
 record['retainedUnqualifiedHeadArtifacts']=[]
@@ -50,7 +50,7 @@ contract=data['quality_targets']['real_meeting_model_contract_20261103'];gate=ne
 assert backlog.read_bytes()==raw,'Original shared backlog changed; re-read and merge before writing';temp=backlog.with_suffix('.activity.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,backlog)
 if args.phase in ['complete','oracle-complete']:
     assert record['decision'],'A completed batch needs an actual result/decision, not preparation counters'
-    conclusion=record['decision'] if args.phase=='complete' else record['oracleActivityDiagnostic']['review'];assert conclusion
+    conclusion=record['decision'] if args.phase=='complete' else record['oracleActivityDiagnostic']['directionDecision'];assert conclusion
     log=R/'docs/development_log.md';marker='原RM-OVERLAP定向适配20261108' if args.phase=='complete' else '原RM-OVERLAP活动标注对照20261108';assert marker not in log.read_text(encoding='utf8')
     with log.open('a',encoding='utf8') as stream:stream.write('\n\n## '+now+'｜'+marker+'\n\n承接Owner“需要你向着正确方向推进”及可行性/效率询问。实际结果、收益与未解决范围：'+json.dumps(conclusion,ensure_ascii=False)+'。源码/公开证据及所选小模块权重（若有）提交'+model_head+'已远端核验。原普通模型/原字/原音与全部<5%/跨域/事实/双端实卡/售卖门保持；不以梯度、训练loss下降或人工标注辅助成绩冒称交付准确率提升。下一步：'+record['next']+'\n')
 dest=S/'docs/handoffs/model-target-activity-adaptation-20261108';dest.mkdir(exist_ok=True)
