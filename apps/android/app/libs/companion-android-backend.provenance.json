@@ -1,7 +1,7 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "4f0ee89748334c49fd95e6ee58535b8480096947bc81e4f01feb654c8f9a0914",
-  "backendSourceCommit": "57e53daa46c5d7f9d2ebfc4a7208ba80edee3ec7",
+  "aarSha256": "bcfd48b48c1a604698a8f1d3f3a083114b15add9cd6f41d297650e183afd28f2",
+  "backendSourceCommit": "e35be96f6a4f4191b37649012e3d34dee67afd4e",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Negotiated durable range reclamation in the actual receiver and bounded initial133 recovery. Native audio/models/web assets unchanged; physical speed and resource gates remain unqualified.",
-  "javaSourceCommit": "57e53daa46c5d7f9d2ebfc4a7208ba80edee3ec7",
+  "scope": "Persist exact range proofs off the append path under the same retained owner; sub-block3..7-sector originals may overlap sector reclaim. Tiny and measured8..15-sector whole-tail paths preserved. Native audio/models/web assets unchanged; actual speed not yet qualified.",
+  "javaSourceCommit": "e35be96f6a4f4191b37649012e3d34dee67afd4e",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -327,5 +327,14 @@
   "javaClassesChangedFrom103": [
     "com/denzic/companion/mobile/RangeConsume.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo103": true
+  "allNonClassAarEntriesByteIdenticalTo103": true,
+  "javaClassesChangedFrom104": [
+    "com/denzic/companion/mobile/RangeCheckpoint$Save.class",
+    "com/denzic/companion/mobile/RangeCheckpoint.class",
+    "com/denzic/companion/mobile/RangeConsume$Session$Pending.class",
+    "com/denzic/companion/mobile/RangeConsume$Session.class",
+    "com/denzic/companion/mobile/RangeConsume.class",
+    "com/denzic/companion/mobile/SegmentReceiver.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo104": true
 }
