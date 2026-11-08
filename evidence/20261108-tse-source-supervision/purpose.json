@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-08T14:07:14.097162+08:00",
+  "owner": "好的,开始吧",
+  "previousDecision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\decision.json",
+  "previousModelCommit": "662b0ab0e258af92d8ed1a481fbaac66ae9c3fde",
+  "state": "PREPARING_KNOWN_POSITIVE_SOURCE_SUPERVISION",
+  "difference": "Previous ASR-plus-inactive-waveform objective admitted global attenuation. This batch supplies exact positive audio components, verifies non-silent objectives, and holds out two new natural source meetings. Same complete pretrained backbone; no model shopping or validation-driven LR sweep.",
+  "next": "准备并核验混音分量、独立声纹与新自然会议；固定可区分静音退化的目标后做一次训练和完整前后验证。",
+  "qualityQualified": false
+}

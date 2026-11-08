@@ -1,0 +1,13 @@
+{
+  "state": "RUNNING_TSE_STAGE",
+  "pid": 10360,
+  "startedAt": "2026-11-08T14:17:20+08:00",
+  "worker": "tse_source_supervision_train_worker_20261108.py",
+  "runId": "source-train-r1",
+  "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 0,
+  "rssPeakBytes": 0,
+  "qualityQualified": false,
+  "activePid": 22264
+}

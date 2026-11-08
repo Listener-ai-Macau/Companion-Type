@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_KNOWN_COMPONENT_AND_NEW_NATURAL_AUDIO_PREPARATION",
+  "trainingUnits": 128,
+  "trainingTargetQueries": 192,
+  "syntheticValidationUnits": 32,
+  "naturalValidationQueries": 66,
+  "counts": {
+    "train/known_additive_mixture": 64,
+    "train/absent_known_identity": 32,
+    "train/single_target_preservation": 32,
+    "validation/known_additive_mixture": 16,
+    "validation/absent_known_identity": 8,
+    "validation/single_target_preservation": 8
+  },
+  "naturalCounts": {
+    "20200709_L_R002S01C01/present_solo": 12,
+    "20200709_L_R002S01C01/present_overlap": 12,
+    "20200709_L_R002S01C01/absent_other_speech": 12,
+    "20200805_S_R001S01C01/present_solo": 10,
+    "20200805_S_R001S01C01/present_overlap": 10,
+    "20200805_S_R001S01C01/absent_other_speech": 10
+  },
+  "componentPool": 223,
+  "profiles": 25,
+  "sourceHashChecks": true,
+  "componentSumExactByConstruction": true,
+  "coverageWarnings": [],
+  "physicalSpeakerSplitIndependenceUnknown": true,
+  "oldExposed48NotUsed": true,
+  "finalHoldoutOpened": false,
+  "newModelCalls": 0,
+  "qualityQualified": false
+}

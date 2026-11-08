@@ -1,0 +1,275 @@
+{
+  "at": "2026-11-08T14:18:56+08:00",
+  "phase": "checkpoint",
+  "ownerOriginal": "好的,开始吧",
+  "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision",
+  "purpose": {
+    "at": "2026-11-08T14:07:14.097162+08:00",
+    "owner": "好的,开始吧",
+    "previousDecision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\decision.json",
+    "previousModelCommit": "662b0ab0e258af92d8ed1a481fbaac66ae9c3fde",
+    "state": "PREPARING_KNOWN_POSITIVE_SOURCE_SUPERVISION",
+    "difference": "Previous ASR-plus-inactive-waveform objective admitted global attenuation. This batch supplies exact positive audio components, verifies non-silent objectives, and holds out two new natural source meetings. Same complete pretrained backbone; no model shopping or validation-driven LR sweep.",
+    "next": "准备并核验混音分量、独立声纹与新自然会议；固定可区分静音退化的目标后做一次训练和完整前后验证。",
+    "qualityQualified": false
+  },
+  "data": {
+    "state": "COMPLETE_KNOWN_COMPONENT_AND_NEW_NATURAL_AUDIO_PREPARATION",
+    "trainingUnits": 128,
+    "trainingTargetQueries": 192,
+    "syntheticValidationUnits": 32,
+    "naturalValidationQueries": 66,
+    "counts": {
+      "train/known_additive_mixture": 64,
+      "train/absent_known_identity": 32,
+      "train/single_target_preservation": 32,
+      "validation/known_additive_mixture": 16,
+      "validation/absent_known_identity": 8,
+      "validation/single_target_preservation": 8
+    },
+    "naturalCounts": {
+      "20200709_L_R002S01C01/present_solo": 12,
+      "20200709_L_R002S01C01/present_overlap": 12,
+      "20200709_L_R002S01C01/absent_other_speech": 12,
+      "20200805_S_R001S01C01/present_solo": 10,
+      "20200805_S_R001S01C01/present_overlap": 10,
+      "20200805_S_R001S01C01/absent_other_speech": 10
+    },
+    "componentPool": 223,
+    "profiles": 25,
+    "sourceHashChecks": true,
+    "componentSumExactByConstruction": true,
+    "coverageWarnings": [],
+    "physicalSpeakerSplitIndependenceUnknown": true,
+    "oldExposed48NotUsed": true,
+    "finalHoldoutOpened": false,
+    "newModelCalls": 0,
+    "qualityQualified": false
+  },
+  "dataVerification": {
+    "state": "PASS_ALL_SOURCE_PCM_PROFILES_LABELS_AND_EXACT_COMPONENT_SUMS",
+    "sourceExcerptsChecked": 314,
+    "mixedInputsCheckedBothChannels": 80,
+    "naturalQueriesChecked": 66,
+    "trainingUnits": 128,
+    "validationUnits": 32,
+    "meetingSplitDisjoint": true,
+    "allProfileAndQueryWindowsDisjoint": true,
+    "allPositiveComponentsIncludeOriginalCompleteUtterance": true,
+    "sourceComponentsStillContainRealRoomBackground": true,
+    "allMixturesExplicitlySynthetic": true,
+    "referenceNotAnInferenceInput": true,
+    "newModelCalls": 0,
+    "qualityQualified": false
+  },
+  "objectiveProof": {
+    "state": "PASS_SOURCE_OBJECTIVE_ANTI_COLLAPSE_AND_LONGEST_PAIRED_GRADIENTS",
+    "pid": 4128,
+    "newWeightUpdates": 0,
+    "checks": {
+      "antiSilenceAndAttenuation": [
+        {
+          "perfectSourceLoss": 0.0,
+          "halfVolumeLoss": 1.4128293991088867,
+          "silentOutputLoss": 6.635377883911133,
+          "wrongSpeakerLoss": 10.015299797058105,
+          "silentOutputGradientTowardTargetDirectionalDerivative": -1.0
+        },
+        {
+          "perfectSourceLoss": 0.0,
+          "halfVolumeLoss": 1.4884097576141357,
+          "silentOutputLoss": 7.844967842102051,
+          "wrongSpeakerLoss": 8.428585052490234,
+          "silentOutputGradientTowardTargetDirectionalDerivative": -1.0
+        }
+      ],
+      "longestPairedGraph": {
+        "id": "train--mixed-015",
+        "audioSeconds": 10.70475,
+        "twoTargetGraphsInOneLoss": true,
+        "parameterGroupsWithFiniteGradient": 562,
+        "spatialGradientNormSum": 8.424876809120178,
+        "loss": 6.000523567199707,
+        "gpuPeakAllocatedBytes": 2611772928,
+        "gpuPeakReservedBytes": 2770337792,
+        "speakerEncoderFrozen": true,
+        "recognizerLoaded": false
+      }
+    },
+    "qualityQualified": false,
+    "finishedAt": "2026-11-08T14:14:49.750644+08:00",
+    "wholeWorkerSeconds": 54.826934599987,
+    "limits": {
+      "pid": 4128,
+      "cpuRate": 1000,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 10.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 1268641792,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "trainingProtocol": {
+    "seed": 20261108,
+    "extractorReady": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\model-ready.json",
+    "extractorReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+    "audioFrontend": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\audio-frontend-source.json",
+    "audioFrontendSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+    "asrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+    "asrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "at": "2026-11-08T14:17:20.169069+08:00",
+    "state": "FROZEN_ONE_PASS_KNOWN_COMPONENT_SUPERVISION",
+    "sourceFiles": [
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_source_data_20261108.py",
+        "sha256": "b80812cb74d04cbd0debe326f28e8b9399f9ec3534ba5f2210a54e18f192e22a"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_source_objective_20261108.py",
+        "sha256": "242fce021bcc35cb44c70abe6b987a009bf34d3ac17c24ed8781208b75ac7ef3"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_source_runtime_20261108.py",
+        "sha256": "a52090ef2ed849ce8908606fbb649bfaed919e1b6d9eb1415cd20bef59862a59"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_training_20261108.py",
+        "sha256": "020f4d18418ab50576368c96efd5f4eb5cbcbb9910dc3cc4a589c5bc9c8b94ab"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_activation_memory_20261108.py",
+        "sha256": "e6406f90702340da58b1e1f4336933932876cfd5999e404471ee01fe03da6cbd"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_model_io_20261108.py",
+        "sha256": "067e6530fcaa7a7587c84e9fd3c8565c3b3f9e9d6c374bd096461612dd4b5fed"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_checkpoint_streamed_20261108.py",
+        "sha256": "30be335575e5033e104dccf93318a2e39142e87092217b93867b107f8a85a416"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+        "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+        "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+        "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tse_source_supervision_proof_worker_20261108.py",
+        "sha256": "aef6e56f01e8841a91cb2824e881b9b0ac6b922c98253f430c648e9300adaf29"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\data-protocol-r1.json",
+        "sha256": "cb13322f5e27e62e349cb7eba6c70f7268f5fe854694afe68b573caa1367e046"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\sources.json",
+        "sha256": "ab8abace856fe872df1edfb9de2ec3645931a68773b9333398e0bf03335a4f1b"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\profiles.json",
+        "sha256": "d159adf7713f9de2c477d4fd404f2529ac0cf9772d4cc0411419e1f057d534e4"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\components.json",
+        "sha256": "7817fed0185b0ccebb9fe2b057701317925194903dd8708b4ff02fc7a13b799f"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\training-units.json",
+        "sha256": "2c9e8e08a668d519939cd0439a743e165f015b3299b8899fd8f8a9e608902054"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+        "sha256": "5223dcad274399133c5231423380d7571502817677e64a8c303d60d0bc08b753"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\natural-validation-queries.json",
+        "sha256": "a7d0c0fad0e3464ac2c9a175ee56e8e2a445f5d1cde86b552cae5f144662f225"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\audio-verification.json",
+        "sha256": "0fcd5cf94c3630e6bf5467c18a03c1c7fa71e3037a5966b47860d15f0df9a45f"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tse_source_supervision_train_worker_20261108.py",
+        "sha256": "64542c443be4d608b3f490e7f9a1fcf46a405f5814923dc8ba8effa8c6d866dd"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_pcm_publication_20261108.py",
+        "sha256": "74484aa889f0355f72e3c1d5a3141ead7ff3ed988b5538b86416c80386623179"
+      },
+      {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\source-proof-r1\\state.json",
+        "sha256": "4a6c0418e0dc9696db8ddce502a3eafd971b6a40fc253832a74412916b719259"
+      }
+    ],
+    "workerSha256": "64542c443be4d608b3f490e7f9a1fcf46a405f5814923dc8ba8effa8c6d866dd",
+    "epochs": 1,
+    "learningRate": 1e-05,
+    "weightDecay": 1e-05,
+    "gradientClipNorm": 5.0,
+    "checkpointInterval": 16,
+    "interStepIdleSeconds": 0.25,
+    "comparisonTolerance": 0.0001,
+    "loss": "Known positive target: normalized waveformL1 plus mean over256/512/1024 STFT spectral convergence and logmagnitudeL1. Mixedpair: mean of both positive losses plus normalized predicted-sum mixture consistency. Absent identity: normalized absolute output only. Same original PS4 complete backbone and zero spatial adapters; speaker encoder frozen. No ASR teacher loss this trial.",
+    "advancementGate": "Both unseen source meetings must improve mean known-mixture normalizedL1; aggregate positive target normalizedL1 must beat silent output (<1), mixedpair RMS-gain error and single-target waveform loss must not regress, and absent mean output/inputRMS must not regress. If any fail, stop this candidate; no learning-rate/epoch/gain sweep. If pass, decode all frozen new natural queries before/after with the same frozen recognizer and count all target-present errors and empty-target insertions. Supervised enrollment pilot is not automatic-meeting or sale qualification.",
+    "qualityQualified": false,
+    "finalHoldoutOpened": false,
+    "productDefaultChanged": false,
+    "objectiveProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\source-proof-r1\\state.json",
+    "objectiveProofSha256": "4a6c0418e0dc9696db8ddce502a3eafd971b6a40fc253832a74412916b719259",
+    "checkpointRoot": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\checkpoints-r1",
+    "audioRoot": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1",
+    "trainingUnits": 128,
+    "trainingTargetQueries": 192,
+    "newNaturalQueriesEachCondition": 66,
+    "doNotInitializeFromRejectedAttenuatedWeights": true
+  },
+  "trainingProgress": {
+    "state": "VALIDATING_BASELINE",
+    "pid": 18568,
+    "startedAt": "2026-11-08T14:17:21.915554+08:00",
+    "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
+    "newWeightUpdates": 0,
+    "completedInputs": 54,
+    "qualityQualified": false,
+    "limits": {
+      "pid": 18568,
+      "cpuRate": 1000,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 10.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 1088262144,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "trainingReview": null,
+  "decision": null,
+  "latestTrainingCheckpoint": null,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "state": "VALIDATING_BASELINE",
+  "next": "完成固定128单元原声监督训练、新会议分量验证和66段自然会议前后验证；先确认不压掉目标声音，再用相同识别器核对实际转写，全部原质量门保留。"
+}

@@ -1,0 +1,16 @@
+{
+  "state": "PASS_ALL_SOURCE_PCM_PROFILES_LABELS_AND_EXACT_COMPONENT_SUMS",
+  "sourceExcerptsChecked": 314,
+  "mixedInputsCheckedBothChannels": 80,
+  "naturalQueriesChecked": 66,
+  "trainingUnits": 128,
+  "validationUnits": 32,
+  "meetingSplitDisjoint": true,
+  "allProfileAndQueryWindowsDisjoint": true,
+  "allPositiveComponentsIncludeOriginalCompleteUtterance": true,
+  "sourceComponentsStillContainRealRoomBackground": true,
+  "allMixturesExplicitlySynthetic": true,
+  "referenceNotAnInferenceInput": true,
+  "newModelCalls": 0,
+  "qualityQualified": false
+}

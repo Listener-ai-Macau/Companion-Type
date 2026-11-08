@@ -43,3 +43,9 @@ evidence/20261108-tse-supervised-adaptation/** -text -whitespace
 trained/20261108-tse-supervised-adaptation/*.safetensors -text -diff
 
 src/freeze_tse_training_trial_20261108.py -text
+
+src/*tse_source_supervision*20261108.py -text
+
+evidence/20261108-tse-source-supervision/** -text -whitespace
+
+trained/20261108-tse-source-supervision/*.safetensors -text -diff

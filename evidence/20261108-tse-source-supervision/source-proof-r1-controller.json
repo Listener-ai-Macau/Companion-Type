@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 21184,
+  "startedAt": "2026-11-08T14:13:47+08:00",
+  "worker": "tse_source_supervision_proof_worker_20261108.py",
+  "runId": "source-proof-r1",
+  "protocolSha256": "d259036d81b058f1c0515d9504a7a6254de55a0350bda26eab03d41882ec6107",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1270652928,
+  "rssPeakBytes": 1146306560,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "PASS_SOURCE_OBJECTIVE_ANTI_COLLAPSE_AND_LONGEST_PAIRED_GRADIENTS",
+  "finishedAt": "2026-11-08T14:14:51+08:00",
+  "wholeProcessFamilySeconds": 63.94532339999569
+}

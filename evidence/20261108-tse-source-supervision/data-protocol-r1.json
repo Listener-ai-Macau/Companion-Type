@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-08T14:07:14.092159+08:00",
+  "state": "FROZEN_KNOWN_COMPONENTS_AND_TWO_NEW_REAL_VALIDATION_MEETINGS",
+  "seed": 20261108,
+  "sourceListSha256": "ab8abace856fe872df1edfb9de2ec3645931a68773b9333398e0bf03335a4f1b",
+  "trainingSourceMeetings": [
+    "20200707_L_R001S08C01",
+    "20200708_L_R002S01C01"
+  ],
+  "naturalValidationMeetings": [
+    "20200709_L_R002S01C01",
+    "20200805_S_R001S01C01"
+  ],
+  "componentMinimumSeconds": 1.5,
+  "componentMaximumSeconds": 8.0,
+  "maximumComponentsPerTrainingPerson": 32,
+  "trainingMixedPairs": 64,
+  "syntheticValidationMixedPairs": 16,
+  "snrScheduleDb": [
+    -3.0,
+    0.0,
+    3.0
+  ],
+  "interfererOffsetScheduleFractions": [
+    0.0,
+    0.25,
+    0.5
+  ],
+  "singleTargetTrainingQueries": 32,
+  "absentTargetTrainingQueries": 32,
+  "maximumNaturalQueriesPerPersonPerCategory": 2,
+  "naturalQueryMaximumSeconds": 15.0,
+  "sourceKind": "Real observed independent nonoverlapping utterances; background/reverberation remain in each component. Their additive mixtures are explicitly synthetic, not natural simultaneous speech or clean close-talk references. Raw mic0/1 phase relationships are preserved within each component.",
+  "lossChange": "Use known positive waveform components and target identity, not solely ASR CE for positive-overlap preservation. Fixed objective tests must reject silence/attenuation shortcuts before updates.",
+  "validationPolicy": "Two new natural meetings, frozen before new model updates. Previous exposed48 queries and final holdout are not used to choose parameters. Speaker physical identity independence unknown; pretrained PS4 may have used AISHELL4, so this is adaptation validation, not pretraining-independent qualification.",
+  "license": "Retain original AISHELL4 CC BY-SA4.0; mirror Apache label does not prove relicensing.",
+  "primaryOrigin": "https://www.openslr.org/111/",
+  "researchSources": [
+    "https://arxiv.org/abs/2203.16843",
+    "https://arxiv.org/abs/2204.04811",
+    "https://huggingface.co/TaurenMountain/PS4"
+  ],
+  "qualityQualified": false,
+  "finalHoldoutOpened": false
+}

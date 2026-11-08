@@ -1,0 +1,25 @@
+{
+  "state": "VALIDATING_BASELINE",
+  "pid": 18568,
+  "startedAt": "2026-11-08T14:17:21.915554+08:00",
+  "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
+  "newWeightUpdates": 0,
+  "completedInputs": 54,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 18568,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1088262144,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

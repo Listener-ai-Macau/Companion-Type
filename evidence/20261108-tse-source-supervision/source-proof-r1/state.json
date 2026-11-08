@@ -1,0 +1,54 @@
+{
+  "state": "PASS_SOURCE_OBJECTIVE_ANTI_COLLAPSE_AND_LONGEST_PAIRED_GRADIENTS",
+  "pid": 4128,
+  "newWeightUpdates": 0,
+  "checks": {
+    "antiSilenceAndAttenuation": [
+      {
+        "perfectSourceLoss": 0.0,
+        "halfVolumeLoss": 1.4128293991088867,
+        "silentOutputLoss": 6.635377883911133,
+        "wrongSpeakerLoss": 10.015299797058105,
+        "silentOutputGradientTowardTargetDirectionalDerivative": -1.0
+      },
+      {
+        "perfectSourceLoss": 0.0,
+        "halfVolumeLoss": 1.4884097576141357,
+        "silentOutputLoss": 7.844967842102051,
+        "wrongSpeakerLoss": 8.428585052490234,
+        "silentOutputGradientTowardTargetDirectionalDerivative": -1.0
+      }
+    ],
+    "longestPairedGraph": {
+      "id": "train--mixed-015",
+      "audioSeconds": 10.70475,
+      "twoTargetGraphsInOneLoss": true,
+      "parameterGroupsWithFiniteGradient": 562,
+      "spatialGradientNormSum": 8.424876809120178,
+      "loss": 6.000523567199707,
+      "gpuPeakAllocatedBytes": 2611772928,
+      "gpuPeakReservedBytes": 2770337792,
+      "speakerEncoderFrozen": true,
+      "recognizerLoaded": false
+    }
+  },
+  "qualityQualified": false,
+  "finishedAt": "2026-11-08T14:14:49.750644+08:00",
+  "wholeWorkerSeconds": 54.826934599987,
+  "limits": {
+    "pid": 4128,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1268641792,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

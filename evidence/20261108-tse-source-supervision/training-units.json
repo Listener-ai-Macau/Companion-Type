@@ -1,0 +1,4290 @@
+[
+  {
+    "id": "train--mixed-060",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-060\\mixture.wav",
+      "audioSha256": "3d65c681a24e7c7c75658e7ca934caeb94795e5dd57f46a3f97c6e60a34cecd5",
+      "audioSeconds": 6.183,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-060\\component-a.wav",
+          "audioSha256": "ccddcc036a0300c89f2368ca0aead9d0f72480fd25ddb14df1d12a49f6307434",
+          "audioSeconds": 6.183,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-003",
+        "referenceForScoringOnly": "如果要让观众感觉到自豪的话，咱们的故事是不是要把观众的情绪带进去？"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-060\\component-b.wav",
+          "audioSha256": "d346f0a485bb034f2257719c1a1a2d4ad147da14250c5e1686cda43ff8dfdff0",
+          "audioSeconds": 6.183,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "sourceGainB": 1.1118036193753358,
+    "commonPcmGain": 7.667298060254429,
+    "interfererOffsetSamples": 32520,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-008",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-008\\mixture.wav",
+      "audioSha256": "ea62d21fabd4ec7527a0b30abb7dc06f52d899586f9a6bfbaaabc1b0d8cf2881",
+      "audioSeconds": 8.883375,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-008\\component-a.wav",
+          "audioSha256": "828ba8c1892eee346e36501032bd0412346ec8c6a18f35c67138257f056cbdf2",
+          "audioSeconds": 8.883375,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-003",
+        "referenceForScoringOnly": "我觉得如果你要市场范围想大一点儿，就不要弄的特别复杂"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-008\\component-b.wav",
+          "audioSha256": "adc3e09e9e6bd6cfc447ff1f9e55f97da4802ab0ee0d64f7ef7cb906e5011b0a",
+          "audioSeconds": 8.883375,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-003",
+        "referenceForScoringOnly": "那个都得根据我们最终定下来的这个人物，还有中心"
+      }
+    ],
+    "sourceGainB": 0.572720893613146,
+    "commonPcmGain": 18.267883274432165,
+    "interfererOffsetSamples": 38213,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-013",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-013\\mixture.wav",
+      "audioSha256": "8185b507fb3ae337338cedf7e5d00b93d55e987822bc862e484bfb054006b96d",
+      "audioSeconds": 7.1150625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-013\\component-a.wav",
+          "audioSha256": "160747d5e747a1788710ef9c62400834a3ba553abea0bba4e1d5bbb94affc598",
+          "audioSeconds": 7.1150625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-001",
+        "referenceForScoringOnly": "所以说我还是很强调就是利弊是肯定都有的，但是要根据个人情况来去选择。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-013\\component-b.wav",
+          "audioSha256": "d7b57430829fbe00a6c8256e4860f95268f9ac3b1e10a995780e1e5a3f383750",
+          "audioSeconds": 7.1150625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-006",
+        "referenceForScoringOnly": "咱们<sil>把学生召集过来，然后开一个这个会"
+      }
+    ],
+    "sourceGainB": 1.0733452926172653,
+    "commonPcmGain": 3.9925833534199486,
+    "interfererOffsetSamples": 22768,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-002",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-002\\mixture.wav",
+      "audioSha256": "4796025c4af065955f03028566e8c3caaa4070ccbbe2e94681071ef4bb05ef35",
+      "audioSeconds": 4.3000625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--004-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-002",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-002",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-002\\mixture.wav",
+      "audioSha256": "4796025c4af065955f03028566e8c3caaa4070ccbbe2e94681071ef4bb05ef35",
+      "audioSeconds": 4.3000625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-002\\component-a.wav",
+          "audioSha256": "b29bbc48d52cba78d3c4025fd63d1a224cdd462242f96ea9a39391ed91e1261e",
+          "audioSeconds": 4.3000625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-001",
+        "referenceForScoringOnly": "男生这边肯定是属于热血比较多对于战斗的比较多"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-002\\component-b.wav",
+          "audioSha256": "efa63a068fd427212192df71778301f1b5b7b4f295a7fd65b2a590901133d2f0",
+          "audioSeconds": 4.3000625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-006",
+        "referenceForScoringOnly": "呃以及金轮兽那样的"
+      }
+    ],
+    "sourceGainB": 1.168789512544874,
+    "commonPcmGain": 10.311833564781374,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-028",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-028\\mixture.wav",
+      "audioSha256": "cdb3e7899a7e2dc4c31c0b5127d3e53e08490970ae9b270c872237d328d693d2",
+      "audioSeconds": 7.8300625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-028\\component-a.wav",
+          "audioSha256": "e8afd41379b61e9a88422a4958b58b951d59d7c9616ff0cf98bab7ab1f7aa67f",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-028\\component-b.wav",
+          "audioSha256": "5f66264bcc7d9dcd591eb62a14c66a8afc7595fa73c0dfe093a0619befa7fc6a",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-000",
+        "referenceForScoringOnly": "比如咱们搞一下那种诶老套路的话，我觉得应该是"
+      }
+    ],
+    "sourceGainB": 1.2495362233346647,
+    "commonPcmGain": 8.465833755756089,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-046",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-046\\mixture.wav",
+      "audioSha256": "32bc9e17f30d40f5ad5a5935e35eadc92f0eef8b6e8557c71c0bc36bd18a792c",
+      "audioSeconds": 7.0750625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-046\\component-a.wav",
+          "audioSha256": "ea9faef786c88864e6277ab9bc40c75896a79b9cee5e4b234a1273651a9c5a1b",
+          "audioSeconds": 7.0750625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-007",
+        "referenceForScoringOnly": "嗯我们想做一个动漫想引入一下，想以钢铁侠"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-046\\component-b.wav",
+          "audioSha256": "b1e2c216e058bd56103ee4834bd7c2c2e3e1bf10fd41c181f66f49660aa2fd3f",
+          "audioSeconds": 7.0750625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-005",
+        "referenceForScoringOnly": "通过就是通过对角色性格进行分析，然后最终得到了一种自豪感。"
+      }
+    ],
+    "sourceGainB": 0.9063247601121569,
+    "commonPcmGain": 17.91577710946546,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-037",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-037\\mixture.wav",
+      "audioSha256": "807a358c402be826230c8523bf3a3df362b49daebe45465703edbb3ac9deabd6",
+      "audioSeconds": 6.9350625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-037\\component-a.wav",
+          "audioSha256": "60c8a927d1d6175f9818c52e3096d9e9e28a0f5271e47f14bcaa4ea3da920c77",
+          "audioSeconds": 6.9350625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-037\\component-b.wav",
+          "audioSha256": "dbb3c348f5aef9be1b4498fd404b1ff4ca9363225be4193a583f511fd6b27a0c",
+          "audioSeconds": 6.9350625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-007",
+        "referenceForScoringOnly": "刚才副副校长说的这个你可以说一下这个，你对这个事件的一个看法。"
+      }
+    ],
+    "sourceGainB": 1.2174904260610628,
+    "commonPcmGain": 4.232797818609807,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-018",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-018\\mixture.wav",
+      "audioSha256": "dfc8a40f30f25b3ac25f18c50b5ca51f2a34dbd7162b1cae0f4103bdf8d1ea8c",
+      "audioSeconds": 7.7600625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-018\\component-a.wav",
+          "audioSha256": "c5697312f0aed6c404fe48bf4519784452eab4a6db0d567a56a67a46e0dd5966",
+          "audioSeconds": 7.7600625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-001",
+        "referenceForScoringOnly": "呃就是加加入疫情然后湿毒还有<sil>变形兽儿那些比较多就是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-018\\component-b.wav",
+          "audioSha256": "fcb0a9ef3985ddf3343e68b382cec1d3436960fac8f8c5217d623ca6efb38bb1",
+          "audioSeconds": 7.7600625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-003",
+        "referenceForScoringOnly": "我觉得如果你要市场范围想大一点儿，就不要弄的特别复杂"
+      }
+    ],
+    "sourceGainB": 1.3487510220185837,
+    "commonPcmGain": 14.479602583937341,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-035",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-035\\mixture.wav",
+      "audioSha256": "2301a0899312816f28b869e55c680b052b4beaed4f91e0bc4e4a782bb5f40287",
+      "audioSeconds": 6.9571875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-035\\component-a.wav",
+          "audioSha256": "f3995abb3ce8f0326f8f1a020a9d4fc79f0342fda8fb735b36c7ae3676db6569",
+          "audioSeconds": 6.9571875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-035\\component-b.wav",
+          "audioSha256": "277c3fa829d66b9df80126dff4b1bd57849de2bed48b18edc9259b30d3095c9c",
+          "audioSeconds": 6.9571875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-001",
+        "referenceForScoringOnly": "所以说我还是很强调就是利弊是肯定都有的，但是要根据个人情况来去选择。"
+      }
+    ],
+    "sourceGainB": 0.7216122417101891,
+    "commonPcmGain": 7.2002947991697,
+    "interfererOffsetSamples": 15954,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-024",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-024\\mixture.wav",
+      "audioSha256": "a4b28abe9b1272068cc9261d8a717b8f3d1c48dd4998c3e7dc3efa22f0fc5a08",
+      "audioSeconds": 5.3450625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-024\\component-a.wav",
+          "audioSha256": "d60915dec8247ae375b839851fb2fdec619dd89fb8900f72f23f4ba5f5fe13fd",
+          "audioSeconds": 5.3450625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-002",
+        "referenceForScoringOnly": "零二四我是剧本"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-024\\component-b.wav",
+          "audioSha256": "7dc5a487c1591c7d7f9cbb1048bfe8e7b4b780cd70ed2ed14291fa7105ccf06a",
+          "audioSeconds": 5.3450625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "sourceGainB": 0.8567150068864186,
+    "commonPcmGain": 10.121297354940467,
+    "interfererOffsetSamples": 20480,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-052",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-052\\mixture.wav",
+      "audioSha256": "e7810edef73223ccb3c7acb076420a75587ff34f1865bbf7a7b024960448522b",
+      "audioSeconds": 9.2745,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-052\\component-a.wav",
+          "audioSha256": "1f87eff5c0a232b2f368b77096009eb6ae893683771654e133786843f4969db7",
+          "audioSeconds": 9.2745,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-001",
+        "referenceForScoringOnly": "我觉得我们如果这样考虑的话，可以和英雄英雄联盟联合"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-052\\component-b.wav",
+          "audioSha256": "e47403c840b5a008a353ede20b30b8b66703df6e6d026635c9f6a3a50ddc77b4",
+          "audioSeconds": 9.2745,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-003",
+        "referenceForScoringOnly": "如果要让观众感觉到自豪的话，咱们的故事是不是要把观众的情绪带进去？"
+      }
+    ],
+    "sourceGainB": 0.7251819056243951,
+    "commonPcmGain": 16.05193987867506,
+    "interfererOffsetSamples": 49464,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-001",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-001\\mixture.wav",
+      "audioSha256": "abd02b0dedde4f02edd01b39f8b576eb96aeab7ecce0215d567d6be865a2a23e",
+      "audioSeconds": 3.9300625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--003-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-001",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-020",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-020\\mixture.wav",
+      "audioSha256": "abc89326c5dcd529b225965a73ac194bf8229b40fedb0071907d2b8c8ae5a8e9",
+      "audioSeconds": 5.0250625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-020",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-043",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-043\\mixture.wav",
+      "audioSha256": "4b6890b63de569964a6aecdb47da1392c6287f20537a518d81fe8c361e7dce55",
+      "audioSeconds": 3.157125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-043\\component-a.wav",
+          "audioSha256": "00a4cf6dfb5b488187ba8d7399dc22e4297cf5956bc0f2a3ada24b0d7bd77756",
+          "audioSeconds": 3.157125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-005",
+        "referenceForScoringOnly": "零零二，我是校长。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-043\\component-b.wav",
+          "audioSha256": "ebd84c21a97876c26322c89d7dffd616eb38e1869403c3ae3787e6639a084e0c",
+          "audioSeconds": 3.157125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      }
+    ],
+    "sourceGainB": 1.1725661576277635,
+    "commonPcmGain": 4.581097031769824,
+    "interfererOffsetSamples": 16000,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-013",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-013\\mixture.wav",
+      "audioSha256": "8185b507fb3ae337338cedf7e5d00b93d55e987822bc862e484bfb054006b96d",
+      "audioSeconds": 7.1150625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--003-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-013",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-021",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-021\\mixture.wav",
+      "audioSha256": "957fe5804cf8dcb61569ff4f9e24cd5c53761d5fc60abca560eabb2ec0af5314",
+      "audioSeconds": 8.3875625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-021",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-008",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-008\\mixture.wav",
+      "audioSha256": "ea62d21fabd4ec7527a0b30abb7dc06f52d899586f9a6bfbaaabc1b0d8cf2881",
+      "audioSeconds": 8.883375,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--007-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-008",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-029",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-002.wav",
+      "audioSha256": "e7c5b64f70aa9847600389765504cb544f89a891d5d55a0f78b67c81c4cccef5",
+      "audioSeconds": 1.76,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-002.wav",
+          "audioSha256": "e7c5b64f70aa9847600389765504cb544f89a891d5d55a0f78b67c81c4cccef5",
+          "audioSeconds": 1.76,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-058",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-058\\mixture.wav",
+      "audioSha256": "ab9d6ddbe8278d9af45e0603feee4e1dcbfa872ce7970ec829fc9e92a2ee31a7",
+      "audioSeconds": 8.0788125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-058\\component-a.wav",
+          "audioSha256": "db756c7ed3d09dba26021fc7506315fbb3f03124a16846c198db967c405343ef",
+          "audioSeconds": 8.0788125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-001",
+        "referenceForScoringOnly": "男生这边肯定是属于热血比较多对于战斗的比较多"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-058\\component-b.wav",
+          "audioSha256": "ef402ba1b55ee1cc392ab0e42fa46268f2eb6850e46e9c0ad7cbd002bc4ba3f8",
+          "audioSeconds": 8.0788125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-003",
+        "referenceForScoringOnly": "咱们可以把这样一个改成相对于来说，就是让大家都理解不了，甚至有一些悬疑在里面什么的"
+      }
+    ],
+    "sourceGainB": 1.433732179196728,
+    "commonPcmGain": 9.266800350287303,
+    "interfererOffsetSamples": 17100,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-026",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-026\\mixture.wav",
+      "audioSha256": "f55858395080ed4adbad58d8c220fab0a49c7e189dfacee58547b5e50a03a359",
+      "audioSeconds": 6.2850625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-026",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-050",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-050\\mixture.wav",
+      "audioSha256": "7b2b183d29e268af8642567a2a73299d4331de79168a11474182879c83e6a52e",
+      "audioSeconds": 2.2,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-050\\component-a.wav",
+          "audioSha256": "2243f0f6d375d190b674238345e5fc66bd6a93762f3658e474c72d1b5c01dc76",
+          "audioSeconds": 2.2,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-001",
+        "referenceForScoringOnly": "零二三我是角色设计"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-050\\component-b.wav",
+          "audioSha256": "f305918c123834e03ec31eaeb5a80526039c4337ea9348a8edda95d032b43e07",
+          "audioSeconds": 2.2,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      }
+    ],
+    "sourceGainB": 0.7414356039898581,
+    "commonPcmGain": 19.17444733420026,
+    "interfererOffsetSamples": 7040,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-061",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-061\\mixture.wav",
+      "audioSha256": "a1f55e0e7ae7fa5392ce34454a74db823517f163bd6881872ba6d5c7eecc7562",
+      "audioSeconds": 5.1135,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-061\\component-a.wav",
+          "audioSha256": "d0560224eade6084dc936ed30c11ed825b58a2881b9691ba8a2fb2909294f8af",
+          "audioSeconds": 5.1135,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-006",
+        "referenceForScoringOnly": "但是是跟自己的专业是挂钩儿的。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-061\\component-b.wav",
+          "audioSha256": "351f5901644680ca7d30221c40216a905674ebf864ca278e5d8a486a9e851749",
+          "audioSeconds": 5.1135,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-003",
+        "referenceForScoringOnly": "应该怎么去指导这个咱们这个学生去就业呢"
+      }
+    ],
+    "sourceGainB": 0.8208820844511887,
+    "commonPcmGain": 3.7564508861558985,
+    "interfererOffsetSamples": 18935,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-011",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-011\\mixture.wav",
+      "audioSha256": "d82cab0b87549fdec275f7be563b995a88013ef4e1cc2d46f0adac16aefd57c4",
+      "audioSeconds": 6.7100625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-011\\component-a.wav",
+          "audioSha256": "f290e30e42e3d893fee34ed09ca8d6c7a7838fb7b97c1eb5ff167812aa55febe",
+          "audioSeconds": 6.7100625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-003",
+        "referenceForScoringOnly": "嗯创业，自己做一点儿别的事情，这是我以后的一个想法吧。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-011\\component-b.wav",
+          "audioSha256": "df33de63daa1e6ce5dbae1b0ec3f402caa0e7796adacdbd787d87b8c8f95cd22",
+          "audioSeconds": 6.7100625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-000",
+        "referenceForScoringOnly": "然后A班和B班B班的第一名考试永远考不过A班A班的第一名"
+      }
+    ],
+    "sourceGainB": 0.6974987676031962,
+    "commonPcmGain": 4.899534806446254,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-044",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-044\\mixture.wav",
+      "audioSha256": "f45b7613d27a66d49aec64153d0ca8d700490d7467dd3fc6a468bd43168760f0",
+      "audioSeconds": 7.9500625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-044\\component-a.wav",
+          "audioSha256": "a143fec6db294fd1bd56d3360823d3f69acc545c60154c5c41c077b6a62a7657",
+          "audioSeconds": 7.9500625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-044\\component-b.wav",
+          "audioSha256": "c174e17cbe49be0f415fe5ae4e11649d64fa48b926e99043599725352bcaec0a",
+          "audioSeconds": 7.9500625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-001",
+        "referenceForScoringOnly": "我觉得我们如果这样考虑的话，可以和英雄英雄联盟联合"
+      }
+    ],
+    "sourceGainB": 0.6984718580743434,
+    "commonPcmGain": 28.752612769415325,
+    "interfererOffsetSamples": 14080,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-007",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-007\\mixture.wav",
+      "audioSha256": "5f6fac34b61061286181692b1738887c54f83603cbabd78f464347d1cb369974",
+      "audioSeconds": 7.5421875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-007\\component-a.wav",
+          "audioSha256": "3a80a07d27ea78569274f1d94945e9913491f1a62afd8535a55ee41a25310be5",
+          "audioSeconds": 7.5421875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-007\\component-b.wav",
+          "audioSha256": "c376cd5bd9e7edfa681d8be2e849e6b1bc9f0ef4aa946c929ac091c454ae6c01",
+          "audioSeconds": 7.5421875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-001",
+        "referenceForScoringOnly": "等<->等到你有了足够的阅历和资本，然后你可以在去试试选择跳槽并不是说"
+      }
+    ],
+    "sourceGainB": 0.9923432805249173,
+    "commonPcmGain": 4.057043163586181,
+    "interfererOffsetSamples": 15954,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-016",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-004.wav",
+      "audioSha256": "c563f6704df8b32cbbbf5b6489788b5f40c400c328f87eb9aa9bf6b74a6f9121",
+      "audioSeconds": 4.9250625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-004.wav",
+          "audioSha256": "c563f6704df8b32cbbbf5b6489788b5f40c400c328f87eb9aa9bf6b74a6f9121",
+          "audioSeconds": 4.9250625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-004",
+        "referenceForScoringOnly": "对，然后留下一个疑点，也会让人引发一个思考，"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-019",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-019\\mixture.wav",
+      "audioSha256": "07f0eda0e66be1f37092985874e903fa4525bf108e6ec352bccab7fce4ab3301",
+      "audioSeconds": 7.0381875,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--007-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-019",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-026",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-026\\mixture.wav",
+      "audioSha256": "f55858395080ed4adbad58d8c220fab0a49c7e189dfacee58547b5e50a03a359",
+      "audioSeconds": 6.2850625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-026\\component-a.wav",
+          "audioSha256": "74bafadb48715b3cc9c9659b6c180e22becee59b31c2002cfa3acf81ba603406",
+          "audioSeconds": 6.2850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-002",
+        "referenceForScoringOnly": "各位就是参与呃会议的人来进行一些把你的想法表达一下。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-026\\component-b.wav",
+          "audioSha256": "d1c2ee3e6485a9410f2d6149a80ecc0abbfd0554406be8a3cc7b325696bda899",
+          "audioSeconds": 6.2850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-000",
+        "referenceForScoringOnly": "这方面需要人家购买版权"
+      }
+    ],
+    "sourceGainB": 0.3913915589232062,
+    "commonPcmGain": 21.244299749692047,
+    "interfererOffsetSamples": 20160,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-009",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-009\\mixture.wav",
+      "audioSha256": "073a5d99784788bf58578e7dc86a4728d44f824f0cf73ad508082be8767bd7a9",
+      "audioSeconds": 4.4650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-009\\component-a.wav",
+          "audioSha256": "9be789109c4a2b70a9b663bf502ef599d7b691b21b17c10cef232e2967a45c02",
+          "audioSeconds": 4.4650625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-009\\component-b.wav",
+          "audioSha256": "e8fd018c34dd27b8161a4bc8a8af7df000dced1662cd77f6092569fc45ca2511",
+          "audioSeconds": 4.4650625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-002",
+        "referenceForScoringOnly": "呃告诉他们以后这些情况让他们有更多的选择"
+      }
+    ],
+    "sourceGainB": 1.5911446168737198,
+    "commonPcmGain": 2.8927760470707358,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-030",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-030\\mixture.wav",
+      "audioSha256": "89340a5b14c37bb299bfbd8ae099315dbb09e0cc73413ee0614891de3d653e89",
+      "audioSeconds": 2.4650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-030\\component-a.wav",
+          "audioSha256": "184654a17d747cd00faad52bf9cac2f48e25a6ad5df73238ddaf04c031ec23ca",
+          "audioSeconds": 2.4650625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-030\\component-b.wav",
+          "audioSha256": "d003dfe98b2d965180fe036c93cba8922893c7e3397efba125c98769c470990a",
+          "audioSeconds": 2.4650625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-001",
+        "referenceForScoringOnly": "零二三我是角色设计"
+      }
+    ],
+    "sourceGainB": 1.3487347985701519,
+    "commonPcmGain": 13.797573233783156,
+    "interfererOffsetSamples": 7040,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-022",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-022\\mixture.wav",
+      "audioSha256": "b7ef75410522aae28ed310897d6b87652418404454d16eb4eec2d9bf6247c09b",
+      "audioSeconds": 7.1625625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-022\\component-a.wav",
+          "audioSha256": "65781ebb8b7b7891a70a2c2f6aab56de21fefcb74807b90cb9e9208ef01b27da",
+          "audioSeconds": 7.1625625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-000",
+        "referenceForScoringOnly": "你不要再指定在青青年这一块儿，我觉得你可以把范围适当扩大一点从"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-022\\component-b.wav",
+          "audioSha256": "5d116db36faa646ae4b36ebe9f35346a2febc32251839a385a0d3111e3f4a209",
+          "audioSeconds": 7.1625625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-012",
+        "referenceForScoringOnly": "就让观众不知道他是主角儿，就是题目是以咱们动漫内容为例的题目"
+      }
+    ],
+    "sourceGainB": 0.6768376008820337,
+    "commonPcmGain": 11.648040596357166,
+    "interfererOffsetSamples": 22920,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-062",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-062\\mixture.wav",
+      "audioSha256": "1f3234997ad3d5b2170d720cc6df18e9739411530b05963729eab70fe5272661",
+      "audioSeconds": 7.8300625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-062\\component-a.wav",
+          "audioSha256": "9e361d45081ac306788ae4557b8a9bd00319dc7ad295f8e6f082673e009ab0b4",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-000",
+        "referenceForScoringOnly": "比如咱们搞一下那种诶老套路的话，我觉得应该是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-062\\component-b.wav",
+          "audioSha256": "96598429120accde76bf30911e74d37d2b98db044cfafddecbd20926fd664ce9",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      }
+    ],
+    "sourceGainB": 1.006067671626588,
+    "commonPcmGain": 10.704283121597095,
+    "interfererOffsetSamples": 14080,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-010",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-010\\mixture.wav",
+      "audioSha256": "0d21fb6faba6cc96a3314a3ae91cc10578ca2511de3ba7239dfe5052a5b2d809",
+      "audioSeconds": 5.6850625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-010\\component-a.wav",
+          "audioSha256": "31b59e887e3b01c3a21ace054dc4509514b92fc6df6d9267c66f5b7a90e07182",
+          "audioSeconds": 5.6850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-002",
+        "referenceForScoringOnly": "零二四我是剧本"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-010\\component-b.wav",
+          "audioSha256": "718744f217827160a7d68e16265eae2a18c0195154dd48ca8b0733f64749167c",
+          "audioSeconds": 5.6850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-011",
+        "referenceForScoringOnly": "就是咱们不需要点出它就是什么，就是咱们就是可以就是"
+      }
+    ],
+    "sourceGainB": 0.960672799685951,
+    "commonPcmGain": 14.33904055172807,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-015",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-015\\mixture.wav",
+      "audioSha256": "9c8a084841cc30a88df83092ce1032732985e9c9ffb9b5d84b1c9d931d0d6cc0",
+      "audioSeconds": 10.70475,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-015\\component-a.wav",
+          "audioSha256": "e6364f4aedf95eb9d8d319f7abe7756bf6d7551cdae8bec34edd7e75e2e22559",
+          "audioSeconds": 10.70475,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-010",
+        "referenceForScoringOnly": "呃下去以后，咱们把这个咱们会上的内容副校长这边儿总结一下儿。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-015\\component-b.wav",
+          "audioSha256": "ae6e8d1f06880563735c5b36e0b6769bd7112250c8dc05b8984480963e99199f",
+          "audioSeconds": 10.70475,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-002",
+        "referenceForScoringOnly": "肯定这个大家关系就同事之间的氛围比较融洽，然后你升职的机会要比大公司要更高，因为你是老员工"
+      }
+    ],
+    "sourceGainB": 1.4817428238165669,
+    "commonPcmGain": 3.5294274850812095,
+    "interfererOffsetSamples": 50875,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-012",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--006-F--component-002.wav",
+      "audioSha256": "1058677fb02977e9755d237292dbe0f1ef7a9686452a029bd883a97e262136d0",
+      "audioSeconds": 4.4650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--006-F--component-002.wav",
+          "audioSha256": "1058677fb02977e9755d237292dbe0f1ef7a9686452a029bd883a97e262136d0",
+          "audioSeconds": 4.4650625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-002",
+        "referenceForScoringOnly": "呃告诉他们以后这些情况让他们有更多的选择"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-030",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-030\\mixture.wav",
+      "audioSha256": "89340a5b14c37bb299bfbd8ae099315dbb09e0cc73413ee0614891de3d653e89",
+      "audioSeconds": 2.4650625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-030",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-017",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-017\\mixture.wav",
+      "audioSha256": "8de2da53fa4d8648b209c84f7581f0fcf4fd5654d3277b6fcda74935b7878fc5",
+      "audioSeconds": 6.6000625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-017\\component-a.wav",
+          "audioSha256": "308c16de59d2e01f20f9f33001b7a6e892bb546aaaff851129f296170312183d",
+          "audioSeconds": 6.6000625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-022",
+        "referenceForScoringOnly": "甚至还没有小公司的专业和自己对口儿，但是小公司它升职又特别的慢。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-017\\component-b.wav",
+          "audioSha256": "9ea363da5b879a96952a9cd33277edf9b0922ada1518cc430e4f891a5cf7aea9",
+          "audioSeconds": 6.6000625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      }
+    ],
+    "sourceGainB": 0.7990950829053605,
+    "commonPcmGain": 5.283106413471874,
+    "interfererOffsetSamples": 15954,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-007",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-007\\mixture.wav",
+      "audioSha256": "5f6fac34b61061286181692b1738887c54f83603cbabd78f464347d1cb369974",
+      "audioSeconds": 7.5421875,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--006-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-007",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-018",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-018\\mixture.wav",
+      "audioSha256": "dfc8a40f30f25b3ac25f18c50b5ca51f2a34dbd7162b1cae0f4103bdf8d1ea8c",
+      "audioSeconds": 7.7600625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--007-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-018",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-008",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--002-M--component-021.wav",
+      "audioSha256": "c42f8307d0e8a3be95a8cbbe8b85a35f051a2f0d15930cc9ada2026136b79ab3",
+      "audioSeconds": 7.9450625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--002-M--component-021.wav",
+          "audioSha256": "c42f8307d0e8a3be95a8cbbe8b85a35f051a2f0d15930cc9ada2026136b79ab3",
+          "audioSeconds": 7.9450625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-021",
+        "referenceForScoringOnly": "就业问题和去大公司好还是小公司好，我可以先给大家先举一个案例，就像。"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-012",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-012\\mixture.wav",
+      "audioSha256": "951407c9e2b553b7f758faa9ddf3af8208cd3fb65722827f42617d38491f1a1d",
+      "audioSeconds": 5.0813125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-012\\component-a.wav",
+          "audioSha256": "999403ed0285757a67775c561856b0f0889ef40a8fcf7e71b47602dfdc37e241",
+          "audioSeconds": 5.0813125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-006",
+        "referenceForScoringOnly": "阐述吧对然后但是咱们节奏是一定要快的"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-012\\component-b.wav",
+          "audioSha256": "3c4c0137be3702a242c97f62c617e79812e17af912644689be56473aaca5bb6b",
+          "audioSeconds": 5.0813125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "sourceGainB": 0.8811581842715419,
+    "commonPcmGain": 9.144249506895422,
+    "interfererOffsetSamples": 16260,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-042",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-042\\mixture.wav",
+      "audioSha256": "5b767ff4ca153e80e4be02cfde80de17b5df281be7d0cda63c50e0be122f1567",
+      "audioSeconds": 6.8091875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-042\\component-a.wav",
+          "audioSha256": "d4704c7fe9150431229efdf34eba28b4ceca41a15fe46d1808b677b8ad0f412b",
+          "audioSeconds": 6.8091875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-042\\component-b.wav",
+          "audioSha256": "7d90423491769efa1f8d55e6c934b0a4a7e39e4e3dffa525067956fb4893039c",
+          "audioSeconds": 6.8091875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-003",
+        "referenceForScoringOnly": "我觉得如果你要市场范围想大一点儿，就不要弄的特别复杂"
+      }
+    ],
+    "sourceGainB": 2.3894677204024877,
+    "commonPcmGain": 8.62685213224302,
+    "interfererOffsetSamples": 32520,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-003",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-003\\mixture.wav",
+      "audioSha256": "ef94a6d31c95d50a1e91fcf76fcd4c71a59de56de767bc962ea3793f91ca78ea",
+      "audioSeconds": 4.6000625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--004-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-003",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-000",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+      "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+      "audioSeconds": 4.0650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+          "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+          "audioSeconds": 4.0650625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-014",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-014\\mixture.wav",
+      "audioSha256": "9e073c814ad7cc797a2ffaa6e5a7b2ae9c35ad7c5c0b7542b0ee36e0a1e9d39f",
+      "audioSeconds": 8.0913125,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-014",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-006",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--007-M--component-010.wav",
+      "audioSha256": "a149db6f4049741d701c50b49235e46408562f2a41a063e9a5e03738fdf985b8",
+      "audioSeconds": 5.1350625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--007-M--component-010.wav",
+          "audioSha256": "a149db6f4049741d701c50b49235e46408562f2a41a063e9a5e03738fdf985b8",
+          "audioSeconds": 5.1350625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-010",
+        "referenceForScoringOnly": "还有就是什么就属于那种在咱们相对于在看一些电影之类的东西，"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-004",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-004\\mixture.wav",
+      "audioSha256": "c58e33cec878e4deff6560f013a41238bcc537285a776586da92d54a82dcde3e",
+      "audioSeconds": 5.9689375,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-004\\component-a.wav",
+          "audioSha256": "33f59b1df44594bc5fc236259ca8c09565b4855fccd5f7fc17efc7c8a365ce39",
+          "audioSeconds": 5.9689375,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-008",
+        "referenceForScoringOnly": "这个剧本儿方面是要考虑到这些，但如果想在这"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-004\\component-b.wav",
+          "audioSha256": "018d57026005f29599d1b1f15bd42661da19b0a488bdd66060d5e054b3f29cb6",
+          "audioSeconds": 5.9689375,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-003",
+        "referenceForScoringOnly": "可以一波几折之类的可以反转反转"
+      }
+    ],
+    "sourceGainB": 1.02372404306351,
+    "commonPcmGain": 13.06750985211769,
+    "interfererOffsetSamples": 15102,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-010",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-010\\mixture.wav",
+      "audioSha256": "0d21fb6faba6cc96a3314a3ae91cc10578ca2511de3ba7239dfe5052a5b2d809",
+      "audioSeconds": 5.6850625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-010",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-015",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-015\\mixture.wav",
+      "audioSha256": "9c8a084841cc30a88df83092ce1032732985e9c9ffb9b5d84b1c9d931d0d6cc0",
+      "audioSeconds": 10.70475,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-015",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-023",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--003-M--component-008.wav",
+      "audioSha256": "513bcd909af2f44cd79595a8540733e32d7c729e83aa75934a09f053c6bdba94",
+      "audioSeconds": 1.6650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--003-M--component-008.wav",
+          "audioSha256": "513bcd909af2f44cd79595a8540733e32d7c729e83aa75934a09f053c6bdba94",
+          "audioSeconds": 1.6650625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-008",
+        "referenceForScoringOnly": "零二二我是教务处"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-048",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-048\\mixture.wav",
+      "audioSha256": "4fb67eea9a68416fea9dc60d9507a7fa88cd23111cb89a4d4cbd3d3204c76514",
+      "audioSeconds": 4.5538125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-048\\component-a.wav",
+          "audioSha256": "03632b571ea8f43e12705fc7f9e4d8a09b8b6daba4bff94087bff2acfa2da451",
+          "audioSeconds": 4.5538125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-002",
+        "referenceForScoringOnly": "零幺三我是画师"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-048\\component-b.wav",
+          "audioSha256": "221a4984c0498fc6f19d8457696df592d1610405880e3739be77c932b005dd81",
+          "audioSeconds": 4.5538125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "sourceGainB": 1.0294279896747747,
+    "commonPcmGain": 8.423189790940839,
+    "interfererOffsetSamples": 7820,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-041",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-041\\mixture.wav",
+      "audioSha256": "70b191dc67bd45c905f3884816f026a01ca1e0ba046d0c5cbb3ec93d1d924454",
+      "audioSeconds": 8.5281875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-041\\component-a.wav",
+          "audioSha256": "a24d85c46fd971c3aa0ec04868957f880f42aa5ad70ac4e978565ba9de58b08f",
+          "audioSeconds": 8.5281875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-001",
+        "referenceForScoringOnly": "所以说我还是很强调就是利弊是肯定都有的，但是要根据个人情况来去选择。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-041\\component-b.wav",
+          "audioSha256": "01df59014944f129f5c1ffd940f7bb08d4dfb91b4b41a8a0f03963b2c8a91ca1",
+          "audioSeconds": 8.5281875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-007",
+        "referenceForScoringOnly": "不用过多的这个建议他们自己有自己的想法儿，但是像那种就是希望自己从事的专业"
+      }
+    ],
+    "sourceGainB": 0.6073487921529417,
+    "commonPcmGain": 6.5307337002653565,
+    "interfererOffsetSamples": 23840,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-047",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-047\\mixture.wav",
+      "audioSha256": "516d8d231f38320859a805e5dd12c22c07d7186396b52642dcf48e52af691c1f",
+      "audioSeconds": 7.20925,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-047\\component-a.wav",
+          "audioSha256": "963805094a51c4c051c061156cd087e4fb0438a21389a6e43901f6724340805b",
+          "audioSeconds": 7.20925,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-007",
+        "referenceForScoringOnly": "不用过多的这个建议他们自己有自己的想法儿，但是像那种就是希望自己从事的专业"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-047\\component-b.wav",
+          "audioSha256": "177c3500dd645dcbcf9d001587da53a1ef74876e74592d0fcc4a9bd55cec272a",
+          "audioSeconds": 7.20925,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-004",
+        "referenceForScoringOnly": "其实每个公司肯定都是有利有弊的。举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班，"
+      }
+    ],
+    "sourceGainB": 0.866513885044806,
+    "commonPcmGain": 4.985680473372781,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-003",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-001.wav",
+      "audioSha256": "03d1ed73062aa0942044232b844da26032b3fbd4ad16f256984a3d5d98e8259b",
+      "audioSeconds": 6.190125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-001.wav",
+          "audioSha256": "03d1ed73062aa0942044232b844da26032b3fbd4ad16f256984a3d5d98e8259b",
+          "audioSeconds": 6.190125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-001",
+        "referenceForScoringOnly": "可以是肯定不是教育学的方面我们在写作，但是过程呢"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-063",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-063\\mixture.wav",
+      "audioSha256": "5675fc66056f6cca995dcfcb4a30eaed70f35933dcf44376d33ca638fea3ddc9",
+      "audioSeconds": 7.8850625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-063\\component-a.wav",
+          "audioSha256": "5163196d7b7691fc4cdb30668379b813f17d51e41fc8ec83298fe77242bfdaee",
+          "audioSeconds": 7.8850625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-002",
+        "referenceForScoringOnly": "不是也要说了你要是真学个企业管理上大公司，真管不上对不对？"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-063\\component-b.wav",
+          "audioSha256": "291f1a85f3e497634ca8967e6f710f7e31df1d933d4de49779fee8d56bd17557",
+          "audioSeconds": 7.8850625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-003",
+        "referenceForScoringOnly": "各位部门就是属于这种如果咱们以教学方式教给学生的话，怎么样去引导他们"
+      }
+    ],
+    "sourceGainB": 1.6289806180511066,
+    "commonPcmGain": 3.2713282099961485,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-023",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-023\\mixture.wav",
+      "audioSha256": "517d61b2c1c1c4f37c07fe71c79621493de52c6c06c02e4fb12f2009dface30c",
+      "audioSeconds": 2.2500625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-023\\component-a.wav",
+          "audioSha256": "791c6a13ba0c65545d4cdacb5792c9bded277824af2a65ed58496ae352a0b49e",
+          "audioSeconds": 2.2500625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-023\\component-b.wav",
+          "audioSha256": "4a9838b8ca674dc99f1e862bc015f28731114eaf156c37c373cb447c7ffdb27a",
+          "audioSeconds": 2.2500625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-005",
+        "referenceForScoringOnly": "零幺四，管理处"
+      }
+    ],
+    "sourceGainB": 0.9061965872644013,
+    "commonPcmGain": 5.371639344262295,
+    "interfererOffsetSamples": 7200,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-005",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--006-F--component-002.wav",
+      "audioSha256": "d947c89b1d5505dfe6e62cdf67a14ca308cf175a1f0c5a4f4950a2f89f621096",
+      "audioSeconds": 2.5600625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--006-F--component-002.wav",
+          "audioSha256": "d947c89b1d5505dfe6e62cdf67a14ca308cf175a1f0c5a4f4950a2f89f621096",
+          "audioSeconds": 2.5600625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-002",
+        "referenceForScoringOnly": "零二四我是剧本"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-032",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-032\\mixture.wav",
+      "audioSha256": "9efdd6d625161fba9dfd25167c131896f8faa01aaa8b2736ecc14890ebd024d5",
+      "audioSeconds": 3.7756875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-032\\component-a.wav",
+          "audioSha256": "f703608d020040db89b6d64b458b3f095522764d5b357339497f8298828ce0a0",
+          "audioSeconds": 3.7756875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-008",
+        "referenceForScoringOnly": "这个剧本儿方面是要考虑到这些，但如果想在这"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-032\\component-b.wav",
+          "audioSha256": "c63aa114f7b2d779c62589a8d30dec1986167ee7f062f66998f9f942b2083fa3",
+          "audioSeconds": 3.7756875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-002",
+        "referenceForScoringOnly": "零二四我是剧本"
+      }
+    ],
+    "sourceGainB": 0.8522486257926862,
+    "commonPcmGain": 15.55395569620253,
+    "interfererOffsetSamples": 10240,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-022",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--002-M--component-001.wav",
+      "audioSha256": "4e2a5bdd59c1d77de62f5c1dfcb402a76eb77a7cd6a60ffa4d60f7528dddf73d",
+      "audioSeconds": 4.3520625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--002-M--component-001.wav",
+          "audioSha256": "4e2a5bdd59c1d77de62f5c1dfcb402a76eb77a7cd6a60ffa4d60f7528dddf73d",
+          "audioSeconds": 4.3520625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-001",
+        "referenceForScoringOnly": "如果以上这些大公司都说需要靠个人的经验"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-001",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-001\\mixture.wav",
+      "audioSha256": "abd02b0dedde4f02edd01b39f8b576eb96aeab7ecce0215d567d6be865a2a23e",
+      "audioSeconds": 3.9300625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-001\\component-a.wav",
+          "audioSha256": "c6a6f92579b2f8a66630dfa66d631a59eef0acd35e93a95ddc712b89b560a27d",
+          "audioSeconds": 3.9300625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-003",
+        "referenceForScoringOnly": "应该怎么去指导这个咱们这个学生去就业呢"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-001\\component-b.wav",
+          "audioSha256": "9a39669f0a2328d3e5d09bc8dcc2238a2554c336384efd4e8be1827b0e9ec713",
+          "audioSeconds": 3.9300625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-028",
+        "referenceForScoringOnly": "还有这个积少成多的问题"
+      }
+    ],
+    "sourceGainB": 1.2118771525578955,
+    "commonPcmGain": 3.179606365421479,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-045",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-045\\mixture.wav",
+      "audioSha256": "f9cfc929ab0e63fb1e26b3e312a5106456297a8dd2c957fb5dfbc549e87be1dc",
+      "audioSeconds": 7.835125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-045\\component-a.wav",
+          "audioSha256": "4941b78aff0306f52345b3a3b55607d5317331abab6a62aadb352cac939087af",
+          "audioSeconds": 7.835125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-002",
+        "referenceForScoringOnly": "但是如果你经历小公司这些弊端之后，你已经面对过到大公司，如果你初入社会就进入到大公司"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-045\\component-b.wav",
+          "audioSha256": "48e6e1f77c5c27b51aba6e5e959c56b099a7521d70c5ab20f9faffcd0d25383a",
+          "audioSeconds": 7.835125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-002",
+        "referenceForScoringOnly": "呃告诉他们以后这些情况让他们有更多的选择"
+      }
+    ],
+    "sourceGainB": 1.3589289661670594,
+    "commonPcmGain": 3.2631712112881455,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-020",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-020\\mixture.wav",
+      "audioSha256": "abc89326c5dcd529b225965a73ac194bf8229b40fedb0071907d2b8c8ae5a8e9",
+      "audioSeconds": 5.0250625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-020\\component-a.wav",
+          "audioSha256": "da9bfae3381174dd535daac7124c3e846a425c853a9fa107bba175ed38b3014a",
+          "audioSeconds": 5.0250625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-003",
+        "referenceForScoringOnly": "可以一波几折之类的可以反转反转"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-020\\component-b.wav",
+          "audioSha256": "7c119662618322a0208bcaed5c6e9f1b24734270de88047f672869c6a50a70a3",
+          "audioSeconds": 5.0250625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-000",
+        "referenceForScoringOnly": "其实中国这些悬疑类的动漫其实真的没有"
+      }
+    ],
+    "sourceGainB": 0.6374405499815726,
+    "commonPcmGain": 12.783621793664212,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-054",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-054\\mixture.wav",
+      "audioSha256": "e6004b1a7bee5bfc7097cc3108456139e749abc42b5499f1dad4c220021cf0a2",
+      "audioSeconds": 5.1350625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-054\\component-a.wav",
+          "audioSha256": "b1e3ba0dc5ef1010d6450a42254b81341716cd9eacd66255352fe414075e88da",
+          "audioSeconds": 5.1350625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-010",
+        "referenceForScoringOnly": "还有就是什么就属于那种在咱们相对于在看一些电影之类的东西，"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-054\\component-b.wav",
+          "audioSha256": "07ee66532f08c9fce50c950380012f6cee2c521536cad98be7bebdefaef1d5e8",
+          "audioSeconds": 5.1350625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-003",
+        "referenceForScoringOnly": "可以一波几折之类的可以反转反转"
+      }
+    ],
+    "sourceGainB": 1.2650923908864669,
+    "commonPcmGain": 11.05824838022318,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-036",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-036\\mixture.wav",
+      "audioSha256": "b80749ef90f4a2d69e28d54f82c2b59662d864e4b95f750a61c33e8e55924164",
+      "audioSeconds": 4.7766875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-036\\component-a.wav",
+          "audioSha256": "819afbbcf9275a73b60c423ccf6c8b5ae931bbceeb8c7c4f402fb91f858cfd6c",
+          "audioSeconds": 4.7766875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-003",
+        "referenceForScoringOnly": "我觉得如果你要市场范围想大一点儿，就不要弄的特别复杂"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-036\\component-b.wav",
+          "audioSha256": "f75d01f80215fac6b0ed344f83fedf57e4d16305ac8e98a145a83d6dda505da4",
+          "audioSeconds": 4.7766875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "sourceGainB": 0.8350237577734647,
+    "commonPcmGain": 9.569198701254257,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-015",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-002.wav",
+      "audioSha256": "e7c5b64f70aa9847600389765504cb544f89a891d5d55a0f78b67c81c4cccef5",
+      "audioSeconds": 1.76,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-002.wav",
+          "audioSha256": "e7c5b64f70aa9847600389765504cb544f89a891d5d55a0f78b67c81c4cccef5",
+          "audioSeconds": 1.76,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-002",
+        "referenceForScoringOnly": "反映一些社会现象吧"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-059",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-059\\mixture.wav",
+      "audioSha256": "03af012b879f79031f0eee128598c8a216033aeb99ad1200be0e475ce43a06e2",
+      "audioSeconds": 9.7125625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-059\\component-a.wav",
+          "audioSha256": "6fa74df2a4072dbb240ae28060fe61b3ab4a47861e3b63f794cee39008cbd411",
+          "audioSeconds": 9.7125625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-010",
+        "referenceForScoringOnly": "好，这边管理部刚才说了一下儿这个大公司的这方面的原因，然后从大公司跳槽到小公司之间的问题"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-059\\component-b.wav",
+          "audioSha256": "4e4e5a7a5da465c071c798d1cf8204d8e82acbdb955d211aaade5180284e71c6",
+          "audioSeconds": 9.7125625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-003",
+        "referenceForScoringOnly": "这个相对于来说就是小公司和大公司的区别，当你进到大公司之后，你可以更好的发挥自己的实力，但是另一个比较"
+      }
+    ],
+    "sourceGainB": 0.6615458252816759,
+    "commonPcmGain": 3.733894656875158,
+    "interfererOffsetSamples": 31080,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-034",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-034\\mixture.wav",
+      "audioSha256": "9b390165fd4fe8ff7bb72eb72bff9704cfc2812d67a5ddde9609833e4ed9a96c",
+      "audioSeconds": 8.5375625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-034\\component-a.wav",
+          "audioSha256": "71cb8c518c6767ec8234e1a12fc69b5eda3675ea1bb272f06add902d2b50b80e",
+          "audioSeconds": 8.5375625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-002",
+        "referenceForScoringOnly": "零幺三我是画师"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-034\\component-b.wav",
+          "audioSha256": "90bd9a68b2102670d9b303d63dbe84e51d9fca8559431bf1c1b4c267dc4b29ac",
+          "audioSeconds": 8.5375625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-007",
+        "referenceForScoringOnly": "呃<sil>这方面的话关于故事，咱们邀请咱们各个呃<sil>"
+      }
+    ],
+    "sourceGainB": 1.2427206476541255,
+    "commonPcmGain": 14.378632260363787,
+    "interfererOffsetSamples": 15640,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-016",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-016\\mixture.wav",
+      "audioSha256": "863f046428b4403bf4297135adbe4e61f9437718a01e7a07c55d9a9fb0cbcc3e",
+      "audioSeconds": 6.2850625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-016\\component-a.wav",
+          "audioSha256": "a866e3b56a1b9d14bec133e1ed61da66f17cbed140eb247b90e6ed8ed616c3ce",
+          "audioSeconds": 6.2850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-000",
+        "referenceForScoringOnly": "这方面需要人家购买版权"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-016\\component-b.wav",
+          "audioSha256": "9a53986eb06f78f4ae79f019c57277df017e273f22e001afe46a1d4fd1d7f17b",
+          "audioSeconds": 6.2850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-003",
+        "referenceForScoringOnly": "可以一波几折之类的可以反转反转"
+      }
+    ],
+    "sourceGainB": 1.2579292532073654,
+    "commonPcmGain": 11.051236935652536,
+    "interfererOffsetSamples": 20160,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-055",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-055\\mixture.wav",
+      "audioSha256": "5c5f15eab2e75250767f0b77e18fdc46f058ff2ee695e1256716fb12c4bf0edc",
+      "audioSeconds": 5.7900625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-055\\component-a.wav",
+          "audioSha256": "1bb775a27f121152e92c50241dde3899b1301b862f9ef3b844fd3ae967ee6174",
+          "audioSeconds": 5.7900625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-000",
+        "referenceForScoringOnly": "然后A班和B班B班的第一名考试永远考不过A班A班的第一名"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-055\\component-b.wav",
+          "audioSha256": "5b432252356a91fd9e8e2890b57aed7d657cfcc03027346d18a3fb943dbb2e53",
+          "audioSeconds": 5.7900625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      }
+    ],
+    "sourceGainB": 1.0495976326983016,
+    "commonPcmGain": 5.24055328182935,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-009",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-009\\mixture.wav",
+      "audioSha256": "073a5d99784788bf58578e7dc86a4728d44f824f0cf73ad508082be8767bd7a9",
+      "audioSeconds": 4.4650625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--007-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-009",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-049",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-049\\mixture.wav",
+      "audioSha256": "50b4c337ed171bca5b056ceb289d46ffe80009fa22b8e09d8ce1cc7fc4d758b2",
+      "audioSeconds": 5.6088125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-049\\component-a.wav",
+          "audioSha256": "012997eb5988849aeaacda052aa4973f5c92a27a416a461612d44d800472d0b2",
+          "audioSeconds": 5.6088125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-000",
+        "referenceForScoringOnly": "零二七，我是教学"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-049\\component-b.wav",
+          "audioSha256": "3344b3d639ac1364294128c5ce92f7bd248fa21c4ef7de03f8922b3ab36dc64c",
+          "audioSeconds": 5.6088125,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-008",
+        "referenceForScoringOnly": "嗯<sil>这个这个<sil>"
+      }
+    ],
+    "sourceGainB": 0.8954656996296452,
+    "commonPcmGain": 5.778200793992645,
+    "interfererOffsetSamples": 6700,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-017",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-017\\mixture.wav",
+      "audioSha256": "8de2da53fa4d8648b209c84f7581f0fcf4fd5654d3277b6fcda74935b7878fc5",
+      "audioSeconds": 6.6000625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--006-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-017",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-003",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-003\\mixture.wav",
+      "audioSha256": "ef94a6d31c95d50a1e91fcf76fcd4c71a59de56de767bc962ea3793f91ca78ea",
+      "audioSeconds": 4.6000625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-003\\component-a.wav",
+          "audioSha256": "163420ccc0783fa7c6c7efa00849ab78b57f3b9b8ffffa1221f3302d903e1102",
+          "audioSeconds": 4.6000625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-017",
+        "referenceForScoringOnly": "房贷啊车贷啊之类的这方面的压力，他会怎么选择"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-003\\component-b.wav",
+          "audioSha256": "c7a2da81199a3613871e4a8dea10d3a4035d83a234f702d4db216dad59035b0d",
+          "audioSeconds": 4.6000625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-000",
+        "referenceForScoringOnly": "还是啥也不懂这个"
+      }
+    ],
+    "sourceGainB": 1.678118536303075,
+    "commonPcmGain": 3.7764492049718985,
+    "interfererOffsetSamples": 9960,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-022",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-022\\mixture.wav",
+      "audioSha256": "b7ef75410522aae28ed310897d6b87652418404454d16eb4eec2d9bf6247c09b",
+      "audioSeconds": 7.1625625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--002-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-022",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-005",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-005\\mixture.wav",
+      "audioSha256": "35993e5e7fe1636691706b763cca8e150692f3dfbf427884c6ddb0f47aecee22",
+      "audioSeconds": 6.9250625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-005",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-007",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--001-M--component-001.wav",
+      "audioSha256": "633f1d8d7e440dfaae41a84e4debb0f511d522d5851b4626bed8b82e15004fc5",
+      "audioSeconds": 6.3750625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--001-M--component-001.wav",
+          "audioSha256": "633f1d8d7e440dfaae41a84e4debb0f511d522d5851b4626bed8b82e15004fc5",
+          "audioSeconds": 6.3750625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-001",
+        "referenceForScoringOnly": "行呃那今天我们既然嗯都说了这么多"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-033",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-033\\mixture.wav",
+      "audioSha256": "4c777e48125ec6fb7f1fc8f941d36cce5a221574a5a75aa4104597b558b03997",
+      "audioSeconds": 9.0675625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-033\\component-a.wav",
+          "audioSha256": "7df20ea23a2eb7e574cf39b57a7ca047ade4826de8a6f3297dead27f93a16b20",
+          "audioSeconds": 9.0675625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-001",
+        "referenceForScoringOnly": "你是陪着这个公司一直在起步阶段，就是你在起步阶段你就进入这个公司，你一直陪伴这个公司的成长。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-033\\component-b.wav",
+          "audioSha256": "961c72effcff9c4bed1f055512a8334a4d4188c6f7405855a92bf529e1080b19",
+          "audioSeconds": 9.0675625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-001",
+        "referenceForScoringOnly": "呃想一出去就有一个好的工作，然后高的薪资这是不太可能的。"
+      }
+    ],
+    "sourceGainB": 1.504055906204958,
+    "commonPcmGain": 3.831773187828493,
+    "interfererOffsetSamples": 48360,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-026",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--006-F--component-003.wav",
+      "audioSha256": "709583b3548d25b657ad98836aee4ee407874073bbcb4efac458ff6bc51dd511",
+      "audioSeconds": 6.7100625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--006-F--component-003.wav",
+          "audioSha256": "709583b3548d25b657ad98836aee4ee407874073bbcb4efac458ff6bc51dd511",
+          "audioSeconds": 6.7100625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-003",
+        "referenceForScoringOnly": "嗯创业，自己做一点儿别的事情，这是我以后的一个想法吧。"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-039",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-039\\mixture.wav",
+      "audioSha256": "5bcafea49dcda4a465dbae9ad6c17e563a47bc07870ac218f7a1076d0814e583",
+      "audioSeconds": 8.1415,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-039\\component-a.wav",
+          "audioSha256": "1dc3454f3712a81adbf33ab2b5c04754ef6b0766f225d057977485b9e5d8a1ad",
+          "audioSeconds": 8.1415,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-004",
+        "referenceForScoringOnly": "呃刚出来肯定是不是什么都那么熟悉，但是都是需要靠后期的经验啊。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-039\\component-b.wav",
+          "audioSha256": "a90ba7a8960ffa3daaa7c80e9ab7189286bb35f1d40c7f43758aa311912a96cb",
+          "audioSeconds": 8.1415,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-007",
+        "referenceForScoringOnly": "如果你有什么不懂的，你可以及时问，他们可能会一些就是叫哥啊叫姐之类的，可能会帮助到你。"
+      }
+    ],
+    "sourceGainB": 1.5508368009446125,
+    "commonPcmGain": 3.191630403780411,
+    "interfererOffsetSamples": 23463,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-004",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-004\\mixture.wav",
+      "audioSha256": "c58e33cec878e4deff6560f013a41238bcc537285a776586da92d54a82dcde3e",
+      "audioSeconds": 5.9689375,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-004",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-011",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--005-F--component-001.wav",
+      "audioSha256": "f9998977d3dcf9c82cdfdfa910c3cac8fe09d713c73a9ea9da4de3596d7dda42",
+      "audioSeconds": 6.5450625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--005-F--component-001.wav",
+          "audioSha256": "f9998977d3dcf9c82cdfdfa910c3cac8fe09d713c73a9ea9da4de3596d7dda42",
+          "audioSeconds": 6.5450625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-001",
+        "referenceForScoringOnly": "等<->等到你有了足够的阅历和资本，然后你可以在去试试选择跳槽并不是说"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-029",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-029\\mixture.wav",
+      "audioSha256": "f4ae7232c8ec87038340dac8f4c5ade236c9b58df44e0cc1a71daf39b87cbb50",
+      "audioSeconds": 7.6400625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-029\\component-a.wav",
+          "audioSha256": "572c4f2d6d16b838f22c48693440f67cc7634f9aea85df1014bfa45c5fd8e023",
+          "audioSeconds": 7.6400625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-004",
+        "referenceForScoringOnly": "嗯每个人对这个问题的这个看法，现在由咱们这个，嗯<sil>副校长这边主持一下儿这个会。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-029\\component-b.wav",
+          "audioSha256": "3c95bc2118f382d483f8f0d1bcabbca794cb341d9ed3c5749466db722ab3e873",
+          "audioSeconds": 7.6400625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      }
+    ],
+    "sourceGainB": 0.7301299152893777,
+    "commonPcmGain": 4.060906086477554,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-030",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-008.wav",
+      "audioSha256": "71a6781425051ef8298945b2dd98db51efd97bbe8229051205efa092c9d7d8ca",
+      "audioSeconds": 3.7756875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-008.wav",
+          "audioSha256": "71a6781425051ef8298945b2dd98db51efd97bbe8229051205efa092c9d7d8ca",
+          "audioSeconds": 3.7756875,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-008",
+        "referenceForScoringOnly": "这个剧本儿方面是要考虑到这些，但如果想在这"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-006",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-006\\mixture.wav",
+      "audioSha256": "e740f39466638fad0c96d83a71fee4f7eadad9b8432c6b056a041ad23740d742",
+      "audioSeconds": 10.0425625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-006\\component-a.wav",
+          "audioSha256": "0a7802fc521e50308d43840a2695e7f1e604f72bd89b15b9f6216d2f5aeee3ed",
+          "audioSeconds": 10.0425625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-000",
+        "referenceForScoringOnly": "比如咱们搞一下那种诶老套路的话，我觉得应该是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-006\\component-b.wav",
+          "audioSha256": "2cebbc79776bec48052cd6187da15b81bd526b6568cce4149a740c0eb276e2c3",
+          "audioSeconds": 10.0425625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-000",
+        "referenceForScoringOnly": "你不要再指定在青青年这一块儿，我觉得你可以把范围适当扩大一点从"
+      }
+    ],
+    "sourceGainB": 1.6810746740403786,
+    "commonPcmGain": 9.338349851413792,
+    "interfererOffsetSamples": 53560,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-031",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-031\\mixture.wav",
+      "audioSha256": "53a3331a1bededc3713977887f3a081b4da7a893bdcd12a90f48e152db1cb6e0",
+      "audioSeconds": 4.3520625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-031",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-010",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--004-M--component-002.wav",
+      "audioSha256": "b9b2d3c3e455e10f231625016cb430bf8df287bf21c627a385d46b2e384d3652",
+      "audioSeconds": 6.9245625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--004-M--component-002.wav",
+          "audioSha256": "b9b2d3c3e455e10f231625016cb430bf8df287bf21c627a385d46b2e384d3652",
+          "audioSeconds": 6.9245625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-002",
+        "referenceForScoringOnly": "不是也要说了你要是真学个企业管理上大公司，真管不上对不对？"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-024",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--004-M--component-000.wav",
+      "audioSha256": "89fd231a2861ef7f689e754eea9720a6d45cd120192cfb295a9421a9448ec482",
+      "audioSeconds": 1.6750625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--004-M--component-000.wav",
+          "audioSha256": "89fd231a2861ef7f689e754eea9720a6d45cd120192cfb295a9421a9448ec482",
+          "audioSeconds": 1.6750625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-000",
+        "referenceForScoringOnly": "零二七，我是教学"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-011",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-011\\mixture.wav",
+      "audioSha256": "d82cab0b87549fdec275f7be563b995a88013ef4e1cc2d46f0adac16aefd57c4",
+      "audioSeconds": 6.7100625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--001-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-011",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-031",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-000.wav",
+      "audioSha256": "3b44aa7d98c26af45c9e926110222a4a3d5a2412b8729bcc3befe25e9a662d20",
+      "audioSeconds": 7.8300625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-000.wav",
+          "audioSha256": "3b44aa7d98c26af45c9e926110222a4a3d5a2412b8729bcc3befe25e9a662d20",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-000",
+        "referenceForScoringOnly": "比如咱们搞一下那种诶老套路的话，我觉得应该是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-031",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-031\\mixture.wav",
+      "audioSha256": "53a3331a1bededc3713977887f3a081b4da7a893bdcd12a90f48e152db1cb6e0",
+      "audioSeconds": 4.3520625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-031\\component-a.wav",
+          "audioSha256": "96e60785410b2b1ef54c91c0ef27a855c123c495eb31d4cb890d7135fdd208d3",
+          "audioSeconds": 4.3520625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-001",
+        "referenceForScoringOnly": "如果以上这些大公司都说需要靠个人的经验"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-031\\component-b.wav",
+          "audioSha256": "6c17854aee7453863b2e6c9351b0c4e417beb3828d2b5c7442faab0162233ff9",
+          "audioSeconds": 4.3520625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      }
+    ],
+    "sourceGainB": 1.0673755198354198,
+    "commonPcmGain": 3.852689957796179,
+    "interfererOffsetSamples": 8628,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-025",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-025\\mixture.wav",
+      "audioSha256": "a62e75ad98831675791f4f319db3f3682af7cbe1a48aadc51d0f1ef0aa048b47",
+      "audioSeconds": 9.1675625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-025\\component-a.wav",
+          "audioSha256": "f3b21ecd938472f34b0f7f9d8306d3586a392563261ef8a273ad5006716d674b",
+          "audioSeconds": 9.1675625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-002",
+        "referenceForScoringOnly": "呃告诉他们以后这些情况让他们有更多的选择"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-025\\component-b.wav",
+          "audioSha256": "79897ccc31de60061142038860877d7da113b515192ad18fc357561c8e0c7576",
+          "audioSeconds": 9.1675625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-007",
+        "referenceForScoringOnly": "刚才副副校长说的这个你可以说一下这个，你对这个事件的一个看法。"
+      }
+    ],
+    "sourceGainB": 1.0808262924642076,
+    "commonPcmGain": 4.549864938036341,
+    "interfererOffsetSamples": 35720,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-027",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-027\\mixture.wav",
+      "audioSha256": "9d1fe68a3e848cc521245bdaab574439b593306245bcacfc0351a9320da4716a",
+      "audioSeconds": 5.7050625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--005-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-027",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-012",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-012\\mixture.wav",
+      "audioSha256": "951407c9e2b553b7f758faa9ddf3af8208cd3fb65722827f42617d38491f1a1d",
+      "audioSeconds": 5.0813125,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--003-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-012",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-021",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-021\\mixture.wav",
+      "audioSha256": "957fe5804cf8dcb61569ff4f9e24cd5c53761d5fc60abca560eabb2ec0af5314",
+      "audioSeconds": 8.3875625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-021\\component-a.wav",
+          "audioSha256": "cceee0af9ed340aa7f38013a5402729f12a693d13f97101fb99ff1cc3486a4f8",
+          "audioSeconds": 8.3875625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-002",
+        "referenceForScoringOnly": "不是也要说了你要是真学个企业管理上大公司，真管不上对不对？"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-021\\component-b.wav",
+          "audioSha256": "cb28988b9e4b83764774859dc57ba67fbc43f77e5be95544a849324926766026",
+          "audioSeconds": 8.3875625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-003",
+        "referenceForScoringOnly": "嗯创业，自己做一点儿别的事情，这是我以后的一个想法吧。"
+      }
+    ],
+    "sourceGainB": 1.3935588631219793,
+    "commonPcmGain": 3.515843453838658,
+    "interfererOffsetSamples": 26840,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-040",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-040\\mixture.wav",
+      "audioSha256": "9b48261d92ed02734c3326a87ef66f395fe29c07db7d07403db71a8c32f6c209",
+      "audioSeconds": 6.948,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-040\\component-a.wav",
+          "audioSha256": "da536a8efb2e844ef231aef600098949bfca3abeed1b407007fbc4fa5ebbbbc3",
+          "audioSeconds": 6.948,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-008",
+        "referenceForScoringOnly": "呃那首先咱们<sil>"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-040\\component-b.wav",
+          "audioSha256": "6ad93b2ee36b0b8906e311c4295310f8d1c9e92f8618c3389603f5faff1de573",
+          "audioSeconds": 6.948,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-003",
+        "referenceForScoringOnly": "如果要让观众感觉到自豪的话，咱们的故事是不是要把观众的情绪带进去？"
+      }
+    ],
+    "sourceGainB": 1.0377231564594418,
+    "commonPcmGain": 9.017088932990683,
+    "interfererOffsetSamples": 12240,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-002",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-001.wav",
+      "audioSha256": "9c38bcac1249ad57137c17c7d8f57f6de3ee58a0869857e32fd9cc7b15e3f952",
+      "audioSeconds": 7.7600625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--003-M--component-001.wav",
+          "audioSha256": "9c38bcac1249ad57137c17c7d8f57f6de3ee58a0869857e32fd9cc7b15e3f952",
+          "audioSeconds": 7.7600625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-001",
+        "referenceForScoringOnly": "呃就是加加入疫情然后湿毒还有<sil>变形兽儿那些比较多就是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-014",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+      "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+      "audioSeconds": 4.0650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+          "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+          "audioSeconds": 4.0650625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-017",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-000.wav",
+      "audioSha256": "3b44aa7d98c26af45c9e926110222a4a3d5a2412b8729bcc3befe25e9a662d20",
+      "audioSeconds": 7.8300625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--004-M--component-000.wav",
+          "audioSha256": "3b44aa7d98c26af45c9e926110222a4a3d5a2412b8729bcc3befe25e9a662d20",
+          "audioSeconds": 7.8300625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--004-M",
+        "originalComponentId": "20200707_L_R001S08C01--004-M--component-000",
+        "referenceForScoringOnly": "比如咱们搞一下那种诶老套路的话，我觉得应该是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-056",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-056\\mixture.wav",
+      "audioSha256": "5790751b08e1c310302d992a897282764a7cff7809afaf3762d021fa5ef5ffb0",
+      "audioSeconds": 4.7550625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-056\\component-a.wav",
+          "audioSha256": "0f97043a9a51c14242970cbd6f48c2551f10fc1101e9e2a49a1c457324cde756",
+          "audioSeconds": 4.7550625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-056\\component-b.wav",
+          "audioSha256": "825baf5aa0cf731072f186baf6e587c7b80092c1ee36e201c07b88e5158e6f6a",
+          "audioSeconds": 4.7550625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-000",
+        "referenceForScoringOnly": "其实中国这些悬疑类的动漫其实真的没有"
+      }
+    ],
+    "sourceGainB": 0.8937579261143391,
+    "commonPcmGain": 8.671067333137312,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-028",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+      "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+      "audioSeconds": 4.0650625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--001-M--component-000.wav",
+          "audioSha256": "861cb4d29bbe1c4d44df82bcec9e104dc0112ca87136ab35843c348763b1f026",
+          "audioSeconds": 4.0650625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-009",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--003-M--component-001.wav",
+      "audioSha256": "d2699507105d68d3c7f4924179e31fa44bbda7b177c676bb14be93ec6a3a06ed",
+      "audioSeconds": 6.9250625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--003-M--component-001.wav",
+          "audioSha256": "d2699507105d68d3c7f4924179e31fa44bbda7b177c676bb14be93ec6a3a06ed",
+          "audioSeconds": 6.9250625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-001",
+        "referenceForScoringOnly": "你是陪着这个公司一直在起步阶段，就是你在起步阶段你就进入这个公司，你一直陪伴这个公司的成长。"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-016",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-016\\mixture.wav",
+      "audioSha256": "863f046428b4403bf4297135adbe4e61f9437718a01e7a07c55d9a9fb0cbcc3e",
+      "audioSeconds": 6.2850625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--006-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-016",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-019",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--006-F--component-003.wav",
+      "audioSha256": "6c3c0ff05073b223fd1501803568630fa5eacd3c9341c377f214d36b7ed73b7f",
+      "audioSeconds": 6.4950625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--006-F--component-003.wav",
+          "audioSha256": "6c3c0ff05073b223fd1501803568630fa5eacd3c9341c377f214d36b7ed73b7f",
+          "audioSeconds": 6.4950625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-003",
+        "referenceForScoringOnly": "那个都得根据我们最终定下来的这个人物，还有中心"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-029",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-029\\mixture.wav",
+      "audioSha256": "f4ae7232c8ec87038340dac8f4c5ade236c9b58df44e0cc1a71daf39b87cbb50",
+      "audioSeconds": 7.6400625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--007-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-029",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-004",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--005-F--component-002.wav",
+      "audioSha256": "9a4f1d9b7e3319457ad5a4428636b36d5fa155ad1182a0bc9d2e35df1e05a7b6",
+      "audioSeconds": 6.785125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--005-F--component-002.wav",
+          "audioSha256": "9a4f1d9b7e3319457ad5a4428636b36d5fa155ad1182a0bc9d2e35df1e05a7b6",
+          "audioSeconds": 6.785125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-002",
+        "referenceForScoringOnly": "我觉得可以把这个主人公呃发生的故事的背景放在多少年多几百年之后"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-025",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-025\\mixture.wav",
+      "audioSha256": "a62e75ad98831675791f4f319db3f3682af7cbe1a48aadc51d0f1ef0aa048b47",
+      "audioSeconds": 9.1675625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--004-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-025",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-021",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--001-M--component-001.wav",
+      "audioSha256": "633f1d8d7e440dfaae41a84e4debb0f511d522d5851b4626bed8b82e15004fc5",
+      "audioSeconds": 6.3750625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--001-M--component-001.wav",
+          "audioSha256": "633f1d8d7e440dfaae41a84e4debb0f511d522d5851b4626bed8b82e15004fc5",
+          "audioSeconds": 6.3750625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-001",
+        "referenceForScoringOnly": "行呃那今天我们既然嗯都说了这么多"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-027",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--007-F--component-004.wav",
+      "audioSha256": "a11937cbd3dbeff043e9f57b35a829b24a5532c334c1140233cd66ff365859a7",
+      "audioSeconds": 7.20925,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--007-F--component-004.wav",
+          "audioSha256": "a11937cbd3dbeff043e9f57b35a829b24a5532c334c1140233cd66ff365859a7",
+          "audioSeconds": 7.20925,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-004",
+        "referenceForScoringOnly": "其实每个公司肯定都是有利有弊的。举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班，"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-023",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-023\\mixture.wav",
+      "audioSha256": "517d61b2c1c1c4f37c07fe71c79621493de52c6c06c02e4fb12f2009dface30c",
+      "audioSeconds": 2.2500625,
+      "channels": 2
+    },
+    "profileId": "20200708_L_R002S01C01--002-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-023",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-000",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-000\\mixture.wav",
+      "audioSha256": "58b2bc22d500a0fe631e2ccdf695faa51395aba15d4d2e95943179f8d9b2158f",
+      "audioSeconds": 4.2750625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-000\\component-a.wav",
+          "audioSha256": "f5ab2d714c4633fd82f5895d039de188084706c1582433542dbe7ac54a0b192d",
+          "audioSeconds": 4.2750625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-000\\component-b.wav",
+          "audioSha256": "8f8cebba1dbd64967533979a4535360da36acc522287aca55d8962180a228b09",
+          "audioSeconds": 4.2750625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-001",
+        "referenceForScoringOnly": "男生这边肯定是属于热血比较多对于战斗的比较多"
+      }
+    ],
+    "sourceGainB": 1.676690242801546,
+    "commonPcmGain": 6.055835246311571,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-006",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-006\\mixture.wav",
+      "audioSha256": "e740f39466638fad0c96d83a71fee4f7eadad9b8432c6b056a041ad23740d742",
+      "audioSeconds": 10.0425625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--006-F",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-006",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-057",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-057\\mixture.wav",
+      "audioSha256": "dba88e68a21b391c6b102a585e53666236a91f2845f68c7ab2d71f1648c1f195",
+      "audioSeconds": 5.4475625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-057\\component-a.wav",
+          "audioSha256": "85c07a4e13875e293b1e4a4d18600fcf02a0788bf7e072c0b2c86d4f9db09cba",
+          "audioSeconds": 5.4475625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--001-M",
+        "originalComponentId": "20200708_L_R002S01C01--001-M--component-003",
+        "referenceForScoringOnly": "应该怎么去指导这个咱们这个学生去就业呢"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-057\\component-b.wav",
+          "audioSha256": "6929d1820e4e9bd1346a2742a1467942fb2071403e96cc50515e12e177225002",
+          "audioSeconds": 5.4475625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-002",
+        "referenceForScoringOnly": "呃告诉他们以后这些情况让他们有更多的选择"
+      }
+    ],
+    "sourceGainB": 1.754657467321499,
+    "commonPcmGain": 2.6232043124314717,
+    "interfererOffsetSamples": 15720,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-020",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--007-M--component-002.wav",
+      "audioSha256": "337b5cb8efa5ebc13910676a00c592c74b1b676d8e71437ccb7b5e20ea7ad52b",
+      "audioSeconds": 6.2850625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--007-M--component-002.wav",
+          "audioSha256": "337b5cb8efa5ebc13910676a00c592c74b1b676d8e71437ccb7b5e20ea7ad52b",
+          "audioSeconds": 6.2850625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--007-M",
+        "originalComponentId": "20200707_L_R001S08C01--007-M--component-002",
+        "referenceForScoringOnly": "各位就是参与呃会议的人来进行一些把你的想法表达一下。"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-013",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--007-F--component-003.wav",
+      "audioSha256": "ee87f46bec33ea3c8b07bfd9264c563053b4da184f02478ba154a039c985caea",
+      "audioSeconds": 7.7700625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--007-F--component-003.wav",
+          "audioSha256": "ee87f46bec33ea3c8b07bfd9264c563053b4da184f02478ba154a039c985caea",
+          "audioSeconds": 7.7700625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-003",
+        "referenceForScoringOnly": "这个相对于来说就是小公司和大公司的区别，当你进到大公司之后，你可以更好的发挥自己的实力，但是另一个比较"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-005",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-005\\mixture.wav",
+      "audioSha256": "35993e5e7fe1636691706b763cca8e150692f3dfbf427884c6ddb0f47aecee22",
+      "audioSeconds": 6.9250625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-005\\component-a.wav",
+          "audioSha256": "06b29c4dc250efac113c8b62b317485d85d64aa4d6548bffdaa982786efd122c",
+          "audioSeconds": 6.9250625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-001",
+        "referenceForScoringOnly": "你是陪着这个公司一直在起步阶段，就是你在起步阶段你就进入这个公司，你一直陪伴这个公司的成长。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-005\\component-b.wav",
+          "audioSha256": "b2f4e82fa06babe3d4c2784bc18632615b3f381e6e66b873008ce13348dd8b28",
+          "audioSeconds": 6.9250625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--004-M",
+        "originalComponentId": "20200708_L_R002S01C01--004-M--component-001",
+        "referenceForScoringOnly": "除非你学的是前台接待"
+      }
+    ],
+    "sourceGainB": 0.6706277720070434,
+    "commonPcmGain": 6.632995951417004,
+    "interfererOffsetSamples": 7977,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-027",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-027\\mixture.wav",
+      "audioSha256": "9d1fe68a3e848cc521245bdaab574439b593306245bcacfc0351a9320da4716a",
+      "audioSeconds": 5.7050625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-027\\component-a.wav",
+          "audioSha256": "400735cda683b0f6f601589e703fffa0d56225bd26035c94ea822b7ef706c6dc",
+          "audioSeconds": 5.7050625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--007-F",
+        "originalComponentId": "20200708_L_R002S01C01--007-F--component-002",
+        "referenceForScoringOnly": "但是他又不认可你在大学里取得这个表面的成绩，是一个很矛盾又很现实的问题"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-027\\component-b.wav",
+          "audioSha256": "d2b4a4b0dcd28f8a4ec2d3322950840021d8cf38a2371cf642ec58290c2e40aa",
+          "audioSeconds": 5.7050625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-030",
+        "referenceForScoringOnly": "是要大公司做第一份工作，还是以小公司做第一份工作"
+      }
+    ],
+    "sourceGainB": 1.411964172152021,
+    "commonPcmGain": 2.252832655000416,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-053",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-053\\mixture.wav",
+      "audioSha256": "371e89cf5755eb0524e5bf6cad90d4798cd2fa9d21ba1c672a5264e8267a56fa",
+      "audioSeconds": 6.7100625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-053\\component-a.wav",
+          "audioSha256": "f290e30e42e3d893fee34ed09ca8d6c7a7838fb7b97c1eb5ff167812aa55febe",
+          "audioSeconds": 6.7100625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--006-F",
+        "originalComponentId": "20200708_L_R002S01C01--006-F--component-003",
+        "referenceForScoringOnly": "嗯创业，自己做一点儿别的事情，这是我以后的一个想法吧。"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-053\\component-b.wav",
+          "audioSha256": "3832cf35c0e59f8d31e28a110f8e6d4e4d147bcdcd310ce38742c344754c61bc",
+          "audioSeconds": 6.7100625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-000",
+        "referenceForScoringOnly": "还是啥也不懂这个"
+      }
+    ],
+    "sourceGainB": 0.7318488685201787,
+    "commonPcmGain": 4.899534806446254,
+    "interfererOffsetSamples": 19920,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-001",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-000.wav",
+      "audioSha256": "759c5f034e8bb519e24e0a4b88e93940ce2cb92bb2684392d08fd908a16c43cf",
+      "audioSeconds": 2.5200625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--002-M--component-000.wav",
+          "audioSha256": "759c5f034e8bb519e24e0a4b88e93940ce2cb92bb2684392d08fd908a16c43cf",
+          "audioSeconds": 2.5200625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-000",
+        "referenceForScoringOnly": "这方面需要人家购买版权"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-025",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--005-F--component-001.wav",
+      "audioSha256": "f9998977d3dcf9c82cdfdfa910c3cac8fe09d713c73a9ea9da4de3596d7dda42",
+      "audioSeconds": 6.5450625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200708_L_R002S01C01--005-F--component-001.wav",
+          "audioSha256": "f9998977d3dcf9c82cdfdfa910c3cac8fe09d713c73a9ea9da4de3596d7dda42",
+          "audioSeconds": 6.5450625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-001",
+        "referenceForScoringOnly": "等<->等到你有了足够的阅历和资本，然后你可以在去试试选择跳槽并不是说"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-000",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-000\\mixture.wav",
+      "audioSha256": "58b2bc22d500a0fe631e2ccdf695faa51395aba15d4d2e95943179f8d9b2158f",
+      "audioSeconds": 4.2750625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--003-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-000",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-038",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-038\\mixture.wav",
+      "audioSha256": "9c4ff18c95421c322fdcb6224a4ecfeeca787697cd15ceff1429437acc697973",
+      "audioSeconds": 6.4950625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-038\\component-a.wav",
+          "audioSha256": "3f33fa4bb622f5d3c5b5a9bf498600f4deba6641523b44efc9dc45419cf8a9c1",
+          "audioSeconds": 6.4950625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--006-F",
+        "originalComponentId": "20200707_L_R001S08C01--006-F--component-003",
+        "referenceForScoringOnly": "那个都得根据我们最终定下来的这个人物，还有中心"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-038\\component-b.wav",
+          "audioSha256": "dd27f6e182709fbbc90e36fa885c69ed6df88be873f473ddc5045d11c6952e7a",
+          "audioSeconds": 6.4950625,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--002-M",
+        "originalComponentId": "20200707_L_R001S08C01--002-M--component-000",
+        "referenceForScoringOnly": "这方面需要人家购买版权"
+      }
+    ],
+    "sourceGainB": 0.5766068632120467,
+    "commonPcmGain": 15.445765029934252,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-024",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-024\\mixture.wav",
+      "audioSha256": "a4b28abe9b1272068cc9261d8a717b8f3d1c48dd4998c3e7dc3efa22f0fc5a08",
+      "audioSeconds": 5.3450625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--004-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-024",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-019",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-019\\mixture.wav",
+      "audioSha256": "07f0eda0e66be1f37092985874e903fa4525bf108e6ec352bccab7fce4ab3301",
+      "audioSeconds": 7.0381875,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-019\\component-a.wav",
+          "audioSha256": "3a241f3b6d47430ab6e08f9fa437fc4ba5cf7336bdfb7276878d90665ae40d7f",
+          "audioSeconds": 7.0381875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--003-M",
+        "originalComponentId": "20200708_L_R002S01C01--003-M--component-007",
+        "referenceForScoringOnly": "不用过多的这个建议他们自己有自己的想法儿，但是像那种就是希望自己从事的专业"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-019\\component-b.wav",
+          "audioSha256": "dfed1d935e0a6c26310402750766dd32660e8e0d784e517ce4ea158f2a3e084e",
+          "audioSeconds": 7.0381875,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-002",
+        "referenceForScoringOnly": "零二三，我是咨询处。"
+      }
+    ],
+    "sourceGainB": 1.4550173432251245,
+    "commonPcmGain": 4.985680473372781,
+    "interfererOffsetSamples": 0,
+    "snrBeforeQuantizationDb": 0.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--solo-018",
+    "kind": "single_target_preservation",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--005-F--component-002.wav",
+      "audioSha256": "9a4f1d9b7e3319457ad5a4428636b36d5fa155ad1182a0bc9d2e35df1e05a7b6",
+      "audioSeconds": 6.785125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200707_L_R001S08C01--005-F--component-002.wav",
+          "audioSha256": "9a4f1d9b7e3319457ad5a4428636b36d5fa155ad1182a0bc9d2e35df1e05a7b6",
+          "audioSeconds": 6.785125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--005-F",
+        "originalComponentId": "20200707_L_R001S08C01--005-F--component-002",
+        "referenceForScoringOnly": "我觉得可以把这个主人公呃发生的故事的背景放在多少年多几百年之后"
+      }
+    ],
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-014",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-014\\mixture.wav",
+      "audioSha256": "9e073c814ad7cc797a2ffaa6e5a7b2ae9c35ad7c5c0b7542b0ee36e0a1e9d39f",
+      "audioSeconds": 8.0913125,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-014\\component-a.wav",
+          "audioSha256": "c85db74190999a497d61d086760513b0dcc82a52324ed4c6937b7ed4fd3dc8aa",
+          "audioSeconds": 8.0913125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--001-M",
+        "originalComponentId": "20200707_L_R001S08C01--001-M--component-000",
+        "referenceForScoringOnly": "你刚才说的这个留留有悬疑这个可以，但是"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-014\\component-b.wav",
+          "audioSha256": "8fd06470dcf9558b823f5e0b18e3474f390bb03557931eadf7dd906f9f6fa757",
+          "audioSeconds": 8.0913125,
+          "channels": 2
+        },
+        "profileId": "20200707_L_R001S08C01--003-M",
+        "originalComponentId": "20200707_L_R001S08C01--003-M--component-007",
+        "referenceForScoringOnly": "嗯我们想做一个动漫想引入一下，想以钢铁侠"
+      }
+    ],
+    "sourceGainB": 1.356103368286872,
+    "commonPcmGain": 7.780927519923187,
+    "interfererOffsetSamples": 16260,
+    "snrBeforeQuantizationDb": 3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--absent-028",
+    "kind": "absent_known_identity",
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-028\\mixture.wav",
+      "audioSha256": "cdb3e7899a7e2dc4c31c0b5127d3e53e08490970ae9b270c872237d328d693d2",
+      "audioSeconds": 7.8300625,
+      "channels": 2
+    },
+    "profileId": "20200707_L_R001S08C01--007-M",
+    "targetIsExactZero": true,
+    "mixedSourceId": "train--mixed-028",
+    "notNaturalOverlap": true
+  },
+  {
+    "id": "train--mixed-051",
+    "kind": "known_additive_mixture",
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "mixture": {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-051\\mixture.wav",
+      "audioSha256": "4706abc3f84bb36e01e72bbb4189b335bb1e381f74c4724eda9b32b405c7624c",
+      "audioSeconds": 5.918625,
+      "channels": 2
+    },
+    "targets": [
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-051\\component-a.wav",
+          "audioSha256": "aec99fdc6f9b57d092933d3d421a82bc6dfbcc0dfefba3c288f8bc01d3c164d3",
+          "audioSeconds": 5.918625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--005-F",
+        "originalComponentId": "20200708_L_R002S01C01--005-F--component-000",
+        "referenceForScoringOnly": "也不用这么悲观，其实"
+      },
+      {
+        "component": {
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\train--mixed-051\\component-b.wav",
+          "audioSha256": "2f0a910ea915ae59d75d530bb9c9feb035b67a46f07c3f0326237b3eff1bb501",
+          "audioSeconds": 5.918625,
+          "channels": 2
+        },
+        "profileId": "20200708_L_R002S01C01--002-M",
+        "originalComponentId": "20200708_L_R002S01C01--002-M--component-023",
+        "referenceForScoringOnly": "可能他在把一些他想要的人生阅历呀，给你说一下儿"
+      }
+    ],
+    "sourceGainB": 1.4864154285227527,
+    "commonPcmGain": 3.627034275911315,
+    "interfererOffsetSamples": 17257,
+    "snrBeforeQuantizationDb": -3.0,
+    "physicalChannels": [
+      0,
+      1
+    ],
+    "componentSumBitIdenticalToMixture": true,
+    "notNaturalOverlap": true
+  }
+]
