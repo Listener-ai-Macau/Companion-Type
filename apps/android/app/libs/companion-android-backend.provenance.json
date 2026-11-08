@@ -1,13 +1,13 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "4442f27c3b468c84d8534e7a7d5e4e8bae724accc83831d5de3bee3bbae9e3ac",
-  "backendSourceCommit": "0810c03733d65adc3cf3de2f54769d58f878dc97",
+  "aarSha256": "3638f0328d909848fb07cf727d19844b983e8f933a8510c1329360e0e0c39e86",
+  "backendSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "0810c03733d65adc3cf3de2f54769d58f878dc97",
   "nativeLibrarySha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110",
   "nativeLibrary16KiBElfAligned": true,
-  "nativeRebuiltThisBatch": true,
+  "nativeRebuiltThisBatch": false,
   "nativeProductionSourceIdenticalToNativeSourceCommit": true,
   "nativeInheritedReceipt": null,
   "aarBase062Sha256": "e1eb24a9795a8a68be287a235c852f27ea9cee8be3abbf30458a8e5e06403f76",
@@ -16,8 +16,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Reduce redundant durable control writes during identical device-state waits; atomically publish completed Android WAV without forbidden hard links and without replacing existing output. Exact platform6f30 restored, native own-App-storage regressions pass; ordinary UI, physical speed and PCM gates remain pending.",
-  "javaSourceCommit": "e35be96f6a4f4191b37649012e3d34dee67afd4e",
+  "scope": "Fresh originals under16 physical sectors use one existing terminal CRA2, removing3..7-sector prefix transactions that measurably serialized after payload. Old pending/confirmed prefix proofs and long-range concurrency still reconcile exactly. Native0810 audio/control fixes, models/web assets unchanged; actual first receive speed not yet qualified.",
+  "javaSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
   "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt.",
@@ -36,5 +36,9 @@
   "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
   "nativeBuildReceipt": "E:/CodexData/Companion/.build-cache/control106/native-build/result.json",
   "javaClassesChangedFrom105": [],
-  "allEntriesExceptNativeAndLockManifestByteIdenticalTo105": true
+  "allEntriesExceptNativeAndLockManifestByteIdenticalTo105": true,
+  "javaClassesChangedFrom106": [
+    "com/denzic/companion/mobile/RangeConsume.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo106": true
 }
