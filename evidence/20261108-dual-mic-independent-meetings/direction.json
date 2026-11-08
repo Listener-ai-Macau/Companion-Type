@@ -1,0 +1,18 @@
+{
+  "state": "FROZEN_INDEPENDENT_REAL_MEETING_VALIDATION",
+  "owner": "那你继续研究一下, 可以考虑占用更多的资源, 然后继续修到可售卖版本",
+  "priorWorkPoint": "Raw dual-channel guided separation72 vs mono82 edits on two exposed overlap clips; lossless decode preserves bits, lossyOpus81 edits; no-hard-gate489 edits rejected. Not general accuracy or product qualification.",
+  "next": "Two untouched meetings full per-mic journals, then fixed rawdualGSS/matchedmono and complete per-person scoring. No two-system DOVER-Lap voting, no parameter/model sweep; keep ordinary, <5%, facts, dual-host/card and sale gates open.",
+  "cpuPercent": 10,
+  "privateCommitBytes": 2147483648,
+  "sourceWorkerSha256": "dd5e263357629e03e548a701971ce632fccab2d6f89527e60a90e134c6775b4c",
+  "protocolSha256": "e56a3830a720a76a6f79ad48000bbf29c90f585a67ccc5b0b2fae0ba0bfbe104",
+  "newTrainingRuns": 0,
+  "productDefaultChanged": false,
+  "hardwareAccess": false,
+  "qualityQualified": false,
+  "twoSystemFusionRejected": {
+    "source": "https://github.com/desh2608/dover-lap/blob/0166e2df83bc1cc32cd81fa278cc728276ca396a/README.md",
+    "reason": "Author says intended for more than two systems; equal two-system conflict assigns both labels and almost certainly degrades performance. Per-mic disagreement will be audited, not naively fused."
+  }
+}

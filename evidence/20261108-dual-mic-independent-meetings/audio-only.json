@@ -1,0 +1,58 @@
+[
+  {
+    "corpus": "AISHELL-4-official-test",
+    "meeting": "M_R003S02C01-mic0",
+    "originalMeeting": "M_R003S02C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-mic0.wav",
+    "audioSha256": "632606c564ffa61da17f0a68597703f35408562ae64eea8073654f532d73116f",
+    "audioSeconds": 2321.259,
+    "sourceSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+    "sourceChannel": 0,
+    "sourceFrames": 37140144,
+    "sourceSampleRate": 16000,
+    "sourceChannels": 8,
+    "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+  },
+  {
+    "corpus": "AISHELL-4-official-test",
+    "meeting": "M_R003S02C01-mic1",
+    "originalMeeting": "M_R003S02C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-mic1.wav",
+    "audioSha256": "47d3c9b95d1965d093dcd87a7cc716dbda598c849327949f950b92c54045ef50",
+    "audioSeconds": 2321.259,
+    "sourceSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+    "sourceChannel": 1,
+    "sourceFrames": 37140144,
+    "sourceSampleRate": 16000,
+    "sourceChannels": 8,
+    "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+  },
+  {
+    "corpus": "AISHELL-4-official-test",
+    "meeting": "S_R003S01C01-mic0",
+    "originalMeeting": "S_R003S01C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-mic0.wav",
+    "audioSha256": "ac0af6bb4b07c2738c709cf4538d3af9fbf8620323a6323dc69494c17c2ec83c",
+    "audioSeconds": 2220.529,
+    "sourceSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+    "sourceChannel": 0,
+    "sourceFrames": 35528464,
+    "sourceSampleRate": 16000,
+    "sourceChannels": 8,
+    "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+  },
+  {
+    "corpus": "AISHELL-4-official-test",
+    "meeting": "S_R003S01C01-mic1",
+    "originalMeeting": "S_R003S01C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-mic1.wav",
+    "audioSha256": "00e5ff715c56ed1c7926c5b7e0175a910a51b1909276585c6359b43ad755a516",
+    "audioSeconds": 2220.529,
+    "sourceSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+    "sourceChannel": 1,
+    "sourceFrames": 35528464,
+    "sourceSampleRate": 16000,
+    "sourceChannels": 8,
+    "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization."
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "state": "RUNNING_NATIVE_FULL_CHANNEL",
+  "pid": 16076,
+  "startedAt": "2026-11-08T10:05:54+08:00",
+  "results": [
+    {
+      "meeting": "M_R003S02C01-mic0",
+      "out": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\M_R003S02C01-mic0\\attempt-1",
+      "exitCode": 0,
+      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 31.496180799993454,
+      "privatePeakBytes": 1780068352
+    }
+  ],
+  "referencePayloadRead": false,
+  "protocolSha256": "e56a3830a720a76a6f79ad48000bbf29c90f585a67ccc5b0b2fae0ba0bfbe104",
+  "automaticModelRetries": 0,
+  "activeMeeting": "M_R003S02C01-mic1",
+  "attempt": 1,
+  "activePid": 23772
+}

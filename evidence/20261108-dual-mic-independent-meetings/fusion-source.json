@@ -1,0 +1,129 @@
+{
+  "repository": "https://github.com/desh2608/dover-lap",
+  "commit": "0166e2df83bc1cc32cd81fa278cc728276ca396a",
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\dover-lap-0166e2df83bc1cc32cd81fa278cc728276ca396a",
+  "files": [
+    {
+      "path": "LICENSE",
+      "gitBlobSha1": "50b17302909b6c1c3ac0ecdcd48bc169a44e879b",
+      "sha256": "2fee0a00c01d82f70d5d35a84f5154e83fb9ff1d3c48631456d8d7222f33758f",
+      "bytes": 1065
+    },
+    {
+      "path": "README.md",
+      "gitBlobSha1": "cdba2eea4daa8d5471c8ad8b28bf7620021c689c",
+      "sha256": "010d9406a8e3c918f9ea010e892bb7d0d147011b90495c0c6a184130b70f5680",
+      "bytes": 5293
+    },
+    {
+      "path": "dover_lap/__init__.py",
+      "gitBlobSha1": "779dbb30f4758997f20951b2f80cf089649b82e9",
+      "sha256": "8bee4fc0fbb57f68e1c6042399e61c5deb09514a9be405330d202598eb7be0a9",
+      "bytes": 39
+    },
+    {
+      "path": "dover_lap/dover_lap.py",
+      "gitBlobSha1": "1db2f6e51a10754c27c5cc2a5cf8deae45f48242",
+      "sha256": "57bc711ce0a2c49f909e1814f910a18cddf71ce281bd1c2f775464523aebf1b1",
+      "bytes": 5300
+    },
+    {
+      "path": "dover_lap/libs/__init__.py",
+      "gitBlobSha1": "96bd3fb51153f85354e6b620933cf582f1c9e7d7",
+      "sha256": "59913afd56c5856043b37b061648e0ed5c7ca57a47b7919c76ae5fa3ccb433ed",
+      "bytes": 80
+    },
+    {
+      "path": "dover_lap/libs/rttm.py",
+      "gitBlobSha1": "10422e110de754d80be178495eb526e844c04bdf",
+      "sha256": "2671ca768578f0ca25afbe6738b87b86834504901767a75abf87f2e5f0be706d",
+      "bytes": 4198
+    },
+    {
+      "path": "dover_lap/libs/turn.py",
+      "gitBlobSha1": "e39ddac535721980214be2cb83ed7011621434bd",
+      "sha256": "35637c4f11334e28fe760dbaff4be78f3bf64502aaf85714517ff2ea5d7c6fd4",
+      "bytes": 9006
+    },
+    {
+      "path": "dover_lap/libs/uem.py",
+      "gitBlobSha1": "34d7179c786f27ba342616deab8ca4b9faa493b2",
+      "sha256": "7ff3322a61532348116b549b5bd51e1c96a6ecab6315573996d20b7e00a386a4",
+      "bytes": 3899
+    },
+    {
+      "path": "dover_lap/libs/utils.py",
+      "gitBlobSha1": "ac5d3f8647de65839e6a260840e4e50b09d6ebee",
+      "sha256": "87782d812afc5a78dc13059ab27538df15e88c3a48d16f6bf6d50c60571b5220",
+      "bytes": 2556
+    },
+    {
+      "path": "dover_lap/src/__init__.py",
+      "gitBlobSha1": "97774edfc2abcce1ab716188ccb90ced777e7aa5",
+      "sha256": "c1a7c4f7d9292be3b2c2dde196b30e1977d4569cc6707ae806bee5263d3a643b",
+      "bytes": 132
+    },
+    {
+      "path": "dover_lap/src/doverlap.py",
+      "gitBlobSha1": "f73fac20f120c5ae337270e701949b0cd63b6b32",
+      "sha256": "6df8f7284ee7baf45d2a127b5c2fc6c16ccaea8c22a3220bd5e16d30d49e7219",
+      "bytes": 2261
+    },
+    {
+      "path": "dover_lap/src/label_mapping.py",
+      "gitBlobSha1": "b610cf497d31cfabc4d7dee95e4121714f7c436f",
+      "sha256": "5815f402866cd6f684c535f562cc0e3fe6144c5ba24acee22d62dc0c2a628104",
+      "bytes": 1969
+    },
+    {
+      "path": "dover_lap/src/label_voting.py",
+      "gitBlobSha1": "a41fa63ba958f2a9d162366ec67a62a290c62454",
+      "sha256": "fa1cd021fec8957825b6ec9a60552727fa32974af48fe300276a9dfb7444d1a8",
+      "bytes": 5748
+    },
+    {
+      "path": "dover_lap/src/mapping/__init__.py",
+      "gitBlobSha1": "88cbfd5f35c04e366cc578c27998857704bef6df",
+      "sha256": "6e7ff92c9eac2ddedb067ea6f4491684e6766d536184d383346952d3da6cd258",
+      "bytes": 66
+    },
+    {
+      "path": "dover_lap/src/mapping/greedy.py",
+      "gitBlobSha1": "1cfc11e5bf1b5577069a5da3b7b3ac4746f297dd",
+      "sha256": "2e9595ddb2ec1c081898ccb19552d7ad7ccce546067663781b1bb09342be350b",
+      "bytes": 7821
+    },
+    {
+      "path": "dover_lap/src/mapping/hungarian.py",
+      "gitBlobSha1": "f795555f0ff41f5b2fa0fbbc7428bf919d7e1c2d",
+      "sha256": "f21ded406999306b975cfec993ed43d8b69bea3ecce0f65c3a498404ce9310fb",
+      "bytes": 4345
+    },
+    {
+      "path": "dover_lap/src/mapping/map_utils.py",
+      "gitBlobSha1": "bd5778ec7d2caa0801cd90729950927763311266",
+      "sha256": "a85392fd6538278f04e127e3f1cecd2c8dd1aff64a8c8c159fc37f2208dc3ff9",
+      "bytes": 1548
+    },
+    {
+      "path": "dover_lap/src/voting/__init__.py",
+      "gitBlobSha1": "33356b63c44f56cd83a314440a967a777b79f2c5",
+      "sha256": "37d42c06a8e188539b4332a9dfafce32cc64c587ecb13450d88b5029917b1b18",
+      "bytes": 42
+    },
+    {
+      "path": "dover_lap/src/voting/average.py",
+      "gitBlobSha1": "b6683d84de0c900d3d7e90d3d3b2893352db0028",
+      "sha256": "b0267a07ec0793567dba0c1f304f5731bf8f228940161ea36c8c94286ee781e9",
+      "bytes": 2391
+    },
+    {
+      "path": "requirements.txt",
+      "gitBlobSha1": "a4bf94e0402924b223f744cfd52a73dd20d318e3",
+      "sha256": "e2bdd2d9f539c96055eeecfd7f013960b14ea87cdc86cd63557aa1d05003db80",
+      "bytes": 74
+    }
+  ],
+  "weightsDownloaded": 0,
+  "executedSetup": false
+}
