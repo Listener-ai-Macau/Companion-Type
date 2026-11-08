@@ -1,7 +1,10 @@
 """Preserve this continuation in the original task, timeline and both remotes."""
 from pathlib import Path
 from datetime import datetime
-import argparse,json,os,shutil,subprocess,time
+import argparse,json,os,shutil,subprocess,sys,time
+sys.path.insert(0,'C:/Users/Billy/Desktop/Denzic/Companion/model-research/src')
+from moss_windows_resource_limits_20261104 import WorkerLimits
+publisher_limits=WorkerLimits(cpu_percent=5,memory_bytes=1024**3)
 p=argparse.ArgumentParser();p.add_argument('--phase',choices=['checkpoint','complete'],required=True);a=p.parse_args()
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';S=R/'companion-device-closure055';C=R/'docs/handoffs/20261108-dual-mic-independent-meetings';EV=M/'evidence/20261108-dual-mic-independent-meetings';EV.mkdir(exist_ok=True)
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));optional=lambda p:read(p) if Path(p).exists() else None
@@ -14,7 +17,7 @@ for line in ['src/*independent*20261108.py -text','evidence/20261108-dual-mic-in
 attr.write_text(text,encoding='utf8')
 env=os.environ.copy();env.update(GIT_TERMINAL_PROMPT='0',GIT_SSH_COMMAND='ssh -o HostName=github.com -p 22 -o ProxyCommand=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=2')
 def git(root,*argv):
-    q=subprocess.run(['git','-c','maintenance.auto=false','-c','pack.threads=1','-c','pack.windowMemory=32m',*argv],cwd=root,env=env,capture_output=True,text=True)
+    q=subprocess.run(['git','-c','maintenance.auto=false','-c','pack.threads=1','-c','pack.windowMemory=32m','-c','pack.deltaCacheSize=32m','-c','core.deltaBaseCacheLimit=32m',*argv],cwd=root,env=env,capture_output=True,text=True)
     if q.returncode:raise RuntimeError((q.stdout+q.stderr)[-3000:])
     return q.stdout.strip()
 def ship(root,paths,message):
@@ -22,8 +25,8 @@ def ship(root,paths,message):
     if git(root,'diff','--cached','--name-only','--',*paths):
         git(root,'-c','core.whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof','diff','--cached','--check','--',*paths);git(root,'commit','--only','-m',message,'--',*paths)
     h=git(root,'rev-parse','HEAD');b=git(root,'branch','--show-current');git(root,'push','origin','HEAD:refs/heads/'+b);assert git(root,'ls-remote','origin','refs/heads/'+b).split()[0]==h;return h
-direction=read(C/'direction.json');record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'phase':a.phase,'ownerOriginal':direction['owner'],'evidence':str(C),'direction':direction,'preparation':optional(C/'preparation.json'),'nativeRun':optional(C/'native-run.json'),'run':optional(C/'run-r2.json'),'review':optional(C/'review.json'),'decision':optional(C/'decision.json'),'newTrainingRuns':0,'productDefaultChanged':False,'qualityQualified':False,'finalHoldoutOpened':False}
-point=record['decision'] or record['review'] or record['run'] or record['nativeRun'] or direction
+direction=read(C/'direction.json');record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'phase':a.phase,'ownerOriginal':direction['owner'],'evidence':str(C),'direction':direction,'preparation':optional(C/'preparation.json'),'nativeRun':optional(C/'native-run.json'),'run':optional(C/'run-r2.json'),'review':optional(C/'review.json'),'decision':optional(C/'decision.json'),'oracleActivityDiagnostic':{'purpose':optional(C/'oracle-activity-control/control-purpose.json'),'run':optional(C/'oracle-activity-control/run-r2.json'),'review':optional(C/'oracle-activity-control/review.json'),'productScore':False},'newTrainingRuns':0,'productDefaultChanged':False,'qualityQualified':False,'finalHoldoutOpened':False}
+point=record['decision'] or record['oracleActivityDiagnostic']['run'] or record['review'] or record['run'] or record['nativeRun'] or direction
 record.update(state=point['state'],next=point.get('next',direction['next']));(EV/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','evidence/20261108-dual-mic-independent-meetings']+[str(p.relative_to(M)).replace('\\','/') for p in (M/'src').glob('*independent*20261108.py')]
 source=optional(C/'fusion-source.json')
@@ -33,6 +36,10 @@ path=R/'docs/product_backlog.json'
 for attempt in range(8):
     raw=path.read_bytes();d=json.loads(raw);node=d['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerNightGpuModelPriority20261104'];node['ownerIndependentDualMicValidation20261108']=record;node.update(status=record['state'],next=record['next'])
     gate=next(g for g in d['quality_targets']['real_meeting_model_contract_20261103']['gates'] if g['id']=='RM-OVERLAP');gate['independentDualMicValidation20261108']={'state':record['state'],'sourceAndEvidenceCommit':head,'evidence':str(C),'qualified':False}
+    journal=optional(C/'journal-review.json')
+    if journal:
+        speaker_gate=next(g for g in d['quality_targets']['real_meeting_model_contract_20261103']['gates'] if g['id']=='QM05')
+        speaker_gate['independentDualMicJournals20261108']={'state':'TWO_NEW_MIC0_MEETINGS_MEET_LOCAL_DER10_AND_COUNT_NOT_GLOBAL_ACCEPTANCE','sourceAndEvidenceCommit':head,'evidence':str(C/'journal-review.json'),'results':[{'meeting':x['meeting'],'DER':x['review']['components']['diarization error rate'],'referenceSpeakers':x['review']['referenceSpeakers'],'predictedSpeakers':x['review']['predictedSpeakers'],'uncoveredReferenceSpeakers':x['review']['uncoveredReferenceSpeakers'],'shortSpans':x['review']['shortReferenceSpans']} for x in journal['fullMeetingReviews'] if x['meeting'].endswith('-mic0')],'allHistoricalFailuresRetained':True,'currentGateQualified':False,'scope':'Two newly exposed development meetings only; no global qualification, final holdout or proof of public pretraining non-overlap.'}
     temp=path.with_suffix('.independent-dual.tmp');temp.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     if path.read_bytes()!=raw:temp.unlink();continue
     try:os.replace(temp,path)
