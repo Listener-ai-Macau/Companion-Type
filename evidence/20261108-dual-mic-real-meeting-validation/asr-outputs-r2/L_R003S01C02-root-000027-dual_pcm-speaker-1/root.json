@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "audioOnlySha256": "2dfae2a59d86fb175dc9c9da1be6de0b307919c4c57f32337bef5f7d60cb270e",
+    "workerSourceSha256": "74cbea02ecbf81169bfae86351dfc2d1a42a30cdb0192a3f0610599197b405b1"
+  },
+  "audioSha256": "cbb210bdcb27e1292ef80497e3f9f78ec70be012ae2ea8a8e25b68188ca1e45b",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "对，该该签的。",
+    "generatedIds": [
+      32664,
+      3837,
+      75882,
+      75882,
+      61755,
+      9370,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对，该该签的。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.202808700007154
+  },
+  "rawSha256": "fd9e33f3d7171b85457f3a3ae08a16c19a138e3e30764025eb7c192e5cf077ed"
+}

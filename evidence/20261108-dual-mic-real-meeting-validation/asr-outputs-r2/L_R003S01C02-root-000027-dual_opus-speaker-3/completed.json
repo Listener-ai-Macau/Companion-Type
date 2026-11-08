@@ -1,0 +1,47 @@
+{
+  "id": "L_R003S01C02-root-000027-dual_opus-speaker-3",
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "audioOnlySha256": "2dfae2a59d86fb175dc9c9da1be6de0b307919c4c57f32337bef5f7d60cb270e",
+    "workerSourceSha256": "74cbea02ecbf81169bfae86351dfc2d1a42a30cdb0192a3f0610599197b405b1"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 27,
+  "predictedSpeaker": 3,
+  "arm": "dual_opus",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\L_R003S01C02-root-000027-dual_opus-speaker-3.wav",
+  "audioSha256": "4c27a6c15e85a2f00c0b38c87be0755d4bbbf0132156a0280c81c483b239cd0c",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "cc1c098858557338b9ad6b0551fd8657c4a73e4269eded4516fb6923a2cbfae7",
+  "sourceCompressedDecodedSha256": "9f0f255cc9d14032ce81fff2a085d9f809a6b2dddddba9527c09fe99c410499d",
+  "predictedJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 19843,
+  "ungatedDerivedAudio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\L_R003S01C02-root-000027-dual_opus-speaker-3-ungated.npy",
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.10464602493777128,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false,
+  "text": "哦，对。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "哦，对。",
+      "generatedIds": [
+        104170,
+        3837,
+        32664,
+        1773,
+        151645
+      ],
+      "rawDecoded": "哦，对。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.5477853000047617
+    }
+  ]
+}

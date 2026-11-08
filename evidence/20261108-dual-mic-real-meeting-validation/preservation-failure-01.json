@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-08T09:34:07+08:00",
+  "state": "WINDOWS_SHARED_BACKLOG_REPLACE_RETURNED_ACCESS_DENIED",
+  "modelSourceAlreadyPushed": true,
+  "stage": "checkpoint-original-backlog-atomic-replace",
+  "winerror": 5,
+  "fix": "Bounded retries re-read and merge the latest original backlog; remove only this task temporary file. Do not elevate permissions or overwrite another module snapshot.",
+  "modelRunsRetried": 0
+}

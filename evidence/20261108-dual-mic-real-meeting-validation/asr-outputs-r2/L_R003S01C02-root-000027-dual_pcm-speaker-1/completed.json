@@ -1,0 +1,50 @@
+{
+  "id": "L_R003S01C02-root-000027-dual_pcm-speaker-1",
+  "binding": {
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "audioOnlySha256": "2dfae2a59d86fb175dc9c9da1be6de0b307919c4c57f32337bef5f7d60cb270e",
+    "workerSourceSha256": "74cbea02ecbf81169bfae86351dfc2d1a42a30cdb0192a3f0610599197b405b1"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 27,
+  "predictedSpeaker": 1,
+  "arm": "dual_pcm",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\L_R003S01C02-root-000027-dual_pcm-speaker-1.wav",
+  "audioSha256": "cbb210bdcb27e1292ef80497e3f9f78ec70be012ae2ea8a8e25b68188ca1e45b",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "cc1c098858557338b9ad6b0551fd8657c4a73e4269eded4516fb6923a2cbfae7",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 27205,
+  "ungatedDerivedAudio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\target-audio\\L_R003S01C02-root-000027-dual_pcm-speaker-1-ungated.npy",
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.14314687607971577,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false,
+  "text": "对，该该签的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "对，该该签的。",
+      "generatedIds": [
+        32664,
+        3837,
+        75882,
+        75882,
+        61755,
+        9370,
+        1773,
+        151645
+      ],
+      "rawDecoded": "对，该该签的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 4.202808700007154
+    }
+  ]
+}
