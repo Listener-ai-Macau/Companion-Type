@@ -1,8 +1,8 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "3638f0328d909848fb07cf727d19844b983e8f933a8510c1329360e0e0c39e86",
-  "backendSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
-  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
+  "aarSha256": "af498b880338aa5b8036cbfa97ad26588fdc784ee5eaf92e15df50c06e9aaadf",
+  "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+  "backendSourceWorkspace": "E:\\CodexData\\Companion\\.build-cache\\range-reclaim-android-source",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "0810c03733d65adc3cf3de2f54769d58f878dc97",
   "nativeLibrarySha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110",
@@ -16,8 +16,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Fresh originals under16 physical sectors use one existing terminal CRA2, removing3..7-sector prefix transactions that measurably serialized after payload. Old pending/confirmed prefix proofs and long-range concurrency still reconcile exactly. Native0810 audio/control fixes, models/web assets unchanged; actual first receive speed not yet qualified.",
-  "javaSourceCommit": "de92b48c8e6f07c3765656e0630ef68cb2b8e8a3",
+  "scope": "Negotiated FW66757+ bounded queued short handoff, independent immutable durable proofs, receiver lock retained through early whole-consume admission, explicit physical receipt recovery. Single-sector and old-device paths retained; native106 audio/control, web and models unchanged. Source models pass; real speed and whole sale remain unqualified.",
+  "javaSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
   "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt.",
@@ -35,10 +35,27 @@
   "inherited096Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability097\\build\\inherited-provenance096.json",
   "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
   "nativeBuildReceipt": "E:/CodexData/Companion/.build-cache/control106/native-build/result.json",
-  "javaClassesChangedFrom105": [],
-  "allEntriesExceptNativeAndLockManifestByteIdenticalTo105": true,
-  "javaClassesChangedFrom106": [
-    "com/denzic/companion/mobile/RangeConsume.class"
+  "javaClassesChangedFrom107": [
+    "com/denzic/companion/mobile/DurableConsume$Pending.class",
+    "com/denzic/companion/mobile/DurableConsume.class",
+    "com/denzic/companion/mobile/QueuedRangeSession$Task.class",
+    "com/denzic/companion/mobile/QueuedRangeSession.class",
+    "com/denzic/companion/mobile/RangeCheckpoint.class",
+    "com/denzic/companion/mobile/RangeConsume$Refused.class",
+    "com/denzic/companion/mobile/RangeConsume$SerialSession$Pending.class",
+    "com/denzic/companion/mobile/RangeConsume$SerialSession.class",
+    "com/denzic/companion/mobile/RangeConsume$Session$Pending.class",
+    "com/denzic/companion/mobile/RangeConsume$Session.class",
+    "com/denzic/companion/mobile/RangeConsume$Status.class",
+    "com/denzic/companion/mobile/RangeConsume.class",
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire$Descriptor.class",
+    "com/denzic/companion/mobile/RecorderWire$Peer.class",
+    "com/denzic/companion/mobile/RecorderWire.class",
+    "com/denzic/companion/mobile/RecordingClient$OriginalReady.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/SegmentReceiver.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo106": true
+  "allNonClassAarEntriesByteIdenticalTo107": true
 }
