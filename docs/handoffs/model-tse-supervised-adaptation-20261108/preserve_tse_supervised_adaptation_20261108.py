@@ -17,7 +17,7 @@ for file in C.rglob('*'):
     if file.is_file() and file.suffix in ['.json','.jsonl','.log','.txt']:
         dest=EV/file.relative_to(C);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(file,dest)
 attr=M/'.gitattributes';content=attr.read_text(encoding='utf8')
-for line in ['src/companion_tse_*20261108.py -text','src/*tse_supervised*20261108.py -text','src/configure_tse_*20261108.py -text','evidence/20261108-tse-supervised-adaptation/** -text -whitespace','trained/20261108-tse-supervised-adaptation/*.safetensors -text -diff']:
+for line in ['src/companion_tse_*20261108.py -text','src/*tse_supervised*20261108.py -text','src/configure_tse_*20261108.py -text','src/freeze_tse_training_trial_20261108.py -text','evidence/20261108-tse-supervised-adaptation/** -text -whitespace','trained/20261108-tse-supervised-adaptation/*.safetensors -text -diff']:
     if line not in content:content+='\n'+line+'\n'
 attr.write_text(content,encoding='utf8')
 runs=sorted(C.glob('train-*-controller.json'),key=lambda p:p.stat().st_mtime_ns);purpose=read(C/'purpose.json');latest_run=optional(runs[-1]) if runs else None
@@ -25,10 +25,11 @@ protocols=list(C.glob('training-protocol-r*.json'));matching=[p for p in protoco
 protocol=read(matching[0]) if matching else optional(C/'training-protocol-r1.json')
 record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'phase':a.phase,'ownerOriginal':purpose['owner'],'evidence':str(C),'purpose':purpose,'gradientProof':optional(C/'gradient-r2/state.json'),'activationMemoryProof':optional(C/'activation-proof-r1/state.json'),'retainedZeroUpdateMemoryStops':optional(C/'training-memory-failure-r1.json'),'trainingProtocol':protocol,'latestTrainingRun':latest_run,'trainingReview':optional(C/'training-review.json'),'decision':optional(C/'decision.json'),'latestTrainingCheckpoint':optional(C/'latest-training-checkpoint.json'),'productDefaultChanged':False,'qualityQualified':False,'saleQualified':False,'finalHoldoutOpened':False}
 point=record['decision'] or record['trainingReview'] or record['latestTrainingRun'] or purpose;record['state']=point['state'];record['next']=point.get('next','完成固定166组单遍训练及48组分开会议验证；全骨干＋空间分支训练，声纹编码器和识别器冻结。仅在预定验证非回退条件通过后做无参考自由转写，不能以训练损失或梯度通过冒充可用；原完整会议<5%、事实、双端实卡和售卖门保留。')
+record['boundedCheckpointRecoveryProof']=optional(C/'checkpoint-proof-r1/state.json');record['failedWholeTrajectoryReplay']=optional(C/'trajectory-replay-failure-r1.json')
 paths=['.gitattributes','evidence/20261108-tse-supervised-adaptation']
-sources={p for pattern in ['companion_tse_*20261108.py','*tse_supervised*20261108.py','configure_tse_*20261108.py'] for p in (M/'src').glob(pattern)};paths += [str(p.relative_to(M)).replace('\\','/') for p in sorted(sources)]
+sources={p for pattern in ['companion_tse_*20261108.py','*tse_supervised*20261108.py','configure_tse_*20261108.py','freeze_tse_training_trial_20261108.py'] for p in (M/'src').glob(pattern)};paths += [str(p.relative_to(M)).replace('\\','/') for p in sorted(sources)]
 weights=[]
-if a.phase=='complete' and record['latestTrainingCheckpoint'] and record['latestTrainingCheckpoint']['completedSteps']>0:
+if record['latestTrainingCheckpoint'] and record['latestTrainingCheckpoint']['completedSteps']>0:
     checkpoint=record['latestTrainingCheckpoint'];source=Path(checkpoint['trainableWeights']);assert hashlib.sha256(source.read_bytes()).hexdigest()==checkpoint['trainableWeightsSha256'] and source.stat().st_size<100*1024**2
     folder=M/'trained/20261108-tse-supervised-adaptation';folder.mkdir(parents=True,exist_ok=True);target=folder/'trainable.safetensors';shutil.copyfile(source,target);metadata={k:v for k,v in checkpoint.items() if k not in ['optimizerState','optimizerStateSha256']};metadata.update(baseReference=record['trainingProtocol']['extractorReady'],optimizerCachedOnlyNotDeploymentRequired=True,qualityQualified=False);(folder/'manifest.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n',encoding='utf8');paths.append('trained/20261108-tse-supervised-adaptation');weights=[str(target.relative_to(M)).replace('\\','/')];record['preservedTrainableWeightSha256']=checkpoint['trainableWeightsSha256']
 (EV/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
