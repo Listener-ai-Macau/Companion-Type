@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-08T12:25:05.721311+08:00",
+  "state": "RETAINED_NATIVE_SAFETENSORS_CPU_READ_ACCESS_VIOLATION",
+  "controller": {
+    "state": "FAILED_TSE_STAGE_RETAINED_NO_AUTOMATIC_RETRY",
+    "pid": 14408,
+    "startedAt": "2026-11-08T12:18:06+08:00",
+    "worker": "tse_supervised_memory_train_worker_20261108.py",
+    "runId": "train-memory-r1",
+    "protocolSha256": "1825518eb9a90f166c1daac4acc207e1a614677a4a15d6d239345758789bcf64",
+    "automaticModelRetries": 0,
+    "privatePeakBytes": 1998643200,
+    "rssPeakBytes": 1837895680,
+    "qualityQualified": false,
+    "exitCode": 3221225477,
+    "workerState": "TRAINING_FIXED_SINGLE_PASS",
+    "finishedAt": "2026-11-08T12:21:04+08:00",
+    "wholeProcessFamilySeconds": 177.94648159999633
+  },
+  "completedUpdatesBeforeCrash": 16,
+  "lastCompleteResumableStep": 0,
+  "partialWeightFile": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoints-r2\\step-0016\\trainable-56bb1eeb7ffc497dabb25c35df6e3002.safetensors",
+  "partialWeightFileSha256": "9638bb300ff0c3eba0bfa882f1a82cb969e88b195e00646f0c3a03c12c964b11",
+  "partialWeightFileBytes": 86157152,
+  "partialOptimizerSaved": false,
+  "nativeStack": "torch_cpu.dll local_scalar_dense_cpu / safetensors_rust during save_checkpoint immediate load_file verification; no Python finally was run. Exact root inside native runtime unproven.",
+  "recovery": "Replace whole CPU archive materialization with standard bounded safetensors byte streaming for both weights and optimizer/RNG, verify next-update equality before restarting the identical trial at step0. Preserve partial step16 weights; never claim exact optimizer recovery from them.",
+  "qualityQualified": false
+}

@@ -1,6 +1,6 @@
 {
   "state": "COMPLETE_FIXED_VALIDATION",
-  "protocolSha256": "1825518eb9a90f166c1daac4acc207e1a614677a4a15d6d239345758789bcf64",
+  "protocolSha256": "971b2c9955aa54cb0790dfe30797cf7fa12fb1ac5f4125dfc47450028a079dad",
   "conditions": "baseline",
   "examples": [
     {
@@ -9,7 +9,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-0.wav",
       "audioSha256": "abf15bafe548247488066239a0cdc6f8c71c47d1d1904c98850eb6ad81b4320a",
       "audioSeconds": 11.5550625,
       "sourceAudioSha256": "03f6644c0970b7cd8b663de0f7a5af02e60d02ce2180cf99a3fdb852f7cb614f",
@@ -25,7 +25,7 @@
         "supervisedSamples": 184881
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.1118451000074856
+      "wholeExampleSeconds": 0.47586070001125336
     },
     {
       "id": "20200623_S_R001S01C01-001-M-absent_other_speech-1",
@@ -33,7 +33,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-1.wav",
       "audioSha256": "56c3daac5563c2189c1fb0ffdfbf65714d1d287855afe7207b2947a166533da9",
       "audioSeconds": 5.0200625,
       "sourceAudioSha256": "4be1af9d3070a87851018f3ca9e3e07eb743b3916782186edfbd4e96163f404c",
@@ -49,7 +49,7 @@
         "supervisedSamples": 80321
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.8170576000120491
+      "wholeExampleSeconds": 0.22895399999106303
     },
     {
       "id": "20200623_S_R001S01C01-001-M-absent_other_speech-2",
@@ -57,7 +57,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-2.wav",
       "audioSha256": "c6aa6e7bf756ec67f3349f7555416c81680cac673cf0edcda16260b2fc5804dc",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "367f15258f935aa1b66c05c6bfdec70a8128c73707ebfc92d48f927f57f476a6",
@@ -73,7 +73,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.14218049999908544
+      "wholeExampleSeconds": 0.1219039999996312
     },
     {
       "id": "20200623_S_R001S01C01-001-M-absent_other_speech-3",
@@ -81,7 +81,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-absent_other_speech-3.wav",
       "audioSha256": "cb72602bab1369572022ceee4c7b6aa467f5f7a1b6afbc4739b0ccad4126c409",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "628da3e731d89d9e484fe783e09016af66f1f86d16157104216bb0e21b5fb0cf",
@@ -97,7 +97,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.09359689999837428
+      "wholeExampleSeconds": 0.0891946000047028
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_overlap-0",
@@ -105,7 +105,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-0.wav",
       "audioSha256": "46e1a16f2622ec678b080daaf52880a788e6d711553b9ba2fe40b1ca1d29380e",
       "audioSeconds": 3.0640625,
       "sourceAudioSha256": "9e613ee00c7b9212e190fcf77135ce66ec745c848b17493a7dd63b4eec894e31",
@@ -121,7 +121,7 @@
         "supervisedSamples": 8000
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 4.081659299990861
+      "wholeExampleSeconds": 0.35885570000391454
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_overlap-1",
@@ -129,7 +129,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-1.wav",
       "audioSha256": "93306bf42b309c8f207410d9fa4b701145097525310e2264910018604caab950",
       "audioSeconds": 2.403125,
       "sourceAudioSha256": "6ff3e666c36b150cc83b48440987c24aa882a707c4a2397cdb5c13a73cb9af81",
@@ -145,7 +145,7 @@
         "supervisedSamples": 10449
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0269861999840941
+      "wholeExampleSeconds": 0.417924099980155
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_overlap-2",
@@ -153,7 +153,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-2.wav",
       "audioSha256": "70d2bd011ac551b187739a80299cc3ec4616023503ad32cbce05d31de2fa7a66",
       "audioSeconds": 7.3448125,
       "sourceAudioSha256": "9a4c2094c9345d5d2b7f7ce8fc8ff568e5772290f1e333612cae30aa44264bcb",
@@ -169,7 +169,7 @@
         "supervisedSamples": 16461
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.1691649999993388
+      "wholeExampleSeconds": 0.5065822000033222
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_overlap-3",
@@ -177,7 +177,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_overlap-3.wav",
       "audioSha256": "d49b9ee0d56e6d055d009aace915ee60e18e5348e5d4ad29470666450a372c85",
       "audioSeconds": 4.576875,
       "sourceAudioSha256": "95010729822cdb0c79b002ba7370b0d18325b06b8b6ad7514f2fbc60894b8048",
@@ -193,7 +193,7 @@
         "supervisedSamples": 15769
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.1317876000248361
+      "wholeExampleSeconds": 0.3879668000154197
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_solo-0",
@@ -201,7 +201,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_solo-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_solo-0.wav",
       "audioSha256": "9adfe9275d37cd54d0d250c6c140391ebd9038f4496df595bd15e5e5bc9886ba",
       "audioSeconds": 7.5200625,
       "sourceAudioSha256": "63af214c21725999f94120e4b88db66455fc5c51c79a81df36c7245809fcecb7",
@@ -217,7 +217,7 @@
         "supervisedSamples": 120321
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.1067248999897856
+      "wholeExampleSeconds": 0.4994179999921471
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_solo-1",
@@ -225,7 +225,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_solo-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_solo-1.wav",
       "audioSha256": "ae333cfe7d68c7b83a17e15c91439621cc284b670baddd8f8536ecd2a7fa66b8",
       "audioSeconds": 5.0165625,
       "sourceAudioSha256": "c09731bbf8ec87dcde7d9b38fd5d7e3b97b39b1dab9291e6e6785c517e1ed04c",
@@ -241,7 +241,7 @@
         "supervisedSamples": 80265
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.59145389997866
+      "wholeExampleSeconds": 0.3665739999851212
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_solo-2",
@@ -249,7 +249,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_solo-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_solo-2.wav",
       "audioSha256": "e86e41841289e923245434f38b8d0a4b7cb94b498678fa7fa03866c6d32ad349",
       "audioSeconds": 5.6100625,
       "sourceAudioSha256": "bf97f1f702c095f04f9f765454fe1dd13bd8be3d8097549c48bb7958b41efb7e",
@@ -265,7 +265,7 @@
         "supervisedSamples": 89761
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9857298999850173
+      "wholeExampleSeconds": 0.4035526999796275
     },
     {
       "id": "20200623_S_R001S01C01-001-M-present_solo-3",
@@ -273,7 +273,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "001-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-001-M-present_solo-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-001-M-present_solo-3.wav",
       "audioSha256": "81b4a1f267b196d721e8a1f595136adc87967a3838aa078b7de8d98b78860d42",
       "audioSeconds": 7.887,
       "sourceAudioSha256": "09f33b71a55ffecf2269cd0d69773cb0a5169ab96ace04065ff87560f9a6f9cd",
@@ -289,7 +289,7 @@
         "supervisedSamples": 126192
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0679927000019234
+      "wholeExampleSeconds": 0.4992664000019431
     },
     {
       "id": "20200623_S_R001S01C01-003-M-absent_other_speech-0",
@@ -297,7 +297,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-0.wav",
       "audioSha256": "3bd870277d3bc779f7ec14d32b554a1c44e1886dad9e60168fd210c730a11fdf",
       "audioSeconds": 5.2740625,
       "sourceAudioSha256": "98a05cd39cc6d70255bdebf72ca075bd191c79576b6039853b6913d2ccecb91e",
@@ -313,7 +313,7 @@
         "supervisedSamples": 84385
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.8044999999983702
+      "wholeExampleSeconds": 0.22865810000803322
     },
     {
       "id": "20200623_S_R001S01C01-003-M-absent_other_speech-1",
@@ -321,7 +321,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-1.wav",
       "audioSha256": "6099246f97aacb15a6ecf0f14c69b031b6a7f1cae0355573626010ac5a90cb76",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "3a6253e159868b6e1c69f513b33037952ac145ce3a68f2f2610e7a4c280a1c1f",
@@ -337,7 +337,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.08953690002090298
+      "wholeExampleSeconds": 0.08911860000807792
     },
     {
       "id": "20200623_S_R001S01C01-003-M-absent_other_speech-2",
@@ -345,7 +345,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-2.wav",
       "audioSha256": "eedb26d3dadfd148b0f932ac0d73f4412bf99f5af279c23a2d086b5726a48510",
       "audioSeconds": 7.196625,
       "sourceAudioSha256": "1ccb72a392d6a8d69c55af3623e4d153d91a3a1bfd32f89a693e3414a8b066d2",
@@ -361,7 +361,7 @@
         "supervisedSamples": 115146
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.8741182999801822
+      "wholeExampleSeconds": 0.27335579998907633
     },
     {
       "id": "20200623_S_R001S01C01-003-M-absent_other_speech-3",
@@ -369,7 +369,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-absent_other_speech-3.wav",
       "audioSha256": "1f01b9caa64b333d6aeed5b69ff43f756645c54871a0d0ce8822fc7dae507413",
       "audioSeconds": 4.3600625,
       "sourceAudioSha256": "bb64c957c03f6f94e0da90cffc2d45134eef1ff54d3be3a8430586b9bcd17927",
@@ -385,7 +385,7 @@
         "supervisedSamples": 69761
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.7482370999932755
+      "wholeExampleSeconds": 0.17898019999847747
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_overlap-0",
@@ -393,7 +393,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-0.wav",
       "audioSha256": "53e9021a3228a01dfc8a2ce1dd7fd7f63cb5f2cf7bc96665130dd26c87e78a14",
       "audioSeconds": 5.9213125,
       "sourceAudioSha256": "76b212b509b66c5198339db6965140383d91f90ad3515c8356d3dcebe33e135b",
@@ -409,7 +409,7 @@
         "supervisedSamples": 23540
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0056957000051625
+      "wholeExampleSeconds": 0.4151211999997031
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_overlap-1",
@@ -417,7 +417,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-1.wav",
       "audioSha256": "c5ee3f2f0dc8e11441d3915087af9137a0fa59bc3d750a4acb73bcd08c101736",
       "audioSeconds": 13.8850625,
       "sourceAudioSha256": "e4f6285badf82f51f4671401229e7149f7f4b15a5edafa19e5954f27cea0586f",
@@ -433,7 +433,7 @@
         "supervisedSamples": 1600
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.7374000000127126
+      "wholeExampleSeconds": 0.8139945000002626
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_overlap-2",
@@ -441,7 +441,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-2.wav",
       "audioSha256": "b3af5944d205d614b5d5e2359e9a6bd6f9a0f1ebcaf1de30732c20d84328a88f",
       "audioSeconds": 5.246875,
       "sourceAudioSha256": "cde1d116c315665a0aca3134f29f355d550df0f382f5d739f7f93579cbbc0803",
@@ -457,7 +457,7 @@
         "supervisedSamples": 79455
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9982731000054628
+      "wholeExampleSeconds": 0.3916328999912366
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_overlap-3",
@@ -465,7 +465,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_overlap-3.wav",
       "audioSha256": "33927eb662ad8f73b255d847574196fb52e44bfc8f202aeaf071c033e2226642",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "b09aa352e0508fdc60ee0a7547b78a3d34fac188c44ec37755099d0b2005260f",
@@ -481,7 +481,7 @@
         "supervisedSamples": 23359
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3950380999885965
+      "wholeExampleSeconds": 0.36789709998993203
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_solo-0",
@@ -489,7 +489,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_solo-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_solo-0.wav",
       "audioSha256": "72e75bd343382f33a1c59de07688a57b694fd04a5f1174e0b070327b6105e415",
       "audioSeconds": 6.1238125,
       "sourceAudioSha256": "c030297be96e68d9074f0b2418b9d9ac4882cf9181cd7fe6a0c32e7c71fdcb45",
@@ -505,7 +505,7 @@
         "supervisedSamples": 97981
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.2316873999952804
+      "wholeExampleSeconds": 0.44873530001495965
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_solo-1",
@@ -513,7 +513,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_solo-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_solo-1.wav",
       "audioSha256": "b6c9c3dab74d75b3fe112ea7e57bedf68ac7363e0fe3488fba7980c18fcd020e",
       "audioSeconds": 8.0200625,
       "sourceAudioSha256": "e6f0e3f799b8523b305873e0b8306303d9b5c2e2ddd15535cd53f792ec010ea0",
@@ -529,7 +529,7 @@
         "supervisedSamples": 128321
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.316639100026805
+      "wholeExampleSeconds": 0.5055558000167366
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_solo-2",
@@ -537,7 +537,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_solo-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_solo-2.wav",
       "audioSha256": "570b1a4d515dce93450c68d4b60e6e0b61610410dfe426f83a7b4d01479b8599",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "72420746f9cf6829facde7ca4f500d8fef892a321269daa86306bdb8a8d8a7eb",
@@ -553,7 +553,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3802723000117112
+      "wholeExampleSeconds": 0.3620871999883093
     },
     {
       "id": "20200623_S_R001S01C01-003-M-present_solo-3",
@@ -561,7 +561,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "003-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-003-M-present_solo-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-003-M-present_solo-3.wav",
       "audioSha256": "9f1f4d1b6f34e38fbcdd9ed2248b49564a6bc8a2cbb6384674fc4747c0c25a57",
       "audioSeconds": 3.2728125,
       "sourceAudioSha256": "8c5f784f762a4d61447ad05619932f41ba2aebaa07f133c5427f8581d27177ac",
@@ -577,7 +577,7 @@
         "supervisedSamples": 52365
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9463918999827001
+      "wholeExampleSeconds": 0.3338430000003427
     },
     {
       "id": "20200623_S_R001S01C01-004-M-absent_other_speech-0",
@@ -585,7 +585,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-0.wav",
       "audioSha256": "626b59ba1611f234a752f759362fbe0aec1f2da2d4cd1a952e83cb2ad5ca079e",
       "audioSeconds": 10.7800625,
       "sourceAudioSha256": "f12a3fc4f87cb2ce141c2f0b39a419019a3e5bfe50cb3463d0007698edad6c8f",
@@ -601,7 +601,7 @@
         "supervisedSamples": 172481
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0045979999995325
+      "wholeExampleSeconds": 0.41873520001536235
     },
     {
       "id": "20200623_S_R001S01C01-004-M-absent_other_speech-1",
@@ -609,7 +609,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-1.wav",
       "audioSha256": "c5785392e8ceb4f4c95b36820dc036dbd0f0a78b97ad89d6dbbfabf5f7b3259e",
       "audioSeconds": 2.0913125,
       "sourceAudioSha256": "b1ca0315283841ca86d3007213dc0ab85cbd13dade96efb0c8f0c351b6ff49b1",
@@ -625,7 +625,7 @@
         "supervisedSamples": 33461
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.7263477999949828
+      "wholeExampleSeconds": 0.11653949998435564
     },
     {
       "id": "20200623_S_R001S01C01-004-M-absent_other_speech-2",
@@ -633,7 +633,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-2.wav",
       "audioSha256": "ed63800d88cbba6324e133329cb219d1ec7e1072e2f9377331f845f11ad5015c",
       "audioSeconds": 4.6000625,
       "sourceAudioSha256": "77602dfe8589368102f802d8330ced1d8566bd204b215ef22a1986bc2c91d3a7",
@@ -649,7 +649,7 @@
         "supervisedSamples": 73601
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.813283199997386
+      "wholeExampleSeconds": 0.19590220000827685
     },
     {
       "id": "20200623_S_R001S01C01-004-M-absent_other_speech-3",
@@ -657,7 +657,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-absent_other_speech-3.wav",
       "audioSha256": "bfaf9d8a320340a1dff0eadcde2bcdad7f3bd21c2b29f6afa8f393898246c5bb",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "13b310f155a3a1f88d3fc9fbe85a37d2642dff8b5f60492577d11db2eee57cd8",
@@ -673,7 +673,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.09785420002299361
+      "wholeExampleSeconds": 0.09347709998837672
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_overlap-0",
@@ -681,7 +681,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-0.wav",
       "audioSha256": "6b873fa5720d3eb239b57bb989be9c8b3b8b236557465a5bd3ff96d392c4b31d",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "26da5bde1b28c7fc5e1e12063c77f6d4e7e11597bf7966f7fc46921d290a19fe",
@@ -697,7 +697,7 @@
         "supervisedSamples": 14027
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.365144200011855
+      "wholeExampleSeconds": 0.3680498000176158
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_overlap-1",
@@ -705,7 +705,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-1.wav",
       "audioSha256": "9054b6ab7e490940ebfcdf6b95ad619e9071001809effa677cb847b022d0cca8",
       "audioSeconds": 6.1500625,
       "sourceAudioSha256": "65d1e8a28a8f2372633b0c0d4a5964e7da654f0ed21c08c57417ea3aa47461a8",
@@ -721,7 +721,7 @@
         "supervisedSamples": 84920
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0210629999928642
+      "wholeExampleSeconds": 0.43199430001550354
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_overlap-2",
@@ -729,7 +729,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-2.wav",
       "audioSha256": "97b73a91e9a6cdbb099855a35d734cca8266440bdf92d105cd71b9296f178fff",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "d6514206ca9cccdf6d5d4ffc8c2820a72bfbcaca399c738e9cfcfe51ae6f4ece",
@@ -745,7 +745,7 @@
         "supervisedSamples": 26124
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3617755000013858
+      "wholeExampleSeconds": 0.369211399985943
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_overlap-3",
@@ -753,7 +753,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_overlap-3.wav",
       "audioSha256": "d7ae2273813755d2422ee279ae99329d113267ec0961476c3e1269f25b74a34f",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "2dbf7cf528e4c710dd7ef1dff803a5b6bacd1dadfb28894cc1051a0609f84bfb",
@@ -769,7 +769,7 @@
         "supervisedSamples": 22950
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3749217999866232
+      "wholeExampleSeconds": 0.3625159000221174
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_solo-0",
@@ -777,7 +777,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_solo-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_solo-0.wav",
       "audioSha256": "49d4d817eebc5cf4b67bedaa565eb527ade91f139638d1ed7c0f3e43276c2926",
       "audioSeconds": 3.5026875,
       "sourceAudioSha256": "bd72afb23af7c6a728dd14cb11c0bb2d0034d31af6d3251d9e843be1328f3ea2",
@@ -793,7 +793,7 @@
         "supervisedSamples": 56043
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9332810000050813
+      "wholeExampleSeconds": 0.3480732000025455
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_solo-1",
@@ -801,7 +801,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_solo-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_solo-1.wav",
       "audioSha256": "8f4ef1a3c7fe42f3b55ab0b744a195ae558a8ef2c51d57f3c2e92e5e10baf6fe",
       "audioSeconds": 8.4150625,
       "sourceAudioSha256": "5ce248e76c876c9904b3e3ce510e46c88bbc9ba10ae5e700134a0f9276b2cc03",
@@ -817,7 +817,7 @@
         "supervisedSamples": 134641
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0889546000107657
+      "wholeExampleSeconds": 0.5085263999935705
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_solo-2",
@@ -825,7 +825,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_solo-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_solo-2.wav",
       "audioSha256": "ef89f51ec376f3b3301adda573fdb649631917789dad294ba9b5fc201d891849",
       "audioSeconds": 6.3000625,
       "sourceAudioSha256": "7694e25949031f214f75cbff9e85bedb5552a171e6f9e69884128704461b258a",
@@ -841,7 +841,7 @@
         "supervisedSamples": 100801
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.0475472999969497
+      "wholeExampleSeconds": 0.4244042999926023
     },
     {
       "id": "20200623_S_R001S01C01-004-M-present_solo-3",
@@ -849,7 +849,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "004-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-004-M-present_solo-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-004-M-present_solo-3.wav",
       "audioSha256": "6465f303c8e7033405a1290aa43f17d9cb404b1cc368dae9ddb98cb7f340c713",
       "audioSeconds": 12.086375,
       "sourceAudioSha256": "0a056e468a7e1a1670d1afbc280dd418ab71049a4b17fee1c5b223c8baec1507",
@@ -865,7 +865,7 @@
         "supervisedSamples": 193382
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.617851899995003
+      "wholeExampleSeconds": 0.7038719000120182
     },
     {
       "id": "20200623_S_R001S01C01-006-M-absent_other_speech-0",
@@ -873,7 +873,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-0.wav",
       "audioSha256": "79bb58d634ef269eb57c623e94f15b49fe6e30a8e6cc4ac17ad68fb4d4e1d481",
       "audioSeconds": 2.4734375,
       "sourceAudioSha256": "f6fd98f2f541f2767443adf8ee0df0a35b0996fc9345aebb952ab56a65667b85",
@@ -889,7 +889,7 @@
         "supervisedSamples": 39575
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.7605787999927998
+      "wholeExampleSeconds": 0.12843599999905564
     },
     {
       "id": "20200623_S_R001S01C01-006-M-absent_other_speech-1",
@@ -897,7 +897,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-1.wav",
       "audioSha256": "ccd5fad6a2c8bf9fd0de242cd192fa64f5fa5b3d471057bc459afbac71c7d151",
       "audioSeconds": 8.5400625,
       "sourceAudioSha256": "7c0297ff607654d51d538bd4230e15e419585650033d2fe5179edf8758f9cef6",
@@ -913,7 +913,7 @@
         "supervisedSamples": 136641
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9351955000020098
+      "wholeExampleSeconds": 0.3156225999991875
     },
     {
       "id": "20200623_S_R001S01C01-006-M-absent_other_speech-2",
@@ -921,7 +921,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-2.wav",
       "audioSha256": "4da58d7bf8409e96da53496283676476e10b7108135dd3485cd876efa4d384b8",
       "audioSeconds": 5.7650625,
       "sourceAudioSha256": "fd85bb8562129c0418cefbfc2fe2c57e2c6008c4fd0edd00ba6f3746996b2e28",
@@ -937,7 +937,7 @@
         "supervisedSamples": 92241
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.8563146000087727
+      "wholeExampleSeconds": 0.24600769998505712
     },
     {
       "id": "20200623_S_R001S01C01-006-M-absent_other_speech-3",
@@ -945,7 +945,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-absent_other_speech-3.wav",
       "audioSha256": "7ba353236df24045960d7648000d5c5b25e9a8902689367fad7d11d8ccb79311",
       "audioSeconds": 6.7000625,
       "sourceAudioSha256": "6f671d6f407789b91ce380c50af92ed2fbb19ceca185004cfecc794c6a00a0f8",
@@ -961,7 +961,7 @@
         "supervisedSamples": 107201
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9327963000105228
+      "wholeExampleSeconds": 0.2651441000052728
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_overlap-0",
@@ -969,7 +969,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-0.wav",
       "audioSha256": "cbc48aac01230be1db16802acd603d797ea1012308a5de8281efc6cfb36bd0eb",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "9984de2b7629bec28434c71dc338c28c07740837af933667c7c56b508b217a05",
@@ -985,7 +985,7 @@
         "supervisedSamples": 21977
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.37701120000565425
+      "wholeExampleSeconds": 0.3641717999998946
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_overlap-1",
@@ -993,7 +993,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-1.wav",
       "audioSha256": "1ad31a83c7d44773f38c6f4b147edc300706e27a97bf699bb98ec360143a2b08",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "1205fb28469e599edd0ea6e5bf1f8f5aad32a4da51cd50df764d7a8d307fb38e",
@@ -1009,7 +1009,7 @@
         "supervisedSamples": 25433
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3666922000120394
+      "wholeExampleSeconds": 0.3681658999994397
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_overlap-2",
@@ -1017,7 +1017,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-2.wav",
       "audioSha256": "4b8333074ae7f0ca6d1ee4079550e48f4d52b072cdab2316e5de23f3a9704e8c",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "51d1de945620ef48591332950ce4391c907bad06ae09c365bc2eb368049f8b26",
@@ -1033,7 +1033,7 @@
         "supervisedSamples": 11954
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3701419999997597
+      "wholeExampleSeconds": 0.3660542000143323
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_overlap-3",
@@ -1041,7 +1041,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_overlap-3.wav",
       "audioSha256": "331e3942630558e89bd52e75c012e403583a78c5afa51ddf2b50f60a72964d98",
       "audioSeconds": 3.7723125,
       "sourceAudioSha256": "d4a0d9bf78d6c2638a1054620b3e69022693c250b9d1fae7e5f4387674d43d7a",
@@ -1057,7 +1057,7 @@
         "supervisedSamples": 11622
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.9737558999913745
+      "wholeExampleSeconds": 0.3532139000017196
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_solo-0",
@@ -1065,7 +1065,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_solo-0.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_solo-0.wav",
       "audioSha256": "3a5123f943a2096094a1a6c27797d11134b816f08b529c1d4d7360e3ad5679a0",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "5c1cb39576b7e4f11c318689d9c823161340997a587257770d361a9a99445c9c",
@@ -1081,7 +1081,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.4104030999878887
+      "wholeExampleSeconds": 0.36348390000057407
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_solo-1",
@@ -1089,7 +1089,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_solo-1.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_solo-1.wav",
       "audioSha256": "654d62e542ac3872ddb64fb86e76fc5fa7110555171c209be2ee86f6c6f54756",
       "audioSeconds": 5.723875,
       "sourceAudioSha256": "96ee56dca708a3b237b0387378fe71eb86716446f2dae0142035067004471157",
@@ -1105,7 +1105,7 @@
         "supervisedSamples": 91582
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 1.029832499974873
+      "wholeExampleSeconds": 0.39528389999759383
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_solo-2",
@@ -1113,7 +1113,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_solo-2.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_solo-2.wav",
       "audioSha256": "762e4ea9a79843f6dce8ee6e27ad10950aff994bcf7fa26dadc0de4333ab1380",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "db4ff5333b75187e70081fca87892301908c73ad677306490499644c1969e85f",
@@ -1129,7 +1129,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.368386099988129
+      "wholeExampleSeconds": 0.38327240000944585
     },
     {
       "id": "20200623_S_R001S01C01-006-M-present_solo-3",
@@ -1137,7 +1137,7 @@
       "meeting": "20200623_S_R001S01C01",
       "personForScoringOnly": "006-M",
       "condition": "baseline",
-      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r2\\baseline\\20200623_S_R001S01C01-006-M-present_solo-3.wav",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\validation-audio-r4\\baseline\\20200623_S_R001S01C01-006-M-present_solo-3.wav",
       "audioSha256": "3d3ca1ec26963f1f8b1d89db0ca6805a4d72a55fe561485107322f7e8a6761e2",
       "audioSeconds": 2.0000625,
       "sourceAudioSha256": "8f7963721ef5bb16eaaa9c16548078459000a04714abae0962e05714262654aa",
@@ -1153,7 +1153,7 @@
         "supervisedSamples": 32001
       },
       "pcmExportDivisor": 1.0,
-      "wholeExampleSeconds": 0.3791403000068385
+      "wholeExampleSeconds": 0.35964330000570044
     }
   ],
   "referenceUse": "Supervised-profile diagnostic validation only, not automatic whole-meeting deployment or final holdout."

@@ -1,13 +1,16 @@
 {
-  "state": "RUNNING_TSE_STAGE",
+  "state": "FAILED_TSE_STAGE_RETAINED_NO_AUTOMATIC_RETRY",
   "pid": 14408,
   "startedAt": "2026-11-08T12:18:06+08:00",
   "worker": "tse_supervised_memory_train_worker_20261108.py",
   "runId": "train-memory-r1",
   "protocolSha256": "1825518eb9a90f166c1daac4acc207e1a614677a4a15d6d239345758789bcf64",
   "automaticModelRetries": 0,
-  "privatePeakBytes": 0,
-  "rssPeakBytes": 0,
+  "privatePeakBytes": 1998643200,
+  "rssPeakBytes": 1837895680,
   "qualityQualified": false,
-  "activePid": 16284
+  "exitCode": 3221225477,
+  "workerState": "TRAINING_FIXED_SINGLE_PASS",
+  "finishedAt": "2026-11-08T12:21:04+08:00",
+  "wholeProcessFamilySeconds": 177.94648159999633
 }

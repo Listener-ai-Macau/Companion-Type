@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 26944,
+  "startedAt": "2026-11-08T12:25:06+08:00",
+  "worker": "tse_supervised_checkpoint_proof_worker_20261108.py",
+  "runId": "checkpoint-proof-r1",
+  "protocolSha256": "83a92a0dbc7d5deca763ec94686fc96082cc8ea0b84d433419aa06e475547f5b",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 936869888,
+  "rssPeakBytes": 909172736,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "PASS_BOUNDED_CHECKPOINT_FULL_ADAMW_RNG_NEXT_UPDATE_EXACT",
+  "finishedAt": "2026-11-08T12:25:14+08:00",
+  "wholeProcessFamilySeconds": 8.125256900006207
+}

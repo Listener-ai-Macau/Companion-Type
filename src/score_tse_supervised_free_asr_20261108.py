@@ -11,7 +11,7 @@ from companion_tse_training_20261108 import target_text
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=R/'docs/handoffs/20261108-tse-supervised-adaptation'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 limits=WorkerLimits(cpu_percent=10,memory_bytes=512*1024**2)
-P=read(C/'free-asr-protocol-r1.json');T=read(C/'training-protocol-r2.json');outputs=read(C/'free-asr-manifest-r1.json');assert len(outputs)==P['expectedOutputRows']==96
+P=read(C/'free-asr-protocol-r1.json');T=read(C/'training-protocol-r4.json');outputs=read(C/'free-asr-manifest-r1.json');assert len(outputs)==P['expectedOutputRows']==96
 assert not (C/'free-asr-review.json').exists()
 binding={'protocolSha256':sha(C/'free-asr-protocol-r1.json'),'audioOnlySha256':P['audioOnlySha256'],'workerSourceSha256':P['asrWorkerSourceSha256']}
 byid={r['id']:r for r in outputs};assert len(byid)==96

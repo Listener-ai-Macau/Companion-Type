@@ -1,0 +1,16 @@
+{
+  "state": "FAILED_TSE_STAGE_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 26048,
+  "startedAt": "2026-11-08T12:25:57+08:00",
+  "worker": "tse_supervised_streamed_train_worker_20261108.py",
+  "runId": "train-streamed-r1",
+  "protocolSha256": "00d20094a95c79452cec005f8495b864e70241c4bdf9f7557d0f924bb50972f5",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1838252032,
+  "rssPeakBytes": 1741344768,
+  "qualityQualified": false,
+  "exitCode": 1,
+  "workerState": "TSE_TRAINING_FAILED_RETAINED",
+  "finishedAt": "2026-11-08T12:27:23+08:00",
+  "wholeProcessFamilySeconds": 86.04445169999963
+}

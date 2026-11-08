@@ -1,0 +1,13 @@
+{
+  "state": "RUNNING_TSE_STAGE",
+  "pid": 21340,
+  "startedAt": "2026-11-08T12:29:28+08:00",
+  "worker": "tse_supervised_bounded_train_worker_20261108.py",
+  "runId": "train-bounded-r1",
+  "protocolSha256": "971b2c9955aa54cb0790dfe30797cf7fa12fb1ac5f4125dfc47450028a079dad",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 0,
+  "rssPeakBytes": 0,
+  "qualityQualified": false,
+  "activePid": 20096
+}

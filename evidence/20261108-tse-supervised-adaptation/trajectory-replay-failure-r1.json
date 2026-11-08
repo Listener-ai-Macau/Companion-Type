@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-08T12:29:28.435630+08:00",
+  "state": "EXACT_WHOLE_TRAINING_TRAJECTORY_REPLAY_NOT_REPRODUCED",
+  "firstDifferentStep": 5,
+  "firstFourAbsenceOnlyStepsLossAndGradientNormExact": true,
+  "perStep": [
+    {
+      "step": 1,
+      "originalLoss": 0.09065236896276474,
+      "replayedLoss": 0.09065236896276474,
+      "lossAbsoluteDifference": 0.0,
+      "gradientNormAbsoluteDifference": 0.0
+    },
+    {
+      "step": 2,
+      "originalLoss": 0.014355413615703583,
+      "replayedLoss": 0.014355413615703583,
+      "lossAbsoluteDifference": 0.0,
+      "gradientNormAbsoluteDifference": 0.0
+    },
+    {
+      "step": 3,
+      "originalLoss": 0.010861425660550594,
+      "replayedLoss": 0.010861425660550594,
+      "lossAbsoluteDifference": 0.0,
+      "gradientNormAbsoluteDifference": 0.0
+    },
+    {
+      "step": 4,
+      "originalLoss": 0.027568424120545387,
+      "replayedLoss": 0.027568424120545387,
+      "lossAbsoluteDifference": 0.0,
+      "gradientNormAbsoluteDifference": 0.0
+    },
+    {
+      "step": 5,
+      "originalLoss": 21.952280044555664,
+      "replayedLoss": 21.600584030151367,
+      "lossAbsoluteDifference": 0.3516960144042969,
+      "gradientNormAbsoluteDifference": 62.645294189453125
+    },
+    {
+      "step": 6,
+      "originalLoss": 10.233963012695312,
+      "replayedLoss": 10.295701026916504,
+      "lossAbsoluteDifference": 0.061738014221191406,
+      "gradientNormAbsoluteDifference": 3.078155517578125
+    },
+    {
+      "step": 7,
+      "originalLoss": 0.23207469284534454,
+      "replayedLoss": 0.23090603947639465,
+      "lossAbsoluteDifference": 0.0011686533689498901,
+      "gradientNormAbsoluteDifference": 0.017070770263671875
+    },
+    {
+      "step": 8,
+      "originalLoss": 0.07753690332174301,
+      "replayedLoss": 0.07695598155260086,
+      "lossAbsoluteDifference": 0.0005809217691421509,
+      "gradientNormAbsoluteDifference": 0.054377079010009766
+    },
+    {
+      "step": 9,
+      "originalLoss": 4.728862285614014,
+      "replayedLoss": 4.711944103240967,
+      "lossAbsoluteDifference": 0.016918182373046875,
+      "gradientNormAbsoluteDifference": 58.4608154296875
+    },
+    {
+      "step": 10,
+      "originalLoss": 5.207726001739502,
+      "replayedLoss": 5.244849681854248,
+      "lossAbsoluteDifference": 0.037123680114746094,
+      "gradientNormAbsoluteDifference": 47.6734619140625
+    },
+    {
+      "step": 11,
+      "originalLoss": 6.898566722869873,
+      "replayedLoss": 6.921779632568359,
+      "lossAbsoluteDifference": 0.023212909698486328,
+      "gradientNormAbsoluteDifference": 73.79168701171875
+    },
+    {
+      "step": 12,
+      "originalLoss": 20.704509735107422,
+      "replayedLoss": 20.843088150024414,
+      "lossAbsoluteDifference": 0.1385784149169922,
+      "gradientNormAbsoluteDifference": 20.4537353515625
+    },
+    {
+      "step": 13,
+      "originalLoss": 7.265527248382568,
+      "replayedLoss": 7.180708408355713,
+      "lossAbsoluteDifference": 0.08481884002685547,
+      "gradientNormAbsoluteDifference": 1652.5067749023438
+    },
+    {
+      "step": 14,
+      "originalLoss": 3.3918330669403076,
+      "replayedLoss": 3.3972156047821045,
+      "lossAbsoluteDifference": 0.005382537841796875,
+      "gradientNormAbsoluteDifference": 17.572509765625
+    },
+    {
+      "step": 15,
+      "originalLoss": 9.658712387084961,
+      "replayedLoss": 9.66079044342041,
+      "lossAbsoluteDifference": 0.0020780563354492188,
+      "gradientNormAbsoluteDifference": 34.38372802734375
+    },
+    {
+      "step": 16,
+      "originalLoss": 3.7954394817352295,
+      "replayedLoss": 4.148995399475098,
+      "lossAbsoluteDifference": 0.35355591773986816,
+      "gradientNormAbsoluteDifference": 38.545135498046875
+    }
+  ],
+  "rootCauseProven": false,
+  "checkpointSerializationNextUpdateProofStillPassed": true,
+  "handlingError": "Optional trajectory comparison was placed before durable checkpoint commit, so it discarded this interrupted16-step optimizer state. Remove that extra stop condition; never weaken saved-byte verification. Do not claim exact end-to-end stochastic/numeric trajectory restoration.",
+  "recovery": "Start identical frozen numerical trial from original author weights, remeasure complete pre-update48 validation in the same worker, then one166-example pass and all48 post-update queries. No loss/learning-rate/seed/data/order changes; previous two16-update executions remain in actual compute accounting.",
+  "newQualityResult": false
+}

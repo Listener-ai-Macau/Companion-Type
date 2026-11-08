@@ -1,0 +1,25 @@
+{
+  "state": "FROZEN_BOUNDED_ADAMW_RNG_CHECKPOINT_PROOF",
+  "workerSha256": "caf190699c63c146db11ecb9f26157d84f68edcbab26e34e8735583bbad36022",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tse_supervised_checkpoint_proof_worker_20261108.py",
+      "sha256": "caf190699c63c146db11ecb9f26157d84f68edcbab26e34e8735583bbad36022"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_checkpoint_streamed_20261108.py",
+      "sha256": "30be335575e5033e104dccf93318a2e39142e87092217b93867b107f8a85a416"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    }
+  ],
+  "proofCheckpointRoot": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoint-format-proof-r1",
+  "newMeetingTrainingUpdates": 0,
+  "qualityQualified": false
+}

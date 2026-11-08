@@ -1,0 +1,133 @@
+{
+  "state": "PASS_BOUNDED_CHECKPOINT_FULL_ADAMW_RNG_NEXT_UPDATE_EXACT",
+  "pid": 22992,
+  "newMeetingTrainingUpdates": 0,
+  "qualityQualified": false,
+  "nextLossBitIdentical": true,
+  "nextWeightsBitIdentical": true,
+  "nextAdamWMomentsAndStepBitIdentical": true,
+  "independentNumpyFormatReadPassed": true,
+  "maximumCpuScratchBytes": 2097152,
+  "checkpoint": {
+    "state": "COMPLETE_EXACT_TRAINING_CHECKPOINT",
+    "completedSteps": 1,
+    "protocolSha256": "83a92a0dbc7d5deca763ec94686fc96082cc8ea0b84d433419aa06e475547f5b",
+    "trainableWeights": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoint-format-proof-r1\\step-0001\\trainable-0373d5fc6f4845508161b5c35bd752a3.safetensors",
+    "trainableWeightsSha256": "54a06dbb32a92388d0fb8b29de921f3bfb9b558f940ef916be94f49bfc6b41a2",
+    "optimizerState": "E:\\CodexData\\Companion\\.model-cache\\tse-supervised-adaptation-20261108\\checkpoint-format-proof-r1\\step-0001\\optimizer-1994d3c90cef4937ad2cc22fda821099.safetensors",
+    "optimizerStateSha256": "32b980ad4ebad0f8233243ab45c789fb4f8a849621a199594bef5cf4aa0c9d38",
+    "optimizerStateFormat": "bounded-safetensors-v1",
+    "optimizerStateSchema": {
+      "0": {
+        "step": {
+          "tensor": "optimizer.0.step",
+          "originalDeviceType": "cpu"
+        },
+        "exp_avg": {
+          "tensor": "optimizer.0.exp_avg",
+          "originalDeviceType": "cuda"
+        },
+        "exp_avg_sq": {
+          "tensor": "optimizer.0.exp_avg_sq",
+          "originalDeviceType": "cuda"
+        }
+      },
+      "1": {
+        "step": {
+          "tensor": "optimizer.1.step",
+          "originalDeviceType": "cpu"
+        },
+        "exp_avg": {
+          "tensor": "optimizer.1.exp_avg",
+          "originalDeviceType": "cuda"
+        },
+        "exp_avg_sq": {
+          "tensor": "optimizer.1.exp_avg_sq",
+          "originalDeviceType": "cuda"
+        }
+      },
+      "2": {
+        "step": {
+          "tensor": "optimizer.2.step",
+          "originalDeviceType": "cpu"
+        },
+        "exp_avg": {
+          "tensor": "optimizer.2.exp_avg",
+          "originalDeviceType": "cuda"
+        },
+        "exp_avg_sq": {
+          "tensor": "optimizer.2.exp_avg_sq",
+          "originalDeviceType": "cuda"
+        }
+      },
+      "3": {
+        "step": {
+          "tensor": "optimizer.3.step",
+          "originalDeviceType": "cpu"
+        },
+        "exp_avg": {
+          "tensor": "optimizer.3.exp_avg",
+          "originalDeviceType": "cuda"
+        },
+        "exp_avg_sq": {
+          "tensor": "optimizer.3.exp_avg_sq",
+          "originalDeviceType": "cuda"
+        }
+      }
+    },
+    "optimizerParamGroups": [
+      {
+        "lr": 1e-05,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 1e-05,
+        "amsgrad": false,
+        "maximize": false,
+        "foreach": null,
+        "capturable": false,
+        "differentiable": false,
+        "fused": null,
+        "decoupled_weight_decay": true,
+        "params": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "cudaRngCount": 1,
+    "parameterNames": [
+      "0.weight",
+      "0.bias",
+      "2.weight",
+      "2.bias"
+    ],
+    "frozenBaseRequired": true,
+    "savedTeacherWeights": false,
+    "allSavedWeightTensorsExactlyVerified": true,
+    "allOptimizerAndRngTensorBytesExactlyVerified": true,
+    "maximumCpuScratchBytes": 2097152
+  },
+  "wholeWorkerSeconds": 5.621029800007818,
+  "finishedAt": "2026-11-08T12:25:13.048253+08:00",
+  "limits": {
+    "pid": 22992,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 936873984,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

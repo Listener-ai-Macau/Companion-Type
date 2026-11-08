@@ -6,10 +6,10 @@ from practical_io_20261107 import atomic_json
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'model-research/src';C=R/'docs/handoffs/20261108-tse-supervised-adaptation'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 review=read(C/'training-review.json');assert review['advanceToUnpromptedFreeGeneration'] and review['completedWeightUpdates']==166
-P=read(C/'training-protocol-r2.json');assert review['protocolSha256']==sha(C/'training-protocol-r2.json')
+P=read(C/'training-protocol-r4.json');assert review['protocolSha256']==sha(C/'training-protocol-r4.json')
 audio=[]
 for condition in ['baseline','adapted']:
-    values=read(C/(condition+'-validation.json'));assert values['protocolSha256']==review['protocolSha256'] and len(values['examples'])==48
+    file=C/(condition+'-validation.json');values=read(file);assert values['protocolSha256']==review['protocolSha256'] and len(values['examples'])==48
     for row in values['examples']:
         assert sha(row['audio'])==row['audioSha256']
         audio.append({'id':condition+'--'+row['id'],'sourceExampleId':row['id'],'condition':condition,'audio':row['audio'],'audioSha256':row['audioSha256'],'audioSeconds':row['audioSeconds']})
