@@ -61,6 +61,9 @@ public final class RangeCheckpointOverlapJvmTest {
         try{continued=wide.dataContinues();}finally{wide.releaseAndJoin();}
         if(!continued){System.out.println("FAIL_RECEIVE_BLOCKED_BY_CHECKPOINT_DURABILITY");System.exit(71);}
         check(wide.failure.get()==null&&wide.link.requests==1&&wide.link.receipts==1);
+        Case shortFile=new Case(22610,false);
+        try{check(shortFile.dataContinues());}finally{shortFile.releaseAndJoin();}
+        check(shortFile.failure.get()==null&&shortFile.link.requests==1&&shortFile.link.receipts==1&&shortFile.device.end==1);
         // Failed source durability never sends an erase request, even when all
         // later radio bytes arrived while the first prefix was being synced.
         Case failed=new Case(63000,true);

@@ -75,6 +75,7 @@ final class RangeConsume {
     final class Session implements Closeable {
         private final Path directory;
         private final RecorderWire.Descriptor descriptor;
+        private final int quantum;
         private int frontier;
         private RangeCheckpoint resume;
         private Pending pending;
@@ -112,6 +113,8 @@ final class RangeConsume {
         }
         Session(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
             this.directory=directory;descriptor=d;
+            long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
+            quantum=used<8?1:8;
             peer.validate(d);
             Status device=exchange(d,nonce.getAsLong(),null); // read-only, no erase
             if(RangeCheckpoint.exists(directory,d)){
@@ -147,10 +150,11 @@ final class RangeConsume {
             if(resume!=null){RangeCheckpoint saved=resume;resume=null;pending=new Pending(saved);return;}
             if(receiver.completeBytesReceived())return;
             int available=(int)((receiver.resumeOffset()/248+1)/16);
-            // Keep full32K erase runs intact. Sending each4K as soon as it
-            // arrives destroys block coalescing and can make physical reclaim
-            // slower than the radio, even when the two overlap.
-            available=available/8*8;
+            // Full-block files retain32K runs. A sub-block file has no full
+            // block of received data to coalesce: hand off its first complete
+            // sector while the rest arrives, with checkpoint fsync on the
+            // same single pending worker rather than blocking the receiver.
+            available=available/quantum*quantum;
             if(available<=frontier)return;
             long token;do{token=nonce.getAsLong();}while(token==lastNonce);
             long began=System.nanoTime();
@@ -178,10 +182,12 @@ final class RangeConsume {
     }
     Session open(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
         long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
-        if(used<16&&!RangeCheckpoint.exists(directory,d)){
-            // Less than two blocks leaves too little radio work to hide a
-            // separate durable range transaction. Whole consume can coalesce
-            // the final erase even when the reservation is unaligned. Preserve existing
+        boolean subBlockOverlap=used>=3&&used<8;
+        if(used<16&&!subBlockOverlap&&!RangeCheckpoint.exists(directory,d)){
+            // Tiny1/2-sector files cannot hide another transaction. Retain the
+            // measured whole-tail policy for8..15 sectors too; this change
+            // does not restore the unproductive per-block short-file trial.
+            // Preserve existing
             // partial proofs: those must still reconcile their exact frontier.
             RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();
             return null;

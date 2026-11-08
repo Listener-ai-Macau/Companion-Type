@@ -140,12 +140,20 @@ public final class RangeConsumeClientJvmTest {
             Link mediumLink=new Link(mediumDevice,mediumDir,false,false,false);mediumLink.expectRange=false;
             check(Arrays.equals(Files.readAllBytes(download(mediumLink,md,true)),medium)&&mediumLink.queries==0&&mediumLink.requests==0);
         }
-        // A new short original keeps the existing whole path;
-        // an old partially reclaimed short original must reconcile its proof.
+        // Sub-block originals now hand off a prefix while receiving. Tiny
+        // files and the previously measured8..15-sector whole path stay put.
         RecorderWire.Descriptor shortD=RangeCheckpointJvmTest.descriptor();byte[] shortData=RangeCheckpointJvmTest.data;
         Path shortDir=Files.createTempDirectory("companion-short-whole-");Device shortDevice=new Device(shortD,shortData);
-        Link shortLink=new Link(shortDevice,shortDir,false,false,false);shortLink.expectRange=false;
-        check(Arrays.equals(Files.readAllBytes(download(shortLink,shortD,true)),shortData)&&shortLink.queries==0&&shortLink.requests==0);
+        Link shortLink=new Link(shortDevice,shortDir,false,false,false);shortLink.waitForRangeRequest=false;
+        check(Arrays.equals(Files.readAllBytes(download(shortLink,shortD,true)),shortData)&&shortLink.queries==1&&shortLink.requests>0&&shortLink.receipts==shortLink.requests);
+        check(RangeCheckpoint.read(shortDir,shortD).confirmed&&shortDevice.end>0&&shortDevice.end<3);
+        for(int bytes:new int[]{1530,5994}){
+            byte[] tiny=Arrays.copyOf(data,bytes),w=d.wireBytes();put(w,48,bytes,4);
+            put(w,52,RecorderWire.crc(tiny,0,bytes),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(tiny),0,w,56,32);
+            put(w,108,RecorderWire.crc(w,0,108),4);RecorderWire.Descriptor td=RecorderWire.Descriptor.decode(w);
+            Path tinyDir=Files.createTempDirectory("companion-tiny-whole-");Link tinyLink=new Link(new Device(td,tiny),tinyDir,false,false,false);tinyLink.expectRange=false;
+            check(Arrays.equals(Files.readAllBytes(download(tinyLink,td,true)),tiny)&&tinyLink.queries==0&&tinyLink.requests==0);
+        }
         RecordingLibrary.Session checked=RecordingLibrary.sessions(shortDir,shortD).get(0);
         check(RecordingLibrary.verifiedPrefix(checked,shortD).segments.size()==1);
         Path shortFile=shortDir.resolve(SegmentReceiver.key(shortD)+".cop1");byte[] damaged=shortData.clone();damaged[0]^=1;Files.write(shortFile,damaged);
