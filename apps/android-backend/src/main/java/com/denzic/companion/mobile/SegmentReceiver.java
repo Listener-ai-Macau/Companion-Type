@@ -53,6 +53,7 @@ public final class SegmentReceiver implements Closeable {
         if(held==null){lc.close();lf.close();throw new IOException("recording is already being received");}
         RandomAccessFile f=null;MessageDigest h=digest();boolean alreadyComplete=false;
         try {
+            RangeCheckpoint.verifySavedPrefix(privateDirectory,descriptor);
             Path metadata=privateDirectory.resolve(key+".meta");
             boolean saveMetadata=!Files.exists(metadata);
             if(!saveMetadata) {
@@ -85,6 +86,18 @@ public final class SegmentReceiver implements Closeable {
     public long nextSequence() {return sequence;}
     public boolean completeBytesReceived() {return offset==descriptor.encodedLength;}
 
+    /** Future negotiated range consumer only; ordinary download never calls
+     * this. The existing receiver lock stays held until physical confirmation. */
+    RangeCheckpoint checkpointRange(Path directory,int firstSector,int endSector,long nonce,
+            RangeCheckpoint.DirectorySync sync)throws IOException {
+        if(closed)throw new IOException("receiver is closed");
+        long end=Math.min(descriptor.encodedLength,((long)endSector*16-1)*248);
+        if(end>offset)throw new IOException("recording range is not fully received");
+        if(!part.getParent().toAbsolutePath().normalize().equals(directory.toAbsolutePath().normalize()))
+            throw new IOException("recording range belongs to a different directory");
+        return RangeCheckpoint.save(directory,descriptor,firstSector,endSector,nonce,sync);
+    }
+
     public void accept(byte[] notification) throws IOException {
         if(closed||completeBytesReceived())throw new IOException("receiver is not accepting chunks");
         byte[] payload=RecorderWire.packet(descriptor,notification,sequence,offset);
@@ -96,6 +109,8 @@ public final class SegmentReceiver implements Closeable {
         if(closed||!completeBytesReceived())throw new IOException("recording is incomplete; partial file retained");
         if(existingComplete){close();return complete;}
         if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(sha.digest(),descriptor.sha256())) {
+            if(RangeCheckpoint.exists(part.getParent(),descriptor))
+                throw new IOException("recording integrity mismatch after partial reclamation; saved source retained, automatic restart disabled");
             file.getFD().sync();file.close();
             try {Files.move(part,damagedPath(".part"),StandardCopyOption.ATOMIC_MOVE);throw new IntegrityMismatch();}
             finally {close();}
