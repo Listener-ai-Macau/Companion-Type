@@ -1,0 +1,25 @@
+{
+  "state": "LOADING_REAL_TSE_TRAINING_JOB",
+  "pid": 19852,
+  "startedAt": "2026-11-08T12:09:25.083547+08:00",
+  "protocolSha256": "e30f2eef213518c89b069f7594c55672af12f5e39f8040e3abc164e904ed9fbe",
+  "newWeightUpdates": 0,
+  "completedInputs": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 19852,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11460608,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

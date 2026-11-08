@@ -1,0 +1,50 @@
+{
+  "state": "TRAINING_FIXED_SINGLE_PASS",
+  "pid": 13196,
+  "startedAt": "2026-11-08T12:18:07.934278+08:00",
+  "protocolSha256": "1825518eb9a90f166c1daac4acc207e1a614677a4a15d6d239345758789bcf64",
+  "newWeightUpdates": 10,
+  "completedInputs": 10,
+  "qualityQualified": false,
+  "lastMemoryPoint": {
+    "at": "2026-11-08T12:19:09.671138+08:00",
+    "phase": "PREFLIGHT_FULL_LONGEST_BACKWARD_COMPLETE",
+    "gpuAllocatedBytes": 4258862080,
+    "gpuReservedBytes": 4404019200,
+    "gpuFreeAndTotalBytes": [
+      12231442432,
+      17163091968
+    ],
+    "systemAvailableBytes": 3644006400
+  },
+  "preflightId": "20200707_L_R001S08C01-004-M-present_overlap-1",
+  "recordRnnMemory": false,
+  "latestTrainingMetrics": {
+    "step": 10,
+    "id": "20200707_L_R001S08C01-007-M-present_overlap-3",
+    "category": "present_overlap",
+    "loss": 5.207726001739502,
+    "presentTargetCe": 5.205490589141846,
+    "waveformLoss": 0.002235417254269123,
+    "gradientNormBeforeClip": 259.6210632324219,
+    "wholeStepSeconds": 6.139113299985183,
+    "gpuPeakAllocatedBytes": 6858307072,
+    "gpuPeakReservedBytes": 7115636736
+  },
+  "limits": {
+    "pid": 13196,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1939279872,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

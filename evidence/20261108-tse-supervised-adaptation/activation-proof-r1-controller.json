@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 6872,
+  "startedAt": "2026-11-08T12:17:02+08:00",
+  "worker": "tse_supervised_memory_proof_worker_20261108.py",
+  "runId": "activation-proof-r1",
+  "protocolSha256": "bfe4d8d07f10b469ca9846ceb6fa0dbf369ff3cbf666287157d3a7b64f73de5b",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1298644992,
+  "rssPeakBytes": 1227317248,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "PASS_ACTIVATION_RECOMPUTATION_OUTPUT_AND_GRADIENT_PARITY",
+  "finishedAt": "2026-11-08T12:17:25+08:00",
+  "wholeProcessFamilySeconds": 23.30842190000112
+}

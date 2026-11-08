@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-08T12:09:23.357274+08:00",
+  "actualExternalRecovery": true,
+  "oldStoppedController": {
+    "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+    "pid": 9176,
+    "startedAt": "2026-11-08T12:05:01+08:00",
+    "worker": "tse_supervised_train_worker_20261108.py",
+    "runId": "train-r1",
+    "protocolSha256": "e30f2eef213518c89b069f7594c55672af12f5e39f8040e3abc164e904ed9fbe",
+    "automaticModelRetries": 0,
+    "privatePeakBytes": 1202655232,
+    "rssPeakBytes": 1679040512,
+    "qualityQualified": false,
+    "availableAtStopBytes": 516202496,
+    "exitCode": 15,
+    "finishedAt": "2026-11-08T12:06:00+08:00",
+    "wholeProcessFamilySeconds": 58.4572094999894
+  },
+  "availableAtRecovery": 5650558976,
+  "protocolChanged": false,
+  "oldUpdates": 0,
+  "nextAttempt": "train-r2"
+}

@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-08T12:17:01.575259+08:00",
+  "state": "RETAINED_TWO_ZERO_UPDATE_LOW_RAM_STOPS",
+  "protocolSha256": "e30f2eef213518c89b069f7594c55672af12f5e39f8040e3abc164e904ed9fbe",
+  "attempts": [
+    {
+      "run": "train-r1",
+      "controller": {
+        "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+        "pid": 9176,
+        "startedAt": "2026-11-08T12:05:01+08:00",
+        "worker": "tse_supervised_train_worker_20261108.py",
+        "runId": "train-r1",
+        "protocolSha256": "e30f2eef213518c89b069f7594c55672af12f5e39f8040e3abc164e904ed9fbe",
+        "automaticModelRetries": 0,
+        "privatePeakBytes": 1202655232,
+        "rssPeakBytes": 1679040512,
+        "qualityQualified": false,
+        "availableAtStopBytes": 516202496,
+        "exitCode": 15,
+        "finishedAt": "2026-11-08T12:06:00+08:00",
+        "wholeProcessFamilySeconds": 58.4572094999894
+      },
+      "bothModelLoadProofsPresent": true,
+      "largestQueryBackwardNotCompleted": true,
+      "progressStateStaleUntilFirstValidation": true,
+      "exactOperationAtKillNotRecorded": true
+    },
+    {
+      "run": "train-r2",
+      "controller": {
+        "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+        "pid": 24460,
+        "startedAt": "2026-11-08T12:09:23+08:00",
+        "worker": "tse_supervised_train_worker_20261108.py",
+        "runId": "train-r2",
+        "protocolSha256": "e30f2eef213518c89b069f7594c55672af12f5e39f8040e3abc164e904ed9fbe",
+        "automaticModelRetries": 0,
+        "privatePeakBytes": 1183735808,
+        "rssPeakBytes": 1760153600,
+        "qualityQualified": false,
+        "availableAtStopBytes": 532185088,
+        "exitCode": 15,
+        "finishedAt": "2026-11-08T12:10:17+08:00",
+        "wholeProcessFamilySeconds": 53.267568000010215
+      },
+      "bothModelLoadProofsPresent": true,
+      "largestQueryBackwardNotCompleted": true,
+      "progressStateStaleUntilFirstValidation": true,
+      "exactOperationAtKillNotRecorded": true
+    }
+  ],
+  "diagnosis": "Both complete exact model load proofs exist before the RAM stop. The original worker never published a largest-query-preflight stage; the displayed loading state is stale. Forward/loss/backward suboperation was not recorded, so do not claim its exact allocation source as measured. Preserve and reduce stored residual-RNN activations with parity proof before retry.",
+  "noHyperparameterOrDataChange": true,
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "source": "https://docs.pytorch.org/docs/main/utils/checkpoint.html"
+}

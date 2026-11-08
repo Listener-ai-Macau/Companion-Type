@@ -1,0 +1,13 @@
+{
+  "state": "RUNNING_TSE_STAGE",
+  "pid": 14408,
+  "startedAt": "2026-11-08T12:18:06+08:00",
+  "worker": "tse_supervised_memory_train_worker_20261108.py",
+  "runId": "train-memory-r1",
+  "protocolSha256": "1825518eb9a90f166c1daac4acc207e1a614677a4a15d6d239345758789bcf64",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 0,
+  "rssPeakBytes": 0,
+  "qualityQualified": false,
+  "activePid": 16284
+}
