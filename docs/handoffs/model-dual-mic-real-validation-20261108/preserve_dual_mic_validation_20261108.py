@@ -30,8 +30,9 @@ record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'phase':a
     'ownerCompressionQuestion':'然后你看看是不是音频压缩了比较难分析要解压了好分析一点',
     'evidence':str(C),'protocol':optional(C/'protocol-summary.json'),'audioPreparation':optional(C/'audio-preparation.json'),
     'numericalProof':optional(C/'numpy-numerical-proof.json'),'run':optional(C/'run-r2.json'),'review':optional(C/'review.json'),'decision':optional(C/'decision.json'),
+    'noHardGateControl':{'run':optional(C/'no-hard-gate/run-r2.json'),'review':optional(C/'no-hard-gate/review.json'),'preparation':optional(C/'no-hard-gate/preparation.json')},
     'productDefaultChanged':False,'newHardwareAccess':False,'newTrainingRuns':0,'qualityQualified':False}
-point=record['decision'] or record['review'] or record['run'] or record['protocol'];record['state']=point['state']
+point=record['decision'] or record['noHardGateControl']['review'] or record['noHardGateControl']['run'] or record['review'] or record['run'] or record['protocol'];record['state']=point['state']
 record['next']=point.get('next','继续原RM-OVERLAP：固定同一原音/预测活动/ASR，对照单路活动分段、原始双路GSS和Opus解码双路GSS，全部逐人评分后决定保留或停止；不扫模型/窗口/码率、不占实板，原普通/严格<5%/纪要事实/双端实卡/售卖门保留。')
 (EV/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 upstream=Path(read(C/'upstream-source.json')['sourceRoot'])

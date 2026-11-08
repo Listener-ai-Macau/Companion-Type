@@ -1,0 +1,1199 @@
+{
+  "at": "2026-11-08T09:45:18+08:00",
+  "phase": "complete",
+  "ownerOriginal": "那你看看验证一下咯  开始看看怎么继续推进吧",
+  "ownerCompressionQuestion": "然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
+  "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation",
+  "protocol": {
+    "state": "FROZEN_REAL_MEETING_PREDICTED_ACTIVITY_SPATIAL_AND_CODEC_SCREEN",
+    "roots": [
+      "L12",
+      "L27",
+      "S1"
+    ],
+    "conditions": 3,
+    "expectedOutputRows": 21,
+    "newSeparationAlgorithms": 1,
+    "newModelFamilies": 0,
+    "trainingRuns": 0,
+    "asrInferenceAstMatchesOriginal": true,
+    "referenceActivityUsed": false,
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36"
+  },
+  "audioPreparation": {
+    "at": "2026-11-08T09:23:00+08:00",
+    "state": "REAL_DUAL_PCM_AND_CODEC_INPUTS_FROZEN_NO_MODEL",
+    "sources": [
+      {
+        "meeting": "L_R003S01C02",
+        "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02.flac",
+        "losslessSourceSha256": "93125b2c8f9f73c042ccd63178d1fec6db2d3047af4078834da7c6c1aa118e72",
+        "sourceWholePayloadMatchesPinnedLfs": true,
+        "revision": "aada72727856313b19d4a030383c426364931dbf",
+        "microphoneChannelsUsed": [
+          0,
+          1
+        ],
+        "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+        "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+      },
+      {
+        "meeting": "S_R004S03C01",
+        "losslessSource": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.flac",
+        "losslessSourceSha256": "c21ce5ce455b87926ca6b486431db2889de5d14be91b55f8cffea31cd94c1262",
+        "sourceWholePayloadMatchesPinnedLfs": true,
+        "revision": "aada72727856313b19d4a030383c426364931dbf",
+        "microphoneChannelsUsed": [
+          0,
+          1
+        ],
+        "sourceCollection": "AISHELL-4 original8channel shared recording; exactly2channels used in this screen.",
+        "geometry": "Original adjacent channel indices0/1; exact port positions/order are not established by the loaded file. No claim this matches the recorder31.8mmestimate."
+      }
+    ],
+    "clips": 3,
+    "uniqueOriginalRootSeconds": 90,
+    "newAudioDownloaded": false,
+    "ffmpegVersion": [
+      "ffmpeg version 8.1.1-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "built with gcc 15.2.0 (Rev13, Built by MSYS2 project)",
+      "configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-cairo --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-liboapv --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libsvtjpegxs --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-openal --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint --enable-whisper"
+    ],
+    "sameRootChannel0PcmAsPriorTests": true,
+    "losslessFlacPcmRoundtripVerified": true,
+    "referenceGeometryNotMatchedToDevice": true,
+    "newModels": 0,
+    "finalHoldoutOpened": false,
+    "qualityQualified": false,
+    "limits": {
+      "pid": 22952,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 311427072,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "numericalProof": {
+    "at": "2026-11-08T09:23:49+08:00",
+    "state": "PASS_PINNED_GSS_NUMPY_NUMERICAL_CONTROLS",
+    "neuralCalls": 0,
+    "qualityQualified": false,
+    "numpyVersion": "2.4.6",
+    "stftInverseMaxAbsoluteError": 5.551115123125783e-16,
+    "pcm16RoundtripExactlyEqual": true,
+    "full20IterationBatchVersusFrequencyLoopMaxError": 4.779510121011299e-14,
+    "independentInverseCovarianceLogDensityMaxError": 1.2212453270876722e-15,
+    "independentWeightedOuterProductPsdMaxError": 1.3323093219486658e-15,
+    "independentFixedReferenceMvdrMaxError": 2.2205636045467026e-16,
+    "nativeGpuParityClaimed": false,
+    "realMeetingAccuracyMeasured": false,
+    "seconds": 0.4146363000036217,
+    "limits": {
+      "pid": 7828,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 57196544,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "run": {
+    "state": "COMPLETE_DUAL_MIC_SPATIAL_CODEC_SCREEN_REVIEW_REQUIRED",
+    "pid": 21348,
+    "startedAt": "2026-11-08T09:26:42+08:00",
+    "priorAttemptReceipts": [],
+    "results": [
+      {
+        "stage": "separation",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 143.3577879999939,
+        "privatePeakBytes": 1770885120
+      },
+      {
+        "stage": "inventory",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 7.108935399999609,
+        "privatePeakBytes": 327315456
+      },
+      {
+        "stage": "asr",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 319.9678211999999,
+        "privatePeakBytes": 1248374784
+      }
+    ],
+    "automaticModelFailureRetries": 0,
+    "qualityQualified": false,
+    "stage": "asr",
+    "finishedAt": "2026-11-08T09:34:32+08:00"
+  },
+  "review": {
+    "at": "2026-11-08T09:34:49+08:00",
+    "state": "LOCAL_DUAL_GUIDED_PIPELINE_SHOWS_GAIN_REQUIRES_INDEPENDENT_MEETINGS",
+    "protocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+    "allOutputRowsVerified": 21,
+    "allRawGenerationHashesAndBindingsVerified": true,
+    "allConditionsAndPeopleScored": true,
+    "referenceUsedOnlyAfterProcessingForScoring": true,
+    "rootCoverage": "Lroot12known two-speaker and disclosed Lroot27true-triple supplement;Sroot1ordinary.2 exposed Mandarin meetings, not independent generalization or final holdout.",
+    "metric": "Sum of fixed whole-meeting-identity-mapped character edit counts against midpoint-selected whole utterances. Clip-edge-straddling references retained/reported. Not strict full-recordingCER, standardDER or pure-overlapCER.",
+    "overlapTotals": {
+      "mono_activity": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 267,
+        "substitute": 25,
+        "delete": 23,
+        "insert": 34,
+        "total": 82
+      },
+      "dual_pcm": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 268,
+        "substitute": 18,
+        "delete": 21,
+        "insert": 33,
+        "total": 72
+      },
+      "dual_opus": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 259,
+        "substitute": 26,
+        "delete": 26,
+        "insert": 29,
+        "total": 81
+      }
+    },
+    "cachedPreviousSingleMicPs4": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 323,
+      "substitute": 43,
+      "delete": 32,
+      "insert": 99,
+      "total": 174
+    },
+    "ordinaryTotals": {
+      "mono_activity": {
+        "referenceCharacters": 129,
+        "hypothesisCharacters": 116,
+        "substitute": 5,
+        "delete": 15,
+        "insert": 2,
+        "total": 22
+      },
+      "dual_pcm": {
+        "referenceCharacters": 129,
+        "hypothesisCharacters": 116,
+        "substitute": 5,
+        "delete": 15,
+        "insert": 2,
+        "total": 22
+      },
+      "dual_opus": {
+        "referenceCharacters": 129,
+        "hypothesisCharacters": 117,
+        "substitute": 10,
+        "delete": 14,
+        "insert": 2,
+        "total": 26
+      }
+    },
+    "perRoot": [
+      {
+        "case": "L_R003S01C02-root-000012",
+        "kind": "previous-exposed-two",
+        "totals": {
+          "mono_activity": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 148,
+            "substitute": 12,
+            "delete": 3,
+            "insert": 23,
+            "total": 38
+          },
+          "dual_pcm": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 147,
+            "substitute": 8,
+            "delete": 3,
+            "insert": 22,
+            "total": 33
+          },
+          "dual_opus": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 144,
+            "substitute": 10,
+            "delete": 6,
+            "insert": 22,
+            "total": 38
+          }
+        },
+        "missingPredictedReferencePeople": [],
+        "previous_single_mic_ps4": {
+          "referenceCharacters": 128,
+          "hypothesisCharacters": 154,
+          "substitute": 25,
+          "delete": 27,
+          "insert": 53,
+          "total": 105
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000027",
+        "kind": "disclosed-reference-curated-triple",
+        "totals": {
+          "mono_activity": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 119,
+            "substitute": 13,
+            "delete": 20,
+            "insert": 11,
+            "total": 44
+          },
+          "dual_pcm": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 121,
+            "substitute": 10,
+            "delete": 18,
+            "insert": 11,
+            "total": 39
+          },
+          "dual_opus": {
+            "referenceCharacters": 128,
+            "hypothesisCharacters": 115,
+            "substitute": 16,
+            "delete": 20,
+            "insert": 7,
+            "total": 43
+          }
+        },
+        "missingPredictedReferencePeople": [],
+        "previous_single_mic_ps4": {
+          "referenceCharacters": 128,
+          "hypothesisCharacters": 169,
+          "substitute": 18,
+          "delete": 5,
+          "insert": 46,
+          "total": 69
+        }
+      },
+      {
+        "case": "S_R004S03C01-root-000001",
+        "kind": "ordinary-regression",
+        "totals": {
+          "mono_activity": {
+            "referenceCharacters": 129,
+            "hypothesisCharacters": 116,
+            "substitute": 5,
+            "delete": 15,
+            "insert": 2,
+            "total": 22
+          },
+          "dual_pcm": {
+            "referenceCharacters": 129,
+            "hypothesisCharacters": 116,
+            "substitute": 5,
+            "delete": 15,
+            "insert": 2,
+            "total": 22
+          },
+          "dual_opus": {
+            "referenceCharacters": 129,
+            "hypothesisCharacters": 117,
+            "substitute": 10,
+            "delete": 14,
+            "insert": 2,
+            "total": 26
+          }
+        },
+        "missingPredictedReferencePeople": []
+      }
+    ],
+    "perPerson": [
+      {
+        "case": "L_R003S01C02-root-000012",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 12,
+        "referencePersonForScoringOnly": "002-F",
+        "referenceText": "那你都进来了，你就没地儿停放了，那就会堵住别人的车了。那物业有的也是，那个业主也是难淘的不行。在物业有时候这个问题，这个工作也不是特别好做。那业主骂，业主给吵在大门口儿，你不让他进，那他没有车位呀，他就一个车位，他家两辆车三辆车，咋整",
+        "boundaryStraddlingReferenceRows": [
+          {
+            "start": 359.8015,
+            "end": 365.12205,
+            "text": "那你都进来了，你就没地儿停放了，那就会堵住别人的车了。"
+          }
+        ],
+        "predictedSlot": 1,
+        "conditions": {
+          "mono_activity": {
+            "text": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂，业主给吵在大门口，你不让他进。那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？他。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 104,
+              "hypothesisCharacters": 103,
+              "substitute": 6,
+              "delete": 2,
+              "insert": 1,
+              "total": 9
+            }
+          },
+          "dual_pcm": {
+            "text": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂业主给吵在大门口，你不让他进。那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？他。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 104,
+              "hypothesisCharacters": 103,
+              "substitute": 6,
+              "delete": 2,
+              "insert": 1,
+              "total": 9
+            }
+          },
+          "dual_opus": {
+            "text": "那你都进来了，你就没地儿停放了，这就会堵住别人的车了。那物业有的也是那个业主也是难逃的不行，但物业有时候这个问题，这工作也不是特别好做。那业主骂，业主给吵，在大门口，你不让他进。那人家没有车位啊，这就一个车位，他家两辆车、三辆车咋整？",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 104,
+              "hypothesisCharacters": 103,
+              "substitute": 6,
+              "delete": 2,
+              "insert": 1,
+              "total": 9
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "那我不。有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。业主嘛，业主给卡在大门上。那个不用，不用那个，人家人家是业主，你凭什么让人家进？对吧？人家一个车位，人家两辆车，人家一个，人家一个车位就是说，咱们这个车位。",
+            "edits": {
+              "referenceCharacters": 104,
+              "hypothesisCharacters": 104,
+              "substitute": 25,
+              "delete": 26,
+              "insert": 26,
+              "total": 77
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000012",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 12,
+        "referencePersonForScoringOnly": "005-M",
+        "referenceText": "那个不用，不用那个人家是业主，你凭什么不让人家进对吧",
+        "boundaryStraddlingReferenceRows": [],
+        "predictedSlot": 5,
+        "conditions": {
+          "mono_activity": {
+            "text": "你不让他进？不用那个，一人家是业主，你凭什么让人家进？那那没有车位啊。人家一个车位，就是说，咱们这个车位。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 24,
+              "hypothesisCharacters": 45,
+              "substitute": 6,
+              "delete": 1,
+              "insert": 22,
+              "total": 29
+            }
+          },
+          "dual_pcm": {
+            "text": "那个不用，不用那个，一人家是业主，你凭什么让人家进？那他们有车位呀。人家一个车位，就是说，咱们这个车位。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 24,
+              "hypothesisCharacters": 44,
+              "substitute": 2,
+              "delete": 1,
+              "insert": 21,
+              "total": 24
+            }
+          },
+          "dual_opus": {
+            "text": "那个，那，那个，叶，人家是业主，你凭什么让人家接？人家没有车位啊！人家一个车位，就是说，咱们这个车位。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 24,
+              "hypothesisCharacters": 41,
+              "substitute": 4,
+              "delete": 4,
+              "insert": 21,
+              "total": 29
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "那个不会，好简单。那个不用，不用那个，一人家是业主，你凭什么让人家进？对吧？人家一个，人家一个车位，就是说，咱们这个车位。",
+            "edits": {
+              "referenceCharacters": 24,
+              "hypothesisCharacters": 50,
+              "substitute": 0,
+              "delete": 1,
+              "insert": 27,
+              "total": 28
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000027",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 27,
+        "referencePersonForScoringOnly": "002-F",
+        "referenceText": "给给指导一下嗯对对对该该剪该剪的就剪剪",
+        "boundaryStraddlingReferenceRows": [],
+        "predictedSlot": 1,
+        "conditions": {
+          "mono_activity": {
+            "text": "对，该该选。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 19,
+              "hypothesisCharacters": 4,
+              "substitute": 1,
+              "delete": 15,
+              "insert": 0,
+              "total": 16
+            }
+          },
+          "dual_pcm": {
+            "text": "对，该该签的。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 19,
+              "hypothesisCharacters": 5,
+              "substitute": 1,
+              "delete": 14,
+              "insert": 0,
+              "total": 15
+            }
+          },
+          "dual_opus": {
+            "text": "对。哎，再见。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 19,
+              "hypothesisCharacters": 4,
+              "substitute": 3,
+              "delete": 15,
+              "insert": 0,
+              "total": 18
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。",
+            "edits": {
+              "referenceCharacters": 19,
+              "hypothesisCharacters": 19,
+              "substitute": 10,
+              "delete": 0,
+              "insert": 0,
+              "total": 10
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000027",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 27,
+        "referencePersonForScoringOnly": "003-F",
+        "referenceText": "嗯对嗯",
+        "boundaryStraddlingReferenceRows": [],
+        "predictedSlot": 3,
+        "conditions": {
+          "mono_activity": {
+            "text": "哦，对。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 3,
+              "hypothesisCharacters": 2,
+              "substitute": 1,
+              "delete": 1,
+              "insert": 0,
+              "total": 2
+            }
+          },
+          "dual_pcm": {
+            "text": "哦，对。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 3,
+              "hypothesisCharacters": 2,
+              "substitute": 1,
+              "delete": 1,
+              "insert": 0,
+              "total": 2
+            }
+          },
+          "dual_opus": {
+            "text": "哦，对。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 3,
+              "hypothesisCharacters": 2,
+              "substitute": 1,
+              "delete": 1,
+              "insert": 0,
+              "total": 2
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "然后自己啊，对呀，嗯，对，对，嗯，对对。懂完之后管理，对，人家简单，呃，嗯。嗯，但是说咱们这个旅馆。",
+            "edits": {
+              "referenceCharacters": 3,
+              "hypothesisCharacters": 36,
+              "substitute": 0,
+              "delete": 0,
+              "insert": 33,
+              "total": 33
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000027",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 27,
+        "referencePersonForScoringOnly": "004-M",
+        "referenceText": "就是绿化部门的事儿对吧，咱们把绿化部门儿这个工作做好以后，人家在日常当中工作当中真正。是吧能够把工作做好的话，这些问题都是可以得到解决。",
+        "boundaryStraddlingReferenceRows": [],
+        "predictedSlot": 2,
+        "conditions": {
+          "mono_activity": {
+            "text": "这个就是绿化部门的事，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 63,
+              "hypothesisCharacters": 64,
+              "substitute": 0,
+              "delete": 2,
+              "insert": 3,
+              "total": 5
+            }
+          },
+          "dual_pcm": {
+            "text": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 63,
+              "hypothesisCharacters": 65,
+              "substitute": 0,
+              "delete": 1,
+              "insert": 3,
+              "total": 4
+            }
+          },
+          "dual_opus": {
+            "text": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 63,
+              "hypothesisCharacters": 65,
+              "substitute": 0,
+              "delete": 1,
+              "insert": 3,
+              "total": 4
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+            "edits": {
+              "referenceCharacters": 63,
+              "hypothesisCharacters": 65,
+              "substitute": 0,
+              "delete": 1,
+              "insert": 3,
+              "total": 4
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "L_R003S01C02-root-000027",
+        "meeting": "L_R003S01C02",
+        "rootIndex": 27,
+        "referencePersonForScoringOnly": "005-M",
+        "referenceText": "咱们自己咱们自己也得有人啊，对吧，咱们不能<$>种可以找对吧，种完之后啊管理呢，剪枝儿嗯修剪，施肥，加水",
+        "boundaryStraddlingReferenceRows": [
+          {
+            "start": 809.71,
+            "end": 822.665,
+            "text": "咱们自己咱们自己也得有人啊，对吧，咱们不能<$>种可以找对吧，种完之后啊管理呢，剪枝儿"
+          }
+        ],
+        "predictedSlot": 5,
+        "conditions": {
+          "mono_activity": {
+            "text": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，是吧？种完之后啊，管理呢？你兼职？嗯。应该去。嗯，但是咱们这个绿化。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 43,
+              "hypothesisCharacters": 49,
+              "substitute": 11,
+              "delete": 2,
+              "insert": 8,
+              "total": 21
+            }
+          },
+          "dual_pcm": {
+            "text": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，对吧？种完之后啊，管理呢？你剪枝，嗯。应该去。嗯，但是咱们这个树啊。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 43,
+              "hypothesisCharacters": 49,
+              "substitute": 8,
+              "delete": 2,
+              "insert": 8,
+              "total": 18
+            }
+          },
+          "dual_opus": {
+            "text": "咱们自己啊，咱们自己也得有人，对吧？你不能，你你种可以长，是吧？种完之后管理呢？嗯，简直。嗯，但是咱们这个吧。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 43,
+              "hypothesisCharacters": 44,
+              "substitute": 12,
+              "delete": 3,
+              "insert": 4,
+              "total": 19
+            }
+          },
+          "previous_single_mic_ps4": {
+            "text": "咱们自己，咱们自己也得有人啊，对吧？你不能，嗯，你种，对吧？种完之后管理呢，你剪枝，嗯，修剪，下水，对吧？嗯，但是咱们这个六万。",
+            "edits": {
+              "referenceCharacters": 43,
+              "hypothesisCharacters": 49,
+              "substitute": 8,
+              "delete": 4,
+              "insert": 10,
+              "total": 22
+            },
+            "newAsrCalls": 0,
+            "notSameSegmentationAsNewArms": true
+          }
+        }
+      },
+      {
+        "case": "S_R004S03C01-root-000001",
+        "meeting": "S_R004S03C01",
+        "rootIndex": 1,
+        "referencePersonForScoringOnly": "001-M",
+        "referenceText": "呃，咱<sil>超市啊近期的销售啊。嗯<sil>比往期的要好。呃，明显的客流量也，呃客流量也多啦。呃，咱这个销售这个<sil>呃营业额也上去了。嗯<sil>这都是大家或者在座的嗯努力的出现的状况。估计工作各位在下也出了，在下边儿也出了不少的呃力气。啊，也做了很多的这个呃营销这些方案。呃希望大家以后啊要继续保持咱这种工作状态。",
+        "boundaryStraddlingReferenceRows": [
+          {
+            "start": 27.34688,
+            "end": 39.93091,
+            "text": "呃，咱<sil>超市啊近期的销售啊。嗯<sil>比往期的要好。呃，明显的客流量也，呃客流量也多啦。呃，咱这个销售这个<sil>呃营业额也上去了。"
+          }
+        ],
+        "predictedSlot": 0,
+        "conditions": {
+          "mono_activity": {
+            "text": "嗯，比往期的要好，呃，明显的客流量也客流量也多了，呃，咱这个销售这个呃营业额也上去了，嗯，这都是大家伙在做的努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持咱这种工作状态，呃。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 129,
+              "hypothesisCharacters": 116,
+              "substitute": 5,
+              "delete": 15,
+              "insert": 2,
+              "total": 22
+            }
+          },
+          "dual_pcm": {
+            "text": "嗯，比往期的要好，呃，明显的客流量也客流量也多了，呃，咱这个销售这个呃营业额也上去了，嗯，这都是大家伙在做的努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持咱这种工作状态，呃。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 129,
+              "hypothesisCharacters": 116,
+              "substitute": 5,
+              "delete": 15,
+              "insert": 2,
+              "total": 22
+            }
+          },
+          "dual_opus": {
+            "text": "嗯，比往期的要好，啊，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家伙在做的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃，也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+            "predictedPersonAvailable": true,
+            "edits": {
+              "referenceCharacters": 129,
+              "hypothesisCharacters": 117,
+              "substitute": 10,
+              "delete": 14,
+              "insert": 2,
+              "total": 26
+            }
+          }
+        }
+      }
+    ],
+    "comparisons": {
+      "rawDualMinusMatchedMonoEdits": -10,
+      "rawDualMinusCachedPs4Edits": -102,
+      "compressedDualMinusRawDualEdits": 9,
+      "rawDualMinusMatchedMonoDeletions": -2,
+      "compressedDualMinusRawDualDeletions": 5
+    },
+    "ordinaryRawBypass": [
+      {
+        "case": "S_R004S03C01-root-000001",
+        "rawMonoAndDualBypassPcmExactlyEqual": true,
+        "noGateOrSpatialProcessingOnOrdinary": true,
+        "compressedOrdinaryIsSeparatelyRecognized": true
+      }
+    ],
+    "ordinaryRawTextSameAcrossArms": true,
+    "sameRecognizerInferenceAst": true,
+    "newSpatialAlgorithmCalls": 4,
+    "newAsrCalls": 20,
+    "sameAudioReuses": 1,
+    "timings": {
+      "separation": 143.3577879999939,
+      "inventory": 7.108935399999609,
+      "asr": 319.9678211999999
+    },
+    "neuralAndSpatialPrivateLimitBytes": 2147483648,
+    "maximumRecordedJobPrivateBytes": 1768947712,
+    "cpuLimitPercent": 5,
+    "gpuUtilizationHardCapped": false,
+    "compressionInterpretation": "FLAC/source PCM exactly preserved. Host stereo32kbpsOpus is lossy; this same-GSS comparison measures its effect in this screen. It is not the current firmware mono CELT bitstream or a codec-rate sweep.",
+    "limitations": [
+      "NumPy CPU reference is not measured CuPy/AMD-GPU parity or author full WPE pipeline;WPE deliberately off.",
+      "Exactly channels0/1 from an8mic public array; no verified acoustic-port geometry match to the close recorder pair.",
+      "New overlap arms share the same predicted waveform activity gate;misses remain charged. This is not an adopted hard-gating product policy.",
+      "Matched mono_activity is an activity-only baseline, not the best available single-mic separator. CachedPS4 uses a different pipeline/segmentation; both comparisons are reported.",
+      "No ground-truth per-root backend selection, text/filler cleaning or hypothesis deletion."
+    ],
+    "finalHoldoutOpened": false,
+    "productDefaultChanged": false,
+    "newTrainingRuns": 0,
+    "newHardwareAccess": false,
+    "qualityQualified": false
+  },
+  "decision": {
+    "at": "2026-11-08T09:45:17+08:00",
+    "state": "REAL_DUAL_INPUT_LOCAL_GAIN_CODEC_LOSS_AND_ACTIVITY_LIMIT_IDENTIFIED",
+    "ownerRequest": "那你看看验证一下咯  开始看看怎么继续推进吧",
+    "ownerCompressionQuestion": "然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
+    "actualValidation": "Processed real original channels0/1 from pinned complete lossless AISHELL-4 sources, prior predicted nativeFP16 speaker journal, one fixed GSS reference and unchanged native1.7B ASR. Compared matched mono activity-only, rawdual spatial separation and decodedhostOpusdual; then one evidence-triggered no-hard-gate control on all6existing target lanes.",
+    "dataScope": "90s original roots: two30s overlapping excerpts of one exposed Mandarin meeting, including the disclosed1.900779s triple supplement, plus30sordinary from another meeting. Spatial estimation uses15scontext eachside. This is not cross-corpus/general meeting qualification.",
+    "mainComparison": {
+      "referenceCharactersInOverlapClips": 256,
+      "matchedMonoActivityOnly": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 267,
+        "substitute": 25,
+        "delete": 23,
+        "insert": 34,
+        "total": 82
+      },
+      "rawDualGuided": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 268,
+        "substitute": 18,
+        "delete": 21,
+        "insert": 33,
+        "total": 72
+      },
+      "decodedOpusDualGuided": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 259,
+        "substitute": 26,
+        "delete": 26,
+        "insert": 29,
+        "total": 81
+      },
+      "rawDualErrorReductionVersusMatchedMono": 0.12195121951219512,
+      "cachedPreviousSingleMicPs4": {
+        "referenceCharacters": 256,
+        "hypothesisCharacters": 323,
+        "substitute": 43,
+        "delete": 32,
+        "insert": 99,
+        "total": 174
+      },
+      "cachedPs4IsDifferentSegmentationAndMethod": true,
+      "perRootSpatialEditImprovement": [
+        {
+          "root": "L_R003S01C02-root-000012",
+          "mono": 38,
+          "rawDual": 33
+        },
+        {
+          "root": "L_R003S01C02-root-000027",
+          "mono": 44,
+          "rawDual": 39
+        }
+      ],
+      "perPersonDeltas": [
+        {
+          "root": 12,
+          "person": "002-F",
+          "rawDualMinusMatchedMonoEdits": 0,
+          "rawDualMinusMatchedMonoDeletions": 0
+        },
+        {
+          "root": 12,
+          "person": "005-M",
+          "rawDualMinusMatchedMonoEdits": -5,
+          "rawDualMinusMatchedMonoDeletions": 0
+        },
+        {
+          "root": 27,
+          "person": "002-F",
+          "rawDualMinusMatchedMonoEdits": -1,
+          "rawDualMinusMatchedMonoDeletions": -1
+        },
+        {
+          "root": 27,
+          "person": "003-F",
+          "rawDualMinusMatchedMonoEdits": 0,
+          "rawDualMinusMatchedMonoDeletions": 0
+        },
+        {
+          "root": 27,
+          "person": "004-M",
+          "rawDualMinusMatchedMonoEdits": -1,
+          "rawDualMinusMatchedMonoDeletions": -1
+        },
+        {
+          "root": 27,
+          "person": "005-M",
+          "rawDualMinusMatchedMonoEdits": -3,
+          "rawDualMinusMatchedMonoDeletions": 0
+        }
+      ],
+      "noMatchedMonoPersonTotalRegressedInThisScreen": true
+    },
+    "compressionConclusion": {
+      "losslessSourceFlacDecodedPcmExactlyPreviousChannel0": true,
+      "flacRoundtripPcmExactlyEqualAllThreeClips": true,
+      "lossyOpusControl": "Hostlibopus32kbpsstereo,20msCBR,lowdelay,complexity0; all input channels/timeline decoded before analysis. Not current-board monoCELT bitstream.",
+      "rawDualOverlapEdits": 72,
+      "opusDualOverlapEdits": 81,
+      "rawDualOverlapDeletions": 21,
+      "opusDualOverlapDeletions": 26,
+      "ordinaryRawEdits": 22,
+      "ordinaryOpusEdits": 26,
+      "meaning": "DecodedPCM is necessary but cannot recreate information discarded by lossy coding. In this fixed screen compression increased errors. FLAC/source compression was lossless and cannot explain the older baseline errors. Phase and amplitude both change; this does not isolate phase as the sole cause."
+    },
+    "activityFailure": {
+      "posthocFullyContainedRemovedChars": 8,
+      "case": "Lroot27reference002-F has only1.6681of5.6539targetseconds inside its predicted activity; eight entirely interior reference characters have no retained audio under the hard gate.",
+      "noHardGateTotals": {
+        "gated": {
+          "referenceCharacters": 256,
+          "hypothesisCharacters": 268,
+          "substitute": 18,
+          "delete": 21,
+          "insert": 33,
+          "total": 72
+        },
+        "ungated": {
+          "referenceCharacters": 256,
+          "hypothesisCharacters": 708,
+          "substitute": 29,
+          "delete": 4,
+          "insert": 456,
+          "total": 489
+        }
+      },
+      "noHardGateDecision": "REMOVE_HARD_GATE_REJECTED_ADDITIONAL_SPEECH_ERRORS",
+      "interpretation": "Gating can erase missed target speech, while removing it restores some content but admits extensive other-speaker text. Neither posthoc word deletion nor selecting gated/ungated text per person is acceptable. Existing activity prediction and target isolation remain actual unresolved gates."
+    },
+    "retained": "Preserve rawdual as one promising research direction, protect current ordinary and product defaults, retain all27generated condition rows and oldPS4/small-head failures. Do not install the hard-gated or ungated prototype as a finished meeting backend.",
+    "methodAndRuntime": {
+      "algorithm": "One pinned GSS NumPyCPU reference of author formulas;20iterations+1post,1024/256Blackman,15scontext,fixedrefchannel0,MVDR+BAN,WPEoff. No parameter,codecrate or channel-pair sweep.",
+      "independentNumericalProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-real-meeting-validation\\numpy-numerical-proof.json",
+      "nativeGpuParityMeasured": false,
+      "recognizerInferenceAstUnchanged": true,
+      "newTrainingRuns": 0,
+      "newModelFamilies": 0,
+      "newSpatialCalls": 4,
+      "mainAsrCalls": 20,
+      "extraNoGateAsrCalls": 6,
+      "mainOwnedStageSeconds": {
+        "separation": 143.3577879999939,
+        "inventory": 7.108935399999609,
+        "asr": 319.9678211999999
+      },
+      "extraNoGateAsrOwnedSeconds": 205.7813900000183,
+      "timingScope": "Sum of this owned finite experiment process families, all compared conditions included; excludes manual analysis/source download/preparation/publishing. Not stop-recording-to-summary latency or a whole-meeting speed claim.",
+      "cpuPercentLimit": 5,
+      "privateCommitLimitBytes": 2147483648,
+      "maximumRecordedJobPrivateBytes": 1768947712,
+      "gpuUtilizationHardCapped": false,
+      "currentOwnedWorkers": [],
+      "resourcePauseResumeNotExercisedInThisRun": true
+    },
+    "limitations": [
+      "Fixed midpoint-utterance clip edit counts retain/report edge-straddling references; not strict full-recordingCER or pure-overlapCER.",
+      "Two microphones from a larger public array do not verify the close recorder ports, synchronization/calibration or encoded transport.",
+      "New mono_activity is an activity-only comparison, not state-of-the-art single-mic separation;oldPS4 is reported separately.",
+      "The research common hard activity gate exposes false-negative limitations and is not adopted as a product rule.",
+      "Host stereo codec result is limited to this frozen setting; recording capacity, battery and microphone phase preservation still require product engineering.",
+      "No phone/card installation, customer hearing trial, final-holdout opening or sale qualification occurred."
+    ],
+    "next": "继续原RM-OVERLAP：保留这版原始双路GSS作为研究候选，固定算法/ASR/编码设置，到另一个房间或另一场未用于本轮决策的真实多人会议复验，重点单列弱声、短插话和3+重叠的逐人漏话与串话。说话人活动的漏判/误判须独立评分，不能用硬静音或逐人挑文字掩盖；本次取消硬门控支路已拒绝，不再追加同片段参数/模型试跑。当前实板长录结束并释放后才验证实卡双路原音与解码相位，再按真实收益确定存储/传输/双端重构。严格<5%、纪要事实、双端实卡及售卖门继续OPEN。",
+    "productDefaultChanged": false,
+    "newHardwareAccess": false,
+    "finalHoldoutOpened": false,
+    "strictWordErrorGatePassed": false,
+    "saleGatePassed": false,
+    "qualityQualified": false
+  },
+  "noHardGateControl": {
+    "run": {
+      "state": "COMPLETE_DUAL_MIC_SPATIAL_CODEC_SCREEN_REVIEW_REQUIRED",
+      "pid": 24740,
+      "startedAt": "2026-11-08T09:38:33+08:00",
+      "priorAttemptReceipts": [],
+      "results": [
+        {
+          "stage": "asr",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 205.7813900000183,
+          "privatePeakBytes": 1246662656
+        }
+      ],
+      "automaticModelFailureRetries": 0,
+      "qualityQualified": false,
+      "stage": "asr",
+      "finishedAt": "2026-11-08T09:41:59+08:00"
+    },
+    "review": {
+      "at": "2026-11-08T09:42:38+08:00",
+      "state": "REMOVE_HARD_GATE_REJECTED_ADDITIONAL_SPEECH_ERRORS",
+      "sourceMainReviewSha256": "e4d8f1b4049b0e138789ec5b0c3a5b7eda72309dd9d614242bcf7c8500699c0d",
+      "scope": "One causal removal of post-GSS predicted waveform zeroing on all6rawdual lanes. No fresh separation, no reference-guided audio, no per-person winner selection.",
+      "totals": {
+        "gated": {
+          "referenceCharacters": 256,
+          "hypothesisCharacters": 268,
+          "substitute": 18,
+          "delete": 21,
+          "insert": 33,
+          "total": 72
+        },
+        "ungated": {
+          "referenceCharacters": 256,
+          "hypothesisCharacters": 708,
+          "substitute": 29,
+          "delete": 4,
+          "insert": 456,
+          "total": 489
+        }
+      },
+      "perPerson": [
+        {
+          "case": "L_R003S01C02-root-000012",
+          "rootIndex": 12,
+          "referencePerson": "002-F",
+          "gated": {
+            "referenceCharacters": 104,
+            "hypothesisCharacters": 103,
+            "substitute": 6,
+            "delete": 2,
+            "insert": 1,
+            "total": 9
+          },
+          "ungated": {
+            "referenceCharacters": 104,
+            "hypothesisCharacters": 134,
+            "substitute": 9,
+            "delete": 1,
+            "insert": 31,
+            "total": 41
+          },
+          "ungatedText": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂业主给吵在大门口，不让他进。不用那个，业人家是业主，你凭什么让人家进？那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？人家一个车位就是说，咱们这个车位。",
+          "gatedText": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。咱物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂业主给吵在大门口，你不让他进。那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？他。",
+          "totalEditDelta": 32,
+          "deletionDelta": -1,
+          "insertionDelta": 30
+        },
+        {
+          "case": "L_R003S01C02-root-000012",
+          "rootIndex": 12,
+          "referencePerson": "005-M",
+          "gated": {
+            "referenceCharacters": 24,
+            "hypothesisCharacters": 44,
+            "substitute": 2,
+            "delete": 1,
+            "insert": 21,
+            "total": 24
+          },
+          "ungated": {
+            "referenceCharacters": 24,
+            "hypothesisCharacters": 134,
+            "substitute": 3,
+            "delete": 0,
+            "insert": 110,
+            "total": 113
+          },
+          "ungatedText": "但你都进来了，你就没地儿停放了，这就会堵住别人的车了。这物业有的也是那个业主也是难逃的不行。咱物业有时候这个问题，这工作也不是特别好做。业主骂，业主给吵在大门口，不让让进。不用那个一，人家是业主，你凭什么不让人家进？那他没有车位呀，他就一个车位，他加两辆车、三辆车咋整？人家一个车位就是说，咱们这个车位。",
+          "gatedText": "那个不用，不用那个，一人家是业主，你凭什么让人家进？那他们有车位呀。人家一个车位，就是说，咱们这个车位。",
+          "totalEditDelta": 89,
+          "deletionDelta": -1,
+          "insertionDelta": 89
+        },
+        {
+          "case": "L_R003S01C02-root-000027",
+          "rootIndex": 27,
+          "referencePerson": "002-F",
+          "gated": {
+            "referenceCharacters": 19,
+            "hypothesisCharacters": 5,
+            "substitute": 1,
+            "delete": 14,
+            "insert": 0,
+            "total": 15
+          },
+          "ungated": {
+            "referenceCharacters": 19,
+            "hypothesisCharacters": 108,
+            "substitute": 15,
+            "delete": 0,
+            "insert": 89,
+            "total": 104
+          },
+          "ungatedText": "咱们自己想，咱们自己也得有人啊，对吧？你不能，嗯，你种可以找，是吧？种完之后管理呢？你剪枝儿，呃修剪啊，剪树枝，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+          "gatedText": "对，该该签的。",
+          "totalEditDelta": 89,
+          "deletionDelta": -14,
+          "insertionDelta": 89
+        },
+        {
+          "case": "L_R003S01C02-root-000027",
+          "rootIndex": 27,
+          "referencePerson": "004-M",
+          "gated": {
+            "referenceCharacters": 63,
+            "hypothesisCharacters": 65,
+            "substitute": 0,
+            "delete": 1,
+            "insert": 3,
+            "total": 4
+          },
+          "ungated": {
+            "referenceCharacters": 63,
+            "hypothesisCharacters": 116,
+            "substitute": 0,
+            "delete": 1,
+            "insert": 54,
+            "total": 55
+          },
+          "ungatedText": "咱们寻找一下，咱们自己得有人，知道吧？能不能不是，能能种可以找，是吧？种完之后管理，嗯，接着，再再联系。这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+          "gatedText": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+          "totalEditDelta": 51,
+          "deletionDelta": 0,
+          "insertionDelta": 51
+        },
+        {
+          "case": "L_R003S01C02-root-000027",
+          "rootIndex": 27,
+          "referencePerson": "003-F",
+          "gated": {
+            "referenceCharacters": 3,
+            "hypothesisCharacters": 2,
+            "substitute": 1,
+            "delete": 1,
+            "insert": 0,
+            "total": 2
+          },
+          "ungated": {
+            "referenceCharacters": 3,
+            "hypothesisCharacters": 110,
+            "substitute": 0,
+            "delete": 0,
+            "insert": 107,
+            "total": 107
+          },
+          "ungatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，是吧？种完之后管理呢？你兼职儿，这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。嗯，但是咱们这个绿化。",
+          "gatedText": "哦，对。",
+          "totalEditDelta": 105,
+          "deletionDelta": -1,
+          "insertionDelta": 107
+        },
+        {
+          "case": "L_R003S01C02-root-000027",
+          "rootIndex": 27,
+          "referencePerson": "005-M",
+          "gated": {
+            "referenceCharacters": 43,
+            "hypothesisCharacters": 49,
+            "substitute": 8,
+            "delete": 2,
+            "insert": 8,
+            "total": 18
+          },
+          "ungated": {
+            "referenceCharacters": 43,
+            "hypothesisCharacters": 106,
+            "substitute": 2,
+            "delete": 2,
+            "insert": 65,
+            "total": 69
+          },
+          "ungatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，对吧？种完之后啊，管理呢，你剪枝儿，呃，修剪、施肥、加水，对吧？嗯。咱把绿化部分这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些个你都是得得到奖励的。嗯，但是咱们这个绿化。",
+          "gatedText": "咱们自己，咱们自己也得有人，对吧？你不能，嗯，你种可以找，对吧？种完之后啊，管理呢？你剪枝，嗯。应该去。嗯，但是咱们这个树啊。",
+          "totalEditDelta": 51,
+          "deletionDelta": 0,
+          "insertionDelta": 57
+        }
+      ],
+      "allSixPeopleScored": true,
+      "newGssCalls": 0,
+      "newAsrCalls": 6,
+      "asrOwnedSeconds": 205.7813900000183,
+      "newModelsOrTraining": 0,
+      "generatedTextFiltered": false,
+      "originalMainComparisonChanged": false,
+      "notProductGatePassed": true,
+      "qualityQualified": false
+    },
+    "preparation": {
+      "state": "ONE_CAUSAL_REMOVE_POST_GSS_HARD_GATE_CONTROL_FROZEN",
+      "sourceBaseProtocolSha256": "fef87869c0ed6aebb54b6b397e97bf2511d180f010c57c5b18e8b77880f6ae36",
+      "derivedRows": 6,
+      "newGssCalls": 0,
+      "newModelFamilies": 0,
+      "sameInferenceAst": true,
+      "sameOriginalFloatOutputAndGain": true,
+      "qualityQualified": false
+    }
+  },
+  "productDefaultChanged": false,
+  "newHardwareAccess": false,
+  "newTrainingRuns": 0,
+  "qualityQualified": false,
+  "state": "REAL_DUAL_INPUT_LOCAL_GAIN_CODEC_LOSS_AND_ACTIVITY_LIMIT_IDENTIFIED",
+  "next": "继续原RM-OVERLAP：保留这版原始双路GSS作为研究候选，固定算法/ASR/编码设置，到另一个房间或另一场未用于本轮决策的真实多人会议复验，重点单列弱声、短插话和3+重叠的逐人漏话与串话。说话人活动的漏判/误判须独立评分，不能用硬静音或逐人挑文字掩盖；本次取消硬门控支路已拒绝，不再追加同片段参数/模型试跑。当前实板长录结束并释放后才验证实卡双路原音与解码相位，再按真实收益确定存储/传输/双端重构。严格<5%、纪要事实、双端实卡及售卖门继续OPEN。",
+  "sourceAndEvidenceCommit": "753abe67654f464b5c59dea24251ffd57a526e73",
+  "remoteReadbackConfirmed": true
+}
