@@ -169,9 +169,10 @@ final class RangeConsume {
     }
     Session open(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
         long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
-        if(used<8&&!RangeCheckpoint.exists(directory,d)){
-            // The established whole-consume path can erase one aligned32K
-            // block after this short original is durable. Preserve existing
+        if(used<16&&!RangeCheckpoint.exists(directory,d)){
+            // Less than two blocks leaves too little radio work to hide a
+            // separate durable range transaction. Whole consume can coalesce
+            // the final erase even when the reservation is unaligned. Preserve existing
             // partial proofs: those must still reconcile their exact frontier.
             RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();
             return null;

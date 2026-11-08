@@ -62,7 +62,7 @@ public final class RangeConsumeClientJvmTest {
             RangeCheckpoint saved=RangeCheckpoint.read(directory,device.d);
             check(saved.nonce==RecorderWire.u32(p,44)&&!saved.confirmed);
             int first=u16(p,48),end=u16(p,50),begin=first==0?0:(first*16-1)*248;
-            if(requests==1&&device.bytes.length==40000&&device.end==0)check(first==0&&end==8);
+            if(requests==1&&device.bytes.length==63000&&device.end==0)check(first==0&&end==8);
             int limit=Math.min(device.bytes.length,(end*16-1)*248);
             try{check(Arrays.equals(MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(device.bytes,begin,limit)),Arrays.copyOfRange(p,56,88)));}
             catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
@@ -109,7 +109,7 @@ public final class RangeConsumeClientJvmTest {
     }
     public static void main(String[] args)throws Exception {
         for(int i=0;i<RangeCheckpointJvmTest.data.length;i++)RangeCheckpointJvmTest.data[i]=(byte)(i*37+13);
-        byte[] data=new byte[40000];for(int i=0;i<data.length;i++)data[i]=(byte)(i*37+13);
+        byte[] data=new byte[63000];for(int i=0;i<data.length;i++)data[i]=(byte)(i*37+13);
         byte[] wire=RangeCheckpointJvmTest.descriptor().wireBytes();put(wire,48,data.length,4);
         put(wire,52,RecorderWire.crc(data,0,data.length),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(data),0,wire,56,32);
         put(wire,108,RecorderWire.crc(wire,0,108),4);RecorderWire.Descriptor d=RecorderWire.Descriptor.decode(wire);
@@ -127,7 +127,17 @@ public final class RangeConsumeClientJvmTest {
         check(failed.requests==1&&RangeCheckpoint.exists(dir,d)&&!RangeCheckpoint.read(dir,d).confirmed);
         Link resumed=new Link(device,dir,false,false,false);Path file=download(resumed,d,true);
         check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==8&&resumed.requests==0);
-        // A new short original keeps the existing single-block whole path;
+        // Fresh tails shorter than two physical blocks use one terminal whole
+        // transaction, including the actual43442B field failure geometry.
+        for(int bytes:new int[]{32000,40000,43442,59000}){
+            byte[] medium=Arrays.copyOf(data,bytes),w=d.wireBytes();put(w,48,bytes,4);
+            put(w,52,RecorderWire.crc(medium,0,bytes),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(medium),0,w,56,32);
+            put(w,108,RecorderWire.crc(w,0,108),4);RecorderWire.Descriptor md=RecorderWire.Descriptor.decode(w);
+            Path mediumDir=Files.createTempDirectory("companion-short-two-block-");Device mediumDevice=new Device(md,medium);
+            Link mediumLink=new Link(mediumDevice,mediumDir,false,false,false);mediumLink.expectRange=false;
+            check(Arrays.equals(Files.readAllBytes(download(mediumLink,md,true)),medium)&&mediumLink.queries==0&&mediumLink.requests==0);
+        }
+        // A new short original keeps the existing whole path;
         // an old partially reclaimed short original must reconcile its proof.
         RecorderWire.Descriptor shortD=RangeCheckpointJvmTest.descriptor();byte[] shortData=RangeCheckpointJvmTest.data;
         Path shortDir=Files.createTempDirectory("companion-short-whole-");Device shortDevice=new Device(shortD,shortData);
