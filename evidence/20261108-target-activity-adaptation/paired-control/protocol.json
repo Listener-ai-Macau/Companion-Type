@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-08T08:36:03+08:00",
+  "state": "ONE_SAME_MIXTURE_ALL_TARGETS_SUPERVISION_CONTROL_FROZEN",
+  "workerSourceSha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\target_activity_paired_worker_20261108.py",
+      "sha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\target_activity_native_20261108.py",
+      "sha256": "a495bb6dd66fc0a03051960bf586500ad4ea05d869226f8a5ba1b42d3db89018"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\target_activity_adapter_20261108.py",
+      "sha256": "f0fd4eef4fb61fc84f11d955b980577b5f029741cd8030b92df25c590a83d5cb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\prepared-audio.json",
+      "sha256": "66e025e09c5d4a9d76d48f274a3a1bc0699f356607db94e1a9b59aea459dda6e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\training-inputs-only.json",
+      "sha256": "19a5133762c6770753f6f5da7df02667ac8d4844daf887588c3a9e458b0e14a7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\supervised-enrollment-plan.json",
+      "sha256": "dd64b1453fd5fedccfbd0a94be450019feedfe3cbe9d68d1085776c1b40d61f7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\training-labels.json",
+      "sha256": "c3908046d19ee86c4744b1a8b5ba6b89eb50eed66202183595765502602c897c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\data-selection.json",
+      "sha256": "07f52e230c5685bb777981b011e9b931df0e1d5cacbfff7a0feea1123566ea66"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\paired-control\\paired-training-labels.json",
+      "sha256": "2e367a5919cf3dbc22cc16df071d36ffc8079238920f96164fed5ecdb66bf550"
+    }
+  ],
+  "base": "Same pinned nomo-pvad release-1.1/native ERes2NetV2 and verified GPU author features as20261107. No new model family, ASR or separation changes.",
+  "trainable": "Bypass only native forward no_grad decorator; freeze exact acoustic backbone (including BN statistics) and independent speaker encoder. Train only existing conditioning/projection/temporal/activity head.",
+  "data": "64supervised examples from2new official train_L sessions/room tags;32examples from a separate train_S room for adaptation validation. Original microphone0,4s real excerpts and disjoint supervised enrollment. None of prior L/S/AMI or final holdout is training data. Physical-speaker independence is not established.",
+  "seed": 20261108,
+  "epochs": 3,
+  "batchSize": 1,
+  "gradientAccumulation": 4,
+  "learningRate": 0.0001,
+  "weightDecay": 0.01,
+  "gradientClipNorm": 1.0,
+  "optimizer": "AdamW",
+  "loss": "2-class cross_entropy on valid native160ms cells; target1 iff any lexical target speech in the cell. No class/cutoff/window search.",
+  "cachedBaseProbabilityTolerance": 1e-05,
+  "featureStage": "Cache109unique backbone feature sets and18new matched profile vectors; reuse old15automatic evaluation vectors only after encoder/feature/audio hash checks. Require parity with all67frozen base probabilities before training.",
+  "probe": "On first new training example, native decorated/unwrapped/cached logits+mask must be exactly equal, head gradients finite/nonzero, a probe optimizer step changes only head, frozen backbone/BN/speaker weights unchanged. Probe step never initializes the real run.",
+  "checkpointSelection": "Lowest cross_entropy on separate train_S validation room among unadapted baseline and3epochs. Never use prior13deployment controls for checkpoint selection, hyperparameters or cutoff tuning. No separate-room loss gain means retain base and stop before deployment evaluation.",
+  "evaluation": "One-shot unchanged13real development clips/67anonymous target queries, original automatic profiles,0.7 threshold and160ms grid. Same whole-meeting fixed reference mapping and original rejection criteria. Compare adapted vs unadapted candidate and existing NativeFP16 activity baseline separately.",
+  "scope": "Small adaptation/resource/validation feasibility, not generalization proof. No original text/audio/default changes. Activity metrics are not wordCER; strict<5%, complex content/ordinary nonregression/full cross-domain/final holdout/minutes/Windows-Android/card/sale gates stay open.",
+  "qualityQualified": false,
+  "finalHoldoutOpened": false,
+  "causalChange": "Only supervised training condition coverage changes: every one of the same64training audio clips is queried with all7same-meeting profiles and true per-profile labels, rather than a different mixture for each sampled target condition. CE is averaged over profiles/time;64clip groups/epoch and48optimizer updates remain. Validation remains the exact same32single-target examples.",
+  "unchanged": "Same base checkpoint, frozen backbone/speaker encoder, existing conditioning/activity head, initialization seed, learningRate,weightDecay,gradientAccumulation,epochs3,loss,clip norm, fixed0.7, old13controls and reference scoring. Not warm-started from the rejected adapted checkpoint.",
+  "stop": "One causal control only after the first adaptation becomes more speech-active but more falsely attributed. If this does not improve the independent validation/deployment criteria, stop this pilot family rather than extend epochs or tune the cutoff.",
+  "cacheReuse": {
+    "sourceProtocolSha256": "98773d74cf5c3cc1ab22cbdcfbe9e5129e0564a036b80515d08e6a7cd470dc5d",
+    "featureManifestSha256": "5410a1ff9e0a7b381444f930995ffa6944e424bb4bedb0a55d05c61ed04d9ac8",
+    "vectorSourceSha256": "1715c9f8d3c1efb3aa4638e04e387e4106c4a338b66d38aa0236c6323a6000d7",
+    "newBackboneOrEnrollmentCalls": 0
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "protocolSha256": "c1d85077a34ef0f4d5d622415b2382901c8e8b4cbfcb40a0aae9da5f0a17b114",
+    "workerSourceSha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2"
+  },
+  "state": "PASS_REAL_TRAINING_GRADIENT_FROZEN_BACKBONE_AND_EXACT_EVAL",
+  "example": "20200707_L_R001S08C01-case-000",
+  "sourceRole": "train",
+  "sourceIsIndependentFromOldDevelopmentMeetings": true,
+  "nativeDecoratedUnwrappedAndCachedEvalLogitsExactlyEqual": true,
+  "trainableParameters": 4236674,
+  "frozenBackboneParameters": 13927280,
+  "finiteHeadGradientNormBeforeClipping": 4.093277454376221,
+  "lossBeforeProbeStep": 0.1922084391117096,
+  "headValuesChanged": true,
+  "backboneValuesAndBuffersUnchanged": true,
+  "speakerEncoderUnchanged": true,
+  "probeStepNotUsedAsTrainingInitialization": true,
+  "cudaPeakAllocatedBytes": 282497024,
+  "accuracyImprovementClaimed": false,
+  "limits": {
+    "pid": 17060,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1379151872,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

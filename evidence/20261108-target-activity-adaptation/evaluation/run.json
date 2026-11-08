@@ -1,0 +1,44 @@
+{
+  "state": "COMPLETE_SHORT_ACTIVITY_CANDIDATE_REVIEW_REQUIRED",
+  "pid": 19312,
+  "startedAt": "2026-11-08T08:27:48+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 9.142489100020612,
+      "privatePeakBytes": 332111872
+    },
+    {
+      "stage": "features",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 157.18230679997941,
+      "privatePeakBytes": 1154736128
+    },
+    {
+      "stage": "probe",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 21.317009299993515,
+      "privatePeakBytes": 1375940608
+    },
+    {
+      "stage": "train",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 66.90822959999787,
+      "privatePeakBytes": 1362907136
+    },
+    {
+      "stage": "evaluate",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 10.1637422000058,
+      "privatePeakBytes": 983969792
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "lastAvailableBytes": 4948246528,
+  "finishedAt": "2026-11-08T08:32:13+08:00",
+  "adapterReceiptBridgeOnly": true,
+  "nativeRunState": "COMPLETE_ADAPTATION_EVALUATION_REVIEW_REQUIRED"
+}

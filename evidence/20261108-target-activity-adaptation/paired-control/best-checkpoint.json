@@ -1,0 +1,17 @@
+{
+  "epoch": 3,
+  "trainingLoss": 0.31382151623256505,
+  "validationLoss": 0.6288246421515942,
+  "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control\\checkpoints\\head-epoch-03.pt",
+  "checkpointSha256": "a3c1fc91170eb28514772ef306990fadb51a910b15a97ccb2603e41c291a25b9",
+  "binding": {
+    "protocolSha256": "c1d85077a34ef0f4d5d622415b2382901c8e8b4cbfcb40a0aae9da5f0a17b114",
+    "workerSourceSha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2"
+  },
+  "baselineValidationLoss": 0.7593312457203865,
+  "selectedOnlyBySeparateRoomLoss": true,
+  "headOnly": true,
+  "backboneUnchanged": true,
+  "adaptedCheckpointImprovesSeparateRoomLoss": true,
+  "qualityQualified": false
+}

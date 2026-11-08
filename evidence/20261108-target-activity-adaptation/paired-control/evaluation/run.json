@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_SHORT_ACTIVITY_CANDIDATE_REVIEW_REQUIRED",
+  "pid": 11336,
+  "startedAt": "2026-11-08T08:39:44+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\paired-control\\attempt-0001.json"
+  ],
+  "results": [
+    {
+      "stage": "train",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 74.15040060001775,
+      "privatePeakBytes": 1375444992
+    },
+    {
+      "stage": "evaluate",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 13.193382199999178,
+      "privatePeakBytes": 985051136
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "lastAvailableBytes": 2907090944,
+  "finishedAt": "2026-11-08T08:41:11+08:00",
+  "adapterReceiptBridgeOnly": true,
+  "nativeRunState": "COMPLETE_ADAPTATION_EVALUATION_REVIEW_REQUIRED"
+}

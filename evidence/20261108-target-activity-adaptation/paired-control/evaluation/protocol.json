@@ -1,0 +1,17 @@
+{
+  "decisionThreshold": 0.7,
+  "shortRejectionCriteria": {
+    "everyMeetingPositive3sWindowRecallMin": 0.95,
+    "everyMeetingAbsent3sWindowFalseAcceptanceMax": 0.05,
+    "windowRule": "3s windows/1.5s-hop. Any lexical reference target speech makes positive; prediction positive iff any frozen0.7 output interval intersects the window. Same predicate on existing baseline activity. Correlated diagnostics, not CER/DER acceptance.",
+    "ordinaryPositiveWindowRecallMustNotDecreaseFromBaseline": true,
+    "shortReferenceTurnEventRecallMustNotDecreaseWithinEachMeeting": true,
+    "aggregateWrongActivitySecondsMustImproveFromBaseline": true,
+    "allConditionsMustHoldBeforeFullExpansion": true,
+    "scope": "Quick engineering falsification only.95/5 does not imply final wordCER<5%; native time-grid/corpus short-span conventions disclosed."
+  },
+  "originalControlProtocolSha256": "b3cf5664fd48b7ee737c13411f2b52097a2cde73da763cc3bb46cc9fbccf0fbb",
+  "adaptationProtocolSha256": "c1d85077a34ef0f4d5d622415b2382901c8e8b4cbfcb40a0aae9da5f0a17b114",
+  "source": "Identical controls/rejection criteria, head changes only; no training/checkpoint choice from these labels.",
+  "pairedTrainingControl": true
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "20200707_L_R001S08C01-profile-001-M",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "001-M",
+    "startSample": 1546459,
+    "endSample": 1706459,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-002-M",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "002-M",
+    "startSample": 22867906,
+    "endSample": 23027906,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-003-M",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "003-M",
+    "startSample": 16539210,
+    "endSample": 16699210,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-004-M",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "004-M",
+    "startSample": 14816339,
+    "endSample": 14944979,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-005-F",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "005-F",
+    "startSample": 7603572,
+    "endSample": 7763572,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-006-F",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "006-F",
+    "startSample": 15302019,
+    "endSample": 15462019,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200707_L_R001S08C01-profile-007-M",
+    "meeting": "20200707_L_R001S08C01",
+    "sourceRole": "train",
+    "person": "007-M",
+    "startSample": 8201893,
+    "endSample": 8361893,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-001-M",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "001-M",
+    "startSample": 30114752,
+    "endSample": 30274752,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-002-M",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "002-M",
+    "startSample": 15459480,
+    "endSample": 15619480,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-003-M",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "003-M",
+    "startSample": 29634551,
+    "endSample": 29794551,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-004-M",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "004-M",
+    "startSample": 19934212,
+    "endSample": 20094212,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-005-F",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "005-F",
+    "startSample": 17650681,
+    "endSample": 17810681,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-006-F",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "006-F",
+    "startSample": 26572944,
+    "endSample": 26732944,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200708_L_R002S01C01-profile-007-F",
+    "meeting": "20200708_L_R002S01C01",
+    "sourceRole": "train",
+    "person": "007-F",
+    "startSample": 8233864,
+    "endSample": 8393864,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200623_S_R001S01C01-profile-001-M",
+    "meeting": "20200623_S_R001S01C01",
+    "sourceRole": "validation",
+    "person": "001-M",
+    "startSample": 11770303,
+    "endSample": 11930303,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200623_S_R001S01C01-profile-003-M",
+    "meeting": "20200623_S_R001S01C01",
+    "sourceRole": "validation",
+    "person": "003-M",
+    "startSample": 19619944,
+    "endSample": 19779944,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200623_S_R001S01C01-profile-004-M",
+    "meeting": "20200623_S_R001S01C01",
+    "sourceRole": "validation",
+    "person": "004-M",
+    "startSample": 7750842,
+    "endSample": 7910842,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  },
+  {
+    "id": "20200623_S_R001S01C01-profile-006-M",
+    "meeting": "20200623_S_R001S01C01",
+    "sourceRole": "validation",
+    "person": "006-M",
+    "startSample": 806121,
+    "endSample": 966121,
+    "sampleRate": 16000,
+    "selectedFromSupervisionForTrainingOrAdaptationValidationOnly": true
+  }
+]

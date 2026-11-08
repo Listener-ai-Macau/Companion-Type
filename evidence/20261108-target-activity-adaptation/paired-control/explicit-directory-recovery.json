@@ -1,0 +1,6 @@
+{
+  "at": "2026-11-08T08:39:44+08:00",
+  "reason": "Create the omitted cache parent before the first training update. No model/labels/seed/hyperparameters/threshold changes; no automatic quality-failure retry.",
+  "failedTrainingUpdates": 0,
+  "createdDirectory": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control"
+}

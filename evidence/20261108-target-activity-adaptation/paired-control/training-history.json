@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "protocolSha256": "c1d85077a34ef0f4d5d622415b2382901c8e8b4cbfcb40a0aae9da5f0a17b114",
+    "workerSourceSha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2"
+  },
+  "epochs": [
+    {
+      "epoch": 0,
+      "validationLoss": 0.7593312457203865,
+      "checkpoint": null
+    },
+    {
+      "epoch": 1,
+      "trainingLoss": 0.39739240892231464,
+      "validationLoss": 0.7449607726931572,
+      "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control\\checkpoints\\head-epoch-01.pt",
+      "checkpointSha256": "fdd6fdb208fa0d160c4346701752490bfcbdb49022ff568333fd5978ac026a26"
+    },
+    {
+      "epoch": 2,
+      "trainingLoss": 0.334878294961527,
+      "validationLoss": 0.6493449460715055,
+      "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control\\checkpoints\\head-epoch-02.pt",
+      "checkpointSha256": "efcc33101107e89213b846226b4019b80ec906e6b9f6332173713cdfef920f54"
+    },
+    {
+      "epoch": 3,
+      "trainingLoss": 0.31382151623256505,
+      "validationLoss": 0.6288246421515942,
+      "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control\\checkpoints\\head-epoch-03.pt",
+      "checkpointSha256": "a3c1fc91170eb28514772ef306990fadb51a910b15a97ccb2603e41c291a25b9"
+    }
+  ],
+  "checkpointSelectionUsesOnlySeparateRoomValidationLoss": true,
+  "old13ControlsNeverUsedForCheckpointSelection": true
+}

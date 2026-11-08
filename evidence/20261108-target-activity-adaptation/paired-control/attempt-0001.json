@@ -1,0 +1,30 @@
+{
+  "state": "FAILED_ADAPTATION_STAGE_RETAINED_NO_RETRY",
+  "pid": 25240,
+  "startedAt": "2026-11-08T08:36:05+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 6.086399399995571,
+      "privatePeakBytes": 345206784
+    },
+    {
+      "stage": "probe",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 19.30977670001448,
+      "privatePeakBytes": 1354911744
+    },
+    {
+      "stage": "train",
+      "exitCode": 1,
+      "wholeProcessFamilySeconds": 9.131043800007319,
+      "privatePeakBytes": 660959232
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "lastAvailableBytes": 4690849792,
+  "finishedAt": "2026-11-08T08:36:39+08:00"
+}

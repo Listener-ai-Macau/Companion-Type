@@ -1,0 +1,226 @@
+{
+  "at": "2026-11-08T08:44:10+08:00",
+  "state": "BOUNDED_REAL_MEETING_HEAD_ADAPTATION_REJECTED_BASELINE_RETAINED",
+  "ownerQuote": "需要你向着正确方向推进",
+  "actualChange": "Implemented a trainable, byte-verified frozen-backbone adaptation path on the existing released target-activity model; actually trained two finite3epoch controls on additional real meetings. No new ASR/separation/backend default.",
+  "decision": "Neither adaptation meets the unchanged cross-meeting activity criteria. Retain the existing NativeFP16 research baseline; do not install either head, expand it to full ASR/separation, add epochs, sweep cutoffs or call loss reduction a product gain.",
+  "comparison": {
+    "unit": "Sum of target-wise missed plus false activity seconds over the same13original30s clips/67queries. Simultaneous targets are counted separately. Not wordCER, standardDER, final<5% or minutes accuracy.",
+    "nativeBaseline": 76.20408885070653,
+    "unadaptedTargetActivity": 254.60377532080594,
+    "initialAdaptation": 293.5087138614628,
+    "sameMixtureAllTargetsAdaptation": 219.4487533310498,
+    "pairedReductionVersusUnadapted": 0.13807737903909745,
+    "pairedReductionVersusFirstAdaptation": 0.2523262752783878,
+    "pairedStillWorseThanNativeBaseline": true
+  },
+  "trials": [
+    {
+      "trial": "initial",
+      "state": "ADAPTED_ACTIVITY_HEAD_REJECTED_BEFORE_FULL_EXPANSION",
+      "protocolSha256": "98773d74cf5c3cc1ab22cbdcfbe9e5129e0564a036b80515d08e6a7cd470dc5d",
+      "trainingHistorySha256": "e46a9160d93ca884e05a5952ad751a1a1f910e833e622ac960430b383ae650f1",
+      "evaluationReviewSha256": "9f6be583fde5bf5768fd977fd92fe198fa25f58198335eeabd4ed1386fbeb3d7",
+      "bestHeadSha256": "34ce40f69d762f5b04b7ac98b27204d4975ac3d744c7ab900a18b7d007206e27",
+      "baselineSeparateRoomValidationLoss": 0.7593312457203865,
+      "selectedSeparateRoomValidationLoss": 0.6032654650509357,
+      "relativeValidationLossReduction": 0.20553056594080932,
+      "aggregateWrongActivitySeconds": {
+        "baseline": 76.20408885070653,
+        "candidate": 293.5087138614628,
+        "improved": false
+      },
+      "meetings": [
+        {
+          "meeting": "L_R003S01C02",
+          "positiveWindowRecall": 0.96,
+          "absentWindowFalseAcceptance": 0.36629213483146067,
+          "missedTargetSeconds": 33.15670746069876,
+          "falseTargetSeconds": 91.32078640076477,
+          "shortEventRecall": 0.8461538461538461,
+          "overlapTargetActivityRecall": 0.8289777915862431,
+          "gates": {
+            "positiveWindowRecallAtLeast95": true,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": true,
+            "shortEventRecallNotLower": true
+          }
+        },
+        {
+          "meeting": "S_R004S03C01",
+          "positiveWindowRecall": 0.9789473684210527,
+          "absentWindowFalseAcceptance": 0.1868421052631579,
+          "missedTargetSeconds": 14.361699999998898,
+          "falseTargetSeconds": 35.43952000000009,
+          "shortEventRecall": 1.0,
+          "overlapTargetActivityRecall": null,
+          "gates": {
+            "positiveWindowRecallAtLeast95": true,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": true,
+            "shortEventRecallNotLower": true
+          }
+        },
+        {
+          "meeting": "EN2002a",
+          "positiveWindowRecall": 0.825,
+          "absentWindowFalseAcceptance": 0.6481481481481481,
+          "missedTargetSeconds": 35.84000000000002,
+          "falseTargetSeconds": 83.3900000000003,
+          "shortEventRecall": 0.6111111111111112,
+          "overlapTargetActivityRecall": 0.7029551954242134,
+          "gates": {
+            "positiveWindowRecallAtLeast95": false,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": true,
+            "shortEventRecallNotLower": false
+          }
+        }
+      ],
+      "ownedStageSecondsIncludingKnownInterruptions": {
+        "inventory": 9.142489100020612,
+        "features": 157.18230679997941,
+        "probe": 21.317009299993515,
+        "train": 66.90822959999787,
+        "evaluate": 10.1637422000058
+      },
+      "sampledPrivatePeakBytes": 1375940608
+    },
+    {
+      "trial": "paired-control",
+      "state": "ADAPTED_ACTIVITY_HEAD_REJECTED_BEFORE_FULL_EXPANSION",
+      "protocolSha256": "c1d85077a34ef0f4d5d622415b2382901c8e8b4cbfcb40a0aae9da5f0a17b114",
+      "trainingHistorySha256": "4d9a037a04959731f1e5d6a24ed64332d0f2a2913cdce6008b8daff5eb4e3b71",
+      "evaluationReviewSha256": "ce60af8c59be726c8c63f6544cbc4e61266f4e50850cfb844696fd24dfa0846e",
+      "bestHeadSha256": "a3c1fc91170eb28514772ef306990fadb51a910b15a97ccb2603e41c291a25b9",
+      "baselineSeparateRoomValidationLoss": 0.7593312457203865,
+      "selectedSeparateRoomValidationLoss": 0.6288246421515942,
+      "relativeValidationLossReduction": 0.1718704508794171,
+      "aggregateWrongActivitySeconds": {
+        "baseline": 76.20408885070653,
+        "candidate": 219.4487533310498,
+        "improved": false
+      },
+      "meetings": [
+        {
+          "meeting": "L_R003S01C02",
+          "positiveWindowRecall": 0.752,
+          "absentWindowFalseAcceptance": 0.060674157303370786,
+          "missedTargetSeconds": 66.57833719549168,
+          "falseTargetSeconds": 9.062416135557783,
+          "shortEventRecall": 0.3076923076923077,
+          "overlapTargetActivityRecall": 0.3891774031935087,
+          "gates": {
+            "positiveWindowRecallAtLeast95": false,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": false,
+            "shortEventRecallNotLower": false
+          }
+        },
+        {
+          "meeting": "S_R004S03C01",
+          "positiveWindowRecall": 0.9473684210526315,
+          "absentWindowFalseAcceptance": 0.13157894736842105,
+          "missedTargetSeconds": 22.450089999999022,
+          "falseTargetSeconds": 21.527910000001363,
+          "shortEventRecall": 0.75,
+          "overlapTargetActivityRecall": null,
+          "gates": {
+            "positiveWindowRecallAtLeast95": false,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": true,
+            "shortEventRecallNotLower": true
+          }
+        },
+        {
+          "meeting": "EN2002a",
+          "positiveWindowRecall": 0.6583333333333333,
+          "absentWindowFalseAcceptance": 0.39814814814814814,
+          "missedTargetSeconds": 52.33999999999994,
+          "falseTargetSeconds": 47.49000000000001,
+          "shortEventRecall": 0.3888888888888889,
+          "overlapTargetActivityRecall": 0.46939942802669243,
+          "gates": {
+            "positiveWindowRecallAtLeast95": false,
+            "absentWindowFalseAcceptanceAtMost5": false,
+            "ordinaryPositiveWindowRecallNotLower": true,
+            "shortEventRecallNotLower": false
+          }
+        }
+      ],
+      "ownedStageSecondsIncludingKnownInterruptions": {
+        "inventory": 6.086399399995571,
+        "features": 0,
+        "probe": 19.30977670001448,
+        "train": 83.28144440002507,
+        "evaluate": 13.193382199999178
+      },
+      "sampledPrivatePeakBytes": 1375444992
+    }
+  ],
+  "data": {
+    "trainMeetings": [
+      "20200707_L_R001S08C01",
+      "20200708_L_R002S01C01"
+    ],
+    "validationMeeting": "20200623_S_R001S01C01",
+    "originalMicrophoneChannel": 0,
+    "trainUniqueSeconds": 256,
+    "validationUniqueSeconds": 128,
+    "targetConditionsPerEpochInitial": 64,
+    "targetConditionsPerEpochPaired": 448,
+    "clipGroupsPerEpochBoth": 64,
+    "optimizerUpdatesBoth": 48,
+    "epochsBoth": 3,
+    "trainingAndValidationProfilesAreSupervised": true,
+    "deploymentProfilesRemainAutomaticAndDisjoint": true,
+    "roomSeparatedButPhysicalSpeakerDisjointnessNotEstablished": true,
+    "tinyPilotNotEvidenceThatAllLargerOrDifferentAdaptationMustFail": true,
+    "noSyntheticMixturesOrCleanPerPersonWaveformTargets": true
+  },
+  "interpretation": [
+    "First adaptation increased recall but also false acceptance; lower separate-room cross_entropy did not predict successful attribution on the existing real deployment controls.",
+    "All-profile supervision on identical mixtures reduced erroneous activity versus both target-activity predecessors, but missed short and overlapped target speech and remained worse than the existing native baseline.",
+    "This is evidence against promoting this finite small-head recipe; it does not isolate data scale, acoustic representation, profile quality and architecture as a single proven root cause."
+  ],
+  "resourceAndCost": {
+    "hardCpuPercent": 5,
+    "neuralPrivateCommitLimitBytes": 2147483648,
+    "maximumActualRecordedNeuralJobPeakBytes": 1395474432,
+    "gpuUtilizationHardCapped": false,
+    "otherApplicationsClosed": false,
+    "stageTimesAreNotTranscriptionOrMeetingMinutesLatency": true,
+    "separateAudioPreparationSeconds": 587.2212814000086,
+    "technicalFailureBeforeAnyPairedTrainingUpdate": {
+      "at": "2026-11-08T08:39:44+08:00",
+      "reason": "Create the omitted cache parent before the first training update. No model/labels/seed/hyperparameters/threshold changes; no automatic quality-failure retry.",
+      "failedTrainingUpdates": 0,
+      "createdDirectory": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\paired-control"
+    },
+    "originalTechnicalFailureAndLogsRetained": true
+  },
+  "protection": {
+    "ordinaryAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\derived-onset\\transcripts\\S_R004S03C01\\model-output.json",
+    "ordinaryAsrSha256": "a729925f58bd2fad4d91c6a8072a85b315ac27c9bc448bd06dcba38377e1080f",
+    "ordinaryBypassByteIdentical": true,
+    "newOrdinaryAsrCalls": 0,
+    "newSeparationOrAsrCalls": 0,
+    "cachedNative67ProbabilityMaxError": 0,
+    "pairedOriginalTargetLabelsIdentical": true,
+    "productDefaultChanged": false,
+    "referenceUsedToFilterProductTextOrAudio": false,
+    "finalHoldoutOpened": false,
+    "phoneOrBoardAccessedThisBatch": false,
+    "realCustomerTrialPerformed": false
+  },
+  "remaining": [
+    "ordinary strictCER<5%",
+    "complex per-person words and overlap separation",
+    "cross-room/corpus and final held-out meeting qualification",
+    "factual minutes",
+    "installed Windows/Android/card end-to-end verification",
+    "sale qualification"
+  ],
+  "next": "继续原RM-OVERLAP，先做分离主干的标注辅助上限诊断，保持同一真实会议原音/目标声纹/固定文字评分：仅用参考时间标注提供正确说话人活动，单独报告为oracle研究对照，比较逐人漏字、串话与插入，绝不冒充产品准确率或直接过滤产品文字。只有活动已知正确时仍分不开，才进入有干净源监督的分离主干适配；若正确活动能解决，再针对活动模块准备更广的真实训练与独立验证。当前小头支路停止，不继续同权重/阈值/轮数试跑。普通原字/原音/模型默认及全部<5%/事实/双端实卡/售卖门保留。",
+  "qualityQualified": false
+}

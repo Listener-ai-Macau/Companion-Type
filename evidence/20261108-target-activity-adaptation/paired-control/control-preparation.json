@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-08T08:36:03+08:00",
+  "state": "ONE_SAME_MIXTURE_ALL_TARGETS_SUPERVISION_CONTROL_FROZEN",
+  "clipGroupsPerEpoch": 64,
+  "targetConditionsPerEpoch": 448,
+  "validationExamplesUnchanged": 32,
+  "copiedSourceWorkerSha256": "d029cc70b6c66edf050de26e44b0243c48818c5d966cef540643e18449a394cd",
+  "generatedWorkerSha256": "4f0c943a4eee255cc44fd48a86d4f68414d0d7fe969052e4b8726c2dfcdc46c2",
+  "newAcousticBackboneInference": false,
+  "allOriginalTrialResultsRetained": true,
+  "newModelFamily": false
+}
