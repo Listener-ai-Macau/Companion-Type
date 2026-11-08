@@ -42838,9 +42838,9 @@
             "qualityQualified": false
           },
           "targetActivityAdaptation20261108": {
-            "state": "BOUNDED_REAL_MEETING_HEAD_ADAPTATION_REJECTED_BASELINE_RETAINED",
+            "state": "RUNNING_PS4_ASR",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
-            "sourceAndEvidenceCommit": "f9afab04d9dd585cc8f841862b7573ea904769a3",
+            "sourceAndEvidenceCommit": "1c13e844b883f1a35492836fd889e158d9f7fbdf",
             "newProductQualification": false,
             "currentOrdinaryAndAllOtherGatesRetained": true
           }
@@ -132912,7 +132912,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-08T08:44:23+08:00",
+      "updatedAt": "2026-11-08T08:50:57+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133398,7 +133398,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "734正常观察OFF协作radio空档候选正经普通手机OTA；完成后独立身份/目录/空间核验，真实新录音+完整原音/全WAV/物理回收+原时间门。若P95/峰值无改善或造成积压则撤回，不能降门或把733观测当交付。短录任何长度含物理回收50仍失败、现有单4K擦除37ms反例不变。",
+      "next": "734初轮60秒实板P95/峰/PDM全部在门内但峰仅余11us，不能叫稳定关闭。现普通手机5分钟真实录音中(session尚待STOP精确绑定)，保持原START/STOP/零缓存/完整原音全WAV/物理回收端点，不并发占板；完成后读当前runtime，若稀有峰/故障失败继续定位。任意短长50原失败保留，未宣售卖。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135993,22 +135993,22 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-08T08:44:23+08:00",
-        "state": "NORMAL734_COOPERATIVE_RADIO_WINDOW_PHONE_OTA_RUNNING",
+        "at": "2026-11-08T08:50:57+08:00",
+        "state": "NORMAL734_OWN344_COMPLETE_ORDINARY_PHONE_FIVE_MINUTE_RECORDING",
         "phoneInstalled": "0.1.98",
-        "firmwareInstalled": 66733,
+        "firmwareInstalled": 66734,
         "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
         "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
-        "firmwareSource": "9069a88f6ff686521c9f9c70806b6f4213e7b86e",
+        "firmwareSource": "25e108f976da624979fd7dae9e85c07349790a42",
         "boardLease": true,
         "boardItem": "Companion733现有线程IRQ归因观测",
-        "liveRecording": false,
+        "liveRecording": true,
         "liveReceive": false,
-        "liveUpgrade": true,
+        "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 343,
-        "evidence": "E:/CodexData/Companion/.build-cache/irq733/runtime/after343-metrics.json",
+        "ownLatestSession": 344,
+        "evidence": "E:/CodexData/Companion/.build-cache/radio734/ordinary098/five-minute/job.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": 66734,
         "candidateSourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
@@ -139005,7 +139005,7 @@
       },
       "radioWindow734": {
         "at": "2026-11-08T08:44:23+08:00",
-        "state": "COMPILED_HOST_POLICY_PASS_NOT_PHYSICAL_TIMING_QUALIFIED",
+        "state": "ONE_NORMAL_60S_SAMPLE_TIMING_ALL_WITHIN_GATES_PHONE300S_IN_PROGRESS",
         "sourceCommit": "25e108f976da624979fd7dae9e85c07349790a42",
         "applicationBytes": 408940,
         "staticBytes": 66232,
@@ -139014,7 +139014,30 @@
         "originalBudgets": "PASS",
         "policy": "Current controller next-event microseconds; only actual ready full frames defer for5500us radio gap,6ms bounded wait; failure/missing/overdue uses unchanged DMA gate. Radio IRQ/priority/clock/audio quality untouched. PDM conversion and PCM staging never deferred by new policy.",
         "hostTests": "boundaries, timer wrap, radio busy, missing query, finite fallback",
-        "hardwareTimingQualified": false
+        "hardwareTimingQualified": false,
+        "ownSession344": {
+          "encodeP95UpperUs": 4500,
+          "encodePeakUpperUs": 5989,
+          "pdmPeakUpperUs": 2860,
+          "captureForegroundTickMs": 6,
+          "captureForegroundConservativeUpperMs": 7,
+          "firstPcmUpperSeconds": 1.141,
+          "stopAckSeconds": 0.171,
+          "coldSeconds": 1.7305,
+          "confirmedKiBpsIncludingPhysicalReclaim": 52.573143740008504,
+          "wholeWavDurationMs": 60120,
+          "wholeWavDurationErrorMs": 20,
+          "faults": 0,
+          "stackMinimumFreeBytes": 4608,
+          "coreHz": 61439820,
+          "original34Unchanged": true,
+          "freeBytesAfter": 4608000,
+          "freeSlotsAfter": 17
+        },
+        "wholeTimingIssueClosed": false,
+        "phoneFiveMinuteUiStartReadySeconds": 2.6012681,
+        "phoneUiStartScope": "Includes ordinary phone control path, not substituted for exact secured firmware positive-PCM callback; retain slow UI sample, do not mark start stable closed.",
+        "helperFailure": "before344receive invoked active mode while recorder was already stopped; expected-busy assertion rejected. All original raw operands saved; later idle after344 parsing/full directory validation completed. No firmware fault inferred or raw discarded."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144595,11 +144618,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "需要你向着正确方向推进",
-          "status": "BOUNDED_REAL_MEETING_HEAD_ADAPTATION_REJECTED_BASELINE_RETAINED",
+          "status": "RUNNING_PS4_ASR",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原RM-OVERLAP，先做分离主干的标注辅助上限诊断，保持同一真实会议原音/目标声纹/固定文字评分：仅用参考时间标注提供正确说话人活动，单独报告为oracle研究对照，比较逐人漏字、串话与插入，绝不冒充产品准确率或直接过滤产品文字。只有活动已知正确时仍分不开，才进入有干净源监督的分离主干适配；若正确活动能解决，再针对活动模块准备更广的真实训练与独立验证。当前小头支路停止，不继续同权重/阈值/轮数试跑。普通原字/原音/模型默认及全部<5%/事实/双端实卡/售卖门保留。",
+          "next": "继续原RM-OVERLAP：运行已冻结活动标注辅助的混音/分离音频对照，保持生成和文字评分，不能把oracle研究成绩当作产品成绩。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -169201,11 +169224,11 @@
             }
           },
           "ownerTargetActivityAdaptation20261108": {
-            "at": "2026-11-08T08:44:16+08:00",
+            "at": "2026-11-08T08:51:27+08:00",
             "ownerQuote": "需要你向着正确方向推进",
             "precedingOwnerQuestion": "接下来什么才是正确的效率高得方式去做这个, 已经很久了这个项目 , 有希望做好吗",
-            "phase": "complete",
-            "state": "BOUNDED_REAL_MEETING_HEAD_ADAPTATION_REJECTED_BASELINE_RETAINED",
+            "phase": "checkpoint",
+            "state": "RUNNING_PS4_ASR",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation",
             "sourcePolicy": {
               "at": "2026-11-08T08:10:19+08:00",
@@ -172364,26 +172387,74 @@
             "originalOrdinaryAsrChanged": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
-            "next": "继续原RM-OVERLAP，先做分离主干的标注辅助上限诊断，保持同一真实会议原音/目标声纹/固定文字评分：仅用参考时间标注提供正确说话人活动，单独报告为oracle研究对照，比较逐人漏字、串话与插入，绝不冒充产品准确率或直接过滤产品文字。只有活动已知正确时仍分不开，才进入有干净源监督的分离主干适配；若正确活动能解决，再针对活动模块准备更广的真实训练与独立验证。当前小头支路停止，不继续同权重/阈值/轮数试跑。普通原字/原音/模型默认及全部<5%/事实/双端实卡/售卖门保留。",
-            "retainedUnqualifiedHeadArtifacts": [
-              {
-                "trial": "initial",
-                "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-target-activity-adaptation\\initial-validation-selected-head.bin",
-                "sha256": "34ce40f69d762f5b04b7ac98b27204d4975ac3d744c7ab900a18b7d007206e27",
-                "bytes": 16955931,
-                "baseSourceCheckpointRequired": true,
-                "qualified": false
+            "oracleActivityDiagnostic": {
+              "preparation": {
+                "at": "2026-11-08T08:49:29+08:00",
+                "state": "FROZEN_REFERENCE_WAVEFORM_GATE_CAUSAL_DIAGNOSTIC_NOT_PRODUCT",
+                "protocolSha256": "340243c0ddfc9a60e023a07a01e59e70a748d5f4627779e44990b4c992287565",
+                "sourceOriginalFullWorkerSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c",
+                "generatedWorkerSha256": "d392143e25488af8f28dd73b16db7ea97a94eccd31de0767ae7d8572819ba341",
+                "workerInferAstMatchesOriginal": true,
+                "roots": [
+                  {
+                    "rootIndex": 12,
+                    "referenceTripleSeconds": 0,
+                    "availableSeparatedPeople": [
+                      "002-F",
+                      "005-M"
+                    ],
+                    "actualReferencePeople": [
+                      "002-F",
+                      "005-M"
+                    ],
+                    "rootBoundaryStraddlingReferenceRows": 3
+                  },
+                  {
+                    "rootIndex": 27,
+                    "referenceTripleSeconds": 1.9007788741647573,
+                    "availableSeparatedPeople": [
+                      "002-F",
+                      "004-M",
+                      "003-F",
+                      "005-M"
+                    ],
+                    "actualReferencePeople": [
+                      "002-F",
+                      "003-F",
+                      "004-M",
+                      "005-M"
+                    ],
+                    "rootBoundaryStraddlingReferenceRows": 2
+                  }
+                ],
+                "conditions": 12,
+                "newModels": 0,
+                "finalHoldoutOpened": false,
+                "next": "运行固定六路的双音频门控诊断，原生成函数不变；逐人比较全部文字，不作产品成绩。"
               },
-              {
-                "trial": "paired-control",
-                "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-target-activity-adaptation\\paired-control-validation-selected-head.bin",
-                "sha256": "a3c1fc91170eb28514772ef306990fadb51a910b15a97ccb2603e41c291a25b9",
-                "bytes": 16955931,
-                "baseSourceCheckpointRequired": true,
-                "qualified": false
-              }
-            ],
-            "sourceAndEvidenceCommit": "f9afab04d9dd585cc8f841862b7573ea904769a3",
+              "run": {
+                "state": "RUNNING_PS4_ASR",
+                "pid": 7812,
+                "startedAt": "2026-11-08T08:49:45+08:00",
+                "priorAttemptReceipts": [],
+                "results": [
+                  {
+                    "stage": "inventory",
+                    "exitCode": 0,
+                    "wholeProcessFamilySeconds": 5.065454800002044,
+                    "privatePeakBytes": 344539136
+                  }
+                ],
+                "automaticModelFailureRetries": 0,
+                "qualityQualified": false,
+                "stage": "asr",
+                "activePid": 7964
+              },
+              "review": null
+            },
+            "next": "继续原RM-OVERLAP：运行已冻结活动标注辅助的混音/分离音频对照，保持生成和文字评分，不能把oracle研究成绩当作产品成绩。",
+            "retainedUnqualifiedHeadArtifacts": [],
+            "sourceAndEvidenceCommit": "1c13e844b883f1a35492836fd889e158d9f7fbdf",
             "remoteReadbackConfirmed": true
           }
         },
