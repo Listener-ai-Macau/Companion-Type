@@ -1,0 +1,32 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--004-F--absent_other_speech--0",
+  "sourceExampleId": "20200709_L_R002S01C01--004-F--absent_other_speech--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--004-F--absent_other_speech--0.wav",
+  "audioSha256": "0c8ea588ae90d6c62e7a78c40e6b5a95019855dc287389ca64a9295ab9b7c9d8",
+  "audioSeconds": 1.5153125,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "两遍。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 24245,
+      "text": "两遍。",
+      "generatedIds": [
+        77540,
+        100094,
+        1773,
+        151645
+      ],
+      "rawDecoded": "两遍。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 0.9022331000014674
+    }
+  ]
+}

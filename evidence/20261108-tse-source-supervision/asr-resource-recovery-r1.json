@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-08T14:57:04.048516+08:00",
+  "state": "OBSERVED_SYSTEM_MEMORY_RECOVERY_REUSE_SAME_NATIVE_ASR_PACKETS",
+  "retainedStoppedAttempt": {
+    "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+    "pid": 15880,
+    "startedAt": "2026-11-08T14:45:35+08:00",
+    "worker": "tse_source_supervision_asr_worker_20261108.py",
+    "runId": "source-asr-r1",
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "automaticModelRetries": 0,
+    "privatePeakBytes": 1264918528,
+    "rssPeakBytes": 1255759872,
+    "qualityQualified": false,
+    "availableAtStopBytes": 742789120,
+    "exitCode": 15,
+    "finishedAt": "2026-11-08T14:54:56+08:00",
+    "wholeProcessFamilySeconds": 561.1941342000209
+  },
+  "availableNowBytes": 4714549248,
+  "observedRecoveryBudgetBytes": 2007707648,
+  "windowsLowRamNow": false,
+  "completedCasesDurablyPresent": 129,
+  "sameProtocolAndAudio": true,
+  "qualityQualified": false
+}

@@ -1,0 +1,44 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "266adecddec2e37e52d788cc82deb97218c3d58348bca410b85a709a9565146d",
+  "raw": {
+    "startSample": 0,
+    "endSample": 140001,
+    "text": "是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+    "generatedIds": [
+      20412,
+      3837,
+      100626,
+      105787,
+      99522,
+      3837,
+      35946,
+      102200,
+      104211,
+      101284,
+      104348,
+      71268,
+      60533,
+      100158,
+      99464,
+      3837,
+      100148,
+      105380,
+      106709,
+      100397,
+      99803,
+      1773,
+      151645
+    ],
+    "rawDecoded": "是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.038892000011401
+  },
+  "rawSha256": "0bd0cefab6b1fe21945a30ea921163d19186393c1c60c1c0649e0d0173af0d86"
+}

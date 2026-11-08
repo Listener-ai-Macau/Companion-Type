@@ -1,0 +1,27 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "6bf7b71a4ecf7c6dc6169763cbbb9dfa2b2c5c75d5037887011827dbdbc22d8b",
+  "raw": {
+    "startSample": 0,
+    "endSample": 39281,
+    "text": "零零三总经理。",
+    "generatedIds": [
+      99822,
+      99822,
+      44991,
+      104266,
+      1773,
+      151645
+    ],
+    "rawDecoded": "零零三总经理。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.185381100018276
+  },
+  "rawSha256": "369acbb98511d3d7f823d5a6318ec89a2b689ad92f47f7356d9aa25644f4f80c"
+}

@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "ed8883693a673e34c5a80af4cc9d8398f3fcbe2bbe964e3bf992407deb0bb9ec",
+  "raw": {
+    "startSample": 0,
+    "endSample": 184561,
+    "text": "就是我们建了五家私这个私人车位，咱咱这小区就是这几天这几天工地就是专门要来房。",
+    "generatedIds": [
+      99486,
+      97639,
+      25807,
+      34187,
+      75108,
+      45629,
+      85027,
+      99487,
+      105815,
+      113344,
+      3837,
+      102177,
+      102177,
+      43288,
+      102039,
+      99486,
+      111470,
+      111470,
+      106452,
+      99486,
+      102093,
+      30534,
+      36407,
+      99218,
+      1773,
+      151645
+    ],
+    "rawDecoded": "就是我们建了五家私这个私人车位，咱咱这小区就是这几天这几天工地就是专门要来房。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.561647299997276
+  },
+  "rawSha256": "107dfa0652b0c8d94ae80cb3c612c33da20fcdc4098c6c8a496c8106e35c2209"
+}

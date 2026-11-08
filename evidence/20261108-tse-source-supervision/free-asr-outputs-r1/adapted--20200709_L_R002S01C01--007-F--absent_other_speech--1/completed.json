@@ -1,0 +1,31 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--007-F--absent_other_speech--1",
+  "sourceExampleId": "20200709_L_R002S01C01--007-F--absent_other_speech--1",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--007-F--absent_other_speech--1.wav",
+  "audioSha256": "800fbf97bd38d46ef7d5663fc1a43056d641c588c892ceaefaaf0fcff7e02526",
+  "audioSeconds": 4.6350625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 74161,
+      "text": "嗯。",
+      "generatedIds": [
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 0.565267900004983
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "122d08b28a23fd502a025578508c89341a98f76578cd47480136f3d4384b48c4",
+  "raw": {
+    "startSample": 0,
+    "endSample": 98481,
+    "text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。",
+    "generatedIds": [
+      101260,
+      110281,
+      99431,
+      115058,
+      3837,
+      100667,
+      105032,
+      89012,
+      39165,
+      99431,
+      9370,
+      99728,
+      5373,
+      104440,
+      99653,
+      1773,
+      151645
+    ],
+    "rawDecoded": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.0831266999884974
+  },
+  "rawSha256": "1f8d13eb93860114125792de38fbd4a86e6976ad2cd175f2a3c3d925e73718e9"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--004-F--present_solo--1",
+  "sourceExampleId": "20200709_L_R002S01C01--004-F--present_solo--1",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--004-F--present_solo--1.wav",
+  "audioSha256": "5dc9e277ea18bbbdae3d156b42e95d4d16eee9da711546789b570eb387f99961",
+  "audioSeconds": 9.3200625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "人家来我们这儿呢，是运动、健身，呃，就是为了健康的，所以我们要把这个消毒措施，呃，提到实施。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 149121,
+      "text": "人家来我们这儿呢，是运动、健身，呃，就是为了健康的，所以我们要把这个消毒措施，呃，提到实施。",
+      "generatedIds": [
+        104389,
+        36407,
+        97639,
+        108896,
+        101036,
+        3837,
+        20412,
+        101079,
+        5373,
+        101420,
+        3837,
+        119108,
+        3837,
+        112689,
+        108136,
+        3837,
+        99999,
+        105332,
+        112505,
+        105202,
+        101082,
+        3837,
+        119108,
+        3837,
+        104496,
+        100355,
+        1773,
+        151645
+      ],
+      "rawDecoded": "人家来我们这儿呢，是运动、健身，呃，就是为了健康的，所以我们要把这个消毒措施，呃，提到实施。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.598806099995272
+    }
+  ]
+}

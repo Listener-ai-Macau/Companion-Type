@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "389f8f8a95b3d00646aea9ed34e1d6587d16ab81d6ee1f7fa4b16e49b25c0a8a",
+  "raw": {
+    "startSample": 0,
+    "endSample": 122241,
+    "text": "就是会会每天的话都会看一下车棚的情况，会定期会去检查，所以说目前的话还没有出现这种情况。",
+    "generatedIds": [
+      99486,
+      36993,
+      36993,
+      101922,
+      100363,
+      101938,
+      111320,
+      39953,
+      103031,
+      102072,
+      3837,
+      36993,
+      104406,
+      36993,
+      85336,
+      101071,
+      3837,
+      109304,
+      100004,
+      100363,
+      104485,
+      100347,
+      106334,
+      1773,
+      151645
+    ],
+    "rawDecoded": "就是会会每天的话都会看一下车棚的情况，会定期会去检查，所以说目前的话还没有出现这种情况。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.634159000008367
+  },
+  "rawSha256": "aba61edd9cbd26ff28a76369f890b8812ec088ad34b0cf1735c867276f79c4a0"
+}

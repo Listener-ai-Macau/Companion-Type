@@ -1,0 +1,33 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "cc52b79340ebd24eb522f5922350b3c709cf047f20f13d2b0f5e0e42180ddd36",
+  "raw": {
+    "startSample": 0,
+    "endSample": 67849,
+    "text": "司令家电器城的走路的话，最远。",
+    "generatedIds": [
+      110152,
+      45629,
+      105724,
+      59074,
+      9370,
+      109214,
+      100363,
+      3837,
+      31235,
+      99427,
+      1773,
+      151645
+    ],
+    "rawDecoded": "司令家电器城的走路的话，最远。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.2403618000098504
+  },
+  "rawSha256": "3ab885880217f294496d79a81c224c1e0bd4b13e3e72b048b4e93dc51777eb99"
+}

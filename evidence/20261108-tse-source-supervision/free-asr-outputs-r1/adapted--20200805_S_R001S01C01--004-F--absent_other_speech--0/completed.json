@@ -1,0 +1,31 @@
+{
+  "id": "adapted--20200805_S_R001S01C01--004-F--absent_other_speech--0",
+  "sourceExampleId": "20200805_S_R001S01C01--004-F--absent_other_speech--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200805_S_R001S01C01--004-F--absent_other_speech--0.wav",
+  "audioSha256": "d11ef7b36a0c03d8fd13d5249368ffbe3bf2ab5e7cd5c44c7c528c52f9de3a01",
+  "audioSeconds": 1.7888125,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "两个小时。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 28621,
+      "text": "两个小时。",
+      "generatedIds": [
+        117895,
+        1773,
+        151645
+      ],
+      "rawDecoded": "两个小时。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 0.6698023999924771
+    }
+  ]
+}

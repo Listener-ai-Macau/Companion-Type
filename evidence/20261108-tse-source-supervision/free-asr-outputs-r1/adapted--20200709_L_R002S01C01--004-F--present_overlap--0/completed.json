@@ -1,0 +1,59 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--004-F--present_overlap--0",
+  "sourceExampleId": "20200709_L_R002S01C01--004-F--present_overlap--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--004-F--present_overlap--0.wav",
+  "audioSha256": "32cfb1acf893664ac1313d2d7f9bd53a4599f9d1215be9bc357401cf98c4c4df",
+  "audioSeconds": 9.1300625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "是还还在滴水，你去跟他说，可能半小时不能干，就这样它就会引起。如果客人在我们，我们这个中心。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 146081,
+      "text": "是还还在滴水，你去跟他说，可能半小时不能干，就这样它就会引起。如果客人在我们，我们这个中心。",
+      "generatedIds": [
+        20412,
+        97706,
+        104241,
+        100856,
+        52510,
+        3837,
+        56568,
+        85336,
+        99557,
+        104318,
+        3837,
+        87267,
+        110070,
+        53153,
+        99251,
+        3837,
+        106041,
+        99652,
+        103939,
+        100771,
+        1773,
+        62244,
+        105315,
+        18493,
+        97639,
+        3837,
+        97639,
+        99487,
+        99488,
+        1773,
+        151645
+      ],
+      "rawDecoded": "是还还在滴水，你去跟他说，可能半小时不能干，就这样它就会引起。如果客人在我们，我们这个中心。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 6.041968300007284
+    }
+  ]
+}

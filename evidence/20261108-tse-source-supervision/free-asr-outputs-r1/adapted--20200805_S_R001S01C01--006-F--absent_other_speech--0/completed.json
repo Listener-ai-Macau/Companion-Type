@@ -1,0 +1,32 @@
+{
+  "id": "adapted--20200805_S_R001S01C01--006-F--absent_other_speech--0",
+  "sourceExampleId": "20200805_S_R001S01C01--006-F--absent_other_speech--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200805_S_R001S01C01--006-F--absent_other_speech--0.wav",
+  "audioSha256": "12912f982ca348cda74f2db3802df86aed0ca1fba2cf15a5377a350b676beb88",
+  "audioSeconds": 0.991,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "这种现象。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 15856,
+      "text": "这种现象。",
+      "generatedIds": [
+        100137,
+        102060,
+        1773,
+        151645
+      ],
+      "rawDecoded": "这种现象。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 0.8092391999962274
+    }
+  ]
+}

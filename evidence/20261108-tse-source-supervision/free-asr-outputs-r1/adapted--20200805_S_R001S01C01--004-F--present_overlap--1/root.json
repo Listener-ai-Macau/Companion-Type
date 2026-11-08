@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "492566188db01407259e8b6c0ff4aa05ebe0ba60bf4bc1765d5fb1e84dbdf3ce",
+  "raw": {
+    "startSample": 0,
+    "endSample": 191015,
+    "text": "家里有高血压、糖尿病、心脏病、高血压、糖尿病、高血脂的，在这一块要做好，做些详细的记录。",
+    "generatedIds": [
+      102078,
+      18830,
+      109155,
+      5373,
+      107218,
+      5373,
+      114582,
+      5373,
+      109155,
+      5373,
+      107218,
+      5373,
+      44636,
+      118112,
+      9370,
+      96050,
+      100147,
+      99922,
+      114063,
+      3837,
+      99190,
+      97084,
+      109648,
+      65577,
+      1773,
+      151645
+    ],
+    "rawDecoded": "家里有高血压、糖尿病、心脏病、高血压、糖尿病、高血脂的，在这一块要做好，做些详细的记录。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.8702009999833535
+  },
+  "rawSha256": "b597a81867fdad74d35e2d3ac737fc4f493a85ce2dfe87aa256c2cdc2e4bf6e0"
+}

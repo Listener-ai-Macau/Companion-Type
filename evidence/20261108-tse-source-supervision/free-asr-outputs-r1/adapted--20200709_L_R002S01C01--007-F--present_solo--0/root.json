@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "666d238ca3250600934dea377714a730d6eaed98d13fdd71eb4a95c17d15dabd",
+  "raw": {
+    "startSample": 0,
+    "endSample": 43201,
+    "text": "零二四前台接待部门。",
+    "generatedIds": [
+      99822,
+      40820,
+      63703,
+      116061,
+      105594,
+      99667,
+      1773,
+      151645
+    ],
+    "rawDecoded": "零二四前台接待部门。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.5109965000010561
+  },
+  "rawSha256": "1c643e0ccc7a4f1c15d33cd777e003c7e88e0be85cadb324da9579e7648dcbe6"
+}

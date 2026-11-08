@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 21796,
+  "startedAt": "2026-11-08T14:57:04+08:00",
+  "worker": "tse_source_supervision_asr_worker_20261108.py",
+  "runId": "source-asr-r2",
+  "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1274871808,
+  "rssPeakBytes": 1248694272,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "COMPLETE_TSE_VALIDATION_FREE_ASR_NOT_PRODUCT",
+  "finishedAt": "2026-11-08T14:59:35+08:00",
+  "wholeProcessFamilySeconds": 150.87836520001292
+}

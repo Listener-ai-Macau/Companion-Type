@@ -1,13 +1,16 @@
 {
-  "state": "RUNNING_TSE_STAGE",
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
   "pid": 15880,
   "startedAt": "2026-11-08T14:45:35+08:00",
   "worker": "tse_source_supervision_asr_worker_20261108.py",
   "runId": "source-asr-r1",
   "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
   "automaticModelRetries": 0,
-  "privatePeakBytes": 0,
-  "rssPeakBytes": 0,
+  "privatePeakBytes": 1264918528,
+  "rssPeakBytes": 1255759872,
   "qualityQualified": false,
-  "activePid": 29652
+  "availableAtStopBytes": 742789120,
+  "exitCode": 15,
+  "finishedAt": "2026-11-08T14:54:56+08:00",
+  "wholeProcessFamilySeconds": 561.1941342000209
 }

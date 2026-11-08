@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 17776,
+  "startedAt": "2026-11-08T15:01:07+08:00",
+  "worker": "tse_source_supervision_identity_worker_20261108.py",
+  "runId": "source-identity-r1",
+  "protocolSha256": "428d143749744b050bba47590ae3177fd43bd10cac7a497d183cd7d1ba4142ed",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1006985216,
+  "rssPeakBytes": 1016623104,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "COMPLETE_FROZEN_SPEAKER_ENCODER_DISJOINT_SOURCE_DIAGNOSTIC",
+  "finishedAt": "2026-11-08T15:03:50+08:00",
+  "wholeProcessFamilySeconds": 162.9370425999805
+}

@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "619610b2cf2e838ef5f8d98f9a40b804f54d3109f96e542fe217cae09400e291",
+  "raw": {
+    "startSample": 0,
+    "endSample": 97761,
+    "text": "电梯方面，就是有时候电梯就停的话，就会影响他们的上班。",
+    "generatedIds": [
+      105038,
+      99522,
+      3837,
+      99486,
+      104854,
+      105038,
+      80158,
+      94375,
+      100363,
+      3837,
+      80158,
+      103252,
+      104056,
+      102547,
+      1773,
+      151645
+    ],
+    "rawDecoded": "电梯方面，就是有时候电梯就停的话，就会影响他们的上班。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.899618900002679
+  },
+  "rawSha256": "66f688be3bb83d5d31af80b93a408e08d24d46c988185ad13a2c01481e2d36ca"
+}

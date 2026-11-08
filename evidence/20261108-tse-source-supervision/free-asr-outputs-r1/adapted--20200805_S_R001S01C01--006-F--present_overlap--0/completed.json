@@ -1,0 +1,39 @@
+{
+  "id": "adapted--20200805_S_R001S01C01--006-F--present_overlap--0",
+  "sourceExampleId": "20200805_S_R001S01C01--006-F--present_overlap--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200805_S_R001S01C01--006-F--present_overlap--0.wav",
+  "audioSha256": "9b125ab7c975a4e1b247fb9af3dd991bc59780e6edfc3936e25c772631964e18",
+  "audioSeconds": 4.214375,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "你这问题有点多啊，同志的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 67430,
+      "text": "你这问题有点多啊，同志的。",
+      "generatedIds": [
+        56568,
+        43288,
+        86119,
+        104037,
+        42140,
+        103924,
+        3837,
+        101309,
+        9370,
+        1773,
+        151645
+      ],
+      "rawDecoded": "你这问题有点多啊，同志的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.9309102999977767
+    }
+  ]
+}

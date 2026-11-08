@@ -1,0 +1,35 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "2e8b639c412173508a7f8d1959bfab97e724ee43e936bdee0742f9c476917735",
+  "raw": {
+    "startSample": 0,
+    "endSample": 106561,
+    "text": "咱这方面，就比如说，咱们小区这个防盗还是比较全。",
+    "generatedIds": [
+      102177,
+      107742,
+      3837,
+      80158,
+      106998,
+      3837,
+      104335,
+      102039,
+      99487,
+      116911,
+      109356,
+      35987,
+      1773,
+      151645
+    ],
+    "rawDecoded": "咱这方面，就比如说，咱们小区这个防盗还是比较全。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.6284832000092138
+  },
+  "rawSha256": "d348c46e6c0183b379effe4a5f81fa06de767e82f0a560ec2b88d1800dbc6559"
+}

@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "4613e1663631861cafd255b29b06255c03b4b768f91ec449e77722fa35fe762e",
+  "raw": {
+    "startSample": 0,
+    "endSample": 98481,
+    "text": "不管任何一方发现问题，及时汇报给双方的领导、维修人员。",
+    "generatedIds": [
+      101260,
+      99885,
+      105235,
+      115058,
+      3837,
+      100667,
+      105032,
+      89012,
+      104002,
+      9370,
+      99728,
+      5373,
+      104440,
+      99653,
+      1773,
+      151645
+    ],
+    "rawDecoded": "不管任何一方发现问题，及时汇报给双方的领导、维修人员。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.8114277999848127
+  },
+  "rawSha256": "2cb3b963e40201281d1335f0112d2a6ecaf221dc61cf2f88673f1e798e6622b0"
+}

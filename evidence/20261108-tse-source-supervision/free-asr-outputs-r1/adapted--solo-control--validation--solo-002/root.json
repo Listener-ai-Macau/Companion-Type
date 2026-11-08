@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "dc0a043675946cfd6fdfd5ac5e47f3df8dd8bccbf6080a124cd66ff347e8f20a",
+  "raw": {
+    "startSample": 0,
+    "endSample": 95681,
+    "text": "呃，目前的话，也就是对于保我们保安部后半年，目前的话就是这些。",
+    "generatedIds": [
+      119108,
+      3837,
+      100004,
+      100363,
+      3837,
+      102200,
+      100002,
+      32463,
+      97639,
+      107150,
+      32948,
+      33447,
+      100543,
+      3837,
+      100004,
+      100363,
+      99486,
+      100001,
+      1773,
+      151645
+    ],
+    "rawDecoded": "呃，目前的话，也就是对于保我们保安部后半年，目前的话就是这些。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.456104699987918
+  },
+  "rawSha256": "f313c1e2300cf04cb0da2ed6c09521448eda5d04c90dbab9fc146d16e59cbccd"
+}

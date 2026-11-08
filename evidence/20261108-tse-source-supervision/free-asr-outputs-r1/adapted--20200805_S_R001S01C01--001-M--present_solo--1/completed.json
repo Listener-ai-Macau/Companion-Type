@@ -1,0 +1,48 @@
+{
+  "id": "adapted--20200805_S_R001S01C01--001-M--present_solo--1",
+  "sourceExampleId": "20200805_S_R001S01C01--001-M--present_solo--1",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200805_S_R001S01C01--001-M--present_solo--1.wav",
+  "audioSha256": "64223d1253ce8d92095ebce2dd9583c51d42c29e3d8488e5e95ec5c1cb91b4d7",
+  "audioSeconds": 6.4485,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "呃，这种人，这个这个李师傅已经开除了，我们就给他换了一个师傅。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 103176,
+      "text": "呃，这种人，这个这个李师傅已经开除了，我们就给他换了一个师傅。",
+      "generatedIds": [
+        119108,
+        3837,
+        100137,
+        17340,
+        3837,
+        99487,
+        99487,
+        100339,
+        105476,
+        99461,
+        29767,
+        103931,
+        3837,
+        106235,
+        104808,
+        71134,
+        104059,
+        105476,
+        1773,
+        151645
+      ],
+      "rawDecoded": "呃，这种人，这个这个李师傅已经开除了，我们就给他换了一个师傅。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.475186299998313
+    }
+  ]
+}

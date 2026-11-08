@@ -1,0 +1,49 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--006-F--present_overlap--0",
+  "sourceExampleId": "20200709_L_R002S01C01--006-F--present_overlap--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--006-F--present_overlap--0.wav",
+  "audioSha256": "c7be8e608ffa594e35bd97fe6a98ef636cc8cd31df244f00a735a0b74995a465",
+  "audioSeconds": 14.4668125,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "就是前台的人不耐心、不热情，对待客户就是很随意那种情况，有吗？",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 231469,
+      "text": "就是前台的人不耐心、不热情，对待客户就是很随意那种情况，有吗？",
+      "generatedIds": [
+        99486,
+        116061,
+        100623,
+        16530,
+        105779,
+        5373,
+        16530,
+        102379,
+        3837,
+        105372,
+        100017,
+        99486,
+        99165,
+        105874,
+        102245,
+        99559,
+        3837,
+        18830,
+        101037,
+        11319,
+        151645
+      ],
+      "rawDecoded": "就是前台的人不耐心、不热情，对待客户就是很随意那种情况，有吗？<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.774819199985359
+    }
+  ]
+}

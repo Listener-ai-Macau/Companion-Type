@@ -1,0 +1,48 @@
+{
+  "id": "adapted--solo-control--validation--solo-005",
+  "sourceExampleId": "solo-control--validation--solo-005",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\synthetic\\adapted\\validation--solo-005--0.wav",
+  "audioSha256": "1cb3c2e9501824de6f254d943b9cef52ce72bc332dbf4fedf7638a085e77d91d",
+  "audioSeconds": 7.9750625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "其他的话就是，嗯，游泳这一块儿，嗯，最近是比较差一点的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 127601,
+      "text": "其他的话就是，嗯，游泳这一块儿，嗯，最近是比较差一点的。",
+      "generatedIds": [
+        92894,
+        100363,
+        99486,
+        3837,
+        106287,
+        3837,
+        107140,
+        100147,
+        99922,
+        99261,
+        3837,
+        106287,
+        3837,
+        104044,
+        110726,
+        99572,
+        100380,
+        9370,
+        1773,
+        151645
+      ],
+      "rawDecoded": "其他的话就是，嗯，游泳这一块儿，嗯，最近是比较差一点的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.4772698000015225
+    }
+  ]
+}

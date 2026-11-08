@@ -1,0 +1,44 @@
+{
+  "id": "adapted--20200805_S_R001S01C01--002-F--present_overlap--0",
+  "sourceExampleId": "20200805_S_R001S01C01--002-F--present_overlap--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200805_S_R001S01C01--002-F--present_overlap--0.wav",
+  "audioSha256": "a2f00e8a9d325c34519a5c45d78a510c6277770039207a9ae1fdebc985dbb932",
+  "audioSeconds": 9.5874375,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "那我们财务会增加支出，多买些山参是这样的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 153399,
+      "text": "那我们财务会增加支出，多买些山参是这样的。",
+      "generatedIds": [
+        99212,
+        97639,
+        102090,
+        36993,
+        100649,
+        105089,
+        3837,
+        42140,
+        99565,
+        97084,
+        57811,
+        73743,
+        20412,
+        101893,
+        1773,
+        151645
+      ],
+      "rawDecoded": "那我们财务会增加支出，多买些山参是这样的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.821193800016772
+    }
+  ]
+}

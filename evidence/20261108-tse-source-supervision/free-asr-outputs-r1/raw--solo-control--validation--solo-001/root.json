@@ -1,0 +1,33 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "bdbc95f18e92b5ec66577c1cfcc8149ca719846e58912bbea8cd70dd3366d56e",
+  "raw": {
+    "startSample": 0,
+    "endSample": 62321,
+    "text": "属于礼貌性的问答，然后也要记住这些顾客。",
+    "generatedIds": [
+      100409,
+      113369,
+      104196,
+      111436,
+      3837,
+      101889,
+      104302,
+      105712,
+      100001,
+      104476,
+      1773,
+      151645
+    ],
+    "rawDecoded": "属于礼貌性的问答，然后也要记住这些顾客。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.102147799974773
+  },
+  "rawSha256": "a3ac68c8e6e39831181e97b51642d27db1f7d75c77cf8982c3a3b3f88d9821e1"
+}

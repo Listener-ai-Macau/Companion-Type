@@ -1,0 +1,31 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "e80411d3d674f67e4e0c824fa5537433894d49153fdcb6dd0e723ec717addd3d",
+  "raw": {
+    "startSample": 0,
+    "endSample": 43041,
+    "text": "进行简简单的打扫，比方说。",
+    "generatedIds": [
+      71817,
+      98237,
+      105172,
+      113820,
+      3837,
+      56006,
+      23384,
+      36587,
+      1773,
+      151645
+    ],
+    "rawDecoded": "进行简简单的打扫，比方说。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.8648043999855872
+  },
+  "rawSha256": "a92aa841a8cea27fc800ec498844be4f0f2b6860ae747b7848f66121cb804cde"
+}

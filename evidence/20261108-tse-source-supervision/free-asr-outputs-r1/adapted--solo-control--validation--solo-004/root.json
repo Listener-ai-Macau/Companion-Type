@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "0947c6bb5be2e1d324f1e0a7a3242a90cc26623acb0d5d981d2c6c73095622c3",
+  "raw": {
+    "startSample": 0,
+    "endSample": 102961,
+    "text": "都可以进来吗？还是进来之后，咱们这边会有给排号还是怎么样？咱们这边详细说一下。",
+    "generatedIds": [
+      104570,
+      105132,
+      101037,
+      11319,
+      99998,
+      105132,
+      103922,
+      3837,
+      104335,
+      106467,
+      104330,
+      89012,
+      59956,
+      17992,
+      99998,
+      104472,
+      11319,
+      104335,
+      106467,
+      100700,
+      36587,
+      100158,
+      1773,
+      151645
+    ],
+    "rawDecoded": "都可以进来吗？还是进来之后，咱们这边会有给排号还是怎么样？咱们这边详细说一下。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.1671698999998625
+  },
+  "rawSha256": "9e7706852882053127d0d5d669f263b42a620b01570b3bcd8642113856607f3c"
+}

@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "4f8bad8899bbf72b25e0b6b46bdaf9b5c73ccb04671af5f2d6ef8b13dfe84d9c",
+  "raw": {
+    "startSample": 0,
+    "endSample": 205761,
+    "text": "嗯，让他们，呃，让他们充分的感感受，感受。",
+    "generatedIds": [
+      106287,
+      3837,
+      105380,
+      3837,
+      119108,
+      3837,
+      105380,
+      100418,
+      9370,
+      98650,
+      101224,
+      3837,
+      101224,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，让他们，呃，让他们充分的感感受，感受。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.667513799999142
+  },
+  "rawSha256": "933667e12ff2538d83591fab6967f7429c37d8d8d2d230dc957e07dde54b066e"
+}

@@ -1,0 +1,24 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "d11ef7b36a0c03d8fd13d5249368ffbe3bf2ab5e7cd5c44c7c528c52f9de3a01",
+  "raw": {
+    "startSample": 0,
+    "endSample": 28621,
+    "text": "两个小时。",
+    "generatedIds": [
+      117895,
+      1773,
+      151645
+    ],
+    "rawDecoded": "两个小时。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 0.6698023999924771
+  },
+  "rawSha256": "ff307145dff4174d05efc75e98e72cb5f00f6088ea5f8c769ac4a3d64700fde1"
+}

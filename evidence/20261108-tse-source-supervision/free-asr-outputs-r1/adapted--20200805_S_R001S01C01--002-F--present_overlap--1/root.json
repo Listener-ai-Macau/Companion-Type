@@ -1,0 +1,25 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "26e577011fa80d0bfb4937d957c3dc385b4c86e9782f10169dda9557767163ad",
+  "raw": {
+    "startSample": 0,
+    "endSample": 19181,
+    "text": "一定要责任。",
+    "generatedIds": [
+      103962,
+      99531,
+      1773,
+      151645
+    ],
+    "rawDecoded": "一定要责任。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 0.8112123000028078
+  },
+  "rawSha256": "bb5c05846236e7183662a056182505a3b4699202dde41a34ec5d25d329aca986"
+}
