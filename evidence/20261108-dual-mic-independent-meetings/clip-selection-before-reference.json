@@ -1,0 +1,1619 @@
+{
+  "at": "2026-11-08T10:08:42.202668+08:00",
+  "state": "FROZEN_PREDICTION_ONLY_WINDOWS",
+  "selection": [
+    {
+      "meeting": "M_R003S02C01",
+      "selectionBeforeReferenceRead": true,
+      "referenceUsed": false,
+      "candidates": [
+        {
+          "rootIndex": 0,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 19.95,
+          "people": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 1,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.78,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 2,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 30.0,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 3,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.4,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 4,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.83,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 5,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.86,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 6,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.68,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 7,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.93,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 8,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.72,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 9,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.68,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 10,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.08,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 11,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.56,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 12,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.06,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 13,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.92,
+          "people": [
+            5
+          ]
+        },
+        {
+          "rootIndex": 14,
+          "predictedOverlapSeconds": 0.14,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.7,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 15,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.18,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 16,
+          "predictedOverlapSeconds": 0.66,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.19,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 17,
+          "predictedOverlapSeconds": 2.79,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.55,
+          "people": [
+            0,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 18,
+          "predictedOverlapSeconds": 8.54,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 21.11,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 19,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.7,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 20,
+          "predictedOverlapSeconds": 0.7,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.87,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 21,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.74,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 22,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.57,
+          "people": [
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 23,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 20.64,
+          "people": [
+            4
+          ]
+        },
+        {
+          "rootIndex": 24,
+          "predictedOverlapSeconds": 2.69,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.58,
+          "people": [
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 25,
+          "predictedOverlapSeconds": 0.46,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.68,
+          "people": [
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 26,
+          "predictedOverlapSeconds": 0.8,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.54,
+          "people": [
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 27,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.25,
+          "people": [
+            4
+          ]
+        },
+        {
+          "rootIndex": 28,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.66,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 29,
+          "predictedOverlapSeconds": 2.12,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.62,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 30,
+          "predictedOverlapSeconds": 0.02,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.94,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 31,
+          "predictedOverlapSeconds": 0.07,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.8,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 32,
+          "predictedOverlapSeconds": 1.67,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.75,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 33,
+          "predictedOverlapSeconds": 9.58,
+          "predictedTripleSeconds": 0.12,
+          "predictedSingleSeconds": 20.11,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 34,
+          "predictedOverlapSeconds": 1.44,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.11,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 35,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.62,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 36,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.98,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 37,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.51,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 38,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.67,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 39,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.99,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 40,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 21.63,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 41,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.11,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 42,
+          "predictedOverlapSeconds": 0.97,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.28,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 43,
+          "predictedOverlapSeconds": 6.42,
+          "predictedTripleSeconds": 0.08,
+          "predictedSingleSeconds": 22.92,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 44,
+          "predictedOverlapSeconds": 6.4,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 21.86,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 45,
+          "predictedOverlapSeconds": 1.45,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.65,
+          "people": [
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "rootIndex": 46,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 20.88,
+          "people": [
+            0,
+            2
+          ]
+        },
+        {
+          "rootIndex": 47,
+          "predictedOverlapSeconds": 0.93,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.91,
+          "people": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 48,
+          "predictedOverlapSeconds": 7.28,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.72,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 49,
+          "predictedOverlapSeconds": 1.54,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.85,
+          "people": [
+            0,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 50,
+          "predictedOverlapSeconds": 6.81,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.38,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 51,
+          "predictedOverlapSeconds": 2.66,
+          "predictedTripleSeconds": 0.52,
+          "predictedSingleSeconds": 26.23,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 52,
+          "predictedOverlapSeconds": 1.5,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.99,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 53,
+          "predictedOverlapSeconds": 1.76,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.48,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 54,
+          "predictedOverlapSeconds": 1.5,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.5,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 55,
+          "predictedOverlapSeconds": 5.8,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.81,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 56,
+          "predictedOverlapSeconds": 4.2,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.51,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 57,
+          "predictedOverlapSeconds": 0.05,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.91,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 58,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.01,
+          "people": [
+            1
+          ]
+        },
+        {
+          "rootIndex": 59,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.98,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 60,
+          "predictedOverlapSeconds": 0.75,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.78,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 61,
+          "predictedOverlapSeconds": 0.33,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.61,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 62,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.48,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 63,
+          "predictedOverlapSeconds": 1.03,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.8,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 64,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.66,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 65,
+          "predictedOverlapSeconds": 2.76,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.42,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 66,
+          "predictedOverlapSeconds": 1.41,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.17,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 67,
+          "predictedOverlapSeconds": 2.42,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.21,
+          "people": [
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 68,
+          "predictedOverlapSeconds": 6.57,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 21.75,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 69,
+          "predictedOverlapSeconds": 1.88,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.89,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 70,
+          "predictedOverlapSeconds": 5.73,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 22.04,
+          "people": [
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 71,
+          "predictedOverlapSeconds": 3.87,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.43,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 72,
+          "predictedOverlapSeconds": 3.59,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.04,
+          "people": [
+            0,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 73,
+          "predictedOverlapSeconds": 0.86,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.98,
+          "people": [
+            0,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 74,
+          "predictedOverlapSeconds": 2.61,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.57,
+          "people": [
+            0,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "rootIndex": 75,
+          "predictedOverlapSeconds": 0.86,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.75,
+          "people": [
+            0,
+            5
+          ]
+        },
+        {
+          "rootIndex": 76,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 20.99,
+          "people": [
+            0
+          ]
+        }
+      ],
+      "chosen": [
+        {
+          "rootIndex": 51,
+          "predictedOverlapSeconds": 2.66,
+          "predictedTripleSeconds": 0.52,
+          "predictedSingleSeconds": 26.23,
+          "people": [
+            0,
+            3,
+            4
+          ],
+          "kind": "predicted-triple"
+        },
+        {
+          "rootIndex": 33,
+          "predictedOverlapSeconds": 9.58,
+          "predictedTripleSeconds": 0.12,
+          "predictedSingleSeconds": 20.11,
+          "people": [
+            0,
+            4,
+            5
+          ],
+          "kind": "predicted-overlap"
+        },
+        {
+          "rootIndex": 1,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.78,
+          "people": [
+            0
+          ],
+          "kind": "ordinary-regression"
+        }
+      ],
+      "ordinaryControlAvailable": true,
+      "journalSha256": "3dcacee164c91adf76b9939e061db4eec0dc541dc3fb3ac4dd06c87b2b187026"
+    },
+    {
+      "meeting": "S_R003S01C01",
+      "selectionBeforeReferenceRead": true,
+      "referenceUsed": false,
+      "candidates": [
+        {
+          "rootIndex": 0,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 20.95,
+          "people": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 1,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.72,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 2,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.98,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 3,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.71,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 4,
+          "predictedOverlapSeconds": 1.3,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.33,
+          "people": [
+            0,
+            2
+          ]
+        },
+        {
+          "rootIndex": 5,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.46,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 6,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.26,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 7,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.59,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 8,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.19,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 9,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.11,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 10,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.52,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 11,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.26,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 12,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.8,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 13,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.98,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 14,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.16,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 15,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.08,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 16,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.98,
+          "people": [
+            2
+          ]
+        },
+        {
+          "rootIndex": 17,
+          "predictedOverlapSeconds": 1.47,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.86,
+          "people": [
+            0,
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 18,
+          "predictedOverlapSeconds": 0.45,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.59,
+          "people": [
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 19,
+          "predictedOverlapSeconds": 1.03,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.48,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 20,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.97,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 21,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.24,
+          "people": [
+            4
+          ]
+        },
+        {
+          "rootIndex": 22,
+          "predictedOverlapSeconds": 1.25,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.65,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 23,
+          "predictedOverlapSeconds": 3.1,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.95,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 24,
+          "predictedOverlapSeconds": 3.5,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.38,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 25,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.53,
+          "people": [
+            4
+          ]
+        },
+        {
+          "rootIndex": 26,
+          "predictedOverlapSeconds": 0.65,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.53,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 27,
+          "predictedOverlapSeconds": 1.59,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.31,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 28,
+          "predictedOverlapSeconds": 1.17,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.16,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 29,
+          "predictedOverlapSeconds": 0.66,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.79,
+          "people": [
+            0,
+            1,
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 30,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.76,
+          "people": [
+            1
+          ]
+        },
+        {
+          "rootIndex": 31,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.08,
+          "people": [
+            1
+          ]
+        },
+        {
+          "rootIndex": 32,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.5,
+          "people": [
+            1
+          ]
+        },
+        {
+          "rootIndex": 33,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.66,
+          "people": [
+            1
+          ]
+        },
+        {
+          "rootIndex": 34,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.57,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 35,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.04,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 36,
+          "predictedOverlapSeconds": 3.15,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.98,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 37,
+          "predictedOverlapSeconds": 2.39,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.96,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 38,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.93,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 39,
+          "predictedOverlapSeconds": 3.87,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.96,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 40,
+          "predictedOverlapSeconds": 1.75,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.01,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 41,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.94,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 42,
+          "predictedOverlapSeconds": 1.33,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.78,
+          "people": [
+            0,
+            1
+          ]
+        },
+        {
+          "rootIndex": 43,
+          "predictedOverlapSeconds": 1.4,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.07,
+          "people": [
+            0,
+            1,
+            3
+          ]
+        },
+        {
+          "rootIndex": 44,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.21,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 45,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.92,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 46,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.98,
+          "people": [
+            3
+          ]
+        },
+        {
+          "rootIndex": 47,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.57,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 48,
+          "predictedOverlapSeconds": 1.73,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.75,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 49,
+          "predictedOverlapSeconds": 1.48,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.16,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 50,
+          "predictedOverlapSeconds": 2.34,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.93,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 51,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.19,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 52,
+          "predictedOverlapSeconds": 0.51,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.51,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 53,
+          "predictedOverlapSeconds": 0.33,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.84,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 54,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.08,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 55,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 30.0,
+          "people": [
+            0
+          ]
+        },
+        {
+          "rootIndex": 56,
+          "predictedOverlapSeconds": 10.76,
+          "predictedTripleSeconds": 1.34,
+          "predictedSingleSeconds": 19.15,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 57,
+          "predictedOverlapSeconds": 8.75,
+          "predictedTripleSeconds": 0.81,
+          "predictedSingleSeconds": 20.12,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 58,
+          "predictedOverlapSeconds": 4.05,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.32,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 59,
+          "predictedOverlapSeconds": 4.92,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 25.08,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 60,
+          "predictedOverlapSeconds": 0.61,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.66,
+          "people": [
+            0,
+            4
+          ]
+        },
+        {
+          "rootIndex": 61,
+          "predictedOverlapSeconds": 1.51,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.06,
+          "people": [
+            0,
+            1,
+            3
+          ]
+        },
+        {
+          "rootIndex": 62,
+          "predictedOverlapSeconds": 1.22,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 27.5,
+          "people": [
+            0,
+            3
+          ]
+        },
+        {
+          "rootIndex": 63,
+          "predictedOverlapSeconds": 0.51,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 28.71,
+          "people": [
+            0,
+            1,
+            4
+          ]
+        },
+        {
+          "rootIndex": 64,
+          "predictedOverlapSeconds": 5.18,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 23.28,
+          "people": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "rootIndex": 65,
+          "predictedOverlapSeconds": 3.63,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 24.93,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 66,
+          "predictedOverlapSeconds": 10.59,
+          "predictedTripleSeconds": 0.34,
+          "predictedSingleSeconds": 19.14,
+          "people": [
+            0,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 67,
+          "predictedOverlapSeconds": 11.6,
+          "predictedTripleSeconds": 0.2,
+          "predictedSingleSeconds": 16.81,
+          "people": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 68,
+          "predictedOverlapSeconds": 2.67,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 26.83,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 69,
+          "predictedOverlapSeconds": 5.76,
+          "predictedTripleSeconds": 0.54,
+          "predictedSingleSeconds": 24.07,
+          "people": [
+            0,
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 70,
+          "predictedOverlapSeconds": 0.83,
+          "predictedTripleSeconds": 0.06,
+          "predictedSingleSeconds": 27.0,
+          "people": [
+            0,
+            1,
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 71,
+          "predictedOverlapSeconds": 1.68,
+          "predictedTripleSeconds": 0.38,
+          "predictedSingleSeconds": 22.64,
+          "people": [
+            0,
+            1,
+            2,
+            4
+          ]
+        },
+        {
+          "rootIndex": 72,
+          "predictedOverlapSeconds": 11.26,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 17.94,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "rootIndex": 73,
+          "predictedOverlapSeconds": 1.44,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 18.3,
+          "people": [
+            0,
+            2,
+            4
+          ]
+        }
+      ],
+      "chosen": [
+        {
+          "rootIndex": 56,
+          "predictedOverlapSeconds": 10.76,
+          "predictedTripleSeconds": 1.34,
+          "predictedSingleSeconds": 19.15,
+          "people": [
+            0,
+            2,
+            3,
+            4
+          ],
+          "kind": "predicted-triple"
+        },
+        {
+          "rootIndex": 67,
+          "predictedOverlapSeconds": 11.6,
+          "predictedTripleSeconds": 0.2,
+          "predictedSingleSeconds": 16.81,
+          "people": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "kind": "predicted-overlap"
+        },
+        {
+          "rootIndex": 1,
+          "predictedOverlapSeconds": 0.0,
+          "predictedTripleSeconds": 0.0,
+          "predictedSingleSeconds": 29.72,
+          "people": [
+            0
+          ],
+          "kind": "ordinary-regression"
+        }
+      ],
+      "ordinaryControlAvailable": true,
+      "journalSha256": "deac48284fdd5f465b58e147674f76d42a0acf8199d4620e5db3c0ad4e20f6f3"
+    }
+  ],
+  "referencePayloadRead": false,
+  "noGroundTruthChoiceOfMicrophone": true,
+  "rootCount": 6
+}

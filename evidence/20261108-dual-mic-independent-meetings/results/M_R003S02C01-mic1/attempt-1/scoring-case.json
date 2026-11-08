@@ -1,0 +1,18 @@
+{
+  "corpus": "AISHELL-4-official-test",
+  "meeting": "M_R003S02C01-mic1",
+  "originalMeeting": "M_R003S02C01",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-mic1.wav",
+  "audioSha256": "47d3c9b95d1965d093dcd87a7cc716dbda598c849327949f950b92c54045ef50",
+  "audioSeconds": 2321.259,
+  "sourceSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+  "sourceChannel": 1,
+  "sourceFrames": 37140144,
+  "sourceSampleRate": 16000,
+  "sourceChannels": 8,
+  "extraction": "Lossless PCM16 channel selection, no mixing, resampling, alignment or normalization.",
+  "reference": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01.TextGrid",
+  "referenceSha256": "bd4561fc778fdd28ef48e59257e791cbd33430c11b26493d7e24166833084879",
+  "referenceKind": "textgrid",
+  "fixedMappingReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\results\\M_R003S02C01-mic1\\attempt-1\\review.json"
+}

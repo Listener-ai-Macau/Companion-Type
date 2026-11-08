@@ -1,5 +1,5 @@
 {
-  "state": "NATIVE8_STREAMING_FULL_AUDIO",
+  "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
   "pid": 23772,
   "startedAt": "2026-11-08T10:06:26+08:00",
   "audioSha256": "47d3c9b95d1965d093dcd87a7cc716dbda598c849327949f950b92c54045ef50",
@@ -8,8 +8,8 @@
   "automaticRetries": 0,
   "sourceSha256": "dd5e263357629e03e548a701971ce632fccab2d6f89527e60a90e134c6775b4c",
   "nativeGeometry": "author-offline-explicit",
-  "newNeuralPushes": 68,
-  "completedNeuralFrames": 204000,
+  "newNeuralPushes": 77,
+  "completedNeuralFrames": 232126,
   "limits": {
     "pid": 23772,
     "cpuRate": 1000,
@@ -18,7 +18,7 @@
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 1892405248,
+    "jobPeakPrivateCommitBytes": 1907671040,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -64,9 +64,19 @@
     "update_period": 300,
     "left_context": 0
   },
-  "submittedSamples": 33075200,
+  "submittedSamples": 37140144,
   "totalAudioSamples": 37140144,
-  "nativeFrameProbabilitiesStart": 102986,
+  "nativeFrameProbabilitiesStart": 160396,
   "nativeOutputSpeakers": 8,
-  "nativeSecondsPerFrame": 0.009999999776482582
+  "nativeSecondsPerFrame": 0.009999999776482582,
+  "meeting": "M_R003S02C01-mic1",
+  "audioSeconds": 2321.259,
+  "predictedSpeakers": 6,
+  "segments": 430,
+  "rttmSha256": "9dc9dc9ad601574d77cb7b19998b573fdf524c06ac032f0be6813911c81ff8ed",
+  "allOriginalAudioSamplesSubmitted": true,
+  "oneContinuousSpeakerState": true,
+  "probabilityManifestSha256": "0564ddeb0931de112217c9e23feb8f22df9975d3196abafa20b2091c5eb98bf1",
+  "finishedAt": "2026-11-08T10:06:54+08:00",
+  "wholeWorkerSeconds": 27.672150200000033
 }
