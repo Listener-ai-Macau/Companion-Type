@@ -1,0 +1,23 @@
+{
+  "startedAt": "2026-11-08T22:46:09+08:00",
+  "state": "FOCUSED_NATIVE_CHECK_FAILED",
+  "pid": 16260,
+  "command": [
+    "C:/Users/Billy/.cargo/bin/cargo.exe",
+    "test",
+    "--offline",
+    "--lib",
+    "--jobs",
+    "1",
+    "backend::volcengine::tests::async_speaker_request_requires_second_pass_and_large_model_ssd",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "target": "E:/CodexData/Companion/.build-cache/windows051/target",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+  "installed": false,
+  "exitCode": 101,
+  "finishedAt": "2026-11-08T22:47:17+08:00",
+  "wallSeconds": 68.33014429998002
+}

@@ -1,0 +1,9 @@
+{
+  "dataset": "AISHELL-4",
+  "source": "https://www.openslr.org/111/",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "changes": "One original meeting channel1 excerpt at frozen common silence boundaries; original reference timestamps shifted for scoring; existing-service hypotheses generated from the same excerpt. No correction of reference labels or words.",
+  "note": "This attribution supplements the original dataset provenance already retained in model evidence; no dataset relicensing.",
+  "attribution": "AISHELL-4 creators; author list and dataset credits at the original OpenSLR111 source."
+}

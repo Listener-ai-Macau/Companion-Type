@@ -49,3 +49,5 @@ src/*tse_source_supervision*20261108.py -text
 evidence/20261108-tse-source-supervision/** -text -whitespace
 
 trained/20261108-tse-source-supervision/*.safetensors -text -diff
+
+evidence/20261108-competitive-sale-standard/** -text -whitespace

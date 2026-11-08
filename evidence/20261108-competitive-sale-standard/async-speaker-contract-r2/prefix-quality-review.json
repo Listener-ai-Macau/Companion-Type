@@ -1,0 +1,177 @@
+{
+  "at": "2026-11-08T22:50:52+08:00",
+  "state": "PUBLIC_COMPLEX_WINDOW_DIAGNOSTIC_NOT_QUALIFIED",
+  "protocolSha256": "a9c20040cfb192c0d4bfbc571cf3f37bc5d67b4d03be31372dfb242493f24bf8",
+  "finalResponseSha256": "2467cbbb43a8ab1afd8de15947b2adb046b5e0da52dccd122f006c4c25e9e8f7",
+  "providerGeneration": "bigmodel",
+  "audioSeconds": 302.05,
+  "sourceMeeting": "L_R003S01C02",
+  "sourceStartSeconds": 1559.9,
+  "sourceEndSeconds": 1861.95,
+  "referencePeople": 6,
+  "referenceOverlapSeconds": 61.46009017863207,
+  "referenceOverlapFraction": 0.2034765442100052,
+  "utterances": 61,
+  "usableTimedUtterances": 60,
+  "unknownIdentityUtterances": [],
+  "invalidUtterances": [],
+  "strictChineseNormalization": "Retain words/fillers/numeral spelling; remove only source angle tags, punctuation/symbols/whitespace and case per existing scorer. Provider original ITN true retained; no answer-based numeral correction.",
+  "cpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 172,
+      "delete": 238,
+      "insert": 122
+    },
+    "totalEdits": 532,
+    "characterErrorRate": 0.3631399317406143,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 141
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "5",
+        "edits": 97
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 113
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "perReferencePerson": {
+    "002-F": {
+      "anonymousHypothesis": "1",
+      "referenceCharacters": 353,
+      "substitutions": 28,
+      "deletions": 92,
+      "insertions": 21,
+      "totalEdits": 141,
+      "cer": 0.39943342776203966
+    },
+    "003-F": {
+      "anonymousHypothesis": "5",
+      "referenceCharacters": 105,
+      "substitutions": 65,
+      "deletions": 32,
+      "insertions": 0,
+      "totalEdits": 97,
+      "cer": 0.9238095238095239
+    },
+    "004-M": {
+      "anonymousHypothesis": "2",
+      "referenceCharacters": 432,
+      "substitutions": 22,
+      "deletions": 24,
+      "insertions": 13,
+      "totalEdits": 59,
+      "cer": 0.13657407407407407
+    },
+    "005-M": {
+      "anonymousHypothesis": "4",
+      "referenceCharacters": 235,
+      "substitutions": 23,
+      "deletions": 54,
+      "insertions": 19,
+      "totalEdits": 96,
+      "cer": 0.4085106382978723
+    },
+    "006-M": {
+      "anonymousHypothesis": "3",
+      "referenceCharacters": 325,
+      "substitutions": 19,
+      "deletions": 36,
+      "insertions": 58,
+      "totalEdits": 113,
+      "cer": 0.3476923076923077
+    },
+    "007-M": {
+      "anonymousHypothesis": "6",
+      "referenceCharacters": 15,
+      "substitutions": 15,
+      "deletions": 0,
+      "insertions": 5,
+      "totalEdits": 20,
+      "cer": 1.3333333333333333
+    },
+    "__unmatched_hypothesis__7": {
+      "anonymousHypothesis": "7",
+      "referenceCharacters": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 6,
+      "totalEdits": 6,
+      "cer": null
+    }
+  },
+  "speechActivityDer": "NOT_MEASURED_sentence_bounds_are_not_independent_voice_activity",
+  "pureOverlapWordCer": "NOT_MEASURED_reference_has_utterance_not_word_timing",
+  "tcpCer": "NOT_MEASURED_reference_word_timing_unavailable",
+  "fullMeetingQualified": false,
+  "crossMeetingQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "actualCompetitorProductTested": false,
+  "localVsCloudPairedImprovementProven": false,
+  "timing": {
+    "wholeProcessSeconds": 331.50050260001444,
+    "rtf": 1.0975020778017361,
+    "inputPacing": "100ms packets paced near real time; this is not an offline bulk-processing or post-meeting-ready latency benchmark",
+    "privatePeakBytes": 23842816
+  },
+  "strictWindowCerBelow5": false,
+  "mixedChronologicalDiagnostic": {
+    "referenceCharacters": 1465,
+    "hypothesisCharacters": 1349,
+    "substitutions": 120,
+    "deletions": 241,
+    "insertions": 125,
+    "cer": 0.331740614334471,
+    "limits": "Single chronological reference concatenation only; ordering during overlap is ambiguous. This does not score speaker attribution or pure overlap recovery and cannot close a gate."
+  },
+  "identityContractDiagnostic": {
+    "returnedLabels": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "allUtterancesSameLabel": false,
+    "requestedSpeakerInfo": true,
+    "validAutomaticMultispeakerOutputProven": false,
+    "cause": "If all labels collapse, separate the request/resource/output contract from acoustic quality before changing a model. This does not establish that all vendor models lack diarization. cpCER includes identity collapse and may exceed100% because unmatched streams count deletions/insertions."
+  },
+  "decision": "本窗口仍失败；不将现有服务当成复杂多人已经解决，不扩大整会或换资源扫参。"
+}

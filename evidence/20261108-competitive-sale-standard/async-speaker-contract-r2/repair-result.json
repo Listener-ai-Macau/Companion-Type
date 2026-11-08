@@ -1,0 +1,154 @@
+{
+  "at": "2026-11-08T22:53:44+08:00",
+  "state": "ASYNC_SPEAKER_CONTRACT_FIXED_REAL_MULTILABEL_GAIN_MODEL_QUALITY_OPEN",
+  "officialContract": "https://docs.volcengine.com/docs/doubao-voice/large-model-streaming-automatic-speech-recognition-api-1?lang=en",
+  "rootCause": "Existing bigmodel_async request asked for speaker info but explicitly disabled the required second pass and omitted ssd_version200. Fix both documented prerequisites together, not a threshold search.",
+  "sourceCommit": "a52d7a5925057c3a0158549bee2b9decf22eaafc",
+  "sourceSha256": "a6480d3d37ab5763b29bccf2e855652ebe6fa5ec96af369bb2c43c02ddcee081",
+  "productSourceCheckout": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+  "primaryEditableSourceMerged": false,
+  "primaryMergeReason": "Primary recovered-software050 has a separate in-progress Cargo.toml edit; retain isolated source repair and verified remote commit for integration rather than overwrite its branch.",
+  "controlledChange": {
+    "enable_nonstream": true,
+    "ssd_version": "200"
+  },
+  "audioSha256": "d1ab2a922b25000f56228d74b97a79e66e868d865711f9bae526b9409c74a463",
+  "audioSeconds": 302.05,
+  "referencePeople": 6,
+  "referenceOverlapFraction": 0.2034765442100052,
+  "predictedGroupsBefore": 1,
+  "predictedGroupsAfter": 7,
+  "cpCerBefore": 1.1583617747440274,
+  "cpCerAfter": 0.3631399317406143,
+  "cpCerLimits": "Anonymous minimum permutation diagnostic on one deliberately difficult development window; includes missed and wrongly grouped words, not ordinary ASR accuracy, not known real identity or pure-overlap wordCER. Before exceeds100% because all other person streams are unmatched.",
+  "afterEdits": {
+    "replace": 172,
+    "delete": 238,
+    "insert": 122
+  },
+  "perPerson": {
+    "002-F": {
+      "anonymousHypothesis": "1",
+      "referenceCharacters": 353,
+      "substitutions": 28,
+      "deletions": 92,
+      "insertions": 21,
+      "totalEdits": 141,
+      "cer": 0.39943342776203966
+    },
+    "003-F": {
+      "anonymousHypothesis": "5",
+      "referenceCharacters": 105,
+      "substitutions": 65,
+      "deletions": 32,
+      "insertions": 0,
+      "totalEdits": 97,
+      "cer": 0.9238095238095239
+    },
+    "004-M": {
+      "anonymousHypothesis": "2",
+      "referenceCharacters": 432,
+      "substitutions": 22,
+      "deletions": 24,
+      "insertions": 13,
+      "totalEdits": 59,
+      "cer": 0.13657407407407407
+    },
+    "005-M": {
+      "anonymousHypothesis": "4",
+      "referenceCharacters": 235,
+      "substitutions": 23,
+      "deletions": 54,
+      "insertions": 19,
+      "totalEdits": 96,
+      "cer": 0.4085106382978723
+    },
+    "006-M": {
+      "anonymousHypothesis": "3",
+      "referenceCharacters": 325,
+      "substitutions": 19,
+      "deletions": 36,
+      "insertions": 58,
+      "totalEdits": 113,
+      "cer": 0.3476923076923077
+    },
+    "007-M": {
+      "anonymousHypothesis": "6",
+      "referenceCharacters": 15,
+      "substitutions": 15,
+      "deletions": 0,
+      "insertions": 5,
+      "totalEdits": 20,
+      "cer": 1.3333333333333333
+    },
+    "__unmatched_hypothesis__7": {
+      "anonymousHypothesis": "7",
+      "referenceCharacters": 0,
+      "substitutions": 0,
+      "deletions": 0,
+      "insertions": 6,
+      "totalEdits": 6,
+      "cer": null
+    }
+  },
+  "timingBefore": {
+    "wholeProcessSeconds": 328.4898156999843,
+    "rtf": 1.0875345661313833,
+    "inputPacing": "100ms packets paced near real time; this is not an offline bulk-processing or post-meeting-ready latency benchmark",
+    "privatePeakBytes": 23445504
+  },
+  "timingAfter": {
+    "wholeProcessSeconds": 331.50050260001444,
+    "rtf": 1.0975020778017361,
+    "inputPacing": "100ms packets paced near real time; this is not an offline bulk-processing or post-meeting-ready latency benchmark",
+    "privatePeakBytes": 23842816
+  },
+  "sameAudioSameAccountResourceEndpoint": true,
+  "originalSeedNostreamRequestUnchanged": true,
+  "cacheIdentityIncludesNewRequest": true,
+  "actualModuleCheck": {
+    "at": "2026-11-08T22:50:36+08:00",
+    "state": "ACTUAL_PROVIDER_MODULE_CHECK_PASSED",
+    "compileExitCode": 0,
+    "sourceSha256": "a6480d3d37ab5763b29bccf2e855652ebe6fa5ec96af369bb2c43c02ddcee081",
+    "fullAppTestPassed": false,
+    "previousFullAppCompileFailure": "Rustc allocation failure inside bounded2GiB full-app test build; original log preserved. No increased memory pressure or repeated full build.",
+    "installed": false,
+    "sourceModuleRewrittenForHarness": false,
+    "runExitCode": 0,
+    "output": "PASS_ACTUAL_PROVIDER_REQUEST_AND_CACHE_CONTRACT_SEED_UNCHANGED",
+    "wallSeconds": 9.989461600023787
+  },
+  "fullAppTestBuild": {
+    "startedAt": "2026-11-08T22:46:09+08:00",
+    "state": "FOCUSED_NATIVE_CHECK_FAILED",
+    "pid": 16260,
+    "command": [
+      "C:/Users/Billy/.cargo/bin/cargo.exe",
+      "test",
+      "--offline",
+      "--lib",
+      "--jobs",
+      "1",
+      "backend::volcengine::tests::async_speaker_request_requires_second_pass_and_large_model_ssd",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "target": "E:/CodexData/Companion/.build-cache/windows051/target",
+    "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "installed": false,
+    "exitCode": 101,
+    "finishedAt": "2026-11-08T22:47:17+08:00",
+    "wallSeconds": 68.33014429998002
+  },
+  "fullAppBuildPassed": false,
+  "buildFailureScope": "Full-app test rustc allocation failed at bounded2GiB. Source module itself compiled and executed assertions successfully in an exact byte-copy of its normal module layout; first absolute-path harness failed module lookup and is retained.",
+  "localModelWeightsOrBaselineChanged": false,
+  "privateAudioUploaded": false,
+  "installed": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "next": "保留已实测修正的async请求与缓存身份，作为已找到的接入缺口；当前6人分7组且逐人联合CER36.31%，不扩大近实时整会或盲调。下一步用现有原音/响应按时间拆分003-F和007-M短发言的漏词、串人及识别错误，先分清身份错误与声音内容丢失；原20200707_L_R001S08C01中002/003/007参考身份复核工作保留。只在明确根因变化后验证新候选，原普通<5%、分人<=10%、重叠逐人<5%、事实、双端实卡和售卖门不变。Windows完整构建/主源码合入和日用安装仍待，不以本模块检查代替交付。"
+}

@@ -1,0 +1,117 @@
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\denzic-platform\third_party\cpal\src\host\wasapi\device.rs:344:9
+    |
+344 |         &self,
+    |         ^^^^^ the lifetime is elided here
+345 |     ) -> Result<MutexGuard<Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+345 |     ) -> Result<MutexGuard<'_, Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                            +++
+
+warning: `cpal` (lib) generated 1 warning (run `cargo fix --lib -p cpal` to apply 1 suggestion)
+   Compiling companion-type v0.1.77 (C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\apps\windows\src-tauri)
+warning: function `notifications_stream_from_broadcast_receiver` is never used
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\common\util.rs:29:8
+   |
+29 | pub fn notifications_stream_from_broadcast_receiver<T: Clone + Send + 'static>(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `unsubscribe` is never used
+   --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\winrtble\ble\characteristic.rs:186:18
+    |
+ 95 | impl BLECharacteristic {
+    | ---------------------- method in this implementation
+...
+186 |     pub async fn unsubscribe(&mut self) -> Result<()> {
+    |                  ^^^^^^^^^^^
+
+warning: function `to_error` is never used
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\winrtble\utils.rs:26:8
+   |
+26 | pub fn to_error(status: GattCommunicationStatus) -> Result<()> {
+   |        ^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\common\adapter_manager.rs:79:9
+   |
+79 |         &self,
+   |         ^^^^^ the lifetime is elided here
+80 |         id: &PeripheralId,
+81 |     ) -> Option<RefMut<PeripheralId, PeripheralType>> {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+81 |     ) -> Option<RefMut<'_, PeripheralId, PeripheralType>> {
+   |                        +++
+
+warning: `btleplug` (lib) generated 4 warnings (run `cargo fix --lib -p btleplug` to apply 1 suggestion)
+memory allocation of 2752528 bytes failed
+stack backtrace:
+   0:     0x7fffddec3d70 - <unknown>
+   1:     0x7fffddeebc61 - <unknown>
+   2:     0x7fffdded40e4 - <unknown>
+   3:     0x7fffddeb6f22 - <unknown>
+   4:     0x7fffdde9ca8c - <unknown>
+   5:     0x7fffdde9a14f - <unknown>
+   6:     0x7fffddeb6fbb - <unknown>
+   7:     0x7fffdde9d9e8 - <unknown>
+   8:     0x7fffe2154a69 - <unknown>
+   9:     0x7fffddeda3f5 - <unknown>
+  10:     0x7fffdf5fba51 - <unknown>
+  11:     0x7fffdf6014bc - <unknown>
+  12:     0x7fffdf601695 - <unknown>
+  13:     0x7fffdeb716fe - <unknown>
+  14:     0x7fffdeb87a0d - <unknown>
+  15:     0x7fffdeb8076e - <unknown>
+  16:     0x7fffdeb5dc38 - <unknown>
+  17:     0x7fffdeb801b2 - <unknown>
+  18:     0x7fffdeb7cfc4 - <unknown>
+  19:     0x7fffdeb804dd - <unknown>
+  20:     0x7fffdeb5db84 - <unknown>
+  21:     0x7fffdeb693e9 - <unknown>
+  22:     0x7fffe12f49e3 - <unknown>
+  23:     0x7fffdeb8415d - <unknown>
+  24:     0x7fffe13110c6 - <unknown>
+  25:     0x7fffdeb83e49 - <unknown>
+  26:     0x7fffdeb5e11b - <unknown>
+  27:     0x7fffdeb693e9 - <unknown>
+  28:     0x7fffdeba9de8 - <unknown>
+  29:     0x7fffdeb92a5b - <unknown>
+  30:     0x7fffdeb3c7ec - <unknown>
+  31:     0x7fffdeb37de8 - <unknown>
+  32:     0x7fffdd9d8db5 - <unknown>
+  33:     0x7fffdd8abe97 - <unknown>
+  34:     0x7fffdd9d8fa2 - <unknown>
+  35:     0x7fffddf35ccd - <unknown>
+  36:     0x7fffded5ebeb - <unknown>
+  37:     0x7fffdec74001 - <unknown>
+  38:     0x7fffded5ec68 - <unknown>
+  39:     0x7fffdf4a89ca - <unknown>
+  40:     0x7fffddcf19da - <unknown>
+  41:     0x7fffdd9bd5ab - <unknown>
+  42:     0x7fffdd8abe97 - <unknown>
+  43:     0x7fffdd9bd742 - <unknown>
+  44:     0x7fffddf1cd00 - <unknown>
+  45:     0x7fffdd9d7f9a - <unknown>
+  46:     0x7fffdd89aaf0 - <unknown>
+  47:     0x7fffdd9d8000 - <unknown>
+  48:     0x7fffdb1dada7 - <unknown>
+  49:     0x7fffdb1d4cb1 - <unknown>
+  50:     0x7fffdb1dfc1a - <unknown>
+  51:     0x7fffddec109c - <unknown>
+  52:     0x7ff879fce957 - <unknown>
+  53:     0x7ff87b62ad6c - <unknown>
+error: could not compile `companion-type` (lib test)
+
+Caused by:
+  process didn't exit successfully: `C:\Users\Billy\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe --crate-name companion_type_lib --edition=2021 src\lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C embed-bitcode=no -C debuginfo=2 --test --cfg "feature=\"custom-protocol\"" --cfg "feature=\"default\"" --check-cfg cfg(docsrs,test) --check-cfg "cfg(feature, values(\"custom-protocol\", \"default\"))" -C metadata=834ecdc116404e4d -C extra-filename=-4c18d5f91650b314 --out-dir E:/CodexData/Companion/.build-cache/windows051/target\debug\deps -L dependency=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps --extern base64=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libbase64-510c46cac5003158.rlib --extern btleplug=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libbtleplug-d4c77e4ebd8e5769.rlib --extern bzip2=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libbzip2-18e501f4c464a7cd.rlib --extern chrono=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libchrono-a091fb0cb81bd4ad.rlib --extern companion_meeting_transcript=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libcompanion_meeting_transcript-d6fb8aba649968dc.rlib --extern crc32fast=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libcrc32fast-ecb374be7ad901e2.rlib --extern denzic_ble_windows=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libdenzic_ble_windows-00dc4ddba62c1dd3.rlib --extern denzic_host_audio_v1_core=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libdenzic_host_audio_v1_core-5e84cd316ea8008d.rlib --extern denzic_observability_v1_core=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libdenzic_observability_v1_core-dcc5f3437642a39a.rlib --extern denzic_ota_core=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libdenzic_ota_core-a4d3a77dbec250e2.rlib --extern futures=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libfutures-57eb93a927b5ea5c.rlib --extern libloading=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\liblibloading-4d1f46c8a12dbd41.rlib --extern minisign_verify=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libminisign_verify-27aa9a1e9bb3d877.rlib --extern msi=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libmsi-f606885d9be70463.rlib --extern nalgebra=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libnalgebra-76aae5af4901d2d6.rlib --extern regex=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libregex-d073314a05bcc9da.rlib --extern reqwest=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libreqwest-e4f4fe08be08029c.rlib --extern semver=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libsemver-f1635a7c1fe21400.rlib --extern serde=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libserde-92de7275602db930.rlib --extern serde_json=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libserde_json-6134c23763ff844c.rlib --extern sha2=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libsha2-f17248e37fb4d6f2.rlib --extern symphonia=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libsymphonia-b20192c53cc95006.rlib --extern tar=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtar-3b40e41c27cfd5bc.rlib --extern tauri=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtauri-cdb28e1fdcc26444.rlib --extern tauri_plugin_dialog=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtauri_plugin_dialog-c38477d1502c3690.rlib --extern tauri_plugin_updater=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtauri_plugin_updater-e37943544e172970.rlib --extern tokio=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtokio-61ea06c59e963054.rlib --extern tokio_tungstenite=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libtokio_tungstenite-feace4cdd71d9850.rlib --extern uuid=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libuuid-141e6e4434bb380c.rlib --extern windows=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libwindows-7ca98c42fed4c523.rlib --extern zip=E:/CodexData/Companion/.build-cache/windows051/target\debug\deps\libzip-2c1213e44a5e81a8.rlib -L native=E:/CodexData/Companion/.build-cache/windows051/target\debug\build\bzip2-sys-28d0f7ec587a3aa3\out\lib -L native=E:/CodexData/Companion/.build-cache/windows051/target\debug\build\denzic-host-audio-v1-core-93b8b8bf4339a799\out -L native=E:/CodexData/Companion/.build-cache/windows051/target\debug\build\ring-5eefc24c805cc1a7\out -L native=E:/CodexData/Companion/.build-cache/windows051/target\debug\build\webview2-com-sys-64ee89babc6e317d\out\x64 -L native=C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows_x86_64_msvc-0.52.6\lib -L native=C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows_x86_64_msvc-0.53.1\lib --cfg desktop --check-cfg cfg(desktop) --check-cfg cfg(mobile) --check-cfg cfg(dev)` (exit code: 0xc0000409, STATUS_STACK_BUFFER_OVERRUN)
