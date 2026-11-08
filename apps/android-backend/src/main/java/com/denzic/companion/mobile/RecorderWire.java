@@ -63,11 +63,7 @@ public final class RecorderWire {
             if(nonce<=0||nonce>0xffffffffL)throw invalid("invalid negotiation nonce");
             if(mtu<139)throw invalid("MTU too small for recording directory");
             byte[] p=new byte[32];p[0]=2;p[1]=0x22;
-            // Current WBA link carries251B data PDUs. A495B characteristic
-            // value plus7B ATT/L2CAP framing fits two;509 needs a third. Keep
-            // the existing negotiated protocol and smaller-MTU limits; the
-            // parser still accepts older509B packets and stored originals.
-            if(maxValueBytes>248){int value=Math.min(Math.min(maxValueBytes,495),mtu-3);if(value<136)throw invalid("MTU too small");put16(p,2,value);}
+            if(maxValueBytes>248){int value=Math.min(maxValueBytes,mtu-3);if(value<136)throw invalid("MTU too small");put16(p,2,value);}
             if(overlapProbe)p[3]|=(byte)0x80;
             if(rangeProbe)p[3]|=0x40;
             put32(p,4,nonce);System.arraycopy(uid,0,p,8,12);put64(p,20,epoch);put32(p,28,crc(p,0,28));return p;
