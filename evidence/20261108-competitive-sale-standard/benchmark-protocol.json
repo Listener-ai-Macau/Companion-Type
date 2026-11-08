@@ -1,0 +1,93 @@
+{
+  "version": "companion.competitive-sale-comparison.v1",
+  "frozenAt": "2026-11-08T22:19:47+08:00",
+  "status": "PROTOCOL_ONLY_NO_LIVE_COMPETITOR_BENCHMARK",
+  "originalContract": "quality_targets.real_meeting_model_contract_20261103",
+  "acceptanceThresholdsUnchanged": true,
+  "qualification": {
+    "audio": "真人现场录制的完整连续会议；公开原件、时间轴、人工逐人文字及来源哈希可核对。非TTS、非拼接、非按输出挑选的短片。可公开记录采集条件，公开会议基准不冒充实际录音卡采集。",
+    "minimumFullMeetings": 3,
+    "minimumMinutesEach": 30,
+    "minimumRooms": 2,
+    "minimumHeldoutMeetings": 1,
+    "heldoutMeaning": "未用于本项目选择阈值、模型或提示词的整场会议；不等于保证模型预训练未见过。选样在候选推理前固定，最后验收一次，返修后该场转为开发素材。",
+    "complexity": "至少一场≥4名说话人且真实重叠占录音时长≥5%；有短回应、快速轮换和两人重叠。三人同时讲话单独列能力范围与失败，不用双路输出冒充三路。",
+    "referencePolicy": "参考标注和事实答案仅用于事后评分；不得喂给转写、聚类、纪要、纠词表或算法预设人数。姓名/角色未知保留未知。",
+    "perMeetingPass": "每场及非重叠/重叠分项分别报告；汇总不能掩盖单场失败。缺标注、范围不足或应用未接入均保留未完成。",
+    "knownDevelopmentMeetings": [
+      "S_R004S03C01",
+      "S_R004S02C01",
+      "M_R003S01C01",
+      "L_R003S01C02"
+    ],
+    "currentQualification": "NOT_QUALIFIED: native17 fixed30s recognized text now has independent predicted word onsets and anonymous identity on both complete development meetings: S_R004S03C01 cpCER 6.37838%; L_R003S01C02 cpCER 39.39604%. Bad full-positive-interval integration and zero-duration predictions retained. Historical onset60ms policy kept with no threshold sweep. Raw fixed30s S5.76577%/complex mixed23.15583% unchanged. Separate author-boundary S5.53754% still misses5%, complex not run by predeclared rule. Complex unknown-forced-unmatched42.71554% remains a failure; no verified word-duration accuracy/tcpCER or both-overlap-voices recovered. Prior FP16/AMI failure and factual minutes/cross-domain holdout/installed Windows-Android/card/sale gates remain open. Full39:23 L routed-candidate fixed-mapping/unknown-unmatched diagnostic 53.55002%, standard cpCER 53.55002%; per-person regressions retained. Research comparison only; no true word-time/pure-overlap/facts/cross-domain/installed-phone-card or sale promotion. Fixed local3s identity audit rejected: positive-window recall90.93248%, absent-window false acceptance77.62619% on3021 correlated development windows. No target-activity filter adopted; all original gates remain open. One learned target-activity candidate on13raw-mixture clips/3real development meetings/67queries rejected before full expansion. Native model/encoder/feature compatibility checked; absent/short/ordinary activity failures retained. No wordCER/standardDER or product accuracy improvement claimed."
+  },
+  "systems": [
+    {
+      "id": "local_original",
+      "purpose": "冻结现有未训练原模型与普通转写基线，保留音频/版本/每步结果。"
+    },
+    {
+      "id": "local_reference_bank",
+      "purpose": "固定多段参考库加原模型，先独立身份/逐人文字验证；已知档案和自动发现的结果分开，不能将带真值身份的实验当自动分人。"
+    },
+    {
+      "id": "commercial_reference",
+      "purpose": "优先核实项目既有火山ASR可用性；兼容接口不等于任何服务已验证。仅公开测试音频，凭据在本机使用且不输出，不自动开通付费账户或新服务。",
+      "actualConfiguredServiceVerified": false
+    },
+    {
+      "id": "competitor_product",
+      "purpose": "Plaud为录音卡产品主对照；Notta中文文件上传分人作次对照。需要实际可用账户/版本/导出结果，目前未运行。Granola作为体验流程参考，不假定支持相同文件导入。",
+      "actualAccountOrResultsVerified": false
+    }
+  ],
+  "inputFairness": [
+    "同条件声学比较使用同一完整公开会议、同一音频文件SHA256/时长/声道，记录所有实际前处理；不以会议账号/独立参会轨道对比单卡混音后宣称模型胜负。",
+    "原始双通道额外路线另列，保存原音，不把阵列麦0/1结果外推到紧邻双麦录音卡。",
+    "先在已暴露完整开发会议比较候选能力和失败原因；不足30分钟的开发片不得进入正式>=30分钟资格集。",
+    "最终至少3场>=30分钟、>=2房间、>=1独立未用于选型的会议，含>=4人、真实重叠>=5%、短回应/快速切换。原最终留出L_R003S03C02保持未打开；候选和处理规则冻结后才验收。",
+    "参考转写/标注/人数仅供评分，不能进入识别器、分离器或摘要提示；看过结果用于改方案的会议成为开发集。"
+  ],
+  "measurements": [
+    {
+      "id": "QM04",
+      "target": "普通及全会逐人严格中文CER<5%，关键人名/数字/日期/否定0错误；按原合同逐场报告。",
+      "report": "替换/删除/插入原始计数、参考字符数、分人和普通/重叠分项；不删除语气词来优化评分。"
+    },
+    {
+      "id": "QM05",
+      "target": "自动分人正式DER<=10%；15%仅阶段目标。",
+      "report": "零宽容且含重叠，整会固定匿名映射，人数、逐人正确覆盖、短回应/重叠漏检与混淆。已知声纹匹配率不是DER。"
+    },
+    {
+      "id": "RM-OVERLAP",
+      "target": "原逐人真实重叠严格CER<5%保留，双人/三人分别报告。",
+      "report": "逐人漏字/串人/重复/虚构，漏掉整路必须计错。最佳排列只作诊断；不得用总CER降低掩盖真实讲话消失。"
+    },
+    {
+      "id": "QM06",
+      "target": "原事实覆盖>=95%；决定、归属、期限、金额及否定100%正确，无根据关键结论0。",
+      "report": "同时对原会与转写核对；所有关键结论带原音时间依据；建议不自动升级为决定，未知负责人/时间保持未知。"
+    },
+    {
+      "id": "QM07-LONG",
+      "target": "准确优先，沿原初始长会RTF<=1.0目标，不能将这个阶段目标当竞品速度或售卖性能证明。",
+      "report": "Windows/Android分别测传输、解码、加载、分人、分离、转写、纪要、总墙钟及停录后等待；记录资源/中断恢复。可比合格样本不足20个不报P95。"
+    },
+    {
+      "id": "QM09",
+      "target": "真实Windows/Android和实卡完整主链按原门验收。",
+      "report": "原文/人物/时间回听/修改/纪要/保存恢复/导出分享、断链续传与取消恢复。脚本成功不当成已安装产品通过。"
+    },
+    {
+      "id": "commercial_viability",
+      "target": "联网路线成本、网络/失败恢复和用户知情选择可交付；具体价格/模式在有实测后确认。",
+      "report": "计费音频量、实际费用、延迟、上传范围及失败状态；云端分数不抵消本地不合格，无同音竞品结果不得宣传达到竞品。"
+    }
+  ],
+  "promotionRule": "所有原门保留；本地/联网分别出资格结论。任何单人讲话回退、重叠漏词增多、整位说话人消失或关键事实错误均不能仅凭平均分晋级。联网使用只能由明确选择触发；私人录音不在本轮上传。",
+  "productPresentation": "默认清晰的生成纪要入口，先展示摘要/决定/待办和人物原文，再提供带依据的问答、思维导图、翻译和模板；未实现功能继续留原竞品待办，不用更多开关冒充能力。",
+  "noNewInferenceOrTraining": true,
+  "finalHoldoutOpened": false
+}
