@@ -1,3 +1,16 @@
+<!-- companion-737738-queue-concurrent-099 -->
+## 2026-11-08T10:54:24+08:00 737修PCM饥饿，738短并发实际通过；开录/短收取/最新OTA仍FAIL，099恢复片段状态已修
+
+737源码a6ae7ccec78c7a96204c3e4e728583e3677d9837恢复radio6ms有限等待，30ms PCM积压时跳过礼让但保留DMA安全窗口；codec2ms/IO4ms分别准入。policy和真实HAL队列检查通过，GAP测试旧fixture缺discard_exclusive字段被编译拒绝后只补fixture并通过，原失败保留。正常app409196/static66232。737手机OTA55.837KiB/s、总115.792s/传完后90.625s过。自身348录10.03s正常STOP188ms，21618B原音/全WAV/回收通过；P95/峰5000/5430us、PDM2530us、异常0。首有效PCM2.171s和含回收25.414KiB/s仍FAIL。
+
+737自身349原测试控制器在10s未见手机持久化统计更新时主动STOP，153.23s；不是设备自行停录，不是已证实10s连接失败。最终native private目录497ms，连接/收取/完整322464B/全WAV/物理receipt均正常，P95/峰5000/5682us、PDM2746us、异常0；仅约11秒实际并发，不充作180秒通过。修观察器：保留原失败，60s只用于等迟写的统计快照，初次真实目录仍按native5s门独立判定；未放宽用户速度/时间门。新短并发按自身360s job核对原音与WAV，不沿用旧7200s fixture。
+
+738 c84e119cb5d5d6a7fe0630642c69a9cd5073880c纳入独立735只读blank缓存，驱动/真实录音核心覆盖完整FF、写擦失效、dirty回退/容量/外来WRITING所有权，不改分配。app410260/static66256；自身350首有效2.172s没有实测收益，STOP172ms正常，10秒含回收26.158KiB/s仍FAIL。738手机OTA48.042KiB/s<50失败，总119.873s/安装核对90.859s过，原失败保留、不用737结果覆盖。自身351录335.14秒、实际同步观察180.125秒，704654B/3段原音CRC/SHA/序列、全WAV、物理receipts全部过，正常非预期断链/重连0。P95 5000us、编码峰5418us、PDM2745us、foreground tick6保守7ms、异常0、栈空4336/guard0/low0，61439820Hz；独立原34目录/4608000B/17段恢复。只是短并发通过，最终2h尚未完成；16.407s尾收录为上界，缺STOP原子剩余快照不伪判动态门，live速度不冒充停录50。
+
+手机0.1.99：后端b677153be43d423085e62d5a0292a3c4544c7e22修正DeviceRecordings把RECOVERED4前缀误判完整，sealed分段齐全不能表示故障录音完整。真实协议向量/恢复标记/删除/分组JVM过；AAR仅DeviceRecordings相关类变化，所有其他内容/JNI原样；前端04da8d182086593ef474c6558e961a7cd471af87含版本99和匹配AAR。APK f113c59a5f5ca46afe3ab76a7a67bed1377b555aeddc069a1aeb9f71fd387674已免清数据安装并逐字节回读校验，冷连2.017s<=5过。安装后旧系统选文件窗口孤立在前台，退回并正常MAIN/LAUNCHER启动后恢复；没有清数据/清配对。没有故意再造录音故障来显示099设备列表，仍按软件范围记录此项。
+
+739 7b2fa462f67d922d4bcf11deb2d63ded93c908f9仅主动查询CAPTURE1时附带现有blank flags/phase/base/bytes/read与ready/space/workspace，normal observerOFF、无后台UART、无采音改动，app410372/static66256，普通手机099 OTA中。用途是解释738无开录收益，不算性能修复；有实测收益才保留优化。任意长度含物理回收50、开录和最新OTA失败继续，原ADC/充电/电流/实体声学/生产等block仍保留，整机未达售卖。
+
 <!-- companion-736-pcm-overflow-737-workpoint -->
 ## 2026-11-08T10:23:12+08:00 736真实录音失败：PCM队列满，前缀收回与物理回收完成；737修调度源头
 

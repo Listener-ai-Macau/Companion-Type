@@ -42899,6 +42899,12 @@
             "sourceAndEvidenceCommit": "16d0381c0bf473c1a462ddd7a1e53b90323bbe18",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings",
             "qualified": false
+          },
+          "jointNeuralSpatialCandidate20261108": {
+            "state": "RUNNING_JOINT_ASR",
+            "sourceAndEvidenceCommit": "9ca05c78986a9d86eab9d2b1b6a7aa1bf84e6ada",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial",
+            "qualified": false
           }
         },
         {
@@ -132968,24 +132974,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-08T10:23:12+08:00",
+      "updatedAt": "2026-11-08T10:54:24+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66736,
+        "firmwareVersion": 66738,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "88537c9a9054b88b69ea7122a34bd568c3589c7f",
-        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\firmware\\fw66736-radio-conversion\\result.json",
-        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\full-media66736\\ordinary-phone098\\after-ota.json",
-        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\radio736\\runtime\\after347-board.json",
+        "sourceCommit": "c84e119cb5d5d6a7fe0630642c69a9cd5073880c",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66738\\build-result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\full-media66738\\after-ota.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\radio738\\runtime\\after351-board.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "NORMAL736_INSTALLED_FAILED_PCM_RING_OVERFLOW_NOT_DELIVERABLE",
+        "sourceRootAvailability": "NORMAL738_SHORT_CONCURRENT_PASS_START_ANY_LENGTH50_OTA_RATE_FAIL_NOT_DELIVERABLE",
         "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133454,7 +133460,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "先读取739仅查询的现有blank proof状态，定位738为何没有减少开录等待；有实测收益才保留候选。短任意长度50、738OTA48.04失败继续，原block保持。738短并发已通过，最终2h仍未完成；不把独立门混合关闭。",
+      "next": "740通过现有加密CRM1读取idle blank缓存状态，解释738开录无收益；739两次UART只读?均0字节，未获得有效状态，不据此宣称板卡故障，不复位/清配对。当前739 OTA55.823KiB/s过，但73848.042失败保留待可靠性余量确认。短任意长度50和开录仍未关闭，原block保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133714,14 +133720,14 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66736,
+        "version": 66738,
         "installed": true,
-        "sourceCommit": "88537c9a9054b88b69ea7122a34bd568c3589c7f",
-        "appBytes": 409156,
-        "staticBytes": 66232,
+        "sourceCommit": "c84e119cb5d5d6a7fe0630642c69a9cd5073880c",
+        "appBytes": 410260,
+        "staticBytes": 66256,
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\candidate.json",
         "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66734\\after-ota.json",
-        "reason": "FAILED:736 own347 PCM ring overflow at6570ms; prefix preserved by existing engineering recovery, normal capture/stop NOT qualified.",
+        "reason": "737 starvation repair retained;738 five-minute capture/three-minute concurrent actual timing and full audio pass. Idle blank-proof experiment showed no first-start gain,2.172s stillFAIL;OTA48.042KiB/sFAIL and all-length50FAIL. Not deliverable.",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
@@ -133956,12 +133962,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-08T00:59:32+08:00",
-        "firmware": 66720,
-        "coreDelivery": "NORMAL720_RESOURCE_OTA_SAMPLE_PASS_LONG720_IN_PROGRESS",
+        "at": "2026-11-08T10:54:24+08:00",
+        "firmware": 66738,
+        "coreDelivery": "SCOPED_SHORT_CONCURRENT_PASS_OPEN_START_SHORT_RATE_OTA_RATE_AND_FINAL2H",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "720097真实333录7363.5秒/并传7200.328秒，60段15472076B和3个完整WAV/误差20ms通过，正常2h非预期断链0、采音异常0、栈4344/guard0/low0；整项仍FAIL：编码P95/峰5.5/7.307ms、PDM峰3.197ms、采音间隔tick8保守9ms>8。先定位同步时处理/调度并修源头，保持61.44MHz/音质/原资源预算，不恢复CPU百分比门。自动恢复7.109<=10秒，同任务/前缀保留且空口新own连接确认；旧脚本额外waiting状态判据FAIL保留并单独复核通过，不把UI状态当产品门槛。098入口修复源码7529d5a8已实装，后端/JNI不变、333全部120文件SHA不变，普通手机入口/冷连待下一板卡轮次。短332任何长度含物理回收50继续FAIL；原电源/声学/生产/屏幕block保持。",
+        "openSoftware": "738自身351 335.14秒录音/180.125秒边录边传，704654B原音全WAV及物理receipt过；P95/峰5000/5418us、PDM2745us、foreground保守7ms、采音异常0、栈4336。尚未完成最终2h；开录2.172s、10秒含回收26.158KiB/s、OTA48.042KiB/s仍失败。739只查询已有blank检查状态，定位无收益后再决定保留/修复/回退；099修复恢复片段误标完整并已装机。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -133974,12 +133980,12 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "Current resources app409364/static69328 below/equal original budgets; current OTA sample pass. Short330/331 still FAIL, valid physical timing attribution not a speed fix. Current idle runtime has0audio samples, never final long qualification.",
+        "completionScope": "原资源预算内app410260/static66256/stack21504；原34设备目录及4608000B/17段不变。范围只含既有证据，blocked不算完成。",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.98"
+        "phoneVersion": "0.1.99"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136038,27 +136044,60 @@
         "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66716\\current096\\short2\\dynamic-verdict.json",
         "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only.",
         "latestAudioTiming": {
-          "firmware": 66734,
-          "session": 346,
-          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long734-diagnostic\\timing-verdict.json",
-          "validMask": 15,
-          "mediaReady": true,
-          "running": false,
-          "encodeSamples": 121489,
-          "pdmSamples": 242978,
-          "encodeP95UpperMs": 5.0,
-          "encodePeakUpperMs": 6.454,
-          "pdmP95UpperMs": 3.0,
-          "pdmPeakUpperMs": 3.217,
-          "encodeP95UpperUs": 5000,
-          "encodePeakUpperUs": 6454,
-          "pdmP95UpperUs": 3000,
-          "pdmPeakUpperUs": 3217,
-          "wireUnits": "CONSERVATIVE_UPPER_MICROSECONDS_SCHEMA2",
+          "at": "2026-11-08T10:54:24+08:00",
+          "firmware": 66738,
+          "phoneVersion": "0.1.98",
+          "session": 351,
+          "recordingSeconds": 335.14,
+          "observedConnectedSeconds": 187.46900000001187,
+          "bytes": 704654,
+          "audioTiming": {
+            "validMask": 15,
+            "mediaReady": true,
+            "running": false,
+            "encodeSamples": 16757,
+            "pdmSamples": 33514,
+            "encodeP95UpperMs": 5.0,
+            "encodePeakUpperMs": 5.418,
+            "pdmP95UpperMs": 2.0,
+            "pdmPeakUpperMs": 2.745,
+            "encodeP95UpperUs": 5000,
+            "encodePeakUpperUs": 5418,
+            "pdmP95UpperUs": 2000,
+            "pdmPeakUpperUs": 2745,
+            "wireUnits": "CONSERVATIVE_UPPER_MICROSECONDS_SCHEMA2"
+          },
+          "audioFaults": {
+            "initialized": true,
+            "running": false,
+            "overflows": 0,
+            "staleDmaHalves": 0,
+            "processingRejections": 0,
+            "deadlineFaults": 0
+          },
+          "audioService": {
+            "initialized": true,
+            "processedDmaHalves": 34516,
+            "errorIrqs": 0,
+            "maxCaptureForegroundMs": 6,
+            "microphoneMaxPollMs": 3
+          },
+          "memory": {
+            "sampled": true,
+            "guardFailed": false,
+            "lowLatched": false,
+            "stackReservedBytes": 21504,
+            "minimumFreeBytes": 4336,
+            "coreHz": 61439820,
+            "uptimeMs": 532867
+          },
+          "scope": "Five-minute capture/three-minute real live receive only. All originals/WAV and exact physical receipts; not final two hours, not stopped-batch50, no atomic STOP remaining snapshot.",
+          "scopedTimingResult": "PASS",
+          "wholeSaleQualified": false,
           "p95Result": "PASS",
-          "encodePeakResult": "FAIL",
-          "pdmPeakResult": "FAIL",
-          "wholeSaleQualified": false
+          "encodePeakResult": "PASS",
+          "pdmPeakResult": "PASS",
+          "foregroundConservativeUpperMs": 7
         }
       },
       "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
@@ -136072,13 +136111,13 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-08T10:23:12+08:00",
-        "state": "738_SHORT_CONCURRENT_PASS_IDLE_739_BLANK_STATE_BUILDING_PHONE099_INSTALLED",
+        "at": "2026-11-08T10:54:24+08:00",
+        "state": "739_NORMAL_INSTALLED_METADATA_VERIFIED_IDLE_740_CACHED_MAINTENANCE_BUILDING",
         "phoneInstalled": "0.1.99",
-        "firmwareInstalled": 66738,
+        "firmwareInstalled": 66739,
         "phoneSourceCommit": "04da8d182086593ef474c6558e961a7cd471af87",
         "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
-        "firmwareSource": "c84e119cb5d5d6a7fe0630642c69a9cd5073880c",
+        "firmwareSource": "7b2fa462f67d922d4bcf11deb2d63ded93c908f9",
         "boardLease": true,
         "boardItem": "Companion733现有线程IRQ归因观测",
         "liveRecording": false,
@@ -136089,8 +136128,8 @@
         "ownLatestSession": 351,
         "evidence": "E:\\CodexData\\Companion\\.build-cache\\radio736\\control\\result.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66739,
-        "candidateSourceCommit": "7b2fa46",
+        "firmwareCandidate": 66740,
+        "candidateSourceCommit": "fe4a9ca",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -139271,6 +139310,20 @@
         "foregroundConservativeUpperMs": 7,
         "pcmFaults": 0,
         "stackMinimumFreeBytes": 4336
+      },
+      "phoneCandidate099": {
+        "at": "2026-11-08T10:54:24+08:00",
+        "state": "INSTALLED_EXACT_APK_AND_COLD_CONNECTION_PASS",
+        "sourceCommit": "04da8d182086593ef474c6558e961a7cd471af87",
+        "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+        "version": "0.1.99",
+        "change": "DeviceRecordings complete excludes RECOVERED flag4; observed347 prefix was previously incorrectly labelled complete in device list, while library terminal correctlyincomplete. Original regression checks/delete/grouping pass.",
+        "coldSeconds": 2.0170999999940395,
+        "minimumGateSeconds": 5,
+        "installedApkSha256": "f113c59a5f5ca46afe3ab76a7a67bed1377b555aeddc069a1aeb9f71fd387674",
+        "nativeAudioAndTransferUnchanged": true,
+        "actualNewRecoveredDeviceRowOn099": "NOT_REPRODUCED_BY_INJECTING_A_NEW_CAPTURE_FAULT",
+        "wholeSaleQualified": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144851,11 +144904,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "AUTOMATIC_DUAL_GAIN_REPEATED_IDENTITY_AND_SEPARATION_ASR_BOTH_UNQUALIFIED",
+          "status": "RUNNING_JOINT_ASR",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原RM-OVERLAP的单一联合提取候选：由同场说话人样音生成目标声学线索，再与原始双路空间信息共同估计提取滤波，固定同一ASR逐人比较；不能把现有单路PS4直接标成双路模型，也不以二值活动门控预先丢掉弱声。先用现有真实数字双路原音验证，不依赖扬声器；有效后再安排双路独立保存和真实采音全链条。保留原失败、普通讲话回退、严格<5%、纪要事实及双端实卡售卖未完成门。",
+          "next": "完成本次固定声纹条件神经掩码＋原始双路MVDR候选，与相同神经单路及缓存最强GSS逐人对照。全局已知人均计入，缺席输出计插入，不以活动门控／top1删除。过预定条件才扩剩余片段；失败即停该候选，不扫模型或掩码参数。原全部质量与售卖门保持未完成。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -177652,6 +177705,181 @@
             "qualityQualified": false,
             "productDefaultChanged": false,
             "sourceAndEvidenceCommit": "0ff8cff455bb3408c7150ca021a737e02749315e",
+            "remoteReadbackConfirmed": true
+          },
+          "ownerJointNeuralSpatial20261108": {
+            "at": "2026-11-08T11:05:31+08:00",
+            "phase": "checkpoint",
+            "ownerOriginal": "好的, 你看看模型那些要怎么继续推进到可用版本, 卡太久了；有一直在原地踏步嘛",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial",
+            "purpose": {
+              "state": "FROZEN_SINGLE_SPEAKER_NEURAL_MASK_SPATIAL_CANDIDATE",
+              "owner": "好的, 你看看模型那些要怎么继续推进到可用版本, 卡太久了；有一直在原地踏步嘛",
+              "previousEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\decision.json",
+              "decisionBasis": "Two new meetings automaticGSS403→361 edits, true activity still237 and one meeting regression. Repeating binary activity/GSS or monoPS4 alone is excluded. New controlled variable is speaker-conditioned spectral masks driving original dual-channel beamforming, with matched neural-mono and strongest cached control.",
+              "processingCases": 4,
+              "allKnownProfiles": 11,
+              "expectedOutputRows": 26,
+              "sourceProtocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+              "newModelFamilies": 0,
+              "newTrainingRuns": 0,
+              "productDefaultChanged": false,
+              "qualityQualified": false
+            },
+            "protocol": {
+              "at": "2026-11-08T10:59:37.811471+08:00",
+              "state": "FROZEN_SINGLE_SPEAKER_NEURAL_MASK_SPATIAL_CANDIDATE",
+              "workerSourceSha256": "004ceda29b19eca6916c530f6006329d44dcc46cd57e515b8af1dcf451b92c22",
+              "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+              "audioOnlySha256": "dfded453218219bcfd6c9a1041a220129560045b00b9af3f272271fabccd75fa",
+              "helperSources": {
+                "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+                "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+                "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107",
+                "practical_target_voice_router_20261107.py": "b416999fe9dd6769a81ef46a7a51394a9432b6bad1aceb76b66945c9942e8afb"
+              },
+              "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+              "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+              "derivedAudioRoot": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108",
+              "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+              "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+              "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+              "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+              "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+              "trainingOverlapWithThesePublicRecordingsUnknown": true,
+              "finalHoldoutOpened": false,
+              "qualityQualified": false,
+              "cpuPercentMaximum": 5,
+              "privateCommitLimitBytes": 2147483648,
+              "modelStagesSequential": true,
+              "parentProtocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+              "audioFrontendManifestSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+              "preparationFailure": "Original model attempt stopped on missing torchaudio before weights or any inference. Pinned unmodified official Python frontend added only to separation-worker path; standard PCM wave I/O and native Torch are unchanged. No model/audio/retention/scoring setting changed.",
+              "componentParentVerifiedReviewSha256": "021474ee010a417f9d238d87563020ba77a7cc3829d734db2700efa3672186aa",
+              "seedManifestSha256": "a2ca387cb66b2e806b6b055a2482695375bac1445e24c686e44405b474d0112a",
+              "globalAnchorsSha256": "eefd80617a89918661178867aad3da5e1650ff5feb22e974d69106e8cf3f7cd7",
+              "fullRoutePlanSha256": "e42d537c4635de487aee4ef310d009a3a6c114124f4349cee561b39ee4340bc9",
+              "fullRoute": "Every predicted-overlap root, all predicted-active enrolled people, same native encoder top1 self-identity check against all6 frozen automatic anchors. All rejected raw lanes retained; no hard time-activity masking. If no lane admitted in a root, retain its full original transcript. Other roots retain original whole output. Same thresholds/model/ASR as routed component, no per-root winner selection.",
+              "fullRetentionRule": "Report full-L fixed global DER mapping/unknown-unmatched and standard cpCER, all-person errors, short utterance and overlap-context categories separately. Any total regression rejects this whole candidate, no per-root model cherry-picking. Ordinary source route stays byte-identical. Short-person regression and absent/unregistered speakers remain explicit even if total improves; no formal5% or sale pass from this one development meeting.",
+              "asrWorkerSourceSha256": "9edebae668740f64443d8b02bdec8aec0bcac3df42801dfc37dc69270920ff69",
+              "sourceFiles": [
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\spatial-audio-only.json",
+                  "sha256": "dfded453218219bcfd6c9a1041a220129560045b00b9af3f272271fabccd75fa"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\profiles.json",
+                  "sha256": "d2c4ac7f5eb8c4087c7abd18e57c0ea8f67dfbd1530b3912c35a9525545ea9a8"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\numpy-backend.json",
+                  "sha256": "751e8850959cd498a895b56dfea5a489ff5821bded4ba2a4bd74b381eea23c6c"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\numpy-numerical-proof.json",
+                  "sha256": "2856fad90297b663daddb54be24ddb5dfe116f9e4c42c58b7e3f379f068121fc"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\audio-frontend-source.json",
+                  "sha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\joint_neural_spatial_cue_worker_20261108.py",
+                  "sha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\joint_neural_spatial_beam_worker_20261108.py",
+                  "sha256": "5e2283261b8a6dec6c3cbaf0b0aa42033a6169cdb277719c3f70ff1ff8d5a4ac"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_pcm_publication_20261108.py",
+                  "sha256": "74484aa889f0355f72e3c1d5a3141ead7ff3ed988b5538b86416c80386623179"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_progress_reader_20261108.py",
+                  "sha256": "f41eb139103396d6b8ff954c1cce6e0f09122c239fd6ad356a18f7941dfa90eb"
+                },
+                {
+                  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_gss_numpy_backend_20261108.py",
+                  "sha256": "4af5abad0ee8ffb370d73a9d4268e1045237b5c9cb3b309fc47c745c057ada11"
+                }
+              ],
+              "algorithm": "Unmodified matching FP32/eval PS4 cue model on original mic0. Non-overlapping <=30s context chunks, separately author peak-normalized and output restored to original mic amplitude. Neural time-frequency target ratio |S|²/(|S|²+|Y0-S|²+eps), clipped to[0,1], drives pinned MVDR-Souden/BAN on ORIGINAL paired0/1 STFT1024Blackman/256/fade, reference0. No GSS EM, activity gate, neural output admission or word filtering. All known people counted. Ordinary bypass original mic0 on both arms.",
+              "conditions": [
+                "neural_mono",
+                "neural_spatial"
+              ],
+              "activity": "Existing full nativeFP16 diarization only. The identical predicted lexical-segment sample mask is applied to every overlap arm, including the mono baseline, after spatial processing. This is a bounded segmentation-controlled research screen, not a new production hard-gating policy; all missed words outside the prediction are charged. No reference/oracle activities or words enter processing.",
+              "ordinary": "First predicted single-ID >=25s root in each new meeting; ordinary rawdual bypass is byte-identical to mono. No alternative ordinary window if reference audit contradicts the prediction.",
+              "recognition": "Exact prior native1.7B inference AST, same512tokens/BF16/greedy/Chinese/no-context/bounded recovery. All raw generations retained; no filler, duplication or reference-word filtering.",
+              "primaryComparison": "Raw paired0/1 fixedGSS versus original0 with identical predicted activity gates. No oracle count/turn/text/slot choice, no parameter or codec sweep. Full per-mic DER and short-span recall reported separately; mic0 always guides separation regardless of reference score.",
+              "retention": "To expand to remaining roots: beat cached automaticGSS total216 edits and each root30/186; reduce the lost S002-F deletion count; do not worsen another participant deletions; both ordinary controls remain original PCM/text. Otherwise stop this candidate, keep all absent-person insertions and do not sweep masks/thresholds/models.",
+              "asrInferenceAstMatchesOriginal": true,
+              "scope": "Local pipeline feasibility, not fullCER<5%, pure-overlapCER, current-card dual-mic performance, Android deployment or sale qualification.",
+              "cpuLimitPercent": 10,
+              "privateCommitBytes": 2147483648,
+              "rootCount": 6,
+              "expectedOutputRows": 26,
+              "referencePayloadRead": false,
+              "cueWorkerSha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67",
+              "beamWorkerSha256": "5e2283261b8a6dec6c3cbaf0b0aa42033a6169cdb277719c3f70ff1ff8d5a4ac",
+              "profilesSha256": "d2c4ac7f5eb8c4087c7abd18e57c0ea8f67dfbd1530b3912c35a9525545ea9a8",
+              "ratioNumericalEpsilonRelativeToPeakPower": 1e-12,
+              "conditionsMeaning": "Matched neural_mono vs neural_spatial isolates the spatial filter; both also compared with cached strongest automaticGSS baseline on identical roots. This is NOT a newly trained joint model or a claim the mono backbone accepts2channels.",
+              "diagnosticRoots": {
+                "M_R003S02C01": 51,
+                "S_R003S01C01": 56
+              },
+              "newTrainingRuns": 0,
+              "referenceUsed": false
+            },
+            "run": {
+              "state": "RUNNING_JOINT_ASR",
+              "pid": 22312,
+              "startedAt": "2026-11-08T11:02:42+08:00",
+              "results": [
+                {
+                  "stage": "inventory",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 5.075290400010999,
+                  "privatePeakBytes": 325922816,
+                  "rssPeakBytes": 410415104
+                },
+                {
+                  "stage": "cue",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 44.68573930001003,
+                  "privatePeakBytes": 1059299328,
+                  "rssPeakBytes": 1069539328
+                },
+                {
+                  "stage": "spatial",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 6.1256899000145495,
+                  "privatePeakBytes": 369131520,
+                  "rssPeakBytes": 355667968
+                }
+              ],
+              "priorAttemptReceipts": [
+                "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\run-attempt-0001.json"
+              ],
+              "automaticModelFailureRetries": 0,
+              "referenceInput": false,
+              "controllerSha256": "862bf484fd17640b595fbae3602a852aee39aa817515080f81cf76338f79243c",
+              "qualityQualified": false,
+              "stage": "asr",
+              "activePid": 3184
+            },
+            "review": null,
+            "decision": null,
+            "newTrainingRuns": 0,
+            "productDefaultChanged": false,
+            "qualityQualified": false,
+            "saleQualified": false,
+            "finalHoldoutOpened": false,
+            "state": "RUNNING_JOINT_ASR",
+            "next": "完成本次固定声纹条件神经掩码＋原始双路MVDR候选，与相同神经单路及缓存最强GSS逐人对照。全局已知人均计入，缺席输出计插入，不以活动门控／top1删除。过预定条件才扩剩余片段；失败即停该候选，不扫模型或掩码参数。原全部质量与售卖门保持未完成。",
+            "sourceAndEvidenceCommit": "9ca05c78986a9d86eab9d2b1b6a7aa1bf84e6ada",
             "remoteReadbackConfirmed": true
           }
         },
