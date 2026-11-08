@@ -1,0 +1,18 @@
+{
+  "state": "RUNNING_SMALL_ADAPTATION_FEATURES",
+  "pid": 19312,
+  "startedAt": "2026-11-08T08:27:48+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 9.142489100020612,
+      "privatePeakBytes": 332111872
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "lastAvailableBytes": 5546225664,
+  "activePid": 9104
+}

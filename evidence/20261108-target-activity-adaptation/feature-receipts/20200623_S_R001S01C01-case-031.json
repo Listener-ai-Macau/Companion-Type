@@ -1,0 +1,19 @@
+{
+  "id": "20200623_S_R001S01C01-case-031",
+  "binding": {
+    "protocolSha256": "98773d74cf5c3cc1ab22cbdcfbe9e5129e0564a036b80515d08e6a7cd470dc5d",
+    "workerSourceSha256": "d029cc70b6c66edf050de26e44b0243c48818c5d966cef540643e18449a394cd"
+  },
+  "featureKind": "supervised",
+  "audioSha256": "aeb6b79adad437bbc08cda58c575844036c46014c438a9a127032fb6cf5e7b62",
+  "featureFile": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\features\\20200623_S_R001S01C01-case-031.npz",
+  "featureSha256": "4d21492345613c97362b8eba27a5ad73692dd1f0d770c4b36957125845f3c7fa",
+  "inputFeatureFrames": 398,
+  "frameFeatureShape": [
+    1,
+    50,
+    1024
+  ],
+  "role": "validation",
+  "meeting": "20200623_S_R001S01C01"
+}

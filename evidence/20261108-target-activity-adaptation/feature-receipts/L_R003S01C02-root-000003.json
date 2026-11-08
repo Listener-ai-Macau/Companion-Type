@@ -1,0 +1,19 @@
+{
+  "id": "L_R003S01C02-root-000003",
+  "binding": {
+    "protocolSha256": "98773d74cf5c3cc1ab22cbdcfbe9e5129e0564a036b80515d08e6a7cd470dc5d",
+    "workerSourceSha256": "d029cc70b6c66edf050de26e44b0243c48818c5d966cef540643e18449a394cd"
+  },
+  "featureKind": "old-evaluation",
+  "audioSha256": "339c8051ec4afe705e5e0dce32934ed418fc1bbe7c8661e3158fdeb97b88f3d3",
+  "featureFile": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\features\\L_R003S01C02-root-000003.npz",
+  "featureSha256": "40fa202f7fe4f2e2f764cc13d032159b33c4cd5f715a7efda782269e4c414856",
+  "inputFeatureFrames": 2998,
+  "frameFeatureShape": [
+    1,
+    375,
+    1024
+  ],
+  "role": null,
+  "meeting": "L_R003S01C02"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "20200707_L_R001S08C01-case-025",
+  "binding": {
+    "protocolSha256": "98773d74cf5c3cc1ab22cbdcfbe9e5129e0564a036b80515d08e6a7cd470dc5d",
+    "workerSourceSha256": "d029cc70b6c66edf050de26e44b0243c48818c5d966cef540643e18449a394cd"
+  },
+  "featureKind": "supervised",
+  "audioSha256": "6843fb0d8e90c5ecccfa24e096abd33f30412dfbb421566a6a9f74ed560d2c83",
+  "featureFile": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\features\\20200707_L_R001S08C01-case-025.npz",
+  "featureSha256": "e553ec0d3c25a78d9cce3b80a1416871fe843d89711f549a9443a12e9af6447a",
+  "inputFeatureFrames": 398,
+  "frameFeatureShape": [
+    1,
+    50,
+    1024
+  ],
+  "role": "train",
+  "meeting": "20200707_L_R001S08C01"
+}

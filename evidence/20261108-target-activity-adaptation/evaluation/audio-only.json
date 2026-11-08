@@ -1,0 +1,470 @@
+[
+  {
+    "id": "L_R003S01C02-root-000001",
+    "meeting": "L_R003S01C02",
+    "kind": "ordinary",
+    "rootIndex": 1,
+    "startSample": 480000,
+    "endSample": 960000,
+    "predictedPeople": [
+      4
+    ],
+    "predictedPersonSeconds": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 29.38000001385808,
+      "5": 0
+    },
+    "predictedSoloSeconds": 29.38000001385808,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\L_R003S01C02-root-000001.wav",
+    "audioSha256": "c80ccf4316fa0618bedb298f4f185b54dfcf6e73a580d919b0fc7f9db29c6823",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  {
+    "id": "L_R003S01C02-root-000012",
+    "meeting": "L_R003S01C02",
+    "kind": "two-speaker-overlap",
+    "rootIndex": 12,
+    "startSample": 5760000,
+    "endSample": 6240000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedPersonSeconds": {
+      "0": 0,
+      "1": 21.91000018082559,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 9.350008508190513
+    },
+    "predictedSoloSeconds": 25.799991376698017,
+    "predictedOverlapSeconds": 2.7300086561590433,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\L_R003S01C02-root-000012.wav",
+    "audioSha256": "1ba8375ac7851d7ea8b287c9575bf9c5a658028d8cec09cb036c3d800660b2e2",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  {
+    "id": "L_R003S01C02-root-000031",
+    "meeting": "L_R003S01C02",
+    "kind": "three-plus-overlap",
+    "rootIndex": 31,
+    "startSample": 14880000,
+    "endSample": 15360000,
+    "predictedPeople": [
+      0,
+      1,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 8.179999817162752,
+      "1": 18.389978801831603,
+      "2": 0,
+      "3": 7.040021300315857,
+      "4": 0,
+      "5": 0
+    },
+    "predictedSoloSeconds": 24.640000119805336,
+    "predictedOverlapSeconds": 3.9799999110400677,
+    "predictedTripleSeconds": 1.0099999774247408,
+    "predictedShortTurns": 5,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\L_R003S01C02-root-000031.wav",
+    "audioSha256": "631c6bc436250af95d442697a516da1a7db804686e604702bc135a5c0d039317",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  {
+    "id": "L_R003S01C02-root-000000",
+    "meeting": "L_R003S01C02",
+    "kind": "short-turn",
+    "rootIndex": 0,
+    "startSample": 0,
+    "endSample": 480000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "predictedPersonSeconds": {
+      "0": 2.7599999383091927,
+      "1": 1.1799999736249447,
+      "2": 1.1099999751895666,
+      "3": 2.2199999503791332,
+      "4": 7.820000495761633,
+      "5": 0
+    },
+    "predictedSoloSeconds": 12.930000381544232,
+    "predictedOverlapSeconds": 1.0799999758601189,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 7,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\L_R003S01C02-root-000000.wav",
+    "audioSha256": "b340428f39bdbc8cb82b9a8683aaaaca1a0e091fef4c7fcce5fa39da709de6fc",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  {
+    "id": "L_R003S01C02-root-000003",
+    "meeting": "L_R003S01C02",
+    "kind": "predicted-person-coverage",
+    "rootIndex": 3,
+    "startSample": 1440000,
+    "endSample": 1920000,
+    "predictedPeople": [
+      2,
+      4
+    ],
+    "predictedPersonSeconds": {
+      "0": 0,
+      "1": 0,
+      "2": 11.890002416446805,
+      "3": 0,
+      "4": 14.549997663125396,
+      "5": 0
+    },
+    "predictedSoloSeconds": 26.4400000795722,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\L_R003S01C02-root-000003.wav",
+    "audioSha256": "339c8051ec4afe705e5e0dce32934ed418fc1bbe7c8661e3158fdeb97b88f3d3",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  {
+    "id": "S_R004S03C01-root-000001",
+    "meeting": "S_R004S03C01",
+    "kind": "ordinary",
+    "rootIndex": 1,
+    "startSample": 480000,
+    "endSample": 960000,
+    "predictedPeople": [
+      0
+    ],
+    "predictedPersonSeconds": {
+      "0": 29.210000017657876,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "predictedSoloSeconds": 29.210000017657876,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\S_R004S03C01-root-000001.wav",
+    "audioSha256": "f5c8f06081d43e0e5f6b95bc83a0ac5f406fc65ca88856148d027bdd59fe6207",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  {
+    "id": "S_R004S03C01-root-000016",
+    "meeting": "S_R004S03C01",
+    "kind": "two-speaker-overlap",
+    "rootIndex": 16,
+    "startSample": 7680000,
+    "endSample": 8160000,
+    "predictedPeople": [
+      0,
+      2
+    ],
+    "predictedPersonSeconds": {
+      "0": 2.319999948143959,
+      "1": 0,
+      "2": 30.0,
+      "3": 0,
+      "4": 0
+    },
+    "predictedSoloSeconds": 27.68000005185604,
+    "predictedOverlapSeconds": 2.319999948143959,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 3,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\S_R004S03C01-root-000016.wav",
+    "audioSha256": "ec814c0e08ffa8ffd2e8dd83ea0442b58475ca68ef79540e265ed46d2ecfa9c6",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  {
+    "id": "S_R004S03C01-root-000000",
+    "meeting": "S_R004S03C01",
+    "kind": "short-turn",
+    "rootIndex": 0,
+    "startSample": 0,
+    "endSample": 480000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 9.370000461116433,
+      "1": 1.3599999696016312,
+      "2": 2.5999999418854713,
+      "3": 1.0399999767541885,
+      "4": 0
+    },
+    "predictedSoloSeconds": 14.370000349357724,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 5,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\S_R004S03C01-root-000000.wav",
+    "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  {
+    "id": "S_R004S03C01-root-000061",
+    "meeting": "S_R004S03C01",
+    "kind": "predicted-person-coverage",
+    "rootIndex": 61,
+    "startSample": 29280000,
+    "endSample": 29760000,
+    "predictedPeople": [
+      1,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 0,
+      "1": 19.270041143521667,
+      "2": 0,
+      "3": 2.74999993853271,
+      "4": 0
+    },
+    "predictedSoloSeconds": 22.020041082054377,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\S_R004S03C01-root-000061.wav",
+    "audioSha256": "67e6fb81fb9f52ed01e29cdfae21ced7b6e8ad81401bb9cc0dfa5b3db3b5e681",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  {
+    "id": "S_R004S03C01-root-000046",
+    "meeting": "S_R004S03C01",
+    "kind": "predicted-person-coverage",
+    "rootIndex": 46,
+    "startSample": 22080000,
+    "endSample": 22560000,
+    "predictedPeople": [
+      3,
+      4
+    ],
+    "predictedPersonSeconds": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 5.070031402632594,
+      "4": 17.93996875360608
+    },
+    "predictedSoloSeconds": 23.010000156238675,
+    "predictedOverlapSeconds": 0,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\S_R004S03C01-root-000046.wav",
+    "audioSha256": "92f840b687c32c470e1dd15cd6de8547e960cd855af087c1a48bc32c8c4976d6",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  {
+    "id": "EN2002a-root-000008",
+    "meeting": "EN2002a",
+    "kind": "two-speaker-overlap",
+    "rootIndex": 8,
+    "startSample": 3840000,
+    "endSample": 4320000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 10.660000432282686,
+      "1": 2.6299945767968893,
+      "2": 13.39999970048666,
+      "3": 0.7799999825656414
+    },
+    "predictedSoloSeconds": 22.25000553764403,
+    "predictedOverlapSeconds": 2.609994577243924,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 8,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\EN2002a-root-000008.wav",
+    "audioSha256": "891a2926c0ed0b1874804d6c685b7e0b87e1374b95faa03f8326c41f270be575",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "originalFullAudioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e"
+  },
+  {
+    "id": "EN2002a-root-000000",
+    "meeting": "EN2002a",
+    "kind": "three-plus-overlap",
+    "rootIndex": 0,
+    "startSample": 0,
+    "endSample": 480000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 7.00999984331429,
+      "1": 6.799999848008156,
+      "2": 10.509999765083194,
+      "3": 0.5699999872595072
+    },
+    "predictedSoloSeconds": 15.149999661371112,
+    "predictedOverlapSeconds": 4.009999910369515,
+    "predictedTripleSeconds": 1.6699999626725912,
+    "predictedShortTurns": 22,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\EN2002a-root-000000.wav",
+    "audioSha256": "c447ac6d39d1f106b1efac7f523ab0590eb15b754fbe5199f834ad090b692efa",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "originalFullAudioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e"
+  },
+  {
+    "id": "EN2002a-root-000001",
+    "meeting": "EN2002a",
+    "kind": "short-turn",
+    "rootIndex": 1,
+    "startSample": 480000,
+    "endSample": 960000,
+    "predictedPeople": [
+      0,
+      2,
+      3
+    ],
+    "predictedPersonSeconds": {
+      "0": 0.3499999921768904,
+      "1": 0,
+      "2": 12.48000106215477,
+      "3": 3.9399999119341373
+    },
+    "predictedSoloSeconds": 15.93000098504126,
+    "predictedOverlapSeconds": 0.41999999061226845,
+    "predictedTripleSeconds": 0,
+    "predictedShortTurns": 15,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\target-activity-controls-20261107\\EN2002a-root-000001.wav",
+    "audioSha256": "7eaa33c857bd103299b2ab2ab0ae44a0fb7e2d33570d4635c05f2789e9c0a72b",
+    "audioSeconds": 30.0,
+    "allAnonymousTargets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "originalFullAudio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "originalFullAudioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e"
+  }
+]
