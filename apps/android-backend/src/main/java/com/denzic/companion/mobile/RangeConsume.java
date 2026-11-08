@@ -75,7 +75,6 @@ final class RangeConsume {
     final class Session implements Closeable {
         private final Path directory;
         private final RecorderWire.Descriptor descriptor;
-        private final int usedSectors;
         private int frontier;
         private RangeCheckpoint resume;
         private Pending pending;
@@ -102,7 +101,7 @@ final class RangeConsume {
             }
         }
         Session(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
-            this.directory=directory;descriptor=d;usedSectors=(int)((((d.encodedLength+247)/248+1)*256+4095)/4096);
+            this.directory=directory;descriptor=d;
             peer.validate(d);
             Status device=exchange(d,nonce.getAsLong(),null); // read-only, no erase
             if(RangeCheckpoint.exists(directory,d)){
@@ -133,18 +132,15 @@ final class RangeConsume {
         /** Called only after the actual PULL was written, or to reconcile a
          * previously complete cached file (which cannot qualify as fresh rate). */
         void progress(SegmentReceiver receiver)throws IOException {
-            progress(receiver,false);
-        }
-        private void progress(SegmentReceiver receiver,boolean fullVerified)throws IOException {
             if(closed)throw new IOException("range receiver is closed");
             settle(false);if(pending!=null||completeCopy)return;
             if(resume!=null){RangeCheckpoint saved=resume;resume=null;pending=new Pending(saved);return;}
-            if(receiver.completeBytesReceived()&&!fullVerified)return;
-            int available=receiver.completeBytesReceived()?usedSectors:(int)((receiver.resumeOffset()/248+1)/16);
+            if(receiver.completeBytesReceived())return;
+            int available=(int)((receiver.resumeOffset()/248+1)/16);
             // Keep full32K erase runs intact. Sending each4K as soon as it
             // arrives destroys block coalescing and can make physical reclaim
             // slower than the radio, even when the two overlap.
-            if(!fullVerified)available=available/8*8;
+            available=available/8*8;
             if(available<=frontier)return;
             long token;do{token=nonce.getAsLong();}while(token==lastNonce);
             long began=System.nanoTime();
@@ -155,7 +151,12 @@ final class RangeConsume {
         void finish(SegmentReceiver receiver)throws IOException {
             if(!receiver.completeBytesReceived())throw new IOException("recording range receiver is incomplete");
             receiver.verifyOriginal();
-            while(true){settle(true);if(completeCopy||frontier==usedSectors)return;progress(receiver,true);}
+            // Settle only proofs already issued (including a durable proof
+            // recovered after disconnect). The unchanged whole CRA2 request
+            // owns the final tail and the terminal receipt. A fresh final
+            // range here would erase the tail once, then run CRA2 again.
+            if(resume!=null){RangeCheckpoint saved=resume;resume=null;pending=new Pending(saved);}
+            settle(true);
         }
         @Override public void close(){
             if(closed)return;closed=true;Pending p=pending;if(p==null)return;

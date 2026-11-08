@@ -66,7 +66,8 @@ public final class RangeConsumeClientJvmTest {
             int limit=Math.min(device.bytes.length,(end*16-1)*248);
             try{check(Arrays.equals(MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(device.bytes,begin,limit)),Arrays.copyOfRange(p,56,88)));}
             catch(java.security.NoSuchAlgorithmException e){throw new AssertionError(e);}
-            check(first==device.end);device.first=first;device.end=end;device.nonce=RecorderWire.u32(p,44);device.pending=false;
+            boolean exactPendingReplay=device.pending&&device.nonce==RecorderWire.u32(p,44)&&first==device.first&&end==device.end;
+            check(first==device.end||exactPendingReplay);device.first=first;device.end=end;device.nonce=RecorderWire.u32(p,44);device.pending=false;
             firstWriteOffset=offset;requested.countDown();if(dataComplete)advanced.countDown();
         }
         private byte[] rangeReply(byte[] q)throws IOException {
@@ -116,7 +117,7 @@ public final class RangeConsumeClientJvmTest {
             Path dir=Files.createTempDirectory("companion-range-client-");Device device=new Device(d,data);
             Link link=new Link(device,dir,mode==1,mode==2,false);link.expectRange=mode==0;Path file=download(link,d,mode!=3);
             check(Arrays.equals(Files.readAllBytes(file),data));
-            if(mode==0){check(link.queries==1&&link.requests>=2&&link.receipts==link.requests&&device.end==11&&RangeCheckpoint.read(dir,d).confirmed);}
+            if(mode==0){check(link.queries==1&&link.requests==1&&link.receipts==1&&device.end==8&&RangeCheckpoint.read(dir,d).confirmed);}
             else check(link.requests==0&&(!Files.exists(dir.resolve(SegmentReceiver.key(d)+".range"))));
         }
         Path dir=Files.createTempDirectory("companion-range-reconnect-");Device device=new Device(d,data);
@@ -125,7 +126,7 @@ public final class RangeConsumeClientJvmTest {
         catch(RecordingSyncRunner.LinkFailure expected){}
         check(failed.requests==1&&RangeCheckpoint.exists(dir,d)&&!RangeCheckpoint.read(dir,d).confirmed);
         Link resumed=new Link(device,dir,false,false,false);Path file=download(resumed,d,true);
-        check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==11);
+        check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==8&&resumed.requests==0);
         // A new short original keeps the existing single-block whole path;
         // an old partially reclaimed short original must reconcile its proof.
         RecorderWire.Descriptor shortD=RangeCheckpointJvmTest.descriptor();byte[] shortData=RangeCheckpointJvmTest.data;
@@ -140,7 +141,14 @@ public final class RangeConsumeClientJvmTest {
         try(SegmentReceiver receiver=new SegmentReceiver(oldDir,shortD)){receiver.checkpointRange(oldDir,0,1,99,p->{});}
         Device oldDevice=new Device(shortD,shortData);oldDevice.nonce=99;oldDevice.end=1;
         Link oldLink=new Link(oldDevice,oldDir,false,false,false);oldLink.expectRange=false;
-        check(Arrays.equals(Files.readAllBytes(download(oldLink,shortD,true)),shortData)&&oldLink.queries==1&&oldLink.requests==1&&oldDevice.end==3);
+        check(Arrays.equals(Files.readAllBytes(download(oldLink,shortD,true)),shortData)&&oldLink.queries==1&&oldLink.requests==0&&oldDevice.end==1);
+        // A previously committed pending range is still settled even when
+        // all local bytes already exist; final tail ownership stays with CRA2.
+        Path pendingDir=Files.createTempDirectory("companion-old-pending-range-");Files.write(pendingDir.resolve(SegmentReceiver.key(shortD)+".part"),shortData);
+        try(SegmentReceiver receiver=new SegmentReceiver(pendingDir,shortD)){receiver.checkpointRange(pendingDir,0,1,100,p->{});}
+        Device pendingDevice=new Device(shortD,shortData);pendingDevice.nonce=100;pendingDevice.end=1;pendingDevice.pending=true;
+        Link pendingLink=new Link(pendingDevice,pendingDir,false,false,false);pendingLink.expectRange=false;
+        check(Arrays.equals(Files.readAllBytes(download(pendingLink,shortD,true)),shortData)&&pendingLink.requests==1&&pendingDevice.end==1&&!pendingDevice.pending);
         System.out.println("PASS_ACTUAL_CLIENT_RANGE_FLOW concurrent_audio_and_receipt=1 durable_source_before_request=1 exact_original_after_reconnect=1 lost_receipt_reconciled=1 legacy_busy_and_copy_only_paths_preserved=1 no_metric_start_or_byte_padding_changes=1");
     }
 }
