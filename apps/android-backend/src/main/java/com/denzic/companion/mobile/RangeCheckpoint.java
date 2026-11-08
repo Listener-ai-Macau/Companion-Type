@@ -20,6 +20,7 @@ import java.util.zip.CRC32;
  * existing exact-descriptor file lock must remain held during save/confirm. */
 final class RangeCheckpoint {
     interface DirectorySync {void sync(Path directory)throws IOException;}
+    interface Save {RangeCheckpoint persist()throws IOException;}
     private static final int BYTES=216;
     final RecorderWire.Descriptor descriptor;
     final long nonce,prefixBytes;

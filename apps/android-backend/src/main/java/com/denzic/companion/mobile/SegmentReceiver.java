@@ -104,6 +104,14 @@ public final class SegmentReceiver implements Closeable {
      * this. The existing receiver lock stays held until physical confirmation. */
     RangeCheckpoint checkpointRange(Path directory,int firstSector,int endSector,long nonce,
             RangeCheckpoint.DirectorySync sync)throws IOException {
+        return prepareRangeCheckpoint(directory,firstSector,endSector,nonce,sync).persist();
+    }
+    /** Capture immutable accepted bounds/hash on the receiver thread. The
+     * caller retains this receiver's lock and joins the persistence worker
+     * before publishing/renaming/closing the source. Later appends do not
+     * mutate the captured prefix and need not wait for filesystem sync. */
+    RangeCheckpoint.Save prepareRangeCheckpoint(Path directory,int firstSector,int endSector,long nonce,
+            RangeCheckpoint.DirectorySync sync)throws IOException {
         if(closed)throw new IOException("receiver is closed");
         long end=Math.min(descriptor.encodedLength,((long)endSector*16-1)*248);
         if(end>offset)throw new IOException("recording range is not fully received");
@@ -113,7 +121,8 @@ public final class SegmentReceiver implements Closeable {
         if(existingComplete&&end==descriptor.encodedLength)prefix=descriptor.sha256();
         else if(end==boundaryBytes)prefix=boundarySha;
         else if(end==offset)try{prefix=((MessageDigest)sha.clone()).digest();}catch(CloneNotSupportedException unsupported){/* full readback fallback retains correctness */}
-        return RangeCheckpoint.saveOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,prefix);
+        final byte[] acceptedSha=prefix==null?null:prefix.clone();
+        return ()->RangeCheckpoint.saveOwned(directory,descriptor,firstSector,endSector,nonce,sync,end,acceptedSha);
     }
     private void rememberBoundary(MessageDigest digest,byte[] payload,int length,long start){
         long sector=((start+length)/248+1)/16;

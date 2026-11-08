@@ -29,7 +29,7 @@ public final class RangeConsumeClientJvmTest {
         final CountDownLatch requested=new CountDownLatch(1),advanced=new CountDownLatch(1);
         volatile byte[] control,range;volatile int offset,sequence,queries,requests,receipts;
         volatile boolean pulled,dataComplete,closed;
-        boolean expectRange=true;volatile int firstWriteOffset;
+        boolean expectRange=true,waitForRangeRequest=true;volatile int firstWriteOffset;
         Link(Device d,Path directory,boolean legacy,boolean busy,boolean disconnect){this.device=d;this.directory=directory;this.legacy=legacy;this.busy=busy;this.disconnect=disconnect;}
         public int mtu(){return 512;}
         public void subscribe(UUID id){}
@@ -86,7 +86,7 @@ public final class RangeConsumeClientJvmTest {
             if(id.equals(RecordingClient.RECORDING_CONTROL))return control.clone();
             if(id.equals(RecordingClient.RECORDING_CONSUME))return rangeReply(range.clone());
             check(id.equals(RecordingClient.RECORDING_PULL)&&pulled);
-            if(expectRange&&!legacy&&!busy&&device.end==0&&offset>=31600&&requests==0){
+            if(waitForRangeRequest&&expectRange&&!legacy&&!busy&&device.end==0&&offset>=31600&&requests==0){
                 try{check(requested.await(2,TimeUnit.SECONDS));}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException(e);}
             }
             int n=Math.min(400,device.bytes.length-offset);boolean last=offset+n==device.bytes.length;int header=last?56:20;
@@ -99,7 +99,10 @@ public final class RangeConsumeClientJvmTest {
         }
     }
     static Path download(Link link,RecorderWire.Descriptor d,boolean consume)throws Exception {
-        try(RecordingClient client=new RecordingClient(link,p->{},prefix->{})){
+        return download(link,d,consume,p->{});
+    }
+    static Path download(Link link,RecorderWire.Descriptor d,boolean consume,DurableConsume.DirectorySync sync)throws Exception {
+        try(RecordingClient client=new RecordingClient(link,sync,prefix->{})){
             Field current=RecordingClient.class.getDeclaredField("current");current.setAccessible(true);current.set(client,Collections.singletonList(d));
             if(!consume)return client.download(d.recordingId,link.directory,null);
             Method method=RecordingClient.class.getDeclaredMethod("download",long.class,Path.class,RecordingClient.Progress.class,boolean.class);method.setAccessible(true);

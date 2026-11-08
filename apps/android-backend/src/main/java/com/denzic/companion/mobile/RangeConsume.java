@@ -81,12 +81,22 @@ final class RangeConsume {
         private long lastNonce;
         private boolean completeCopy,closed;
         private final class Pending {
-            final RangeCheckpoint checkpoint;final CountDownLatch finished=new CountDownLatch(1);
+            RangeCheckpoint checkpoint;final CountDownLatch finished=new CountDownLatch(1);
             final Thread thread;volatile IOException error;
             Pending(RangeCheckpoint checkpoint){
-                this.checkpoint=checkpoint;
+                this(()->checkpoint,0);
+            }
+            Pending(RangeCheckpoint.Save save,long preparedAt){
                 thread=new Thread(()->{
                     try{
+                        // Prefix bytes/metadata/directories/proof must all be
+                        // durable before a destructive request. Keep that work
+                        // off the append/notification receive path, under the
+                        // same retained file owner and single pending worker.
+                        checkpoint=save.persist();
+                        if(Thread.currentThread().isInterrupted())throw new IOException("recording range preparation interrupted; saved source retained");
+                        RecordingTransferMetrics prepared=metrics;
+                        if(preparedAt!=0&&prepared!=null)prepared.rangePrepared(checkpoint.firstSector,checkpoint.endSector,System.nanoTime()-preparedAt);
                         long began=System.nanoTime();
                         Status result=exchange(descriptor,checkpoint.nonce,checkpoint);
                         if(result.pending||result.nonce!=checkpoint.nonce||result.first!=checkpoint.firstSector||result.end!=checkpoint.endSector)
@@ -144,9 +154,8 @@ final class RangeConsume {
             if(available<=frontier)return;
             long token;do{token=nonce.getAsLong();}while(token==lastNonce);
             long began=System.nanoTime();
-            RangeCheckpoint saved=receiver.checkpointRange(directory,frontier,available,token,sync);
-            RecordingTransferMetrics m=metrics;if(m!=null)m.rangePrepared(frontier,available,System.nanoTime()-began);
-            lastNonce=token;pending=new Pending(saved);
+            RangeCheckpoint.Save save=receiver.prepareRangeCheckpoint(directory,frontier,available,token,sync);
+            lastNonce=token;pending=new Pending(save,began);
         }
         void finish(SegmentReceiver receiver)throws IOException {
             if(!receiver.completeBytesReceived())throw new IOException("recording range receiver is incomplete");

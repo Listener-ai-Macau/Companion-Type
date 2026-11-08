@@ -11,11 +11,13 @@ api=Path('E:/CodexData/Companion/.build-cache/android-sdk/platforms/android-35/a
 sources=sorted((base/'main/java').rglob('*.java'))
 test=base/'test/java/com/denzic/companion/mobile/RangeCheckpointJvmTest.java'
 client_test=base/'test/java/com/denzic/companion/mobile/RangeConsumeClientJvmTest.java'
+overlap_test=base/'test/java/com/denzic/companion/mobile/RangeCheckpointOverlapJvmTest.java'
 env=dict(os.environ,JAVA_TOOL_OPTIONS='-XX:ActiveProcessorCount=2 -Xmx384m')
-for name,cmd in [('compile',[str(java/'javac.exe'),'--release','8','-encoding','UTF-8','-cp',str(api),'-d',str(classes),*map(str,sources),str(test),str(client_test)]),
+for name,cmd in [('compile',[str(java/'javac.exe'),'--release','8','-encoding','UTF-8','-cp',str(api),'-d',str(classes),*map(str,sources),str(test),str(client_test),str(overlap_test)]),
                  ('range-checkpoint',[str(java/'java.exe'),'-cp',str(classes)+os.pathsep+str(api),'com.denzic.companion.mobile.RangeCheckpointJvmTest']),
-                 ('range-client',[str(java/'java.exe'),'-cp',str(classes)+os.pathsep+str(api),'com.denzic.companion.mobile.RangeConsumeClientJvmTest'])]:
+                 ('range-client',[str(java/'java.exe'),'-cp',str(classes)+os.pathsep+str(api),'com.denzic.companion.mobile.RangeConsumeClientJvmTest']),
+                 ('range-disk-overlap',[str(java/'java.exe'),'-cp',str(classes)+os.pathsep+str(api),'com.denzic.companion.mobile.RangeCheckpointOverlapJvmTest'])]:
     p=subprocess.run(cmd,capture_output=True,text=True,encoding='utf-8',errors='replace',env=env,creationflags=subprocess.CREATE_NO_WINDOW,timeout=90)
     (out/(name+'.log')).write_text(p.stdout+p.stderr,encoding='utf-8');print(name,p.returncode,p.stdout,p.stderr,flush=True);p.check_returncode()
-changed=[base/'main/java/com/denzic/companion/mobile'/n for n in ['RangeCheckpoint.java','SegmentReceiver.java','RangeConsume.java','RecordingClient.java','RecorderWire.java']]+[test,client_test,Path(__file__)]
+changed=[base/'main/java/com/denzic/companion/mobile'/n for n in ['RangeCheckpoint.java','SegmentReceiver.java','RangeConsume.java','RecordingClient.java','RecorderWire.java']]+[test,client_test,overlap_test,Path(__file__)]
 (out/'result.json').write_text(json.dumps({'result':'PASS_RANGE_HOST_PERSISTENCE_AND_ACTUAL_RECEIVER_RECOVERY','sourceSha256':{str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in changed},'deviceAccessed':False,'installed':False,'speedQualified':False,'negotiatedRangeWireEnabled':False},indent=2)+'\n')
