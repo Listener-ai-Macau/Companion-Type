@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-09T07:34:30+08:00",
+  "change": "Preserve every explicit sentence word identity. Refine only actual words from missing-sentence responses, using sole predicted voice plus its largest observed provider-label association from normal single-voice words. Ties/overlap/unmapped voices keep source label; no threshold, named speaker, expected person count, transcript answer or tuning.",
+  "whyDifferent": "Whole-transcript replacement already failed. The source parser lost94 actual returned characters in one missing-text response; repair that concrete source seam without disturbing ordinary text.",
+  "providerWordsSha256": "efaebf5f4772b4e3cb8321224e1c0fedca70b23e94e866f1efd57d5d46e63905",
+  "sourceSha256": "88ad2db7adcdc0e9326b9a5bebe7f2c97c081a1a2c3d9924a3e9adbc23748b34",
+  "scope": "Same exposed difficult window, native journal has full-meeting context. Diagnostic only; not an independent qualification.",
+  "newModelOrNetworkCalls": 0,
+  "saleQualified": false
+}

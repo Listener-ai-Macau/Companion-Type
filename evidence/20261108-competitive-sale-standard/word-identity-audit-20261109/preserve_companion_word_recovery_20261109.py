@@ -1,0 +1,62 @@
+"""Merge the safe parser repair, preserve cached diagnostics in the original task."""
+from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import ast,hashlib,json,os,shutil,subprocess,sys,time
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';S=R/'companion-device-closure055';PRIMARY=R/'recovered-software050';PARENT=R/'docs/handoffs/20261108-competitive-sale-standard';C=PARENT/'word-identity-audit-20261109';EV=M/'evidence/20261108-competitive-sale-standard/word-identity-audit-20261109';DEST=S/'docs/handoffs/model-competitive-sale-standard-20261108/word-identity-audit-20261109';W=Path(__file__).parent
+sys.path.insert(0,str(M/'src'))
+from moss_windows_resource_limits_20261104 import WorkerLimits
+limits=WorkerLimits(cpu_percent=5,memory_bytes=1024**3)
+read=lambda p:json.loads(Path(p).read_text(encoding='utf8'))
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def write(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+env=os.environ.copy();env.update(GIT_TERMINAL_PROMPT='0',GIT_SSH_COMMAND='ssh -o HostName=github.com -p 22 -o ProxyCommand=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=2')
+publisher=S/'docs/handoffs/model-joint-neural-spatial-20261108/preserve_joint_neural_spatial_20261108.py';functions=[n for n in ast.parse(publisher.read_text(encoding='utf8')).body if isinstance(n,ast.FunctionDef) and n.name in ['git','ship']];exec(compile(ast.Module(body=functions,type_ignores=[]),str(publisher),'exec'),globals())
+source='apps/windows/src-tauri/src/backend/volcengine.rs';native=read(C/'native-check-result.json');audit=read(C/'result.json');scoped=read(C/'scoped-alias-result.json');pool=read(C/'automatic-profiles-review.json')
+assert native['state']=='NATIVE_WORD_RECOVERY_CHECK_PASSED' and native['productionSourceSha256']==sha(S/source)
+assert audit['state']=='CACHED_WORD_JOIN_REJECTED' and scoped['recoveredSourceCharacters']==94 and scoped['normalWordIdentitiesUnchanged']
+assert scoped['candidateCpCer']['totalEdits']<scoped['legacyDroppedWordsCpCer']['totalEdits']
+assert not scoped['saleQualified'] and not scoped['productDefaultChanged']
+# Capture the exact processing version used for the first frozen global join;
+# the later scoped function was appended without changing the earlier functions.
+module=M/'src/companion_word_journal_join_20261109.py';raw_module=module.read_bytes();prefix=raw_module.split(b'\ndef refine_recovered_words',1)[0];expected=read(C/'plan.json')['joinSourceSha256'];snapshots=[prefix.rstrip(b'\r\n')+b'\n'*n for n in range(1,4)];snapshot=next(x for x in snapshots if hashlib.sha256(x).hexdigest()==expected);(C/'word-join-source-frozen-r1.py.txt').write_bytes(snapshot)
+at=datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds')
+assert git(S,'diff','--name-only').splitlines()==[source]
+assert not git(PRIMARY,'diff','--name-only','--',source)
+assert sha(PRIMARY/source)=='9912c986f7b07e855e85471f95b3ae2785fd6c7a8fccdfec5f774703b930e899'
+unrelated_before=git(PRIMARY,'diff','--binary','--','.',':(exclude)'+source)
+staged_before=git(PRIMARY,'diff','--cached','--binary','--','.',':(exclude)'+source)
+shutil.copyfile(S/source,PRIMARY/source)
+primary_head=ship(PRIMARY,[source],'Preserve returned ASR word-only content and enable documented async speaker processing')
+assert git(PRIMARY,'diff','--binary','--','.',':(exclude)'+source)==unrelated_before
+assert git(PRIMARY,'diff','--cached','--binary','--','.',':(exclude)'+source)==staged_before
+source_head=ship(S,[source],'Recover words-only ASR utterances without changing recognized text')
+write(C/'python-checks.json',{'at':at,'result':'PASS_5_RELEVANT_WORD_CONSERVATION_TESTS','observedOutput':'Ran5tests,OK,0.006seconds','testSourceSha256':sha(M/'src/test_companion_word_journal_join_20261109.py'),'moduleSourceSha256':sha(module),'scope':'Missing sentence, duplicate-span ambiguous voice, no neighboring voice borrowing, zero-duration retention, scoped recovery does not relabel normal words.'})
+decision={'at':at,'ownerQuote':'那你看看继续吧','state':'REAL_PROVIDER_WORD_RECOVERY_MERGED_SCOPED_IDENTITY_GAIN_NOT_QUALIFIED','sourceRepair':{'sourceCommit':source_head,'primaryCommit':primary_head,'primaryEditableSourceMerged':True,'primaryUnrelatedWorktreeAndIndexChangesPreserved':True,'sourceSha256':sha(S/source),'cause':'The real definite response omitted utterance50.text but retained70timed tokens/94normalized recognition characters in words; result.text omitted them too. Old extraction silently dropped the entire segment.','behavior':'Prefer explicit formatted sentence text. Otherwise recover only complete actual source word tokens. Extend the whole text only when it was missing or exactly explained by the explicit sentence texts; preserve unrelated top text and refuse malformed partial tokens. Parser policy is included in cache identity.','recoveredUtterances':1,'recoveredActualCharacters':94,'recoveredActualWordTokens':70,'nativeSourceReplayPassed':True,'normalFormattingAndEmptyProbePreserved':True,'installed':False},'diagnostic':{'legacyJointCer':scoped['legacyDroppedWordsCpCer']['characterErrorRate'],'recoveredOnlyJointCer':scoped['recoveredSourceCpCer']['characterErrorRate'],'globalTimeJoinCer':audit['joinedCpCer']['characterErrorRate'],'scopedJointCer':scoped['candidateCpCer']['characterErrorRate'],'legacyEdits':scoped['legacyDroppedWordsCpCer']['edits'],'scopedEdits':scoped['candidateCpCer']['edits'],'referenceCharacters':1465,'audioSeconds':302.05,'referencePeople':6,'sourceWordsAllOnceUnchanged':True,'normalWordIdentitiesUnchanged':True,'scopedReassignedWordTokens':54,'scope':'Same deliberately difficult exposed5m window; native speaker journal saw the entire39m recording. Retrospective engineering diagnostic only, not ordinary ASR rate, independent model generalization, true identity or product result.','retainedGlobalReplacement':False,'scopedCompositionProductIntegrated':False},'causeFindings':{'003-F':{'referenceUtterances':33,'utterancesWithAnyReferenceOverlap':30,'referenceCharacters':105,'charactersInThoseUtterances':96,'entirelySoloReferenceCharacters':9,'observedCleanWordExamples':'嗯嗯 and 对说到头里了 exist in provider output but on different anonymous identities; the remaining短嗯 requires boundary/audio review, empty midpoint window is not proof of missing audio.'},'007-M':{'referenceUtterances':1,'utterancesWithReferenceOverlap':1,'referenceCharacters':15,'finding':'Some of its content is in a longer provider sentence combined with other voices. Whole-meeting cpCER permutation alone cannot diagnose whether its words disappeared.'}},'automaticReferencePool':{'inputs':str(C/'automatic-profiles-inputs.json'),'profiles':17,'predictedIdentities':6,'counts':[pool['perPerson'][str(i)]['clips'] for i in range(6)],'allSelectedClipsExclusiveReferenceCoverageAtLeast95Percent':all(x['meetsFrozenPurityDiagnostic'] for x in pool['profiles']),'allDominantReferencesDistinctAndConsistent':pool['allPredictedPeopleReady'],'selectedWithoutReference':True,'referenceUsedOnlyForPosthocPurityAudit':True,'notAnUnseenModelQualification':True,'noVoiceExtractionStarted':True},'preparationFailuresRetained':['Initial word-conservation precondition rejected a missing sentence text and exposed the actual source data-loss defect.','First native-check template accidentally replaced RESPONSE in the success label; private wrapper compile failed before any test or network call, fixed unique placeholders and preserved initial files.','Automatic pool checker initially mistook maximum3clips for a minimum; corrected to the existing1..3 API without changing any of17clips, labels or95%purity diagnostic.'],'newModelOrNetworkCalls':0,'newTrainingSteps':0,'modelWeightsChanged':False,'productInstalled':False,'wholeAppBuildPassed':False,'qualityQualified':False,'saleQualified':False,'finalHoldoutOpened':False,'next':'保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。'}
+write(C/'decision.json',decision)
+scripts=['analyze_companion_word_identity_20261109.py','check_companion_word_recovery_native_20261109.py','check_companion_recovered_word_alias_20261109.py','prepare_companion_automatic_profiles_20261109.py','preserve_companion_word_recovery_20261109.py']
+for file in C.rglob('*'):
+ if file.is_file():dest=EV/file.relative_to(C);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(file,dest)
+for name in scripts:shutil.copyfile(W/name,EV/name)
+model_head=ship(M,['evidence/20261108-competitive-sale-standard/word-identity-audit-20261109','src/companion_word_journal_join_20261109.py','src/test_companion_word_journal_join_20261109.py'],'Preserve returned word content and reject indiscriminate speaker reassignment')
+decision.update(modelEvidenceCommit=model_head,remoteReadbackConfirmed=True);write(C/'decision.json',decision)
+path=R/'docs/product_backlog.json';old=read(path);quality=old['quality_targets'];log=R/'docs/development_log.md';oldlog=log.read_bytes()
+def task(d):return d['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerNightGpuModelPriority20261104']
+for attempt in range(8):
+ raw=path.read_bytes();d=json.loads(raw);n=task(d);record=n['ownerCompetitiveSaleStandard20261108'];assert record['sourceAndEvidenceCommit']=='37ea00c3739198f1561a1c1aa2b41cd32b5ec965';record['wordContentRecovery20261109']=decision;record.update(state=decision['state'],next=decision['next'],sourceAndEvidenceCommit=model_head,remoteReadbackConfirmed=True);n.update(status=decision['state'],next=decision['next']);temp=path.with_suffix('.word-recovery.tmp');write(temp,d)
+ if path.read_bytes()!=raw:temp.unlink();continue
+ try:os.replace(temp,path);break
+ except PermissionError:temp.unlink(missing_ok=True);time.sleep(min(.05*2**attempt,2))
+else:raise RuntimeError('Original backlog busy; all source/evidence already preserved')
+assert read(path)['quality_targets']==quality
+marker='原模型任务真实逐词内容恢复与人物定位20261109';assert marker.encode('utf8') not in oldlog
+entry='\n\n## '+at+'｜'+marker+'\n\n承接Owner“那你看看继续吧”，沿原最差短发言定位。真实最终响应有一段约20秒无整句text但保留70逐词token/94识别字符，旧适配器和旧评分路径整段跳过；修正文句优先、完整逐词回退、正文一致性及缓存parser身份。实际生产模块前缀不变+隔离检查后缀编译/回放通过，保留格式化文字、未知人物、畸形词拒绝及静音检查；5项文字保留/归属边界测试过。主可编辑工程仅合入语音文件，原Cargo及其它未提交/暂存修改逐字核验保留，源码'+primary_head+'和候选'+source_head+'已推送核验。原开发片联合CER36.3140%；补全内容而未修归属40.5461%；全量按时间重分46.7577%拒绝；仅对补回段作自动别名归属33.1741%（保留全部1419token，正常段1349token人物不变），删除238→166，仍未达5%，组合未入产品。003-F33次发言30次有交叠，不能只改标签补出未识别的声音。另在不读参考的情况下从现有自动日志选17段/6身份档案，事后标注核对各段独占覆盖>=95%、归属一致且互异；只作下一步声纹条件准备，不作新会议模型合格。初次严格源字段检查失败、私有检查占位符错误及档案最大3被误作最小3的检查错误均保留；没有重复网络/新模型推理或训练，无GPU占用，不接管前台。证据'+model_head+'已远端核验；原质量门与留出完整保留，完整应用构建/安装与实卡仍待。下一项：'+decision['next']+'\n'
+with log.open('ab') as f:f.write(entry.encode('utf8'))
+assert log.read_bytes().startswith(oldlog)
+for file in [path,log]:shutil.copyfile(file,S/'docs'/file.name)
+for file in C.rglob('*'):
+ if file.is_file():dest=DEST/file.relative_to(C);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(file,dest)
+for name in scripts:shutil.copyfile(W/name,DEST/name)
+main=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-competitive-sale-standard-20261108/word-identity-audit-20261109'],'Record real word-content repair and bounded complex speaker progress')
+result={'at':datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds'),'state':decision['state'],'primaryCommit':primary_head,'sourceCommit':source_head,'modelCommit':model_head,'mainCommit':main,'remoteReadbackConfirmed':True,'originalQualityTargetsUnchanged':read(path)['quality_targets']==quality,'timelinePrefixPreserved':log.read_bytes().startswith(oldlog),'primaryUnrelatedWorkPreserved':git(PRIMARY,'diff','--binary','--','.',':(exclude)'+source)==unrelated_before and git(PRIMARY,'diff','--cached','--binary','--','.',':(exclude)'+source)==staged_before,'modelAndCandidateTreesClean':all(not git(repo,'status','--porcelain') for repo in [M,S]),'next':task(read(path))['next'],'installed':False,'saleQualified':False}
+write(C/'preservation-result.json',result);print(json.dumps(result,ensure_ascii=False),flush=True)

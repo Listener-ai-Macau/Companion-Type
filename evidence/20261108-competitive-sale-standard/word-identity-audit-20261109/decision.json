@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-09T07:40:16+08:00",
+  "ownerQuote": "那你看看继续吧",
+  "state": "REAL_PROVIDER_WORD_RECOVERY_MERGED_SCOPED_IDENTITY_GAIN_NOT_QUALIFIED",
+  "sourceRepair": {
+    "sourceCommit": "c05ad4dc612af06d5048fd513f3b9b3e26183f20",
+    "primaryCommit": "673c2bb23be2f3d0a7ef7077a573d3afc724d30e",
+    "primaryEditableSourceMerged": true,
+    "primaryUnrelatedWorktreeAndIndexChangesPreserved": true,
+    "sourceSha256": "ed37a1734b15ddd25c9059ea317cddfb408d2a15b46a17b7cd6ee543a6ce74fc",
+    "cause": "The real definite response omitted utterance50.text but retained70timed tokens/94normalized recognition characters in words; result.text omitted them too. Old extraction silently dropped the entire segment.",
+    "behavior": "Prefer explicit formatted sentence text. Otherwise recover only complete actual source word tokens. Extend the whole text only when it was missing or exactly explained by the explicit sentence texts; preserve unrelated top text and refuse malformed partial tokens. Parser policy is included in cache identity.",
+    "recoveredUtterances": 1,
+    "recoveredActualCharacters": 94,
+    "recoveredActualWordTokens": 70,
+    "nativeSourceReplayPassed": true,
+    "normalFormattingAndEmptyProbePreserved": true,
+    "installed": false
+  },
+  "diagnostic": {
+    "legacyJointCer": 0.3631399317406143,
+    "recoveredOnlyJointCer": 0.40546075085324235,
+    "globalTimeJoinCer": 0.46757679180887374,
+    "scopedJointCer": 0.331740614334471,
+    "legacyEdits": {
+      "replace": 172,
+      "delete": 238,
+      "insert": 122
+    },
+    "scopedEdits": {
+      "replace": 176,
+      "delete": 166,
+      "insert": 144
+    },
+    "referenceCharacters": 1465,
+    "audioSeconds": 302.05,
+    "referencePeople": 6,
+    "sourceWordsAllOnceUnchanged": true,
+    "normalWordIdentitiesUnchanged": true,
+    "scopedReassignedWordTokens": 54,
+    "scope": "Same deliberately difficult exposed5m window; native speaker journal saw the entire39m recording. Retrospective engineering diagnostic only, not ordinary ASR rate, independent model generalization, true identity or product result.",
+    "retainedGlobalReplacement": false,
+    "scopedCompositionProductIntegrated": false
+  },
+  "causeFindings": {
+    "003-F": {
+      "referenceUtterances": 33,
+      "utterancesWithAnyReferenceOverlap": 30,
+      "referenceCharacters": 105,
+      "charactersInThoseUtterances": 96,
+      "entirelySoloReferenceCharacters": 9,
+      "observedCleanWordExamples": "嗯嗯 and 对说到头里了 exist in provider output but on different anonymous identities; the remaining短嗯 requires boundary/audio review, empty midpoint window is not proof of missing audio."
+    },
+    "007-M": {
+      "referenceUtterances": 1,
+      "utterancesWithReferenceOverlap": 1,
+      "referenceCharacters": 15,
+      "finding": "Some of its content is in a longer provider sentence combined with other voices. Whole-meeting cpCER permutation alone cannot diagnose whether its words disappeared."
+    }
+  },
+  "automaticReferencePool": {
+    "inputs": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\word-identity-audit-20261109\\automatic-profiles-inputs.json",
+    "profiles": 17,
+    "predictedIdentities": 6,
+    "counts": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      3
+    ],
+    "allSelectedClipsExclusiveReferenceCoverageAtLeast95Percent": true,
+    "allDominantReferencesDistinctAndConsistent": true,
+    "selectedWithoutReference": true,
+    "referenceUsedOnlyForPosthocPurityAudit": true,
+    "notAnUnseenModelQualification": true,
+    "noVoiceExtractionStarted": true
+  },
+  "preparationFailuresRetained": [
+    "Initial word-conservation precondition rejected a missing sentence text and exposed the actual source data-loss defect.",
+    "First native-check template accidentally replaced RESPONSE in the success label; private wrapper compile failed before any test or network call, fixed unique placeholders and preserved initial files.",
+    "Automatic pool checker initially mistook maximum3clips for a minimum; corrected to the existing1..3 API without changing any of17clips, labels or95%purity diagnostic."
+  ],
+  "newModelOrNetworkCalls": 0,
+  "newTrainingSteps": 0,
+  "modelWeightsChanged": false,
+  "productInstalled": false,
+  "wholeAppBuildPassed": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "next": "保留并交付本批真实ASR逐词内容恢复源码，主编辑工程与候选均已合入，完整应用构建/双端安装与实卡仍待；不把回放检查当日用已装。全量时间重分失败46.76%拒绝，仅补回段组合开发33.17%尚未产品接入。原003-F大多数短句交叠，下一步沿先分离再转写：用已固定的17段自动档案检查目标声纹稳定性，再只对预测重叠片段逐人提取，普通音频旁路；先检验目标词不被压掉，不能在当前窗口反复挑参。原20200707_L_R001S08C01的002/003/007参考身份复核保留，所有<5%、自动分人、纪要事实、独立整会、双端实卡和售卖门不变。"
+}

@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-09T07:38:11+08:00",
+  "purpose": "Before another voice-extraction experiment, check whether the existing automatic diarization can supply stable solo profiles, without reference labels or text selecting them.",
+  "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "policy": "Outside the exposed5m window; exactly one predicted person active; shrink each continuous solo span200ms per side; at least2s; choose earliest up to8s, maximum3clips per predicted identity, start separation>=30s. All selected clips retained, including bad ones.",
+  "readinessDiagnostic": "After preparation only, check dominant actual reference identity consistency and>=95% exclusive reference speech coverage of each selected clip; this is a profile-purity diagnostic, not a model acceptance threshold or a selection filter.",
+  "newModelInference": false,
+  "newNetworkCalls": 0,
+  "finalHoldoutOpened": false,
+  "saleQualified": false
+}

@@ -1,0 +1,292 @@
+{
+  "at": "2026-11-09T07:38:11+08:00",
+  "state": "AUTOMATIC_PROFILE_POOL_READY_FOR_FURTHER_UNSEEN_CHECK_ONLY",
+  "selectedProfiles": 17,
+  "predictedPeople": 6,
+  "allPredictedPeopleReady": true,
+  "distinctDominantReferenceIdentities": 6,
+  "perPerson": {
+    "0": {
+      "clips": 3,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "007-M"
+      ]
+    },
+    "1": {
+      "clips": 3,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "002-F"
+      ]
+    },
+    "2": {
+      "clips": 3,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "004-M"
+      ]
+    },
+    "3": {
+      "clips": 2,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "003-F"
+      ]
+    },
+    "4": {
+      "clips": 3,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "006-M"
+      ]
+    },
+    "5": {
+      "clips": 3,
+      "consistentDominantReference": true,
+      "allClipsPureEnough": true,
+      "referenceIdentitiesForScoringOnly": [
+        "005-M"
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "id": "native-4-0",
+      "nativePerson": "4",
+      "dominantReferenceForEvaluationOnly": "006-M",
+      "exclusiveReferenceCoverage": 0.9974999804685974,
+      "referenceSpeechSeconds": {
+        "006-M": 7.979937499999998
+      },
+      "exclusiveReferenceSeconds": {
+        "006-M": 7.979937499999998
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-4-1",
+      "nativePerson": "4",
+      "dominantReferenceForEvaluationOnly": "006-M",
+      "exclusiveReferenceCoverage": 0.9884999101555483,
+      "referenceSpeechSeconds": {
+        "006-M": 7.907937500000003
+      },
+      "exclusiveReferenceSeconds": {
+        "006-M": 7.907937500000003
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-2-0",
+      "nativePerson": "2",
+      "dominantReferenceForEvaluationOnly": "004-M",
+      "exclusiveReferenceCoverage": 0.9932636973726363,
+      "referenceSpeechSeconds": {
+        "004-M": 7.946047500000006
+      },
+      "exclusiveReferenceSeconds": {
+        "004-M": 7.946047500000006
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-2-1",
+      "nativePerson": "2",
+      "dominantReferenceForEvaluationOnly": "004-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "004-M": 5.949937500000004
+      },
+      "exclusiveReferenceSeconds": {
+        "004-M": 5.949937500000004
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-2-2",
+      "nativePerson": "2",
+      "dominantReferenceForEvaluationOnly": "004-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "004-M": 7.909937499999984
+      },
+      "exclusiveReferenceSeconds": {
+        "004-M": 7.909937499999984
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-4-2",
+      "nativePerson": "4",
+      "dominantReferenceForEvaluationOnly": "006-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "006-M": 7.999937500000016
+      },
+      "exclusiveReferenceSeconds": {
+        "006-M": 7.999937500000016
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-5-0",
+      "nativePerson": "5",
+      "dominantReferenceForEvaluationOnly": "005-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "005-M": 4.029937499999988
+      },
+      "exclusiveReferenceSeconds": {
+        "005-M": 4.029937499999988
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-5-1",
+      "nativePerson": "5",
+      "dominantReferenceForEvaluationOnly": "005-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "005-M": 7.999937499999987
+      },
+      "exclusiveReferenceSeconds": {
+        "005-M": 7.999937499999987
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-5-2",
+      "nativePerson": "5",
+      "dominantReferenceForEvaluationOnly": "005-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "005-M": 4.4799375000000055
+      },
+      "exclusiveReferenceSeconds": {
+        "005-M": 4.4799375000000055
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-1-0",
+      "nativePerson": "1",
+      "dominantReferenceForEvaluationOnly": "002-F",
+      "exclusiveReferenceCoverage": 0.9892099157024663,
+      "referenceSpeechSeconds": {
+        "002-F": 7.913617499999987
+      },
+      "exclusiveReferenceSeconds": {
+        "002-F": 7.913617499999987
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-1-1",
+      "nativePerson": "1",
+      "dominantReferenceForEvaluationOnly": "002-F",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "002-F": 2.419937500000003
+      },
+      "exclusiveReferenceSeconds": {
+        "002-F": 2.419937500000003
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-1-2",
+      "nativePerson": "1",
+      "dominantReferenceForEvaluationOnly": "002-F",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "002-F": 7.999937499999987
+      },
+      "exclusiveReferenceSeconds": {
+        "002-F": 7.999937499999987
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-3-0",
+      "nativePerson": "3",
+      "dominantReferenceForEvaluationOnly": "003-F",
+      "exclusiveReferenceCoverage": 0.9886092860100569,
+      "referenceSpeechSeconds": {
+        "003-F": 7.999937499999987,
+        "005-M": 0.09112499999991996
+      },
+      "exclusiveReferenceSeconds": {
+        "003-F": 7.908812500000067,
+        "005-M": 0.0
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-0-0",
+      "nativePerson": "0",
+      "dominantReferenceForEvaluationOnly": "007-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "007-M": 2.339937500000019
+      },
+      "exclusiveReferenceSeconds": {
+        "007-M": 2.339937500000019
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-3-1",
+      "nativePerson": "3",
+      "dominantReferenceForEvaluationOnly": "003-F",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "003-F": 2.769937499999969
+      },
+      "exclusiveReferenceSeconds": {
+        "003-F": 2.769937499999969
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-0-1",
+      "nativePerson": "0",
+      "dominantReferenceForEvaluationOnly": "007-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "007-M": 7.999937499999987
+      },
+      "exclusiveReferenceSeconds": {
+        "007-M": 7.999937499999987
+      },
+      "meetsFrozenPurityDiagnostic": true
+    },
+    {
+      "id": "native-0-2",
+      "nativePerson": "0",
+      "dominantReferenceForEvaluationOnly": "007-M",
+      "exclusiveReferenceCoverage": 1.0,
+      "referenceSpeechSeconds": {
+        "007-M": 7.419937499999833
+      },
+      "exclusiveReferenceSeconds": {
+        "007-M": 7.419937499999833
+      },
+      "meetsFrozenPurityDiagnostic": true
+    }
+  ],
+  "readinessCountCorrection": "The existing reference-bank API accepts1..3 clips. Maximum3 is not a minimum; the first readiness check accidentally demanded3. Corrected to>=1 without changing any of17 selected clips or95% purity criterion; initial result retained. Two valid clips for one short speaker are not discarded or padded.",
+  "referenceGuidedSelection": false,
+  "profilesPrunedAfterScoring": false,
+  "sourceCaseIsExposedDevelopment": true,
+  "actualPhysicalIdentityIndependenceKnown": false,
+  "newModelOrNetworkCalls": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false
+}

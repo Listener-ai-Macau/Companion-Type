@@ -1,0 +1,5335 @@
+{
+  "at": "2026-11-09T07:28:40+08:00",
+  "state": "CACHED_WORD_JOIN_REJECTED",
+  "legacyDroppedWordsCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 172,
+      "delete": 238,
+      "insert": 122
+    },
+    "totalEdits": 532,
+    "characterErrorRate": 0.3631399317406143,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 141
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "5",
+        "edits": 97
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 113
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "baselineCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 8,
+    "edits": {
+      "replace": 182,
+      "delete": 217,
+      "insert": 195
+    },
+    "totalEdits": 594,
+    "characterErrorRate": 0.40546075085324235,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 141
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "0",
+        "edits": 99
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 59
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "3",
+        "edits": 113
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "5",
+        "edits": 60
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "6",
+        "edits": 20
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "joinedCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 302.05,
+    "referenceCharacters": 1465,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 8,
+    "edits": {
+      "replace": 163,
+      "delete": 272,
+      "insert": 250
+    },
+    "totalEdits": 685,
+    "characterErrorRate": 0.46757679180887374,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "native:1",
+        "edits": 129
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "unattributed:overlap",
+        "edits": 235
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "native:2",
+        "edits": 117
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "native:5",
+        "edits": 69
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "native:4",
+        "edits": 103
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "native:0",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "unattributed:no_voice",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "native:3",
+        "edits": 18
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "recoveredActualCharacters": 94,
+  "recoveredActualWordTokens": 70,
+  "sourceWordCount": 1419,
+  "allWordsOnceUnchanged": true,
+  "pcmSliceBitIdentical": true,
+  "assignmentReasons": {
+    "unique_largest_predicted_voice_overlap": 1147,
+    "ambiguous_simultaneous_predicted_voices": 265,
+    "no_predicted_voice_overlap": 7
+  },
+  "people": {
+    "002-F": {
+      "referenceUtterances": 33,
+      "referenceCharacters": 353,
+      "overlappedUtterances": 31,
+      "overlappedReferenceCharacters": 340,
+      "nonoverlapUtterances": 2,
+      "nonoverlapReferenceCharacters": 13,
+      "cleanRows": [
+        {
+          "reference": {
+            "start": 2.064598810186908,
+            "end": 4.088375000000042,
+            "speaker": "002-F",
+            "text": "咱看能不能有个什么措施"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "0:0",
+              "utteranceIndex": 0,
+              "wordIndex": 0,
+              "sourceOrder": 0,
+              "text": "咱",
+              "start": 2.042,
+              "end": 2.202,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:1",
+              "utteranceIndex": 0,
+              "wordIndex": 1,
+              "sourceOrder": 1,
+              "text": "看",
+              "start": 2.242,
+              "end": 2.402,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:2",
+              "utteranceIndex": 0,
+              "wordIndex": 2,
+              "sourceOrder": 2,
+              "text": "能",
+              "start": 2.442,
+              "end": 2.602,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:3",
+              "utteranceIndex": 0,
+              "wordIndex": 3,
+              "sourceOrder": 3,
+              "text": "找",
+              "start": 2.722,
+              "end": 2.882,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:4",
+              "utteranceIndex": 0,
+              "wordIndex": 4,
+              "sourceOrder": 4,
+              "text": "个",
+              "start": 2.882,
+              "end": 3.042,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:5",
+              "utteranceIndex": 0,
+              "wordIndex": 5,
+              "sourceOrder": 5,
+              "text": "什",
+              "start": 3.042,
+              "end": 3.122,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:6",
+              "utteranceIndex": 0,
+              "wordIndex": 6,
+              "sourceOrder": 6,
+              "text": "么",
+              "start": 3.122,
+              "end": 3.242,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:7",
+              "utteranceIndex": 0,
+              "wordIndex": 7,
+              "sourceOrder": 7,
+              "text": "措",
+              "start": 3.242,
+              "end": 3.482,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "0:8",
+              "utteranceIndex": 0,
+              "wordIndex": 8,
+              "sourceOrder": 8,
+              "text": "施",
+              "start": 3.482,
+              "end": 3.602,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1"
+          ],
+          "speakerBlindWindowText": "咱看能找个什么措施",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 68.900120704252,
+            "end": 69.56237499999997,
+            "speaker": "002-F",
+            "text": "确实"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "19:0",
+              "utteranceIndex": 19,
+              "wordIndex": 0,
+              "sourceOrder": 338,
+              "text": "确",
+              "start": 68.992,
+              "end": 69.232,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "19:1",
+              "utteranceIndex": 19,
+              "wordIndex": 1,
+              "sourceOrder": 339,
+              "text": "实",
+              "start": 69.232,
+              "end": 69.432,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1"
+          ],
+          "speakerBlindWindowText": "确实",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ],
+      "rows": []
+    },
+    "003-F": {
+      "referenceUtterances": 33,
+      "referenceCharacters": 105,
+      "overlappedUtterances": 30,
+      "overlappedReferenceCharacters": 96,
+      "nonoverlapUtterances": 3,
+      "nonoverlapReferenceCharacters": 9,
+      "cleanRows": [
+        {
+          "reference": {
+            "start": 67.12228919368818,
+            "end": 67.85831250000001,
+            "speaker": "003-F",
+            "text": "嗯嗯"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "18:0",
+              "utteranceIndex": 18,
+              "wordIndex": 0,
+              "sourceOrder": 335,
+              "text": "嗯",
+              "start": 67.181,
+              "end": 67.541,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "18:1",
+              "utteranceIndex": 18,
+              "wordIndex": 1,
+              "sourceOrder": 336,
+              "text": "嗯",
+              "start": 67.581,
+              "end": 67.621,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "嗯嗯",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 171.5272597183905,
+            "end": 172.04406249999988,
+            "speaker": "003-F",
+            "text": "嗯"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [],
+          "providerLabels": [],
+          "speakerBlindWindowText": "",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 187.3965450159801,
+            "end": 188.35006249999992,
+            "speaker": "003-F",
+            "text": "对说到头里了"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "46:0",
+              "utteranceIndex": 46,
+              "wordIndex": 0,
+              "sourceOrder": 940,
+              "text": "对",
+              "start": 187.482,
+              "end": 187.602,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:1",
+              "utteranceIndex": 46,
+              "wordIndex": 1,
+              "sourceOrder": 941,
+              "text": "说",
+              "start": 187.642,
+              "end": 187.762,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:2",
+              "utteranceIndex": 46,
+              "wordIndex": 2,
+              "sourceOrder": 942,
+              "text": "到",
+              "start": 187.762,
+              "end": 187.882,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:3",
+              "utteranceIndex": 46,
+              "wordIndex": 3,
+              "sourceOrder": 943,
+              "text": "头",
+              "start": 187.882,
+              "end": 188.002,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:4",
+              "utteranceIndex": 46,
+              "wordIndex": 4,
+              "sourceOrder": 944,
+              "text": "里",
+              "start": 188.002,
+              "end": 188.122,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:5",
+              "utteranceIndex": 46,
+              "wordIndex": 5,
+              "sourceOrder": 945,
+              "text": "了",
+              "start": 188.122,
+              "end": 188.282,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "6"
+          ],
+          "speakerBlindWindowText": "对说到头里了",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ],
+      "rows": [
+        {
+          "reference": {
+            "start": 14.044534841005316,
+            "end": 15.484549859495019,
+            "speaker": "003-F",
+            "text": "对有的就是一些"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M",
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "6:0",
+              "utteranceIndex": 6,
+              "wordIndex": 0,
+              "sourceOrder": 62,
+              "text": "对",
+              "start": 14.042,
+              "end": 14.202,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "6:1",
+              "utteranceIndex": 6,
+              "wordIndex": 1,
+              "sourceOrder": 63,
+              "text": "像",
+              "start": 14.322,
+              "end": 14.362,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "6:2",
+              "utteranceIndex": 6,
+              "wordIndex": 2,
+              "sourceOrder": 64,
+              "text": "那",
+              "start": 14.362,
+              "end": 14.402,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "6:3",
+              "utteranceIndex": 6,
+              "wordIndex": 3,
+              "sourceOrder": 65,
+              "text": "些",
+              "start": 14.402,
+              "end": 14.442,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:0",
+              "utteranceIndex": 7,
+              "wordIndex": 0,
+              "sourceOrder": 66,
+              "text": "啊",
+              "start": 14.442,
+              "end": 14.522,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:1",
+              "utteranceIndex": 7,
+              "wordIndex": 1,
+              "sourceOrder": 67,
+              "text": "本",
+              "start": 14.642,
+              "end": 14.722,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:2",
+              "utteranceIndex": 7,
+              "wordIndex": 2,
+              "sourceOrder": 68,
+              "text": "小",
+              "start": 14.842,
+              "end": 14.882,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:3",
+              "utteranceIndex": 7,
+              "wordIndex": 3,
+              "sourceOrder": 69,
+              "text": "区",
+              "start": 14.882,
+              "end": 14.922,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:4",
+              "utteranceIndex": 7,
+              "wordIndex": 4,
+              "sourceOrder": 70,
+              "text": "哎",
+              "start": 15.122,
+              "end": 15.402,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "7:5",
+              "utteranceIndex": 7,
+              "wordIndex": 5,
+              "sourceOrder": 71,
+              "text": "这",
+              "start": 15.442,
+              "end": 15.482,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1",
+            "2"
+          ],
+          "speakerBlindWindowText": "对像那些啊本小区哎这",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 22.17535134784339,
+            "end": 23.39018749999991,
+            "speaker": "003-F",
+            "text": "对他有的"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "9:0",
+              "utteranceIndex": 9,
+              "wordIndex": 0,
+              "sourceOrder": 103,
+              "text": "这",
+              "start": 22.511,
+              "end": 22.671,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:1",
+              "utteranceIndex": 9,
+              "wordIndex": 1,
+              "sourceOrder": 104,
+              "text": "没",
+              "start": 22.791,
+              "end": 22.871,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:2",
+              "utteranceIndex": 9,
+              "wordIndex": 2,
+              "sourceOrder": 105,
+              "text": "办",
+              "start": 23.071,
+              "end": 23.151,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:3",
+              "utteranceIndex": 9,
+              "wordIndex": 3,
+              "sourceOrder": 106,
+              "text": "法",
+              "start": 23.311,
+              "end": 23.431,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1"
+          ],
+          "speakerBlindWindowText": "这没办法",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 24.12606603423751,
+            "end": 27.358749999999873,
+            "speaker": "003-F",
+            "text": "就是<$>专门就回收那种废纸，哦<sil>"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "9:4",
+              "utteranceIndex": 9,
+              "wordIndex": 4,
+              "sourceOrder": 107,
+              "text": "啊",
+              "start": 24.671,
+              "end": 24.871,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:5",
+              "utteranceIndex": 9,
+              "wordIndex": 5,
+              "sourceOrder": 108,
+              "text": "这",
+              "start": 25.071,
+              "end": 25.191,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:6",
+              "utteranceIndex": 9,
+              "wordIndex": 6,
+              "sourceOrder": 109,
+              "text": "没",
+              "start": 25.271,
+              "end": 25.351,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:7",
+              "utteranceIndex": 9,
+              "wordIndex": 7,
+              "sourceOrder": 110,
+              "text": "办",
+              "start": 25.511,
+              "end": 25.591,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:8",
+              "utteranceIndex": 9,
+              "wordIndex": 8,
+              "sourceOrder": 111,
+              "text": "法",
+              "start": 25.591,
+              "end": 25.671,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:9",
+              "utteranceIndex": 9,
+              "wordIndex": 9,
+              "sourceOrder": 112,
+              "text": "你",
+              "start": 25.911,
+              "end": 26.031,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:10",
+              "utteranceIndex": 9,
+              "wordIndex": 10,
+              "sourceOrder": 113,
+              "text": "说",
+              "start": 26.111,
+              "end": 26.271,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:11",
+              "utteranceIndex": 9,
+              "wordIndex": 11,
+              "sourceOrder": 114,
+              "text": "你",
+              "start": 26.311,
+              "end": 26.471,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:12",
+              "utteranceIndex": 9,
+              "wordIndex": 12,
+              "sourceOrder": 115,
+              "text": "说",
+              "start": 26.631,
+              "end": 26.751,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:13",
+              "utteranceIndex": 9,
+              "wordIndex": 13,
+              "sourceOrder": 116,
+              "text": "都",
+              "start": 26.911,
+              "end": 27.031,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:14",
+              "utteranceIndex": 9,
+              "wordIndex": 14,
+              "sourceOrder": 117,
+              "text": "有",
+              "start": 27.031,
+              "end": 27.191,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "9:15",
+              "utteranceIndex": 9,
+              "wordIndex": 15,
+              "sourceOrder": 118,
+              "text": "门",
+              "start": 27.191,
+              "end": 27.351,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1"
+          ],
+          "speakerBlindWindowText": "啊这没办法你说你说都有门",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 39.95129572670089,
+            "end": 40.32008006070441,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F"
+          ],
+          "providerWordsByMidpoint": [],
+          "providerLabels": [],
+          "speakerBlindWindowText": "",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 44.11186428950714,
+            "end": 46.786749999999984,
+            "speaker": "003-F",
+            "text": "嗯对也得让人家进是吧嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F",
+            "007-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "13:15",
+              "utteranceIndex": 13,
+              "wordIndex": 15,
+              "sourceOrder": 203,
+              "text": "家",
+              "start": 44.222,
+              "end": 44.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:16",
+              "utteranceIndex": 13,
+              "wordIndex": 16,
+              "sourceOrder": 204,
+              "text": "进",
+              "start": 44.422,
+              "end": 44.502,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:17",
+              "utteranceIndex": 13,
+              "wordIndex": 17,
+              "sourceOrder": 205,
+              "text": "来",
+              "start": 44.502,
+              "end": 44.582,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:18",
+              "utteranceIndex": 13,
+              "wordIndex": 18,
+              "sourceOrder": 206,
+              "text": "你",
+              "start": 44.702,
+              "end": 44.742,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:19",
+              "utteranceIndex": 13,
+              "wordIndex": 19,
+              "sourceOrder": 207,
+              "text": "不",
+              "start": 44.782,
+              "end": 44.822,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:20",
+              "utteranceIndex": 13,
+              "wordIndex": 20,
+              "sourceOrder": 208,
+              "text": "让",
+              "start": 44.862,
+              "end": 45.102,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:21",
+              "utteranceIndex": 13,
+              "wordIndex": 21,
+              "sourceOrder": 209,
+              "text": "进",
+              "start": 45.102,
+              "end": 45.142,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:22",
+              "utteranceIndex": 13,
+              "wordIndex": 22,
+              "sourceOrder": 210,
+              "text": "人",
+              "start": 45.142,
+              "end": 45.222,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:23",
+              "utteranceIndex": 13,
+              "wordIndex": 23,
+              "sourceOrder": 211,
+              "text": "家",
+              "start": 45.222,
+              "end": 45.302,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:24",
+              "utteranceIndex": 13,
+              "wordIndex": 24,
+              "sourceOrder": 212,
+              "text": "就",
+              "start": 45.302,
+              "end": 45.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:25",
+              "utteranceIndex": 13,
+              "wordIndex": 25,
+              "sourceOrder": 213,
+              "text": "说",
+              "start": 45.342,
+              "end": 45.462,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:26",
+              "utteranceIndex": 13,
+              "wordIndex": 26,
+              "sourceOrder": 214,
+              "text": "你",
+              "start": 45.462,
+              "end": 45.502,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:27",
+              "utteranceIndex": 13,
+              "wordIndex": 27,
+              "sourceOrder": 215,
+              "text": "这",
+              "start": 45.502,
+              "end": 45.542,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:28",
+              "utteranceIndex": 13,
+              "wordIndex": 28,
+              "sourceOrder": 216,
+              "text": "你",
+              "start": 45.542,
+              "end": 45.582,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:29",
+              "utteranceIndex": 13,
+              "wordIndex": 29,
+              "sourceOrder": 217,
+              "text": "这",
+              "start": 45.582,
+              "end": 45.622,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:30",
+              "utteranceIndex": 13,
+              "wordIndex": 30,
+              "sourceOrder": 218,
+              "text": "不",
+              "start": 45.622,
+              "end": 45.662,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:31",
+              "utteranceIndex": 13,
+              "wordIndex": 31,
+              "sourceOrder": 219,
+              "text": "能",
+              "start": 45.662,
+              "end": 45.702,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:32",
+              "utteranceIndex": 13,
+              "wordIndex": 32,
+              "sourceOrder": 220,
+              "text": "来",
+              "start": 45.702,
+              "end": 45.742,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:33",
+              "utteranceIndex": 13,
+              "wordIndex": 33,
+              "sourceOrder": 221,
+              "text": "呀",
+              "start": 45.742,
+              "end": 45.782,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:34",
+              "utteranceIndex": 13,
+              "wordIndex": 34,
+              "sourceOrder": 222,
+              "text": "你",
+              "start": 45.782,
+              "end": 45.982,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:35",
+              "utteranceIndex": 13,
+              "wordIndex": 35,
+              "sourceOrder": 223,
+              "text": "得",
+              "start": 46.062,
+              "end": 46.102,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:36",
+              "utteranceIndex": 13,
+              "wordIndex": 36,
+              "sourceOrder": 224,
+              "text": "登",
+              "start": 46.102,
+              "end": 46.142,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:37",
+              "utteranceIndex": 13,
+              "wordIndex": 37,
+              "sourceOrder": 225,
+              "text": "记",
+              "start": 46.142,
+              "end": 46.182,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:38",
+              "utteranceIndex": 13,
+              "wordIndex": 38,
+              "sourceOrder": 226,
+              "text": "你",
+              "start": 46.182,
+              "end": 46.222,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:39",
+              "utteranceIndex": 13,
+              "wordIndex": 39,
+              "sourceOrder": 227,
+              "text": "得",
+              "start": 46.222,
+              "end": 46.262,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:40",
+              "utteranceIndex": 13,
+              "wordIndex": 40,
+              "sourceOrder": 228,
+              "text": "登",
+              "start": 46.302,
+              "end": 46.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:41",
+              "utteranceIndex": 13,
+              "wordIndex": 41,
+              "sourceOrder": 229,
+              "text": "记",
+              "start": 46.342,
+              "end": 46.422,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:42",
+              "utteranceIndex": 13,
+              "wordIndex": 42,
+              "sourceOrder": 230,
+              "text": "你",
+              "start": 46.462,
+              "end": 46.502,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:43",
+              "utteranceIndex": 13,
+              "wordIndex": 43,
+              "sourceOrder": 231,
+              "text": "得",
+              "start": 46.582,
+              "end": 46.622,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:44",
+              "utteranceIndex": 13,
+              "wordIndex": 44,
+              "sourceOrder": 232,
+              "text": "找",
+              "start": 46.622,
+              "end": 46.662,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:45",
+              "utteranceIndex": 13,
+              "wordIndex": 45,
+              "sourceOrder": 233,
+              "text": "他",
+              "start": 46.662,
+              "end": 46.702,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "5"
+          ],
+          "speakerBlindWindowText": "家进来你不让进人家就说你这你这不能来呀你得登记你得登记你得找他",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 53.454400750928016,
+            "end": 54.09431249999989,
+            "speaker": "003-F",
+            "text": "嗯对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "15:0",
+              "utteranceIndex": 15,
+              "wordIndex": 0,
+              "sourceOrder": 270,
+              "text": "嗯",
+              "start": 53.412,
+              "end": 53.612,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "15:1",
+              "utteranceIndex": 15,
+              "wordIndex": 1,
+              "sourceOrder": 271,
+              "text": "对",
+              "start": 53.732,
+              "end": 54.052,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "5"
+          ],
+          "speakerBlindWindowText": "嗯对",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 67.12228919368818,
+            "end": 67.85831250000001,
+            "speaker": "003-F",
+            "text": "嗯嗯"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "18:0",
+              "utteranceIndex": 18,
+              "wordIndex": 0,
+              "sourceOrder": 335,
+              "text": "嗯",
+              "start": 67.181,
+              "end": 67.541,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "18:1",
+              "utteranceIndex": 18,
+              "wordIndex": 1,
+              "sourceOrder": 336,
+              "text": "嗯",
+              "start": 67.581,
+              "end": 67.621,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "嗯嗯",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 91.28311144222243,
+            "end": 91.71106250000003,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "005-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "25:1",
+              "utteranceIndex": 25,
+              "wordIndex": 1,
+              "sourceOrder": 425,
+              "text": "能",
+              "start": 91.262,
+              "end": 91.422,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "25:2",
+              "utteranceIndex": 25,
+              "wordIndex": 2,
+              "sourceOrder": 426,
+              "text": "在",
+              "start": 91.462,
+              "end": 91.622,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "25:3",
+              "utteranceIndex": 25,
+              "wordIndex": 3,
+              "sourceOrder": 427,
+              "text": "那",
+              "start": 91.662,
+              "end": 91.702,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "4"
+          ],
+          "speakerBlindWindowText": "能在那",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 98.78172717760185,
+            "end": 99.19024999999988,
+            "speaker": "003-F",
+            "text": "嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "005-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "27:0",
+              "utteranceIndex": 27,
+              "wordIndex": 0,
+              "sourceOrder": 464,
+              "text": "嗯",
+              "start": 98.902,
+              "end": 99.102,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "4"
+          ],
+          "speakerBlindWindowText": "嗯",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 101.74726249668356,
+            "end": 102.13606249999998,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "28:19",
+              "utteranceIndex": 28,
+              "wordIndex": 19,
+              "sourceOrder": 484,
+              "text": "加",
+              "start": 101.822,
+              "end": 101.862,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "28:20",
+              "utteranceIndex": 28,
+              "wordIndex": 20,
+              "sourceOrder": 485,
+              "text": "诶",
+              "start": 102.062,
+              "end": 102.182,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "加诶",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 104.73265948623543,
+            "end": 105.7336455356733,
+            "speaker": "003-F",
+            "text": "换门啊"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "28:33",
+              "utteranceIndex": 28,
+              "wordIndex": 33,
+              "sourceOrder": 498,
+              "text": "是",
+              "start": 105.142,
+              "end": 105.222,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "28:34",
+              "utteranceIndex": 28,
+              "wordIndex": 34,
+              "sourceOrder": 499,
+              "text": "吧",
+              "start": 105.222,
+              "end": 105.342,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "是吧",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 111.74233161317056,
+            "end": 112.17131249999989,
+            "speaker": "003-F",
+            "text": "嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "29:0",
+              "utteranceIndex": 29,
+              "wordIndex": 0,
+              "sourceOrder": 541,
+              "text": "有",
+              "start": 111.891,
+              "end": 112.011,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "29:1",
+              "utteranceIndex": 29,
+              "wordIndex": 1,
+              "sourceOrder": 542,
+              "text": "这",
+              "start": 112.011,
+              "end": 112.091,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "29:2",
+              "utteranceIndex": 29,
+              "wordIndex": 2,
+              "sourceOrder": 543,
+              "text": "个",
+              "start": 112.091,
+              "end": 112.171,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "有这个",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 115.51798074701537,
+            "end": 118.14662499999986,
+            "speaker": "003-F",
+            "text": "对对对是这这这这是一方面"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "29:23",
+              "utteranceIndex": 29,
+              "wordIndex": 23,
+              "sourceOrder": 564,
+              "text": "这",
+              "start": 115.891,
+              "end": 116.051,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "29:24",
+              "utteranceIndex": 29,
+              "wordIndex": 24,
+              "sourceOrder": 565,
+              "text": "是",
+              "start": 116.051,
+              "end": 116.131,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "29:25",
+              "utteranceIndex": 29,
+              "wordIndex": 25,
+              "sourceOrder": 566,
+              "text": "一",
+              "start": 116.131,
+              "end": 116.251,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "29:26",
+              "utteranceIndex": 29,
+              "wordIndex": 26,
+              "sourceOrder": 567,
+              "text": "个",
+              "start": 116.251,
+              "end": 116.371,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:0",
+              "utteranceIndex": 30,
+              "wordIndex": 0,
+              "sourceOrder": 568,
+              "text": "对",
+              "start": 116.371,
+              "end": 116.411,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:1",
+              "utteranceIndex": 30,
+              "wordIndex": 1,
+              "sourceOrder": 569,
+              "text": "对",
+              "start": 116.451,
+              "end": 116.491,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:2",
+              "utteranceIndex": 30,
+              "wordIndex": 2,
+              "sourceOrder": 570,
+              "text": "对",
+              "start": 116.531,
+              "end": 116.571,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:3",
+              "utteranceIndex": 30,
+              "wordIndex": 3,
+              "sourceOrder": 571,
+              "text": "是",
+              "start": 116.571,
+              "end": 116.611,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:4",
+              "utteranceIndex": 30,
+              "wordIndex": 4,
+              "sourceOrder": 572,
+              "text": "这",
+              "start": 116.651,
+              "end": 116.771,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:5",
+              "utteranceIndex": 30,
+              "wordIndex": 5,
+              "sourceOrder": 573,
+              "text": "这",
+              "start": 116.811,
+              "end": 116.931,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:6",
+              "utteranceIndex": 30,
+              "wordIndex": 6,
+              "sourceOrder": 574,
+              "text": "这",
+              "start": 117.011,
+              "end": 117.051,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:7",
+              "utteranceIndex": 30,
+              "wordIndex": 7,
+              "sourceOrder": 575,
+              "text": "是",
+              "start": 117.211,
+              "end": 117.251,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:8",
+              "utteranceIndex": 30,
+              "wordIndex": 8,
+              "sourceOrder": 576,
+              "text": "最",
+              "start": 117.531,
+              "end": 117.691,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:9",
+              "utteranceIndex": 30,
+              "wordIndex": 9,
+              "sourceOrder": 577,
+              "text": "主",
+              "start": 117.691,
+              "end": 117.731,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:10",
+              "utteranceIndex": 30,
+              "wordIndex": 10,
+              "sourceOrder": 578,
+              "text": "要",
+              "start": 117.731,
+              "end": 117.851,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "30:11",
+              "utteranceIndex": 30,
+              "wordIndex": 11,
+              "sourceOrder": 579,
+              "text": "的",
+              "start": 117.891,
+              "end": 117.931,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "31:0",
+              "utteranceIndex": 31,
+              "wordIndex": 0,
+              "sourceOrder": 580,
+              "text": "嗯",
+              "start": 118.011,
+              "end": 118.051,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2",
+            "6"
+          ],
+          "speakerBlindWindowText": "这是一个对对对是这这这是最主要的嗯",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 123.73660304766395,
+            "end": 124.49031249999985,
+            "speaker": "003-F",
+            "text": "嗯嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "31:33",
+              "utteranceIndex": 31,
+              "wordIndex": 33,
+              "sourceOrder": 613,
+              "text": "生",
+              "start": 123.891,
+              "end": 123.971,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "31:34",
+              "utteranceIndex": 31,
+              "wordIndex": 34,
+              "sourceOrder": 614,
+              "text": "盗",
+              "start": 124.091,
+              "end": 124.131,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "31:35",
+              "utteranceIndex": 31,
+              "wordIndex": 35,
+              "sourceOrder": 615,
+              "text": "心",
+              "start": 124.251,
+              "end": 124.411,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "生盗心",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 125.29954617748808,
+            "end": 125.72574999999983,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F",
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "31:38",
+              "utteranceIndex": 31,
+              "wordIndex": 38,
+              "sourceOrder": 618,
+              "text": "这",
+              "start": 125.411,
+              "end": 125.571,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "31:39",
+              "utteranceIndex": 31,
+              "wordIndex": 39,
+              "sourceOrder": 619,
+              "text": "这",
+              "start": 125.611,
+              "end": 125.691,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "这这",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 135.8506581884319,
+            "end": 136.27031250000005,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "32:26",
+              "utteranceIndex": 32,
+              "wordIndex": 26,
+              "sourceOrder": 676,
+              "text": "你",
+              "start": 135.861,
+              "end": 135.901,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:27",
+              "utteranceIndex": 32,
+              "wordIndex": 27,
+              "sourceOrder": 677,
+              "text": "别",
+              "start": 135.981,
+              "end": 136.101,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:28",
+              "utteranceIndex": 32,
+              "wordIndex": 28,
+              "sourceOrder": 678,
+              "text": "往",
+              "start": 136.141,
+              "end": 136.301,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "你别往",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 138.0458030336904,
+            "end": 138.51324999999997,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "32:36",
+              "utteranceIndex": 32,
+              "wordIndex": 36,
+              "sourceOrder": 686,
+              "text": "你",
+              "start": 138.221,
+              "end": 138.261,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:37",
+              "utteranceIndex": 32,
+              "wordIndex": 37,
+              "sourceOrder": 687,
+              "text": "弄",
+              "start": 138.301,
+              "end": 138.421,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:38",
+              "utteranceIndex": 32,
+              "wordIndex": 38,
+              "sourceOrder": 688,
+              "text": "个",
+              "start": 138.421,
+              "end": 138.541,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "你弄个",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 145.9262335044657,
+            "end": 146.69831249999993,
+            "speaker": "003-F",
+            "text": "对哼"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "32:82",
+              "utteranceIndex": 32,
+              "wordIndex": 82,
+              "sourceOrder": 732,
+              "text": "决",
+              "start": 145.941,
+              "end": 145.981,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:83",
+              "utteranceIndex": 32,
+              "wordIndex": 83,
+              "sourceOrder": 733,
+              "text": "是",
+              "start": 146.501,
+              "end": 146.621,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "32:84",
+              "utteranceIndex": 32,
+              "wordIndex": 84,
+              "sourceOrder": 734,
+              "text": "吧",
+              "start": 146.621,
+              "end": 146.741,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "决是吧",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 148.24430646105884,
+            "end": 148.62199999999984,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "32:97",
+              "utteranceIndex": 32,
+              "wordIndex": 97,
+              "sourceOrder": 747,
+              "text": "个",
+              "start": 148.261,
+              "end": 148.381,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "个",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 149.6491991620244,
+            "end": 150.49812499999985,
+            "speaker": "003-F",
+            "text": "操点儿心儿"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "33:0",
+              "utteranceIndex": 33,
+              "wordIndex": 0,
+              "sourceOrder": 750,
+              "text": "操",
+              "start": 149.621,
+              "end": 149.741,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "33:1",
+              "utteranceIndex": 33,
+              "wordIndex": 1,
+              "sourceOrder": 751,
+              "text": "点",
+              "start": 149.781,
+              "end": 149.861,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "33:2",
+              "utteranceIndex": 33,
+              "wordIndex": 2,
+              "sourceOrder": 752,
+              "text": "儿",
+              "start": 149.861,
+              "end": 149.941,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "33:3",
+              "utteranceIndex": 33,
+              "wordIndex": 3,
+              "sourceOrder": 753,
+              "text": "心",
+              "start": 149.941,
+              "end": 150.061,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "34:0",
+              "utteranceIndex": 34,
+              "wordIndex": 0,
+              "sourceOrder": 754,
+              "text": "啊",
+              "start": 150.221,
+              "end": 150.301,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "34:1",
+              "utteranceIndex": 34,
+              "wordIndex": 1,
+              "sourceOrder": 755,
+              "text": "操",
+              "start": 150.421,
+              "end": 150.541,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1",
+            "2"
+          ],
+          "speakerBlindWindowText": "操点儿心啊操",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 154.1929405444132,
+            "end": 155.83381250000002,
+            "speaker": "003-F",
+            "text": "嗯对对对对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F",
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "37:3",
+              "utteranceIndex": 37,
+              "wordIndex": 3,
+              "sourceOrder": 779,
+              "text": "确",
+              "start": 154.431,
+              "end": 154.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:4",
+              "utteranceIndex": 37,
+              "wordIndex": 4,
+              "sourceOrder": 780,
+              "text": "实",
+              "start": 154.511,
+              "end": 154.591,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:5",
+              "utteranceIndex": 37,
+              "wordIndex": 5,
+              "sourceOrder": 781,
+              "text": "这",
+              "start": 154.631,
+              "end": 154.751,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:6",
+              "utteranceIndex": 37,
+              "wordIndex": 6,
+              "sourceOrder": 782,
+              "text": "种",
+              "start": 154.751,
+              "end": 154.831,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:7",
+              "utteranceIndex": 37,
+              "wordIndex": 7,
+              "sourceOrder": 783,
+              "text": "情",
+              "start": 154.831,
+              "end": 154.951,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:8",
+              "utteranceIndex": 37,
+              "wordIndex": 8,
+              "sourceOrder": 784,
+              "text": "况",
+              "start": 154.951,
+              "end": 154.991,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:9",
+              "utteranceIndex": 37,
+              "wordIndex": 9,
+              "sourceOrder": 785,
+              "text": "就",
+              "start": 155.151,
+              "end": 155.311,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:10",
+              "utteranceIndex": 37,
+              "wordIndex": 10,
+              "sourceOrder": 786,
+              "text": "多",
+              "start": 155.391,
+              "end": 155.471,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:11",
+              "utteranceIndex": 37,
+              "wordIndex": 11,
+              "sourceOrder": 787,
+              "text": "了",
+              "start": 155.471,
+              "end": 155.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:12",
+              "utteranceIndex": 37,
+              "wordIndex": 12,
+              "sourceOrder": 788,
+              "text": "咱",
+              "start": 155.511,
+              "end": 155.551,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:13",
+              "utteranceIndex": 37,
+              "wordIndex": 13,
+              "sourceOrder": 789,
+              "text": "们",
+              "start": 155.551,
+              "end": 155.591,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "37:14",
+              "utteranceIndex": 37,
+              "wordIndex": 14,
+              "sourceOrder": 790,
+              "text": "得",
+              "start": 155.591,
+              "end": 155.631,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "38:0",
+              "utteranceIndex": 38,
+              "wordIndex": 0,
+              "sourceOrder": 791,
+              "text": "对",
+              "start": 155.631,
+              "end": 155.671,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "38:1",
+              "utteranceIndex": 38,
+              "wordIndex": 1,
+              "sourceOrder": 792,
+              "text": "对",
+              "start": 155.711,
+              "end": 155.751,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "38:2",
+              "utteranceIndex": 38,
+              "wordIndex": 2,
+              "sourceOrder": 793,
+              "text": "对",
+              "start": 155.791,
+              "end": 155.831,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1",
+            "2"
+          ],
+          "speakerBlindWindowText": "确实这种情况就多了咱们得对对对",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 169.4023595081801,
+            "end": 170.89868750000005,
+            "speaker": "003-F",
+            "text": "我们都说到"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "004-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "43:14",
+              "utteranceIndex": 43,
+              "wordIndex": 14,
+              "sourceOrder": 863,
+              "text": "操",
+              "start": 169.391,
+              "end": 169.551,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:15",
+              "utteranceIndex": 43,
+              "wordIndex": 15,
+              "sourceOrder": 864,
+              "text": "心",
+              "start": 169.551,
+              "end": 169.671,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:16",
+              "utteranceIndex": 43,
+              "wordIndex": 16,
+              "sourceOrder": 865,
+              "text": "这",
+              "start": 169.751,
+              "end": 169.871,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:17",
+              "utteranceIndex": 43,
+              "wordIndex": 17,
+              "sourceOrder": 866,
+              "text": "个",
+              "start": 169.871,
+              "end": 169.951,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:18",
+              "utteranceIndex": 43,
+              "wordIndex": 18,
+              "sourceOrder": 867,
+              "text": "话",
+              "start": 170.031,
+              "end": 170.071,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:19",
+              "utteranceIndex": 43,
+              "wordIndex": 19,
+              "sourceOrder": 868,
+              "text": "咱",
+              "start": 170.551,
+              "end": 170.671,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:20",
+              "utteranceIndex": 43,
+              "wordIndex": 20,
+              "sourceOrder": 869,
+              "text": "们",
+              "start": 170.671,
+              "end": 170.791,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:21",
+              "utteranceIndex": 43,
+              "wordIndex": 21,
+              "sourceOrder": 870,
+              "text": "说",
+              "start": 170.791,
+              "end": 170.951,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "操心这个话咱们说",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 171.5272597183905,
+            "end": 172.04406249999988,
+            "speaker": "003-F",
+            "text": "嗯"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [],
+          "providerLabels": [],
+          "speakerBlindWindowText": "",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 187.3965450159801,
+            "end": 188.35006249999992,
+            "speaker": "003-F",
+            "text": "对说到头里了"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "46:0",
+              "utteranceIndex": 46,
+              "wordIndex": 0,
+              "sourceOrder": 940,
+              "text": "对",
+              "start": 187.482,
+              "end": 187.602,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:1",
+              "utteranceIndex": 46,
+              "wordIndex": 1,
+              "sourceOrder": 941,
+              "text": "说",
+              "start": 187.642,
+              "end": 187.762,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:2",
+              "utteranceIndex": 46,
+              "wordIndex": 2,
+              "sourceOrder": 942,
+              "text": "到",
+              "start": 187.762,
+              "end": 187.882,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:3",
+              "utteranceIndex": 46,
+              "wordIndex": 3,
+              "sourceOrder": 943,
+              "text": "头",
+              "start": 187.882,
+              "end": 188.002,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:4",
+              "utteranceIndex": 46,
+              "wordIndex": 4,
+              "sourceOrder": 944,
+              "text": "里",
+              "start": 188.002,
+              "end": 188.122,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "46:5",
+              "utteranceIndex": 46,
+              "wordIndex": 5,
+              "sourceOrder": 945,
+              "text": "了",
+              "start": 188.122,
+              "end": 188.282,
+              "speaker": "6",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "6"
+          ],
+          "speakerBlindWindowText": "对说到头里了",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 217.2338358128618,
+            "end": 217.61974999999984,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "48:70",
+              "utteranceIndex": 48,
+              "wordIndex": 70,
+              "sourceOrder": 1068,
+              "text": "品",
+              "start": 217.282,
+              "end": 217.362,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "品",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 220.41565256720241,
+            "end": 220.80199810860358,
+            "speaker": "003-F",
+            "text": "嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "48:83",
+              "utteranceIndex": 48,
+              "wordIndex": 83,
+              "sourceOrder": 1081,
+              "text": "那",
+              "start": 220.722,
+              "end": 220.762,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "那",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 225.28286422926794,
+            "end": 227.26727541919263,
+            "speaker": "003-F",
+            "text": "对像那个对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "49:22",
+              "utteranceIndex": 49,
+              "wordIndex": 22,
+              "sourceOrder": 1108,
+              "text": "对",
+              "start": 226.111,
+              "end": 226.191,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "49:23",
+              "utteranceIndex": 49,
+              "wordIndex": 23,
+              "sourceOrder": 1109,
+              "text": "吧",
+              "start": 226.191,
+              "end": 226.311,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "49:24",
+              "utteranceIndex": 49,
+              "wordIndex": 24,
+              "sourceOrder": 1110,
+              "text": "嗯",
+              "start": 226.951,
+              "end": 227.071,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "对吧嗯",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 232.55318487200088,
+            "end": 233.03168749999986,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "49:52",
+              "utteranceIndex": 49,
+              "wordIndex": 52,
+              "sourceOrder": 1138,
+              "text": "及",
+              "start": 232.791,
+              "end": 232.951,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "49:53",
+              "utteranceIndex": 49,
+              "wordIndex": 53,
+              "sourceOrder": 1139,
+              "text": "时",
+              "start": 232.951,
+              "end": 233.031,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "及时",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 233.50148756453132,
+            "end": 234.51256250000006,
+            "speaker": "003-F",
+            "text": "对嗯"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "49:56",
+              "utteranceIndex": 49,
+              "wordIndex": 56,
+              "sourceOrder": 1142,
+              "text": "提",
+              "start": 233.431,
+              "end": 233.591,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "49:57",
+              "utteranceIndex": 49,
+              "wordIndex": 57,
+              "sourceOrder": 1143,
+              "text": "供",
+              "start": 233.671,
+              "end": 233.871,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "提供",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 235.7493161690477,
+            "end": 236.2886249999999,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "49:63",
+              "utteranceIndex": 49,
+              "wordIndex": 63,
+              "sourceOrder": 1149,
+              "text": "一",
+              "start": 236.151,
+              "end": 236.311,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "一",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 260.53987603806445,
+            "end": 262.150625,
+            "speaker": "003-F",
+            "text": "嗯对对对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F",
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "50:67",
+              "utteranceIndex": 50,
+              "wordIndex": 67,
+              "sourceOrder": 1240,
+              "text": "吧",
+              "start": 260.522,
+              "end": 260.601,
+              "speaker": "0",
+              "textSource": "utterance.words"
+            },
+            {
+              "id": "50:68",
+              "utteranceIndex": 50,
+              "wordIndex": 68,
+              "sourceOrder": 1241,
+              "text": "对",
+              "start": 261.002,
+              "end": 261.082,
+              "speaker": "0",
+              "textSource": "utterance.words"
+            },
+            {
+              "id": "50:69",
+              "utteranceIndex": 50,
+              "wordIndex": 69,
+              "sourceOrder": 1242,
+              "text": "对",
+              "start": 261.462,
+              "end": 261.542,
+              "speaker": "0",
+              "textSource": "utterance.words"
+            },
+            {
+              "id": "51:0",
+              "utteranceIndex": 51,
+              "wordIndex": 0,
+              "sourceOrder": 1243,
+              "text": "这",
+              "start": 261.692,
+              "end": 261.812,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "51:1",
+              "utteranceIndex": 51,
+              "wordIndex": 1,
+              "sourceOrder": 1244,
+              "text": "些",
+              "start": 261.812,
+              "end": 261.972,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "51:2",
+              "utteranceIndex": 51,
+              "wordIndex": 2,
+              "sourceOrder": 1245,
+              "text": "人",
+              "start": 261.972,
+              "end": 262.172,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "0",
+            "3"
+          ],
+          "speakerBlindWindowText": "吧对对这些人",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 275.36149589909473,
+            "end": 275.7869375,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "006-M"
+          ],
+          "providerWordsByMidpoint": [],
+          "providerLabels": [],
+          "speakerBlindWindowText": "",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 290.40881017072184,
+            "end": 290.79949999999985,
+            "speaker": "003-F",
+            "text": "对"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "005-M"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "55:18",
+              "utteranceIndex": 55,
+              "wordIndex": 18,
+              "sourceOrder": 1379,
+              "text": "呃",
+              "start": 290.631,
+              "end": 290.751,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "4"
+          ],
+          "speakerBlindWindowText": "呃",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ]
+    },
+    "004-M": {
+      "referenceUtterances": 21,
+      "referenceCharacters": 432,
+      "overlappedUtterances": 18,
+      "overlappedReferenceCharacters": 382,
+      "nonoverlapUtterances": 3,
+      "nonoverlapReferenceCharacters": 50,
+      "cleanRows": [
+        {
+          "reference": {
+            "start": 172.04406249999988,
+            "end": 178.72867999999994,
+            "speaker": "004-M",
+            "text": "是吧，咱们第二方面就是说加强咱们这方面的一个管理，一个监督，然后真出问题以后"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "43:25",
+              "utteranceIndex": 43,
+              "wordIndex": 25,
+              "sourceOrder": 874,
+              "text": "是",
+              "start": 172.071,
+              "end": 172.311,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:26",
+              "utteranceIndex": 43,
+              "wordIndex": 26,
+              "sourceOrder": 875,
+              "text": "吧",
+              "start": 172.311,
+              "end": 172.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:27",
+              "utteranceIndex": 43,
+              "wordIndex": 27,
+              "sourceOrder": 876,
+              "text": "咱",
+              "start": 172.711,
+              "end": 172.871,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:28",
+              "utteranceIndex": 43,
+              "wordIndex": 28,
+              "sourceOrder": 877,
+              "text": "们",
+              "start": 172.871,
+              "end": 173.031,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:29",
+              "utteranceIndex": 43,
+              "wordIndex": 29,
+              "sourceOrder": 878,
+              "text": "第",
+              "start": 173.231,
+              "end": 173.431,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:30",
+              "utteranceIndex": 43,
+              "wordIndex": 30,
+              "sourceOrder": 879,
+              "text": "二",
+              "start": 173.431,
+              "end": 173.591,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:31",
+              "utteranceIndex": 43,
+              "wordIndex": 31,
+              "sourceOrder": 880,
+              "text": "方",
+              "start": 173.631,
+              "end": 173.751,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:32",
+              "utteranceIndex": 43,
+              "wordIndex": 32,
+              "sourceOrder": 881,
+              "text": "面",
+              "start": 173.751,
+              "end": 173.831,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:33",
+              "utteranceIndex": 43,
+              "wordIndex": 33,
+              "sourceOrder": 882,
+              "text": "就",
+              "start": 173.831,
+              "end": 173.991,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:34",
+              "utteranceIndex": 43,
+              "wordIndex": 34,
+              "sourceOrder": 883,
+              "text": "是",
+              "start": 173.991,
+              "end": 174.031,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:35",
+              "utteranceIndex": 43,
+              "wordIndex": 35,
+              "sourceOrder": 884,
+              "text": "说",
+              "start": 174.031,
+              "end": 174.151,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:36",
+              "utteranceIndex": 43,
+              "wordIndex": 36,
+              "sourceOrder": 885,
+              "text": "加",
+              "start": 174.151,
+              "end": 174.351,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:37",
+              "utteranceIndex": 43,
+              "wordIndex": 37,
+              "sourceOrder": 886,
+              "text": "强",
+              "start": 174.351,
+              "end": 174.471,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:38",
+              "utteranceIndex": 43,
+              "wordIndex": 38,
+              "sourceOrder": 887,
+              "text": "咱",
+              "start": 174.591,
+              "end": 174.711,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:39",
+              "utteranceIndex": 43,
+              "wordIndex": 39,
+              "sourceOrder": 888,
+              "text": "们",
+              "start": 174.711,
+              "end": 174.831,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:40",
+              "utteranceIndex": 43,
+              "wordIndex": 40,
+              "sourceOrder": 889,
+              "text": "这",
+              "start": 174.831,
+              "end": 175.031,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:41",
+              "utteranceIndex": 43,
+              "wordIndex": 41,
+              "sourceOrder": 890,
+              "text": "方",
+              "start": 175.071,
+              "end": 175.191,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:42",
+              "utteranceIndex": 43,
+              "wordIndex": 42,
+              "sourceOrder": 891,
+              "text": "面",
+              "start": 175.191,
+              "end": 175.271,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:43",
+              "utteranceIndex": 43,
+              "wordIndex": 43,
+              "sourceOrder": 892,
+              "text": "的",
+              "start": 175.271,
+              "end": 175.391,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:44",
+              "utteranceIndex": 43,
+              "wordIndex": 44,
+              "sourceOrder": 893,
+              "text": "一",
+              "start": 175.391,
+              "end": 175.471,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:45",
+              "utteranceIndex": 43,
+              "wordIndex": 45,
+              "sourceOrder": 894,
+              "text": "个",
+              "start": 175.471,
+              "end": 175.591,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:46",
+              "utteranceIndex": 43,
+              "wordIndex": 46,
+              "sourceOrder": 895,
+              "text": "管",
+              "start": 175.591,
+              "end": 175.791,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:47",
+              "utteranceIndex": 43,
+              "wordIndex": 47,
+              "sourceOrder": 896,
+              "text": "理",
+              "start": 175.791,
+              "end": 175.911,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:48",
+              "utteranceIndex": 43,
+              "wordIndex": 48,
+              "sourceOrder": 897,
+              "text": "一",
+              "start": 175.991,
+              "end": 176.151,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:49",
+              "utteranceIndex": 43,
+              "wordIndex": 49,
+              "sourceOrder": 898,
+              "text": "个",
+              "start": 176.151,
+              "end": 176.271,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:50",
+              "utteranceIndex": 43,
+              "wordIndex": 50,
+              "sourceOrder": 899,
+              "text": "监",
+              "start": 176.311,
+              "end": 176.471,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:51",
+              "utteranceIndex": 43,
+              "wordIndex": 51,
+              "sourceOrder": 900,
+              "text": "督",
+              "start": 176.471,
+              "end": 176.631,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:52",
+              "utteranceIndex": 43,
+              "wordIndex": 52,
+              "sourceOrder": 901,
+              "text": "然",
+              "start": 176.951,
+              "end": 177.151,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:53",
+              "utteranceIndex": 43,
+              "wordIndex": 53,
+              "sourceOrder": 902,
+              "text": "后",
+              "start": 177.151,
+              "end": 177.271,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:54",
+              "utteranceIndex": 43,
+              "wordIndex": 54,
+              "sourceOrder": 903,
+              "text": "真",
+              "start": 177.271,
+              "end": 177.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:55",
+              "utteranceIndex": 43,
+              "wordIndex": 55,
+              "sourceOrder": 904,
+              "text": "出",
+              "start": 177.511,
+              "end": 177.711,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:56",
+              "utteranceIndex": 43,
+              "wordIndex": 56,
+              "sourceOrder": 905,
+              "text": "问",
+              "start": 177.711,
+              "end": 177.831,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:57",
+              "utteranceIndex": 43,
+              "wordIndex": 57,
+              "sourceOrder": 906,
+              "text": "题",
+              "start": 177.831,
+              "end": 177.951,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:58",
+              "utteranceIndex": 43,
+              "wordIndex": 58,
+              "sourceOrder": 907,
+              "text": "以",
+              "start": 177.951,
+              "end": 178.111,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:59",
+              "utteranceIndex": 43,
+              "wordIndex": 59,
+              "sourceOrder": 908,
+              "text": "后",
+              "start": 178.111,
+              "end": 178.351,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "是吧咱们第二方面就是说加强咱们这方面的一个管理一个监督然后真出问题以后",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 178.9847499689488,
+            "end": 181.7067295770696,
+            "speaker": "004-M",
+            "text": "你你你这个咱们解决起来也"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "43:60",
+              "utteranceIndex": 43,
+              "wordIndex": 60,
+              "sourceOrder": 909,
+              "text": "你",
+              "start": 179.031,
+              "end": 179.151,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:61",
+              "utteranceIndex": 43,
+              "wordIndex": 61,
+              "sourceOrder": 910,
+              "text": "你",
+              "start": 179.231,
+              "end": 179.351,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:62",
+              "utteranceIndex": 43,
+              "wordIndex": 62,
+              "sourceOrder": 911,
+              "text": "你",
+              "start": 179.391,
+              "end": 179.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:63",
+              "utteranceIndex": 43,
+              "wordIndex": 63,
+              "sourceOrder": 912,
+              "text": "你",
+              "start": 179.591,
+              "end": 179.751,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:64",
+              "utteranceIndex": 43,
+              "wordIndex": 64,
+              "sourceOrder": 913,
+              "text": "这",
+              "start": 179.751,
+              "end": 179.911,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:65",
+              "utteranceIndex": 43,
+              "wordIndex": 65,
+              "sourceOrder": 914,
+              "text": "个",
+              "start": 179.911,
+              "end": 180.071,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:66",
+              "utteranceIndex": 43,
+              "wordIndex": 66,
+              "sourceOrder": 915,
+              "text": "咱",
+              "start": 180.071,
+              "end": 180.191,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:67",
+              "utteranceIndex": 43,
+              "wordIndex": 67,
+              "sourceOrder": 916,
+              "text": "们",
+              "start": 180.191,
+              "end": 180.391,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:68",
+              "utteranceIndex": 43,
+              "wordIndex": 68,
+              "sourceOrder": 917,
+              "text": "解",
+              "start": 180.551,
+              "end": 180.831,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:69",
+              "utteranceIndex": 43,
+              "wordIndex": 69,
+              "sourceOrder": 918,
+              "text": "决",
+              "start": 180.831,
+              "end": 180.951,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:70",
+              "utteranceIndex": 43,
+              "wordIndex": 70,
+              "sourceOrder": 919,
+              "text": "起",
+              "start": 180.951,
+              "end": 181.111,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:71",
+              "utteranceIndex": 43,
+              "wordIndex": 71,
+              "sourceOrder": 920,
+              "text": "来",
+              "start": 181.111,
+              "end": 181.231,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "43:72",
+              "utteranceIndex": 43,
+              "wordIndex": 72,
+              "sourceOrder": 921,
+              "text": "也",
+              "start": 181.231,
+              "end": 181.511,
+              "speaker": "2",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "2"
+          ],
+          "speakerBlindWindowText": "你你你你这个咱们解决起来也",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 182.37405361002834,
+            "end": 183.21698923060762,
+            "speaker": "004-M",
+            "text": "&嗯&也也"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "44:0",
+              "utteranceIndex": 44,
+              "wordIndex": 0,
+              "sourceOrder": 922,
+              "text": "也",
+              "start": 182.562,
+              "end": 182.722,
+              "speaker": "7",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "44:1",
+              "utteranceIndex": 44,
+              "wordIndex": 1,
+              "sourceOrder": 923,
+              "text": "也",
+              "start": 182.762,
+              "end": 183.002,
+              "speaker": "7",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "44:2",
+              "utteranceIndex": 44,
+              "wordIndex": 2,
+              "sourceOrder": 924,
+              "text": "是",
+              "start": 183.162,
+              "end": 183.202,
+              "speaker": "7",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "7"
+          ],
+          "speakerBlindWindowText": "也也是",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ],
+      "rows": []
+    },
+    "005-M": {
+      "referenceUtterances": 13,
+      "referenceCharacters": 235,
+      "overlappedUtterances": 11,
+      "overlappedReferenceCharacters": 173,
+      "nonoverlapUtterances": 2,
+      "nonoverlapReferenceCharacters": 62,
+      "cleanRows": [
+        {
+          "reference": {
+            "start": 54.669999999999845,
+            "end": 67.12228919368818,
+            "speaker": "005-M",
+            "text": "要不说咱们这儿还有个来客登记制度，纪律什么的，咱们这儿都规定的比较详细，只不过就是难就难在哪儿啊，难就难在执行上边儿啦"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "17:0",
+              "utteranceIndex": 17,
+              "wordIndex": 0,
+              "sourceOrder": 273,
+              "text": "你",
+              "start": 54.861,
+              "end": 54.981,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:1",
+              "utteranceIndex": 17,
+              "wordIndex": 1,
+              "sourceOrder": 274,
+              "text": "要",
+              "start": 54.981,
+              "end": 55.101,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:2",
+              "utteranceIndex": 17,
+              "wordIndex": 2,
+              "sourceOrder": 275,
+              "text": "不",
+              "start": 55.101,
+              "end": 55.221,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:3",
+              "utteranceIndex": 17,
+              "wordIndex": 3,
+              "sourceOrder": 276,
+              "text": "是",
+              "start": 55.261,
+              "end": 55.301,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:4",
+              "utteranceIndex": 17,
+              "wordIndex": 4,
+              "sourceOrder": 277,
+              "text": "说",
+              "start": 55.301,
+              "end": 55.501,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:5",
+              "utteranceIndex": 17,
+              "wordIndex": 5,
+              "sourceOrder": 278,
+              "text": "咱",
+              "start": 55.621,
+              "end": 55.741,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:6",
+              "utteranceIndex": 17,
+              "wordIndex": 6,
+              "sourceOrder": 279,
+              "text": "们",
+              "start": 55.741,
+              "end": 55.861,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:7",
+              "utteranceIndex": 17,
+              "wordIndex": 7,
+              "sourceOrder": 280,
+              "text": "这",
+              "start": 55.861,
+              "end": 55.901,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:8",
+              "utteranceIndex": 17,
+              "wordIndex": 8,
+              "sourceOrder": 281,
+              "text": "儿",
+              "start": 55.901,
+              "end": 56.021,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:9",
+              "utteranceIndex": 17,
+              "wordIndex": 9,
+              "sourceOrder": 282,
+              "text": "还",
+              "start": 56.021,
+              "end": 56.141,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:10",
+              "utteranceIndex": 17,
+              "wordIndex": 10,
+              "sourceOrder": 283,
+              "text": "有",
+              "start": 56.141,
+              "end": 56.261,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:11",
+              "utteranceIndex": 17,
+              "wordIndex": 11,
+              "sourceOrder": 284,
+              "text": "个",
+              "start": 56.261,
+              "end": 56.421,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:12",
+              "utteranceIndex": 17,
+              "wordIndex": 12,
+              "sourceOrder": 285,
+              "text": "来",
+              "start": 56.421,
+              "end": 56.701,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:13",
+              "utteranceIndex": 17,
+              "wordIndex": 13,
+              "sourceOrder": 286,
+              "text": "客",
+              "start": 56.781,
+              "end": 56.821,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:14",
+              "utteranceIndex": 17,
+              "wordIndex": 14,
+              "sourceOrder": 287,
+              "text": "登",
+              "start": 56.981,
+              "end": 57.141,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:15",
+              "utteranceIndex": 17,
+              "wordIndex": 15,
+              "sourceOrder": 288,
+              "text": "记",
+              "start": 57.141,
+              "end": 57.221,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:16",
+              "utteranceIndex": 17,
+              "wordIndex": 16,
+              "sourceOrder": 289,
+              "text": "制",
+              "start": 57.301,
+              "end": 57.461,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:17",
+              "utteranceIndex": 17,
+              "wordIndex": 17,
+              "sourceOrder": 290,
+              "text": "度",
+              "start": 57.501,
+              "end": 57.541,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:18",
+              "utteranceIndex": 17,
+              "wordIndex": 18,
+              "sourceOrder": 291,
+              "text": "你",
+              "start": 57.661,
+              "end": 57.821,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:19",
+              "utteranceIndex": 17,
+              "wordIndex": 19,
+              "sourceOrder": 292,
+              "text": "看",
+              "start": 57.821,
+              "end": 57.981,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:20",
+              "utteranceIndex": 17,
+              "wordIndex": 20,
+              "sourceOrder": 293,
+              "text": "条",
+              "start": 58.181,
+              "end": 58.421,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:21",
+              "utteranceIndex": 17,
+              "wordIndex": 21,
+              "sourceOrder": 294,
+              "text": "条",
+              "start": 58.501,
+              "end": 58.661,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:22",
+              "utteranceIndex": 17,
+              "wordIndex": 22,
+              "sourceOrder": 295,
+              "text": "列",
+              "start": 58.821,
+              "end": 58.861,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:23",
+              "utteranceIndex": 17,
+              "wordIndex": 23,
+              "sourceOrder": 296,
+              "text": "列",
+              "start": 58.981,
+              "end": 59.021,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:24",
+              "utteranceIndex": 17,
+              "wordIndex": 24,
+              "sourceOrder": 297,
+              "text": "纪",
+              "start": 59.181,
+              "end": 59.341,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:25",
+              "utteranceIndex": 17,
+              "wordIndex": 25,
+              "sourceOrder": 298,
+              "text": "律",
+              "start": 59.341,
+              "end": 59.501,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:26",
+              "utteranceIndex": 17,
+              "wordIndex": 26,
+              "sourceOrder": 299,
+              "text": "什",
+              "start": 59.741,
+              "end": 59.941,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:27",
+              "utteranceIndex": 17,
+              "wordIndex": 27,
+              "sourceOrder": 300,
+              "text": "么",
+              "start": 59.941,
+              "end": 60.101,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:28",
+              "utteranceIndex": 17,
+              "wordIndex": 28,
+              "sourceOrder": 301,
+              "text": "的",
+              "start": 60.101,
+              "end": 60.261,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:29",
+              "utteranceIndex": 17,
+              "wordIndex": 29,
+              "sourceOrder": 302,
+              "text": "咱",
+              "start": 60.301,
+              "end": 60.461,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:30",
+              "utteranceIndex": 17,
+              "wordIndex": 30,
+              "sourceOrder": 303,
+              "text": "们",
+              "start": 60.461,
+              "end": 60.581,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:31",
+              "utteranceIndex": 17,
+              "wordIndex": 31,
+              "sourceOrder": 304,
+              "text": "这",
+              "start": 60.661,
+              "end": 60.821,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:32",
+              "utteranceIndex": 17,
+              "wordIndex": 32,
+              "sourceOrder": 305,
+              "text": "儿",
+              "start": 60.821,
+              "end": 60.861,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:33",
+              "utteranceIndex": 17,
+              "wordIndex": 33,
+              "sourceOrder": 306,
+              "text": "都",
+              "start": 60.941,
+              "end": 61.221,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:34",
+              "utteranceIndex": 17,
+              "wordIndex": 34,
+              "sourceOrder": 307,
+              "text": "规",
+              "start": 61.261,
+              "end": 61.461,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:35",
+              "utteranceIndex": 17,
+              "wordIndex": 35,
+              "sourceOrder": 308,
+              "text": "定",
+              "start": 61.461,
+              "end": 61.621,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:36",
+              "utteranceIndex": 17,
+              "wordIndex": 36,
+              "sourceOrder": 309,
+              "text": "的",
+              "start": 61.701,
+              "end": 61.781,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:37",
+              "utteranceIndex": 17,
+              "wordIndex": 37,
+              "sourceOrder": 310,
+              "text": "比",
+              "start": 61.901,
+              "end": 62.061,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:38",
+              "utteranceIndex": 17,
+              "wordIndex": 38,
+              "sourceOrder": 311,
+              "text": "较",
+              "start": 62.061,
+              "end": 62.181,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:39",
+              "utteranceIndex": 17,
+              "wordIndex": 39,
+              "sourceOrder": 312,
+              "text": "详",
+              "start": 62.181,
+              "end": 62.461,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:40",
+              "utteranceIndex": 17,
+              "wordIndex": 40,
+              "sourceOrder": 313,
+              "text": "细",
+              "start": 62.461,
+              "end": 62.541,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:41",
+              "utteranceIndex": 17,
+              "wordIndex": 41,
+              "sourceOrder": 314,
+              "text": "只",
+              "start": 62.701,
+              "end": 62.901,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:42",
+              "utteranceIndex": 17,
+              "wordIndex": 42,
+              "sourceOrder": 315,
+              "text": "不",
+              "start": 62.901,
+              "end": 63.021,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:43",
+              "utteranceIndex": 17,
+              "wordIndex": 43,
+              "sourceOrder": 316,
+              "text": "过",
+              "start": 63.021,
+              "end": 63.141,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:44",
+              "utteranceIndex": 17,
+              "wordIndex": 44,
+              "sourceOrder": 317,
+              "text": "就",
+              "start": 63.141,
+              "end": 63.341,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:45",
+              "utteranceIndex": 17,
+              "wordIndex": 45,
+              "sourceOrder": 318,
+              "text": "是",
+              "start": 63.341,
+              "end": 63.581,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:46",
+              "utteranceIndex": 17,
+              "wordIndex": 46,
+              "sourceOrder": 319,
+              "text": "难",
+              "start": 63.901,
+              "end": 64.261,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:47",
+              "utteranceIndex": 17,
+              "wordIndex": 47,
+              "sourceOrder": 320,
+              "text": "就",
+              "start": 64.261,
+              "end": 64.541,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:48",
+              "utteranceIndex": 17,
+              "wordIndex": 48,
+              "sourceOrder": 321,
+              "text": "难",
+              "start": 64.541,
+              "end": 64.741,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:49",
+              "utteranceIndex": 17,
+              "wordIndex": 49,
+              "sourceOrder": 322,
+              "text": "在",
+              "start": 64.741,
+              "end": 64.941,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:50",
+              "utteranceIndex": 17,
+              "wordIndex": 50,
+              "sourceOrder": 323,
+              "text": "哪",
+              "start": 64.941,
+              "end": 65.101,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:51",
+              "utteranceIndex": 17,
+              "wordIndex": 51,
+              "sourceOrder": 324,
+              "text": "儿",
+              "start": 65.101,
+              "end": 65.141,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:52",
+              "utteranceIndex": 17,
+              "wordIndex": 52,
+              "sourceOrder": 325,
+              "text": "啊",
+              "start": 65.181,
+              "end": 65.301,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:53",
+              "utteranceIndex": 17,
+              "wordIndex": 53,
+              "sourceOrder": 326,
+              "text": "难",
+              "start": 65.381,
+              "end": 65.581,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:54",
+              "utteranceIndex": 17,
+              "wordIndex": 54,
+              "sourceOrder": 327,
+              "text": "就",
+              "start": 65.581,
+              "end": 65.781,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:55",
+              "utteranceIndex": 17,
+              "wordIndex": 55,
+              "sourceOrder": 328,
+              "text": "难",
+              "start": 65.781,
+              "end": 65.941,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:56",
+              "utteranceIndex": 17,
+              "wordIndex": 56,
+              "sourceOrder": 329,
+              "text": "在",
+              "start": 65.941,
+              "end": 66.141,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:57",
+              "utteranceIndex": 17,
+              "wordIndex": 57,
+              "sourceOrder": 330,
+              "text": "执",
+              "start": 66.221,
+              "end": 66.421,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:58",
+              "utteranceIndex": 17,
+              "wordIndex": 58,
+              "sourceOrder": 331,
+              "text": "行",
+              "start": 66.421,
+              "end": 66.661,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:59",
+              "utteranceIndex": 17,
+              "wordIndex": 59,
+              "sourceOrder": 332,
+              "text": "上",
+              "start": 66.661,
+              "end": 66.861,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:60",
+              "utteranceIndex": 17,
+              "wordIndex": 60,
+              "sourceOrder": 333,
+              "text": "面",
+              "start": 66.861,
+              "end": 66.981,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "17:61",
+              "utteranceIndex": 17,
+              "wordIndex": 61,
+              "sourceOrder": 334,
+              "text": "儿",
+              "start": 66.981,
+              "end": 67.021,
+              "speaker": "4",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "4"
+          ],
+          "speakerBlindWindowText": "你要不是说咱们这儿还有个来客登记制度你看条条列列纪律什么的咱们这儿都规定的比较详细只不过就是难就难在哪儿啊难就难在执行上面儿",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 185.40594992991828,
+            "end": 187.39137294831107,
+            "speaker": "005-M",
+            "text": "说到头里啦是吧"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "45:2",
+              "utteranceIndex": 45,
+              "wordIndex": 2,
+              "sourceOrder": 930,
+              "text": "给",
+              "start": 185.402,
+              "end": 185.562,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:3",
+              "utteranceIndex": 45,
+              "wordIndex": 3,
+              "sourceOrder": 931,
+              "text": "他",
+              "start": 185.562,
+              "end": 185.722,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:4",
+              "utteranceIndex": 45,
+              "wordIndex": 4,
+              "sourceOrder": 932,
+              "text": "们",
+              "start": 185.722,
+              "end": 185.802,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:5",
+              "utteranceIndex": 45,
+              "wordIndex": 5,
+              "sourceOrder": 933,
+              "text": "说",
+              "start": 186.122,
+              "end": 186.322,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:6",
+              "utteranceIndex": 45,
+              "wordIndex": 6,
+              "sourceOrder": 934,
+              "text": "到",
+              "start": 186.322,
+              "end": 186.522,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:7",
+              "utteranceIndex": 45,
+              "wordIndex": 7,
+              "sourceOrder": 935,
+              "text": "头",
+              "start": 186.522,
+              "end": 186.722,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:8",
+              "utteranceIndex": 45,
+              "wordIndex": 8,
+              "sourceOrder": 936,
+              "text": "里",
+              "start": 186.722,
+              "end": 186.882,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:9",
+              "utteranceIndex": 45,
+              "wordIndex": 9,
+              "sourceOrder": 937,
+              "text": "了",
+              "start": 186.882,
+              "end": 187.042,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:10",
+              "utteranceIndex": 45,
+              "wordIndex": 10,
+              "sourceOrder": 938,
+              "text": "是",
+              "start": 187.122,
+              "end": 187.242,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "45:11",
+              "utteranceIndex": 45,
+              "wordIndex": 11,
+              "sourceOrder": 939,
+              "text": "吧",
+              "start": 187.242,
+              "end": 187.402,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "给他们说到头里了是吧",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ],
+      "rows": []
+    },
+    "006-M": {
+      "referenceUtterances": 11,
+      "referenceCharacters": 325,
+      "overlappedUtterances": 9,
+      "overlappedReferenceCharacters": 272,
+      "nonoverlapUtterances": 2,
+      "nonoverlapReferenceCharacters": 53,
+      "cleanRows": [
+        {
+          "reference": {
+            "start": 188.48533685922848,
+            "end": 195.65028963415284,
+            "speaker": "006-M",
+            "text": "他们这呃这块儿啊你们咱们刚才讨论的都是咱自身的问题，对吧&对&都是自身的一些这个"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "47:1",
+              "utteranceIndex": 47,
+              "wordIndex": 1,
+              "sourceOrder": 947,
+              "text": "这",
+              "start": 188.802,
+              "end": 188.922,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:2",
+              "utteranceIndex": 47,
+              "wordIndex": 2,
+              "sourceOrder": 948,
+              "text": "个",
+              "start": 189.002,
+              "end": 189.042,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:3",
+              "utteranceIndex": 47,
+              "wordIndex": 3,
+              "sourceOrder": 949,
+              "text": "嗯",
+              "start": 189.242,
+              "end": 189.402,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:4",
+              "utteranceIndex": 47,
+              "wordIndex": 4,
+              "sourceOrder": 950,
+              "text": "这",
+              "start": 189.682,
+              "end": 189.922,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:5",
+              "utteranceIndex": 47,
+              "wordIndex": 5,
+              "sourceOrder": 951,
+              "text": "块",
+              "start": 189.922,
+              "end": 190.042,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:6",
+              "utteranceIndex": 47,
+              "wordIndex": 6,
+              "sourceOrder": 952,
+              "text": "儿",
+              "start": 190.042,
+              "end": 190.122,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:7",
+              "utteranceIndex": 47,
+              "wordIndex": 7,
+              "sourceOrder": 953,
+              "text": "啊",
+              "start": 190.122,
+              "end": 190.242,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:8",
+              "utteranceIndex": 47,
+              "wordIndex": 8,
+              "sourceOrder": 954,
+              "text": "你",
+              "start": 190.242,
+              "end": 190.442,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:9",
+              "utteranceIndex": 47,
+              "wordIndex": 9,
+              "sourceOrder": 955,
+              "text": "们",
+              "start": 190.442,
+              "end": 190.522,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:10",
+              "utteranceIndex": 47,
+              "wordIndex": 10,
+              "sourceOrder": 956,
+              "text": "咱",
+              "start": 190.642,
+              "end": 190.762,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:11",
+              "utteranceIndex": 47,
+              "wordIndex": 11,
+              "sourceOrder": 957,
+              "text": "们",
+              "start": 190.762,
+              "end": 190.962,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:12",
+              "utteranceIndex": 47,
+              "wordIndex": 12,
+              "sourceOrder": 958,
+              "text": "刚",
+              "start": 191.002,
+              "end": 191.202,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:13",
+              "utteranceIndex": 47,
+              "wordIndex": 13,
+              "sourceOrder": 959,
+              "text": "才",
+              "start": 191.202,
+              "end": 191.362,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:14",
+              "utteranceIndex": 47,
+              "wordIndex": 14,
+              "sourceOrder": 960,
+              "text": "讨",
+              "start": 191.362,
+              "end": 191.562,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:15",
+              "utteranceIndex": 47,
+              "wordIndex": 15,
+              "sourceOrder": 961,
+              "text": "论",
+              "start": 191.562,
+              "end": 191.682,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:16",
+              "utteranceIndex": 47,
+              "wordIndex": 16,
+              "sourceOrder": 962,
+              "text": "的",
+              "start": 191.762,
+              "end": 191.802,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:17",
+              "utteranceIndex": 47,
+              "wordIndex": 17,
+              "sourceOrder": 963,
+              "text": "都",
+              "start": 191.882,
+              "end": 192.002,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:18",
+              "utteranceIndex": 47,
+              "wordIndex": 18,
+              "sourceOrder": 964,
+              "text": "是",
+              "start": 192.002,
+              "end": 192.122,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:19",
+              "utteranceIndex": 47,
+              "wordIndex": 19,
+              "sourceOrder": 965,
+              "text": "咱",
+              "start": 192.162,
+              "end": 192.282,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:20",
+              "utteranceIndex": 47,
+              "wordIndex": 20,
+              "sourceOrder": 966,
+              "text": "自",
+              "start": 192.322,
+              "end": 192.522,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:21",
+              "utteranceIndex": 47,
+              "wordIndex": 21,
+              "sourceOrder": 967,
+              "text": "身",
+              "start": 192.522,
+              "end": 192.642,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:22",
+              "utteranceIndex": 47,
+              "wordIndex": 22,
+              "sourceOrder": 968,
+              "text": "的",
+              "start": 192.642,
+              "end": 192.802,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:23",
+              "utteranceIndex": 47,
+              "wordIndex": 23,
+              "sourceOrder": 969,
+              "text": "问",
+              "start": 192.802,
+              "end": 192.922,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:24",
+              "utteranceIndex": 47,
+              "wordIndex": 24,
+              "sourceOrder": 970,
+              "text": "题",
+              "start": 192.922,
+              "end": 193.042,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:25",
+              "utteranceIndex": 47,
+              "wordIndex": 25,
+              "sourceOrder": 971,
+              "text": "对",
+              "start": 193.082,
+              "end": 193.242,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:26",
+              "utteranceIndex": 47,
+              "wordIndex": 26,
+              "sourceOrder": 972,
+              "text": "吧",
+              "start": 193.242,
+              "end": 193.402,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:27",
+              "utteranceIndex": 47,
+              "wordIndex": 27,
+              "sourceOrder": 973,
+              "text": "都",
+              "start": 193.802,
+              "end": 193.962,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:28",
+              "utteranceIndex": 47,
+              "wordIndex": 28,
+              "sourceOrder": 974,
+              "text": "是",
+              "start": 193.962,
+              "end": 194.122,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:29",
+              "utteranceIndex": 47,
+              "wordIndex": 29,
+              "sourceOrder": 975,
+              "text": "自",
+              "start": 194.122,
+              "end": 194.242,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:30",
+              "utteranceIndex": 47,
+              "wordIndex": 30,
+              "sourceOrder": 976,
+              "text": "身",
+              "start": 194.242,
+              "end": 194.362,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:31",
+              "utteranceIndex": 47,
+              "wordIndex": 31,
+              "sourceOrder": 977,
+              "text": "的",
+              "start": 194.362,
+              "end": 194.522,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:32",
+              "utteranceIndex": 47,
+              "wordIndex": 32,
+              "sourceOrder": 978,
+              "text": "一",
+              "start": 194.522,
+              "end": 194.682,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:33",
+              "utteranceIndex": 47,
+              "wordIndex": 33,
+              "sourceOrder": 979,
+              "text": "些",
+              "start": 194.682,
+              "end": 194.842,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:34",
+              "utteranceIndex": 47,
+              "wordIndex": 34,
+              "sourceOrder": 980,
+              "text": "这",
+              "start": 194.962,
+              "end": 195.042,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:35",
+              "utteranceIndex": 47,
+              "wordIndex": 35,
+              "sourceOrder": 981,
+              "text": "个",
+              "start": 195.042,
+              "end": 195.362,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "这个嗯这块儿啊你们咱们刚才讨论的都是咱自身的问题对吧都是自身的一些这个",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        },
+        {
+          "reference": {
+            "start": 195.75387,
+            "end": 200.42934999999989,
+            "speaker": "006-M",
+            "text": "处理方案主要还是在于这个业主咱们"
+          },
+          "hasAnnotatedOverlap": false,
+          "otherReferencePeople": [],
+          "providerWordsByMidpoint": [
+            {
+              "id": "47:36",
+              "utteranceIndex": 47,
+              "wordIndex": 36,
+              "sourceOrder": 982,
+              "text": "处",
+              "start": 195.722,
+              "end": 196.002,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:37",
+              "utteranceIndex": 47,
+              "wordIndex": 37,
+              "sourceOrder": 983,
+              "text": "理",
+              "start": 196.002,
+              "end": 196.122,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:38",
+              "utteranceIndex": 47,
+              "wordIndex": 38,
+              "sourceOrder": 984,
+              "text": "方",
+              "start": 196.122,
+              "end": 196.322,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:39",
+              "utteranceIndex": 47,
+              "wordIndex": 39,
+              "sourceOrder": 985,
+              "text": "案",
+              "start": 196.322,
+              "end": 196.482,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:40",
+              "utteranceIndex": 47,
+              "wordIndex": 40,
+              "sourceOrder": 986,
+              "text": "主",
+              "start": 196.802,
+              "end": 197.082,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:41",
+              "utteranceIndex": 47,
+              "wordIndex": 41,
+              "sourceOrder": 987,
+              "text": "要",
+              "start": 197.082,
+              "end": 197.242,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:42",
+              "utteranceIndex": 47,
+              "wordIndex": 42,
+              "sourceOrder": 988,
+              "text": "还",
+              "start": 197.602,
+              "end": 197.842,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:43",
+              "utteranceIndex": 47,
+              "wordIndex": 43,
+              "sourceOrder": 989,
+              "text": "是",
+              "start": 197.842,
+              "end": 198.002,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:44",
+              "utteranceIndex": 47,
+              "wordIndex": 44,
+              "sourceOrder": 990,
+              "text": "在",
+              "start": 198.002,
+              "end": 198.202,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:45",
+              "utteranceIndex": 47,
+              "wordIndex": 45,
+              "sourceOrder": 991,
+              "text": "于",
+              "start": 198.202,
+              "end": 198.442,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:46",
+              "utteranceIndex": 47,
+              "wordIndex": 46,
+              "sourceOrder": 992,
+              "text": "这",
+              "start": 198.602,
+              "end": 198.682,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:47",
+              "utteranceIndex": 47,
+              "wordIndex": 47,
+              "sourceOrder": 993,
+              "text": "个",
+              "start": 198.682,
+              "end": 198.842,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:48",
+              "utteranceIndex": 47,
+              "wordIndex": 48,
+              "sourceOrder": 994,
+              "text": "业",
+              "start": 198.842,
+              "end": 199.082,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:49",
+              "utteranceIndex": 47,
+              "wordIndex": 49,
+              "sourceOrder": 995,
+              "text": "主",
+              "start": 199.082,
+              "end": 199.282,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:50",
+              "utteranceIndex": 47,
+              "wordIndex": 50,
+              "sourceOrder": 996,
+              "text": "咱",
+              "start": 199.402,
+              "end": 199.642,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "47:51",
+              "utteranceIndex": 47,
+              "wordIndex": 51,
+              "sourceOrder": 997,
+              "text": "们",
+              "start": 199.642,
+              "end": 199.882,
+              "speaker": "3",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "3"
+          ],
+          "speakerBlindWindowText": "处理方案主要还是在于这个业主咱们",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ],
+      "rows": []
+    },
+    "007-M": {
+      "referenceUtterances": 1,
+      "referenceCharacters": 15,
+      "overlappedUtterances": 1,
+      "overlappedReferenceCharacters": 15,
+      "nonoverlapUtterances": 0,
+      "nonoverlapReferenceCharacters": 0,
+      "cleanRows": [],
+      "rows": [
+        {
+          "reference": {
+            "start": 41.90429341914114,
+            "end": 45.867980165714016,
+            "speaker": "007-M",
+            "text": "有人串串门儿啊走亲戚啊人家就是"
+          },
+          "hasAnnotatedOverlap": true,
+          "otherReferencePeople": [
+            "002-F",
+            "003-F"
+          ],
+          "providerWordsByMidpoint": [
+            {
+              "id": "12:22",
+              "utteranceIndex": 12,
+              "wordIndex": 22,
+              "sourceOrder": 186,
+              "text": "难",
+              "start": 41.942,
+              "end": 42.022,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "12:23",
+              "utteranceIndex": 12,
+              "wordIndex": 23,
+              "sourceOrder": 187,
+              "text": "度",
+              "start": 42.022,
+              "end": 42.142,
+              "speaker": "1",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:0",
+              "utteranceIndex": 13,
+              "wordIndex": 0,
+              "sourceOrder": 188,
+              "text": "那",
+              "start": 42.142,
+              "end": 42.182,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:1",
+              "utteranceIndex": 13,
+              "wordIndex": 1,
+              "sourceOrder": 189,
+              "text": "肯",
+              "start": 42.182,
+              "end": 42.222,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:2",
+              "utteranceIndex": 13,
+              "wordIndex": 2,
+              "sourceOrder": 190,
+              "text": "定",
+              "start": 42.222,
+              "end": 42.262,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:3",
+              "utteranceIndex": 13,
+              "wordIndex": 3,
+              "sourceOrder": 191,
+              "text": "啊",
+              "start": 42.302,
+              "end": 42.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:4",
+              "utteranceIndex": 13,
+              "wordIndex": 4,
+              "sourceOrder": 192,
+              "text": "有",
+              "start": 42.342,
+              "end": 42.382,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:5",
+              "utteranceIndex": 13,
+              "wordIndex": 5,
+              "sourceOrder": 193,
+              "text": "的",
+              "start": 42.382,
+              "end": 42.422,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:6",
+              "utteranceIndex": 13,
+              "wordIndex": 6,
+              "sourceOrder": 194,
+              "text": "串",
+              "start": 42.622,
+              "end": 42.702,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:7",
+              "utteranceIndex": 13,
+              "wordIndex": 7,
+              "sourceOrder": 195,
+              "text": "串",
+              "start": 42.862,
+              "end": 43.022,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:8",
+              "utteranceIndex": 13,
+              "wordIndex": 8,
+              "sourceOrder": 196,
+              "text": "门",
+              "start": 43.022,
+              "end": 43.182,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:9",
+              "utteranceIndex": 13,
+              "wordIndex": 9,
+              "sourceOrder": 197,
+              "text": "儿",
+              "start": 43.182,
+              "end": 43.222,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:10",
+              "utteranceIndex": 13,
+              "wordIndex": 10,
+              "sourceOrder": 198,
+              "text": "啊",
+              "start": 43.222,
+              "end": 43.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:11",
+              "utteranceIndex": 13,
+              "wordIndex": 11,
+              "sourceOrder": 199,
+              "text": "走",
+              "start": 43.422,
+              "end": 43.582,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:12",
+              "utteranceIndex": 13,
+              "wordIndex": 12,
+              "sourceOrder": 200,
+              "text": "亲",
+              "start": 43.582,
+              "end": 43.742,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:13",
+              "utteranceIndex": 13,
+              "wordIndex": 13,
+              "sourceOrder": 201,
+              "text": "戚",
+              "start": 43.742,
+              "end": 43.862,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:14",
+              "utteranceIndex": 13,
+              "wordIndex": 14,
+              "sourceOrder": 202,
+              "text": "人",
+              "start": 43.942,
+              "end": 44.182,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:15",
+              "utteranceIndex": 13,
+              "wordIndex": 15,
+              "sourceOrder": 203,
+              "text": "家",
+              "start": 44.222,
+              "end": 44.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:16",
+              "utteranceIndex": 13,
+              "wordIndex": 16,
+              "sourceOrder": 204,
+              "text": "进",
+              "start": 44.422,
+              "end": 44.502,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:17",
+              "utteranceIndex": 13,
+              "wordIndex": 17,
+              "sourceOrder": 205,
+              "text": "来",
+              "start": 44.502,
+              "end": 44.582,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:18",
+              "utteranceIndex": 13,
+              "wordIndex": 18,
+              "sourceOrder": 206,
+              "text": "你",
+              "start": 44.702,
+              "end": 44.742,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:19",
+              "utteranceIndex": 13,
+              "wordIndex": 19,
+              "sourceOrder": 207,
+              "text": "不",
+              "start": 44.782,
+              "end": 44.822,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:20",
+              "utteranceIndex": 13,
+              "wordIndex": 20,
+              "sourceOrder": 208,
+              "text": "让",
+              "start": 44.862,
+              "end": 45.102,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:21",
+              "utteranceIndex": 13,
+              "wordIndex": 21,
+              "sourceOrder": 209,
+              "text": "进",
+              "start": 45.102,
+              "end": 45.142,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:22",
+              "utteranceIndex": 13,
+              "wordIndex": 22,
+              "sourceOrder": 210,
+              "text": "人",
+              "start": 45.142,
+              "end": 45.222,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:23",
+              "utteranceIndex": 13,
+              "wordIndex": 23,
+              "sourceOrder": 211,
+              "text": "家",
+              "start": 45.222,
+              "end": 45.302,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:24",
+              "utteranceIndex": 13,
+              "wordIndex": 24,
+              "sourceOrder": 212,
+              "text": "就",
+              "start": 45.302,
+              "end": 45.342,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:25",
+              "utteranceIndex": 13,
+              "wordIndex": 25,
+              "sourceOrder": 213,
+              "text": "说",
+              "start": 45.342,
+              "end": 45.462,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:26",
+              "utteranceIndex": 13,
+              "wordIndex": 26,
+              "sourceOrder": 214,
+              "text": "你",
+              "start": 45.462,
+              "end": 45.502,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:27",
+              "utteranceIndex": 13,
+              "wordIndex": 27,
+              "sourceOrder": 215,
+              "text": "这",
+              "start": 45.502,
+              "end": 45.542,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:28",
+              "utteranceIndex": 13,
+              "wordIndex": 28,
+              "sourceOrder": 216,
+              "text": "你",
+              "start": 45.542,
+              "end": 45.582,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:29",
+              "utteranceIndex": 13,
+              "wordIndex": 29,
+              "sourceOrder": 217,
+              "text": "这",
+              "start": 45.582,
+              "end": 45.622,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:30",
+              "utteranceIndex": 13,
+              "wordIndex": 30,
+              "sourceOrder": 218,
+              "text": "不",
+              "start": 45.622,
+              "end": 45.662,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:31",
+              "utteranceIndex": 13,
+              "wordIndex": 31,
+              "sourceOrder": 219,
+              "text": "能",
+              "start": 45.662,
+              "end": 45.702,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:32",
+              "utteranceIndex": 13,
+              "wordIndex": 32,
+              "sourceOrder": 220,
+              "text": "来",
+              "start": 45.702,
+              "end": 45.742,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            },
+            {
+              "id": "13:33",
+              "utteranceIndex": 13,
+              "wordIndex": 33,
+              "sourceOrder": 221,
+              "text": "呀",
+              "start": 45.742,
+              "end": 45.782,
+              "speaker": "5",
+              "textSource": "utterance.text"
+            }
+          ],
+          "providerLabels": [
+            "1",
+            "5"
+          ],
+          "speakerBlindWindowText": "难度那肯定啊有的串串门儿啊走亲戚人家进来你不让进人家就说你这你这不能来呀",
+          "limits": "Reference utterance times only; window text can contain the other simultaneous voice. No pure-overlap wordCER or definitive missing-word claim from this alone."
+        }
+      ]
+    }
+  },
+  "newModelOrNetworkCalls": 0,
+  "nativeJournalContextIsFullMeeting": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "finalHoldoutOpened": false,
+  "scope": "One exposed deliberately difficult window. Neither a product path nor proof of correct real identity. Unknown words counted as their own output streams, not dropped. Reference-time word-window diagnostic is not an independent recognizer or an oracle lower bound.",
+  "retainedForProduct": false
+}

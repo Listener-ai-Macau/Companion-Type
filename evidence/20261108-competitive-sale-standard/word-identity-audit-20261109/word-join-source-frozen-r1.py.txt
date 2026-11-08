@@ -1,0 +1,122 @@
+"""Conservative word/journal join. Never duplicates, deletes, or invents words.
+
+Inputs are a recognizer's final response and an independently predicted speaker
+journal. No reference speaker names, counts, transcripts, or scoring answers.
+"""
+from collections import defaultdict
+import math
+import re
+import unicodedata
+
+def text_signature(text):
+    # Text conservation only; this processing module imports no reference scorer
+    # or numerical/model runtime.
+    return ''.join(c for c in re.sub(r'<[^>]*>', '', text)
+                   if not c.isspace() and not unicodedata.category(c).startswith(('P','S'))).lower()
+
+def result_object(document):
+    result = document.get('result')
+    if isinstance(result, list):
+        if len(result) != 1:
+            raise ValueError('Expected one authoritative recognition result')
+        result = result[0]
+    if not isinstance(result, dict):
+        raise ValueError('Missing authoritative result')
+    return result
+
+def speaker_id(utterance):
+    import json
+    additions = utterance.get('additions', {})
+    if isinstance(additions, str):
+        try:
+            additions = json.loads(additions)
+        except ValueError:
+            additions = {}
+    for obj in [utterance, additions]:
+        if not isinstance(obj, dict):
+            continue
+        for key in ['speaker', 'speaker_id', 'speakerId', 'spk_id']:
+            value = obj.get(key)
+            if isinstance(value, (str, int)) and not isinstance(value, bool) and str(value).strip():
+                return str(value).strip()
+    return 'unknown'
+
+def word_time(word, names):
+    for key in names:
+        value = word.get(key)
+        if isinstance(value, (int, float, str)) and not isinstance(value, bool):
+            try:
+                number = float(value) / 1000
+            except ValueError:
+                continue
+            if math.isfinite(number):
+                return number
+    return None
+
+def provider_words(document, audio_seconds):
+    utterances = result_object(document).get('utterances')
+    if not isinstance(utterances, list):
+        raise ValueError('Missing source utterances')
+    rows = []
+    for utterance_index, utterance in enumerate(utterances):
+        words = utterance.get('words')
+        explicit = utterance.get('text')
+        if not isinstance(words, list) or not all(isinstance(x.get('text'), str) for x in words):
+            raise ValueError(f'Missing complete source word tokens {utterance_index}')
+        if isinstance(explicit, str) and explicit.strip() and text_signature(explicit) != text_signature(''.join(x['text'] for x in words)):
+            raise ValueError(f'Word text differs from source utterance {utterance_index}; refuse silent rewriting')
+        for word_index, word in enumerate(words):
+            text = word.get('text')
+            if not isinstance(text, str):
+                raise ValueError('Missing source token text')
+            start = word_time(word, ['start_time', 'startTime', 'start_ms'])
+            end = word_time(word, ['end_time', 'endTime', 'end_ms'])
+            if start is None or end is None or not 0 <= start <= end <= audio_seconds + 1e-6:
+                raise ValueError('Source word timing is absent or out of bounds')
+            rows.append({'id':f'{utterance_index}:{word_index}', 'utteranceIndex':utterance_index,
+                         'wordIndex':word_index, 'sourceOrder':len(rows), 'text':text,
+                         'start':start, 'end':end, 'speaker':speaker_id(utterance),
+                         'textSource':'utterance.text' if isinstance(explicit,str) and explicit.strip() else 'utterance.words'})
+    return rows
+
+def joined_words(words, journal_segments, source_offset_seconds):
+    # Merge overlapping/touching spans of the same anonymous predicted person;
+    # otherwise duplicate spans could falsely increase a person's vote.
+    by_person = defaultdict(list)
+    for segment in journal_segments:
+        start, end = float(segment['start']), float(segment['end'])
+        if not math.isfinite(start) or not math.isfinite(end) or not 0 <= start < end:
+            raise ValueError('Invalid predicted journal interval')
+        by_person[str(segment['speaker'])].append((start, end))
+    merged = {}
+    for person, spans in by_person.items():
+        runs = []
+        for start, end in sorted(spans):
+            if runs and start <= runs[-1][1]:
+                runs[-1] = (runs[-1][0], max(end, runs[-1][1]))
+            else:
+                runs.append((start, end))
+        merged[person] = runs
+    output = []
+    for word in words:
+        start = word['start'] + source_offset_seconds
+        end = word['end'] + source_offset_seconds
+        votes = {person:sum(max(0, min(end, b)-max(start, a)) for a,b in spans)
+                 for person,spans in merged.items()}
+        votes = {k:v for k,v in votes.items() if v > 1e-9}
+        top = max(votes.values(), default=0)
+        winners = sorted(k for k,v in votes.items() if abs(v-top) <= 1e-9)
+        reason = 'unique_largest_predicted_voice_overlap'
+        if end == start:
+            identity, reason = 'unattributed:zero_duration', 'zero_duration_source_word'
+        elif not votes:
+            identity, reason = 'unattributed:no_voice', 'no_predicted_voice_overlap'
+        elif len(winners) != 1:
+            identity, reason = 'unattributed:overlap', 'ambiguous_simultaneous_predicted_voices'
+        else:
+            identity = 'native:' + winners[0]
+        output.append(dict(word, speaker=identity, providerSpeaker=word['speaker'],
+                           assignmentReason=reason, predictedVoiceOverlapSeconds=votes))
+    if [(x['id'],x['text'],x['start'],x['end']) for x in output] != [(x['id'],x['text'],x['start'],x['end']) for x in words]:
+        raise AssertionError('All source words and timings must survive once and unchanged')
+    return output
