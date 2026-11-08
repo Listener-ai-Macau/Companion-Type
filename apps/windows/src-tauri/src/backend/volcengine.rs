@@ -329,6 +329,9 @@ impl VolcengineSaucAsr {
         // persisted profile. The cache layer hashes this effective request.
         json!({
             "provider": "volcengine-sauc",
+            // Old cached results may have discarded a words-only utterance.
+            // Parser policy belongs in cache identity even when the request is unchanged.
+            "response_parser": "utterance-text-or-complete-word-tokens-v2",
             "endpoint": self.endpoint,
             "resource": self.credentials.resource_id,
             "model": if is_seed_asr_v2(&self.credentials.resource_id) { "seed-asr-v2" } else { "bigmodel" },
@@ -1059,10 +1062,49 @@ fn result_object(json: &Value) -> Option<&Value> {
 /// Pull the transcript text out of a server response: prefer `result.text`,
 /// fall back to top-level `text`.
 fn extract_text(json: &Value) -> Option<String> {
-    result_object(json)?
-        .get("text")
-        .and_then(|v| v.as_str())
-        .map(|s| s.to_string())
+    let result = result_object(json)?;
+    let original = result.get("text").and_then(Value::as_str).map(str::to_string);
+    let Some(utterances) = result.get("utterances").and_then(Value::as_array) else {
+        return original;
+    };
+    let mut explicit = String::new();
+    let mut complete = String::new();
+    let mut recovered = false;
+    for utterance in utterances {
+        if let Some(text) = utterance.get("text").and_then(Value::as_str).filter(|s| !s.trim().is_empty()) {
+            explicit.push_str(text);
+            complete.push_str(text);
+        } else if let Some(text) = utterance_text(utterance) {
+            complete.push_str(&text);
+            recovered = true;
+        } else if utterance.get("words").and_then(Value::as_array).is_some_and(|words| !words.is_empty()) {
+            // A malformed token list cannot justify replacing the summary text.
+            return original;
+        }
+    }
+    if !complete.trim().is_empty() && (original.as_ref().is_none_or(|s| s.trim().is_empty())
+        || recovered && text_signature(original.as_deref().unwrap_or_default()) == text_signature(&explicit)) {
+        return Some(complete);
+    }
+    original
+}
+
+fn text_signature(text: &str) -> String {
+    text.chars().filter(|c| c.is_alphanumeric()).flat_map(char::to_lowercase).collect()
+}
+
+/// Preserve the provider's formatted sentence when present. Some definite
+/// two-pass results omit it but retain all timed word tokens: recover only
+/// from that actual response, refusing partial/malformed token lists.
+fn utterance_text(utterance: &Value) -> Option<String> {
+    if let Some(text) = utterance.get("text").and_then(Value::as_str).filter(|s| !s.trim().is_empty()) {
+        return Some(text.to_string());
+    }
+    let words = utterance.get("words")?.as_array()?;
+    if words.is_empty() { return None; }
+    let parts = words.iter().map(|word| word.get("text")?.as_str()).collect::<Option<Vec<_>>>()?;
+    let text = parts.concat();
+    (!text.trim().is_empty()).then_some(text)
 }
 
 /// Extract timed utterances from a server response. Ported from Listener's
@@ -1082,7 +1124,7 @@ fn extract_utterances(json: &Value) -> Vec<Utterance> {
     let end_keys = ["end_time", "endTime", "end_ms"];
     let mut out = Vec::new();
     for utt in utterances {
-        let Some(text) = utt.get("text").and_then(|t| t.as_str()) else {
+        let Some(text) = utterance_text(utt) else {
             continue;
         };
         let text = text.trim();
