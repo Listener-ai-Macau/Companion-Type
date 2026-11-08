@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_PS4_ASR",
+  "state": "COMPLETE_ORACLE_ACTIVITY_DIAGNOSTIC_REVIEW_REQUIRED",
   "pid": 7812,
   "startedAt": "2026-11-08T08:49:45+08:00",
   "priorAttemptReceipts": [],
@@ -9,10 +9,16 @@
       "exitCode": 0,
       "wholeProcessFamilySeconds": 5.065454800002044,
       "privatePeakBytes": 344539136
+    },
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 195.3220654000179,
+      "privatePeakBytes": 1244499968
     }
   ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
   "stage": "asr",
-  "activePid": 7964
+  "finishedAt": "2026-11-08T08:53:05+08:00"
 }

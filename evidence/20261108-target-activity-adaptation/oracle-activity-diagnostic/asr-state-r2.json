@@ -1,5 +1,5 @@
 {
-  "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
+  "state": "COMPLETE_ORACLE_ACTIVITY_ASR_DIAGNOSTIC_NOT_PRODUCT",
   "pid": 15044,
   "startedAt": "2026-11-08T08:49:50+08:00",
   "stage": "asr",
@@ -8,9 +8,9 @@
     "audioOnlySha256": "722546946b90aa6c025ec2413920d1ec775c60012c746e717515ba44cedf2682",
     "workerSourceSha256": "d392143e25488af8f28dd73b16db7ea97a94eccd31de0767ae7d8572819ba341"
   },
-  "newNeuralCalls": 1,
+  "newNeuralCalls": 12,
   "reusedOutputs": 0,
-  "completedInputs": 1,
+  "completedInputs": 12,
   "referencePassedToWorker": true,
   "referenceDerivedWaveformDiagnostic": true,
   "noReferenceWordsInPrompt": true,
@@ -32,5 +32,7 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "gpu": "AMD Radeon RX 6800 XT",
-  "modelLoaded": true
+  "modelLoaded": true,
+  "finishedAt": "2026-11-08T08:53:01+08:00",
+  "wholeWorkerSeconds": 191.3076089999813
 }

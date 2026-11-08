@@ -1,0 +1,585 @@
+{
+  "at": "2026-11-08T08:54:24+08:00",
+  "state": "REFERENCE_ACTIVITY_GATE_ALONE_NOT_A_SOLUTION",
+  "purpose": "Causal diagnostic after two failed target-activity adaptations; not a third learned candidate.",
+  "protocolSha256": "340243c0ddfc9a60e023a07a01e59e70a748d5f4627779e44990b4c992287565",
+  "originalNativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "originalInferFunctionAstMatches": true,
+  "rawGenerationBindingReadback": [
+    {
+      "condition": "L_R003S01C02-root-000012-speaker-1-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "ee8e7391eaaf7bfe02430a2fdd13ef443ccfdd46f1c27ec3b3736ada90849e89"
+    },
+    {
+      "condition": "L_R003S01C02-root-000012-speaker-1-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "11e64fcc7f6319bcf465bbdc5077711098861b1aeaeb91410aad2aaaab99f218"
+    },
+    {
+      "condition": "L_R003S01C02-root-000012-speaker-5-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "cfc6c8707b240d2c7b31ad41526e5fefb682124f7406b03d9d1f0b74c33d8b1f"
+    },
+    {
+      "condition": "L_R003S01C02-root-000012-speaker-5-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "015c32c6cef9ea3b7b3b67d52ef2e85daa26a581e0c2fe488fba7b2992d0e0a4"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-1-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "6be84ddd0bf1dd5dd54543aff925cb297eff266cdb623516e9c04cc6fe5e6d08"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-1-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "5da58dd4e7b6891b915ba5b5a42e588a4891fd705df5f2fccb2b097c90d77ea0"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-2-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "4b4a749074b7613b78ada7419496e6bd06ebf931853820d156de3c4c5f745134"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-2-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "280940b26dac1e505651398dccc999937aba5b87d23893dfd12850466900f039"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-3-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "6cc047e2108d24815e1caa2c71db52fd232005c2553a9b0e839361465b141b2c"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-3-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "c056f79600d87d76b1b44bf6c12b3356b3da401cf56a3b9223ae9820b797cb74"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-5-oracle-mixture",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "ee763a74e035def0674e3b316d2662e3dd8ec907e1e921fc297d3a43d72279e5"
+    },
+    {
+      "condition": "L_R003S01C02-root-000027-speaker-5-oracle-separated",
+      "rawNodeCount": 1,
+      "everyRawNodeBoundToCurrentProtocol": true,
+      "allAcceptedLeavesAndTextVerifiedAgainstRawNodes": true,
+      "aggregateInheritedSourceBinding": true,
+      "completedFileSha256": "7f867cd476c8a271d9b906a19772a5e12f56330325aa0b2a158236bb80c54901"
+    }
+  ],
+  "metadataAggregationCorrection": "Initial aggregates retain source-lane binding; all raw nodes independently verify the current frozen protocol/audio/worker and exactly reconstruct all12complete texts. Future preparation generator corrects only the aggregate binding. No neural output was changed or rerun.",
+  "rootSelection": [
+    12,
+    27
+  ],
+  "uniqueOriginalAudioSeconds": 60,
+  "existingTargetLanes": 6,
+  "newAudioConditions": 12,
+  "actualRootCoverage": [
+    {
+      "rootIndex": 12,
+      "referenceTripleSeconds": 0,
+      "availableSeparatedPeople": [
+        "002-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 3
+    },
+    {
+      "rootIndex": 27,
+      "referenceTripleSeconds": 1.9007788741647573,
+      "availableSeparatedPeople": [
+        "002-F",
+        "004-M",
+        "003-F",
+        "005-M"
+      ],
+      "actualReferencePeople": [
+        "002-F",
+        "003-F",
+        "004-M",
+        "005-M"
+      ],
+      "rootBoundaryStraddlingReferenceRows": 2
+    }
+  ],
+  "allConditionsScored": true,
+  "sameFixedWholeMeetingPersonMapping": true,
+  "totals": {
+    "ungatedSeparated": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 323,
+      "substitute": 43,
+      "delete": 32,
+      "insert": 99,
+      "total": 174,
+      "midpointClipEditRateDiagnostic": 0.6796875
+    },
+    "oracleGatedMixture": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 287,
+      "substitute": 33,
+      "delete": 12,
+      "insert": 43,
+      "total": 88,
+      "midpointClipEditRateDiagnostic": 0.34375
+    },
+    "oracleGatedSeparated": {
+      "referenceCharacters": 256,
+      "hypothesisCharacters": 234,
+      "substitute": 25,
+      "delete": 55,
+      "insert": 33,
+      "total": 113,
+      "midpointClipEditRateDiagnostic": 0.44140625
+    }
+  },
+  "perRoot": [
+    {
+      "rootIndex": 12,
+      "ungatedSeparated": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 154,
+        "substitute": 25,
+        "delete": 27,
+        "insert": 53,
+        "total": 105,
+        "midpointClipEditRateDiagnostic": 0.8203125
+      },
+      "oracleGatedMixture": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 146,
+        "substitute": 12,
+        "delete": 4,
+        "insert": 22,
+        "total": 38,
+        "midpointClipEditRateDiagnostic": 0.296875
+      },
+      "oracleGatedSeparated": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 99,
+        "substitute": 15,
+        "delete": 45,
+        "insert": 16,
+        "total": 76,
+        "midpointClipEditRateDiagnostic": 0.59375
+      }
+    },
+    {
+      "rootIndex": 27,
+      "ungatedSeparated": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 169,
+        "substitute": 18,
+        "delete": 5,
+        "insert": 46,
+        "total": 69,
+        "midpointClipEditRateDiagnostic": 0.5390625
+      },
+      "oracleGatedMixture": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 141,
+        "substitute": 21,
+        "delete": 8,
+        "insert": 21,
+        "total": 50,
+        "midpointClipEditRateDiagnostic": 0.390625
+      },
+      "oracleGatedSeparated": {
+        "referenceCharacters": 128,
+        "hypothesisCharacters": 135,
+        "substitute": 10,
+        "delete": 10,
+        "insert": 17,
+        "total": 37,
+        "midpointClipEditRateDiagnostic": 0.2890625
+      }
+    }
+  ],
+  "allLaneDetails": [
+    {
+      "sourceLane": "L_R003S01C02-root-000012-speaker-1",
+      "rootIndex": 12,
+      "referencePerson": "002-F",
+      "referenceRowsCrossingClipBoundary": [
+        {
+          "start": 359.8015,
+          "end": 365.12205,
+          "text": "那你都进来了，你就没地儿停放了，那就会堵住别人的车了。"
+        },
+        {
+          "start": 389.654406970089,
+          "end": 391.7199316665799,
+          "text": "他进来你叫他往哪儿停啊"
+        }
+      ],
+      "ungatedSeparated": {
+        "text": "那我不。有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。业主嘛，业主给卡在大门上。那个不用，不用那个，人家人家是业主，你凭什么让人家进？对吧？人家一个车位，人家两辆车，人家一个，人家一个车位就是说，咱们这个车位。",
+        "edits": {
+          "referenceCharacters": 104,
+          "hypothesisCharacters": 104,
+          "substitute": 25,
+          "delete": 26,
+          "insert": 26,
+          "total": 77,
+          "midpointClipEditRateDiagnostic": 0.7403846153846154
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "他你都进来了，你就没地儿停放了，这就会堵住别人的车了。这物业有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。那业主骂，业主给吵在大门口，不让他进。那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？对。",
+        "edits": {
+          "referenceCharacters": 104,
+          "hypothesisCharacters": 102,
+          "substitute": 6,
+          "delete": 3,
+          "insert": 1,
+          "total": 10,
+          "midpointClipEditRateDiagnostic": 0.09615384615384616
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 347687,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "那我不。有的也是那个业主也是难逃的不行，咱物业有时候这个问题，这工作也不是特别好做。业主嘛，业主给吵在大门上。那个不用。对吧？然后那个。对。",
+        "edits": {
+          "referenceCharacters": 104,
+          "hypothesisCharacters": 60,
+          "substitute": 15,
+          "delete": 44,
+          "insert": 0,
+          "total": 59,
+          "midpointClipEditRateDiagnostic": 0.5673076923076923
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 347687,
+        "acceptedLeaves": 1
+      }
+    },
+    {
+      "sourceLane": "L_R003S01C02-root-000012-speaker-5",
+      "rootIndex": 12,
+      "referencePerson": "005-M",
+      "referenceRowsCrossingClipBoundary": [
+        {
+          "start": 386.51592,
+          "end": 395.61186,
+          "text": "人家一个车位，就是说咱们这个车位目前来说，咱们这个车位目前来说啊，还是比较充足的你知道吧。"
+        }
+      ],
+      "ungatedSeparated": {
+        "text": "那个不会，好简单。那个不用，不用那个，一人家是业主，你凭什么让人家进？对吧？人家一个，人家一个车位，就是说，咱们这个车位。",
+        "edits": {
+          "referenceCharacters": 24,
+          "hypothesisCharacters": 50,
+          "substitute": 0,
+          "delete": 1,
+          "insert": 27,
+          "total": 28,
+          "midpointClipEditRateDiagnostic": 1.1666666666666667
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "你不让他进？不用那个，一人家是业主，你凭什么让人家进？他没有车位呀。人家一个车位，就是说，咱们这个车位。",
+        "edits": {
+          "referenceCharacters": 24,
+          "hypothesisCharacters": 44,
+          "substitute": 6,
+          "delete": 1,
+          "insert": 21,
+          "total": 28,
+          "midpointClipEditRateDiagnostic": 1.1666666666666667
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 146302,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "那个不用，不用那个，业人家是业主，你凭什么让人家进？对吧？人家一个车位，就是说，咱们这个车位。",
+        "edits": {
+          "referenceCharacters": 24,
+          "hypothesisCharacters": 39,
+          "substitute": 0,
+          "delete": 1,
+          "insert": 16,
+          "total": 17,
+          "midpointClipEditRateDiagnostic": 0.7083333333333334
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 146302,
+        "acceptedLeaves": 1
+      }
+    },
+    {
+      "sourceLane": "L_R003S01C02-root-000027-speaker-1",
+      "rootIndex": 27,
+      "referencePerson": "002-F",
+      "referenceRowsCrossingClipBoundary": [],
+      "ungatedSeparated": {
+        "text": "得给指导一下。嗯，对，对，对。嗯。对。哎，在线，在线的。嗯。",
+        "edits": {
+          "referenceCharacters": 19,
+          "hypothesisCharacters": 19,
+          "substitute": 10,
+          "delete": 0,
+          "insert": 0,
+          "total": 10,
+          "midpointClipEditRateDiagnostic": 0.5263157894736842
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "嗯，自己啊，对，嗯，对，嗯，对，该该减的减，该该补的补。",
+        "edits": {
+          "referenceCharacters": 19,
+          "hypothesisCharacters": 19,
+          "substitute": 9,
+          "delete": 3,
+          "insert": 3,
+          "total": 15,
+          "midpointClipEditRateDiagnostic": 0.7894736842105263
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 90470,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "可以可以指导一下，嗯，对对对，哎，在线，在线的。",
+        "edits": {
+          "referenceCharacters": 19,
+          "hypothesisCharacters": 18,
+          "substitute": 7,
+          "delete": 3,
+          "insert": 2,
+          "total": 12,
+          "midpointClipEditRateDiagnostic": 0.631578947368421
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 90470,
+        "acceptedLeaves": 1
+      }
+    },
+    {
+      "sourceLane": "L_R003S01C02-root-000027-speaker-2",
+      "rootIndex": 27,
+      "referencePerson": "004-M",
+      "referenceRowsCrossingClipBoundary": [],
+      "ungatedSeparated": {
+        "text": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+        "edits": {
+          "referenceCharacters": 63,
+          "hypothesisCharacters": 65,
+          "substitute": 0,
+          "delete": 1,
+          "insert": 3,
+          "total": 4,
+          "midpointClipEditRateDiagnostic": 0.06349206349206349
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "就是绿化部门的事，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中、工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+        "edits": {
+          "referenceCharacters": 63,
+          "hypothesisCharacters": 62,
+          "substitute": 0,
+          "delete": 2,
+          "insert": 1,
+          "total": 3,
+          "midpointClipEditRateDiagnostic": 0.047619047619047616
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 201628,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "这个就是绿化部门的事儿，对吧？咱们把绿化部门这个工作做好以后，人家在日常当中、工作当中真正是吧，能够把工作做好的话，这些问题都是可以得到解决的。",
+        "edits": {
+          "referenceCharacters": 63,
+          "hypothesisCharacters": 65,
+          "substitute": 0,
+          "delete": 1,
+          "insert": 3,
+          "total": 4,
+          "midpointClipEditRateDiagnostic": 0.06349206349206349
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 201628,
+        "acceptedLeaves": 1
+      }
+    },
+    {
+      "sourceLane": "L_R003S01C02-root-000027-speaker-3",
+      "rootIndex": 27,
+      "referencePerson": "003-F",
+      "referenceRowsCrossingClipBoundary": [],
+      "ungatedSeparated": {
+        "text": "然后自己啊，对呀，嗯，对，对，嗯，对对。懂完之后管理，对，人家简单，呃，嗯。嗯，但是说咱们这个旅馆。",
+        "edits": {
+          "referenceCharacters": 3,
+          "hypothesisCharacters": 36,
+          "substitute": 0,
+          "delete": 0,
+          "insert": 33,
+          "total": 33,
+          "midpointClipEditRateDiagnostic": 11.0
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "哦，咱们。嗯。",
+        "edits": {
+          "referenceCharacters": 3,
+          "hypothesisCharacters": 4,
+          "substitute": 2,
+          "delete": 0,
+          "insert": 1,
+          "total": 3,
+          "midpointClipEditRateDiagnostic": 1.0
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 22624,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "啊，对呀。嗯。",
+        "edits": {
+          "referenceCharacters": 3,
+          "hypothesisCharacters": 4,
+          "substitute": 1,
+          "delete": 0,
+          "insert": 1,
+          "total": 2,
+          "midpointClipEditRateDiagnostic": 0.6666666666666666
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 22624,
+        "acceptedLeaves": 1
+      }
+    },
+    {
+      "sourceLane": "L_R003S01C02-root-000027-speaker-5",
+      "rootIndex": 27,
+      "referencePerson": "005-M",
+      "referenceRowsCrossingClipBoundary": [
+        {
+          "start": 809.71,
+          "end": 822.665,
+          "text": "咱们自己咱们自己也得有人啊，对吧，咱们不能<$>种可以找对吧，种完之后啊管理呢，剪枝儿"
+        },
+        {
+          "start": 836.815,
+          "end": 845.095,
+          "text": "嗯<sil>但是<->咱们这个绿化啊<#>说实在的啊，真的还是不到位"
+        }
+      ],
+      "ungatedSeparated": {
+        "text": "咱们自己，咱们自己也得有人啊，对吧？你不能，嗯，你种，对吧？种完之后管理呢，你剪枝，嗯，修剪，下水，对吧？嗯，但是咱们这个六万。",
+        "edits": {
+          "referenceCharacters": 43,
+          "hypothesisCharacters": 49,
+          "substitute": 8,
+          "delete": 4,
+          "insert": 10,
+          "total": 22,
+          "midpointClipEditRateDiagnostic": 0.5116279069767442
+        }
+      },
+      "oracleGatedMixture": {
+        "text": "咱们自己想，咱们自己也得有人，对吧？你不能，嗯，你种可以找，是吧？种完之后管理呢？你兼职？这个就是绿化部门的事儿。嗯，但是咱们这个绿化。",
+        "edits": {
+          "referenceCharacters": 43,
+          "hypothesisCharacters": 56,
+          "substitute": 10,
+          "delete": 3,
+          "insert": 16,
+          "total": 29,
+          "midpointClipEditRateDiagnostic": 0.6744186046511628
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 301575,
+        "acceptedLeaves": 1
+      },
+      "oracleGatedSeparated": {
+        "text": "咱们自己，咱们自己也得有人啊，对吧？你不能，嗯，种，对吧？种完之后管理呢？你剪枝，嗯，修剪，施肥，下水。嗯，但是咱们这个六万。",
+        "edits": {
+          "referenceCharacters": 43,
+          "hypothesisCharacters": 48,
+          "substitute": 2,
+          "delete": 6,
+          "insert": 11,
+          "total": 19,
+          "midpointClipEditRateDiagnostic": 0.4418604651162791
+        },
+        "inputSamples": 480000,
+        "targetActiveSamples": 301575,
+        "acceptedLeaves": 1
+      }
+    }
+  ],
+  "observations": {
+    "oracleGatedSeparationFewerEditsThanUngated": true,
+    "oracleGatedSeparationFewerEditsThanEquallyGatedMixture": false,
+    "differenceFromUngated": -61,
+    "differenceFromEquallyGatedMixture": 25
+  },
+  "limitations": [
+    "Oracle uses true reference activity to alter waveforms before ASR. It is unavailable in production; no oracle number qualifies the product.",
+    "Six existing extracted lanes in two exposed Mandarin roots are not a whole meeting, independent corpus or final holdout. Reference-assisted root27 has1.900779s actual triple overlap.",
+    "Midpoint-selected full utterance texts can straddle30s clip edges. Report these rows; paired edit differences are diagnostic, not strict full-recordingCER or pure-overlapCER.",
+    "Utterance-based hard zeroing may clip phonetic context. Target-active samples are preserved but this is not an internally activity-conditioned separator or a mathematical upper bound on all separation methods.",
+    "Without clean per-person waveform truth this does not uniquely attribute residual errors to ASR versus separation distortion or prove all larger adaptation impossible."
+  ],
+  "actualOwnedSecondsIncludingKnownInterruptions": {
+    "inventory": 5.065454800002044,
+    "asr": 195.3220654000179
+  },
+  "maximumRecordedNeuralJobPrivateBytes": 1279545344,
+  "newAsrCalls": 12,
+  "newSeparationCalls": 0,
+  "newTrainingRuns": 0,
+  "noReferenceWordsInAsrPrompt": true,
+  "generatedTextFiltered": false,
+  "originalTextAudioAndDefaultChanged": false,
+  "phoneOrBoardAccessed": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "next": "继续原RM-OVERLAP：已知正确活动时间的局部对照仍不能作为产品交付。先逐人复核本次残余替换/漏字/插入及片段边界影响，分开检查分离波形与ASR；只有取得独立真实验证和可用干净源监督后才投入针对性分离适配。保留NativeFP16与普通ASR，不重跑两个失败小头，不调阈值凑通过；全部<5%/纪要事实/双端实卡/售卖门继续开放。"
+}

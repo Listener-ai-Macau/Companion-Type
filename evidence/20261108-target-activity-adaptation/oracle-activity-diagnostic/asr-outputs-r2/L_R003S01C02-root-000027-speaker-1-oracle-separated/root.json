@@ -1,0 +1,40 @@
+{
+  "binding": {
+    "protocolSha256": "340243c0ddfc9a60e023a07a01e59e70a748d5f4627779e44990b4c992287565",
+    "audioOnlySha256": "722546946b90aa6c025ec2413920d1ec775c60012c746e717515ba44cedf2682",
+    "workerSourceSha256": "d392143e25488af8f28dd73b16db7ea97a94eccd31de0767ae7d8572819ba341"
+  },
+  "audioSha256": "d6c31e97fbd89955a7471c4836318475120312b0a8ecb670f02d8d43dd932871",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "可以可以指导一下，嗯，对对对，哎，在线，在线的。",
+    "generatedIds": [
+      73670,
+      73670,
+      101086,
+      100158,
+      3837,
+      106287,
+      3837,
+      32664,
+      32664,
+      32664,
+      3837,
+      110030,
+      96050,
+      43268,
+      96050,
+      43268,
+      9370,
+      1773,
+      151645
+    ],
+    "rawDecoded": "可以可以指导一下，嗯，对对对，哎，在线，在线的。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.422816000005696
+  },
+  "rawSha256": "6d7e1a2381a16f32f5e83f2752861c83d77f750a40d9abeab807870ef7589fcc"
+}

@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-08T08:56:41+08:00",
+  "state": "PRIMARY_PAIRED_REAL_MEETING_SOURCE_AVAILABILITY_ONLY_NO_AUDIO_OR_TRAINING",
+  "AliMeeting": {
+    "primary": "https://www.openslr.org/119/",
+    "paper": "https://arxiv.org/abs/2110.07393",
+    "observed": "Official release provides real Mandarin2–4person meetings with8channel far-field array and each participant headset recording; Train/Eval/Test are distinct released sets. CC BY-SA4.0. Train far73.24G and near22.85G are published archives.",
+    "whyRelevant": "Paired real near/far recordings may expose which target words are lost through the separator and may provide supervised adaptation references after verification.",
+    "notVerified": "Same-session pairing, sample/time alignment, person-channel mapping, physical-speaker/room split independence, cross-talk and reference quality have not been audited on downloaded payloads. Headset is not automatically a perfectly clean source."
+  },
+  "AMI": {
+    "primary": "https://groups.inf.ed.ac.uk/ami/corpus/",
+    "signalMapping": "https://groups.inf.ed.ac.uk/ami/corpus/signals.shtml",
+    "download": "https://groups.inf.ed.ac.uk/ami/download/",
+    "observed": "Official corpus documents synchronized close/far recordings and individual headset channels; meetings.xml provides participant/channel information. Released signals and transcriptions CC BY4.0.",
+    "whyRelevant": "Second-corpus paired-reference check; keep previously exposed EN2002a separate from any genuinely unused validation meeting.",
+    "notVerified": "Recorded headsets contain room response/cross-talk; payload alignment and speaker reference purity need direct checks."
+  },
+  "scope": "Source metadata was browsed; no paired audio payload was downloaded, no license override, no new model/checkpoint, no training or final-holdout opening. Do not call data preparation product accuracy progress."
+}

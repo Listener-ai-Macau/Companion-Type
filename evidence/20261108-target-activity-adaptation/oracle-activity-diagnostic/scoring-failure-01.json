@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-08T08:54:21+08:00",
+  "state": "INITIAL_AGGREGATE_PROVENANCE_ASSERTION_FAILED_RETAINED",
+  "cause": "Derived completed.json inherited original source lane binding; actual raw generation nodes carry current oracle protocol binding. Scorer now verifies every raw node hash/binding, every accepted leaf, contiguous sample coverage and complete unchanged text instead of silently relabeling aggregates. Future generator fixes the aggregate binding.",
+  "neuralRunSucceeded": true,
+  "newNeuralRerunsForScoringRepair": 0
+}

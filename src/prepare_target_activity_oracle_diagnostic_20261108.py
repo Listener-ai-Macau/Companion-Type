@@ -96,6 +96,7 @@ end=text.index("    else:\n        assert read(C/'separation-state-r2.json')",be
 text=text[:begin]+"    if args.stage=='asr':\n"+text[end+len('    else:\n'):]
 text=text.replace("assert read(C/'separation-state-r2.json')['state']=='COMPLETE_PS4_SEPARATION_UNQUALIFIED'","assert read(C/'audio-gate-preparation.json')['state']=='COMPLETE_REFERENCE_ACTIVITY_WAVEFORM_GATE_NOT_PRODUCT'")
 text=text.replace("'referencePassedToWorker':False","'referencePassedToWorker':True,'referenceDerivedWaveformDiagnostic':True,'noReferenceWordsInPrompt':True")
+text=text.replace("result={**case,'text':","result={**case,'binding':binding,'text':")
 text=text.replace("'COMPLETE_PS4_'+args.stage.upper()+'_UNQUALIFIED'","'COMPLETE_ORACLE_ACTIVITY_ASR_DIAGNOSTIC_NOT_PRODUCT'")
 text=text.replace('Sequential target extraction / unchanged native ASR. No references enter here.','Annotation-assisted waveform gate / unchanged native ASR. Never a product result.')
 def infer_ast(value):

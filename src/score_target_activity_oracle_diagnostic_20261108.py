@@ -27,7 +27,7 @@ byid={r['id']:r for r in outputs};assert len(byid)==len(prepared)==12
 def edits(ref,hyp):
     truth=normalize(ref);text=normalize(hyp);ops=Counter(op.tag for op in Levenshtein.editops(truth,text))
     return {'referenceCharacters':len(truth),'hypothesisCharacters':len(text),'substitute':ops['replace'],'delete':ops['delete'],'insert':ops['insert'],'total':sum(ops.values()),'midpointClipEditRateDiagnostic':sum(ops.values())/len(truth) if truth else None}
-rows=[]
+rows=[];binding_checks=[]
 for item in read(C/'scoring-only.json'):
     assert sha(item['cachedUngatedFile'])==item['cachedUngatedFileSha256']
     cached=read(item['cachedUngatedFile']);assert cached['text']==item['cachedUngatedText']
@@ -36,7 +36,22 @@ for item in read(C/'scoring-only.json'):
         'ungatedSeparated':{'text':cached['text'],'edits':edits(item['referenceText'],cached['text'])}}
     for mode in ['mixture','separated']:
         identity=item['laneId']+'-oracle-'+mode;output=byid[identity];audio=prepared[identity]
-        assert output['binding']['protocolSha256']==sha(C/'protocol-r2.json')
+        # The initial derived aggregator inherited the old source-lane binding.
+        # Prove every actual raw generation node belongs to this frozen run;
+        # retain the initial aggregate unchanged and disclose this bridge.
+        expected={'protocolSha256':sha(C/'protocol-r2.json'),'audioOnlySha256':protocol['audioOnlySha256'],'workerSourceSha256':protocol['workerSourceSha256']}
+        nodes=[]
+        for file in (C/'asr-outputs-r2'/identity).glob('*.json'):
+            if file.name=='completed.json':continue
+            node=read(file);assert node['binding']==expected and node['audioSha256']==audio['audioSha256']
+            assert node['rawSha256']==hashlib.sha256(json.dumps(node['raw'],ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+            nodes.append(node['raw'])
+        assert nodes and all(any(leaf==node for node in nodes) for leaf in output['acceptedLeaves'])
+        assert output['text']=='\n'.join(leaf['text'] for leaf in output['acceptedLeaves'])
+        assert output['acceptedLeaves'][0]['startSample']==0 and output['acceptedLeaves'][-1]['endSample']==round(output['audioSeconds']*16000)
+        assert all(a['endSample']==b['startSample'] for a,b in zip(output['acceptedLeaves'],output['acceptedLeaves'][1:]))
+        if output['binding']!=expected:assert output['binding']==audio['binding']
+        binding_checks.append({'condition':identity,'rawNodeCount':len(nodes),'everyRawNodeBoundToCurrentProtocol':True,'allAcceptedLeavesAndTextVerifiedAgainstRawNodes':True,'aggregateInheritedSourceBinding':output['binding']!=expected,'completedFileSha256':sha(C/'asr-outputs-r2'/identity/'completed.json')})
         assert output['audioSha256']==audio['audioSha256']==sha(audio['audio'])
         assert output['referenceActivityUsedOnWaveform'] and output['allTargetActivePcmSamplesUnchanged']
         assert output['originalSampleCountAndTimelineUnchanged']
@@ -56,6 +71,7 @@ result={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':s
     'purpose':'Causal diagnostic after two failed target-activity adaptations; not a third learned candidate.',
     'protocolSha256':sha(C/'protocol-r2.json'),'originalNativeAsrProtocolSha256':protocol['nativeAsrProtocolSha256'],
     'originalInferFunctionAstMatches':protocol['asrGenerationFunctionAstUnchanged'],
+    'rawGenerationBindingReadback':binding_checks,'metadataAggregationCorrection':'Initial aggregates retain source-lane binding; all raw nodes independently verify the current frozen protocol/audio/worker and exactly reconstruct all12complete texts. Future preparation generator corrects only the aggregate binding. No neural output was changed or rerun.',
     'rootSelection':[12,27],'uniqueOriginalAudioSeconds':60,'existingTargetLanes':6,'newAudioConditions':12,
     'actualRootCoverage':read(C/'audio-gate-preparation.json')['roots'],
     'allConditionsScored':True,'sameFixedWholeMeetingPersonMapping':True,
