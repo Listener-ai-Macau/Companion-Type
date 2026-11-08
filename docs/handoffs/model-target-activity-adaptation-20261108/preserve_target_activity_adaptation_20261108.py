@@ -30,11 +30,14 @@ record={'at':now,'ownerQuote':'需要你向着正确方向推进','precedingOwne
     'state':(optional(C/'decision.json') or optional(C/'run.json') or optional(C/'audio-preparation-state.json') or {'state':'ACTIVITY_ADAPTATION_PREPARATION'})['state'],
     'evidence':str(C),'sourcePolicy':optional(C/'data-source-policy.json'),'dataSelection':optional(C/'data-selection.json'),'audioPreparation':optional(C/'audio-preparation-state.json'),'run':optional(C/'run.json'),
     'gradientProof':optional(C/'gradient-proof.json'),'trainingHistory':optional(C/'training-history.json'),'selectedCheckpoint':optional(C/'best-checkpoint.json'),'evaluation':optional(C/'evaluation/review.json'),'decision':optional(C/'decision.json'),
+    'pairedControl':{'run':optional(C/'paired-control/run.json'),'preparation':optional(C/'paired-control/control-preparation.json'),'trainingHistory':optional(C/'paired-control/training-history.json'),'selectedCheckpoint':optional(C/'paired-control/best-checkpoint.json'),'evaluation':optional(C/'paired-control/evaluation/review.json'),'technicalRecovery':optional(C/'paired-control/explicit-directory-recovery.json')},
     'defaultProductChanged':False,'originalOrdinaryAsrChanged':False,'finalHoldoutOpened':False,'qualityQualified':False}
 record['next']=(record['decision'] or {}).get('next','继续原RM-OVERLAP：完成独立真实训练与另房间验证数据，冻结原模型主干，只验证条件活动小模块的梯度/资源与跨会议效果；没有实际收益不扩整场，不替换产品默认。原普通<5%、复杂逐路文字/分离/纪要事实/双端实卡/售卖门保留。')
-best=record['selectedCheckpoint'];artifact=None
-if args.phase=='complete' and best and best.get('checkpoint'):
-    assert hashlib.sha256(Path(best['checkpoint']).read_bytes()).hexdigest()==best['checkpointSha256'];artifact=EV/'selected-adapter-head.bin';shutil.copyfile(best['checkpoint'],artifact);record['retainedSelectedHeadArtifact']={'file':str(artifact),'sha256':best['checkpointSha256'],'baseSourceCheckpointRequired':True,'qualified':False}
+record['retainedUnqualifiedHeadArtifacts']=[]
+if args.phase=='complete':
+    for trial,best in [('initial',record['selectedCheckpoint']),('paired-control',record['pairedControl']['selectedCheckpoint'])]:
+        if best and best.get('checkpoint'):
+            assert hashlib.sha256(Path(best['checkpoint']).read_bytes()).hexdigest()==best['checkpointSha256'];artifact=EV/(trial+'-validation-selected-head.bin');shutil.copyfile(best['checkpoint'],artifact);record['retainedUnqualifiedHeadArtifacts'].append({'trial':trial,'file':str(artifact),'sha256':best['checkpointSha256'],'bytes':artifact.stat().st_size,'baseSourceCheckpointRequired':True,'qualified':False})
 (EV/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','evidence/20261108-target-activity-adaptation']+[str(p.relative_to(M)).replace('\\','/') for p in (M/'src').glob('*target_activity*20261108.py')]
 if (M/'README.md').exists():paths.append('README.md')
