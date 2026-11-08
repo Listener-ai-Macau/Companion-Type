@@ -33,20 +33,20 @@ public final class RangeCheckpointJvmTest {
         RecorderWire.Descriptor d=descriptor();Path dir=dir(d);AtomicInteger syncs=new AtomicInteger();
         RangeCheckpoint first;
         try(SegmentReceiver receiver=new SegmentReceiver(dir,d)){
-            first=receiver.checkpointRange(dir,1,2,100,p->syncs.incrementAndGet());
-            check(syncs.get()==3&&first.prefixBytes==7688&&!first.confirmed);
-            byte[] expected=MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(data,3720,7688));
+            first=receiver.checkpointRange(dir,0,1,100,p->syncs.incrementAndGet());
+            check(syncs.get()==3&&first.prefixBytes==3720&&!first.confirmed);
+            byte[] expected=MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(data,0,3720));
             check(Arrays.equals(expected,first.rangeSha()));
-            check(receiver.checkpointRange(dir,1,2,100,p->syncs.incrementAndGet()).nonce==100);
-            refused(()->receiver.checkpointRange(dir,1,2,101,p->{}));
-            refused(()->receiver.checkpointRange(dir,0,2,101,p->{}));
-            refused(()->receiver.checkpointRange(dir,1,4,101,p->{}));
-            refused(()->receiver.checkpointRange(dir.getParent(),1,2,100,p->{}));
+            check(receiver.checkpointRange(dir,0,1,100,p->syncs.incrementAndGet()).nonce==100);
+            refused(()->receiver.checkpointRange(dir,0,1,101,p->{}));
+            refused(()->receiver.checkpointRange(dir,-1,1,101,p->{}));
+            refused(()->receiver.checkpointRange(dir,0,4,101,p->{}));
+            refused(()->receiver.checkpointRange(dir.getParent(),0,1,100,p->{}));
             first.confirm(dir,p->syncs.incrementAndGet());
             check(RangeCheckpoint.read(dir,d).confirmed);
-            refused(()->receiver.checkpointRange(dir,1,3,102,p->{}));
-            RangeCheckpoint second=receiver.checkpointRange(dir,2,3,102,p->{});
-            check(second.prefixBytes==data.length&&second.firstSector==2);
+            refused(()->receiver.checkpointRange(dir,0,3,102,p->{}));
+            RangeCheckpoint second=receiver.checkpointRange(dir,1,3,102,p->{});
+            check(second.prefixBytes==data.length&&second.firstSector==1);
             refused(()->first.confirm(dir,p->{}));
             second.confirm(dir,p->{});
         }
@@ -61,10 +61,10 @@ public final class RangeCheckpointJvmTest {
         // retry, rather than treated as permission merely because it exists.
         Path retry=dir(d);AtomicInteger retries=new AtomicInteger();
         try(SegmentReceiver receiver=new SegmentReceiver(retry,d)){
-            refused(()->receiver.checkpointRange(retry,1,2,200,p->{
+            refused(()->receiver.checkpointRange(retry,0,1,200,p->{
                 if(Files.exists(retry.resolve(SegmentReceiver.key(d)+".range")))throw new IOException("controlled final directory sync failure");
             }));
-            RangeCheckpoint c=receiver.checkpointRange(retry,1,2,200,p->retries.incrementAndGet());
+            RangeCheckpoint c=receiver.checkpointRange(retry,0,1,200,p->retries.incrementAndGet());
             check(c.nonce==200&&retries.get()==2);
         }
         System.out.println("PASS_RANGE_HOST_SYNC_FAILURE no_sendable_result_on_failed_sync=1 exact_retry_resyncs_source_metadata_proof_and_directories=1");
@@ -72,7 +72,7 @@ public final class RangeCheckpointJvmTest {
         for(int mode=0;mode<3;mode++){
             Path broken=dir(d);String key=SegmentReceiver.key(d);
             try(SegmentReceiver receiver=new SegmentReceiver(broken,d)){
-                receiver.checkpointRange(broken,1,2,300,p->{});
+                receiver.checkpointRange(broken,0,1,300,p->{});
             }
             if(mode==0){byte[] changed=data.clone();changed[10]^=1;Files.write(broken.resolve(key+".part"),changed);}
             if(mode==1)Files.write(broken.resolve(key+".range"),new byte[]{1,2,3});

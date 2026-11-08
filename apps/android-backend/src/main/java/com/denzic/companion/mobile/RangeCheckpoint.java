@@ -29,11 +29,11 @@ final class RangeCheckpoint {
 
     private RangeCheckpoint(RecorderWire.Descriptor d,long nonce,int first,int end,
             long prefixBytes,byte[] prefixSha,byte[] rangeSha,boolean confirmed)throws IOException {
-        if(d==null||nonce<=0||nonce>0xffffffffL||first<1||end<=first||end>65535)
+        if(d==null||nonce<=0||nonce>0xffffffffL||first<0||end<=first||end>65535)
             throw invalid();
         long usedSectors=(((d.encodedLength+247)/248+1)*256+4095)/4096;
         long expectedEnd=Math.min(d.encodedLength,((long)end*16-1)*248);
-        if(end>usedSectors||((long)first*16-1)*248>=d.encodedLength||prefixBytes!=expectedEnd||
+        if(end>usedSectors||Math.max(0,((long)first*16-1)*248)>=d.encodedLength||prefixBytes!=expectedEnd||
                 prefixSha.length!=32||rangeSha.length!=32)throw invalid();
         descriptor=d;this.nonce=nonce;firstSector=first;endSector=end;this.prefixBytes=prefixBytes;
         this.prefixSha=prefixSha.clone();this.rangeSha=rangeSha.clone();this.confirmed=confirmed;
@@ -87,7 +87,7 @@ final class RangeCheckpoint {
             throw new IOException("saved recording prefix is damaged; range recovery cannot restart from zero");
     }
     private static byte[][] hashes(Path file,RecorderWire.Descriptor d,int first,long end)throws IOException {
-        long begin=((long)first*16-1)*248;
+        long begin=Math.max(0,((long)first*16-1)*248);
         MessageDigest prefix=sha(),range=sha();byte[] buffer=new byte[32768];
         try(RandomAccessFile f=new RandomAccessFile(file.toFile(),"r")){
             if(f.length()<end||f.length()>d.encodedLength)throw new IOException("saved recording prefix length changed; source retained");
@@ -135,7 +135,7 @@ final class RangeCheckpoint {
                 throw new IOException("a recording range confirmation is still pending; saved proof retained");
             }
             if(first!=previous.endSector||nonce==previous.nonce)throw new IOException("recording range frontier is not contiguous");
-        }else if(first!=1)throw new IOException("recording range frontier must start after the first retained sector");
+        }else if(first!=0)throw new IOException("recording range frontier must start at the first sector");
         Path file=source(dir,d),meta=dir.resolve(SegmentReceiver.key(d)+".meta");
         RecorderWire.Descriptor saved=RecorderWire.Descriptor.decode(Files.readAllBytes(meta));
         if(!saved.sameContent(d)||(saved.startedUnixSeconds!=0&&d.startedUnixSeconds!=0&&
