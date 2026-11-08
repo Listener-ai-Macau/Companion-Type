@@ -209,7 +209,16 @@ fn preflight<T:Transport>(transport:&mut T,identity:&[u8],peer:&Peer,seconds:u16
 
 fn settle<T:Transport>(transport:&mut T,peer:&PausePeer,path:&Path,journal:&mut Journal,
     disposition:Observation,fresh_start:bool)->Result<(),String> {
-    save(path,journal)?;
+    settle_with_save(transport,peer,path,journal,disposition,fresh_start,save)
+}
+fn settle_with_save<T:Transport,F:FnMut(&Path,&Journal)->Result<(),String>>(
+    transport:&mut T,peer:&PausePeer,path:&Path,journal:&mut Journal,
+    disposition:Observation,fresh_start:bool,mut persist:F)->Result<(),String> {
+    persist(path,journal)?;
+    // Only this locked operation owns the snapshot. Update it after a real
+    // successful durable save; identical accepted/preparing polls need no
+    // repeated atomic replacement/fsync. New confirmation always persists.
+    let mut persisted=journal.clone();
     let mut floor=None;
     let mut action=recorder_control::settlement_action(journal,disposition,true,fresh_start,&mut floor)?;
     let deadline=Instant::now()+Duration::from_secs(60);
@@ -219,7 +228,8 @@ fn settle<T:Transport>(transport:&mut T,peer:&PausePeer,path:&Path,journal:&mut 
         if Instant::now()>=deadline{return Err("录音控制确认超时；原请求和录音保留，请重连核对。".into());}
         let wire=transport.status()?;
         if wire.len()==64&&journal.unconfirmed_start_retry(){validate_idle(&wire,peer)?;std::thread::sleep(Duration::from_millis(100));continue;}
-        let disposition=observation(journal,peer,&wire)?;save(path,journal)?;
+        let disposition=observation(journal,peer,&wire)?;
+        if *journal!=persisted {persist(path,journal)?;persisted=journal.clone();}
         action=recorder_control::settlement_action(journal,disposition,false,false,&mut floor)?;
         if matches!(action,SettlementAction::Wait){std::thread::sleep(Duration::from_millis(100));}
     }
@@ -326,6 +336,52 @@ mod tests {
         let r=root.canonicalize().unwrap();let temp=std::env::temp_dir().canonicalize().unwrap();
         assert!(r.parent()==Some(temp.as_path())&&r.file_name().unwrap().to_string_lossy().starts_with("companion-control-test-"));
         fs::remove_dir_all(r).unwrap();
+    }
+    struct Preparing {
+        inner:Fake,path:PathBuf,polls:u32,waiting:u32,
+    }
+    impl Transport for Preparing {
+        fn identity(&mut self)->Result<Vec<u8>,String>{self.inner.identity()}
+        fn status(&mut self)->Result<Vec<u8>,String>{
+            self.polls+=1;let mut s=self.inner.status()?;
+            if self.waiting>0 {self.waiting-=1;s[1]=5;crc_status(&mut s);}
+            Ok(s)
+        }
+        fn write_control(&mut self,wire:&[u8])->Result<(),String>{
+            // Observe the real file before the transport accepts any command.
+            let durable=read_journal(&self.path)?.ok_or("missing durable START")?;
+            if durable.pending.as_ref().map(|p|p.wire.as_slice())!=Some(wire){return Err("START before durable intent".into());}
+            self.inner.write_control(wire)
+        }
+        fn capacity_slots(&mut self,wire:&[u8])->Result<Option<Vec<u8>>,String>{self.inner.capacity_slots(wire)}
+    }
+    #[test]
+    fn preparing_control_polls_do_not_rewrite_unchanged_durable_intent() {
+        for failed_save in [0u32,1,2] {
+            let root=root();let dir=device_dir(&root,DEVICE).unwrap();fs::create_dir_all(&dir).unwrap();
+            let path=dir.join(journal_name("preparing"));let fake=Fake::new();
+            let peer=PausePeer::from_status(&fake.identity).unwrap().unwrap();
+            let mut journal=Journal::start(&peer,"preparing",DEVICE,1234,120).unwrap();
+            let mut transport=Preparing{inner:fake,path:path.clone(),polls:0,waiting:4};
+            let mut writes=0u32;
+            let result=settle_with_save(&mut transport,&peer,&path,&mut journal,Observation::Previous,true,|path,journal|{
+                writes+=1;if writes==failed_save{return Err("injected durable-save failure".into());}
+                save(path,journal)
+            });
+            if failed_save==1 {
+                assert!(result.is_err());assert_eq!(writes,1);assert!(transport.inner.writes.is_empty());assert!(!path.exists());
+            } else {
+                assert_eq!(writes,2,"four unchanged preparation polls must not force four extra disk synchronizations");
+                assert_eq!(transport.polls,5);assert_eq!(transport.inner.writes.len(),1);
+                if failed_save==2 {
+                    assert!(result.is_err());let old=read_journal(&path).unwrap().unwrap();
+                    assert!(old.pending.is_some()&&old.confirmed.is_none(),"failed new confirmation must retain prior durable START");
+                    assert_eq!(execute(&root,"preparing",DEVICE,0,0,&mut transport.inner).unwrap().state,"recording");
+                    assert_eq!(transport.inner.writes.len(),1,"recover confirmation without replaying START");
+                } else {assert!(result.is_ok());assert_eq!(read_journal(&path).unwrap().unwrap(),journal);}
+            }
+            cleanup(&root);
+        }
     }
     #[test]
     fn start_pause_resume_stop_are_persisted_and_bound_to_same_original() {
