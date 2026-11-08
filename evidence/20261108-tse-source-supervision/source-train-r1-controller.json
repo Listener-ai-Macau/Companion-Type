@@ -1,13 +1,16 @@
 {
-  "state": "RUNNING_TSE_STAGE",
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
   "pid": 10360,
   "startedAt": "2026-11-08T14:17:20+08:00",
   "worker": "tse_source_supervision_train_worker_20261108.py",
   "runId": "source-train-r1",
   "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
   "automaticModelRetries": 0,
-  "privatePeakBytes": 0,
-  "rssPeakBytes": 0,
+  "privatePeakBytes": 1403338752,
+  "rssPeakBytes": 1102983168,
   "qualityQualified": false,
-  "activePid": 22264
+  "availableAtStopBytes": 674418688,
+  "exitCode": 15,
+  "finishedAt": "2026-11-08T14:30:07+08:00",
+  "wholeProcessFamilySeconds": 767.1337475999899
 }

@@ -1,0 +1,40 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--005-M--absent_other_speech--1",
+  "sourceExampleId": "20200805_S_R001S01C01--005-M--absent_other_speech--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--005-M--absent_other_speech--1.wav",
+  "audioSha256": "7b8ce22a5f25a63c55257fd86b4c10ec8ef8b90b491bc3f43f5d94cc25ee201b",
+  "audioSeconds": 14.870625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "嗯，他俩是不是好用？嗯嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 237930,
+      "text": "嗯，他俩是不是好用？嗯嗯。",
+      "generatedIds": [
+        106287,
+        3837,
+        42411,
+        104882,
+        104074,
+        52801,
+        11622,
+        11319,
+        106287,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "嗯，他俩是不是好用？嗯嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.4213140000065323
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--005-M--present_solo--0",
+  "sourceExampleId": "20200805_S_R001S01C01--005-M--present_solo--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--005-M--present_solo--0.wav",
+  "audioSha256": "cc701c958971a0fcbadf5d36ca4c0432ef886f1e466ce567560fe1f0fc8f874f",
+  "audioSeconds": 6.6600625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "安保方面，就比如说咱们小区这个防盗还是比较全面的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 106561,
+      "text": "安保方面，就比如说咱们小区这个防盗还是比较全面的。",
+      "generatedIds": [
+        113740,
+        99522,
+        3837,
+        80158,
+        106998,
+        104335,
+        102039,
+        99487,
+        116911,
+        109356,
+        100011,
+        9370,
+        1773,
+        151645
+      ],
+      "rawDecoded": "安保方面，就比如说咱们小区这个防盗还是比较全面的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.7010842000017874
+    }
+  ]
+}

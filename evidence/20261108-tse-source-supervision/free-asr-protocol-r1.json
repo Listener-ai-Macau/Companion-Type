@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-08T14:45:03.237889+08:00",
+  "state": "FROZEN_POST_REJECTION_156_AUDIO_ONLY_DIAGNOSTIC",
+  "asrWorkerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe",
+  "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+  "helperSources": {
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+    "moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
+    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107"
+  },
+  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "trainingProxyPassed": false,
+  "diagnosticAfterRejection": true,
+  "diagnosticPlanSha256": "2d900f2825e2f322ee1003bb1c299540110a7afa4c648dbb1af8e1c44a024ef4",
+  "referencePassedToWorker": false,
+  "inferenceAstMatchesOriginal": true,
+  "sameFrozenRecognizerBothConditions": true,
+  "expectedOutputRows": 156,
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "scope": "All 66 new natural real-meeting queries before and after. Supervised enrollment diagnostic, not automatic-meeting or final holdout qualification."
+}

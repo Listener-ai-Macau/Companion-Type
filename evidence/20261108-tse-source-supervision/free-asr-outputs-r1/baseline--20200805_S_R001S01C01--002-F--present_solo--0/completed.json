@@ -1,0 +1,60 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--002-F--present_solo--0",
+  "sourceExampleId": "20200805_S_R001S01C01--002-F--present_solo--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--002-F--present_solo--0.wav",
+  "audioSha256": "efd9bedafae9cd8eeca1df20c3bad67edd7bccec0566570a26aa8694166e40e3",
+  "audioSeconds": 12.7650625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "下面就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对调查问卷的结果进行分析。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 204241,
+      "text": "下面就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对调查问卷的结果进行分析。",
+      "generatedIds": [
+        100431,
+        99486,
+        101991,
+        18493,
+        100627,
+        100003,
+        3837,
+        101889,
+        99487,
+        116502,
+        102173,
+        103977,
+        107685,
+        100370,
+        3837,
+        101889,
+        103939,
+        104477,
+        56007,
+        106287,
+        101066,
+        9370,
+        104009,
+        3837,
+        32664,
+        101923,
+        116502,
+        105369,
+        71817,
+        101042,
+        1773,
+        151645
+      ],
+      "rawDecoded": "下面就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对调查问卷的结果进行分析。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.635761200013803
+    }
+  ]
+}

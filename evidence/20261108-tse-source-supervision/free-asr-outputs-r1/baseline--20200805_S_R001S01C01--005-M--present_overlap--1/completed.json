@@ -1,0 +1,55 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--005-M--present_overlap--1",
+  "sourceExampleId": "20200805_S_R001S01C01--005-M--present_overlap--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--005-M--present_overlap--1.wav",
+  "audioSha256": "856f1a663a89442b79af4f05f34c640255ef4bbb247bbcdff2b93fc725641a02",
+  "audioSeconds": 12.500125,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "下半年我们也会那个建一个心理咨询室，业主的心理问题也是非常重要的一个事情，所以我要时刻关注他们的心理。嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 200002,
+      "text": "下半年我们也会那个建一个心理咨询室，业主的心理问题也是非常重要的一个事情，所以我要时刻关注他们的心理。嗯。",
+      "generatedIds": [
+        103262,
+        97639,
+        103977,
+        101095,
+        25807,
+        46944,
+        116653,
+        99478,
+        3837,
+        104348,
+        107152,
+        86119,
+        110447,
+        100799,
+        46944,
+        99916,
+        3837,
+        99999,
+        104515,
+        102254,
+        100020,
+        104056,
+        100438,
+        1773,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "下半年我们也会那个建一个心理咨询室，业主的心理问题也是非常重要的一个事情，所以我要时刻关注他们的心理。嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.10935270000482
+    }
+  ]
+}

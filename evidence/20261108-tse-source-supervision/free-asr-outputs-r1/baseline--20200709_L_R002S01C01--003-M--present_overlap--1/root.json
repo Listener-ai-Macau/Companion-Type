@@ -1,0 +1,24 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "e83b493985ff2f75456894f233a087da10ac7b5b9a20f9f15c6a33567a80ef2a",
+  "raw": {
+    "startSample": 0,
+    "endSample": 21826,
+    "text": "对。",
+    "generatedIds": [
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 0.6236723999900278
+  },
+  "rawSha256": "b7fb41096ca5eef26aa6560f36e98ef51495beb7bce4fb2958e73514d4aec986"
+}

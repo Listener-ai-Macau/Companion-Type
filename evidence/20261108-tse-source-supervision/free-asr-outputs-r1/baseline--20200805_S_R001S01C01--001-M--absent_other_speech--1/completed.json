@@ -1,0 +1,62 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--001-M--absent_other_speech--1",
+  "sourceExampleId": "20200805_S_R001S01C01--001-M--absent_other_speech--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--001-M--absent_other_speech--1.wav",
+  "audioSha256": "338b7b2aa63148118c322a6ad2c4e774239bd262979100f7f986482a5bce38c6",
+  "audioSeconds": 11.7050625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "虽然我们的电梯用的都都是正规厂家的，但是我们还是要定期做一些维修维护，很专业的，不要来，不要太麻烦。但是它没事。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 187281,
+      "text": "虽然我们的电梯用的都都是正规厂家的，但是我们还是要定期做一些维修维护，很专业的，不要来，不要太麻烦。但是它没事。",
+      "generatedIds": [
+        103925,
+        103952,
+        105038,
+        11622,
+        9370,
+        71268,
+        100132,
+        105327,
+        102333,
+        9370,
+        3837,
+        100131,
+        97639,
+        99998,
+        30534,
+        104406,
+        112446,
+        104440,
+        101999,
+        3837,
+        99165,
+        104715,
+        3837,
+        100148,
+        36407,
+        3837,
+        115596,
+        104969,
+        1773,
+        100131,
+        99652,
+        107821,
+        1773,
+        151645
+      ],
+      "rawDecoded": "虽然我们的电梯用的都都是正规厂家的，但是我们还是要定期做一些维修维护，很专业的，不要来，不要太麻烦。但是它没事。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 5.97322549999808
+    }
+  ]
+}

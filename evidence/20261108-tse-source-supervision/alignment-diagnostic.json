@@ -1,0 +1,1929 @@
+{
+  "state": "POST_REJECTION_POLARITY_DELAY_AND_SOURCE_CONFUSION_DIAGNOSTIC",
+  "predeclaredCandidateRejectionUnchanged": true,
+  "maximumDelaySearchedSamples": 160,
+  "sampleRate": 16000,
+  "summary": {
+    "baseline": {
+      "known_additive_mixture": {
+        "examples": 32,
+        "negativeZeroLagCorrelations": 32,
+        "meanSignedCorrelation": -0.39779625306639005,
+        "meanSiSdrDbSignInvariant": -10.86957908086259,
+        "meanAbsBestDelaySamples": 7.28125,
+        "meanBestDelayAbsoluteCorrelation": 0.43091678713739967,
+        "inversionReducesL1Cases": 31,
+        "otherSourceCorrelationLargerCases": 3
+      },
+      "single_target_preservation": {
+        "examples": 8,
+        "negativeZeroLagCorrelations": 7,
+        "meanSignedCorrelation": -0.3574392188634211,
+        "meanSiSdrDbSignInvariant": -12.925329404351515,
+        "meanAbsBestDelaySamples": 8.0,
+        "meanBestDelayAbsoluteCorrelation": 0.4200761621197413,
+        "inversionReducesL1Cases": 7,
+        "otherSourceCorrelationLargerCases": 0
+      }
+    },
+    "adapted": {
+      "known_additive_mixture": {
+        "examples": 32,
+        "negativeZeroLagCorrelations": 15,
+        "meanSignedCorrelation": 0.16299792433703553,
+        "meanSiSdrDbSignInvariant": -10.460884074888464,
+        "meanAbsBestDelaySamples": 13.59375,
+        "meanBestDelayAbsoluteCorrelation": 0.4700974196412896,
+        "inversionReducesL1Cases": 11,
+        "otherSourceCorrelationLargerCases": 8
+      },
+      "single_target_preservation": {
+        "examples": 8,
+        "negativeZeroLagCorrelations": 2,
+        "meanSignedCorrelation": 0.4127105555857783,
+        "meanSiSdrDbSignInvariant": -2.196700864672226,
+        "meanAbsBestDelaySamples": 13.125,
+        "meanBestDelayAbsoluteCorrelation": 0.7258864424615381,
+        "inversionReducesL1Cases": 2,
+        "otherSourceCorrelationLargerCases": 0
+      }
+    }
+  },
+  "perExample": [
+    {
+      "id": "validation--mixed-000--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.5344153314331693,
+        "targetProjectionGain": -0.3515287205590331,
+        "signInvariantSiSdrDb": -3.9818378242695256,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.5344153314331715,
+        "normalL1": 1.4445330273008319,
+        "invertedL1": 0.8901676244374787
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.04050033776251383,
+        "targetProjectionGain": -0.01065460796260459,
+        "signInvariantSiSdrDb": -27.84369761447271,
+        "bestDelaySamplesWithin10ms": 50,
+        "bestDelaySignedCorrelation": 0.06748722046177477,
+        "normalL1": 1.0447386323400982,
+        "invertedL1": 1.0295655691738976
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-000--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.35727436951926833,
+        "targetProjectionGain": -0.44674077433159004,
+        "signInvariantSiSdrDb": -8.346895440100045,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.3572743695192682,
+        "normalL1": 1.871321080733435,
+        "invertedL1": 1.2626436334765772
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.017325112959022605,
+        "targetProjectionGain": -0.054166762804469575,
+        "signInvariantSiSdrDb": -35.22517473050124,
+        "bestDelaySamplesWithin10ms": -45,
+        "bestDelaySignedCorrelation": 0.0335885640383215,
+        "normalL1": 5.404720763033296,
+        "invertedL1": 5.336960458298666
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-001--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7258024358045353,
+        "targetProjectionGain": -0.850621010608988,
+        "signInvariantSiSdrDb": 0.4658217265143102,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7258024358045356,
+        "normalL1": 2.06318781443896,
+        "invertedL1": 0.9000517673025114
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.15439774567566986,
+        "targetProjectionGain": -0.2218222311690746,
+        "signInvariantSiSdrDb": -16.12239692059934,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.15439774567566983,
+        "normalL1": 2.3697199621498766,
+        "invertedL1": 2.040439835607271
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-001--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7377773518930497,
+        "targetProjectionGain": -0.6598937051795153,
+        "signInvariantSiSdrDb": 0.7718630672744798,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7377773518930494,
+        "normalL1": 1.7893121994687777,
+        "invertedL1": 0.770921102709875
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.11799556884034924,
+        "targetProjectionGain": -0.08609301847920725,
+        "signInvariantSiSdrDb": -18.501794526785268,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.11799556884034926,
+        "normalL1": 1.3316126452121306,
+        "invertedL1": 1.2063103268399626
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-002--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.16648595071821,
+        "targetProjectionGain": -0.10253674705814628,
+        "signInvariantSiSdrDb": -15.450372559468589,
+        "bestDelaySamplesWithin10ms": 15,
+        "bestDelaySignedCorrelation": 0.24216294814728556,
+        "normalL1": 1.271885728846221,
+        "invertedL1": 1.0973601868975977
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.03800657515568988,
+        "targetProjectionGain": 0.03418208050217185,
+        "signInvariantSiSdrDb": -28.39654735655886,
+        "bestDelaySamplesWithin10ms": 53,
+        "bestDelaySignedCorrelation": 0.13437859569501479,
+        "normalL1": 1.4469424070785342,
+        "invertedL1": 1.5121758906408194
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-002--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.15441613111163496,
+        "targetProjectionGain": -0.0513865019870505,
+        "signInvariantSiSdrDb": -16.121337420286782,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.15441613111163505,
+        "normalL1": 1.131797316222072,
+        "invertedL1": 1.008142386787306
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.04720222391466605,
+        "targetProjectionGain": -0.010756749064803102,
+        "signInvariantSiSdrDb": -26.51106369169005,
+        "bestDelaySamplesWithin10ms": 49,
+        "bestDelaySignedCorrelation": 0.14116799782689882,
+        "normalL1": 1.04247148647336,
+        "invertedL1": 1.0233090174946815
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-003--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6775316587982355,
+        "targetProjectionGain": -0.4852231115645472,
+        "signInvariantSiSdrDb": -0.7129862229374277,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6775316587982345,
+        "normalL1": 1.6797016316826157,
+        "invertedL1": 0.891242914932279
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.21037298295289547,
+        "targetProjectionGain": -0.06184060966378607,
+        "signInvariantSiSdrDb": -13.343612903890243,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.21037298295289547,
+        "normalL1": 1.1477570163341317,
+        "invertedL1": 1.033063507135569
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-003--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7100418920934737,
+        "targetProjectionGain": -0.39264064762862216,
+        "signInvariantSiSdrDb": 0.07225938354790144,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7100418920934735,
+        "normalL1": 1.4510081223513864,
+        "invertedL1": 0.7584327753782839
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.058825845968036194,
+        "targetProjectionGain": -0.07925151152406282,
+        "signInvariantSiSdrDb": -24.593581633598866,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.05882584596803576,
+        "normalL1": 3.0760979584197683,
+        "invertedL1": 2.953966279173363
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-004--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.16578742213095127,
+        "targetProjectionGain": -0.1401766222526724,
+        "signInvariantSiSdrDb": -15.487929416866983,
+        "bestDelaySamplesWithin10ms": 20,
+        "bestDelaySignedCorrelation": 0.16863246972620466,
+        "normalL1": 1.4829176876129688,
+        "invertedL1": 1.2405869537922622
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.10148758340599406,
+        "targetProjectionGain": 0.09717481272357333,
+        "signInvariantSiSdrDb": -19.826778662631057,
+        "bestDelaySamplesWithin10ms": 21,
+        "bestDelaySignedCorrelation": 0.1724406397390238,
+        "normalL1": 1.4914055688891337,
+        "invertedL1": 1.6637667313801112
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-004--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.0481491064357585,
+        "targetProjectionGain": -0.013732790374203314,
+        "signInvariantSiSdrDb": -26.338155268076537,
+        "bestDelaySamplesWithin10ms": 22,
+        "bestDelaySignedCorrelation": 0.19583848774105142,
+        "normalL1": 1.0767223449376047,
+        "invertedL1": 1.0419842480563875
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.024741456024090246,
+        "targetProjectionGain": -0.0062313052203653765,
+        "signInvariantSiSdrDb": -32.128835615491205,
+        "bestDelaySamplesWithin10ms": 47,
+        "bestDelaySignedCorrelation": 0.09831952870103632,
+        "normalL1": 1.0498088248334938,
+        "invertedL1": 1.03989347068367
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-005--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7538153018179174,
+        "targetProjectionGain": -0.5599297076005277,
+        "signInvariantSiSdrDb": 1.1928498761699795,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7538153018179176,
+        "normalL1": 1.6308615699450386,
+        "invertedL1": 0.7079227532780284
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.1484238424833356,
+        "targetProjectionGain": -0.1675507548194953,
+        "signInvariantSiSdrDb": -16.47318352522449,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.14842384248333557,
+        "normalL1": 1.818833554571951,
+        "invertedL1": 1.5909632259690039
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-005--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6386345769851671,
+        "targetProjectionGain": -0.18053985935694228,
+        "signInvariantSiSdrDb": -1.61923852906745,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6386345769851671,
+        "normalL1": 1.1946510872069187,
+        "invertedL1": 0.8784482470132
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.2527802634146569,
+        "targetProjectionGain": -0.04702076346972825,
+        "signInvariantSiSdrDb": -11.658369131928355,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.25278026341465687,
+        "normalL1": 1.0890290266622107,
+        "invertedL1": 0.9904788954861458
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-006--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.09259450904106754,
+        "targetProjectionGain": -0.03599217412862152,
+        "signInvariantSiSdrDb": -20.630899499752374,
+        "bestDelaySamplesWithin10ms": -21,
+        "bestDelaySignedCorrelation": 0.20791336065332566,
+        "normalL1": 1.1437360945285238,
+        "invertedL1": 1.0747564275279928
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.01588234729316121,
+        "targetProjectionGain": 0.004656052503971393,
+        "signInvariantSiSdrDb": -35.98061059173808,
+        "bestDelaySamplesWithin10ms": 46,
+        "bestDelaySignedCorrelation": 0.09733388930801438,
+        "normalL1": 1.15396257373149,
+        "invertedL1": 1.1825446101625736
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-006--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.0008859837593948039,
+        "targetProjectionGain": -0.00014008154992383424,
+        "signInvariantSiSdrDb": -61.05148136921233,
+        "bestDelaySamplesWithin10ms": 47,
+        "bestDelaySignedCorrelation": 0.20560685885936364,
+        "normalL1": 1.0233853553140726,
+        "invertedL1": 1.0235384915635328
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.009124742348368412,
+        "targetProjectionGain": 0.0019129140406520962,
+        "signInvariantSiSdrDb": -40.79522618124543,
+        "bestDelaySamplesWithin10ms": -22,
+        "bestDelaySignedCorrelation": 0.06962291106435552,
+        "normalL1": 1.0902920386995079,
+        "invertedL1": 1.0953473571759709
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-007--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.661878189977645,
+        "targetProjectionGain": -0.4414188788616316,
+        "signInvariantSiSdrDb": -1.0811623231497445,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6618781899776449,
+        "normalL1": 1.464956986899917,
+        "invertedL1": 0.86237435396219
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.0510848001716536,
+        "targetProjectionGain": -0.027169206157318507,
+        "signInvariantSiSdrDb": -25.822817612483604,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.05108480017165354,
+        "normalL1": 1.3269481907090572,
+        "invertedL1": 1.2759137692703564
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-007--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7788538848131402,
+        "targetProjectionGain": -0.6516852592205998,
+        "signInvariantSiSdrDb": 1.880923896778452,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7788538848131401,
+        "normalL1": 1.663412179514386,
+        "invertedL1": 0.6640092516574968
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.022879125667022174,
+        "targetProjectionGain": -0.024005398144230597,
+        "signInvariantSiSdrDb": -32.80893759650239,
+        "bestDelaySamplesWithin10ms": -140,
+        "bestDelaySignedCorrelation": -0.027259401437821535,
+        "normalL1": 2.0795092954312464,
+        "invertedL1": 2.0424321740862115
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-008--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.0984416768366238,
+        "targetProjectionGain": -0.027758831870183073,
+        "signInvariantSiSdrDb": -20.094128240136126,
+        "bestDelaySamplesWithin10ms": -22,
+        "bestDelaySignedCorrelation": 0.11856137027895856,
+        "normalL1": 1.097598681311662,
+        "invertedL1": 1.029931301669342
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.05166373508917663,
+        "targetProjectionGain": -0.0186255234571967,
+        "signInvariantSiSdrDb": -25.72467655197716,
+        "bestDelaySamplesWithin10ms": 38,
+        "bestDelaySignedCorrelation": 0.06327885582697426,
+        "normalL1": 1.2094659683676832,
+        "invertedL1": 1.1681665074772496
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-008--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.31669873708281376,
+        "targetProjectionGain": -0.20597964820947764,
+        "signInvariantSiSdrDb": -9.5280597939106,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.3166987370828141,
+        "normalL1": 1.3703450052258448,
+        "invertedL1": 1.0083590480955489
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.008289703982071324,
+        "targetProjectionGain": 0.004217125255511835,
+        "signInvariantSiSdrDb": -41.62892109490781,
+        "bestDelaySamplesWithin10ms": 48,
+        "bestDelaySignedCorrelation": 0.03677450310430116,
+        "normalL1": 1.4423946740873408,
+        "invertedL1": 1.458002428433638
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-009--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.13608675917157917,
+        "targetProjectionGain": -0.015175333009391868,
+        "signInvariantSiSdrDb": -17.24249885120493,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.13608675917157934,
+        "normalL1": 1.1511425933908093,
+        "invertedL1": 1.0944862629685113
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.34955450999771587,
+        "targetProjectionGain": -0.016326904823373827,
+        "signInvariantSiSdrDb": -8.563715179958871,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.34955450999771576,
+        "normalL1": 1.0158495908242025,
+        "invertedL1": 0.9869495762497194
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-009--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.7695172985599045,
+        "targetProjectionGain": -0.8485516800209254,
+        "signInvariantSiSdrDb": 1.6194362604510502,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.7695172985599046,
+        "normalL1": 1.9595981261302549,
+        "invertedL1": 0.7811696580271893
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.05106884981625529,
+        "targetProjectionGain": -0.13444646701650986,
+        "signInvariantSiSdrDb": -25.825537151336384,
+        "bestDelaySamplesWithin10ms": 50,
+        "bestDelaySignedCorrelation": 0.06573180565511905,
+        "normalL1": 5.855144449163905,
+        "invertedL1": 5.6608790798082405
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-010--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.2291664334241567,
+        "targetProjectionGain": -0.10761858428191258,
+        "signInvariantSiSdrDb": -12.562692984310527,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.22916643342415668,
+        "normalL1": 1.2225494001071853,
+        "invertedL1": 1.011730846693655
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.015839429031507864,
+        "targetProjectionGain": -0.008342497306995473,
+        "signInvariantSiSdrDb": -36.00411982474435,
+        "bestDelaySamplesWithin10ms": 39,
+        "bestDelaySignedCorrelation": 0.10158956314760301,
+        "normalL1": 1.2687205970738082,
+        "invertedL1": 1.2675068851676958
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-010--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.2723464080236854,
+        "targetProjectionGain": -0.15614832984012714,
+        "signInvariantSiSdrDb": -10.962867421376323,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.2723464080236849,
+        "normalL1": 1.2850889920682804,
+        "invertedL1": 1.0210660772015399
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.028523255798752246,
+        "targetProjectionGain": -0.01458124155132685,
+        "signInvariantSiSdrDb": -30.892483311080653,
+        "bestDelaySamplesWithin10ms": 64,
+        "bestDelaySignedCorrelation": 0.08837480870949234,
+        "normalL1": 1.1464307659672546,
+        "invertedL1": 1.1446975674384525
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-011--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6456574247980827,
+        "targetProjectionGain": -0.4894647431751102,
+        "signInvariantSiSdrDb": -1.4575847144900136,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6456574247980825,
+        "normalL1": 1.5091923094772222,
+        "invertedL1": 0.8261282596964018
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.23061636249226508,
+        "targetProjectionGain": -0.3103587408626827,
+        "signInvariantSiSdrDb": -12.504853956937833,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.23061636249226514,
+        "normalL1": 2.2766256008911245,
+        "invertedL1": 1.8045964122417237
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-011--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6132419417125968,
+        "targetProjectionGain": -0.2570478610625622,
+        "signInvariantSiSdrDb": -2.198751754773784,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.613241941712597,
+        "normalL1": 1.3426673735662418,
+        "invertedL1": 0.8716846457481138
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.15536859157780455,
+        "targetProjectionGain": -0.03668519014882486,
+        "signInvariantSiSdrDb": -16.066613264966975,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.15536859157780455,
+        "normalL1": 1.0695423109646995,
+        "invertedL1": 1.0038410783224707
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-012--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.07534763179356217,
+        "targetProjectionGain": -0.03502748463574596,
+        "signInvariantSiSdrDb": -22.433881556903543,
+        "bestDelaySamplesWithin10ms": 44,
+        "bestDelaySignedCorrelation": 0.24736205607687523,
+        "normalL1": 1.1617748297734016,
+        "invertedL1": 1.1021999268748437
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.02461845429831622,
+        "targetProjectionGain": 0.009525226444980942,
+        "signInvariantSiSdrDb": -32.17215144676246,
+        "bestDelaySamplesWithin10ms": 62,
+        "bestDelaySignedCorrelation": 0.15107380979330146,
+        "normalL1": 1.18704786748742,
+        "invertedL1": 1.2317201823170825
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-012--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.11162635703033577,
+        "targetProjectionGain": -0.05346113823544889,
+        "signInvariantSiSdrDb": -18.99020997335117,
+        "bestDelaySamplesWithin10ms": 21,
+        "bestDelaySignedCorrelation": 0.2710156555551277,
+        "normalL1": 1.2198022551944134,
+        "invertedL1": 1.1039545881169266
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.04808933732930736,
+        "targetProjectionGain": 0.027672287370517384,
+        "signInvariantSiSdrDb": -26.348969091834316,
+        "bestDelaySamplesWithin10ms": 47,
+        "bestDelaySignedCorrelation": 0.14130944365729206,
+        "normalL1": 1.1711852517841226,
+        "invertedL1": 1.238210183401263
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-013--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6977799947862613,
+        "targetProjectionGain": -0.5844813400574452,
+        "signInvariantSiSdrDb": -0.22767592339914836,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.697779994786261,
+        "normalL1": 1.6174177057177463,
+        "invertedL1": 0.7872313857653861
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.09832284688685841,
+        "targetProjectionGain": -0.0917799643501326,
+        "signInvariantSiSdrDb": -20.104721936274295,
+        "bestDelaySamplesWithin10ms": 46,
+        "bestDelaySignedCorrelation": 0.1099171850883142,
+        "normalL1": 1.607334544766974,
+        "invertedL1": 1.475823592188808
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-013--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6121441948075362,
+        "targetProjectionGain": -0.45356771305898774,
+        "signInvariantSiSdrDb": -2.223667092970068,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6121441948075362,
+        "normalL1": 1.459736400230083,
+        "invertedL1": 0.8684833365485496
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.09799947067647047,
+        "targetProjectionGain": -0.06515846179004911,
+        "signInvariantSiSdrDb": -20.133614632526864,
+        "bestDelaySamplesWithin10ms": -150,
+        "bestDelaySignedCorrelation": -0.11016763040363745,
+        "normalL1": 1.2608647555118428,
+        "invertedL1": 1.1761936384204705
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-014--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.1634368300866587,
+        "targetProjectionGain": -0.1182020570270247,
+        "signInvariantSiSdrDb": -15.615416876447723,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.16343683008665888,
+        "normalL1": 1.385125016696979,
+        "invertedL1": 1.1900765886690063
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.00047012542237745376,
+        "targetProjectionGain": 0.0005279992159447456,
+        "signInvariantSiSdrDb": -66.55572430780549,
+        "bestDelaySamplesWithin10ms": 61,
+        "bestDelaySignedCorrelation": 0.08189527781762797,
+        "normalL1": 1.7834607366810515,
+        "invertedL1": 1.7962608831590903
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-014--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.045327600849792475,
+        "targetProjectionGain": -0.011819652083980689,
+        "signInvariantSiSdrDb": -26.863813187008297,
+        "bestDelaySamplesWithin10ms": 21,
+        "bestDelaySignedCorrelation": 0.2074101218298113,
+        "normalL1": 1.0727404120856405,
+        "invertedL1": 1.0359263687956097
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.009756791457606733,
+        "targetProjectionGain": 0.0016383419280859802,
+        "signInvariantSiSdrDb": -40.21344610485174,
+        "bestDelaySamplesWithin10ms": 38,
+        "bestDelaySignedCorrelation": 0.12692844090287064,
+        "normalL1": 1.0243743372053282,
+        "invertedL1": 1.0352781032692435
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-015--0",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.6526309618868602,
+        "targetProjectionGain": -0.37100676158275236,
+        "signInvariantSiSdrDb": -1.296316438552799,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6526309618868603,
+        "normalL1": 1.4589662490201882,
+        "invertedL1": 0.7912162119809111
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.06944770578101335,
+        "targetProjectionGain": -0.046126887449807856,
+        "signInvariantSiSdrDb": -23.145845307238954,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.06944770578101335,
+        "normalL1": 2.074566741221713,
+        "invertedL1": 1.9569481775858681
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-015--1",
+      "condition": "baseline",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.08568575094141284,
+        "targetProjectionGain": -0.052897512749373155,
+        "signInvariantSiSdrDb": -21.309824116316175,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.08568575094141286,
+        "normalL1": 1.996650255210344,
+        "invertedL1": 1.8536390838926757
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.6360832820219028,
+        "targetProjectionGain": -0.3360922747796446,
+        "signInvariantSiSdrDb": -1.6777945142343151,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.6360832820219032,
+        "normalL1": 1.4295354371851448,
+        "invertedL1": 0.7987200836025445
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--solo-000--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.4845087461138723,
+        "targetProjectionGain": -0.48652158143642793,
+        "signInvariantSiSdrDb": -5.132008195655412,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.48450874611387246,
+        "normalL1": 1.7797898724493129,
+        "invertedL1": 1.0320583907833456
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-001--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.27348059183487816,
+        "targetProjectionGain": -0.22338919289037826,
+        "signInvariantSiSdrDb": -10.92386528922868,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.27348059183487816,
+        "normalL1": 1.451493124751348,
+        "invertedL1": 1.1456162787399808
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-002--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.2355171124159495,
+        "targetProjectionGain": -0.2157905428833811,
+        "signInvariantSiSdrDb": -12.311715974663075,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.23551711241594947,
+        "normalL1": 1.6957391758689153,
+        "invertedL1": 1.2787873633248172
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-003--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.019465169352088172,
+        "targetProjectionGain": 0.00766144092058092,
+        "signInvariantSiSdrDb": -34.21319044665009,
+        "bestDelaySamplesWithin10ms": 22,
+        "bestDelaySignedCorrelation": 0.2901242370349028,
+        "normalL1": 1.0853814030621363,
+        "invertedL1": 1.109723450068137
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-004--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.018662340516015168,
+        "targetProjectionGain": -0.005812171201612055,
+        "signInvariantSiSdrDb": -34.57916497548517,
+        "bestDelaySamplesWithin10ms": 42,
+        "bestDelaySignedCorrelation": 0.21016848017958525,
+        "normalL1": 1.0772339693773771,
+        "invertedL1": 1.0632717943576093
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-005--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.25002511665854116,
+        "targetProjectionGain": -0.13054054111866217,
+        "signInvariantSiSdrDb": -11.759981812841072,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.2500251166585412,
+        "normalL1": 1.271680177278967,
+        "invertedL1": 1.0166006909421088
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-006--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.8005750501471154,
+        "targetProjectionGain": -0.8582159953562898,
+        "signInvariantSiSdrDb": 2.516133829389367,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.8005750501471154,
+        "normalL1": 1.9901197410885847,
+        "invertedL1": 0.7277078544259441
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-007--0",
+      "condition": "baseline",
+      "kind": "single_target_preservation",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.8162099625730856,
+        "targetProjectionGain": -0.7415915427716856,
+        "signInvariantSiSdrDb": 3.0011576303220022,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.8162099625730854,
+        "normalL1": 1.7596089462189255,
+        "invertedL1": 0.6192516522388443
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--mixed-000--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": -0.04180930098985561,
+        "targetProjectionGain": -0.00972926403618813,
+        "signInvariantSiSdrDb": -27.566943680245775,
+        "bestDelaySamplesWithin10ms": 17,
+        "bestDelaySignedCorrelation": 0.28046395002919317,
+        "normalL1": 1.039768292309661,
+        "invertedL1": 1.0379341253721817
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.32252392566431887,
+        "targetProjectionGain": 0.030016907355688984,
+        "signInvariantSiSdrDb": -9.351736253638878,
+        "bestDelaySamplesWithin10ms": 11,
+        "bestDelaySignedCorrelation": 0.39992000680173756,
+        "normalL1": 0.9802459373292466,
+        "invertedL1": 1.027957540825725
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-000--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.5070111573703399,
+        "targetProjectionGain": 0.377700886141017,
+        "signInvariantSiSdrDb": -4.609185248940511,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.7383724412924061,
+        "normalL1": 0.8724615355788734,
+        "invertedL1": 1.5185041348546109
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.17681048449962775,
+        "targetProjectionGain": 0.32933779750160325,
+        "signInvariantSiSdrDb": -14.911903309733098,
+        "bestDelaySamplesWithin10ms": 17,
+        "bestDelaySignedCorrelation": 0.21895238747380702,
+        "normalL1": 3.422688520965319,
+        "invertedL1": 3.8503925156796117
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-001--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.3716163047224879,
+        "targetProjectionGain": -0.2125012531267004,
+        "signInvariantSiSdrDb": -7.952680259198322,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.43798427910069976,
+        "normalL1": 1.2696264381665123,
+        "invertedL1": 1.042290432085618
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.0068583525306415635,
+        "targetProjectionGain": -0.00480765139970777,
+        "signInvariantSiSdrDb": -43.27539961998341,
+        "bestDelaySamplesWithin10ms": 12,
+        "bestDelaySignedCorrelation": 0.17609125860087563,
+        "normalL1": 1.419479604354298,
+        "invertedL1": 1.4644720978175567
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-001--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.35844995419282927,
+        "targetProjectionGain": -0.14918213629032934,
+        "signInvariantSiSdrDb": -8.314171253529882,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.35844995419283016,
+        "normalL1": 1.1813431490135995,
+        "invertedL1": 0.9896347362220888
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.038839449519330015,
+        "targetProjectionGain": 0.013186056392962749,
+        "signInvariantSiSdrDb": -28.20798239064386,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.20618605866442885,
+        "normalL1": 1.0370392647348827,
+        "invertedL1": 1.09844701006793
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-002--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6018852395901683,
+        "targetProjectionGain": 0.5026472867693523,
+        "signInvariantSiSdrDb": -2.45612293364992,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.6965379876258414,
+        "normalL1": 0.8488236648819819,
+        "invertedL1": 1.6597888680889255
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.47746203306989893,
+        "targetProjectionGain": 0.5822725329807574,
+        "signInvariantSiSdrDb": -5.297564947222849,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.4969813537574266,
+        "normalL1": 1.2727101434554262,
+        "invertedL1": 2.0697663653700653
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-002--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.3095696179195143,
+        "targetProjectionGain": 0.029623404939167736,
+        "signInvariantSiSdrDb": -9.747318226219633,
+        "bestDelaySamplesWithin10ms": 17,
+        "bestDelaySignedCorrelation": 0.36553970437713934,
+        "normalL1": 0.9779059300882899,
+        "invertedL1": 1.034402452529708
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.41542255290217145,
+        "targetProjectionGain": 0.027222556193721905,
+        "signInvariantSiSdrDb": -6.807480270106981,
+        "bestDelaySamplesWithin10ms": 11,
+        "bestDelaySignedCorrelation": 0.47187303367145833,
+        "normalL1": 0.9750782118170729,
+        "invertedL1": 1.0286789275507255
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-003--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.47442448012243404,
+        "targetProjectionGain": -0.11582361553760573,
+        "signInvariantSiSdrDb": -5.369234807734472,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.4744244801224347,
+        "normalL1": 1.147573948940741,
+        "invertedL1": 0.9597461276516118
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.11334092873477425,
+        "targetProjectionGain": -0.011357655890807079,
+        "signInvariantSiSdrDb": -18.85611302551418,
+        "bestDelaySamplesWithin10ms": -22,
+        "bestDelaySignedCorrelation": 0.14668959801096462,
+        "normalL1": 1.0309023333873422,
+        "invertedL1": 1.0139820998006228
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-003--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.08376342719604446,
+        "targetProjectionGain": -0.003236203046390468,
+        "signInvariantSiSdrDb": -21.50833237855784,
+        "bestDelaySamplesWithin10ms": -22,
+        "bestDelaySignedCorrelation": 0.29179406865766655,
+        "normalL1": 1.000753008685096,
+        "invertedL1": 1.0028877394765248
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.03914476430904569,
+        "targetProjectionGain": -0.0036845384627731755,
+        "signInvariantSiSdrDb": -28.139866496900016,
+        "bestDelaySamplesWithin10ms": 38,
+        "bestDelaySignedCorrelation": 0.05288792342128284,
+        "normalL1": 1.1269617640486165,
+        "invertedL1": 1.1208004896102086
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-004--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.508522169112766,
+        "targetProjectionGain": 0.5334894717772074,
+        "signInvariantSiSdrDb": -4.574358481510638,
+        "bestDelaySamplesWithin10ms": 16,
+        "bestDelaySignedCorrelation": 0.5878984181365638,
+        "normalL1": 1.0575302737666745,
+        "invertedL1": 1.8456199248667433
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.6270499515186848,
+        "targetProjectionGain": 0.7449633200046399,
+        "signInvariantSiSdrDb": -1.8844727700432635,
+        "bestDelaySamplesWithin10ms": -13,
+        "bestDelaySignedCorrelation": 0.6474209848314941,
+        "normalL1": 1.1197587097926245,
+        "invertedL1": 2.202617644081388
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-004--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.42617476054287534,
+        "targetProjectionGain": 0.08591843324098286,
+        "signInvariantSiSdrDb": -6.537769413097271,
+        "bestDelaySamplesWithin10ms": 16,
+        "bestDelaySignedCorrelation": 0.4579045888791295,
+        "normalL1": 0.9397420424517193,
+        "invertedL1": 1.1082154151257104
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.2603601724337503,
+        "targetProjectionGain": 0.046350709331243016,
+        "signInvariantSiSdrDb": -11.383658586301559,
+        "bestDelaySamplesWithin10ms": 11,
+        "bestDelaySignedCorrelation": 0.2719498265239203,
+        "normalL1": 0.9614385479149203,
+        "invertedL1": 1.0766321923975093
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-005--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.36391489649198594,
+        "targetProjectionGain": -0.09167079200862042,
+        "signInvariantSiSdrDb": -8.163028309357362,
+        "bestDelaySamplesWithin10ms": 24,
+        "bestDelaySignedCorrelation": 0.3739064263713425,
+        "normalL1": 1.1004549385194546,
+        "invertedL1": 0.9724283954463925
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.015170687965188862,
+        "targetProjectionGain": -0.005807785698556761,
+        "signInvariantSiSdrDb": -36.378894842040786,
+        "bestDelaySamplesWithin10ms": -16,
+        "bestDelaySignedCorrelation": 0.16086166661304985,
+        "normalL1": 1.1475107453913183,
+        "invertedL1": 1.1752378942677397
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-005--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.1086520665475728,
+        "targetProjectionGain": -0.001387924190044763,
+        "signInvariantSiSdrDb": -19.227665508834516,
+        "bestDelaySamplesWithin10ms": -23,
+        "bestDelaySignedCorrelation": 0.2347375829531336,
+        "normalL1": 1.0012392089450664,
+        "invertedL1": 1.0007856322125148
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.04491786632101356,
+        "targetProjectionGain": -0.0003775484707076246,
+        "signInvariantSiSdrDb": -26.942846392861703,
+        "bestDelaySamplesWithin10ms": 22,
+        "bestDelaySignedCorrelation": 0.14890359936780012,
+        "normalL1": 1.000550240506657,
+        "invertedL1": 1.0010890415533256
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-006--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6290333395776933,
+        "targetProjectionGain": 0.5309949760805657,
+        "signInvariantSiSdrDb": -1.839175245495176,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.6588975265948396,
+        "normalL1": 0.8641967677963162,
+        "invertedL1": 1.8001148396649602
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.4970079995942826,
+        "targetProjectionGain": 0.31641747425357475,
+        "signInvariantSiSdrDb": -4.840584412249631,
+        "bestDelaySamplesWithin10ms": 6,
+        "bestDelaySignedCorrelation": 0.5012694123171617,
+        "normalL1": 1.0546205889751823,
+        "invertedL1": 1.691330924983846
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-006--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6080614478562548,
+        "targetProjectionGain": 0.1791018614255704,
+        "signInvariantSiSdrDb": -2.316256855893973,
+        "bestDelaySamplesWithin10ms": 6,
+        "bestDelaySignedCorrelation": 0.6221236852307148,
+        "normalL1": 0.8304337150510732,
+        "invertedL1": 1.2453318350455247
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.26477170649393744,
+        "targetProjectionGain": 0.10340555552860621,
+        "signInvariantSiSdrDb": -11.22691204085552,
+        "bestDelaySamplesWithin10ms": -15,
+        "bestDelaySignedCorrelation": 0.27400863351728777,
+        "normalL1": 1.1142492156776371,
+        "invertedL1": 1.3090277569925164
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-007--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.05610681607427716,
+        "targetProjectionGain": -0.013566417877930429,
+        "signInvariantSiSdrDb": -25.00599447021751,
+        "bestDelaySamplesWithin10ms": 17,
+        "bestDelaySignedCorrelation": 0.5374982250335946,
+        "normalL1": 1.010877145316644,
+        "invertedL1": 1.0542857525292813
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.02924619708533823,
+        "targetProjectionGain": -0.005639380337830986,
+        "signInvariantSiSdrDb": -30.674895669659954,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.029246197085338238,
+        "normalL1": 1.1187900391051515,
+        "invertedL1": 1.1042944554207605
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-007--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.3935937550633692,
+        "targetProjectionGain": -0.1644632062422066,
+        "signInvariantSiSdrDb": -7.368034584461239,
+        "bestDelaySamplesWithin10ms": 12,
+        "bestDelaySignedCorrelation": 0.41697586570122175,
+        "normalL1": 1.1984177475531468,
+        "invertedL1": 0.9661790204179954
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.08393452060715544,
+        "targetProjectionGain": 0.04397934433176762,
+        "signInvariantSiSdrDb": -21.49048336801208,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.11548168509241934,
+        "normalL1": 1.4845289918267486,
+        "invertedL1": 1.613764223994955
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-008--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6920326624412778,
+        "targetProjectionGain": 0.2808909249808962,
+        "signInvariantSiSdrDb": -0.3666021534488287,
+        "bestDelaySamplesWithin10ms": 7,
+        "bestDelaySignedCorrelation": 0.7325413566985244,
+        "normalL1": 0.7801400423246688,
+        "invertedL1": 1.3580722492162178
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.19136311420874696,
+        "targetProjectionGain": 0.09930471016881406,
+        "signInvariantSiSdrDb": -14.200812374842279,
+        "bestDelaySamplesWithin10ms": 13,
+        "bestDelaySignedCorrelation": 0.21105371119380337,
+        "normalL1": 1.2075765248645658,
+        "invertedL1": 1.3955576098593736
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-008--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.48392588133909453,
+        "targetProjectionGain": 0.34708992090554464,
+        "signInvariantSiSdrDb": -5.145665896805568,
+        "bestDelaySamplesWithin10ms": -13,
+        "bestDelaySignedCorrelation": 0.6350711142763,
+        "normalL1": 0.893598308675879,
+        "invertedL1": 1.5109033950752697
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.28564990113185107,
+        "targetProjectionGain": 0.160249516618618,
+        "signInvariantSiSdrDb": -10.513656737740577,
+        "bestDelaySamplesWithin10ms": 6,
+        "bestDelaySignedCorrelation": 0.2926802398678457,
+        "normalL1": 1.281000928692839,
+        "invertedL1": 1.6339965899695583
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-009--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": 0.39052171587391626,
+        "targetProjectionGain": 0.004294841320200772,
+        "signInvariantSiSdrDb": -7.44845634170267,
+        "bestDelaySamplesWithin10ms": 8,
+        "bestDelaySignedCorrelation": 0.4056824982051846,
+        "normalL1": 1.0098612397082825,
+        "invertedL1": 1.0143664184370205
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.19313323366990207,
+        "targetProjectionGain": 0.0008896630198408292,
+        "signInvariantSiSdrDb": -14.11776746564251,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.3002979998563372,
+        "normalL1": 0.9980128455950505,
+        "invertedL1": 1.0020132508084778
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-009--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.30350460178859856,
+        "targetProjectionGain": -0.1617198278999502,
+        "signInvariantSiSdrDb": -9.937002594477374,
+        "bestDelaySamplesWithin10ms": 15,
+        "bestDelaySignedCorrelation": 0.4941202599348588,
+        "normalL1": 1.1863129783918474,
+        "invertedL1": 1.0982108121796061
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.28499411648425305,
+        "targetProjectionGain": 0.36254948425587813,
+        "signInvariantSiSdrDb": -10.535389659042682,
+        "bestDelaySamplesWithin10ms": 15,
+        "bestDelaySignedCorrelation": 0.34501339333962366,
+        "normalL1": 3.1440549364785535,
+        "invertedL1": 3.4820147486044535
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-010--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.41062300812148855,
+        "targetProjectionGain": 0.20709358233966646,
+        "signInvariantSiSdrDb": -6.929175806080061,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.48721526043667235,
+        "normalL1": 0.9147999947241563,
+        "invertedL1": 1.3341091088969486
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.4044454875188889,
+        "targetProjectionGain": 0.22877240543856683,
+        "signInvariantSiSdrDb": -7.087064181376367,
+        "bestDelaySamplesWithin10ms": -6,
+        "bestDelaySignedCorrelation": 0.4152248378327185,
+        "normalL1": 1.0529933305319876,
+        "invertedL1": 1.473744120438831
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-010--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.33390909848982125,
+        "targetProjectionGain": 0.13340291396169493,
+        "signInvariantSiSdrDb": -9.014032301952899,
+        "bestDelaySamplesWithin10ms": 17,
+        "bestDelaySignedCorrelation": 0.4266602729755985,
+        "normalL1": 0.9473168907842454,
+        "invertedL1": 1.2083499812089804
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.41712755076825286,
+        "targetProjectionGain": 0.1485886560424104,
+        "signInvariantSiSdrDb": -6.764447184297775,
+        "bestDelaySamplesWithin10ms": 6,
+        "bestDelaySignedCorrelation": 0.44988308719557596,
+        "normalL1": 0.9152354909123459,
+        "invertedL1": 1.2061372460323383
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-011--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.03171686155011276,
+        "targetProjectionGain": -0.014379903112242099,
+        "signInvariantSiSdrDb": -29.969824846877387,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.46638396208204674,
+        "normalL1": 1.042404824672547,
+        "invertedL1": 1.1624678648393048
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.1953307195675466,
+        "targetProjectionGain": -0.15721388578826284,
+        "signInvariantSiSdrDb": -14.015644027156924,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.19533071956754663,
+        "normalL1": 1.8170711275322056,
+        "invertedL1": 1.5611476367969044
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-011--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.1379534972229907,
+        "targetProjectionGain": -0.006394083128144732,
+        "signInvariantSiSdrDb": -17.121897798898843,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.1379534972229907,
+        "normalL1": 1.0120294027194898,
+        "invertedL1": 1.0005503062997874
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.06542746187930326,
+        "targetProjectionGain": 0.0017082484601241255,
+        "signInvariantSiSdrDb": -23.666167559432697,
+        "bestDelaySamplesWithin10ms": -18,
+        "bestDelaySignedCorrelation": 0.16512575708199287,
+        "normalL1": 0.9962268795958171,
+        "invertedL1": 1.0049932604964698
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-012--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.49059755710938346,
+        "targetProjectionGain": 0.137297085367938,
+        "signInvariantSiSdrDb": -4.989706657960724,
+        "bestDelaySamplesWithin10ms": 9,
+        "bestDelaySignedCorrelation": 0.5123611987125494,
+        "normalL1": 0.9055442169061055,
+        "invertedL1": 1.1813561023217685
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.46013776017887387,
+        "targetProjectionGain": 0.10717635762996221,
+        "signInvariantSiSdrDb": -5.70901036192338,
+        "bestDelaySamplesWithin10ms": 10,
+        "bestDelaySignedCorrelation": 0.47234513942486805,
+        "normalL1": 0.9897116552197232,
+        "invertedL1": 1.216847531599119
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-012--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6266588302715309,
+        "targetProjectionGain": 0.4050925336959624,
+        "signInvariantSiSdrDb": -1.8934003151463876,
+        "bestDelaySamplesWithin10ms": 16,
+        "bestDelaySignedCorrelation": 0.6848768011876764,
+        "normalL1": 0.8584597232009448,
+        "invertedL1": 1.5761814316375167
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.39378149220892494,
+        "targetProjectionGain": 0.3058462729210941,
+        "signInvariantSiSdrDb": -7.3631328375222305,
+        "bestDelaySamplesWithin10ms": 9,
+        "bestDelaySignedCorrelation": 0.40385291125870804,
+        "normalL1": 1.0254235263568987,
+        "invertedL1": 1.5891069611181583
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-013--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.0737756136953714,
+        "targetProjectionGain": -0.047095794656878555,
+        "signInvariantSiSdrDb": -22.61804086142634,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.3573531678924149,
+        "normalL1": 1.2156347827334868,
+        "invertedL1": 1.2613691474005209
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.23498123559751982,
+        "targetProjectionGain": 0.16716439656195423,
+        "signInvariantSiSdrDb": -12.33266080382997,
+        "bestDelaySamplesWithin10ms": 16,
+        "bestDelaySignedCorrelation": 0.336706510824418,
+        "normalL1": 1.1824725209203906,
+        "invertedL1": 1.5416198393294065
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-013--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.1272969867937365,
+        "targetProjectionGain": -0.020762405422846224,
+        "signInvariantSiSdrDb": -17.83268574167472,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.3606290001481153,
+        "normalL1": 1.0190008729442268,
+        "invertedL1": 1.0065050150923718
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.04242919555197333,
+        "targetProjectionGain": 0.006209877566594138,
+        "signInvariantSiSdrDb": -27.438878671379136,
+        "bestDelaySamplesWithin10ms": -14,
+        "bestDelaySignedCorrelation": 0.18099967873956652,
+        "normalL1": 0.9937184770136739,
+        "invertedL1": 1.0360994205352527
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-014--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6341821170127379,
+        "targetProjectionGain": 0.5580044004075932,
+        "signInvariantSiSdrDb": -1.7213740297282851,
+        "bestDelaySamplesWithin10ms": -11,
+        "bestDelaySignedCorrelation": 0.7260583728495874,
+        "normalL1": 0.8342323798986843,
+        "invertedL1": 1.7504411299881182
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.48185107281293893,
+        "targetProjectionGain": 0.658386473238166,
+        "signInvariantSiSdrDb": -5.194335016955228,
+        "bestDelaySamplesWithin10ms": 15,
+        "bestDelaySignedCorrelation": 0.5027770854006455,
+        "normalL1": 1.4755713061118227,
+        "invertedL1": 2.3941393957883683
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--mixed-014--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.30866007580294663,
+        "targetProjectionGain": 0.024558019987343076,
+        "signInvariantSiSdrDb": -9.775575739610705,
+        "bestDelaySamplesWithin10ms": 22,
+        "bestDelaySignedCorrelation": 0.3711326106496004,
+        "normalL1": 0.9818797863231566,
+        "invertedL1": 1.0288636314558082
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.4006169714032688,
+        "targetProjectionGain": 0.02052569146593916,
+        "signInvariantSiSdrDb": -7.185651393842108,
+        "bestDelaySamplesWithin10ms": -11,
+        "bestDelaySignedCorrelation": 0.44420301700665893,
+        "normalL1": 0.9801787274025818,
+        "invertedL1": 1.0243194086086924
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-015--0",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.12916369415650927,
+        "targetProjectionGain": -0.05422013639651372,
+        "signInvariantSiSdrDb": -17.704125175174475,
+        "bestDelaySamplesWithin10ms": -21,
+        "bestDelaySignedCorrelation": 0.3425251080540793,
+        "normalL1": 1.1074272491936237,
+        "invertedL1": 1.0980578404391628
+      },
+      "otherComponent": {
+        "signedCorrelation": 0.43798682446404724,
+        "targetProjectionGain": 0.2148143502915545,
+        "signInvariantSiSdrDb": -6.245793114274949,
+        "bestDelaySamplesWithin10ms": 12,
+        "bestDelaySignedCorrelation": 0.47708708685736306,
+        "normalL1": 1.5002009490571633,
+        "invertedL1": 1.8815334547737894
+      },
+      "leansTowardOtherSourceAtZeroLag": true
+    },
+    {
+      "id": "validation--mixed-015--1",
+      "condition": "adapted",
+      "kind": "known_additive_mixture",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": 0.31030715696150313,
+        "targetProjectionGain": 0.07415722266015526,
+        "signInvariantSiSdrDb": -9.724452478521515,
+        "bestDelaySamplesWithin10ms": 14,
+        "bestDelaySignedCorrelation": 0.369043762896316,
+        "normalL1": 1.2481974889096499,
+        "invertedL1": 1.402698835270379
+      },
+      "otherComponent": {
+        "signedCorrelation": -0.04179532391709341,
+        "targetProjectionGain": -0.008548841467007174,
+        "signInvariantSiSdrDb": -27.56985298887065,
+        "bestDelaySamplesWithin10ms": -21,
+        "bestDelaySignedCorrelation": 0.2809403198190174,
+        "normalL1": 1.0156537304053022,
+        "invertedL1": 1.0439136136077638
+      },
+      "leansTowardOtherSourceAtZeroLag": false
+    },
+    {
+      "id": "validation--solo-000--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.3602385362991684,
+        "targetProjectionGain": 0.25354061224909247,
+        "signInvariantSiSdrDb": -8.264528123947342,
+        "bestDelaySamplesWithin10ms": 18,
+        "bestDelaySignedCorrelation": 0.7042781850812976,
+        "normalL1": 0.9220524975410082,
+        "invertedL1": 1.3935398301484487
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-001--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.5806667455776063,
+        "targetProjectionGain": 0.42601945133190483,
+        "signInvariantSiSdrDb": -2.9354571132411262,
+        "bestDelaySamplesWithin10ms": -11,
+        "bestDelaySignedCorrelation": 0.8115260488997348,
+        "normalL1": 0.7616252991106544,
+        "invertedL1": 1.538270819584465
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-002--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.7291900193866496,
+        "targetProjectionGain": 0.5224178373269517,
+        "signInvariantSiSdrDb": 0.5517404516573774,
+        "bestDelaySamplesWithin10ms": 15,
+        "bestDelaySignedCorrelation": 0.8054399449029654,
+        "normalL1": 0.6950147984151874,
+        "invertedL1": 1.6320229690483872
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-003--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.849821852294392,
+        "targetProjectionGain": 0.640333299927911,
+        "signInvariantSiSdrDb": 4.149191396773394,
+        "bestDelaySamplesWithin10ms": 9,
+        "bestDelaySignedCorrelation": 0.8814553511509392,
+        "normalL1": 0.541381172399856,
+        "invertedL1": 1.7027455099469244
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-004--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.8673175497037917,
+        "targetProjectionGain": 0.725224813300181,
+        "signInvariantSiSdrDb": 4.823246063097075,
+        "bestDelaySamplesWithin10ms": 6,
+        "bestDelaySignedCorrelation": 0.8965386688104499,
+        "normalL1": 0.512960601428818,
+        "invertedL1": 1.749560656496626
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-005--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200709_L_R002S01C01",
+      "target": {
+        "signedCorrelation": 0.6894325560729477,
+        "targetProjectionGain": 0.4131985484960135,
+        "signInvariantSiSdrDb": -0.42913211419523,
+        "bestDelaySamplesWithin10ms": 9,
+        "bestDelaySignedCorrelation": 0.7765602357378162,
+        "normalL1": 0.7003168957994468,
+        "invertedL1": 1.5094390270401552
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-006--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.48249474311660606,
+        "targetProjectionGain": -0.23826994692524117,
+        "signInvariantSiSdrDb": -5.179227558639463,
+        "bestDelaySamplesWithin10ms": 0,
+        "bestDelaySignedCorrelation": -0.48249474311660606,
+        "normalL1": 1.2635298654520881,
+        "invertedL1": 0.9667103761095828
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    },
+    {
+      "id": "validation--solo-007--0",
+      "condition": "adapted",
+      "kind": "single_target_preservation",
+      "meeting": "20200805_S_R001S01C01",
+      "target": {
+        "signedCorrelation": -0.2924880715317235,
+        "targetProjectionGain": -0.14671883021477924,
+        "signInvariantSiSdrDb": -10.289439918882495,
+        "bestDelaySamplesWithin10ms": -37,
+        "bestDelaySignedCorrelation": 0.4487983619924951,
+        "normalL1": 1.1878845681280756,
+        "invertedL1": 1.0358878931027997
+      },
+      "otherComponent": null,
+      "leansTowardOtherSourceAtZeroLag": null
+    }
+  ],
+  "newModelCalls": 0,
+  "noGainDelayOrPolarityCorrectionApplied": true,
+  "qualityQualified": false
+}

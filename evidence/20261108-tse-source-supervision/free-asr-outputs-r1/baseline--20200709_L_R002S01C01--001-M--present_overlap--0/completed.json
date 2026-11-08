@@ -1,0 +1,42 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--001-M--present_overlap--0",
+  "sourceExampleId": "20200709_L_R002S01C01--001-M--present_overlap--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--001-M--present_overlap--0.wav",
+  "audioSha256": "15d56d4a41bc971559471d76e2587ba4a64751b1f28279f0d613a75807269b7d",
+  "audioSeconds": 5.230875,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "对，咱对要对他的个人这个信息要了解。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 83694,
+      "text": "对，咱对要对他的个人这个信息要了解。",
+      "generatedIds": [
+        32664,
+        3837,
+        102177,
+        32664,
+        30534,
+        32664,
+        100648,
+        99605,
+        99487,
+        27369,
+        30534,
+        99794,
+        1773,
+        151645
+      ],
+      "rawDecoded": "对，咱对要对他的个人这个信息要了解。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.4186242999858223
+    }
+  ]
+}

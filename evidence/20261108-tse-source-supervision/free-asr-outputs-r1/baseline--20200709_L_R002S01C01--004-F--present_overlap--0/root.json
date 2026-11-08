@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "aa527e9bbf5074a7521b560c05ecd08f615b4e2927ebe0ca7d4227bedede28f4",
+  "raw": {
+    "startSample": 0,
+    "endSample": 146081,
+    "text": "是还还在滴水，你去蹲足啊？可能半个小时都不行。那这样的话就会引起，如果客人在我们我们这个中心。",
+    "generatedIds": [
+      20412,
+      97706,
+      104241,
+      100856,
+      52510,
+      3837,
+      56568,
+      85336,
+      107751,
+      99336,
+      103924,
+      11319,
+      87267,
+      117160,
+      100486,
+      22243,
+      1773,
+      99212,
+      114717,
+      103939,
+      100771,
+      3837,
+      62244,
+      105315,
+      18493,
+      97639,
+      97639,
+      99487,
+      99488,
+      1773,
+      151645
+    ],
+    "rawDecoded": "是还还在滴水，你去蹲足啊？可能半个小时都不行。那这样的话就会引起，如果客人在我们我们这个中心。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.40723280000384
+  },
+  "rawSha256": "b1b0cff2bf9b2870968a367bd404a21905ff45be8e3efc3110c11bd7fd2955e4"
+}

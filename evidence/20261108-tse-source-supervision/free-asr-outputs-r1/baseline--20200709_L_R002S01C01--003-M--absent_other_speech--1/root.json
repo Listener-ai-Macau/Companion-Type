@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "de440ad015c97efec238f6dd6b237b6e579d32dd91dcd2a373b3fdfbbff3a764",
+  "raw": {
+    "startSample": 0,
+    "endSample": 169681,
+    "text": "就是以服务为主吧，而且让他们了解顾客的心理，还有就属于和顾客打成一片。",
+    "generatedIds": [
+      99486,
+      23031,
+      47874,
+      100782,
+      100003,
+      3837,
+      101885,
+      105380,
+      99794,
+      104476,
+      107152,
+      3837,
+      100626,
+      80158,
+      100409,
+      33108,
+      104476,
+      75437,
+      12857,
+      104195,
+      1773,
+      151645
+    ],
+    "rawDecoded": "就是以服务为主吧，而且让他们了解顾客的心理，还有就属于和顾客打成一片。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.850466800009599
+  },
+  "rawSha256": "9952c603f8998e6e47b76abc18cb61c5e0837c42eb65f61b9326e728f73ee7af"
+}

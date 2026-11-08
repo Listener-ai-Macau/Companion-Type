@@ -1,0 +1,41 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--006-F--present_overlap--1",
+  "sourceExampleId": "20200805_S_R001S01C01--006-F--present_overlap--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--006-F--present_overlap--1.wav",
+  "audioSha256": "b1e026510202267ee4ceca2afb762eb041f058ae63784e0789a94024aa8e5c28",
+  "audioSeconds": 7.3300625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "那我们小区的那个娱乐设备那些都怎么样？对。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 117281,
+      "text": "那我们小区的那个娱乐设备那些都怎么样？对。",
+      "generatedIds": [
+        99212,
+        97639,
+        102039,
+        108819,
+        100415,
+        101044,
+        103928,
+        71268,
+        104472,
+        11319,
+        32664,
+        1773,
+        151645
+      ],
+      "rawDecoded": "那我们小区的那个娱乐设备那些都怎么样？对。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.578408599976683
+    }
+  ]
+}

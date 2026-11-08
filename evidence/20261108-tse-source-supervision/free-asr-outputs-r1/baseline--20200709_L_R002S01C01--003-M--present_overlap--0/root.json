@@ -1,0 +1,31 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "4e46cd4b1af4be45c5b89a8e3217c1eb84ce305ae72c8e34b435bd494e851aab",
+  "raw": {
+    "startSample": 0,
+    "endSample": 81206,
+    "text": "晚上之晚上之间的话，会平常。",
+    "generatedIds": [
+      104030,
+      53930,
+      104030,
+      101920,
+      100363,
+      3837,
+      36993,
+      106533,
+      1773,
+      151645
+    ],
+    "rawDecoded": "晚上之晚上之间的话，会平常。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.7137801999924704
+  },
+  "rawSha256": "7dcc7da75e4ef498247d1e051fd88aa5fec21ad1c7341883448e009f29ea0ad7"
+}

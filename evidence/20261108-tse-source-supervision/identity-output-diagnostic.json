@@ -1,0 +1,376 @@
+{
+  "state": "POST_REJECTION_DIFFERENT_PROFILE_OUTPUT_IDENTITY_DIAGNOSTIC",
+  "summary": {
+    "baseline": {
+      "pairs": 16,
+      "meanTwoOutputCorrelation": 0.3117428158336595,
+      "medianTwoOutputCorrelation": 0.2630759168109066,
+      "pairsWithCorrelationAbovePoint9": 1,
+      "meanRelativeAbsoluteDifference": 1.432797596836023
+    },
+    "adapted": {
+      "pairs": 16,
+      "meanTwoOutputCorrelation": 0.5617654767755804,
+      "medianTwoOutputCorrelation": 0.5993257911237131,
+      "pairsWithCorrelationAbovePoint9": 1,
+      "meanRelativeAbsoluteDifference": 1.5145365779010262
+    }
+  },
+  "perPair": [
+    {
+      "unitId": "validation--mixed-000",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--001-M",
+        "20200709_L_R002S01C01--002-M"
+      ],
+      "twoOutputSignedCorrelation": 0.08759959167148872,
+      "twoOutputRelativeAbsoluteDifference": 1.7881239125646153
+    },
+    {
+      "unitId": "validation--mixed-001",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--001-M",
+        "20200805_S_R001S01C01--002-F"
+      ],
+      "twoOutputSignedCorrelation": 0.2562018082018748,
+      "twoOutputRelativeAbsoluteDifference": 1.3430854387416113
+    },
+    {
+      "unitId": "validation--mixed-002",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--002-M",
+        "20200709_L_R002S01C01--003-M"
+      ],
+      "twoOutputSignedCorrelation": 0.3753270596371985,
+      "twoOutputRelativeAbsoluteDifference": 1.3780269317109293
+    },
+    {
+      "unitId": "validation--mixed-003",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--002-F",
+        "20200805_S_R001S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.25882272433789716,
+      "twoOutputRelativeAbsoluteDifference": 1.5234490047721323
+    },
+    {
+      "unitId": "validation--mixed-004",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--003-M",
+        "20200709_L_R002S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.2731430617660547,
+      "twoOutputRelativeAbsoluteDifference": 1.5308564856818843
+    },
+    {
+      "unitId": "validation--mixed-005",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--004-F",
+        "20200805_S_R001S01C01--005-M"
+      ],
+      "twoOutputSignedCorrelation": 0.40610075305806687,
+      "twoOutputRelativeAbsoluteDifference": 1.4921977480819546
+    },
+    {
+      "unitId": "validation--mixed-006",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--004-F",
+        "20200709_L_R002S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.24390266301720268,
+      "twoOutputRelativeAbsoluteDifference": 1.4465232847230085
+    },
+    {
+      "unitId": "validation--mixed-007",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--005-M",
+        "20200805_S_R001S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.08464931790803808,
+      "twoOutputRelativeAbsoluteDifference": 1.7521098819814565
+    },
+    {
+      "unitId": "validation--mixed-008",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--006-F",
+        "20200709_L_R002S01C01--007-F"
+      ],
+      "twoOutputSignedCorrelation": 0.20302954376862653,
+      "twoOutputRelativeAbsoluteDifference": 1.5772480154799413
+    },
+    {
+      "unitId": "validation--mixed-009",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--006-F",
+        "20200805_S_R001S01C01--001-M"
+      ],
+      "twoOutputSignedCorrelation": 0.4189443602845816,
+      "twoOutputRelativeAbsoluteDifference": 1.8859172792779035
+    },
+    {
+      "unitId": "validation--mixed-010",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--007-F",
+        "20200709_L_R002S01C01--001-M"
+      ],
+      "twoOutputSignedCorrelation": 0.18688457664284835,
+      "twoOutputRelativeAbsoluteDifference": 1.46719672851079
+    },
+    {
+      "unitId": "validation--mixed-011",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--001-M",
+        "20200805_S_R001S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.42955497832161077,
+      "twoOutputRelativeAbsoluteDifference": 1.3719905226380795
+    },
+    {
+      "unitId": "validation--mixed-012",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--001-M",
+        "20200709_L_R002S01C01--003-M"
+      ],
+      "twoOutputSignedCorrelation": 0.2977493990753244,
+      "twoOutputRelativeAbsoluteDifference": 1.2727278227806178
+    },
+    {
+      "unitId": "validation--mixed-013",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--002-F",
+        "20200805_S_R001S01C01--005-M"
+      ],
+      "twoOutputSignedCorrelation": 0.26732910928391596,
+      "twoOutputRelativeAbsoluteDifference": 1.3117802494718416
+    },
+    {
+      "unitId": "validation--mixed-014",
+      "condition": "baseline",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--002-M",
+        "20200709_L_R002S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.21965533617829477,
+      "twoOutputRelativeAbsoluteDifference": 1.577748317813414
+    },
+    {
+      "unitId": "validation--mixed-015",
+      "condition": "baseline",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--004-F",
+        "20200805_S_R001S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.9789907701855278,
+      "twoOutputRelativeAbsoluteDifference": 0.2057799251461867
+    },
+    {
+      "unitId": "validation--mixed-000",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--001-M",
+        "20200709_L_R002S01C01--002-M"
+      ],
+      "twoOutputSignedCorrelation": 0.5726825487888922,
+      "twoOutputRelativeAbsoluteDifference": 1.756169418305529
+    },
+    {
+      "unitId": "validation--mixed-001",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--001-M",
+        "20200805_S_R001S01C01--002-F"
+      ],
+      "twoOutputSignedCorrelation": 0.6275462188022809,
+      "twoOutputRelativeAbsoluteDifference": 1.0003223247800217
+    },
+    {
+      "unitId": "validation--mixed-002",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--002-M",
+        "20200709_L_R002S01C01--003-M"
+      ],
+      "twoOutputSignedCorrelation": 0.7280519885053194,
+      "twoOutputRelativeAbsoluteDifference": 1.7663694833667682
+    },
+    {
+      "unitId": "validation--mixed-003",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--002-F",
+        "20200805_S_R001S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.2956627296053908,
+      "twoOutputRelativeAbsoluteDifference": 1.4964602267004217
+    },
+    {
+      "unitId": "validation--mixed-004",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--003-M",
+        "20200709_L_R002S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.6176434876603736,
+      "twoOutputRelativeAbsoluteDifference": 1.6068516148019503
+    },
+    {
+      "unitId": "validation--mixed-005",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--004-F",
+        "20200805_S_R001S01C01--005-M"
+      ],
+      "twoOutputSignedCorrelation": 0.5810080945870525,
+      "twoOutputRelativeAbsoluteDifference": 1.8951327086523044
+    },
+    {
+      "unitId": "validation--mixed-006",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--004-F",
+        "20200709_L_R002S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.513705412494451,
+      "twoOutputRelativeAbsoluteDifference": 1.290761500857215
+    },
+    {
+      "unitId": "validation--mixed-007",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--005-M",
+        "20200805_S_R001S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.1762219218327609,
+      "twoOutputRelativeAbsoluteDifference": 1.7202032166012138
+    },
+    {
+      "unitId": "validation--mixed-008",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--006-F",
+        "20200709_L_R002S01C01--007-F"
+      ],
+      "twoOutputSignedCorrelation": 0.4404348145267382,
+      "twoOutputRelativeAbsoluteDifference": 1.282663808001155
+    },
+    {
+      "unitId": "validation--mixed-009",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--006-F",
+        "20200805_S_R001S01C01--001-M"
+      ],
+      "twoOutputSignedCorrelation": 0.7635911368446237,
+      "twoOutputRelativeAbsoluteDifference": 1.9690688862868808
+    },
+    {
+      "unitId": "validation--mixed-010",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--007-F",
+        "20200709_L_R002S01C01--001-M"
+      ],
+      "twoOutputSignedCorrelation": 0.3347842773715574,
+      "twoOutputRelativeAbsoluteDifference": 1.3425843250581013
+    },
+    {
+      "unitId": "validation--mixed-011",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--001-M",
+        "20200805_S_R001S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.4311701666774309,
+      "twoOutputRelativeAbsoluteDifference": 1.85995713449198
+    },
+    {
+      "unitId": "validation--mixed-012",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--001-M",
+        "20200709_L_R002S01C01--003-M"
+      ],
+      "twoOutputSignedCorrelation": 0.6642975602204785,
+      "twoOutputRelativeAbsoluteDifference": 1.2327370175710894
+    },
+    {
+      "unitId": "validation--mixed-013",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--002-F",
+        "20200805_S_R001S01C01--005-M"
+      ],
+      "twoOutputSignedCorrelation": 0.649284831474909,
+      "twoOutputRelativeAbsoluteDifference": 1.4787654198447004
+    },
+    {
+      "unitId": "validation--mixed-014",
+      "condition": "adapted",
+      "meeting": "20200709_L_R002S01C01",
+      "requestedProfiles": [
+        "20200709_L_R002S01C01--002-M",
+        "20200709_L_R002S01C01--004-F"
+      ],
+      "twoOutputSignedCorrelation": 0.6482609521928435,
+      "twoOutputRelativeAbsoluteDifference": 1.834821307612978
+    },
+    {
+      "unitId": "validation--mixed-015",
+      "condition": "adapted",
+      "meeting": "20200805_S_R001S01C01",
+      "requestedProfiles": [
+        "20200805_S_R001S01C01--004-F",
+        "20200805_S_R001S01C01--006-F"
+      ],
+      "twoOutputSignedCorrelation": 0.9439014868241858,
+      "twoOutputRelativeAbsoluteDifference": 0.6997168534841082
+    }
+  ],
+  "highCorrelationIsDiagnosticNotAutomaticProofOfIgnoredSpeaker": true,
+  "noNewModelCalls": true,
+  "candidateStillRejected": true
+}

@@ -1,0 +1,36 @@
+{
+  "id": "adapted--20200709_L_R002S01C01--002-M--present_solo--0",
+  "sourceExampleId": "20200709_L_R002S01C01--002-M--present_solo--0",
+  "condition": "adapted",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\adapted\\20200709_L_R002S01C01--002-M--present_solo--0.wav",
+  "audioSha256": "1e827e31b18903a4ccf7a13cb4df352babff99e2c8dfe1be9582e0a7606c165d",
+  "audioSeconds": 11.1201875,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "上半年的情况主要是有像一些。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 177923,
+      "text": "上半年的情况主要是有像一些。",
+      "generatedIds": [
+        102717,
+        102072,
+        104312,
+        18830,
+        65101,
+        101883,
+        1773,
+        151645
+      ],
+      "rawDecoded": "上半年的情况主要是有像一些。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.6018175999925006
+    }
+  ]
+}

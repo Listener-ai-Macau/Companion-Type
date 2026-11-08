@@ -1,0 +1,40 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "f22998926b34aa16965fdea529ed84816d68fa50ade310224936397c8ecbd1e9",
+  "raw": {
+    "startSample": 0,
+    "endSample": 155761,
+    "text": "嗯，听一下这个授课是有一定的帮助的。如果我们决定下来要实行这个。",
+    "generatedIds": [
+      106287,
+      3837,
+      49187,
+      100158,
+      99487,
+      108994,
+      105802,
+      102495,
+      100364,
+      9370,
+      1773,
+      109198,
+      103930,
+      100194,
+      30534,
+      104088,
+      99487,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，听一下这个授课是有一定的帮助的。如果我们决定下来要实行这个。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.3244984000048134
+  },
+  "rawSha256": "3de905e53842ee2d7d52894c6235df808b8c712029274a9fbb3ddbaf8d556263"
+}

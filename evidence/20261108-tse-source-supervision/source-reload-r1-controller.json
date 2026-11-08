@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 12640,
+  "startedAt": "2026-11-08T14:40:52+08:00",
+  "worker": "tse_source_supervision_reload_worker_20261108.py",
+  "runId": "source-reload-r1",
+  "protocolSha256": "9b6f122bce02f91ad50fad3f11a378636bed51450f82c52cfb9506632e7c971a",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 988033024,
+  "rssPeakBytes": 993886208,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "PASS_INDEPENDENT_TRAINED_WEIGHT_RELOAD_AND_PCM_REPRODUCTION",
+  "finishedAt": "2026-11-08T14:41:04+08:00",
+  "wholeProcessFamilySeconds": 12.169332899997244
+}

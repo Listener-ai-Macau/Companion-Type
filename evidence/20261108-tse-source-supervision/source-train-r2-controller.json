@@ -1,0 +1,16 @@
+{
+  "state": "COMPLETE_TSE_STAGE_REVIEW_REQUIRED",
+  "pid": 20896,
+  "startedAt": "2026-11-08T14:34:33+08:00",
+  "worker": "tse_source_supervision_train_worker_20261108.py",
+  "runId": "source-train-r2",
+  "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 1341767680,
+  "rssPeakBytes": 1304817664,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "workerState": "COMPLETE_SOURCE_SUPERVISION_TRAINING_REVIEW_REQUIRED",
+  "finishedAt": "2026-11-08T14:37:38+08:00",
+  "wholeProcessFamilySeconds": 185.6675922999857
+}

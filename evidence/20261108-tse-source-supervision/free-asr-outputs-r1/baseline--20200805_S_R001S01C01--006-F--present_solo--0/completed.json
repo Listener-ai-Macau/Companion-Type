@@ -1,0 +1,37 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--006-F--present_solo--0",
+  "sourceExampleId": "20200805_S_R001S01C01--006-F--present_solo--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--006-F--present_solo--0.wav",
+  "audioSha256": "84f98f40730b4f20ef28280c980c3e100eeb884f03dc049d02771713350fd1df",
+  "audioSeconds": 3.1259375,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "嗯，大家都没有什么问题了吧？",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 50015,
+      "text": "嗯，大家都没有什么问题了吧？",
+      "generatedIds": [
+        106287,
+        3837,
+        99466,
+        104338,
+        99245,
+        86119,
+        105482,
+        11319,
+        151645
+      ],
+      "rawDecoded": "嗯，大家都没有什么问题了吧？<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.8433080000104383
+    }
+  ]
+}

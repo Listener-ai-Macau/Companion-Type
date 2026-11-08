@@ -1,0 +1,61 @@
+{
+  "id": "baseline--20200805_S_R001S01C01--005-M--present_overlap--0",
+  "sourceExampleId": "20200805_S_R001S01C01--005-M--present_overlap--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200805_S_R001S01C01--005-M--present_overlap--0.wav",
+  "audioSha256": "b7b9c19b354cf610694df96ccfdbaa6d3349e989782ac600fdafc531f2e01bc3",
+  "audioSeconds": 7.9850625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "比如咱们有的时候忘带门禁卡了，他那时候就要向我们保安这个安保员求助，才能让他进来，而且还要证明一下身份。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 127761,
+      "text": "比如咱们有的时候忘带门禁卡了，他那时候就要向我们保安这个安保员求助，才能让他进来，而且还要证明一下身份。",
+      "generatedIds": [
+        101912,
+        104335,
+        99996,
+        99651,
+        99980,
+        99278,
+        64689,
+        100085,
+        99603,
+        34187,
+        3837,
+        42411,
+        106457,
+        104134,
+        69041,
+        97639,
+        107150,
+        99487,
+        113740,
+        42223,
+        110679,
+        3837,
+        101901,
+        104358,
+        105132,
+        3837,
+        101885,
+        104019,
+        104022,
+        100158,
+        101294,
+        1773,
+        151645
+      ],
+      "rawDecoded": "比如咱们有的时候忘带门禁卡了，他那时候就要向我们保安这个安保员求助，才能让他进来，而且还要证明一下身份。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 6.486805599997751
+    }
+  ]
+}

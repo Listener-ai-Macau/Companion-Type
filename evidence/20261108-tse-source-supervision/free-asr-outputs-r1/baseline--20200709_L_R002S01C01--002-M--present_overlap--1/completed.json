@@ -1,0 +1,45 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--002-M--present_overlap--1",
+  "sourceExampleId": "20200709_L_R002S01C01--002-M--present_overlap--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--002-M--present_overlap--1.wav",
+  "audioSha256": "f1b08def58645268be5360a085cc70db3d0020cc2242d2aa566b5fcd4392d17a",
+  "audioSeconds": 5.798375,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "那你知道多少VIP用户的名字？他的健身情况是什么样的？家庭住址？",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 92774,
+      "text": "那你知道多少VIP用户的名字？他的健身情况是什么样的？家庭住址？",
+      "generatedIds": [
+        99212,
+        107733,
+        100430,
+        98807,
+        20002,
+        105180,
+        11319,
+        100648,
+        101420,
+        99559,
+        102021,
+        100535,
+        11319,
+        101064,
+        114870,
+        11319,
+        151645
+      ],
+      "rawDecoded": "那你知道多少VIP用户的名字？他的健身情况是什么样的？家庭住址？<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.0052142000058666
+    }
+  ]
+}

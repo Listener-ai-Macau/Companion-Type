@@ -1,0 +1,63 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--006-F--absent_other_speech--0",
+  "sourceExampleId": "20200709_L_R002S01C01--006-F--absent_other_speech--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--006-F--absent_other_speech--0.wav",
+  "audioSha256": "a0f83f650edce3815297c039a2cf2ee535815e9ea435a3e2957a7820888f590f",
+  "audioSeconds": 11.0050625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "其实，在同时，如果他们发现了有这个问题，或者是订错的，反馈，我们单位第一时间听到，就是及时的，呃，往上报，对不对？",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 176081,
+      "text": "其实，在同时，如果他们发现了有这个问题，或者是订错的，反馈，我们单位第一时间听到，就是及时的，呃，往上报，对不对？",
+      "generatedIds": [
+        101045,
+        96050,
+        91572,
+        3837,
+        62244,
+        99650,
+        106546,
+        18830,
+        105073,
+        3837,
+        105471,
+        99975,
+        28726,
+        9370,
+        3837,
+        102468,
+        3837,
+        97639,
+        75317,
+        105201,
+        104188,
+        3837,
+        99486,
+        100667,
+        9370,
+        3837,
+        119108,
+        3837,
+        99321,
+        109543,
+        3837,
+        32664,
+        105788,
+        11319,
+        151645
+      ],
+      "rawDecoded": "其实，在同时，如果他们发现了有这个问题，或者是订错的，反馈，我们单位第一时间听到，就是及时的，呃，往上报，对不对？<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 6.135703700012527
+    }
+  ]
+}

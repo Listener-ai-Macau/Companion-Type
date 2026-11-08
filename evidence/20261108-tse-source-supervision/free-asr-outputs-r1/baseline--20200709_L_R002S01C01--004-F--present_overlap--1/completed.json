@@ -1,0 +1,48 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--004-F--present_overlap--1",
+  "sourceExampleId": "20200709_L_R002S01C01--004-F--present_overlap--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--004-F--present_overlap--1.wav",
+  "audioSha256": "92d4ccdcebf502eef27256ef00ac6248a607b96d8726fc86a4a84628bb0069a1",
+  "audioSeconds": 7.49475,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "有什么？把上级机构的那个工作状况汇报一下吧。我们是后勤这一块的。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 119916,
+      "text": "有什么？把上级机构的那个工作状况汇报一下吧。我们是后勤这一块的。",
+      "generatedIds": [
+        104139,
+        11319,
+        99360,
+        106310,
+        100008,
+        108819,
+        99257,
+        104215,
+        105032,
+        100158,
+        100003,
+        1773,
+        97639,
+        20412,
+        110233,
+        100147,
+        99922,
+        9370,
+        1773,
+        151645
+      ],
+      "rawDecoded": "有什么？把上级机构的那个工作状况汇报一下吧。我们是后勤这一块的。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.491887599986512
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
   "state": "COMPLETE_EXACT_TRAINING_CHECKPOINT",
-  "completedSteps": 32,
+  "completedSteps": 128,
   "protocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
-  "trainableWeights": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\checkpoints-r1\\step-0032\\trainable-f515e4902aa44563bd6d2d9862016dc6.safetensors",
-  "trainableWeightsSha256": "26d87cc9591e041075921593481ec53c75b328ef6b1c4ddad9011054c5df4259",
+  "trainableWeights": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\checkpoints-r1\\step-0128\\trainable-c5b53f7d5eb741e69c8c17b31d8ed28d.safetensors",
+  "trainableWeightsSha256": "5f9bf3009ee35ead7584ddd8bea2cd6b488e5f62cb565b2b74a85de7a2bd9d3a",
   "optimizerStateFormat": "bounded-safetensors-v1",
   "cudaRngCount": 1,
   "parameterNames": [

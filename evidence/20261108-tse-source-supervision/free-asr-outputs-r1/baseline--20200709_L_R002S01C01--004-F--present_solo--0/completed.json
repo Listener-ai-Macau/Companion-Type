@@ -1,0 +1,36 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--004-F--present_solo--0",
+  "sourceExampleId": "20200709_L_R002S01C01--004-F--present_solo--0",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--004-F--present_solo--0.wav",
+  "audioSha256": "ceadb8815cba3e4d00fd29917e06e7626f006b5b75184bc92f6c64d413bf11f2",
+  "audioSeconds": 2.0750625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "零幺九付晴飞。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 33201,
+      "text": "零幺九付晴飞。",
+      "generatedIds": [
+        99822,
+        119538,
+        99609,
+        45900,
+        105212,
+        99723,
+        1773,
+        151645
+      ],
+      "rawDecoded": "零幺九付晴飞。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.5057387000124436
+    }
+  ]
+}

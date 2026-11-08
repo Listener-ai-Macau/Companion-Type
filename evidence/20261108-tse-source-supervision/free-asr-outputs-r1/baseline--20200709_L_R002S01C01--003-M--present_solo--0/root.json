@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "a61404169425ea4c54b9ee686322c8ceccbe990d66b58fb946ceab890b49efb7",
+  "raw": {
+    "startSample": 0,
+    "endSample": 239401,
+    "text": "呃，因为目前的话，保安部门，保安部门的话，人人员不是不是说很多，就就是几个人。",
+    "generatedIds": [
+      119108,
+      3837,
+      99519,
+      100004,
+      100363,
+      3837,
+      107150,
+      99667,
+      3837,
+      107150,
+      99667,
+      100363,
+      3837,
+      17340,
+      99653,
+      99520,
+      99520,
+      36587,
+      99555,
+      3837,
+      80158,
+      99486,
+      112285,
+      1773,
+      151645
+    ],
+    "rawDecoded": "呃，因为目前的话，保安部门，保安部门的话，人人员不是不是说很多，就就是几个人。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.836058700020658
+  },
+  "rawSha256": "d9dba44469f1120580d1f96da255281f30c789d56cea9b458bf04f72cb778581"
+}

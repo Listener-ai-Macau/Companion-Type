@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-08T14:45:02.006997+08:00",
+  "state": "FROZEN_POST_REJECTION_NATURAL_WORDS_AND_RAW_SOLO_CONTROL",
+  "originalWaveformRejectionUnchanged": true,
+  "originalTrainingProtocolSha256": "8c5eb4f69a61a0b89753760dde8082ac71ad046d1a0d98f89473730b6a55548b",
+  "trainingReviewSha256": "29a1092978362759454664772ff3674230bee42dcf53c17a7fde70d9d2a96086",
+  "alignmentDiagnosticSha256": "dba4efbf798934af50d269b05d59184ff16c727b2e682cb3bf69c1b345a35bd7",
+  "newEvidence": "All32 original mixed outputs have negative target correlation, so direct waveform error is partly polarity dependent, while trained outputs show more other-source preference. Word accuracy and raw-solo controls distinguish waveform representation error, extraction damage and recognition limitations. No gain/polarity/delay correction or new weights will be used.",
+  "scope": "All66 already-frozen new natural queries before/after plus all8 already-frozen real solo preservation excerpts in raw/baseline/adapted forms. No cherry-picked subset, prompts, ground-truth input, model change or candidate promotion.",
+  "newOutputRows": 156,
+  "noFurtherTrainingThisCandidate": true,
+  "promotionAllowed": false,
+  "qualityQualified": false
+}

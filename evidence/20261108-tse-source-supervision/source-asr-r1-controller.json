@@ -1,0 +1,13 @@
+{
+  "state": "RUNNING_TSE_STAGE",
+  "pid": 15880,
+  "startedAt": "2026-11-08T14:45:35+08:00",
+  "worker": "tse_source_supervision_asr_worker_20261108.py",
+  "runId": "source-asr-r1",
+  "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+  "automaticModelRetries": 0,
+  "privatePeakBytes": 0,
+  "rssPeakBytes": 0,
+  "qualityQualified": false,
+  "activePid": 29652
+}

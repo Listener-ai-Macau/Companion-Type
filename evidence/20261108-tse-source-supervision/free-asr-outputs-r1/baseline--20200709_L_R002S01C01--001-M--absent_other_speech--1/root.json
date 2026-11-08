@@ -1,0 +1,27 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "bd00e0584060eaaebf836746674672ac64917cee026459fa32f606b6cd1873d0",
+  "raw": {
+    "startSample": 0,
+    "endSample": 22172,
+    "text": "号码，你也可以。",
+    "generatedIds": [
+      107154,
+      3837,
+      56568,
+      104047,
+      1773,
+      151645
+    ],
+    "rawDecoded": "号码，你也可以。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.273632299999008
+  },
+  "rawSha256": "125edc5c06ba8ee6149c7f5c7d44fd3fa62eeb330ef9d99e76d7a9ec187bbaae"
+}

@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "77c2c78fc3d303d1b398941b0709caeaf25391a31aaa594ae08dec3e2a73c726",
+  "raw": {
+    "startSample": 0,
+    "endSample": 67849,
+    "text": "所以你看，定期挣点儿，否则的话，这种人我们不能没有。",
+    "generatedIds": [
+      99999,
+      106878,
+      3837,
+      104406,
+      101707,
+      112519,
+      3837,
+      104420,
+      100363,
+      3837,
+      100137,
+      17340,
+      97639,
+      53153,
+      80443,
+      1773,
+      151645
+    ],
+    "rawDecoded": "所以你看，定期挣点儿，否则的话，这种人我们不能没有。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.407724099990446
+  },
+  "rawSha256": "f564ae1d59c7a61dd98f25b405f7ef1f1fa916a93a9a6335bf32b1efd36c1010"
+}

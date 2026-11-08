@@ -1,0 +1,45 @@
+{
+  "id": "baseline--solo-control--validation--solo-003",
+  "sourceExampleId": "solo-control--validation--solo-003",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\synthetic\\baseline\\validation--solo-003--0.wav",
+  "audioSha256": "cf2350a29b5e34781a5470ecef8543daba6a23d42a48cc9db54568a9660d238e",
+  "audioSeconds": 6.1550625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 98481,
+      "text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。",
+      "generatedIds": [
+        101260,
+        110281,
+        99431,
+        115058,
+        3837,
+        100667,
+        105032,
+        89012,
+        39165,
+        99431,
+        9370,
+        99728,
+        5373,
+        104440,
+        99653,
+        1773,
+        151645
+      ],
+      "rawDecoded": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.330523299984634
+    }
+  ]
+}

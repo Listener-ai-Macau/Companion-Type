@@ -1,0 +1,55 @@
+{
+  "id": "baseline--20200709_L_R002S01C01--006-F--absent_other_speech--1",
+  "sourceExampleId": "20200709_L_R002S01C01--006-F--absent_other_speech--1",
+  "condition": "baseline",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\validation-audio-r1\\natural\\baseline\\20200709_L_R002S01C01--006-F--absent_other_speech--1.wav",
+  "audioSha256": "965093f6549d8292d4e6aadeed96fcd592600741445876333ec96c7973fe4912",
+  "audioSeconds": 12.8600625,
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "text": "嗯，让他们，呃，让他们充分的感觉感受到我们这个服务的热情。感觉他们不会买我们这个课程的时候，就是。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 205761,
+      "text": "嗯，让他们，呃，让他们充分的感觉感受到我们这个服务的热情。感觉他们不会买我们这个课程的时候，就是。",
+      "generatedIds": [
+        106287,
+        3837,
+        105380,
+        3837,
+        119108,
+        3837,
+        105380,
+        100418,
+        104336,
+        105322,
+        97639,
+        99487,
+        47874,
+        108845,
+        1773,
+        100681,
+        99650,
+        99670,
+        99565,
+        97639,
+        99487,
+        103995,
+        103920,
+        3837,
+        99486,
+        1773,
+        151645
+      ],
+      "rawDecoded": "嗯，让他们，呃，让他们充分的感觉感受到我们这个服务的热情。感觉他们不会买我们这个课程的时候，就是。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 4.758476399991196
+    }
+  ]
+}

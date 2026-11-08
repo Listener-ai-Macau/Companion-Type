@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "46077863307504c1871b6b803f9a27884fe3c4844a799e94ffabb9ed6123da90",
+  "raw": {
+    "startSample": 0,
+    "endSample": 28621,
+    "text": "健身器，咱们小区。",
+    "generatedIds": [
+      101420,
+      31548,
+      3837,
+      104335,
+      102039,
+      1773,
+      151645
+    ],
+    "rawDecoded": "健身器，咱们小区。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.4442868000187445
+  },
+  "rawSha256": "4a06ea3bf3ba4a903c7d12564f841b688b3a5813c2da546d9ed2bbdb3c9d3721"
+}

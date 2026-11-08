@@ -1,0 +1,40 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "c0afdc784138128bfdac58cb54050c29498d12b275b2490e9a3ef0652b8f3718",
+  "raw": {
+    "startSample": 0,
+    "endSample": 121606,
+    "text": "而且比较适合下午游泳，下午的时候那个太阳不会直射，这个问题，对。",
+    "generatedIds": [
+      101885,
+      99792,
+      100231,
+      102172,
+      107140,
+      3837,
+      102172,
+      103920,
+      101095,
+      101281,
+      99670,
+      73145,
+      99759,
+      3837,
+      105073,
+      3837,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "而且比较适合下午游泳，下午的时候那个太阳不会直射，这个问题，对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.337017099984223
+  },
+  "rawSha256": "1f7971cdea572cc1a39c5383ca115fc16b560bf7e9fad3b51ea8e8c37d966f64"
+}

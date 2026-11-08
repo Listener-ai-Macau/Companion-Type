@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "protocolSha256": "f6d268d89dc9c846cc917cf98c2ce9c36ea855836807231257466573a4f8eaa3",
+    "audioOnlySha256": "91c6f73f508b89ab634da23509a61b6f39fd60715f7d6845fe3cb52c57f54fbc",
+    "workerSourceSha256": "e18d69ad0ae27ad0adc1c52bfadeca26e39fdcbd6b556bc80808c32f03dc50fe"
+  },
+  "audioSha256": "6ee56a7ac437bb5b6fdebed676ff38c259dfe9cca094f4054c79e154cb65d834",
+  "raw": {
+    "startSample": 0,
+    "endSample": 96385,
+    "text": "对，因为疫情嘛，他来建镇的人比较少。",
+    "generatedIds": [
+      32664,
+      3837,
+      99519,
+      100202,
+      102455,
+      3837,
+      42411,
+      36407,
+      25807,
+      99523,
+      100623,
+      99792,
+      82647,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对，因为疫情嘛，他来建镇的人比较少。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.631630399991991
+  },
+  "rawSha256": "28f9ea8feb40380c94cb9fbc9b6ef25b8b7237dbd40d40090db7ee25818be149"
+}
