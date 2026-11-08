@@ -1,7 +1,7 @@
 {
   "at": "2026-11-08T10:45:49+08:00",
-  "aarSha256": "83ad88515d67bd62dd11ec4040fcfd877d4405ddbc06fb4db02d708c6a4091ad",
-  "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+  "aarSha256": "f2c154a24245acf18aa24fbf951cd73e087771a58d9c3eabc6c223b1e0602a40",
+  "backendSourceCommit": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Only device-list completeness excludes RECOVERED4 prefixes. Sealed segments can be complete as a set without the original capture being complete. No radio/control/transfer/OTA/JNI/audio/clock/endpoints change. Phone acceptance pending.",
-  "javaSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+  "scope": "Negotiated durable range reclamation in the actual receiver and bounded initial133 recovery. Native audio/models/web assets unchanged; physical speed and resource gates remain unqualified.",
+  "javaSourceCommit": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -273,5 +273,29 @@
     "com/denzic/companion/mobile/DeviceRecordings.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo098": true,
-  "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json"
+  "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
+  "javaClassesChangedFrom099": [
+    "com/denzic/companion/mobile/AndroidGattLink$3.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Attempt.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Budget.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Clock.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Refused.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry.class",
+    "com/denzic/companion/mobile/RangeCheckpoint$DirectorySync.class",
+    "com/denzic/companion/mobile/RangeCheckpoint.class",
+    "com/denzic/companion/mobile/RangeConsume$Refused.class",
+    "com/denzic/companion/mobile/RangeConsume$Session$Pending.class",
+    "com/denzic/companion/mobile/RangeConsume$Session.class",
+    "com/denzic/companion/mobile/RangeConsume$Status.class",
+    "com/denzic/companion/mobile/RangeConsume.class",
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire$Descriptor.class",
+    "com/denzic/companion/mobile/RecorderWire$Peer.class",
+    "com/denzic/companion/mobile/RecorderWire.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/SegmentReceiver.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo099": true
 }
