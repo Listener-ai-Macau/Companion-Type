@@ -1,0 +1,19 @@
+{
+  "state": "PASS_FIXED_SPATIAL_MATH_AND_FROZEN_SOURCE_BINDINGS",
+  "compiledSources": [
+    "audit_independent_dual_gate_20261108.py",
+    "configure_independent_dual_meetings_20261108.py",
+    "freeze_independent_dual_gss_20261108.py",
+    "independent_dual_asr_worker_20261108.py",
+    "independent_dual_gss_worker_20261108.py",
+    "independent_dual_native_worker_20261108.py",
+    "prepare_independent_dual_meetings_20261108.py",
+    "run_independent_dual_gss_20261108.py",
+    "run_independent_dual_native_20261108.py",
+    "score_independent_dual_gss_20261108.py",
+    "score_independent_dual_journals_20261108.py"
+  ],
+  "completeStftGssMvdrBanIstftAndGatedMonoCoreByteIdentical": true,
+  "unchangedCoreSha256": "740b73dabaefae73416852e7684c3793aca6f841928b5c9a091005e2382aa493",
+  "allFrozenSourceBindingsVerified": true
+}

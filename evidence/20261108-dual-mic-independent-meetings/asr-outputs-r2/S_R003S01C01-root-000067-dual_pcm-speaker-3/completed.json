@@ -1,0 +1,49 @@
+{
+  "id": "S_R003S01C01-root-000067-dual_pcm-speaker-3",
+  "binding": {
+    "protocolSha256": "48bc87b31ba2eca2a10fd1508e0a3ce5952a191976990b5335b551eaa95d0327",
+    "audioOnlySha256": "9d4fe47e0c14c354ac756def6f99df4a98f49ebcd394ab473e541591a855299d",
+    "workerSourceSha256": "0ec05a5bf808faf5a3a2474f1dfa270a5839a22b006c0ddba70844c9ee782269"
+  },
+  "meeting": "S_R003S01C01",
+  "rootIndex": 67,
+  "predictedSpeaker": 3,
+  "arm": "dual_pcm",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\target-audio\\S_R003S01C01-root-000067-dual_pcm-speaker-3.wav",
+  "audioSha256": "c02e65271d33cc0ad5eb51d84a0b7ffcdf43999a99b29c79619df00b573ec635",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "5178d6c9dc915a1248ca9b82ef8fce66a11e3f54c37ef73176a9ff680ed62b36",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "deac48284fdd5f465b58e147674f76d42a0acf8199d4620e5db3c0ad4e20f6f3",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 37281,
+  "ungatedDerivedAudio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\target-audio\\S_R003S01C01-root-000067-dual_pcm-speaker-3-ungated.npy",
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.19037684599637295,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false,
+  "text": "都有这个方面的需求啊。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "都有这个方面的需求啊。",
+      "generatedIds": [
+        101103,
+        99487,
+        99522,
+        104378,
+        103924,
+        1773,
+        151645
+      ],
+      "rawDecoded": "都有这个方面的需求啊。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.4564528000191785
+    }
+  ]
+}

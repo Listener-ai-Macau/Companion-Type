@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-08T10:19:49.081366+08:00",
+  "state": "FROZEN_SINGLE_REFERENCE_ACTIVITY_DIAGNOSTIC_NOT_PRODUCT",
+  "automaticReviewSha256": "c156d799d8c7514700b9b33f91d63d19015125664bc28dee8ac5831f362dd65b",
+  "automaticGateAuditSha256": "e6867751671957651f371939af2d89428ea3edfe49489f81df451bfabfa17fc9",
+  "hypothesis": "If true activity/identity still leaves substantial speaker words missing or contaminated, fixing diarization alone is insufficient; spatial front end also needs a different separation design. If much improved, prioritize robust identity/activity before more separator models.",
+  "ordinaryPipelineChanged": false,
+  "expectedOutputRows": 32,
+  "referenceActivityUsed": true,
+  "referenceLexicalTextPassedToAsr": false,
+  "newTrainingRuns": 0,
+  "productDefaultChanged": false,
+  "productScore": false
+}

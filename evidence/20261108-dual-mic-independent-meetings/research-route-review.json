@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-08T10:17:00+08:00",
+  "state": "PRIMARY_SOURCE_DIRECTION_PREFLIGHT_NO_NEW_MODEL_INSTALL",
+  "decisions": [
+    {
+      "source": "https://github.com/desh2608/dover-lap/blob/0166e2df83bc1cc32cd81fa278cc728276ca396a/README.md",
+      "decision": "Reject naive two-system DOVER-Lap fusion. Author explicitly warns equal two-way conflict retains both labels, usually degrading results. Save per-mic disagreements instead."
+    },
+    {
+      "source": "https://github.com/wenet-e2e/WeSep",
+      "retrievedVersion": "README lastupdated2026-11-06",
+      "decision": "Cue-composable speaker/spatial design is a relevant architecture reference, not a deployable replacement. Current v0.1 is research preview, pretrained packages and inference CLI under validation. No dependencies or weights installed."
+    },
+    {
+      "source": "https://real-tse.github.io/challenge/",
+      "decision": "Use real conversational Mandarin/English and measure target word errors as well as voice identity and non-target leakage. Keep development/test separation; corrected challenge scoring is not a score guarantee for our pipeline."
+    },
+    {
+      "source": "https://huggingface.co/TaurenMountain/PS4/blob/f00909cb1aaec247d5a5ca6c61332c86afea0e57/README.md",
+      "decision": "Do not substitute the evaluation ResNet encoder into a192D-ECAPA cue checkpoint. Existing complete pinned author inference and strict tensor roundtrip remain authoritative for that failed experiment; no model retry from an ambiguous model-card note."
+    }
+  ],
+  "newModelFamiliesExecuted": 0,
+  "newTrainingRuns": 0,
+  "productDefaultChanged": false
+}

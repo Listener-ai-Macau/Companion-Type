@@ -1,0 +1,937 @@
+{
+  "at": "2026-11-08T10:17:40.087548+08:00",
+  "state": "COMPLETE_POSTHOC_PREDICTED_GATE_OMISSION_AUDIT",
+  "sourceReviewSha256": "c156d799d8c7514700b9b33f91d63d19015125664bc28dee8ac5831f362dd65b",
+  "coverage": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 26.11322999999993,
+      "coveredTargetSeconds": 24.276504287795433,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1532.17324,
+          "end": 1547.31753,
+          "text": "看看过来以后看哪些消哪一些消费水平，咱不能说，也是咱，说下咱搞活动的也这些活动，你要抓住这客户的一些心理。&嗯&啊学生过来以后，他肯定是事事先看好的",
+          "withinClipSeconds": 15.144289999999955,
+          "predictedTargetCoverageSeconds": 14.277564266114268,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1547.68908,
+          "end": 1558.65802,
+          "text": "就是就就盯着你价位的。你价位你这越低，我就来你这儿来拿，你不低我就走。这是年轻人就是就是",
+          "withinClipSeconds": 10.968939999999975,
+          "predictedTargetCoverageSeconds": 9.998940021681165,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "referencePersonForPosthocAudit": "004-F",
+      "predictedSlot": 3,
+      "referenceTargetSeconds": 4.736533864242574,
+      "coveredTargetSeconds": 4.233836568148263,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1529.4440898343917,
+          "end": 1531.1938366360976,
+          "text": "对分期付款花呗",
+          "withinClipSeconds": 1.1938366360975579,
+          "predictedTargetCoverageSeconds": 1.1938366360975579,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 1552.6569461575696,
+          "end": 1556.1996433857146,
+          "text": "对他有时候转好几家儿啦过来来",
+          "withinClipSeconds": 3.542697228145016,
+          "predictedTargetCoverageSeconds": 3.039999932050705,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "referencePersonForPosthocAudit": "005-F",
+      "predictedSlot": 4,
+      "referenceTargetSeconds": 1.0152851812365498,
+      "coveredTargetSeconds": 0.5652618412070751,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1554.9899418931773,
+          "end": 1556.0052270744138,
+          "text": "嗯对",
+          "withinClipSeconds": 1.0152851812365498,
+          "predictedTargetCoverageSeconds": 0.5652618412070751,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 21.008063794748523,
+      "coveredTargetSeconds": 20.574566678430983,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 992.0070694640133,
+          "end": 992.7847347092159,
+          "text": "对",
+          "withinClipSeconds": 0.7776652452025701,
+          "predictedTargetCoverageSeconds": 0.7047568839318501,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 992.92521,
+          "end": 997.76498,
+          "text": "热卖款之类的，对吧，就是销售爆款热热卖款",
+          "withinClipSeconds": 4.839770000000044,
+          "predictedTargetCoverageSeconds": 4.774767699667223,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 999.476644927929,
+          "end": 1004.5615,
+          "text": "啊啊啊还有一些一些一些高档的一些呃那个服装，对吧",
+          "withinClipSeconds": 5.084855072071036,
+          "predictedTargetCoverageSeconds": 5.053332619075832,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1008.5961235107982,
+          "end": 1009.4201875,
+          "text": "呃",
+          "withinClipSeconds": 0.824063989201818,
+          "predictedTargetCoverageSeconds": 0.5599999874830246,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1010.432277561971,
+          "end": 1012.3332370502441,
+          "text": "对，毕竟男装不太",
+          "withinClipSeconds": 1.900959488273088,
+          "predictedTargetCoverageSeconds": 1.900959488273088,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1012.41925,
+          "end": 1025.2588302238808,
+          "text": "销售不出去就不是咱这商场所有商场都男装。不太好销售，就是嗯男的就不太喜欢，就逛超市就是每年都对对，就这几身儿衣服。",
+          "withinClipSeconds": 7.580749999999966,
+          "predictedTargetCoverageSeconds": 7.580749999999966,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "referencePersonForPosthocAudit": "005-F",
+      "predictedSlot": 4,
+      "referenceTargetSeconds": 16.730316303974973,
+      "coveredTargetSeconds": 15.260093448229782,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 989.7604809778724,
+          "end": 992.87019,
+          "text": "对咱要把那个新品挂到那个",
+          "withinClipSeconds": 2.8701899999999796,
+          "predictedTargetCoverageSeconds": 2.8701899999999796,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 992.9117118656716,
+          "end": 995.3527166631129,
+          "text": "呃明显的地方嗯",
+          "withinClipSeconds": 2.4410047974413374,
+          "predictedTargetCoverageSeconds": 1.6682659037330723,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 997.86826,
+          "end": 999.8473895022688,
+          "text": "挂到那个明显的地方",
+          "withinClipSeconds": 1.9791295022688473,
+          "predictedTargetCoverageSeconds": 1.711717657645977,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1003.8005211653821,
+          "end": 1010.6698974980051,
+          "text": "嗯，不好卖的，咱都打上那个特价签儿或者有个优惠或一个赠品，咱尽量把它那个销售出去",
+          "withinClipSeconds": 6.8693763326230055,
+          "predictedTargetCoverageSeconds": 6.599919940718451,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1015.602820095949,
+          "end": 1018.1734357675908,
+          "text": "对，男装<sil>它",
+          "withinClipSeconds": 2.5706156716418036,
+          "predictedTargetCoverageSeconds": 2.4099999461323023,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "referencePersonForPosthocAudit": "006-F",
+      "predictedSlot": 5,
+      "referenceTargetSeconds": 6.457042811561337,
+      "coveredTargetSeconds": 2.5799778141081333,
+      "fullyContainedCompletelyRemovedCharacters": 2,
+      "utterances": [
+        {
+          "start": 988.0539378008999,
+          "end": 992.352698461881,
+          "text": "嗯那些新品要挂上，那些新品爆款",
+          "withinClipSeconds": 2.3526984618810047,
+          "predictedTargetCoverageSeconds": 1.6599778346717358,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 994.2510242324092,
+          "end": 996.8864453411513,
+          "text": "呃对挂上那种就像",
+          "withinClipSeconds": 2.6354211087420936,
+          "predictedTargetCoverageSeconds": 0.9199999794363976,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1000.4522402485375,
+          "end": 1001.1867018690066,
+          "text": "嗯",
+          "withinClipSeconds": 0.7344616204691192,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1003.8437247901155,
+          "end": 1004.5781864105846,
+          "text": "嗯",
+          "withinClipSeconds": 0.7344616204691192,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "M_R003S02C01-root-000001",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 29.28535,
+      "coveredTargetSeconds": 29.28535,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 29.60528,
+          "end": 37.7653,
+          "text": "把各个部门儿呃出现的问题啊咱再进行一次，你们也进行汇报一下。我这边儿也了解你们大体的一些基本情况",
+          "withinClipSeconds": 7.765300000000003,
+          "predictedTargetCoverageSeconds": 7.765300000000003,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 37.78363,
+          "end": 42.80864,
+          "text": "我才能针对你们所出出的问题才能才能才能解决。",
+          "withinClipSeconds": 5.025009999999995,
+          "predictedTargetCoverageSeconds": 5.025009999999995,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 42.99531,
+          "end": 50.96533,
+          "text": "呃<sil>呃然后呢咱们商场这块儿也。呃看看有什么呃大的好的这个<sil>",
+          "withinClipSeconds": 7.970019999999998,
+          "predictedTargetCoverageSeconds": 7.970019999999998,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 51.04199,
+          "end": 59.56701,
+          "text": "这个活动呃<sil>还有一些促销的手手段能留住咱咱这个呃<sil>挽留大家客流量。",
+          "withinClipSeconds": 8.525020000000005,
+          "predictedTargetCoverageSeconds": 8.525020000000005,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": true
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 11.416192840423946,
+      "coveredTargetSeconds": 8.749958378791689,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1680.00384,
+          "end": 1681.462842424725,
+          "text": "嗯<sil>进行处理，",
+          "withinClipSeconds": 1.4590024247249858,
+          "predictedTargetCoverageSeconds": 1.396122417781271,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1682.9028576244934,
+          "end": 1683.271642004922,
+          "text": "对",
+          "withinClipSeconds": 0.3687843804284512,
+          "predictedTargetCoverageSeconds": 0.3687843804284512,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1687.866079611481,
+          "end": 1688.7376875,
+          "text": "对这个",
+          "withinClipSeconds": 0.8716078885190655,
+          "predictedTargetCoverageSeconds": 0.8716078885190655,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1690.8145340971687,
+          "end": 1691.6786875,
+          "text": "包到一块儿",
+          "withinClipSeconds": 0.8641534028313345,
+          "predictedTargetCoverageSeconds": 0.6654280953071066,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1698.0289492760146,
+          "end": 1700.5226340961435,
+          "text": "对也可以贴一个标签儿",
+          "withinClipSeconds": 2.4936848201289195,
+          "predictedTargetCoverageSeconds": 0.14999999664723873,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1704.5090175762089,
+          "end": 1704.7806875,
+          "text": "对",
+          "withinClipSeconds": 0.27166992379125077,
+          "predictedTargetCoverageSeconds": 0.21072560010861707,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1704.91271,
+          "end": 1710.54306,
+          "text": "所以看你有的你弄一大袋子，他会他，一顿他吃不完，他有的时候，他回去想吃两种菜",
+          "withinClipSeconds": 5.087289999999939,
+          "predictedTargetCoverageSeconds": 5.087289999999939,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForPosthocAudit": "002-F",
+      "predictedSlot": null,
+      "referenceTargetSeconds": 11.5989012782386,
+      "coveredTargetSeconds": 0,
+      "fullyContainedCompletelyRemovedCharacters": 57,
+      "utterances": [
+        {
+          "start": 1689.8837925797966,
+          "end": 1690.9425625000001,
+          "text": "对包到一块儿",
+          "withinClipSeconds": 1.058769920203531,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1691.358930079028,
+          "end": 1693.704,
+          "text": "比如说两个香菇啦，一把儿油麦啦",
+          "withinClipSeconds": 2.345069920972037,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1694.8503791883854,
+          "end": 1697.3967474906299,
+          "text": "对。也也让他们再放一些金针菇啦",
+          "withinClipSeconds": 2.5463683022444457,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1697.835776508258,
+          "end": 1703.1743693626186,
+          "text": "啊五元一袋儿啊，六六元六元一袋儿就是品种比较多",
+          "withinClipSeconds": 5.338592854360513,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1703.5958372195419,
+          "end": 1703.9059375,
+          "text": "啊",
+          "withinClipSeconds": 0.31010028045807303,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForPosthocAudit": "003-M",
+      "predictedSlot": 2,
+      "referenceTargetSeconds": 3.822514062489063,
+      "coveredTargetSeconds": 3.233309153520395,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1688.744028799047,
+          "end": 1690.118375,
+          "text": "放到一块儿把它",
+          "withinClipSeconds": 1.374346200952914,
+          "predictedTargetCoverageSeconds": 1.169999973848462,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1693.7426,
+          "end": 1695.44745865236,
+          "text": "那就在一个袋子里面",
+          "withinClipSeconds": 1.704858652359917,
+          "predictedTargetCoverageSeconds": 1.3199999704957008,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1703.876815790824,
+          "end": 1704.6201250000001,
+          "text": "啊是",
+          "withinClipSeconds": 0.7433092091762319,
+          "predictedTargetCoverageSeconds": 0.7433092091762319,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForPosthocAudit": "004-F",
+      "predictedSlot": 3,
+      "referenceTargetSeconds": 6.220217236819508,
+      "coveredTargetSeconds": 6.094361069920296,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1681.3399142979156,
+          "end": 1682.8898574419152,
+          "text": "对对两三种菜，",
+          "withinClipSeconds": 1.5499431439995988,
+          "predictedTargetCoverageSeconds": 1.5298950232397601,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1683.22569298201,
+          "end": 1685.9058161508397,
+          "text": "两到现在对咱们就应该是两三种菜",
+          "withinClipSeconds": 2.6801231688295957,
+          "predictedTargetCoverageSeconds": 2.665853774185507,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1686.00135,
+          "end": 1687.9915009239903,
+          "text": "绿叶菜啦，豆制品啦是吧",
+          "withinClipSeconds": 1.9901509239903135,
+          "predictedTargetCoverageSeconds": 1.8986122724950292,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForPosthocAudit": "005-M",
+      "predictedSlot": 4,
+      "referenceTargetSeconds": 8.204609758816787,
+      "coveredTargetSeconds": 6.7011832324399165,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 1688.4613385626808,
+          "end": 1689.3475,
+          "text": "品种多",
+          "withinClipSeconds": 0.8861614373192879,
+          "predictedTargetCoverageSeconds": 0.8861614373192879,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1689.6554974906298,
+          "end": 1690.3935000000001,
+          "text": "对这样",
+          "withinClipSeconds": 0.7380025093702898,
+          "predictedTargetCoverageSeconds": 0.5599999874830246,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1696.518689455373,
+          "end": 1699.3811586503098,
+          "text": "就就跟套餐一样，包在一个，包装里边儿",
+          "withinClipSeconds": 2.8624691949366934,
+          "predictedTargetCoverageSeconds": 2.4999999441206455,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1700.06604391781,
+          "end": 1701.4182532921054,
+          "text": "哎，对对对对",
+          "withinClipSeconds": 1.3522093742953984,
+          "predictedTargetCoverageSeconds": 1.0539180591949844,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1701.9099657918491,
+          "end": 1702.41425,
+          "text": "量",
+          "withinClipSeconds": 0.5042842081509207,
+          "predictedTargetCoverageSeconds": 0.4542880417704964,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1702.823146148516,
+          "end": 1704.68462918326,
+          "text": "种类多一点儿，反而好卖一些嗯",
+          "withinClipSeconds": 1.8614830347441966,
+          "predictedTargetCoverageSeconds": 1.2468157625514777,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 5.011940846183279,
+      "coveredTargetSeconds": 4.484732653266974,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 2010.99144,
+          "end": 2012.7271632167415,
+          "text": "运营成本儿也太高啦，",
+          "withinClipSeconds": 1.7357232167414622,
+          "predictedTargetCoverageSeconds": 1.2085150238251572,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2016.4691763275573,
+          "end": 2016.8812749258025,
+          "text": "对，",
+          "withinClipSeconds": 0.4120985982451657,
+          "predictedTargetCoverageSeconds": 0.4120985982451657,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2017.0246135686705,
+          "end": 2018.75325,
+          "text": "所以这个，都有这个方面的需求，",
+          "withinClipSeconds": 1.7286364313295053,
+          "predictedTargetCoverageSeconds": 1.7286364313295053,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2019.2821971938404,
+          "end": 2019.6763784617272,
+          "text": "啊",
+          "withinClipSeconds": 0.3941812678867791,
+          "predictedTargetCoverageSeconds": 0.3941812678867791,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2033.1143861680196,
+          "end": 2033.8556875,
+          "text": "哦那",
+          "withinClipSeconds": 0.7413013319803667,
+          "predictedTargetCoverageSeconds": 0.7413013319803667,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForPosthocAudit": "002-F",
+      "predictedSlot": 1,
+      "referenceTargetSeconds": 4.519771486661057,
+      "coveredTargetSeconds": 3.7117152098817314,
+      "fullyContainedCompletelyRemovedCharacters": 3,
+      "utterances": [
+        {
+          "start": 2012.8322039489767,
+          "end": 2016.5439191588584,
+          "text": "对具体实施还是由咱们超市来去制定去",
+          "withinClipSeconds": 3.7117152098817314,
+          "predictedTargetCoverageSeconds": 3.7117152098817314,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2016.897415845514,
+          "end": 2017.2933735240479,
+          "text": "嗯",
+          "withinClipSeconds": 0.39595767853393227,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2019.5330398188592,
+          "end": 2019.9451384171045,
+          "text": "嗯嗯",
+          "withinClipSeconds": 0.4120985982453931,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForPosthocAudit": "003-M",
+      "predictedSlot": 2,
+      "referenceTargetSeconds": 10.500694455869052,
+      "coveredTargetSeconds": 10.232754984893518,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 2020.65411,
+          "end": 2023.73411,
+          "text": "这个就是可以跟那个啥美团",
+          "withinClipSeconds": 3.0800000000001546,
+          "predictedTargetCoverageSeconds": 2.9341551683999114,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2023.76036,
+          "end": 2026.7538814240659,
+          "text": "包括邢台现在不是做很多这种送货的这种，",
+          "withinClipSeconds": 2.993521424065875,
+          "predictedTargetCoverageSeconds": 2.993521424065875,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2027.5780786205564,
+          "end": 2028.8681264063678,
+          "text": "啊，跑腿儿啊，这种",
+          "withinClipSeconds": 1.290047785811339,
+          "predictedTargetCoverageSeconds": 1.290047785811339,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2029.27786,
+          "end": 2030.470149453323,
+          "text": "去跟他们合作，",
+          "withinClipSeconds": 1.1922894533231556,
+          "predictedTargetCoverageSeconds": 1.0701948139478645,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2031.6994307026823,
+          "end": 2032.4721217737083,
+          "text": "都给送",
+          "withinClipSeconds": 0.7726910710259745,
+          "predictedTargetCoverageSeconds": 0.7726910710259745,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2034.361228578084,
+          "end": 2035.5333732997265,
+          "text": "但是这个可能",
+          "withinClipSeconds": 1.1721447216425531,
+          "predictedTargetCoverageSeconds": 1.1721447216425531,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForPosthocAudit": "004-F",
+      "predictedSlot": 3,
+      "referenceTargetSeconds": 2.6166129849448225,
+      "coveredTargetSeconds": 2.17224914398048,
+      "fullyContainedCompletelyRemovedCharacters": 1,
+      "utterances": [
+        {
+          "start": 2010.5454386175447,
+          "end": 2010.9493453199186,
+          "text": "对",
+          "withinClipSeconds": 0.40390670237388804,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2017.907705703713,
+          "end": 2020.120411986284,
+          "text": "这个你们反应一下吧，是吧，因为",
+          "withinClipSeconds": 2.2127062825709345,
+          "predictedTargetCoverageSeconds": 2.17224914398048,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForPosthocAudit": "005-M",
+      "predictedSlot": 4,
+      "referenceTargetSeconds": 10.294054863112933,
+      "coveredTargetSeconds": 9.420566699756137,
+      "fullyContainedCompletelyRemovedCharacters": 1,
+      "utterances": [
+        {
+          "start": 2012.0422779388027,
+          "end": 2014.2198618994282,
+          "text": "对对对，咱咱也得考虑咱自己的运营成本",
+          "withinClipSeconds": 2.1775839606254976,
+          "predictedTargetCoverageSeconds": 2.1775839606254976,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2016.7379362829347,
+          "end": 2017.012086494101,
+          "text": "嗯",
+          "withinClipSeconds": 0.27415021116621574,
+          "predictedTargetCoverageSeconds": 0.27415021116621574,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2026.4662048125526,
+          "end": 2027.3989053169716,
+          "text": "悠悠跑腿儿，",
+          "withinClipSeconds": 0.9327005044190173,
+          "predictedTargetCoverageSeconds": 0.9289506121058366,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2027.5780786205564,
+          "end": 2028.7785397545754,
+          "text": "对吧，啊对",
+          "withinClipSeconds": 1.2004611340189513,
+          "predictedTargetCoverageSeconds": 1.2004611340189513,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2030.3647824890922,
+          "end": 2031.910164631144,
+          "text": "他们送个小东西都给都给",
+          "withinClipSeconds": 1.5453821420517215,
+          "predictedTargetCoverageSeconds": 1.5202100138969854,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2032.1384597203107,
+          "end": 2032.550375,
+          "text": "嗯",
+          "withinClipSeconds": 0.4119152796893104,
+          "predictedTargetCoverageSeconds": 0.4119152796893104,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2033.5407201612143,
+          "end": 2034.318412871856,
+          "text": "嗯",
+          "withinClipSeconds": 0.7776927106417588,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2035.0430810794996,
+          "end": 2038.01725,
+          "text": "还是考虑成本，啊就考虑费用问题了嗯",
+          "withinClipSeconds": 2.9741689205004604,
+          "predictedTargetCoverageSeconds": 2.9072954882533395,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": false
+    },
+    {
+      "case": "S_R003S01C01-root-000001",
+      "referencePersonForPosthocAudit": "001-M",
+      "predictedSlot": 0,
+      "referenceTargetSeconds": 29.541249999999998,
+      "coveredTargetSeconds": 29.432429055191875,
+      "fullyContainedCompletelyRemovedCharacters": 0,
+      "utterances": [
+        {
+          "start": 29.25256,
+          "end": 36.07257,
+          "text": "包括一些工作上遇到一些问题，呃<sil>呃<sil>这个你的产品或者一些",
+          "withinClipSeconds": 6.072569999999999,
+          "predictedTargetCoverageSeconds": 6.072569999999999,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        },
+        {
+          "start": 36.08882,
+          "end": 42.37882,
+          "text": "呃遇到哪些呃呃问题。这个产品需要上线哪些新产品",
+          "withinClipSeconds": 6.289999999999999,
+          "predictedTargetCoverageSeconds": 6.181179055191876,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 42.60132,
+          "end": 47.92633,
+          "text": "呃，员工之间，你们下属员工嗯的呃，这个工作情况",
+          "withinClipSeconds": 5.325009999999999,
+          "predictedTargetCoverageSeconds": 5.325009999999999,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 48.03758,
+          "end": 53.37758,
+          "text": "还有你们的一些建议，包括一些呃有什么新的想法啦",
+          "withinClipSeconds": 5.340000000000003,
+          "predictedTargetCoverageSeconds": 5.340000000000003,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 53.40258,
+          "end": 55.24258,
+          "text": "还有一些新的产品啦",
+          "withinClipSeconds": 1.8399999999999963,
+          "predictedTargetCoverageSeconds": 1.8399999999999963,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 55.30258,
+          "end": 56.50758,
+          "text": "嗯<sil>",
+          "withinClipSeconds": 1.2049999999999983,
+          "predictedTargetCoverageSeconds": 1.2049999999999983,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 56.53133,
+          "end": 60.00134,
+          "text": "都<sil>简单说一下，主要就是两方面，第一",
+          "withinClipSeconds": 3.468670000000003,
+          "predictedTargetCoverageSeconds": 3.468670000000003,
+          "completelyRemovedByPredictedGate": false,
+          "fullyContainedInClip": false
+        }
+      ],
+      "ordinaryBypassDoesNotApplyThisGate": true
+    }
+  ],
+  "wholeInteriorCharsExcludedByPredictedGate": 64,
+  "newModelCalls": 0,
+  "generatedTextChanged": false,
+  "referenceOnlyUsedForPosthocAudit": true,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 13440,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 55504896,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

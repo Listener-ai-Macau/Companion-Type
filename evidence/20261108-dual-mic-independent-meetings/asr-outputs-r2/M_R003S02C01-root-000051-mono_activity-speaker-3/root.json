@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "protocolSha256": "48bc87b31ba2eca2a10fd1508e0a3ce5952a191976990b5335b551eaa95d0327",
+    "audioOnlySha256": "9d4fe47e0c14c354ac756def6f99df4a98f49ebcd394ab473e541591a855299d",
+    "workerSourceSha256": "0ec05a5bf808faf5a3a2474f1dfa270a5839a22b006c0ddba70844c9ee782269"
+  },
+  "audioSha256": "3ae8667c4841411a66aa324d1c1f8272aca6aa1a8ddfb8335a464b3d9a0a6395",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "分期付款，花呗分期付款。嗯。对他有时候转好几家了，过来了。",
+    "generatedIds": [
+      111521,
+      106554,
+      3837,
+      99232,
+      111382,
+      111521,
+      106554,
+      1773,
+      106287,
+      1773,
+      105921,
+      104854,
+      46670,
+      52801,
+      112248,
+      34187,
+      3837,
+      38182,
+      101161,
+      1773,
+      151645
+    ],
+    "rawDecoded": "分期付款，花呗分期付款。嗯。对他有时候转好几家了，过来了。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.9242778999905568
+  },
+  "rawSha256": "5f158b123d1af1bf0278662193c119c8f8e98b0de744cdabafaa2fb13d9e15d1"
+}

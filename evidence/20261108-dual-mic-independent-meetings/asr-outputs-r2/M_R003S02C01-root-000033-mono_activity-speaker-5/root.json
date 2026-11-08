@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "protocolSha256": "48bc87b31ba2eca2a10fd1508e0a3ce5952a191976990b5335b551eaa95d0327",
+    "audioOnlySha256": "9d4fe47e0c14c354ac756def6f99df4a98f49ebcd394ab473e541591a855299d",
+    "workerSourceSha256": "0ec05a5bf808faf5a3a2474f1dfa270a5839a22b006c0ddba70844c9ee782269"
+  },
+  "audioSha256": "82aaf4546980adacbc7eef279d6e6d42d0cdce99923fb9bbf751d354d647f5ac",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "大家把那个新品，嗯。",
+    "generatedIds": [
+      99466,
+      99360,
+      101095,
+      107608,
+      3837,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "大家把那个新品，嗯。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.6312811999814585
+  },
+  "rawSha256": "463545751687597e5fa325705e48592e38050487999f9648e647816e94661825"
+}

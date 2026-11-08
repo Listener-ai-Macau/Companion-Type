@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "protocolSha256": "48bc87b31ba2eca2a10fd1508e0a3ce5952a191976990b5335b551eaa95d0327",
+    "audioOnlySha256": "9d4fe47e0c14c354ac756def6f99df4a98f49ebcd394ab473e541591a855299d",
+    "workerSourceSha256": "0ec05a5bf808faf5a3a2474f1dfa270a5839a22b006c0ddba70844c9ee782269"
+  },
+  "audioSha256": "455804323f9a67b1188736823752e54cca4ed0d085bfee7b02d5ded7c2d1ac2b",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "这个具体实施还是由咱们超市来去制定去。",
+    "generatedIds": [
+      99487,
+      100398,
+      100355,
+      99998,
+      67071,
+      104335,
+      104631,
+      36407,
+      85336,
+      104016,
+      85336,
+      1773,
+      151645
+    ],
+    "rawDecoded": "这个具体实施还是由咱们超市来去制定去。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.5161222999740858
+  },
+  "rawSha256": "541fc87319a19631932fa81c343f3274c033be96de4bf2cb218967f7029b2350"
+}

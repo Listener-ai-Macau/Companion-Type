@@ -1,0 +1,562 @@
+{
+  "at": "2026-11-08T10:18:34.325487+08:00",
+  "state": "COMPLETE_POSTHOC_LOST_UTTERANCE_IDENTITY_VS_SILENCE_AUDIT",
+  "rows": [
+    {
+      "case": "M_R003S02C01-root-000033",
+      "referencePersonForEvaluationOnly": "006-F",
+      "fullyContainedCompletelyRemovedCharacters": 2,
+      "utterancesForEvaluationOnly": [
+        {
+          "start": 1000.4522402485375,
+          "end": 1001.1867018690066,
+          "text": "嗯",
+          "withinClipSeconds": 0.7344616204691192,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1003.8437247901155,
+          "end": 1004.5781864105846,
+          "text": "嗯",
+          "withinClipSeconds": 0.7344616204691192,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "micDiagnostics": [
+        {
+          "channel": 0,
+          "globallyMappedExpectedSlotForEvaluationOnly": 5,
+          "auditedInteriorReferenceSecondsAt10ms": 1.44,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.01,
+          "targetAbsentButOtherSpeakerActiveSeconds": 1.43,
+          "predictedActiveSecondsBySlot": [
+            1.4,
+            0.0,
+            0.0,
+            0.0,
+            0.65,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.8684348464012146,
+            0.014296569861471653,
+            0.01310078427195549,
+            0.014682714827358723,
+            0.385021448135376,
+            0.02862120419740677,
+            0.002896561985835433,
+            0.0006131981499493122
+          ],
+          "maximumPosteriorBySlot": [
+            0.9756463170051575,
+            0.026942184194922447,
+            0.02187112718820572,
+            0.03428725525736809,
+            0.8211366534233093,
+            0.062173958867788315,
+            0.005103356204926968,
+            0.0010632759658619761
+          ],
+          "thresholdChanged": false
+        },
+        {
+          "channel": 1,
+          "globallyMappedExpectedSlotForEvaluationOnly": 5,
+          "auditedInteriorReferenceSecondsAt10ms": 1.44,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 1.44,
+          "predictedActiveSecondsBySlot": [
+            1.41,
+            0.0,
+            0.0,
+            0.0,
+            0.66,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.8560851812362671,
+            0.015923695638775826,
+            0.01415934320539236,
+            0.018029309809207916,
+            0.37512755393981934,
+            0.021071143448352814,
+            0.0028102314099669456,
+            0.0005558331613428891
+          ],
+          "maximumPosteriorBySlot": [
+            0.9706442356109619,
+            0.03070206567645073,
+            0.025244800373911858,
+            0.043756794184446335,
+            0.8083754777908325,
+            0.03465407341718674,
+            0.0054845320992171764,
+            0.0011525838635861874
+          ],
+          "thresholdChanged": false
+        }
+      ]
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "referencePersonForEvaluationOnly": "002-F",
+      "fullyContainedCompletelyRemovedCharacters": 57,
+      "utterancesForEvaluationOnly": [
+        {
+          "start": 1689.8837925797966,
+          "end": 1690.9425625000001,
+          "text": "对包到一块儿",
+          "withinClipSeconds": 1.058769920203531,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1691.358930079028,
+          "end": 1693.704,
+          "text": "比如说两个香菇啦，一把儿油麦啦",
+          "withinClipSeconds": 2.345069920972037,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1694.8503791883854,
+          "end": 1697.3967474906299,
+          "text": "对。也也让他们再放一些金针菇啦",
+          "withinClipSeconds": 2.5463683022444457,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1697.835776508258,
+          "end": 1703.1743693626186,
+          "text": "啊五元一袋儿啊，六六元六元一袋儿就是品种比较多",
+          "withinClipSeconds": 5.338592854360513,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 1703.5958372195419,
+          "end": 1703.9059375,
+          "text": "啊",
+          "withinClipSeconds": 0.31010028045807303,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "micDiagnostics": [
+        {
+          "channel": 0,
+          "globallyMappedExpectedSlotForEvaluationOnly": 1,
+          "auditedInteriorReferenceSecondsAt10ms": 11.55,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 11.55,
+          "predictedActiveSecondsBySlot": [
+            1.04,
+            0.0,
+            1.96,
+            11.55,
+            5.09,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.10722338408231735,
+            0.004464459605515003,
+            0.20196644961833954,
+            0.9543085098266602,
+            0.4301990568637848,
+            0.010065955109894276,
+            0.0019440287724137306,
+            0.000379170902306214
+          ],
+          "maximumPosteriorBySlot": [
+            0.9762725234031677,
+            0.012527087703347206,
+            0.986770749092102,
+            0.9884899258613586,
+            0.9678274989128113,
+            0.034959036856889725,
+            0.009469459764659405,
+            0.001319793052971363
+          ],
+          "thresholdChanged": false
+        },
+        {
+          "channel": 1,
+          "globallyMappedExpectedSlotForEvaluationOnly": 1,
+          "auditedInteriorReferenceSecondsAt10ms": 11.55,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 11.55,
+          "predictedActiveSecondsBySlot": [
+            0.88,
+            0.0,
+            2.0,
+            11.55,
+            5.09,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.10850265622138977,
+            0.0045800842344760895,
+            0.20068858563899994,
+            0.9532057642936707,
+            0.42778462171554565,
+            0.010495658963918686,
+            0.0020183187443763018,
+            0.0003942670300602913
+          ],
+          "maximumPosteriorBySlot": [
+            0.9592199921607971,
+            0.01365946140140295,
+            0.9866443276405334,
+            0.9890205264091492,
+            0.9640330672264099,
+            0.037414517253637314,
+            0.010371650569140911,
+            0.0015382892452180386
+          ],
+          "thresholdChanged": false
+        }
+      ]
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForEvaluationOnly": "002-F",
+      "fullyContainedCompletelyRemovedCharacters": 3,
+      "utterancesForEvaluationOnly": [
+        {
+          "start": 2016.897415845514,
+          "end": 2017.2933735240479,
+          "text": "嗯",
+          "withinClipSeconds": 0.39595767853393227,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        },
+        {
+          "start": 2019.5330398188592,
+          "end": 2019.9451384171045,
+          "text": "嗯嗯",
+          "withinClipSeconds": 0.4120985982453931,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "micDiagnostics": [
+        {
+          "channel": 0,
+          "globallyMappedExpectedSlotForEvaluationOnly": 1,
+          "auditedInteriorReferenceSecondsAt10ms": 0.79,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.79,
+          "predictedActiveSecondsBySlot": [
+            0.53,
+            0.0,
+            0.0,
+            0.4,
+            0.66,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.7198820114135742,
+            0.3543003797531128,
+            0.06932640075683594,
+            0.44783735275268555,
+            0.5600618124008179,
+            0.05008089169859886,
+            0.01213319692760706,
+            0.0027430886402726173
+          ],
+          "maximumPosteriorBySlot": [
+            0.9274377822875977,
+            0.43295881152153015,
+            0.1147516593337059,
+            0.8220921754837036,
+            0.7936913967132568,
+            0.06839992851018906,
+            0.018869096413254738,
+            0.0043469201773405075
+          ],
+          "thresholdChanged": false
+        },
+        {
+          "channel": 1,
+          "globallyMappedExpectedSlotForEvaluationOnly": 1,
+          "auditedInteriorReferenceSecondsAt10ms": 0.79,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.79,
+          "predictedActiveSecondsBySlot": [
+            0.7,
+            0.0,
+            0.0,
+            0.4,
+            0.29,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.7349534630775452,
+            0.3739384710788727,
+            0.0658988207578659,
+            0.45944836735725403,
+            0.5120359063148499,
+            0.04936566948890686,
+            0.012175212614238262,
+            0.0028764698654413223
+          ],
+          "maximumPosteriorBySlot": [
+            0.9241999387741089,
+            0.4753704071044922,
+            0.10910172015428543,
+            0.8413378000259399,
+            0.7860303521156311,
+            0.06783393025398254,
+            0.019607139751315117,
+            0.0047292811796069145
+          ],
+          "thresholdChanged": false
+        }
+      ]
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForEvaluationOnly": "004-F",
+      "fullyContainedCompletelyRemovedCharacters": 1,
+      "utterancesForEvaluationOnly": [
+        {
+          "start": 2010.5454386175447,
+          "end": 2010.9493453199186,
+          "text": "对",
+          "withinClipSeconds": 0.40390670237388804,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "micDiagnostics": [
+        {
+          "channel": 0,
+          "globallyMappedExpectedSlotForEvaluationOnly": 3,
+          "auditedInteriorReferenceSecondsAt10ms": 0.39,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.39,
+          "predictedActiveSecondsBySlot": [
+            0.39,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.9531665444374084,
+            0.0742233544588089,
+            0.023310169577598572,
+            0.04181695356965065,
+            0.21056942641735077,
+            0.015987945720553398,
+            0.002653017407283187,
+            0.0008115297532640398
+          ],
+          "maximumPosteriorBySlot": [
+            0.9636991620063782,
+            0.10010848194360733,
+            0.024970946833491325,
+            0.04663518816232681,
+            0.2261466532945633,
+            0.018022142350673676,
+            0.0031391074880957603,
+            0.0009822866413742304
+          ],
+          "thresholdChanged": false
+        },
+        {
+          "channel": 1,
+          "globallyMappedExpectedSlotForEvaluationOnly": 3,
+          "auditedInteriorReferenceSecondsAt10ms": 0.39,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.0,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.39,
+          "predictedActiveSecondsBySlot": [
+            0.39,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.9709411263465881,
+            0.05698181316256523,
+            0.020152699202299118,
+            0.039129313081502914,
+            0.18529951572418213,
+            0.011854368261992931,
+            0.001822905265726149,
+            0.0005234221462160349
+          ],
+          "maximumPosteriorBySlot": [
+            0.9795295596122742,
+            0.07388374954462051,
+            0.02121143788099289,
+            0.041932377964258194,
+            0.19956420361995697,
+            0.012695342302322388,
+            0.002027533482760191,
+            0.0005964525043964386
+          ],
+          "thresholdChanged": false
+        }
+      ]
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "referencePersonForEvaluationOnly": "005-M",
+      "fullyContainedCompletelyRemovedCharacters": 1,
+      "utterancesForEvaluationOnly": [
+        {
+          "start": 2033.5407201612143,
+          "end": 2034.318412871856,
+          "text": "嗯",
+          "withinClipSeconds": 0.7776927106417588,
+          "predictedTargetCoverageSeconds": 0,
+          "completelyRemovedByPredictedGate": true,
+          "fullyContainedInClip": true
+        }
+      ],
+      "micDiagnostics": [
+        {
+          "channel": 0,
+          "globallyMappedExpectedSlotForEvaluationOnly": 4,
+          "auditedInteriorReferenceSecondsAt10ms": 0.76,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.21,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.55,
+          "predictedActiveSecondsBySlot": [
+            0.55,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.6197955012321472,
+            0.14863431453704834,
+            0.2063264697790146,
+            0.05707717686891556,
+            0.09371066093444824,
+            0.016618309542536736,
+            0.004542977083474398,
+            0.0012802937999367714
+          ],
+          "maximumPosteriorBySlot": [
+            0.8981146216392517,
+            0.19820626080036163,
+            0.40775933861732483,
+            0.08051589131355286,
+            0.13340596854686737,
+            0.023829441517591476,
+            0.006779781077057123,
+            0.002015860751271248
+          ],
+          "thresholdChanged": false
+        },
+        {
+          "channel": 1,
+          "globallyMappedExpectedSlotForEvaluationOnly": 4,
+          "auditedInteriorReferenceSecondsAt10ms": 0.76,
+          "correctTargetActiveSeconds": 0.0,
+          "noSpeakerActiveSeconds": 0.24,
+          "targetAbsentButOtherSpeakerActiveSeconds": 0.52,
+          "predictedActiveSecondsBySlot": [
+            0.52,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "meanPosteriorBySlot": [
+            0.6131370067596436,
+            0.13739639520645142,
+            0.20935922861099243,
+            0.05547019839286804,
+            0.09557682275772095,
+            0.014732550829648972,
+            0.0037475870922207832,
+            0.0010545601835474372
+          ],
+          "maximumPosteriorBySlot": [
+            0.8876307606697083,
+            0.18485181033611298,
+            0.42588645219802856,
+            0.07675892859697342,
+            0.13477842509746552,
+            0.021944684907794,
+            0.005767088383436203,
+            0.0017549420008435845
+          ],
+          "thresholdChanged": false
+        }
+      ]
+    }
+  ],
+  "scope": "10ms diagnostic quantization only, not a replacement for standard continuous-time DER. Other-slot activity can be another real overlapping person or wrong identity; it is not proof that all such activity is a label swap. Reference annotations used only to diagnose existing failures.",
+  "generatedTextChanged": false,
+  "newModelCalls": 0,
+  "referenceDataPassedToWorker": false,
+  "thresholdSweepPerformed": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 28676,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 21893120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

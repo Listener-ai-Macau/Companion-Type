@@ -1,0 +1,169 @@
+[
+  {
+    "id": "M_R003S02C01-root-000051",
+    "meeting": "M_R003S02C01",
+    "rootIndex": 51,
+    "kind": "diagnostic-reference-activity",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-root-000051-raw-pair-context.wav",
+    "audioSha256": "2a0a8b7d85264bc47b0ca0e3ff2d093952d4801c5dc5df4ec7227466c73a766c",
+    "contextStartSample": 24240000,
+    "contextEndSample": 25200000,
+    "rootStartSample": 24480000,
+    "rootEndSample": 24960000,
+    "rootOffsetWithinContext": 240000,
+    "contextSeconds": 60.0,
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\M_R003S02C01-ORACLE-ACTIVITY-NOT-PRODUCT.json",
+    "journalSha256": "04f401a65a52b4f2a968ac8d245e166593c874e5904f72be1e99386b1650fb88",
+    "predictedRootPeople": [
+      0,
+      3,
+      4
+    ],
+    "sourceFullFlacSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+    "sourcePhysicalChannels": [
+      0,
+      1
+    ],
+    "selectionMetrics": {
+      "rootIndex": 51,
+      "predictedOverlapSeconds": 2.66,
+      "predictedTripleSeconds": 0.52,
+      "predictedSingleSeconds": 26.23,
+      "people": [
+        0,
+        3,
+        4
+      ],
+      "kind": "predicted-triple"
+    },
+    "activityProvenance": "ORACLE_REFERENCE_ACTIVITY_DIAGNOSTIC_NOT_PRODUCT",
+    "referenceLexicalTextPassedToAsr": false
+  },
+  {
+    "id": "M_R003S02C01-root-000033",
+    "meeting": "M_R003S02C01",
+    "rootIndex": 33,
+    "kind": "diagnostic-reference-activity",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\M_R003S02C01-root-000033-raw-pair-context.wav",
+    "audioSha256": "5c860be456c2d6734adad1f3c041c4e4e586291bb7341cd53110a00844d1bcc7",
+    "contextStartSample": 15600000,
+    "contextEndSample": 16560000,
+    "rootStartSample": 15840000,
+    "rootEndSample": 16320000,
+    "rootOffsetWithinContext": 240000,
+    "contextSeconds": 60.0,
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\M_R003S02C01-ORACLE-ACTIVITY-NOT-PRODUCT.json",
+    "journalSha256": "04f401a65a52b4f2a968ac8d245e166593c874e5904f72be1e99386b1650fb88",
+    "predictedRootPeople": [
+      0,
+      4,
+      5
+    ],
+    "sourceFullFlacSha256": "b74f2c00c374b899c7b0154a1b492a9429b0dd270e0f236d83abff0f7a2c7e0f",
+    "sourcePhysicalChannels": [
+      0,
+      1
+    ],
+    "selectionMetrics": {
+      "rootIndex": 33,
+      "predictedOverlapSeconds": 9.58,
+      "predictedTripleSeconds": 0.12,
+      "predictedSingleSeconds": 20.11,
+      "people": [
+        0,
+        4,
+        5
+      ],
+      "kind": "predicted-overlap"
+    },
+    "activityProvenance": "ORACLE_REFERENCE_ACTIVITY_DIAGNOSTIC_NOT_PRODUCT",
+    "referenceLexicalTextPassedToAsr": false
+  },
+  {
+    "id": "S_R003S01C01-root-000056",
+    "meeting": "S_R003S01C01",
+    "rootIndex": 56,
+    "kind": "diagnostic-reference-activity",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-root-000056-raw-pair-context.wav",
+    "audioSha256": "cbe62da218c6dc32497932416698891f04892fbd3cd8b08e6c7f73e42066ceba",
+    "contextStartSample": 26640000,
+    "contextEndSample": 27600000,
+    "rootStartSample": 26880000,
+    "rootEndSample": 27360000,
+    "rootOffsetWithinContext": 240000,
+    "contextSeconds": 60.0,
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\S_R003S01C01-ORACLE-ACTIVITY-NOT-PRODUCT.json",
+    "journalSha256": "60555d9b823582f42670f6675600911b35994723df65695cbdce3c9fba4ec8be",
+    "predictedRootPeople": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "sourceFullFlacSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+    "sourcePhysicalChannels": [
+      0,
+      1
+    ],
+    "selectionMetrics": {
+      "rootIndex": 56,
+      "predictedOverlapSeconds": 10.76,
+      "predictedTripleSeconds": 1.34,
+      "predictedSingleSeconds": 19.15,
+      "people": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "kind": "predicted-triple"
+    },
+    "activityProvenance": "ORACLE_REFERENCE_ACTIVITY_DIAGNOSTIC_NOT_PRODUCT",
+    "referenceLexicalTextPassedToAsr": false
+  },
+  {
+    "id": "S_R003S01C01-root-000067",
+    "meeting": "S_R003S01C01",
+    "rootIndex": 67,
+    "kind": "diagnostic-reference-activity",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\S_R003S01C01-root-000067-raw-pair-context.wav",
+    "audioSha256": "5178d6c9dc915a1248ca9b82ef8fce66a11e3f54c37ef73176a9ff680ed62b36",
+    "contextStartSample": 31920000,
+    "contextEndSample": 32880000,
+    "rootStartSample": 32160000,
+    "rootEndSample": 32640000,
+    "rootOffsetWithinContext": 240000,
+    "contextSeconds": 60.0,
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\S_R003S01C01-ORACLE-ACTIVITY-NOT-PRODUCT.json",
+    "journalSha256": "60555d9b823582f42670f6675600911b35994723df65695cbdce3c9fba4ec8be",
+    "predictedRootPeople": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "sourceFullFlacSha256": "e4a8a76315b7dabe63f43e2364486d9dee989ddcf111d73dc3eae47d86838cd0",
+    "sourcePhysicalChannels": [
+      0,
+      1
+    ],
+    "selectionMetrics": {
+      "rootIndex": 67,
+      "predictedOverlapSeconds": 11.6,
+      "predictedTripleSeconds": 0.2,
+      "predictedSingleSeconds": 16.81,
+      "people": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "kind": "predicted-overlap"
+    },
+    "activityProvenance": "ORACLE_REFERENCE_ACTIVITY_DIAGNOSTIC_NOT_PRODUCT",
+    "referenceLexicalTextPassedToAsr": false
+  }
+]

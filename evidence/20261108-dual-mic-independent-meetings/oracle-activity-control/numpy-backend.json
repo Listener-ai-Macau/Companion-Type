@@ -1,0 +1,96 @@
+{
+  "upstreamCommit": "10fad18cae85e2e4342c77421abc70c9c5da23ed",
+  "destination": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference",
+  "files": [
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\__init__.py",
+      "upstreamSha256": "1e01fc11f1d7b36675aabf6d735eb5372a89b7e376c1aac0340d4c122d33d45f",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\__init__.py",
+      "numpySha256": "c1683ab583ff0c9e14cb1278685c1f6155738d79d4ae8e28b2388b3f0275055e"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\cacg.py",
+      "upstreamSha256": "c278018f665bbe08d27450d2df3e117cf851de12375443587b18e0029027f784",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\cacg.py",
+      "numpySha256": "0ac484a9219525993979a5acf9ed79281d38658dceec291121b83e0a6f9c3498"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\cacg_trainer.py",
+      "upstreamSha256": "24290f18f76c8915a3d51d41615698887498b1d8e0c5a758bdf8a5080c8d5106",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\cacg_trainer.py",
+      "numpySha256": "da023d1616387acab0578a85997472deb955f198e61f14869b59aba35dd28153"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\cacgmm.py",
+      "upstreamSha256": "dcc46c325d71fe1861828d5330a919155e480f60a79273553e98deaed89b1e9b",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\cacgmm.py",
+      "numpySha256": "769c85086bf989d40183beb100e0c0e38468e539e08e5144c2d433366e0da23d"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\cacgmm_trainer.py",
+      "upstreamSha256": "a3ecae7552203930392b6b5a75a26608aa238e3ae8b7ced2fcd30021f4c50c11",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\cacgmm_trainer.py",
+      "numpySha256": "6e11ae39dfc95c562e5a412c55782b1830d2fcf1bab1b0e6f5fee2902b8c4c47"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\cacgmm\\utils.py",
+      "upstreamSha256": "065fea8ce2271a7ccb04f58faddb34ab6d94531ccaecd9b908a0f977a48f615e",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\cacgmm\\utils.py",
+      "numpySha256": "eda220e24c32d41646643488da5f49b34d3267b187cf66690212021048cba826"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\beamformer\\__init__.py",
+      "upstreamSha256": "ca1018c4ff2eab3f17aad5d1dfce50963859b9b62d6173e0c1b13fca69c2b434",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\beamformer\\__init__.py",
+      "numpySha256": "435936038838eb622523b8a8359c261cc3c3790c3dcb15635b4b4709efce17ad"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\beamformer\\beamform.py",
+      "upstreamSha256": "c62cd33cd2277935a4cbd66c0a8dfbc9ad815892e40a2d79f5d55010470c0865",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\beamformer\\beamform.py",
+      "numpySha256": "374242509b3a7e905aa4e461f4be0a39642423d3b7b2617470a1553d84ea4c20"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\beamformer\\souden_mvdr.py",
+      "upstreamSha256": "0b48b9cc30e4075bb168c0ba903a18ba359062ca3d9b683c7ba064f532a01a1b",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\beamformer\\souden_mvdr.py",
+      "numpySha256": "964f26e6107faa7a3d4e19070507e8694074e0088dc6debd7495fd85d3aeb501"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\beamformer\\utils.py",
+      "upstreamSha256": "10fa7d5b7435d32d729bd3f8a77a53ed54b457d7e50baa320b1186aeedc55028",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\beamformer\\utils.py",
+      "numpySha256": "ceba937baabbdd030c4c8bf06935c89bd97067b87f423829e0fe1b92d8c2fabb"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\utils\\numpy_utils.py",
+      "upstreamSha256": "20105bc1acfa2d802fca6325a6179850826441a542dd13902f7dcb64fa639928",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\utils\\numpy_utils.py",
+      "numpySha256": "8b7dc2f433b1dfc5380f1d88987a932bad328155aa21426267ea491cba4c6b51"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\core\\gss.py",
+      "upstreamSha256": "22a56720db745c65be9cedf7c25980f4a3eac12a84ad1729e710071dd2f8a669",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\core\\gss.py",
+      "numpySha256": "9f6c267cd2e9d0a6ef867b40a26c00f1ec5b1693050b4fea66c5e44362a6691f"
+    },
+    {
+      "upstreamFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-spatial\\gss-10fad18cae85e2e4342c77421abc70c9c5da23ed\\gss\\core\\stft_module.py",
+      "upstreamSha256": "877ef33c65668fd9c1f08efeb076f3325cbcf5b4c50d60e51c6a4b1efc239f67",
+      "numpyFile": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-real-meeting-20261108\\numpy-reference\\gss\\core\\stft_module.py",
+      "numpySha256": "0bfc3c53c9252543c56c9f668e0f3a40688c0024674e6f756c1597426b7ee142"
+    }
+  ],
+  "allowedChanges": [
+    "CuPy array/FFT imports -> NumPy",
+    "remove unused cupyx import",
+    "host .get/asnumpy -> ndarray identity/asarray",
+    "get_array_module -> NumPy",
+    "removed NumPy int/asfarray aliases -> same int/float64 semantics",
+    "cached_property -> standard functools"
+  ],
+  "mathematicalParametersOrFormulasManuallyChanged": false,
+  "torchLhotseCudaAndPackageInstallerNotLoaded": true,
+  "nativeGpuParityClaimed": false,
+  "scope": "CPU reference of pinned source equations. Independent numerical checks are required; this is not the released CuPy GPU runtime."
+}

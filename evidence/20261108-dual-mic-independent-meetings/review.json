@@ -1,0 +1,1006 @@
+{
+  "at": "2026-11-08T10:17:25.147603+08:00",
+  "state": "INDEPENDENT_RAW_DUAL_LOCAL_GAIN_NOT_PRODUCT_QUALIFIED",
+  "allOutputRowsVerified": 34,
+  "allRawGenerationHashesAndBindingsVerified": true,
+  "allFrozenCasesAndPeopleScored": true,
+  "metric": "Fixed full-meeting-identity-mapped character edit counts on prediction-selected30s windows; whole midpoint-selected reference utterances, straddling boundaries disclosed. Not strict full-meetingCER or pure-overlapCER.",
+  "overlapTotals": {
+    "mono_activity": {
+      "referenceCharacters": 698,
+      "hypothesisCharacters": 739,
+      "substitute": 84,
+      "delete": 139,
+      "insert": 180,
+      "total": 403
+    },
+    "dual_pcm": {
+      "referenceCharacters": 698,
+      "hypothesisCharacters": 732,
+      "substitute": 61,
+      "delete": 133,
+      "insert": 167,
+      "total": 361
+    }
+  },
+  "ordinaryTotals": {
+    "mono_activity": {
+      "referenceCharacters": 237,
+      "hypothesisCharacters": 230,
+      "substitute": 11,
+      "delete": 8,
+      "insert": 1,
+      "total": 20
+    },
+    "dual_pcm": {
+      "referenceCharacters": 237,
+      "hypothesisCharacters": 230,
+      "substitute": 11,
+      "delete": 8,
+      "insert": 1,
+      "total": 20
+    }
+  },
+  "perMeetingOverlapTotals": {
+    "M_R003S02C01": {
+      "mono_activity": {
+        "referenceCharacters": 324,
+        "hypothesisCharacters": 291,
+        "substitute": 47,
+        "delete": 56,
+        "insert": 23,
+        "total": 126
+      },
+      "dual_pcm": {
+        "referenceCharacters": 324,
+        "hypothesisCharacters": 294,
+        "substitute": 31,
+        "delete": 52,
+        "insert": 22,
+        "total": 105
+      }
+    },
+    "S_R003S01C01": {
+      "mono_activity": {
+        "referenceCharacters": 374,
+        "hypothesisCharacters": 448,
+        "substitute": 37,
+        "delete": 83,
+        "insert": 157,
+        "total": 277
+      },
+      "dual_pcm": {
+        "referenceCharacters": 374,
+        "hypothesisCharacters": 438,
+        "substitute": 30,
+        "delete": 81,
+        "insert": 145,
+        "total": 256
+      }
+    }
+  },
+  "perRoot": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "kind": "predicted-triple",
+      "meeting": "M_R003S02C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 129,
+          "hypothesisCharacters": 134,
+          "substitute": 12,
+          "delete": 11,
+          "insert": 16,
+          "total": 39
+        },
+        "dual_pcm": {
+          "referenceCharacters": 129,
+          "hypothesisCharacters": 135,
+          "substitute": 10,
+          "delete": 7,
+          "insert": 13,
+          "total": 30
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "kind": "predicted-overlap",
+      "meeting": "M_R003S02C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 195,
+          "hypothesisCharacters": 157,
+          "substitute": 35,
+          "delete": 45,
+          "insert": 7,
+          "total": 87
+        },
+        "dual_pcm": {
+          "referenceCharacters": 195,
+          "hypothesisCharacters": 159,
+          "substitute": 21,
+          "delete": 45,
+          "insert": 9,
+          "total": 75
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "M_R003S02C01-root-000001",
+      "kind": "ordinary-regression",
+      "meeting": "M_R003S02C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 123,
+          "hypothesisCharacters": 119,
+          "substitute": 8,
+          "delete": 5,
+          "insert": 1,
+          "total": 14
+        },
+        "dual_pcm": {
+          "referenceCharacters": 123,
+          "hypothesisCharacters": 119,
+          "substitute": 8,
+          "delete": 5,
+          "insert": 1,
+          "total": 14
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "kind": "predicted-triple",
+      "meeting": "S_R003S01C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 206,
+          "hypothesisCharacters": 241,
+          "substitute": 13,
+          "delete": 70,
+          "insert": 105,
+          "total": 188
+        },
+        "dual_pcm": {
+          "referenceCharacters": 206,
+          "hypothesisCharacters": 240,
+          "substitute": 12,
+          "delete": 70,
+          "insert": 104,
+          "total": 186
+        }
+      },
+      "missingPredictedReferencePeople": [
+        "002-F"
+      ]
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "kind": "predicted-overlap",
+      "meeting": "S_R003S01C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 168,
+          "hypothesisCharacters": 207,
+          "substitute": 24,
+          "delete": 13,
+          "insert": 52,
+          "total": 89
+        },
+        "dual_pcm": {
+          "referenceCharacters": 168,
+          "hypothesisCharacters": 198,
+          "substitute": 18,
+          "delete": 11,
+          "insert": 41,
+          "total": 70
+        }
+      },
+      "missingPredictedReferencePeople": []
+    },
+    {
+      "case": "S_R003S01C01-root-000001",
+      "kind": "ordinary-regression",
+      "meeting": "S_R003S01C01",
+      "totals": {
+        "mono_activity": {
+          "referenceCharacters": 114,
+          "hypothesisCharacters": 111,
+          "substitute": 3,
+          "delete": 3,
+          "insert": 0,
+          "total": 6
+        },
+        "dual_pcm": {
+          "referenceCharacters": 114,
+          "hypothesisCharacters": 111,
+          "substitute": 3,
+          "delete": 3,
+          "insert": 0,
+          "total": 6
+        }
+      },
+      "missingPredictedReferencePeople": []
+    }
+  ],
+  "perPerson": [
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "看看过来以后看哪些消哪一些消费水平，咱不能说，也是咱，说下咱搞活动的也这些活动，你要抓住这客户的一些心理。&嗯&啊学生过来以后，他肯定是事事先看好的就是就就盯着你价位的。你价位你这越低，我就来你这儿来拿，你不低我就走。这是年轻人就是就是",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "看看过来以后看那些消一些消费水平，咱不能说就是咱说咱搞活动的这些活动，要抓住客户的一些心理。你看学生过来以后，他肯定是是事先看好的，就是就就盯着你价位呢。你价位你是越低，我就来你那，你越低我就过来了。对对，这是年轻人就是就是一些心理，像老年。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 106,
+            "hypothesisCharacters": 109,
+            "substitute": 10,
+            "delete": 8,
+            "insert": 11,
+            "total": 29
+          }
+        },
+        "dual_pcm": {
+          "text": "看看过来以后看那些消一些消费水平，咱不能说，就是咱说下咱搞活动的这些活动，要抓住这客户的一些心理。你看学生过来以后，他肯定是是事先看好的，就是就就盯着你价位的，你价位你是越低，我就来你这拿，你你低，我就走。对，这是年轻人就是就是一些心理，像老。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 106,
+            "hypothesisCharacters": 108,
+            "substitute": 7,
+            "delete": 5,
+            "insert": 7,
+            "total": 19
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "004-F",
+      "referenceText": "对分期付款花呗对他有时候转好几家儿啦过来来",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 1529.4440898343917,
+          "end": 1531.1938366360976,
+          "text": "对分期付款花呗"
+        }
+      ],
+      "predictedSlot": 3,
+      "conditions": {
+        "mono_activity": {
+          "text": "分期付款，花呗分期付款。嗯。对他有时候转好几家了，过来了。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 21,
+            "hypothesisCharacters": 24,
+            "substitute": 2,
+            "delete": 2,
+            "insert": 5,
+            "total": 9
+          }
+        },
+        "dual_pcm": {
+          "text": "分期付款，花呗分期付款。嗯。对他有时候转好几家了，他过来了就。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 21,
+            "hypothesisCharacters": 26,
+            "substitute": 3,
+            "delete": 1,
+            "insert": 6,
+            "total": 10
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000051",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 51,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "005-F",
+      "referenceText": "嗯对",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 4,
+      "conditions": {
+        "mono_activity": {
+          "text": "对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 2,
+            "hypothesisCharacters": 1,
+            "substitute": 0,
+            "delete": 1,
+            "insert": 0,
+            "total": 1
+          }
+        },
+        "dual_pcm": {
+          "text": "对。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 2,
+            "hypothesisCharacters": 1,
+            "substitute": 0,
+            "delete": 1,
+            "insert": 0,
+            "total": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 33,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "对热卖款之类的，对吧，就是销售爆款热热卖款啊啊啊还有一些一些一些高档的一些呃那个服装，对吧呃对，毕竟男装不太销售不出去就不是咱这商场所有商场都男装。不太好销售，就是嗯男的就不太喜欢，就逛超市就是每年都对对，就这几身儿衣服。",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 1012.41925,
+          "end": 1025.2588302238808,
+          "text": "销售不出去就不是咱这商场所有商场都男装。不太好销售，就是嗯男的就不太喜欢，就逛超市就是每年都对对，就这几身儿衣服。"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "那个呃明显的地方，嗯，销售爆款、热热卖款地方，这还有一些那些一些高档的一些那个服装，对吧？那尽量把它。对，因为男装不太销售，一就不是在那上，就上那男装。哦对，男装它。对呀，销售就是，嗯，男的就。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 102,
+            "hypothesisCharacters": 80,
+            "substitute": 28,
+            "delete": 27,
+            "insert": 5,
+            "total": 60
+          }
+        },
+        "dual_pcm": {
+          "text": "对呀，就热卖款之类的，对吧？销售爆款、热热卖款。地方，这还有一些，一些一些高档的一些那个服装，是吧？男装方面。对，因为男装不太销售，就不是咱这上，就是像那种男装。对，男装。不太好销售，就是嗯，男的就和。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 102,
+            "hypothesisCharacters": 82,
+            "substitute": 15,
+            "delete": 27,
+            "insert": 7,
+            "total": 49
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 33,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "005-F",
+      "referenceText": "对咱要把那个新品挂到那个呃明显的地方嗯挂到那个明显的地方嗯，不好卖的，咱都打上那个特价签儿或者有个优惠或一个赠品，咱尽量把它那个销售出去对，男装<sil>它",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 989.7604809778724,
+          "end": 992.87019,
+          "text": "对咱要把那个新品挂到那个"
+        }
+      ],
+      "predictedSlot": 4,
+      "conditions": {
+        "mono_activity": {
+          "text": "大家把那个新品挂到那个呃明显的地方，挂到那个明显的地方。嗯，不好卖的咱能打上那个特价签儿，或者有个优惠或一个赠品，咱尽量把它那个销售出去。对。哦对，男装它。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 69,
+            "hypothesisCharacters": 69,
+            "substitute": 3,
+            "delete": 2,
+            "insert": 2,
+            "total": 7
+          }
+        },
+        "dual_pcm": {
+          "text": "大家把那个新品挂到那个呃明显的地方，挂到那个明显的地方。嗯，不好卖的咱都打上那个特价签儿，或者有个优惠或一个赠品，咱尽量把它那个销售出去。对。哦对，男装它。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 69,
+            "hypothesisCharacters": 69,
+            "substitute": 2,
+            "delete": 2,
+            "insert": 2,
+            "total": 6
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000033",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 33,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "006-F",
+      "referenceText": "嗯那些新品要挂上，那些新品爆款呃对挂上那种就像嗯嗯",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 988.0539378008999,
+          "end": 992.352698461881,
+          "text": "嗯那些新品要挂上，那些新品爆款"
+        }
+      ],
+      "predictedSlot": 5,
+      "conditions": {
+        "mono_activity": {
+          "text": "大家把那个新品，嗯。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 24,
+            "hypothesisCharacters": 8,
+            "substitute": 4,
+            "delete": 16,
+            "insert": 0,
+            "total": 20
+          }
+        },
+        "dual_pcm": {
+          "text": "大家把那个新品，嗯。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 24,
+            "hypothesisCharacters": 8,
+            "substitute": 4,
+            "delete": 16,
+            "insert": 0,
+            "total": 20
+          }
+        }
+      }
+    },
+    {
+      "case": "M_R003S02C01-root-000001",
+      "meeting": "M_R003S02C01",
+      "rootIndex": 1,
+      "kind": "ordinary-regression",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "把各个部门儿呃出现的问题啊咱再进行一次，你们也进行汇报一下。我这边儿也了解你们大体的一些基本情况我才能针对你们所出出的问题才能才能才能解决。呃<sil>呃然后呢咱们商场这块儿也。呃看看有什么呃大的好的这个<sil>这个活动呃<sil>还有一些促销的手手段能留住咱咱这个呃<sil>挽留大家客流量。",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 29.60528,
+          "end": 37.7653,
+          "text": "把各个部门儿呃出现的问题啊咱再进行一次，你们也进行汇报一下。我这边儿也了解你们大体的一些基本情况"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "各个部门儿呃出现的问题啊，咱也进行一次，你们也进行汇报一下，我这边也了解你们大体的一些基本情况，我才能针对你们所出出的问题，咱能咱能咱能解决。呃，然后呢，咱们商场这块儿也看看有什么呃大的好的这个这个活动，呃，还有一些促销的手段手段，能留住的这一个呃挽留的客流量。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 123,
+            "hypothesisCharacters": 119,
+            "substitute": 8,
+            "delete": 5,
+            "insert": 1,
+            "total": 14
+          }
+        },
+        "dual_pcm": {
+          "text": "各个部门儿呃出现的问题啊，咱也进行一次，你们也进行汇报一下，我这边也了解你们大体的一些基本情况，我才能针对你们所出出的问题，咱能咱能咱能解决。呃，然后呢，咱们商场这块儿也看看有什么呃大的好的这个这个活动，呃，还有一些促销的手段手段，能留住的这一个呃挽留的客流量。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 123,
+            "hypothesisCharacters": 119,
+            "substitute": 8,
+            "delete": 5,
+            "insert": 1,
+            "total": 14
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "嗯<sil>进行处理，对对这个包到一块儿对也可以贴一个标签儿对所以看你有的你弄一大袋子，他会他，一顿他吃不完，他有的时候，他回去想吃两种菜",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 1704.91271,
+          "end": 1710.54306,
+          "text": "所以看你有的你弄一大袋子，他会他，一顿他吃不完，他有的时候，他回去想吃两种菜"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "呃，进行处理。对，这个进行。对，这个就是。包到一块儿。包到一块儿。对，他你看，有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 59,
+            "hypothesisCharacters": 58,
+            "substitute": 7,
+            "delete": 8,
+            "insert": 7,
+            "total": 22
+          }
+        },
+        "dual_pcm": {
+          "text": "呃，进行处理。对，这个进行。对，这个就是。包到一块儿。包到一块儿。对。对，但你看有的你弄一大袋子，他回去他一顿他吃不完，他有的时候他回去想吃两。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 59,
+            "hypothesisCharacters": 59,
+            "substitute": 7,
+            "delete": 8,
+            "insert": 8,
+            "total": 23
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "002-F",
+      "referenceText": "对包到一块儿比如说两个香菇啦，一把儿油麦啦对。也也让他们再放一些金针菇啦啊五元一袋儿啊，六六元六元一袋儿就是品种比较多啊",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": null,
+      "conditions": {
+        "mono_activity": {
+          "text": "",
+          "predictedPersonAvailable": false,
+          "edits": {
+            "referenceCharacters": 57,
+            "hypothesisCharacters": 0,
+            "substitute": 0,
+            "delete": 57,
+            "insert": 0,
+            "total": 57
+          }
+        },
+        "dual_pcm": {
+          "text": "",
+          "predictedPersonAvailable": false,
+          "edits": {
+            "referenceCharacters": 57,
+            "hypothesisCharacters": 0,
+            "substitute": 0,
+            "delete": 57,
+            "insert": 0,
+            "total": 57
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "003-M",
+      "referenceText": "放到一块儿把它那就在一个袋子里面啊是",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 2,
+      "conditions": {
+        "mono_activity": {
+          "text": "放到一块儿，把它。那就在一个站子里面。贴一个标签儿。哎，对对。哦，是。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 18,
+            "hypothesisCharacters": 27,
+            "substitute": 2,
+            "delete": 0,
+            "insert": 9,
+            "total": 11
+          }
+        },
+        "dual_pcm": {
+          "text": "放到一块儿，把它。那就在一个袋子里面。贴一个标签。哎对对。哦，是。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 18,
+            "hypothesisCharacters": 26,
+            "substitute": 1,
+            "delete": 0,
+            "insert": 8,
+            "total": 9
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "004-F",
+      "referenceText": "对对两三种菜，两到现在对咱们就应该是两三种菜绿叶菜啦，豆制品啦是吧",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 3,
+      "conditions": {
+        "mono_activity": {
+          "text": "对对，两三种菜，两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对，包到一块儿，包到一块儿。比如说两个香菇啦，一把油麦啦，对，一比如说还有再放一个金针菇啦。就就跟套餐一样，包在一个真空包装里，贴一个标签。哎，对对对，六元一袋儿，就是品种比较多，种类多一点，反正好卖。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 31,
+            "hypothesisCharacters": 116,
+            "substitute": 1,
+            "delete": 0,
+            "insert": 85,
+            "total": 86
+          }
+        },
+        "dual_pcm": {
+          "text": "对对，两三种菜，两道现在对咱们最应该是两三种菜，绿叶菜啦、豆制品啦，是吧？对，包到一块儿。包到一块儿。比如说两个香菇啦，一把油麦啦。对，一比如说哈，再放一个金针菇啦。就跟套餐一样。包在一个，这个包装也。六元一袋儿，六元六元六元一袋儿，就是品种比较多，种类多一点，反正好卖。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 31,
+            "hypothesisCharacters": 114,
+            "substitute": 2,
+            "delete": 0,
+            "insert": 83,
+            "total": 85
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000056",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 56,
+      "kind": "predicted-triple",
+      "referencePersonForScoringOnly": "005-M",
+      "referenceText": "品种多对这样就就跟套餐一样，包在一个，包装里边儿哎，对对对对量种类多一点儿，反而好卖一些嗯",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 4,
+      "conditions": {
+        "mono_activity": {
+          "text": "品种多一些，对，这样就就跟套餐一样，包在一个真空包装里面。哎，对对对，这样种类多一点，反而好卖。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 41,
+            "hypothesisCharacters": 40,
+            "substitute": 3,
+            "delete": 5,
+            "insert": 4,
+            "total": 12
+          }
+        },
+        "dual_pcm": {
+          "text": "品种多一些，对，这样就就跟套餐一样，包在一个真空包装里面。哎，对对对对，那样种类多一点，反而好卖。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 41,
+            "hypothesisCharacters": 41,
+            "substitute": 2,
+            "delete": 5,
+            "insert": 5,
+            "total": 12
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 67,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "运营成本儿也太高啦，对，所以这个，都有这个方面的需求，啊哦那",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "那咱这个运营成本也太高了。对。对，所以这边都有这个方面需求。反映一下嘛，是吧？啊。啊，那。费用问题的话，这块儿之前。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 26,
+            "hypothesisCharacters": 47,
+            "substitute": 3,
+            "delete": 2,
+            "insert": 23,
+            "total": 28
+          }
+        },
+        "dual_pcm": {
+          "text": "对，咱这个运营成本也太高了。对。对，所以这边都有这个方面需求。反映一下嘛，是吧？啊，那费用问题的话，这块儿之前。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 26,
+            "hypothesisCharacters": 46,
+            "substitute": 4,
+            "delete": 2,
+            "insert": 22,
+            "total": 28
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 67,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "002-F",
+      "referenceText": "对具体实施还是由咱们超市来去制定去嗯嗯嗯",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 1,
+      "conditions": {
+        "mono_activity": {
+          "text": "这个具体实施还是由咱们超市来去制定去。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 20,
+            "hypothesisCharacters": 18,
+            "substitute": 1,
+            "delete": 3,
+            "insert": 1,
+            "total": 5
+          }
+        },
+        "dual_pcm": {
+          "text": "这个具体实施还是由咱们超市来去制定去。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 20,
+            "hypothesisCharacters": 18,
+            "substitute": 1,
+            "delete": 3,
+            "insert": 1,
+            "total": 5
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 67,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "003-M",
+      "referenceText": "这个就是可以跟那个啥美团包括邢台现在不是做很多这种送货的这种，啊，跑腿儿啊，这种去跟他们合作，都给送但是这个可能",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 2,
+      "conditions": {
+        "mono_activity": {
+          "text": "这个就是可以跟那个啥，美团，包括邢台现在不是做很多这种送货的这种，啊对吧？啊对，去跟他们合作，都可以送。嗯。但是这个可能，哎，考虑成本，哎，就考虑费用问题了，嗯。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 52,
+            "hypothesisCharacters": 67,
+            "substitute": 4,
+            "delete": 2,
+            "insert": 17,
+            "total": 23
+          }
+        },
+        "dual_pcm": {
+          "text": "这个就是可以跟那个啥，美团，包括邢台现在不是做很多这种送货的这种，啊，跑腿啊这种，去跟他们合作，都给送。但是这个可能产生的费用啊，就在个人身上了。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 52,
+            "hypothesisCharacters": 64,
+            "substitute": 0,
+            "delete": 1,
+            "insert": 13,
+            "total": 14
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 67,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "004-F",
+      "referenceText": "对这个你们反应一下吧，是吧，因为",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 3,
+      "conditions": {
+        "mono_activity": {
+          "text": "都有这个方面的需求啊。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 14,
+            "hypothesisCharacters": 10,
+            "substitute": 7,
+            "delete": 5,
+            "insert": 1,
+            "total": 13
+          }
+        },
+        "dual_pcm": {
+          "text": "都有这个方面的需求啊。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 14,
+            "hypothesisCharacters": 10,
+            "substitute": 7,
+            "delete": 5,
+            "insert": 1,
+            "total": 13
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000067",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 67,
+      "kind": "predicted-overlap",
+      "referencePersonForScoringOnly": "005-M",
+      "referenceText": "对对对，咱咱也得考虑咱自己的运营成本嗯悠悠跑腿儿，对吧，啊对他们送个小东西都给都给嗯嗯还是考虑成本，啊就考虑费用问题了嗯",
+      "boundaryStraddlingReferenceRows": [],
+      "predictedSlot": 4,
+      "conditions": {
+        "mono_activity": {
+          "text": "对对对，但是咱也得考虑咱具体运营成本。对，嗯，所以就。有有有跑腿儿，对吧？啊，对。他们送个小东西都给都给你送，都给送。嗯。那也考虑成本，哎，就考虑费用问题了，嗯。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 56,
+            "hypothesisCharacters": 65,
+            "substitute": 9,
+            "delete": 1,
+            "insert": 10,
+            "total": 20
+          }
+        },
+        "dual_pcm": {
+          "text": "对对对，但咱也得考虑咱自己的运营成本。嗯。对。嗯。有有有跑腿儿，对吧？啊，对。他们送个小东西都给都给你送，嗯。主要考虑成本，啊，就考虑费用问题了，嗯。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 56,
+            "hypothesisCharacters": 60,
+            "substitute": 6,
+            "delete": 0,
+            "insert": 4,
+            "total": 10
+          }
+        }
+      }
+    },
+    {
+      "case": "S_R003S01C01-root-000001",
+      "meeting": "S_R003S01C01",
+      "rootIndex": 1,
+      "kind": "ordinary-regression",
+      "referencePersonForScoringOnly": "001-M",
+      "referenceText": "包括一些工作上遇到一些问题，呃<sil>呃<sil>这个你的产品或者一些呃遇到哪些呃呃问题。这个产品需要上线哪些新产品呃，员工之间，你们下属员工嗯的呃，这个工作情况还有你们的一些建议，包括一些呃有什么新的想法啦还有一些新的产品啦嗯<sil>都<sil>简单说一下，主要就是两方面，第一",
+      "boundaryStraddlingReferenceRows": [
+        {
+          "start": 29.25256,
+          "end": 36.07257,
+          "text": "包括一些工作上遇到一些问题，呃<sil>呃<sil>这个你的产品或者一些"
+        },
+        {
+          "start": 56.53133,
+          "end": 60.00134,
+          "text": "都<sil>简单说一下，主要就是两方面，第一"
+        }
+      ],
+      "predictedSlot": 0,
+      "conditions": {
+        "mono_activity": {
+          "text": "一些工作上遇到一些问题，呃呃，这个你的产品或者一些呃遇到哪些呃呃问题，这个产品需要上些哪些新产品，啊，员工之间，你们下边员工的呃这个工作情况，还有你们的一些建议，包括一些呃有什么新的想法啦，还有一些新的产品啦，嗯，都简单说一下，主要就是两方面，第一。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 114,
+            "hypothesisCharacters": 111,
+            "substitute": 3,
+            "delete": 3,
+            "insert": 0,
+            "total": 6
+          }
+        },
+        "dual_pcm": {
+          "text": "一些工作上遇到一些问题，呃呃，这个你的产品或者一些呃遇到哪些呃呃问题，这个产品需要上些哪些新产品，啊，员工之间，你们下边员工的呃这个工作情况，还有你们的一些建议，包括一些呃有什么新的想法啦，还有一些新的产品啦，嗯，都简单说一下，主要就是两方面，第一。",
+          "predictedPersonAvailable": true,
+          "edits": {
+            "referenceCharacters": 114,
+            "hypothesisCharacters": 111,
+            "substitute": 3,
+            "delete": 3,
+            "insert": 0,
+            "total": 6
+          }
+        }
+      }
+    }
+  ],
+  "overlapRootRegressions": [],
+  "participantDeletionRegressions": [],
+  "ordinaryRawTextSameAcrossArms": true,
+  "standardFullJournalReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\journal-review.json",
+  "actualReferenceClipCoverage": [
+    {
+      "id": "M_R003S02C01-root-000051",
+      "selectedKind": "predicted-triple",
+      "trueSingleSeconds": 23.925604584221674,
+      "trueOverlapSeconds": 4.736533864242574,
+      "trueTripleOrMoreSeconds": 1.0152851812365498,
+      "trueSilenceSeconds": 1.3378615515357524,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "M_R003S02C01-root-000033",
+      "selectedKind": "predicted-overlap",
+      "trueSingleSeconds": 17.508044097316088,
+      "trueOverlapSeconds": 12.26114108725642,
+      "trueTripleOrMoreSeconds": 2.165096638455907,
+      "trueSilenceSeconds": 0.23081481542749316,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "M_R003S02C01-root-000001",
+      "selectedKind": "ordinary-regression",
+      "trueSingleSeconds": 29.365000000000002,
+      "trueOverlapSeconds": 0.0,
+      "trueTripleOrMoreSeconds": 0.0,
+      "trueSilenceSeconds": 0.634999999999998,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000056",
+      "selectedKind": "predicted-triple",
+      "trueSingleSeconds": 20.35518286553406,
+      "trueOverlapSeconds": 9.36182060272722,
+      "trueTripleOrMoreSeconds": 2.1836111057994003,
+      "trueSilenceSeconds": 0.28299653173871775,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000067",
+      "selectedKind": "predicted-overlap",
+      "trueSingleSeconds": 20.661238109574697,
+      "trueOverlapSeconds": 7.529607779083335,
+      "trueTripleOrMoreSeconds": 0.14333864286800235,
+      "trueSilenceSeconds": 1.809154111341968,
+      "selectionChangedAfterSeeingTruth": false
+    },
+    {
+      "id": "S_R003S01C01-root-000001",
+      "selectedKind": "ordinary-regression",
+      "trueSingleSeconds": 29.541249999999998,
+      "trueOverlapSeconds": 0.0,
+      "trueTripleOrMoreSeconds": 0.0,
+      "trueSilenceSeconds": 0.458750000000002,
+      "selectionChangedAfterSeeingTruth": false
+    }
+  ],
+  "sameRecognizerInferenceAst": true,
+  "newSpatialAlgorithmCalls": 4,
+  "newAsrCalls": 32,
+  "sameAudioReuses": 2,
+  "timings": {
+    "separation": 119.84454619997996,
+    "inventory": 7.119088000006741,
+    "asr": 354.48305100001744
+  },
+  "maximumRecordedJobPrivateBytes": 1743044608,
+  "cpuLimitPercent": 10,
+  "privateLimitBytes": 2147483648,
+  "twoWayLabelFusionPerformed": false,
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false,
+  "newTrainingRuns": 0,
+  "newHardwareAccess": false,
+  "qualityQualified": false,
+  "broadPromotionAllowed": false
+}
