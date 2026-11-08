@@ -27,3 +27,7 @@ evidence/20261108-dual-mic-real-meeting-validation/** -text -whitespace
 src/*independent*20261108.py -text
 
 evidence/20261108-dual-mic-independent-meetings/** -text -whitespace
+
+src/*joint_neural_spatial*20261108.py -text
+
+evidence/20261108-joint-neural-spatial/** -text -whitespace

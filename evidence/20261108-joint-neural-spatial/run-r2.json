@@ -1,0 +1,37 @@
+{
+  "state": "RUNNING_JOINT_ASR",
+  "pid": 22312,
+  "startedAt": "2026-11-08T11:02:42+08:00",
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 5.075290400010999,
+      "privatePeakBytes": 325922816,
+      "rssPeakBytes": 410415104
+    },
+    {
+      "stage": "cue",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 44.68573930001003,
+      "privatePeakBytes": 1059299328,
+      "rssPeakBytes": 1069539328
+    },
+    {
+      "stage": "spatial",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 6.1256899000145495,
+      "privatePeakBytes": 369131520,
+      "rssPeakBytes": 355667968
+    }
+  ],
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\run-attempt-0001.json"
+  ],
+  "automaticModelFailureRetries": 0,
+  "referenceInput": false,
+  "controllerSha256": "862bf484fd17640b595fbae3602a852aee39aa817515080f81cf76338f79243c",
+  "qualityQualified": false,
+  "stage": "asr",
+  "activePid": 3184
+}

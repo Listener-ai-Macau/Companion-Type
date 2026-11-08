@@ -1,0 +1,29 @@
+{
+  "id": "M_R003S02C01-root-000051-neural_spatial-speaker-0",
+  "binding": {
+    "protocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+    "workerSourceSha256": "5e2283261b8a6dec6c3cbaf0b0aa42033a6169cdb277719c3f70ff1ff8d5a4ac"
+  },
+  "meeting": "M_R003S02C01",
+  "rootIndex": 51,
+  "kind": "predicted-triple",
+  "predictedSpeaker": 0,
+  "arm": "neural_spatial",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\target-audio\\M_R003S02C01-root-000051-neural_spatial-speaker-0.wav",
+  "audioSha256": "e385c484eee27f555aa7e3385fc8e56a005878381f22f2b09742cbba73ef8db3",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "2a0a8b7d85264bc47b0ca0e3ff2d093952d4801c5dc5df4ec7227466c73a766c",
+  "oracleOrReferenceActivityUsed": false,
+  "predictedActivityGateApplied": false,
+  "voiceAdmissionApplied": false,
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.08205897217685337,
+  "durablePublication": {
+    "audioSha256": "e385c484eee27f555aa7e3385fc8e56a005878381f22f2b09742cbba73ef8db3",
+    "existingIdenticalPcmRecovered": false,
+    "allSamplesVerified": true,
+    "existingAudioOverwritten": false
+  },
+  "sampleTimelineRetained": true,
+  "ordinaryBypass": false
+}

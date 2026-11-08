@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_ALL_KNOWN_SPEAKER_CUES_UNQUALIFIED",
+  "pid": 26644,
+  "startedAt": "2026-11-08T11:02:47.333131+08:00",
+  "binding": {
+    "protocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+    "workerSourceSha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67"
+  },
+  "completedInputs": 11,
+  "newNeuralCalls": 22,
+  "reusedOutputs": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 26644,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1058770944,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "finishedAt": "2026-11-08T11:03:29.917816+08:00",
+  "wholeWorkerSeconds": 42.585895600001095
+}

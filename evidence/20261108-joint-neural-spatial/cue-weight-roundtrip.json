@@ -1,0 +1,9 @@
+{
+  "state": "PASS_EXACT_AUTHOR_STATE_TENSORS_AND_GPU_BYTES",
+  "tensors": 754,
+  "sourceTensorSha256": "07fb6ac6f500d981b76221a1ef4c31c2d9d1038faaf8c7bbdd6aedd332bc13de",
+  "deviceTensorSha256": "07fb6ac6f500d981b76221a1ef4c31c2d9d1038faaf8c7bbdd6aedd332bc13de",
+  "unmodifiedAuthorInference": true,
+  "dtype": "float32",
+  "newTrainingRuns": 0
+}

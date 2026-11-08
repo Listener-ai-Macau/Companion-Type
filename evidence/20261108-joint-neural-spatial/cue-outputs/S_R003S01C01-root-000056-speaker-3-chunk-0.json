@@ -1,0 +1,23 @@
+{
+  "id": "S_R003S01C01-root-000056-speaker-3-chunk-0",
+  "binding": {
+    "protocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+    "workerSourceSha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67"
+  },
+  "case": "S_R003S01C01-root-000056",
+  "meeting": "S_R003S01C01",
+  "predictedSpeaker": 3,
+  "startSampleWithinContext": 0,
+  "endSampleWithinContext": 480000,
+  "floatAudio": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\cue-floats\\S_R003S01C01-root-000056-speaker-3-chunk-0-e05cb66cfc5447e5a6a48d36ce2c73b9.npy",
+  "floatAudioSha256": "933245fb280319b7082733938aec6c44ff236a9e67a0271e3673a96f71b78b73",
+  "profileSha256": "f4c87de192a9f9fa03c0f7a0f949d5256255a3ce6af4e83cc813252b470ea61b",
+  "sourcePairSha256": "cbe62da218c6dc32497932416698891f04892fbd3cd8b08e6c7f73e42066ceba",
+  "mixtureAuthorPeakNormalization": 0.173553466796875,
+  "outputRestoredToOriginalMic0Amplitude": true,
+  "enrollmentAuthorPeakNormalization": 0.090911865234375,
+  "inferenceSeconds": 1.128308500017738,
+  "referenceUsed": false,
+  "activityGate": false,
+  "voiceAdmission": false
+}

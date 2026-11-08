@@ -1,0 +1,107 @@
+{
+  "at": "2026-11-08T10:59:37.811471+08:00",
+  "state": "FROZEN_SINGLE_SPEAKER_NEURAL_MASK_SPATIAL_CANDIDATE",
+  "workerSourceSha256": "004ceda29b19eca6916c530f6006329d44dcc46cd57e515b8af1dcf451b92c22",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "audioOnlySha256": "dfded453218219bcfd6c9a1041a220129560045b00b9af3f272271fabccd75fa",
+  "helperSources": {
+    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107",
+    "practical_target_voice_router_20261107.py": "b416999fe9dd6769a81ef46a7a51394a9432b6bad1aceb76b66945c9942e8afb"
+  },
+  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "derivedAudioRoot": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108",
+  "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+  "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+  "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+  "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+  "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+  "trainingOverlapWithThesePublicRecordingsUnknown": true,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "modelStagesSequential": true,
+  "parentProtocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+  "audioFrontendManifestSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+  "preparationFailure": "Original model attempt stopped on missing torchaudio before weights or any inference. Pinned unmodified official Python frontend added only to separation-worker path; standard PCM wave I/O and native Torch are unchanged. No model/audio/retention/scoring setting changed.",
+  "componentParentVerifiedReviewSha256": "021474ee010a417f9d238d87563020ba77a7cc3829d734db2700efa3672186aa",
+  "seedManifestSha256": "a2ca387cb66b2e806b6b055a2482695375bac1445e24c686e44405b474d0112a",
+  "globalAnchorsSha256": "eefd80617a89918661178867aad3da5e1650ff5feb22e974d69106e8cf3f7cd7",
+  "fullRoutePlanSha256": "e42d537c4635de487aee4ef310d009a3a6c114124f4349cee561b39ee4340bc9",
+  "fullRoute": "Every predicted-overlap root, all predicted-active enrolled people, same native encoder top1 self-identity check against all6 frozen automatic anchors. All rejected raw lanes retained; no hard time-activity masking. If no lane admitted in a root, retain its full original transcript. Other roots retain original whole output. Same thresholds/model/ASR as routed component, no per-root winner selection.",
+  "fullRetentionRule": "Report full-L fixed global DER mapping/unknown-unmatched and standard cpCER, all-person errors, short utterance and overlap-context categories separately. Any total regression rejects this whole candidate, no per-root model cherry-picking. Ordinary source route stays byte-identical. Short-person regression and absent/unregistered speakers remain explicit even if total improves; no formal5% or sale pass from this one development meeting.",
+  "asrWorkerSourceSha256": "9edebae668740f64443d8b02bdec8aec0bcac3df42801dfc37dc69270920ff69",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\spatial-audio-only.json",
+      "sha256": "dfded453218219bcfd6c9a1041a220129560045b00b9af3f272271fabccd75fa"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\profiles.json",
+      "sha256": "d2c4ac7f5eb8c4087c7abd18e57c0ea8f67dfbd1530b3912c35a9525545ea9a8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\numpy-backend.json",
+      "sha256": "751e8850959cd498a895b56dfea5a489ff5821bded4ba2a4bd74b381eea23c6c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\numpy-numerical-proof.json",
+      "sha256": "2856fad90297b663daddb54be24ddb5dfe116f9e4c42c58b7e3f379f068121fc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-joint-neural-spatial\\audio-frontend-source.json",
+      "sha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\joint_neural_spatial_cue_worker_20261108.py",
+      "sha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\joint_neural_spatial_beam_worker_20261108.py",
+      "sha256": "5e2283261b8a6dec6c3cbaf0b0aa42033a6169cdb277719c3f70ff1ff8d5a4ac"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_pcm_publication_20261108.py",
+      "sha256": "74484aa889f0355f72e3c1d5a3141ead7ff3ed988b5538b86416c80386623179"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\independent_progress_reader_20261108.py",
+      "sha256": "f41eb139103396d6b8ff954c1cce6e0f09122c239fd6ad356a18f7941dfa90eb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_gss_numpy_backend_20261108.py",
+      "sha256": "4af5abad0ee8ffb370d73a9d4268e1045237b5c9cb3b309fc47c745c057ada11"
+    }
+  ],
+  "algorithm": "Unmodified matching FP32/eval PS4 cue model on original mic0. Non-overlapping <=30s context chunks, separately author peak-normalized and output restored to original mic amplitude. Neural time-frequency target ratio |S|²/(|S|²+|Y0-S|²+eps), clipped to[0,1], drives pinned MVDR-Souden/BAN on ORIGINAL paired0/1 STFT1024Blackman/256/fade, reference0. No GSS EM, activity gate, neural output admission or word filtering. All known people counted. Ordinary bypass original mic0 on both arms.",
+  "conditions": [
+    "neural_mono",
+    "neural_spatial"
+  ],
+  "activity": "Existing full nativeFP16 diarization only. The identical predicted lexical-segment sample mask is applied to every overlap arm, including the mono baseline, after spatial processing. This is a bounded segmentation-controlled research screen, not a new production hard-gating policy; all missed words outside the prediction are charged. No reference/oracle activities or words enter processing.",
+  "ordinary": "First predicted single-ID >=25s root in each new meeting; ordinary rawdual bypass is byte-identical to mono. No alternative ordinary window if reference audit contradicts the prediction.",
+  "recognition": "Exact prior native1.7B inference AST, same512tokens/BF16/greedy/Chinese/no-context/bounded recovery. All raw generations retained; no filler, duplication or reference-word filtering.",
+  "primaryComparison": "Raw paired0/1 fixedGSS versus original0 with identical predicted activity gates. No oracle count/turn/text/slot choice, no parameter or codec sweep. Full per-mic DER and short-span recall reported separately; mic0 always guides separation regardless of reference score.",
+  "retention": "To expand to remaining roots: beat cached automaticGSS total216 edits and each root30/186; reduce the lost S002-F deletion count; do not worsen another participant deletions; both ordinary controls remain original PCM/text. Otherwise stop this candidate, keep all absent-person insertions and do not sweep masks/thresholds/models.",
+  "asrInferenceAstMatchesOriginal": true,
+  "scope": "Local pipeline feasibility, not fullCER<5%, pure-overlapCER, current-card dual-mic performance, Android deployment or sale qualification.",
+  "cpuLimitPercent": 10,
+  "privateCommitBytes": 2147483648,
+  "rootCount": 6,
+  "expectedOutputRows": 26,
+  "referencePayloadRead": false,
+  "cueWorkerSha256": "f70b6939a2c2de22e9ce0c1cf06ac50ba8f33271b990dee6c8874031e421ea67",
+  "beamWorkerSha256": "5e2283261b8a6dec6c3cbaf0b0aa42033a6169cdb277719c3f70ff1ff8d5a4ac",
+  "profilesSha256": "d2c4ac7f5eb8c4087c7abd18e57c0ea8f67dfbd1530b3912c35a9525545ea9a8",
+  "ratioNumericalEpsilonRelativeToPeakPower": 1e-12,
+  "conditionsMeaning": "Matched neural_mono vs neural_spatial isolates the spatial filter; both also compared with cached strongest automaticGSS baseline on identical roots. This is NOT a newly trained joint model or a claim the mono backbone accepts2channels.",
+  "diagnosticRoots": {
+    "M_R003S02C01": 51,
+    "S_R003S01C01": 56
+  },
+  "newTrainingRuns": 0,
+  "referenceUsed": false
+}

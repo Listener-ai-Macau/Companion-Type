@@ -1,0 +1,14 @@
+{
+  "state": "FROZEN_SINGLE_SPEAKER_NEURAL_MASK_SPATIAL_CANDIDATE",
+  "owner": "好的, 你看看模型那些要怎么继续推进到可用版本, 卡太久了；有一直在原地踏步嘛",
+  "previousEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\decision.json",
+  "decisionBasis": "Two new meetings automaticGSS403→361 edits, true activity still237 and one meeting regression. Repeating binary activity/GSS or monoPS4 alone is excluded. New controlled variable is speaker-conditioned spectral masks driving original dual-channel beamforming, with matched neural-mono and strongest cached control.",
+  "processingCases": 4,
+  "allKnownProfiles": 11,
+  "expectedOutputRows": 26,
+  "sourceProtocolSha256": "2f1d34951c710e300189d4a9a28ee87d705dfe315a454ec5fc87775f0e71ac40",
+  "newModelFamilies": 0,
+  "newTrainingRuns": 0,
+  "productDefaultChanged": false,
+  "qualityQualified": false
+}
