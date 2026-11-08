@@ -1,0 +1,35 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 24504,
+  "startedAt": "2026-11-08T10:27:38+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0002.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0003.json"
+  ],
+  "results": [
+    {
+      "stage": "separation",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 29.41516119998414,
+      "privatePeakBytes": 1638973440
+    },
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 6.0933897999930196,
+      "privatePeakBytes": 345092096
+    },
+    {
+      "stage": "asr",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 199.8975185000163,
+      "privatePeakBytes": 1243631616
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "asr",
+  "transientObserverSkips": 2,
+  "finishedAt": "2026-11-08T10:31:33+08:00"
+}

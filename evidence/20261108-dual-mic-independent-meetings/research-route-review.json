@@ -22,5 +22,25 @@
   ],
   "newModelFamiliesExecuted": 0,
   "newTrainingRuns": 0,
-  "productDefaultChanged": false
+  "productDefaultChanged": false,
+  "correctedPublicChallengeContext": {
+    "source": "https://real-tse.github.io/challenge/#rankings",
+    "updated": "2026-10-25",
+    "offlineWinner": "MERL",
+    "TER": 0.462,
+    "scoredSamples": 4930,
+    "importantScope": "Combined MandarinCER/EnglishWER averaged per target mix-enrollment sample with officialZipformer ASR. Not our fixed-mapping30s edit count, not ordinary full-meetingCER, not a guarantee or a reason to change our<5% acceptance target. Raw public challenge clips and current final holdout not downloaded.",
+    "direction": "Measure retained target words, speaker identity, non-target leakage and actual overlap separately; do not equate a good-sounding separator or low ordinary speech CER with solved overlap."
+  },
+  "winningSystemMethodReview": {
+    "source": "https://real-tse.github.io/assets/pdf/MERL-SA-Track2.pdf",
+    "facts": [
+      "Uses BSRNN with both framewise and pooled speaker cues, matching model architecture/weights.",
+      "Focuses on processed real far-field conversational training and multi-stage curriculum, not just choosing a larger separator.",
+      "Uses explicitly absent-target examples during training, and acknowledges large synthetic-to-real domain gap.",
+      "Warns that optimizing speaker-similarity/MOS metrics can produce artifacts or optimistic scores without better perceived identity."
+    ],
+    "ourInferenceNotClaimOfReproduction": "The next joint front end should retain consistent speaker evidence and real-domain word preservation/non-target rejection. Do not repeat top1-cosine presence gating, a small fixed-feature head, MOS optimization or a sweep of synthetic2speaker models. True reference-guided causal control below will decide whether diarization alone is a plausible next focus.",
+    "thisTurnActions": "Primary report read and limitations recorded; no new training, encoder substitution, model install or final-holdout access."
+  }
 }

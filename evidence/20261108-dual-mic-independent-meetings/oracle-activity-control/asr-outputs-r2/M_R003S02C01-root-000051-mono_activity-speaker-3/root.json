@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "audioSha256": "0cbb22c0f2b5f02ffc9c4abe6949ef0dd98298d7298fabbc05cbed773f8b9053",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "最后吧，刮败。对他有时候转好几家了，过来了。",
+    "generatedIds": [
+      100161,
+      100003,
+      3837,
+      106366,
+      21125,
+      1773,
+      105921,
+      104854,
+      46670,
+      52801,
+      112248,
+      34187,
+      3837,
+      38182,
+      101161,
+      1773,
+      151645
+    ],
+    "rawDecoded": "最后吧，刮败。对他有时候转好几家了，过来了。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.2187553999829106
+  },
+  "rawSha256": "7479ceb9a387346171fc5872b5b6dc1fc37e087736279a3435b37c1e3e64d355"
+}

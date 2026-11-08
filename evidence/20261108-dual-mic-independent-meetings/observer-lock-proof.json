@@ -1,0 +1,9 @@
+{
+  "state": "PASS_REAL_WINDOWS_EXCLUSIVE_LOCK_OBSERVER_CONTINUES_AND_RECOVERS",
+  "actualExclusiveFileLockReproduced": true,
+  "cachedObservationReturnedOnlyDuringLock": true,
+  "freshProgressObservedAfterRelease": true,
+  "malformedJsonStillFails": true,
+  "noProgressDeadlineBypassed": false,
+  "newModelCalls": 0
+}

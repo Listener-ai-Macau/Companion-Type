@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "audioSha256": "20b126083c689cdaa1960e727f0c0bad66594734ffe58c2f63eaaedbf7aa46f3",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "放到一块儿，把它。那就在一个袋子里面。哦，是。",
+    "generatedIds": [
+      107974,
+      104474,
+      99261,
+      3837,
+      105744,
+      1773,
+      99212,
+      104158,
+      46944,
+      117263,
+      100420,
+      1773,
+      104170,
+      3837,
+      20412,
+      1773,
+      151645
+    ],
+    "rawDecoded": "放到一块儿，把它。那就在一个袋子里面。哦，是。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.2147249999979977
+  },
+  "rawSha256": "1cd983b4c916f6391e7b296137717ee1cf705ad1a6da20cc583638805fe5a80f"
+}

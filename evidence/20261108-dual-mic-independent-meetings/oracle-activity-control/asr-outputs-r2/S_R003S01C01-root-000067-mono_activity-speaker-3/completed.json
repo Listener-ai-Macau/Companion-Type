@@ -1,0 +1,48 @@
+{
+  "id": "S_R003S01C01-root-000067-mono_activity-speaker-3",
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "meeting": "S_R003S01C01",
+  "rootIndex": 67,
+  "predictedSpeaker": 3,
+  "arm": "mono_activity",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000067-mono_activity-speaker-3.wav",
+  "audioSha256": "ec1b41bafb3f5da8914059dbe8a2ffbab1bb7f38bdcbb03ead2bc00274c9b032",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "5178d6c9dc915a1248ca9b82ef8fce66a11e3f54c37ef73176a9ff680ed62b36",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "60555d9b823582f42670f6675600911b35994723df65695cbdce3c9fba4ec8be",
+  "oracleOrReferenceActivityUsed": true,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 41867,
+  "ungatedDerivedAudio": null,
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.101165771484375,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false,
+  "text": "这个方面的需求啊。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "这个方面的需求啊。",
+      "generatedIds": [
+        99487,
+        99522,
+        104378,
+        103924,
+        1773,
+        151645
+      ],
+      "rawDecoded": "这个方面的需求啊。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 1.2534316999954171
+    }
+  ]
+}

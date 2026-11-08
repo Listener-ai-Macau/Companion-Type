@@ -1,0 +1,21 @@
+{
+  "state": "PASS_EXISTING_ORPHAN_MONO_PCM_EXACT_FROZEN_INPUTS_RECEIPT_RECOVERED",
+  "repaired": [
+    {
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\separation-outputs\\S_R003S01C01-root-000067-mono_activity-speaker-0.json",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000067-mono_activity-speaker-0.wav",
+      "proof": {
+        "toolSha256": "47885f129d5d09bf36252272d07219dffc54101dc4cffad6493df8c0bd37d8cf",
+        "reason": "Previous controller interruption after WAV close before receipt publication. Exact frozen original PCM and activity mask reproduce every sample.",
+        "existingOrphanAudioSha256": "28907662251813bd770157d5134e96071cb65cdde444adbb1be8b17bd960d325",
+        "originalFileUnmodified": true,
+        "everyPcmSampleBitIdenticalToDeterministicFrozenMono": true,
+        "newModelCalls": 0
+      }
+    }
+  ],
+  "sourceAcousticWorkerUnmodified": true,
+  "protocolAndBindingUnchanged": true,
+  "newModelCalls": 0,
+  "deletedOrOverwrittenAudioFiles": 0
+}

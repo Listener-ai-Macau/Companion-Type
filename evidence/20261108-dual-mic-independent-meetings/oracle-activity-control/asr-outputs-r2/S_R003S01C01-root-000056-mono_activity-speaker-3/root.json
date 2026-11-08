@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "audioSha256": "72a15b688ab063992246db138f7f851bb56d94708b8374745766abc6512144c0",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "对对，两三种菜，两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？",
+    "generatedIds": [
+      32664,
+      32664,
+      3837,
+      77540,
+      102723,
+      99800,
+      3837,
+      77540,
+      44793,
+      99601,
+      32664,
+      104335,
+      80158,
+      104583,
+      77540,
+      102723,
+      99800,
+      3837,
+      99679,
+      100027,
+      99800,
+      104060,
+      5373,
+      99955,
+      105069,
+      104060,
+      3837,
+      20412,
+      100003,
+      11319,
+      151645
+    ],
+    "rawDecoded": "对对，两三种菜，两道现在对咱们就应该是两三种菜，绿叶菜啦、豆制品啦，是吧？<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.686027399991872
+  },
+  "rawSha256": "f3ccbac2db7e97be7355cb24c3ca32dfdb926a0ef1ea12e644faba89f3a2c351"
+}

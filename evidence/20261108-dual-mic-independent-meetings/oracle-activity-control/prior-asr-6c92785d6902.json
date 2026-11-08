@@ -1,0 +1,35 @@
+{
+  "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
+  "pid": 8680,
+  "startedAt": "2026-11-08T10:28:13+08:00",
+  "stage": "asr",
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "newNeuralCalls": 15,
+  "reusedOutputs": 0,
+  "completedInputs": 15,
+  "referenceActivityUsedForInputPreparation": true,
+  "referenceLexicalTextPassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 8680,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1280851968,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "modelLoaded": true
+}

@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "audioSha256": "0a6d5080b5bd455ef33b70fbb2fd8b74ac116a37b9f6d5745859c3ad2d7ab78a",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "去后边，花呗。对他有时候转好几家了，他过来了，对。",
+    "generatedIds": [
+      85336,
+      33447,
+      99319,
+      3837,
+      99232,
+      111382,
+      1773,
+      105921,
+      104854,
+      46670,
+      52801,
+      112248,
+      34187,
+      3837,
+      42411,
+      38182,
+      101161,
+      3837,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "去后边，花呗。对他有时候转好几家了，他过来了，对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.92720870001358
+  },
+  "rawSha256": "2ed9d07d65d765afa6f80f268c4b93e02bf86f8a86d17e3b9e22d59516425c0e"
+}

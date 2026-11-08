@@ -1,0 +1,57 @@
+{
+  "id": "S_R003S01C01-root-000067-dual_pcm-speaker-1",
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "audioOnlySha256": "c105919f2c0ef886adc6f792e6271e186d161f20689b84b864c7c67bc328cc0c",
+    "workerSourceSha256": "a4e714ff8d874a93148ca7097baa9169f37f879b8ad31a54ec6ef2fe2e86bce6"
+  },
+  "meeting": "S_R003S01C01",
+  "rootIndex": 67,
+  "predictedSpeaker": 1,
+  "arm": "dual_pcm",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000067-dual_pcm-speaker-1.wav",
+  "audioSha256": "8d66ddf9d8af118877a1a1ea269aeedd4025a918601a25956862450a544c0f6f",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "5178d6c9dc915a1248ca9b82ef8fce66a11e3f54c37ef73176a9ff680ed62b36",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "60555d9b823582f42670f6675600911b35994723df65695cbdce3c9fba4ec8be",
+  "oracleOrReferenceActivityUsed": true,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 72319,
+  "ungatedDerivedAudio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000067-dual_pcm-speaker-1-ungated.npy",
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.1405354913630482,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false,
+  "text": "这个具体实施还是由咱们超市来去制定去。嗯。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "这个具体实施还是由咱们超市来去制定去。嗯。",
+      "generatedIds": [
+        99487,
+        100398,
+        100355,
+        99998,
+        67071,
+        104335,
+        104631,
+        36407,
+        85336,
+        104016,
+        85336,
+        1773,
+        106287,
+        1773,
+        151645
+      ],
+      "rawDecoded": "这个具体实施还是由咱们超市来去制定去。嗯。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.857628500001738
+    }
+  ]
+}

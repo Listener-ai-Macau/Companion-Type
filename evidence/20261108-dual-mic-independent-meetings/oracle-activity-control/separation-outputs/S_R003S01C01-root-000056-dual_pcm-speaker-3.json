@@ -1,0 +1,26 @@
+{
+  "id": "S_R003S01C01-root-000056-dual_pcm-speaker-3",
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "workerSourceSha256": "3ba85d5900e2ffe96f60a6eb079a20fc8483c08f336a686f9a48849da28df27e"
+  },
+  "meeting": "S_R003S01C01",
+  "rootIndex": 56,
+  "predictedSpeaker": 3,
+  "arm": "dual_pcm",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000056-dual_pcm-speaker-3.wav",
+  "audioSha256": "c53a016b6831efe5dc9a61fb1955f38c522949dbca570eef1eb0acb3e8201adb",
+  "audioSeconds": 30.0,
+  "sourceRawPairSha256": "cbe62da218c6dc32497932416698891f04892fbd3cd8b08e6c7f73e42066ceba",
+  "sourceCompressedDecodedSha256": null,
+  "predictedJournalSha256": "60555d9b823582f42670f6675600911b35994723df65695cbdce3c9fba4ec8be",
+  "oracleOrReferenceActivityUsed": true,
+  "predictedActivityGateApplied": true,
+  "predictedActiveSamples": 99527,
+  "ungatedDerivedAudio": "E:\\CodexData\\Companion\\.model-cache\\dual-mic-independent-meetings-20261108\\oracle-activity-control\\target-audio\\S_R003S01C01-root-000056-dual_pcm-speaker-3-ungated.npy",
+  "pcmExportDivisor": 1.0,
+  "floatPeakBeforePcmExport": 0.09222117326844721,
+  "ordinaryBypass": false,
+  "sampleTimelineRetained": true,
+  "generatedWordsFiltered": false
+}

@@ -1,0 +1,15 @@
+{
+  "state": "PS4_CONTROLLER_ERROR_RETAINED",
+  "pid": 6060,
+  "startedAt": "2026-11-08T10:21:40+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0001.json"
+  ],
+  "results": [],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "separation",
+  "error": "PermissionError(13, 'Permission denied')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_independent_oracle_gss_20261108.py\", line 50, in <module>\n    progress=read(receipt) if receipt.exists() else {};point=(progress.get('state'),progress.get('completedInputs'),progress.get('newNeuralCalls'))\n             ^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_independent_oracle_gss_20261108.py\", line 9, in <lambda>\n    read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pathlib.py\", line 1058, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\pathlib.py\", line 1044, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: 'C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\docs\\\\handoffs\\\\20261108-dual-mic-independent-meetings\\\\oracle-activity-control\\\\separation-state-r2.json'\n",
+  "finishedAt": "2026-11-08T10:23:06+08:00"
+}

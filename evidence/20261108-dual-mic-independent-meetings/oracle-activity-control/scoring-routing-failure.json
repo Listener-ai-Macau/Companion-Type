@@ -1,0 +1,7 @@
+{
+  "state": "SCORING_CONTROL_DIRECTORY_ROUTING_ASSERTION_PROTECTED_EXISTING_AUTOMATIC_REVIEW",
+  "cause": "Derived scorer initially retained its relative main control directory. Existing review assertion stopped before any file write. Changed only scorer directory, not models/audio/output/reference selection.",
+  "automaticReviewUnmodifiedSha256": "c156d799d8c7514700b9b33f91d63d19015125664bc28dee8ac5831f362dd65b",
+  "newModelCalls": 0,
+  "sourceFixed": true
+}

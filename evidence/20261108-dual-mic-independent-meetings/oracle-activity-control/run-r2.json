@@ -1,11 +1,23 @@
 {
-  "state": "RUNNING_PS4_SEPARATION",
-  "pid": 25984,
-  "startedAt": "2026-11-08T10:20:07+08:00",
-  "priorAttemptReceipts": [],
-  "results": [],
+  "state": "COMPLETE_DUAL_MIC_SPATIAL_CODEC_SCREEN_REVIEW_REQUIRED",
+  "pid": 30004,
+  "startedAt": "2026-11-08T10:34:13+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0002.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0003.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0004.json"
+  ],
+  "results": [
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 163.59116750000976,
+      "privatePeakBytes": 1245630464
+    }
+  ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
-  "stage": "separation",
-  "activePid": 8392
+  "stage": "asr",
+  "finishedAt": "2026-11-08T10:36:57+08:00"
 }

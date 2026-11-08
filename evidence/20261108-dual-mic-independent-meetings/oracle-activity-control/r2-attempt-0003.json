@@ -1,0 +1,21 @@
+{
+  "state": "FAILED_PS4_COMPONENT_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 6816,
+  "startedAt": "2026-11-08T10:24:57+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\oracle-activity-control\\r2-attempt-0002.json"
+  ],
+  "results": [
+    {
+      "stage": "separation",
+      "exitCode": 1,
+      "wholeProcessFamilySeconds": 27.358481300005224,
+      "privatePeakBytes": 1639628800
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "separation",
+  "finishedAt": "2026-11-08T10:25:24+08:00"
+}

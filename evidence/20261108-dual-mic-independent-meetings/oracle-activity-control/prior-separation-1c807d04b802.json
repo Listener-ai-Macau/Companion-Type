@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-08T10:21:40+08:00",
+  "state": "SAVED_DUAL_PCM_TARGET",
+  "pid": 14804,
+  "binding": {
+    "protocolSha256": "911df84d1a043c2585cf9fe75430bf6a1f0bbd1e4386d57e636f751559c95b8c",
+    "workerSourceSha256": "3ba85d5900e2ffe96f60a6eb079a20fc8483c08f336a686f9a48849da28df27e"
+  },
+  "completedInputs": 17,
+  "newAlgorithmCalls": 3,
+  "newNeuralCalls": 0,
+  "reusedOutputs": 6,
+  "referenceActivityPassedToWorker": true,
+  "referenceLexicalTextPassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 14804,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1759518720,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

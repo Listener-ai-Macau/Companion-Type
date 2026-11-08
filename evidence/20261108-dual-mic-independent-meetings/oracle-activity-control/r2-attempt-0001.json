@@ -1,0 +1,18 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 25984,
+  "startedAt": "2026-11-08T10:20:07+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "separation",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 45.748451899999054,
+      "privatePeakBytes": 1524178944
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "separation",
+  "finishedAt": "2026-11-08T10:20:52+08:00"
+}
