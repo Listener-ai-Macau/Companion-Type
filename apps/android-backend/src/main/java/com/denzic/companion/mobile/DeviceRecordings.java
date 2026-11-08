@@ -14,14 +14,15 @@ public final class DeviceRecordings {
         public final boolean complete;
         private Session(List<Descriptor> entries) {
             entries.sort(Comparator.comparingLong(d->d.segmentIndex));representative=entries.get(0);
-            long date=0,duration=0,size=0,total=0;boolean contiguous=true;int expected=0;
+            long date=0,duration=0,size=0,total=0;boolean contiguous=true,recovered=false;int expected=0;
             for(Descriptor d:entries) {
                 if(d.segmentIndex==0)date=d.startedUnixSeconds;
                 duration+=d.sampleCount/16;size+=d.encodedLength;
                 if(d.segmentIndex!=expected++)contiguous=false;
                 if((d.flags&2)!=0)total=d.totalSegments;
+                if((d.flags&4)!=0)recovered=true;
             }
-            startedUnixSeconds=date;durationMillis=duration;bytes=size;segments=entries.size();complete=contiguous&&total==segments;
+            startedUnixSeconds=date;durationMillis=duration;bytes=size;segments=entries.size();complete=contiguous&&total==segments&&!recovered;
         }
     }
     public static List<Session> group(List<Descriptor> entries) {

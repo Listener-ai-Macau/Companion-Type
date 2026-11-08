@@ -38,6 +38,13 @@ public final class DeviceRecordingsTest {
   byte[] second=selected.wireBytes();put32(second,28,1);put64(second,32,selected.sampleCount);put32(second,88,2);put32(second,108,crc(second,0,108));
   Descriptor missing=Descriptor.decode(second);row=DeviceRecordings.group(Arrays.asList(missing)).get(0);check(!row.complete&&row.startedUnixSeconds==0);
   List<DeviceRecordings.Session> grouped=DeviceRecordings.group(Arrays.asList(selected,missing));check(grouped.size()==1&&grouped.get(0).complete);
+  // A recovered prefix can have every sealed segment and FINAL set while
+  // still having lost its unfinished tail. Never label it a full recording.
+  byte[] recovered=selected.wireBytes();recovered[92]|=4;put32(recovered,108,crc(recovered,0,108));
+  if(recovered.length==120)put32(recovered,116,crc(recovered,0,116));
+  Descriptor prefix=Descriptor.decode(recovered);
+  check(!DeviceRecordings.group(Arrays.asList(prefix)).get(0).complete);
+  check(!DeviceRecordings.group(Arrays.asList(prefix,missing)).get(0).complete);
   System.out.println("PASS_REAL_FIRMWARE_WIRE_VECTOR_CANCEL_EXACT_SESSION_DELETE_FORGED_OFFER_AND_LOGICAL_GROUPING_SOFTWARE_ONLY");
  }
 }
