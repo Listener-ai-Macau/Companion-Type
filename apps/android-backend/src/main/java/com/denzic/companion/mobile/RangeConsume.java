@@ -182,13 +182,12 @@ final class RangeConsume {
     }
     Session open(Path directory,RecorderWire.Descriptor d,SegmentReceiver receiver)throws IOException {
         long used=(((d.encodedLength+247)/248+1)*256+4095)/4096;
-        boolean subBlockOverlap=used>=3&&used<8;
-        if(used<16&&!subBlockOverlap&&!RangeCheckpoint.exists(directory,d)){
-            // Tiny1/2-sector files cannot hide another transaction. Retain the
-            // measured whole-tail policy for8..15 sectors too; this change
-            // does not restore the unproductive per-block short-file trial.
-            // Preserve existing
-            // partial proofs: those must still reconcile their exact frontier.
+        if(used<16&&!RangeCheckpoint.exists(directory,d)){
+            // Field361/362:3..7-sector prefix transactions finish after the
+            // last payload and then still require final CRA2. Restore one
+            // terminal transaction for a fresh short original, using the
+            // current prefetch reader and exact physical tail coalescing.
+            // Existing partial proofs must still settle their original range.
             RecordingTransferMetrics m=metrics;if(m!=null)m.rangeShortWholeFallback();
             return null;
         }

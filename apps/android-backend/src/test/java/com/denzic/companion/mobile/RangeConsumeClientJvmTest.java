@@ -132,7 +132,7 @@ public final class RangeConsumeClientJvmTest {
         check(Arrays.equals(Files.readAllBytes(file),data)&&RangeCheckpoint.read(dir,d).confirmed&&device.end==8&&resumed.requests==0);
         // Fresh tails shorter than two physical blocks use one terminal whole
         // transaction, including the actual43442B field failure geometry.
-        for(int bytes:new int[]{32000,40000,43442,59000}){
+        for(int bytes:new int[]{1530,5994,8420,22362,22610,32000,40000,43442,59000}){
             byte[] medium=Arrays.copyOf(data,bytes),w=d.wireBytes();put(w,48,bytes,4);
             put(w,52,RecorderWire.crc(medium,0,bytes),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(medium),0,w,56,32);
             put(w,108,RecorderWire.crc(w,0,108),4);RecorderWire.Descriptor md=RecorderWire.Descriptor.decode(w);
@@ -140,13 +140,14 @@ public final class RangeConsumeClientJvmTest {
             Link mediumLink=new Link(mediumDevice,mediumDir,false,false,false);mediumLink.expectRange=false;
             check(Arrays.equals(Files.readAllBytes(download(mediumLink,md,true)),medium)&&mediumLink.queries==0&&mediumLink.requests==0);
         }
-        // Sub-block originals now hand off a prefix while receiving. Tiny
-        // files and the previously measured8..15-sector whole path stay put.
+        // Fresh sub-block originals avoid extra prefix requests. Old durable
+        // sub-block intents below still reconcile without recreating sources.
         RecorderWire.Descriptor shortD=RangeCheckpointJvmTest.descriptor();byte[] shortData=RangeCheckpointJvmTest.data;
         Path shortDir=Files.createTempDirectory("companion-short-whole-");Device shortDevice=new Device(shortD,shortData);
         Link shortLink=new Link(shortDevice,shortDir,false,false,false);shortLink.waitForRangeRequest=false;
-        check(Arrays.equals(Files.readAllBytes(download(shortLink,shortD,true)),shortData)&&shortLink.queries==1&&shortLink.requests>0&&shortLink.receipts==shortLink.requests);
-        check(RangeCheckpoint.read(shortDir,shortD).confirmed&&shortDevice.end>0&&shortDevice.end<3);
+        shortLink.expectRange=false;
+        check(Arrays.equals(Files.readAllBytes(download(shortLink,shortD,true)),shortData)&&shortLink.queries==0&&shortLink.requests==0);
+        check(!RangeCheckpoint.exists(shortDir,shortD)&&shortDevice.end==0);
         for(int bytes:new int[]{1530,5994}){
             byte[] tiny=Arrays.copyOf(data,bytes),w=d.wireBytes();put(w,48,bytes,4);
             put(w,52,RecorderWire.crc(tiny,0,bytes),4);System.arraycopy(MessageDigest.getInstance("SHA-256").digest(tiny),0,w,56,32);
