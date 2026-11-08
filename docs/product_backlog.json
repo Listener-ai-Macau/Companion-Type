@@ -133454,7 +133454,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "737正常手机OTA完成后先10秒捕获控制/真实原音及回收，再约5分钟并发，核对PCM溢出、P95/峰/PDM与原34目录；若并发峰仍失败继续修源头，受影响门通过后才跑冻结版本2h。短任意长度含回收50及原明确block继续未关闭。",
+      "next": "先读取739仅查询的现有blank proof状态，定位738为何没有减少开录等待；有实测收益才保留候选。短任意长度50、738OTA48.04失败继续，原block保持。738短并发已通过，最终2h仍未完成；不把独立门混合关闭。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135876,8 +135876,8 @@
       "metricAcceptance": {
         "at": "2026-11-08T10:23:12+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "736普通手机OTA 56.021KiB/s、总116.852s、payload后90.431s达标；但自身347请求10s录音，6570ms PCM队列8满，pcm_overflows=1，MIC自动停止，正常STOP拒绝；首次有效PCM2.25s亦失败。HAL DMA异常0不能覆盖core PCM溢出。现有工程REC RECOVER恢复13622B前缀，手机incomplete、complete=false、速度null；原音CRC/SHA/顺序已独立核验，物理receipt收到，旧34目录与4608000B/17段恢复。737修源头：radio等待回6ms、PCM积压优先、codec独立2ms DMA准入，外围IO保持4ms；候选未安装。734并发峰失败、任意长度50和最终2h仍未关闭。",
-        "verdict": "FAIL_736_PCM_RING_OVERFLOW_START_LATENCY_AND_ANY_LENGTH50_OPEN",
+        "currentFacts": "738自身351录335.14s、真实边传观察180.125s，704654B/全原音/全WAV/物理回收通过，断链重连0、采音异常0。P95 5000us、编码峰5418us、PDM2745us、foreground tick6保守7ms、栈4336均满足当前门。未做冻结版本最终2h。738自身350首有效2.172s无收益，短录率仍失败；738OTA48.042KiB/s<50失败，总119.873s/安装核对90.859s过。0737原并发349被脚本读缓存误停，native目录0.497s不是设备10s连接失败；全322464B原音/WAV/receipt保留，未计完整短并发通过。099修复设备列表把RECOVERED4前缀误标完整，源码/JVM/AAR/APK已构建装机，JNI/传输/音质不变。",
+        "verdict": "START_ANY_LENGTH50_AND_LATEST_OTA_RATE_FAIL_FINAL2H_OPEN",
         "result": "NOT_QUALIFIED",
         "functionalOtaResult": "PASS_CURRENT097_OTA718_NATIVE_EXACT_IDENTITY_SAMPLE",
         "ownerQuotes": [
@@ -136073,24 +136073,24 @@
       },
       "runningWork": {
         "at": "2026-11-08T10:23:12+08:00",
-        "state": "NORMAL737_SHORT_CAPTURE_NO_OVERFLOW_CONCURRENT_RUNNING_738_BUILDING",
-        "phoneInstalled": "0.1.98",
-        "firmwareInstalled": 66737,
-        "phoneSourceCommit": "7529d5a8afcce925e6bb1f53399181445a6b4a70",
-        "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
-        "firmwareSource": "a6ae7ccec78c7a96204c3e4e728583e3677d9837",
+        "state": "738_SHORT_CONCURRENT_PASS_IDLE_739_BLANK_STATE_BUILDING_PHONE099_INSTALLED",
+        "phoneInstalled": "0.1.99",
+        "firmwareInstalled": 66738,
+        "phoneSourceCommit": "04da8d182086593ef474c6558e961a7cd471af87",
+        "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+        "firmwareSource": "c84e119cb5d5d6a7fe0630642c69a9cd5073880c",
         "boardLease": true,
         "boardItem": "Companion733现有线程IRQ归因观测",
-        "liveRecording": true,
+        "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 348,
+        "ownLatestSession": 351,
         "evidence": "E:\\CodexData\\Companion\\.build-cache\\radio736\\control\\result.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66738,
-        "candidateSourceCommit": "c84e119",
+        "firmwareCandidate": 66739,
+        "candidateSourceCommit": "7b2fa46",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -139200,7 +139200,7 @@
       },
       "readonlyBlank735": {
         "at": "2026-11-08T09:47:51+08:00",
-        "state": "CHERRY_PICKED_AFTER737_FOR_NORMAL738_BUILDING_NOT_INSTALLED",
+        "state": "NORMAL738_NO_MEASURED_START_GAIN_739_STATUS_ONLY_CANDIDATE",
         "sourceWorktree": "E:/CodexData/Companion/.build-cache/prefix735-source",
         "basedOn": "25e108f976da624979fd7dae9e85c07349790a42",
         "scope": "Read-only idle FF proof of exactly the original predicted next allocation; physical program/erase invalidates first; reset loses proof, real allocator ownership and rotation untouched; no format/partition/new audio buffer or erase deferral.",
@@ -139209,7 +139209,11 @@
         "physicalTimingQualified": false,
         "anyLength50Solved": false,
         "sourceCommit": "c84e119",
-        "actualProductModel": "PASS real NOR/Opus ownership, exact predicted extent, cache invalidation/fallback, unchanged allocation/capacity; newsource738 host passes"
+        "actualProductModel": "PASS real NOR/Opus ownership, exact predicted extent, cache invalidation/fallback, unchanged allocation/capacity; newsource738 host passes",
+        "firstValidPcmSeconds": 2.172,
+        "firstValidPcmResult": "FAIL",
+        "applicationBytes": 410260,
+        "staticBytes": 66256
       },
       "radioWindow736": {
         "at": "2026-11-08T09:47:51+08:00",
@@ -139239,7 +139243,7 @@
       },
       "radioWindow737": {
         "at": "2026-11-08T10:23:12+08:00",
-        "state": "SHORT_CAPTURE_PASS_CONCURRENT_IN_PROGRESS_START_AND_SHORT_RATE_FAIL",
+        "state": "738_SHORT_CONCURRENT_SCOPED_TIMING_AND_AUDIO_PASS_FINAL2H_OPEN",
         "purpose": "Fix736 Opus starvation. Radio deferral<=6ms;30ms queuedPCM bypass courtesy, still requires safe DMA admission; codec budget7ms/PDM4ms/headroom1 yields2ms guard; other foreground IO retains4ms. Audio quality/clock/deadlines/endpoints unchanged.",
         "physicalQualified": false,
         "sourceCommit": "a6ae7ccec78c7a96204c3e4e728583e3677d9837",
@@ -139255,7 +139259,18 @@
         "shortEncodePeakUpperUs": 5430,
         "shortPdmPeakUpperUs": 2530,
         "audioFaults": 0,
-        "ownSession": 348
+        "ownSession": 348,
+        "currentFirmware": 66738,
+        "currentSession": 351,
+        "recordingSeconds": 335.14,
+        "observedLiveSeconds": 180.125,
+        "bytes": 704654,
+        "encodeP95UpperUs": 5000,
+        "encodePeakUpperUs": 5418,
+        "pdmPeakUpperUs": 2745,
+        "foregroundConservativeUpperMs": 7,
+        "pcmFaults": 0,
+        "stackMinimumFreeBytes": 4336
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -144840,7 +144855,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原RM-OVERLAP：停止把“更准分人→固定双路GSS→ASR”当作完整修复，保留其空间辅助价值和本轮全自动基线。下一项是从已可复现的开源目标说话人提取骨干准备单一“说话人身份/活动+双路空间线索”联合前端，训练数据仅用真实训练会议及目标缺席负样本，独立会议验证，先固定协议再运行；评价逐人文字保留、非目标串话和普通讲话回退，不只看声纹/MOS。先验证一个联合方案再决定是否扩大微调，不扫模型/参数、不把官方活动辅助结果算成绩。保留原严格<5%、纪要事实、双端实卡和售卖OPEN。",
+          "next": "继续原RM-OVERLAP的单一联合提取候选：由同场说话人样音生成目标声学线索，再与原始双路空间信息共同估计提取滤波，固定同一ASR逐人比较；不能把现有单路PS4直接标成双路模型，也不以二值活动门控预先丢掉弱声。先用现有真实数字双路原音验证，不依赖扬声器；有效后再安排双路独立保存和真实采音全链条。保留原失败、普通讲话回退、严格<5%、纪要事实及双端实卡售卖未完成门。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -177604,6 +177619,39 @@
             "state": "AUTOMATIC_DUAL_GAIN_REPEATED_IDENTITY_AND_SEPARATION_ASR_BOTH_UNQUALIFIED",
             "next": "继续原RM-OVERLAP：停止把“更准分人→固定双路GSS→ASR”当作完整修复，保留其空间辅助价值和本轮全自动基线。下一项是从已可复现的开源目标说话人提取骨干准备单一“说话人身份/活动+双路空间线索”联合前端，训练数据仅用真实训练会议及目标缺席负样本，独立会议验证，先固定协议再运行；评价逐人文字保留、非目标串话和普通讲话回退，不只看声纹/MOS。先验证一个联合方案再决定是否扩大微调，不扫模型/参数、不把官方活动辅助结果算成绩。保留原严格<5%、纪要事实、双端实卡和售卖OPEN。",
             "sourceAndEvidenceCommit": "16d0381c0bf473c1a462ddd7a1e53b90323bbe18",
+            "remoteReadbackConfirmed": true
+          },
+          "ownerAcousticPlaybackClarification20261108": {
+            "at": "2026-11-08T10:53:18+08:00",
+            "ownerQuote": "那你看看怎么再继续咯, 需要外放扬声器嘛",
+            "state": "CONTINUATION_SCOPE_CONFIRMED_NO_LOUDSPEAKER_DEPENDENCY",
+            "loudspeakerNeededNow": false,
+            "why": "现有原始双路真实会议数字录音可隔离判断分人、分离和ASR；额外回放会叠加房间、音箱和采集影响。",
+            "laterAcousticValidation": {
+              "singleSource": "一只扬声器播放整段混合多人录音可验收回放采音、编码、上传和转写链路，不能证明按不同方向区分不同发言人。",
+              "spatialSeparation": "至少两个独立声源，分别播放不同人的声音，或真人分别发言；三人重叠另验。先确认录音卡分别保存两路且时间一致；回放域与真人现场成绩分别报告。",
+              "hardwareStatusOnly": "board_turn status观察到1项现有占用，mayClaim=false；未访问ST-Link/COM/BLE或改固件。"
+            },
+            "verifiedExistingBackbone": {
+              "repository": "TaurenMountain/PS4",
+              "revision": "8feb7a1b3da1264659f155c42bfb40a5be88d730",
+              "sourceFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\inference.py",
+              "sourceSha256": "172f22339c79c29e46b1e213e91f822fb46b13d95cd3c90bfc93b8b007ea004e",
+              "nativeInput": "BSRNN.forward(B,T),nch=1",
+              "directTwoChannelModel": false,
+              "inferencePerformed": false
+            },
+            "technicalSource": "https://www.isca-archive.org/interspeech_2017/zmolikova17_interspeech.html",
+            "interpretation": "声纹条件神经掩码参与多麦空间滤波是候选方向，不是本机已实现或达标的模型。上一轮真值活动辅助仍237编辑错误，不重复原GSS/门控参数试验。",
+            "next": "继续原RM-OVERLAP的单一联合提取候选：由同场说话人样音生成目标声学线索，再与原始双路空间信息共同估计提取滤波，固定同一ASR逐人比较；不能把现有单路PS4直接标成双路模型，也不以二值活动门控预先丢掉弱声。先用现有真实数字双路原音验证，不依赖扬声器；有效后再安排双路独立保存和真实采音全链条。保留原失败、普通讲话回退、严格<5%、纪要事实及双端实卡售卖未完成门。",
+            "newModelCalls": 0,
+            "newTrainingRuns": 0,
+            "newAudioPlayback": false,
+            "newHardwareAccess": false,
+            "newProductCodeChanges": false,
+            "qualityQualified": false,
+            "productDefaultChanged": false,
+            "sourceAndEvidenceCommit": "0ff8cff455bb3408c7150ca021a737e02749315e",
             "remoteReadbackConfirmed": true
           }
         },
