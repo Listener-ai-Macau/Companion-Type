@@ -1,0 +1,100 @@
+{
+  "at": "2026-11-08T22:19:47+08:00",
+  "ownerQuote": "你觉得像我们这种水平的模型能达到竞品的那种感觉吗？能可以达到这种公开售卖的这个标准。",
+  "state": "COMPETITIVE_SALE_STANDARD_REVIEWED_CURRENT_MODELS_NOT_QUALIFIED",
+  "judgment": "目前不能按复杂多人/重叠会议能力公开售卖。达到有竞争力产品有可行路径，但尚无同音实测证据证明已达到竞品；不承诺现有本地候选能独自解决所有复杂场景。",
+  "route": "以最终原文、逐人内容和纪要事实为产品主线，使用可替换成熟组件；保留本地普通语音基线，复杂多人先建立成熟方案同音对照，再决定最小差距的适配。原本地重叠目标保持独立未完成；可选联网增强先验证质量/成本/知情选择，不改成静默默认上传。",
+  "rejectedRoutes": [
+    "不以自研基础模型、扩大同一训练或不断换模型作为必经路线；先证实差距在采音、身份、分离、识别还是纪要。",
+    "拒绝以总CER改善掩盖漏掉更多真实讲话的候选；本轮128步训练继续拒绝，不进产品。",
+    "不拿已知档案223段匹配、短片/合成混音或历史拼接开发样本代替完整自然会议验收。",
+    "简单增加参考或等权双麦融合不能解决最难场，不据此继续扫参数或按预测改标签。"
+  ],
+  "observedEvidence": {
+    "sourceDecisionSha256": "85b1ffa2a7823cf6eb60fe149a706c000cfe393eab3ccc93221289c5a25b1c57",
+    "wordsReviewSha256": "5986af27105c6e1fd62f770fe14b320ed3923d5cb3eaed28457b287adef1da1e",
+    "referenceResultSha256": "b9786972a82a7f2a83827ca04dd79bae8b8a8db280d646ba4b162eb3742c10fa",
+    "fixedNaturalTargetQueriesPerCondition": 66,
+    "words": {
+      "naturalReferenceCharacters": 1086,
+      "naturalOverallCerBefore": 0.5488029465930019,
+      "naturalOverallCerAfter": 0.2882136279926335,
+      "ordinaryCerBefore": 0.13162118780096307,
+      "ordinaryCerAfter": 0.1508828250401284,
+      "overlapDeletionsBefore": 10,
+      "overlapDeletionsAfter": 86,
+      "absentTargetInsertedCharactersBefore": 357,
+      "absentTargetInsertedCharactersAfter": 71,
+      "rawSoloControls": {
+        "raw": {
+          "referenceCharacters": 179,
+          "substitute": 1,
+          "delete": 7,
+          "insert": 0,
+          "total": 8,
+          "cer": 0.0446927374301676
+        },
+        "baseline": {
+          "referenceCharacters": 179,
+          "substitute": 1,
+          "delete": 6,
+          "insert": 0,
+          "total": 7,
+          "cer": 0.03910614525139665
+        },
+        "adapted": {
+          "referenceCharacters": 179,
+          "substitute": 4,
+          "delete": 7,
+          "insert": 0,
+          "total": 11,
+          "cer": 0.061452513966480445
+        }
+      },
+      "interpretation": "Aggregate CER reduction is dominated by fewer inserted characters. Actual ordinary recognition regresses and overlap deletions increase10to86; the candidate must remain rejected. Raw179-character solo control is small and not a whole-meeting<5 qualification."
+    },
+    "knownProfileSingleAccuracy": 0.8654708520179372,
+    "knownProfileMultiAccuracy": 0.9103139013452914,
+    "hardestKnownProfileMeetingAccuracy": 0.5526315789473685,
+    "knownProfileAccuracyIsNotAutomaticDiarizationOrFullMeetingCer": true,
+    "historical3612PercentScope": "原QM04验收记录将61分钟3.6120%列为拼接开发结果，不可宣称独立完整复杂会议已经通过。",
+    "currentApplicationAdapters": "Windows源码已有本地Paraformer、显式选择的火山ASR和兼容ASR接口；双端有AI纪要接口。这是代码能力检查，不是已配置服务可用性/质量或云端复杂重叠通过证明。",
+    "privateCredentialsReadOrPrinted": false,
+    "liveCompetitorComparisonRun": false
+  },
+  "officialSources": [
+    {
+      "url": "https://www.granola.ai/security",
+      "claim": "Granola公开列出第三方转写和摘要服务。这支持成熟组件集成的产品路线，不证明其中文或重叠识别准确率。"
+    },
+    {
+      "url": "https://help.otter.ai/hc/en-us/articles/4403627500951-Troubleshoot-audio-recording-problems",
+      "claim": "Otter排障文档提醒音频抑制可能丢掉其他人声音，并建议避免同时讲话。不能把竞品存在多人标签理解为任意重叠均可正确还原。"
+    },
+    {
+      "url": "https://support.notta.ai/hc/en-us/articles/4403163792027-Does-Notta-support-speaker-identification",
+      "claim": "Notta文件上传可启用分人，支持所有转写语言、至多10人；会议Bot依赖参会账号识别。账号区分不能作为单卡声学分人的同条件结果。"
+    },
+    {
+      "url": "https://support.plaud.ai/hc/en-us/articles/63429907861657-Auto-speaker-labeling-for-v4-0-x-or-later",
+      "claim": "Plaud有自动说话人标签和可选声纹档案，建议档案录制至少30秒；不能据此推断延长我们的档案就能修好最难会议。"
+    },
+    {
+      "url": "https://support.plaud.ai/hc/en-us/articles/55624401842841-How-to-Generate-a-Summary-and-Mindmap",
+      "claim": "Plaud在转写后生成摘要与思维导图，提供自动选择模板、模型、语言的入口，也保留自定义。适合作为少量清晰入口的流程参考。"
+    }
+  ],
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
+  "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
+  "next": "先核实既有成熟ASR服务的可用性并做同一完整公开开发会议的固定对照，分开定位分人、漏词、转写与纪要事实差距；无现成服务/竞品账户时保留未测，继续原最难会议002/003/007参考身份复核，不等账户、不扩大训练。成熟方案只有同音实测达原门才作为候选；离线/可选联网分开验收。固定多段参考库保留、128步训练候选拒绝，原<5%、自动分人、真实重叠、事实、双端实卡和售卖门全部保留。",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "newModelTrainingOrInference": false,
+  "productDefaultChanged": false,
+  "privateRecordingsUploaded": false,
+  "finalHoldoutOpened": false,
+  "thisBatchIsDecisionAndProtocolNotCapabilityImprovement": true,
+  "preparationFailureRetained": "首次保存脚本读取原合同误用qualificationSet键，KeyError后在任何原待办/日志/远端写入前退出；核对实际qualification键后修正，未影响模型或质量门。",
+  "sourceAndEvidenceCommit": "512a8643ec420e860ae3bdf3b7d8034d98993b58",
+  "remoteReadbackConfirmed": true
+}
