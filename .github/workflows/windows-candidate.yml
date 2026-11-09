@@ -18,7 +18,9 @@ jobs:
     runs-on: windows-2022
     timeout-minutes: 15
     permissions:
-      contents: read
+      # GitHub restricts private draft assets to repository push access.
+      # This job only downloads the frozen public test input; it never publishes.
+      contents: write
       actions: read
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
