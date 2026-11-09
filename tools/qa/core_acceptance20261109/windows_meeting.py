@@ -75,7 +75,8 @@ def spawn(args,env,cwd,desktop,job,log):
  require(K.AssignProcessToJobObject(job,process.process));assert K.ResumeThread(process.thread)!=0xffffffff;K.CloseHandle(process.thread);process.thread=None
  return process
 def frozen_app(root):
- v=json.loads((R/'docs/handoffs/20261109-windows-file-copy078/windows-verification.json').read_text(encoding='utf8'))
+ verification=Path(os.environ['COMPANION_ACCEPTANCE_VERIFICATION']) if os.environ.get('COMPANION_ACCEPTANCE_VERIFICATION') else R/'docs/handoffs/20261109-windows-file-copy078/windows-verification.json'
+ v=json.loads(verification.read_text(encoding='utf8'))
  payload=Path(os.environ['COMPANION_ACCEPTANCE_FROZEN_NATIVE']) if os.environ.get('COMPANION_ACCEPTANCE_FROZEN_NATIVE') else R/'docs/handoffs/20261109-windows-file-copy078/msi-inspection/files'
  app=root/'app';app.mkdir()
  for name,key in [('companion-type.exe','embeddedExeSha256'),('companion_type_lib.dll','dllSha256')]:
@@ -83,7 +84,7 @@ def frozen_app(root):
  shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
  return app,v
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  token=uuid.uuid4().hex;root=D/token;root.mkdir(parents=True);out=C/token;out.mkdir(parents=True)
@@ -98,8 +99,14 @@ def main():
   evidence=a.library.resolve();assert evidence.parent==C.resolve() and evidence.name.startswith('saved-')
   prior=json.loads((evidence/'result.json').read_text(encoding='utf8'));source=Path(prior['root'])/'state/sessions.json'
   assert sha(source)==prior['checkpointStateSha256'];sessions=json.loads(source.read_text(encoding='utf8'));session=next(row for row in sessions if row['id']=='core-real-public-S_R004S03C01')
+ if a.stage=='ai':
+  assert a.reviewed_ai and not a.library and not a.audio
+  session=json.loads(a.reviewed_ai.read_text(encoding='utf8'));sessions=[session]
+  assert session['id']=='core-real-public-S_R004S03C01' and session['source']=='importedTranscript'
+  assert session['transcriptReview']['revision']==1 and session['minutes']['source']=='llm_deepseek'
+  assert session['minutes']['processing']['complete'] and not session['audioStored']
  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
- (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else None,'selectedNoteId':session['meetingNotes'][0]['id'],'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library)},ensure_ascii=False),encoding='utf8')
+ (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version']=='0.1.79'},ensure_ascii=False),encoding='utf8')
  if a.stage=='audio':
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
   (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'))
@@ -108,7 +115,7 @@ def main():
  # A missing private settings file means valid fresh defaults. Writing '{}'
  # would be a corrupt product store, not an empty configured user profile.
  with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
- record={'at':datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),'state':'PREPARING_NATIVE_WORKFLOW','stage':a.stage,'frozenAppVersion':'0.1.78','frozenAppSource':v['sourceCommit'],'exeSha256':v['embeddedExeSha256'],'dllSha256':v['dllSha256'],'inputKind':'explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test','privateRoot':str(root),'ownerClipboardContentsRead':False,'ordinaryRecipientTested':False,'wholeCoreCandidateQualified':False,'modelsRun':False,'boardAccessed':False,'phoneAccessed':False}
+ record={'at':datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),'state':'PREPARING_NATIVE_WORKFLOW','stage':a.stage,'frozenAppVersion':v['version'],'frozenAppSource':v['sourceCommit'],'exeSha256':v['embeddedExeSha256'],'dllSha256':v['dllSha256'],'inputKind':'explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test','privateRoot':str(root),'ownerClipboardContentsRead':False,'ordinaryRecipientTested':False,'wholeCoreCandidateQualified':False,'modelsRun':False,'boardAccessed':False,'phoneAccessed':False}
  def save():(out/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
  def resources():
   limits=ExtendedLimits();require(K.QueryInformationJobObject(job,9,ctypes.byref(limits),ctypes.sizeof(limits),None))
@@ -117,6 +124,7 @@ def main():
  old_station=U.GetProcessWindowStation();old_desktop=U.GetThreadDesktop(K.GetCurrentThreadId());before_clip=U.GetClipboardSequenceNumber()
  if a.library:record['inputKind']='Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture'
  if a.stage=='audio':record['inputKind']='Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture'
+ if a.stage=='ai':record['inputKind']='Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR'
  name=station_name() if DEDICATED_CI else 'CompanionCore-'+token
  station=old_station if DEDICATED_CI else require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set();dialog_workers={}
  try:
@@ -194,13 +202,15 @@ def main():
     else:text=(receiver.destination/source.name).read_text(encoding='utf8')
     if a.stage!='audio':
      assert 'EXCLUDED_CORE_NOTE_20261109' not in text
-     assert '人工软件验收草稿' in text and '工程验收补充' in text
+     if a.stage=='ai':
+      assert '周一至周五' in text and '临时区' not in text and '基于修订后的转写生成' in text
+     else:assert '人工软件验收草稿' in text and '工程验收补充' in text
      received['selectedContentsVerified']=True
     record.setdefault('receivedFiles',[]).append(received)
     reply=out/request.name.replace('handoff-request-','handoff-reply-');reply.write_text(json.dumps(received,ensure_ascii=False),encoding='utf8');handled.add(request.name);save()
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
-  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 3))
+  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 1 if a.stage=='ai' else 3))
  except BaseException as error:
   record.update(state='NATIVE_WORKFLOW_STOPPED_RETAINED',error=repr(error));save();raise
  finally:

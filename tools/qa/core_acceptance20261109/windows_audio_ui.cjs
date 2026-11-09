@@ -45,6 +45,12 @@ module.exports=async function audioJourney(page,plan,out){
   assert.ok(fs.existsSync(reply),'Windows Shell must actually receive '+id);const result=JSON.parse(fs.readFileSync(reply,'utf8'));checkpoints.push({step:id,...result});save();return result;
  }
  await openAudio('import-real-public-wav',plan.audioInput,plan.audioSha256,plan.audioTitle);
+ if(plan.requireGroupedUi){
+  assert.ok(await page.getByRole('button',{name:'导出录音',exact:true}).isVisible());
+  assert.ok(await page.getByRole('button',{name:'转文字',exact:true}).isVisible());
+  assert.equal(await page.getByRole('region',{name:'会议AI助手',exact:true}).count(),0);
+  checkpoints.push({step:'audio-only-next-step',directAudioExportVisible:true,transcribeVisible:true,inapplicableAiWorkbenchAbsent:true});save();
+ }
  await playback('play-whole-public-wav');
  // The public audio controls are inside the existing More disclosure.
  const format=page.getByLabel('音频副本格式');

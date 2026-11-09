@@ -35,7 +35,7 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   core-audio:
-    if: contains(github.event.head_commit.message, '[core-audio]')
+    if: contains(github.event.head_commit.message, '[core-audio]') || contains(github.event.head_commit.message, '[core-candidate]')
     runs-on: windows-2022
     timeout-minutes: 15
     permissions:
@@ -54,6 +54,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           COMPANION_CORE_PHASE: audio
+          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ contains(github.event.head_commit.message, '[core-candidate]') && 'docs/handoffs/core-acceptance-20261109/candidate079/runtime-spec.json' || '' }}
         run: python tools/qa/core_acceptance20261109/run_ci.py
       - name: Preserve audio workflow results and failures
         if: always()

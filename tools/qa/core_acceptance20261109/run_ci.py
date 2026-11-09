@@ -1,9 +1,11 @@
-"""Reuse approved078 binaries; run one Windows workflow, no native rebuild."""
+"""Reuse an independently inspected native pair; no native rebuild or ASR."""
 from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
 PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio'}
+SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
+spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
 private=Path(os.environ['RUNNER_TEMP'])/'companion-core-acceptance';private.mkdir()
 product=private/'product';cache=private/'cache';native=private/'frozen-native';native.mkdir()
@@ -21,9 +23,13 @@ def save():(O/'result.json').write_text(json.dumps(record,ensure_ascii=False,ind
 save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
- run('download-frozen-native',['gh','run','download','42563058131','--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-bb1550c42b674d7ec3e526db9f7fdefb84cff7ae','--dir',artifact])
+ if spec:
+  assert PHASE=='audio' and spec['verification']['version']=='0.1.79'
+  assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
+  record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
+ run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+record['appSourceCommit'],'--dir',artifact])
  receipt=json.loads((artifact/'result.json').read_text(encoding='utf8'));assert receipt['sourceCommit']==record['appSourceCommit']
- v=json.loads((S/'docs/handoffs/windows-file-copy078-20261109/windows-verification.json').read_text(encoding='utf8'))
+ v=spec['verification'] if spec else json.loads((S/'docs/handoffs/windows-file-copy078-20261109/windows-verification.json').read_text(encoding='utf8'))
  assert v['sourceCommit']==record['appSourceCommit'] and v['version']==record['appVersion']
  for row in receipt['nativeFiles']:assert sha(artifact/'windows-bin'/row['path'])==row['sha256']
  # Tauri's documented bundle-type placeholder is the sole packaging patch.
@@ -35,7 +41,8 @@ try:
  assert sha(native/'companion-type.exe')==v['embeddedExeSha256'];assert sha(native/'companion_type_lib.dll')==v['dllSha256']
  verification=product/'docs/handoffs/20261109-windows-file-copy078';verification.mkdir(parents=True)
  (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
- record.update(exactInstalledExeSha256=v['embeddedExeSha256'],exactInstalledDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
+ env['COMPANION_ACCEPTANCE_VERIFICATION']=str(verification/'windows-verification.json')
+ record.update(exactMsiExeSha256=v['embeddedExeSha256'],exactMsiDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
  if PHASE=='audio':
   public=private/'public-input';public.mkdir();audio=public/'public-audio-S_R004S03C01.wav'
   with audio.open('wb') as dest,(O/'download-public-audio.log').open('wb') as log:
@@ -74,6 +81,18 @@ try:
   assert sha(audio)==record['publicAudio']['sha256'];record['originalInputUnchanged']=True
   record['state']='WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED' if gui_code==0 and reopen_code==0 else 'WINDOWS_REAL_PUBLIC_AUDIO_FLOW_NOT_QUALIFIED_FAILURE_RETAINED'
   assert gui_code==0 and reopen_code==0,'Real audio flow remains unqualified; preserve the actual failing stage'
+  if spec:
+   fixture=S/spec['reviewedAiFixture'];assert sha(fixture)==spec['reviewedAiFixtureSha256']
+   before=json.loads(fixture.read_text(encoding='utf8'))
+   ai_code=run('native-reviewed-ai-reading-and-export',[sys.executable,tool/'windows_meeting.py','--stage','ai','--reviewed-ai',fixture],required=False)
+   ai_cases=[p for p in cases.iterdir() if p.is_dir() and p!=gui[0]];assert len(ai_cases)==1
+   ai=json.loads((ai_cases[0]/'result.json').read_text(encoding='utf8'));record['reviewedAiUi']={'exitCode':ai_code,'state':ai['state'],'ordinaryFileReceived':ai.get('ordinaryRecipientTested',False),'cachedRealCloudAi':True,'newCloudCalls':0,'newAsrRun':False}
+   if ai_code==0:
+    after=json.loads((Path(ai['privateRoot'])/'state/sessions.json').read_text(encoding='utf8'))[0]
+    for key in ['transcriptText','utterances','transcriptReview','minutes','minutesByMode']:assert after[key]==before[key],key+' changed during reading and export'
+    record['publicRawReviewAndAiUnchangedByReadingAndExport']=True
+   assert ai_code==0 and ai.get('ordinaryRecipientTested',False),'Grouped candidate AI reading/export remains unqualified'
+   record['state']='WINDOWS079_GROUPED_AUDIO_REVIEWED_AI_AND_DELIVERY_RUNTIME_PASSED'
  else:
   run('current-source-typecheck',['node',S/'node_modules/typescript/bin/tsc','--project',S/'apps/windows/tsconfig.json','--noEmit'])
   record['currentUiSourceTypecheckOnly']=True;record['currentUiSourcePackaged']=False;save()
