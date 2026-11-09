@@ -1,0 +1,87 @@
+{
+  "recordedAt": "2026-11-09T12:01:36+08:00",
+  "ownerQuote": "有手机了",
+  "state": "ANDROID100_VERIFIED_APK_READY_USB_DISCONNECTED_BEFORE_INSTALLATION",
+  "actualPhoneObservation": {
+    "serialSuffix": "45DU",
+    "model": "25060RK16C",
+    "package": "com.denzic.companion.app",
+    "versionName": "0.1.65",
+    "versionCode": 65,
+    "screenWasUnlocked": true,
+    "appWasRunning": false,
+    "appForegroundServicesObserved": false,
+    "observedBeforeDisconnect": true,
+    "observationTimeNotIndependentlyRecorded": true,
+    "notAnInstallationDowngrade": "Live65 observation takes priority for this device over old98/99 receipts; no package installed this turn."
+  },
+  "transportEndState": {
+    "adbDeviceListEmpty": true,
+    "windowsConnectedAndroidUsbDeviceAbsent": true,
+    "connectionMissingBeforePrivateFileSnapshot": true,
+    "virtualDisplayCreated": false,
+    "installationAttempted": false,
+    "appLaunched": false,
+    "libraryChanged": false
+  },
+  "preparationFailures": [
+    "Phone disconnected after initial read-only package/power/activity/service observation. Preflight stopped on adb device not found before file hashing. A subsequent virtual setup attempt also stopped on its first read; no process/display was created. Driver now explicitly requires completed preflight before virtual creation.",
+    "First inline version-edit command had a PowerShell quoting SyntaxError, changed no file. Applied the exact Gradle version change through apply_patch instead."
+  ],
+  "candidate": {
+    "result": "ANDROID100_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+    "versionName": "0.1.100",
+    "versionCode": 100,
+    "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\Companion-Android-0.1.100-录音与内容修复候选.apk",
+    "sha256": "23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3",
+    "bytes": 48802248,
+    "frontendSourceCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+    "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+    "signerMatches050r2And055": true,
+    "zip16KiBAligned": true,
+    "nativeLibraries": [
+      {
+        "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+        "sha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libonnxruntime.so",
+        "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+        "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+        "elf16KiBAligned": true
+      }
+    ],
+    "webAssetsExact": [
+      "index.html",
+      "manifest.webmanifest",
+      "assets/index-BXeaSz1o.css",
+      "assets/index-NrlemCDc.js"
+    ],
+    "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\apk100-build-1794196409731096700.log",
+    "buildWallSeconds": 75.438,
+    "installed": false,
+    "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
+    "actualOrdinaryControlButtonsAccepted": false,
+    "modelsRun": false,
+    "nativeRebuilt": false,
+    "nativeRebuiltByApkBuildStep": false
+  },
+  "webSourceReusedWithoutRebuild": true,
+  "nativeRebuiltThisBatch": false,
+  "sourceAndVersionCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+  "sharedItem": "Only Android100 local-library/export acceptance; no board BLE/recording.",
+  "sharedItemReleased": true,
+  "ownedModelOrBuildWorkersStillRunning": false,
+  "phoneAcceptanceComplete": false,
+  "originalFilesRetentionVerifiedThisTurn": false,
+  "phoneOrUserFilesModified": false,
+  "modelsRun": false,
+  "ownerAccepted": false,
+  "wholeProductQualified": false,
+  "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。"
+}

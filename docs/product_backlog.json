@@ -140585,7 +140585,7 @@
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
+        "state": "ANDROID100_VERIFIED_APK_READY_USB_DISCONNECTED_BEFORE_INSTALLATION",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -140626,7 +140626,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "当前手机不在线。新库位置提示与返回入口已完成源码/构建和受控App验证；实际手机接入后先读取已装版本及共享现场，基于最新手机源合并本次Web改动，集中打包并验真实资料识别/切回、回收站保护/恢复、Word保存及本机分享收件，保留原资料与现有连接修复，不装旧069候选或降级。外部音频导入及纪要/回听阅读沿原竞品待办继续；模型仍待外置GPU。",
+        "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -141784,13 +141784,14 @@
           }
         },
         "latestAndroidCandidate": {
-          "version": "0.1.69",
-          "code": 69,
-          "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
-          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Android-0.1.69-本机保护与回收站.apk",
-          "apkSha256": "23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09",
+          "version": "0.1.100",
+          "code": 100,
+          "sourceCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+          "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\Companion-Android-0.1.100-录音与内容修复候选.apk",
+          "apkSha256": "23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3",
           "installed": false,
-          "containsUnified066WordAndTransport": true
+          "scope": "Includes committed library-location/return Web source plus existing099 native/connection/Word/trash features. Phone absent before installation."
         },
         "embeddedFollowup070": {
           "at": "2026-11-07T00:38:03+08:00",
@@ -142215,9 +142216,118 @@
           "modelWorkpointPreserved": "ownerCoreDeliveryPriority20261104/ownerNightGpuModelPriority20261104: paired real source audited; same-Qwen comparison awaits external6800XT. No model selection resumed.",
           "ownerAccepted": false,
           "wholeProductQualified": false,
-          "next": "当前手机不在线。新库位置提示与返回入口已完成源码/构建和受控App验证；实际手机接入后先读取已装版本及共享现场，基于最新手机源合并本次Web改动，集中打包并验真实资料识别/切回、回收站保护/恢复、Word保存及本机分享收件，保留原资料与现有连接修复，不装旧069候选或降级。外部音频导入及纪要/回听阅读沿原竞品待办继续；模型仍待外置GPU。",
+          "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。",
           "sourceCommit": "a213c3c7051cc5c0356e50248a78080092b11f5f",
-          "previousPhoneNext": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。"
+          "previousPhoneNext": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。",
+          "phone100": {
+            "recordedAt": "2026-11-09T12:01:36+08:00",
+            "ownerQuote": "有手机了",
+            "state": "ANDROID100_VERIFIED_APK_READY_USB_DISCONNECTED_BEFORE_INSTALLATION",
+            "actualPhoneObservation": {
+              "serialSuffix": "45DU",
+              "model": "25060RK16C",
+              "package": "com.denzic.companion.app",
+              "versionName": "0.1.65",
+              "versionCode": 65,
+              "screenWasUnlocked": true,
+              "appWasRunning": false,
+              "appForegroundServicesObserved": false,
+              "observedBeforeDisconnect": true,
+              "observationTimeNotIndependentlyRecorded": true,
+              "notAnInstallationDowngrade": "Live65 observation takes priority for this device over old98/99 receipts; no package installed this turn."
+            },
+            "transportEndState": {
+              "adbDeviceListEmpty": true,
+              "windowsConnectedAndroidUsbDeviceAbsent": true,
+              "connectionMissingBeforePrivateFileSnapshot": true,
+              "virtualDisplayCreated": false,
+              "installationAttempted": false,
+              "appLaunched": false,
+              "libraryChanged": false
+            },
+            "preparationFailures": [
+              "Phone disconnected after initial read-only package/power/activity/service observation. Preflight stopped on adb device not found before file hashing. A subsequent virtual setup attempt also stopped on its first read; no process/display was created. Driver now explicitly requires completed preflight before virtual creation.",
+              "First inline version-edit command had a PowerShell quoting SyntaxError, changed no file. Applied the exact Gradle version change through apply_patch instead."
+            ],
+            "candidate": {
+              "result": "ANDROID100_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+              "versionName": "0.1.100",
+              "versionCode": 100,
+              "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\Companion-Android-0.1.100-录音与内容修复候选.apk",
+              "sha256": "23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3",
+              "bytes": 48802248,
+              "frontendSourceCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+              "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+              "signerMatches050r2And055": true,
+              "zip16KiBAligned": true,
+              "nativeLibraries": [
+                {
+                  "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+                  "sha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+                  "elf16KiBAligned": true
+                },
+                {
+                  "name": "jni/arm64-v8a/libonnxruntime.so",
+                  "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+                  "elf16KiBAligned": true
+                },
+                {
+                  "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+                  "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+                  "elf16KiBAligned": true
+                }
+              ],
+              "webAssetsExact": [
+                "index.html",
+                "manifest.webmanifest",
+                "assets/index-BXeaSz1o.css",
+                "assets/index-NrlemCDc.js"
+              ],
+              "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\apk100-build-1794196409731096700.log",
+              "buildWallSeconds": 75.438,
+              "installed": false,
+              "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
+              "actualOrdinaryControlButtonsAccepted": false,
+              "modelsRun": false,
+              "nativeRebuilt": false,
+              "nativeRebuiltByApkBuildStep": false
+            },
+            "webSourceReusedWithoutRebuild": true,
+            "nativeRebuiltThisBatch": false,
+            "sourceAndVersionCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+            "sharedItem": "Only Android100 local-library/export acceptance; no board BLE/recording.",
+            "sharedItemReleased": true,
+            "ownedModelOrBuildWorkersStillRunning": false,
+            "phoneAcceptanceComplete": false,
+            "originalFilesRetentionVerifiedThisTurn": false,
+            "phoneOrUserFilesModified": false,
+            "modelsRun": false,
+            "ownerAccepted": false,
+            "wholeProductQualified": false,
+            "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。"
+          }
+        },
+        "candidateBeforePhone100": {
+          "version": "0.1.69",
+          "code": 69,
+          "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Android-0.1.69-本机保护与回收站.apk",
+          "apkSha256": "23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09",
+          "installed": false,
+          "containsUnified066WordAndTransport": true
+        },
+        "latestPhoneLiveObservation": {
+          "serialSuffix": "45DU",
+          "model": "25060RK16C",
+          "package": "com.denzic.companion.app",
+          "versionName": "0.1.65",
+          "versionCode": 65,
+          "screenWasUnlocked": true,
+          "appWasRunning": false,
+          "appForegroundServicesObserved": false,
+          "observedBeforeDisconnect": true,
+          "observationTimeNotIndependentlyRecorded": true,
+          "notAnInstallationDowngrade": "Live65 observation takes priority for this device over old98/99 receipts; no package installed this turn."
         }
       },
       "ownerAndroidMaterialExports054": {
