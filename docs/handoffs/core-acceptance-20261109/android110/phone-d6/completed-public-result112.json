@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-09T22:15:22+08:00",
+  "state": "ANDROID112_FULL_PUBLIC_MEETING_TRANSLATED_SAVED_AND_AI_MATERIAL_REOPENED",
+  "versionCode": 112,
+  "translation": {
+    "language": "en",
+    "sourceMatchesActualPhoneTranscript": true,
+    "sourceRevision": 1,
+    "sourceCharacters": 8341,
+    "translationCharacters": 26839,
+    "sha256": "68f1342a8080fdf3b13ae1012148e90b335485065db87357cf04e144bb469958",
+    "fileSha256": "20e12629367a91cb102fe0e9198cd2f72f9e5a97b63383f6d444c606ed03d4f7",
+    "allThreeChunksCompletedBeforeSave": true
+  },
+  "originalTranscriptAndMinutesUnchanged": true,
+  "aiMaterials": [
+    {
+      "id": "14fca8c6-8b25-4add-a646-7c192ed63d6b",
+      "title": "会议问答",
+      "items": 2,
+      "allQuotesFoundInActualPhoneTranscript": true,
+      "sha256": "ec30a6f821758c6a71812238d1d7cbd9f6cdadb096c9681298374b97653579dd"
+    }
+  ],
+  "durablePublicFiles": 13,
+  "accuracyDiagnosticReused": {
+    "referenceCharacters": 8325,
+    "hypothesisCharacters": 8185,
+    "edits": {
+      "replace": 284,
+      "delete": 204,
+      "insert": 64
+    },
+    "cer": 0.06630630630630631,
+    "passedBelowFivePercent": false,
+    "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+    "scope": "One exposed public full meeting, actual phone Paraformer after lossy COP1 import. Not a new holdout or speaker/overlap qualification."
+  },
+  "wholeProductQualified": false
+}

@@ -33,10 +33,15 @@
       }
     ]
   },
-  "remoteBuildRun": 42627157009,
+  "remoteBuildRun": 42627556502,
   "physicalBoardAccessed": false,
   "originalPhoneDataUploaded": false,
   "privateBackupLocalOnly": true,
   "ordinaryPhoneFlowQualified": false,
-  "wholeProductQualified": false
+  "wholeProductQualified": false,
+  "previousBuildFailure": {
+    "run": 42627157009,
+    "reason": "Windows checkout converted resource bytes; exact resource .gitattributes now in repository",
+    "nativeBuildOrInferenceFailed": false
+  }
 }

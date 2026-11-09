@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-09T21:58:56+08:00",
+  "state": "SYSTEM_SAVED_WORD_TXT_AND_LOCAL_PDF_SHARE_READBACK_ACTUAL_CLIPBOARD_PASTE_IDENTICAL",
+  "files": [
+    {
+      "filename": "Companion-QA111-shared-minutes.pdf",
+      "bytes": 281360,
+      "sha256": "cf55b380437e8ba7c5cfa77be1e2e862d57c338fbd5ac87ab791a0752359ba8c"
+    },
+    {
+      "filename": "Companion-QA111-minutes.docx",
+      "bytes": 10780,
+      "sha256": "e88a6269b77489952b6a3e155424f5d83c24bff5f44aa114b135c15ee6895ab1"
+    },
+    {
+      "filename": "Companion-QA111-minutes-and-transcript.txt",
+      "bytes": 51786,
+      "sha256": "c18261a8114fd8abbae7ffca326c6374388511e21b7e90928a771a0d43ebcd4a"
+    }
+  ],
+  "clipboard": {
+    "actualOrdinaryAndroidPaste": true,
+    "bytes": 51745,
+    "characters": 17579,
+    "sha256": "d984f4d6cf0d676a5daf8c5c616417d42487efabb20516e2a1216362caff8a82",
+    "matchesPreparedCopyBytes": true,
+    "savedTranscriptUnchanged": true
+  },
+  "txtIncludesEntireSavedRawTranscript": true,
+  "wordDocumentXmlReadable": true,
+  "pdfShareRecipient": "Android system print spooler, Save as PDF; no printer job or contact message",
+  "pdfReprintedBytesMayDiffer": true,
+  "qaRecipientInstallRejected": true,
+  "systemSecuritySettingsChanged": false,
+  "phonePhysicalAudioQualityQualified": false
+}

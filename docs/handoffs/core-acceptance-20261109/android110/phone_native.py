@@ -30,7 +30,7 @@ else:
   import re
   matches=[node for node in result['nodes'] if (request.get('id') and node.get('id')==request['id']) or (request.get('label') and request['label'] in [node.get('text'),node.get('desc')])]
   index=int(sys.argv[3]) if len(sys.argv)>3 else 0;assert index<len(matches);node=matches[index];bounds=list(map(int,re.findall(r'-?\d+',node['bounds'])));assert len(bounds)==4 and node['enabled']
-  left,top,right,bottom=bounds;x=(left+right)//2;y=(top+bottom)//2;assert right>left and bottom>top and 0<=x<1080 and 0<=y<1920
+  left,top,right,bottom=bounds;x=(left+right)//2;y=(top+bottom)//2;assert right>left and bottom>top and 0<=x<1080 and 0<=y<state.get('height',1920)
   adb(['shell','input','-d',state['displayId'],'tap',x,y]);print(json.dumps({'display':state['displayId'],'action':'tap','ordinaryInputAtObservedBounds':True}));sys.exit(0)
  # Until the public library is active, keep record/document names out of model
  # output. The raw tool result is private and never published.

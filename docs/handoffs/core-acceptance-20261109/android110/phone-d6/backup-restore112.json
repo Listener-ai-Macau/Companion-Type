@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-09T22:17:07+08:00",
+  "state": "ANDROID112_ORDINARY_SYSTEM_BACKUP_RESTORE_ALL_PUBLIC_FILES_IDENTICAL",
+  "backupBytes": 4594647,
+  "backupSha256": "f5c0963ffac7f544e3441ca69585aaaf8d3abe3448fd3b364f5faadb011a4317",
+  "archivedFiles": 13,
+  "restoredFilesVerified": 13,
+  "restoredIntoNewLibrary": true,
+  "priorPublicLibraryRetained": true,
+  "originalOwnerLibraryRetained": true,
+  "includes": [
+    "COP1 original audio and descriptor",
+    "saved ASR and timing",
+    "AI minutes",
+    "named AI material and exact source citations",
+    "complete English translation"
+  ],
+  "serviceKeyAbsent": true,
+  "modelsAbsent": true,
+  "restoredAutomaticallyConnectedToBoard": false
+}

@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-11-09T22:12:29.821473+08:00",
+  "sourceCommit": "d399170fb7a743a48e7c93ce0365d042b564cc6a",
+  "state": "PASS_FOCUSED_JVM_PROVIDER_TRANSLATION_PROTOCOL",
+  "checks": [
+    "official DeepSeek non-thinking and bounded output",
+    "unrelated provider unchanged",
+    "source text unchanged",
+    "incomplete output rejected",
+    "failed chunk cause retained"
+  ],
+  "compileTarget": "Java8",
+  "androidBuildRun": 42631330764,
+  "phoneRetestPending": true
+}

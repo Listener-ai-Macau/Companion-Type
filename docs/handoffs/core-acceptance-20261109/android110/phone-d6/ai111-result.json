@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-09T22:00:18.051994+08:00",
+  "state": "ACTUAL_PHONE_ASR_MINUTES_GENERATED_AND_SOURCE_MATCHED",
+  "source": "llm_deepseek",
+  "quality": "final",
+  "processing": {
+    "complete": true,
+    "completedChunks": 2,
+    "processedSourceBytes": 24685,
+    "resumedChunks": 0,
+    "sourceBytes": 24685,
+    "strategy": "chunkedSourceBacked",
+    "totalChunks": 2
+  },
+  "noRawAudioUploaded": true,
+  "savedRevision": 1,
+  "sourceMeetingRevision": 1,
+  "sourceHashVerified": true,
+  "factReviewScope": "AI identified conflicting 20/30 kilometre delivery ranges and left absent owners/dates unfilled. Not a complete semantic accuracy qualification."
+}

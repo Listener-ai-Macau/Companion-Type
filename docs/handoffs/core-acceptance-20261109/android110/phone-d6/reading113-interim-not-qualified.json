@@ -1,0 +1,10 @@
+{
+  "recordedAt": "2026-11-09T22:57:37.196780+08:00",
+  "state": "ANDROID113_FIRST_SCREEN_SHOWED_COUNTS_BUT_SAVED_SECTION_STILL_BELOW_VIEWPORT",
+  "sourceCommit": "f99aa537741710cdf671d74e23a05d024ed98884",
+  "actualPhoneCssWidth": 391,
+  "actualPhoneCssHeight": 869,
+  "firstSavedSectionTop": 957.1859130859375,
+  "bottomNavigationTop": 799.4354858398438,
+  "decision": "Further change actual reading order and navigation layout, not repeat the same collapse-only adjustment. Existing generated text remains unchanged."
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-09T22:52:15.599486+08:00",
+  "sourceCheckpointWithTypingFailure": "ca2ae9bb00c69dba6a18afb0f7b06b81764f0eba",
+  "typingError": "First-generation branch correctly narrows minutes to absent; replaced optional template access with undefined",
+  "localTypecheckHeapLimitMiB": 256,
+  "localTypecheckEndedAtHeapCap": true,
+  "phoneVersionAtFailures": 113,
+  "newFailedApkInstalled": false,
+  "decision": "Do not increase local memory under actual pressure. Verify full typecheck and package on CI before installation."
+}

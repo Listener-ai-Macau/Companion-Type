@@ -1,0 +1,177 @@
+{
+  "at": "2026-11-09T23:17:21+08:00",
+  "state": "ANDROID115_PHONE_MEETING_PROCESSING_DELIVERY_RESTORE_AND_READING_BATCH_COMPLETED",
+  "ownerOriginal": "继续, 现在有手机了",
+  "version": "0.1.115",
+  "sourceCommit": "afa463953ecc62f3808704679b4e069d9f270d7e",
+  "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+  "apkSha256": "39a30664910e87c3e0ee32abd8fd336fdabffb3ae847b2409e4047589565a683",
+  "installed": true,
+  "qualifiedScope": [
+    "public COP1 meeting imported through system picker",
+    "phone local transcription saved",
+    "AI minutes and quoted-source material saved",
+    "complete English translation saved",
+    "play/pause/seek/resume",
+    "system Word/TXT/WAV saving and actual clipboard paste",
+    "PDF received by local system print spooler and saved",
+    "mindmap XML saving",
+    "whole-library backup and new-library restore",
+    "public recording trash and restore",
+    "saved meeting content visible and secondary tools reachable"
+  ],
+  "linkedFunctionalVersions": {
+    "localAsrAndMinutes": 111,
+    "contentAndPlayback": 111,
+    "fixedTranslationBackupRestoreAndLifecycle": 112,
+    "finalReadingUi": 115
+  },
+  "localAsr": {
+    "at": "2026-11-09T21:49:12.658919+08:00",
+    "state": "ANDROID111_REAL_PUBLIC_MEETING_LOCAL_TRANSCRIPTION_SAVED",
+    "sample": "S_R004S03C01",
+    "durationSeconds": 2327.12,
+    "elapsedUntilCompletionObservedSeconds": 143.79,
+    "includesFirstTimeModelDownload": true,
+    "completionObservedNotExactInferenceTimer": true,
+    "visibleTranscriptCharacters": 8083,
+    "visibleTranscriptSha256": "5eb6a953f10839d54d6d64822d9f097b88f3d830b9a04d23de60527527befd62",
+    "ui": {
+      "headings": [
+        "公开实会 S_R004S03C01 · 38分47秒"
+      ],
+      "status": [
+        "转写已保存，请核对内容。"
+      ],
+      "alerts": [],
+      "rowCount": 0
+    },
+    "rawSourceAccuracyNotYetScored": true
+  },
+  "result": {
+    "at": "2026-11-09T22:15:22+08:00",
+    "state": "ANDROID112_FULL_PUBLIC_MEETING_TRANSLATED_SAVED_AND_AI_MATERIAL_REOPENED",
+    "versionCode": 112,
+    "translation": {
+      "language": "en",
+      "sourceMatchesActualPhoneTranscript": true,
+      "sourceRevision": 1,
+      "sourceCharacters": 8341,
+      "translationCharacters": 26839,
+      "sha256": "68f1342a8080fdf3b13ae1012148e90b335485065db87357cf04e144bb469958",
+      "fileSha256": "20e12629367a91cb102fe0e9198cd2f72f9e5a97b63383f6d444c606ed03d4f7",
+      "allThreeChunksCompletedBeforeSave": true
+    },
+    "originalTranscriptAndMinutesUnchanged": true,
+    "aiMaterials": [
+      {
+        "id": "14fca8c6-8b25-4add-a646-7c192ed63d6b",
+        "title": "会议问答",
+        "items": 2,
+        "allQuotesFoundInActualPhoneTranscript": true,
+        "sha256": "ec30a6f821758c6a71812238d1d7cbd9f6cdadb096c9681298374b97653579dd"
+      }
+    ],
+    "durablePublicFiles": 13,
+    "accuracyDiagnosticReused": {
+      "referenceCharacters": 8325,
+      "hypothesisCharacters": 8185,
+      "edits": {
+        "replace": 284,
+        "delete": 204,
+        "insert": 64
+      },
+      "cer": 0.06630630630630631,
+      "passedBelowFivePercent": false,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "scope": "One exposed public full meeting, actual phone Paraformer after lossy COP1 import. Not a new holdout or speaker/overlap qualification."
+    },
+    "wholeProductQualified": false
+  },
+  "ui": {
+    "at": "2026-11-09T15:14:03.935Z",
+    "versionCode": 115,
+    "scope": "Actual connected phone WebView on owned display5, same 1440x3200/589 metrics as physical phone. No physical main-display capture.",
+    "layout": {
+      "width": 391,
+      "height": 869,
+      "bottomNavigationTop": 799.4354858398438,
+      "firstContentTop": 711.5492553710938,
+      "firstContentCharacters": 1223,
+      "recordingManagementTop": 304.52886962890625,
+      "bookmarksTop": 304.52886962890625,
+      "outlineCardTops": [
+        512.1774291992188,
+        512.1774291992188,
+        512.1774291992188
+      ],
+      "regenerationAfterReading": true,
+      "regenerationInitiallyClosed": true
+    },
+    "state": "ANDROID115_REAL_PHONE_FIRST_CONTENT_VISIBLE_SECONDARY_TOOLS_REACHABLE",
+    "regenerationShortcutWorked": true,
+    "localBookmarkReadWorked": true,
+    "recordingManagementReachable": true,
+    "newCloudCalls": 0
+  },
+  "ownerReturn": {
+    "at": "2026-11-09T23:15:11+08:00",
+    "state": "OWNER_ORIGINAL_LIBRARY_ACTIVE_FILES_IDENTICAL_PUBLIC_TEST_DUPLICATES_RETIRED",
+    "installedVersionCode": 115,
+    "originalFilesVerified": 1740,
+    "onlyIntentionalOriginalFileChange": "Library index retains original plus one fully verified public meeting copy",
+    "retiredPublicDuplicateLibraries": 3,
+    "quarantinedInsteadOfErased": true,
+    "originalActive": true,
+    "retainedVerifiedPublicMeetingLibrary": true,
+    "originalPrivateBackupUploaded": false,
+    "publicBackupRemoteHashVerified": true
+  },
+  "sessionEnded": {
+    "at": "2026-11-09T23:15:40+08:00",
+    "state": "OWNED_PHONE_ACCEPTANCE_SESSION_CLOSED_OWNER_LIBRARY_RESTORED",
+    "installedVersionCode": 115,
+    "ownerOriginalRows": 104,
+    "retainedLibraries": 2,
+    "ownAppStopped": true,
+    "ownVirtualDisplayStopped": true,
+    "ownForwardRemoved": true,
+    "temporaryVirtualMetricsReset": true,
+    "physicalSizeUnchanged": true,
+    "physicalDensityUnchanged": true,
+    "boardAccessed": false,
+    "computerUseUsed": false,
+    "ownerPrivateFilesUploaded": false
+  },
+  "remotePackage": {
+    "at": "2026-11-09T23:13:00+08:00",
+    "state": "ANDROID115_PRIVATE_DRAFT_BACKUP_DOWNLOADED_AND_HASH_VERIFIED",
+    "sourceCommit": "afa463953ecc62f3808704679b4e069d9f270d7e",
+    "apkSha256": "39a30664910e87c3e0ee32abd8fd336fdabffb3ae847b2409e4047589565a683",
+    "tag": "windows-0.1.78-bb1550c4-candidate",
+    "draft": true,
+    "published": false,
+    "oldArtifactsReplaced": false,
+    "downloadByteIdentical": true,
+    "installed": false,
+    "phoneOrdinaryFlowQualified": false
+  },
+  "publicMeetingBackup": {
+    "at": "2026-11-09T22:19:52+08:00",
+    "state": "COMPLETE_PUBLIC_PHONE_MEETING_BACKUP_REMOTE_READBACK_IDENTICAL",
+    "archive": "Companion-QA112-S_R004S03C01-complete-backup.zip",
+    "bytes": 4594647,
+    "sha256": "f5c0963ffac7f544e3441ca69585aaaf8d3abe3448fd3b364f5faadb011a4317",
+    "privateDraftReleaseId": 438762888,
+    "draft": true,
+    "published": false,
+    "downloadHashIdentical": true,
+    "ownerOriginalPhoneFilesUploaded": false,
+    "serviceCredentialsUploaded": false
+  },
+  "newDesktopModelTrainingRuns": 0,
+  "physicalBoardAccessed": false,
+  "computerUseUsed": false,
+  "wholeProductQualified": false,
+  "newCustomerEvaluationPerformed": false
+}

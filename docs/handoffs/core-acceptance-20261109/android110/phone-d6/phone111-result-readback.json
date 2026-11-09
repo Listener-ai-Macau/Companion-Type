@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-09T21:51:19+08:00",
+  "title": "公开实会 S_R004S03C01 · 38分47秒",
+  "meetingRevision": 1,
+  "transcriptCharacters": 8341,
+  "transcriptSha256": "3dc90a608b1a01a1698a718205338b0cde3b123e7224b822d089128d401d56df",
+  "meetingFileSha256": "248ae5a07e746d6164a8c73177733d80b9ad9211c7fb8690befa5618cbad4dd8",
+  "publicDataOnly": true,
+  "minutes": {
+    "revision": 1,
+    "sourceMeetingRevision": 1,
+    "sourceMatchesActualPhoneTranscript": true,
+    "fileSha256": "83067b7fbbfd7b7eb3b0e64288e26bff6e7f7430ed0f2eee6f92562985f2f0bf",
+    "jsonKeys": [
+      "actionItems",
+      "decisions",
+      "generatedAt",
+      "keywords",
+      "llmNote",
+      "markdown",
+      "processing",
+      "quality",
+      "questions",
+      "source",
+      "sourceNoteContext",
+      "sourceReviewRevision",
+      "sourceSupplements",
+      "summary",
+      "template"
+    ]
+  },
+  "chronologicalMixedCerDiagnostic": {
+    "referenceCharacters": 8325,
+    "hypothesisCharacters": 8185,
+    "edits": {
+      "replace": 284,
+      "delete": 204,
+      "insert": 64
+    },
+    "cer": 0.06630630630630631,
+    "passedBelowFivePercent": false,
+    "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+    "scope": "One exposed public full meeting, actual phone Paraformer after lossy COP1 import. Not a new holdout or speaker/overlap qualification."
+  }
+}

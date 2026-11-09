@@ -1,8 +1,11 @@
 {
-  "jarSha256": "935a6fccdf050bd6ea5b005e6c18f91c1f68a0791301fb6534f16f73cc23350d",
-  "ordinaryUiOnly": true,
-  "nonMainDisplayOnly": true,
-  "installedApk": false,
-  "accessibilitySettingsChanged": false,
-  "noPhysicalWindowRoots": true
+  "at": "2026-11-09T23:17:21.518086+08:00",
+  "state": "STANDARD_UIAUTOMATOR_ORDINARY_INPUT_USED_AND_CLOSED",
+  "driver": "Stock Android UiAutomator runner with display5 and package restrictions; real DocumentsUI taps at observed bounds",
+  "qaApkInstalled": false,
+  "oldCustomAppProcessAttemptExit137Retained": true,
+  "persistentAccessibilitySettingsChanged": false,
+  "physicalMainDisplayInput": false,
+  "systemShareRecipient": "com.android.printspooler, Save as PDF",
+  "sessionEnded": true
 }
