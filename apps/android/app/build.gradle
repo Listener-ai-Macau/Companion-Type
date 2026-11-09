@@ -54,7 +54,7 @@ tasks.register('verifyCompanionModelResources') {
             def file = resourceDirectory.file(resource.name).asFile
             def actual = java.security.MessageDigest.getInstance('SHA-256').digest(file.bytes).encodeHex().toString()
             if (file.length() != resource.bytes || actual != resource.sha256) {
-                throw new GradleException('Pinned first-run model resource is missing or changed: ' + resource.name)
+                throw new GradleException('Pinned first-run model resource is missing or changed: ' + resource.name + ' bytes=' + file.length() + ' sha256=' + actual)
             }
         }
     }
