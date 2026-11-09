@@ -2431,7 +2431,7 @@ export function CompanionDashboard({
             sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
             minutes={hasMinutes} transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
             exactTiming={Boolean(finalTranscript&&companionReviewedUtterances(selectedSession).length&&!companionReviewedUtterances(selectedSession).some(row=>row.approximateTiming||row.endMs<=row.startMs))}
-            notes={selectedSession.meetingNotes??[]} blocked={controlsBusy||oobeBlockedByRecording}
+            notes={selectedSession.meetingNotes??[]} blocked={controlsBusy||oobeBlockedByRecording} desktopFileSharing={surface==='windows'}
             unsaved={{title:titleDirty,minutes:minutesDirty,transcript:transcriptReviewUnsaved,highlights:bookmarkUnsaved,notes:noteUnsaved}}
             onPreview={onPreviewMeetingExport} onSave={onExportMeeting} onCopy={onCopyMeetingContent} onShare={onShareMeetingContent}/>:null}
           <section className="ct-recording-text" aria-label="录音文字">
@@ -2651,9 +2651,9 @@ export function CompanionDashboard({
             <label>音频格式 <select aria-label="音频副本格式" value={audioExportFormat} disabled={controlsBusy||oobeBlockedByRecording} onChange={e=>setAudioExportFormat(e.currentTarget.value as 'original'|'mp3')}><option value="original">原文件 / WAV / 分段ZIP</option><option value="mp3">MP3 兼容副本（有损）</option></select></label>
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
               onClick={() => void exportAudio(audioExportFormat)}><Download size={15} />{audioExportFormat==='mp3'?'保存 MP3 副本':selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
-            <button type="button" className="ct-action" disabled={!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio()}>分享录音…</button>
+            <button type="button" className="ct-action" disabled={!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio(surface==='windows'?'clipboard':'system')}>{surface==='windows'?'复制录音文件':'分享录音…'}</button>
             {onShareAudio?<details><summary>其他录音分享方式</summary>
-              <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio('clipboard')}>复制录音文件</button>
+              <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio(surface==='windows'?'system':'clipboard')}>{surface==='windows'?'系统分享录音…':'复制录音文件'}</button>
               <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio('folder')}>在文件夹中分享录音…</button>
             </details>:null}
             {renderExportFeedback('audio')}

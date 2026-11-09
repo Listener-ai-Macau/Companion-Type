@@ -56,6 +56,17 @@ async function main(){
  await act(async()=>button('复制所选内容').props.onClick());assert.equal(calls.preview.length,before);assert.match(text(tree.root),/未保存的修改/);
  await act(async()=>button('复制所选文件').props.onClick());assert.equal(calls.preview.length,before);
  await act(async()=>tree.unmount());
+ // Desktop exposes full-file copying without invoking an OS picker. Mobile
+ // keeps the system-share entry exercised above.
+ await act(async()=>{tree=create(<ContentExportPanel {...props} desktopFileSharing/>);});
+ const desktopCopy=button('复制所选文件');
+ assert.equal(desktopCopy.parent?.props.className,'ct-button-row');
+ assert.equal(tree.root.findAllByType('button').filter((node:any)=>text(node)==='复制所选文件').length,1);
+ staleCopy=false;wrongFolderStatus=false;
+ await act(async()=>desktopCopy.props.onClick());assert.equal(calls.routes.at(-1),'clipboard');
+ assert.equal(calls.share.at(-1).format,'pdf');assert.equal(calls.share.at(-1).expectedContentHash,'f'.repeat(64));
+ await act(async()=>button('系统分享所选文件…').props.onClick());assert.equal(calls.routes.at(-1),'system');
+ await act(async()=>tree.unmount());
  console.log('PASS all selected-content formats, explicit material exclusion, native copy/hash, cancel, explicit folder route with exact selection/hash, no automatic fallback or false sent/saved feedback, subtitle scope and unsaved edits');
 }
 main().then(()=>process.exit(0),error=>{console.error(error);process.exit(1);});

@@ -27,6 +27,9 @@ try:
   assert PHASE in {'audio','whole','delivery'} and spec['verification']['version'] in {'0.1.79','0.1.80'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
+  if spec.get('browserAttachmentReceipt'):
+   env['COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS']='1'
+   record['browserAttachmentReceiptRequired']=True
  run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+record['appSourceCommit'],'--dir',artifact])
  receipt=json.loads((artifact/'result.json').read_text(encoding='utf8'));assert receipt['sourceCommit']==record['appSourceCommit']
  v=spec['verification'] if spec else json.loads((S/'docs/handoffs/windows-file-copy078-20261109/windows-verification.json').read_text(encoding='utf8'))

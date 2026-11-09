@@ -7,7 +7,7 @@ export type ContentSelection={minutes:boolean;transcript:boolean;highlights:bool
 type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png';
 const formats:readonly [Format,string][]=[['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
 type Preview={contentHash:string;textContent?:string|null};
-type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
+type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
  onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
  onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
@@ -91,11 +91,15 @@ export function ContentExportPanel(props:Props){
      <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>
      <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('copy')}><Copy size={14}/>复制所选内容</button>
      <button type="button" className="ct-action ct-action-primary" disabled={disabled||!props.onSave||!any} onClick={()=>void run('save')}><Download size={14}/>保存 {formats.find(([value])=>value===format)?.[1]}…</button>
-     <button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>
+     {props.desktopFileSharing?<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
+       :<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>}
    </div>
-   {props.onShare?<details className="ct-content-share-alternative"><summary>复制文件或在文件夹中分享</summary>
+   {props.desktopFileSharing&&props.onShare?<p className="ct-step-meta">复制的是上方所选格式的完整文件，可到支持文件粘贴的应用中按 Ctrl+V 添加附件，再自行发送。</p>:null}
+   {props.onShare?<details className="ct-content-share-alternative"><summary>{props.desktopFileSharing?'其他分享方式':'复制文件或在文件夹中分享'}</summary>
+     {props.desktopFileSharing?<><p className="ct-step-meta">使用 Windows 分享面板选择接收应用。</p><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('share')}><Share2 size={14}/>系统分享所选文件…</button></>:<>
      <p className="ct-step-meta">复制完整文件后，可到支持文件粘贴的应用中按 Ctrl+V。接收位置与是否发送由你确认。</p>
      <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
+     </>}
      <p className="ct-step-meta">在文件夹中准备相同选择的临时副本，再通过资源管理器分享。接收应用由你选择。</p>
      <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('folder')}>在文件夹中分享所选文件…</button>
    </details>:null}

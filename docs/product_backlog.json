@@ -132986,24 +132986,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T18:45:17+08:00",
+      "updatedAt": "2026-11-09T19:18:21+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66771,
+        "firmwareVersion": 66773,
         "uiGeneration": 85,
         "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
-        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate771-build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
+        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal773-candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-normal773-return-identity.json",
         "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal771/fd2 installed; actual targeted results and old769 long scope are separate.",
+        "sourceRootAvailability": "Current normal773/634, editable optional observation source51f in stopped-recovery-source. Core function byte-equivalence receipt binds reuse of771 results; no new773 recording sample or final2h claim.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。",
+      "next": "正常773空闲且板卡已释放。编码6510us>6000仍开放；先修好的读取器在实际发MIC前用?验证新鲜本机报告，停录后读同场缓存再返回正常配置。774/775签名包和5场景读取器验证已准备，原新批次窗口Timeout没有授予任何录音范围；下次Owner明确就绪时运行原统一弹窗续作入口 run_codec774_readback.py --retry-not-ready，未确认不录音。若确认，按弹窗最多[180,10,180,7380]且4小时内的条件批次执行：诊断、真实修复后开停/录中复核、全门过才最终同版本2h，不原样碰运气。普通手机ADB上次列表为空，手机/偶发连接与原block/速度后置不继承关闭。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133725,11 +133725,11 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "installedSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "installedFirmwareVersion": 66771,
-        "scope": "Combined771 normal installed; current targeted acceptance remains scoped, final2h not inherited.",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
+        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "installedSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "installedFirmwareVersion": 66773,
+        "scope": "Normal773/634 installed. Fourteen selected core functions exactly match normal771; reuse only its scoped results and6510us encode failure. Optional observation source51f is not installed.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-ready.json",
         "phoneActualVersion": "0.1.109",
         "phoneObservation": "LAST_POSITIVE_NOT_CURRENT_ADB_READ",
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -133747,14 +133747,15 @@
         "windowsCoreCandidatePackageSha256": "6f4a708c9bb983f9193a7a6dc7445d830d34241452b50f45026175139d1877e3",
         "windowsCoreCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-candidate.json",
         "windowsCoreCandidateInstalled": false,
-        "nextFaultRecoveryFirmware": 66771,
-        "nextFaultRecoveryCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "nextFaultRecoverySourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
-        "nextFaultRecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
-        "nextCoreFirmware": 66771,
-        "nextCoreSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "nextCoreSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
-        "nextCoreReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json"
+        "editableObservationCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
+        "editableSourceRoot": "E:/CodexData/Companion/.build-cache/stopped-recovery-source",
+        "preparedObserverFirmware": 66774,
+        "preparedObserverSourceCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
+        "preparedObserverReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-observer-candidate.json",
+        "preparedNormalReturnFirmware": 66775,
+        "preparedNormalReturnReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal775-candidate.json",
+        "preparedImagesInstalled": false,
+        "installedObservationAt": "2026-11-09T18:53:00+08:00"
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -133985,14 +133986,14 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66771,
+        "version": 66773,
         "installed": true,
-        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
         "appBytes": 406580,
         "staticBytes": 67896,
         "stackReservedBytes": 21504,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
-        "reason": "合并771正常OTA已安装；当前定向/最终长录分别按实际收据判定，不继承769峰值通过。",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-current.json",
+        "reason": "既有观察后返回相同正常核心；未把观察配置或新版本号当编码峰修复。",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
@@ -134184,8 +134185,8 @@
             "order": 3,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "NORMAL771_TARGETED_RESULTS_PRESERVED",
-            "next": "按core771-development实际门继续；失败先修源头，只有当前定向已达门才组织有变化的最终长录。不借769零故障长录关闭771峰值。"
+            "status": "NORMAL773_ENCODER6510_OPEN_READBACK_FIXED_OWNER_READY_PENDING",
+            "next": "按embedded.next续作本批；旧失败与未确认录音范围保留。"
           }
         ],
         "doNotReopen": [
@@ -134275,12 +134276,12 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109"
       },
       "releaseReadiness": {
-        "at": "2026-11-09T17:47:56+08:00",
-        "firmware": 66771,
+        "at": "2026-11-09T19:18:21+08:00",
+        "firmware": 66773,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "771短录开停/原音各门过，录中同步PDM P95上界2000us/峰2832us、零采音故障及前台7ms过；编码峰6510us>6000仍失败。暂不原样跑2h，先区分本帧执行/IRQ及编码准入原因；普通手机链/偶发连接仍开放。",
+        "openSoftware": "Normal773 retains byte-identical selected771 core. Its scoped firstPCM312ms/STOP188ms, PDM P95<=2000us/peak2832us and zero-fault audio results are reusable; encode6510us>6000 remains failed. 772 observation obtained no cached report because the read-only query was omitted; no cause inferred. Reader fixed/validated, new774 batch prompt timed out with no new recording. Final current2h, ordinary phone and intermittent acquisition remain open.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134342,7 +134343,18 @@
         "current771TargetedPassed": false,
         "current771TwoHourPassed": false,
         "current771PdmScopedPass": true,
-        "current771EncodePeakPass": false
+        "current771EncodePeakPass": false,
+        "current773FreshRecordings": 0,
+        "normal773OtaMetrics": {
+          "elapsedMs": 133207,
+          "maximumMs": 150000,
+          "postFinishMs": 93571,
+          "postFinishMaximumMs": 100000,
+          "jointConfirmed": true,
+          "temporarySpaceReleased": true,
+          "gatesPass": true
+        },
+        "coreCodeReuseReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core773-hot-code-reuse.json"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -135582,7 +135594,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "771合并修复已装板并定向：原378十秒全门过，原379三分钟录中同步PDM P95从769的3000降至2000us、峰2832us/原音/零故障过；编码峰6510us仍失败。原769的2h零故障原音保留范围，不能冒充当前771最终通过。"
+        "currentDelivery": "当前正常773已返回，应用406580B/静态67896B/栈21504B保持原预算；14个关键采音/编码函数与771逐字节相同，复用其首PCM/STOP/PDM/完整原音及编码6510us失败。772定位因漏查询未取到报告，读取器已修好，774/775包未安装；新批次19:07:18弹窗超时，未再录音。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136466,25 +136478,25 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T18:45:17+08:00",
-        "state": "INSTALL_EXISTING_OPTIONAL_OBSERVER772",
+        "at": "2026-11-09T19:18:21+08:00",
+        "state": "NORMAL773_IDLE_CORRECTED_READBACK774_READY_OWNER_TIMEOUT",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66771,
+        "firmwareInstalled": 66773,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "boardLease": true,
-        "boardItem": "Companion编码最坏帧准入原因：一次既有观察与正常配置返回",
+        "firmwareSource": "634e1335fe37df089cce8e10d775761219436e60",
+        "boardLease": false,
+        "boardItem": null,
         "liveRecording": false,
         "liveReceive": false,
-        "liveUpgrade": true,
+        "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 379,
+        "ownLatestSession": 380,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66771,
-        "candidateSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "firmwareCandidate": 66773,
+        "candidateSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -136505,7 +136517,7 @@
         "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core769-matched079\\long\\progress.json",
         "longObserverSession": null,
         "startupDiagnosticSession": null,
-        "firmwareSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "firmwareSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
         "windowsInstalledVersion": "0.1.78",
@@ -136520,9 +136532,9 @@
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "000000000000017b"
+          "sessionId": "000000000000017c"
         },
-        "operatorReady": true,
+        "operatorReady": false,
         "operatorPromptPending": false,
         "offlineRecoveryCandidate": 66771,
         "offlineRecoverySourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
@@ -136530,8 +136542,8 @@
         "offlineRecoveryInstalled": true,
         "targetedControllerSession": null,
         "targetedControllerPid": null,
-        "codecObserverSession": 53843,
-        "codecObserverPid": 4664,
+        "codecObserverSession": null,
+        "codecObserverPid": null,
         "activeEngineeringFirmware": null
       },
       "offlineCpuCandidate700": {
@@ -141009,16 +141021,21 @@
             "normalAudioByteIdentical": true
           },
           "encodePeakAttribution772": {
-            "at": "2026-11-09T18:45:17+08:00",
+            "at": "2026-11-09T19:13:58+08:00",
             "sourceCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
             "observerFirmware": 66772,
             "observerCandidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-observer-r2-candidate.json",
             "normalReturn": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal773-candidate.json",
             "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-current.json",
-            "state": "INSTALL_EXISTING_OPTIONAL_OBSERVER772",
-            "newStartCommands": 0,
+            "state": "NORMAL773_RETURNED_OBSERVER_RESULT_PRESERVED",
+            "observerResult": "FAILED_READBACK_PREPARATION_NO_CODEC_REPORT",
+            "newStartCommands": 1,
             "metricMaximumUs": 6000,
-            "normalCurrentQualified": false
+            "normalCurrentQualified": false,
+            "readbackFixed": true,
+            "readbackSoftwarePass": true,
+            "nextAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-ready.json",
+            "nextAttemptState": "OWNER_NOT_READY_NO_CHANGE_NO_RECORDING"
           }
         }
       },
@@ -141232,6 +141249,23 @@
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "lastOperatorPrompt": {
+        "at": "2026-11-09T19:07:18+08:00",
+        "selected": "Timeout",
+        "recordingScopeGranted": [],
+        "requestedScopeOnly": [
+          180,
+          10,
+          180,
+          7380
+        ],
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-readiness.json"
+      },
+      "currentConnectionDependency": {
+        "phoneAdb": "LAST_INVENTORY_EMPTY",
+        "source": "Actual adb devices -l using project platform-tools during this batch; no phone in the returned list. Not a current phone app-version observation and not an Owner-declared hardware block.",
+        "action": "When phone attachment changes, use existing selector and ordinary core path; do not repeatedly ask for a cable while handling encoder evidence."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -264052,7 +264086,23 @@
             "saleQualified": false,
             "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
             "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
-          }
+          },
+          "activeFileDelivery": {
+            "at": "2026-11-09T19:55:08+08:00",
+            "state": "WINDOWS_FILE_DELIVERY_BATCH_IMPLEMENTED_BUILD_AND_RECEIPT_RUNNING",
+            "version": "0.1.81",
+            "purpose": "纪要、所选正文和原音/MP3可从主入口复制为完整文件并在接收应用粘贴为附件。",
+            "baselineProductSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+            "baselineFailure": "WinRT068/069请求改写与自定义Shell site均未修复系统面板；文件CF_HDROP及真实Shell收件已通过。",
+            "newEvidence": "真实有头Edge从系统文件剪贴板触发可信paste，File经标准FormData到本机收件器；收件器不给原文件路径/字节，核对实际收到的文件。",
+            "systemPickerRepaired": false,
+            "newAsrOrAiCalls": false,
+            "phoneOnline": false,
+            "boardAccessed": false,
+            "installed": false,
+            "saleQualified": false
+          },
+          "lastOwnerQuote": "你不要老是说还有什么东西没做，你说什么东西没做难道是因为你不能做吗？直接把它做了就好了。"
         }
       },
       "latestCandidate20261102": {
