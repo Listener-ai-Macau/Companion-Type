@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-09T08:06:23+08:00",
+  "ownerQuote": "完整会议基线错误率再怎么压，换模型还是在千问基础上改善？",
+  "decision": "Keep Qwen3-ASR1.7B as the retained ASR backbone. Do not immediately replace it, increase model size, change weights or start fine-tuning. Ordinary remaining errors need verified cross-meeting causes; complex overlap requires source/content recovery rather than only another generic ASR checkpoint.",
+  "currentEvidence": {
+    "bestOrdinaryCharacters": 8325,
+    "bestOrdinaryErrors": 461,
+    "bestOrdinaryCer": 0.055375375375375374,
+    "errorsAtStrictUnder5Maximum": 416,
+    "netErrorsRequired": 45,
+    "fixed30sErrors": 480,
+    "lowEnergyBoundaryNetGain": 19,
+    "complexFixed30sChronologicalCer": 0.23155832180728447,
+    "wholeModelQualityQualified": false
+  },
+  "newAudit": {
+    "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\qwen-baseline-improvement-20261109\\ordinary-r6-error-inventory.json",
+    "sha256": "5705d5948eebb8d0ffafb17be81ef3ad24970276f6cb9bdbd8d30164542dbe74",
+    "newNeuralCalls": 0,
+    "strictEditsUnchanged": 461,
+    "inspectionTags": {
+      "number_or_unit": 66,
+      "filler": 128,
+      "negation": 3,
+      "er_suffix": 122,
+      "other_lexical": 173
+    },
+    "interpretation": "Groups/tags overlap and are not listening-confirmed causes. Number regex also matches nonnumeric一/点/分; do not call all tagged edits numerical mistakes. Filler/儿 differences are not a justification to delete reference words or change strictCER. Negation and lexical content must be audited separately before adaptation."
+  },
+  "improvementOrder": [
+    "Freeze the native1.7B fixed30s whole-meeting baseline and keep the5.54% boundary variant as a single-meeting candidate; the tested boundary-only change gained19edits and did not cross5%, so no further boundary/threshold sweep without a distinct proven cause.",
+    "Check whether persistent substantive errors recur across different real meetings and whether the reference words agree with the original audio before creating adaptation labels. Handle actual names, quantities, negation and lexical mistakes before optimizing superficial score differences. Existing audio coverage/native weight equivalence proofs are reused, not re-run as a ritual.",
+    "Where a real user provides agenda, names or domain vocabulary before recognition, test the official prompt/context interface with that source only and preserve a no-context route. Never derive hotwords from reference answers or silently use a language model to rewrite what was said.",
+    "For true overlap retain the independent automatic-speaker-profile/separation workpoint: validate the17already-selected profiles, extract predicted simultaneous voices separately, then use the same ASR; ordinary speech bypasses separation. Profile preparation does not establish content recovery.",
+    "Fine-tuning/adapter work is justified only after enough independently checked, authorized real-meeting audio/text exposes a stable recognizer error, with meetings/speakers separated between adaptation and evaluation. Freeze old model, protect ordinary content and key facts, and use heldout meetings; no one-meeting memorization.",
+    "Replace the backbone only when a mature challenger wins a predeclared same-audio comparison across multiple meetings without protected-path regressions and within measured CPU/system-RAM/device limits. A headline score or one sample is insufficient. No from-scratch foundation-model plan is supported by current evidence."
+  ],
+  "officialSupport": [
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf",
+      "supports": "Native Transformers input supports language and prompt context/hotwords, and documents training/fine-tuning. Context support is not proof of an accuracy gain on our meetings."
+    },
+    {
+      "url": "https://github.com/QwenLM/Qwen3-ASR",
+      "supports": "Official inference, timestamps and finetuning references; timestamp alignment does not itself correct recognition words."
+    }
+  ],
+  "previousWorkpoint": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
+  "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+  "newInferenceOrTraining": false,
+  "newAccuracyGainClaimed": false,
+  "weightsChanged": false,
+  "productDefaultChanged": false,
+  "targetsChanged": false,
+  "saleQualified": false,
+  "modelEvidenceCommit": "98ba01d5779d579142f1e0d5258b278fd48ddbc3",
+  "remoteReadbackConfirmed": true
+}

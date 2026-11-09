@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-09T08:02:17+08:00",
+  "purpose": "Reuse the exact existing ordinary1.7B full-meeting output to inspect remaining errors before choosing replacement, engineering change, or fine-tuning. No new inference, no answer-based correction.",
+  "modelOutputSha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+  "strictReferenceCharacters": 8325,
+  "strictErrors": 461,
+  "maximumErrorsBelow5Percent": 416,
+  "netErrorsMustBeRemoved": 45,
+  "newModelOrNetworkCalls": 0,
+  "thresholdsChanged": false,
+  "referenceNeverReturnedToInference": true
+}

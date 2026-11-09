@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T07:25:18+08:00",
+      "updatedAt": "2026-11-09T07:48:25+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Owner已清除持续Goal，自动续跑停止；原任务与失败保留，未标完成。若后续恢复：以369真实设备阶段数据为依据处理重复读取/校验串行链路：5范围累计461ms（查找32、哈希读取126、日志阶段11、WIP阶段204、空白检查88），实际6擦除busy观测233–252ms、最大poll间隔4ms，23次program仅4ms，排除日志程序写入和严重WIP漏轮询为主要猜因。先评估将已校验传输读取的哈希证据复用于精确范围验证，并减少空白读取逐页调度；单省126ms仍未覆盖约250ms缺口，不单项装板或重复旧754批读/495/未触发对齐/预读队列微调，须保留CRC/SHA、全字节物理空白校验、断点恢复、61.44MHz/音质、原资源预算和任意长度50，旧1530B反例仍开放。当前正常760镜像412212/67896/21504；最新恢复OTA37.266693 FAIL，不能拿之前55–62通过覆盖，需后续定位但本次不再重测。首PCM/偶发初连/稳定性/冻结2h及原block和屏幕暂停仍未完成。",
+      "next": "Owner本轮要求尽快查OTA慢因，先读ota760Diagnosis。已用现存快/慢记录排除本次Flash处理变慢、实际PHY/MTU/CI降档及应用收到确认后的秒级延迟；主要差额为板端完整DATA队列EMPTY+15.634s。剩余定位边界是Windows蓝牙栈/控制器、空口与板端接收/确认送达，未有当前RF证据，不能唯一归因干扰或把旧100上传当OTA。保留正常760、不新建持续Goal，本轮无硬件访问/新固件/新录音。原短录结构、售卖未完成及明确block沿ota760Diagnosis.priorEmbeddedNext保留。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -140369,6 +140369,26 @@
         "latestTurnClassification": "PROGRESS_CALIBRATED_REAL_DEVICE_PHASE_EVIDENCE_AND_NORMAL_RESTORE;LATEST_OTA_RATE_FAIL;OWNER_CLEARED_GOAL_NO_AUTO_CONTINUATION",
         "previousTurnAudit": "PROGRESS:758 installed source bug repair and actual no-clear-speed-benefit result changed next action to calibrated phase observation; no unchanged rerun",
         "clearedAt": "2026-11-09T07:25:18+08:00"
+      },
+      "ota760Diagnosis": {
+        "at": "2026-11-09T07:48:25+08:00",
+        "ownerRequest": "Owner问为何反复数日、是否难修、可否复用旧100版本；要求尽快查什么让OTA变慢。速度先这样不据此擅自改原数值验收门，不重新建立已清除持续Goal。",
+        "result": "Additional13.891s device payload span is dominated by +15.634s with no COMPLETE DATA packet queued, offset by shorter DATA/READY processing. Not a Flash-processing slowdown in these samples. Actual observed PHY/MTU/final CI/DLE budget/packet size/pipeline are unchanged; no observed parameter downgrade. Receipt callback to app sender wake and submission are microseconds in both captures, excluding that app wake/submission interval as the seconds-scale gap. Remaining interval crosses Windows stack/controller, air and peripheral RX/credit delivery; RF retries/event packet count not proven by these logs.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\ota760-vs758-saved-analysis.json",
+        "oldFastReference": {
+          "firmware": 556,
+          "sourceCommit": "d23606655937a411ec0f9d4c71c6cb645b18ae79",
+          "uploadKiBps": 103.6158590568515,
+          "uploadBytes": 2097152,
+          "sameRoundOtaKiBps": 84.37,
+          "sourceAvailable": true,
+          "preferred251_2120RequestRetained": true,
+          "meaning": "Verified historical single 2MiB device-to-PC file upload, not current full short-recording reclaim and not proof of stable100 OTA. Do not flash the whole old product image or attribute all changes to clock/coexistence without matching evidence."
+        },
+        "priorEmbeddedNext": "Owner已清除持续Goal，自动续跑停止；原任务与失败保留，未标完成。若后续恢复：以369真实设备阶段数据为依据处理重复读取/校验串行链路：5范围累计461ms（查找32、哈希读取126、日志阶段11、WIP阶段204、空白检查88），实际6擦除busy观测233–252ms、最大poll间隔4ms，23次program仅4ms，排除日志程序写入和严重WIP漏轮询为主要猜因。先评估将已校验传输读取的哈希证据复用于精确范围验证，并减少空白读取逐页调度；单省126ms仍未覆盖约250ms缺口，不单项装板或重复旧754批读/495/未触发对齐/预读队列微调，须保留CRC/SHA、全字节物理空白校验、断点恢复、61.44MHz/音质、原资源预算和任意长度50，旧1530B反例仍开放。当前正常760镜像412212/67896/21504；最新恢复OTA37.266693 FAIL，不能拿之前55–62通过覆盖，需后续定位但本次不再重测。首PCM/偶发初连/稳定性/冻结2h及原block和屏幕暂停仍未完成。",
+        "nextScope": "仅沿数据/额度往返与控制器实际收发查因。保留正常760与旧高速源码，先核同偏移回执时序和实际空口/控制器差异；不重复Flash/CRC/频率/MTU/池/heldThroughput等旧负面，不整包盲回退，不重录/重刷碰通过值。旧100数据请求仍在；当前61和37参数相同，不能说某个PHY降档或已定位干扰。任何新试验先必须能区分剩余解释。",
+        "hardwareAccessedThisRequest": false,
+        "productionCodeChanged": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -145953,7 +145973,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
+          "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -259502,7 +259522,7 @@
             ],
             "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
             "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-            "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
+            "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
             "qualityQualified": false,
             "saleQualified": false,
             "newModelTrainingOrInference": true,
@@ -260065,6 +260085,64 @@
               "next": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
               "saleQualified": false,
               "modelEvidenceCommit": "b212bd6253a28e112868ce3b3e4bcb98305d7fab",
+              "remoteReadbackConfirmed": true
+            },
+            "qwenBaselineImprovement20261109": {
+              "at": "2026-11-09T08:06:23+08:00",
+              "ownerQuote": "完整会议基线错误率再怎么压，换模型还是在千问基础上改善？",
+              "decision": "Keep Qwen3-ASR1.7B as the retained ASR backbone. Do not immediately replace it, increase model size, change weights or start fine-tuning. Ordinary remaining errors need verified cross-meeting causes; complex overlap requires source/content recovery rather than only another generic ASR checkpoint.",
+              "currentEvidence": {
+                "bestOrdinaryCharacters": 8325,
+                "bestOrdinaryErrors": 461,
+                "bestOrdinaryCer": 0.055375375375375374,
+                "errorsAtStrictUnder5Maximum": 416,
+                "netErrorsRequired": 45,
+                "fixed30sErrors": 480,
+                "lowEnergyBoundaryNetGain": 19,
+                "complexFixed30sChronologicalCer": 0.23155832180728447,
+                "wholeModelQualityQualified": false
+              },
+              "newAudit": {
+                "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\qwen-baseline-improvement-20261109\\ordinary-r6-error-inventory.json",
+                "sha256": "5705d5948eebb8d0ffafb17be81ef3ad24970276f6cb9bdbd8d30164542dbe74",
+                "newNeuralCalls": 0,
+                "strictEditsUnchanged": 461,
+                "inspectionTags": {
+                  "number_or_unit": 66,
+                  "filler": 128,
+                  "negation": 3,
+                  "er_suffix": 122,
+                  "other_lexical": 173
+                },
+                "interpretation": "Groups/tags overlap and are not listening-confirmed causes. Number regex also matches nonnumeric一/点/分; do not call all tagged edits numerical mistakes. Filler/儿 differences are not a justification to delete reference words or change strictCER. Negation and lexical content must be audited separately before adaptation."
+              },
+              "improvementOrder": [
+                "Freeze the native1.7B fixed30s whole-meeting baseline and keep the5.54% boundary variant as a single-meeting candidate; the tested boundary-only change gained19edits and did not cross5%, so no further boundary/threshold sweep without a distinct proven cause.",
+                "Check whether persistent substantive errors recur across different real meetings and whether the reference words agree with the original audio before creating adaptation labels. Handle actual names, quantities, negation and lexical mistakes before optimizing superficial score differences. Existing audio coverage/native weight equivalence proofs are reused, not re-run as a ritual.",
+                "Where a real user provides agenda, names or domain vocabulary before recognition, test the official prompt/context interface with that source only and preserve a no-context route. Never derive hotwords from reference answers or silently use a language model to rewrite what was said.",
+                "For true overlap retain the independent automatic-speaker-profile/separation workpoint: validate the17already-selected profiles, extract predicted simultaneous voices separately, then use the same ASR; ordinary speech bypasses separation. Profile preparation does not establish content recovery.",
+                "Fine-tuning/adapter work is justified only after enough independently checked, authorized real-meeting audio/text exposes a stable recognizer error, with meetings/speakers separated between adaptation and evaluation. Freeze old model, protect ordinary content and key facts, and use heldout meetings; no one-meeting memorization.",
+                "Replace the backbone only when a mature challenger wins a predeclared same-audio comparison across multiple meetings without protected-path regressions and within measured CPU/system-RAM/device limits. A headline score or one sample is insufficient. No from-scratch foundation-model plan is supported by current evidence."
+              ],
+              "officialSupport": [
+                {
+                  "url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf",
+                  "supports": "Native Transformers input supports language and prompt context/hotwords, and documents training/fine-tuning. Context support is not proof of an accuracy gain on our meetings."
+                },
+                {
+                  "url": "https://github.com/QwenLM/Qwen3-ASR",
+                  "supports": "Official inference, timestamps and finetuning references; timestamp alignment does not itself correct recognition words."
+                }
+              ],
+              "previousWorkpoint": "固定Qwen3-ASR1.7B原生30秒版本作完整两会可复核基线，5.54%低能量切分只保留单场候选，33.17%线上组合不再混称本地最好模型。普通线沿既有实词/数字/否定/漏词清单达到跨真实整会<5%；复杂线承接已准备17段自动档案，先验证目标声纹稳定，再只在预测重叠处先分离再逐人转写，普通音频旁路，原坏训练/全量时间重分不恢复。下一轮候选在不同真实会议按漏词、逐人、普通保护固定规则验证；没有实际词语改善便停止该候选，不继续以标签/参数微调代替恢复声音。真实Plaud/Notta同音产品对照仍未做，官方宣传/基准不冒充本机实测。原独立留出、完整构建/双端安装、实卡、事实纪要与售卖门保留。",
+              "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+              "newInferenceOrTraining": false,
+              "newAccuracyGainClaimed": false,
+              "weightsChanged": false,
+              "productDefaultChanged": false,
+              "targetsChanged": false,
+              "saleQualified": false,
+              "modelEvidenceCommit": "98ba01d5779d579142f1e0d5258b278fd48ddbc3",
               "remoteReadbackConfirmed": true
             }
           }
