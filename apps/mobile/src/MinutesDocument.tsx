@@ -28,7 +28,7 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
  if(!headings.length)return <>{renderText(display.body)}</>;
  return <MeetingReadingFrame markdown={markdown} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{manualReview&&<p className="manual-minutes-note">含人工修订 · 负责人和时间请按实际安排确认</p>}{sections.map((section,index)=>{
   const title=section.title?meetingHeadingForDisplay(section.title):null;
-  if(!title)return <div key={index} className="minutes-preamble">{renderText(section.body)}</div>;
+  if(!title)return <div key={index} className={/^>\s*整理视角：[^\r\n]+$/.test(section.body.trim())?'minutes-preamble minutes-preamble-generated':'minutes-preamble'}>{renderText(section.body)}</div>;
   if(/^(分段原文依据|原文依据)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
   const remaining=excerpt(section.body);
   const sectionOccurrence=sections.slice(0,index).filter(previous=>previous.title===section.title).length;
