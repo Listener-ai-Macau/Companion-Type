@@ -14,7 +14,7 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
   fs.writeFileSync(path.join(out,'ui-body.txt'),text);
   fs.writeFileSync(path.join(out,'ui-controls.json'),JSON.stringify(await page.locator('button,input,select,summary').evaluateAll(nodes=>nodes.map(node=>({tag:node.tagName,text:node.innerText||'',aria:node.getAttribute('aria-label'),type:node.getAttribute('type')}))),null,2));
   await page.screenshot({path:path.join(out,'native-workspace.png'),fullPage:true});
-  if(stage==='audio'){
+  if(stage==='audio'||stage==='transcribe'){
    const result=await require('./windows_audio_ui.cjs')(page,plan,out);
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(stage==='ai'){

@@ -45,6 +45,15 @@ module.exports=async function audioJourney(page,plan,out){
   assert.ok(fs.existsSync(reply),'Windows Shell must actually receive '+id);const result=JSON.parse(fs.readFileSync(reply,'utf8'));checkpoints.push({step:id,...result});save();return result;
  }
  await openAudio('import-real-public-wav',plan.audioInput,plan.audioSha256,plan.audioTitle);
+ if(plan.wholeMeetingAsr){
+  const started=Date.now();await page.getByRole('button',{name:'转文字',exact:true}).click();
+  await page.getByRole('button',{name:'转写原文',exact:true}).waitFor({state:'visible',timeout:1150000});
+  const seconds=(Date.now()-started)/1000;
+  checkpoints.push({step:'same-imported-audio-product-transcription',seconds,provider:'local-paraformer-official',cloudAudioUploaded:false,modelTrainingOrSelectionChanged:false});save();
+  await page.getByRole('button',{name:'转写原文',exact:true}).click();
+  await page.screenshot({path:path.join(out,'same-audio-actual-product-transcription.png'),fullPage:true});
+  return {state:'REAL_NATIVE_PUBLIC_AUDIO_IMPORT_AND_FIXED_PRODUCT_ASR_PASSED',checkpoints,newAsrRun:true,asrSeconds:seconds,modelTrainingRun:false,cloudCalls:0,sourceAudioSha256:plan.audioSha256,modelQualityQualified:false};
+ }
  if(plan.requireGroupedUi){
   assert.ok(await page.getByRole('button',{name:'导出录音',exact:true}).isVisible());
   assert.ok(await page.getByRole('button',{name:'转文字',exact:true}).isVisible());

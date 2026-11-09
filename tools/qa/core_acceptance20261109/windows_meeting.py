@@ -84,7 +84,7 @@ def frozen_app(root):
  shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
  return app,v
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  token=uuid.uuid4().hex;root=D/token;root.mkdir(parents=True);out=C/token;out.mkdir(parents=True)
@@ -107,9 +107,9 @@ def main():
   assert session['minutes']['processing']['complete'] and not session['audioStored']
  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
  (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version']=='0.1.79'},ensure_ascii=False),encoding='utf8')
- if a.stage=='audio':
+ if a.stage in {'audio','transcribe'}:
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
-  (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'))
+  (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),wholeMeetingAsr=a.stage=='transcribe')
   (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir()
  # A missing private settings file means valid fresh defaults. Writing '{}'
@@ -125,6 +125,7 @@ def main():
  if a.library:record['inputKind']='Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture'
  if a.stage=='audio':record['inputKind']='Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture'
  if a.stage=='ai':record['inputKind']='Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR'
+ if a.stage=='transcribe':record.update(inputKind='Actual public S_R004S03C01 audio through the fixed current product CPU ASR; no training, provider substitution or cloud audio',modelsRun=True,modelResearchOrTrainingRun=False)
  name=station_name() if DEDICATED_CI else 'CompanionCore-'+token
  station=old_station if DEDICATED_CI else require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set();dialog_workers={}
  try:
@@ -132,10 +133,13 @@ def main():
   desktop_path=name+'\\'+object_name(desktop)
   record['privateStation']=name;record['stationVerifiedBeforeLaunch']=True
   record['desktopIsolation']='Dedicated disposable GitHub Windows runner; no owner desktop' if DEDICATED_CI else 'Private noninteractive window station on owner PC'
-  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=1536*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT
+  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if a.stage=='transcribe' and DEDICATED_CI else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
   env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
   for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
   if a.audio:env['COMPANION_ACCEPTANCE_AUDIO_INPUT']=str(a.audio.resolve())
+  if a.stage=='transcribe':
+   assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
+   env['COMPANION_TYPE_LOCAL_ASR_DIR']=os.environ['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']
   log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
   deadline=time.monotonic()+60
   import urllib.request
@@ -173,7 +177,7 @@ def main():
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
-  deadline=time.monotonic()+(480 if a.stage=='audio' else 180)
+  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage=='audio' else 180)
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
    for request in sorted(out.glob('dialog-request-*.json')):
@@ -210,7 +214,7 @@ def main():
     reply=out/request.name.replace('handoff-request-','handoff-reply-');reply.write_text(json.dumps(received,ensure_ascii=False),encoding='utf8');handled.add(request.name);save()
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
-  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 1 if a.stage=='ai' else 3))
+  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 1 if a.stage=='ai' else 3))
  except BaseException as error:
   record.update(state='NATIVE_WORKFLOW_STOPPED_RETAINED',error=repr(error));save();raise
  finally:
