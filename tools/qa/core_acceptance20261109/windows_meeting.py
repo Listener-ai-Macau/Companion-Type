@@ -228,7 +228,15 @@ def main():
     if a.stage!='audio' and not audio_file:
      assert 'EXCLUDED_CORE_NOTE_20261109' not in text
      if a.stage=='ai':
-      if whole_delivery:assert json.loads((out/'plan.json').read_text(encoding='utf8'))['expectedExportContains'] in text
+      if whole_delivery:
+       expected=json.loads((out/'plan.json').read_text(encoding='utf8'))['expectedExportContains']
+       if source.suffix=='.pdf':
+        # PDF pagination inserts layout newlines inside ordinary sentences.
+        # Ignore only whitespace; never edit/substitute source words or facts.
+        (out/'actual-received-pdf-extracted.txt').write_text(text,encoding='utf8')
+        assert ''.join(expected.split()) in ''.join(text.split())
+        received['pdfContentMatch']='Source excerpt retained after layout-whitespace normalization only'
+       else:assert expected in text
       else:assert '周一至周五' in text and '临时区' not in text and '基于修订后的转写生成' in text
      else:assert '人工软件验收草稿' in text and '工程验收补充' in text
      received['selectedContentsVerified']=True

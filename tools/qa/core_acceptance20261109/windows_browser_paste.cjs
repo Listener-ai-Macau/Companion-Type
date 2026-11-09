@@ -24,6 +24,9 @@ document.querySelector('textarea').addEventListener('paste',async event=>{
   const form=await request.formData(),file=form.get('attachment');assert.ok(file&&typeof file.arrayBuffer==='function');
   assert.equal(form.get('trusted'),'true');assert.equal(file.name,path.basename(file.name));assert.equal(file.name,active.fileName);
   const payload=Buffer.from(await file.arrayBuffer()),slot=path.join(inbox,active.id);fs.mkdirSync(slot);const destination=path.join(slot,file.name);fs.writeFileSync(destination,payload,{flag:'wx'});
+  // Keep the actual small public attachment for diagnostic replay. Audio stays
+  // only in the disposable runner; its independent byte hash is retained.
+  if(payload.length<5*1024**2&&['.pdf','.txt','.docx'].includes(path.extname(file.name)))fs.writeFileSync(path.join(out,'received-'+active.id+path.extname(file.name)),payload,{flag:'wx'});
   const result={receiver:'Microsoft Edge native clipboard paste into a browser attachment composer',operation:'Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver',fileName:file.name,bytes:payload.length,sha256:crypto.createHash('sha256').update(payload).digest('hex'),receivedPath:destination,clipboardTypes:JSON.parse(form.get('types')),trustedNativePaste:true,sourcePathOrBytesSuppliedToReceiver:false,actualFileReceived:true,thirdPartyMessengerOrSendQualified:false};
   active.result=result;res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));
  }catch(error){res.statusCode=400;res.end(String(error));if(active)active.error=String(error);}});
