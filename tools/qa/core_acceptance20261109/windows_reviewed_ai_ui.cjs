@@ -7,10 +7,16 @@ module.exports=async function reviewedAiJourney(page,plan,out){
  const minutes=workspace.locator('#ct-recording-result');
  await minutes.getByRole('heading',{name:'会中问题',exact:true}).waitFor();
  assert.equal(await minutes.getByRole('heading',{name:'待解问题',exact:true}).count(),0);
- const summary=minutes.getByText(/长会议已整理全部 2 段/);await summary.waitFor();
+ const summary=minutes.getByText(new RegExp('长会议已整理全部 '+plan.aiChunks+' 段'));await summary.waitFor();
  const full=minutes.getByText('查看完整摘要和关键词',{exact:true});
  if(await full.count() && !await minutes.getByText(/周一至周五人流量稍少/).isVisible())await full.click();
- assert.match(await minutes.innerText(),/周一至周五/);
+ if(plan.wholeMeetingDelivery)assert.ok((await minutes.innerText()).includes(plan.expectedExportContains));
+ else assert.match(await minutes.innerText(),/周一至周五/);
+ if(plan.wholeMeetingDelivery){
+  await workspace.getByRole('button',{name:'回听',exact:true}).click();const audio=workspace.locator('#ct-recording-playback audio');await audio.waitFor();
+  await page.waitForFunction(()=>document.querySelector('#ct-recording-playback audio')?.duration>2300);
+  await audio.press('Space');await page.waitForFunction(()=>document.querySelector('#ct-recording-playback audio')?.currentTime>.4);await audio.press('Space');
+ }
  await page.screenshot({path:path.join(out,'reviewed-ai-minutes-reading.png'),fullPage:true});
  await workspace.getByRole('button',{name:'导出分享',exact:true}).click();
  const panel=workspace.locator('#ct-meeting-export');
@@ -31,8 +37,8 @@ module.exports=async function reviewedAiJourney(page,plan,out){
  await workspace.getByRole('button',{name:'问这场会议',exact:true}).click();
  await page.getByRole('region',{name:'会议AI助手',exact:true}).waitFor({state:'visible'});
  await page.screenshot({path:path.join(out,'reviewed-ai-workbench-and-export.png'),fullPage:true});
- return {state:'ACTUAL_REVIEWED_AI_READING_MAIN_EXPORT_AND_SHELL_HANDOFF_PASSED',sourceMeeting:plan.sourceMeeting,
-  cachedRealCloudAi:true,manualSourceReviewDeclared:true,newCloudCalls:0,newAsrRun:false,neutralQuestionHeading:true,
+ return {state:plan.wholeMeetingDelivery?'ACTUAL_SAME_AUDIO_ASR_AI_READING_PLAYBACK_WORD_HANDOFF_PASSED':'ACTUAL_REVIEWED_AI_READING_MAIN_EXPORT_AND_SHELL_HANDOFF_PASSED',sourceMeeting:plan.sourceMeeting,
+  cachedRealCloudAi:true,manualSourceReviewDeclared:!plan.wholeMeetingDelivery,sameAudioAndActualAsrLineage:!!plan.wholeMeetingDelivery,newCloudCalls:0,newAsrRun:false,neutralQuestionHeading:true,
   completeTwoChunkNotice:true,topExportOpensSelectedContent:true,received,aiWorkbenchAvailableAfterFinalText:true,
   customerOrBusinessFactQualityQualified:false};
 };

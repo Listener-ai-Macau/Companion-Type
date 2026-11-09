@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
-PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole'}
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
 spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole'} and spec['verification']['version']=='0.1.79'
+  assert PHASE in {'audio','whole','delivery'} and spec['verification']['version']=='0.1.79'
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
  run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+record['appSourceCommit'],'--dir',artifact])
@@ -43,7 +43,7 @@ try:
  (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
  env['COMPANION_ACCEPTANCE_VERIFICATION']=str(verification/'windows-verification.json')
  record.update(exactMsiExeSha256=v['embeddedExeSha256'],exactMsiDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
- if PHASE in {'audio','whole'}:
+ if PHASE in {'audio','whole','delivery'}:
   public=private/'public-input';public.mkdir();audio=public/'public-audio-S_R004S03C01.wav'
   with audio.open('wb') as dest,(O/'download-public-audio.log').open('wb') as log:
    download=subprocess.run(['gh','api','repos/Listener-ai-Macau/Companion-Type/releases/assets/726625128','-H','Accept: application/octet-stream'],env=env,stdout=dest,stderr=log,cwd=S)
@@ -61,10 +61,42 @@ try:
   assert (model/'funasr-paraformer-large-zh-2024/ready').read_text(encoding='ascii').strip()==component['readyValue']
   env['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']=str(model)
   record.update(modelsRun=True,localModelsRun=False,modelTrainingRun=False,productProvider='local-paraformer-official',modelSelectionChanged=False,fixedProductAsrBundleSha256=component['bundleSha256']);save()
+ if PHASE=='delivery':
+  previous=private/'actual-asr-artifact';previous.mkdir()
+  run('download-actual-same-meeting-asr',['gh','run','download',str(spec['sameMeetingAsrRun']),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-core-audio-'+spec['sameMeetingAsrTestSource'],'--dir',previous])
+  prior=json.loads((previous/'result.json').read_text(encoding='utf8'));assert prior['state']=='WINDOWS079_SAME_PUBLIC_AUDIO_IMPORT_AND_PRODUCT_ASR_PASSED_AI_CONTINUES'
+  material=private/'same-meeting-material';material.mkdir();manifest=json.loads((previous/'same-meeting-state/manifest.json').read_text(encoding='utf8'))
+  assert manifest['sourceAudioSha256']==record['publicAudio']['sha256'] and sha(previous/'same-meeting-state/decoded.wav')==manifest['decodedAudioSha256']
+  shutil.copy2(previous/'same-meeting-state/decoded.wav',material/'decoded.wav');shutil.copy2(audio,material/'original.wav')
+  (material/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False),encoding='utf8');env['COMPANION_ACCEPTANCE_WHOLE_DELIVERY_DIR']=str(material)
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- if PHASE=='whole':
+ if PHASE=='delivery':
+  run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
+  fixture=S/spec['sameMeetingAiFixture'];assert sha(fixture)==spec['sameMeetingAiFixtureSha256']
+  source_row=json.loads(fixture.read_text(encoding='utf8'));assert source_row['id']==manifest['sessionId'] and hashlib.sha256(source_row['transcriptText'].encode('utf8')).hexdigest()==manifest['rawTranscriptSha256']
+  tool=S/'tools/qa/core_acceptance20261109';code=run('same-real-audio-asr-ai-ui-and-word',[sys.executable,tool/'windows_meeting.py','--stage','ai','--reviewed-ai',fixture],required=False)
+  cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
+  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save();assert code==0 and result['ordinaryRecipientTested']
+  root=Path(result['privateRoot']);details=O/'same-meeting-delivery';details.mkdir()
+  base_env={**env,'COMPANION_TYPE_STATE_PATH':str(root/'state/sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1'}
+  def native_call(name,flag,payload,environment=base_env):
+   request=details/(name+'-request.json');dest=details/(name+'-result.json');request.write_text(json.dumps(payload,ensure_ascii=False),encoding='utf8')
+   run(name,[root/'app/companion-type.exe',flag,request,dest],environment=environment)
+   return json.loads(dest.read_text(encoding='utf8'))
+  before=native_call('01-reopen-after-real-ui','--local-recording-snapshot',{})['snapshot']['host']['sessions'][0]
+  for key in ['transcriptText','utterances','minutes','minutesByMode']:assert before[key]==source_row[key],key
+  backup_dir=root/'backups';backup_dir.mkdir();backup=native_call('02-backup-same-audio-asr-ai','--library-backup-request',{'directory':str(backup_dir)})
+  restored=root/'restored-library';restored.mkdir();(restored/'recordings').mkdir()
+  restored_env={**base_env,'COMPANION_TYPE_STATE_PATH':str(restored/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(restored/'recordings')}
+  native_call('03-restore-audio-asr-ai-to-fresh-library','--library-restore-request',{'directory':backup['path']},restored_env)
+  after=native_call('04-reopen-restored-same-meeting','--local-recording-snapshot',{},restored_env)['snapshot']['host']['sessions'][0]
+  for key in ['id','title','transcriptText','utterances','minutes','minutesByMode']:assert after[key]==before[key],key
+  assert sha(after['audioPath'])==manifest['decodedAudioSha256']
+  original=next(c for c in after['chunks'] if c['status']=='importedOriginal');assert sha(original['path'])==manifest['sourceAudioSha256']
+  assert sha(audio)==manifest['sourceAudioSha256'];record.update(state='WINDOWS_SAME_REAL_AUDIO_PRODUCT_ASR_AI_DOCUMENT_BACKUP_REOPEN_PASSED',sameMeeting=manifest,sameAudioAndActualAsrAiLineageVerified=True,actualWordReceived=True,rawAsrAndAiUnchangedByUi=True,rawOriginalAndDecodedAudioRestoredByteIdentical=True,newCloudOrAsrCallsThisDeliveryStage=0,wholeCoreCandidateQualified=False,saleQualified=False)
+ elif PHASE=='whole':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   tool=S/'tools/qa/core_acceptance20261109';code=run('same-public-audio-import-and-product-asr',[sys.executable,tool/'windows_meeting.py','--stage','transcribe','--audio',audio],required=False)
   cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1

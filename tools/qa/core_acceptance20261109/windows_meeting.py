@@ -102,16 +102,29 @@ def main():
  if a.stage=='ai':
   assert a.reviewed_ai and not a.library and not a.audio
   session=json.loads(a.reviewed_ai.read_text(encoding='utf8'));sessions=[session]
-  assert session['id']=='core-real-public-S_R004S03C01' and session['source']=='importedTranscript'
-  assert session['transcriptReview']['revision']==1 and session['minutes']['source']=='llm_deepseek'
-  assert session['minutes']['processing']['complete'] and not session['audioStored']
+  whole=os.environ.get('COMPANION_ACCEPTANCE_WHOLE_DELIVERY_DIR')
+  if whole:
+   material=Path(whole);manifest=json.loads((material/'manifest.json').read_text(encoding='utf8'))
+   assert session['id']==manifest['sessionId'] and session['source']=='importedAudio' and session['audioStored']
+   assert hashlib.sha256(session['transcriptText'].encode('utf8')).hexdigest()==manifest['rawTranscriptSha256']
+   original=next(c for c in session['chunks'] if c['status']=='importedOriginal');original_path=original['path'];decoded_path=session['audioPath'];(root/'recordings').mkdir()
+   paths={decoded_path:root/'recordings'/(session['id']+'.wav'),original_path:root/'recordings'/(session['id']+'.original.wav')}
+   for name,old,digest in [('decoded.wav',decoded_path,manifest['decodedAudioSha256']),('original.wav',original_path,manifest['sourceAudioSha256'])]:
+    assert sha(material/name)==digest;shutil.copy2(material/name,paths[old]);assert sha(paths[old])==digest
+   session['audioPath']=str(paths[decoded_path])
+   for chunk in session['chunks']:assert chunk['path'] in paths;chunk['path']=str(paths[chunk['path']])
+  else:
+   assert session['id']=='core-real-public-S_R004S03C01' and session['source']=='importedTranscript'
+   assert session['transcriptReview']['revision']==1 and not session['audioStored']
+  assert session['minutes']['source']=='llm_deepseek' and session['minutes']['processing']['complete']
  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
- (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version']=='0.1.79'},ensure_ascii=False),encoding='utf8')
+ whole_delivery=a.stage=='ai' and bool(os.environ.get('COMPANION_ACCEPTANCE_WHOLE_DELIVERY_DIR'))
+ (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version']=='0.1.79','wholeMeetingDelivery':whole_delivery,'aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
  if a.stage in {'audio','transcribe'}:
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
   (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),wholeMeetingAsr=a.stage=='transcribe')
   (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
- for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir()
+ for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir(exist_ok=True)
  # A missing private settings file means valid fresh defaults. Writing '{}'
  # would be a corrupt product store, not an empty configured user profile.
  with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
@@ -125,6 +138,7 @@ def main():
  if a.library:record['inputKind']='Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture'
  if a.stage=='audio':record['inputKind']='Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture'
  if a.stage=='ai':record['inputKind']='Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR'
+ if whole_delivery:record['inputKind']='The same actual public imported audio and new fixed-product ASR, followed by actual cloud AI; reading/audio playback/document receipt and restoration continuation, no new ASR/cloud call in this UI stage'
  if a.stage=='transcribe':record.update(inputKind='Actual public S_R004S03C01 audio through the fixed current product CPU ASR; no training, provider substitution or cloud audio',modelsRun=True,modelResearchOrTrainingRun=False)
  name=station_name() if DEDICATED_CI else 'CompanionCore-'+token
  station=old_station if DEDICATED_CI else require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set();dialog_workers={}
@@ -207,7 +221,8 @@ def main():
     if a.stage!='audio':
      assert 'EXCLUDED_CORE_NOTE_20261109' not in text
      if a.stage=='ai':
-      assert '周一至周五' in text and '临时区' not in text and '基于修订后的转写生成' in text
+      if whole_delivery:assert json.loads((out/'plan.json').read_text(encoding='utf8'))['expectedExportContains'] in text
+      else:assert '周一至周五' in text and '临时区' not in text and '基于修订后的转写生成' in text
      else:assert '人工软件验收草稿' in text and '工程验收补充' in text
      received['selectedContentsVerified']=True
     record.setdefault('receivedFiles',[]).append(received)
