@@ -24,7 +24,10 @@ module.exports=async function reviewedAiJourney(page,plan,out){
  assert.equal(await panel.evaluate(node=>node.open),true,'Top export must reveal the selected-content panel');
  await panel.getByLabel('整理结果',{exact:true}).check();await panel.getByLabel('录音文字',{exact:true}).uncheck();
  await panel.getByLabel('所选内容文件格式').selectOption('docx');
- await panel.locator('.ct-content-share-alternative > summary').click();
+ if(plan.desktopPrimaryFileCopy){
+  const primary=panel.locator(':scope > .ct-button-row').getByRole('button',{name:'复制所选文件',exact:true});assert.ok(await primary.isVisible(),'Desktop attachment copy must be directly visible');
+  assert.equal(await panel.locator('.ct-content-share-alternative').evaluate(node=>node.open),false,'No additional sharing menu is required');
+ }else await panel.locator('.ct-content-share-alternative > summary').click();
  await panel.getByRole('button',{name:'复制所选文件',exact:true}).click();
  const feedback=panel.getByLabel('所选内容操作结果');await feedback.getByText(/文件已复制：/).waitFor({timeout:60000});
  const message=await feedback.innerText();assert.match(message,/文件尚未发送/);
@@ -50,6 +53,7 @@ module.exports=async function reviewedAiJourney(page,plan,out){
   }
   await workspace.getByRole('button',{name:'导出录音',exact:true}).click();const audio=workspace.locator('.ct-recording-audio-export');
   const copy=audio.getByRole('button',{name:'复制录音文件',exact:true});
+  if(plan.desktopPrimaryFileCopy)assert.ok(await copy.isVisible(),'Audio file copy must also be directly visible');
   if(!await copy.isVisible())await audio.locator(':scope > details > summary').click();
   for(const format of ['original','mp3']){
    await audio.getByLabel('音频副本格式').selectOption(format);await receiveAttachment('audio-'+format,audio,copy);

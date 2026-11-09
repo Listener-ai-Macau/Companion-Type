@@ -124,6 +124,9 @@ def main():
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
   (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),wholeMeetingAsr=a.stage=='transcribe')
   (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+ if a.stage=='ai' and whole_delivery and os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1':
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan['desktopPrimaryFileCopy']=v['version']=='0.1.81'
+  (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir(exist_ok=True)
  # A missing private settings file means valid fresh defaults. Writing '{}'
  # would be a corrupt product store, not an empty configured user profile.
