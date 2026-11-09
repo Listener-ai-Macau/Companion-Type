@@ -1,0 +1,43 @@
+name: Windows candidate
+
+on:
+  push:
+    branches: [work/device-phone-closure055-20261106]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-candidate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  candidate:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[windows-build]')
+    runs-on: windows-2022
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.15.0
+      - name: Install matching Rust toolchain
+        run: rustup toolchain install 1.95.0 --profile minimal --no-self-update
+      - name: Build frozen candidate and installer
+        run: python tools/build_windows_candidate_ci.py
+      - name: Preserve candidate and failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: companion-windows-candidate-${{ github.sha }}
+          path: ci-output/
+          retention-days: 7
+          if-no-files-found: warn
