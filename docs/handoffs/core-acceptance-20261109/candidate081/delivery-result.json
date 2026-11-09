@@ -1,0 +1,162 @@
+{
+  "at": "2026-11-09T20:25:01+08:00",
+  "state": "WINDOWS081_INSTALLED_COMPLETE_MEETING_DOCUMENT_AND_AUDIO_FILE_HANDOFF_PASSED",
+  "purpose": "同一场实际公开会议的纪要、正文和原音/MP3从主入口复制为完整文件，实际粘贴为附件及文件落盘，备份恢复后继续使用。",
+  "version": "0.1.81",
+  "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "buildRun": 42612798269,
+  "runtimeRun": 42616003162,
+  "runtimeTestSource": "3db64f0c65c41e5a2b092269b234a9ab71abcf81",
+  "installed": true,
+  "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\installation.json",
+  "runtimeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\runtime-result.json",
+  "receivedFiles": [
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+      "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+      "bytes": 45411,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+        "bytes": 45411,
+        "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "selectedContentsVerified": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+      "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+      "bytes": 21218,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+        "bytes": 21218,
+        "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-1\\public-audio-S_R004S03C01-所选内容.txt",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "selectedContentsVerified": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+      "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+      "bytes": 370021,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+        "bytes": 370021,
+        "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-2\\public-audio-S_R004S03C01-所选内容.pdf",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "pdfContentMatch": "Source excerpt retained after layout-whitespace normalization only",
+      "selectedContentsVerified": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-original.wav",
+      "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "bytes": 74467886,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-original.wav",
+        "bytes": 74467886,
+        "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-3\\public-audio-S_R004S03C01-original.wav",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "originalAudioBytesIdentical": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+      "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+      "bytes": 37149710,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+        "bytes": 37149710,
+        "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-4\\public-audio-S_R004S03C01-original-兼容音频.mp3",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+    }
+  ],
+  "standardBrowserAttachmentPasteQualified": true,
+  "ordinaryShellFilePasteQualified": true,
+  "sameOriginalWavByteIdentical": true,
+  "sameAsrAiAndAudioBackupRestorePassed": true,
+  "desktopPrimaryFileAndAudioCopyVisibleWithoutExtraMenu": true,
+  "existingDataFilesByteIdentical": 245,
+  "remoteMsiReadbackVerified": true,
+  "oldWinRTSharePickerFixed": false,
+  "thirdPartyMessengerOrSendQualified": false,
+  "ownerForegroundUsed": false,
+  "newAsrOrAiCalls": 0,
+  "boardOrPhoneAccessed": false,
+  "newCustomerAcceptance": false,
+  "saleQualified": false,
+  "verificationPreparationFailure": "PDF exact-string check encountered layout newlines; preserved native receipt and same-MSI headless diagnosis, then normalized whitespace only. No product source, source wording, model or installer was changed for this retry."
+}

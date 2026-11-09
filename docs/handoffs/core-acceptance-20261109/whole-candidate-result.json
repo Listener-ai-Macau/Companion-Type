@@ -8,7 +8,7 @@
   "decodedAudioSha256": "c66aa116d80a7cf4e6ea5ca91a7d3ba1ccf2945a22d95e5d8b540373fc7c3262",
   "actualAsrRun": 42592563926,
   "actualAiEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\whole-805278e2b7214018a4ddef74e361a9e8",
-  "wholeDeliveryRun": 42593867826,
+  "wholeDeliveryRun": 42616003162,
   "fixedProductAsrSeconds": 136.076,
   "actualAiSeconds": 49.702544700001454,
   "asrDiagnostic": {
@@ -65,9 +65,11 @@
     "saleQualified": false,
     "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
     "sourceRemoteReadbackVerified": true,
-    "buildRun": 42594837619
+    "buildRun": 42594837619,
+    "continuedCandidateVersion": "0.1.81",
+    "continuedSourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9"
   },
-  "newProductBuildRun": 42594837619,
+  "newProductBuildRun": 42612798269,
   "localHeavyInference": false,
   "modelResearchOrTraining": false,
   "fixedProductAsrInferenceOnRemote": true,
@@ -79,7 +81,7 @@
     {
       "block": "双端与实卡同一候选",
       "state": "OPEN",
-      "facts": "Windows完整公开会议链已过；Android110已合并109原生后端、100资料库修复与共同会议UI，完成签名APK、Web/原生包内和16KiB核对及远端下载回读，尚未真机。授权手机均离线，旧系统分享/聊天附件也仍开放。",
+      "facts": "Windows081同场实际ASR/AI结果、Word/TXT/PDF/WAV/MP3直接复制、标准浏览器真实附件粘贴及Shell实际落盘、原音备份恢复已过并安装；Android110签名包已远端保护，授权手机最近观察离线，真机/实卡匹配全链待续。旧WinRT面板及具体聊天客户端不由标准浏览器收件继承通过。",
       "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
     },
     {
@@ -277,24 +279,24 @@
     "pdmPeakUs": 3252,
     "wholeQualified": false
   },
-  "integratedRuntimeRun": 42597707514,
-  "installedVersion": "0.1.80",
-  "installedSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+  "integratedRuntimeRun": 42616003162,
+  "installedVersion": "0.1.81",
+  "installedSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
   "installation": {
-    "state": "WINDOWS080_INSTALLED_EXISTING_DATA_IDENTICAL",
-    "startedAt": "2026-11-09T18:06:38+08:00",
-    "candidateVersion": "0.1.80",
-    "previousInstalledVersion": "0.1.79",
-    "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-    "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+    "state": "WINDOWS081_INSTALLED_EXISTING_DATA_IDENTICAL",
+    "startedAt": "2026-11-09T20:22:52+08:00",
+    "candidateVersion": "0.1.81",
+    "previousInstalledVersion": "0.1.80",
+    "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+    "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
     "existingDataFiles": 245,
     "dataContentsPrinted": false,
     "installerExitCode": 0,
-    "finishedAt": "2026-11-09T18:06:43+08:00",
+    "finishedAt": "2026-11-09T20:23:01+08:00",
     "dataManifestIdentical": true,
-    "installedVersion": "0.1.80",
-    "installedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
-    "installedDllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+    "installedVersion": "0.1.81",
+    "installedExeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+    "installedDllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
     "installedHelpStartupPassed": true,
     "ordinaryThirdPartyPasteQualified": false,
     "oldWinRTSharePickerFixed": false,
@@ -302,14 +304,14 @@
     "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
   },
   "package": {
-    "at": "2026-11-09T17:59:48+08:00",
-    "state": "WINDOWS080_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-    "version": "0.1.80",
-    "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-    "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\Companion-Windows-0.1.80-candidate.msi",
-    "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
-    "embeddedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
-    "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+    "at": "2026-11-09T20:13:21+08:00",
+    "state": "WINDOWS081_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+    "version": "0.1.81",
+    "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+    "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\Companion-Windows-0.1.81-candidate.msi",
+    "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+    "embeddedExeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+    "dllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
     "licenseFilesMatched": 257,
     "sourceFilesMatched": 1228,
     "sourceFilesWithOnlyCheckoutEolDifference": [
@@ -342,7 +344,7 @@
     "newerVersionGuard": true,
     "ciSourceAndNativeFrozenTogether": true,
     "nativeProfile": "normal release on dedicated Windows runner",
-    "ciRunId": 42594837619,
+    "ciRunId": 42612798269,
     "ciWrapperOverallPassed": true,
     "localHeavyBuild": false,
     "installed": false,
@@ -351,14 +353,14 @@
     "saleQualified": false,
     "modelsRun": false,
     "inspectionLimits": {
-      "pid": 38668,
+      "pid": 24628,
       "cpuRate": 500,
       "cpuControlFlags": 5,
       "cpuPercentMaximum": 5.0,
       "inLimitedJob": true,
       "jobPrivateCommitLimitBytes": 536870912,
       "jobMemoryLimitEnabled": true,
-      "jobPeakPrivateCommitBytes": 47386624,
+      "jobPeakPrivateCommitBytes": 48398336,
       "cpuPriorityClass": 64,
       "memoryPagePriority": 1,
       "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -368,15 +370,15 @@
     }
   },
   "remoteDraft": {
-    "at": "2026-11-09T18:01:10+08:00",
+    "at": "2026-11-09T20:13:54+08:00",
     "state": "PRIVATE_DRAFT_MSI_DOWNLOADED_AND_HASH_VERIFIED",
     "tag": "windows-0.1.78-bb1550c4-candidate",
-    "preferredNewTag": "windows-0.1.80-f339e22a-candidate",
+    "preferredNewTag": "windows-0.1.81-62b702d7-candidate",
     "sharedHistoricalRecoveryContainer": true,
     "original078AssetsReplaced": false,
     "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
-    "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-    "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+    "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+    "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
     "draft": true,
     "published": false,
     "readbackByteIdentical": true,
@@ -437,5 +439,168 @@
     "saleQualified": false,
     "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
     "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
-  }
+  },
+  "windowsFileDelivery": {
+    "at": "2026-11-09T20:25:01+08:00",
+    "state": "WINDOWS081_INSTALLED_COMPLETE_MEETING_DOCUMENT_AND_AUDIO_FILE_HANDOFF_PASSED",
+    "purpose": "同一场实际公开会议的纪要、正文和原音/MP3从主入口复制为完整文件，实际粘贴为附件及文件落盘，备份恢复后继续使用。",
+    "version": "0.1.81",
+    "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+    "buildRun": 42612798269,
+    "runtimeRun": 42616003162,
+    "runtimeTestSource": "3db64f0c65c41e5a2b092269b234a9ab71abcf81",
+    "installed": true,
+    "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+    "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\installation.json",
+    "runtimeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\runtime-result.json",
+    "receivedFiles": [
+      {
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+        "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+        "bytes": 45411,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "browserAttachment": {
+          "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+          "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+          "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+          "bytes": 45411,
+          "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+          "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+          "clipboardTypes": [
+            "Files"
+          ],
+          "trustedNativePaste": true,
+          "sourcePathOrBytesSuppliedToReceiver": false,
+          "actualFileReceived": true,
+          "thirdPartyMessengerOrSendQualified": false
+        },
+        "selectedContentsVerified": true
+      },
+      {
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+        "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+        "bytes": 21218,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "browserAttachment": {
+          "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+          "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+          "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+          "bytes": 21218,
+          "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+          "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-1\\public-audio-S_R004S03C01-所选内容.txt",
+          "clipboardTypes": [
+            "Files"
+          ],
+          "trustedNativePaste": true,
+          "sourcePathOrBytesSuppliedToReceiver": false,
+          "actualFileReceived": true,
+          "thirdPartyMessengerOrSendQualified": false
+        },
+        "selectedContentsVerified": true
+      },
+      {
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+        "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+        "bytes": 370021,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "browserAttachment": {
+          "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+          "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+          "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+          "bytes": 370021,
+          "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+          "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-2\\public-audio-S_R004S03C01-所选内容.pdf",
+          "clipboardTypes": [
+            "Files"
+          ],
+          "trustedNativePaste": true,
+          "sourcePathOrBytesSuppliedToReceiver": false,
+          "actualFileReceived": true,
+          "thirdPartyMessengerOrSendQualified": false
+        },
+        "pdfContentMatch": "Source excerpt retained after layout-whitespace normalization only",
+        "selectedContentsVerified": true
+      },
+      {
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-original.wav",
+        "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "bytes": 74467886,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "browserAttachment": {
+          "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+          "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+          "fileName": "public-audio-S_R004S03C01-original.wav",
+          "bytes": 74467886,
+          "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+          "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-3\\public-audio-S_R004S03C01-original.wav",
+          "clipboardTypes": [
+            "Files"
+          ],
+          "trustedNativePaste": true,
+          "sourcePathOrBytesSuppliedToReceiver": false,
+          "actualFileReceived": true,
+          "thirdPartyMessengerOrSendQualified": false
+        },
+        "originalAudioBytesIdentical": true
+      },
+      {
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+        "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+        "bytes": 37149710,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "browserAttachment": {
+          "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+          "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+          "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+          "bytes": 37149710,
+          "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+          "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-4\\public-audio-S_R004S03C01-original-兼容音频.mp3",
+          "clipboardTypes": [
+            "Files"
+          ],
+          "trustedNativePaste": true,
+          "sourcePathOrBytesSuppliedToReceiver": false,
+          "actualFileReceived": true,
+          "thirdPartyMessengerOrSendQualified": false
+        },
+        "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+      }
+    ],
+    "standardBrowserAttachmentPasteQualified": true,
+    "ordinaryShellFilePasteQualified": true,
+    "sameOriginalWavByteIdentical": true,
+    "sameAsrAiAndAudioBackupRestorePassed": true,
+    "desktopPrimaryFileAndAudioCopyVisibleWithoutExtraMenu": true,
+    "existingDataFilesByteIdentical": 245,
+    "remoteMsiReadbackVerified": true,
+    "oldWinRTSharePickerFixed": false,
+    "thirdPartyMessengerOrSendQualified": false,
+    "ownerForegroundUsed": false,
+    "newAsrOrAiCalls": 0,
+    "boardOrPhoneAccessed": false,
+    "newCustomerAcceptance": false,
+    "saleQualified": false,
+    "verificationPreparationFailure": "PDF exact-string check encountered layout newlines; preserved native receipt and same-MSI headless diagnosis, then normalized whitespace only. No product source, source wording, model or installer was changed for this retry."
+  },
+  "updatedAt": "2026-11-09T20:25:01+08:00"
 }

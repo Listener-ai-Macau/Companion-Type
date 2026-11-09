@@ -1,0 +1,6 @@
+{
+  "stage": "Source preservation only",
+  "failure": "Whitespace guard rejected double-CR log line endings before committing",
+  "repair": "Restored single CRLF without editing prior text; product, data and runtime verification unchanged",
+  "productRebuilt": false
+}

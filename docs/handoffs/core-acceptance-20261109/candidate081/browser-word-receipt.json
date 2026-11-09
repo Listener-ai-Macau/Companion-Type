@@ -1,0 +1,23 @@
+{
+  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+  "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+  "bytes": 45411,
+  "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\930440c061724f1581d31fe6d39b7aba\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+  "clipboardTypes": [
+    "Files"
+  ],
+  "trustedNativePaste": true,
+  "sourcePathOrBytesSuppliedToReceiver": false,
+  "actualFileReceived": true,
+  "thirdPartyMessengerOrSendQualified": false,
+  "state": "WINDOWS080_ACTUAL_PUBLIC_MEETING_WORD_BROWSER_ATTACHMENT_RECEIVED",
+  "testRun": 42612798269,
+  "testSourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "productSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+  "productVersion": "0.1.80",
+  "systemSharePickerQualified": false,
+  "allFormatsQualified": false,
+  "ownerForegroundUsed": false
+}

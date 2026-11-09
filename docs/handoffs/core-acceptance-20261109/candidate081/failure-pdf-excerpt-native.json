@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-09T20:15:25+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "ai",
+  "frozenAppVersion": "0.1.81",
+  "frozenAppSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "exeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+  "dllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
+  "inputKind": "The same actual public imported audio and new fixed-product ASR, followed by actual cloud AI; reading/audio playback/document receipt and restoration continuation, no new ASR/cloud call in this UI stage",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 3221225472,
+  "appPid": 7408,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 197064,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 393416,
+      "title": ""
+    },
+    {
+      "hwnd": 196794,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    7996
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 6556,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7616,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7884,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7992,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7996,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 8112,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 1031065600,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5451399168,
+    "systemPhysicalPercent": 36.5
+  },
+  "receivedFiles": [
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+      "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+      "bytes": 45411,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+        "bytes": 45411,
+        "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "selectedContentsVerified": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+      "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+      "bytes": 21218,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "browserAttachment": {
+        "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+        "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+        "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+        "bytes": 21218,
+        "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+        "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e890b01e434a43ea9fa9a0c66bc382d3\\browser-received-files\\attachment-1\\public-audio-S_R004S03C01-所选内容.txt",
+        "clipboardTypes": [
+          "Files"
+        ],
+        "trustedNativePaste": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "actualFileReceived": true,
+        "thirdPartyMessengerOrSendQualified": false
+      },
+      "selectedContentsVerified": true
+    }
+  ],
+  "error": "AssertionError()",
+  "receiverPreferencesRestoredIdentically": null,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T20:15:54+08:00"
+}

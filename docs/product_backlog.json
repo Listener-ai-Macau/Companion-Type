@@ -132986,24 +132986,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T19:18:21+08:00",
+      "updatedAt": "2026-11-09T20:10:50+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66773,
+        "firmwareVersion": 66776,
         "uiGeneration": 85,
-        "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
-        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal773-candidate.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-normal773-return-identity.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
+        "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "sourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate776.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-installed-normal776-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-installed-normal776-ota-identity.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Current normal773/634, editable optional observation source51f in stopped-recovery-source. Core function byte-equivalence receipt binds reuse of771 results; no new773 recording sample or final2h claim.",
+        "sourceRootAvailability": "Normal776/b548 is installed and editable at stopped-recovery-source; clean source checkpoint and C durable patch. Changed actual encode call boundaries require fresh qualification; do not inherit773/771 whole-core pass.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "正常773空闲且板卡已释放。编码6510us>6000仍开放；先修好的读取器在实际发MIC前用?验证新鲜本机报告，停录后读同场缓存再返回正常配置。774/775签名包和5场景读取器验证已准备，原新批次窗口Timeout没有授予任何录音范围；下次Owner明确就绪时运行原统一弹窗续作入口 run_codec774_readback.py --retry-not-ready，未确认不录音。若确认，按弹窗最多[180,10,180,7380]且4小时内的条件批次执行：诊断、真实修复后开停/录中复核、全门过才最终同版本2h，不原样碰运气。普通手机ADB上次列表为空，手机/偶发连接与原block/速度后置不继承关闭。",
+      "next": "正常776/b548已安装、软件回归与OTA通过。读取core776-current和E:/CodexData/Companion/.build-cache/core776-unified-admission/device-chain/progress.json，不重放已经完成的START。原集中就绪窗口未确认时新录音范围为空；Owner下一次就绪，用原入口python recovery-work/accept_core776.py --retry-not-ready在新证据目录续作，复用当前修复，不重编译或重装776，不能运行旧774/775低版本控制器。具体确认后按10秒/3分钟/仅前门全过才7380秒同版本长录；任一失败保留并修源头。普通手机当前ADB为空，偶发获取及新版本最终2h未验就保留；明确block与速度后置不重开。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133725,11 +133725,11 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
-        "installedSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
-        "installedFirmwareVersion": 66773,
-        "scope": "Normal773/634 installed. Fourteen selected core functions exactly match normal771; reuse only its scoped results and6510us encode failure. Optional observation source51f is not installed.",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-ready.json",
+        "sourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+        "installedSourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+        "installedFirmwareVersion": 66776,
+        "scope": "Normal776 unified actual encode admission installed. Software byte identity and original resource budgets pass; hardware peak and final candidate qualification follow actual scoped receipts.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-current.json",
         "phoneActualVersion": "0.1.109",
         "phoneObservation": "LAST_POSITIVE_NOT_CURRENT_ADB_READ",
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -133747,15 +133747,15 @@
         "windowsCoreCandidatePackageSha256": "6f4a708c9bb983f9193a7a6dc7445d830d34241452b50f45026175139d1877e3",
         "windowsCoreCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-candidate.json",
         "windowsCoreCandidateInstalled": false,
-        "editableObservationCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
-        "editableSourceRoot": "E:/CodexData/Companion/.build-cache/stopped-recovery-source",
-        "preparedObserverFirmware": 66774,
-        "preparedObserverSourceCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
-        "preparedObserverReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-observer-candidate.json",
-        "preparedNormalReturnFirmware": 66775,
-        "preparedNormalReturnReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal775-candidate.json",
-        "preparedImagesInstalled": false,
-        "installedObservationAt": "2026-11-09T18:53:00+08:00"
+        "editableObservationCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+        "editableSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "installedObservationAt": "2026-11-09T18:53:00+08:00",
+        "supersededPreparedObserver774": {
+          "observerVersion": 66774,
+          "normalReturnVersion": 66775,
+          "installed": false,
+          "reason": "Superseded by substantive normal776 fix; lower-version packages/controllers are historical evidence, not a continuation entry."
+        }
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -133986,14 +133986,14 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66773,
+        "version": 66776,
         "installed": true,
-        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
-        "appBytes": 406580,
-        "staticBytes": 67896,
+        "sourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+        "appBytes": 406588,
+        "staticBytes": 67912,
         "stackReservedBytes": 21504,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-current.json",
-        "reason": "既有观察后返回相同正常核心；未把观察配置或新版本号当编码峰修复。",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-current.json",
+        "reason": "统一实际编码入口，修复暂停/停录尾帧绕过既有空档策略；非仅加诊断或重复测速。",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
@@ -134185,8 +134185,8 @@
             "order": 3,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "NORMAL773_ENCODER6510_OPEN_READBACK_FIXED_OWNER_READY_PENDING",
-            "next": "按embedded.next续作本批；旧失败与未确认录音范围保留。"
+            "status": "OWNER_NOT_READY_NO_NEW_RECORDING",
+            "next": "按embedded.next与core776-current真实状态续作。"
           }
         ],
         "doNotReopen": [
@@ -134194,9 +134194,9 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "同批771/fd2bd8c：完整单麦96x帧减少重复边界/通道判断，既有参考与ARM模型一致；编码等待不在已预告蓝牙事件前6ms强行超时。与770异常原音自动整理合并为一套正常候选，先核原预算再做有改动的定向实测，不原样重跑2h。",
-        "lastUpdatedAt": "2026-11-09T13:53:17+08:00",
-        "lastOwnerRaw": "开始吧, 先做开发, 避免这么多奇怪的保护防御性工作",
+        "currentExecutable": "同一正常776统一编码入口已安装；按本轮一次就绪的条件短录/3分钟/最终2h集中验收，失败停下定位，不运行低版本774/775历史入口。",
+        "lastUpdatedAt": "2026-11-09T20:10:50+08:00",
+        "lastOwnerRaw": "失败的东西你就把它做了就好了呀，那是东西是难点是什么呢？需要把它达到这个售卖标准。",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
         ],
@@ -134276,12 +134276,12 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109"
       },
       "releaseReadiness": {
-        "at": "2026-11-09T19:18:21+08:00",
-        "firmware": 66773,
+        "at": "2026-11-09T20:10:50+08:00",
+        "firmware": 66776,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "Normal773 retains byte-identical selected771 core. Its scoped firstPCM312ms/STOP188ms, PDM P95<=2000us/peak2832us and zero-fault audio results are reusable; encode6510us>6000 remains failed. 772 observation obtained no cached report because the read-only query was omitted; no cause inferred. Reader fixed/validated, new774 batch prompt timed out with no new recording. Final current2h, ordinary phone and intermittent acquisition remain open.",
+        "openSoftware": "Normal776 code fix and software original-byte identity passed, actual normal OTA passed. Remaining prior6510us peak has no confirmed physical attribution. Fresh fixed-candidate scoped measurements and final2h follow actual receipt; ordinary phone/intermittent acquisition remain open. No old whole-core pass inherited.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134298,7 +134298,7 @@
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
-        "nonBlockedCompletionScope": "CP04-01开录<=1.5s；CP09-02冷目录<=5s/原会话恢复<=10s及偶发失败；CP23-10当前匹配版本可靠性/普通手机链。PDM峰3.245ms>3ms本次实测未关，2h受电脑重启中断不合格。",
+        "nonBlockedCompletionScope": "Companion:首个有效PCM<=1.5s、STOP ACK<=0.4s、编码P95<=5000us/峰<=6000us、PDM峰<=3000us、原内存预算与零采集故障；同一当前版本2h录音和2h同步；普通手机及偶发首次获取。旧771采音峰2832us已在原范围通过，编码6510us失败仍保留；新776按实际结果验收。",
         "phoneVersion": "0.1.109",
         "scopeBeforeOwnerExcludedBlocked20261109": {
           "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
@@ -134317,8 +134317,8 @@
         },
         "matchedCoreCandidateFrozen": false,
         "coreCandidateBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
-        "currentCoreShortBatchAccepted": true,
-        "currentCoreShortBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-device-chain-acceptance.json",
+        "currentCoreShortBatchAccepted": false,
+        "currentCoreShortBatchReceipt": null,
         "windowsCoreCandidateBuilt": true,
         "currentCoreLongPassed": false,
         "currentCoreLongReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
@@ -134354,7 +134354,28 @@
           "temporarySpaceReleased": true,
           "gatesPass": true
         },
-        "coreCodeReuseReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core773-hot-code-reuse.json"
+        "coreCodeReuseReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core773-hot-code-reuse.json",
+        "current776FreshRecordings": 0,
+        "normal776OtaMetrics": {
+          "at": "2026-11-09T20:05:40+08:00",
+          "firmware": 66776,
+          "sourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+          "otaGates": {
+            "total": true,
+            "postFinish": true,
+            "jointConfirmed": true,
+            "temporarySpaceReleased": true,
+            "oldMetadataIdentical": true
+          },
+          "allOtaGatesPass": true,
+          "elapsedMs": 119967,
+          "postFinishMs": 85755,
+          "newStartCommands": 0,
+          "physicalTimingQualified": false,
+          "oldAudioRead": false,
+          "oldAudioConsumed": false,
+          "saleQualified": false
+        }
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -134973,9 +134994,9 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-09T17:47:56+08:00",
-        "text": "再试一下?",
-        "decision": "新一次重连可读旧故障；Owner原统一弹窗确认后，现有正常START恢复375并用掉获准第一段10秒，恢复原音后装769，剩余一次新录音用于最终长录。"
+        "processedAt": "2026-11-09T20:10:50+08:00",
+        "text": "失败的东西你就把它做了就好了呀，那是东西是难点是什么呢？需要把它达到这个售卖标准。",
+        "decision": "继续原整套核心候选，不另建任务；已完成统一编码准入开发、真实软件回归与正常OTA。剩余实板峰值不宣称关闭，原block/速度后置保持。"
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -135594,7 +135615,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "当前正常773已返回，应用406580B/静态67896B/栈21504B保持原预算；14个关键采音/编码函数与771逐字节相同，复用其首PCM/STOP/PDM/完整原音及编码6510us失败。772定位因漏查询未取到报告，读取器已修好，774/775包未安装；新批次19:07:18弹窗超时，未再录音。"
+        "currentDelivery": "正常776/b548统一实际编码入口已开发并安装；9个Opus模型与生产回调验证通过，普通控制原音SHA保持。应用406588B/静态67912B/栈21504B在原预算，OTA119967ms/最终85755ms通过。实板阶段OWNER_NOT_READY_NO_NEW_RECORDING；旧6510us峰、当前最终2h、手机/偶发连接不自动关闭。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136478,13 +136499,13 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T19:18:21+08:00",
-        "state": "NORMAL773_IDLE_CORRECTED_READBACK774_READY_OWNER_TIMEOUT",
+        "at": "2026-11-09T20:10:50+08:00",
+        "state": "OWNER_NOT_READY_NO_NEW_RECORDING",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66773,
+        "firmwareInstalled": 66776,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "634e1335fe37df089cce8e10d775761219436e60",
+        "firmwareSource": "b5482668344962832142e097c4f5e8554b6367e3",
         "boardLease": false,
         "boardItem": null,
         "liveRecording": false,
@@ -136493,10 +136514,10 @@
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 380,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-current.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66773,
-        "candidateSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "firmwareCandidate": 66776,
+        "candidateSourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -136517,7 +136538,7 @@
         "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core769-matched079\\long\\progress.json",
         "longObserverSession": null,
         "startupDiagnosticSession": null,
-        "firmwareSourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "firmwareSourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
         "windowsInstalledVersion": "0.1.78",
@@ -136527,7 +136548,7 @@
         "windowsCoreCandidateSourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
         "windowsCoreCandidateInstalled": false,
         "windowsCoreCandidateArtifact": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\release\\Companion-Windows-0.1.79-Core-Candidate.msi",
-        "coreShortBatchAccepted": true,
+        "coreShortBatchAccepted": false,
         "longControllerPid": null,
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
@@ -136536,8 +136557,8 @@
         },
         "operatorReady": false,
         "operatorPromptPending": false,
-        "offlineRecoveryCandidate": 66771,
-        "offlineRecoverySourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "offlineRecoveryCandidate": 66776,
+        "offlineRecoverySourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "offlineRecoveryBuildRunning": false,
         "offlineRecoveryInstalled": true,
         "targetedControllerSession": null,
@@ -136756,7 +136777,7 @@
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
       },
-      "lastOwnerRequest": "开始吧, 先做开发, 避免这么多奇怪的保护防御性工作",
+      "lastOwnerRequest": "失败的东西你就把它做了就好了呀，那是东西是难点是什么呢？需要把它达到这个售卖标准。",
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
         "result": "PASS_DYNAMIC_WAIT_COVERED_LENGTHS_AND_SCOPED_RESUME_NOT_FULL_SALE_QUALIFICATION",
@@ -140966,14 +140987,14 @@
           "failedOriginal": 375,
           "failedAtMs": 251110,
           "staleDmaHalves": 1,
-          "candidateFirmware": 66769,
-          "candidateSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+          "candidateFirmware": 66776,
+          "candidateSourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
           "candidateBuilt": true,
           "candidateInstalled": true,
           "softwareFailureReproducedAndFixed": true,
           "physicalFixQualified": false,
-          "applicationBytes": 404964,
-          "staticBytes": 67896,
+          "applicationBytes": 406588,
+          "staticBytes": 67912,
           "remaining": "One physical handoff, preserve/recover original375, normal OTA and matched recording-chain acceptance.",
           "hardwareReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
           "old375RecoveredAsIncomplete": true,
@@ -141036,6 +141057,25 @@
             "readbackSoftwarePass": true,
             "nextAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-ready.json",
             "nextAttemptState": "OWNER_NOT_READY_NO_CHANGE_NO_RECORDING"
+          },
+          "unifiedEncodeAdmission776": {
+            "at": "2026-11-09T20:10:50+08:00",
+            "sourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
+            "installed": true,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-current.json",
+            "software": {
+              "confirmedDefect": "The outer RUNNING-only radio gate did not cover PAUSE/STOP queued frames or final padding; inactive product polling called those actual encode entries directly.",
+              "implementation": "Optional generic encode_window port at both actual codec entries, forwarded through existing pipeline config; platform owns DMA/radio policy. Denial yields without PCM/codec/packet mutation. Non-encoding NOR/timeline work remains serviceable. Running urgency>=3 PCM blocks and12ms radio fallback retained.",
+              "before": "Production HEAD51f engine with candidate callback header reproduces ignored STOP admission; expected failure preserved. Initial missing host range-reclaim links and an overstrict fixture expectation were harness preparation failures, fixed before final evidence; not board defects.",
+              "after": "Nine real-core/Opus RUNNING,STOP,PAUSE,legacy flush and exact-source finish cases; denied states resume with identical original bytes, CRC/SHA-backed modeled reclaim and one microphone lifetime. Extracted production callback verifies actual DMA safety,30ms urgency,12ms bounded courtesy,quiet gap and unavailable query.",
+              "normalControlSha256": "EAFFDDEB77518826D0F0588F764B5B61C093EB16063A1BFE1A7C6415A736F0AE",
+              "automaticRecoveryModelPass": true,
+              "physicalPeakCauseConfirmed": false,
+              "physicalEncodePeakQualified": false,
+              "physicalFinalTwoHoursQualified": false
+            },
+            "targetedPass": false,
+            "finalTwoHoursPass": false
           }
         }
       },
@@ -141181,36 +141221,14 @@
       },
       "deliveryBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
       "currentCoreLong": {
-        "at": "2026-11-09T17:42:06+08:00",
-        "pid": 34668,
-        "state": "CURRENT_CORE_LONG_GAPS_RETAINED",
-        "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
-        "firmware": 66769,
+        "at": "2026-11-09T20:10:50+08:00",
+        "firmware": 66776,
+        "state": "NOT_STARTED_CONDITIONAL_ON_SAME_CANDIDATE_TARGETED_PASS",
         "boardLease": false,
-        "newStartCommands": 1,
+        "newStartCommands": 0,
         "targetRecordingSeconds": 7380,
         "targetLiveSyncSeconds": 7200,
-        "saleQualified": false,
-        "childPid": 32092,
-        "sessionId": "v1-real-installed-1794209887609",
-        "recordingKey": {
-          "deviceUid": "120011000d50335754363720",
-          "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "0000000000000179"
-        },
-        "recordingId": 132449,
-        "sessionState": "captured",
-        "liveRecording": false,
-        "liveReceive": false,
-        "sealedChunks": 60,
-        "hostElapsedSeconds": 7388.647,
-        "sameOriginalActiveFollowWindows": 681,
-        "conservativeLiveSyncSeconds": 7248.4610108000015,
-        "unexpectedDisconnects": 0,
-        "maximumFilePollGapSeconds": 1.1093813000006776,
-        "firstObservedChunkAt": "2026-11-09T15:40:18+08:00",
-        "exitCode": 0,
-        "releaseCode": 0
+        "saleQualified": false
       },
       "baselineBefore769": {
         "firmwareVersion": 66767,
@@ -141251,28 +141269,74 @@
         "historicalCompileProfile": "product=companion, screen disabled independently"
       },
       "lastOperatorPrompt": {
-        "at": "2026-11-09T19:07:18+08:00",
-        "selected": "Timeout",
+        "at": "2026-11-09T20:09:25+08:00",
+        "ready": false,
         "recordingScopeGranted": [],
-        "requestedScopeOnly": [
-          180,
-          10,
-          180,
-          7380
-        ],
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec774-readiness.json"
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-targeted-readiness.json"
       },
       "currentConnectionDependency": {
         "phoneAdb": "LAST_INVENTORY_EMPTY",
-        "source": "Actual adb devices -l using project platform-tools during this batch; no phone in the returned list. Not a current phone app-version observation and not an Owner-declared hardware block.",
-        "action": "When phone attachment changes, use existing selector and ordinary core path; do not repeatedly ask for a cable while handling encoder evidence."
+        "source": "Actual project adb devices -l returned no entries during normal776 build. Last positive109 stays historical; not an Owner hardware block.",
+        "action": "When phone attachment changes, use existing selector and ordinary core path; do not repeatedly ask for a cable while handling encoder evidence.",
+        "at": "2026-11-09T20:10:50+08:00"
+      },
+      "baselineBefore776": {
+        "firmwareVersion": 66773,
+        "uiGeneration": 85,
+        "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
+        "sourceCommit": "634e1335fe37df089cce8e10d775761219436e60",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal773-candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-normal773-return-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Current normal773/634, editable optional observation source51f in stopped-recovery-source. Core function byte-equivalence receipt binds reuse of771 results; no new773 recording sample or final2h claim.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "previousCoreLong769": {
+        "at": "2026-11-09T17:42:06+08:00",
+        "pid": 34668,
+        "state": "CURRENT_CORE_LONG_GAPS_RETAINED",
+        "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
+        "firmware": 66769,
+        "boardLease": false,
+        "newStartCommands": 1,
+        "targetRecordingSeconds": 7380,
+        "targetLiveSyncSeconds": 7200,
+        "saleQualified": false,
+        "childPid": 32092,
+        "sessionId": "v1-real-installed-1794209887609",
+        "recordingKey": {
+          "deviceUid": "120011000d50335754363720",
+          "formatEpoch": "5a6584e1707422bb",
+          "sessionId": "0000000000000179"
+        },
+        "recordingId": 132449,
+        "sessionState": "captured",
+        "liveRecording": false,
+        "liveReceive": false,
+        "sealedChunks": 60,
+        "hostElapsedSeconds": 7388.647,
+        "sameOriginalActiveFollowWindows": 681,
+        "conservativeLiveSyncSeconds": 7248.4610108000015,
+        "unexpectedDisconnects": 0,
+        "maximumFilePollGapSeconds": 1.1093813000006776,
+        "firstObservedChunkAt": "2026-11-09T15:40:18+08:00",
+        "exitCode": 0,
+        "releaseCode": 0
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "ANDROID100_VERIFIED_APK_READY_USB_DISCONNECTED_BEFORE_INSTALLATION",
+        "state": "ANDROID110_UNIFIED_CANDIDATE_READY_PHONE_OFFLINE_WINDOWS081_INSTALLED",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -141313,7 +141377,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。",
+        "next": "沿ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.next续作；当前安卓候选110，连接后先读实际版本，不安装旧100或降级。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -142024,12 +142088,12 @@
           }
         },
         "latestWindowsInstalled": {
-          "version": "0.1.80",
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\installation.json",
-          "source": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+          "version": "0.1.81",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\installation.json",
+          "source": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
           "existingFilesByteIdentical": 245,
-          "exeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
-          "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+          "exeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+          "dllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
           "wholeProductQualified": false
         },
         "windows067Issues": {
@@ -143428,6 +143492,15 @@
             "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
             "actualGroupedRuntimeRun": 42589879725,
             "wholeProductQualified": false
+          },
+          {
+            "version": "0.1.80",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\installation.json",
+            "source": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+            "existingFilesByteIdentical": 245,
+            "exeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
+            "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+            "wholeProductQualified": false
           }
         ],
         "previousAndroidCandidates": [
@@ -143441,7 +143514,11 @@
             "installed": false,
             "scope": "Includes committed library-location/return Web source plus existing099 native/connection/Word/trash features. Phone absent before installation."
           }
-        ]
+        ],
+        "phone100AggregateBeforeUnified110": {
+          "state": "ANDROID100_VERIFIED_APK_READY_USB_DISCONNECTED_BEFORE_INSTALLATION",
+          "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。"
+        }
       },
       "ownerAndroidMaterialExports054": {
         "at": "2026-11-06T10:24:17+08:00",
@@ -143608,7 +143685,8 @@
         ],
         "installer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-windows-content051\\Companion-Windows-0.1.51-内容导出复制分享.msi",
         "msiSha256": "0850645f9e9b64cc3263b61a0efda21d586e4b39ee482d20174b777dd6a143b8",
-        "customerResult": null
+        "customerResult": null,
+        "latestContinuation": "ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeFileDelivery"
       },
       "priorCandidateBeforeDay050": {
         "at": "2026-11-05T14:07:41+08:00",
@@ -263534,7 +263612,7 @@
             "decodedAudioSha256": "c66aa116d80a7cf4e6ea5ca91a7d3ba1ccf2945a22d95e5d8b540373fc7c3262",
             "actualAsrRun": 42592563926,
             "actualAiEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\whole-805278e2b7214018a4ddef74e361a9e8",
-            "wholeDeliveryRun": 42593867826,
+            "wholeDeliveryRun": 42616003162,
             "fixedProductAsrSeconds": 136.076,
             "actualAiSeconds": 49.702544700001454,
             "asrDiagnostic": {
@@ -263591,9 +263669,11 @@
               "saleQualified": false,
               "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
               "sourceRemoteReadbackVerified": true,
-              "buildRun": 42594837619
+              "buildRun": 42594837619,
+              "continuedCandidateVersion": "0.1.81",
+              "continuedSourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9"
             },
-            "newProductBuildRun": 42594837619,
+            "newProductBuildRun": 42612798269,
             "localHeavyInference": false,
             "modelResearchOrTraining": false,
             "fixedProductAsrInferenceOnRemote": true,
@@ -263605,7 +263685,7 @@
               {
                 "block": "双端与实卡同一候选",
                 "state": "OPEN",
-                "facts": "Windows完整公开会议链已过；Android110已合并109原生后端、100资料库修复与共同会议UI，完成签名APK、Web/原生包内和16KiB核对及远端下载回读，尚未真机。授权手机均离线，旧系统分享/聊天附件也仍开放。",
+                "facts": "Windows081同场实际ASR/AI结果、Word/TXT/PDF/WAV/MP3直接复制、标准浏览器真实附件粘贴及Shell实际落盘、原音备份恢复已过并安装；Android110签名包已远端保护，授权手机最近观察离线，真机/实卡匹配全链待续。旧WinRT面板及具体聊天客户端不由标准浏览器收件继承通过。",
                 "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
               },
               {
@@ -263803,24 +263883,24 @@
               "pdmPeakUs": 3252,
               "wholeQualified": false
             },
-            "integratedRuntimeRun": 42597707514,
-            "installedVersion": "0.1.80",
-            "installedSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+            "integratedRuntimeRun": 42616003162,
+            "installedVersion": "0.1.81",
+            "installedSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
             "installation": {
-              "state": "WINDOWS080_INSTALLED_EXISTING_DATA_IDENTICAL",
-              "startedAt": "2026-11-09T18:06:38+08:00",
-              "candidateVersion": "0.1.80",
-              "previousInstalledVersion": "0.1.79",
-              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+              "state": "WINDOWS081_INSTALLED_EXISTING_DATA_IDENTICAL",
+              "startedAt": "2026-11-09T20:22:52+08:00",
+              "candidateVersion": "0.1.81",
+              "previousInstalledVersion": "0.1.80",
+              "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+              "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
               "existingDataFiles": 245,
               "dataContentsPrinted": false,
               "installerExitCode": 0,
-              "finishedAt": "2026-11-09T18:06:43+08:00",
+              "finishedAt": "2026-11-09T20:23:01+08:00",
               "dataManifestIdentical": true,
-              "installedVersion": "0.1.80",
-              "installedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
-              "installedDllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+              "installedVersion": "0.1.81",
+              "installedExeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+              "installedDllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
               "installedHelpStartupPassed": true,
               "ordinaryThirdPartyPasteQualified": false,
               "oldWinRTSharePickerFixed": false,
@@ -263828,14 +263908,14 @@
               "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
             },
             "package": {
-              "at": "2026-11-09T17:59:48+08:00",
-              "state": "WINDOWS080_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-              "version": "0.1.80",
-              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\Companion-Windows-0.1.80-candidate.msi",
-              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
-              "embeddedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
-              "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+              "at": "2026-11-09T20:13:21+08:00",
+              "state": "WINDOWS081_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+              "version": "0.1.81",
+              "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\Companion-Windows-0.1.81-candidate.msi",
+              "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+              "embeddedExeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+              "dllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
               "licenseFilesMatched": 257,
               "sourceFilesMatched": 1228,
               "sourceFilesWithOnlyCheckoutEolDifference": [
@@ -263868,7 +263948,7 @@
               "newerVersionGuard": true,
               "ciSourceAndNativeFrozenTogether": true,
               "nativeProfile": "normal release on dedicated Windows runner",
-              "ciRunId": 42594837619,
+              "ciRunId": 42612798269,
               "ciWrapperOverallPassed": true,
               "localHeavyBuild": false,
               "installed": false,
@@ -263877,14 +263957,14 @@
               "saleQualified": false,
               "modelsRun": false,
               "inspectionLimits": {
-                "pid": 38668,
+                "pid": 24628,
                 "cpuRate": 500,
                 "cpuControlFlags": 5,
                 "cpuPercentMaximum": 5.0,
                 "inLimitedJob": true,
                 "jobPrivateCommitLimitBytes": 536870912,
                 "jobMemoryLimitEnabled": true,
-                "jobPeakPrivateCommitBytes": 47386624,
+                "jobPeakPrivateCommitBytes": 48398336,
                 "cpuPriorityClass": 64,
                 "memoryPagePriority": 1,
                 "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -263894,15 +263974,15 @@
               }
             },
             "remoteDraft": {
-              "at": "2026-11-09T18:01:10+08:00",
+              "at": "2026-11-09T20:13:54+08:00",
               "state": "PRIVATE_DRAFT_MSI_DOWNLOADED_AND_HASH_VERIFIED",
               "tag": "windows-0.1.78-bb1550c4-candidate",
-              "preferredNewTag": "windows-0.1.80-f339e22a-candidate",
+              "preferredNewTag": "windows-0.1.81-62b702d7-candidate",
               "sharedHistoricalRecoveryContainer": true,
               "original078AssetsReplaced": false,
               "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
-              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+              "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+              "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
               "draft": true,
               "published": false,
               "readbackByteIdentical": true,
@@ -263963,13 +264043,176 @@
               "saleQualified": false,
               "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
               "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
-            }
+            },
+            "windowsFileDelivery": {
+              "at": "2026-11-09T20:25:01+08:00",
+              "state": "WINDOWS081_INSTALLED_COMPLETE_MEETING_DOCUMENT_AND_AUDIO_FILE_HANDOFF_PASSED",
+              "purpose": "同一场实际公开会议的纪要、正文和原音/MP3从主入口复制为完整文件，实际粘贴为附件及文件落盘，备份恢复后继续使用。",
+              "version": "0.1.81",
+              "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+              "buildRun": 42612798269,
+              "runtimeRun": 42616003162,
+              "runtimeTestSource": "3db64f0c65c41e5a2b092269b234a9ab71abcf81",
+              "installed": true,
+              "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+              "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\installation.json",
+              "runtimeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\runtime-result.json",
+              "receivedFiles": [
+                {
+                  "receiver": "Windows Shell folder Paste verb",
+                  "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+                  "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+                  "bytes": 45411,
+                  "actualFileReceived": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "thirdPartyMessengerOrSendQualified": false,
+                  "browserAttachment": {
+                    "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                    "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                    "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+                    "bytes": 45411,
+                    "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+                    "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+                    "clipboardTypes": [
+                      "Files"
+                    ],
+                    "trustedNativePaste": true,
+                    "sourcePathOrBytesSuppliedToReceiver": false,
+                    "actualFileReceived": true,
+                    "thirdPartyMessengerOrSendQualified": false
+                  },
+                  "selectedContentsVerified": true
+                },
+                {
+                  "receiver": "Windows Shell folder Paste verb",
+                  "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+                  "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+                  "bytes": 21218,
+                  "actualFileReceived": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "thirdPartyMessengerOrSendQualified": false,
+                  "browserAttachment": {
+                    "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                    "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                    "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+                    "bytes": 21218,
+                    "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+                    "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-1\\public-audio-S_R004S03C01-所选内容.txt",
+                    "clipboardTypes": [
+                      "Files"
+                    ],
+                    "trustedNativePaste": true,
+                    "sourcePathOrBytesSuppliedToReceiver": false,
+                    "actualFileReceived": true,
+                    "thirdPartyMessengerOrSendQualified": false
+                  },
+                  "selectedContentsVerified": true
+                },
+                {
+                  "receiver": "Windows Shell folder Paste verb",
+                  "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+                  "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+                  "bytes": 370021,
+                  "actualFileReceived": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "thirdPartyMessengerOrSendQualified": false,
+                  "browserAttachment": {
+                    "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                    "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                    "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+                    "bytes": 370021,
+                    "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+                    "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-2\\public-audio-S_R004S03C01-所选内容.pdf",
+                    "clipboardTypes": [
+                      "Files"
+                    ],
+                    "trustedNativePaste": true,
+                    "sourcePathOrBytesSuppliedToReceiver": false,
+                    "actualFileReceived": true,
+                    "thirdPartyMessengerOrSendQualified": false
+                  },
+                  "pdfContentMatch": "Source excerpt retained after layout-whitespace normalization only",
+                  "selectedContentsVerified": true
+                },
+                {
+                  "receiver": "Windows Shell folder Paste verb",
+                  "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                  "fileName": "public-audio-S_R004S03C01-original.wav",
+                  "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                  "bytes": 74467886,
+                  "actualFileReceived": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "thirdPartyMessengerOrSendQualified": false,
+                  "browserAttachment": {
+                    "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                    "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                    "fileName": "public-audio-S_R004S03C01-original.wav",
+                    "bytes": 74467886,
+                    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                    "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-3\\public-audio-S_R004S03C01-original.wav",
+                    "clipboardTypes": [
+                      "Files"
+                    ],
+                    "trustedNativePaste": true,
+                    "sourcePathOrBytesSuppliedToReceiver": false,
+                    "actualFileReceived": true,
+                    "thirdPartyMessengerOrSendQualified": false
+                  },
+                  "originalAudioBytesIdentical": true
+                },
+                {
+                  "receiver": "Windows Shell folder Paste verb",
+                  "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                  "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+                  "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+                  "bytes": 37149710,
+                  "actualFileReceived": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "thirdPartyMessengerOrSendQualified": false,
+                  "browserAttachment": {
+                    "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                    "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                    "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+                    "bytes": 37149710,
+                    "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+                    "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-4\\public-audio-S_R004S03C01-original-兼容音频.mp3",
+                    "clipboardTypes": [
+                      "Files"
+                    ],
+                    "trustedNativePaste": true,
+                    "sourcePathOrBytesSuppliedToReceiver": false,
+                    "actualFileReceived": true,
+                    "thirdPartyMessengerOrSendQualified": false
+                  },
+                  "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+                }
+              ],
+              "standardBrowserAttachmentPasteQualified": true,
+              "ordinaryShellFilePasteQualified": true,
+              "sameOriginalWavByteIdentical": true,
+              "sameAsrAiAndAudioBackupRestorePassed": true,
+              "desktopPrimaryFileAndAudioCopyVisibleWithoutExtraMenu": true,
+              "existingDataFilesByteIdentical": 245,
+              "remoteMsiReadbackVerified": true,
+              "oldWinRTSharePickerFixed": false,
+              "thirdPartyMessengerOrSendQualified": false,
+              "ownerForegroundUsed": false,
+              "newAsrOrAiCalls": 0,
+              "boardOrPhoneAccessed": false,
+              "newCustomerAcceptance": false,
+              "saleQualified": false,
+              "verificationPreparationFailure": "PDF exact-string check encountered layout newlines; preserved native receipt and same-MSI headless diagnosis, then normalized whitespace only. No product source, source wording, model or installer was changed for this retry."
+            },
+            "updatedAt": "2026-11-09T20:25:01+08:00"
           },
           "remainingSaleBlocks": [
             {
               "block": "双端与实卡同一候选",
               "state": "OPEN",
-              "facts": "Windows完整公开会议链已过；Android110已合并109原生后端、100资料库修复与共同会议UI，完成签名APK、Web/原生包内和16KiB核对及远端下载回读，尚未真机。授权手机均离线，旧系统分享/聊天附件也仍开放。",
+              "facts": "Windows081同场实际ASR/AI结果、Word/TXT/PDF/WAV/MP3直接复制、标准浏览器真实附件粘贴及Shell实际落盘、原音备份恢复已过并安装；Android110签名包已远端保护，授权手机最近观察离线，真机/实卡匹配全链待续。旧WinRT面板及具体聊天客户端不由标准浏览器收件继承通过。",
               "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
             },
             {
@@ -264088,19 +264331,166 @@
             "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
           },
           "activeFileDelivery": {
-            "at": "2026-11-09T19:55:08+08:00",
-            "state": "WINDOWS_FILE_DELIVERY_BATCH_IMPLEMENTED_BUILD_AND_RECEIPT_RUNNING",
+            "at": "2026-11-09T20:25:01+08:00",
+            "state": "WINDOWS081_INSTALLED_COMPLETE_MEETING_DOCUMENT_AND_AUDIO_FILE_HANDOFF_PASSED",
+            "purpose": "同一场实际公开会议的纪要、正文和原音/MP3从主入口复制为完整文件，实际粘贴为附件及文件落盘，备份恢复后继续使用。",
             "version": "0.1.81",
-            "purpose": "纪要、所选正文和原音/MP3可从主入口复制为完整文件并在接收应用粘贴为附件。",
-            "baselineProductSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
-            "baselineFailure": "WinRT068/069请求改写与自定义Shell site均未修复系统面板；文件CF_HDROP及真实Shell收件已通过。",
-            "newEvidence": "真实有头Edge从系统文件剪贴板触发可信paste，File经标准FormData到本机收件器；收件器不给原文件路径/字节，核对实际收到的文件。",
-            "systemPickerRepaired": false,
-            "newAsrOrAiCalls": false,
-            "phoneOnline": false,
-            "boardAccessed": false,
-            "installed": false,
-            "saleQualified": false
+            "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+            "buildRun": 42612798269,
+            "runtimeRun": 42616003162,
+            "runtimeTestSource": "3db64f0c65c41e5a2b092269b234a9ab71abcf81",
+            "installed": true,
+            "msiSha256": "ddaf7906f843c921e82bb97c847a153a666101f82dd08b2b2344eea12b99fe5e",
+            "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\installation.json",
+            "runtimeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate081\\runtime-result.json",
+            "receivedFiles": [
+              {
+                "receiver": "Windows Shell folder Paste verb",
+                "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+                "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+                "bytes": 45411,
+                "actualFileReceived": true,
+                "sourcePathOrBytesSuppliedToReceiver": false,
+                "thirdPartyMessengerOrSendQualified": false,
+                "browserAttachment": {
+                  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+                  "bytes": 45411,
+                  "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+                  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-0\\public-audio-S_R004S03C01-所选内容.docx",
+                  "clipboardTypes": [
+                    "Files"
+                  ],
+                  "trustedNativePaste": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "actualFileReceived": true,
+                  "thirdPartyMessengerOrSendQualified": false
+                },
+                "selectedContentsVerified": true
+              },
+              {
+                "receiver": "Windows Shell folder Paste verb",
+                "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+                "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+                "bytes": 21218,
+                "actualFileReceived": true,
+                "sourcePathOrBytesSuppliedToReceiver": false,
+                "thirdPartyMessengerOrSendQualified": false,
+                "browserAttachment": {
+                  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.txt",
+                  "bytes": 21218,
+                  "sha256": "bfa27424a48ed0e719bb4f0edcfc0bdac186ce7257aaaa6ea4807c717af95c65",
+                  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-1\\public-audio-S_R004S03C01-所选内容.txt",
+                  "clipboardTypes": [
+                    "Files"
+                  ],
+                  "trustedNativePaste": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "actualFileReceived": true,
+                  "thirdPartyMessengerOrSendQualified": false
+                },
+                "selectedContentsVerified": true
+              },
+              {
+                "receiver": "Windows Shell folder Paste verb",
+                "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+                "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+                "bytes": 370021,
+                "actualFileReceived": true,
+                "sourcePathOrBytesSuppliedToReceiver": false,
+                "thirdPartyMessengerOrSendQualified": false,
+                "browserAttachment": {
+                  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                  "fileName": "public-audio-S_R004S03C01-所选内容.pdf",
+                  "bytes": 370021,
+                  "sha256": "ff662cfa925778fc1e333bb5d357ebe9b718c8db33e68bf1357a11c14b96e5a6",
+                  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-2\\public-audio-S_R004S03C01-所选内容.pdf",
+                  "clipboardTypes": [
+                    "Files"
+                  ],
+                  "trustedNativePaste": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "actualFileReceived": true,
+                  "thirdPartyMessengerOrSendQualified": false
+                },
+                "pdfContentMatch": "Source excerpt retained after layout-whitespace normalization only",
+                "selectedContentsVerified": true
+              },
+              {
+                "receiver": "Windows Shell folder Paste verb",
+                "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                "fileName": "public-audio-S_R004S03C01-original.wav",
+                "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                "bytes": 74467886,
+                "actualFileReceived": true,
+                "sourcePathOrBytesSuppliedToReceiver": false,
+                "thirdPartyMessengerOrSendQualified": false,
+                "browserAttachment": {
+                  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                  "fileName": "public-audio-S_R004S03C01-original.wav",
+                  "bytes": 74467886,
+                  "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-3\\public-audio-S_R004S03C01-original.wav",
+                  "clipboardTypes": [
+                    "Files"
+                  ],
+                  "trustedNativePaste": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "actualFileReceived": true,
+                  "thirdPartyMessengerOrSendQualified": false
+                },
+                "originalAudioBytesIdentical": true
+              },
+              {
+                "receiver": "Windows Shell folder Paste verb",
+                "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+                "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+                "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+                "bytes": 37149710,
+                "actualFileReceived": true,
+                "sourcePathOrBytesSuppliedToReceiver": false,
+                "thirdPartyMessengerOrSendQualified": false,
+                "browserAttachment": {
+                  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+                  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+                  "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+                  "bytes": 37149710,
+                  "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+                  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-4\\public-audio-S_R004S03C01-original-兼容音频.mp3",
+                  "clipboardTypes": [
+                    "Files"
+                  ],
+                  "trustedNativePaste": true,
+                  "sourcePathOrBytesSuppliedToReceiver": false,
+                  "actualFileReceived": true,
+                  "thirdPartyMessengerOrSendQualified": false
+                },
+                "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+              }
+            ],
+            "standardBrowserAttachmentPasteQualified": true,
+            "ordinaryShellFilePasteQualified": true,
+            "sameOriginalWavByteIdentical": true,
+            "sameAsrAiAndAudioBackupRestorePassed": true,
+            "desktopPrimaryFileAndAudioCopyVisibleWithoutExtraMenu": true,
+            "existingDataFilesByteIdentical": 245,
+            "remoteMsiReadbackVerified": true,
+            "oldWinRTSharePickerFixed": false,
+            "thirdPartyMessengerOrSendQualified": false,
+            "ownerForegroundUsed": false,
+            "newAsrOrAiCalls": 0,
+            "boardOrPhoneAccessed": false,
+            "newCustomerAcceptance": false,
+            "saleQualified": false,
+            "verificationPreparationFailure": "PDF exact-string check encountered layout newlines; preserved native receipt and same-MSI headless diagnosis, then normalized whitespace only. No product source, source wording, model or installer was changed for this retry."
           },
           "lastOwnerQuote": "你不要老是说还有什么东西没做，你说什么东西没做难道是因为你不能做吗？直接把它做了就好了。"
         }
@@ -264121,7 +264511,7 @@
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
       "at": "2026-11-09T18:26:19+08:00",
-      "state": "WINDOWS_FULL_MEETING_AND_CURRENT_RECEIVER_INTEGRATED_ANDROID_AND_QUALITY_OPEN",
+      "state": "WINDOWS081_COMPLETE_MEETING_FILE_DELIVERY_INSTALLED_ANDROID110_PHONE_ACCEPTANCE_PENDING",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",

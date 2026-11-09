@@ -1,0 +1,15 @@
+{
+  "receiver": "Microsoft Edge native clipboard paste into a browser attachment composer",
+  "operation": "Trusted Ctrl+V paste -> browser File -> multipart FormData -> loopback-only receiver",
+  "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+  "bytes": 37149710,
+  "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+  "receivedPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\ec011ac9c2eb4e3fb7a2c3b4b27580fd\\browser-received-files\\attachment-4\\public-audio-S_R004S03C01-original-兼容音频.mp3",
+  "clipboardTypes": [
+    "Files"
+  ],
+  "trustedNativePaste": true,
+  "sourcePathOrBytesSuppliedToReceiver": false,
+  "actualFileReceived": true,
+  "thirdPartyMessengerOrSendQualified": false
+}

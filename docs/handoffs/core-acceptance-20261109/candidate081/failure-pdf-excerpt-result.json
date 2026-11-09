@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-09T12:14:58.692839+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "5811a0b1753a77ad8410d75f677d80dd567fff86",
+  "appSourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "appVersion": "0.1.81",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "browserAttachmentReceiptRequired": true,
+  "exactMsiExeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+  "exactMsiDllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 1,
+  "nativeUiState": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-09T12:15:54.146078+00:00"
+}

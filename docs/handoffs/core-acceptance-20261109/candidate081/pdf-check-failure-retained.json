@@ -1,0 +1,9 @@
+{
+  "run": 42615341299,
+  "testSource": "5811a0b1753a77ad8410d75f677d80dd567fff86",
+  "productSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "failure": "PDF exact excerpt assertion stopped on layout line breaks after browser/Shell byte-identical receipt; DOCX and TXT content passed.",
+  "diagnosis": "Exact MSI081 native headless export reproduces excerpt split across PDF layout lines. Whitespace-only normalization recovers unchanged wording; no product/AI/source-text modification.",
+  "retained": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\attachments081-failure42615341299",
+  "next": "Reuse the same MSI and same real meeting; retain actual PDF and extracted text, check whitespace-only normalization, continue original/MP3 and restore."
+}

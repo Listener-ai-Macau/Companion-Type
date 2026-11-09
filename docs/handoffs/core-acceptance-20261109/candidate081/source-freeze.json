@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-09T19:55:08+08:00",
+  "state": "WINDOWS_FILE_DELIVERY_BATCH_IMPLEMENTED_BUILD_AND_RECEIPT_RUNNING",
+  "version": "0.1.81",
+  "purpose": "纪要、所选正文和原音/MP3可从主入口复制为完整文件并在接收应用粘贴为附件。",
+  "baselineProductSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+  "baselineFailure": "WinRT068/069请求改写与自定义Shell site均未修复系统面板；文件CF_HDROP及真实Shell收件已通过。",
+  "newEvidence": "真实有头Edge从系统文件剪贴板触发可信paste，File经标准FormData到本机收件器；收件器不给原文件路径/字节，核对实际收到的文件。",
+  "systemPickerRepaired": false,
+  "newAsrOrAiCalls": false,
+  "phoneOnline": false,
+  "boardAccessed": false,
+  "installed": false,
+  "saleQualified": false,
+  "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "sourceRemoteReadbackVerified": true
+}
