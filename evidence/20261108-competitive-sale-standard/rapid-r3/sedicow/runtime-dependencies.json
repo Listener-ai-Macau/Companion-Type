@@ -1,0 +1,23 @@
+{
+  "state": "PASS_AMD_PYTHON_ISOLATED_IMPORTS_NO_TORCH_OR_MODEL",
+  "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+  "versions": {
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "4.55.0",
+    "tokenizers": "0.21.4",
+    "huggingface-hub": "0.34.4",
+    "safetensors": "0.8.0",
+    "pandas": "2.3.3",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "python-dateutil": "2.9.0.post0",
+    "pytz": "2025.2",
+    "tzdata": "2025.2",
+    "six": "1.17.0"
+  },
+  "torchImported": false,
+  "globalEnvironmentChanged": false,
+  "isolatedRuntime": "E:\\CodexData\\Companion\\.model-cache\\sedicow-runtime-20261109",
+  "installCommand": "Python311/python.exe -m pip install --no-deps --target E:/CodexData/Companion/.model-cache/sedicow-runtime-20261109 transformers==4.55.0 tokenizers==0.21.4 huggingface-hub==0.34.4 pandas==2.3.3 python-dateutil==2.9.0.post0 pytz==2025.2 tzdata==2025.2 six==1.17.0",
+  "trainedInferenceRun": false
+}

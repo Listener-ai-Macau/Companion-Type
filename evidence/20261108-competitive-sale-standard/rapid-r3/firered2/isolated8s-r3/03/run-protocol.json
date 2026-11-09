@@ -1,0 +1,7 @@
+{
+  "workerSha256": "08117585b74908c604498a3f013ad94c15d6b3ec5349ed48e9aaf9367a8c2282",
+  "modelReadySha256": "b1d8c3ffdef73efd75ff238671582734a81635f69ba3518e44da50103acaa8ea",
+  "policy": "Recovered old2026FireRed2 AED same frozenrelease, notnewmodel. Newcomparison:current continuousfullPCM andfixed30s currentQwenpolicy, rather than old61mcompressed/concatenatedCOP1 andvariablewindows. NoVAD/language-modelcorrection/hotwords/answers. GreedyCPU1thread, allframes/noisekept, onlyexactdigitalsilencepipeline skip. Probeordinary30s+6fixedoldoverlapinput clips before fullS. NativeEOSreason unavailable, preserve rawtokens/times andfailedloop; donotclaimsameQwenEOSproof. Strictfullscore usingoriginalreference/scorer; no partialwindowCERclaim.",
+  "previousEvidence": "Originaltask QM04 old61m496/13732=3.612%; correctedfourclip180/2423=7.4288%; originalrawEresults/weights were cleaned. OldcompleteL outputinventorybound13.1512%notanactualCER. Newmodelassertionwithdrawn beforeanyneuralinference.",
+  "qualification": false
+}

@@ -1,0 +1,27 @@
+{
+  "id": "overlap-01-native-2",
+  "index": 0,
+  "sourceAudioSha256": "9a17177ee1a20439bd58e52b0bb3571f2d6f1b94182cf40237db95f5eba4b734",
+  "startSample": 0,
+  "endSample": 128000,
+  "text": "本小利就是本小区呗",
+  "tokens": [
+    "本",
+    "小",
+    "利",
+    "就",
+    "是",
+    "本",
+    "小",
+    "区",
+    "呗"
+  ],
+  "timestampsRaw": [],
+  "nativeDecoderEOSOrLimitReasonObservable": false,
+  "exactDigitalSilence": false,
+  "seconds": 7.977150099992286,
+  "loop": null,
+  "sourceSha256": "08117585b74908c604498a3f013ad94c15d6b3ec5349ed48e9aaf9367a8c2282",
+  "runProtocolSha256": "16a1d56e1c808286801be230efff9289a07d20eb893a6a1f0797ae7ee76cd339",
+  "modelReadySha256": "b1d8c3ffdef73efd75ff238671582734a81635f69ba3518e44da50103acaa8ea"
+}

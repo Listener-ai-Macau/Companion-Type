@@ -1,0 +1,89 @@
+{
+  "state": "PASS_EXACT_TINY_LOAD_GENERATION_AND_FULL_META_HEADER",
+  "realPretrainedTensorBytesLoaded": 0,
+  "realAudioRecognitionRun": false,
+  "saleQualified": false,
+  "tinyWeightRoundtrip": {
+    "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+    "tensorCount": 111,
+    "dataBytesCopied": 6749636,
+    "maximumTransferChunkBytes": 3319488,
+    "scratchBytes": 16777216,
+    "roundtripBufferBytes": 16777216,
+    "roundtripCpuBufferReused": true,
+    "fileSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+    "deviceRoundtripSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+    "selectedSourceBytesSha256": "6f64df711c15043e6462255e8b74a6e3127cafd67c247639d47ad5cc4e384927",
+    "selectedDeviceBytesSha256": "6f64df711c15043e6462255e8b74a6e3127cafd67c247639d47ad5cc4e384927",
+    "selectedPrefixes": null,
+    "sourceTensorCount": 111,
+    "skippedTensorCount": 0,
+    "targetDevice": "cpu",
+    "mmapUsed": false,
+    "wholeCpuStateDictCreated": false,
+    "seconds": 0.048395699996035546,
+    "restoredTiedAliases": {
+      "proj_out.weight": "model.decoder.embed_tokens.weight"
+    },
+    "strictModelStateLoaded": true,
+    "modelParameters": 2517265,
+    "dtypeConversion": false
+  },
+  "tinyForwardBitExact": true,
+  "tinyParameterCount": 2517265,
+  "tinyForcedGenerationApiPass": true,
+  "generationOutputType": "Tensor",
+  "rawGreedySequences": [
+    [
+      [
+        50258,
+        50260,
+        50360,
+        50365,
+        7751,
+        50367,
+        50257
+      ]
+    ]
+  ],
+  "authorReconstructedIds": [
+    [
+      50258,
+      50364,
+      50365,
+      7751,
+      50367,
+      50257
+    ]
+  ],
+  "trainingOnlySmoothingMatrixOmitted": true,
+  "forcedTokensOnlyForPlumbingNotQuality": true,
+  "fullCheckpointTensorCount": 957,
+  "fullExpectedStateKeys": 958,
+  "fullTiedAliases": {
+    "proj_out.weight": "model.decoder.embed_tokens.weight"
+  },
+  "fullParameterCount": 1101790728,
+  "fullCheckpointHeaderBytesRead": 113112,
+  "fullCheckpointF32Only": true,
+  "fullModelWeightsAllocatedOnCpu": false,
+  "transformers": "4.55.0",
+  "torch": "2.12.0+cpu",
+  "seconds": 29.63978790002875,
+  "limits": {
+    "pid": 32144,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 431702016,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

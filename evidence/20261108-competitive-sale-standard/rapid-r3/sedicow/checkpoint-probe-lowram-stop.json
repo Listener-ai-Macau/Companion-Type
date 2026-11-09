@@ -1,0 +1,25 @@
+{
+  "state": "FAILED_CHECKPOINT_PLUMBING",
+  "realPretrainedTensorBytesLoaded": 0,
+  "realAudioRecognitionRun": false,
+  "saleQualified": false,
+  "failureType": "AssertionError",
+  "reason": "",
+  "seconds": 0.0003263999824412167,
+  "limits": {
+    "pid": 23260,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 9158656,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

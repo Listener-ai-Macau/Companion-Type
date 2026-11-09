@@ -1,0 +1,14 @@
+{"id": "overlap-00-mixture", "index": 0, "seconds": 10.017629500012845, "text": "对这个挺普遍咱们小区其他小区也有嗯"}
+[1;31m2026-11-09 09:32:48.2277718 [E:onnxruntime:, sequential_executor.cc:620 onnxruntime::ExecuteKernel] Non-zero status code returned while running Concat node. Name:'/Concat' Status Message: D:\a\onnxruntime-libs\onnxruntime-libs\onnxruntime\core\framework\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 16384000
+[m
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_firered2_cpu_worker_20261109.py", line 47, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_firered2_cpu_worker_20261109.py", line 41, in main
+    stream=recognizer.create_stream();stream.accept_waveform(16000,value);recognizer.decode_stream(stream);result=stream.result;text=result.text;tokens=list(result.tokens);timestamps=list(result.timestamps)
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\site-packages\sherpa_onnx\offline_recognizer.py", line 1880, in decode_stream
+    self.recognizer.decode_stream(s)
+RuntimeError: Non-zero status code returned while running Concat node. Name:'/Concat' Status Message: D:\a\onnxruntime-libs\onnxruntime-libs\onnxruntime\core\framework\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 16384000
+

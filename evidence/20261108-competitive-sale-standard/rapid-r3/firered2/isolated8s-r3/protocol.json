@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-09T09:34:37+08:00",
+  "whyDifferent": "First8sclip succeeded, secondfailed during nativeConcat allocation in same recognizer. Exactly one discriminating test: fresh process for failedsecondclip, sameweights/runtime/threads/input. If it succeeds continue otherfixed8s clips, each in separate process; no repeated firstclip or cut/threshold tuning. Stop batch on firstfailure.",
+  "previousSuccessfulRawFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\small8s-r2\\probe\\overlap-00-mixture-0000.json",
+  "previousSuccessfulRawSha256": "29fa9f8b75ce7e70dac6abd803f3f457a469f40bdeabf86708c7a0493aefe4fb",
+  "allocatorResetNotModelChange": true,
+  "privateBudgetBytes": 2147483648,
+  "inferenceParametersChanged": false,
+  "saleQualified": false
+}

@@ -1,0 +1,88 @@
+{
+  "files": [
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+      "member": "original-main30.wav",
+      "sha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-0.wav",
+      "member": "enroll-native-0.wav",
+      "sha256": "d02d474638647c81517d7c52d7d55e98b020b0ac536c4d1f7617a4b7bc527e37",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-0-inputs.npz",
+      "member": "native-0-inputs.npz",
+      "sha256": "089cdf6254968df34101b77ceb38ee7676be107aa99ed487abcadb26af91f970",
+      "bytes": 2710941
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-1.wav",
+      "member": "enroll-native-1.wav",
+      "sha256": "b89a1b74c5c9a7026ce43a448f87fc76dc0767d1b546ba3e3efb7c3df8a4018d",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-1-inputs.npz",
+      "member": "native-1-inputs.npz",
+      "sha256": "f64371bc933032958d4c1f363fbc714d249d079491af46d95a8ccf938662b8b8",
+      "bytes": 2715160
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-2.wav",
+      "member": "enroll-native-2.wav",
+      "sha256": "7c53063396de85c163c143d153158c896deb5e085653ef935b70db69fe2d29e4",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-2-inputs.npz",
+      "member": "native-2-inputs.npz",
+      "sha256": "9b91ecf05a3e86a36cbd6a5a073706ad2a54455fa5fd9c0525d75994ea676c25",
+      "bytes": 2705463
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-3.wav",
+      "member": "enroll-native-3.wav",
+      "sha256": "cfae0b1717acab7a2abcc12fa7ea3a18c612b3ebe4ed7626f4a868dee6b18214",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-3-inputs.npz",
+      "member": "native-3-inputs.npz",
+      "sha256": "0df48a7bac417333ef45adda9c463e484b72e362bcb419821992ebeb2583c027",
+      "bytes": 2692723
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-4.wav",
+      "member": "enroll-native-4.wav",
+      "sha256": "4adb39a11e181a49dc749e2008d6024bc559e806b7723ecc570bb7f43ccc1deb",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-4-inputs.npz",
+      "member": "native-4-inputs.npz",
+      "sha256": "1f774902d2f68757dcd5a7f581d29ca8176c0bd7f9c00367f3da898d154de82b",
+      "bytes": 2701655
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-5.wav",
+      "member": "enroll-native-5.wav",
+      "sha256": "fadb62057a2844036a93eeb8c083d5a4e5bdc441c6305c473628481743f1bf3c",
+      "bytes": 960044
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-5-inputs.npz",
+      "member": "native-5-inputs.npz",
+      "sha256": "3b0234a12ceae4d535a0ceb50e956c169940ad03f273330159e93ce04a68885d",
+      "bytes": 2694814
+    }
+  ],
+  "archiveSha256": "7138e0b7d96974e08a5f4b11addbf749081cced2f398b954bf142c95a791a71b",
+  "archiveBytes": 21269007,
+  "source": "AISHELL4/OpenSLR111 https://www.openslr.org/111/ CC-BY-SA4.0; originalauthors/corpus attribution retained. Only publicdevelopmentaudio, no privatecontent.",
+  "derivedFeatures": "ExactpinnedWhisperprocessor; originalmain30s andsixautomaticenrollment30s plusfloat32features/STNO arrays. No referencewords/IDs in inference.",
+  "noWeightsInGit": true,
+  "weightRecovery": "Official pinned URLs, bytecounts andSHA256 in source.json/model-ready.json; >GBweights remainrecoverableEcache, not claimedGitbackup."
+}

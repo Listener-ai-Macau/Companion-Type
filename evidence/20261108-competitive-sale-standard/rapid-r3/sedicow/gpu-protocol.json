@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-09T10:04:17+08:00",
+  "state": "FROZEN_AUTHOR_SE_DICOW_GPU_PILOT_NOT_RUN",
+  "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_gpu_worker_20261109.py",
+  "workerSha256": "225ded5ccdc7dfcb6c65a8d8147cc11cff74bd7707e904a17ce157c056f6c710",
+  "controller": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_sedicow_pilot_20261109.py",
+  "controllerSha256": "6551171dbe560097802cc285bef4c0b60c60478e3eeed97ab3331fda774c5b21",
+  "supportSources": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_checkpoint_20261109.py",
+      "sha256": "10db6bd5440acf3f82cbad865c61d4f0aaa0220564da5ea59f1daec71ae63d9d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_decode_trace_20261109.py",
+      "sha256": "d9590d826b70412e9beb649921c099c49a8c9b65122ee69776c968652389932c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_conditioning_20261109.py",
+      "sha256": "3a99fc720fe1cc35ec7db11544251f5a0a49542cf0931687cc076e3375d18ae0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_bounded_decode_20261107.py",
+      "sha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691"
+    }
+  ],
+  "amdPython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "isolatedTransformersRuntime": "E:/CodexData/Companion/.model-cache/sedicow-runtime-20261109",
+  "maximumPrivateBytes": 2147483648,
+  "maximumSecondsWithoutCompletedTarget": 240,
+  "maximumRunSeconds": 900,
+  "resourcePolicy": "One worker-only5percentCPU/2GiBprivate job, IDLE, low memorypagepriority; controller no nestedratejob. ActualWindowsLOWRAM stops only ownfamily. No GPUutilizationhardcap claim. NoCPU/integratedfallback. OriginalF32authorcheckpoint direct16MiBstreamedtransfer+bitwiseroundtrip, noCPUstatecopy ornewquantization.",
+  "decodePolicy": "Author generationdefaults, Chinese transcribe, timestamps, greedy, max_length448. Capture originalgreedy sequences unchanged before author timestamp reconstruction; EOS/loop checks use rawIDs. No referencehints/hotwords/posthoc rewriting. Authortraining-only SoftLabelCreator notallocated because labels=None; testedtiny generation withoutit.",
+  "inputProtocolSha256": "f6793b7e710f8c72cea837b28c9ff8abb0b589747545eae00caa319d78697805",
+  "audioOnlyInputsSha256": "dd69d623be8e282b1163b0b9d5a13aa087dd075a158a78bc4e1e1cecd41b3f57",
+  "acceptanceOrder": [
+    "Pilotthree anonymouspeople1,2,3 onoriginal30s1560..1590s: check rawEOS, absenceofloops, eachperson leakage/missing/changedwords against frozenreference after inference. No8svs30s improvementclaim.",
+    "Ifpositive, testall6including absentpeople0,4,5; rejecthallucination/leakage beforefullmeeting.",
+    "Samepolicy ordinaryspeechprotection+secondrealmeeting, finalheldoutstillunopened. Ordinary/perpersonCER<5percent andformalDER/facts/productgatesunchanged."
+  ],
+  "originalPS4SameQwenSixClipControlStillPending": true,
+  "waveformSeparationResearchNotCancelled": true,
+  "trainedModelInferred": false,
+  "saleQualified": false
+}
