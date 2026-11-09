@@ -1,0 +1,58 @@
+"""Reuse approved078 binaries; run one Windows workflow, no native rebuild."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,shutil,subprocess,sys,traceback
+S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
+assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
+private=Path(os.environ['RUNNER_TEMP'])/'companion-core-acceptance';private.mkdir()
+product=private/'product';cache=private/'cache';native=private/'frozen-native';native.mkdir()
+env={**os.environ,'COMPANION_ACCEPTANCE_PROJECT_ROOT':str(product),'COMPANION_ACCEPTANCE_CACHE':str(cache),'COMPANION_ACCEPTANCE_FROZEN_NATIVE':str(native)}
+def sha(p):
+ with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def run(name,args,environment=env,required=True):
+ print('Starting '+name,flush=True)
+ with (O/(name+'.log')).open('wb') as log:p=subprocess.run(list(map(str,args)),cwd=S,env=environment,stdout=log,stderr=subprocess.STDOUT)
+ print(name+' exit='+str(p.returncode),flush=True)
+ if required:assert p.returncode==0,name+' failed; see retained log'
+ return p.returncode
+record={'at':datetime.now(timezone.utc).isoformat(),'state':'PREPARING_FROZEN_CORE_WORKFLOW','testSourceCommit':os.environ['GITHUB_SHA'],'appSourceCommit':'bb1550c42b674d7ec3e526db9f7fdefb84cff7ae','appVersion':'0.1.78','nativeRecompiled':False,'wholeCoreCandidateQualified':False,'modelsRun':False,'deviceOrPhoneAccess':False}
+def save():(O/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+save()
+try:
+ artifact=private/'original-native-artifact';artifact.mkdir()
+ run('download-frozen-native',['gh','run','download','42563058131','--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-bb1550c42b674d7ec3e526db9f7fdefb84cff7ae','--dir',artifact])
+ receipt=json.loads((artifact/'result.json').read_text(encoding='utf8'));assert receipt['sourceCommit']==record['appSourceCommit']
+ v=json.loads((S/'docs/handoffs/windows-file-copy078-20261109/windows-verification.json').read_text(encoding='utf8'))
+ assert v['sourceCommit']==record['appSourceCommit'] and v['version']==record['appVersion']
+ for row in receipt['nativeFiles']:assert sha(artifact/'windows-bin'/row['path'])==row['sha256']
+ # Tauri's documented bundle-type placeholder is the sole packaging patch.
+ # The final byte hash must equal the independently extracted/installed MSI
+ # payload, not just a matching version label or a renamed older binary.
+ raw=(artifact/'windows-bin/companion-type.exe').read_bytes();assert raw.count(b'__TAURI_BUNDLE_TYPE_VAR_UNK')==1
+ (native/'companion-type.exe').write_bytes(raw.replace(b'__TAURI_BUNDLE_TYPE_VAR_UNK',b'__TAURI_BUNDLE_TYPE_VAR_MSI'))
+ shutil.copy2(artifact/'windows-bin/companion_type_lib.dll',native/'companion_type_lib.dll')
+ assert sha(native/'companion-type.exe')==v['embeddedExeSha256'];assert sha(native/'companion_type_lib.dll')==v['dllSha256']
+ verification=product/'docs/handoffs/20261109-windows-file-copy078';verification.mkdir(parents=True)
+ (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
+ record.update(exactInstalledExeSha256=v['embeddedExeSha256'],exactInstalledDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
+ for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
+ run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
+ run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
+ tool=S/'tools/qa/core_acceptance20261109'
+ code=run('saved-meeting-backend',[sys.executable,tool/'windows_saved_meeting.py'],required=False);record['backendExitCode']=code;save()
+ cases=product/'docs/handoffs/20261109-core-acceptance';saved=list(cases.glob('saved-*'));assert len(saved)==1
+ backend=json.loads((saved[0]/'result.json').read_text(encoding='utf8'));record['backendState']=backend['state']
+ assert (saved[0]/'10-reopen-after-document-result.json').is_file(),'Native UI input was not prepared; never substitute a demo'
+ gui_code=run('native-ui-and-file-receiver',[sys.executable,tool/'windows_meeting.py','--stage','handoff','--library',saved[0]],required=False);record['nativeUiExitCode']=gui_code
+ gui=[p for p in cases.iterdir() if p.is_dir() and not p.name.startswith('saved-')];assert len(gui)==1
+ native_result=json.loads((gui[0]/'result.json').read_text(encoding='utf8'));record['nativeUiState']=native_result['state']
+ record['ordinaryReceiverPassed']=native_result.get('ordinaryRecipientTested',False)
+ record['state']='WINDOWS_SAVED_MEETING_AND_ORDINARY_FILE_HANDOFF_PASSED' if code==0 and gui_code==0 and record['ordinaryReceiverPassed'] else 'WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
+ assert code==0 and gui_code==0 and record['ordinaryReceiverPassed'],'One or more core software stages remain unqualified'
+except BaseException as error:
+ record.setdefault('error',repr(error));record['state']='WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
+ (O/'failure.txt').write_text(traceback.format_exc(),encoding='utf8');raise
+finally:
+ source=product/'docs/handoffs/20261109-core-acceptance'
+ if source.exists():shutil.copytree(source,O/'workflow-evidence',dirs_exist_ok=True)
+ record['finishedAt']=datetime.now(timezone.utc).isoformat();save()

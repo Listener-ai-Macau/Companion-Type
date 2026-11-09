@@ -16,3 +16,6 @@ apps/windows/src-tauri/src/file_clipboard.rs -text
 tools/verify_file_clipboard078.py -text
 
 docs/handoffs/windows-file-copy078-20261109/** -text -whitespace
+
+tools/qa/core_acceptance20261109/fixtures/** -text
+docs/handoffs/core-acceptance-20261109/** -text -whitespace

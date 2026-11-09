@@ -1,0 +1,175 @@
+"""One isolated native Windows meeting workflow; no demo or mock fallback.
+
+Runs a frozen production app on a noninteractive window station, with a private
+library/profile and existing automatic device/model recovery disabled. Neither
+this tooling nor a seeded text record qualifies capture, ASR or a real meeting.
+"""
+from pathlib import Path
+from datetime import datetime,timezone,timedelta
+from ctypes import wintypes as w
+import argparse,ctypes,hashlib,json,os,socket,subprocess,sys,time,uuid,msvcrt,shutil
+import psutil
+
+S=Path(__file__).resolve().parents[3];R=Path(os.environ.get('COMPANION_ACCEPTANCE_PROJECT_ROOT',str(S.parent)))
+C=R/'docs/handoffs/20261109-core-acceptance';D=Path(os.environ.get('COMPANION_ACCEPTANCE_CACHE','E:/CodexData/Companion/.build-cache/core-acceptance20261109'))
+CPU_PERCENT=100 if os.environ.get('GITHUB_ACTIONS')=='true' else 5
+K=ctypes.WinDLL('kernel32',use_last_error=True);U=ctypes.WinDLL('user32',use_last_error=True)
+class Startup(ctypes.Structure):
+ _fields_=[('cb',w.DWORD),('lpReserved',w.LPWSTR),('lpDesktop',w.LPWSTR),('lpTitle',w.LPWSTR),('dwX',w.DWORD),('dwY',w.DWORD),('dwXSize',w.DWORD),('dwYSize',w.DWORD),('dwXCountChars',w.DWORD),('dwYCountChars',w.DWORD),('dwFillAttribute',w.DWORD),('dwFlags',w.DWORD),('wShowWindow',w.WORD),('cbReserved2',w.WORD),('lpReserved2',ctypes.POINTER(ctypes.c_ubyte)),('hStdInput',w.HANDLE),('hStdOutput',w.HANDLE),('hStdError',w.HANDLE)]
+class Process(ctypes.Structure):
+ _fields_=[('process',w.HANDLE),('thread',w.HANDLE),('pid',w.DWORD),('tid',w.DWORD)]
+class BasicLimits(ctypes.Structure):
+ _fields_=[('PerProcessUserTimeLimit',ctypes.c_longlong),('PerJobUserTimeLimit',ctypes.c_longlong),('LimitFlags',w.DWORD),('MinimumWorkingSetSize',ctypes.c_size_t),('MaximumWorkingSetSize',ctypes.c_size_t),('ActiveProcessLimit',w.DWORD),('Affinity',ctypes.c_size_t),('PriorityClass',w.DWORD),('SchedulingClass',w.DWORD)]
+class IoCounters(ctypes.Structure):_fields_=[(name,ctypes.c_ulonglong) for name in ['ReadOperationCount','WriteOperationCount','OtherOperationCount','ReadTransferCount','WriteTransferCount','OtherTransferCount']]
+class ExtendedLimits(ctypes.Structure):
+ _fields_=[('BasicLimitInformation',BasicLimits),('IoInfo',IoCounters),('ProcessMemoryLimit',ctypes.c_size_t),('JobMemoryLimit',ctypes.c_size_t),('PeakProcessMemoryUsed',ctypes.c_size_t),('PeakJobMemoryUsed',ctypes.c_size_t)]
+class CpuRate(ctypes.Structure):_fields_=[('flags',w.DWORD),('rate',w.DWORD)]
+EnumProc=ctypes.WINFUNCTYPE(w.BOOL,w.HWND,w.LPARAM)
+for lib,name,args,result in [
+ (K,'CreateJobObjectW',[ctypes.c_void_p,w.LPCWSTR],w.HANDLE),(K,'SetInformationJobObject',[w.HANDLE,ctypes.c_int,ctypes.c_void_p,w.DWORD],w.BOOL),
+ (K,'AssignProcessToJobObject',[w.HANDLE,w.HANDLE],w.BOOL),(K,'CloseHandle',[w.HANDLE],w.BOOL),
+ (K,'QueryInformationJobObject',[w.HANDLE,ctypes.c_int,ctypes.c_void_p,w.DWORD,ctypes.c_void_p],w.BOOL),
+ (K,'CreateProcessW',[w.LPCWSTR,w.LPWSTR,ctypes.c_void_p,ctypes.c_void_p,w.BOOL,w.DWORD,ctypes.c_void_p,w.LPCWSTR,ctypes.POINTER(Startup),ctypes.POINTER(Process)],w.BOOL),
+ (K,'ResumeThread',[w.HANDLE],w.DWORD),(K,'GetExitCodeProcess',[w.HANDLE,ctypes.POINTER(w.DWORD)],w.BOOL),
+ (K,'CreateMemoryResourceNotification',[ctypes.c_int],w.HANDLE),(K,'QueryMemoryResourceNotification',[w.HANDLE,ctypes.POINTER(w.BOOL)],w.BOOL),
+ (U,'GetProcessWindowStation',[],w.HANDLE),(U,'SetProcessWindowStation',[w.HANDLE],w.BOOL),
+ (U,'GetThreadDesktop',[w.DWORD],w.HANDLE),(K,'GetCurrentThreadId',[],w.DWORD),(U,'SetThreadDesktop',[w.HANDLE],w.BOOL),
+ (U,'CreateWindowStationW',[w.LPCWSTR,w.DWORD,w.DWORD,ctypes.c_void_p],w.HANDLE),(U,'CloseWindowStation',[w.HANDLE],w.BOOL),
+ (U,'CreateDesktopW',[w.LPCWSTR,w.LPCWSTR,ctypes.c_void_p,w.DWORD,w.DWORD,ctypes.c_void_p],w.HANDLE),(U,'CloseDesktop',[w.HANDLE],w.BOOL),
+ (U,'GetClipboardSequenceNumber',[],w.DWORD),(U,'EnumDesktopWindows',[w.HANDLE,EnumProc,w.LPARAM],w.BOOL),
+ (U,'GetWindowThreadProcessId',[w.HWND,ctypes.POINTER(w.DWORD)],w.DWORD),(U,'GetWindowTextW',[w.HWND,w.LPWSTR,ctypes.c_int],ctypes.c_int),
+ (U,'PostMessageW',[w.HWND,w.UINT,w.WPARAM,w.LPARAM],w.BOOL),(U,'GetUserObjectInformationW',[w.HANDLE,ctypes.c_int,ctypes.c_void_p,w.DWORD,ctypes.POINTER(w.DWORD)],w.BOOL)]:
+ f=getattr(lib,name);f.argtypes=args;f.restype=result
+def require(value):
+ if not value:raise ctypes.WinError(ctypes.get_last_error())
+ return value
+def sha(path):
+ with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+def station_name():
+ buf=ctypes.create_unicode_buffer(256);needed=w.DWORD();require(U.GetUserObjectInformationW(U.GetProcessWindowStation(),2,buf,ctypes.sizeof(buf),ctypes.byref(needed)));return buf.value
+def windows(desktop,pid):
+ result=[]
+ @EnumProc
+ def visit(hwnd,_):
+  owner=w.DWORD();U.GetWindowThreadProcessId(hwnd,ctypes.byref(owner))
+  if owner.value==pid:
+   text=ctypes.create_unicode_buffer(1000);U.GetWindowTextW(hwnd,text,1000);result.append({'hwnd':hwnd,'title':text.value})
+  return True
+ require(U.EnumDesktopWindows(desktop,visit,0));return result
+def alive(process):
+ value=w.DWORD();require(K.GetExitCodeProcess(process.process,ctypes.byref(value)));return value.value==259
+def spawn(args,env,cwd,desktop,job,log):
+ startup=Startup();startup.cb=ctypes.sizeof(startup);startup.lpDesktop=desktop;startup.dwFlags=0x100|0x80
+ null=open(os.devnull,'rb');handles=[msvcrt.get_osfhandle(null.fileno()),msvcrt.get_osfhandle(log.fileno())]
+ for handle in handles:os.set_handle_inheritable(handle,True)
+ startup.hStdInput=handles[0];startup.hStdOutput=handles[1];startup.hStdError=handles[1]
+ environment=ctypes.create_unicode_buffer('\0'.join(key+'='+str(value) for key,value in sorted(env.items(),key=lambda x:x[0].upper()))+'\0\0')
+ command=ctypes.create_unicode_buffer(subprocess.list2cmdline(list(map(str,args))));process=Process()
+ try:require(K.CreateProcessW(str(args[0]),command,None,None,True,0x400|0x08000000|0x40|0x4,environment,str(cwd),ctypes.byref(startup),ctypes.byref(process)))
+ finally:
+  for handle in handles:os.set_handle_inheritable(handle,False)
+  null.close()
+ require(K.AssignProcessToJobObject(job,process.process));assert K.ResumeThread(process.thread)!=0xffffffff;K.CloseHandle(process.thread);process.thread=None
+ return process
+def frozen_app(root):
+ v=json.loads((R/'docs/handoffs/20261109-windows-file-copy078/windows-verification.json').read_text(encoding='utf8'))
+ payload=Path(os.environ['COMPANION_ACCEPTANCE_FROZEN_NATIVE']) if os.environ.get('COMPANION_ACCEPTANCE_FROZEN_NATIVE') else R/'docs/handoffs/20261109-windows-file-copy078/msi-inspection/files'
+ app=root/'app';app.mkdir()
+ for name,key in [('companion-type.exe','embeddedExeSha256'),('companion_type_lib.dll','dllSha256')]:
+  source=next(p for p in payload.rglob('*') if p.is_file() and sha(p)==v[key]);shutil.copy2(source,app/name);assert sha(app/name)==v[key]
+ shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
+ return app,v
+def main():
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff'],default='inspect');parser.add_argument('--library',type=Path);a=parser.parse_args()
+ psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
+ low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
+ token=uuid.uuid4().hex;root=D/token;root.mkdir(parents=True);out=C/token;out.mkdir(parents=True)
+ app,v=frozen_app(root)
+ state=root/'state';state.mkdir();session=json.loads((S/'apps/windows/src-tauri/src/calendar_test_fixtures/p738-sessions.json').read_text(encoding='utf8'))[0]
+ session.update(id='core-public-20261109',title='明确虚构·核心会后流程验收',transcriptText='小王：采购清单需要周五前核对。\n小李：追加20%的费用尚未批准，需要书面确认。',transcriptPreview='小王：采购清单需要周五前核对。',calendarCopies=[],calendarSlotCopies=[],calendarCopyRevision=0,exportedAt=None,exportMarkdown='')
+ text='## Summary\n明确虚构的工程资料，仅验证会后操作和文件交付，不代表ASR或AI质量。\n\n## Action Items\n- [ ] 核对采购清单（负责人：小王；截止：周五）\n\n## Questions\n- 追加20%的费用尚未批准，等待书面确认。'
+ session['minutes'].update(markdown=text,source='userAuthored');session['minutesByMode']['offlineStore'].update(markdown=text,source='userAuthored')
+ session['meetingNotes']=[{'id':'exclude-note','text':'不选择的补充：内部备注不可进入本次文件','createdAt':'2026-11-09T05:00:00Z','updatedAt':'2026-11-09T05:00:00Z'}]
+ sessions=[session]
+ if a.library:
+  evidence=a.library.resolve();assert evidence.parent==C.resolve() and evidence.name.startswith('saved-')
+  prior=json.loads((evidence/'result.json').read_text(encoding='utf8'));source=Path(prior['root'])/'state/sessions.json'
+  assert sha(source)==prior['checkpointStateSha256'];sessions=json.loads(source.read_text(encoding='utf8'));session=next(row for row in sessions if row['id']=='core-real-public-S_R004S03C01')
+ (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
+ (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else None,'selectedNoteId':session['meetingNotes'][0]['id'],'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library)},ensure_ascii=False),encoding='utf8')
+ for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir()
+ # A missing private settings file means valid fresh defaults. Writing '{}'
+ # would be a corrupt product store, not an empty configured user profile.
+ with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
+ record={'at':datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),'state':'PREPARING_NATIVE_WORKFLOW','stage':a.stage,'frozenAppVersion':'0.1.78','frozenAppSource':v['sourceCommit'],'exeSha256':v['embeddedExeSha256'],'dllSha256':v['dllSha256'],'inputKind':'explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test','privateRoot':str(root),'ownerClipboardContentsRead':False,'ordinaryRecipientTested':False,'wholeCoreCandidateQualified':False,'modelsRun':False,'boardAccessed':False,'phoneAccessed':False}
+ def save():(out/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+ def resources():
+  limits=ExtendedLimits();require(K.QueryInformationJobObject(job,9,ctypes.byref(limits),ctypes.sizeof(limits),None))
+  record['sampledJobPrivateCommitPeakBytes']=limits.PeakJobMemoryUsed
+  memory=psutil.virtual_memory();record['lastResourceObservation']={'availablePhysicalBytes':memory.available,'systemPhysicalPercent':memory.percent}
+ old_station=U.GetProcessWindowStation();old_desktop=U.GetThreadDesktop(K.GetCurrentThreadId());before_clip=U.GetClipboardSequenceNumber()
+ if a.library:record['inputKind']='Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture'
+ name='CompanionCore-'+token;station=require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set()
+ try:
+  require(U.SetProcessWindowStation(station));desktop=require(U.CreateDesktopW('Meeting',None,None,0,0x1ff,None));require(U.SetThreadDesktop(desktop));assert station_name()==name
+  record['privateStation']=name;record['stationVerifiedBeforeLaunch']=True
+  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=1536*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT
+  env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
+  for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
+  log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe'],env,app,name+'\\Meeting',job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
+  deadline=time.monotonic()+60
+  import urllib.request
+  while time.monotonic()<deadline:
+   require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; stopping only this owned job'
+   assert alive(p),'Frozen native app exited before CDP'
+   try:
+    with urllib.request.urlopen(f'http://127.0.0.1:{port}/json/version',timeout=1) as response:record['webviewAgent']=json.load(response).get('User-Agent');break
+   except Exception:time.sleep(.3)
+  else:raise TimeoutError('Private native WebView did not expose CDP; no foreground fallback')
+  actual_windows=windows(desktop,p.pid);assert actual_windows,'App main window not proven on private desktop';record['nativeWindowsOnPrivateDesktop']=actual_windows
+  children=psutil.Process(p.pid).children(recursive=True);profiles=[' '.join(c.cmdline()) for c in children if '--user-data-dir=' in ' '.join(c.cmdline())]
+  assert profiles and all(str(root/'webview').lower() in value.lower() for value in profiles),'WebView profile is not the isolated folder';record['webviewProfileVerifiedPrivate']=True
+  log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,name+'\\Meeting',job,log);processes.append(node)
+  deadline=time.monotonic()+180
+  while alive(node) and time.monotonic()<deadline:
+   resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
+   for request in sorted(out.glob('handoff-request-*.json')):
+    if request.name in handled:continue
+    from windows_file_receiver import Receiver,copied_path
+    data=json.loads(request.read_text(encoding='utf8'));source=copied_path();assert source.name==data['fileName'] and source.parent.name and source.parent.parent.name=='content-share'
+    if receiver is None:
+     receiver=Receiver(root,out,job,desktop,name+'\\Meeting',env);receiver.start()
+    received=receiver.paste(source)
+    if source.suffix=='.pdf':
+     from pypdf import PdfReader
+     text='\n'.join(page.extract_text() or '' for page in PdfReader(receiver.destination/source.name).pages)
+    elif source.suffix=='.docx':
+     import zipfile,xml.etree.ElementTree as ET
+     with zipfile.ZipFile(receiver.destination/source.name) as archive:text=''.join(ET.fromstring(archive.read('word/document.xml')).itertext())
+    else:text=(receiver.destination/source.name).read_text(encoding='utf8')
+    assert 'EXCLUDED_CORE_NOTE_20261109' not in text
+    assert '人工软件验收草稿' in text and '工程验收补充' in text
+    received['selectedContentsVerified']=True;record.setdefault('receivedFiles',[]).append(received)
+    reply=out/request.name.replace('handoff-request-','handoff-reply-');reply.write_text(json.dumps(received,ensure_ascii=False),encoding='utf8');handled.add(request.name);save()
+   time.sleep(.25)
+  assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==3)
+ except BaseException as error:
+  record.update(state='NATIVE_WORKFLOW_STOPPED_RETAINED',error=repr(error));save();raise
+ finally:
+  if receiver:receiver.request_close()
+  for p in processes:
+   if p.pid==record.get('appPid'):
+    for window in windows(desktop,p.pid) if desktop else []:U.PostMessageW(window['hwnd'],0x10,0,0)
+  until=time.monotonic()+5
+  while any(alive(p) for p in processes) and time.monotonic()<until:time.sleep(.1)
+  if job:K.CloseHandle(job);job=None
+  if receiver:record['receiverPreferencesRestoredIdentically']=receiver.restore_preferences_after_job_closed()
+  for p in processes:K.CloseHandle(p.process)
+  for log in logs:log.close()
+  require(U.SetProcessWindowStation(old_station));require(U.SetThreadDesktop(old_desktop))
+  record['ownerClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber();record['keyboardMouseOrForegroundControlUsed']=False
+  if desktop:U.CloseDesktop(desktop)
+  U.CloseWindowStation(station);K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()
+ print(json.dumps({'state':record['state'],'evidence':str(out),'privateStation':name,'ownerClipboardSequenceUnchangedAtObservation':record['ownerClipboardSequenceUnchangedAtObservation'],'wholeCoreCandidateQualified':False},ensure_ascii=False))
+if __name__=='__main__':main()
