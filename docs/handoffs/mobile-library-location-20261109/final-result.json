@@ -1,0 +1,139 @@
+{
+  "at": "2026-11-09T11:42:14+08:00",
+  "ownerQuote": "目前还没有显卡, 所以还有什么能做吗, 做手机相关?",
+  "state": "MOBILE_LIBRARY_LOCATION_SOURCE_BUILT_CONTROLLED_UI_VERIFIED_PHONE_PENDING",
+  "userOutcome": "恢复备份后在录音库持续看见当前资料位置，并能直接返回原有资料或进入备份管理；接收/升级时拒绝切库，普通单库页面保持简洁。",
+  "originalTasks": [
+    "CP27-01",
+    "backup_restore",
+    "local_protection_and_trash"
+  ],
+  "sourceBefore": "48b97a6393865e1de4607c0dc5e26a33b84a28d6",
+  "sourceFiles": {
+    "apps/mobile/src/App.tsx": "bc3634a337ee8c0358d868870bff64c9486a82f8f2a3474b929f2b59a9318aff",
+    "apps/mobile/src/LibraryBackups.tsx": "00dfb1be91138a0115251a7f4566a8e77f2e737084f1fc585ed0386978bcdb2d",
+    "apps/mobile/src/LibraryLocation.tsx": "7acfbf13ea1f7ee01c0152385f244af32a157586d7492a5d658bad85c61911da",
+    "apps/mobile/src/libraryStatus.ts": "bc84d56bc7a066bf9a4db93e99a58e95b8d543b39b7ace12e766373ca7b3141f",
+    "apps/mobile/src/libraryLocation.css": "9af8aac01c749fb6b482969f23134c97dc2f589997cf8d1aebf9ea18e7892b0e",
+    "tools/verify_mobile_library_location_20261109.cjs": "d3f4c400ebfab71bd411719c7f1dd71874fe8e7fe07234bcc066b0f1aae6e09a"
+  },
+  "changes": [
+    "Actual mobile library page now shows restored-library provenance and guarded original-library return.",
+    "Share native-status validation and labels with backup settings; malformed dates, duplicate IDs, missing active/original entries cannot create an actionable switch.",
+    "Request generations discard late status snapshots; one pending action guard preserves token binding and cancel behavior.",
+    "Use existing libraryActivate and existing confirmation; receive/OTA blocking preserved; no new native bridge, model, deletion or Bluetooth action.",
+    "Restore feedback now points to the library return entry. Single original-library users do not get extra switch UI."
+  ],
+  "verification": {
+    "at": "2026-11-09T03:40:29.576Z",
+    "state": "PASS_BUILT_MOBILE_APP_CONTROLLED_BRIDGE_LIBRARY_LOCATION",
+    "results": [
+      {
+        "mode": "restored",
+        "result": "PASS",
+        "layouts": [
+          {
+            "theme": "light",
+            "width": 360,
+            "documentWidth": 360,
+            "cardWidth": 318,
+            "cardClient": 318
+          },
+          {
+            "theme": "light",
+            "width": 393,
+            "documentWidth": 393,
+            "cardWidth": 343,
+            "cardClient": 343
+          },
+          {
+            "theme": "light",
+            "width": 430,
+            "documentWidth": 430,
+            "cardWidth": 380,
+            "cardClient": 380
+          },
+          {
+            "theme": "dark",
+            "width": 360,
+            "documentWidth": 360,
+            "cardWidth": 318,
+            "cardClient": 318
+          },
+          {
+            "theme": "dark",
+            "width": 393,
+            "documentWidth": 393,
+            "cardWidth": 343,
+            "cardClient": 343
+          },
+          {
+            "theme": "dark",
+            "width": 430,
+            "documentWidth": 430,
+            "cardWidth": 380,
+            "cardClient": 380
+          }
+        ],
+        "cancelPreserves": true,
+        "nativeTokenBound": true,
+        "settingsAndReturn": true
+      },
+      {
+        "mode": "receiving",
+        "result": "PASS",
+        "switchBlockedDuringReception": true
+      },
+      {
+        "mode": "bad-status",
+        "result": "PASS",
+        "invalidSnapshotNotActionable": true,
+        "retryRecovers": true
+      },
+      {
+        "mode": "missing-original",
+        "result": "PASS",
+        "invalidSnapshotNotActionable": true,
+        "retryRecovers": true
+      },
+      {
+        "mode": "late-status",
+        "result": "PASS",
+        "lateOldSnapshotExcluded": true
+      },
+      {
+        "mode": "original-only",
+        "result": "PASS",
+        "ordinaryLibraryUncluttered": true
+      }
+    ],
+    "phoneTested": false,
+    "systemPickerTested": false,
+    "privateUserDataUsed": false,
+    "modelRun": false
+  },
+  "build": {
+    "command": "node npm-cli.js run build:mobile",
+    "typescriptPassed": true,
+    "vitePassed": true,
+    "assets": {
+      "index.html": "9e0e8309a31dcc84c240ef58e570ea4b6968137a02040b32ecea5f58ce6fdd48",
+      "manifest.webmanifest": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2",
+      "assets/index-BXeaSz1o.css": "8fe07f5335ec067ff3ed767f2d4c9cca25d3d9471ff1e57b2616ae877f6af6ae",
+      "assets/index-NrlemCDc.js": "9759d1b358aed336861fa7542a30e09262a0efc37cd6e2fd16209c7770fd4435"
+    },
+    "shellPreparationFailure": "Initial npm.ps1 could not load this host PowerShell built-in modules. It did not run a build; using the installed node/npm CLI directly completed the actual TypeScript/Vite build. Host shell settings unchanged."
+  },
+  "currentPhone": "ADB device list empty on this turn; no phone foreground/background task or installation performed.",
+  "candidateScope": "Web source and built mobile App verified with a controlled public bridge. No APK rebuilt or installed; no real native library switch, picker, export recipient or acoustic test.",
+  "installedOrDeviceDataChanged": false,
+  "phoneAccessed": false,
+  "boardAccessed": false,
+  "modelsRun": false,
+  "modelWorkpointPreserved": "ownerCoreDeliveryPriority20261104/ownerNightGpuModelPriority20261104: paired real source audited; same-Qwen comparison awaits external6800XT. No model selection resumed.",
+  "ownerAccepted": false,
+  "wholeProductQualified": false,
+  "next": "当前手机不在线。新库位置提示与返回入口已完成源码/构建和受控App验证；实际手机接入后先读取已装版本及共享现场，基于最新手机源合并本次Web改动，集中打包并验真实资料识别/切回、回收站保护/恢复、Word保存及本机分享收件，保留原资料与现有连接修复，不装旧069候选或降级。外部音频导入及纪要/回听阅读沿原竞品待办继续；模型仍待外置GPU。",
+  "sourceCommit": "a213c3c7051cc5c0356e50248a78080092b11f5f",
+  "previousPhoneNext": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。"
+}

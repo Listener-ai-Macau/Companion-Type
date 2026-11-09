@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "原370因电脑重启中断收取，已精确原会话停录收全且释放板卡；先用已准备762一次就绪短录定位开录准备最大占时，随即恢复正常761并修源头。原370的PDM3.245ms>3ms保留在CP23-10，2h未合格不重跑碰结果。连接/恢复和普通手机链随后继续；Owner明确block/暂停/速度后置不参与本批完成门。",
+      "next": "按764真实分段改空闲准备完整270336B空间；735仅只读FF缓存无收益及729拆小容量回退已对照，当前不再重复。保持原容量、校验、61.44MHz与应用预算；改后受影响验证，再就绪短录实测。首PCM、连接恢复、PDM峰及当前集成仍开放；Owner明确block/暂停/速度后置保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134021,8 +134021,8 @@
         }
       },
       "releaseReadiness": {
-        "at": "2026-11-09T11:02:52+08:00",
-        "firmware": 66761,
+        "at": "2026-11-09T11:32:47+08:00",
+        "firmware": 66765,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
@@ -136208,25 +136208,25 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T11:20:12.271802+08:00",
-        "state": "INSTALL_TEMPORARY764",
+        "at": "2026-11-09T11:32:47+08:00",
+        "state": "NORMAL765_RESTORED_IMPLEMENT_IDLE_EXTENT_PREPARATION",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": null,
+        "firmwareInstalled": 66765,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "firmwareSource": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
-        "boardLease": true,
+        "boardLease": false,
         "boardItem": "Companion764一次蓝牙读取开录准备耗时，恢复正常765",
         "liveRecording": false,
         "liveReceive": false,
-        "liveUpgrade": true,
+        "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 370,
+        "ownLatestSession": 372,
         "evidence": "E:\\CodexData\\Companion\\.build-cache\\startup764-hardware\\progress.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66761,
-        "candidateSourceCommit": "872b5f3",
+        "firmwareCandidate": null,
+        "candidateSourceCommit": null,
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -136246,7 +136246,7 @@
         "windowsClientPid": null,
         "longRunEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\acceptance.json",
         "longObserverSession": null,
-        "startupDiagnosticSession": 29692
+        "startupDiagnosticSession": null
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -140576,7 +140576,9 @@
         "hardwareTimingMeasured": false,
         "currentDiagnosticVersion": 66764,
         "currentDiagnosticSource": "933c24dab945fb94d3206b98e281b6f510e2b2a3",
-        "normalRestoreVersion": 66765
+        "normalRestoreVersion": 66765,
+        "currentResult": "764实际准备1971ms：擦除1177ms，擦后逐页验证676ms，查找与提交76ms，空白扫描38ms，来源4ms；正常765已恢复，原34目录相同，板卡已释放。不是开录修复。",
+        "phaseEvidence": "E:/CodexData/Companion/.build-cache/startup764-hardware/diagnosis.json"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -140624,7 +140626,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。",
+        "next": "当前手机不在线。新库位置提示与返回入口已完成源码/构建和受控App验证；实际手机接入后先读取已装版本及共享现场，基于最新手机源合并本次Web改动，集中打包并验真实资料识别/切回、回收站保护/恢复、Word保存及本机分享收件，保留原资料与现有连接修复，不装旧069候选或降级。外部音频导入及纪要/回听阅读沿原竞品待办继续；模型仍待外置GPU。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -142077,6 +142079,145 @@
           "phone098Installed": true,
           "boardLeaseHeld": false,
           "wholeProductQualified": false
+        },
+        "ownerDaytimeLibraryLocation20261109": {
+          "at": "2026-11-09T11:42:14+08:00",
+          "ownerQuote": "目前还没有显卡, 所以还有什么能做吗, 做手机相关?",
+          "state": "MOBILE_LIBRARY_LOCATION_SOURCE_BUILT_CONTROLLED_UI_VERIFIED_PHONE_PENDING",
+          "userOutcome": "恢复备份后在录音库持续看见当前资料位置，并能直接返回原有资料或进入备份管理；接收/升级时拒绝切库，普通单库页面保持简洁。",
+          "originalTasks": [
+            "CP27-01",
+            "backup_restore",
+            "local_protection_and_trash"
+          ],
+          "sourceBefore": "48b97a6393865e1de4607c0dc5e26a33b84a28d6",
+          "sourceFiles": {
+            "apps/mobile/src/App.tsx": "bc3634a337ee8c0358d868870bff64c9486a82f8f2a3474b929f2b59a9318aff",
+            "apps/mobile/src/LibraryBackups.tsx": "00dfb1be91138a0115251a7f4566a8e77f2e737084f1fc585ed0386978bcdb2d",
+            "apps/mobile/src/LibraryLocation.tsx": "7acfbf13ea1f7ee01c0152385f244af32a157586d7492a5d658bad85c61911da",
+            "apps/mobile/src/libraryStatus.ts": "bc84d56bc7a066bf9a4db93e99a58e95b8d543b39b7ace12e766373ca7b3141f",
+            "apps/mobile/src/libraryLocation.css": "9af8aac01c749fb6b482969f23134c97dc2f589997cf8d1aebf9ea18e7892b0e",
+            "tools/verify_mobile_library_location_20261109.cjs": "d3f4c400ebfab71bd411719c7f1dd71874fe8e7fe07234bcc066b0f1aae6e09a"
+          },
+          "changes": [
+            "Actual mobile library page now shows restored-library provenance and guarded original-library return.",
+            "Share native-status validation and labels with backup settings; malformed dates, duplicate IDs, missing active/original entries cannot create an actionable switch.",
+            "Request generations discard late status snapshots; one pending action guard preserves token binding and cancel behavior.",
+            "Use existing libraryActivate and existing confirmation; receive/OTA blocking preserved; no new native bridge, model, deletion or Bluetooth action.",
+            "Restore feedback now points to the library return entry. Single original-library users do not get extra switch UI."
+          ],
+          "verification": {
+            "at": "2026-11-09T03:40:29.576Z",
+            "state": "PASS_BUILT_MOBILE_APP_CONTROLLED_BRIDGE_LIBRARY_LOCATION",
+            "results": [
+              {
+                "mode": "restored",
+                "result": "PASS",
+                "layouts": [
+                  {
+                    "theme": "light",
+                    "width": 360,
+                    "documentWidth": 360,
+                    "cardWidth": 318,
+                    "cardClient": 318
+                  },
+                  {
+                    "theme": "light",
+                    "width": 393,
+                    "documentWidth": 393,
+                    "cardWidth": 343,
+                    "cardClient": 343
+                  },
+                  {
+                    "theme": "light",
+                    "width": 430,
+                    "documentWidth": 430,
+                    "cardWidth": 380,
+                    "cardClient": 380
+                  },
+                  {
+                    "theme": "dark",
+                    "width": 360,
+                    "documentWidth": 360,
+                    "cardWidth": 318,
+                    "cardClient": 318
+                  },
+                  {
+                    "theme": "dark",
+                    "width": 393,
+                    "documentWidth": 393,
+                    "cardWidth": 343,
+                    "cardClient": 343
+                  },
+                  {
+                    "theme": "dark",
+                    "width": 430,
+                    "documentWidth": 430,
+                    "cardWidth": 380,
+                    "cardClient": 380
+                  }
+                ],
+                "cancelPreserves": true,
+                "nativeTokenBound": true,
+                "settingsAndReturn": true
+              },
+              {
+                "mode": "receiving",
+                "result": "PASS",
+                "switchBlockedDuringReception": true
+              },
+              {
+                "mode": "bad-status",
+                "result": "PASS",
+                "invalidSnapshotNotActionable": true,
+                "retryRecovers": true
+              },
+              {
+                "mode": "missing-original",
+                "result": "PASS",
+                "invalidSnapshotNotActionable": true,
+                "retryRecovers": true
+              },
+              {
+                "mode": "late-status",
+                "result": "PASS",
+                "lateOldSnapshotExcluded": true
+              },
+              {
+                "mode": "original-only",
+                "result": "PASS",
+                "ordinaryLibraryUncluttered": true
+              }
+            ],
+            "phoneTested": false,
+            "systemPickerTested": false,
+            "privateUserDataUsed": false,
+            "modelRun": false
+          },
+          "build": {
+            "command": "node npm-cli.js run build:mobile",
+            "typescriptPassed": true,
+            "vitePassed": true,
+            "assets": {
+              "index.html": "9e0e8309a31dcc84c240ef58e570ea4b6968137a02040b32ecea5f58ce6fdd48",
+              "manifest.webmanifest": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2",
+              "assets/index-BXeaSz1o.css": "8fe07f5335ec067ff3ed767f2d4c9cca25d3d9471ff1e57b2616ae877f6af6ae",
+              "assets/index-NrlemCDc.js": "9759d1b358aed336861fa7542a30e09262a0efc37cd6e2fd16209c7770fd4435"
+            },
+            "shellPreparationFailure": "Initial npm.ps1 could not load this host PowerShell built-in modules. It did not run a build; using the installed node/npm CLI directly completed the actual TypeScript/Vite build. Host shell settings unchanged."
+          },
+          "currentPhone": "ADB device list empty on this turn; no phone foreground/background task or installation performed.",
+          "candidateScope": "Web source and built mobile App verified with a controlled public bridge. No APK rebuilt or installed; no real native library switch, picker, export recipient or acoustic test.",
+          "installedOrDeviceDataChanged": false,
+          "phoneAccessed": false,
+          "boardAccessed": false,
+          "modelsRun": false,
+          "modelWorkpointPreserved": "ownerCoreDeliveryPriority20261104/ownerNightGpuModelPriority20261104: paired real source audited; same-Qwen comparison awaits external6800XT. No model selection resumed.",
+          "ownerAccepted": false,
+          "wholeProductQualified": false,
+          "next": "当前手机不在线。新库位置提示与返回入口已完成源码/构建和受控App验证；实际手机接入后先读取已装版本及共享现场，基于最新手机源合并本次Web改动，集中打包并验真实资料识别/切回、回收站保护/恢复、Word保存及本机分享收件，保留原资料与现有连接修复，不装旧069候选或降级。外部音频导入及纪要/回听阅读沿原竞品待办继续；模型仍待外置GPU。",
+          "sourceCommit": "a213c3c7051cc5c0356e50248a78080092b11f5f",
+          "previousPhoneNext": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。"
         }
       },
       "ownerAndroidMaterialExports054": {
