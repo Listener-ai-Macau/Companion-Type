@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-09T12:24:36+08:00",
+  "state": "NATIVE_RELEASE_FAILED_RETAINED",
+  "sourceCommit": "33325eda6e9658ba4609747c17ba67924531d579",
+  "kind": "release",
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-release-1794198276881510700.log",
+  "limits": {
+    "pid": 6140,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 3221225472,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 2160963584,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelsRun": false,
+  "installed": false,
+  "pid": 29704,
+  "stoppedForActualWindowsLowRam": true,
+  "exitCode": 1,
+  "wallSeconds": 60.06587600000057
+}

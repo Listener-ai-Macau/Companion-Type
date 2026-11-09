@@ -1,0 +1,21 @@
+{
+  "state": "UNCHANGED_THIRD_PARTY_GRAPH_CONFIRMED_APPLICATION_VERSION_ONLY",
+  "inputs": [
+    {
+      "input": "apps/windows/src-tauri/Cargo.lock",
+      "priorSha256": "12c93da2d8ca93157e5b486ab4c70c3994bf79fb6fbc2da39b778b38bf5737ce",
+      "currentSha256": "05549e185c7315ce383f29605f623975f6fef9178b702fa2c51ebfe72ebe0441",
+      "onlyOwnApplicationVersionChanged": true
+    },
+    {
+      "input": "package-lock.json",
+      "priorSha256": "9dd4ea8f4cbb1a0d201f6742f835fc47dae56607bba7b012eed53cdda2c95c75",
+      "currentSha256": "38ea49a5dad3cacae3454f25cb2646e363f114f075be3667c0469af855ecdef0",
+      "onlyOwnApplicationVersionChanged": true
+    }
+  ],
+  "componentRecordsUnchanged": true,
+  "componentCount": 342,
+  "sourceArchivesAndLicenseTextsChanged": false,
+  "noticesVerifierNotBypassed": true
+}

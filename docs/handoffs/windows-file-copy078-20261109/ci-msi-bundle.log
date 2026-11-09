@@ -1,0 +1,11 @@
+        Info Patching D:\a\_temp\companion-windows-target\release\companion-type.exe with bundle type information: msi
+        Info Verifying wix package
+ Downloading https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip
+        Info validating hash
+        Info extracting WIX
+        Info Target: x64
+     Running candle for "D:\\a\\_temp/companion-windows-target\\release\\wix\\x64\\main.wxs"
+     Running light to produce D:\a\_temp\companion-windows-target\release\bundle\msi\Companion Type_0.1.78_x64_en-US.msi
+    Finished 1 bundle at:
+        D:\a\_temp\companion-windows-target\release\bundle\msi\Companion Type_0.1.78_x64_en-US.msi
+

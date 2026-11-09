@@ -1,0 +1,22 @@
+
+> companion-type@0.1.78 build:windows
+> node tools/verify_third_party_notices.mjs && tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts
+
+{"result":"MATCHED_LOCKS_NOTICES_AND_CORRESPONDING_SOURCE","components":342,"sourceArchives":17}
+[36mvite v7.3.7 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 1932 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                               [39m[1m[2m    0.41 kB[22m[1m[22m[2m │ gzip:   0.28 kB[22m
+[2mdist/[22m[35massets/index-Crt5T0hf.css                [39m[1m[2m   94.36 kB[22m[1m[22m[2m │ gzip:  18.10 kB[22m
+[2mdist/[22m[36massets/ShadcnDashboardMIT-BIeifDLG.js    [39m[1m[2m    1.12 kB[22m[1m[22m[2m │ gzip:   0.68 kB[22m
+[2mdist/[22m[36massets/OptionalSpeechModels-BqNq0d5M.js  [39m[1m[2m    2.50 kB[22m[1m[22m[2m │ gzip:   1.43 kB[22m
+[2mdist/[22m[36massets/index-Cc3lM7mZ.js                 [39m[1m[33m  707.37 kB[39m[22m[2m │ gzip: 228.61 kB[22m
+[2mdist/[22m[36massets/ThirdPartyNotices-DGI2UsZk.js     [39m[1m[33m1,068.23 kB[39m[22m[2m │ gzip: 114.72 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 4.48s[39m

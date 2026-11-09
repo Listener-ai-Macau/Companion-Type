@@ -1,0 +1,7 @@
+{
+  "state": "PRIVATE_STATION_GUARD_REJECTED_DEFAULT_WINSTA0_BEFORE_CLIPBOARD",
+  "moduleSha256": "80bb4fa08ef18681908c6c378c6d3c0ead0ebc928765afc7ea93ae2627682ca5",
+  "launcherSha256": "2a91b730e2bece1d280a0c1add5a4fd1f6dad8145091b13ba368f56aba7cb9d7",
+  "reason": "Python subprocess STARTUPINFO dynamic lpDesktop did not bind native child; test rejected actualWinSta0 before window or clipboard call",
+  "ownerClipboardTouched": false
+}

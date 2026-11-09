@@ -1,3 +1,7 @@
+<!-- frontend-windows078-current -->
+Windows当前（2026-11-09T13:12:06+08:00）：已安装0.1.78，245个原资料文件hash一致；完整文件复制原生/界面/包内核对通过，普通第三方实际粘贴收件未验，旧系统分享故障开放。 手机100后置。当前点沿原待办ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109；本机收据 C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261109-windows-file-copy078\installation.json，远端证据 docs/handoffs/windows-file-copy078-20261109。
+<!-- /frontend-windows078-current -->
+
 ## 2026-11-09T11:02:52+08:00 — Companion当前交付收敛：电脑重启后原370收全，继续开录准备定位
 
 Owner最新范围为“达到售卖标准，除了明确block的需求”。当前可执行交付门沿原CP04-01/CP09-02/CP23-10；明确block、屏幕暂停与速度后置不重新列为本批推进前置，原失败仍留存。
@@ -8,6 +12,26 @@ Owner最新范围为“达到售卖标准，除了明确block的需求”。当�
 
 <!-- startup762-hardware-terminal -->
 
+实测续作（截至2026-11-09T12:42:41+08:00）：762就绪短录371完成，但UART8秒0字节，恢复761被版本保护在写入前拒绝；一次idle SWD读未连上，没有RAM证明或复位。改备较高正常763并安装成功。764仅通过原加密CRM通道读缓存阶段，不新增服务/存储IO；自身372准备1971ms，擦除1177、擦后逐页验证676、查找/提交76、空白扫描38、来源4，14次物理擦除/270336B、invalid0。正常765在11:24恢复确认，原34目录相同，板卡释放；这些是定位与恢复，不算开录修复。
+
+源9d17ec3→fd433ae实现正常候选66767：共享原allocator/现有scratch，空闲对完整270336B free extent实际擦除并逐字校验，不制造录音ID或缩短6211帧；显式START才绑定真实会话并提交。准备中START先等现有擦除退休再写CSI1，取消不分配会话、不自动开录；OTA/删除/消费先交回工作区。只读连接暂停IO但保留同代完整证明，目录变化使其失效。真实NOR/Opus端口、完整容量/旧WRITING边界、8个中断后挂载及真实product_app开录/取消通过；原按键/标记/日期/重启模型受影响确认通过。未拿软件模型代替实物。
+
+766初版412988B超原预算772B，未安装；冷函数分组及Oz试验无收益撤回。复用空闲准入判断减少约250B。发现无屏配置仍引用触摸派发链，按已停用屏幕配置关闭该入口，有屏原路径保留。66767正常全构建405140B，比正常765少7048B；static67896/栈21504不变，61.44MHz/音频参数/格式/旧音保留。增量测量曾因response输出路径覆写未签名766的ELF/map，已保留试验并用原未改objects重新链接，重建bin与原bin逐字一致；未装该产物。准备用66768精确872源较高恢复包，不再低版恢复。
+
+当前实板状态：NORMAL767_INSTALLED_ORIGINAL_METADATA_UNCHANGED_NO_RECORDING，已核版本66767，本轮新START数0；硬件结果见同目录manifest及idle767-hardware收据。首PCM稳定性、连接恢复、PDM原3ms峰及当前最终2h仍开放；手机当前未在线，继续留依赖，不重催接线。原Owner block/暂停/蓝牙速度后置均不复开。本批源码与构建不等于售卖资格。
+
+12:10原就绪弹窗超时，未升级、未录音，正常765保持并释放板卡。PDM离线核对：正常DUAL_PAIR_CAPTURE=1/profile选单麦，不是新发现持续算第二麦；计时含稳定DMA副本、转换/交付及IRQ，原370缺同帧IRQ细分，不补造根因。未重做已否决四字节表/盲调优先级或改3ms门。下一次短录已复用正常CRM解码，连同原编码P95/峰、PDM峰、零采音异常、保守前台间隔、栈与61.44MHz核对，不把开停成功单独当合格。
+
+12:21第二次原就绪弹窗超时，仍0 START。随后独立完成已经授权的后台正常OTA，不占用录音就绪授权：12:27实核66767/fd433ae，原34目录完全相同，系统包jointConfirmed且临时空间释放。实际总117398ms、finish后校验86685ms，分别符合150000/100000ms；载荷观察88.73KiB/s仅保留观察，原始收据旧100KiB门不充当现要求，速度优化仍后置。
+
+12:29普通Windows0.1.68新连接实际首次失败后第二次恢复；成功子阶段2535ms不是完整冷连接。保留最初误判收据并按同一原日志纠正：包含失败与重试的setup下界6342.016ms，已超过5秒；重试间隔2199.598ms。主机只证明曾Active后Closed/GATT Unreachable，未证明空口根因。12:34仅读一次原加密CRM缓存：正常idle、hostError0、pairing成功、initialCompletionFailed0，事件导出为空；不反复读日志或宣称物理根因修复。下一步沿本次失败修客户端旧owner退休后的固定重试等待，未就绪录音不启动。
+
+<!-- windows079-initial-recovery -->
+截至2026-11-09T13:06:35+08:00，沿12:29实际首次连接失败推进Windows恢复源04a138b34789b3d4bcffd69593ebdbf10bbd2a74（独立于安装版068源码571c，不覆盖其它工作树）。仅当原WinRT会话确实Active→Closed、MaintainConnection(false)成功且peripheral GATT资源退休完成，取消下一次初连固定2000ms；未知/清理失败保持原等待，配对错误仍终止，不重放START/控制。Closed可能在偏好清理过程中才送达，不把通知先后误作空口根因；过窄的清理前过滤已撤回。补全初连所有尝试与protected probe（身份/目录/普通校时）计时，成功子阶段不充当完整5秒门。
+
+原生产SessionObservation与8项测试均未变，8f源码8/8通过；迟到成功/旧owner回调/真实控制日志/持久前缀检查通过，绑定收据明确本次最终源的改动范围。初版release尚未完成即为修正过滤主动取消；最终版一次因全机97%阈值停编，随后改按实际可用内存384MiB判断，只重试该构建。首次git提交自动maintenance在旧对象99a837处失败，源提交实际完成；未反复GC或改写历史。
+
+最终正常构建：成功，私有原生对已冻结，未安装；硬件结果：{"at": "2026-11-09T13:05:31+08:00", "result": "ORDINARY_079_CONNECTION_FUNCTIONAL", "firmware": 66767, "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74", "nativeVersion": "0.1.79", "nativeInstalled": false, "nativeSha256": "eaf4b51a98008d52cce4703cbfc6e4a1583a0eef3bad3fd452075688fcb47fbf", "initialAcquisitionAllAttemptsMs": 7019.647, "completeProtectedProbeMs": 12838.633, "publicResultUpperMs": 13641.0, "coldMaximumMs": 5000, "coldWindowsSamplePass": false, "initialFailures": 0, "retiredLossImmediateRetryObserved": 0, "intermittentRootCauseQualified": false, "newStartCommands": 0, "oldAudioRead": false, "oldAudioConsumed": false, "original34MetadataUnchanged": true, "scope": "completeProtectedProbe includes exact paired lookup, all attempts, retry waits, protected identity/catalogue, normal idle clock sync and retained owner setup. publicResultUpper is a separate upper bound including process/DLL/init, coordinator persistence and <=10ms observer delay. Acquisition alone is never used as full pass. Not a phone or air-cause result."}。原首次6342ms失败保留，偶发根因/手机/录音恢复未据此关闭。全程0新START、0旧音频消费；66767首PCM和当前最终2h仍需就绪后真实验收。
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。
@@ -24937,3 +24961,16 @@ Owner确认当前无显卡，询问推进手机事项。沿原P0资料保留/恢
 ## 2026-11-09T12:01:36+08:00｜手机100候选就绪但USB在安装前断开20261109
 
 Owner告知“有手机了”。实际ADB识别45DU/25060RK16C，当前包0.1.65/code65、解锁、Companion无进程/前台服务；日用主屏在其它应用，仅过滤读取状态，不保存其内容。历史98/99收据不能代替这台手机当前值。沿前批已构建并逐文件核hash的Web资源，Android版本改100；同源提交c1a33e262cf7195f7070e08f7a7f399cb35d842a已推送读回。复用原受控APK构建器，75.438s完成单次Gradle构建；100APK SHA256 23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3，同原签名、三JNI与预定AAR逐字节一致且16KiB对齐、四Web资源精确匹配。未重建语音native、未改模型或板卡连接策略。USB随后从ADB及Windows已连接USB列表消失；文件hash前置读取即失败，后续虚屏准备同样在首个读取前停，无显示/辅助进程创建。驱动补齐先完成preflight才能建虚屏的顺序条件。没有开始安装、启动App、读取录音内容、切换/恢复/删除资料或系统保存分享，原文件保留本轮尚未核验，不虚报。手机测试原单项已释放，无遗留构建或模型作业。安装包在C受保护交付目录；源码、构建/签名/输入hash及公开虚构备份另存远端证据，APK本体不冒充已入Git。下一项：USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。
+
+
+## 2026-11-09T13:12:06+08:00｜Windows078完整文件复制与远端可重建20261109
+
+承接Owner“先搞win端到时候再调手机”。手机100候选/实际65观测/USB中断点保留，未接手机、板卡或跑模型。本批用户结果：已选格式的完整内容文件，以及所选原音/MP3，可以由用户点击复制后到支持文件粘贴的应用中自行粘贴；复制文字独立，原音保持，收件人和发送由用户决定。
+
+文件操作复用所选范围、格式与expectedContentHash，在UI线程操作前再次确认来源；使用CF_HDROP和Preferred DropEffect COPY，不调用Shell命令或自动收件/发送。真实原生模块在独立非交互窗口站读回中文/emoji单文件及COPY标记和原字节，无效路径拒绝，Owner剪贴板序号未变；主程序cargo check63.0553911s过，前端/许可证342组件17源包过，原导出组件选区/来源hash/反馈合同及1080/1280/1440明暗受控布局过。这些不代替第三方普通收件。
+
+本机正常release60.065876s因Windows真实LOWRAM停止；低优化候选38.0543726s触及2GiB作业内存上限而失败，未采用；正常优化/物理驻留上限候选又出现LLVM OOM，控制进程枚举返回WinError1455，确认作业已退出，未安装旧产物。失败日志保留，控制器补终态异常记录，停止本机同条件重复构建，没有关闭Owner应用或改分页文件。转用只读权限、固定工具链、正常优化的远端Windows构建；首次workflow入口错误与后续checkout缺失共享核心的失败保留。发现原gitlink6f30ab5远端不可达，已原样推送Denzic-Platform专用preserve分支并读回，主仓库gitlink/业务逻辑未改。
+
+CI正常release原生编译18m48s通过，但后置源文件字节检查使整轮CI仍为failure。已取回原EXE/DLL，独立目录按CI的1228个源文件和6个完全相同Web资源复现bundle：仅Cargo.toml的CRLF变LF，解析配置相同，原生对和Web未变。未把CI整轮改成成功；复用原生对完成私有打包，无额外原生编译，包内257个许可证文件/EXE/DLL/同升级身份核对通过。CI源检查仅放行已复现的该一个manifest换行变化，版本/依赖/其它源变化仍拒绝，必要边界已验证，不重跑无变化的19分钟编译。
+
+最终交付：WINDOWS078_FILE_COPY_INSTALLED_ORDINARY_RECIPIENT_PENDING；CI bb1550c42b674d7ec3e526db9f7fdefb84cff7ae / run42563058131。MSI包内EXE/DLL/许可证/同升级身份已核对，0.1.78后台升级且245个原资料文件hash一致；实际安装EXE/DLL及只读help启动通过。安装包另备份私有GitHub草稿并下载回读核SHA，未公开发布。 售卖门、普通应用粘贴收件、旧系统分享面板故障仍开放；没有新的客户购买评价或整机合格结论。下一项：Windows优先：在支持文件粘贴的普通接收应用中完成所选文档、原音/MP3实际收件，核对内容与未发送状态；不得用隔离原生模块或安装成功代替该项。原系统分享面板故障仍独立开放。复用078匹配产物，不再在当前内存压力下重编。手机100和模型原工作点不变。 证据在docs/handoffs/windows-file-copy078-20261109及原本机候选目录。墙钟只使用已有构建收据，不推算人工工时或token成本。

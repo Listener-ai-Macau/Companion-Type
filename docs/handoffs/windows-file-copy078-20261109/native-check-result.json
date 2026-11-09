@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-09T12:17:43+08:00",
+  "state": "PASS_NATIVE_CHECK",
+  "sourceCommit": "f5d249edd5a0a9537fd9f608a6fa0c4bcabc04b3",
+  "kind": "check",
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-check-1794197863253956500.log",
+  "limits": {
+    "pid": 18956,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1809186816,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelsRun": false,
+  "installed": false,
+  "pid": 26364,
+  "exitCode": 0,
+  "wallSeconds": 63.055391100000634
+}

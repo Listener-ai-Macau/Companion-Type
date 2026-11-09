@@ -1,0 +1,442 @@
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\denzic-platform\third_party\cpal\src\host\wasapi\device.rs:344:9
+    |
+344 |         &self,
+    |         ^^^^^ the lifetime is elided here
+345 |     ) -> Result<MutexGuard<Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+345 |     ) -> Result<MutexGuard<'_, Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                            +++
+
+warning: `cpal` (lib) generated 1 warning (run `cargo fix --lib -p cpal` to apply 1 suggestion)
+   Compiling companion-type v0.1.78 (C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\apps\windows\src-tauri)
+warning: function `notifications_stream_from_broadcast_receiver` is never used
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\common\util.rs:29:8
+   |
+29 | pub fn notifications_stream_from_broadcast_receiver<T: Clone + Send + 'static>(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `unsubscribe` is never used
+   --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\winrtble\ble\characteristic.rs:186:18
+    |
+ 95 | impl BLECharacteristic {
+    | ---------------------- method in this implementation
+...
+186 |     pub async fn unsubscribe(&mut self) -> Result<()> {
+    |                  ^^^^^^^^^^^
+
+warning: function `to_error` is never used
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\winrtble\utils.rs:26:8
+   |
+26 | pub fn to_error(status: GattCommunicationStatus) -> Result<()> {
+   |        ^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\third_party\btleplug-0.11.8\src\common\adapter_manager.rs:79:9
+   |
+79 |         &self,
+   |         ^^^^^ the lifetime is elided here
+80 |         id: &PeripheralId,
+81 |     ) -> Option<RefMut<PeripheralId, PeripheralType>> {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+81 |     ) -> Option<RefMut<'_, PeripheralId, PeripheralType>> {
+   |                        +++
+
+warning: `btleplug` (lib) generated 4 warnings (run `cargo fix --lib -p btleplug` to apply 1 suggestion)
+warning: unused import: `PathBuf`
+ --> src\backend\library_export.rs:3:50
+  |
+3 | use std::{collections::HashSet, fs, path::{Path, PathBuf}};
+  |                                                  ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `PathBuf`
+ --> src\backend\library_backup.rs:2:89
+  |
+2 | use std::{collections::HashSet,fs::{self,File,OpenOptions},io::{Read,Write},path::{Path,PathBuf}};
+  |                                                                                         ^^^^^^^
+
+warning: unused import: `RefCell`
+ --> src\backend\diagnostics\identity.rs:3:23
+  |
+3 | use std::{cell::{Cell,RefCell}, fs, io::{Read,Write}, marker::PhantomData,
+  |                       ^^^^^^^
+
+warning: unused import: `apply_fixture_control`
+   --> src\backend\mod.rs:167:23
+    |
+167 |     apply_control_at, apply_fixture_control, fixture_snapshot, seal_companion_v1_session_chunks,
+    |                       ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `write_board_acceptance_output` is never used
+    --> src\lib.rs:1873:4
+     |
+1873 | fn write_board_acceptance_output(path: &Path, payload: &serde_json::Value) -> Result<(), String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `refresh_minutes_products` is never used
+   --> src\backend\mod.rs:357:4
+    |
+357 | fn refresh_minutes_products<F>(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `RECORDING_LIST_ENTRY_BYTES` is never used
+   --> src\backend\ble_bridge.rs:112:7
+    |
+112 | const RECORDING_LIST_ENTRY_BYTES: usize = 32;
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `delete_all_privacy` is never used
+   --> src\backend\ble_bridge.rs:816:12
+    |
+270 | impl CompanionBleBridge {
+    | ----------------------- method in this implementation
+...
+816 |     pub fn delete_all_privacy(&self, requested_device_id: Option<&str>) -> CompanionBleOperation {
+    |            ^^^^^^^^^^^^^^^^^^
+
+warning: field `device_id` is never read
+    --> src\backend\ble_bridge.rs:1937:5
+     |
+1935 | struct NativeRecordingSync {
+     |        ------------------- field in this struct
+1936 |     capture_incomplete: bool,
+1937 |     device_id: String,
+     |     ^^^^^^^^^
+     |
+     = note: `NativeRecordingSync` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `operation`, `request_id`, `recording_id`, and `validated_total_length` are never read
+    --> src\backend\ble_bridge.rs:2265:5
+     |
+2263 | struct NativeDeleteResult {
+     |        ------------------ fields in this struct
+2264 |     device_id: String,
+2265 |     operation: u8,
+     |     ^^^^^^^^^
+2266 |     request_id: u32,
+     |     ^^^^^^^^^^
+2267 |     refused: bool,
+2268 |     recording_id: u32,
+     |     ^^^^^^^^^^^^
+2269 |     validated_total_length: u32,
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `NativeDeleteResult` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `sync_first_native_recording` is never used
+    --> src\backend\ble_bridge.rs:4566:10
+     |
+4566 | async fn sync_first_native_recording(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sync_first_native_recording_inner` is never used
+    --> src\backend\ble_bridge.rs:4970:10
+     |
+4970 | async fn sync_first_native_recording_inner(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sync_native_recordings_inner` is never used
+    --> src\backend\ble_bridge.rs:4976:10
+     |
+4976 | async fn sync_native_recordings_inner(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `recording_chunk_pull_request` is never used
+    --> src\backend\ble_bridge.rs:6268:4
+     |
+6268 | fn recording_chunk_pull_request(recording_id: u32, offset: u32, requested_length: u16) -> [u8; 16] {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `recording_chunk_requested_length` is never used
+    --> src\backend\ble_bridge.rs:6389:4
+     |
+6389 | fn recording_chunk_requested_length(chunk_bytes: u16, remaining: u32) -> u16 {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `recording_window_requested_length` is never used
+    --> src\backend\ble_bridge.rs:6400:4
+     |
+6400 | fn recording_window_requested_length(window_bytes: u32, remaining: u32) -> u16 {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `merge` is never used
+  --> src\backend\recording_bookmarks\device.rs:35:15
+   |
+35 | pub(crate) fn merge(row:&mut CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
+   |               ^^^^^
+
+warning: function `require_saved` is never used
+   --> src\backend\recording_bookmarks\device.rs:100:15
+    |
+100 | pub(crate) fn require_saved(row:&CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
+    |               ^^^^^^^^^^^^^
+
+warning: function `bind` is never used
+ --> src\backend\recording_bookmarks\logical.rs:5:15
+  |
+5 | pub(crate) fn bind(row:&mut CompanionV1HostSession,key:&SessionKey,captured_samples:Option<u64>)
+  |               ^^^^
+
+warning: function `require_saved` is never used
+  --> src\backend\recording_bookmarks\logical.rs:40:15
+   |
+40 | pub(crate) fn require_saved(row:&CompanionV1HostSession,key:&SessionKey,captured_samples:Option<u64>)
+   |               ^^^^^^^^^^^^^
+
+warning: associated function `paired` is never used
+  --> src\backend\ota_metrics.rs:90:19
+   |
+76 | impl PayloadMetrics {
+   | ------------------- associated function in this implementation
+...
+90 |     pub(super) fn paired(new_bytes:usize,resumed:usize,elapsed:Option<Duration>)->Self {
+   |                   ^^^^^^
+
+warning: associated function `from_pair_status` is never used
+   --> src\backend\ota_flow.rs:199:12
+    |
+189 | impl WbaFlow {
+    | ------------ associated function in this implementation
+...
+199 |     pub fn from_pair_status(status: &[u8], supports_wwr: bool) -> Result<Self, String> {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: method `session_id` is never used
+   --> src\backend\recording_wire\receiver.rs:160:19
+    |
+102 | impl Receiver {
+    | ------------- method in this implementation
+...
+160 |     pub(crate) fn session_id(&self) -> &str { &self.stem }
+    |                   ^^^^^^^^^^
+
+warning: associated function `verify_completed_row` is never used
+  --> src\backend\recording_wire\receiver\publish.rs:41:19
+   |
+ 6 | impl Receiver {
+   | ------------- associated function in this implementation
+...
+41 |     pub(crate) fn verify_completed_row(row: &crate::companion_v1::CompanionV1HostSession) -> Result<(),String> {
+   |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: method `closed_pause_ms` is never used
+   --> src\backend\cop1.rs:106:19
+    |
+ 45 | impl Timeline {
+    | ------------- method in this implementation
+...
+106 |     pub(crate) fn closed_pause_ms(&self) -> u64 {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: struct `DiarizationSegment` is never constructed
+  --> src\backend\diarization.rs:42:12
+   |
+42 | pub struct DiarizationSegment {
+   |            ^^^^^^^^^^^^^^^^^^
+
+warning: function `diarize` is never used
+   --> src\backend\diarization.rs:490:8
+    |
+490 | pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
+    |        ^^^^^^^
+
+warning: function `calendar` is never used
+   --> src\backend\action_export.rs:235:8
+    |
+235 | pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], draft: bool, stamp: &str) -> String {
+    |        ^^^^^^^^
+
+warning: function `calendar_events` is never used
+   --> src\backend\action_export.rs:297:8
+    |
+297 | pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str)->Result<String,String> {
+    |        ^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_reminder` is never used
+   --> src\backend\action_export.rs:311:8
+    |
+311 | pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,remind_at_time:bo...
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_copy_entries` is never used
+   --> src\backend\action_export.rs:388:15
+    |
+388 | pub(crate) fn calendar_copy_entries(session_id:&str,mode:&str,actions:&[Action],lead:Option<u16>)->Vec<super::calendar_copy::Entry> {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_reminder_lead` is never used
+   --> src\backend\action_export.rs:398:15
+    |
+398 | pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_selections` is never used
+   --> src\backend\action_export.rs:402:15
+    |
+402 | pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_min...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_selections_and_provenance` is never used
+   --> src\backend\action_export.rs:406:15
+    |
+406 | pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stam...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `append_captured_samples` is never used
+   --> src\backend\host_recording.rs:377:4
+    |
+377 | fn append_captured_samples(writer: &mut WavWriter, samples: &[i16]) -> std::io::Result<()> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `finish_capture_file` is never used
+   --> src\backend\host_recording.rs:384:4
+    |
+384 | fn finish_capture_file(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: field `duration_ms` is never read
+  --> src\backend\host_interrupted_recovery.rs:11:9
+   |
+ 8 | pub(super) struct RecoveredHostAudio {
+   |                   ------------------ field in this struct
+...
+11 |     pub duration_ms: u64,
+   |         ^^^^^^^^^^^
+
+warning: function `run_deepseek_native` is never used
+   --> src\backend\minutes.rs:279:4
+    |
+279 | fn run_deepseek_native(api_key: &str, session: &CompanionV1HostSession,
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_deepseek_native_with_template` is never used
+   --> src\backend\minutes.rs:284:4
+    |
+284 | fn run_deepseek_native_with_template(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `render_speaker_section` is never used
+    --> src\backend\minutes.rs:1174:4
+     |
+1174 | fn render_speaker_section(transcript_text: &str) -> Option<String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> src\backend\minutes\long_meeting.rs:38:8
+   |
+37 | impl Identity {
+   | ------------- associated function in this implementation
+38 |     fn new(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession) -> Self {
+   |        ^^^
+
+warning: function `run` is never used
+   --> src\backend\minutes\long_meeting.rs:373:15
+    |
+373 | pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+    |               ^^^
+
+warning: function `run_with` is never used
+    --> src\backend\minutes\long_meeting.rs:1381:4
+     |
+1381 | fn run_with<F>(root: &Path, endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+     |    ^^^^^^^^
+
+warning: function `ask_with` is never used
+   --> src\backend\meeting_qa.rs:149:4
+    |
+149 | fn ask_with<F>(request:&Request,mut extract:F)->Result<ResultView,String>
+    |    ^^^^^^^^
+
+warning: function `load_sessions` is never used
+   --> src\backend\persistence.rs:420:8
+    |
+420 | pub fn load_sessions() -> Option<Vec<CompanionV1HostSession>> {
+    |        ^^^^^^^^^^^^^
+
+warning: function `save_settings` is never used
+   --> src\backend\product_settings.rs:260:8
+    |
+260 | pub fn save_settings(settings: &CompanionProductSettings) -> Result<PathBuf, String> {
+    |        ^^^^^^^^^^^^^
+
+warning: function `merge_and_save` is never used
+   --> src\backend\product_settings.rs:306:8
+    |
+306 | pub fn merge_and_save(patch: CompanionProductSettings) -> Result<CompanionProductSettings, String> {
+    |        ^^^^^^^^^^^^^^
+
+warning: method `consumable_ids` is never used
+   --> src\backend\recording_ring.rs:163:12
+    |
+119 | impl RecordingRing {
+    | ------------------ method in this implementation
+...
+163 |     pub fn consumable_ids(&self) -> Vec<u32> {
+    |            ^^^^^^^^^^^^^^
+
+warning: methods `on_connect` and `enqueue_pending_from_ring` are never used
+   --> src\backend\recording_ring.rs:350:12
+    |
+335 | impl AutoUploadQueue {
+    | -------------------- methods in this implementation
+...
+350 |     pub fn on_connect(&mut self, ring: &RecordingRing) -> Vec<u32> {
+    |            ^^^^^^^^^^
+...
+358 |     pub fn enqueue_pending_from_ring(&mut self, ring: &RecordingRing) -> Vec<u32> {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `upload_ack_consume` is never used
+   --> src\backend\recording_ring.rs:402:8
+    |
+402 | pub fn upload_ack_consume(
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `product_ring_reset_for_test` is never used
+   --> src\backend\recording_ring.rs:465:8
+    |
+465 | pub fn product_ring_reset_for_test() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `extract_transcript_from_stdout` is never used
+    --> src\backend\transcription.rs:1470:4
+     |
+1470 | fn extract_transcript_from_stdout(stdout: &str) -> Result<String, String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `load` is never used
+   --> src\backend\transcription\paraformer_shared.rs:264:19
+    |
+263 | impl Runtime {
+    | ------------ associated function in this implementation
+264 |     pub(super) fn load(root: &Path, runtime_root: &Path) -> Result<Self, String> {
+    |                   ^^^^
+
+warning: function `stage_assets` is never used
+  --> src\backend\transcription\model_download.rs:99:15
+   |
+99 | pub(super) fn stage_assets(client: &Client, base: &str, sense: &Path, stage: &Path,
+   |               ^^^^^^^^^^^^
+
+warning: function `apply_fixture_control` is never used
+   --> src\companion_v1.rs:835:8
+    |
+835 | pub fn apply_fixture_control(
+    |        ^^^^^^^^^^^^^^^^^^^^^
+

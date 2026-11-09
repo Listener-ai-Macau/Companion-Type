@@ -1,0 +1,17 @@
+
+running 1 test
+test file_clipboard::tests::content078_real_file_clipboard_is_exact_unicode_copy_and_preserves_source ... FAILED
+
+failures:
+
+failures:
+    file_clipboard::tests::content078_real_file_clipboard_is_exact_unicode_copy_and_preserves_source
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+thread 'file_clipboard::tests::content078_real_file_clipboard_is_exact_unicode_copy_and_preserves_source' (29468) panicked at C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\apps\windows\src-tauri\src\file_clipboard.rs:85:9:
+assertion `left == right` failed: No clipboard API runs on the interactive station
+  left: "WinSta0"
+ right: "CompanionFileCopy078-fee3931208c741608014825f9e4f7622"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

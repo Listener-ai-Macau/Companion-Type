@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-09T12:32:24+08:00",
+  "state": "CONTROLLER_AND_NATIVE_FAILED_RETAINED",
+  "sourceCommit": "28ab38b16cf197f185a9f602385e802ea4142e75",
+  "kind": "release-paged",
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-release-paged-1794198744295797200.log",
+  "limits": {
+    "pid": 18044,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 3221225472,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 102789120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelsRun": false,
+  "installed": false,
+  "pid": 25588,
+  "controllerError": "OSError WinError1455 during psutil process enumeration",
+  "nativeLogError": "rustc-LLVM ERROR out of memory; Allocation failed",
+  "observedTerminalAt": "2026-11-09T12:38:50+08:00",
+  "cargoPidNoLongerAliveAtObservation": true,
+  "decision": "Do not repeat local native build under current resource pressure; use repository CI for the same application source."
+}

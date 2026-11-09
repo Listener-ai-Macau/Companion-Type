@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\build_windows_candidate_ci.py", line 51, in <module>
+    for row in record['sourceFiles']:assert sha(S/row['path'])==row['sha256']
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

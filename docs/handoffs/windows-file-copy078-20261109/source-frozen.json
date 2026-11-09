@@ -1,0 +1,4049 @@
+{
+  "at": "2026-11-09T12:32:17+08:00",
+  "sourceCommit": "28ab38b16cf197f185a9f602385e802ea4142e75",
+  "version": "0.1.78",
+  "sourceFiles": [
+    {
+      "path": "apps/windows/index.html",
+      "sha256": "be618877a388ba03a187fa9b930091c355c8abda0c2b5181c81cc9e349d14d4c"
+    },
+    {
+      "path": "apps/windows/src-tauri/.gitignore",
+      "sha256": "fb3350ef2114ac4e0115686a8cdecc62bc1110510da4191bfbba022dd7c4d6a9"
+    },
+    {
+      "path": "apps/windows/src-tauri/Cargo.lock",
+      "sha256": "05549e185c7315ce383f29605f623975f6fef9178b702fa2c51ebfe72ebe0441"
+    },
+    {
+      "path": "apps/windows/src-tauri/Cargo.toml",
+      "sha256": "ef632b57b731bdfdac8d62566d43a4d6a5daa5be542307e4fb486fde977aa6f4"
+    },
+    {
+      "path": "apps/windows/src-tauri/build.rs",
+      "sha256": "4ae2333b11623039cc115e29b696e7ff5cdfcd5b7d628280ddf48fa733e6418d"
+    },
+    {
+      "path": "apps/windows/src-tauri/icons/icon.ico",
+      "sha256": "fdfe8a5960c7ba2910db31b85d88ce17d58b3377057f48f6cb5c3e6644ea7063"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/OptionalSpeechModels.txt",
+      "sha256": "9c7d6d0a833522c02cccaa961cfe0909449f8608297889c2dc42f9a58d575a09"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/README.txt",
+      "sha256": "d4fa208c26d2de080fbb479dfe760ee25e48c41b7f5c0fda5088064eb38a092c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/ShadcnDashboardMIT.txt",
+      "sha256": "559fc2ce493ee61b4e72523c14bf23681183a136f505b8afbb0c822d56ba5725"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json",
+      "sha256": "9a0e38a655386e45d7e3c634f1d14fad11479fafaff0ded49827f73b128a3e3a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/ThirdPartyNotices.txt",
+      "sha256": "b4fc970fc80998e7b86c6d09278d8c181f182f719c52ba5e6098fa370e3256ce"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/cssparser-0.36.0.crate",
+      "sha256": "dae61cf9c0abb83bd659dab65b7e4e38d8236824c85f0f804f173567bda257d2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/dtoa-short-0.3.5.crate",
+      "sha256": "cd1511a7b6a56299bd043a9c167a6d2bfb37bf84a6dfceaba651168adfb43c87"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/option-ext-0.2.0.crate",
+      "sha256": "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/selectors-0.36.1.crate",
+      "sha256": "c5d9c0c92a92d33f08817311cf3f2c29a3538a8240e94a6a3c622ce652d7e00c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-0.5.5.crate",
+      "sha256": "5773a4c030a19d9bfaa090f49746ff35c75dfddfa700df7a5939d5e076a57039"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-bundle-flac-0.5.5.crate",
+      "sha256": "c91565e180aea25d9b80a910c546802526ffd0072d0b8974e3ebe59b686c9976"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-bundle-mp3-0.5.5.crate",
+      "sha256": "4872dd6bb56bf5eac799e3e957aa1981086c3e613b27e0ac23b176054f7c57ed"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-codec-aac-0.5.5.crate",
+      "sha256": "4c263845aa86881416849c1729a54c7f55164f8b96111dba59de46849e73a790"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-codec-alac-0.5.5.crate",
+      "sha256": "8413fa754942ac16a73634c9dfd1500ed5c61430956b33728567f667fdd393ab"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-codec-pcm-0.5.5.crate",
+      "sha256": "4e89d716c01541ad3ebe7c91ce4c8d38a7cf266a3f7b2f090b108fb0cb031d95"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-codec-vorbis-0.5.5.crate",
+      "sha256": "f025837c309cd69ffef572750b4a2257b59552c5399a5e49707cc5b1b85d1c73"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-core-0.5.5.crate",
+      "sha256": "ea00cc4f79b7f6bb7ff87eddc065a1066f3a43fe1875979056672c9ef948c2af"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-format-isomp4-0.5.5.crate",
+      "sha256": "243739585d11f81daf8dac8d9f3d18cc7898f6c09a259675fc364b382c30e0a5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-format-ogg-0.5.5.crate",
+      "sha256": "2b4955c67c1ed3aa8ae8428d04ca8397fbef6a19b2b051e73b5da8b1435639cb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-format-riff-0.5.5.crate",
+      "sha256": "c2d7c3df0e7d94efb68401d81906eae73c02b40d5ec1a141962c592d0f11a96f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-metadata-0.5.5.crate",
+      "sha256": "36306ff42b9ffe6e5afc99d49e121e0bd62fe79b9db7b9681d48e29fa19e6b16"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/sources/symphonia-utils-xiph-0.5.5.crate",
+      "sha256": "ee27c85ab799a338446b68eec77abf42e1a6f1bb490656e121c6e27bfbab9f16"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/005fc765ddc5115da796cca915baa9557abae13ff35e0a47c47affc56f6c414d.txt",
+      "sha256": "005fc765ddc5115da796cca915baa9557abae13ff35e0a47c47affc56f6c414d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f.txt",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0218327e7a480793ffdd4eb792379a9709e5c135c7ba267f709d6f6d4d70af0a.txt",
+      "sha256": "0218327e7a480793ffdd4eb792379a9709e5c135c7ba267f709d6f6d4d70af0a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/02b6448337b757772d90e5f31caaa0f9e6afaad2221c01771d0a3deaa4d4196c.txt",
+      "sha256": "02b6448337b757772d90e5f31caaa0f9e6afaad2221c01771d0a3deaa4d4196c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0463bfa47d6d763d8c824333efb0e6d6df3946c13c3b077c78ed9f23ca50d0f2.txt",
+      "sha256": "0463bfa47d6d763d8c824333efb0e6d6df3946c13c3b077c78ed9f23ca50d0f2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/04dc52136d82400b11df5f474949863a70a5d05d2278dec45b99c479494450a6.txt",
+      "sha256": "04dc52136d82400b11df5f474949863a70a5d05d2278dec45b99c479494450a6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/070dbc7dda03a29296f2d58bdb9b7331af90f2abc9f31df22875d1eabaf29852.txt",
+      "sha256": "070dbc7dda03a29296f2d58bdb9b7331af90f2abc9f31df22875d1eabaf29852"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/07919255c7e04793d8ea760d6c2ce32d19f9ff02bdbdde3ce90b1e1880929a9b.txt",
+      "sha256": "07919255c7e04793d8ea760d6c2ce32d19f9ff02bdbdde3ce90b1e1880929a9b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/09785877275ffada6c371b652a30e95c26b435126fc0fc62f1bc2d72171f80a4.txt",
+      "sha256": "09785877275ffada6c371b652a30e95c26b435126fc0fc62f1bc2d72171f80a4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0ab4d106b6faac07fb6a051815fd1b4d862d730895e2d7d7358c2f13565e7a38.txt",
+      "sha256": "0ab4d106b6faac07fb6a051815fd1b4d862d730895e2d7d7358c2f13565e7a38"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9.txt",
+      "sha256": "0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9.txt",
+      "sha256": "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0dcf41516e608bbcb6cdc5229feb7b86fe4a643b85e7df251133c93408fdac73.txt",
+      "sha256": "0dcf41516e608bbcb6cdc5229feb7b86fe4a643b85e7df251133c93408fdac73"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0dd882e53de11566d50f8e8e2d5a651bcf3fabee4987d70f306233cf39094ba7.txt",
+      "sha256": "0dd882e53de11566d50f8e8e2d5a651bcf3fabee4987d70f306233cf39094ba7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f.txt",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/11789f45bb180841cd362a5eee6789c68ddb573a11105e30768c308a6add0190.txt",
+      "sha256": "11789f45bb180841cd362a5eee6789c68ddb573a11105e30768c308a6add0190"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e.txt",
+      "sha256": "123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1466d9b4f3a59bb8997fc8d5fa977ce3f6a24bb2358793c09bfdf007039f6486.txt",
+      "sha256": "1466d9b4f3a59bb8997fc8d5fa977ce3f6a24bb2358793c09bfdf007039f6486"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/155420c6403d4e0fca34105e3c03fdd6939b64c393c7ec6f95f5b72c5474eab0.txt",
+      "sha256": "155420c6403d4e0fca34105e3c03fdd6939b64c393c7ec6f95f5b72c5474eab0"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/16692e8cee4aa06e3913787497eba2d47c42002014136f5da67be6ee640e28a3.txt",
+      "sha256": "16692e8cee4aa06e3913787497eba2d47c42002014136f5da67be6ee640e28a3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1847e0e0698142ed4347c1441a9fa81c8fbddd44b1d8bbcd5e3647f991759d7f.txt",
+      "sha256": "1847e0e0698142ed4347c1441a9fa81c8fbddd44b1d8bbcd5e3647f991759d7f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1954992a2b32e8a2af24a4c11b726902e344c1934b947a77f04d404908f8db30.txt",
+      "sha256": "1954992a2b32e8a2af24a4c11b726902e344c1934b947a77f04d404908f8db30"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df.txt",
+      "sha256": "1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1c7cf76689c837a68ed8d704994e52a0f2940c087958f860d17f3186afbdcc0c.txt",
+      "sha256": "1c7cf76689c837a68ed8d704994e52a0f2940c087958f860d17f3186afbdcc0c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1dd8eca0f83669e75fa119e34fb9e1be9d16e3e9b6368962b8019db6e8ae5f7b.txt",
+      "sha256": "1dd8eca0f83669e75fa119e34fb9e1be9d16e3e9b6368962b8019db6e8ae5f7b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1e697ce8d21401fbf1bddd9b5c3fd4c4c79ae1e3bdf51f81761c85e11d5a89cd.txt",
+      "sha256": "1e697ce8d21401fbf1bddd9b5c3fd4c4c79ae1e3bdf51f81761c85e11d5a89cd"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5.txt",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/209fbbe0ad52d9235e37badf9cadfe4dbdc87203179c0899e738b39ade42177b.txt",
+      "sha256": "209fbbe0ad52d9235e37badf9cadfe4dbdc87203179c0899e738b39ade42177b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/20c7855c364d57ea4c97889a5e8d98470a9952dade37bd9248b9a54431670e5e.txt",
+      "sha256": "20c7855c364d57ea4c97889a5e8d98470a9952dade37bd9248b9a54431670e5e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/219920e865eee70b7dcfc948a86b099e7f4fe2de01bcca2ca9a20c0a033f2b59.txt",
+      "sha256": "219920e865eee70b7dcfc948a86b099e7f4fe2de01bcca2ca9a20c0a033f2b59"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/231c837c45eb53f108fb48929e488965bc4fcc14e9ea21d35f50e6b99d98685b.txt",
+      "sha256": "231c837c45eb53f108fb48929e488965bc4fcc14e9ea21d35f50e6b99d98685b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/23860c2a7b5d96b21569afedf033469bab9fe14a1b24a35068b8641c578ce24d.txt",
+      "sha256": "23860c2a7b5d96b21569afedf033469bab9fe14a1b24a35068b8641c578ce24d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2537228d9a1b44a5dc595241349cae7090b326c8de165aaf89bfddef4a00d0fc.txt",
+      "sha256": "2537228d9a1b44a5dc595241349cae7090b326c8de165aaf89bfddef4a00d0fc"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/253cd04c6714889df2d32f3f64d669179a1c95c76ac43c40882c52eb06bc3552.txt",
+      "sha256": "253cd04c6714889df2d32f3f64d669179a1c95c76ac43c40882c52eb06bc3552"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5.txt",
+      "sha256": "25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/26235c41e314fb0da35b33b2bb5bcbc4dd523839f8eeca52efcd43586f441fb5.txt",
+      "sha256": "26235c41e314fb0da35b33b2bb5bcbc4dd523839f8eeca52efcd43586f441fb5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/270b0d81891aa44c7e8726cf9432dade9556a01c848bacd2f3ef839c9c1a1859.txt",
+      "sha256": "270b0d81891aa44c7e8726cf9432dade9556a01c848bacd2f3ef839c9c1a1859"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2748c1a1fba7616917c61d455e8d715ab952671ead63f2026ad0124410596b09.txt",
+      "sha256": "2748c1a1fba7616917c61d455e8d715ab952671ead63f2026ad0124410596b09"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427.txt",
+      "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2773e20df8f4c52a026b5b578c7f2457341f5aa3fb6612fd87e1d2e1bd8f48ad.txt",
+      "sha256": "2773e20df8f4c52a026b5b578c7f2457341f5aa3fb6612fd87e1d2e1bd8f48ad"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/29e9fe5074bd27e0e5d5d110394fbbcd841baee2651a3c4b4560a632702cede4.txt",
+      "sha256": "29e9fe5074bd27e0e5d5d110394fbbcd841baee2651a3c4b4560a632702cede4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2ab5537b8c0cb1d475e2145b6a7994b04e7c71e6e5bd836f7f9c47c221a5ad9a.txt",
+      "sha256": "2ab5537b8c0cb1d475e2145b6a7994b04e7c71e6e5bd836f7f9c47c221a5ad9a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2bc107bdc18a74263d20bdefdb8073e17bc1a01b6b374dc5835683a33ee5ba7d.txt",
+      "sha256": "2bc107bdc18a74263d20bdefdb8073e17bc1a01b6b374dc5835683a33ee5ba7d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2cf31f2ae7f3feba667d50fc1d4d21ecf217703c04c3068b83c9a73b6dde723a.txt",
+      "sha256": "2cf31f2ae7f3feba667d50fc1d4d21ecf217703c04c3068b83c9a73b6dde723a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/2d01890414494742ba4a509fcec8efa40f6d8be22cbd72be7cff08d6fda4ec89.txt",
+      "sha256": "2d01890414494742ba4a509fcec8efa40f6d8be22cbd72be7cff08d6fda4ec89"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/30fefc3a7d6a0041541858293bcbea2dde4caa4c0a5802f996a7f7e8c0085652.txt",
+      "sha256": "30fefc3a7d6a0041541858293bcbea2dde4caa4c0a5802f996a7f7e8c0085652"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/31dbbab009f1b2e59a1622d5955dfafc38ebe834000215b49d954c6f85fe927c.txt",
+      "sha256": "31dbbab009f1b2e59a1622d5955dfafc38ebe834000215b49d954c6f85fe927c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/3521672491a3479422d5fe1aca6645dd2984090f85da6e5205abfb18fb7a6897.txt",
+      "sha256": "3521672491a3479422d5fe1aca6645dd2984090f85da6e5205abfb18fb7a6897"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/35242e7a83f69875e6edeff02291e688c97caafe2f8902e4e19b49d3e78b4cab.txt",
+      "sha256": "35242e7a83f69875e6edeff02291e688c97caafe2f8902e4e19b49d3e78b4cab"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397.txt",
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/391a5396cec6230bfabd4ef4eb2350eb895bc5efce377a2218f5702ed020d3e3.txt",
+      "sha256": "391a5396cec6230bfabd4ef4eb2350eb895bc5efce377a2218f5702ed020d3e3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94.txt",
+      "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5.txt",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/3fa4ca83dcc9237839b1bdeb2e6d16bdfb5ec0c5ce42b24694d8bbf0dcbef72c.txt",
+      "sha256": "3fa4ca83dcc9237839b1bdeb2e6d16bdfb5ec0c5ce42b24694d8bbf0dcbef72c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/41ace205715d9f19a3214218cc1c01d57c533e02cd0fef7c8e51a49a7fce5ac5.txt",
+      "sha256": "41ace205715d9f19a3214218cc1c01d57c533e02cd0fef7c8e51a49a7fce5ac5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4249c8e6c5ebb85f97c77e6457c6fafc1066406eb8f1ef61e796fbdc5ff18482.txt",
+      "sha256": "4249c8e6c5ebb85f97c77e6457c6fafc1066406eb8f1ef61e796fbdc5ff18482"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/42c8695fbc468866d9756be99af0ba4e37d733f8daa3c8827c8d80b8bec1b2f9.txt",
+      "sha256": "42c8695fbc468866d9756be99af0ba4e37d733f8daa3c8827c8d80b8bec1b2f9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/42d3bf7e7d4d49d72c0555d14ed99c3ee7ce9ce3cbffbc38bbafe8c103f50969.txt",
+      "sha256": "42d3bf7e7d4d49d72c0555d14ed99c3ee7ce9ce3cbffbc38bbafe8c103f50969"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/42fa16951ce7f24b5a467a40e5b449a1d41e662f97ca779864f053f39e097737.txt",
+      "sha256": "42fa16951ce7f24b5a467a40e5b449a1d41e662f97ca779864f053f39e097737"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/436bc5a105d8e57dcd8778730f3754f7bf39c14d2f530e4cde4bd2d17a83ec3d.txt",
+      "sha256": "436bc5a105d8e57dcd8778730f3754f7bf39c14d2f530e4cde4bd2d17a83ec3d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/45f522cacecb1023856e46df79ca625dfc550c94910078bd8aec6e02880b3d42.txt",
+      "sha256": "45f522cacecb1023856e46df79ca625dfc550c94910078bd8aec6e02880b3d42"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/45fd05c4865e7c350b98ad7ac50e1b15462d49af4a91e9b0c9dd933dc9a69742.txt",
+      "sha256": "45fd05c4865e7c350b98ad7ac50e1b15462d49af4a91e9b0c9dd933dc9a69742"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/47d4e1803702728e03d30f8a848ae2249ba274bbd9f8443e803f7924d83cd371.txt",
+      "sha256": "47d4e1803702728e03d30f8a848ae2249ba274bbd9f8443e803f7924d83cd371"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/47dc9ff29128ddfb4d6a0435383c9f89120bc374dbcc1dd00b933a0b28aa7865.txt",
+      "sha256": "47dc9ff29128ddfb4d6a0435383c9f89120bc374dbcc1dd00b933a0b28aa7865"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4b2d0aca6789fa39e03d6738e869ea0988cceba210ca34ebb59c15c463e93a04.txt",
+      "sha256": "4b2d0aca6789fa39e03d6738e869ea0988cceba210ca34ebb59c15c463e93a04"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4cada0bd02ea3692eee6f16400d86c6508bbd3bafb2b65fed0419f36d4f83e8f.txt",
+      "sha256": "4cada0bd02ea3692eee6f16400d86c6508bbd3bafb2b65fed0419f36d4f83e8f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871.txt",
+      "sha256": "4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4f44572785f35152c1fd2eadf565b7e079c0f300b4324f0af653419f9d76b735.txt",
+      "sha256": "4f44572785f35152c1fd2eadf565b7e079c0f300b4324f0af653419f9d76b735"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/4f6bd11a0f17fe5b085ace1daaedb7b002a08316850dd9577c246c6a68a68e8c.txt",
+      "sha256": "4f6bd11a0f17fe5b085ace1daaedb7b002a08316850dd9577c246c6a68a68e8c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5049cf464977eff4b4fcfa7988d84e74116956a3eb9d5f1d451b3f828f945233.txt",
+      "sha256": "5049cf464977eff4b4fcfa7988d84e74116956a3eb9d5f1d451b3f828f945233"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1.txt",
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406.txt",
+      "sha256": "516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/523a42c25d245dde9c015f882cec7f4555aad883382a6cf19b4b7d9b2cd5419b.txt",
+      "sha256": "523a42c25d245dde9c015f882cec7f4555aad883382a6cf19b4b7d9b2cd5419b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85.txt",
+      "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/54a744942eb3fa63a74d8d359989ed6962c04f3f10ff20cfa08ff8aa7efbe4e6.txt",
+      "sha256": "54a744942eb3fa63a74d8d359989ed6962c04f3f10ff20cfa08ff8aa7efbe4e6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5734ed989dfca1f625b40281ee9f4530f91b2411ec01cb748223e7eb87e201ab.txt",
+      "sha256": "5734ed989dfca1f625b40281ee9f4530f91b2411ec01cb748223e7eb87e201ab"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/58545fed1565e42d687aecec6897d35c6d37ccb71479a137c0deb2203e125c79.txt",
+      "sha256": "58545fed1565e42d687aecec6897d35c6d37ccb71479a137c0deb2203e125c79"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5b0ae40d1a35f7ae6591a28e44771240e6a88cb03a66c9189a45b9681639b466.txt",
+      "sha256": "5b0ae40d1a35f7ae6591a28e44771240e6a88cb03a66c9189a45b9681639b466"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5b2c207dcf571267ebe0bbdd5bf321f561ddc22ff597e7b363e96f4539507a29.txt",
+      "sha256": "5b2c207dcf571267ebe0bbdd5bf321f561ddc22ff597e7b363e96f4539507a29"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5b698ca13897be3afdb7174256fa1574f8c6892b8bea1a66dd6469d3fe27885a.txt",
+      "sha256": "5b698ca13897be3afdb7174256fa1574f8c6892b8bea1a66dd6469d3fe27885a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5cf1c9dc617e4cad7fa03181ff893601ad5243aa3be527ef39034e1cd6377676.txt",
+      "sha256": "5cf1c9dc617e4cad7fa03181ff893601ad5243aa3be527ef39034e1cd6377676"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/5e05b024f653a5ce199e77cbbbd42fb5553562ec714b819421ed0c3e552a75d7.txt",
+      "sha256": "5e05b024f653a5ce199e77cbbbd42fb5553562ec714b819421ed0c3e552a75d7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/60a7062291b01ba068f300612cdbdc20382ac1d4934f07bcdd7167c15299f309.txt",
+      "sha256": "60a7062291b01ba068f300612cdbdc20382ac1d4934f07bcdd7167c15299f309"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/617b85f62a4f1b6a62d3d9f28f6d7003b7f68a70b7675a8174bbcc68401ac62d.txt",
+      "sha256": "617b85f62a4f1b6a62d3d9f28f6d7003b7f68a70b7675a8174bbcc68401ac62d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/61d383b05b87d78f94d2937e2580cce47226d17823c0430fbcad09596537efcf.txt",
+      "sha256": "61d383b05b87d78f94d2937e2580cce47226d17823c0430fbcad09596537efcf"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/62065228e42caebca7e7d7db1204cbb867033de5982ca4009928915e4095f3a3.txt",
+      "sha256": "62065228e42caebca7e7d7db1204cbb867033de5982ca4009928915e4095f3a3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5.txt",
+      "sha256": "6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a.txt",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb.txt",
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/65fc947f4bac882a2cd104ef73c246b1b037059df9f2b3a58b7f77f0b9e56071.txt",
+      "sha256": "65fc947f4bac882a2cd104ef73c246b1b037059df9f2b3a58b7f77f0b9e56071"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/65fdb6c76cd61612070c066eec9ecdb30ee74fb27859d0d9af58b9f499fd0c3e.txt",
+      "sha256": "65fdb6c76cd61612070c066eec9ecdb30ee74fb27859d0d9af58b9f499fd0c3e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd.txt",
+      "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172.txt",
+      "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6a2e0ade09a7d5f816f11566fee2b151b32235a7fad52b41d49cce96f833c1a9.txt",
+      "sha256": "6a2e0ade09a7d5f816f11566fee2b151b32235a7fad52b41d49cce96f833c1a9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6c1e5d0ccf5e8951401cb964036ae664d52fc8d1148173b53bc54fc534f5d404.txt",
+      "sha256": "6c1e5d0ccf5e8951401cb964036ae664d52fc8d1148173b53bc54fc534f5d404"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6dc0e068dcf3a5bc8e054205b85b7720e1d49265bbc64bf515d2cf79197df69a.txt",
+      "sha256": "6dc0e068dcf3a5bc8e054205b85b7720e1d49265bbc64bf515d2cf79197df69a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6df43f6f4b5d4587f3d8d71e45532c688fd168afa5fe89d571cb32fa09c4ef51.txt",
+      "sha256": "6df43f6f4b5d4587f3d8d71e45532c688fd168afa5fe89d571cb32fa09c4ef51"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6ee2ed6c77710de911761acd5fc1ad1da00f476beb1a7ef27e78c2d1858deafc.txt",
+      "sha256": "6ee2ed6c77710de911761acd5fc1ad1da00f476beb1a7ef27e78c2d1858deafc"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/6efb0476a1cc085077ed49357026d8c173bf33017278ef440f222fb9cbcb66e6.txt",
+      "sha256": "6efb0476a1cc085077ed49357026d8c173bf33017278ef440f222fb9cbcb66e6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/709e3175b4212f7b13aa93971c9f62ff8c69ec45ad8c6532a7e0c41d7a7d6f8c.txt",
+      "sha256": "709e3175b4212f7b13aa93971c9f62ff8c69ec45ad8c6532a7e0c41d7a7d6f8c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349.txt",
+      "sha256": "7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/74db5baf44a41b1000312c673544b3374e4198af5605c7f9080a402cec42cfa3.txt",
+      "sha256": "74db5baf44a41b1000312c673544b3374e4198af5605c7f9080a402cec42cfa3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/751963a8b88c0e3a9f27e98933079fbcf09b9998b2c13ac49c2e4d58444520d6.txt",
+      "sha256": "751963a8b88c0e3a9f27e98933079fbcf09b9998b2c13ac49c2e4d58444520d6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7554701d1e74fc434f68c522b1dd743c8c16d816a4b761b5213f367b898884c8.txt",
+      "sha256": "7554701d1e74fc434f68c522b1dd743c8c16d816a4b761b5213f367b898884c8"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/756c8d2ab2dc24f256e1455b5f03937f4933d83d7bc9f2d55009fc962377d512.txt",
+      "sha256": "756c8d2ab2dc24f256e1455b5f03937f4933d83d7bc9f2d55009fc962377d512"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545.txt",
+      "sha256": "7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb.txt",
+      "sha256": "769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/79217bf659236f8a91ede4ebeac657a63de2292706bfc34597beedf13bd27399.txt",
+      "sha256": "79217bf659236f8a91ede4ebeac657a63de2292706bfc34597beedf13bd27399"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/792d075c7bad6dac258a44e799eb64cbf465e24d9932d27669be08c5ec957e27.txt",
+      "sha256": "792d075c7bad6dac258a44e799eb64cbf465e24d9932d27669be08c5ec957e27"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7abd9b6960dcf7d4d0a48606a5b71bfe37d472db68d70637f3a58a56785f1621.txt",
+      "sha256": "7abd9b6960dcf7d4d0a48606a5b71bfe37d472db68d70637f3a58a56785f1621"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0.txt",
+      "sha256": "7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7ca6700600dfa9c9497bf5556365067daa802c871ea78239f129309c7a2048f7.txt",
+      "sha256": "7ca6700600dfa9c9497bf5556365067daa802c871ea78239f129309c7a2048f7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7ccef0d35e8507fa02d7e904a5277d62723f9ec576d52f6a865cab7b4dbf12ad.txt",
+      "sha256": "7ccef0d35e8507fa02d7e904a5277d62723f9ec576d52f6a865cab7b4dbf12ad"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7cfafc877eccc46c0e346ccbaa5c51bb6b894d2b818e617d970211e232785ad4.txt",
+      "sha256": "7cfafc877eccc46c0e346ccbaa5c51bb6b894d2b818e617d970211e232785ad4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/7fea0ee51a4ca5d5cea7464135fd55e8b09caf3a61da3d451ac8a22af95c033f.txt",
+      "sha256": "7fea0ee51a4ca5d5cea7464135fd55e8b09caf3a61da3d451ac8a22af95c033f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/816000f9c28f7005d931c77636eb79fa7020071eb0f6e6a995515dfccd3559cb.txt",
+      "sha256": "816000f9c28f7005d931c77636eb79fa7020071eb0f6e6a995515dfccd3559cb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90.txt",
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/838118388fe5c2e7f1dbbaeed13e1c7f3ebf88be91319c7c1d77c18e987d1a50.txt",
+      "sha256": "838118388fe5c2e7f1dbbaeed13e1c7f3ebf88be91319c7c1d77c18e987d1a50"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32.txt",
+      "sha256": "83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151.txt",
+      "sha256": "84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8569ebf6bf52937b961d9c9c934d8400a2bb6b09651a9afacbb3fc18fe5c09b1.txt",
+      "sha256": "8569ebf6bf52937b961d9c9c934d8400a2bb6b09651a9afacbb3fc18fe5c09b1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/86ae51c591e742d80ce56823d35e2e176b53e38a99bd8499c85dae31ef4fe1f7.txt",
+      "sha256": "86ae51c591e742d80ce56823d35e2e176b53e38a99bd8499c85dae31ef4fe1f7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/86dd7f026f916daf7511e39951ad8ea8cf55a8db67ae64060dacf829761c18f3.txt",
+      "sha256": "86dd7f026f916daf7511e39951ad8ea8cf55a8db67ae64060dacf829761c18f3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/87d9feb9238c6bd8e0024fc4733b06cff036f89f36d93b7df1c8a0549bbb7a5b.txt",
+      "sha256": "87d9feb9238c6bd8e0024fc4733b06cff036f89f36d93b7df1c8a0549bbb7a5b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/87f7527b1066337751f7f4d717089bf514ff8f7ee7d66c4c5b891b09e744ec11.txt",
+      "sha256": "87f7527b1066337751f7f4d717089bf514ff8f7ee7d66c4c5b891b09e744ec11"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/898b1ae9821e98daf8964c8d6c7f61641f5f5aa78ad500020771c0939ee0dea1.txt",
+      "sha256": "898b1ae9821e98daf8964c8d6c7f61641f5f5aa78ad500020771c0939ee0dea1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/89ff9689dcf9dd53968785d05a26f7898bb169dbfcada8d032b3e68cf0d55607.txt",
+      "sha256": "89ff9689dcf9dd53968785d05a26f7898bb169dbfcada8d032b3e68cf0d55607"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8a35369f3ca263b3c62fbb5032947e53b6bfebc6c8a4d1bb982de1c069f6fba5.txt",
+      "sha256": "8a35369f3ca263b3c62fbb5032947e53b6bfebc6c8a4d1bb982de1c069f6fba5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb.txt",
+      "sha256": "8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8b427f5bc501764575e52ba4f9d95673cf8f6d80a86d0d06599852e1a9a20a36.txt",
+      "sha256": "8b427f5bc501764575e52ba4f9d95673cf8f6d80a86d0d06599852e1a9a20a36"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8b43ce8accd61e9d370b5ca9e9c4f953279b5c239926c62315b40e24df51b726.txt",
+      "sha256": "8b43ce8accd61e9d370b5ca9e9c4f953279b5c239926c62315b40e24df51b726"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8bb1b50b0e5c9399ae33bd35fab2769010fa6c14e8860c729a52295d84896b7a.txt",
+      "sha256": "8bb1b50b0e5c9399ae33bd35fab2769010fa6c14e8860c729a52295d84896b7a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8c7516d4b27b1e495be5e38b612298b63de48d05f49cdac94f70f3cd70f8864b.txt",
+      "sha256": "8c7516d4b27b1e495be5e38b612298b63de48d05f49cdac94f70f3cd70f8864b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8ca6b96cea9e67c6c5c63f452c31bd396db8bd2406231fdea5d48ef462b48077.txt",
+      "sha256": "8ca6b96cea9e67c6c5c63f452c31bd396db8bd2406231fdea5d48ef462b48077"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8ce0830173fdac609dfb4ea603fdc002c2f4af0dc9b1a005653f5da9cf534b18.txt",
+      "sha256": "8ce0830173fdac609dfb4ea603fdc002c2f4af0dc9b1a005653f5da9cf534b18"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8df47c6ad9ac2c41eb9b2a72def9908959da0ede8dadd56c7b249c1bdb0c5ce6.txt",
+      "sha256": "8df47c6ad9ac2c41eb9b2a72def9908959da0ede8dadd56c7b249c1bdb0c5ce6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/8ea93490d74a5a1b1af3ff71d786271b3f1e5f0bea79ac16e02ec533cef040d6.txt",
+      "sha256": "8ea93490d74a5a1b1af3ff71d786271b3f1e5f0bea79ac16e02ec533cef040d6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5.txt",
+      "sha256": "90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9117d922e667125508dde62b02c1f57ed22f5ad21eb536aa2e2d99e1c796e639.txt",
+      "sha256": "9117d922e667125508dde62b02c1f57ed22f5ad21eb536aa2e2d99e1c796e639"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/946c9835d8034d24404f8cfec5f4654cee5dad17e944afc3d06d742cf2882831.txt",
+      "sha256": "946c9835d8034d24404f8cfec5f4654cee5dad17e944afc3d06d742cf2882831"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/95bd3988beee069fa2848f648dab43cc6e0b2add2ad6bcb17360caf749802bcc.txt",
+      "sha256": "95bd3988beee069fa2848f648dab43cc6e0b2add2ad6bcb17360caf749802bcc"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9c5a80639a57c1c945570e7ebbca0706305849ce3c098021325cca9db2f7acc4.txt",
+      "sha256": "9c5a80639a57c1c945570e7ebbca0706305849ce3c098021325cca9db2f7acc4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3.txt",
+      "sha256": "9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9dd42ea92cff2ede5cd477cbfcce051b2d0115c0ac7f368ee88cb545055dff1d.txt",
+      "sha256": "9dd42ea92cff2ede5cd477cbfcce051b2d0115c0ac7f368ee88cb545055dff1d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2.txt",
+      "sha256": "9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9e0a97848ea543aef745c98e84fde696a9a3e0735538f6daefdd3cb1942effc1.txt",
+      "sha256": "9e0a97848ea543aef745c98e84fde696a9a3e0735538f6daefdd3cb1942effc1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9e0dfd2dd4173a530e238cb6adb37aa78c34c6bc7444e0e10c1ab5d8881f63ba.txt",
+      "sha256": "9e0dfd2dd4173a530e238cb6adb37aa78c34c6bc7444e0e10c1ab5d8881f63ba"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9eacbcb81be660840c714a560a9d65ba07913db98dd4baf969f78dd499fdd60f.txt",
+      "sha256": "9eacbcb81be660840c714a560a9d65ba07913db98dd4baf969f78dd499fdd60f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/9eff396a99bafd208e7126602420d6864f6066c08b84485a5b032320a9c01997.txt",
+      "sha256": "9eff396a99bafd208e7126602420d6864f6066c08b84485a5b032320a9c01997"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a4445427440043e8ce6fadf7a43fb906cb0d7f6c573a560a9f142cf9f9bf8ff4.txt",
+      "sha256": "a4445427440043e8ce6fadf7a43fb906cb0d7f6c573a560a9f142cf9f9bf8ff4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a65f5d0a945d267751344c95665945b90c030ea107faf5c85d518929886187da.txt",
+      "sha256": "a65f5d0a945d267751344c95665945b90c030ea107faf5c85d518929886187da"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a77a1c089806b39ad339535bdf3677f636c91d96693e8ad7b11fe733f650ea64.txt",
+      "sha256": "a77a1c089806b39ad339535bdf3677f636c91d96693e8ad7b11fe733f650ea64"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f.txt",
+      "sha256": "a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae.txt",
+      "sha256": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5.txt",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/aa72991ac35b4de0034da0afe943e62b48c4092fc2ba13ae47806d8e9a4ad551.txt",
+      "sha256": "aa72991ac35b4de0034da0afe943e62b48c4092fc2ba13ae47806d8e9a4ad551"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf.txt",
+      "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ae895c8576e682f310fb70d93d9f99b1dd82872094c54a8f6cdfe2ca5c2d6ecb.txt",
+      "sha256": "ae895c8576e682f310fb70d93d9f99b1dd82872094c54a8f6cdfe2ca5c2d6ecb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985.txt",
+      "sha256": "ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b1181a40b2a7b25cf66fd01481713bc1005df082c53ef73e851e55071b102744.txt",
+      "sha256": "b1181a40b2a7b25cf66fd01481713bc1005df082c53ef73e851e55071b102744"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b16db96b93b1d7cf7bea533f572091ec6bca3234fbe0a83038be772ff391a44c.txt",
+      "sha256": "b16db96b93b1d7cf7bea533f572091ec6bca3234fbe0a83038be772ff391a44c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b1d6df41ed3aa96806e74c729444d7c121d90e6660a6aed01d298e03fde475a0.txt",
+      "sha256": "b1d6df41ed3aa96806e74c729444d7c121d90e6660a6aed01d298e03fde475a0"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b29f8b01452350c20dd1af16ef83b598fea3053578ccc1c7a0ef40e57be2620f.txt",
+      "sha256": "b29f8b01452350c20dd1af16ef83b598fea3053578ccc1c7a0ef40e57be2620f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b38f11f6096706e6de553dabe2a7ed142d59b6fa8c97e290c67496154745cdd5.txt",
+      "sha256": "b38f11f6096706e6de553dabe2a7ed142d59b6fa8c97e290c67496154745cdd5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b3d734001a94efff3579978d953391aa7115f877657d25eb54037a43875d078a.txt",
+      "sha256": "b3d734001a94efff3579978d953391aa7115f877657d25eb54037a43875d078a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1.txt",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57.txt",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1.txt",
+      "sha256": "b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b68ad1a3367b825447089e1f8d6829b97f47a89eb78d2f4ebaef4672f5606186.txt",
+      "sha256": "b68ad1a3367b825447089e1f8d6829b97f47a89eb78d2f4ebaef4672f5606186"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b843fb7430efdf9732c834b6814beda44fccf3f0ddf7c9e030b39da17f6b159c.txt",
+      "sha256": "b843fb7430efdf9732c834b6814beda44fccf3f0ddf7c9e030b39da17f6b159c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b99f9d43803f2ac979c50949df630bd8eeaf2fcd1b9fdb9093710d70f5dfb63d.txt",
+      "sha256": "b99f9d43803f2ac979c50949df630bd8eeaf2fcd1b9fdb9093710d70f5dfb63d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/b9eb266294324f672cbe945fe8f2e32f85024f0d61a1a7d14382cdde0ac44769.txt",
+      "sha256": "b9eb266294324f672cbe945fe8f2e32f85024f0d61a1a7d14382cdde0ac44769"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/bccaa8b6c09f94e81f06696e179dbe058464bbdfbc823b6d49cada1d71e84ac3.txt",
+      "sha256": "bccaa8b6c09f94e81f06696e179dbe058464bbdfbc823b6d49cada1d71e84ac3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583.txt",
+      "sha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c0c56f26d9c051cac4d200c34c84e7ae9aaa853e01a982a1df08b09931e518ae.txt",
+      "sha256": "c0c56f26d9c051cac4d200c34c84e7ae9aaa853e01a982a1df08b09931e518ae"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b.txt",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383.txt",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c30152c94a6d75e021adbc52b3a52470366a46edb917e17deae3259251af244c.txt",
+      "sha256": "c30152c94a6d75e021adbc52b3a52470366a46edb917e17deae3259251af244c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c43b9a9b1387ed53d2c49263838261129a010e280e3a174a792242c3e2c98db9.txt",
+      "sha256": "c43b9a9b1387ed53d2c49263838261129a010e280e3a174a792242c3e2c98db9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c46324e45a005413535a6fb7a97e9eacd3cc6bf30335b7d5c10b8ee3af9e60c2.txt",
+      "sha256": "c46324e45a005413535a6fb7a97e9eacd3cc6bf30335b7d5c10b8ee3af9e60c2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08.txt",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3.txt",
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.txt",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c816a0749cdc6bf062a5111c159723de51b2bfac66a1dac2655abd9e6b1583eb.txt",
+      "sha256": "c816a0749cdc6bf062a5111c159723de51b2bfac66a1dac2655abd9e6b1583eb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c8c6324cf2f0f076e3ed5dea4a21f00bd4dd6fce44f72b110bc52e7fe06f6e1e.txt",
+      "sha256": "c8c6324cf2f0f076e3ed5dea4a21f00bd4dd6fce44f72b110bc52e7fe06f6e1e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c962ee4d1d05ddc138b202b2540219ebc57893fcf97b364852094a9a94ce1365.txt",
+      "sha256": "c962ee4d1d05ddc138b202b2540219ebc57893fcf97b364852094a9a94ce1365"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c9a75f18b9ab2927829a208fc6aa2cf4e63b8420887ba29cdb265d6619ae82d5.txt",
+      "sha256": "c9a75f18b9ab2927829a208fc6aa2cf4e63b8420887ba29cdb265d6619ae82d5"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566.txt",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cb3c929a05e6cbc9de9ab06a4c57eeb60ca8c724bef6c138c87d3a577e27aa14.txt",
+      "sha256": "cb3c929a05e6cbc9de9ab06a4c57eeb60ca8c724bef6c138c87d3a577e27aa14"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cb5aedb296c5246d1f22e9099f925a65146f9f0d6b4eebba97fd27a6cdbbab2d.txt",
+      "sha256": "cb5aedb296c5246d1f22e9099f925a65146f9f0d6b4eebba97fd27a6cdbbab2d"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cbd8bd07329a234413710c02b19d22c0cf78fc451882593e817130779b5455e3.txt",
+      "sha256": "cbd8bd07329a234413710c02b19d22c0cf78fc451882593e817130779b5455e3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cc117d90b498b32b11a886f279b359da16a73c3b01efbb2f5cc004b20262334e.txt",
+      "sha256": "cc117d90b498b32b11a886f279b359da16a73c3b01efbb2f5cc004b20262334e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cddabf8adc6ccd6c3e68f5d71eac9fae3094116623cf23a46af0a5fd6b8ee813.txt",
+      "sha256": "cddabf8adc6ccd6c3e68f5d71eac9fae3094116623cf23a46af0a5fd6b8ee813"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ceacfa4d7fa67df64ab09a56fe248c50a3bfc9bc00374d69bd74ad763b14b89c.txt",
+      "sha256": "ceacfa4d7fa67df64ab09a56fe248c50a3bfc9bc00374d69bd74ad763b14b89c"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/d1fc1bc0d155df60b2e7705b6b2ae02a05c96f948e1cec6e2fb86360b09f346b.txt",
+      "sha256": "d1fc1bc0d155df60b2e7705b6b2ae02a05c96f948e1cec6e2fb86360b09f346b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/d3174ad63e721d4c9dccb8ad4320848992d314369bc46319720b5802c9153fe9.txt",
+      "sha256": "d3174ad63e721d4c9dccb8ad4320848992d314369bc46319720b5802c9153fe9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/d5c22aa3118d240e877ad41c5d9fa232f9c77d757d4aac0c2f943afc0a95e0ef.txt",
+      "sha256": "d5c22aa3118d240e877ad41c5d9fa232f9c77d757d4aac0c2f943afc0a95e0ef"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/d75967ce788187f83c3bd3328210974acfc443d4dc44909f1d7e34f21623a0c6.txt",
+      "sha256": "d75967ce788187f83c3bd3328210974acfc443d4dc44909f1d7e34f21623a0c6"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a.txt",
+      "sha256": "db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/dc91f8200e4b2a1f9261035d4c18c33c246911a6c0f7b543d75347e61b249cff.txt",
+      "sha256": "dc91f8200e4b2a1f9261035d4c18c33c246911a6c0f7b543d75347e61b249cff"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/dd87e27dfbaa888cb77ea34592648a7743636b8dce07e49543bddda0fcfc73bc.txt",
+      "sha256": "dd87e27dfbaa888cb77ea34592648a7743636b8dce07e49543bddda0fcfc73bc"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/df9cfd06d8a44d9a671eadd39ffd97f166481da015a30f45dfd27886209c5922.txt",
+      "sha256": "df9cfd06d8a44d9a671eadd39ffd97f166481da015a30f45dfd27886209c5922"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e20fa2b8e0a2565f24a792b94b4bf4b6c2b9d36f781d8a9516e218a036e6677a.txt",
+      "sha256": "e20fa2b8e0a2565f24a792b94b4bf4b6c2b9d36f781d8a9516e218a036e6677a"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e271993808fec50ab29350b39539cdec611a9103f827e0aa26d61da70e2d33f8.txt",
+      "sha256": "e271993808fec50ab29350b39539cdec611a9103f827e0aa26d61da70e2d33f8"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e2e245f2b566d0bfafb0f6a04c16b82d710c4e6e7d799e39bb4ef6e541b85b98.txt",
+      "sha256": "e2e245f2b566d0bfafb0f6a04c16b82d710c4e6e7d799e39bb4ef6e541b85b98"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb.txt",
+      "sha256": "e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e53a7165e8bc3ced5e5628404b3d2d28ecc14ad720f1c09ba28385d5151ecf93.txt",
+      "sha256": "e53a7165e8bc3ced5e5628404b3d2d28ecc14ad720f1c09ba28385d5151ecf93"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/e57011537d230b14e790f6666dc00816f7b371ebbd7da8a12491e51086fec278.txt",
+      "sha256": "e57011537d230b14e790f6666dc00816f7b371ebbd7da8a12491e51086fec278"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ea084a2373ebc1f0902c09266e7bf25a05ab3814c1805bb017ffa7308f90c061.txt",
+      "sha256": "ea084a2373ebc1f0902c09266e7bf25a05ab3814c1805bb017ffa7308f90c061"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/eb8a6c84630461b352badcab1dbe5d0168c56d377358b2b8c86b51003272d5ef.txt",
+      "sha256": "eb8a6c84630461b352badcab1dbe5d0168c56d377358b2b8c86b51003272d5ef"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ebaac853b53fec0ed475796f533ce676912a4df9ad9d8a621fa76d5060591e10.txt",
+      "sha256": "ebaac853b53fec0ed475796f533ce676912a4df9ad9d8a621fa76d5060591e10"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055.txt",
+      "sha256": "ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/edd65bdd88957a205c47d53fa499eed8865a70320f0f03f6391668cb304ea376.txt",
+      "sha256": "edd65bdd88957a205c47d53fa499eed8865a70320f0f03f6391668cb304ea376"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ef88893533af22ffbb68ceef0724ba1389518df26165a34f3c99ad30b884df4f.txt",
+      "sha256": "ef88893533af22ffbb68ceef0724ba1389518df26165a34f3c99ad30b884df4f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f025ccfb7dfb6bdfedc75ca0f67acc69e6fb4998143d834f7c2f38a29989680f.txt",
+      "sha256": "f025ccfb7dfb6bdfedc75ca0f67acc69e6fb4998143d834f7c2f38a29989680f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f28420c1906af38be726cd7842798f0194b27c41d6051c0d1e9ee348b8a4a0ea.txt",
+      "sha256": "f28420c1906af38be726cd7842798f0194b27c41d6051c0d1e9ee348b8a4a0ea"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f367c1b8e1aa262435251e442901da4607b4650e0e63a026f5044473ecfb90f2.txt",
+      "sha256": "f367c1b8e1aa262435251e442901da4607b4650e0e63a026f5044473ecfb90f2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f428305bbf2e70fbd807af0f3c7ac1b7acfb95311640f451e9d2e48db6d7e96b.txt",
+      "sha256": "f428305bbf2e70fbd807af0f3c7ac1b7acfb95311640f451e9d2e48db6d7e96b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f51ac2c59a222f7476ce507ca879960e2b64ea64bb2786eefdbeb7b0b538d1b7.txt",
+      "sha256": "f51ac2c59a222f7476ce507ca879960e2b64ea64bb2786eefdbeb7b0b538d1b7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f5c342c49f3ac804f3e8e7bb62a8040a44c50d47bb36902b1abd13f66a1adf8b.txt",
+      "sha256": "f5c342c49f3ac804f3e8e7bb62a8040a44c50d47bb36902b1abd13f66a1adf8b"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f5e1170ad72f951ba05d763e0234cc6f16108492713f59fc577ebb8cc0ca668e.txt",
+      "sha256": "f5e1170ad72f951ba05d763e0234cc6f16108492713f59fc577ebb8cc0ca668e"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f7715d38a3fa1b4ac97c5729740752505a39cb92ee83ab5b102aeb5eaa7cdea4.txt",
+      "sha256": "f7715d38a3fa1b4ac97c5729740752505a39cb92ee83ab5b102aeb5eaa7cdea4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f7bdb3426d045cd50efd4953026e3eb5a83d0199f458a075602611b9344da5b9.txt",
+      "sha256": "f7bdb3426d045cd50efd4953026e3eb5a83d0199f458a075602611b9344da5b9"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1.txt",
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+      "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/fb77f0a9c53e473abe5103c8632ef9f0f2874d4fb3f17cb2d8c661aab9cee9d7.txt",
+      "sha256": "fb77f0a9c53e473abe5103c8632ef9f0f2874d4fb3f17cb2d8c661aab9cee9d7"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/fd80a26fbb3f644af1fa994134446702932968519797227e07a1368dea80f0bc.txt",
+      "sha256": "fd80a26fbb3f644af1fa994134446702932968519797227e07a1368dea80f0bc"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/fdd55e2b2da854b0fbdc1e607df7c2ba1e1ebf91ecb77c515511ebeef972bc8f.txt",
+      "sha256": "fdd55e2b2da854b0fbdc1e607df7c2ba1e1ebf91ecb77c515511ebeef972bc8f"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/texts/ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2.txt",
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/opus-license.txt",
+      "sha256": "cbd8bd07329a234413710c02b19d22c0cf78fc451882593e817130779b5455e3"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/type-update-public-key.txt",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/action_export.rs",
+      "sha256": "e25846f2e02263f400ed56ebdb8e4696b8d6f6bd72efc88ea9f03ab38684213c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_artifacts.rs",
+      "sha256": "1ad0cba8d95fa65c44cac506fbae1342f1bec9b0a3b386a4d5be282eeea1a401"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_artifacts/probe.rs",
+      "sha256": "266532e0a3ef1daff7aefd55df286bf3dbe7a74f23f1c3f4edf31acde6c13cb9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_components.rs",
+      "sha256": "14a279d57f4958fe513428e88b7c5e0507de3b508862e21d1562d3333665b5d0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_decode.rs",
+      "sha256": "a25733471824dc4660aaa9948425b8341248fee931b442e073ebf01798aea401"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_export.rs",
+      "sha256": "78244cb384dc8a81eb20e36160cb44eec70c585245dcf9ca4de640c8ff48c561"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_storage.rs",
+      "sha256": "2a6860513bd906f1e3c6597d55560e07a68a81ad7c5f20ded54e58d913cad6b6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+      "sha256": "836cd14baeb908766f9038c2589a225c018f5f9574809c29d83d5f9b6675202f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/batch_interval.rs",
+      "sha256": "4c9cecac377e5713779c62a16adae10c4f39a36d9b007ad2700283f3dec6c63e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/device_clock.rs",
+      "sha256": "0283dd13e93c6d8ab9b99ca3cea0f4f0f53523f9ed8b92a1e361806dcd916e71"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/legacy_reclaim.rs",
+      "sha256": "4173649ae5d2cddb32492dd70034e199c55e81a4f4f0006631414dac1925544e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/offline_connection.rs",
+      "sha256": "f59cd10104bf686ae9fc7d0c021f71dd1cf579eed9417d286aba88b188c20f35"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pet_caption.rs",
+      "sha256": "ff33b4d4beb4bdb6bc9e27a3475afca4fe329b5f348a154557cddf925d83d8a8"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pet_caption_protocol.rs",
+      "sha256": "65e22ab0fa4df6dcde2c529df489e6592ec45d0f4cbd1ff9939d16cd3b2634af"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pet_find.rs",
+      "sha256": "11877bae50dc2ed7403c7b17db38c376645d25ef7d01ab99748cf7f1f2c12f86"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pet_profile.rs",
+      "sha256": "8bf5574843ebeb72dab22b0a678c0cca302893cc3c29c45e0c8a5190bf6f28a9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/prepared_connection.rs",
+      "sha256": "bfc3897f67bccdb7ce4ab103b4cd213930495611922c71852a510994090e8881"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_progress.rs",
+      "sha256": "fe5a0bb8d2ed3417d59885a9c224dacaa3b945893e62f6b3bb423da8b663788d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_receiver.rs",
+      "sha256": "d44f15a384cc47b5f22d7ad1e37f1dcf63f166cedf89080d33295df6251ac685"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_recovery.rs",
+      "sha256": "c1f588ba21137ae74ec277312c8c998e02c85277ea822c2a957732859bf17fad"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_recovery/tests.rs",
+      "sha256": "9e363ec1366590733de45bbce4fd08e8df70f1276631f393f376c7f5a5bb36fb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_reorder.rs",
+      "sha256": "c2cce18dcc27c5b6fde911a206c62ba73354510dc7644cdc6e53201b83f67212"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_session.rs",
+      "sha256": "121b6f158591ca768e77f515956551c75197e8fd3fda39650042ca8abd54539b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/pull_timing.rs",
+      "sha256": "98657e4dac56e66a9a6baf898837aabeeb1935dd7aa31aeeadc4d7b428134ac2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs",
+      "sha256": "8a379b41d877fb9120f20d95efda1a1806c727c53e23000bd3cd79ae45761db9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/recording_management.rs",
+      "sha256": "08e5414d2a282bd93f19fd80d49c6b2f798a7135448f583d439e9b5c4a1fd2f6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/segmented.rs",
+      "sha256": "4e607c16a6ade63a79497fad44c2b64e7bca8f864e76ffc297a489c2ef64c345"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/upload_benchmark.rs",
+      "sha256": "82220fedf63ee852c33b96afb1bfae842f69709224655a3044d9cd829d62c7cf"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_link_budget.rs",
+      "sha256": "e9d584a31e37fc0e701726bc039172edc7a62908a476d5005aa47a141749561b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_mtu.rs",
+      "sha256": "7f0f933940710ce24adecd71bde42a781ef1ef83c91cc4745510f79d0303ef63"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_pairing.rs",
+      "sha256": "3e98a5e45f545c2d76e0866d7cee4e1aa68b1f5a8cfb411d5b0221cc1c96e9ed"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_throughput.rs",
+      "sha256": "a20bb96bae71e667ca4750cee8f5e642dab4ce277f96106f6c9298908d627604"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/board_meeting.rs",
+      "sha256": "5b9c2bde86ad8b88125388f1826c466c1fce488b832650fb94f2b648d0b75ccb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/board_stop.rs",
+      "sha256": "d2a54cab103078999194106906b522fe8d18c03ce33ac59eabb900e45f0157d7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/calendar_copy.rs",
+      "sha256": "9998142111edd662d742bb94e1ca40c65f8d140344b554781738caa47db3efa7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/calendar_copy/tests.rs",
+      "sha256": "2e0629e73532901aaf1179d44521a4810ef959259502d9354b5da1825b23e249"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/content_export.rs",
+      "sha256": "2f5d4e10b2bb9b4c12b16c0c679991efd75162df682e2f3fd7a39faba4f14df8"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1.rs",
+      "sha256": "d642b9e11fb61b05807bc2d04639f8830165f40a10fec56db68069117ea9d58b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-bookmarks.cmb3",
+      "sha256": "634bc47da69491279a3601d2c6f02b1ebc8fd681ff39d34dc8c922d2ab4515bf"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-local-controls.cms3",
+      "sha256": "a13bc4bc89e04aea1d1e9e47fd4a482714090d946ea51a065880051a64bea120"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-pause-control.cpc3",
+      "sha256": "9b669dc69a1b444197323f06ec7de2f3e496b90d4e62ca55658118d4897df5fc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-pause-tail.cpt2",
+      "sha256": "6d1fe2fd6927b6134e40f22342ec372123dc34ad4b3ab390902e10cb29a35560"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-pause.cpf2",
+      "sha256": "74c65bede3b6423f75e1484a60c82645c5d856847d9e79d9e61a693b50cfac67"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1/tests/engine-terminal-cause.cms3",
+      "sha256": "a3094705e39620218628d71fab6ae43bfccfb8c3c04dbc63b45cc37a9da7b1ac"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1_audio_profile.rs",
+      "sha256": "94b8004fce6c6dd975a38b1f1ec6adb8377f73d4ddf0b0922825719c06018523"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1_audio_profile_tests.rs",
+      "sha256": "8592f993c18e061ceb6c2de2debcc7ef01ea7f34a95e55d313d4becb29365deb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/cop1_boundary.rs",
+      "sha256": "1c862b7f9953c60499d21b17506015a8dc546ec3518e9e90aac50715224af48e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/desktop_update.rs",
+      "sha256": "b82726e99388c530f22652f42d3d3dcf3476c8d2a4edf8b0773d1587c42f8954"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/desktop_update/installer.rs",
+      "sha256": "34453b07c9bce871b673169cda92954b2b59ca99b2c78f45cb70e8d28463f341"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/desktop_update/probe.rs",
+      "sha256": "97458819bf461eb7564f97290c394376c88336928c1a2bd56a853a447be101f2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/device_connection.rs",
+      "sha256": "466a44b601c8da8d16ade0d73edaa676463fd5c22becb3157112ce47c56749b5"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/device_discovery.rs",
+      "sha256": "0d1db299549c0572665c1915b6309c3e91ee4150d1f782ad7016555800368ee4"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/diagnostics.rs",
+      "sha256": "af88d09ce095b461cfb75c55b74f14160dc0a54b3a922717f5986eaf387ec167"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/diagnostics/identity.rs",
+      "sha256": "a3b20dbeeec14b544dac17e8aba9fc287f69b978236b91688ef3e0df5a202e64"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/diagnostics/trace_tests.rs",
+      "sha256": "02bcb96544d31af1f004adb077ebcbf6bb0d1afbeca89c4ea390c35364a204e8"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/diarization.rs",
+      "sha256": "4dedd1b72ed311c681c576b3831739e470b81b1c1753bec4a61f4636225f7dae"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/diarization/speaker_count.rs",
+      "sha256": "550e823e234998ce1a9ca7459ab5f885c30c037cc7d5f6908e6712dc8fe5e8a6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/export.rs",
+      "sha256": "c85d69cee49991d2fb57f6c63feef01f55acd7005ba10ce53f9b5a6cf75f818b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+      "sha256": "93c0274806aec8fc3d3af730ee5ea8919a4c576f78e76d7e10214bb626dc97fc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/external_command.rs",
+      "sha256": "9b3c8ff5b01fc31f2d0fc0c8b3d92360c5f5d21f1df925ce2ffe6346b30c0b2a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/external_command/windows.rs",
+      "sha256": "1223c89f77559f3d21f737db1dea342735f982497a9df5944202025096e8b40a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/external_command_probe.rs",
+      "sha256": "1a3208c044d2f4f82e2a777c487257972f66758cbe82096fc60381b7a57eeefc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/file_storage_probe.rs",
+      "sha256": "1b22a2d82d2224989511201981b64dfda935557ad938caa793b45c8fadb4d339"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/firmware_ota.rs",
+      "sha256": "b8c33814e6cf57b1284cc189fdebec8917c13ee4ba3a02c96d044f809d802ccd"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/fixtures/audio-profile-v1.bin",
+      "sha256": "8a9a8995b9b553649c361031bd7fd9403a957ad37e2fe504ff136f415fd84e55"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/fixtures/production-model-audio-profile5.cmb4",
+      "sha256": "a8dafcba207b3db7d317774ecf0873a51791990faa93ac6e8ec8a8f6ab298149"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/hardware_identity.rs",
+      "sha256": "e3d59f8845ed5af879364fcaf8391ce2c9441fa2122d55f14122d41e85e22391"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/host_interrupted_recovery.rs",
+      "sha256": "e8d219b12e94d1b9103eb3411bc73ad4475a441e0bb7fb00aa72538d9debf961"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/host_recording.rs",
+      "sha256": "99256ee9f70eeb97a61f8c8a77e3fb8425d656168eb7633a7583b11a279a3d0d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/host_segmented_capture.rs",
+      "sha256": "02062167a449de14cc2525232fa87e285d8e94a4a2e9537232f4e642402e86df"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/import_audio.rs",
+      "sha256": "05ead2bca96e8be432b12ffaa9f384c5bd0a21897880e98dfb3945190e9e2f13"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/interrupted_capture.rs",
+      "sha256": "5335bd63a914b439fcdecf7c76269f9a5a2d02deb45c28242d1e1f71740a00a2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/library_backup.rs",
+      "sha256": "3a830dcda90fa931938ab21b96041a8c2a88340ec6cae1436ddeff42ba820855"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/library_export.rs",
+      "sha256": "d611c8d24a81e5cb66c9bcb649c9f5e63ce6ceffe59bbc342f4847c914df3810"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/library_lifecycle.rs",
+      "sha256": "cde209042bd939788ddeb579796ce03a3cd3219555b22ebb61a7811002ee9f45"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/library_organization.rs",
+      "sha256": "ff60c4c4b3990a4cad0e432b8bbe9595991054abff6f8766940f8d82fcbc9162"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/lifecycle.rs",
+      "sha256": "e1f4ce5b3f50db3b1d4c4b007359b817c32fe9a62e0d5f4ab876ded5f6581afb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/live_asr.rs",
+      "sha256": "6d36f8e183178355852bb55563debf624ddd212a9b76a6fa2a63d663f3869e99"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_capture.rs",
+      "sha256": "b1d3a8fc9e4c0e72640fbec803e34aa9c1366e0c58352cdd252a15803d63962e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_mix.rs",
+      "sha256": "c03c48723ea9a3ef226b58be989e882bf07709b42010f34247417ecad645a302"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_recovery.rs",
+      "sha256": "8638af5da189f9d13e20bd931185b06fb8fe8317f5af407dfba121c041aecf9b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_timeline.rs",
+      "sha256": "4cd6308765272264ccb53ad0607f80221d7e52c57443cb147ee20a1fd6cbea54"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_tracks.rs",
+      "sha256": "5cba7b8c6000c452fba1fc22ecca15fb0cff6b8a7670e8c309ef4eac33883fc5"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_audio_transcription.rs",
+      "sha256": "0705148d65b358f9c553e70850d5248c02bd64226f90649f4bfa5c197ad667ac"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_document_export.rs",
+      "sha256": "074a9882f8404412247b3b0a7b9fa4c321ae56a984e9ae5d34d9e49987550b27"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_document_presentation.rs",
+      "sha256": "c253c88889f27a93bf4712dff2848d9a0a9b3a13060f512fd983831a104fb21e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_notes.rs",
+      "sha256": "fe864c753731d9c2a2c66e4e2906a858a74493e733c8f3e5382e8f13432c66b1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_notes/tests.rs",
+      "sha256": "dd1af165237d431d43c3ec1494a37471168ebb9607599df522ccd3ae7a359f60"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_processing_job.rs",
+      "sha256": "6ef343565aea98ce3e459ecd42d5b4d1e7dfb56db767f37385c7acfd51d46186"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_processing_tests.rs",
+      "sha256": "8bf95c6d294e88a1bfc1c9658ea5d8e1f2dff9cdc4066a1dbba574240fbc95e1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_qa.rs",
+      "sha256": "04a4c08531b680e10ca8cff2b3842fc07ba4630ed6d4344f6737fa3823baf175"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_transcript.rs",
+      "sha256": "79ccfb91cd96b1ebb7fc237fd7139a48d7b78e51b834cb30761216920a79e063"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_workspace.rs",
+      "sha256": "08c35877ea01473e6030a2d81f591b412f670a3e4ec99f9928266f6ec0c499cc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/mindmap_image_export.rs",
+      "sha256": "b73c8e21921785161499a2f5a5a2880fc27311ab27eda0bbd7ae3b2b4e4ec9b4"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes.rs",
+      "sha256": "3fc1805b641e09e044c3cfdf4be867df776c1fe7e6892d5c75fdceb5f7c86c09"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/context_plan.rs",
+      "sha256": "95a52c216f247886d9582ca3dd17292dcf653902d59061af200ac826b77954bb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/long_meeting.rs",
+      "sha256": "3bf510391e41786d8b2957d737ff72a9f1f2fef3c2dbe1f8de4303710068cbb9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/long_meeting/tests.rs",
+      "sha256": "2a2bfe468dcad87073dc034b29393acdb34965fc6e9e33d1bba761ba13eff80f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/question_sources.rs",
+      "sha256": "b2c7eb426c4fb472c4f99f066ca47d0c00dafaa7fd093ca75b0347e33c9d4869"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/short_evidence.rs",
+      "sha256": "9028a017a52ff248fe9654397388fb35e83ea66dbb28908c4b1154336e3044cb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/short_memo.rs",
+      "sha256": "e177e394663c350529f21e1af3db0f68afb42288b61ab103fdaecd668d79e022"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/template.rs",
+      "sha256": "396544a687a64f166c3fde62aeda5948d064a5bbb8bc847693a04a71f87fdc82"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes_context.rs",
+      "sha256": "340472a001a1b51408974621350068db51fd54e6753d69e7f570c4e7b211c7c0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/mod.rs",
+      "sha256": "9ea6ba24519ccae7eb5cde93714dba55bd0eeccdc128a34303e7c5fbd70c184b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/mp3_export.rs",
+      "sha256": "e99957a69c4d405c67c5205d1b246cc8efb832d42b4a5fc1b74d22e830654912"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_credit_stream.rs",
+      "sha256": "94361fd06431d82fe6f3c5e9afee43eb27284e39513ea6170353c8068711ce59"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_finish_receipt.rs",
+      "sha256": "697807a89c472880e9e2c0523dc73cfd2e1c6426081164a52ef8f352b8c9dc47"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_flow.rs",
+      "sha256": "f2104b7163edc946b25e4fd6965103ee15ccca3fbf601ea46d9ab9ebf11b61b1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_metrics.rs",
+      "sha256": "8a9a4fe792807750b5ed3a09341e841d969eb5372cc898375d150c16746d4859"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_pending.rs",
+      "sha256": "fc4a6fbfe7a8ecb3578f9475e657d33bed892d752428b494a31566de1396237a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_readiness.rs",
+      "sha256": "d3b6673a924a06bcf792210e9b5b57385365ff89a1ff458c2d615637df8335df"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_reboot_wait.rs",
+      "sha256": "bf96ca0c26c4786d8d579571adfc3c5446b91ae2a6712c225132d1d9fbd97759"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_submit_timing.rs",
+      "sha256": "15dc71a372982ca0da125897d59880efbe4034261c656f7d934a550f86a08447"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ota_winrt.rs",
+      "sha256": "f466ad73d754756c26d80e029fb9ef89280145cedcbfcbb9ac68856435f61e71"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/pdf_export.rs",
+      "sha256": "69a44653cfe1b42bb7a476f57527c5a8d9629a070ae943b74a7572ec83f98f0d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/persistence.rs",
+      "sha256": "705f0cecddd7e83076ff0d157df90803f6f69b0ed5d420265c7f9a8bbdea4df7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/pet_chat.rs",
+      "sha256": "c0508c35e9587f7eefab1efcb44a5a0c8225c9422e87e83ee380f01a2bf45a80"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/pet_chat_language.rs",
+      "sha256": "f00ff5934c214d2a398639e9e2a2a3c5150abc4d6a46f0c73cd2c4f43211a31f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/pet_profile.rs",
+      "sha256": "31184262cbdfebb125f17ec1c2c5f722ebedc3a7bd066eead0a27984a1724e5c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/pet_profile_model.rs",
+      "sha256": "86990180ece84a3caa17df7c4bc4046de1ede44ae37dcff9c95c8e3c7980aac0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/presentation_export.rs",
+      "sha256": "a299f85ca0c681d64db083fd8029a7f38a8b6f8bc3c8f285d8ba69e8d1a6d7e1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/privacy.rs",
+      "sha256": "1c843eac4559bb9ea405fab8abc70a5132ae798a974ed1a55b3ae348f70aeab6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/privacy/probe.rs",
+      "sha256": "c348a978084a607426490f976b8a88618d8d0a9ca74ffd21e22b2113160b0e94"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings.rs",
+      "sha256": "c8e604cf9f77f026b4af7c4277bffe3fef09ee7587ace1893cc7a604f4de4574"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings/credentials.rs",
+      "sha256": "da69bd7ebdf65c98451cc34afd2f3f961a2dc9b824e56b766abaca6e4976804b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings/storage.rs",
+      "sha256": "08ad3f47f92e278233cc417b60b0298de89dee35b1b0aeb5f4154b9e04b17225"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings/storage_probe.rs",
+      "sha256": "3d9b0b729452e11bfe407ed3e43d4fe90332db6e6ee96115b2a4cab528ee5749"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings/windows_vault.rs",
+      "sha256": "ccb8ce98d63361d6023319866b2e90b203388269977e55959f963f0557d504b9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control.rs",
+      "sha256": "c23184b439a2479f085e4b3737c39fd92a18bab7e8f7c5c290e25de0b48499fe"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control/application.rs",
+      "sha256": "ed172431cd163d8716aa09a5cfe626f697d84a514afdbb1b44921624f452e1d0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control/catalogue.rs",
+      "sha256": "51aecc8ec8836a33f1dd05f69144fda04a32d7a1173c3ea13f10ba67ae084138"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control/local_adoption.rs",
+      "sha256": "18ab7bfe216ecb33a99f77981db30928a91a03467670e64a7b734690dc397b45"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control/retirement.rs",
+      "sha256": "f9300f41b9a9e933379a78eef3371c122ca895413429311a51ca1e750891d889"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recorder_control/tests.rs",
+      "sha256": "c72bd1d470e9285e7dab0adef3777872f4695369eba42f302e3efbcaf8e22d7e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks.rs",
+      "sha256": "ecad7b399b57a2146083e64bc31119d58a15b2e659cbbc79e9e243b2c085a57c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks/device.rs",
+      "sha256": "c7d2b437a6c180a524868ba32a15b0bf7857faddaa3e8f073b14d5402eea8e3d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks/live_queue.rs",
+      "sha256": "1c10cb4822173b1b33bce0667d4f2adefb58f98826e2a59d4e15e37f8275ea2e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks/logical.rs",
+      "sha256": "554f15e51eb2c6e03d353874365975a5d27f8db6dae441433f8a648e3c242b50"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks/probe.rs",
+      "sha256": "8fc86f45576d857b71754e7fa781e7493cae70c31cadd4e9e5aa9cc7fc45c4e6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_bookmarks/tests.rs",
+      "sha256": "57a48e466d82dec6e4d97a368c102d16b906edba0626467e059052c818378698"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_capacity.rs",
+      "sha256": "cc7ccf7f0f10f7438621de6ace8064fc3833116c9f274a8f7ed240dadb078c2c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_capacity/fixtures/ccq2-current-arena.bin",
+      "sha256": "eb9b6cd1da413fff4313bc66b6b0374bfe5817162367d91b80df38fd90f0a9d0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_capacity/fixtures/csn1-fragmented.bin",
+      "sha256": "372755eee3f97a1543b69adf987e9c64a7321943e1012e0d4959562fafae020e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_discard.rs",
+      "sha256": "3087a8fbf9c695d698ef5ca8d9a345e8d4f772e44903034757bf0baf70ac6b99"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_discard_v3.rs",
+      "sha256": "0aefa90101a43f4f4e7185f68c169dfdaf279ec1bb3f0d1f60a9d81a1680c7ca"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_metrics.rs",
+      "sha256": "8144b7f2156b0213c3142274155b642a2af74ac7a4bb294308d5abc7dc64aeeb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_metrics/targets.rs",
+      "sha256": "4b865e8b0f731c7e49d138d4ca927f48a371cab92d1167448ab5a5aa53c0ab1b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_metrics/tests.rs",
+      "sha256": "7af796b71379f12af8747aeccaae7dbdb49a68dfde16320c01a5e0b7f7563f9c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_pause_view.rs",
+      "sha256": "edf01bf2b1102f2de95045064bfd16d2049012c7102a0b363f53ebb6f46ec628"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_ring.rs",
+      "sha256": "d41edc4e19d7957dba3cf3e32b49d4feea1935ab5c7b86d15aa684ba725e5b14"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_sync.rs",
+      "sha256": "4fcadeacd9ebadf3b0d5dd02fbef19589e06d6f25d6e30d8cdc7ef9b99325c70"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_sync/flow_tests.rs",
+      "sha256": "cc4256824523a1c47df66424acf8a1c21427806606cc3581b3e4ff0f0e5e2b9a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_sync/preference.rs",
+      "sha256": "abf6f413518eb61d87421b3423003660f6fadac7dd0c7f528f6e19bb04292ff9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_sync/restart_tests.rs",
+      "sha256": "4388438a20929312adb3fcf502acfed12cb2f6ad86bc9fbd8ecb83734acc83f0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer.rs",
+      "sha256": "6d8eaed3d08cea0642b936e91a384cfbb7207f2d116e45757b116f8ae55c3615"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer/groups.rs",
+      "sha256": "6577f068e63abf813385a532cd7c642ea19639a2f3f3af1341ab894e784c8c04"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer/probe.rs",
+      "sha256": "002e61d443521fb947fbf5d3aeec99bedf3371aa57ac2b6156a005c0eb3d31eb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer/tests.rs",
+      "sha256": "e4ab2d487cb154f5d155ccc73cb16f14974ece7be930c3c772451a66a9f33e44"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer/worker.rs",
+      "sha256": "4443993a6a660834ed0612f459ae3806835cca96b44fd8e70852c17aa3e3bf0d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_transfer/worker/tests.rs",
+      "sha256": "587e9b0e9b602e468c58aafdfc5488a8f2694a0984ff3962549dcc691b7d76c7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire.rs",
+      "sha256": "4fd95ab351bac00869655f990a44ea3a62e5d8546ee289ff8337154052a30552"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/control.rs",
+      "sha256": "211de1ef462ce1ce1a48914ac8ee7dd8366061b44f36a29549957c9af25b2d91"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/control/pause_tests.rs",
+      "sha256": "e42543e794ca35811f30335ff41a623bf286652871ba45bc11f8001603c7595b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/golden.json",
+      "sha256": "88bd516a7f0bd981bd878bf84cfef7a364f626e00f31f20a5894bb05df980b73"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/legacy.rs",
+      "sha256": "bf5c565c6b1183b5931da244c705c1dd22c16102a65576b771ba4c2876cc743d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver.rs",
+      "sha256": "2b195fdaec1f6a5adc470b344d1f70ca9325a2e2becde80b96dde2a5e9d6ea78"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/audio_profile_tests.rs",
+      "sha256": "3dff53acdd9a3b0428f1118aea06b31b867c5cec2d01fcb614cb8d3f8da639b2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/device_bookmark_tests.rs",
+      "sha256": "e136cfed96361a4bad02ac7428b56f397e927f53daf1d1abc722e197486cf496"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/fixtures/engine-source-boundary-marks642.cmb4",
+      "sha256": "06b10958bd40d74508ec9473cc2fa2f0fb7b15776f6b97f24e1b0ad879aeeb1b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/fixtures/high-tone-clamp.cop1",
+      "sha256": "04fb463f8c027c065ba52527b5027c2b89a0e6ad37899a98fe9466b261d2d048"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/fixtures/paused-stop642.segments",
+      "sha256": "e127a29d2acbae3b662033323f94798c5631020c969cffeae872d09ece0ddddd"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/fixtures/source-boundary642.segments",
+      "sha256": "a6fe5362b1b9682ef4fb9dd684ae72fc4c6d492a50b47f7ac07c78601d466bdc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/live.rs",
+      "sha256": "3f0762936c4a9296f224e178706d86e37ab3e1fb934fc175ee361e738d9e381c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/local.rs",
+      "sha256": "c45c5430e129e31dd0515b1d1c5363fb749b94800ff21db4ae43f23e90a5c2ab"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/parts.rs",
+      "sha256": "e29f5bd4f65d8f205e01e066c7fcd12709c688653f847e7f61796d42d86565b5"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/pause_tests.rs",
+      "sha256": "499b106b26530e02705dede6226602b1229e652fc5ec5c93c0fe1dccdacd7a43"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/probe.rs",
+      "sha256": "fc34b885bd13221592f61c605a2cf8eeb42ae9b3f5b602f92fb4caebadd2d16e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/publish.rs",
+      "sha256": "c4098250d655f6d3e3559ec705d8e08ac601286952bb24e83d4af8e2c8c0a6c6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/resync.rs",
+      "sha256": "3f139292b355c0078f075c42cfd9d68d856133cd8e433b294bca3456c2f6f8f2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/resync/tests.rs",
+      "sha256": "d26f494bcb502fd045acc957f655585e6fcf1c8417db22af8fe14f9e2444466e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/source_boundary_tests.rs",
+      "sha256": "7f380561e2b931c84207af6a7b0dd4e9fa95d24f7a01df430448e13e9ffa52e7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/tail.rs",
+      "sha256": "0880b6dad153e70a2da86d099375cb892a23bab90431b014ec15236f1c0e9ce8"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/tail/tests.rs",
+      "sha256": "50a63c14fc81140bca9b70948e348b3d80a55907e3f86cd594ea2d7bf20325b9"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/transport.rs",
+      "sha256": "861c685238840286d19948753dcc7959e767d56f79700131fa8f8a6f072c7c81"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/transport/tests.rs",
+      "sha256": "8dad759e3eb13c8dc01476db97869904a5348170c148ccd3f55c1f42490f8930"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/service_check.rs",
+      "sha256": "a3215a8680cbd978035cb7d25b4ca2116248a2ab8f3d4a1f76bc96f041503d09"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/service_network_probe.rs",
+      "sha256": "82e0191960b4a0af4d5dd1cb2b810ba09bb5ad5317c86bb2477342ecee50912a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/session_store.rs",
+      "sha256": "eea389fb811760b5046acdd8e69d291f0c882cae98a82d4d7167cb60393a6745"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/simple_ota_restart.rs",
+      "sha256": "f1f165778bc26166a499657545128354116e4536c4f963ff6b1c691c5e04f0a5"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/speaker_refinement.rs",
+      "sha256": "f1d63ce087163bf8a4095ef2694be37f27c15d7aed0cd75a497ee590ee18625d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/spreadsheet_export.rs",
+      "sha256": "43d0055da3af67f2f8a74d49007dd63abe82fdbeed44d3a4344078a6099e63ff"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/system_ota.rs",
+      "sha256": "d05809745ef03b9ac14bf471e9ce91e0a8588ef26c6a9d9b5f72f4aa5641cf91"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcript_review.rs",
+      "sha256": "a16ebc3a52204e3c5d82d79cefd412eb0e324562f4994200a31cd78062955522"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription.rs",
+      "sha256": "8923e1a1dbb4370f844623ae122ceef9cf1085f623a64f914b47c58c972b585b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/chunk_cache.rs",
+      "sha256": "260bdcbe49cfff61fd8ac7d55b1740cb66addae9c18f8b18a98175f8d8d500dc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/chunk_cache/ownership.rs",
+      "sha256": "bec1e1b1b2b5265e1a01c7707e03dd133a57131f28640703e28054fcf05de6c0"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/chunk_cache/ownership/probe.rs",
+      "sha256": "97ded17482fdd4c96a5b13cfb8fabff680c2d2cbef1224ec27402732657cc0c4"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/chunk_cache/probe.rs",
+      "sha256": "ef9a5937ead8f6923e25449de7992372a6a35a61ad1f2f61c0d7656201a72806"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/gap.rs",
+      "sha256": "b939ab9e01732345e7996f4375587782f1f99908b756a09bdb18e036fef0fea7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/local_paraformer.rs",
+      "sha256": "58283bb37781defdf15751230cfe45a395df01a3fa3ea79004a3a1e477e9425c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/model_download.rs",
+      "sha256": "8e2acc07f7e32b7ae6e742bf92aac88d10eb9e03e601f5c683d97f59d5067fba"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/official_paraformer_assets/.gitattributes",
+      "sha256": "e682271c4482732ab595acc29e2562b7fe51b556d32afd46838981eebb333ee5"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/official_paraformer_assets/README.md",
+      "sha256": "88a8cb4fc76d8757abd4c215f8f461aa4f2f6aade9b63ca5a362fa4916979dfb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/official_paraformer_assets/metadata.bin",
+      "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/official_paraformer_assets/tokens.txt",
+      "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription/paraformer_shared.rs",
+      "sha256": "098267058e5755aa4523d803249f6b5006ee898569cc71e876e20e7dc4da2433"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/volcengine.rs",
+      "sha256": "ed37a1734b15ddd25c9059ea317cddfb408d2a15b46a17b7cd6ee543a6ce74fc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/volcengine/network_probe.rs",
+      "sha256": "3f3cf7be86394eeb9d41cc2f9005bab3bbcb82b424cacece1ca6a3767f73175c"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/cache_updates.rs",
+      "sha256": "66c96e5eca09c5730588341e92106cb7b2b5f7c5e98ab129f517e57126229434"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/calendar_handoff.rs",
+      "sha256": "21303a0e4f704e42044e66d3506c55df969f412ba26dac79bcf633979cd07c61"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/calendar_test_fixtures/p723-original.ics",
+      "sha256": "19401d97896404b514c7cd0d331a94798d91839c363f776ced13ae2e4b6c1f5b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/calendar_test_fixtures/p723-thunderbird-edit.ics",
+      "sha256": "aea7783a87cefc1cd96a7144cd2225350c29007ab65bb2f18e0d1b746b71da02"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/calendar_test_fixtures/p738-sessions.json",
+      "sha256": "691cf6236f73cb1eed5cebdfcb0a67147d0cc9a2c20b4af6e1cf26c8f54825eb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/cli_fallback.rs",
+      "sha256": "e7204f17fd2f528207e11ceae5bff9766a9da31fab6e6f02d9b8b93f551b8b8d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/close_review.rs",
+      "sha256": "1bc7a80fb311624301c9f146e81a717caf09a7f5520bdc5247e3f5a35f13ebd1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "sha256": "5f7cc3ceb42be35c9ace80e4ed1e4b6cb000b14adbdffc42456c4613ce0f1729"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands/board_online_cli.rs",
+      "sha256": "013fa56bbea7bc75c530880bbbfa5f74ce364032385b4d0a8b7893e7f881892e"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands/segmented_online_live.rs",
+      "sha256": "e3dddb4090d2890e493a4eb56418993f288a29b28c30af859060d99022a9d764"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/companion_v1.rs",
+      "sha256": "5a6a6fa151fd7248aba092aba455687897be193e5fbadb49de693bbb4953b97b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/content_handoff.rs",
+      "sha256": "d364aae4419d01321ce3dd7bc370f94becd5002494987db6f1c0204363a83409"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/coordinator.rs",
+      "sha256": "2582fae841e31a0e83ee41ad08d3320e8c49ddb5d5c8c9417cdfbf15f2ad6164"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/file_clipboard.rs",
+      "sha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/lib.rs",
+      "sha256": "845b4c00bb91054a43083f3a86aeec56d48001ad2bd2ac6ac2d762059309db51"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/main.rs",
+      "sha256": "72e79a44f4170a8f5ee03d999b37df29b4e4ad9ea86b0dc2088e249ccf1238b1"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/pet_chat_commands.rs",
+      "sha256": "46cf20785d47a26826ba9de48a7bf7f36e581cc610c669776a47e4b6bd43ffa3"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/pet_find_commands.rs",
+      "sha256": "52c95936410e38b73446fe1e0706b396fce0ce9443011e9ed810a6fb3925f930"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/pet_profile_commands.rs",
+      "sha256": "32efc8cb8583647e3f08a207c28dd0b94b1d8f4f0403c4259b6163db729d66c7"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/recorder_sync_exercise.rs",
+      "sha256": "50976ffbd9580c5ea78ae4a2215b9a6a64218cc41572ccbe169d53c4edb4da1f"
+    },
+    {
+      "path": "apps/windows/src-tauri/tauri.conf.json",
+      "sha256": "267c68890ba683dca7b6a6022b9457e205feb9786415cbd6540ae2fd9ec8a481"
+    },
+    {
+      "path": "apps/windows/src/App.tsx",
+      "sha256": "516d764b5543acbba4a3502c2c19187793239d485bc94ddf1f050c086eef238e"
+    },
+    {
+      "path": "apps/windows/src/CloseReview.tsx",
+      "sha256": "6eb1861a6eebba7f38548b1e676fb2fc9e9e01caaac2b1fd7d8b9c696c003722"
+    },
+    {
+      "path": "apps/windows/src/PetChat.tsx",
+      "sha256": "bd21a6e406ec53f7349f566eefeb3027be72197ee550dbe4d8a6c795652e73bd"
+    },
+    {
+      "path": "apps/windows/src/PetProfile.tsx",
+      "sha256": "ce77e92185b5dcb40685e4c80a500a743ed2904a9e0f7ac44332c1d7f1af8d2e"
+    },
+    {
+      "path": "apps/windows/src/bundledText.d.ts",
+      "sha256": "fd9c59eb00e7094bfe926dac37dc55a0415e91070b65c4c83e94b074bf8097cf"
+    },
+    {
+      "path": "apps/windows/src/cachedRefresh.ts",
+      "sha256": "7d1b6397c9922d5eaadcb3e71602c7ae1be887547d35feb795369a9ac6e74d28"
+    },
+    {
+      "path": "apps/windows/src/closeReviewClient.ts",
+      "sha256": "de4ec458989e741ab420e9f98579bf985046cadd9f6b96576c8987aedcca8dc5"
+    },
+    {
+      "path": "apps/windows/src/companionClient.ts",
+      "sha256": "5a178bb6cf5b4cca3c525830cff8510d56a4d4d45f8d7be8f07e6f0b55b94530"
+    },
+    {
+      "path": "apps/windows/src/main.tsx",
+      "sha256": "233328f9f4466ff6a4f9fdcb1318e6475efda2b6d9dd666c8a0eea813db47726"
+    },
+    {
+      "path": "apps/windows/src/workspaceRefinement.css",
+      "sha256": "046fdbdc4229a6a2de6ca3044611e64132b0093ea3e603fac9479ad46dad362e"
+    },
+    {
+      "path": "apps/windows/tsconfig.json",
+      "sha256": "9e4a180968c24889fbaa3f23baa5f859cf38e48589970ca58a48add1caa902eb"
+    },
+    {
+      "path": "apps/windows/vite.config.ts",
+      "sha256": "ae2be133626b9405ce96a4ed0aecd22085d96029fef2ad6a96c9bfce3e609b97"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "38ea49a5dad3cacae3454f25cb2646e363f114f075be3667c0469af855ecdef0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "9019079c6fb823e36f253a080a16edb5b99e4b19c646cc7f51826f4d8940f662"
+    },
+    {
+      "path": "packages/core/src/companionV1.test.ts",
+      "sha256": "a8772cc84248a5fb2dfab04ab08d6faec1fc6483a90dfe6c917a58d42ddaaeab"
+    },
+    {
+      "path": "packages/core/src/companionV1.ts",
+      "sha256": "7d946965ea60d2746e8c100cefb2c3aea4be52788016f289850afc32e17c595d"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "sha256": "02a2457a0ad56e8856e267f894af0892815aff1ceb77d8e9dd4609443e16cf87"
+    },
+    {
+      "path": "packages/core/src/libraryOrganization.ts",
+      "sha256": "40340a794cb513da1892e398ba9fc2711cfcecd757f197f8d12dfdee68bce465"
+    },
+    {
+      "path": "packages/core/src/meetingNotes.ts",
+      "sha256": "54392d66c7c6d51cb7a7ad85a775323d749ea6b5683a5ae3e2b6a2c494a15c39"
+    },
+    {
+      "path": "packages/core/src/meetingQa.ts",
+      "sha256": "beb47394c9e15e6b9cc3d95a2ef1b198e532f6888ef97cd49f646a523df61bae"
+    },
+    {
+      "path": "packages/core/src/minutesSources.ts",
+      "sha256": "3bcd8f872796b1c6cb319b61400c0abb3ef5b7f5af7a1eec5f56b32e768accfb"
+    },
+    {
+      "path": "packages/core/src/offlineRecordingLink.ts",
+      "sha256": "449c1539a1faeb473c8b66090c5c7b6fa5b4928459a19e25dfaed528334faf06"
+    },
+    {
+      "path": "packages/core/src/recordingBookmarks.ts",
+      "sha256": "1b47b92bf1aa44baf71e92dccfb239b6ab44dff592346f46be6664166841d30b"
+    },
+    {
+      "path": "packages/core/src/recordingCapacity.ts",
+      "sha256": "ff47c365e33e13a49103c01c181430a64bd0b1bf5920139cf8a54f339aeae18b"
+    },
+    {
+      "path": "packages/core/src/recordingProcessing.test.ts",
+      "sha256": "48d92f2fbc531a27a8efefd660b36593d4cb4047cecb74442d44e9e47f43390e"
+    },
+    {
+      "path": "packages/core/src/transcriptCoverage.ts",
+      "sha256": "374e1f142b1944f750add02e14ee22797ce42c4e0d2f907a4b1a3108144978b0"
+    },
+    {
+      "path": "packages/core/src/transcriptReview.ts",
+      "sha256": "c67e6a94449e14d328401126005e53d506f05ca1253a00e0b98a1eeb6ba4c4df"
+    },
+    {
+      "path": "packages/meeting-transcript/Cargo.lock",
+      "sha256": "0ae18cf1573680caef452543ce795b73103053fb24076660453dfbb0957e095f"
+    },
+    {
+      "path": "packages/meeting-transcript/Cargo.toml",
+      "sha256": "602aae1dfbd79b3c07d6d85f0a2f4491d6facf4fdca08180696122459eb44f20"
+    },
+    {
+      "path": "packages/meeting-transcript/src/lib.rs",
+      "sha256": "f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684"
+    },
+    {
+      "path": "packages/ui/src/ActionListCommonFields.tsx",
+      "sha256": "d8bc89c35971154c96af5127f92e3ef0f689adc792c50b68718109fec4cb869c"
+    },
+    {
+      "path": "packages/ui/src/ActionListEditor.tsx",
+      "sha256": "e16730e5be3e93c067cc49115b384706b38ae700f525a2dfd70a794d33d73690"
+    },
+    {
+      "path": "packages/ui/src/CalendarAllDayReminders.tsx",
+      "sha256": "c09fa6bb6560f67cc1c4ae9dc173cb837c7797e0aa1ce569e2db4743489c5b50"
+    },
+    {
+      "path": "packages/ui/src/CalendarCopyComparison.tsx",
+      "sha256": "119239b0de74c57aebfa7f6803c22b975cfe84427e7aad91a206d1dfad2dc970"
+    },
+    {
+      "path": "packages/ui/src/CalendarExecutionSlotEditor.tsx",
+      "sha256": "4702eb1730e4fc5e0070fa068135dc5746d272c5f9b54d0d95f9a6f34767aa5e"
+    },
+    {
+      "path": "packages/ui/src/CalendarExportItems.tsx",
+      "sha256": "46f0d24106c13946f06b01c3c015ea08f0686f7816f6d1c9b202f580b9f13617"
+    },
+    {
+      "path": "packages/ui/src/CalendarFileLink.tsx",
+      "sha256": "fd5689c14f07220c192aacb0b517d94b7b59d1ebfc2e90b03e515d56bfbb848c"
+    },
+    {
+      "path": "packages/ui/src/CalendarReminderEditor.tsx",
+      "sha256": "de251f5fa48a3d152d3f10c6ba28e76044f9669da3da49e31a99fdf4ec1f9fc5"
+    },
+    {
+      "path": "packages/ui/src/CalendarTimeEditor.tsx",
+      "sha256": "01d50d0164bae442ffb8d1bb45e97b71b335985c19c06f809186e7c91f78ba2e"
+    },
+    {
+      "path": "packages/ui/src/CompanionAudioPlayer.tsx",
+      "sha256": "ec4e9628c6f39d52d461959a9526aae8816bc27a77d001aed8f6c85becbe38a3"
+    },
+    {
+      "path": "packages/ui/src/CompanionBehaviorPreview.tsx",
+      "sha256": "6a8edd23e9ab47cf7a6b1ffda572ab12136d13d69910c117c22b6c0668e45a02"
+    },
+    {
+      "path": "packages/ui/src/CompanionBookmarks.tsx",
+      "sha256": "657dbe09135419814e60d9394d166131b48610bada4110856505b110519ddf74"
+    },
+    {
+      "path": "packages/ui/src/CompanionCalendarCopies.tsx",
+      "sha256": "762c01946f288c6e972286cd9727f272889816e9627bb401f12563513a52aa6d"
+    },
+    {
+      "path": "packages/ui/src/CompanionCalendarUpdateHelp.tsx",
+      "sha256": "df74c4c7c2bd65041d0ac9aef58210177903cc95f14303db41a9f63faf67438b"
+    },
+    {
+      "path": "packages/ui/src/CompanionCard.tsx",
+      "sha256": "5f0bbb1adf528fd606e86e7ad517cafb3bac29d866b784fddfd8a36c7a42ed46"
+    },
+    {
+      "path": "packages/ui/src/CompanionChecklistHandoff.tsx",
+      "sha256": "17e47be0da99c339a53da503f4240a3b925d5cec52c29790408f9fa2f926824a"
+    },
+    {
+      "path": "packages/ui/src/CompanionChecklistPhone.tsx",
+      "sha256": "0e726f1cdc58d9ef355d1c98dc0b8e9dec28a0263ac4ea7daabfcba9120859bd"
+    },
+    {
+      "path": "packages/ui/src/CompanionDashboard.tsx",
+      "sha256": "00dcad92e1cda54a87d2b072d6e1f7413874da61438164b76dc03bd090fa5763"
+    },
+    {
+      "path": "packages/ui/src/CompanionDesktopUpdate.tsx",
+      "sha256": "3a01f7eb509412310c51a3f81bd578c81cecb980806ace94e99605f3b928dbc9"
+    },
+    {
+      "path": "packages/ui/src/CompanionDeviceRecordings.tsx",
+      "sha256": "3d1006ddeb5d5c1eaf9bf1fd8984127be29a676f6701881572b3544cb983edd2"
+    },
+    {
+      "path": "packages/ui/src/CompanionDiagnosticsPreview.tsx",
+      "sha256": "43c0025f157e3e2da7145ed9c3dbd41394428596e50c3b802c4c49c00eeb0d24"
+    },
+    {
+      "path": "packages/ui/src/CompanionExportFeedback.tsx",
+      "sha256": "80ddac064c4afbc946132e48f15f17d2689d408b05625391452ee3c25a3064a4"
+    },
+    {
+      "path": "packages/ui/src/CompanionHelp.tsx",
+      "sha256": "6123e0becdde45b1a67da451396c1d0ad3354f5897a50917e63d21fb34e43765"
+    },
+    {
+      "path": "packages/ui/src/CompanionJourney.tsx",
+      "sha256": "24dc82da4acdf6500172cb56358a883e8205e7bfb28d45ddae65493940476653"
+    },
+    {
+      "path": "packages/ui/src/CompanionLibraryLifeActions.tsx",
+      "sha256": "463093575b3b2e9f039327240872ae29478c769ccb4ad99be614e09abda8ea32"
+    },
+    {
+      "path": "packages/ui/src/CompanionLibraryTools.tsx",
+      "sha256": "f299c83504a9a86ff8ff7b19e049fc026fa1551132000cfdb70ef4d8fcddb7c0"
+    },
+    {
+      "path": "packages/ui/src/CompanionLicenses.tsx",
+      "sha256": "b24f926aeff3d4409f876be9d68661ebdc7982481b36ac21e051e04daed3316f"
+    },
+    {
+      "path": "packages/ui/src/CompanionMeetingAudioPlayer.tsx",
+      "sha256": "026b6eaf0753ce72e9f59cdb5e600296a133c46b4cd0808e19e025299d8cee01"
+    },
+    {
+      "path": "packages/ui/src/CompanionMeetingNotes.tsx",
+      "sha256": "b0a3a6369d515eaf19c676c81585c3c23c1dc622e6bab7ebeb183429a46a500e"
+    },
+    {
+      "path": "packages/ui/src/CompanionPetFind.tsx",
+      "sha256": "44ea5c7b81d29c204cac5ad41db487e578e13040c7e2e57594af654671297458"
+    },
+    {
+      "path": "packages/ui/src/CompanionPrivacyCleanup.tsx",
+      "sha256": "5dbf6fdd32bd195f10be9f0e53a9e91dd59ae8d69858a321eef35cc3ca22c1b1"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecorderControl.tsx",
+      "sha256": "107c1e9b1108d1262abbb37ae344cb9e4f0a93204e7ffab110b96f5ec1b61a79"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecordingReadiness.tsx",
+      "sha256": "1a311487a04e0c951dd6c44a41b99b57fa1b407325412cfdb28ba9b2f2f79623"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecordingSync.tsx",
+      "sha256": "170726953221be6fd425089f6e1f7d726cf771694641d1da5e5cef362963d4a3"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecoveryCenter.tsx",
+      "sha256": "e08a0cb3f119df8ab9791b6b60482e514e4267e46e738bd9a8d0d62cfaa45293"
+    },
+    {
+      "path": "packages/ui/src/CompanionSegmentedAudioPlayer.tsx",
+      "sha256": "1a0f7f45707f1181551c3acbbf236b0f7f4ac5f5a6da004959197e75fafb2cdd"
+    },
+    {
+      "path": "packages/ui/src/CompanionSetup.tsx",
+      "sha256": "2fb1063d7e44f5af063febaabca76d4bbe231c39678a7704e860bedd06c82397"
+    },
+    {
+      "path": "packages/ui/src/CompanionTranscriptReview.tsx",
+      "sha256": "aca520c8d917899066f00823f1c3bf35447716bd7dcd99f04bcf56380542a81f"
+    },
+    {
+      "path": "packages/ui/src/ContentExportPanel.tsx",
+      "sha256": "7db0d7b197ac52eaf8309af93305befafe9e33c65d27fa4e2f28f47b99370015"
+    },
+    {
+      "path": "packages/ui/src/DeleteConfirmation.tsx",
+      "sha256": "571939a0a4d450061bee63dd7e89fdc51dad7f6f4621a59761670592a674bb79"
+    },
+    {
+      "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "sha256": "4122b4f770a39b87ed9ebf3e70c60123f118ca95acf941e9a53989bd783171eb"
+    },
+    {
+      "path": "packages/ui/src/MeetingReadingFrame.tsx",
+      "sha256": "4c6ed97d6a7deb48093d69eef3c390cd8c9f9d994a9a34cd3354202dffa3d873"
+    },
+    {
+      "path": "packages/ui/src/MinutesModeTabs.tsx",
+      "sha256": "fcd13300e7da08f8f54c2ebcdaec703cf063b2578d4a1ac9d821c33c35861194"
+    },
+    {
+      "path": "packages/ui/src/TranscriptFind.tsx",
+      "sha256": "5f50690483ba4922208af4517f3be25c07fbec92fed1b10461e91f8065398461"
+    },
+    {
+      "path": "packages/ui/src/actionMetadata.ts",
+      "sha256": "f7c2e6a906fe87275db9fb4e731c2245213e81efa9fe6f3cb1dc16b79e742770"
+    },
+    {
+      "path": "packages/ui/src/aiMaterialNote.ts",
+      "sha256": "0d19d9594851dd8170a1723c3e2ea1459c1668819a30466a6d3c9c92a31725c6"
+    },
+    {
+      "path": "packages/ui/src/bookmarkAudio.ts",
+      "sha256": "19f1ac96708fa3c987b5007d570d4b656b99f1272720badc66229ee1ddd9a98b"
+    },
+    {
+      "path": "packages/ui/src/briefMinutes.ts",
+      "sha256": "5a900049d22f9634d00662fe82bf7aec26ddf745711abff2ffe670acef63868b"
+    },
+    {
+      "path": "packages/ui/src/calendarReminderCarryover.ts",
+      "sha256": "9f105f676513e4c8221fe2e527fa7860ea5fed3b18fbe07d8b87ac2cc7d8db6d"
+    },
+    {
+      "path": "packages/ui/src/calendarSavedSlot.ts",
+      "sha256": "c5efc6fe9e5e678fd8de3e22db676f36399aeafb39bf197260d0a012025df346"
+    },
+    {
+      "path": "packages/ui/src/calendarSlotCarryover.ts",
+      "sha256": "970cebe4329a4bc8c9353f8a97cdff947f015559f9117e4bff11fa239565874b"
+    },
+    {
+      "path": "packages/ui/src/calendarTime.ts",
+      "sha256": "19d482a8ac0399099ea116ddef4f2c162a8d88d8c7508b01bbefb7b14b09b3f4"
+    },
+    {
+      "path": "packages/ui/src/checklistPhone.ts",
+      "sha256": "9b0fa567fbc7630baa11fa4015c16d6b61492c5b1dcd345f410299e2372913d2"
+    },
+    {
+      "path": "packages/ui/src/companionDark.css",
+      "sha256": "6e85ef16ab3406e4e1324332fae4e54e4af5220a9ad5cd7f7e16d4d8f6a8f120"
+    },
+    {
+      "path": "packages/ui/src/companionDesign.css",
+      "sha256": "a258839029c2bea11108aae86d8cc7bb447c0d6785a1f327ef2eb1c518fa6192"
+    },
+    {
+      "path": "packages/ui/src/companionUi.css",
+      "sha256": "c2ef907bc6e1ccbea905cf7b3a57c8bfd4d82c064df6781dac6a53af0cd1de8b"
+    },
+    {
+      "path": "packages/ui/src/customTemplateBackup.ts",
+      "sha256": "77ae8c7742ea23d9ad5a558d9667c203fa29f40196d16db403c22a710beb974d"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "sha256": "c51bd51d7805fa117b897325af7872a6cceca08bf173ca6af69765d5144df2ac"
+    },
+    {
+      "path": "packages/ui/src/knownOperationErrors.ts",
+      "sha256": "ef6ef3f732497a27a97b7ac76ef42ceec8638cd6c3d973758c3b8bd1d654e198"
+    },
+    {
+      "path": "packages/ui/src/libraryDates.ts",
+      "sha256": "f0f2d7e260db99f2d7aa4a1d3bce1c6c2de1df404b651ba58bb80872c76796af"
+    },
+    {
+      "path": "packages/ui/src/libraryPreview.ts",
+      "sha256": "38d96d27c70cc1871a112ac83b0f6c7765dfbebcdcdf59ab2320b1a096155e2d"
+    },
+    {
+      "path": "packages/ui/src/meetingAiWorkbench.css",
+      "sha256": "af431fab5095506fca47af935a79d1ba5b9eca31932867ecd88495cf1b6e4678"
+    },
+    {
+      "path": "packages/ui/src/meetingOutline.ts",
+      "sha256": "1cb5e4952147533c61662953b99459d2ed35b1113da6e1ed75026b3b6ddd92e5"
+    },
+    {
+      "path": "packages/ui/src/meetingReading.ts",
+      "sha256": "81cc807d3443c040409b47f7d8519144629dc84519d72c402839919df8728ff3"
+    },
+    {
+      "path": "packages/ui/src/meetingReadingFrame.css",
+      "sha256": "d447bc6d151fd8bf2f939cba2c99726bdf4054e8c4314c67259bae152033e956"
+    },
+    {
+      "path": "packages/ui/src/meetingTrackPlayback.ts",
+      "sha256": "1242bde85795ee8350c186b3d4f0d4d21a522f94ee356c70349116407d97243b"
+    },
+    {
+      "path": "packages/ui/src/minutesTemplateLibrary.ts",
+      "sha256": "1454e96aa13bbe3ef19649261bb8b75146a99565c77f6485a031a5bf7626a092"
+    },
+    {
+      "path": "packages/ui/src/operationFailure.ts",
+      "sha256": "59da8989f47191777b8947ba68db6583ab12fe162b420f7cb5d344d9da8012a6"
+    },
+    {
+      "path": "packages/ui/src/playbackMemory.ts",
+      "sha256": "c4814b4544744a068161f35deb51f7e13c0a210fb9cd1648d654a5c9254b01c4"
+    },
+    {
+      "path": "packages/ui/src/recordingParts.ts",
+      "sha256": "362cdecbda247c1b070e4d079b90e5b81c5e06ad46b7a0b9ecc099a1ee1f8da9"
+    },
+    {
+      "path": "packages/ui/src/savedActions.ts",
+      "sha256": "f2146212c99434b2bfe678aed2e18b838583ba1b3477d0b19c05bb209de4dc1d"
+    },
+    {
+      "path": "packages/ui/src/savedExportPreview.ts",
+      "sha256": "5bcf9fa531ec76ddf7faef3184ad975f34aac72d113a7b1c6ee33b39ab1d7c38"
+    },
+    {
+      "path": "packages/ui/src/shareHandoff.ts",
+      "sha256": "2e1e101051e219371aa6a628ae3083ddda764da0c0a9a4144eab7eb6b57b98ea"
+    },
+    {
+      "path": "packages/ui/src/transcriptFind.css",
+      "sha256": "23f7d969a09c94eb003228b471c12cf971d7cf302e36690b410ddf925a4b2396"
+    },
+    {
+      "path": "packages/ui/src/transcriptMatching.ts",
+      "sha256": "308a4afb58e9e5c1bdc9577b11a164332f72d0d9ea77ba0f1083d2eb6a949287"
+    },
+    {
+      "path": "packages/ui/src/transcriptReading.ts",
+      "sha256": "874cdabf3515b22807872a10eb5ed6c35358e6040dbfb4afb923d5d77bc5acb9"
+    },
+    {
+      "path": "packages/ui/src/useListeningQueue.ts",
+      "sha256": "ce37f7ff342dd6999bb49e92c85b07890d9995025fd746f448c292acef75635f"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/.cargo_vcs_info.json",
+      "sha256": "d415dcc7d068fe9b4596a534a35d6cbc952dde7313fbc181b340f1fc32ac1f91"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/COMPANION_PATCH.json",
+      "sha256": "7c3818883b4b91e80cc4ce0437a9d38f82fb0ed7e7a9e77dc9d577f8cc601891"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/Cargo.lock",
+      "sha256": "181485cb8a0ce09203ec0c3cc582c75d61e23aac33e006cb77fb95b0fc664515"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/Cargo.toml",
+      "sha256": "627932ab87bdaaae2db2a645ced33fdd317c2e423396b561a82feaab0283442b"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/Cargo.toml.orig",
+      "sha256": "128fef620bf6ffa6232f80cb4d3529ae12d448140a8cac133bc1fd969f63fbdd"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/LICENSE.md",
+      "sha256": "79217bf659236f8a91ede4ebeac657a63de2292706bfc34597beedf13bd27399"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/README.md",
+      "sha256": "93b09af3cc5d8cab991e4d7612466b21af82ac68874ab8619b77b96af9b60ac1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/UPSTREAM.json",
+      "sha256": "1cfc5c0dcb25519f394eda1071c0d9589e281b872bf99b847a10dc271e33d71a"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/examples/discover_adapters_peripherals.rs",
+      "sha256": "31c57a774c38acd47044ff30cac882f641c57377979c70ef61b40372b4b7d9d1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/examples/event_driven_discovery.rs",
+      "sha256": "a9ed44017c5265dbe77216d2cce612cd847f2f89924f0fa138a9972c8571c067"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/examples/lights.rs",
+      "sha256": "d4db21664e0168b5c2ecf17af0b5eb88deb5c47ddcced204aae2a1a3f633c2ac"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/examples/subscribe_notify_characteristic.rs",
+      "sha256": "3bbfb94c7c1399d131a71614a9ad5a3aad2fb260cf6d691e60fe16089e8a091d"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/api/bdaddr.rs",
+      "sha256": "9bf0239b302ea675eae5e70e95d4f6381cba9beccf5494435edd46ac1419111b"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/api/bleuuid.rs",
+      "sha256": "f5f2a3500d8c015eac5278c969b2659d0cac0f88bf60ed800583edd44b849503"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/api/mod.rs",
+      "sha256": "26df624801ddccfca0654d84d654da288dde24186f7a725f6f257513ba82d3da"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/bluez/adapter.rs",
+      "sha256": "007fd53cee911cc3a236c3db7f241868ce36db8a8f24349c40b8eb8f7f80ba4a"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/bluez/manager.rs",
+      "sha256": "317e4ba6ee555e017ec01f60addd875f8be35e9dba6b8c4393ab10613b59cabe"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/bluez/mod.rs",
+      "sha256": "4cb9dad13f8b81cf9d9a8be8dd9eae87f4ba40d95b21ad09633265cae971090d"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/bluez/peripheral.rs",
+      "sha256": "dc10f11412e681ebdf1171c3203da4ddd7b07582c7bc088429f17befe560b61d"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/common/adapter_manager.rs",
+      "sha256": "7ab68c4b7295d2452843f14729679f4a030ff594e94ded4c72b14472e8b38715"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/common/mod.rs",
+      "sha256": "352c00226073a8df4be00c9ab21922239539593e0b32c91e1eceb6ee1610e3e1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/common/util.rs",
+      "sha256": "720f5f294edb052985f4f2ad0e75f0edd011b00b4d81c1ed134b4eb436de7703"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/adapter.rs",
+      "sha256": "1d6fd5e35df5322e28c9ba80b84e71bb998cfe656ab57b1f539ad57d6a083454"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/central_delegate.rs",
+      "sha256": "656329013e812005bcd71c15fef68c48f75b9f5ee388f89436791a4c1b2d610e"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/ffi.rs",
+      "sha256": "29efce77a251ed0cacd533045b0a6f510f7ba88d6fb426b3690d1540bc5b38ce"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/future.rs",
+      "sha256": "62bed9fd858c3cbe24b7cb68e8e595cb9dad233f17d65ef65694d0c86e938d5f"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/internal.rs",
+      "sha256": "09d3d1eff05ec84ac42c5d88d4a1f50c5f9f249b7a515c4862603daeea2b2b80"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/manager.rs",
+      "sha256": "e413fc124489756011d862375b2c7cf76082da4ed233eff8ee77f54b3edfb8c1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/mod.rs",
+      "sha256": "0aff61ae621f96e89a9122a0088dcd87bbad5fdb3bb0c6d98f4973808ce04f02"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/peripheral.rs",
+      "sha256": "b899396e99a025e49e5a9e843ac717574fe0384ededacd4db422eff819f19204"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/utils/core_bluetooth.rs",
+      "sha256": "deebfe1bf672a70ecf9561da0df561c4ab57e4fca6248a64ac759f83707cbe73"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/corebluetooth/utils/mod.rs",
+      "sha256": "6598964a6dea58e3e20153d23f4208f8cc722335fe88ff680e1b159f01ca1f87"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/adapter.rs",
+      "sha256": "97fc14d791208629a9fe03f21142f1e7b951b580d9ce4dc24646f3e8672dd337"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/.gitignore",
+      "sha256": "cdbab06e10ad02b460fcd2e2801acb64824b82923730a311de4ac87889a60562"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/build.gradle",
+      "sha256": "02423120da8a5cc9e4cad6577d4d4afd5c214330fa62290b70f70edf0a98d296"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "70239e6ca1f0d5e3b2808ef6d82390cf9ad58d3a3a0d271677a51d1b89475857"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "947b1725202fece569b501fd45e586cbdf2c44fc589559e330dbf672a8129faa"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/gradlew",
+      "sha256": "5f0ed788e1995f424431c6cfd8205af5d9851cba49cb2a1f479e924d7153e4d6"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/gradlew.bat",
+      "sha256": "8b944879156b43c74b18c865d5ac04ee2659e8902edebca78f445365917f698f"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/settings.gradle",
+      "sha256": "3093f658b14bc18834e6b3e97c2cf7a4fc4eea2a236430641e353fbc57f155c7"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/AndroidManifest.xml",
+      "sha256": "beca4adf5cb841a0a5ede77801cf84094c6aae1d6c09e2d176880bc7411466df"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/Adapter.java",
+      "sha256": "48d09633e4ed14552b3cdd80de008a328dd6d972c6d03654f9d376ca84a0b226"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/BluetoothException.java",
+      "sha256": "979837110db0f15a3fc8e0958e36b26cf372249ecf7b5468ce8c06bd3a0b14ae"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/NoSuchCharacteristicException.java",
+      "sha256": "818dd0d04a80f5b967a61bea85ff1ea6c63d5842adb90cb98a5c74e9ebd3a76e"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/NotConnectedException.java",
+      "sha256": "9b27fb48e8db3db3bb734907dda61a5bc0df5652e1e9d76dbf674884cca4fb8c"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/Peripheral.java",
+      "sha256": "0c0c03e110a1dfde973976fda2e04cadc1a0d0e864bdede180fd5900d3747e8d"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/PermissionDeniedException.java",
+      "sha256": "b7ca7121f084cb4280f51161e05e92028d75e1b4c62ca43b531d76d3b5227e7e"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/ScanFilter.java",
+      "sha256": "e97c3281255f056fd8e07d3fde321c0e78be9cc166b018f79e66b97096d58dc1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/UnexpectedCallbackException.java",
+      "sha256": "a2ffd9494931261acd725ee4e165a6ac793f88cd54ae420f1e217c8b32533643"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/java/src/main/java/com/nonpolynomial/btleplug/android/impl/UnexpectedCharacteristicException.java",
+      "sha256": "1427a234712913d81fec78af4acccad4a361842748312dac7463d0f3ed92f663"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/jni/mod.rs",
+      "sha256": "ea9302f27eac67d367f8ae20036facbec269c6f6c8092ebff304d1da552f63a1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/jni/objects.rs",
+      "sha256": "0396bad55f7f638bdc125a36287886e7d59b3482599d7326ccfd858b341d92ce"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/manager.rs",
+      "sha256": "ac76a3c953695de8dd8123c17c66b7337720652da175d532d44cd281bb297cb1"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/mod.rs",
+      "sha256": "09da44494eee4f5a3e7cedd7a0b06254319425505e43b1b63f6f08612b8ce166"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/droidplug/peripheral.rs",
+      "sha256": "dd9f75c6e2eb0218ca4183810b1515712dd30da140e8e0cc7ead4e46dac990b2"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/lib.rs",
+      "sha256": "15aa2db83d1f6b342713b106db371e3212d8dd2f54f6e8672854df7fe2988c67"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/platform.rs",
+      "sha256": "1b77632cf349bbf3e644a76517397ce08728ae96a057caa3a60739e4e25666bc"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/serde.rs",
+      "sha256": "34f75578681e9384487c908540d7c16433206f89499b4d98d0c791a4beb5424a"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/adapter.rs",
+      "sha256": "5ebeb0cb1c35242a43f72dd059cb4f29d22fb7bed415c8d53209efc33a8b487c"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/characteristic.rs",
+      "sha256": "49f0a5c502865c69241fbc20240cf8b9aea5d345048b12b870e18b27d731d8f4"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/descriptor.rs",
+      "sha256": "3e5a59ce00de5b17c1444e1d0efd9bc95b1a4cae5ae59adec1f0e08f8e5dfe4f"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/device.rs",
+      "sha256": "3555dd00c2d7a6a66afc17601ad7c87cd9dc71e03fa2da5b06a51fd9d80c8f18"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/mod.rs",
+      "sha256": "00cc975c4f67a2fa1baf1468a997cd1137878f2b56a9cdaba5c9503dd63b1782"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/service.rs",
+      "sha256": "5cdc5dd36fa5443104aebd176a26c46a6e8e7c1c0778bf318606c7b1b9851222"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/ble/watcher.rs",
+      "sha256": "e9bdd2df2cc99da356d462adddeac212be5124eca6de092b8324acf0f85f8b43"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/cccd_release_trace.rs",
+      "sha256": "9bf61edce9573397896f6c72095b93da60289cb0eae0c10023bf1f0fc50238e0"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/manager.rs",
+      "sha256": "38831e3dab35b983c38677abfad245d26629f38b9e4a3f5047574171928250cd"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/mod.rs",
+      "sha256": "71ec3b85112d72ebe0c90de02bbf1e21d828dbedb1f59ab76f40d06e014f9afd"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/peripheral.rs",
+      "sha256": "902852b1a3b514f13080bd9243b5937365951f62b1ec6de64aeb3b3bcfe6a69e"
+    },
+    {
+      "path": "third_party/btleplug-0.11.8/src/winrtble/utils.rs",
+      "sha256": "5d67e5de19adf5f6c55968fb5e167b33e07137526732d69dea48e196c4888777"
+    },
+    {
+      "path": "tools/LocalRecordingLifecycle071Test.java",
+      "sha256": "f0e95d67da0b98cbea0ad0a3ebd22f7aabec3c03e5535a72918a8b3b28092289"
+    },
+    {
+      "path": "tools/MaterialFormatInstrumentation.java",
+      "sha256": "5556c6cca8ceac767816c695d6c6163743f446007c2d8839187dc67b4d22ddbb"
+    },
+    {
+      "path": "tools/ValidateDocuments054.cs",
+      "sha256": "06c4d9b78a941d7258d86a8d77d91507fe56790b3504e442c331251ef75d5555"
+    },
+    {
+      "path": "tools/ValidatePresentation052.cs",
+      "sha256": "fdc86d8159c771b16f53b3de3b9525d8d5dfc38957ee9bb00c4784df52a76e03"
+    },
+    {
+      "path": "tools/ai-workspace-preview050.tsx",
+      "sha256": "381f276363219d7128a9cbd2de9544118648f8ae2824f25e38f78c52367f70c0"
+    },
+    {
+      "path": "tools/analyse_simple_ota_hci.py",
+      "sha256": "0809eff2e6e025625511cc96286b2c8328ceefe07df404e9ced692f01916b067"
+    },
+    {
+      "path": "tools/android-fsync-test/android/system/ErrnoException.java",
+      "sha256": "0fe8b0b8790f4dfd33964e880e3bbe8136bb7b8bc4a25b0d8f21ce86b9af439f"
+    },
+    {
+      "path": "tools/android-fsync-test/android/system/Os.java",
+      "sha256": "2972dcefc4ae558d0acf7478437efb3cd888dde5bf1eb424b01954bdd8848da2"
+    },
+    {
+      "path": "tools/android-fsync-test/android/system/OsConstants.java",
+      "sha256": "2a969b98674f77002093aa07243624982b7b1b8477c193c9bcb6557291e4fa46"
+    },
+    {
+      "path": "tools/android-fsync-test/android/system/StructStat.java",
+      "sha256": "5b506510017a97ebf965b39223903097d42df041772c5fd4926d8cfccb0e576c"
+    },
+    {
+      "path": "tools/android-fsync-test/com/denzic/companion/mobile/AndroidDirectorySyncTest.java",
+      "sha256": "dc40c661217c4a951ae7534c0a4d007784ff0587cec62551e2f1aa415826f155"
+    },
+    {
+      "path": "tools/android-fsync-test/com/denzic/companion/mobile/AndroidDurableIntegrationTest.java",
+      "sha256": "717e24b0eda22097112b86240401bbbf59635decbf068e6e40bdf342b647fe7f"
+    },
+    {
+      "path": "tools/app_client_test_stub.ts",
+      "sha256": "f006d1499ab332c7bf46fb695b70047d3a62e72869ffc7b6bf167c0b4a4dd9b3"
+    },
+    {
+      "path": "tools/build_android_material054.py",
+      "sha256": "6331b889b3c3d06c81eeb2a84f1fcb8f40353b2989ac76d43193622e93006510"
+    },
+    {
+      "path": "tools/build_material054_phone_qa.py",
+      "sha256": "1e19fdf19c90dc9442ff23a607e2b86a8d485c4f9a27a0898683528f1282da3d"
+    },
+    {
+      "path": "tools/build_transcript_reading_test_20261103.mjs",
+      "sha256": "9a06148e0c8d0da3fc2970f611d6e08b6fb8204d2af16d867c0d68bf56ac1cfc"
+    },
+    {
+      "path": "tools/build_user_guides.ps1",
+      "sha256": "d1645638c4cbe85e864eccb70a7549f70032acf87e508697fa748bf33516c8e8"
+    },
+    {
+      "path": "tools/capture_pptx_geometry052.cjs",
+      "sha256": "87c3a198d073d826a946b57389134b08833861061738a4fa2e9f433ddbbeef77"
+    },
+    {
+      "path": "tools/check_exports052.cjs",
+      "sha256": "15f52f89085a9db31d5268052d09e36820154182a12e41def476c8923815feb8"
+    },
+    {
+      "path": "tools/check_material054_ui.cjs",
+      "sha256": "92daaede10bfa77d1555b5b388fb5fb12c3e111d83886fa692591d2425818854"
+    },
+    {
+      "path": "tools/check_openxml052.py",
+      "sha256": "dfe3d154b75185aeed82d93ff9957f589551a611d0973d9a180d00705cfb6e31"
+    },
+    {
+      "path": "tools/check_packaged_exports052.py",
+      "sha256": "648c5d42dacc7a950073996daa1647ddd2b6716f58d170b9513d248c98ace90e"
+    },
+    {
+      "path": "tools/companion_overlap_backend.py",
+      "sha256": "59c8f5013d6af2a2f044baa2c3bc10440d70cc6bed0ef25059406c9e224f7812"
+    },
+    {
+      "path": "tools/companion_speaker_recluster.py",
+      "sha256": "37852d9ef1034ac7228042a172860e35296a88aaae6faee530e8b5edce92157b"
+    },
+    {
+      "path": "tools/component_test_environment.mjs",
+      "sha256": "b45f9d41dfc88a0f3f67c477355052253ff65a90021c0b4a06e9338003dd3a19"
+    },
+    {
+      "path": "tools/delivery/windows051/install_windows051_verified.py",
+      "sha256": "5aeac37c46e9d3f110ec0de764f2c6f14fd12fc587828192ac3d238743816685"
+    },
+    {
+      "path": "tools/delivery/windows051/package_windows051.py",
+      "sha256": "8eca1f2d16007ec92357e08f6e68838dafefac31fc332e913e4755d14b74fd8d"
+    },
+    {
+      "path": "tools/delivery/windows051/run_exports051_cargo.py",
+      "sha256": "be204c92bb8b95b0b8a45867eceb4f6bc6bd8b78e7448c62dab7149a2725f833"
+    },
+    {
+      "path": "tools/delivery/windows051/test_windows051_native_gui.py",
+      "sha256": "18bcecfdf93ef6cb83b258e522d96fcaa49455d628fee939d36afd49507ccd5a"
+    },
+    {
+      "path": "tools/delivery/windows051/test_windows051_native_readonly.py",
+      "sha256": "52de0e13520faae43f920c0494390b437b7259fc13987747f700ad5fedad4af4"
+    },
+    {
+      "path": "tools/delivery/windows051/verify_windows051_documents.py",
+      "sha256": "d362831a92bb2dab96113263a16e6c227d36291d147e44b3bbe23a6cfe79d4da"
+    },
+    {
+      "path": "tools/delivery/windows051/windows051_native_gui.cjs",
+      "sha256": "d95bad9e899885add5f86e65eadca6a1c7f229076d3be5b8ae0d4f1a22948353"
+    },
+    {
+      "path": "tools/finalize_material_exports052.py",
+      "sha256": "7766688c32c4181db88b82eeaedac42c37ca7cadb584cecfb2484da6f43c03b9"
+    },
+    {
+      "path": "tools/fixtures/meeting_failure_client.mjs",
+      "sha256": "3f76b69a39445a642357171ca5d7da5681f14afd54cb1ebe20fb012d0e49802e"
+    },
+    {
+      "path": "tools/fixtures/meeting_failure_dashboard.tsx",
+      "sha256": "14ea6e9cce111d855a39fc13ab17b1c1dba2e4847de87924f2d980ad1082cf2b"
+    },
+    {
+      "path": "tools/install_companion_type_candidate.ps1",
+      "sha256": "a010699525d7049ffc81578bcf77fa4f4dfe9e49c78ce66a5a291b6d07d43a88"
+    },
+    {
+      "path": "tools/measure_recording_upload.py",
+      "sha256": "9b88f2e7b0d6c29c1c6d10e63bd81172df3b150e02480af1b7aa529aac1245d1"
+    },
+    {
+      "path": "tools/meeting-polish-preview.tsx",
+      "sha256": "8777fac41af9f77439eb9d410100dbd02a89365f0a4c32b3e9e2ba81cc7d694e"
+    },
+    {
+      "path": "tools/mobile-bridge-smoke.cjs",
+      "sha256": "adb1a7d307a5088c3552c7924d04bf95f626ac4af937ce4de28249e4130881bf"
+    },
+    {
+      "path": "tools/mobile-meeting-polish-preview.tsx",
+      "sha256": "b10f66680ab1e17dcfc85d933e36db0bc3c7efc04597ec5f13afee57c8493d92"
+    },
+    {
+      "path": "tools/ota_pending_native/Cargo.toml",
+      "sha256": "13f10ff54b85ce45420ddcd9a94a8bbb813dad1db2acff474e1f506c345e29d9"
+    },
+    {
+      "path": "tools/ota_pending_native/src/lib.rs",
+      "sha256": "b85178cd95525e85ee43e5954c2db41aa6602b96297a1662e7c099a694b2920e"
+    },
+    {
+      "path": "tools/ota_pending_native/src/tests.rs",
+      "sha256": "162be323a1bbeeb6bf320df2805ae8fde5b6d3b162254a9d277bd1e64be206b5"
+    },
+    {
+      "path": "tools/ota_rf_admission_native/Cargo.toml",
+      "sha256": "ed0fd0f76871dd39c599d3aba269c67c056d2fd1288c62bea7d6b4e73e379d53"
+    },
+    {
+      "path": "tools/ota_rf_admission_native/src/lib.rs",
+      "sha256": "c2f8335c832f93400367ddf325a964b5354aa2a9ea8bb08bf85fabfe2c2106e1"
+    },
+    {
+      "path": "tools/ota_window_retry_native/Cargo.toml",
+      "sha256": "380a6197d26fb4c8d946d670ab67800bce47b9244311bd538ca8d8f7276f68a9"
+    },
+    {
+      "path": "tools/ota_window_retry_native/src/lib.rs",
+      "sha256": "e788ab43a36be8f7f29b4d96501831647316eaca6147e866ddb4b36619ad4071"
+    },
+    {
+      "path": "tools/package_android_system_update.py",
+      "sha256": "187bbc29ea830c9bafa60ea43150f5c7ac319da619898af665362ddb2e722f06"
+    },
+    {
+      "path": "tools/pet_test_invoke.ts",
+      "sha256": "80bfe60c4fa26d802c1e1cee7695938c595df6f6cb1e024f0d8031165217d155"
+    },
+    {
+      "path": "tools/prepare_material054_java_qa.py",
+      "sha256": "98bd8c25fc1eb948f55cecbddf30cd9c25cfd2f3d783ea79e88ae1480dc32e03"
+    },
+    {
+      "path": "tools/prepare_recording_upload_sample.py",
+      "sha256": "40ff5ec70545f5ae5be571193365b0032d0a873a9b7bd916447a2dc238afe4eb"
+    },
+    {
+      "path": "tools/preview-meeting-polish.cjs",
+      "sha256": "2ffd82c2c0ed86fc18e176dcd01f51204ff5eadd8d15d99ce0a30f41f1a55446"
+    },
+    {
+      "path": "tools/preview_material054_mobile.cjs",
+      "sha256": "1431c4253f94824c7d8465ab616f350968b00d819f7ea1e8a612738ff60e169a"
+    },
+    {
+      "path": "tools/preview_meeting_workspace_20261104.cjs",
+      "sha256": "88fe3f086bcd3a10eab6643011da6edcfc064f75b0592a926fb69c623a6552e1"
+    },
+    {
+      "path": "tools/protect_material052_task_archive.py",
+      "sha256": "1625869a66432820ff7c164f04ae936fbdca642182eaacaa37c1d2c2ad251580"
+    },
+    {
+      "path": "tools/qa/phone_closure056/FixtureRecording056.java",
+      "sha256": "171f9964214d53f6bae89fac424cc109dec3ca69d81e835fa4ddf63d40c08e00"
+    },
+    {
+      "path": "tools/qa/phone_closure056/PublicExportFixture056.java",
+      "sha256": "b1952cfee6a95bf21adf8dfe8fd6ee16322e8caab3bddbc34c8ec8bd1cc860b2"
+    },
+    {
+      "path": "tools/qa/phone_closure056/ShareReceiver056.java",
+      "sha256": "62c99af7f97714ebef798e8141542f591a1b54a30f3d43fb8595e0eca38e9792"
+    },
+    {
+      "path": "tools/qa/phone_closure056/android_lock_probe056.rs",
+      "sha256": "2a11a5102adec129f83f7cc70a2113d0bbc5d3877ab6f736e722286a3f4398ca"
+    },
+    {
+      "path": "tools/qa/phone_closure056/build_native_control056.py",
+      "sha256": "8ce968466ae92fdfadb952f5c3d08fed478108c44a83bb51018b2639dcf34e60"
+    },
+    {
+      "path": "tools/qa/phone_closure056/build_public_export_fixture056.py",
+      "sha256": "71062d67e937e9208bff42f6b2250cd440ee4a8b36124ecaaa02ff8982dd22d3"
+    },
+    {
+      "path": "tools/qa/phone_closure056/build_share_receiver056.py",
+      "sha256": "45d8f3d82e909d155f22ca92d2860736ba9dba11dbf8214e500f42ba8cb1f2a7"
+    },
+    {
+      "path": "tools/qa/phone_closure056/build_verify_control056_apk.py",
+      "sha256": "ec4245b8b59e76436aa18ccb9420f970bfb30449bf5f95ec419c80d9f8a0b959"
+    },
+    {
+      "path": "tools/qa/phone_closure056/package_control056.py",
+      "sha256": "a12fabcff43c0347759d9bbea7d393418bc6084dbc00d4c32cbe40dce7f82a15"
+    },
+    {
+      "path": "tools/qa/phone_closure056/phone056_playback.cjs",
+      "sha256": "613c17b5000576e7018e26cec1ed91b020d8c82ebaf8ef93c2d5b381ab58d282"
+    },
+    {
+      "path": "tools/qa/phone_closure056/prepare_virtual_display056.py",
+      "sha256": "6881a3fb99ff350bda84aacb07162e1b811860bd761ddd90e130641c5dba618c"
+    },
+    {
+      "path": "tools/qa/phone_closure056/relink_native056_16k.py",
+      "sha256": "6db103d838a4dbe538b3ff3e2f1461189b2d443f1b39c14ab3dc3ec47eb279ea"
+    },
+    {
+      "path": "tools/qa/phone_closure056/run_android_lock_probe056.py",
+      "sha256": "d2b1c2bb8e73a6259f40584445995bc547baac851923df2fa15e66f927b45047"
+    },
+    {
+      "path": "tools/qa/phone_closure056/run_production_lock056.py",
+      "sha256": "2b27f020e2dbe8b0bb198bf833987b0eb475bf5f92e2ed6f75432ead0accce57"
+    },
+    {
+      "path": "tools/qa/phone_closure056/test_control056_background.py",
+      "sha256": "731a7602d27be6cd5050bc3d85e481ace2b2388ec3d48bd19c661d7e1e47aa6a"
+    },
+    {
+      "path": "tools/qa/phone_closure056/test_control056_host.py",
+      "sha256": "5239d35e80a67b557e6da96cc233bdf31b86e89257a00b35c2f18b8ec5c821d9"
+    },
+    {
+      "path": "tools/qa/phone_closure059/ValidateDocuments059.cs",
+      "sha256": "7d19442087e4c898187a662f2d5a63568fc227d7bbc1d42d95f2a785a6751b76"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_android_trash071.py",
+      "sha256": "1127844d763436f617bf028ad47f04964ca81503aaeb5ff0a7fbed17d38a439c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_lifecycleqa071.py",
+      "sha256": "75fab39e8dbad0947c45c243a6048b2ddf9ccd705171e6946d1b8a5ec207bcfb"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_native_ui059.py",
+      "sha256": "32050af21fea95bbc3c730354eeaecbade665896898d06c46f5979ad04618522"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_native_word062.py",
+      "sha256": "9bd31854f8b30994d5f03fc1446e17b47b458c8ab4fff0365c4229286577a8c2"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_share_receiver059.py",
+      "sha256": "4dcc63d95bc9dca55d2e7131307886253f3f309c2ab6fd48ca47821aba064965"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_verify_control059_apk.py",
+      "sha256": "61634b30eacfdc4769c6fd5cac234efe13653a7a0d5d42dcc815e10fbb90d5c7"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_windows060_word062.py",
+      "sha256": "d1c1a357944930ec440623ea856375f886fb0ab696e719c1972a81ca0e753983"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_windows067_release.py",
+      "sha256": "abd796db5e6113a6b730dedddc79bfad6b7f71f7e7e61ae33100a6fba6903fe6"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_windows068_folder_share.py",
+      "sha256": "79f8a82cbe07f2437507f266c2e3f7270f0ee26b36805fe1136367b65538d967"
+    },
+    {
+      "path": "tools/qa/phone_closure059/build_windows_shareqa068.py",
+      "sha256": "eeb79b12b4b513dda1b5bbad7786a411f3794083b0b9e9442c74915f7028c3e9"
+    },
+    {
+      "path": "tools/qa/phone_closure059/check_android_trash071.py",
+      "sha256": "af51388803683a2e4925d8d27c540c4622ac292ad5ea04f3417d3a15a50b341e"
+    },
+    {
+      "path": "tools/qa/phone_closure059/check_share070_light.py",
+      "sha256": "6f60969db02d88b9c711a3bab4b6c2594bce5129aa6a14fb13bff5de8e4bf6de"
+    },
+    {
+      "path": "tools/qa/phone_closure059/check_shell_share069.py",
+      "sha256": "b25a4543b5b5ae26d1395dadfde81153b8bdcbdba50ea81252e460db4f6c496c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/check_word062_footer_source.py",
+      "sha256": "f83958962233b82084e6b34cd98919549c18eae9e13206e4bcd8d8d20463bfd8"
+    },
+    {
+      "path": "tools/qa/phone_closure059/checkpoint_priority12_059.py",
+      "sha256": "0879afee4d42fc2e66b445bf364a3baa28d85535a5164540933c90e27b6e68e4"
+    },
+    {
+      "path": "tools/qa/phone_closure059/checkpoint_windows067_issues.py",
+      "sha256": "e68f30535aae30de5497fa440e623a785e710f4df47f422cf4be38acef6acbc4"
+    },
+    {
+      "path": "tools/qa/phone_closure059/close_preserve_share068_interrupted.py",
+      "sha256": "fbff8a489746afa8536858c6b7632f3fb69a993c2bf7501df2c92a6b76aa056b"
+    },
+    {
+      "path": "tools/qa/phone_closure059/diagnose_headless_document_lifetime.py",
+      "sha256": "6f3de27d9d2de2c2f72d9bc7ace631c070b7cc5406a883381d5f1f5066e47464"
+    },
+    {
+      "path": "tools/qa/phone_closure059/diagnose_windows060_fixture.py",
+      "sha256": "7a6b5be46aedcf7648757f68b455a66cd7c21123affa8d50ec0724264499ab9f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/finalize_windows067_workpoint.py",
+      "sha256": "0ee260726950d0deab402dad258816a865b838427d74ad002cd69305465f0f2c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/finish_control059.py",
+      "sha256": "75bc2863f61952c68d9cf738958853ad4de15655112c52e78644fd2642840263"
+    },
+    {
+      "path": "tools/qa/phone_closure059/finish_windows067_protection.py",
+      "sha256": "d9b61364569c893f3f70d4daa628df1c3ca0717eec71dc1b21b559d0fd449220"
+    },
+    {
+      "path": "tools/qa/phone_closure059/inspect_windows067_actual_saved.py",
+      "sha256": "9cdf408b8e31344d26d60cb940a837a0a0b25a4153d78902a1ed0c4943035aef"
+    },
+    {
+      "path": "tools/qa/phone_closure059/inspect_windows067_native_files.py",
+      "sha256": "0b28718806f4eb19169e9c56c19a63032303236a552cd0531650faa82076bc7e"
+    },
+    {
+      "path": "tools/qa/phone_closure059/install059_virtual.py",
+      "sha256": "c83c703e31bc52c37fba5913bdd8ab8c4abdeb639e7288c038aa8f19ea7033dc"
+    },
+    {
+      "path": "tools/qa/phone_closure059/install_windows060_verified.py",
+      "sha256": "26527cd80d638ccf41f334babc5088a5ebd5ef56451f495f50781a6a52bf1390"
+    },
+    {
+      "path": "tools/qa/phone_closure059/install_windows067_verified.py",
+      "sha256": "2a82ecf0a961e5aabb0a6dee25232fbceef1b7ca2d5ba9e1833ccd8747f08020"
+    },
+    {
+      "path": "tools/qa/phone_closure059/install_windows068_folder_share.py",
+      "sha256": "e8128da43b9b9ff8d06c51ee93232ce6e72fc676b106d28653753443934fdc7d"
+    },
+    {
+      "path": "tools/qa/phone_closure059/install_windows_shareqa068.ps1",
+      "sha256": "64f43e47992f3ab72829ca578577f52761e80f4e5558e9b343338d82b7f2b84b"
+    },
+    {
+      "path": "tools/qa/phone_closure059/integrate_android_trash071.py",
+      "sha256": "f69e99622186c19e95ed6a4c95a613423a5de8752d2eaf5a9417d2b074505a46"
+    },
+    {
+      "path": "tools/qa/phone_closure059/integrate_control058.py",
+      "sha256": "ad42d5e79f79d5948ab7aa0ed6a4bb9f447511ee524cfae3e767d0995a7bbd74"
+    },
+    {
+      "path": "tools/qa/phone_closure059/lifecycleqa071/LifecycleQa071.java",
+      "sha256": "c089ac1fe218de11b1b0ec09348a8dc9e91df0bc2f7277a6c738f0573cd49f27"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_unified066_word_and_transport.py",
+      "sha256": "13cb9d523eb701d6e4d12296e534920da4f72f1034f42bd3e8cdc23ee01be65e"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_windows060_word062.py",
+      "sha256": "e72c255822ca4539d6787c017b4624ad7dc6cb5e7bdc778ef8609718c55e3855"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_windows067_release.py",
+      "sha256": "4eda2a06bf7389062e61bf4f4fdecc7a4cd4c24f1d3e3863f1dbbca8071e93cf"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_windows068_folder_share.py",
+      "sha256": "1ab193a3d3de94641b0177c8388194bb0c6fe19a7f5fe4b902819f9c916884fb"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_word061.py",
+      "sha256": "a72456c7fd5b91dd081d0715608b496b36cb5b3053c974063393bcb61b1c2712"
+    },
+    {
+      "path": "tools/qa/phone_closure059/package_word062.py",
+      "sha256": "3f1a1d754a0748b143d5d65d27f9140d6443daccc8e790d8120b2c211ba14f77"
+    },
+    {
+      "path": "tools/qa/phone_closure059/phone059_ui.py",
+      "sha256": "5e9e7fd71594d3c8e6bfd8f09717d99a4cd69313142fded50de719c01c52d811"
+    },
+    {
+      "path": "tools/qa/phone_closure059/phone059_web.cjs",
+      "sha256": "9db3dd53018d767684b9e7e0ff64a8bf74cdc154e9c015b2b6c4be8b39c175f8"
+    },
+    {
+      "path": "tools/qa/phone_closure059/phone_library100_session.py",
+      "sha256": "ccb70d627acfc7aa4e2b3b0230c1a84b75d2233af11a653c188617a0f6de5c5a"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_android_trash071.py",
+      "sha256": "77edd3e4fa61ef0d9159be68c8afa3afb7c95f2b54e439372c76fb323ab7c381"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_install_windows060.py",
+      "sha256": "7a009e38731fea0e76e0eed93cad7504665781df3b52e0a0f3b462f18538d41c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_installed_windows060_check.py",
+      "sha256": "275e6d3ead8e7686a5a25e5d2ed034af48485816bc6f56be506510f6ee494684"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_modern_share069.py",
+      "sha256": "63d848f1b1ed49a98cce7a8743cbed7fb8943342fab02199b86e2ddbc0c8aa86"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_share068_probe.py",
+      "sha256": "4918a8a3fb06d735e192c5b8fe5540ff88295dcf6f17446cfa43b20fd6edd314"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_share069_native_probe.py",
+      "sha256": "04ae5136ee9f79d58a2f7bc7c5da6fbeff26e9ea3d09ae1f7b7f884381a0dc9b"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_shareqa059.py",
+      "sha256": "426e9866b0694b65db9097ecf47bc6bf1020e005c2a3b1fa40b1a559d0cd1f6f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_windows060_package_driver.py",
+      "sha256": "1926598333a72d860880ff51c4d68e8a0cb9b2e38d40f7e30dea007e78d2c9a0"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_windows060_word062.py",
+      "sha256": "c5092e3a935191ec4fe0110bdfeb1f61524c70c0982201d8aa041c90e30dea56"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_windows067_actual.py",
+      "sha256": "699284b018c3339831ce15178610ad5ff93ff1a2d4901fcd728e4efeb6a1ec29"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_windows067_release.py",
+      "sha256": "3806293b0ed20fd3cad8a2bc0a2d125754498867b2c40c814cf1649c937ba4b1"
+    },
+    {
+      "path": "tools/qa/phone_closure059/prepare_windows068_folder_share.py",
+      "sha256": "448b60ef88e996c5579dfc985cbf9134cad23fc98675b907923d1c33979ab8cc"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_android_trash071.py",
+      "sha256": "f6bba28d0a6cebe1fe0ab69ef50e416fb8f4cee2f1de3f0d552ca4c31556270f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_priority12_progress.py",
+      "sha256": "280f155ef225665f2110d5aa952042d19a692b8aec8a4c169c6674663d934274"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_r22_final_and_qa071.py",
+      "sha256": "75a1b04ed363c3d1a090076423cbd70a59b369ade83c94ce7a5f8160f1bb2055"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_share069_actual_failures.py",
+      "sha256": "11993790fbc67747730fe79f07f7f8142ef731d48d91b702b69ad9d24824ce71"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_share069_source.py",
+      "sha256": "e8b9805ad1c95934fd32f1b7b40ce02dabe125520954bb01be9a8464bcc26276"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_unified066_delivery.py",
+      "sha256": "e709acfd4215da73be11e31d8d0738e74457d8faadf84db2bf3958ce9987cd72"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_windows060_priority12.py",
+      "sha256": "55b9000602d937b803cece750d19fb7f7061e52c3c360b3f099a9423664578c6"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_windows067_delivery.py",
+      "sha256": "8a8813a1e9d3e4d5758e9c15f8a598751749b4ce5e96416cd4b60464809012e4"
+    },
+    {
+      "path": "tools/qa/phone_closure059/preserve_windows068_folder_share.py",
+      "sha256": "5ee6df5e4ae6750e799aceb585ef09496a5479c49e4a9a50ae2b5d1e6b4e74ba"
+    },
+    {
+      "path": "tools/qa/phone_closure059/protect_control059.py",
+      "sha256": "b025c779420d68d7794a82f362aea9203a1796a8d469346756e7c53dd67f6854"
+    },
+    {
+      "path": "tools/qa/phone_closure059/read_windows_share068_events.ps1",
+      "sha256": "cebd3e37266220c11c52816964784f4d6cdfa58741a687651dbba5216833aa60"
+    },
+    {
+      "path": "tools/qa/phone_closure059/resume_install061.py",
+      "sha256": "facaed776c0de144f934bbbdebe46be9065cd1e9bbfe9366a74d567ddb2856b1"
+    },
+    {
+      "path": "tools/qa/phone_closure059/resume_word061_packaging.py",
+      "sha256": "a74638e1f1111639741aa85a171a1710f7b48c26034ebb601180c0bcb8c0cc98"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_modern_share069_gui.py",
+      "sha256": "ff5f8e5f30d3b1eacae0ea9a0ccd252d6ca152aea4f7ac67c5170b42ddd0afec"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_public_saves059.py",
+      "sha256": "1e077124858c7f95e4c31bf2e952fa09b183aaf39c6b6062f656619d74081438"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_public_shares059.py",
+      "sha256": "e745520b30bdc6761cb2521f1e83ad7e50a545cb18e02a3ea74ee443c7c3677f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_share068_probe_gui.py",
+      "sha256": "45e3034ec5c8129ee1ab9baeb3335e9210928fe7bf40890c66a0bee818fb467c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_share069_dual_gui.py",
+      "sha256": "ac7f73dd9b9b1d2c9866395e0beb32b38b3124b17569a9df91ff17f2e1f63669"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_share069_source_tests.py",
+      "sha256": "10d76764af62181e2b1f8c8c58d9a1a8eddebf1eed8601d7965416fcf8ba76cf"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_share070_checks.py",
+      "sha256": "f05d5220f5ee705c20173ad56969cd0c73c62ec2427f8faa7827348edaae802f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/run_windows067_focused_tests.py",
+      "sha256": "4a47ff70933e7ab817c650f1baa9058508489dcc55d641209d55624717b65326"
+    },
+    {
+      "path": "tools/qa/phone_closure059/shareqa059/NativeUi059.java",
+      "sha256": "b553261ed79f908cda360e5319744ec87046bccc1c5f24bc4d8bc84cf9acfe84"
+    },
+    {
+      "path": "tools/qa/phone_closure059/shareqa059/ShareReceiver056.java",
+      "sha256": "cfeb3d91a679c5dd393940f0cbff1fb0898013cb1f782efedad31ae6515b0828"
+    },
+    {
+      "path": "tools/qa/phone_closure059/start_virtual059.py",
+      "sha256": "dace867e2e890e7cbb880cfc2aeed3c2af13975894fff4893edf98fd3500862c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/test_installed_windows060_readonly.py",
+      "sha256": "f344f14cceff9e918dbdb3407e02c5b5413773140e153ecaa570196c4dcee447"
+    },
+    {
+      "path": "tools/qa/phone_closure059/test_windows060_word062_ui.py",
+      "sha256": "4449f1ca653162b9c4f4c79a35c567a81ecf2764210f8561d5571d99d5a1027c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/triage_other_formats059.py",
+      "sha256": "7011bafa6142f4d9760bd03ba788cf24b990fb063e3746db0537bff0e99d0db9"
+    },
+    {
+      "path": "tools/qa/phone_closure059/verify_public_exports059.py",
+      "sha256": "7c8e3d5909f4a1e20b9568969d35819aef10a097e85cfd901f9c012cd63e9057"
+    },
+    {
+      "path": "tools/qa/phone_closure059/virtual_native059.py",
+      "sha256": "0eca5038080d8e69c37224cf3056521cac283cf853b3023d4fa99246dcb77eb7"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows060_literal_baseline.py",
+      "sha256": "73b94197243c44541b785ef8b3a1bc2276a0484e4aac7a7c62650e25dfb56e18"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows060_native_gui.cjs",
+      "sha256": "993ca5ff358817d5ad0a17f85d07f98150645b441f3933c2d87330d8258c8ede"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows060_system_native.py",
+      "sha256": "2ab32aea2142c9e046b63da7a267a0d3276d383170146e4452af83a2aa14a0c1"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows060_system_session.py",
+      "sha256": "5c07af532b92ef8c9c178f40a1386e54f302369da48d78b5a5bf7a8ad62cc293"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows060_system_web.cjs",
+      "sha256": "d47716db734c27584f1c4762da40dabbabaaa94a7a8a7beb7aeabcadb92616ea"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_actual_save_batch.py",
+      "sha256": "38ba6162a3bdf788e9ccd6ec8c7cc2e2344a7ebd3a0bfe9c645aa79d1ed36de9"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_actual_save_fresh.py",
+      "sha256": "beb0cf39058abaf2e80d8dd1db29e6027a49e2a2de887933528a68e23c0cbbae"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_copy_preserving_clipboard.py",
+      "sha256": "0066e9ae6bcc45a9fab5c0236c9dc13e0af1ea440eed662b2d771b5fd8fa73b4"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_release_native.py",
+      "sha256": "3509916e0894afc1494e0d5b574681cf50c199e22b4eef7b50447da3eb65ad10"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_system_native.py",
+      "sha256": "f614ad508237bec940f8169c3faac24643c38f10b68c7b4e1a3b50baaade6bb7"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows067_system_session.py",
+      "sha256": "f723e2807cddc3240eb5960e0406c8a1a3da396ccc72cfd40b928fc95b364438"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_share068_session.py",
+      "sha256": "9518087014b4c4d3adfa284a90432621784c6df98284ed6d2a349f78bfd3a74f"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_shareqa068/ModernShareWindow.cpp",
+      "sha256": "5a30026351965086dee0bdc1cd06eb3b3b63a0f4f3bf2fef02e7760e33c57317"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_shareqa068/ShareReceiver.cpp",
+      "sha256": "8272be66363080b73efbbab4a7660a5817e0e554552db3e18a7f1fad614af19b"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_shareqa068/ShellShareVerbs.cpp",
+      "sha256": "c98d7f4fc9ae045a1d378caa2d4626cf34f23a8b224f0f130d740c6194e3374c"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_shareqa068/dual_probe069.rs",
+      "sha256": "1b5ddd89f65abd3cfe6e30533929acedc0d2ffaf57f732ef01e68b86a02b5fab"
+    },
+    {
+      "path": "tools/qa/phone_closure059/windows_shareqa068/ipc_probe.rs",
+      "sha256": "7e2f9074da19ed499f674c32007039efb0bcbaba273d81a2cbaf71e58e8343c8"
+    },
+    {
+      "path": "tools/recording_uart_observer.py",
+      "sha256": "2e478539d265c504277ffcbcba7cf82775bf287470913275ed5d258793f9469b"
+    },
+    {
+      "path": "tools/render_pptx_geometry052.py",
+      "sha256": "0d483faae8810e3c8e68778bf5196bc5de244a54597075a75027b4428071e86f"
+    },
+    {
+      "path": "tools/run_companion_type_ble_sync_popup.ps1",
+      "sha256": "651f768ae538d90a230a0cb719e08ba2c2c9f8fe38ce119d31faa465825e26e6"
+    },
+    {
+      "path": "tools/run_companion_type_mechanical_voice_tts.ps1",
+      "sha256": "7201d129b9bb3881ebbd734814bccc84371e9ef5809a80e0170defa68ab29229"
+    },
+    {
+      "path": "tools/run_companion_type_real_microphone_soak_popup.ps1",
+      "sha256": "8faa94c8884d0ada50cd27c552268d02b5bc5ea2b5640e370de264d9556bc86c"
+    },
+    {
+      "path": "tools/run_exports052_cargo.py",
+      "sha256": "3e126bfa49d58066508390fb375d7d83023594df6bf4b9d6964f1f10821cfb0e"
+    },
+    {
+      "path": "tools/run_host_meeting_failure_app.mjs",
+      "sha256": "01cd4ab151025b677d442b8626220d43b7e455d34e4ce2461d5c4e5d8c7a2cef"
+    },
+    {
+      "path": "tools/run_material054_phone_qa.py",
+      "sha256": "8898bb0b5e9c3e665788fa9a166fdd83e1d8daf8933f1ddf9e30de1d0c00013d"
+    },
+    {
+      "path": "tools/run_meeting_track_ui_test.mjs",
+      "sha256": "046781297a1c639ebf82c0ae76673a903b9ffdc5aea54b6e8e7d0c9c007497cd"
+    },
+    {
+      "path": "tools/run_p636_ui_contracts.mjs",
+      "sha256": "006d15ae2ee7ea6af6fa20c650f93548a7ea0d2ece7f91c7761362b8200d3541"
+    },
+    {
+      "path": "tools/run_p637_ui_contracts.mjs",
+      "sha256": "1b761ee70d3f65db5f2348e58ff144bc20838b344bc052f016d450a13b58d652"
+    },
+    {
+      "path": "tools/run_p642_ui_contracts.mjs",
+      "sha256": "a5c6a10c4c2f67d9ae61f8567ad2e65bbd65595660246f4793c22638d1e7b9c3"
+    },
+    {
+      "path": "tools/run_p646_ui_contracts.mjs",
+      "sha256": "7ae053258cf9a494eaecb811b7ff50034dd95ad4b1f323d6b66eb5ed5f78abb3"
+    },
+    {
+      "path": "tools/run_p648_ui_contracts.mjs",
+      "sha256": "eb3b40aa6c96cf71f025b13ab4c3be46ef12d4c2b941b912cd686b8dd955e400"
+    },
+    {
+      "path": "tools/run_pet_memory_confirmation.mjs",
+      "sha256": "9da1f695458ebfc233318ebccfc7ef239112e6f5566d7595871bf38cb6b6f661"
+    },
+    {
+      "path": "tools/run_windows_file_copy078_native.py",
+      "sha256": "bc01a5b0c6f72dfbc35bc261961d8c3bde2b14100886ce4ba0d8106d052286fd"
+    },
+    {
+      "path": "tools/seed_core_delivery_public.ts",
+      "sha256": "5ef8a25c236d60a7aaa0034b0079a1566c082dfdc3e688c3e23187b6b58311da"
+    },
+    {
+      "path": "tools/test_audio_import.tsx",
+      "sha256": "cf5c62d218df2af9d37bc68ecd85bb3073ba9e2102367ff0ed8ca60121849608"
+    },
+    {
+      "path": "tools/test_calendar_absolute_reminder_suggestion.tsx",
+      "sha256": "dd874b299ed92f37988875b1c95d91126525ff73580d98e01903ee350d2a4664"
+    },
+    {
+      "path": "tools/test_calendar_allday_common.tsx",
+      "sha256": "063d4a1c2c6f6efd3b98fadf76063bcda68bb3bb38c74ee2f8b67867e3a12cfb"
+    },
+    {
+      "path": "tools/test_calendar_cancel_return.tsx",
+      "sha256": "0721fdc84a82c10bd7786780d5afa86cb0f98f372250cae0ce0d6e599f074906"
+    },
+    {
+      "path": "tools/test_calendar_comparison.tsx",
+      "sha256": "718cb3a3a9381a82185897ac955abaa65fb9c5135cfc2e49eafad36f4a7ad8a1"
+    },
+    {
+      "path": "tools/test_calendar_copy.tsx",
+      "sha256": "c3d6f73287b8ee07978a5154ae7b3bb1731b25f5718d4db729db01c22aa80531"
+    },
+    {
+      "path": "tools/test_calendar_deadline.tsx",
+      "sha256": "259f5ad52eda7f5044b2425d9c1056d2071fc7676911e1e654c3a10c4614085f"
+    },
+    {
+      "path": "tools/test_calendar_event_export.tsx",
+      "sha256": "beb4097633a4552f931a352385a416d683d491882b2561788cbb215b843c025a"
+    },
+    {
+      "path": "tools/test_calendar_execution_slots.tsx",
+      "sha256": "c9a2a5865316ee9547d2d509cfe650f983be69ab5a7a5865f5019cd56faee216"
+    },
+    {
+      "path": "tools/test_calendar_explicit_none_date_to_time.tsx",
+      "sha256": "69938f13e89689469c6ba3639a3f3f6572335e638da4b70c0dad4f27a9ec4f8b"
+    },
+    {
+      "path": "tools/test_calendar_explicit_none_deadline_edit.tsx",
+      "sha256": "5a5ec3c897cd5f38b2f0a6043c3a78d82667e1262bfa7c7658b82a6f61dc7d94"
+    },
+    {
+      "path": "tools/test_calendar_explicit_reminder_reuse.tsx",
+      "sha256": "0f72d677a54d8cbcaa312678dc718f8df883c2ddbd00c4ffced72b7f2ec5053b"
+    },
+    {
+      "path": "tools/test_calendar_export_review.tsx",
+      "sha256": "3208768bcbff86424feeca9b93bd6900a24a30007fd087e32c9fa6a86897f907"
+    },
+    {
+      "path": "tools/test_calendar_file_link.tsx",
+      "sha256": "58ab05d5077393eade6ac5a26b699bd798d922a67045ac31915204505e9c72be"
+    },
+    {
+      "path": "tools/test_calendar_independent_reminders.tsx",
+      "sha256": "6e2e7a285e7b8e1b3e5584fb4602225deb0c67cbbc9cb1a33ba22b49918a00e2"
+    },
+    {
+      "path": "tools/test_calendar_open_handoff.tsx",
+      "sha256": "ada6f2eb4f40240c6f8191265179e19ed386aff5b4f9f89377a38429dfecde5d"
+    },
+    {
+      "path": "tools/test_calendar_relative_deadline_edit.tsx",
+      "sha256": "0c4a35cc32d759a614108caba847f16cd780b058259860a9890be071fcf9e329"
+    },
+    {
+      "path": "tools/test_calendar_reminder_carryover.tsx",
+      "sha256": "c1d52250e7945adc92ef28195ef86d9389c6ac6aaf585777fb21a269e38bd049"
+    },
+    {
+      "path": "tools/test_calendar_reminder_choice.tsx",
+      "sha256": "df42d892b5a3824ebd0fe520c539c4d7acd5a1142f6260bedd8b829c61a57ccc"
+    },
+    {
+      "path": "tools/test_calendar_review_all_times.tsx",
+      "sha256": "1c25488a6e626f26b52be7196c69e72b13418e40e0cd9bb7afb53d2f6bac6788"
+    },
+    {
+      "path": "tools/test_calendar_review_items.tsx",
+      "sha256": "d22f9593c4b29ac969e06d029721db09ac25bf08200a5cfc27c14091ddce309d"
+    },
+    {
+      "path": "tools/test_calendar_time_required.tsx",
+      "sha256": "5efee2cc78cc97654f958c5531849d879fbf061e8cd5c821e92a6c6a213b4043"
+    },
+    {
+      "path": "tools/test_caption_capability_errors.ts",
+      "sha256": "054ee2dd8ace299ec8acdf56ffb80525b21fc4a5edcde94e1dcae6922b6b2387"
+    },
+    {
+      "path": "tools/test_checklist_phone.tsx",
+      "sha256": "07044a0e0aa561681b4dd80fe1198cc83a235b1fbb20371685f9deb7bf9293b7"
+    },
+    {
+      "path": "tools/test_common_action_fields.tsx",
+      "sha256": "0d9f15e3a57b85553833d44754676acada6fa8e154148e860a4f594e18eebedf"
+    },
+    {
+      "path": "tools/test_common_calendar_time.tsx",
+      "sha256": "71150c645e978d93a3f616dd20526d1f85484dd3796dad90c4a91161768ccb0f"
+    },
+    {
+      "path": "tools/test_companion_app_state.tsx",
+      "sha256": "28ba265756f5c5cda78a0b398be7e45fee3fcba1bda7dca7407287e2f7bcba8d"
+    },
+    {
+      "path": "tools/test_companion_credentials.tsx",
+      "sha256": "6b2cf5ccbaf196f70f8c18d62285b38bf080fd2675d5b51933309df24797efe4"
+    },
+    {
+      "path": "tools/test_companion_dashboard_state.tsx",
+      "sha256": "4c1c154d9821a992b7430415d568f9ce04702f1a5d996fa21819267c066d7804"
+    },
+    {
+      "path": "tools/test_companion_desktop_update.tsx",
+      "sha256": "33af9a79cf8a09eafe35996b3936cce359954991254ad6303d8cb8e73899e99a"
+    },
+    {
+      "path": "tools/test_companion_device_bookmarks.ts",
+      "sha256": "2acbb0032517cc66c9164a884f59f14831a2122b607d253cfaa88e40a3e5f1d3"
+    },
+    {
+      "path": "tools/test_companion_diagnostics.tsx",
+      "sha256": "b570d74f420257f093815600d95f7642735e9edef93cfcf52d69b601d655327b"
+    },
+    {
+      "path": "tools/test_companion_host_capture_warning.tsx",
+      "sha256": "4e2f7948c6b8d6878b5ac0008cbf1bec3a8f75f00179b6ad16565c61f5fc2080"
+    },
+    {
+      "path": "tools/test_companion_journey.tsx",
+      "sha256": "60d0d19512ecb8cc4248a6a145ef5bebd91816b5c55c59d990798dc53dec6eaa"
+    },
+    {
+      "path": "tools/test_companion_library.tsx",
+      "sha256": "252e0941c20d926499ed8305949970fb18f9676cd45f51307158c8fbccf99426"
+    },
+    {
+      "path": "tools/test_companion_library_export.tsx",
+      "sha256": "9edb2f79863f699ccd7ac3fd0c7c6aff306b3f2b614f3a73095a9a7272fdd753"
+    },
+    {
+      "path": "tools/test_companion_library_lifecycle.tsx",
+      "sha256": "c6c835b13cdfa5d1850dba8e0d15469a13b9a8f6a3694ebced86b94210a7575d"
+    },
+    {
+      "path": "tools/test_companion_listening.tsx",
+      "sha256": "b96deb5ec927b343824db3d6d0c5b5d56db9dd3e8f2b71829fb81bd4d37df4c4"
+    },
+    {
+      "path": "tools/test_companion_local_audio.tsx",
+      "sha256": "68df05d7eb77a4b5a97c128cce2cc95590f4586e7524b5d3cafbb000d691e877"
+    },
+    {
+      "path": "tools/test_companion_original_sync.tsx",
+      "sha256": "aabf14212d422414b298e7b3568fb5d5c64d2ad7f4018a3749e087ddd5340f4a"
+    },
+    {
+      "path": "tools/test_companion_overlap_backend.py",
+      "sha256": "3e71e1c0d2975e475d1871b0c253d44cde15b6c26872ebadb8d87018a0de421f"
+    },
+    {
+      "path": "tools/test_companion_pet_navigation.tsx",
+      "sha256": "a266bea6ef7475c60f3d9a88250d17a8295f1ab868f1923d0030fd55dab06689"
+    },
+    {
+      "path": "tools/test_companion_recorder_control_state.tsx",
+      "sha256": "f4d0e373c0a769cee9731ef1c550464fd5e0b0a7fd9918d058e8952c6d422bbb"
+    },
+    {
+      "path": "tools/test_companion_recovery_center.tsx",
+      "sha256": "3a863fd55cf9febffa12400d8321ccfceea7bc71086ba8a10755e42663c6afab"
+    },
+    {
+      "path": "tools/test_companion_result_order.tsx",
+      "sha256": "60ce794c7020fbdad8e00b70275408c023c93289727247e2466bde00ebbdd520"
+    },
+    {
+      "path": "tools/test_companion_service_actions.tsx",
+      "sha256": "7854157111998e7f2fcf59a2c34d55ba3e003f2093af892a418f0c88e78945ca"
+    },
+    {
+      "path": "tools/test_companion_setup_render.mjs",
+      "sha256": "8f840eaacf31bdc9ff9440d0fd67a9655f77e07c005e9cf595670feb369fcd4f"
+    },
+    {
+      "path": "tools/test_companion_setup_render.tsx",
+      "sha256": "9a1865cb505a602b128528ac234bb3ef0b036ae9a5fdd20950fbdbbc734bf96f"
+    },
+    {
+      "path": "tools/test_companion_speaker_recluster.py",
+      "sha256": "6c78ebb46a02d723f8feadb5f8c2b68dbf680cd91f8e5f21d2b1b2c9d4b0fb79"
+    },
+    {
+      "path": "tools/test_companion_stop_recovery.tsx",
+      "sha256": "2e5e195a50140caff2de016a398179094ed3ef0db098215e0712b61be9cf51b5"
+    },
+    {
+      "path": "tools/test_companion_sync_pause.tsx",
+      "sha256": "f0cadc77c336150ee834ce829209905b67b18b51ad99aa285e9f7f110419e550"
+    },
+    {
+      "path": "tools/test_content_export_panel051.tsx",
+      "sha256": "16b38a9acdafb795ba8442ba4d3445893b2b78655f201c845e23b84ebcb43c59"
+    },
+    {
+      "path": "tools/test_core_model_boundary.mjs",
+      "sha256": "2d91060459fa9f4ecb45f0b8dd480dbf4f7623555b03b1664e8880973684864e"
+    },
+    {
+      "path": "tools/test_custom_template_backup.tsx",
+      "sha256": "9b1134427280eb3983f19b4c4618c77b7fd8ac251fb03248e22671685f497f3c"
+    },
+    {
+      "path": "tools/test_custom_template_draft.tsx",
+      "sha256": "7ae60769b9e76e89d29441cb4dfea22a285be7b92fee71f0d738c5c8cb475588"
+    },
+    {
+      "path": "tools/test_customer_reading.tsx",
+      "sha256": "03b2b978b6383f6660599b450eeb72affd84ddf99589fda436fa973fefd8763f"
+    },
+    {
+      "path": "tools/test_damaged_recording_recovery.tsx",
+      "sha256": "fe203c796b7a3112993a607d5f33fb2cf0a792941ec8f535816a46d7b7bf80c3"
+    },
+    {
+      "path": "tools/test_device_full_notice.tsx",
+      "sha256": "0831ed96ce43cd02236b48b843cc483ffa7ce699c3ec25a93eb33fe5d0518a16"
+    },
+    {
+      "path": "tools/test_device_recordings.tsx",
+      "sha256": "ebf1fcec7751255a20e983d66f8f38429a416fb15b245562905de59de69aa055"
+    },
+    {
+      "path": "tools/test_empty_transcription_range.tsx",
+      "sha256": "22b5b7212702a961cfdf7d86646f0d6a948a387c6648c2d08df03df8d8481010"
+    },
+    {
+      "path": "tools/test_gap_retranscription.tsx",
+      "sha256": "c84268d670e40e2f0fbafa6f239ecf0e341f2bc6d1d641d8c491b24d33d4523a"
+    },
+    {
+      "path": "tools/test_host_interrupted_status.tsx",
+      "sha256": "935c165820dae3f2274fa8a524b21b0c45adb1f8b7c6c26a42db12857c59b1ed"
+    },
+    {
+      "path": "tools/test_host_meeting_failure_app.tsx",
+      "sha256": "a1addc0e20432b2aea6a41d3d8a4fbccc7f9ee35a7805b7dc0e725decdf7752c"
+    },
+    {
+      "path": "tools/test_installed_windows052_readonly.py",
+      "sha256": "81d7719880044d6227d5f1f3fa82632587ce8a69bed3488feb94e31537daecc5"
+    },
+    {
+      "path": "tools/test_library_backup.tsx",
+      "sha256": "378d99dc75eef4123a502cfab7dcc1fbc643212637e2cc14b17a9963f41d04c7"
+    },
+    {
+      "path": "tools/test_local_asr_anchors.tsx",
+      "sha256": "703722b5e6727e0cbd521683ca8dc7adb057177080688a577ed9336bd45faa3e"
+    },
+    {
+      "path": "tools/test_local_transcription_ui.tsx",
+      "sha256": "5a94e88bd8f16184ae63f90e00310632909ccd6b9f218c17b583c7e264952766"
+    },
+    {
+      "path": "tools/test_long_minutes_reading.tsx",
+      "sha256": "e2fb2904cd40a0f603950ca40cb792157604dc6214e48d5003ea223edbe55764"
+    },
+    {
+      "path": "tools/test_material054_java.py",
+      "sha256": "63ba338e4f5504427d4dc184eb199b8a16db90b8a10bda7d0a6d5b49916425e3"
+    },
+    {
+      "path": "tools/test_meeting_document_export.tsx",
+      "sha256": "1b53d806e19ab259f71bb53e569bbf0b4b0168d2a3dab422305e9865c5afbb24"
+    },
+    {
+      "path": "tools/test_meeting_outline.ts",
+      "sha256": "87875d216fb227a1784d18ae6ff35cb0989a20dc1fb9bbabf994c095c4c41486"
+    },
+    {
+      "path": "tools/test_meeting_qa_service_recovery.tsx",
+      "sha256": "e4aea9637717f765d20653012a93aa8ae5a59e2378a14ce0e8d3e82290ff12f1"
+    },
+    {
+      "path": "tools/test_meeting_track_browser.mjs",
+      "sha256": "025ac2eec54a6502dabe61e3b61bab8eb76a3edafca6b6bf903e06bb98ed9f73"
+    },
+    {
+      "path": "tools/test_meeting_track_dashboard.tsx",
+      "sha256": "010fffa9add934fa7198504b81c813f22516e44d9baa65c50151e8c767021bc7"
+    },
+    {
+      "path": "tools/test_meeting_track_playback.mjs",
+      "sha256": "0349f36803aeac654d5902755d5ff97b8edde3691811e07fa71db7645016dc47"
+    },
+    {
+      "path": "tools/test_meeting_track_resume.tsx",
+      "sha256": "303139e3586b1b46cb7b62aa80b4103fbe68bcfc1e83bbdbd472be8bde4f4952"
+    },
+    {
+      "path": "tools/test_meeting_track_ui.tsx",
+      "sha256": "e6dc677ac047dde924c00584878cf7db187c5b59c95adb1b2fedd5eb5f888cf9"
+    },
+    {
+      "path": "tools/test_minutes_cancel_app.tsx",
+      "sha256": "59d4ab23048564eca5ff1c763adf34cd3af59ec1a3ff6d5736be0cde9ecd7f60"
+    },
+    {
+      "path": "tools/test_minutes_history_journey.ts",
+      "sha256": "d458b6b74b4637ebec74c900defd251eb965d62fb7a79854ee5d65d4b92a62ea"
+    },
+    {
+      "path": "tools/test_mobile_action_cards.ts",
+      "sha256": "ab4eea2c85bfb7752ca49bbd1a4aabe69a29b5a6e30c5c9a7e0c467ece7e17ec"
+    },
+    {
+      "path": "tools/test_mobile_action_editing_20261105.ts",
+      "sha256": "c53f765016064498f2752bb1e315c6575b4dc9864975933eee6df9b5e22ace09"
+    },
+    {
+      "path": "tools/test_mobile_cross_window_20261103.cjs",
+      "sha256": "b0a73e1d121003a0a4374796f98ba3323ca6ddbd5772c4b0a289a6bb0c24294f"
+    },
+    {
+      "path": "tools/test_mobile_device_snapshots.tsx",
+      "sha256": "088e203d2cb2426ae9cfe70b9488993b8018696bb54f373fa4bc9b81fb152e26"
+    },
+    {
+      "path": "tools/test_mobile_lifecycle071.mjs",
+      "sha256": "cef675bae9adc79c78a8fe0411514a8c2690d581037c9834cf93fe68d84aa3a4"
+    },
+    {
+      "path": "tools/test_mobile_lifecycle071.tsx",
+      "sha256": "4240aa20220ab1f4b12c26bca16b25756e32b358cc5d96efd809d77ea3c48115"
+    },
+    {
+      "path": "tools/test_mobile_material_exports054.tsx",
+      "sha256": "8efb6b58f991571ad563623c1da29676d27fe147ec780bc865745fb9435bf185"
+    },
+    {
+      "path": "tools/test_mobile_playback_bookmark_lifecycle.cjs",
+      "sha256": "bb1fb38713664c1dbfc6ee85716cf42a8eae8059ea37599a5261ccc990d5cb97"
+    },
+    {
+      "path": "tools/test_mobile_saved_translation.cjs",
+      "sha256": "2f67f6df6f9ff084a3fc4261158b2ad5d56f44776f7fca2449924d012682e6d6"
+    },
+    {
+      "path": "tools/test_mobile_source_review.cjs",
+      "sha256": "b1ba0f6b01fddca7b32867af26fd846767b5bea1014ed523a2a252f37a6543ba"
+    },
+    {
+      "path": "tools/test_pdf_export_selection.tsx",
+      "sha256": "11a35a8726df63b75ba4a9ef04c6fbf4db8c06920c0b7c1584482ceba0ea7507"
+    },
+    {
+      "path": "tools/test_pet_memory_confirmation.tsx",
+      "sha256": "9e45d0ebbfe20707102e3fc823fffd66267123f6211a2e6135a85bdc80cfbd4e"
+    },
+    {
+      "path": "tools/test_reading_density.tsx",
+      "sha256": "a1a421d3eae1a3516e4b030108c1280c4fa691a5d6678a23a58050d141fb39b4"
+    },
+    {
+      "path": "tools/test_recording_readiness.tsx",
+      "sha256": "626e914b22585920746d514c2b70f20ea7b49e69126425497eef101cd12ec853"
+    },
+    {
+      "path": "tools/test_retranscription.tsx",
+      "sha256": "6ea58b33e15d2755c6336a6772cf857a99fc64edca7a4946446a99e23fa4a1b5"
+    },
+    {
+      "path": "tools/test_reviewed_speaker_sources.tsx",
+      "sha256": "9fae30aecdfcb6d18969f7cdfbc853ad1645f37817ea1255db0610e0fe29b349"
+    },
+    {
+      "path": "tools/test_segmented_discard_entry.tsx",
+      "sha256": "65952d386ac2f00c4791ff6260fa6a0da4dfac6005ad7e8cd384c59ff5420b77"
+    },
+    {
+      "path": "tools/test_selected_content_copy.tsx",
+      "sha256": "cb92fb09c62a28aa521dfe3193bd0f6305287adf7a6e1ef520ee547f9569109c"
+    },
+    {
+      "path": "tools/test_share070.mjs",
+      "sha256": "11e5578bc7e03549eb4b49cca962e5b6dba14c62ea6739b1e2bc8db7e61ea1cf"
+    },
+    {
+      "path": "tools/test_short_minutes_evidence.tsx",
+      "sha256": "1f2c6788eadc7ae38a59ebb0e4c9e29ae7be02c97c1ac33509a03b985132988e"
+    },
+    {
+      "path": "tools/test_single_transcription_entry.tsx",
+      "sha256": "813db3ceb4581c57bc3f745ebb821d96d0bd48df8799fd4dd6433f260e033b18"
+    },
+    {
+      "path": "tools/test_software_contracts.mjs",
+      "sha256": "b5637224ec4045b658895133a5388b7896b44cf2fb7cdfd07e6f7dc821e3c79f"
+    },
+    {
+      "path": "tools/test_speaker_labelled_sources.ts",
+      "sha256": "e02032946f08577fa1173c6d77f024bcbf07ca79335505854a4001ba4524a604"
+    },
+    {
+      "path": "tools/test_speech_service_feedback.tsx",
+      "sha256": "1116b7feeec7af386e1102c10bf42c7c26435fa2474fce10e0ccf515a317732d"
+    },
+    {
+      "path": "tools/test_sync_manual_recovery.tsx",
+      "sha256": "896f42375ed4fa907c170d6d16c906761ea3080a456e7895827a43e2c5578d01"
+    },
+    {
+      "path": "tools/test_sync_repair.tsx",
+      "sha256": "c72231105e06067349f869ac68be360227c3bc940252f5b3ad7db83256724f50"
+    },
+    {
+      "path": "tools/test_template_retry_ui.tsx",
+      "sha256": "7e62e7bf065c97c2799896835bbd415df9dee6551ce5152dda7995dd779b6a5c"
+    },
+    {
+      "path": "tools/test_transcript_bulk_replace.tsx",
+      "sha256": "478710a1bfe65b918dca802b2f496afbe0e5d00ce383e2487bbd13c88e034433"
+    },
+    {
+      "path": "tools/test_transcript_matching_20261104.ts",
+      "sha256": "6afd790b792319a2e0e5d40be3cba472252dba3a975de470f02dfade3bc83f58"
+    },
+    {
+      "path": "tools/test_transcript_reading_20261103.tsx",
+      "sha256": "3940bab884753d2ca336da6529b86fb768497576af60e851e4273040b07c586c"
+    },
+    {
+      "path": "tools/test_transcription_cancel.tsx",
+      "sha256": "9913a25c14047c529e33454c845a174fd2c6f499972561bd93771c3e6fa8903b"
+    },
+    {
+      "path": "tools/test_transcription_cancel_app.tsx",
+      "sha256": "2671f0b65cea4f7b4147d110d2ccac97d6dcf106e84e6985df6bc8021823905f"
+    },
+    {
+      "path": "tools/test_unlimited_online_ui.tsx",
+      "sha256": "ef11c4ce5c3c5f2d083ebb13f8d7fb6f158db1370fbb5e79ff67157ef18c5133"
+    },
+    {
+      "path": "tools/test_unlimited_recording_ui.tsx",
+      "sha256": "a673d53ce5067e17667c79a4e77408e004086e34c8048bb1c60df350ef8e454b"
+    },
+    {
+      "path": "tools/test_unrecognized_seek.tsx",
+      "sha256": "08bfc0660cbbfacafa7e619ade2c45df2f25d684df94b8340e3378f7cf13a1ca"
+    },
+    {
+      "path": "tools/test_unverified_minutes.ts",
+      "sha256": "7ad312d0b9cb1518ab600b4bc7455cfad98b97d628031c2085e0d2b7d12e0d9a"
+    },
+    {
+      "path": "tools/test_windows052_native_readonly.py",
+      "sha256": "1eb92654061e30782b26af97065029cb19ecdf545aa88ac7007c4f3c4919d3ac"
+    },
+    {
+      "path": "tools/test_windows_device_actions.tsx",
+      "sha256": "4034a2f6bc93d61d1801827703e98eaa3a66d62faf85a47353e52dc4e08a420b"
+    },
+    {
+      "path": "tools/test_windows_settings_navigation.tsx",
+      "sha256": "bb47b2af700a3860366057e6ce7d9ab1b31bb9299e8142956f3c0dadb7d5f805"
+    },
+    {
+      "path": "tools/validate_material054_documents.py",
+      "sha256": "ca614b82dfb63a3c0b8e518d1782915312744aa9ff5319939e6323770417c21e"
+    },
+    {
+      "path": "tools/verify_companion_type_backend_shape.ts",
+      "sha256": "c4d3fcfbd1b387bfbdcd61ca0db5dac40bbc697f3beee42f86e69fb196957643"
+    },
+    {
+      "path": "tools/verify_companion_type_browser_ui_chain.spec.cjs",
+      "sha256": "edfb769719a108d7f0f730009dc3aa67d6a914a33237ed3d73806c5681a22bdb"
+    },
+    {
+      "path": "tools/verify_companion_type_dirty_audit.ts",
+      "sha256": "202dbd97738e774669f2bac92eac5bfacb0ea95e99a129bce5ab4ab355402df9"
+    },
+    {
+      "path": "tools/verify_companion_type_final_human_signoff.ps1",
+      "sha256": "13d0f177a12478e673b73147791ac78a60a3bc727660e7d2d95c03b97e68a275"
+    },
+    {
+      "path": "tools/verify_companion_type_host_recording.ts",
+      "sha256": "c6e898bb0e58f9db2f583ca94b6fc8ccaf7b2984e14109734ea9b73a8dfa5e04"
+    },
+    {
+      "path": "tools/verify_companion_type_independent_asr_chain.ts",
+      "sha256": "97325d10ee1a229a7b96e6ded630525b64a33758469f9660425b01dd93775ef3"
+    },
+    {
+      "path": "tools/verify_companion_type_installed_ui_sync.ps1",
+      "sha256": "63b2743dd0e36b6e7746a3d8865123fe5529f7dfe41b3e74b694589307031b7a"
+    },
+    {
+      "path": "tools/verify_companion_type_installed_user_journey.spec.cjs",
+      "sha256": "e070fde96b0054d46b2a2de2492cf47d6be86c7ba6610c4190a88e7c1cfd6574"
+    },
+    {
+      "path": "tools/verify_companion_type_joint_acceptance.ts",
+      "sha256": "2edbd188db7297eaed2efbc7ad2cf6e082f6f2d985c0a9a76bb928a48e9fa33f"
+    },
+    {
+      "path": "tools/verify_companion_type_long_meeting_chain.ts",
+      "sha256": "74ef0c47145c2cf97c2dc2c87f375283b1c0ecb8d905fba49e2b85a505f8c835"
+    },
+    {
+      "path": "tools/verify_companion_type_mechanical_voice_minutes.ts",
+      "sha256": "491e550ba0a4fed4aaaaa20f52819d0a16582c8da07e91e09093b4539f308354"
+    },
+    {
+      "path": "tools/verify_companion_type_msi_install_smoke.ps1",
+      "sha256": "f80e040fefb3319756ea8972434535203e842ee7e88d4618135fde737cea99bc"
+    },
+    {
+      "path": "tools/verify_companion_type_product_chain.ts",
+      "sha256": "99fba6d97044091b951cb9a3c5280f28470df29af0ec50fd75aefb3b39ab9398"
+    },
+    {
+      "path": "tools/verify_companion_type_real_microphone.ts",
+      "sha256": "18df943d92cd7a0dc9fb6d796fd1947b4ad62eb6bf3acf84e3b9325abd1e33c8"
+    },
+    {
+      "path": "tools/verify_companion_type_real_microphone_soak.ts",
+      "sha256": "bb725c9f7ce0206d11eed23b94cb8ba147430e422d4848b9e8bde3a538b5a9d8"
+    },
+    {
+      "path": "tools/verify_companion_type_user_chain.ts",
+      "sha256": "4bf18a55aa382471d3694a404fcb4c851bfb15b08bdff242bd4b47807de18b96"
+    },
+    {
+      "path": "tools/verify_companion_type_virtual_owner_minutes.ts",
+      "sha256": "2a6d0e2fc2cc2463e361101b39fee822fcbeffbac72fe60215609bd29e9434b8"
+    },
+    {
+      "path": "tools/verify_exports052_documents.py",
+      "sha256": "bfe80a25d727e2250c899b639e9b1a4a9a5feddfa4cde9d643ad7e22067790ea"
+    },
+    {
+      "path": "tools/verify_file_clipboard078.py",
+      "sha256": "6b659d71df7c2dfc13504e59a62971fa2c1391e1e73a03c80aa356a0da622449"
+    },
+    {
+      "path": "tools/verify_material054_apk.py",
+      "sha256": "660e48a5be174bc6f53b58389b76b72c416ba98390a9d90d464bcc443f080cc3"
+    },
+    {
+      "path": "tools/verify_mobile_library_location_20261109.cjs",
+      "sha256": "d3f4c400ebfab71bd411719c7f1dd71874fe8e7fe07234bcc066b0f1aae6e09a"
+    },
+    {
+      "path": "tools/verify_third_party_notices.mjs",
+      "sha256": "02e811ec287988f3851a7b1cfa8a280a2705ceaf31e775fa69555072776b784b"
+    },
+    {
+      "path": "tools/verify_type_source_checkpoint.py",
+      "sha256": "93f8857f98771dbfd7f72c0cf68eb7c61277e6ed40d82f34dcb50eb31b8197a4"
+    },
+    {
+      "path": "tools/verify_windows_file_copy078_ui.cjs",
+      "sha256": "66fb0559679300cf2a010b7b11fdd1badcfd28a5721c1057b427d22c914c7b33"
+    },
+    {
+      "path": "tools/visual-baseline.cjs",
+      "sha256": "6679dc6feb502f7de0ac81e31a6dc33ede5ebcdbf9f82a0a8a7bf80d59c3ddaf"
+    },
+    {
+      "path": "tools/windows052_native_gui.cjs",
+      "sha256": "44eafdb74440719adb523ace338a6d5186432c0d7b58ba966453d6689f3e572d"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "sha256": "d63590a39100261c06eea7cf0bdcf478dd246e5e1a1cd76e3d0bffe6f637d635"
+    }
+  ],
+  "windowsWebAssets": [
+    {
+      "path": "index.html",
+      "sha256": "c08874e88e2abd76717e4ed0dccbf11e32d7da15953b29d1912b3cb7aeb594af"
+    },
+    {
+      "path": "assets/index-Cc3lM7mZ.js",
+      "sha256": "cdc1ab229236c8770f3b2c31e25d24760dddae7a8bf065fc9d39c2207cd5bae9"
+    },
+    {
+      "path": "assets/index-Crt5T0hf.css",
+      "sha256": "3dd273098d154160c0feaa2504a9a6a9cf4eafcff701e4a7d20747ec17b48558"
+    },
+    {
+      "path": "assets/OptionalSpeechModels-BqNq0d5M.js",
+      "sha256": "ab0be3de457c36b730e9dbf92f88d79787b8d870c4fdc1e26772a082a830f724"
+    },
+    {
+      "path": "assets/ShadcnDashboardMIT-BIeifDLG.js",
+      "sha256": "11861e134fa155c8fcd8d67ac4c62fe27c60612519aa555f32ea5fbc4dc335a7"
+    },
+    {
+      "path": "assets/ThirdPartyNotices-DGI2UsZk.js",
+      "sha256": "3d244b55a3d761bd862a64970d591347094923ab9631347db2d7a0b618c85a30"
+    }
+  ]
+}

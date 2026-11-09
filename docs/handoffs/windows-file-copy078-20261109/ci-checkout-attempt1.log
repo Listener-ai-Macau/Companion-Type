@@ -1,0 +1,156 @@
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	﻿2026-11-09T04:39:59.1239483Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1240628Z with:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1240979Z   submodules: recursive
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1241367Z   persist-credentials: false
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1241816Z   repository: Listener-ai-Macau/Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1245272Z   token: ***
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1245624Z   ssh-strict: true
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1245973Z   ssh-user: git
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1246301Z   clean: true
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1246645Z   sparse-checkout-cone-mode: true
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1247060Z   fetch-depth: 1
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1247390Z   fetch-tags: false
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1247736Z   show-progress: true
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1248089Z   lfs: false
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1248473Z   set-safe-directory: true
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1248872Z   allow-unsafe-pr-checkout: false
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1249451Z env:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1249755Z   CARGO_BUILD_JOBS: 2
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1250122Z   CARGO_INCREMENTAL: 0
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.1250510Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.2628781Z Syncing repository: Listener-ai-Macau/Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.2632993Z ##[group]Getting Git version info
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.2634730Z Working directory is 'D:\a\Companion-Type\Companion-Type'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.3379276Z [command]"C:\Program Files\Git\bin\git.exe" version
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:39:59.6642179Z git version 2.56.0.windows.4
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3268688Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3273377Z Temporarily overriding HOME='D:\a\_temp\44c43c69-e80c-41ad-af2c-a46598d02e1a' before making global git config changes
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3274404Z Adding repository directory to the temporary git global config as a safe directory
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3275315Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Companion-Type\Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3278998Z Deleting the contents of 'D:\a\Companion-Type\Companion-Type'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3279809Z ##[group]Initializing the repository
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3280397Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Companion-Type\Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3281437Z Initialized empty Git repository in D:/a/Companion-Type/Companion-Type/.git/
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3282873Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/Listener-ai-Macau/Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3284361Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3284966Z ##[group]Disabling automatic garbage collection
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3285505Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3286640Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3287137Z ##[group]Setting up auth
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3287704Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3289558Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3291452Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.3461304Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.8281707Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:01.8560984Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:03.3215341Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:03.3216471Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:03.3216844Z ##[group]Fetching the repository
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:03.3220804Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bb1550c42b674d7ec3e526db9f7fdefb84cff7ae:refs/remotes/origin/work/device-phone-closure055-20261106
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9227588Z From https://github.com/Listener-ai-Macau/Companion-Type
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9229518Z  * [new ref]         bb1550c42b674d7ec3e526db9f7fdefb84cff7ae -> origin/work/device-phone-closure055-20261106
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9263611Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9267695Z ##[group]Determining the checkout info
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9272430Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9282853Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:09.9764288Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:10.0033884Z ##[group]Checking out the ref
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:10.0056878Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B work/device-phone-closure055-20261106 refs/remotes/origin/work/device-phone-closure055-20261106
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.3322009Z Updating files:  37% (799/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.3602431Z Updating files:  38% (821/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.3708613Z Updating files:  39% (843/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.5248304Z Updating files:  40% (864/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.5289463Z Updating files:  41% (886/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7608591Z Updating files:  42% (907/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7614678Z Updating files:  43% (929/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7631926Z Updating files:  44% (950/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7663862Z Updating files:  45% (972/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7806128Z Updating files:  46% (994/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7842704Z Updating files:  47% (1015/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7876264Z Updating files:  48% (1037/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.7913877Z Updating files:  49% (1058/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:11.9387743Z Updating files:  50% (1080/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.0955212Z Updating files:  51% (1102/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.0980498Z Updating files:  51% (1108/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1218692Z Updating files:  52% (1123/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1327957Z Updating files:  53% (1145/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1370849Z Updating files:  54% (1166/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1433588Z Updating files:  55% (1188/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1496542Z Updating files:  56% (1210/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1553049Z Updating files:  57% (1231/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1589087Z Updating files:  58% (1253/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1643165Z Updating files:  59% (1274/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1687525Z Updating files:  60% (1296/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1725623Z Updating files:  61% (1317/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1778765Z Updating files:  62% (1339/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1829721Z Updating files:  63% (1361/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.1949157Z Updating files:  64% (1382/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2016771Z Updating files:  65% (1404/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2048335Z Updating files:  66% (1425/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2082453Z Updating files:  67% (1447/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2136346Z Updating files:  68% (1469/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2289462Z Updating files:  69% (1490/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2338552Z Updating files:  70% (1512/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2347146Z Updating files:  71% (1533/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2347688Z Updating files:  72% (1555/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.2364302Z Updating files:  73% (1577/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3144478Z Updating files:  74% (1598/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3188020Z Updating files:  75% (1620/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3228481Z Updating files:  76% (1641/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3264204Z Updating files:  77% (1663/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3306526Z Updating files:  78% (1685/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3336572Z Updating files:  79% (1706/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3367902Z Updating files:  80% (1728/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3411462Z Updating files:  81% (1749/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3448700Z Updating files:  82% (1771/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3485309Z Updating files:  83% (1792/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3519312Z Updating files:  84% (1814/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3549051Z Updating files:  85% (1836/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.3598746Z Updating files:  86% (1857/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8153278Z Updating files:  87% (1879/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8182315Z Updating files:  88% (1900/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8215104Z Updating files:  89% (1922/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8247386Z Updating files:  90% (1944/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8280263Z Updating files:  91% (1965/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8307831Z Updating files:  92% (1987/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8339298Z Updating files:  93% (2008/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8371569Z Updating files:  94% (2030/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8401585Z Updating files:  95% (2052/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8427981Z Updating files:  96% (2073/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8462359Z Updating files:  97% (2095/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8491326Z Updating files:  98% (2116/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8525256Z Updating files:  99% (2138/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8525987Z Updating files: 100% (2159/2159)
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8526281Z Updating files: 100% (2159/2159), done.
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8638151Z Switched to a new branch 'work/device-phone-closure055-20261106'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8650660Z branch 'work/device-phone-closure055-20261106' set up to track 'origin/work/device-phone-closure055-20261106'.
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8801792Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8802347Z ##[group]Setting up auth for fetching submodules
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.8815816Z [command]"C:\Program Files\Git\bin\git.exe" config --global http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9086365Z [command]"C:\Program Files\Git\bin\git.exe" config --global --unset-all url.https://github.com/.insteadOf
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9427600Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add url.https://github.com/.insteadOf git@github.com:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9621998Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add url.https://github.com/.insteadOf org-284191823@github.com:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9911000Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9911608Z ##[group]Fetching submodules
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:12.9919785Z [command]"C:\Program Files\Git\bin\git.exe" submodule sync --recursive
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:13.4338361Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 submodule update --init --force --depth=1 --recursive
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:13.8493874Z Submodule 'third_party/denzic-platform' (git@github.com:Listener-ai-Macau/Denzic-Platform.git) registered for path 'third_party/denzic-platform'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:14.1435804Z Cloning into 'D:/a/Companion-Type/Companion-Type/third_party/denzic-platform'...
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:15.5132184Z ##[error]fatal: remote error: upload-pack: not our ref 6f30ab5888e3f603084d71359f3099ab5b8f66fc
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:15.5141750Z ##[error]fatal: Fetched in submodule path 'third_party/denzic-platform', but it did not contain 6f30ab5888e3f603084d71359f3099ab5b8f66fc. Direct fetching of that commit failed.
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:15.5210729Z ##[group]Removing auth
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:15.5220969Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:15.5477571Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.1240418Z Entering 'third_party/denzic-platform'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.2240941Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.2472715Z http.https://github.com/.extraheader
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.2512944Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.2771704Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.7175302Z Entering 'third_party/denzic-platform'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.7832531Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:16.8102885Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:17.3469966Z Entering 'third_party/denzic-platform'
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:17.3471206Z file:D:/a/Companion-Type/Companion-Type/.git/modules/third_party/denzic-platform/config	remote.origin.url
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:17.3473962Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:/a/Companion-Type/Companion-Type/.git/modules/third_party/denzic-platform/config --name-only --get-regexp ^includeIf\.gitdir:
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:17.3475580Z ##[endgroup]
+candidate	Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262	2026-11-09T04:40:17.3499381Z ##[error]The process 'C:\Program Files\Git\bin\git.exe' failed with exit code 128

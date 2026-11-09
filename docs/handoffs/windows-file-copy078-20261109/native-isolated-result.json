@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-09T12:14:05+08:00",
+  "state": "PASS_REAL_FILE_CLIPBOARD_PRIVATE_WINDOW_STATION",
+  "exactProductionModule": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\file_clipboard.rs",
+  "sourceSha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106",
+  "testExe": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\target\\debug\\deps\\companion_file_clipboard078_proof-bece67d5921e787b.exe",
+  "testExeSha256": "a54e5e97cb3b2180a449d439e77634f0939d22c86a5bcedb14f4037bd0c836fd",
+  "compileSeconds": 0.7606384000000617,
+  "testSeconds": 0.12774799999988318,
+  "privateStation": "CompanionFileCopy078-184aeb8ebae847a2b397d0b43b7e700d",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardContentsRead": false,
+  "interactiveWindowOpened": false,
+  "keyboardOrMouseUsed": false,
+  "ordinaryThirdPartyPasteQualified": false,
+  "modelsRun": false,
+  "productInstalled": false,
+  "primarySources": [
+    "https://learn.microsoft.com/en-us/windows/win32/shell/clipboard",
+    "https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations"
+  ]
+}

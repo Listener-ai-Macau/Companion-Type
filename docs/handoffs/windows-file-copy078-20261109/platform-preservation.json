@@ -1,0 +1,9 @@
+{
+  "state": "EXACT_EXISTING_PLATFORM_GITLINK_PRESERVED_ON_REMOTE",
+  "commit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "branch": "preserve/companion-core-6f30ab5-20261109",
+  "workingTreeAndIndexChanged": false,
+  "sourceBehaviorChanged": false,
+  "remoteReadbackConfirmed": true,
+  "reason": "CI clean checkout exposed an unreachable recorded submodule commit; preserve the exact existing source without changing the gitlink."
+}

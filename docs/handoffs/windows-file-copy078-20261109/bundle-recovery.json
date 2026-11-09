@@ -1,0 +1,23 @@
+{
+  "state": "PRIVATE_BUNDLE_COMPLETED_SOURCE_CHANGES_FOR_REVIEW",
+  "at": "2026-11-09T13:05:53+08:00",
+  "ciSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "sourceFiles": 1228,
+  "ciExactWebAssetsMatched": true,
+  "ciExactNativePairUnchanged": true,
+  "privateSource": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\bundle-source-ci",
+  "target": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\bundle-target-ci",
+  "sourceChanges": [
+    {
+      "path": "apps/windows/src-tauri/Cargo.toml",
+      "beforeSha256": "ef632b57b731bdfdac8d62566d43a4d6a5daa5be542307e4fb486fde977aa6f4",
+      "afterSha256": "bfcb097a9c0eeecdf6fae149b95ddae76e807f26b0d6fc6a87d85f8cc3d77f0a",
+      "onlyLineEndings": true,
+      "tomlSemanticallyIdentical": true
+    }
+  ],
+  "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\Companion-Windows-0.1.78-文件复制候选.msi",
+  "msiSha256": "9128ca3decbc4cb09e233d50e119f8f1822e6a5880d89f3d4c7d879c9110bc58",
+  "nativeRecompiled": false,
+  "installed": false
+}

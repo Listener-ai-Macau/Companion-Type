@@ -1,0 +1,7 @@
+
+running 1 test
+test file_clipboard::tests::content078_real_file_clipboard_is_exact_unicode_copy_and_preserves_source ... PASS real CF_HDROP: one exact Unicode file, Preferred DropEffect COPY, readable unchanged bytes; invalid inputs preserve prior clipboard. Private station=CompanionFileCopy078-184aeb8ebae847a2b397d0b43b7e700d
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

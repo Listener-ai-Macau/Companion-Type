@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "按764真实分段改空闲准备完整270336B空间；735仅只读FF缓存无收益及729拆小容量回退已对照，当前不再重复。保持原容量、校验、61.44MHz与应用预算；改后受影响验证，再就绪短录实测。首PCM、连接恢复、PDM峰及当前集成仍开放；Owner明确block/暂停/速度后置保持。",
+      "next": "正常66767在板；CP04-01首PCM/STOP等待原弹窗显式就绪，0新START。CP09-02按实抓失败修Windows旧owner完全退休后的无谓2秒等待；079实际结果与完整protected probe计时见现有initialConnection.windows079Recovery，不拿单次正常或软件检查关闭偶发失败。再按受影响范围验手机/原会话10s恢复、PDM3ms峰与最终2h；Owner block/屏幕暂停/速度后置不复开。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134021,8 +134021,8 @@
         }
       },
       "releaseReadiness": {
-        "at": "2026-11-09T11:32:47+08:00",
-        "firmware": 66765,
+        "at": "2026-11-09T13:06:35+08:00",
+        "firmware": 66767,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
@@ -134049,7 +134049,8 @@
           "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
           "completionScope": "Normal configuration restored; no short-speed qualification; latest OTA rate fails",
           "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。"
-        }
+        },
+        "windowsRecoveryQualified": false
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136208,25 +136209,25 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T11:32:47+08:00",
-        "state": "NORMAL765_RESTORED_IMPLEMENT_IDLE_EXTENT_PREPARATION",
+        "at": "2026-11-09T13:06:35+08:00",
+        "state": "NORMAL767_IDLE_WINDOWS079_RECOVERY_PENDING_QUALIFICATION",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66765,
+        "firmwareInstalled": 66767,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "firmwareSource": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
         "boardLease": false,
-        "boardItem": "Companion764一次蓝牙读取开录准备耗时，恢复正常765",
+        "boardItem": "Companion767完整空间提前准备，正常短录与精确收取",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 372,
-        "evidence": "E:\\CodexData\\Companion\\.build-cache\\startup764-hardware\\progress.json",
+        "evidence": "E:\\CodexData\\Companion\\.build-cache\\idle767-background-install\\progress.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": null,
-        "candidateSourceCommit": null,
+        "firmwareCandidate": 66767,
+        "candidateSourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -136246,7 +136247,10 @@
         "windowsClientPid": null,
         "longRunEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\acceptance.json",
         "longObserverSession": null,
-        "startupDiagnosticSession": null
+        "startupDiagnosticSession": null,
+        "firmwareSourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
+        "windowsRecoverySourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+        "windowsRecoveryInstalled": false
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -136458,11 +136462,7 @@
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
       },
-      "lastOwnerRequest": {
-        "at": "2026-11-09T10:22:13+08:00",
-        "text": "开始录音，那你看一下继续吧。有这么麻烦吗？困难在哪里？除了蓝牙速度以外都没什么很难的问题。",
-        "decision": "同370已在录音，不重复START；保持速度后置，继续普通软件收敛，先把开录准备子阶段分开而非猜测重构。"
-      },
+      "lastOwnerRequest": "需要继续推进到售卖标准",
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
         "result": "PASS_DYNAMIC_WAIT_COVERED_LENGTHS_AND_SCOPED_RESUME_NOT_FULL_SALE_QUALIFICATION",
@@ -139491,9 +139491,130 @@
             "actualDeadlineElapsed": true,
             "newPairingExpiryAndEncryptionGuards": "PRESERVED",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\range-tail-20261108\\ordinary746-103-expired-window\\cold-connection.json"
+          },
+          "windows76720261109": {
+            "at": "2026-11-09T12:29:37+08:00",
+            "result": "FUNCTIONAL_CONNECT_RECOVERED_FULL_COLD_TIMING_FAIL",
+            "firmware": 66767,
+            "nativeWindowsVersion": "0.1.68",
+            "nativeSha256": "ca7bc25147b49b6988d5607d6f8533389b0d6131c7156ece6ba1b9742338865a",
+            "protectedConnectionMs": 2535,
+            "maximumMs": 5000,
+            "connectionTimePass": false,
+            "original34MetadataUnchanged": true,
+            "lastLogicalSessionUnchanged": true,
+            "catalogGeneration": 5753,
+            "newStartCommands": 0,
+            "oldAudioRead": false,
+            "oldAudioConsumed": false,
+            "scope": "Fresh installed ordinary Windows client after OTA, followed by exact protected catalog. Not a phone result, hardware cold boot, expired-window sample or proof of intermittent failure root cause.",
+            "successfulAttemptProtectedMs": 2535,
+            "allAttemptsSetupLowerMs": 6342.016,
+            "retryGapBetweenSetupScopesMs": 2199.598,
+            "initialAttemptFailed": true,
+            "coldScope": "First setup trace start through final setup trace end, including failed first attempt and retry gap. Lower bound only; excludes earlier paired-device lookup and command/process startup. Already exceeds5000ms.",
+            "firstFailure": "Windows reported first_active then first_loss; root service discovery Unreachable, Not connected. Controller cause not proven by these host states.",
+            "correction": "Initial report compared only successful2535ms subphase. Original preserved; no new device run or relaxed threshold."
+          },
+          "windows079Recovery": {
+            "at": "2026-11-09T13:06:35+08:00",
+            "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+            "sourceBase": "571c577fbf546a1e157f5b2cf46e68cc45955440",
+            "version": "0.1.79",
+            "nativeInstalled": false,
+            "boardFirmware": 66767,
+            "sourceChange": "Only after native Active->Closed and confirmed MaintainConnection release plus successful peripheral GATT retirement, omit fixed2000ms initial retry delay. Closed can be delivered during preference cleanup; no physical cause inferred. Unknown or failed cleanup retains delay; pairing remains terminal; no business command replay.",
+            "testBinding": {
+              "testedCommit": "8f0879ad61a892a9f2aaaa236689557d7f086b44",
+              "productionSessionObservationUnchanged": true,
+              "allEightTestBodiesUnchanged": true,
+              "changesSinceTests": "Removed unused pre-cleanup observation getter and over-strict before-cleanup filter; late Closed before owner-close can qualify after successful full retirement. Added full protected probe timing. Final native build required.",
+              "cancelledRelease": true
+            },
+            "build": {
+              "at": "2026-11-09T13:04:53+08:00",
+              "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+              "version": "0.1.79",
+              "results": [
+                {
+                  "stage": "session-loss-tests",
+                  "exitCode": 0,
+                  "seconds": 192.625,
+                  "peakRssMiB": 3454,
+                  "stoppedForActualMemoryPressure": false,
+                  "sourceCommit": "8f0879ad61a892a9f2aaaa236689557d7f086b44",
+                  "modelsRun": false,
+                  "installed": false
+                },
+                {
+                  "stage": "native-release",
+                  "exitCode": 0,
+                  "seconds": 478.125,
+                  "peakRssMiB": 2489,
+                  "stoppedForActualMemoryPressure": false,
+                  "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+                  "modelsRun": false,
+                  "installed": false
+                }
+              ],
+              "native": [
+                {
+                  "name": "companion-type.exe",
+                  "bytes": 34932224,
+                  "sha256": "eaf4b51a98008d52cce4703cbfc6e4a1583a0eef3bad3fd452075688fcb47fbf"
+                },
+                {
+                  "name": "companion_type_lib.dll",
+                  "bytes": 467968,
+                  "sha256": "d20ee7ed2b9fb39ff263ada78d474e685347ad5c72b00d7f8a59a8d1f473110b"
+                }
+              ],
+              "installed": false
+            },
+            "hardware": {
+              "at": "2026-11-09T13:05:31+08:00",
+              "result": "ORDINARY_079_CONNECTION_FUNCTIONAL",
+              "firmware": 66767,
+              "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+              "nativeVersion": "0.1.79",
+              "nativeInstalled": false,
+              "nativeSha256": "eaf4b51a98008d52cce4703cbfc6e4a1583a0eef3bad3fd452075688fcb47fbf",
+              "initialAcquisitionAllAttemptsMs": 7019.647,
+              "completeProtectedProbeMs": 12838.633,
+              "publicResultUpperMs": 13641.0,
+              "coldMaximumMs": 5000,
+              "coldWindowsSamplePass": false,
+              "initialFailures": 0,
+              "retiredLossImmediateRetryObserved": 0,
+              "intermittentRootCauseQualified": false,
+              "newStartCommands": 0,
+              "oldAudioRead": false,
+              "oldAudioConsumed": false,
+              "original34MetadataUnchanged": true,
+              "scope": "completeProtectedProbe includes exact paired lookup, all attempts, retry waits, protected identity/catalogue, normal idle clock sync and retained owner setup. publicResultUpper is a separate upper bound including process/DLL/init, coordinator persistence and <=10ms observer delay. Acquisition alone is never used as full pass. Not a phone or air-cause result."
+            },
+            "hardwareProgress": {
+              "at": "2026-11-09T13:05:32+08:00",
+              "state": "ORDINARY_079_CONNECTION_FUNCTIONAL",
+              "boardLease": false,
+              "firmware": 66767,
+              "newStartCommands": 0,
+              "nativeInstalled": false,
+              "sourceCommit": "04a138b34789b3d4bcffd69593ebdbf10bbd2a74",
+              "coldWindowsSamplePass": false,
+              "retiredLossImmediateRetryObserved": 0,
+              "releaseCode": 0
+            },
+            "intermittentRootCauseQualified": false,
+            "newStartCommands": 0,
+            "failuresPreserved": [
+              "Initial source8f release cancelled before finalizing late-Closed policy.",
+              "Final source04a first release stopped by global97% memory criterion; one retry changed to actual available memory384MiB, no product source change.",
+              "Automatic Git maintenance during first commit failed to read old object99a837; source commit retained, no history rewrite or repeated GC."
+            ]
           }
         },
-        "startup": "首有效PCM原741记录2.157s>1.5s，准备阶段状态转换1867ms、后续210ms；尚未关闭。762仅临时分段诊断候选已编译签名未装，子阶段实物耗时未知，不称已修。",
+        "startup": "764实测准备1971ms：擦除1177、擦后验证676、查找/提交76、空白扫描38、来源4。66767源fd433ae已实现空闲准备完整270336B、不生成会话，显式START才绑定提交；准备中身份写入/取消已修。软件端口、真实产品入口、容量/原所有权/8个中断点通过。正常镜像405140/static67896/栈21504；实板首PCM1.5s尚按实际验收，不预记通过。",
         "physicalFloor": "原0.5s/1530B样本目标总时29.883ms，已测单4K擦除至少37ms。保持任何长度含物理回收50KiB/s门失败；此范围重叠方案不能声称消除小于一扇区的硬件下限。",
         "remaining": [
           "任何长度首次收取含物理回收≥50KiB/s仍未通过，实际758新36831.777053；1530B/37ms反例保留。",
@@ -140557,11 +140678,12 @@
           "stackGuardAndLowZero": true
         },
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\acceptance.json",
-        "scope": "Host-reboot original recovery87min only; continuous2h unqualified; observedPDM peak fails3000us."
+        "scope": "Host-reboot original recovery87min only; continuous2h unqualified; observedPDM peak fails3000us.",
+        "pdmSourceReview20261109": "正常编译DUAL_MIC_PROBE=1且DUAL_PAIR_CAPTURE=1，profile选择正常selected_only路径，无持续第二麦全转换的新证据。原PDM计时包含3.84KiB稳定DMA副本、转换/PCM交付与IRQ；370未分离同帧IRQ，不能认定3245us全是某单一来源。保留原3000us门，未改算法、计时端点、主频或按旧无收益4字节表重刷。新短录验收器已复用CRM5..8实际累计计数，原P95/峰/零溢出/间隔/栈/61.44MHz均独立判定。"
       },
       "startupPreparationDiagnostic762": {
         "at": "2026-11-09T11:20:12.271802+08:00",
-        "state": "INSTALL_TEMPORARY764",
+        "state": "764_PHASE_EVIDENCE_SAVED_NORMAL765_RESTORED",
         "sourceCommit": "01c3a77e30676ef15a91a78a9e3b7b6d076e8b08",
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\manifest.json",
         "candidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate.json",
@@ -140578,7 +140700,9 @@
         "currentDiagnosticSource": "933c24dab945fb94d3206b98e281b6f510e2b2a3",
         "normalRestoreVersion": 66765,
         "currentResult": "764实际准备1971ms：擦除1177ms，擦后逐页验证676ms，查找与提交76ms，空白扫描38ms，来源4ms；正常765已恢复，原34目录相同，板卡已释放。不是开录修复。",
-        "phaseEvidence": "E:/CodexData/Companion/.build-cache/startup764-hardware/diagnosis.json"
+        "phaseEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\startup764-hardware-diagnosis.json",
+        "actualPreparationMs": 1971,
+        "largestObservedPhase": "erase_wait_ms"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -142305,6 +142429,11 @@
             "ownerAccepted": false,
             "wholeProductQualified": false,
             "next": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。"
+          },
+          "deferredByOwnerWindowsFirst": {
+            "at": "2026-11-09T12:17:24+08:00",
+            "ownerQuote": "先搞win端到时候再调手机",
+            "preserved": true
           }
         },
         "candidateBeforePhone100": {
@@ -142328,6 +142457,372 @@
           "observedBeforeDisconnect": true,
           "observationTimeNotIndependentlyRecorded": true,
           "notAnInstallationDowngrade": "Live65 observation takes priority for this device over old98/99 receipts; no package installed this turn."
+        },
+        "ownerWindowsFileCopy07820261109": {
+          "at": "2026-11-09T13:12:06+08:00",
+          "state": "WINDOWS078_FILE_COPY_INSTALLED_ORDINARY_RECIPIENT_PENDING",
+          "ownerQuote": "先搞win端到时候再调手机",
+          "version": "0.1.78",
+          "featureCommit": "f5d249edd5a0a9537fd9f608a6fa0c4bcabc04b3",
+          "sourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+          "sourceRemoteReadbackVerified": true,
+          "userOutcome": "已选格式的完整内容文件，以及所选原音/MP3，可以由用户点击复制后到支持文件粘贴的应用中自行粘贴；复制文字独立，原音保持，收件人和发送由用户决定。",
+          "nativeProof": {
+            "at": "2026-11-09T12:14:05+08:00",
+            "state": "PASS_REAL_FILE_CLIPBOARD_PRIVATE_WINDOW_STATION",
+            "exactProductionModule": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\file_clipboard.rs",
+            "sourceSha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106",
+            "testExe": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\target\\debug\\deps\\companion_file_clipboard078_proof-bece67d5921e787b.exe",
+            "testExeSha256": "a54e5e97cb3b2180a449d439e77634f0939d22c86a5bcedb14f4037bd0c836fd",
+            "compileSeconds": 0.7606384000000617,
+            "testSeconds": 0.12774799999988318,
+            "privateStation": "CompanionFileCopy078-184aeb8ebae847a2b397d0b43b7e700d",
+            "ownerClipboardSequenceUnchangedAtObservation": true,
+            "ownerClipboardContentsRead": false,
+            "interactiveWindowOpened": false,
+            "keyboardOrMouseUsed": false,
+            "ordinaryThirdPartyPasteQualified": false,
+            "modelsRun": false,
+            "productInstalled": false,
+            "primarySources": [
+              "https://learn.microsoft.com/en-us/windows/win32/shell/clipboard",
+              "https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations"
+            ]
+          },
+          "nativeMainCheck": {
+            "at": "2026-11-09T12:17:43+08:00",
+            "state": "PASS_NATIVE_CHECK",
+            "sourceCommit": "f5d249edd5a0a9537fd9f608a6fa0c4bcabc04b3",
+            "kind": "check",
+            "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-check-1794197863253956500.log",
+            "limits": {
+              "pid": 18956,
+              "cpuRate": 500,
+              "cpuControlFlags": 5,
+              "cpuPercentMaximum": 5.0,
+              "inLimitedJob": true,
+              "jobPrivateCommitLimitBytes": 2147483648,
+              "jobMemoryLimitEnabled": true,
+              "jobPeakPrivateCommitBytes": 1809186816,
+              "cpuPriorityClass": 64,
+              "memoryPagePriority": 1,
+              "memoryPagePriorityIsReclaimHintNotRamCap": true,
+              "gpuPriorityClass": 0,
+              "gpuUtilizationHardCapped": false,
+              "scope": "This worker and its descendants only; no global or other-app changes."
+            },
+            "modelsRun": false,
+            "installed": false,
+            "pid": 26364,
+            "exitCode": 0,
+            "wallSeconds": 63.055391100000634
+          },
+          "uiControlledProof": {
+            "state": "PASS_PRODUCTION_EXPORT_COMPONENT_CONTROLLED_BROWSER",
+            "at": "2026-11-09T04:23:41.491Z",
+            "exactSelectionAndHash": true,
+            "route": "clipboard",
+            "noFalseSentFeedback": true,
+            "layouts": [
+              {
+                "dark": false,
+                "width": 1080,
+                "documentWidth": 1080
+              },
+              {
+                "dark": false,
+                "width": 1280,
+                "documentWidth": 1280
+              },
+              {
+                "dark": false,
+                "width": 1440,
+                "documentWidth": 1440
+              },
+              {
+                "dark": true,
+                "width": 1080,
+                "documentWidth": 1080
+              },
+              {
+                "dark": true,
+                "width": 1280,
+                "documentWidth": 1280
+              },
+              {
+                "dark": true,
+                "width": 1440,
+                "documentWidth": 1440
+              }
+            ],
+            "pageErrors": [],
+            "nativeClipboardTouched": false,
+            "ordinaryRecipientTested": false,
+            "modelsRun": false
+          },
+          "remoteBuild": {
+            "at": "2026-11-09T12:43:15+08:00",
+            "state": "CI_NATIVE_PASSED_WRAPPER_EOL_GUARD_FAILED_RECOVERED_PRIVATE_MSI_INSTALLED",
+            "runId": 42563058131,
+            "attempt": 2,
+            "sourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42563058131",
+            "localNativeJobsRunning": false,
+            "installed": true,
+            "modelsRun": false,
+            "status": "completed",
+            "conclusion": "failure",
+            "nativeReleasePassed": true,
+            "ciWrapperOverallPassed": false,
+            "nativeReleaseLogReportedDuration": "18m48s",
+            "sourceGuardFailureReproducedAsOnlyManifestLineEndings": true,
+            "recoveredWithoutNativeRecompile": true,
+            "matchingPrivateMsiInstalled": true,
+            "observedTerminalAt": "2026-11-09T13:12:06+08:00"
+          },
+          "bundleRecovery": {
+            "state": "PRIVATE_BUNDLE_COMPLETED_SOURCE_CHANGES_FOR_REVIEW",
+            "at": "2026-11-09T13:05:53+08:00",
+            "ciSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "sourceFiles": 1228,
+            "ciExactWebAssetsMatched": true,
+            "ciExactNativePairUnchanged": true,
+            "privateSource": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\bundle-source-ci",
+            "target": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\bundle-target-ci",
+            "sourceChanges": [
+              {
+                "path": "apps/windows/src-tauri/Cargo.toml",
+                "beforeSha256": "ef632b57b731bdfdac8d62566d43a4d6a5daa5be542307e4fb486fde977aa6f4",
+                "afterSha256": "bfcb097a9c0eeecdf6fae149b95ddae76e807f26b0d6fc6a87d85f8cc3d77f0a",
+                "onlyLineEndings": true,
+                "tomlSemanticallyIdentical": true
+              }
+            ],
+            "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\Companion-Windows-0.1.78-文件复制候选.msi",
+            "msiSha256": "9128ca3decbc4cb09e233d50e119f8f1822e6a5880d89f3d4c7d879c9110bc58",
+            "nativeRecompiled": false,
+            "installed": false
+          },
+          "sourceGuardVerification": {
+            "state": "PASS_EXACT_CI_SOURCE_GUARD_BOUNDARIES",
+            "exactBytesAccepted": true,
+            "reproducedManifestOnlyEolAccepted": true,
+            "changedVersionRejected": true,
+            "changedDependencyRejected": true,
+            "otherSourceEolChangeRejected": true,
+            "nativeRecompiled": false
+          },
+          "package": {
+            "at": "2026-11-09T13:07:12+08:00",
+            "state": "WINDOWS078_CI_NATIVE_PRIVATE_MSI_SOURCE_PAYLOAD_AND_UPGRADE_VERIFIED",
+            "version": "0.1.78",
+            "sourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\Companion-Windows-0.1.78-文件复制候选.msi",
+            "msiSha256": "9128ca3decbc4cb09e233d50e119f8f1822e6a5880d89f3d4c7d879c9110bc58",
+            "embeddedExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+            "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+            "licenseFilesMatched": 257,
+            "sourceFilesMatched": 1228,
+            "sourceFilesWithOnlyCheckoutEolDifference": [
+              "apps/windows/src-tauri/src/backend/ble_bridge/device_clock.rs",
+              "apps/windows/src-tauri/src/backend/ble_bridge/recording_management.rs",
+              "apps/windows/src-tauri/src/backend/content_export.rs",
+              "apps/windows/src-tauri/src/backend/device_discovery.rs",
+              "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+              "apps/windows/src-tauri/src/backend/mp3_export.rs",
+              "apps/windows/src-tauri/src/backend/ota_metrics.rs",
+              "apps/windows/src-tauri/src/backend/recording_metrics/targets.rs",
+              "apps/windows/src-tauri/src/backend/recording_metrics/tests.rs",
+              "apps/windows/src-tauri/src/backend/spreadsheet_export.rs",
+              "packages/meeting-transcript/Cargo.lock",
+              "packages/meeting-transcript/Cargo.toml",
+              "packages/ui/src/CompanionCard.tsx",
+              "packages/ui/src/CompanionDeviceRecordings.tsx",
+              "packages/ui/src/ContentExportPanel.tsx",
+              "packages/ui/src/MeetingReadingFrame.tsx",
+              "packages/ui/src/TranscriptFind.tsx",
+              "packages/ui/src/aiMaterialNote.ts",
+              "packages/ui/src/meetingOutline.ts",
+              "packages/ui/src/shareHandoff.ts",
+              "packages/ui/src/transcriptFind.css",
+              "packages/ui/src/transcriptMatching.ts",
+              "third_party/btleplug-0.11.8/src/winrtble/adapter.rs",
+              "third_party/btleplug-0.11.8/src/winrtble/ble/watcher.rs"
+            ],
+            "sameUpgradeIdentity": true,
+            "newerVersionGuard": true,
+            "localAndCIWebAssetsByteIdentical": true,
+            "ciSourceAndNativeFrozenTogether": true,
+            "nativeProfile": "normal release on clean dedicated Windows runner",
+            "ciRunId": 42563058131,
+            "recoveredAfterCiSourceEolGuard": true,
+            "ciWrapperOverallPassed": false,
+            "sourceSemanticsChangedByBundle": false,
+            "installed": false,
+            "ordinaryThirdPartyPasteQualified": false,
+            "oldWinRTSharePickerFixed": false,
+            "wholeProductQualified": false,
+            "modelsRun": false
+          },
+          "installation": {
+            "state": "WINDOWS078_INSTALLED_EXISTING_DATA_IDENTICAL",
+            "startedAt": "2026-11-09T13:07:20+08:00",
+            "candidateVersion": "0.1.78",
+            "previousInstalledVersion": "0.1.68",
+            "sourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "msiSha256": "9128ca3decbc4cb09e233d50e119f8f1822e6a5880d89f3d4c7d879c9110bc58",
+            "existingDataFiles": 245,
+            "dataContentsPrinted": false,
+            "installerExitCode": 0,
+            "finishedAt": "2026-11-09T13:07:25+08:00",
+            "dataManifestIdentical": true,
+            "installedVersion": "0.1.78",
+            "installedExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+            "installedDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+            "installedHelpStartupPassed": true,
+            "ordinaryThirdPartyPasteQualified": false,
+            "oldWinRTSharePickerFixed": false,
+            "modelsRun": false,
+            "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+          },
+          "remoteCandidateBackup": {
+            "at": "2026-11-09T13:09:24+08:00",
+            "state": "PRIVATE_DRAFT_CANDIDATE_UPLOAD_AND_DOWNLOAD_SHA256_VERIFIED",
+            "repository": "Listener-ai-Macau/Companion-Type",
+            "privateRepositoryVerified": true,
+            "draft": true,
+            "published": false,
+            "tag": "windows-0.1.78-bb1550c4-candidate",
+            "sourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+            "releaseId": 438762888,
+            "assetId": 726309040,
+            "assetName": "Companion-Windows-0.1.78-candidate.msi",
+            "msiSha256": "9128ca3decbc4cb09e233d50e119f8f1822e6a5880d89f3d4c7d879c9110bc58",
+            "downloadReadbackMatches": true,
+            "saleQualified": false
+          },
+          "platformPreservation": {
+            "state": "EXACT_EXISTING_PLATFORM_GITLINK_PRESERVED_ON_REMOTE",
+            "commit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+            "branch": "preserve/companion-core-6f30ab5-20261109",
+            "workingTreeAndIndexChanged": false,
+            "sourceBehaviorChanged": false,
+            "remoteReadbackConfirmed": true,
+            "reason": "CI clean checkout exposed an unreachable recorded submodule commit; preserve the exact existing source without changing the gitlink."
+          },
+          "localBuildFailures": [
+            {
+              "at": "2026-11-09T12:24:36+08:00",
+              "state": "NATIVE_RELEASE_FAILED_RETAINED",
+              "sourceCommit": "33325eda6e9658ba4609747c17ba67924531d579",
+              "kind": "release",
+              "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-release-1794198276881510700.log",
+              "limits": {
+                "pid": 6140,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 3221225472,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 2160963584,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              },
+              "modelsRun": false,
+              "installed": false,
+              "pid": 29704,
+              "stoppedForActualWindowsLowRam": true,
+              "exitCode": 1,
+              "wallSeconds": 60.06587600000057
+            },
+            {
+              "at": "2026-11-09T12:30:01+08:00",
+              "state": "NATIVE_RELEASE-LOWRAM_FAILED_RETAINED",
+              "sourceCommit": "c920d2396b6b6a9c2ce3580b5f3a47e3e62da0a0",
+              "kind": "release-lowram",
+              "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-release-lowram-1794198601738834900.log",
+              "limits": {
+                "pid": 13820,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 2147483648,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 2149928960,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              },
+              "modelsRun": false,
+              "installed": false,
+              "applicationBuildOverrides": {
+                "optLevel": 1,
+                "codegenUnits": 256,
+                "dependencyProfilesUnchanged": true,
+                "runtimePerformanceQualified": false
+              },
+              "pid": 2788,
+              "exitCode": 101,
+              "wallSeconds": 38.054372599999624
+            },
+            {
+              "at": "2026-11-09T12:32:24+08:00",
+              "state": "CONTROLLER_AND_NATIVE_FAILED_RETAINED",
+              "sourceCommit": "28ab38b16cf197f185a9f602385e802ea4142e75",
+              "kind": "release-paged",
+              "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-windows-file-copy078\\native-release-paged-1794198744295797200.log",
+              "limits": {
+                "pid": 18044,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 3221225472,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 102789120,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              },
+              "modelsRun": false,
+              "installed": false,
+              "pid": 25588,
+              "controllerError": "OSError WinError1455 during psutil process enumeration",
+              "nativeLogError": "rustc-LLVM ERROR out of memory; Allocation failed",
+              "observedTerminalAt": "2026-11-09T12:38:50+08:00",
+              "cargoPidNoLongerAliveAtObservation": true,
+              "decision": "Do not repeat local native build under current resource pressure; use repository CI for the same application source."
+            }
+          ],
+          "ordinaryThirdPartyPasteQualified": false,
+          "oldWinRTSharePickerFixed": false,
+          "modelsRun": false,
+          "phoneAccessed": false,
+          "boardAccessed": false,
+          "installed": true,
+          "saleQualified": false,
+          "remaining": [
+            "支持文件粘贴的普通第三方应用实际收件与文件内容核对未验",
+            "原WinRT系统分享面板故障保留",
+            "手机100候选待真机流程，按Owner暂后置",
+            "多人/重叠模型质量门及整机售卖门均沿原记录开放"
+          ],
+          "next": "Windows优先：在支持文件粘贴的普通接收应用中完成所选文档、原音/MP3实际收件，核对内容与未发送状态；不得用隔离原生模块或安装成功代替该项。原系统分享面板故障仍独立开放。复用078匹配产物，不再在当前内存压力下重编。手机100和模型原工作点不变。",
+          "phoneInterruptedWorkpoint": "Android100 verified APK23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3; not installed, actual phone65 observed before USB loss. Owner now prioritizes Windows; do not poll/reinstall phone.",
+          "previousPhoneNext": "USB恢复后重新读取这台45DU手机实际包版本/主屏/在途服务，领取原单项，先保留文件hash，再用已校验100包升级并复核原文件；如手机版本已更新则先合并，不降级。独立虚屏确认主屏不变后验证恢复公开备份→当前资料提示→取消/返回原库、回收站保护恢复、Word保存及本机分享收件，最后回原库并清理本轮辅助程序。现成包与Web资源复用，不重建或重跑模型；真实安装/系统交互保持未完成。"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -261975,7 +262470,7 @@
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
       "result": "Windows052已交付范围保留；Android054候选PPTX/XLSX/mm/PNG与独立AI材料选择完成，实际生产Java/JVM/手机原生位图与文件结构、同源APK签名和16KiB对齐通过。保留手机053配对现场，主App054未装，系统保存/分享/升级资料保留和Owner/客户待验。",
-      "next": "沿owner_module_execution.nextBatch.next；不重复原053设备管理实现或模型等待。",
+      "next": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",

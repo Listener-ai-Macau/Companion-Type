@@ -1,7 +1,7 @@
 """Clean Windows candidate build on CI; no publishing, user data or inference."""
 from pathlib import Path
 from datetime import datetime,timezone
-import hashlib,json,os,shutil,subprocess,traceback
+import hashlib,json,os,shutil,subprocess,traceback,tomllib,time
 
 S=Path(__file__).resolve().parents[1]
 C=S/'ci-output';C.mkdir(exist_ok=False)
@@ -10,9 +10,20 @@ def sha(p):
  with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def capture(args,cwd=S):return subprocess.check_output(args,cwd=cwd,text=True,encoding='utf8').strip()
 def run(name,args,cwd=S):
+ started=time.perf_counter();print('Starting '+name,flush=True)
  with (C/(name+'.log')).open('wb') as log:
   p=subprocess.run(args,cwd=cwd,stdout=log,stderr=subprocess.STDOUT)
+ print(f'Finished {name}: exit={p.returncode}, seconds={time.perf_counter()-started:.3f}',flush=True)
  if p.returncode:raise RuntimeError(f'{name} failed: {p.returncode}; see retained log')
+def source_change(name,expected,after,before_manifest):
+ actual=hashlib.sha256(after).hexdigest()
+ if actual==expected:return None
+ # Reproduced Tauri bundle behavior: CRLF -> LF in the application's own
+ # manifest, after compilation. Accept only this exact formatting change.
+ # Other source changes, dependency changes and all lock/license checks fail.
+ if name=='apps/windows/src-tauri/Cargo.toml' and hashlib.sha256(before_manifest).hexdigest()==expected and after.replace(b'\r\n',b'\n')==before_manifest.replace(b'\r\n',b'\n') and tomllib.loads(after.decode('utf8'))==tomllib.loads(before_manifest.decode('utf8')):
+  return {'path':name,'beforeSha256':expected,'afterSha256':actual,'onlyLineEndings':True,'tomlSemanticallyIdentical':True}
+ raise AssertionError('Build input changed: '+name)
 def save():(C/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 record={'at':datetime.now(timezone.utc).isoformat(),'state':'PREPARING_CLEAN_WINDOWS_CANDIDATE','sourceCommit':capture(['git','rev-parse','HEAD']),'platformCommit':capture(['git','rev-parse','HEAD'],S/'third_party/denzic-platform'),'version':json.loads((N/'tauri.conf.json').read_text())['version'],'modelsRun':False,'installed':False,'ordinaryRecipientTested':False,'saleQualified':False}
 save()
@@ -39,6 +50,7 @@ try:
  record['webAssets']=[{'path':p.relative_to(dist).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(dist.rglob('*')) if p.is_file()]
  names=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party','package.json','package-lock.json','tsconfig.base.json']).splitlines()
  record['sourceFiles']=[{'path':name,'sha256':sha(S/name)} for name in names if (S/name).is_file()]
+ before_manifest=(N/'Cargo.toml').read_bytes()
  record['state']='BUILDING_NORMAL_RELEASE';save()
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
  pair=C/'windows-bin';pair.mkdir()
@@ -46,11 +58,17 @@ try:
  record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]
  record['state']='BUNDLING_MATCHING_NATIVE_PAIR';save()
  run('msi-bundle',['node',str(S/'node_modules/@tauri-apps/cli/tauri.js'),'bundle','--bundles','msi','--ci','--no-sign'],S/'apps/windows')
- for row in record['nativeFiles']:assert sha(T/'release'/row['path'])==row['sha256']
- for row in record['webAssets']:assert sha(dist/row['path'])==row['sha256']
- for row in record['sourceFiles']:assert sha(S/row['path'])==row['sha256']
+ # Retain the actual MSI even if later verification fails; a failed guard
+ # never becomes permission to install it without independent inspection.
  installers=list((T/'release/bundle/msi').glob('*'+record['version']+'*x64*.msi'));assert len(installers)==1,installers
  msi=C/f"Companion-Windows-{record['version']}-candidate.msi";shutil.copy2(installers[0],msi)
+ record.update(msi=msi.name,msiSha256=sha(msi),state='VERIFYING_BUNDLE_INPUTS');save()
+ for row in record['nativeFiles']:assert sha(T/'release'/row['path'])==row['sha256']
+ for row in record['webAssets']:assert sha(dist/row['path'])==row['sha256']
+ record['postBundleSourceFormatting']=[]
+ for row in record['sourceFiles']:
+  change=source_change(row['path'],row['sha256'],(S/row['path']).read_bytes(),before_manifest)
+  if change:record['postBundleSourceFormatting'].append(change)
  raw=(pair/'companion-type.exe').read_bytes();assert raw.count(b'__TAURI_BUNDLE_TYPE_VAR_UNK')==1
  record['expectedEmbeddedExeSha256']=hashlib.sha256(raw.replace(b'__TAURI_BUNDLE_TYPE_VAR_UNK',b'__TAURI_BUNDLE_TYPE_VAR_MSI')).hexdigest()
  record['expectedDllSha256']=sha(pair/'companion_type_lib.dll')

@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-09T12:17:24+08:00",
+  "ownerQuote": "先搞win端到时候再调手机",
+  "state": "WINDOWS078_FILE_COPY_SOURCE_PROTECTED_NATIVE_CLIPBOARD_PASSED_MAIN_CHECK_PENDING",
+  "sourceCommit": "f5d249edd5a0a9537fd9f608a6fa0c4bcabc04b3",
+  "sourceRemoteReadbackVerified": true,
+  "version": "0.1.78",
+  "phoneInterruptedWorkpoint": "Android100 verified APK23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3; not installed, actual phone65 observed before USB loss. Owner now prioritizes Windows; do not poll/reinstall phone.",
+  "userOutcome": "复制已选格式的完整文件或原音/MP3，供用户到支持文件粘贴的应用中自行粘贴。保持文字复制独立、同一来源hash核对、源音不变，不选择收件人或自动发送。",
+  "nativeProof": {
+    "at": "2026-11-09T12:14:05+08:00",
+    "state": "PASS_REAL_FILE_CLIPBOARD_PRIVATE_WINDOW_STATION",
+    "exactProductionModule": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\file_clipboard.rs",
+    "sourceSha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106",
+    "testExe": "E:\\CodexData\\Companion\\.build-cache\\windows-file-copy078\\target\\debug\\deps\\companion_file_clipboard078_proof-bece67d5921e787b.exe",
+    "testExeSha256": "a54e5e97cb3b2180a449d439e77634f0939d22c86a5bcedb14f4037bd0c836fd",
+    "compileSeconds": 0.7606384000000617,
+    "testSeconds": 0.12774799999988318,
+    "privateStation": "CompanionFileCopy078-184aeb8ebae847a2b397d0b43b7e700d",
+    "ownerClipboardSequenceUnchangedAtObservation": true,
+    "ownerClipboardContentsRead": false,
+    "interactiveWindowOpened": false,
+    "keyboardOrMouseUsed": false,
+    "ordinaryThirdPartyPasteQualified": false,
+    "modelsRun": false,
+    "productInstalled": false,
+    "primarySources": [
+      "https://learn.microsoft.com/en-us/windows/win32/shell/clipboard",
+      "https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations"
+    ]
+  },
+  "remaining": [
+    "Full Tauri command integration check and matching release/package",
+    "Controlled actual App layout/route checks",
+    "Ordinary third-party paste acceptance remains separate",
+    "Original WinRT share-picker failure remains open"
+  ],
+  "modelsRun": false,
+  "phoneAccessed": false,
+  "boardAccessed": false,
+  "installed": false,
+  "saleQualified": false,
+  "next": "当前优先Windows文件复制完整交付：已完成隔离Win32真实剪贴板读回；继续主程序集成编译、实际界面/选区与反馈验证，再构建匹配候选并验证升级资料保留。不得用私有窗口站测试冒充第三方普通收件；旧系统分享故障保留。手机100包与模型配对工作点保留。"
+}
