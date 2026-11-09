@@ -56,29 +56,40 @@ if kind=='release-lowram':
  args.extend(['--config','profile.release.package.companion-type.opt-level=1',
               '--config','profile.release.package.companion-type.codegen-units=256'])
  record['applicationBuildOverrides']={'optLevel':1,'codegenUnits':256,'dependencyProfilesUnchanged':True,'runtimePerformanceQualified':False}
-with logpath.open('wb') as log:
- child=subprocess.Popen(args,cwd=S/'apps/windows/src-tauri',env=env,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
- import psutil
- parent=psutil.Process(child.pid);record['pid']=child.pid;target.write_text(json.dumps(record,indent=2)+'\n',encoding='utf8')
- if kind=='release-paged':bound_working_set(psutil.Process())
- while child.poll() is None:
-  if kind=='release-paged':
-   family=[parent,*parent.children(recursive=True)]
-   for process in family:
-    try:bound_working_set(process)
-    except (psutil.NoSuchProcess,psutil.ZombieProcess):pass
-   rss=0
-   for process in family:
-    try:rss+=process.memory_info().rss
-    except psutil.Error:pass
-   peak_family_rss=max(peak_family_rss,rss)
-  if pressure.low():
-   record['stoppedForActualWindowsLowRam']=True
-   for p in parent.children(recursive=True)[::-1]:
-    try:p.terminate()
-    except psutil.Error:pass
-   child.terminate();child.wait();break
-  time.sleep(.2 if kind=='release-paged' else 1)
+child=None
+try:
+ with logpath.open('wb') as log:
+  child=subprocess.Popen(args,cwd=S/'apps/windows/src-tauri',env=env,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
+  import psutil
+  parent=psutil.Process(child.pid);record['pid']=child.pid;target.write_text(json.dumps(record,indent=2)+'\n',encoding='utf8')
+  if kind=='release-paged':bound_working_set(psutil.Process())
+  while child.poll() is None:
+   if kind=='release-paged':
+    family=[parent,*parent.children(recursive=True)]
+    for process in family:
+     try:bound_working_set(process)
+     except (psutil.NoSuchProcess,psutil.ZombieProcess):pass
+    rss=0
+    for process in family:
+     try:rss+=process.memory_info().rss
+     except psutil.Error:pass
+    peak_family_rss=max(peak_family_rss,rss)
+   if pressure.low():
+    record['stoppedForActualWindowsLowRam']=True
+    for p in parent.children(recursive=True)[::-1]:
+     try:p.terminate()
+     except psutil.Error:pass
+    child.terminate();child.wait();break
+   time.sleep(.2 if kind=='release-paged' else 1)
+except BaseException as error:
+ # In particular Toolhelp/psutil itself can fail on an OS/quota allocation.
+ # Retain a terminal receipt; the existing KILL_ON_JOB_CLOSE also terminates
+ # any unenumerable children when this controller exits. Never leave RUNNING.
+ record.update(state='CONTROLLER_FAILED_RETAINED',controllerError=repr(error),wallSeconds=time.perf_counter()-tick,physicalWorkingSetLimits=list(working_sets.values()),sampledPeakCargoFamilyResidentBytes=peak_family_rss)
+ try:record['limits']=limits.query()
+ except BaseException:record['limitsReadbackUnavailable']=True
+ target.write_text(json.dumps(record,indent=2)+'\n',encoding='utf8');pressure.close()
+ raise
 record.update(state=('PASS_NATIVE_'+kind.upper()) if child.returncode==0 else 'NATIVE_'+kind.upper()+'_FAILED_RETAINED',exitCode=child.returncode,wallSeconds=time.perf_counter()-tick,limits=limits.query())
 if kind=='release-paged':record.update(physicalWorkingSetLimits=list(working_sets.values()),sampledPeakCargoFamilyResidentBytes=peak_family_rss,applicationBuildOverrides=None,pageFileOrOtherApplicationsChanged=False)
 target.write_text(json.dumps(record,indent=2)+'\n',encoding='utf8');pressure.close()
