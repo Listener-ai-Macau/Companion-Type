@@ -1,0 +1,88 @@
+{
+  "at": "2026-11-09T03:40:29.576Z",
+  "state": "PASS_BUILT_MOBILE_APP_CONTROLLED_BRIDGE_LIBRARY_LOCATION",
+  "results": [
+    {
+      "mode": "restored",
+      "result": "PASS",
+      "layouts": [
+        {
+          "theme": "light",
+          "width": 360,
+          "documentWidth": 360,
+          "cardWidth": 318,
+          "cardClient": 318
+        },
+        {
+          "theme": "light",
+          "width": 393,
+          "documentWidth": 393,
+          "cardWidth": 343,
+          "cardClient": 343
+        },
+        {
+          "theme": "light",
+          "width": 430,
+          "documentWidth": 430,
+          "cardWidth": 380,
+          "cardClient": 380
+        },
+        {
+          "theme": "dark",
+          "width": 360,
+          "documentWidth": 360,
+          "cardWidth": 318,
+          "cardClient": 318
+        },
+        {
+          "theme": "dark",
+          "width": 393,
+          "documentWidth": 393,
+          "cardWidth": 343,
+          "cardClient": 343
+        },
+        {
+          "theme": "dark",
+          "width": 430,
+          "documentWidth": 430,
+          "cardWidth": 380,
+          "cardClient": 380
+        }
+      ],
+      "cancelPreserves": true,
+      "nativeTokenBound": true,
+      "settingsAndReturn": true
+    },
+    {
+      "mode": "receiving",
+      "result": "PASS",
+      "switchBlockedDuringReception": true
+    },
+    {
+      "mode": "bad-status",
+      "result": "PASS",
+      "invalidSnapshotNotActionable": true,
+      "retryRecovers": true
+    },
+    {
+      "mode": "missing-original",
+      "result": "PASS",
+      "invalidSnapshotNotActionable": true,
+      "retryRecovers": true
+    },
+    {
+      "mode": "late-status",
+      "result": "PASS",
+      "lateOldSnapshotExcluded": true
+    },
+    {
+      "mode": "original-only",
+      "result": "PASS",
+      "ordinaryLibraryUncluttered": true
+    }
+  ],
+  "phoneTested": false,
+  "systemPickerTested": false,
+  "privateUserDataUsed": false,
+  "modelRun": false
+}

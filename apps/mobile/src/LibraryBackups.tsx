@@ -1,12 +1,13 @@
 import {useEffect,useState} from 'react';
 import {Archive,Download,RotateCcw} from 'lucide-react';
-export type LibraryStatus={version:number;activeId:string;previousId?:string;token:string;libraries:Array<{id:string;restoredAt:number}>};
+import {libraryLabel,validateLibraryStatus,type LibraryStatus} from './libraryStatus';
+export type {LibraryStatus} from './libraryStatus';
 export function LibraryBackups({busy,receiving,onLoad,onArchive,onActivate}:{busy:boolean;receiving:boolean;onLoad:()=>Promise<LibraryStatus>;onArchive:(kind:'backup'|'restore',token:string)=>Promise<LibraryStatus|undefined>;onActivate:(id:string,token:string)=>Promise<LibraryStatus|undefined>}){
  const [state,setState]=useState<LibraryStatus|null>(null),[error,setError]=useState(''),[loading,setLoading]=useState(true);
- const valid=(v:LibraryStatus)=>{if(v.version!==1||!v.token||!Array.isArray(v.libraries)||!v.libraries.some(x=>x.id===v.activeId))throw new Error('当前资料信息未能确认，请重新读取。');return v;};
+ const valid=validateLibraryStatus;
  const load=async()=>{setLoading(true);setError('');try{setState(valid(await onLoad()));}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setLoading(false);}};
  useEffect(()=>{let active=true;void onLoad().then(value=>{if(active)setState(valid(value));}).catch(e=>{if(active)setError(e instanceof Error?e.message:String(e));}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
- const label=(item:{id:string;restoredAt:number})=>item.id==='original'?'原有资料':`${new Intl.DateTimeFormat('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(item.restoredAt))} 恢复的资料`;
+ const label=libraryLabel;
  const disabled=busy||loading||receiving||!state||!!error;
  const archive=async(kind:'backup'|'restore')=>{if(!state||disabled)return;const result=await onArchive(kind,state.token);if(result)setState(valid(result));};
  const activate=async(id:string)=>{if(!state||disabled)return;const result=await onActivate(id,state.token);if(result)setState(valid(result));};
