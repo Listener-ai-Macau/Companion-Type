@@ -7,8 +7,8 @@ android {
         applicationId 'com.denzic.companion.app'
         minSdk 26
         targetSdk 35
-        versionCode 110
-        versionName '0.1.110'
+        versionCode 111
+        versionName '0.1.111'
         ndk { abiFilters 'arm64-v8a' }
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
@@ -42,3 +42,21 @@ tasks.register('verifyCompanionBackend') {
 }
 tasks.named('preBuild').configure { dependsOn('copyCompanionWeb', 'verifyCompanionBackend') }
 dependencies { implementation files('libs/companion-android-backend.aar') }
+
+// First-run local transcription also needs these Java classpath resources.
+// The frozen native AAR omitted them; keep the publisher-derived bytes pinned.
+tasks.register('verifyCompanionModelResources') {
+    def resourceDirectory = layout.projectDirectory.dir('src/main/resources/com/denzic/companion/mobile')
+    inputs.dir(resourceDirectory)
+    doLast {
+        def receipt = new groovy.json.JsonSlurper().parse(resourceDirectory.file('provenance.json').asFile)
+        receipt.resources.each { resource ->
+            def file = resourceDirectory.file(resource.name).asFile
+            def actual = java.security.MessageDigest.getInstance('SHA-256').digest(file.bytes).encodeHex().toString()
+            if (file.length() != resource.bytes || actual != resource.sha256) {
+                throw new GradleException('Pinned first-run model resource is missing or changed: ' + resource.name)
+            }
+        }
+    }
+}
+tasks.named('preBuild').configure { dependsOn('verifyCompanionModelResources') }

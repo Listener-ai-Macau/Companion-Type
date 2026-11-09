@@ -1,0 +1,18 @@
+{
+  "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+  "reason": "Frozen AAR omitted Java classpath resources required by LocalModelPreparation.resource(); host supplies unchanged pinned metadata and vocabulary. Native libraries and model weights are unchanged.",
+  "resources": [
+    {
+      "name": "metadata.bin",
+      "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c",
+      "bytes": 11352,
+      "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/metadata.bin"
+    },
+    {
+      "name": "tokens.txt",
+      "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+      "bytes": 75756,
+      "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/tokens.txt"
+    }
+  ]
+}
