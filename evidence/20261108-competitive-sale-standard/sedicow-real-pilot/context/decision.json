@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-09T10:04:17+08:00",
+  "state": "OLD_PATH_LIMITS_CONFIRMED_DIRECT_SPEAKER_CONDITIONED_ASR_PREPARED_NOT_QUALIFIED",
+  "ordinaryBestStrictCerUnchanged": 0.055375375375375374,
+  "strictUnderFivePercentNotReached": true,
+  "marginalProbabilityTrial": "Threecachedrealmeetings. Firstcomplexunionfalsepositives109.040749→101.739980s, recall82.9594→82.9921%; thirdstandalone recall38.9270→34.6378%. Fixedsoftmarginal notpromoted. Stopthresholdsweeps.",
+  "restoredFireRed2": "Sameoldv2notnew. Sixfixed8sdecoded; separatorcontentregressionremains.30s/continuous8smemoryfailuresretained;isolatedprocessworksdiagnostically only.",
+  "newArchitectureCandidate": "OfficialrecommendedApache2 ungatedBUT-FIT/SE-DiCoW, hashpinned4.407GBF32weights. DirecttargetASRconditionedonourautomatic8headnativeactivitySTNOand30sself-enrollment, withoutPS4audio reconstruction. Reuseourdiarizer, excludebundlednoncommercialDiariZen. MostlyEnglishresearch;Mandarinandournoisyactivityunknown.",
+  "executionPreparation": "STNOformulaauthorcomparison maxerror5.96e-8; sixautomatic enrollment+main30sfeatures frozen beforeASR, nooraclewords/peoplecount; tinyexactload/forward/generation andfullmeta/headercheck distinctfromtrainedaccuracy. No pretrainedforwardhasrun. Final exacttinyload/forward/generation+full957tensorheadercheckpassedin18.726s, privatejobpeak416133120B. FulltrainedweightsneverloadedontoCPU.",
+  "memoryAndHardware": "CurrentPnPonly780M, no6800XT. Followupsmallprobehit actualWindowsLOWRAM beforemodelimport; failurepreserved. Signalclearednaturally, correctedtiedparameteridentityverifiedsuccessfully. No userappsclosed. NoCPUfullASRfallback.",
+  "trainedAccuracyProgressThisBatch": false,
+  "installedOrDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "next": "独显可用且实际LOWRAM解除后先跑已固定3人物同30sSE-DiCoW小对照，按每人漏话/串话/实词及原始EOS判生死，再扩全部6人(含无声人物负样本)和普通讲话保护、跨真实会议。旧PS4同Qwen六8s对照、第三整会native人物/普通ASR不取消但不压CPU。新分支若不能恢复分离丢失内容则拒绝并保留失败，再考虑有真实近讲目标的数据适配；不启动无目标自研/大训练。原字错<5%、人物DER、事实及双端实卡售卖门均不改。"
+}

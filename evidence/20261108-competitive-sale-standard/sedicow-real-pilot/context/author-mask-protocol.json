@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-09T10:26:32+08:00",
+  "state": "FROZEN_SINGLE_AUTHOR_FORMAT_ABLATION_NOT_TRAINING",
+  "reason": "Native2softconditioning producedEnglish despiteforcedzh; testwhether deviationfromauthorbinarytimestampmask causesfailure beforeattributingittoChinesecheckpoint. Oneauthor-stylebinarycontrol onexactly sameaudio/enrollment/features, target2, no threshold/model/beam/hint sweep.",
+  "sourceSpeakerJournal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+  "sourceSpeakerJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "referenceLabelsOrWordsUsed": false,
+  "modelWeightsOrAudioChanged": false,
+  "authorClock": "50Hz localwindow mask, round(start*50):round(end*50), STNO products. Main1560s andnative2enrollment111.2s alignfull50Hzgrid. Preserveoldautomaticjournal all8heads, no oraclepersoncount.",
+  "changed": "Onlymain/enrollmentSTNO binary masks, allfeature/audioarraysunchanged. References/enrollmentselectionnotchanged.",
+  "selectedTarget": "native-2",
+  "inputManifestSha256": "54c636b8347474fb1d5ca866adb1f62969ba956fd8bb59a0478c1f1ef5bc3567",
+  "saleQualified": false
+}

@@ -1,0 +1,62 @@
+{
+  "id": "native-3",
+  "sourceStartSample": 24960000,
+  "sourceEndSample": 25440000,
+  "audioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+  "modelInputsSha256": "0df48a7bac417333ef45adda9c463e484b72e362bcb419821992ebeb2583c027",
+  "authorReconstructedIds": [
+    50258,
+    50364,
+    51057,
+    8713,
+    8713,
+    51133,
+    51559,
+    5620,
+    51703,
+    50257
+  ],
+  "authorReconstructedWithSpecialTokens": "<|startoftranscript|><|notimestamps|>对对就是<|endoftext|>",
+  "rawGreedySequences": [
+    [
+      [
+        50258,
+        50260,
+        50360,
+        51057,
+        8713,
+        8713,
+        51133,
+        51559,
+        5620,
+        51703,
+        50257
+      ]
+    ]
+  ],
+  "rawGreedyWithSpecialTokens": [
+    [
+      "<|startoftranscript|><|zh|><|transcribe|>对对就是<|endoftext|>"
+    ]
+  ],
+  "text": "对对就是",
+  "seconds": 55.241603400034364,
+  "naturalEos": true,
+  "loop": false,
+  "referencePassedToInference": false,
+  "training": false,
+  "dtypeConversion": false,
+  "exactOriginalMixtureAudio": true,
+  "separatedWaveformUsed": false,
+  "checkpoint": {
+    "checkpointSha256": "7e42482cf705a422b022a6c0df84f02be60da5a2fbf454ca517001359a1b9b20",
+    "tensorCalls": 947,
+    "tensorBytesLoaded": 4076052512,
+    "wholeCpuStateDictCreated": false,
+    "mmapUsed": false,
+    "dtypeConversion": false,
+    "everyLoadedTensorHashVerified": true
+  },
+  "attentionImplementation": "sdpa",
+  "saleQualified": false
+}

@@ -1,0 +1,144 @@
+{
+  "at": "2026-11-09T09:39:30+08:00",
+  "state": "PINNED_OFFICIAL_COMPATIBLE_SOURCE_NOT_EXECUTED_NO_WEIGHTS",
+  "model": "BUT-FIT/SE-DiCoW",
+  "revision": "470fce9ffff844dd53a27751cdf6c6df9efecb39",
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39",
+  "gated": false,
+  "license": "apache-2.0",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\FDDT.py",
+      "bytes": 3996,
+      "sha256": "fe8b1dec493fdae366b5474de3d1ac0004adcac80036533dacd1ea5f35e0c945",
+      "gitBlobSha1": "c66160d0aeae57ebb55ede9db5d52062abe7480e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\README.md",
+      "bytes": 5038,
+      "sha256": "becd3765b672e9298b60aecff8389750ee35648c502688268051d4e0babfb737",
+      "gitBlobSha1": "a32ca8b1adbbc75bedd0c543cb618dcfbda0f98a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\added_tokens.json",
+      "bytes": 34648,
+      "sha256": "3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0",
+      "gitBlobSha1": "1b33526d33aaa60d79f78ae8651dae50b730185a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\config.json",
+      "bytes": 1996,
+      "sha256": "e709395dbcb706e605b010b051246a97eb6ddbdf9fbabe42856d25cd64ea76a5",
+      "gitBlobSha1": "b6454b7b0a78996adc2d55ab537b6a51a802d1d2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\config.py",
+      "bytes": 2558,
+      "sha256": "fc9eea09841fb6558e68dda42c327332005b5145b144d2fddfe463bff3e9c971",
+      "gitBlobSha1": "0bc6942913765ba7800346f4ad3d23e47e405eb7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\decoding.py",
+      "bytes": 16250,
+      "sha256": "b713399e01804690b84eea5e4cd58d5c475d8da4217835478a364bff15243f46",
+      "gitBlobSha1": "b1015ac04e8f1159d6689056c5b2ca9648282974"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\encoder.py",
+      "bytes": 10887,
+      "sha256": "ec63648d28e0950ed4e4b0651bf651c60aab613a3bc603b6a9a97f704dc325ef",
+      "gitBlobSha1": "ea0b960cbe937f47533bb639fbc54c6c18ac71c4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\generation.py",
+      "bytes": 58446,
+      "sha256": "d766d9259b272f080b4361cf07281dee520c32bc763b8a0c043b950bee8d44e0",
+      "gitBlobSha1": "0c06eae37fab08527f3de2fff7d4f081ec21f18e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\generation_config.json",
+      "bytes": 3733,
+      "sha256": "5f16cf3f2d75b6b24946f6855455af784574c8a6098326742653ce4ea7648b47",
+      "gitBlobSha1": "2f3a7bc5cbe945eee372b9b3a7d21e41ae6c7763"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\layers.py",
+      "bytes": 8518,
+      "sha256": "e91a8af1e4d62e5b112032e42b89796b3430a0c05c49f8c5031dff6e37c8a842",
+      "gitBlobSha1": "95a77eecedc963b85abf8140ad135d49e8db6f76"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\merges.txt",
+      "bytes": 493869,
+      "sha256": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6",
+      "gitBlobSha1": "6038932a2a1f09a66991b1c2adae0d14066fa29e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\modeling_dicow.py",
+      "bytes": 15126,
+      "sha256": "aa335c71078cfad5b84b5e323dd56f232289552a0052b02693819a591e1049b1",
+      "gitBlobSha1": "5cdfeb76a03eb0d200d062c11dde48fc7630cce6"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\normalizer.json",
+      "bytes": 52666,
+      "sha256": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd",
+      "gitBlobSha1": "dd6ae819ad738ac1a546e9f9282ef325c33b9ea0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\preprocessor_config.json",
+      "bytes": 357,
+      "sha256": "654cf18d3e163b948ceaf9766da56ce0b52de265d58673cf61c9376f126bd499",
+      "gitBlobSha1": "3f567c1115178e9fd2e1ef818dca934e22ca0c85"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\special_tokens_map.json",
+      "bytes": 2186,
+      "sha256": "baea4ea09372eb4fca86b4e4346139fd73cb807d5087e9de0948e971739c3e74",
+      "gitBlobSha1": "312bc106291bb51bf2cc1648df070bef963a0639"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\tokenizer.json",
+      "bytes": 3930645,
+      "sha256": "5c1bf30c9e716e1477bedef846b01be0013daecb89e9e3ef7ab89b23c178df1b",
+      "gitBlobSha1": "33c8354828689f5daef89956ad477df739eccd16"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\tokenizer_config.json",
+      "bytes": 282873,
+      "sha256": "3c75940dfce3a294fca7041a5faff011677f1b68fa85e47511bb8cf6dccaded6",
+      "gitBlobSha1": "5bff1ae6346582c59a1999bb0e1784b6642540b4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\utils.py",
+      "bytes": 540,
+      "sha256": "f25f0617517f7ed604361643dc875fc5d2d3500376134dbbe240c82688b6714b",
+      "gitBlobSha1": "6a8995af505210b51bb96f0f72d408ba5f326045"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\sedicow-470fce9ffff844dd53a27751cdf6c6df9efecb39\\vocab.json",
+      "bytes": 835528,
+      "sha256": "6788c80b082e9b0d1393147d3a3e62ba19285ac0c82ace8e5ef00f37ead58971",
+      "gitBlobSha1": "b45bc0e97a5511c917c112c42231cdbf455e200d"
+    }
+  ],
+  "weight": {
+    "file": "model.safetensors",
+    "bytes": 4407276024,
+    "sha256": "7e42482cf705a422b022a6c0df84f02be60da5a2fbf454ca517001359a1b9b20",
+    "url": "https://huggingface.co/BUT-FIT/SE-DiCoW/resolve/470fce9ffff844dd53a27751cdf6c6df9efecb39/model.safetensors"
+  },
+  "olderUnderscoreVariantExcluded": "OfficialBUT-FIT/SE_DiCoW README directs users to hyphenSE-DiCoW for code compatibility. Choose officialrecommended variant, notmultiplecheckpoints.",
+  "whyDifferent": "Target-speaker ASR directly conditioned on STNO activity plus self-enrollment, without a waveformseparator. Tests whether PS4waveform-content distortion can be bypassed. Keep normalQwen and all rawaudio.",
+  "existingDiarizerToReuse": "OuralreadymeasuredNemotron automatic8speaker probabilities, not bundledCC-BY-NC DiariZen weights.",
+  "primarySources": [
+    "https://huggingface.co/BUT-FIT/SE-DiCoW",
+    "https://github.com/BUTSpeechFIT/TS-ASR-Whisper",
+    "https://arxiv.org/abs/2601.19194",
+    "https://www.isca-archive.org/mlcslm_2025/polok25_mlcslm.pdf"
+  ],
+  "limitations": "Officialbenchmarks are mostlyEnglish; Chinese accuracy under5% and robustness to our imperfectdiarization remain unproven. Speakeractivity-conditioning is not post-hocword relabeling. No qualityclaim from sourcedownload.",
+  "codeExecuted": false,
+  "weightsDownloaded": false,
+  "saleQualified": false
+}

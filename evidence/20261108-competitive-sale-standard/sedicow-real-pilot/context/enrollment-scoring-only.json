@@ -1,0 +1,104 @@
+{
+  "state": "POSTHOC_ENROLLMENT_AUDIT_NOT_INPUT_SELECTION",
+  "referencePassedToInference": false,
+  "inputManifestSha256": "dd69d623be8e282b1163b0b9d5a13aa087dd075a158a78bc4e1e1cecd41b3f57",
+  "rows": [
+    {
+      "nativePerson": 0,
+      "window": [
+        1924.6899375,
+        1954.6899375
+      ],
+      "referenceSpeakerForEvaluationOnly": "007-M",
+      "metrics": {
+        "anyLexicalSpeechSeconds": 29.40000000000009,
+        "targetPresentSeconds": 29.40000000000009,
+        "targetExclusiveSeconds": 29.40000000000009,
+        "summedSpeakerSeconds": 29.40000000000009
+      },
+      "targetExclusiveFractionOfAnySpeech": 1.0,
+      "sourceEnrollmentAudioSha256": "d02d474638647c81517d7c52d7d55e98b020b0ac536c4d1f7617a4b7bc527e37"
+    },
+    {
+      "nativePerson": 1,
+      "window": [
+        343.25,
+        373.25
+      ],
+      "referenceSpeakerForEvaluationOnly": "002-F",
+      "metrics": {
+        "summedSpeakerSeconds": 29.549909050183203,
+        "anyLexicalSpeechSeconds": 28.456412967568383,
+        "targetPresentSeconds": 26.914164730066773,
+        "targetExclusiveSeconds": 26.83942040530428
+      },
+      "targetExclusiveFractionOfAnySpeech": 0.9431765147593627,
+      "sourceEnrollmentAudioSha256": "b89a1b74c5c9a7026ce43a448f87fc76dc0767d1b546ba3e3efb7c3df8a4018d"
+    },
+    {
+      "nativePerson": 2,
+      "window": [
+        111.2,
+        141.2
+      ],
+      "referenceSpeakerForEvaluationOnly": "004-M",
+      "metrics": {
+        "anyLexicalSpeechSeconds": 29.786059999999992,
+        "targetPresentSeconds": 29.786059999999992,
+        "targetExclusiveSeconds": 29.786059999999992,
+        "summedSpeakerSeconds": 29.786059999999992
+      },
+      "targetExclusiveFractionOfAnySpeech": 1.0,
+      "sourceEnrollmentAudioSha256": "7c53063396de85c163c143d153158c896deb5e085653ef935b70db69fe2d29e4"
+    },
+    {
+      "nativePerson": 3,
+      "window": [
+        788.98,
+        818.98
+      ],
+      "referenceSpeakerForEvaluationOnly": "003-F",
+      "metrics": {
+        "anyLexicalSpeechSeconds": 28.800394116942698,
+        "summedSpeakerSeconds": 34.42446105127431,
+        "targetPresentSeconds": 11.711210734370525,
+        "targetExclusiveSeconds": 9.343875000000025
+      },
+      "targetExclusiveFractionOfAnySpeech": 0.3244356643891623,
+      "sourceEnrollmentAudioSha256": "cfae0b1717acab7a2abcc12fa7ea3a18c612b3ebe4ed7626f4a868dee6b18214"
+    },
+    {
+      "nativePerson": 4,
+      "window": [
+        67.54,
+        97.54
+      ],
+      "referenceSpeakerForEvaluationOnly": "006-M",
+      "metrics": {
+        "anyLexicalSpeechSeconds": 29.878,
+        "targetPresentSeconds": 29.878,
+        "targetExclusiveSeconds": 29.878,
+        "summedSpeakerSeconds": 29.878
+      },
+      "targetExclusiveFractionOfAnySpeech": 1.0,
+      "sourceEnrollmentAudioSha256": "4adb39a11e181a49dc749e2008d6024bc559e806b7723ecc570bb7f43ccc1deb"
+    },
+    {
+      "nativePerson": 5,
+      "window": [
+        310.8,
+        340.8
+      ],
+      "referenceSpeakerForEvaluationOnly": "005-M",
+      "metrics": {
+        "anyLexicalSpeechSeconds": 28.502449999999953,
+        "targetPresentSeconds": 28.502449999999953,
+        "targetExclusiveSeconds": 28.502449999999953,
+        "summedSpeakerSeconds": 28.502449999999953
+      },
+      "targetExclusiveFractionOfAnySpeech": 1.0,
+      "sourceEnrollmentAudioSha256": "fadb62057a2844036a93eeb8c083d5a4e5bdc441c6305c473628481743f1bf3c"
+    }
+  ],
+  "inputsChangedFromAudit": false
+}

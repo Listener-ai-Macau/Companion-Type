@@ -1,0 +1,134 @@
+[
+  {
+    "id": "native-0",
+    "nativePerson": 0,
+    "pilot": false,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-0.wav",
+    "enrollmentAudioSha256": "d02d474638647c81517d7c52d7d55e98b020b0ac536c4d1f7617a4b7bc527e37",
+    "enrollmentStartSample": 30795039,
+    "enrollmentEndSample": 31275039,
+    "automaticEnrollmentScoreSeconds": 26.610654070586236,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-0-inputs.npz",
+    "modelInputsSha256": "089cdf6254968df34101b77ceb38ee7676be107aa99ed487abcadb26af91f970",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 0.2924342155456543
+  },
+  {
+    "id": "native-1",
+    "nativePerson": 1,
+    "pilot": true,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-1.wav",
+    "enrollmentAudioSha256": "b89a1b74c5c9a7026ce43a448f87fc76dc0767d1b546ba3e3efb7c3df8a4018d",
+    "enrollmentStartSample": 5492000,
+    "enrollmentEndSample": 5972000,
+    "automaticEnrollmentScoreSeconds": 24.532551351784505,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-1-inputs.npz",
+    "modelInputsSha256": "f64371bc933032958d4c1f363fbc714d249d079491af46d95a8ccf938662b8b8",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 16.0135555267334
+  },
+  {
+    "id": "native-2",
+    "nativePerson": 2,
+    "pilot": true,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-2.wav",
+    "enrollmentAudioSha256": "7c53063396de85c163c143d153158c896deb5e085653ef935b70db69fe2d29e4",
+    "enrollmentStartSample": 1779200,
+    "enrollmentEndSample": 2259200,
+    "automaticEnrollmentScoreSeconds": 28.5038320962228,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-2-inputs.npz",
+    "modelInputsSha256": "9b91ecf05a3e86a36cbd6a5a073706ad2a54455fa5fd9c0525d75994ea676c25",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 7.552205562591553
+  },
+  {
+    "id": "native-3",
+    "nativePerson": 3,
+    "pilot": true,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-3.wav",
+    "enrollmentAudioSha256": "cfae0b1717acab7a2abcc12fa7ea3a18c612b3ebe4ed7626f4a868dee6b18214",
+    "enrollmentStartSample": 12623680,
+    "enrollmentEndSample": 13103680,
+    "automaticEnrollmentScoreSeconds": 9.82409404842563,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-3-inputs.npz",
+    "modelInputsSha256": "0df48a7bac417333ef45adda9c463e484b72e362bcb419821992ebeb2583c027",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 5.0992536544799805
+  },
+  {
+    "id": "native-4",
+    "nativePerson": 4,
+    "pilot": false,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-4.wav",
+    "enrollmentAudioSha256": "4adb39a11e181a49dc749e2008d6024bc559e806b7723ecc570bb7f43ccc1deb",
+    "enrollmentStartSample": 1080640,
+    "enrollmentEndSample": 1560640,
+    "automaticEnrollmentScoreSeconds": 29.13909269409418,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-4-inputs.npz",
+    "modelInputsSha256": "1f774902d2f68757dcd5a7f581d29ca8176c0bd7f9c00367f3da898d154de82b",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 4.549911022186279
+  },
+  {
+    "id": "native-5",
+    "nativePerson": 5,
+    "pilot": false,
+    "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+    "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "sourceStartSample": 24960000,
+    "sourceEndSample": 25440000,
+    "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-5.wav",
+    "enrollmentAudioSha256": "fadb62057a2844036a93eeb8c083d5a4e5bdc441c6305c473628481743f1bf3c",
+    "enrollmentStartSample": 4972800,
+    "enrollmentEndSample": 5452800,
+    "automaticEnrollmentScoreSeconds": 27.658925073580605,
+    "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\native-5-inputs.npz",
+    "modelInputsSha256": "3b0234a12ceae4d535a0ceb50e956c169940ad03f273330159e93ce04a68885d",
+    "stnoShape": [
+      4,
+      1500
+    ],
+    "stnoMassMaxError": 1.1920928955078125e-07,
+    "targetActivitySecondsFromSoftMask": 1.6470211744308472
+  }
+]

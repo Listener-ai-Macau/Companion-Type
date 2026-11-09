@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-09T10:23:31+08:00",
+  "state": "REAL_TARGET_DIAGNOSTIC_SCORED_NOT_QUALIFIED",
+  "nativePerson": 1,
+  "referenceSpeakerForEvaluationOnly": "002-F",
+  "sourceWindow": [
+    1560,
+    1590
+  ],
+  "rawText": "大概能找过什么措施相同间的其他小区也有这样这样这样的不是分小区的有的是像这种事还真避免不了还真没办法这没办法你说你说都有门金卡都有门金卡还跟着那个开门的",
+  "naturalEos": true,
+  "loop": false,
+  "referenceUtterances": [
+    {
+      "start": 1561.964598810187,
+      "end": 1563.9883750000001,
+      "speaker": "002-F",
+      "text": "咱看能不能有个什么措施",
+      "lexical": "咱看能不能有个什么措施",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1565.8104925790801,
+      "end": 1566.862,
+      "speaker": "002-F",
+      "text": "挺普遍的",
+      "lexical": "挺普遍的",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1567.3207522326181,
+      "end": 1568.6526875,
+      "speaker": "002-F",
+      "text": "其他小区也有",
+      "lexical": "其他小区也有",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1576.5260251790296,
+      "end": 1583.65,
+      "speaker": "002-F",
+      "text": "像像像着不是本小区的有的是，像这种事儿还真避免不了。他真没办法",
+      "lexical": "像像像着不是本小区的有的是，像这种事儿还真避免不了。他真没办法",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1584.5002173208134,
+      "end": 1591.0856518565895,
+      "speaker": "002-F",
+      "text": "哦，这没办法，你说你说都有门禁卡，都有门禁卡，他跟着那个开门儿的，他进来了",
+      "lexical": "哦，这没办法，你说你说都有门禁卡，都有门禁卡，他跟着那个开门儿的，他进来了",
+      "crossesAudioBoundary": true
+    }
+  ],
+  "strictTargetCer": null,
+  "strictCerOmittedForCrossingUtterance": true,
+  "rawSha256": "3d7fa5a60d567a0b22ac3678fac9b240b87bcef3f14073c1b3af664bda87a3a1",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "timeSeconds": 118.45132909994572,
+  "smallSampleNotWholeMeetingQualification": true,
+  "referencePassedToInference": false,
+  "saleQualified": false
+}

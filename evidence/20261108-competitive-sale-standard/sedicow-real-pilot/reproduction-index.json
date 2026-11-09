@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_cpu_stream_20261109.py",
+      "sha256": "d3e269c084de2885ddac21c2131867db5a7fa69d80a6ded9046c3f0f0f81a88b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_cpu_worker_20261109.py",
+      "sha256": "675268e7c8fe0c2b7ee6d19ecf5fc1822da67be26dd48a10c6b10deed22dd536"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\probe_companion_sedicow_cpu_stream_20261109.py",
+      "sha256": "9c80f075f381f28ec601edddb0d8c1f2781330823ff10acf3a874b7b09edf2fb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_sedicow_cpu_20261109.py",
+      "sha256": "407d3f6ee6e857238025444e849b24d7c1e7ba488373cbab8ba9a6d52a4d2ccc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\score_companion_sedicow_pilot_20261109.py",
+      "sha256": "4499110d6d17736883bdbac5c6dd3e5c5d6c4ee811cddba965f9c4d736b9e75a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\audit_companion_sedicow_enrollment_20261109.py",
+      "sha256": "48667ca979b5d40c796fc3a0d3b2a69f72d094f23f6914d316d9de66aed4e395"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_sedicow_author_mask_20261109.py",
+      "sha256": "6f5a251d6a587e86403c8d1fb5f354c94c7305f758a4921d33b30bd3f6541d0c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\preserve_companion_sedicow_real_pilot_20261109.py",
+      "sha256": "d127fcc16a3601aea8bf302640aa377c87b46971d4a22f9218c8a148b94f2f0f"
+    }
+  ],
+  "priorFrozenOriginalAudioAndFeaturesCommit": "9efd7e195af425450fe4680321c13fc9417ca336",
+  "newArchiveSha256": "e6edd4c4344e651076326aefa10c7c6378fcbdc2daea24435f46e3a3f10e2b8b",
+  "newArchiveBytes": 2662401,
+  "newArchiveMember": "native-2-inputs.npz",
+  "newFeatureFileSha256": "3e671814ac449ad99a00c3258e0a09f9858f5a225cce57d533f1c9d345f47815",
+  "publicReferenceLicense": "AISHELL4/OpenSLR111 https://www.openslr.org/111/ CC-BY-SA4.0; authors/corpus attribution retained. Referenceonlyforscoring, neverinference.",
+  "largeWeightsOrRuntimeInGit": false,
+  "failedSourceSnapshots": "attempt-2/source-before-lazy-decoder; alloldcontrollerbytesretainedforsha-boundoriginalprotocols.",
+  "noProductOrModelPromotion": true
+}

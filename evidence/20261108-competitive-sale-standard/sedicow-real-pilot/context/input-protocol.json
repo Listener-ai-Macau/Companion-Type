@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-09T09:48:46+08:00",
+  "policy": "One frozenoriginal30s window1560..1590s aligns priorQwenfixed30s root52 andcontainsboth earlier8s overlap probes. Firstpilottargets anonymous1,2,3 fromoldpredicted overlap pairs, thenallobserved0..5including absent-person negatives ifpilotworks. Use ALL8rawnativeactivityheads forSTNO, no referencepersoncount. For eachtarget choose earliestmaximum-sumT-state30s windowoutside prior1559.9..1861.95query interval. No word/answer/reference/score used.",
+  "referenceChoice": "Author self-enrollment expects30s features; shortform8s warned against. We choose30s fromfullconversation basedautomaticTprobabilities, not former8sreferencebank. Frozen before newASR; maincontextlonger thanprior8scontrols, so no directsame8sCERcomparison.",
+  "clockPolicy": "Native10msSTNO→probability-mass average onto20ms encodergrid; realaudio30s, anypaddingissilence. ExactauthorSTNO stateformula compared separately; timeprojection is our explicitadapter, not claimbitexactauthorbinarytimestampmask.",
+  "sourceAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "nativeProbabilityManifestSha256": "726456623b75c7f2a583e1da59fc54f6415bfcd26b98756d5b7c33f7b9369c49",
+  "sourceModuleSha256": "3a99fc720fe1cc35ec7db11544251f5a0a49542cf0931687cc076e3375d18ae0",
+  "referenceLabelsOrWordsRead": false,
+  "newAsrInference": false,
+  "saleQualified": false
+}

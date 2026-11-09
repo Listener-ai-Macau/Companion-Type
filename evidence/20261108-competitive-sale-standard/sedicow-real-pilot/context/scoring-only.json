@@ -1,0 +1,147 @@
+{
+  "at": "2026-11-09T10:17:41+08:00",
+  "reference": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02.TextGrid",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "nativeMapping": {
+    "1": "002-F",
+    "3": "003-F",
+    "2": "004-M",
+    "5": "005-M",
+    "4": "006-M",
+    "0": "007-M"
+  },
+  "mappingForScoringOnly": true,
+  "mappingSourceSha256": "8ed8a34328be034b84ebdc99f6ba18c7f5c493b87e83361c10ee9ed00acd1415",
+  "audioOnlyInputsAlreadyFrozenSha256": "dd69d623be8e282b1163b0b9d5a13aa087dd075a158a78bc4e1e1cecd41b3f57",
+  "sourceWindow": [
+    1560,
+    1590
+  ],
+  "rows": [
+    {
+      "start": 1571.1748434452354,
+      "end": 1574.3007297048837,
+      "speaker": "006-M",
+      "text": "这个看看是不是咱本小区的这个",
+      "lexical": "这个看看是不是咱本小区的这个",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1580.3206615354409,
+      "end": 1580.7070070282064,
+      "speaker": "006-M",
+      "text": "对",
+      "lexical": "对",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1561.964598810187,
+      "end": 1563.9883750000001,
+      "speaker": "002-F",
+      "text": "咱看能不能有个什么措施",
+      "lexical": "咱看能不能有个什么措施",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1565.8104925790801,
+      "end": 1566.862,
+      "speaker": "002-F",
+      "text": "挺普遍的",
+      "lexical": "挺普遍的",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1567.3207522326181,
+      "end": 1568.6526875,
+      "speaker": "002-F",
+      "text": "其他小区也有",
+      "lexical": "其他小区也有",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1576.5260251790296,
+      "end": 1583.65,
+      "speaker": "002-F",
+      "text": "像像像着不是本小区的有的是，像这种事儿还真避免不了。他真没办法",
+      "lexical": "像像像着不是本小区的有的是，像这种事儿还真避免不了。他真没办法",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1584.5002173208134,
+      "end": 1591.0856518565895,
+      "speaker": "002-F",
+      "text": "哦，这没办法，你说你说都有门禁卡，都有门禁卡，他跟着那个开门儿的，他进来了",
+      "lexical": "哦，这没办法，你说你说都有门禁卡，都有门禁卡，他跟着那个开门儿的，他进来了",
+      "crossesAudioBoundary": true
+    },
+    {
+      "start": 1564.1070601791594,
+      "end": 1567.6192919315733,
+      "speaker": "004-M",
+      "text": "这个挺普遍，咱们小区有其他小区也有，",
+      "lexical": "这个挺普遍，咱们小区有其他小区也有，",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1568.7256449335837,
+      "end": 1569.2428750000001,
+      "speaker": "004-M",
+      "text": "嗯",
+      "lexical": "嗯",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1574.2129239110734,
+      "end": 1576.6512500000001,
+      "speaker": "004-M",
+      "text": "本小区他他就是本小区的呀",
+      "lexical": "本小区他他就是本小区的呀",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1588.416355724755,
+      "end": 1588.9068125000001,
+      "speaker": "004-M",
+      "text": "对",
+      "lexical": "对",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1573.9445348410054,
+      "end": 1575.384549859495,
+      "speaker": "003-F",
+      "text": "对有的就是一些",
+      "lexical": "对有的就是一些",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1582.0753513478435,
+      "end": 1583.2901875,
+      "speaker": "003-F",
+      "text": "对他有的",
+      "lexical": "对他有的",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1584.0260660342376,
+      "end": 1587.25875,
+      "speaker": "003-F",
+      "text": "就是<$>专门就回收那种废纸，哦<sil>",
+      "lexical": "就是专门就回收那种废纸，哦",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1569.1997962201597,
+      "end": 1570.7763750000001,
+      "speaker": "005-M",
+      "text": "其他小区怎么做的呀",
+      "lexical": "其他小区怎么做的呀",
+      "crossesAudioBoundary": false
+    }
+  ],
+  "trulyAbsentNativePeople": [
+    0
+  ],
+  "correction": "Native0 alone has no lexical reference speech in this30s. Native4/5 eachactuallyspeak, so doNOT callthem negative/no-speech controls. Oldrapid-r3prepared description guessedabsent0/4/5; preservedasoldassumption, correctedbefore newqualityjudgment. No modelinput/targetselection changed.",
+  "crossingWordPolicy": "Do notcroporassignpartialutterancecharactersbyduration. Full30s targetCERonlyifallintersectingreferenceutterancesforthatpersonarefullyinside. Otherwise showraw+boundaryrowsbutnoformalCER. Allpersonsincludedinscore; nativeidentity mapfrozenfromexistingfulljournal evaluation, nooracleinput."
+}
