@@ -1,0 +1,118 @@
+{
+  "at": "2026-11-09T09:22:43+08:00",
+  "state": "COMPLETE_FIXED_POSTERIOR_MARGINAL_TRIAL_NOT_QUALIFIED",
+  "cases": [
+    {
+      "meeting": "L_R003S01C02",
+      "trueOverlapSeconds": 188.3593880675116,
+      "metrics": {
+        "hard": {
+          "missedSeconds": 56.257260453541946,
+          "caughtSeconds": 132.10212761396966,
+          "predictedSeconds": 220.53777694702148,
+          "falsePositiveSeconds": 88.43564933305183,
+          "recall": 0.7013302016389102,
+          "precision": 0.598999996475451
+        },
+        "soft": {
+          "missedSeconds": 57.12549267071249,
+          "caughtSeconds": 131.2338953967991,
+          "predictedSeconds": 211.25958251953125,
+          "falsePositiveSeconds": 80.02568712273214,
+          "recall": 0.6967207567576211,
+          "precision": 0.6211973621819799
+        },
+        "native": {
+          "falsePositiveSeconds": 54.08795658877033,
+          "predictedSeconds": 178.61999600753188,
+          "caughtSeconds": 124.53203941876154,
+          "missedSeconds": 63.82734864875006,
+          "recall": 0.6611406030589083,
+          "precision": 0.6971898007069175
+        },
+        "hard_union": {
+          "falsePositiveSeconds": 109.04074903118905,
+          "predictedSeconds": 265.30263739451766,
+          "caughtSeconds": 156.2618883633286,
+          "missedSeconds": 32.097499704182994,
+          "recall": 0.8295943725795147,
+          "precision": 0.5889948546985597
+        },
+        "soft_union": {
+          "falsePositiveSeconds": 101.73997975304391,
+          "predictedSeconds": 258.0633989293128,
+          "caughtSeconds": 156.3234191762689,
+          "missedSeconds": 32.03596889124269,
+          "recall": 0.829921039668273,
+          "precision": 0.6057558717154155
+        }
+      },
+      "thirdNativeUnionNotMeasured": false
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "trueOverlapSeconds": 0,
+      "metrics": {
+        "hard": {
+          "falsePositiveSeconds": 0.89434814453125,
+          "predictedSeconds": 0.89434814453125,
+          "recall": null,
+          "precision": 0.0
+        },
+        "soft": {
+          "falsePositiveSeconds": 0.74249267578125,
+          "predictedSeconds": 0.74249267578125,
+          "recall": null,
+          "precision": 0.0
+        },
+        "native": {
+          "falsePositiveSeconds": 2.9499999340623617,
+          "predictedSeconds": 2.9499999340623617,
+          "recall": null,
+          "precision": 0.0
+        },
+        "hard_union": {
+          "falsePositiveSeconds": 3.8443480785936117,
+          "predictedSeconds": 3.8443480785936117,
+          "recall": null,
+          "precision": 0.0
+        },
+        "soft_union": {
+          "falsePositiveSeconds": 3.6924926098436117,
+          "predictedSeconds": 3.6924926098436117,
+          "recall": null,
+          "precision": 0.0
+        }
+      },
+      "thirdNativeUnionNotMeasured": false
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "trueOverlapSeconds": 131.06881203400562,
+      "metrics": {
+        "hard": {
+          "falsePositiveSeconds": 13.357972169654175,
+          "predictedSeconds": 64.37910461425781,
+          "caughtSeconds": 51.02113244460364,
+          "missedSeconds": 80.04767958940198,
+          "recall": 0.3892698167689677,
+          "precision": 0.7925107494164212
+        },
+        "soft": {
+          "falsePositiveSeconds": 11.030641968543222,
+          "predictedSeconds": 56.43003845214844,
+          "caughtSeconds": 45.399396483605216,
+          "missedSeconds": 85.6694155504004,
+          "recall": 0.3463783319545645,
+          "precision": 0.8045253508395712
+        }
+      },
+      "thirdNativeUnionNotMeasured": true
+    }
+  ],
+  "newNeuralCalls": 0,
+  "weightsOrThresholdSearch": false,
+  "noAsrOrContentRecoveryClaim": true,
+  "productDefaultChanged": false,
+  "saleQualified": false
+}

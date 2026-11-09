@@ -1,0 +1,115 @@
+{
+  "at": "2026-11-09T10:04:17+08:00",
+  "state": "RESTORED_PREVIOUS_FIRERED2_SIX_CLIP_CONTENT_PROBE_NOT_NEW_MODEL_OR_CER_GAIN",
+  "modelHistoryCorrection": "Old20261103FireRedexperiment alreadyusedsameFireRed2AED20260226, notFireRedv1. Correctedbeforecurrentneuralprobe andexplicitlytoldOwner. Recoveredmodel/runtime/rawnewclips, notanewmodeldiscovery.",
+  "fixedEightSecondInputs": 6,
+  "successfulNeuralCallsAcrossBothSmallRuns": 6,
+  "isolatedRunFreshCalls": 5,
+  "isolatedRunInheritedCalls": 1,
+  "isolatedFiveFreshWallIncludingLoadSeconds": 93.17106040002545,
+  "rows": [
+    {
+      "id": "overlap-00-mixture",
+      "text": "对这个挺普遍咱们小区其他小区也有嗯",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\small8s-r2\\probe\\overlap-00-mixture-0000.json",
+      "sha256": "29fa9f8b75ce7e70dac6abd803f3f457a469f40bdeabf86708c7a0493aefe4fb",
+      "controller": null,
+      "inherited": true
+    },
+    {
+      "id": "overlap-00-native-1",
+      "text": "看看能找个什么措施交通便的其他小区也有",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\01\\probe\\overlap-00-native-1-0000.json",
+      "sha256": "2f89efac55fb26d2e26b0cabc062ca5328a85a042593cd88b499eaac5976c0be",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2141999104,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 21.027642700006254
+      },
+      "inherited": false
+    },
+    {
+      "id": "overlap-00-native-2",
+      "text": "这个挺普遍咱们小区其他小区也有啊",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\02\\probe\\overlap-00-native-2-0000.json",
+      "sha256": "26e84cf4a8d30d91185adf8ace8735aab139832b1b8503bc16e3520c772fcc52",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2140925952,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 22.05435170000419
+      },
+      "inherited": false
+    },
+    {
+      "id": "overlap-01-mixture",
+      "text": "这个看是不是咱们本小区的这个",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\03\\probe\\overlap-01-mixture-0000.json",
+      "sha256": "dbef6e40c92bcb0faffb04dcb1e22f79c0073f327da6cddf093af57149fd4d65",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2142597120,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 17.02109080000082
+      },
+      "inherited": false
+    },
+    {
+      "id": "overlap-01-native-2",
+      "text": "本小利就是本小区呗",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\04\\probe\\overlap-01-native-2-0000.json",
+      "sha256": "67e9c1ce226766d921cd8c172d0671430e744c0e90623ae8dc597ea1fa15adb1",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2143723520,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 17.02977429999737
+      },
+      "inherited": false
+    },
+    {
+      "id": "overlap-01-native-3",
+      "text": "对或者就是那些",
+      "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\05\\probe\\overlap-01-native-3-0000.json",
+      "sha256": "6c2e69f547035e2fac9acaa78233cb01732bdabec3dfeefae8e8e48c5b7da815",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2141028352,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 15.021453399967868
+      },
+      "inherited": false
+    }
+  ],
+  "interpretation": "TwoASRbackends show relatedregression onPS4native1 voice: original contains挺普遍while separatedFireRed2reads交通便的; oldconfiguredASRread交通便利. Also native3reads对或者就是那些asoldprobe. This supports prioritizing directtargetASR/bypassing waveformreconstruction, notdefinitive humanacousticproof orsameQwencomparison.",
+  "whyNoStrictCer": "8s cuts intersect annotatedutterances; no exact8scharacterreference wasmanufactured. No formalCER orfullmeetinggainclaimed.",
+  "memoryFailuresRetained": [
+    "probe/state.json:30sScatterND80MiBallocation failed under2GiBjob; no completecall.",
+    "small8s-r2/probe/state.json:first8ssuccess, nextConcat16MiBallocation failed withsamemodelretained.",
+    "isolated8s-r3:eachof5remaining8susesfreshprocess andpassed; peakprivate2.140..2.144GB nearly2GiBcap. Loadingonceperclip isdiagnostic, notfastproductionroute."
+  ],
+  "wholeMeetingRun": false,
+  "ordinaryBestCerUnchanged": 0.055375375375375374,
+  "saleQualified": false
+}

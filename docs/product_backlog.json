@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T09:00:10+08:00",
+      "updatedAt": "2026-11-09T09:56:31+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Owner明确无抓包器，OTA/收取速度先放下，保留旧失败和原50门，不做速度冲刺或抓包提示。761/872b5f3已装，回执重入队列越界有修前ASAN失败/修后恢复及实板非破坏错误与重连证据，旧34未读/消费，资源412188/67896/21504过，板已释放。标准构建入口现已对齐当前872b5f3，并明确显示源码/已装提交，历史配置及C盘Git保留；不再从旧c802默认构建。继续原非速度可靠性：首有效PCM响应与首次连接/录音中断恢复；现有证据只够单场，不把旧失败清零。先核现存时序和当前源码找具体缺陷；没有可复现缺陷不盲改，不重跑已验无关路径。实体首字/电源/生产/屏幕依旧按原暂停或block保留。",
+      "next": "当前370长录/录中同步继续自动收尾（监督21684、实际客户4584），不另开START/OTA/抢板；它只覆盖当前版本长稳，不是全部最终验收。按更新后的priorityDecision集中修首PCM<=1.5s，再收敛初连/原会话恢复及受影响手机链。先有可复现根因和实现，再一次必要构建/验收；仅启动路径改动不机械重跑2h。Owner速度后置、原硬件block/屏幕暂停均保持。今天先拿长录真实结果及开录局部修复/结构重构判断，不重复无依据的一工作日承诺。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133909,84 +133909,116 @@
         }
       },
       "priorityDecision": {
-        "at": "2026-11-05T11:41:53+08:00",
+        "at": "2026-11-09T09:56:31+08:00",
         "ownerRaw": "你就把接下来的优先级修一下，block的东西就block；除了block以外的东西都已经做了吗，可以交付、售卖吗？",
-        "correction": "上轮将两个包均标blocked过宽，软件栈复核独立可做，恢复CP24-08为活动包；只挂起实际依赖的子项。",
+        "correction": "现行优先级字段仍停在11月5/6日的日期/维护入口旧顺序，与embedded.next不一致，已纠正。原结果和已过范围保留，不把规则/文档/验收工具数量算产品进展。上一轮较多时间用于验收适配，未产生新固件修复，明确保留这一投入事实。",
         "ordered": [
           {
             "order": 1,
-            "task": "CP04-05",
-            "scope": "离线录音日期与可信校时",
-            "status": "completed_scoped",
-            "releaseRole": "日常交付补全"
+            "task": "CP04-01",
+            "scope": "正常开录至首个真实PCM<=1.5s；保留可录时长/音质/资源预算",
+            "status": "OPEN_MEASURED_741_2_157S_NOT_FIXED",
+            "next": "长录期间可离线定位准备阶段；准备1867ms已有状态转换证据，不能重复已有16步/1ms批处理。先区分物理擦除/读校验/其它阶段，再修源头；没有不同证据不重录。"
           },
           {
             "order": 2,
-            "task": "CP13-08",
-            "scope": "无屏换手机、清配对与恢复设置",
-            "status": "device_accepted_normal_boot_persisted_app_ui_pending",
-            "releaseRole": "日常交付补全"
+            "task": "CP09-02",
+            "scope": "首次连接及原会话中断恢复；冷目录<=5s、恢复<=10s、不重复START",
+            "status": "OPEN_INTERMITTENT_INITIAL_CONNECTION_AND_CURRENT_PHONE_INTEGRATION",
+            "next": "复用761已交付重入越界修复与旧故障证据，排除软件连接生命周期/恢复错误。不能把正常一次连接称偶发失败已修；不展开速度/RF冲刺。"
           },
           {
             "order": 3,
-            "task": "CP04-01",
-            "scope": "无屏状态、容量与指示灯软件策略",
-            "status": "software_and_normal_query_hardware_accepted_led_blocked",
-            "releaseRole": "日常交付补全"
-          },
-          {
-            "order": 4,
-            "task": "CP04-01",
-            "scope": "开录响应、第一句话和标记时机",
-            "status": "first_pcm_success_bug_fixed_real_mark_accepted_physical_experience_pending",
-            "releaseRole": "日常交付补全"
-          },
-          {
-            "order": 5,
-            "task": "CP21-03",
-            "scope": "Capture无屏RAM和升级资源裁剪",
-            "status": "completed_scoped_actual_528B_ram_saved_joint_ota_retained",
-            "releaseRole": "收益驱动优化候选"
-          },
-          {
-            "order": 6,
-            "task": "CP04-01",
-            "scope": "录音与屏幕职责解耦",
-            "status": "review_completed_screen_compile_boundary_improved_no_broad_rewrite",
-            "releaseRole": "收益驱动优化候选"
-          },
-          {
-            "order": 7,
-            "task": "CP07-09",
-            "scope": "用户主动删除不需要的设备录音并释放空间",
-            "status": "in_progress_selected_session_model_passed_fw66685_ota_running",
-            "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
-          },
-          {
-            "order": 8,
-            "task": "CP09-04",
-            "scope": "从设备列表选择一场优先收取",
-            "status": "core_hardware_accepted_regular_dual_client_entry_pending",
-            "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
-          },
-          {
-            "order": 9,
-            "task": "CP13-08",
-            "scope": "手机独立完成设备恢复设置与固件升级",
-            "status": "device_protocols_accepted_android_product_entry_pending",
-            "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
+            "task": "CP23-10",
+            "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
+            "status": "CURRENT_761_LONG_RUN_ACTIVE_NOT_FINAL_WHOLE_SALE",
+            "next": "已有370长录持续并自动收尾；其证据只覆盖当前761/Windows068。随后补受影响普通手机路径；仅改开录/闲置路径不机械重跑2h，改录中调度/编码/写入才需对应长录。"
           }
         ],
         "doNotReopen": [
-          "已验短录、同步断链恢复和普通OTA",
-          "Owner暂停的屏幕、ADC定位和无法开展的电流测量"
+          "已验证且未受本批改动影响的路径，按原版本和适用范围复用；旧通过不继承成当前全部通过。",
+          "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
+          "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "完成正常OTA后仅用本轮新录音验取消、选场实际删除/空间变化、旧34目录不变和再录；普通Windows/Android用户入口在隔离053工作树联动，完整用户链未完成前不关闭。",
-        "lastUpdatedAt": "2026-11-06T09:14:49+08:00",
-        "lastOwnerRaw": "要让我们的嵌软达到一个售卖的标准",
+        "currentExecutable": "370长录监督21684/客户端4584继续，不换固件、不新增START；离线集中解决开录响应。每批形成可用修复后一次必要构建/安装及受影响验证；无新信息停止同条件重测。今天先给出长录实测和开录是否需要结构重构的结论，再据真实结果估剩余。",
+        "lastUpdatedAt": "2026-11-09T09:56:31+08:00",
+        "lastOwnerRaw": "然后的话，那你看下怎么样继续收敛呗，什么时候可以搞完这个事情，可以达到这个售卖标准？感觉你一直不知道为啥，不知道在干什么，有没有一个良好的工作流去做这个事情？",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
-        ]
+        ],
+        "orderingBeforeOwnerConvergence20261109": {
+          "at": "2026-11-05T11:41:53+08:00",
+          "ordered": [
+            {
+              "order": 1,
+              "task": "CP04-05",
+              "scope": "离线录音日期与可信校时",
+              "status": "completed_scoped",
+              "releaseRole": "日常交付补全"
+            },
+            {
+              "order": 2,
+              "task": "CP13-08",
+              "scope": "无屏换手机、清配对与恢复设置",
+              "status": "device_accepted_normal_boot_persisted_app_ui_pending",
+              "releaseRole": "日常交付补全"
+            },
+            {
+              "order": 3,
+              "task": "CP04-01",
+              "scope": "无屏状态、容量与指示灯软件策略",
+              "status": "software_and_normal_query_hardware_accepted_led_blocked",
+              "releaseRole": "日常交付补全"
+            },
+            {
+              "order": 4,
+              "task": "CP04-01",
+              "scope": "开录响应、第一句话和标记时机",
+              "status": "first_pcm_success_bug_fixed_real_mark_accepted_physical_experience_pending",
+              "releaseRole": "日常交付补全"
+            },
+            {
+              "order": 5,
+              "task": "CP21-03",
+              "scope": "Capture无屏RAM和升级资源裁剪",
+              "status": "completed_scoped_actual_528B_ram_saved_joint_ota_retained",
+              "releaseRole": "收益驱动优化候选"
+            },
+            {
+              "order": 6,
+              "task": "CP04-01",
+              "scope": "录音与屏幕职责解耦",
+              "status": "review_completed_screen_compile_boundary_improved_no_broad_rewrite",
+              "releaseRole": "收益驱动优化候选"
+            },
+            {
+              "order": 7,
+              "task": "CP07-09",
+              "scope": "用户主动删除不需要的设备录音并释放空间",
+              "status": "in_progress_selected_session_model_passed_fw66685_ota_running",
+              "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
+            },
+            {
+              "order": 8,
+              "task": "CP09-04",
+              "scope": "从设备列表选择一场优先收取",
+              "status": "core_hardware_accepted_regular_dual_client_entry_pending",
+              "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
+            },
+            {
+              "order": 9,
+              "task": "CP13-08",
+              "scope": "手机独立完成设备恢复设置与固件升级",
+              "status": "device_protocols_accepted_android_product_entry_pending",
+              "releaseRole": "本轮竞品复核补入原任务的用户结果；非额外行政门槛"
+            }
+          ],
+          "currentExecutable": "完成正常OTA后仅用本轮新录音验取消、选场实际删除/空间变化、旧34目录不变和再录；普通Windows/Android用户入口在隔离053工作树联动，完整用户链未完成前不关闭。",
+          "doNotReopen": [
+            "已验短录、同步断链恢复和普通OTA",
+            "Owner暂停的屏幕、ADC定位和无法开展的电流测量"
+          ]
+        }
       },
       "releaseReadiness": {
         "at": "2026-11-09T08:56:32+08:00",
@@ -135255,7 +135287,39 @@
         "currentDelivery": "原4–8小时的软件收尾估计未兑现。当前741/099仍不合格；本轮两个隔离源码检查点和初连恢复源码不是可交付整机。先完成同一存储/同步批次的实际联动，再按受影响验收结果更新剩余时间，不重复承诺一个工作日。",
         "state": "PRIOR_ONE_DAY_ESTIMATE_NOT_MET_STORAGE_PROTOCOL_REFACTOR_REQUIRED",
         "completionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone065-recording235-metric-verdict.json",
-        "actualEngineeringHours": "NOT_RECONSTRUCTED_FROM_WALL_CLOCK"
+        "actualEngineeringHours": "NOT_RECONSTRUCTED_FROM_WALL_CLOCK",
+        "currentRevision20261109": {
+          "at": "2026-11-09T09:56:31+08:00",
+          "ownerRaw": "然后的话，那你看下怎么样继续收敛呗，什么时候可以搞完这个事情，可以达到这个售卖标准？感觉你一直不知道为啥，不知道在干什么，有没有一个良好的工作流去做这个事情？",
+          "state": "CONDITIONAL_SOFTWARE_ESTIMATE_NOT_WHOLE_PRODUCT_SALE_DATE",
+          "priorEstimate": "原4–8小时/一个工作日估计已未兑现；保留原失败，不再次把计划当已完成或确定售卖日期。",
+          "conditionalSoftwareRangeWorkingDays": [
+            1,
+            2
+          ],
+          "assumptions": [
+            "首PCM问题能在现有存储结构内修复，资源/容量不回退。",
+            "连接/恢复没有发现新的存储或无线协议结构缺陷。",
+            "板卡与接收端可用于必要确认，原明确block不计入软件收尾。"
+          ],
+          "invalidIf": "首PCM需要改存储准备结构或连接根因仍无可分辨证据，则该区间失效，先给出具体实现范围和新依据，不自动每天顺延。",
+          "todayCheckpoints": [
+            {
+              "target": "2026-11-09约11:36+08:00",
+              "deliverable": "370实际长录停录/完整原音/WAV/累计指标结果，当前仍在运行；故障按实记失败，不承诺必过。"
+            },
+            {
+              "target": "2026-11-09 15:00+08:00",
+              "deliverable": "开录慢的分段依据和局部修复/结构重构判断；能做的实现继续，不把只有方案写成修好。"
+            },
+            {
+              "target": "2026-11-09当天收尾",
+              "deliverable": "按实际已交付修复、关闭项、仍失败项及具体依赖说明；不再给版本/测试数量充当进展。"
+            }
+          ],
+          "wholeSaleDate": null,
+          "reason": "电源/充电/低电/续航、声学/实体首字与生产交付条件尚未齐；屏幕保持Owner暂停。软件估计不包含这些实物条件，也不关闭它们。"
+        }
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136139,21 +136203,21 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T08:56:32+08:00",
-        "state": "NORMAL761_RELIABILITY_FIX_INSTALLED_SPEED_DEFERRED_BOARD_RELEASED",
+        "at": "2026-11-09T09:48:01+08:00",
+        "state": "NORMAL761_OWNER_APPROVED_LONG_RECORDING_AND_LIVE_RECEIVE_RUNNING",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66760,
+        "firmwareInstalled": 66761,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "b4ecf6184505f9d4f52902b97212be86ec38c6e0",
-        "boardLease": false,
-        "boardItem": "Companion761修复同步错误回执重入队列越界",
-        "liveRecording": false,
-        "liveReceive": false,
+        "firmwareSource": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
+        "boardLease": true,
+        "boardItem": "Companion761当前固件非速度长录及录中同步验收",
+        "liveRecording": true,
+        "liveReceive": true,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 369,
+        "ownLatestSession": 370,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": 66761,
@@ -136164,7 +136228,7 @@
         "backendCandidateSource": null,
         "phoneBuildSession": null,
         "normalRestoreCandidate": null,
-        "longControllerSession": null,
+        "longControllerSession": 21684,
         "rangeFirmwarePrototype": "2b1a1461b51dd8defcd60cccaf46e0f71a5b4f7d",
         "rangeHostPrototype": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
         "otaControllerSession": null,
@@ -136173,7 +136237,10 @@
         "nativeBuildSession": null,
         "engineeringRunnerName": null,
         "phoneControllerSession": null,
-        "firmwareCandidateProfile": null
+        "firmwareCandidateProfile": null,
+        "windowsClientPid": 4584,
+        "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\long761\\progress.json",
+        "longObserverSession": 14504
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -136386,9 +136453,9 @@
         ]
       },
       "lastOwnerRequest": {
-        "handledAt": "2026-11-08T22:45:22+08:00",
-        "raw": "需要搞一个目标优化嵌软指标直到达到售卖标准, 有问题就修复",
-        "action": "已建立本聊天持续Goal，状态active、未设预算；沿原嵌软待办与现行指标自动续作，不另建任务树。先继续短录存储/同步结构，有缺陷先修源头，仅重验受影响部分。"
+        "at": "2026-11-09T09:56:31+08:00",
+        "text": "然后的话，那你看下怎么样继续收敛呗，什么时候可以搞完这个事情，可以达到这个售卖标准？感觉你一直不知道为啥，不知道在干什么，有没有一个良好的工作流去做这个事情？",
+        "decision": "纠正旧优先级入口并收敛原非速度软件可靠性；不新增功能/任务树/审批。"
       },
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
@@ -140463,6 +140530,16 @@
           "deviceAccessed": false,
           "firmwareRebuilt": false
         }
+      },
+      "long761Current": {
+        "at": "2026-11-09T09:48:01+08:00",
+        "result": "OWNER_APPROVED_REAL_LONG_RECORDING_RUNNING_NOT_PASSED",
+        "session": 370,
+        "firmware": 66761,
+        "sourceCommit": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\manifest.json",
+        "liveResult": "E:\\CodexData\\Companion\\.build-cache\\long761\\acceptance.json",
+        "scope": "Current Windows068 long recording/live sync; not yet complete and no phone/speed/whole-sale inheritance"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -146043,11 +146120,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+          "status": "OLD_PATH_LIMITS_CONFIRMED_DIRECT_SPEAKER_CONDITIONED_ASR_PREPARED_NOT_QUALIFIED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。",
+          "next": "独显可用且实际LOWRAM解除后先跑已固定3人物同30sSE-DiCoW小对照，按每人漏话/串话/实词及原始EOS判生死，再扩全部6人(含无声人物负样本)和普通讲话保护、跨真实会议。旧PS4同Qwen六8s对照、第三整会native人物/普通ASR不取消但不压CPU。新分支若不能恢复分离丢失内容则拒绝并保留失败，再考虑有真实近讲目标的数据适配；不启动无目标自研/大训练。原字错<5%、人物DER、事实及双端实卡售卖门均不改。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -259596,7 +259673,7 @@
             ],
             "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
             "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-            "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。",
+            "next": "独显可用且实际LOWRAM解除后先跑已固定3人物同30sSE-DiCoW小对照，按每人漏话/串话/实词及原始EOS判生死，再扩全部6人(含无声人物负样本)和普通讲话保护、跨真实会议。旧PS4同Qwen六8s对照、第三整会native人物/普通ASR不取消但不压CPU。新分支若不能恢复分离丢失内容则拒绝并保留失败，再考虑有真实近讲目标的数据适配；不启动无目标自研/大训练。原字错<5%、人物DER、事实及双端实卡售卖门均不改。",
             "qualityQualified": false,
             "saleQualified": false,
             "newModelTrainingOrInference": true,
@@ -260392,6 +260469,438 @@
               "weightsOrFormalTargetsChanged": false,
               "saleQualified": false,
               "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
+            },
+            "rapidArchitectureCandidates20261109": {
+              "at": "2026-11-09T10:06:41+08:00",
+              "ownerQuote": "那看着好像有一点进展, 那接下来要怎么搞, 我想你看看研究, 快点搞好这个事情, 速速尝试可能成功的方向",
+              "state": "OLD_PATH_LIMITS_CONFIRMED_DIRECT_SPEAKER_CONDITIONED_ASR_PREPARED_NOT_QUALIFIED",
+              "previousStatus": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+              "previousWorkpoint": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。",
+              "modelEvidenceCommit": "9efd7e195af425450fe4680321c13fc9417ca336",
+              "remoteReadbackConfirmed": true,
+              "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-sedicow-r1",
+              "marginalProbabilityTrial": {
+                "at": "2026-11-09T09:22:43+08:00",
+                "state": "COMPLETE_FIXED_POSTERIOR_MARGINAL_TRIAL_NOT_QUALIFIED",
+                "cases": [
+                  {
+                    "meeting": "L_R003S01C02",
+                    "trueOverlapSeconds": 188.3593880675116,
+                    "metrics": {
+                      "hard": {
+                        "missedSeconds": 56.257260453541946,
+                        "caughtSeconds": 132.10212761396966,
+                        "predictedSeconds": 220.53777694702148,
+                        "falsePositiveSeconds": 88.43564933305183,
+                        "recall": 0.7013302016389102,
+                        "precision": 0.598999996475451
+                      },
+                      "soft": {
+                        "missedSeconds": 57.12549267071249,
+                        "caughtSeconds": 131.2338953967991,
+                        "predictedSeconds": 211.25958251953125,
+                        "falsePositiveSeconds": 80.02568712273214,
+                        "recall": 0.6967207567576211,
+                        "precision": 0.6211973621819799
+                      },
+                      "native": {
+                        "falsePositiveSeconds": 54.08795658877033,
+                        "predictedSeconds": 178.61999600753188,
+                        "caughtSeconds": 124.53203941876154,
+                        "missedSeconds": 63.82734864875006,
+                        "recall": 0.6611406030589083,
+                        "precision": 0.6971898007069175
+                      },
+                      "hard_union": {
+                        "falsePositiveSeconds": 109.04074903118905,
+                        "predictedSeconds": 265.30263739451766,
+                        "caughtSeconds": 156.2618883633286,
+                        "missedSeconds": 32.097499704182994,
+                        "recall": 0.8295943725795147,
+                        "precision": 0.5889948546985597
+                      },
+                      "soft_union": {
+                        "falsePositiveSeconds": 101.73997975304391,
+                        "predictedSeconds": 258.0633989293128,
+                        "caughtSeconds": 156.3234191762689,
+                        "missedSeconds": 32.03596889124269,
+                        "recall": 0.829921039668273,
+                        "precision": 0.6057558717154155
+                      }
+                    },
+                    "thirdNativeUnionNotMeasured": false
+                  },
+                  {
+                    "meeting": "S_R004S03C01",
+                    "trueOverlapSeconds": 0,
+                    "metrics": {
+                      "hard": {
+                        "falsePositiveSeconds": 0.89434814453125,
+                        "predictedSeconds": 0.89434814453125,
+                        "recall": null,
+                        "precision": 0.0
+                      },
+                      "soft": {
+                        "falsePositiveSeconds": 0.74249267578125,
+                        "predictedSeconds": 0.74249267578125,
+                        "recall": null,
+                        "precision": 0.0
+                      },
+                      "native": {
+                        "falsePositiveSeconds": 2.9499999340623617,
+                        "predictedSeconds": 2.9499999340623617,
+                        "recall": null,
+                        "precision": 0.0
+                      },
+                      "hard_union": {
+                        "falsePositiveSeconds": 3.8443480785936117,
+                        "predictedSeconds": 3.8443480785936117,
+                        "recall": null,
+                        "precision": 0.0
+                      },
+                      "soft_union": {
+                        "falsePositiveSeconds": 3.6924926098436117,
+                        "predictedSeconds": 3.6924926098436117,
+                        "recall": null,
+                        "precision": 0.0
+                      }
+                    },
+                    "thirdNativeUnionNotMeasured": false
+                  },
+                  {
+                    "meeting": "20200805_S_R001S01C01",
+                    "trueOverlapSeconds": 131.06881203400562,
+                    "metrics": {
+                      "hard": {
+                        "falsePositiveSeconds": 13.357972169654175,
+                        "predictedSeconds": 64.37910461425781,
+                        "caughtSeconds": 51.02113244460364,
+                        "missedSeconds": 80.04767958940198,
+                        "recall": 0.3892698167689677,
+                        "precision": 0.7925107494164212
+                      },
+                      "soft": {
+                        "falsePositiveSeconds": 11.030641968543222,
+                        "predictedSeconds": 56.43003845214844,
+                        "caughtSeconds": 45.399396483605216,
+                        "missedSeconds": 85.6694155504004,
+                        "recall": 0.3463783319545645,
+                        "precision": 0.8045253508395712
+                      }
+                    },
+                    "thirdNativeUnionNotMeasured": true
+                  }
+                ],
+                "newNeuralCalls": 0,
+                "weightsOrThresholdSearch": false,
+                "noAsrOrContentRecoveryClaim": true,
+                "productDefaultChanged": false,
+                "saleQualified": false
+              },
+              "restoredFireRed2": {
+                "at": "2026-11-09T10:04:17+08:00",
+                "state": "RESTORED_PREVIOUS_FIRERED2_SIX_CLIP_CONTENT_PROBE_NOT_NEW_MODEL_OR_CER_GAIN",
+                "modelHistoryCorrection": "Old20261103FireRedexperiment alreadyusedsameFireRed2AED20260226, notFireRedv1. Correctedbeforecurrentneuralprobe andexplicitlytoldOwner. Recoveredmodel/runtime/rawnewclips, notanewmodeldiscovery.",
+                "fixedEightSecondInputs": 6,
+                "successfulNeuralCallsAcrossBothSmallRuns": 6,
+                "isolatedRunFreshCalls": 5,
+                "isolatedRunInheritedCalls": 1,
+                "isolatedFiveFreshWallIncludingLoadSeconds": 93.17106040002545,
+                "rows": [
+                  {
+                    "id": "overlap-00-mixture",
+                    "text": "对这个挺普遍咱们小区其他小区也有嗯",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\small8s-r2\\probe\\overlap-00-mixture-0000.json",
+                    "sha256": "29fa9f8b75ce7e70dac6abd803f3f457a469f40bdeabf86708c7a0493aefe4fb",
+                    "controller": null,
+                    "inherited": true
+                  },
+                  {
+                    "id": "overlap-00-native-1",
+                    "text": "看看能找个什么措施交通便的其他小区也有",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\01\\probe\\overlap-00-native-1-0000.json",
+                    "sha256": "2f89efac55fb26d2e26b0cabc062ca5328a85a042593cd88b499eaac5976c0be",
+                    "controller": {
+                      "state": "COMPLETE",
+                      "phase": "probe",
+                      "meeting": null,
+                      "privatePeakBytes": 2141999104,
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+                      "newNeuralCalls": 1,
+                      "wallSeconds": 21.027642700006254
+                    },
+                    "inherited": false
+                  },
+                  {
+                    "id": "overlap-00-native-2",
+                    "text": "这个挺普遍咱们小区其他小区也有啊",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\02\\probe\\overlap-00-native-2-0000.json",
+                    "sha256": "26e84cf4a8d30d91185adf8ace8735aab139832b1b8503bc16e3520c772fcc52",
+                    "controller": {
+                      "state": "COMPLETE",
+                      "phase": "probe",
+                      "meeting": null,
+                      "privatePeakBytes": 2140925952,
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+                      "newNeuralCalls": 1,
+                      "wallSeconds": 22.05435170000419
+                    },
+                    "inherited": false
+                  },
+                  {
+                    "id": "overlap-01-mixture",
+                    "text": "这个看是不是咱们本小区的这个",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\03\\probe\\overlap-01-mixture-0000.json",
+                    "sha256": "dbef6e40c92bcb0faffb04dcb1e22f79c0073f327da6cddf093af57149fd4d65",
+                    "controller": {
+                      "state": "COMPLETE",
+                      "phase": "probe",
+                      "meeting": null,
+                      "privatePeakBytes": 2142597120,
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+                      "newNeuralCalls": 1,
+                      "wallSeconds": 17.02109080000082
+                    },
+                    "inherited": false
+                  },
+                  {
+                    "id": "overlap-01-native-2",
+                    "text": "本小利就是本小区呗",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\04\\probe\\overlap-01-native-2-0000.json",
+                    "sha256": "67e9c1ce226766d921cd8c172d0671430e744c0e90623ae8dc597ea1fa15adb1",
+                    "controller": {
+                      "state": "COMPLETE",
+                      "phase": "probe",
+                      "meeting": null,
+                      "privatePeakBytes": 2143723520,
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+                      "newNeuralCalls": 1,
+                      "wallSeconds": 17.02977429999737
+                    },
+                    "inherited": false
+                  },
+                  {
+                    "id": "overlap-01-native-3",
+                    "text": "对或者就是那些",
+                    "rawResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\05\\probe\\overlap-01-native-3-0000.json",
+                    "sha256": "6c2e69f547035e2fac9acaa78233cb01732bdabec3dfeefae8e8e48c5b7da815",
+                    "controller": {
+                      "state": "COMPLETE",
+                      "phase": "probe",
+                      "meeting": null,
+                      "privatePeakBytes": 2141028352,
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+                      "newNeuralCalls": 1,
+                      "wallSeconds": 15.021453399967868
+                    },
+                    "inherited": false
+                  }
+                ],
+                "interpretation": "TwoASRbackends show relatedregression onPS4native1 voice: original contains挺普遍while separatedFireRed2reads交通便的; oldconfiguredASRread交通便利. Also native3reads对或者就是那些asoldprobe. This supports prioritizing directtargetASR/bypassing waveformreconstruction, notdefinitive humanacousticproof orsameQwencomparison.",
+                "whyNoStrictCer": "8s cuts intersect annotatedutterances; no exact8scharacterreference wasmanufactured. No formalCER orfullmeetinggainclaimed.",
+                "memoryFailuresRetained": [
+                  "probe/state.json:30sScatterND80MiBallocation failed under2GiBjob; no completecall.",
+                  "small8s-r2/probe/state.json:first8ssuccess, nextConcat16MiBallocation failed withsamemodelretained.",
+                  "isolated8s-r3:eachof5remaining8susesfreshprocess andpassed; peakprivate2.140..2.144GB nearly2GiBcap. Loadingonceperclip isdiagnostic, notfastproductionroute."
+                ],
+                "wholeMeetingRun": false,
+                "ordinaryBestCerUnchanged": 0.055375375375375374,
+                "saleQualified": false
+              },
+              "newCandidateSource": {
+                "model": "BUT-FIT/SE-DiCoW",
+                "revision": "470fce9ffff844dd53a27751cdf6c6df9efecb39",
+                "license": "apache-2.0",
+                "noAccountGate": true,
+                "pretrainedInferenceRun": false,
+                "inputReady": {
+                  "state": "READY_FIXED_ORIGINAL_AUDIO_STNO_AND_AUTO_ENROLLMENT_NOT_ASR_RUN",
+                  "jobs": 6,
+                  "pilotNativePeople": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "mainWindowSeconds": [
+                    1560,
+                    1590
+                  ],
+                  "mainMatchesPriorFixedQwenRoot": 52,
+                  "authorSTNOFormulaMaximumDifference": 5.960464477539063e-08,
+                  "allOriginalAudioSamplesPreserved": true,
+                  "enrollmentSelectedWithoutAnswers": true,
+                  "trainedCheckpointForwardRun": false,
+                  "featureExtractorClass": "WhisperFeatureExtractor frompinnedofficialmodelprocessor files",
+                  "seconds": 11.673707899986766,
+                  "limits": {
+                    "pid": 32988,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 1073741824,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 322535424,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  },
+                  "saleQualified": false
+                },
+                "checkpointProbe": {
+                  "state": "PASS_EXACT_TINY_LOAD_GENERATION_AND_FULL_META_HEADER",
+                  "realPretrainedTensorBytesLoaded": 0,
+                  "realAudioRecognitionRun": false,
+                  "saleQualified": false,
+                  "tinyWeightRoundtrip": {
+                    "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+                    "tensorCount": 111,
+                    "dataBytesCopied": 6749636,
+                    "maximumTransferChunkBytes": 3319488,
+                    "scratchBytes": 16777216,
+                    "roundtripBufferBytes": 16777216,
+                    "roundtripCpuBufferReused": true,
+                    "fileSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+                    "deviceRoundtripSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+                    "selectedSourceBytesSha256": "6f64df711c15043e6462255e8b74a6e3127cafd67c247639d47ad5cc4e384927",
+                    "selectedDeviceBytesSha256": "6f64df711c15043e6462255e8b74a6e3127cafd67c247639d47ad5cc4e384927",
+                    "selectedPrefixes": null,
+                    "sourceTensorCount": 111,
+                    "skippedTensorCount": 0,
+                    "targetDevice": "cpu",
+                    "mmapUsed": false,
+                    "wholeCpuStateDictCreated": false,
+                    "seconds": 0.04519019997678697,
+                    "restoredTiedAliases": {
+                      "proj_out.weight": "model.decoder.embed_tokens.weight"
+                    },
+                    "strictModelStateLoaded": true,
+                    "modelParameters": 1687409,
+                    "dtypeConversion": false
+                  },
+                  "tinyForwardBitExact": true,
+                  "tinyParameterCount": 1687409,
+                  "tinyForcedGenerationApiPass": true,
+                  "generationOutputType": "Tensor",
+                  "rawGreedySequences": [
+                    [
+                      [
+                        50258,
+                        50260,
+                        50360,
+                        50365,
+                        7751,
+                        50367,
+                        50257
+                      ]
+                    ]
+                  ],
+                  "authorReconstructedIds": [
+                    [
+                      50258,
+                      50364,
+                      50365,
+                      7751,
+                      50367,
+                      50257
+                    ]
+                  ],
+                  "trainingOnlySmoothingMatrixOmitted": true,
+                  "forcedTokensOnlyForPlumbingNotQuality": true,
+                  "fullCheckpointTensorCount": 957,
+                  "fullExpectedStateKeys": 958,
+                  "fullTiedAliases": {
+                    "proj_out.weight": "model.decoder.embed_tokens.weight"
+                  },
+                  "fullParameterCount": 1101790728,
+                  "fullCheckpointHeaderBytesRead": 113112,
+                  "fullCheckpointF32Only": true,
+                  "fullModelWeightsAllocatedOnCpu": false,
+                  "transformers": "4.55.0",
+                  "torch": "2.12.0+cpu",
+                  "seconds": 18.72564339998644,
+                  "limits": {
+                    "pid": 34244,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 2147483648,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 416133120,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  }
+                },
+                "runtimeDependencies": {
+                  "state": "PASS_AMD_PYTHON_ISOLATED_IMPORTS_NO_TORCH_OR_MODEL",
+                  "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+                  "versions": {
+                    "torch": "2.11.0+rocm10.0.0",
+                    "transformers": "4.55.0",
+                    "tokenizers": "0.21.4",
+                    "huggingface-hub": "0.34.4",
+                    "safetensors": "0.8.0",
+                    "pandas": "2.3.3",
+                    "numpy": "2.4.6",
+                    "scipy": "1.17.1",
+                    "python-dateutil": "2.9.0.post0",
+                    "pytz": "2025.2",
+                    "tzdata": "2025.2",
+                    "six": "1.17.0"
+                  },
+                  "torchImported": false,
+                  "globalEnvironmentChanged": false,
+                  "isolatedRuntime": "E:\\CodexData\\Companion\\.model-cache\\sedicow-runtime-20261109",
+                  "installCommand": "Python311/python.exe -m pip install --no-deps --target E:/CodexData/Companion/.model-cache/sedicow-runtime-20261109 transformers==4.55.0 tokenizers==0.21.4 huggingface-hub==0.34.4 pandas==2.3.3 python-dateutil==2.9.0.post0 pytz==2025.2 tzdata==2025.2 six==1.17.0",
+                  "trainedInferenceRun": false
+                },
+                "gpuPreflight": {
+                  "at": "2026-11-09T10:04:18+08:00",
+                  "state": "DEFERRED_NO_CONNECTED_6800XT_NO_MODEL_IMPORTED",
+                  "newNeuralCalls": 0,
+                  "privatePeakBytes": 0,
+                  "controllerHasCpuRateJob": false,
+                  "saleQualified": false,
+                  "connectedDisplayQuery": "Microsoft PnP Utility\r\n\r\nInstance ID:                PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857bc2&0&0041\r\nDevice Description:         AMD Radeon 780M Graphics\r\nClass Name:                 Display\r\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\r\nManufacturer Name:          Advanced Micro Devices, Inc.\r\nStatus:                     Started\r\nDriver Name:                oem0.inf\r\nHardware IDs:               PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\r\n                            PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002\r\n                            PCI\\VEN_1002&DEV_15BF&CC_030000\r\n                            PCI\\VEN_1002&DEV_15BF&CC_0300\r\nCompatible IDs:             PCI\\VEN_1002&DEV_15BF&REV_C2\r\n                            PCI\\VEN_1002&DEV_15BF\r\n                            PCI\\VEN_1002&CC_030000\r\n                            PCI\\VEN_1002&CC_0300\r\n                            PCI\\VEN_1002\r\n                            PCI\\CC_030000&DT_1\r\n                            PCI\\CC_030000\r\n                            PCI\\CC_0300&DT_1\r\n                            PCI\\CC_0300\r\n\r\n",
+                  "displayQueryReturnCode": 0,
+                  "wallSeconds": 0.08005079999566078
+                }
+              },
+              "decision": {
+                "at": "2026-11-09T10:04:17+08:00",
+                "state": "OLD_PATH_LIMITS_CONFIRMED_DIRECT_SPEAKER_CONDITIONED_ASR_PREPARED_NOT_QUALIFIED",
+                "ordinaryBestStrictCerUnchanged": 0.055375375375375374,
+                "strictUnderFivePercentNotReached": true,
+                "marginalProbabilityTrial": "Threecachedrealmeetings. Firstcomplexunionfalsepositives109.040749→101.739980s, recall82.9594→82.9921%; thirdstandalone recall38.9270→34.6378%. Fixedsoftmarginal notpromoted. Stopthresholdsweeps.",
+                "restoredFireRed2": "Sameoldv2notnew. Sixfixed8sdecoded; separatorcontentregressionremains.30s/continuous8smemoryfailuresretained;isolatedprocessworksdiagnostically only.",
+                "newArchitectureCandidate": "OfficialrecommendedApache2 ungatedBUT-FIT/SE-DiCoW, hashpinned4.407GBF32weights. DirecttargetASRconditionedonourautomatic8headnativeactivitySTNOand30sself-enrollment, withoutPS4audio reconstruction. Reuseourdiarizer, excludebundlednoncommercialDiariZen. MostlyEnglishresearch;Mandarinandournoisyactivityunknown.",
+                "executionPreparation": "STNOformulaauthorcomparison maxerror5.96e-8; sixautomatic enrollment+main30sfeatures frozen beforeASR, nooraclewords/peoplecount; tinyexactload/forward/generation andfullmeta/headercheck distinctfromtrainedaccuracy. No pretrainedforwardhasrun. Final exacttinyload/forward/generation+full957tensorheadercheckpassedin18.726s, privatejobpeak416133120B. FulltrainedweightsneverloadedontoCPU.",
+                "memoryAndHardware": "CurrentPnPonly780M, no6800XT. Followupsmallprobehit actualWindowsLOWRAM beforemodelimport; failurepreserved. Signalclearednaturally, correctedtiedparameteridentityverifiedsuccessfully. No userappsclosed. NoCPUfullASRfallback.",
+                "trainedAccuracyProgressThisBatch": false,
+                "installedOrDefaultChanged": false,
+                "finalHoldoutOpened": false,
+                "saleQualified": false,
+                "next": "独显可用且实际LOWRAM解除后先跑已固定3人物同30sSE-DiCoW小对照，按每人漏话/串话/实词及原始EOS判生死，再扩全部6人(含无声人物负样本)和普通讲话保护、跨真实会议。旧PS4同Qwen六8s对照、第三整会native人物/普通ASR不取消但不压CPU。新分支若不能恢复分离丢失内容则拒绝并保留失败，再考虑有真实近讲目标的数据适配；不启动无目标自研/大训练。原字错<5%、人物DER、事实及双端实卡售卖门均不改。"
+              },
+              "ordinaryBestStrictCerUnchanged": 0.055375375375375374,
+              "newProductInstalled": false,
+              "formalQualityTargetsChanged": false,
+              "finalHoldoutOpened": false,
+              "saleQualified": false,
+              "next": "独显可用且实际LOWRAM解除后先跑已固定3人物同30sSE-DiCoW小对照，按每人漏话/串话/实词及原始EOS判生死，再扩全部6人(含无声人物负样本)和普通讲话保护、跨真实会议。旧PS4同Qwen六8s对照、第三整会native人物/普通ASR不取消但不压CPU。新分支若不能恢复分离丢失内容则拒绝并保留失败，再考虑有真实近讲目标的数据适配；不启动无目标自研/大训练。原字错<5%、人物DER、事实及双端实卡售卖门均不改。"
             }
           }
         },

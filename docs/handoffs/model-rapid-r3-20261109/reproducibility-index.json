@@ -1,0 +1,129 @@
+{
+  "sources": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_overlap_regions_20261109.py",
+      "sha256": "f9a01f05513eb4fc59905495abeac15acc2de1af405ef5de6efd725d617703fc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\test_companion_overlap_posterior_20261109.py",
+      "sha256": "48d21d09533e0c0ba31690e915aa135497e6254e3c0418ae1481adc8b72880ef"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_firered2_cpu_worker_20261109.py",
+      "sha256": "08117585b74908c604498a3f013ad94c15d6b3ec5349ed48e9aaf9367a8c2282"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_checkpoint_20261109.py",
+      "sha256": "10db6bd5440acf3f82cbad865c61d4f0aaa0220564da5ea59f1daec71ae63d9d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_conditioning_20261109.py",
+      "sha256": "3a99fc720fe1cc35ec7db11544251f5a0a49542cf0931687cc076e3375d18ae0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_decode_trace_20261109.py",
+      "sha256": "d9590d826b70412e9beb649921c099c49a8c9b65122ee69776c968652389932c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_gpu_worker_20261109.py",
+      "sha256": "225ded5ccdc7dfcb6c65a8d8147cc11cff74bd7707e904a17ce157c056f6c710"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\test_companion_sedicow_conditioning_20261109.py",
+      "sha256": "650ca21b198875d72fff0b57d53fa9ed7d9738254781a446aa65d526b2637c33"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\companion_overlap_marginal_trial_20261109.py",
+      "sha256": "e0f4828f52d53a7eebabf55c2e9959b536a4caf361497d3cfda9f7ef0b308540"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_firered2_20261109.py",
+      "sha256": "bc1135b057e4d129f41ae4392d61957c09af45db75a13325daf3dd888a618f72"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_firered2_cpu_20261109.py",
+      "sha256": "15a467ff6cf30f35c0f032710e4e101f31a9efac957900657505f0ce632545d0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_firered2_isolated_20261109.py",
+      "sha256": "995b3b93f8fa34987c629a8f2b4e9db42c08ef117e5ed743eb2ff853631576b3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_sedicow_20261109.py",
+      "sha256": "c8928767f7cccc308d9bd8a1de7ca87bc6fc5a1ded301a4ab63006c12533baa0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\download_companion_sedicow_weights_20261109.py",
+      "sha256": "979d63aecc2a8f570b5fa0a1a492209937161663517ba6f95e72a97c1f98806f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_sedicow_inputs_20261109.py",
+      "sha256": "bafc8040efcabae49d89dc4f3b99977cb3aba22d6fdb932d36f8ec7b8abf6d0f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\probe_companion_sedicow_runtime_20261109.py",
+      "sha256": "9ad13b6a3be41568b579c398716cf4872c106a37ea03388fb5ba28e039ec4373"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\probe_companion_sedicow_checkpoint_20261109.py",
+      "sha256": "f5f50527cad99f28891adf538867e3d570b71f2e2cedf24389cb063048d40f0f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\check_companion_sedicow_runtime_dependencies_20261109.py",
+      "sha256": "569236aaecd9cd8f0adfd108a3c6c4caba384a03cde4e4033c52a0c16eb56186"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_sedicow_pilot_20261109.py",
+      "sha256": "6551171dbe560097802cc285bef4c0b60c60478e3eeed97ab3331fda774c5b21"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\finalize_companion_rapid_candidates_20261109.py",
+      "sha256": "26686493555ae5e83e0956f77280eb3993d20dd3dd1383bdf92bf7ca24b1275c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\preserve_companion_rapid_candidates_20261109.py",
+      "sha256": "d8043d0adc5960158dca5ff0fe62be3ffcd458faf83ad4961eef8b88ef7d1bb5"
+    }
+  ],
+  "originalGenerationNotChanged": true,
+  "decodeTraceObserver": "Originalsampler called withidenticalargs; rawresult copiedwithoutlogitsretention. Authorreturned timestamprebuilttokens recordedseparately.",
+  "tinyLoadFix": "Firstpassingprobe showedassign=TruelostsharedParameteridentity thoughbytes/forwardequal. Restoredauthor tie_weights, rerunverifiedexactparams/logits/parametercount1687409. Beforefixresult andactualLOWRAM stop retained. Full957tensorheader(+onealias) checkedonmeta, norealCPUweightload.",
+  "safetyTests": {
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "successful": true,
+    "seconds": 0.2572575999656692,
+    "limits": {
+      "pid": 13064,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 19742720,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "qualityTest": false
+  },
+  "gpuPreflight": {
+    "at": "2026-11-09T10:04:18+08:00",
+    "state": "DEFERRED_NO_CONNECTED_6800XT_NO_MODEL_IMPORTED",
+    "newNeuralCalls": 0,
+    "privatePeakBytes": 0,
+    "controllerHasCpuRateJob": false,
+    "saleQualified": false,
+    "connectedDisplayQuery": "Microsoft PnP Utility\r\n\r\nInstance ID:                PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857bc2&0&0041\r\nDevice Description:         AMD Radeon 780M Graphics\r\nClass Name:                 Display\r\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\r\nManufacturer Name:          Advanced Micro Devices, Inc.\r\nStatus:                     Started\r\nDriver Name:                oem0.inf\r\nHardware IDs:               PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\r\n                            PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002\r\n                            PCI\\VEN_1002&DEV_15BF&CC_030000\r\n                            PCI\\VEN_1002&DEV_15BF&CC_0300\r\nCompatible IDs:             PCI\\VEN_1002&DEV_15BF&REV_C2\r\n                            PCI\\VEN_1002&DEV_15BF\r\n                            PCI\\VEN_1002&CC_030000\r\n                            PCI\\VEN_1002&CC_0300\r\n                            PCI\\VEN_1002\r\n                            PCI\\CC_030000&DT_1\r\n                            PCI\\CC_030000\r\n                            PCI\\CC_0300&DT_1\r\n                            PCI\\CC_0300\r\n\r\n",
+    "displayQueryReturnCode": 0,
+    "wallSeconds": 0.08005079999566078
+  },
+  "finalHoldoutOpened": false,
+  "newProductDelivery": false,
+  "saleQualified": false
+}

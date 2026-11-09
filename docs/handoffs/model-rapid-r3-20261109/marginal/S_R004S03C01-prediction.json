@@ -1,0 +1,24 @@
+{
+  "meeting": "S_R004S03C01",
+  "sourceSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "sourceFrames": 37233904,
+  "regions": [
+    {
+      "start": 630.1434936523438,
+      "end": 630.885986328125
+    }
+  ],
+  "metadata": {
+    "frames": 137904,
+    "sourceFrames": 37233904,
+    "cutoff": 0.5,
+    "sourceOutputsAreLogProbabilities": true,
+    "largestProbabilityNormalizationError": 3.5762786865234375e-07,
+    "windowAggregation": "uniform mean overlap marginal probability",
+    "globalSpeakerClusteringUsed": false,
+    "probabilitiesAreNotGuaranteedCalibrated": true
+  },
+  "segmentManifestSha256": "e721a8a4f1e5db5d2124ae054b52507db43c5d7ae6e6acc9fedcd6e452eddc4e",
+  "posteriorArraySha256": "a2ff926ae3f8fcd525fae39f66f9ffe7340a6dc8abe6c7651c0eeb062ae5a934",
+  "referenceRead": false
+}

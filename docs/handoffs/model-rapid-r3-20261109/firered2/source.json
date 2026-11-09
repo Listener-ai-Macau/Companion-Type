@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-09T09:25:24+08:00",
+  "model": "FireRedASR2-AED",
+  "variant": "Full AED encoder+attention decoder, maintained int8ONNX conversion; not CTC-only, not original2025FireRedAED. No bit-exact nativefloatcheckpoint claim.",
+  "upstream": "https://github.com/FireRedTeam/FireRedASR2S",
+  "upstreamModel": "https://huggingface.co/FireRedTeam/FireRedASR2-AED",
+  "conversionDocs": "https://k2-fsa.github.io/sherpa/onnx/FireRedAsr/pretrained.html",
+  "asset": {
+    "id": 362647206,
+    "name": "sherpa-onnx-fire-red-asr2-zh_en-int8-2026-02-26.tar.bz2",
+    "size": 838589068,
+    "digest": "sha256:43015b3f1643a5688b4821e8ed323473d38b798c4ec291471fe00df1bcfc4f1c",
+    "browser_download_url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-fire-red-asr2-zh_en-int8-2026-02-26.tar.bz2",
+    "created_at": "2026-02-26T06:01:24Z",
+    "updated_at": "2026-02-26T06:01:52Z"
+  },
+  "releaseId": 130628817,
+  "releaseTag": "asr-models",
+  "benchmarkEvidence": "OfficialFireRedASR2 report WenetSpeechmeeting AED4.53% versus Qwen1.7B5.88%; author benchmark notour strictmeeting result orint8equivalence. This justifies one candidate, not replacement.",
+  "officialBenchmarkUrl": "https://raw.githubusercontent.com/FireRedTeam/FireRedASR2S/main/README.md",
+  "decision": "ExistingQwenbaseline retained. Test resource/load andsameaudio only; no prompts/answerhotwords/thresholds/training. No bulkmodelsearch.",
+  "resourcePolicy": "SingleCPUmodel5percent/private2GiB, singleORTthread, actualLOWRAMstop; no otherapps modified.",
+  "saleQualified": false,
+  "historyCorrection": "Verified old20261103prepare_firered_aed_screen andresume_public61 sources use thissame20260226release. Thisisrecovery/evidencegapcomparison, notnewmodel. No oldidenticaltest rerun."
+}

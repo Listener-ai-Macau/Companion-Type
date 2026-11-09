@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-09T09:22:34+08:00",
+  "workerSha256": "e0f4828f52d53a7eebabf55c2e9959b536a4caf361497d3cfda9f7ef0b308540",
+  "sourceSha256": "f9a01f05513eb4fc59905495abeac15acc2de1af405ef5de6efd725d617703fc",
+  "policy": "Exactly one fixed alternative: normalizedpowerset7logprobabilities→sumexp mutuallyexclusivepairclasses4..6→uniform crosswindowmean→0.5binarycutoff. Sameframegeometry andsourceframes. No threshold/temperature/min-duration/padding sweep or permeeting choice. Compare both standalone and existingnativeunion on allavailable3meetings. Allresults/failures retained.",
+  "whyDifferent": "Existing method uses hard7classargmax then roundedlocalcount, discarding split probability mass. New method marginalizes the desired binary event beforedecision. This is a hypothesis about decision information loss, not a proven modelbug or officialrecommendedpipeline.",
+  "primaryReferences": [
+    "https://raw.githubusercontent.com/pyannote/pyannote-audio/main/src/pyannote/audio/utils/powerset.py",
+    "https://www.isca-archive.org/interspeech_2023/plaquet23_interspeech.pdf",
+    "https://arxiv.org/abs/2409.15885"
+  ],
+  "referenceLabelsOrTextsReadByInference": false,
+  "newModelInferenceOrWeights": false,
+  "finalHeldoutOpened": false,
+  "saleQualified": false
+}

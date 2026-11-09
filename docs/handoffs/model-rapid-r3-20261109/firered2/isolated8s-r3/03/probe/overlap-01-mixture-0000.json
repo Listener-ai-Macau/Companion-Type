@@ -1,0 +1,32 @@
+{
+  "id": "overlap-01-mixture",
+  "index": 0,
+  "sourceAudioSha256": "a45fccb179b50b0782a712b8ebebbc43b6347459e4c764bb001bd85e17c98489",
+  "startSample": 0,
+  "endSample": 128000,
+  "text": "这个看是不是咱们本小区的这个",
+  "tokens": [
+    "这",
+    "个",
+    "看",
+    "是",
+    "不",
+    "是",
+    "咱",
+    "们",
+    "本",
+    "小",
+    "区",
+    "的",
+    "这",
+    "个"
+  ],
+  "timestampsRaw": [],
+  "nativeDecoderEOSOrLimitReasonObservable": false,
+  "exactDigitalSilence": false,
+  "seconds": 9.13012180000078,
+  "loop": null,
+  "sourceSha256": "08117585b74908c604498a3f013ad94c15d6b3ec5349ed48e9aaf9367a8c2282",
+  "runProtocolSha256": "16a1d56e1c808286801be230efff9289a07d20eb893a6a1f0797ae7ee76cd339",
+  "modelReadySha256": "b1d8c3ffdef73efd75ff238671582734a81635f69ba3518e44da50103acaa8ea"
+}

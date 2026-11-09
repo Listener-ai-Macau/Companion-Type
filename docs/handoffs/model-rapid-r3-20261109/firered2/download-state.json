@@ -1,0 +1,26 @@
+{
+  "state": "COMPLETE_PINNED_FIRERED2_AED_READY",
+  "startedAt": "2026-11-09T09:25:24+08:00",
+  "bytes": 838589068,
+  "saleQualified": false,
+  "seconds": 168.58102490002057,
+  "sha256": "43015b3f1643a5688b4821e8ed323473d38b798c4ec291471fe00df1bcfc4f1c",
+  "publisherDigestVerified": true,
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\firered2-aed-20261109\\sherpa-onnx-fire-red-asr2-zh_en-int8-2026-02-26",
+  "limits": {
+    "pid": 21700,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 28114944,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

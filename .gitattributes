@@ -1,2 +1,4 @@
 /apps/windows/src-tauri/resources/licenses/texts/*.txt -text
 /apps/windows/src-tauri/resources/licenses/ThirdPartyNotices.txt text eol=lf
+
+docs/handoffs/model-rapid-r3-20261109/** -text -whitespace

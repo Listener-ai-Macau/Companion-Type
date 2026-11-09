@@ -1,0 +1,100 @@
+{
+  "state": "COMPLETE_SIX_FIXED_CLIPS_WITH_ONE_INHERITED",
+  "startedAt": "2026-11-09T09:34:37+08:00",
+  "rows": [
+    {
+      "id": "overlap-00-mixture",
+      "state": "INHERITED_SUCCESS",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\small8s-r2\\probe\\overlap-00-mixture-0000.json",
+      "sha256": "29fa9f8b75ce7e70dac6abd803f3f457a469f40bdeabf86708c7a0493aefe4fb",
+      "seconds": 10.017629500012845
+    },
+    {
+      "id": "overlap-00-native-1",
+      "state": "COMPLETE",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2141999104,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 21.027642700006254
+      },
+      "wallSeconds": 21.25459269998828,
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\01\\probe\\overlap-00-native-1-0000.json",
+      "sha256": "2f89efac55fb26d2e26b0cabc062ca5328a85a042593cd88b499eaac5976c0be"
+    },
+    {
+      "id": "overlap-00-native-2",
+      "state": "COMPLETE",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2140925952,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 22.05435170000419
+      },
+      "wallSeconds": 22.254215700028,
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\02\\probe\\overlap-00-native-2-0000.json",
+      "sha256": "26e84cf4a8d30d91185adf8ace8735aab139832b1b8503bc16e3520c772fcc52"
+    },
+    {
+      "id": "overlap-01-mixture",
+      "state": "COMPLETE",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2142597120,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 17.02109080000082
+      },
+      "wallSeconds": 17.21028399997158,
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\03\\probe\\overlap-01-mixture-0000.json",
+      "sha256": "dbef6e40c92bcb0faffb04dcb1e22f79c0073f327da6cddf093af57149fd4d65"
+    },
+    {
+      "id": "overlap-01-native-2",
+      "state": "COMPLETE",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2143723520,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 17.02977429999737
+      },
+      "wallSeconds": 17.201076099998318,
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\04\\probe\\overlap-01-native-2-0000.json",
+      "sha256": "67e9c1ce226766d921cd8c172d0671430e744c0e90623ae8dc597ea1fa15adb1"
+    },
+    {
+      "id": "overlap-01-native-3",
+      "state": "COMPLETE",
+      "controller": {
+        "state": "COMPLETE",
+        "phase": "probe",
+        "meeting": null,
+        "privatePeakBytes": 2141028352,
+        "exitCode": 0,
+        "workerState": "COMPLETE_FROZEN_FIRERED2_CPU_UNQUALIFIED",
+        "newNeuralCalls": 1,
+        "wallSeconds": 15.021453399967868
+      },
+      "wallSeconds": 15.226733599964064,
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-firered2-cpu-r1\\isolated8s-r3\\05\\probe\\overlap-01-native-3-0000.json",
+      "sha256": "6c2e69f547035e2fac9acaa78233cb01732bdabec3dfeefae8e8e48c5b7da815"
+    }
+  ],
+  "newNeuralCalls": 5,
+  "wallSeconds": 93.17106040002545
+}

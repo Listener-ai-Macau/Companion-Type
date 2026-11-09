@@ -1,0 +1,13 @@
+[1;31m2026-11-09 09:31:01.7106641 [E:onnxruntime:, sequential_executor.cc:620 onnxruntime::ExecuteKernel] Non-zero status code returned while running ScatterND node. Name:'/ScatterND_3' Status Message: D:\a\onnxruntime-libs\onnxruntime-libs\onnxruntime\core\framework\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 83886080
+[m
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_firered2_cpu_worker_20261109.py", line 47, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_firered2_cpu_worker_20261109.py", line 41, in main
+    stream=recognizer.create_stream();stream.accept_waveform(16000,value);recognizer.decode_stream(stream);result=stream.result;text=result.text;tokens=list(result.tokens);timestamps=list(result.timestamps)
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\site-packages\sherpa_onnx\offline_recognizer.py", line 1880, in decode_stream
+    self.recognizer.decode_stream(s)
+RuntimeError: Non-zero status code returned while running ScatterND node. Name:'/ScatterND_3' Status Message: D:\a\onnxruntime-libs\onnxruntime-libs\onnxruntime\core\framework\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 83886080
+
