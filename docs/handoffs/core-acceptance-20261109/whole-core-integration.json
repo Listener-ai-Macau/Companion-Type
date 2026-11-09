@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-09T17:37:14+08:00",
+  "state": "WHOLE_WINDOWS_CORE_SOURCE_INTEGRATED_BUILD_PENDING",
+  "version": "0.1.80",
+  "preservedFrontendNativeBase": "471d2d019a644849578bf09f9d781be76a535d88",
+  "matchedRecordingCoreSource": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
+  "reason": "此前前端079和实卡接收079实际来自不同源码；并入同一套冷目录/连接保持/开录恢复实现。",
+  "exactCoreFiles": [
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+      "prior": "836cd14baeb908766f9038c2589a225c018f5f9574809c29d83d5f9b6675202f",
+      "core": "109358040063913a0540d051bbfdaf1d66fc923a5e42656756a8940c359806f2",
+      "workingMatchedOwnHeadBeforeIntegration": true,
+      "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs",
+      "prior": "8a379b41d877fb9120f20d95efda1a1806c727c53e23000bd3cd79ae45761db9",
+      "core": "8929fa64750ae50aa05d5e41cca64ed53e46318367ffecc04196bac6e442fe01",
+      "workingMatchedOwnHeadBeforeIntegration": true,
+      "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_throughput.rs",
+      "prior": "a20bb96bae71e667ca4750cee8f5e642dab4ce277f96106f6c9298908d627604",
+      "core": "1335118d32d90442cde1b2d35684ecd81785209f91eb4235727e7734e0b6d897",
+      "workingMatchedOwnHeadBeforeIntegration": true,
+      "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+    }
+  ],
+  "asrMinutesAndExportsChanged": false,
+  "physicalOriginalOrPeerProcessTouched": false,
+  "previousSourceKept": true,
+  "wholeCoreCandidateQualified": false,
+  "saleQualified": false
+}

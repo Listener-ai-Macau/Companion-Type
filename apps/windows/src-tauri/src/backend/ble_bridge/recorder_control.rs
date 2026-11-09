@@ -250,9 +250,21 @@ pub(super) async fn execute_owned(
         .or_else(||journal.confirmed.as_ref().map(|c|c.request)).ok_or("原命令缺失。")?;
     let retained=retained_offline_connection(Some(device_id),start_request,expected_anchor,request).await?;
     let reused=retained.is_some();
+    #[cfg(windows)]
+    let mut control_preference=None;
     let mut device=match retained {Some(lease)=>lease.device,
         // Retrying an original capture must not rewrite its clock.
-        None=>connect_native_device_with_clock(Some(device_id),false).await?};
+        None=>{
+            let setup=connect_native_device_setup(Some(device_id),false).await?;
+            #[cfg(windows)]
+            {control_preference=setup.preference;}
+            setup.device
+        }};
+    // Keep a newly acquired link's existing temporary setup request until
+    // its recorder ACK is durable. An already live recording lease keeps
+    // its current parameters; it does not acquire a replacement request.
+    #[cfg(windows)]
+    let _control_preference=control_preference;
     // Own the subscription outside the cancellable work. On link loss both
     // an in-flight CCCD write and a confirmation wait are drained before the
     // connection closes, never left to unsubscribe a later fresh connection.

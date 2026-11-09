@@ -2573,6 +2573,22 @@ async fn connect_native_device_once(
     }).await
 }
 
+struct InitialConnectFailure {
+    error: String,
+    released_lost_owner: bool,
+}
+
+async fn initial_native_device_once(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent)
+    -> Result<NativeConnectionSetup,InitialConnectFailure> {
+    let released_lost_owner=AtomicBool::new(false);
+    super::lifecycle::PROCESS.run(async {
+        let device=scan_native_device(requested_device_id).await?;
+        connect_known_native_device_setup_observed(device,sync_clock,intent,false,Some(&released_lost_owner)).await
+    }).await.map_err(|error|InitialConnectFailure {
+        error,released_lost_owner:released_lost_owner.load(Ordering::SeqCst),
+    })
+}
+
 async fn connect_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
     connect_native_device_with_clock(requested_device_id,true).await
 }
@@ -2586,12 +2602,17 @@ async fn connect_native_device_setup(requested_device_id: Option<&str>,sync_cloc
 }
 
 async fn connect_native_device_setup_with_intent(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent) -> Result<NativeConnectionSetup,String> {
+    let acquisition_started=StdInstant::now();
+    eprintln!("BLE initial_acquisition stage=start host_unix_us={}",chrono::Utc::now().timestamp_micros());
+    let result=async {
     if let Some(device) = take_prepared_device(requested_device_id).await? {
         if sync_clock { let _ = sync_device_utc_clock(&device.peripheral).await; }
         #[cfg(windows)]
         let preference = if intent == ConnectionIntent::SealedSync {
             super::ble_throughput::request_for_sealed_sync(&device.address, device.address_type).await
-        } else { None };
+        } else {
+            super::ble_throughput::request_for_connection_setup(&device.address, device.address_type).await
+        };
         return Ok(NativeConnectionSetup { device, #[cfg(windows)] preference });
     }
     /* Windows may retain a stale GATT object for a few seconds after the
@@ -2605,20 +2626,27 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
         .unwrap_or(4)
         .max(1);
     let retry_delay = env_timeout("COMPANION_TYPE_BLE_CONNECT_RETRY_DELAY_MS", 2_000);
+    let mut next_retry_delay=retry_delay;
     let mut failures = Vec::new();
     for attempt in 1..=attempts {
         if attempt > 1 {
-            sleep(retry_delay).await;
+            sleep(next_retry_delay).await;
         }
-        match connect_native_device_once(requested_device_id,sync_clock,intent).await {
+        match initial_native_device_once(requested_device_id,sync_clock,intent).await {
             Ok(device) => {
                 eprintln!("BLE initial connect success attempt={attempt}/{attempts}");
                 return Ok(device);
             }
-            Err(error) => {
+            Err(failure) => {
+                let error=failure.error;
                 #[cfg(windows)]
                 if super::ble_pairing::is_pairing_error(&error) { return Err(error); }
-                eprintln!("BLE initial connect failed attempt={attempt}/{attempts} cause={error}");
+                // The failed attempt has already awaited native retirement.
+                // Unknown/timeout/cleanup failures keep the old delay. Never
+                // replay a recorder command; this loop acquires only a link.
+                next_retry_delay=if failure.released_lost_owner {StdDuration::ZERO} else {retry_delay};
+                eprintln!("BLE initial connect failed attempt={attempt}/{attempts} cause={error} released_lost_owner={} next_retry_delay_ms={}",
+                    failure.released_lost_owner,next_retry_delay.as_millis());
                 failures.push(format!("attempt {attempt}: {error}"));
             }
         }
@@ -2627,10 +2655,10 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
         "BLE initial connect exhausted {attempts} attempts: {}",
         failures.join(" | ")
     ))
-}
-
-async fn connect_known_native_device(device: NativeDevice) -> Result<NativeDevice, String> {
-    connect_known_native_device_with_clock(device,true).await
+    }.await;
+    eprintln!("BLE initial_acquisition stage=end elapsed_us={} success={} host_unix_us={}",
+        acquisition_started.elapsed().as_micros(),result.is_ok(),chrono::Utc::now().timestamp_micros());
+    result
 }
 
 async fn connect_known_native_device_with_clock(device: NativeDevice,sync_clock:bool) -> Result<NativeDevice,String> {
@@ -2641,8 +2669,13 @@ async fn connect_known_native_device_setup(device: NativeDevice,sync_clock:bool,
     connect_known_native_device_setup_guarded(device,sync_clock,intent,false).await
 }
 
-async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync_clock:bool,intent:ConnectionIntent,
+async fn connect_known_native_device_setup_guarded(device: NativeDevice,sync_clock:bool,intent:ConnectionIntent,
     require_existing_connection:bool) -> Result<NativeConnectionSetup,String> {
+    connect_known_native_device_setup_observed(device,sync_clock,intent,require_existing_connection,None).await
+}
+
+async fn connect_known_native_device_setup_observed(mut device: NativeDevice,sync_clock:bool,intent:ConnectionIntent,
+    require_existing_connection:bool,retry_retirement:Option<&AtomicBool>) -> Result<NativeConnectionSetup,String> {
     let device_id = device.device_id();
     let connect_timeout = env_timeout("COMPANION_TYPE_BLE_CONNECT_TIMEOUT_MS", 12_000);
     let discover_timeout = env_timeout("COMPANION_TYPE_BLE_DISCOVER_TIMEOUT_MS", 8_000);
@@ -2722,14 +2755,14 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
     }
     let discovery_begun = StdInstant::now();
     let discovery = async {
-        // Sealed receive uses characteristics and WinRT's CCCD subscription API,
-        // never raw descriptors. Keep fresh service/characteristic discovery and
-        // all normal encryption/identity checks, without enumerating every unused
-        // descriptor over ATT before the first original byte can arrive.
+        // Product callers use characteristic operations and WinRT's CCCD API,
+        // never raw descriptors. Keep fresh services/characteristics and all
+        // encryption/identity checks without unused ATT descriptor enumeration.
         #[cfg(windows)]
-        if intent == ConnectionIntent::SealedSync {
+        {
             return device.peripheral.discover_services_without_descriptors().await;
         }
+        #[cfg(not(windows))]
         device.peripheral.discover_services().await
     };
     timeout(discover_timeout, discovery)
@@ -2743,7 +2776,7 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
         .map_err(|err| format!("discover GATT services: {err}"))?;
     eprintln!("BLE connection_setup phase=gatt_discovery elapsed_ms={} scope={:?} raw_descriptors={}",
         discovery_begun.elapsed().as_millis(), intent,
-        if cfg!(windows) && intent == ConnectionIntent::SealedSync { "not_used_not_enumerated" } else { "ordinary" });
+        if cfg!(windows) { "not_used_not_enumerated" } else { "ordinary" });
     /* Best-effort clock sync is a backwards-compatible Settings extension.
      * The first 10 bytes are read back unchanged; UTC H/M/S are appended so
      * the board never has to invent a status-bar time. */
@@ -2762,7 +2795,18 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
         // A failed connect/discovery can still own WinRT GATT handles. Close
         // them before the next fresh scan instead of leaving a stale attempt
         // in parallel with the retry. This never removes the pairing bond.
-        close_native_device(&device).await;
+        let cleanup=disconnect_native_device(&device).await;
+        #[cfg(windows)]
+        // Closed may be delivered while retiring the setup preference. Its
+        // cause is not inferred here: the retry needs a closed, fully retired
+        // old owner, not proof that the radio initiated the loss. An owner-
+        // close callback alone is excluded by SessionObservation.
+        if cleanup.is_ok() && device.connection_session.as_ref().is_some_and(|session|session.released_after_observed_loss()) {
+            if let Some(retirement)=retry_retirement {retirement.store(true,Ordering::SeqCst);}
+        }
+        #[cfg(not(windows))]
+        let _=retry_retirement;
+        if let Err(error)=cleanup {eprintln!("BLE failed_setup_retirement success=false cause={error}");}
     }
     eprintln!("BLE protected_connection elapsed_ms={} success={} clock_sync={sync_clock}",
         started.elapsed().as_millis(), result.is_ok());
@@ -2878,7 +2922,9 @@ async fn reconnect_native_device(
         if attempt > 1 {
             sleep(StdDuration::from_secs(3)).await;
         }
-        match connect_known_native_device(cached.clone()).await {
+        // A resumed upload belongs to the original recording time axis.
+        // Clock sync happens on an ordinary idle connection, not recovery.
+        match connect_known_native_device_with_clock(cached.clone(),false).await {
             Ok(device) => {
                 eprintln!("BLE reconnect cached_success attempt={attempt}/{attempts}");
                 return Ok(device);
@@ -2889,7 +2935,7 @@ async fn reconnect_native_device(
                 failures.push(format!("attempt {attempt} cached: {error}"));
             }
         }
-        match connect_native_device_once(requested_device_id, true, ConnectionIntent::Normal).await {
+        match connect_native_device_once(requested_device_id, false, ConnectionIntent::Normal).await {
             Ok(device) => {
                 eprintln!("BLE reconnect scan_success attempt={attempt}/{attempts}");
                 return Ok(device.device);
@@ -2925,17 +2971,30 @@ async fn connect_native_probe(
         }
         None => None,
     };
+    // GATT discovery is only part of protected readiness. Keep its existing
+    // temporary preference through identity, idle clock and the exact catalogue,
+    // rather than reverting to idle parameters before those control exchanges.
+    #[cfg(windows)]
+    let mut setup_preference=None;
     let mut device = match retained {
         Some(lease) => lease.device,
-        None => connect_native_device_with_clock(requested_device_id, false).await?,
+        None => {
+            let setup=connect_native_device_setup(requested_device_id,false).await?;
+            #[cfg(windows)]
+            {setup_preference=setup.preference;}
+            setup.device
+        },
     };
     let mut retain_active_recording = false;
     let link = NativeLinkGuard::capture(&device);
     let result = link.run(async {
     let characteristics = device.peripheral.characteristics();
+    let phase=StdInstant::now();
     let device_status = Some(read_recording_protocol_identity(
         &device.peripheral, &characteristics,
     ).await?);
+    eprintln!("BLE protected_probe_phase name=identity elapsed_us={}",phase.elapsed().as_micros());
+    let phase=StdInstant::now();
     let imu_status =
         read_optional_status(&device.peripheral, &characteristics, IMU_STATUS_UUID, 26).await;
     let speaker_status = read_optional_status(
@@ -2945,6 +3004,7 @@ async fn connect_native_probe(
         16,
     )
     .await;
+    eprintln!("BLE protected_probe_phase name=optional_status elapsed_us={}",phase.elapsed().as_micros());
     let identity = parse_device_identity(
         device_status.as_deref(),
         imu_status.as_deref(),
@@ -2953,13 +3013,17 @@ async fn connect_native_probe(
     let actual_peer = super::recording_wire::transport::Peer::from_status(
         device_status.as_deref().expect("required device status"))?;
     require_same_recorder(expected_peer.as_ref(), actual_peer.as_ref())?;
+    let phase=StdInstant::now();
     let recorder_active=if owner.is_none() && actual_peer.as_ref().is_some_and(|p|p.pause_control) {
         recorder_control::observe_local_original(&device,actual_peer.as_ref().unwrap()).await?.1
     } else {identity.recording!=Some(false)};
+    eprintln!("BLE protected_probe_phase name=local_original elapsed_us={}",phase.elapsed().as_micros());
     // Preserve ordinary idle clock sync after ruling out a device-local
     // RUNNING/PAUSED capture. Connecting must not rewrite its original axis.
     if owner.is_none() && expected_peer.is_none() && !recorder_active {
+        let phase=StdInstant::now();
         let _=sync_device_utc_clock(&device.peripheral).await;
+        eprintln!("BLE protected_probe_phase name=idle_clock elapsed_us={}",phase.elapsed().as_micros());
     }
     if let Some(key) = owner.and_then(|owner| owner.logical_key.as_ref()) {
         if actual_peer.as_ref().is_none_or(|peer| !peer.logical_control ||
@@ -2970,6 +3034,7 @@ async fn connect_native_probe(
         device.verified_uid = identity.mcu_uid.clone();device.observed_identity = Some(identity.clone());
     }
     let segmented_recording = actual_peer.is_some();
+    let phase=StdInstant::now();
     let recordings_available = if let Some(owner) = owner {
         if identity.recording == Some(false) {
             owner.verify_closed_device(&device.device_id(), &identity)?;
@@ -3007,6 +3072,7 @@ async fn connect_native_probe(
         device.recording_peer = catalog.peer;
         catalog.entries.len()
     };
+    eprintln!("BLE protected_probe_phase name=exact_catalogue elapsed_us={}",phase.elapsed().as_micros());
     let probe = NativeConnectProbe {
         device_id: device.device_id(),
         service_count: device.service_uuids.len(),
@@ -3036,6 +3102,10 @@ async fn connect_native_probe(
         }
         remember_prepared_device(device).await?;
     }
+    #[cfg(windows)]
+    drop(setup_preference);
+    eprintln!("BLE protected_probe elapsed_us={} success={} identity_and_catalogue=required attempts_and_cleanup=included",
+        begun.elapsed().as_micros(),result.is_ok());
     if owner.is_some() {
         eprintln!(
             "offline_reconnect_native_elapsed_ms={} verified={}",

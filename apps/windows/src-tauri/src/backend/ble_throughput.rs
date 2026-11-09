@@ -59,6 +59,7 @@ impl Drop for SessionHandles {
             if self.maintain_requested {
                 let release_started = Instant::now();
                 let released = session.SetMaintainConnection(false);
+                self.observation.maintain_released.store(released.is_ok(), Ordering::SeqCst);
                 self.maintain_requested=false;
                 // A local owner retirement is distinct from Windows accepting
                 // its property write, and neither proves radio disconnection.
@@ -81,6 +82,8 @@ struct SessionObservation {
     started: Instant,
     active_seen: AtomicBool,
     owner_closed: AtomicBool,
+    active_link_lost: AtomicBool,
+    maintain_released: AtomicBool,
     // Sticky for this actual session, even if Windows later reconnects its
     // device object. Old notification/ACK state cannot cross that boundary.
     terminal: tokio::sync::watch::Sender<Option<String>>,
@@ -89,7 +92,8 @@ impl SessionObservation {
     fn new() -> Self {
         let (terminal, _) = tokio::sync::watch::channel(None);
         Self { started: Instant::now(), active_seen: AtomicBool::new(false),
-            owner_closed: AtomicBool::new(false), terminal }
+            owner_closed: AtomicBool::new(false), active_link_lost: AtomicBool::new(false),
+            maintain_released: AtomicBool::new(false), terminal }
     }
 
     fn error(&self) -> Option<String> { self.terminal.borrow().clone() }
@@ -118,6 +122,10 @@ impl SessionObservation {
             && status == Some(GattSessionStatus::Closed)) { return; }
         self.terminal.send_if_modified(|state| {
             if state.is_some() { return false; }
+            // Only the native Active -> Closed event qualifies. An initial
+            // error, an intentional close, or a late cleanup callback does not.
+            self.active_link_lost.store(self.active_seen.load(Ordering::SeqCst)
+                && status == Some(GattSessionStatus::Closed), Ordering::SeqCst);
             let detail=format!("BLE session disconnected: address={address:012X} status={status:?} error={error:?}; original recording retained; reconnect with a fresh verified session");
             eprintln!("BLE session_trace address={address:012X} elapsed_us={} stage=first_loss was_active={} status={status:?} error={error:?} owner_cleanup=false", self.started.elapsed().as_micros(),self.active_seen.load(Ordering::SeqCst));
             *state=Some(detail);
@@ -176,6 +184,16 @@ impl ConnectionSession {
     pub(super) fn close(&self) {
         let handles = self.handles.lock().unwrap_or_else(|error| error.into_inner()).take();
         drop(handles);
+    }
+
+    /// Local retirement proof only. Peripheral GATT cleanup must also finish
+    /// successfully before initial acquisition can omit its stale-owner delay.
+    /// This does not claim that the controller or the air link is already idle.
+    pub(super) fn released_after_observed_loss(&self) -> bool {
+        self.observation.active_link_lost.load(Ordering::SeqCst)
+            && self.observation.owner_closed.load(Ordering::SeqCst)
+            && self.observation.maintain_released.load(Ordering::SeqCst)
+            && self.handles.lock().unwrap_or_else(|error| error.into_inner()).is_none()
     }
 
     /// Read the owned session; waiting creates no extra connection handle,
@@ -380,8 +398,8 @@ pub(super) async fn request_for_sealed_sync(
 }
 
 /// Pairing must finish before this is called. Hold the request through the
-/// uncached service/descriptor enumeration and clock sync, then drop it before
-/// returning the normal idle/user connection. Errors and cancelled futures
+/// uncached service/characteristic enumeration and complete protected probe,
+/// then drop it before returning the normal idle/user connection. Errors and cancelled futures
 /// release it through the same guard as recording receive.
 pub(super) async fn request_for_connection_setup(
     address: &str, address_type: Option<AddressType>,
@@ -534,6 +552,41 @@ mod session_loss_tests {
     use sha2::{Digest, Sha256};
 
     const ADDRESS:u64=0xc892ffdd3bca;
+
+    #[test]
+    fn active_loss_requires_completed_owner_retirement_for_immediate_reacquisition() {
+        let observation=Arc::new(SessionObservation::new());
+        let owner=ConnectionSession{handles:Mutex::new(None),observation:observation.clone()};
+        observation.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        observation.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        assert!(!owner.released_after_observed_loss(),"a loss event is not cleanup completion");
+        observation.close_owner();
+        assert!(!owner.released_after_observed_loss(),"a missing/failed MaintainConnection release retains the delay");
+        // At the WinRT boundary this bit is written only for a successful
+        // SetMaintainConnection(false), after the callback has been detached.
+        observation.maintain_released.store(true,Ordering::SeqCst);
+        assert!(owner.released_after_observed_loss());
+        observation.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        assert!(owner.released_after_observed_loss(),"late old callbacks cannot revive a retired owner");
+    }
+
+    #[test]
+    fn initial_errors_and_intentional_cleanup_never_qualify_as_active_link_loss() {
+        for initial_error in [false,true] {
+            let observation=Arc::new(SessionObservation::new());
+            let owner=ConnectionSession{handles:Mutex::new(None),observation:observation.clone()};
+            if initial_error {
+                observation.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::OtherError));
+            } else {
+                observation.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+                observation.close_owner();
+                observation.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+            }
+            observation.close_owner();
+            observation.maintain_released.store(true,Ordering::SeqCst);
+            assert!(!owner.released_after_observed_loss());
+        }
+    }
 
     #[tokio::test]
     async fn r53_session_loss_interrupts_control_wait_and_preserves_exact_durable_command() {
