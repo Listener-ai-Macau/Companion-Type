@@ -262917,7 +262917,7 @@
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "沿同一Windows完整会后目的推进实际原音回听、原音/MP3交付、AI整理及事实核对；相关阻断收敛后集中构建候选，再Android与录音卡联调。不重测已过且未受影响数据链，不再使用7-Zip空粘贴入口。",
+          "next": "同一批Windows079远端正常构建、包内核对和受影响普通界面确认；公开AI事实审阅链已实际跑通，保留原ASR错误/人工修订边界。随后Android/录音卡按原待办联调，不重跑未受影响旧检查。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -262966,7 +262966,7 @@
           },
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
-            "state": "REAL_IMPORT_AND_WHOLE_AUDIO_DECODING_PROVEN_NATIVE_SAVE_PATH_COMMIT_UNDER_RECHECK",
+            "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
             "nativeVersion": "0.1.78",
             "reusePassedNativeSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
             "sourceMeeting": "S_R004S03C01",
@@ -262992,21 +262992,50 @@
               2319.119
             ],
             "physicalListeningQualified": false,
-            "currentVerificationSource": "38f6205660fe384333ad671b05431964dec74954",
+            "currentVerificationSource": "af03118156e59a17ad48bae3e54f573c690108be",
             "retainedFailures": [
               "42581280155 private draft access403 before native app",
               "42581986300 ambiguous Open buttons; now bind primary ID1",
               "42582723892 requested Save filename not reflected in returned file; explicit field commit/readback/output verification added"
-            ]
+            ],
+            "acceptedRun": 42587058258,
+            "savedOriginalByteIdentical": true,
+            "deliveredMp3ReimportedAndDecoded": true,
+            "ordinaryShellPasteQualified": true
           },
           "groupedMeetingUiSource20261109": {
-            "state": "SOURCE_PREPARED_REMOTE_CHECK_PENDING_NOT_PACKAGED",
+            "state": "GROUPED_UI_SOURCE_CHECKS_PASSED_NOT_YET_PACKAGED",
             "changes": [
               "原音导出进入会议顶部工具栏，打开原有格式/保存/分享区域",
               "无最终文字时隐藏无法使用的会议AI工作区，给出简短下一步",
               "Questions按会中问题展示，不擅自宣称尚未解决；显式人工待解标题保留"
             ],
-            "automaticUnresolvedQuestionResolutionStillOpen": true
+            "automaticUnresolvedQuestionResolutionStillOpen": true,
+            "sourceCommit": "5e8909e514866d6b513bf436636495f273eba77b",
+            "acceptedRun": 42584662552,
+            "nativePackaged": false
+          },
+          "groupedCandidate079": {
+            "at": "2026-11-09T16:41:52+08:00",
+            "state": "GROUPED_WINDOWS079_SOURCE_FROZEN_REMOTE_BUILD_PENDING",
+            "version": "0.1.79",
+            "purpose": "同一场会议从原音、转写修订、AI整理到所选内容/录音交付，集中收敛Windows候选。",
+            "changes": [
+              "会议顶部导出定位到所选内容面板",
+              "原音导出进入会议顶部工具栏",
+              "无最终文字时明确先转文字，不展示不可用AI工作区",
+              "会中问题不擅自标成未解决"
+            ],
+            "affectedUiSourcePassedRun": 42584662552,
+            "realAudioFlowPassedRun": 42587058258,
+            "nativeRecompiled": false,
+            "installed": false,
+            "wholeCoreCandidateQualified": false,
+            "saleQualified": false,
+            "localHeavyBuild": false,
+            "modelsRun": false,
+            "phoneAccessed": false,
+            "boardAccessed": false
           }
         }
       },

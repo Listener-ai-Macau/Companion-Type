@@ -2,6 +2,7 @@
 from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,traceback,tomllib,time
+from check_type_build_target import inspect
 
 S=Path(__file__).resolve().parents[1]
 C=S/'ci-output';C.mkdir(exist_ok=False)
@@ -51,6 +52,9 @@ try:
  names=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party','package.json','package-lock.json','tsconfig.base.json']).splitlines()
  record['sourceFiles']=[{'path':name,'sha256':sha(S/name)} for name in names if (S/name).is_file()]
  before_manifest=(N/'Cargo.toml').read_bytes()
+ preflight=inspect(T,S,source_dir=S)
+ (C/'native-target-preflight.json').write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+ assert preflight['result']=='TARGET_IDLE_AT_OBSERVATION',preflight['result']
  record['state']='BUILDING_NORMAL_RELEASE';save()
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
  pair=C/'windows-bin';pair.mkdir()
