@@ -1,0 +1,12 @@
+{
+  "state": "ACTUAL_SAME_IMPORTED_AUDIO_AND_PRODUCT_ASR_AI_LINEAGE",
+  "sourceAsrRun": 42592563926,
+  "sourceAsrTestCommit": "9bf2cb5b02ea97983f591e47a8ce98fac58401c9",
+  "actualAi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\whole-805278e2b7214018a4ddef74e361a9e8",
+  "sameSessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
+  "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "rawTranscriptSha256": "ecada0e12b2cc0ed74fd6c56c1ce17841586d528727034ba76c9dc27ec40d2a7",
+  "fixtureSha256": "a6b5a008f1d0a2fc3f3cfb62b02c8f2e3a2fda68109ad49afdf925546f935db8",
+  "manualCorrectionsForThisFixture": false,
+  "newInferenceRequiredFor080": false
+}
