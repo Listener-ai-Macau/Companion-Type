@@ -141911,10 +141911,14 @@
           }
         },
         "latestWindowsInstalled": {
-          "version": "0.1.68",
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\installation.json",
+          "version": "0.1.79",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate079\\installation.json",
           "existingFilesByteIdentical": 245,
-          "source": "571c577fbf546a1e157f5b2cf46e68cc45955440"
+          "source": "471d2d019a644849578bf09f9d781be76a535d88",
+          "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+          "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+          "actualGroupedRuntimeRun": 42589879725,
+          "wholeProductQualified": false
         },
         "windows067Issues": {
           "at": "2026-11-06T17:31:02+08:00",
@@ -143279,7 +143283,15 @@
             "thirdPartyMessengerAndSendQualified": false,
             "systemShareFailureStillOpen": true
           }
-        }
+        },
+        "previousWindowsInstalledObservations": [
+          {
+            "version": "0.1.68",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\installation.json",
+            "existingFilesByteIdentical": 245,
+            "source": "571c577fbf546a1e157f5b2cf46e68cc45955440"
+          }
+        ]
       },
       "ownerAndroidMaterialExports054": {
         "at": "2026-11-06T10:24:17+08:00",
@@ -262947,7 +262959,7 @@
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
           "lastOutcome": {
-            "at": "2026-11-09T17:05:55+08:00",
+            "at": "2026-11-09T17:08:34+08:00",
             "state": "WINDOWS079_GROUPED_CANDIDATE_INSTALLED_DATA_PRESERVED",
             "version": "0.1.79",
             "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
@@ -263225,7 +263237,7 @@
             }
           ],
           "lastWindowsGroupedOutcome": {
-            "at": "2026-11-09T17:05:55+08:00",
+            "at": "2026-11-09T17:08:34+08:00",
             "state": "WINDOWS079_GROUPED_CANDIDATE_INSTALLED_DATA_PRESERVED",
             "version": "0.1.79",
             "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
@@ -263295,7 +263307,7 @@
           },
           "latestOwnerContinuation": {
             "quote": "继续集中推进",
-            "at": "2026-11-09T17:05:55+08:00",
+            "at": "2026-11-09T17:08:34+08:00",
             "decision": "完成同一Windows会议交付链及079集中候选，承接原1–2周工程预算，不拆新任务树。",
             "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。"
           }

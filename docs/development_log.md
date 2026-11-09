@@ -1,5 +1,5 @@
 <!-- frontend-windows078-current -->
-Windows当前（2026-11-09T17:05:55+08:00）：0.1.79集中候选已安装，原资料hash一致；真实公开原音/MP3及校对后AI文档的受影响原生界面和Shell实际交付通过。旧系统分享/聊天附件/双端板卡/模型/售卖门仍开放。沿原核心批次ownerCoreAcceptanceCandidate20261109继续。
+Windows当前（2026-11-09T17:08:34+08:00）：0.1.79集中候选已安装，原资料hash一致；真实公开原音/MP3及校对后AI文档的受影响原生界面和Shell实际交付通过。旧系统分享/聊天附件/双端板卡/模型/售卖门仍开放。沿原核心批次ownerCoreAcceptanceCandidate20261109继续。
 <!-- /frontend-windows078-current -->
 
 ## 2026-11-09T11:02:52+08:00 — Companion当前交付收敛：电脑重启后原370收全，继续开录准备定位

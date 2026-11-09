@@ -28,6 +28,10 @@ b['lastOutcome']=record
 b.update(state='CORE_ACCEPTANCE_BATCH_IN_PROGRESS_WINDOWS079_GROUPED_RUNTIME_PROVEN',lastWindowsGroupedOutcome=record)
 b['groupedCandidate079'].update(state=record['state'],sourceCommit=v['sourceCommit'],runtimeRun=args.run,installed=installed,normalReleaseBuildPassed=True,msiPayloadAndUpgradeVerified=True,actualRuntimePassed=True,remoteDraftProtected=True)
 b['groupedMeetingUiSource20261109'].update(state='GROUPED_UI_PACKAGED_AND_ACTUAL_RUNTIME_PASSED',nativePackaged=True,candidateVersion='0.1.79',runtimeRun=args.run,installed=installed)
+if installed:
+ closure=f['ownerDevicePhoneClosure055'];previous=closure.get('latestWindowsInstalled')
+ if previous and previous.get('version')!='0.1.79':closure.setdefault('previousWindowsInstalledObservations',[]).append(previous)
+ closure['latestWindowsInstalled']={'version':'0.1.79','receipt':str(O/'installation.json'),'existingFilesByteIdentical':install['existingDataFiles'],'source':v['sourceCommit'],'exeSha256':install['installedExeSha256'],'dllSha256':install['installedDllSha256'],'actualGroupedRuntimeRun':args.run,'wholeProductQualified':False}
 b['currentCheckpoint']['windows']='0.1.79 '+('installed; existing data hashes unchanged' if installed else 'inspected protected candidate; installation pending')+'; source '+v['sourceCommit']+'; normal release MSI and grouped runtime passed'
 b['currentCheckpoint']['windowsRemaining']='旧WinRT系统分享与聊天应用附件、实体实听保留；下一批Windows阻断/双端/录音卡按原任务集中完成，不能写只剩模型。'
 b['next']='先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。'

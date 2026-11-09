@@ -1,6 +1,6 @@
 # Companion 核心候选验收入口
 
-更新：2026-11-09T17:05:55+08:00。当前这份是Windows侧集中候选0.1.79，已后台升级，原有应用资料逐文件校验一致。整体核心候选仍在推进，不能作为正式开售合格证明。
+更新：2026-11-09T17:08:34+08:00。当前这份是Windows侧集中候选0.1.79，已后台升级，原有应用资料逐文件校验一致。整体核心候选仍在推进，不能作为正式开售合格证明。
 
 [Windows 0.1.79 候选安装包](C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-core-acceptance/candidate079/Companion-Windows-0.1.79-candidate.msi) · [私有草稿备份](https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab)
 
