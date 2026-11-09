@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-09T11:22:19+08:00",
+  "officialDescription": "https://www.openslr.org/119/",
+  "url": "https://speech-lab-share-data.oss-cn-shanghai.aliyuncs.com/AliMeeting/openlr/Eval_Ali.tar.gz",
+  "method": "HEAD",
+  "status": 200,
+  "contentLength": 3673718355,
+  "etag": "\"FEA425CB59FEE8781CD152B32022C964-351\"",
+  "licenseAsPublished": "CC BY-SA 4.0",
+  "split": "Eval",
+  "purpose": "Exposed diagnostic pairing only; NOT training or untouched final evaluation.",
+  "lastModified": "Mon, 14 Feb 2022 07:18:21 GMT",
+  "limits": {
+    "pid": 28956,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 23711744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

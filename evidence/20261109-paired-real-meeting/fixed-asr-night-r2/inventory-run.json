@@ -1,0 +1,17 @@
+{
+  "state": "COMPLETE_INVENTORY_CONTROL_REVIEW_REQUIRED",
+  "at": "2026-11-09T23:55:10+08:00",
+  "pid": 21412,
+  "workerSourceSha256": "c7bdf59e86e26833450cf36ee7c8a3135d7ec0529eb93fb35001fb84f7e2b402",
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "priorOwnedProcessSeconds": 0.0,
+  "actualRecoveryObservation": null,
+  "exitCode": 0,
+  "wholeProcessFamilySeconds": 8.376521699996374,
+  "accumulatedOwnedProcessSeconds": 8.376521699996374,
+  "sampledPrivatePeakBytes": 344641536,
+  "sampledRssPeakBytes": 425033728,
+  "finishedAt": "2026-11-09T23:55:18+08:00"
+}

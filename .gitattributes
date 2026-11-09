@@ -73,3 +73,13 @@ src/paired_meeting_pcm16_20261109.py -text
 src/audit_alimeeting_paired_session_20261109.py -text
 
 src/prepare_alimeeting_fixed_asr_20261109.py -text
+
+evidence/20261109-paired-real-meeting/** -text -whitespace
+
+src/run_paired_fixed_asr_20261109.py -text
+
+src/*paired_product_asr*20261110.py -text
+
+src/audit_*20261110.py -text
+
+src/CompanionPairedPhone*20261109.java -text

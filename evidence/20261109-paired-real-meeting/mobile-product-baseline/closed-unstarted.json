@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-09T23:57:24+08:00",
+  "state": "PHONE_COMPARATOR_NOT_STARTED_INVENTORY_CLAIM_INVALIDATED",
+  "invalidates": "prepared.json",
+  "cause": "app_process returned zero with empty stdout and no state.json; not evidence of Java/API/model startup",
+  "instrumentationFallback": "INSTALL_FAILED_USER_RESTRICTED: Install canceled by user",
+  "instrumentationFallbackInstalled": false,
+  "neuralCalls": 0,
+  "modelQualityMeasured": false,
+  "productApkChanged": false,
+  "mainDisplayUsed": false,
+  "originalLibraryAccessed": false,
+  "noFurtherInstallRetry": true,
+  "ownPublicStagingRemoved": true
+}

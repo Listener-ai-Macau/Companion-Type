@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-10T00:15:52+08:00",
+  "state": "SEVEN_DECLARED_SAVED_MINUTES_QUANTITY_CHECKS_REVIEWED",
+  "sample": "S_R004S03C01",
+  "actualSavedMinutesSha256": "bce3fbbd3e27624141f036fe00b2de0c05e5369ac382708b700755c0033e5343",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "checks": [
+    {
+      "id": "stack-limit",
+      "sourceReference": [
+        {
+          "start": 426.63629,
+          "end": 438.92534,
+          "speaker": "004-F",
+          "text": "都有冻的那个冰凌碴儿，在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢嗯<sil>堆放呢这个层次上也有要求，不能超过四层。"
+        }
+      ],
+      "savedSummary": "果蔬区负责人介绍：天冷后超市买菜人流量较大，因为超市环境暖和、比较安全，疫情下大家戴口罩、防护措施做得比较好，这段时间销售还可以；同时提出陈列标准要求：菜品经加工清洁后陈列、不能带泥、去掉腐烂菜叶、同分类商品摆放在一起、有层次和颜色搭配、堆放不超过四层、冷鲜产品放冷柜、叶菜每天喷水、严禁蘸水的菜远离喷雾口、蔬菜销售期限为一天，每天下午五点出特价菜清仓，例如一块钱一斤的菜到下午五点后八毛或五毛清仓。",
+      "review": "Source constraint retained; not a new task or universal retail rule.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "clearance-time",
+      "sourceReference": [
+        {
+          "start": 504.41828,
+          "end": 518.01222,
+          "speaker": "004-F",
+          "text": "是一天。嗯<sil>比如说今天我们这个菜没有卖出去，比如说这个叶子菜菜以<->这个绿叶儿菜。今天我们没有卖完，到到每天下午的五点呢，我们就要出一些"
+        }
+      ],
+      "savedSummary": "果蔬区负责人介绍：天冷后超市买菜人流量较大，因为超市环境暖和、比较安全，疫情下大家戴口罩、防护措施做得比较好，这段时间销售还可以；同时提出陈列标准要求：菜品经加工清洁后陈列、不能带泥、去掉腐烂菜叶、同分类商品摆放在一起、有层次和颜色搭配、堆放不超过四层、冷鲜产品放冷柜、叶菜每天喷水、严禁蘸水的菜远离喷雾口、蔬菜销售期限为一天，每天下午五点出特价菜清仓，例如一块钱一斤的菜到下午五点后八毛或五毛清仓。",
+      "review": "Time retained as the speaker described.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "delivery-distance-ambiguity",
+      "sourceReference": [
+        {
+          "start": 710.94396,
+          "end": 721.86812,
+          "speaker": "004-F",
+          "text": "完了以后呢，我们就是附近三十公里或者是二十公里以内呢免费呃，给<sil>这个把这个菜呢给他送到家里去，呃，方便他去。"
+        }
+      ],
+      "savedSummary": "果蔬区负责人还介绍：每天有精包装菜品服务，价格比普通菜稍高，针对没时间洗菜摘菜的年轻人群；购买蔬菜满三十元、附近二十公里或三十公里以内免费送到家（转写中先后出现三十公里和二十公里，待核对）；每天有一到三款特价菜低于市场价摆放在超市门口，例如市场土豆一块钱、超市卖六毛钱一斤，起到捆绑式销售作用。",
+      "review": "Both conflicting distances remain explicit; no single confirmed service radius.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "customer-age",
+      "sourceReference": [
+        {
+          "start": 965.72189,
+          "end": 976.77603,
+          "speaker": "003-F",
+          "text": "人群分类就是呃一方面就是这个学校的在学在校学生嗯就是年纪吧，就是十八到二十六左右。嗯<sil>。"
+        }
+      ],
+      "savedSummary": "蛋糕店负责人提出销售方案：店面装修要整洁干净，分前厅和厨房，前厅设糕点销售区，装修以淡黄、粉红、淡紫色为主营造温馨感，粘贴制作蛋糕过程照片宣传；不同种类蛋糕打折优惠、节日期间买大蛋糕送小蛋糕、办理积分卡；人群分类为18到26岁在校学生（经济来源来自父母，销售不太贵的商品）、小情侣（DIY蛋糕）、带孩子的家长（提供游玩场所并推销产品）；产品要健康，多进有机蔬菜蛋糕；周六日搞促销活动，如全场七折、购买返二十元代金券（限下次使用）、买二赠一、曲奇饼干专场/糕点专场/面包专场交叉进行、充值满三百送五十或满五百送一百、烘焙DIY活动、满一百加八块八或九块九换购商品、老顾客积分卡个位数抹零、满二百以上十位数抹零。",
+      "review": "Numerical range retained; this remains a proposed audience description.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "membership-offer",
+      "sourceReference": [
+        {
+          "start": 1269.05207,
+          "end": 1283.99091,
+          "speaker": "003-F",
+          "text": "然后就是这种我们会员儿卡的话，可以做一个满三百送五十的活动，或者买满五百送一百的活动，就是类似这种充的越多就送的。越多就会吸引很多人过来办这个卡。<#>"
+        }
+      ],
+      "savedSummary": "蛋糕店负责人提出销售方案：店面装修要整洁干净，分前厅和厨房，前厅设糕点销售区，装修以淡黄、粉红、淡紫色为主营造温馨感，粘贴制作蛋糕过程照片宣传；不同种类蛋糕打折优惠、节日期间买大蛋糕送小蛋糕、办理积分卡；人群分类为18到26岁在校学生（经济来源来自父母，销售不太贵的商品）、小情侣（DIY蛋糕）、带孩子的家长（提供游玩场所并推销产品）；产品要健康，多进有机蔬菜蛋糕；周六日搞促销活动，如全场七折、购买返二十元代金券（限下次使用）、买二赠一、曲奇饼干专场/糕点专场/面包专场交叉进行、充值满三百送五十或满五百送一百、烘焙DIY活动、满一百加八块八或九块九换购商品、老顾客积分卡个位数抹零、满二百以上十位数抹零。",
+      "review": "Both amounts retained in a proposed promotion.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "exchange-offer",
+      "sourceReference": [
+        {
+          "start": 1325.497,
+          "end": 1336.92111,
+          "speaker": "003-F",
+          "text": "嗯八块八九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品，嗯，也是非常。不错的。"
+        }
+      ],
+      "savedSummary": "蛋糕店负责人提出销售方案：店面装修要整洁干净，分前厅和厨房，前厅设糕点销售区，装修以淡黄、粉红、淡紫色为主营造温馨感，粘贴制作蛋糕过程照片宣传；不同种类蛋糕打折优惠、节日期间买大蛋糕送小蛋糕、办理积分卡；人群分类为18到26岁在校学生（经济来源来自父母，销售不太贵的商品）、小情侣（DIY蛋糕）、带孩子的家长（提供游玩场所并推销产品）；产品要健康，多进有机蔬菜蛋糕；周六日搞促销活动，如全场七折、购买返二十元代金券（限下次使用）、买二赠一、曲奇饼干专场/糕点专场/面包专场交叉进行、充值满三百送五十或满五百送一百、烘焙DIY活动、满一百加八块八或九块九换购商品、老顾客积分卡个位数抹零、满二百以上十位数抹零。",
+      "review": "The alternative amounts are preserved rather than merged.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    },
+    {
+      "id": "speaker-stated-shelf-life",
+      "sourceReference": [
+        {
+          "start": 1943.96676,
+          "end": 1955.20589,
+          "speaker": "002-F",
+          "text": "可以做一些这样的活动。然后奶制品呢它的这个保质期呢一般是在四十到四十五天。而酸奶的这个保质期呢，它是相较于短的"
+        }
+      ],
+      "savedSummary": "奶制品活动与保质期：可推出整箱奶附带杯子、碗之类的活动；奶制品保质期一般四十到四十五天，酸奶较短约二十来天，零售酸奶可买一赠一或买二赠一，也可准备小杯子免费品尝，以更好销售保质期短的酸奶。",
+      "review": "Speaker claim retained with general qualifier; this is not independent product safety advice.",
+      "referenceCompared": true,
+      "originalAudioAudited": false,
+      "samplingDeclared": true
+    }
+  ],
+  "structuredOutputObservations": {
+    "actions": 21,
+    "actionsWithExplicitPendingPrefix": 20,
+    "decisions": 5,
+    "decisionsWithExplicitPendingPrefix": 5,
+    "explicitOwners": 0,
+    "explicitDueDates": 0
+  },
+  "engineerReviewOnly": true,
+  "newCustomerEvaluation": false,
+  "wholeMeetingFactCoverageQualified": false,
+  "quantifiedNumericFactErrorRate": null,
+  "notAcceptanceScore": "Selected seven existing claims, not a prespecified exhaustive or random fact sample; no general fact-accuracy percentage or sale pass follows. Pending-labelled decisions/actions are not verified commitments.",
+  "cloudOrInferenceCalls": 0,
+  "phoneOrBoardAccess": false
+}

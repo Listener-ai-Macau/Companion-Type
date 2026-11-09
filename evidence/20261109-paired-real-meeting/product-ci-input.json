@@ -1,0 +1,58 @@
+{
+  "at": "2026-11-10T00:08:23+08:00",
+  "archive": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\product-ci\\Companion-public-R8001-M8004-five-inputs-20261110.zip",
+  "name": "Companion-public-R8001-M8004-five-inputs-20261110.zip",
+  "sha256": "45ac7c250fc05bad5140c0f39475c92b164fb32f880ff9e60971a806ca6a1ab1",
+  "bytes": 248293010,
+  "cases": [
+    {
+      "id": "near-N_SPK8013",
+      "wav": "near-N_SPK8013.wav",
+      "sha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "seconds": 1551.82
+    },
+    {
+      "id": "near-N_SPK8014",
+      "wav": "near-N_SPK8014.wav",
+      "sha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "seconds": 1551.82
+    },
+    {
+      "id": "near-N_SPK8015",
+      "wav": "near-N_SPK8015.wav",
+      "sha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+      "seconds": 1551.82
+    },
+    {
+      "id": "near-N_SPK8016",
+      "wav": "near-N_SPK8016.wav",
+      "sha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+      "seconds": 1551.82
+    },
+    {
+      "id": "far-mic0-common-span",
+      "wav": "far-mic0-common-span.wav",
+      "sha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+      "seconds": 1551.82
+    }
+  ],
+  "referencesIncluded": false,
+  "privateContentsIncluded": false,
+  "sourceAudioChanged": false,
+  "limits": {
+    "pid": 35612,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 167772160,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10620928,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

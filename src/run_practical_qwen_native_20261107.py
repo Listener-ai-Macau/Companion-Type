@@ -59,7 +59,9 @@ if a.phase=='short':
 state={'state':'PREPARING_OFFICIAL_NATIVE_'+a.phase.upper(),'at':now(),'pid':os.getpid(),'workerSourceSha256':sha(worker),'automaticRetries':0,'referencePassedToWorker':False,'qualityQualified':False,'priorOwnedProcessSeconds':prior_seconds,'actualRecoveryObservation':recovery}
 atomic_json(target,state);pressure=SystemRamPressure();child=None;process=None
 try:
-    assert not pressure.low(),'Actual Windows low-memory signal before native control'
+    if pressure.low():
+        state.update(state='STOPPED_OWN_NATIVE_CONTROL',reason='actual_low_ram_before_worker',actualWindowsLowRam=True,modelWorkerStarted=False)
+        raise RuntimeError('Actual Windows low-memory signal before native control')
     start=time.perf_counter();peak=0;rss_peak=0
     with (C/(a.phase+'-worker.log')).open('xb') as log:
         cmd=[PY,str(worker),'--control',str(C)]+(['--inventory-only'] if a.phase=='inventory' else [])
