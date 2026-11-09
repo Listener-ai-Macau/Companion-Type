@@ -46,7 +46,8 @@ def main():
    assert len(matches)==1,('Filename field not unique',controls)
    nodes[matches[0]].GetCurrentPattern(UIA.UIA_ValuePatternId).QueryInterface(UIA.IUIAutomationValuePattern).SetValue(str(target))
   labels={'open':{'Open','Open(O)','打开','打开(O)'},'save':{'Save','Save(S)','保存','保存(S)'},'cancel':{'Cancel','取消'}}[action]
-  matches=[i for i,c in enumerate(controls) if c['type']==UIA.UIA_ButtonControlTypeId and c['name'] in labels]
+  primary_id='2' if action=='cancel' else '1'
+  matches=[i for i,c in enumerate(controls) if c['type']==UIA.UIA_ButtonControlTypeId and c['id']==primary_id and c['name'] in labels]
   assert len(matches)==1,('Picker button not unique',controls)
   node=nodes[matches[0]];assert node.CurrentIsEnabled
   node.GetCurrentPattern(UIA.UIA_InvokePatternId).QueryInterface(UIA.IUIAutomationInvokePattern).Invoke()
