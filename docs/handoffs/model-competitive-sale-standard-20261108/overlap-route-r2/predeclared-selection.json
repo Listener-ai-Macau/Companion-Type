@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-09T08:51:52+08:00",
+  "cases": [
+    {
+      "meeting": "S_R004S03C01",
+      "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\automatic-cross-meeting-r2\\S_R004S03C01",
+      "profiles": 15,
+      "profileCounts": {
+        "0": 3,
+        "2": 3,
+        "4": 3,
+        "3": 3,
+        "1": 3
+      },
+      "queries": 67,
+      "queryCounts": {
+        "0": 16,
+        "2": 12,
+        "4": 16,
+        "3": 18,
+        "1": 5
+      }
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\automatic-cross-meeting-r2\\L_R003S01C02",
+      "profiles": 17,
+      "profileCounts": {
+        "4": 3,
+        "2": 3,
+        "5": 3,
+        "1": 3,
+        "3": 2,
+        "0": 3
+      },
+      "queries": 81,
+      "queryCounts": {
+        "5": 17,
+        "2": 11,
+        "1": 12,
+        "4": 41
+      }
+    }
+  ],
+  "referenceLabelsOrTextReadDuringPreparation": false,
+  "decisionRule": "Report originaljournal versus independentfrozenencoder. Additionally evaluate an agreement-only annotation as an uncertainty policy, without fitting a scorethreshold: disagreement is unconfirmed, never drop/transcribe-away audio/text. Report coverage and wrong accepted identities together. Do not call agreement verified identity or claim modelaccuracygain from abstention.",
+  "newHyperparameterSearch": false,
+  "finalHoldoutOpened": false,
+  "saleQualified": false
+}

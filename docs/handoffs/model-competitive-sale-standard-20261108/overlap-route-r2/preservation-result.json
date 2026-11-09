@@ -1,0 +1,100 @@
+{
+  "at": "2026-11-09T09:16:14+08:00",
+  "ownerQuote": "那继续吧",
+  "state": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+  "previousStatus": "REAL_PROVIDER_WORD_RECOVERY_MERGED_SCOPED_IDENTITY_GAIN_NOT_QUALIFIED",
+  "previousWorkpoint": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
+  "modelEvidenceCommit": "bde4530dcb994bd004ce86a2580decc096046005",
+  "remoteReadbackConfirmed": true,
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\automatic-cross-meeting-r2",
+  "newSpeakerChecks": {
+    "queries": 148,
+    "nativeJournalMatchesDominant": 142,
+    "encoderMatchesDominant": 139,
+    "agreementAccepted": 139,
+    "agreementDominantMismatch": 3,
+    "dominantMatchingJournalLabelsWithheld": 6,
+    "elapsedSeconds": 35.41800530004548,
+    "peakWorkerPrivateBytes": 645574656
+  },
+  "ordinarySpeakerQueryMatches": "67/67 new selectedclips; sameexposedordinarymeeting, notASRaccuracy or wholeDER",
+  "complexSpeakerQueryMatches": "72/81dominantmatches, nativejournal75/81; includesmixtures, rarepeople0/3have no neweligibleclips underfrozenpolicy. Not replacementfor6personcoveragegate.",
+  "overlapRouting": {
+    "complexNative": {
+      "falsePositiveSeconds": 54.08795658877033,
+      "predictedPositiveSeconds": 178.61999600753188,
+      "caughtSeconds": 124.53203941876154,
+      "missedSeconds": 63.82734864875006,
+      "recall": 0.6611406030589083,
+      "precision": 0.6971898007069175
+    },
+    "complexIndependent": {
+      "missedSeconds": 56.257260453541946,
+      "caughtSeconds": 132.10212761396966,
+      "predictedPositiveSeconds": 220.53777694702148,
+      "falsePositiveSeconds": 88.43564933305183,
+      "recall": 0.7013302016389102,
+      "precision": 0.598999996475451
+    },
+    "complexUnion": {
+      "falsePositiveSeconds": 109.04074903118905,
+      "predictedPositiveSeconds": 265.30263739451766,
+      "caughtSeconds": 156.2618883633286,
+      "missedSeconds": 32.097499704182994,
+      "recall": 0.8295943725795147,
+      "precision": 0.5889948546985597
+    },
+    "changedRegions": {
+      "newFalsePositiveSeconds": 54.95279244241871,
+      "newlyCaughtTrueOverlapSeconds": 31.729848944567067
+    },
+    "ordinaryExtraFalsePositiveSeconds": 0.89434814453125,
+    "routeUnknownSecondPersonDoesNotInventIdentity": true,
+    "allSourceFramesPreserved": true,
+    "defaultNotPromoted": true
+  },
+  "thirdMeeting": {
+    "meeting": "20200805_S_R001S01C01",
+    "audioSeconds": 2195.362,
+    "freshNeuralCacheFrames": 2187,
+    "metrics": {
+      "falsePositiveSeconds": 13.357972169654175,
+      "predictedPositiveSeconds": 64.37910461425781,
+      "trueOverlapSeconds": 131.06881203400562,
+      "caughtSeconds": 51.02113244460364,
+      "missedSeconds": 80.04767958940198,
+      "recall": 0.3892698167689677,
+      "precision": 0.7925107494164212
+    },
+    "freshWorkerWallIncludingOutputFailureSeconds": 167.16233089996967,
+    "freshWorkerPolledPrivatePeakBytes": 222969856,
+    "cacheOnlyOutputRecoverySeconds": 1.0166409999947064,
+    "cacheOnlyRecoveryNewNeuralItems": 0,
+    "nativeOrUnionThirdNotMeasured": true,
+    "notFinalHeldout": true
+  },
+  "decision": {
+    "at": "2026-11-09T09:16:14+08:00",
+    "state": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+    "decision": "Retain nativejournal as primary activity/identity baseline. Do not replace identity labels with PS4encoder nearestprototype or use two-modelagreement as proof of nooverlap. Retain independent localcount union only as researchcandidate: Lrecall improves66.114→82.959%, but precision69.719→58.899%; ordinaryextra falseoverlap0.894s. Thirddevelopment meeting standalone localcount recall38.927% prevents generalization/promotionclaim; its native8/union still unmeasured. ExistingPS4contentregressions and sameQwenpending remain blockers. No threshold fitting or retraining from these recordings.",
+    "ordinaryAsrBestCerUnchanged": 0.055375375375375374,
+    "speakerQueryScope": "148newclips from2previouslyexposed fullmeetings, not wholeDER or CER. L newclips cover4/6 nativepeople; old22cliptest covers rarepeople but not reused in these counts. All32profiles had>=95% exclusive reference coverage on posthoc audit; this does not mean every future profile is safe.",
+    "agreementDiagnostic": "Agreement-dominant mismatches occur in genuine mixtures where more than one voice is present; do not call all3 arbitrary dominant-tie choices wrong realidentity. The 95%-pure subset and coverage costs remain separately reported.",
+    "referenceScopeCorrection": "Initial audit included source angle-tag-only intervals; preserved initialJSON, then aligned to canonical original lexical policy (remove source angle tags, nonempty remainder). Original fulloverlap reference seconds188.359388 reproduced exactly; ordinaryS has0 lexicaloverlap. No reference/data/model selection change, no worddeletion to improve CER.",
+    "executionFailuresRetained": [
+      "Initial nested5percent controller/worker jobs caused excessive throttling; stopped only ownfamily and kept same neuralcache. Corrected to worker-only5percent/2GiB cap plus actualLOWRAMmonitor.",
+      "Freshthird2187window neuralcache completed; final statepublication failed because nested control path made .tmp filename exceed Windows260character bound. Samefolder8.3 alias restored finalstate from verified completecache in1.017s, zero new neuralcalls; no repeat full inference. Firstfreshworker wall167.162s includes neuralwork/publicationfailure, not claimed isolated inference time."
+    ],
+    "newProductDelivery": false,
+    "installedOrDefaultChanged": false,
+    "finalHoldoutOpened": false,
+    "saleQualified": false,
+    "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
+  },
+  "ordinaryAsrBestUnchanged": 0.055375375375375374,
+  "noAsrAccuracyGainClaimed": true,
+  "newProductInstalled": false,
+  "weightsOrFormalTargetsChanged": false,
+  "saleQualified": false,
+  "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
+}

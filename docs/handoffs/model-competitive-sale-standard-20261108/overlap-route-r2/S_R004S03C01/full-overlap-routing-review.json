@@ -1,0 +1,23 @@
+{
+  "meeting": "S_R004S03C01",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "journalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+  "countsAreUniqueActivePeopleNotDuplicateSegments": true,
+  "timing": "Continuous exact source times, zero collar, includes overlaps, no dilation/gap repair or threshold tuning. Existing lexical policy: remove source angle tags and require nonempty remaining text, as canonical original overlap breakdown.",
+  "originalOverlapReferenceSecondsReproduced": true,
+  "seconds": {
+    "ordinary_or_no_reference": 2324.169000065938,
+    "false_overlap_solo": 2.9499999340623617
+  },
+  "trueOverlapSeconds": 0,
+  "predictedOverlapSeconds": 2.9499999340623617,
+  "overlapDetectionRecall": null,
+  "overlapDetectionPrecision": 0.0,
+  "missedOverlapByReferencePeople": {},
+  "missedOverlapSpans": [],
+  "newModelInference": false,
+  "newDerOrWordCer": false,
+  "saleQualified": false
+}

@@ -1,0 +1,1707 @@
+{
+  "meeting": "L_R003S01C02",
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "nativeMappingSourceForEvaluationOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\review.json",
+  "profiles": 17,
+  "profileMatchesExistingNativeMapping": 17,
+  "profilePureAt95Percent": 17,
+  "profileRows": [
+    {
+      "id": "native-4-0",
+      "nativePerson": "4",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9974999804685974,
+      "speechSeconds": {
+        "006-M": 7.979937499999998
+      }
+    },
+    {
+      "id": "native-4-1",
+      "nativePerson": "4",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9884999101555483,
+      "speechSeconds": {
+        "006-M": 7.907937500000003
+      }
+    },
+    {
+      "id": "native-2-0",
+      "nativePerson": "2",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.9932636973726363,
+      "speechSeconds": {
+        "004-M": 7.946047500000006
+      }
+    },
+    {
+      "id": "native-2-1",
+      "nativePerson": "2",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 5.949937500000004
+      }
+    },
+    {
+      "id": "native-2-2",
+      "nativePerson": "2",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 7.909937499999984
+      }
+    },
+    {
+      "id": "native-4-2",
+      "nativePerson": "4",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 7.999937500000016
+      }
+    },
+    {
+      "id": "native-5-0",
+      "nativePerson": "5",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.029937499999988
+      }
+    },
+    {
+      "id": "native-5-1",
+      "nativePerson": "5",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 7.999937499999987
+      }
+    },
+    {
+      "id": "native-5-2",
+      "nativePerson": "5",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.4799375000000055
+      }
+    },
+    {
+      "id": "native-1-0",
+      "nativePerson": "1",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 0.9892099157024663,
+      "speechSeconds": {
+        "002-F": 7.913617499999987
+      }
+    },
+    {
+      "id": "native-1-1",
+      "nativePerson": "1",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 2.419937500000003
+      }
+    },
+    {
+      "id": "native-1-2",
+      "nativePerson": "1",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 7.999937499999987
+      }
+    },
+    {
+      "id": "native-3-0",
+      "nativePerson": "3",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "003-F",
+      "exclusiveDominantFraction": 0.9886092860100569,
+      "speechSeconds": {
+        "005-M": 0.09112499999991996,
+        "003-F": 7.999937499999987
+      }
+    },
+    {
+      "id": "native-0-0",
+      "nativePerson": "0",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "007-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "007-M": 2.339937500000019
+      }
+    },
+    {
+      "id": "native-3-1",
+      "nativePerson": "3",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "003-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "003-F": 2.769937499999969
+      }
+    },
+    {
+      "id": "native-0-1",
+      "nativePerson": "0",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "007-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "007-M": 7.999937499999987
+      }
+    },
+    {
+      "id": "native-0-2",
+      "nativePerson": "0",
+      "matchesExistingNativeMapping": true,
+      "dominantReferenceForScoringOnly": "007-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "007-M": 7.419937499999833
+      }
+    }
+  ],
+  "allSelectedQueries": {
+    "queries": 81,
+    "nativeJournalMatchesDominant": 75,
+    "encoderMatchesDominant": 72,
+    "agreementOnly": {
+      "accepted": 72,
+      "unconfirmed": 9,
+      "acceptedCorrect": 69,
+      "acceptedWrong": 3,
+      "correctJournalLabelsWithheld": 6,
+      "coverage": 0.8888888888888888
+    }
+  },
+  "pureReferenceSubsetForDiagnosticOnly": {
+    "queries": 70,
+    "nativeJournalMatchesDominant": 67,
+    "encoderMatchesDominant": 66,
+    "agreementOnly": {
+      "accepted": 63,
+      "unconfirmed": 7,
+      "acceptedCorrect": 63,
+      "acceptedWrong": 0,
+      "correctJournalLabelsWithheld": 4,
+      "coverage": 0.9
+    }
+  },
+  "perAutomaticPerson": {
+    "0": {
+      "queries": 0,
+      "nativeJournalMatchesDominant": 0,
+      "encoderMatchesDominant": 0,
+      "agreementOnly": {
+        "accepted": 0,
+        "unconfirmed": 0,
+        "acceptedCorrect": 0,
+        "acceptedWrong": 0,
+        "correctJournalLabelsWithheld": 0,
+        "coverage": null
+      }
+    },
+    "1": {
+      "queries": 12,
+      "nativeJournalMatchesDominant": 10,
+      "encoderMatchesDominant": 10,
+      "agreementOnly": {
+        "accepted": 12,
+        "unconfirmed": 0,
+        "acceptedCorrect": 10,
+        "acceptedWrong": 2,
+        "correctJournalLabelsWithheld": 0,
+        "coverage": 1.0
+      }
+    },
+    "2": {
+      "queries": 11,
+      "nativeJournalMatchesDominant": 10,
+      "encoderMatchesDominant": 10,
+      "agreementOnly": {
+        "accepted": 11,
+        "unconfirmed": 0,
+        "acceptedCorrect": 10,
+        "acceptedWrong": 1,
+        "correctJournalLabelsWithheld": 0,
+        "coverage": 1.0
+      }
+    },
+    "3": {
+      "queries": 0,
+      "nativeJournalMatchesDominant": 0,
+      "encoderMatchesDominant": 0,
+      "agreementOnly": {
+        "accepted": 0,
+        "unconfirmed": 0,
+        "acceptedCorrect": 0,
+        "acceptedWrong": 0,
+        "correctJournalLabelsWithheld": 0,
+        "coverage": null
+      }
+    },
+    "4": {
+      "queries": 41,
+      "nativeJournalMatchesDominant": 38,
+      "encoderMatchesDominant": 35,
+      "agreementOnly": {
+        "accepted": 32,
+        "unconfirmed": 9,
+        "acceptedCorrect": 32,
+        "acceptedWrong": 0,
+        "correctJournalLabelsWithheld": 6,
+        "coverage": 0.7804878048780488
+      }
+    },
+    "5": {
+      "queries": 17,
+      "nativeJournalMatchesDominant": 17,
+      "encoderMatchesDominant": 17,
+      "agreementOnly": {
+        "accepted": 17,
+        "unconfirmed": 0,
+        "acceptedCorrect": 17,
+        "acceptedWrong": 0,
+        "correctJournalLabelsWithheld": 0,
+        "coverage": 1.0
+      }
+    }
+  },
+  "peopleWithoutEligibleNewQueries": [
+    "0",
+    "3"
+  ],
+  "rows": [
+    {
+      "id": "query-0000",
+      "start": 315.57,
+      "end": 319.57,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2535833418369293,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0001",
+      "start": 391.99,
+      "end": 395.4399375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.12055236101150513,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 3.449937499999976
+      }
+    },
+    {
+      "id": "query-0002",
+      "start": 451.17,
+      "end": 455.17,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.5169428586959839,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.9836350000000067,
+      "speechSeconds": {
+        "004-M": 3.934540000000027
+      }
+    },
+    {
+      "id": "query-0003",
+      "start": 471.69,
+      "end": 474.5399375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.3874250650405884,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 2.84993750000001
+      }
+    },
+    {
+      "id": "query-0004",
+      "start": 475.91,
+      "end": 479.91,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.18315663933753967,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0005",
+      "start": 490.18,
+      "end": 492.9199375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.5274738669395447,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 2.7399374999999964
+      }
+    },
+    {
+      "id": "query-0006",
+      "start": 499.17,
+      "end": 501.5599375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.21167966723442078,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 2.3899374999999736
+      }
+    },
+    {
+      "id": "query-0007",
+      "start": 508.52,
+      "end": 512.52,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.10043764114379883,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0008",
+      "start": 530.14,
+      "end": 534.1399375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.058399349451065063,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9176353372450246,
+      "speechSeconds": {
+        "006-M": 3.9999374999999873,
+        "002-F": 0.32945350322847844
+      }
+    },
+    {
+      "id": "query-0009",
+      "start": 550.94,
+      "end": 553.8799375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.0572471022605896,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.8582554901251931,
+      "speechSeconds": {
+        "006-M": 2.5232174999998733
+      }
+    },
+    {
+      "id": "query-0010",
+      "start": 572.84,
+      "end": 576.84,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.02543047070503235,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0011",
+      "start": 590.06,
+      "end": 594.06,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.013192206621170044,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.8990250000000231,
+      "speechSeconds": {
+        "006-M": 3.5961000000000922
+      }
+    },
+    {
+      "id": "query-0012",
+      "start": 610.13,
+      "end": 612.8499375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.0840243399143219,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 2.7199375000000146
+      }
+    },
+    {
+      "id": "query-0013",
+      "start": 626.42,
+      "end": 630.42,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.04159247875213623,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0014",
+      "start": 653.59,
+      "end": 654.7799375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.20003753900527954,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.1899374999999281
+      }
+    },
+    {
+      "id": "query-0015",
+      "start": 672.35,
+      "end": 675.7999375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.1451302170753479,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 3.4499375000000327
+      }
+    },
+    {
+      "id": "query-0016",
+      "start": 696.25,
+      "end": 699.5699375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2846997082233429,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 3.3199375000000373
+      }
+    },
+    {
+      "id": "query-0017",
+      "start": 714.46,
+      "end": 718.46,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.21530328691005707,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0018",
+      "start": 729.67,
+      "end": 733.67,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.18951743841171265,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 4.0
+      }
+    },
+    {
+      "id": "query-0019",
+      "start": 738.21,
+      "end": 742.21,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2607204020023346,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0020",
+      "start": 764.58,
+      "end": 768.58,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.3917698264122009,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0021",
+      "start": 824.42,
+      "end": 825.7199375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.24313028156757355,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 0.0,
+      "speechSeconds": {
+        "005-M": 1.2999375000000555,
+        "004-M": 1.2999375000000555,
+        "002-F": 0.7893360158334417
+      }
+    },
+    {
+      "id": "query-0022",
+      "start": 837.11,
+      "end": 839.9499375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.14869418740272522,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.839937500000019
+      }
+    },
+    {
+      "id": "query-0023",
+      "start": 843.64,
+      "end": 844.9099375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.17118048667907715,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 1.269937499999969
+      }
+    },
+    {
+      "id": "query-0024",
+      "start": 845.38,
+      "end": 848.3099375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.39058077335357666,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.9169405211912441,
+      "speechSeconds": {
+        "004-M": 2.929937500000051,
+        "002-F": 0.2433590816922333
+      }
+    },
+    {
+      "id": "query-0025",
+      "start": 856.6,
+      "end": 858.4799375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.22563692927360535,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 0.0,
+      "speechSeconds": {
+        "005-M": 1.8799374999999827,
+        "002-F": 1.8799374999999827
+      }
+    },
+    {
+      "id": "query-0026",
+      "start": 859.46,
+      "end": 861.6599375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.20846351981163025,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.199937499999919
+      }
+    },
+    {
+      "id": "query-0027",
+      "start": 869.17,
+      "end": 870.1899375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.09814184904098511,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.9679514676143756,
+      "speechSeconds": {
+        "004-M": 1.0199375000000828,
+        "002-F": 0.032687500000065484
+      }
+    },
+    {
+      "id": "query-0028",
+      "start": 880.58,
+      "end": 884.58,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.12480691075325012,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0029",
+      "start": 897.8,
+      "end": 900.7299375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.1735084354877472,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.929937500000051
+      }
+    },
+    {
+      "id": "query-0030",
+      "start": 907.96,
+      "end": 909.4299375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": false,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.18063712120056152,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 0.005070371729287188,
+      "speechSeconds": {
+        "005-M": 1.4699375000000146,
+        "002-F": 1.4624843704561954
+      }
+    },
+    {
+      "id": "query-0031",
+      "start": 1008.17,
+      "end": 1010.9599375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.23439103364944458,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.7899375000000646
+      }
+    },
+    {
+      "id": "query-0032",
+      "start": 1026.63,
+      "end": 1028.0699375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2214343249797821,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 1.4399374999998145
+      }
+    },
+    {
+      "id": "query-0033",
+      "start": 1039.64,
+      "end": 1043.64,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.23495662212371826,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 4.0
+      }
+    },
+    {
+      "id": "query-0034",
+      "start": 1057.56,
+      "end": 1060.5199375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.24317681789398193,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 2.9599375000000236
+      }
+    },
+    {
+      "id": "query-0035",
+      "start": 1062.99,
+      "end": 1065.5299375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.08360624313354492,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 2.539937499999951
+      }
+    },
+    {
+      "id": "query-0036",
+      "start": 1087.13,
+      "end": 1091.13,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.16698354482650757,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9353427872021598,
+      "speechSeconds": {
+        "006-M": 4.0,
+        "003-F": 0.2586288511913608
+      }
+    },
+    {
+      "id": "query-0037",
+      "start": 1099.65,
+      "end": 1101.6799375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.04536551237106323,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 2.02993749999996
+      }
+    },
+    {
+      "id": "query-0038",
+      "start": 1102.23,
+      "end": 1106.23,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.08715790510177612,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0039",
+      "start": 1131.86,
+      "end": 1135.2699375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.05577924847602844,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 3.409937500000069
+      }
+    },
+    {
+      "id": "query-0040",
+      "start": 1150.37,
+      "end": 1152.8699375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.007933765649795532,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 2.4999375000002146
+      }
+    },
+    {
+      "id": "query-0041",
+      "start": 1166.04,
+      "end": 1170.04,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.186845600605011,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9815156250000427,
+      "speechSeconds": {
+        "006-M": 3.9750000000001364,
+        "002-F": 0.04893749999996544
+      }
+    },
+    {
+      "id": "query-0042",
+      "start": 1183.93,
+      "end": 1187.8399375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.21508878469467163,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 3.9099374999998417
+      }
+    },
+    {
+      "id": "query-0043",
+      "start": 1202.29,
+      "end": 1206.29,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.1866258978843689,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0044",
+      "start": 1235.17,
+      "end": 1239.17,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.16819006204605103,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0045",
+      "start": 1245.0,
+      "end": 1249.0,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.42571431398391724,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 4.0
+      }
+    },
+    {
+      "id": "query-0046",
+      "start": 1276.1,
+      "end": 1278.1999375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.30918800830841064,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 2.0999375000001237
+      }
+    },
+    {
+      "id": "query-0047",
+      "start": 1287.6,
+      "end": 1291.6,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.21337968111038208,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0048",
+      "start": 1304.89,
+      "end": 1306.5199375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.22001245617866516,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.629937499999869
+      }
+    },
+    {
+      "id": "query-0049",
+      "start": 1330.6,
+      "end": 1331.6599375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.16321676969528198,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.9813940654882121,
+      "speechSeconds": {
+        "006-M": 1.040216372288569
+      }
+    },
+    {
+      "id": "query-0050",
+      "start": 1332.19,
+      "end": 1336.19,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.381811261177063,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.9974436459255571,
+      "speechSeconds": {
+        "006-M": 0.010225416297771517,
+        "004-M": 4.0
+      }
+    },
+    {
+      "id": "query-0051",
+      "start": 1354.68,
+      "end": 1358.68,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2679261863231659,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0052",
+      "start": 1372.39,
+      "end": 1375.9699375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.1359851360321045,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 0.96172170654538,
+      "speechSeconds": {
+        "006-M": 3.4429036018257193,
+        "002-F": 0.1370338981741952
+      }
+    },
+    {
+      "id": "query-0053",
+      "start": 1392.59,
+      "end": 1396.59,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2099197804927826,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0054",
+      "start": 1428.49,
+      "end": 1432.49,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.15624767541885376,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 4.0
+      }
+    },
+    {
+      "id": "query-0055",
+      "start": 1447.72,
+      "end": 1451.72,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.499531090259552,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "004-M": 4.0
+      }
+    },
+    {
+      "id": "query-0056",
+      "start": 1460.38,
+      "end": 1462.7299375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.16590368747711182,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.3499374999998963
+      }
+    },
+    {
+      "id": "query-0057",
+      "start": 1476.25,
+      "end": 1478.3299375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.17526918649673462,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 2.0799374999999145
+      }
+    },
+    {
+      "id": "query-0058",
+      "start": 1495.96,
+      "end": 1498.8899375,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.13878780603408813,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 0.9988879889570388,
+      "speechSeconds": {
+        "005-M": 2.929937500000051,
+        "002-F": 0.0032581228551862296
+      }
+    },
+    {
+      "id": "query-0059",
+      "start": 1524.56,
+      "end": 1526.9499375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2341916859149933,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 0.8562592070740075,
+      "speechSeconds": {
+        "005-M": 0.34353151129357684,
+        "002-F": 2.3899375000000873
+      }
+    },
+    {
+      "id": "query-0060",
+      "start": 1543.91,
+      "end": 1545.3699375,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.148298442363739,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "002-F": 1.4599375000000236
+      }
+    },
+    {
+      "id": "query-0061",
+      "start": 1864.93,
+      "end": 1867.6099375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.010086774826049805,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 2.6799374999998236
+      }
+    },
+    {
+      "id": "query-0062",
+      "start": 1869.45,
+      "end": 1870.6099375,
+      "nativeJournalPerson": "2",
+      "encoderPerson": "2",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "2",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2532830536365509,
+      "dominantReferenceForScoringOnly": "004-M",
+      "exclusiveDominantFraction": 0.6122425942608449,
+      "speechSeconds": {
+        "006-M": 0.44977435581949976,
+        "004-M": 1.0438252026633563
+      }
+    },
+    {
+      "id": "query-0063",
+      "start": 1962.18,
+      "end": 1966.0999375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.17119646072387695,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 3.9199374999998327
+      }
+    },
+    {
+      "id": "query-0064",
+      "start": 1982.48,
+      "end": 1986.48,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.035931408405303955,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0065",
+      "start": 1988.9,
+      "end": 1992.9,
+      "nativeJournalPerson": "1",
+      "encoderPerson": "1",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "1",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.33637577295303345,
+      "dominantReferenceForScoringOnly": "002-F",
+      "exclusiveDominantFraction": 0.8725000000000023,
+      "speechSeconds": {
+        "006-M": 0.5,
+        "002-F": 3.490000000000009
+      }
+    },
+    {
+      "id": "query-0066",
+      "start": 1999.04,
+      "end": 2000.6199375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.23825210332870483,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.5799375000001419
+      }
+    },
+    {
+      "id": "query-0067",
+      "start": 2015.99,
+      "end": 2019.99,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.11012101173400879,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0068",
+      "start": 2034.62,
+      "end": 2038.62,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.2493981420993805,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0069",
+      "start": 2055.59,
+      "end": 2059.59,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.21892356872558594,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0070",
+      "start": 2064.63,
+      "end": 2068.1499375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.10274505615234375,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 3.5199374999997417
+      }
+    },
+    {
+      "id": "query-0071",
+      "start": 2083.55,
+      "end": 2084.8199375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.08307576179504395,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.2699374999997417
+      }
+    },
+    {
+      "id": "query-0072",
+      "start": 2107.3,
+      "end": 2111.3,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.13150379061698914,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0073",
+      "start": 2122.89,
+      "end": 2126.89,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": false,
+      "agreementOnlyPerson": null,
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.015827983617782593,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0074",
+      "start": 2139.66,
+      "end": 2143.66,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.04280883073806763,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0075",
+      "start": 2157.06,
+      "end": 2158.8199375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.1407804787158966,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.7599374999999782
+      }
+    },
+    {
+      "id": "query-0076",
+      "start": 2170.01,
+      "end": 2174.01,
+      "nativeJournalPerson": "5",
+      "encoderPerson": "5",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "5",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.14317333698272705,
+      "dominantReferenceForScoringOnly": "005-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "005-M": 4.0
+      }
+    },
+    {
+      "id": "query-0077",
+      "start": 2179.81,
+      "end": 2183.81,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.23829099535942078,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0078",
+      "start": 2197.66,
+      "end": 2200.3599375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.16932719945907593,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 2.6999375000000327
+      }
+    },
+    {
+      "id": "query-0079",
+      "start": 2227.77,
+      "end": 2231.77,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.10614681243896484,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 4.0
+      }
+    },
+    {
+      "id": "query-0080",
+      "start": 2246.09,
+      "end": 2247.1299375,
+      "nativeJournalPerson": "4",
+      "encoderPerson": "4",
+      "nativeJournalMatchesDominant": true,
+      "encoderMatchesDominant": true,
+      "agreementOnlyPerson": "4",
+      "agreementIsNotVerifiedIdentity": true,
+      "topTwoMargin": 0.10310423374176025,
+      "dominantReferenceForScoringOnly": "006-M",
+      "exclusiveDominantFraction": 1.0,
+      "speechSeconds": {
+        "006-M": 1.0399374999997235
+      }
+    }
+  ],
+  "elapsedSeconds": 16.070881800027564,
+  "limits": {
+    "pid": 21736,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 645558272,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "scope": "Clip-level diagnostics only. Dominant identity is ambiguous in mixtures; allselected clips retained, pure subset is posthoc and not used to filter. Fullmeeting DER is separately retained, not recalculated from these clips. Existing fullnative assignment used only for scoring. Source meetings exposed earlier; pretraining overlap unknown.",
+  "thresholdOrWeightsChanged": false,
+  "productDefaultChanged": false,
+  "qualified": false
+}

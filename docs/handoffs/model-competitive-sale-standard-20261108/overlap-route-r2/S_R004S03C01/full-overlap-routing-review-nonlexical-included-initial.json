@@ -1,0 +1,40 @@
+{
+  "meeting": "S_R004S03C01",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "journalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+  "countsAreUniqueActivePeopleNotDuplicateSegments": true,
+  "timing": "Continuous exact source times, zero collar, includes overlaps, no dilation/gap repair or threshold tuning. Nonempty original reference intervals, including source nonlexical annotations, same source parser.",
+  "seconds": {
+    "ordinary_or_no_reference": 2323.5192371099447,
+    "false_overlap_solo": 2.9499999340623617,
+    "missed_overlap": 0.6497629559930829
+  },
+  "trueOverlapSeconds": 0.6497629559930829,
+  "predictedOverlapSeconds": 2.9499999340623617,
+  "overlapDetectionRecall": 0.0,
+  "overlapDetectionPrecision": 0.0,
+  "missedOverlapByReferencePeople": {
+    "2": {
+      "totalSeconds": 0.6497629559930829,
+      "missedSeconds": 0.6497629559930829
+    }
+  },
+  "missedOverlapSpans": [
+    {
+      "start": 794.8295057606431,
+      "end": 795.4792687166362,
+      "referencePeopleForScoringOnly": [
+        "001-M",
+        "004-F"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    }
+  ],
+  "newModelInference": false,
+  "newDerOrWordCer": false,
+  "saleQualified": false
+}

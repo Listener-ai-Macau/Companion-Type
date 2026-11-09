@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\bounded_speaker_20261107.py", line 223, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\bounded_speaker_20261107.py", line 219, in main
+    state.update(finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'),wholeWorkerSeconds=time.perf_counter()-tick,limits=limits.query());atomic_json(target,state)
+                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\practical_io_20261107.py", line 8, in atomic_json
+    with temp.open('xb') as stream:
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\automatic-cross-meeting-r2\\independent-overlap-candidate-r1\\third-meeting-r1\\results\\20200805_S_R001S01C01\\.tmp-839f425b3af74d0283ea701e3c82700a'

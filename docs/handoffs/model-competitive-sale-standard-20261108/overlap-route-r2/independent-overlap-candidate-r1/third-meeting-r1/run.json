@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_FRESH_THIRD_MEETING_SEGMENTATION",
+  "newNeuralItems": 0,
+  "startedAt": "2026-11-09T09:12:33+08:00",
+  "exitCode": 0,
+  "workerState": "COMPLETE_SEGMENTATION_CACHE",
+  "workerPrivatePeakBytes": 184803328,
+  "completionFromVerifiedCacheOnly": true,
+  "completedFreshNeuralCacheFrames": 2187,
+  "priorFullNeuralAttempt": {
+    "state": "FAILED_SEGMENTATION",
+    "newNeuralItems": 0,
+    "startedAt": "2026-11-09T09:07:07+08:00",
+    "exitCode": 1,
+    "workerState": null,
+    "workerPrivatePeakBytes": null,
+    "wallSeconds": 167.16233089996967,
+    "polledPrivatePeakBytes": 222969856,
+    "resourcePolicy": "Modelworker single5percent job/2GiB privatecap; controller monitors Windows actualLOWRAM without nestedCPUcap",
+    "finishedAt": "2026-11-09T09:09:54+08:00",
+    "saleQualified": false
+  },
+  "wallSeconds": 1.0166409999947064,
+  "polledPrivatePeakBytes": 425984,
+  "resourcePolicy": "Modelworker single5percent job/2GiB privatecap; controller monitors Windows actualLOWRAM without nestedCPUcap",
+  "finishedAt": "2026-11-09T09:12:34+08:00",
+  "saleQualified": false
+}

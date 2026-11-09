@@ -1,0 +1,31 @@
+{
+  "binding": {
+    "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+    "audioSeconds": 2195.362,
+    "segmentationSha256": "220ad67ca923bef2fa91f2390c786097bf305bceb5e261d4af67b38e938e1079",
+    "embeddingSha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
+    "recipe": "published-v1.13.4-10s-step1s-clean10frames-full-timeline-v1",
+    "runtime": "1.26.0",
+    "neuralFunctionSha256": "2cc8240a1338c04a9dcd043ee437f51085fda6d79614cd13bf40c83de4068d58"
+  },
+  "done": 2187,
+  "shape": [
+    2187,
+    589,
+    7
+  ],
+  "dtype": "float32",
+  "committedPrefixSha256": "309dbccf1791cef843d73ba3051a8161c804165e2214a22bb7d752130bee3b65",
+  "meta": {
+    "sample_rate": 16000,
+    "num_speakers": 3,
+    "num_classes": 7,
+    "powerset_max_classes": 2,
+    "receptive_field_size": 991,
+    "window_size": 160000,
+    "receptive_field_shift": 270,
+    "window_shift": 16000
+  },
+  "total": 2187,
+  "state": "COMPLETE_SEGMENTATION_CACHE"
+}

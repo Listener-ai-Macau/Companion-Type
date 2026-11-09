@@ -1,0 +1,46 @@
+{
+  "state": "COMPLETE_CACHED_INDEPENDENT_OVERLAP_CANDIDATE",
+  "cases": [
+    {
+      "meeting": "L_R003S01C02",
+      "secondsByRoute": {
+        "raw_asr_unattributed": 277.1293125,
+        "raw_asr": 1820.5134375,
+        "candidate_target_extraction": 178.62,
+        "candidate_overlap_identity_pending": 86.68225
+      },
+      "elapsedSeconds": 0.05990290001500398,
+      "sourceFramesPreservedExactlyOnce": true
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "secondsByRoute": {
+        "raw_asr_unattributed": 308.8990625,
+        "raw_asr": 2014.3755625,
+        "candidate_target_extraction": 2.95,
+        "candidate_overlap_identity_pending": 0.894375
+      },
+      "elapsedSeconds": 0.0506722999853082,
+      "sourceFramesPreservedExactlyOnce": true
+    }
+  ],
+  "elapsedSeconds": 0.31206580001162365,
+  "limits": {
+    "pid": 13832,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 28786688,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "newNeuralCalls": 0,
+  "saleQualified": false
+}

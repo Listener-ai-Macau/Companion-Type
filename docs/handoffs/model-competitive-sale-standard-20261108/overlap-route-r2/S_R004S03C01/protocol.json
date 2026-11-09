@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-09T08:51:51+08:00",
+  "workerSha256": "f9dbe5c75a8562843d30081d01a60478e0e6fda7e5f00d59efb21a3d286aa62b",
+  "audioOnlySha256": "16de30bbcb8ca116f345130582814ffdd7acc8166245ba23b4f99b46b4212805",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "policy": "Same frozen originalPS4 model/CPUencoder/rawmean prototype. S enrollment:earliest3 solo predictedclips perperson,2..8s,200msedgeguard,30sstartspacing. Existing L17reference clips retained unchanged. Query:earliest1..4s perpredictedsolo span,200msedgeguard,15sstartspacing; >15s awayfrom allprofiles. L excludes old302s analysis andall22priorqueries. No answer/reference identities/count/text used. No threshold/tuning/training. Allselected kept.",
+  "qualification": "Exposed development meetings, not wholeDER or finalheldout. Report everyquery and provenance, same frozen recipe across rooms.",
+  "cpuPercentCap": 5,
+  "privateCommitCapBytes": 2147483648,
+  "saleQualified": false
+}

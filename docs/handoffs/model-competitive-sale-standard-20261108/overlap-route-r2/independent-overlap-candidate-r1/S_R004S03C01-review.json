@@ -1,0 +1,42 @@
+{
+  "meeting": "S_R004S03C01",
+  "sourceSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "audioSeconds": 2327.119,
+  "trueOverlapSeconds": 0,
+  "metrics": {
+    "native": {
+      "falsePositiveSeconds": 2.9499999340623617,
+      "predictedPositiveSeconds": 2.9499999340623617,
+      "recall": null,
+      "precision": 0.0
+    },
+    "independent": {
+      "falsePositiveSeconds": 0.89434814453125,
+      "predictedPositiveSeconds": 0.89434814453125,
+      "recall": null,
+      "precision": 0.0
+    },
+    "union": {
+      "falsePositiveSeconds": 3.8443480785936117,
+      "predictedPositiveSeconds": 3.8443480785936117,
+      "recall": null,
+      "precision": 0.0
+    }
+  },
+  "changedRegions": {
+    "newFalsePositiveSeconds": 0.89434814453125
+  },
+  "newlyCaughtTrueOverlapRegionsForScoringOnly": [],
+  "sourceFramesPreservedExactlyOnce": true,
+  "routeTimes": {
+    "raw_asr_unattributed": 308.8990625,
+    "raw_asr": 2014.3755625,
+    "candidate_target_extraction": 2.95,
+    "candidate_overlap_identity_pending": 0.894375
+  },
+  "additionalUnknownTargetIdentityIsNotGuessed": true,
+  "newNeuralCalls": 0,
+  "wordRecoveryProven": false,
+  "saleQualified": false
+}

@@ -132986,24 +132986,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T08:27:39+08:00",
+      "updatedAt": "2026-11-09T09:00:10+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66760,
+        "firmwareVersion": 66761,
         "uiGeneration": 85,
         "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
-        "sourceCommit": "b4ecf6184505f9d4f52902b97212be86ec38c6e0",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66760\\build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\ota760-summary.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\actual760\\idle-metadata.json",
+        "sourceCommit": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66761\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\callback-queue761-20261109\\hardware\\installation-summary.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\callback761-hardware\\final761-idle.txt",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal760 b4ecf61 observerOFF restores758-equivalent production source; diagnostic759 data retained; no speed fix claimed",
+        "sourceRootAvailability": "Normal761 source872b5f3 installed; reentrant queue bug fixed; speed explicitly deferred by Owner",
         "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Owner明确没有抓包器，OTA与同步速度优化先放下；原50门与失败保留，停止速度试验和抓包器提示。继续原CP09-02可靠性：审查真实范围同步队列在发送错误回执时嵌套断连/退订的清理路径，先用生产radio模型复现队列计数/移位问题，再修具体根因与受影响恢复，不新增行政门槛；保持旧音/当前音质/61.44MHz/原资源预算，屏幕和原硬件block不动。",
+      "next": "Owner明确无抓包器，OTA/收取速度先放下，保留旧失败和原50门，不做速度冲刺或抓包提示。761/872b5f3已装，回执重入队列越界有修前ASAN失败/修后恢复及实板非破坏错误与重连证据，旧34未读/消费，资源412188/67896/21504过，板已释放。标准构建入口现已对齐当前872b5f3，并明确显示源码/已装提交，历史配置及C盘Git保留；不再从旧c802默认构建。继续原非速度可靠性：首有效PCM响应与首次连接/录音中断恢复；现有证据只够单场，不把旧失败清零。先核现存时序和当前源码找具体缺陷；没有可复现缺陷不盲改，不重跑已验无关路径。实体首字/电源/生产/屏幕依旧按原暂停或block保留。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133892,7 +133892,21 @@
         "next": "保持任何长度含物理回收>=50。合法332为0.5秒1530B，总预算29.883ms，单次4K擦除实际忙下界37ms；当前NOR-only同样耐久/物理回执契约，纯软件重排无法满足此正常短样本。72布局模型保留容量但不能消除此单单元反例，未盲目上格式改造。短50原项FAIL转当前存储能力依赖评估，不降指标/不延后擦除/不填充字节。正常720097已装，资源409364/69328回原预算，OTA56.303/115.821/90.972该样本过。继续720当前核心两小时连续录音与同步；历史0x3E只在新失败现场留证，现有block保留。",
         "minimumPhysicalBound": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66719\\minimum-physical-bound.json",
         "formatRewriteDeployed": false,
-        "combinedStorageProtocolFeasibility": "E:\\CodexData\\Companion\\.build-cache\\full-media66720\\architecture\\storage-protocol-feasibility.json"
+        "combinedStorageProtocolFeasibility": "E:\\CodexData\\Companion\\.build-cache\\full-media66720\\architecture\\storage-protocol-feasibility.json",
+        "currentSourceCheckoutRepair761": {
+          "at": "2026-11-09T09:00:10+08:00",
+          "task": "CP25-05",
+          "result": "FIXED_DEFAULT_BUILD_SOURCE_WAS_STALE",
+          "oldSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+          "oldSourceCommit": "c802756b0b3f546342fd95cd1e3c7f7c72ac5f40",
+          "source": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
+          "sourceCommit": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
+          "sourceRecoveryRepository": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+          "recipeArgumentsAndReferenceUnchanged": true,
+          "deviceAccessed": false,
+          "firmwareRebuilt": false,
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\callback-queue761-20261109\\build-entry-repair.json"
+        }
       },
       "priorityDecision": {
         "at": "2026-11-05T11:41:53+08:00",
@@ -133975,12 +133989,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-09T07:25:18+08:00",
-        "firmware": 66760,
+        "at": "2026-11-09T08:56:32+08:00",
+        "firmware": 66761,
         "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "正常758短录31.777053仍FAIL；诊断369仅作归因。760恢复升级完成但37.266693KiB/s FAIL50；首有效PCM/偶发初连/恢复稳定性/最终冻结2h/普通UI与首字及明确block、屏幕暂停未关。",
+        "openSoftware": "761已交付同步错误回执嵌套断连导致队列计数回绕/越界的源码修复；精确竞态由ASAN验证，实板基本错误/重连过，不覆盖全部历史死机。速度按Owner明确后置且失败保留；首PCM/初连/恢复稳定性/冻结2h、普通UI与首字及原block/屏幕暂停仍未关。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -133998,7 +134012,7 @@
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.106"
+        "phoneVersion": "0.1.109"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136125,15 +136139,15 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T07:25:18+08:00",
-        "state": "ACTUAL760_NORMAL_IDLE_RELEASED_GOAL_CLEARED_SHORT_AND_OTA_RATE_FAIL",
+        "at": "2026-11-09T08:56:32+08:00",
+        "state": "NORMAL761_RELIABILITY_FIX_INSTALLED_SPEED_DEFERRED_BOARD_RELEASED",
         "phoneInstalled": "0.1.109",
         "firmwareInstalled": 66760,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "firmwareSource": "b4ecf6184505f9d4f52902b97212be86ec38c6e0",
         "boardLease": false,
-        "boardItem": "Companion759范围回收分阶段计时及正常配置恢复",
+        "boardItem": "Companion761修复同步错误回执重入队列越界",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
@@ -136142,8 +136156,8 @@
         "ownLatestSession": 369,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": null,
-        "candidateSourceCommit": null,
+        "firmwareCandidate": 66761,
+        "candidateSourceCommit": "872b5f3",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -139362,7 +139376,7 @@
           "CP04-01",
           "CP13-08"
         ],
-        "state": "NORMAL760_RESTORED_DIAGNOSTIC_PHASE_ROOT_EVIDENCE_OWNER_GOAL_CLEARED",
+        "state": "NORMAL761_QUEUE_CALLBACK_RELIABILITY_FIXED_SPEED_DEFERRED_BY_OWNER",
         "firmwarePrototype": {
           "source": "E:\\CodexData\\Companion\\.build-cache\\range-reclaim-source",
           "commit": "e31f71250448a0050773161480250f2ea01782af",
@@ -140407,6 +140421,47 @@
           "scope": "OTA与录音收取速度优化均先放下；保留失败与原50门，不追加速度试验/抓包器操作提示",
           "status": "DEFERRED_BY_OWNER_NO_VALID_SNIFFER",
           "priorNext": "继续原OTA慢速修复，不能称已达到售卖。当前正常760/手机109/Windows068保持；068真实源码已绑定并确认回执后续发为微秒，Condvar已存在，不重写伪轮询修复。抓包器5.0.0应用包和只选原Nordic序列号的更新程序已准备，原统一弹窗在完整PowerShell7.6.9实际显示后Timeout，未收到RESET就绪，未刷抓包器、未碰Companion、未跑新测速。下次先补抓包器实体bootloader依赖并核实际版本/CONNECT+DATA；Windows底层记录可继续后台准备，目前无在跑采集，不启动第二个WPP占用。没有新可区分证据不再相同OTA重测或扩池碰成绩。原短录结构工作点、50门、正常资源及明确block沿ota760Diagnosis.priorEmbeddedNext保留；售卖仍未完成。"
+        }
+      },
+      "callbackQueueReliability761": {
+        "at": "2026-11-09T08:56:32+08:00",
+        "result": "DELIVERED_761_REENTRANT_QUEUE_UNDERFLOW_FIX;SPEED_DEFERRED;WHOLE_SALE_OPEN",
+        "ownerRaw": "先定位一下问题咯, 没有抓包器, 速度问题先放一下先修点别的",
+        "regressionIntroducedBy": "015d83402a95a175db8b6f7294fde5d38256c90c",
+        "previousSafeQueueOrder": "081d9c5a06aa728a12d367515565e0c77488798c",
+        "fixCommits": [
+          "cf97c6958a097fb5f261b9076d58af1f1a08e34d",
+          "872b5f39e8aa642a1872f1b987dbe1e14ac877c7"
+        ],
+        "rootCause": "Parsing the queue cell could publish an error; the nested actual disconnect dispatcher cleared queue_count. The outer dequeue decremented0 to255 then memmove read24480B. Later clearing the counter hid the bug in plain end-state assertions and the large legacy union masked the object boundary.",
+        "fix": "Copy the next request into the retired receipt scratch, dequeue before parsing/publication, then dispatch the local immutable copy. Same-wire correlated error fields copied directly to avoid decode/reencode overhead.",
+        "softwareEvidence": "Exact-object ASAN old source fails24480B read; fixed disconnect and unsubscribe cases pass and recover with original CRC/SHA. Five existing affected queue/normal range/deferred receipt/normal segmented/consume-error groups pass with ASAN. M33 strict compile passes.",
+        "hardwareEvidence": "Normal signed761 installed, joint app/UI identity and temporary-space release verified; nonmutating query, badCRC refusal, unsubscribe/resubscribe query, reconnect and original34 metadata pass. No new recording or original audio access.",
+        "physicalRaceForced": false,
+        "allPriorCrashesExplained": false,
+        "speedFixed": false,
+        "resources": {
+          "applicationBytes": 412188,
+          "previous760Bytes": 412212,
+          "originalMaxBytes": 412216,
+          "staticBytes": 67896,
+          "stackReservedBytes": 21504,
+          "radioPollM33FrameBytes": 128,
+          "previousFrameBytes": 96
+        },
+        "boardReleased": true,
+        "liveJob": false,
+        "wholeSaleQualified": false,
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\callback-queue761-20261109\\manifest.json",
+        "buildEntryRepair": {
+          "oldSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+          "oldSourceCommit": "c802756b0b3f546342fd95cd1e3c7f7c72ac5f40",
+          "source": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
+          "sourceCommit": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
+          "sourceRecoveryRepository": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+          "recipeArgumentsAndReferenceUnchanged": true,
+          "deviceAccessed": false,
+          "firmwareRebuilt": false
         }
       }
     },
@@ -145988,11 +146043,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "REAL_PROVIDER_WORD_RECOVERY_MERGED_SCOPED_IDENTITY_GAIN_NOT_QUALIFIED",
+          "status": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
+          "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -259541,7 +259596,7 @@
             ],
             "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
             "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-            "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
+            "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。",
             "qualityQualified": false,
             "saleQualified": false,
             "newModelTrainingOrInference": true,
@@ -260237,6 +260292,106 @@
               "installedOrProductDefaultChanged": false,
               "saleQualified": false,
               "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。"
+            },
+            "crossMeetingOverlapRouting20261109": {
+              "at": "2026-11-09T09:16:14+08:00",
+              "ownerQuote": "那继续吧",
+              "state": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+              "previousStatus": "REAL_PROVIDER_WORD_RECOVERY_MERGED_SCOPED_IDENTITY_GAIN_NOT_QUALIFIED",
+              "previousWorkpoint": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
+              "modelEvidenceCommit": "bde4530dcb994bd004ce86a2580decc096046005",
+              "remoteReadbackConfirmed": true,
+              "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\automatic-cross-meeting-r2",
+              "newSpeakerChecks": {
+                "queries": 148,
+                "nativeJournalMatchesDominant": 142,
+                "encoderMatchesDominant": 139,
+                "agreementAccepted": 139,
+                "agreementDominantMismatch": 3,
+                "dominantMatchingJournalLabelsWithheld": 6,
+                "elapsedSeconds": 35.41800530004548,
+                "peakWorkerPrivateBytes": 645574656
+              },
+              "ordinarySpeakerQueryMatches": "67/67 new selectedclips; sameexposedordinarymeeting, notASRaccuracy or wholeDER",
+              "complexSpeakerQueryMatches": "72/81dominantmatches, nativejournal75/81; includesmixtures, rarepeople0/3have no neweligibleclips underfrozenpolicy. Not replacementfor6personcoveragegate.",
+              "overlapRouting": {
+                "complexNative": {
+                  "falsePositiveSeconds": 54.08795658877033,
+                  "predictedPositiveSeconds": 178.61999600753188,
+                  "caughtSeconds": 124.53203941876154,
+                  "missedSeconds": 63.82734864875006,
+                  "recall": 0.6611406030589083,
+                  "precision": 0.6971898007069175
+                },
+                "complexIndependent": {
+                  "missedSeconds": 56.257260453541946,
+                  "caughtSeconds": 132.10212761396966,
+                  "predictedPositiveSeconds": 220.53777694702148,
+                  "falsePositiveSeconds": 88.43564933305183,
+                  "recall": 0.7013302016389102,
+                  "precision": 0.598999996475451
+                },
+                "complexUnion": {
+                  "falsePositiveSeconds": 109.04074903118905,
+                  "predictedPositiveSeconds": 265.30263739451766,
+                  "caughtSeconds": 156.2618883633286,
+                  "missedSeconds": 32.097499704182994,
+                  "recall": 0.8295943725795147,
+                  "precision": 0.5889948546985597
+                },
+                "changedRegions": {
+                  "newFalsePositiveSeconds": 54.95279244241871,
+                  "newlyCaughtTrueOverlapSeconds": 31.729848944567067
+                },
+                "ordinaryExtraFalsePositiveSeconds": 0.89434814453125,
+                "routeUnknownSecondPersonDoesNotInventIdentity": true,
+                "allSourceFramesPreserved": true,
+                "defaultNotPromoted": true
+              },
+              "thirdMeeting": {
+                "meeting": "20200805_S_R001S01C01",
+                "audioSeconds": 2195.362,
+                "freshNeuralCacheFrames": 2187,
+                "metrics": {
+                  "falsePositiveSeconds": 13.357972169654175,
+                  "predictedPositiveSeconds": 64.37910461425781,
+                  "trueOverlapSeconds": 131.06881203400562,
+                  "caughtSeconds": 51.02113244460364,
+                  "missedSeconds": 80.04767958940198,
+                  "recall": 0.3892698167689677,
+                  "precision": 0.7925107494164212
+                },
+                "freshWorkerWallIncludingOutputFailureSeconds": 167.16233089996967,
+                "freshWorkerPolledPrivatePeakBytes": 222969856,
+                "cacheOnlyOutputRecoverySeconds": 1.0166409999947064,
+                "cacheOnlyRecoveryNewNeuralItems": 0,
+                "nativeOrUnionThirdNotMeasured": true,
+                "notFinalHeldout": true
+              },
+              "decision": {
+                "at": "2026-11-09T09:16:14+08:00",
+                "state": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+                "decision": "Retain nativejournal as primary activity/identity baseline. Do not replace identity labels with PS4encoder nearestprototype or use two-modelagreement as proof of nooverlap. Retain independent localcount union only as researchcandidate: Lrecall improves66.114→82.959%, but precision69.719→58.899%; ordinaryextra falseoverlap0.894s. Thirddevelopment meeting standalone localcount recall38.927% prevents generalization/promotionclaim; its native8/union still unmeasured. ExistingPS4contentregressions and sameQwenpending remain blockers. No threshold fitting or retraining from these recordings.",
+                "ordinaryAsrBestCerUnchanged": 0.055375375375375374,
+                "speakerQueryScope": "148newclips from2previouslyexposed fullmeetings, not wholeDER or CER. L newclips cover4/6 nativepeople; old22cliptest covers rarepeople but not reused in these counts. All32profiles had>=95% exclusive reference coverage on posthoc audit; this does not mean every future profile is safe.",
+                "agreementDiagnostic": "Agreement-dominant mismatches occur in genuine mixtures where more than one voice is present; do not call all3 arbitrary dominant-tie choices wrong realidentity. The 95%-pure subset and coverage costs remain separately reported.",
+                "referenceScopeCorrection": "Initial audit included source angle-tag-only intervals; preserved initialJSON, then aligned to canonical original lexical policy (remove source angle tags, nonempty remainder). Original fulloverlap reference seconds188.359388 reproduced exactly; ordinaryS has0 lexicaloverlap. No reference/data/model selection change, no worddeletion to improve CER.",
+                "executionFailuresRetained": [
+                  "Initial nested5percent controller/worker jobs caused excessive throttling; stopped only ownfamily and kept same neuralcache. Corrected to worker-only5percent/2GiB cap plus actualLOWRAMmonitor.",
+                  "Freshthird2187window neuralcache completed; final statepublication failed because nested control path made .tmp filename exceed Windows260character bound. Samefolder8.3 alias restored finalstate from verified completecache in1.017s, zero new neuralcalls; no repeat full inference. Firstfreshworker wall167.162s includes neuralwork/publicationfailure, not claimed isolated inference time."
+                ],
+                "newProductDelivery": false,
+                "installedOrDefaultChanged": false,
+                "finalHoldoutOpened": false,
+                "saleQualified": false,
+                "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
+              },
+              "ordinaryAsrBestUnchanged": 0.055375375375375374,
+              "noAsrAccuracyGainClaimed": true,
+              "newProductInstalled": false,
+              "weightsOrFormalTargetsChanged": false,
+              "saleQualified": false,
+              "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
             }
           }
         },

@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_SEGMENTATION_CACHE",
+  "stage": "segment",
+  "pid": 15812,
+  "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+  "referenceRead": false,
+  "gpuUsed": false,
+  "sourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+  "newNeuralItems": 0,
+  "reusedCachedPrefix": 2187,
+  "completed": 2187,
+  "total": 2187,
+  "manifest": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\third-meeting-overlap-r1\\20200805_S_R001S01C01\\segment.json",
+  "manifestSha256": "6cfbf5a200109aa2c6d7bb0349e42df9db28d60debcd40a1b57fd4a779aeb4d7",
+  "finishedAt": "2026-11-09T09:12:34+08:00",
+  "wholeWorkerSeconds": 0.4874223000369966,
+  "limits": {
+    "pid": 15812,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 184803328,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
