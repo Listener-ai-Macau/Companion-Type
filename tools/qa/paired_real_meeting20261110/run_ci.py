@@ -1,4 +1,4 @@
-"""Five frozen public inputs through the installed Windows candidate's native CLI.
+"""Declared frozen public inputs through the Windows candidate's native CLI.
 
 Engineering ASR comparator only: no UI, microphone, Bluetooth, new model,
 training, reference text, cloud inference, or substitution of saved transcripts.
@@ -24,7 +24,7 @@ def asset(name,id,digest):
         q=subprocess.run(['gh','api','repos/Listener-ai-Macau/Companion-Type/releases/assets/'+str(id),'-H','Accept: application/octet-stream'],stdout=f,stderr=error)
     assert q.returncode==0 and sha(target)==digest,'Frozen input asset mismatch'
     return target
-state={'at':now(),'state':'PREPARING_FROZEN_PUBLIC_FIVE_INPUT_PRODUCT_ASR','testSource':os.environ['GITHUB_SHA'],'appSource':spec['app']['sourceCommit'],'appVersion':spec['app']['version'],'modelSha256':spec['model']['readyValue'],'completed':[],'newModelSelected':False,'trainingPerformed':False,'referencesOpened':False,'productDefaultChanged':False,'phoneOrBoardAccessed':False,'localOwnerComputerModelWorkers':0,'qualityQualified':False,'saleQualified':False}
+state={'at':now(),'state':'PREPARING_FROZEN_PUBLIC_PRODUCT_ASR','testSource':os.environ['GITHUB_SHA'],'appSource':spec['app']['sourceCommit'],'appVersion':spec['app']['version'],'modelSha256':spec['model']['readyValue'],'completed':[],'newModelSelected':False,'trainingPerformed':False,'referencesOpened':False,'referenceActivityConditioningViaWaveform':spec.get('referenceActivityConditioningViaWaveform',False),'arm':spec.get('arm','raw-five-sources'),'productDefaultChanged':False,'phoneOrBoardAccessed':False,'localOwnerComputerModelWorkers':0,'qualityQualified':False,'saleQualified':False}
 def checkpoint():save(O/'result.json',state)
 checkpoint()
 try:
@@ -87,6 +87,6 @@ try:
         target=O/(case['id']+'-output.json');save(target,doc)
         receipt={**case,'modelSha256':spec['model']['readyValue'],'outputSha256':sha(target),'transcriptSha256':hashlib.sha256(actual['transcriptText'].encode()).hexdigest(),'characters':len(actual['transcriptText']),'utterances':len(actual['utterances']),'elapsedSeconds':elapsed,'privatePeakBytes':peak,'sourceAudioUnchanged':True,'referencesPassed':False,'nativeExitCode':child.returncode,'scope':'Native product backend CLI; not ordinary UI/phone/diarization qualification'}
         save(O/(case['id']+'-complete.json'),receipt);state['completed'].append(receipt);checkpoint();print('Completed '+case['id']+' in '+str(round(elapsed,2))+'s',flush=True)
-    state.pop('activeCase',None);state.update(state='COMPLETE_FIVE_FIXED_PRODUCT_ASR_INPUTS_UNSCORED',finishedAt=now());checkpoint()
+    state.pop('activeCase',None);state.update(state='COMPLETE_DECLARED_FIXED_PRODUCT_ASR_INPUTS_UNSCORED',finishedAt=now());checkpoint()
 except BaseException as error:
-    state.update(state='INCOMPLETE_FIVE_INPUT_PRODUCT_ASR_RETAINED',error=repr(error),finishedAt=now());checkpoint();(O/'failure.txt').write_text(traceback.format_exc(),encoding='utf8');raise
+    state.update(state='INCOMPLETE_DECLARED_INPUT_PRODUCT_ASR_RETAINED',error=repr(error),finishedAt=now());checkpoint();(O/'failure.txt').write_text(traceback.format_exc(),encoding='utf8');raise

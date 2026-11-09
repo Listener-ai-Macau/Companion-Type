@@ -44,40 +44,36 @@
     "sourceAssetsUnchanged": true
   },
   "input": {
-    "privateDraftAsset": 728094471,
-    "sha256": "45ac7c250fc05bad5140c0f39475c92b164fb32f880ff9e60971a806ca6a1ab1",
+    "privateDraftAsset": 728148741,
+    "sha256": "5b60caa153d528d4d34bc40dbe3f8fdafdb4220e3bb75ae951f1adfef2076f28",
     "cases": [
       {
         "id": "near-N_SPK8013",
-        "wav": "near-N_SPK8013.wav",
-        "sha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+        "wav": "near-N_SPK8013-known-activity.wav",
+        "sha256": "fab64f319b4a71dca2030fdf273c3ae763a3995bde72225d7b1c8461c2164748",
         "seconds": 1551.82
       },
       {
         "id": "near-N_SPK8014",
-        "wav": "near-N_SPK8014.wav",
-        "sha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+        "wav": "near-N_SPK8014-known-activity.wav",
+        "sha256": "cdefc4455055b626ae7a2222ce1c1c291259a6a68f41fbb157816f25839ffa9f",
         "seconds": 1551.82
       },
       {
         "id": "near-N_SPK8015",
-        "wav": "near-N_SPK8015.wav",
-        "sha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+        "wav": "near-N_SPK8015-known-activity.wav",
+        "sha256": "2162094cd51ec9034c13c9d836031d8d3956d38f3aabb403ba4fb54f1fe06d4f",
         "seconds": 1551.82
       },
       {
         "id": "near-N_SPK8016",
-        "wav": "near-N_SPK8016.wav",
-        "sha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
-        "seconds": 1551.82
-      },
-      {
-        "id": "far-mic0-common-span",
-        "wav": "far-mic0-common-span.wav",
-        "sha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+        "wav": "near-N_SPK8016-known-activity.wav",
+        "sha256": "7c0bd7d9507185505bc69553aba4339cf293e5a6218a6f9384000b01314e8aab",
         "seconds": 1551.82
       }
     ]
   },
-  "scope": "Existing deployed Paraformer comparator; distinct from pending frozen Qwen arm. Raw public WAV inputs, no references, no training, not sale qualification."
+  "scope": "Explicitly known-reference-activity conditioned full headset audio, four people. No automatic diarization, separation or sale qualification.",
+  "arm": "known-reference-activity-headset-diagnostic",
+  "referenceActivityConditioningViaWaveform": true
 }
