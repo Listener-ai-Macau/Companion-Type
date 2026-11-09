@@ -1,0 +1,23 @@
+{
+  "pid": 32092,
+  "executableOutsideInstalledDirectory": true,
+  "storageIsolation": {
+    "COMPANION_TYPE_STATE_PATH": {
+      "explicit": true,
+      "outsideDailyProductStore": true
+    },
+    "COMPANION_TYPE_RECORDING_DIR": {
+      "explicit": true,
+      "outsideDailyProductStore": true
+    },
+    "COMPANION_TYPE_PRODUCT_SETTINGS_PATH": {
+      "explicit": false,
+      "outsideDailyProductStore": false
+    }
+  },
+  "activeExeSha256": "979acd305815a33651a9cd48d267ce0c00c5c2bab629ccf4e542ecd8c5393e5f",
+  "processStopped": false,
+  "otherEnvironmentValuesPrinted": false,
+  "usesDailyAppDataRoot": false,
+  "hasSeparateAppDataRoot": true
+}

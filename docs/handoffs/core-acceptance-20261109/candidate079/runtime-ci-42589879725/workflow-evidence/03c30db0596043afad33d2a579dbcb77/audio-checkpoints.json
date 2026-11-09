@@ -1,0 +1,98 @@
+[
+  {
+    "step": "import-real-public-wav",
+    "nativePicker": "open"
+  },
+  {
+    "step": "audio-only-next-step",
+    "directAudioExportVisible": true,
+    "transcribeVisible": true,
+    "inapplicableAiWorkbenchAbsent": true
+  },
+  {
+    "step": "play-whole-public-wav",
+    "duration": 2327.119,
+    "probes": [
+      {
+        "meetingPosition": 0,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 1163.5595,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 2319.119,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      }
+    ],
+    "playControl": "native audio Space key",
+    "seekProbe": "HTMLMediaElement.currentTime; native seek UI not qualified",
+    "mutedByTestRuntime": true,
+    "physicalListeningQualified": false
+  },
+  {
+    "step": "save-original-wav",
+    "nativePicker": "save"
+  },
+  {
+    "step": "audio-original",
+    "receiver": "Windows Shell folder Paste verb",
+    "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+    "fileName": "public-audio-S_R004S03C01-original.wav",
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "actualFileReceived": true,
+    "sourcePathOrBytesSuppliedToReceiver": false,
+    "thirdPartyMessengerOrSendQualified": false,
+    "originalAudioBytesIdentical": true
+  },
+  {
+    "step": "save-mp3",
+    "nativePicker": "save"
+  },
+  {
+    "step": "audio-mp3",
+    "receiver": "Windows Shell folder Paste verb",
+    "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+    "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+    "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+    "bytes": 37149710,
+    "actualFileReceived": true,
+    "sourcePathOrBytesSuppliedToReceiver": false,
+    "thirdPartyMessengerOrSendQualified": false,
+    "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+  },
+  {
+    "step": "decode-exported-mp3",
+    "nativePicker": "open"
+  },
+  {
+    "step": "play-decoded-exported-mp3",
+    "duration": 2327.170563,
+    "probes": [
+      {
+        "meetingPosition": 0,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 1163.5595,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 2319.119,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      }
+    ],
+    "playControl": "native audio Space key",
+    "seekProbe": "HTMLMediaElement.currentTime; native seek UI not qualified",
+    "mutedByTestRuntime": true,
+    "physicalListeningQualified": false
+  }
+]

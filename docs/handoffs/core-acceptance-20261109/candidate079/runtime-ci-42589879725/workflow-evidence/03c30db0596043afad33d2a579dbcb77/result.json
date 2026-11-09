@@ -1,0 +1,230 @@
+{
+  "at": "2026-11-09T16:59:56+08:00",
+  "state": "REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED",
+  "stage": "audio",
+  "frozenAppVersion": "0.1.79",
+  "frozenAppSource": "471d2d019a644849578bf09f9d781be76a535d88",
+  "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+  "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+  "inputKind": "Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": true,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 8172,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 197218,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 524900,
+      "title": ""
+    },
+    {
+      "hwnd": 852134,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    936
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 936,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 2156,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3796,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4160,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4236,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6244,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\03c30db0596043afad33d2a579dbcb77\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 385576960,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5985083392,
+    "systemPhysicalPercent": 30.3
+  },
+  "receivedFiles": [
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-original.wav",
+      "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "bytes": 74467886,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "originalAudioBytesIdentical": true
+    },
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+      "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+      "bytes": 37149710,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+    }
+  ],
+  "ui": {
+    "state": "REAL_NATIVE_PUBLIC_AUDIO_IMPORT_PLAYBACK_EXPORT_AND_SHELL_HANDOFF_PASSED",
+    "checkpoints": [
+      {
+        "step": "import-real-public-wav",
+        "nativePicker": "open"
+      },
+      {
+        "step": "audio-only-next-step",
+        "directAudioExportVisible": true,
+        "transcribeVisible": true,
+        "inapplicableAiWorkbenchAbsent": true
+      },
+      {
+        "step": "play-whole-public-wav",
+        "duration": 2327.119,
+        "probes": [
+          {
+            "meetingPosition": 0,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          },
+          {
+            "meetingPosition": 1163.5595,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          },
+          {
+            "meetingPosition": 2319.119,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          }
+        ],
+        "playControl": "native audio Space key",
+        "seekProbe": "HTMLMediaElement.currentTime; native seek UI not qualified",
+        "mutedByTestRuntime": true,
+        "physicalListeningQualified": false
+      },
+      {
+        "step": "save-original-wav",
+        "nativePicker": "save"
+      },
+      {
+        "step": "audio-original",
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-original.wav",
+        "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "bytes": 74467886,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "originalAudioBytesIdentical": true
+      },
+      {
+        "step": "save-mp3",
+        "nativePicker": "save"
+      },
+      {
+        "step": "audio-mp3",
+        "receiver": "Windows Shell folder Paste verb",
+        "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+        "fileName": "public-audio-S_R004S03C01-original-兼容音频.mp3",
+        "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+        "bytes": 37149710,
+        "actualFileReceived": true,
+        "sourcePathOrBytesSuppliedToReceiver": false,
+        "thirdPartyMessengerOrSendQualified": false,
+        "mp3DecodeQualification": "Requires subsequent actual product reimport/playback, not size alone"
+      },
+      {
+        "step": "decode-exported-mp3",
+        "nativePicker": "open"
+      },
+      {
+        "step": "play-decoded-exported-mp3",
+        "duration": 2327.170563,
+        "probes": [
+          {
+            "meetingPosition": 0,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          },
+          {
+            "meetingPosition": 1163.5595,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          },
+          {
+            "meetingPosition": 2319.119,
+            "decodedTimeAdvanced": true,
+            "mediaError": null
+          }
+        ],
+        "playControl": "native audio Space key",
+        "seekProbe": "HTMLMediaElement.currentTime; native seek UI not qualified",
+        "mutedByTestRuntime": true,
+        "physicalListeningQualified": false
+      }
+    ],
+    "modelsRun": false,
+    "aiCalls": 0,
+    "captureOrAcousticQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "receiverPreferencesRestoredIdentically": null,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": true,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T17:01:00+08:00"
+}

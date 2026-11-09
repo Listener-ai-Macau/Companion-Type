@@ -1,0 +1,7 @@
+{
+  "state": "NEW_DRAFT_CREATION_REJECTED_BY_EXISTING_GITHUB_TOKEN_SCOPE",
+  "requestedTag": "windows-0.1.79-471d2d01-candidate",
+  "stderr": "Failed to create release, workflow scope may be required.",
+  "newPermissionRequested": false,
+  "decision": "Use distinct 0.1.79 assets in the existing authorized private recovery draft; preserve all original0.1.78 assets and metadata."
+}

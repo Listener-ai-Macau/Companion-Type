@@ -1,0 +1,139 @@
+{
+  "at": "2026-11-09T17:01:00+08:00",
+  "state": "REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED",
+  "stage": "ai",
+  "frozenAppVersion": "0.1.79",
+  "frozenAppSource": "471d2d019a644849578bf09f9d781be76a535d88",
+  "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+  "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+  "inputKind": "Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": true,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 2900,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 197010,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 590208,
+      "title": ""
+    },
+    {
+      "hwnd": 459068,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    3080
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 740,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 1596,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3080,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 5168,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6300,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6668,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\79a6fb3a7c9b40d690c61a85a601adb5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 440373248,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 6002458624,
+    "systemPhysicalPercent": 30.1
+  },
+  "receivedFiles": [
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "公开会议·超市运营与服务改进（软件链验收）-所选内容.docx",
+      "sha256": "ac803d5c2ebfc861b8ac4607098cee2c2356efdbd31ec38834ca3902b8a76892",
+      "bytes": 25196,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "selectedContentsVerified": true
+    }
+  ],
+  "ui": {
+    "state": "ACTUAL_REVIEWED_AI_READING_MAIN_EXPORT_AND_SHELL_HANDOFF_PASSED",
+    "sourceMeeting": "S_R004S03C01",
+    "cachedRealCloudAi": true,
+    "manualSourceReviewDeclared": true,
+    "newCloudCalls": 0,
+    "newAsrRun": false,
+    "neutralQuestionHeading": true,
+    "completeTwoChunkNotice": true,
+    "topExportOpensSelectedContent": true,
+    "received": {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "公开会议·超市运营与服务改进（软件链验收）-所选内容.docx",
+      "sha256": "ac803d5c2ebfc861b8ac4607098cee2c2356efdbd31ec38834ca3902b8a76892",
+      "bytes": 25196,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "selectedContentsVerified": true
+    },
+    "aiWorkbenchAvailableAfterFinalText": true,
+    "customerOrBusinessFactQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "receiverPreferencesRestoredIdentically": null,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T17:01:06+08:00"
+}

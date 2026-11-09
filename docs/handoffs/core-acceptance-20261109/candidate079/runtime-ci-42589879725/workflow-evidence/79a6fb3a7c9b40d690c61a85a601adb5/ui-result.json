@@ -1,0 +1,29 @@
+{
+  "state": "ACTUAL_REVIEWED_AI_READING_MAIN_EXPORT_AND_SHELL_HANDOFF_PASSED",
+  "sourceMeeting": "S_R004S03C01",
+  "cachedRealCloudAi": true,
+  "manualSourceReviewDeclared": true,
+  "newCloudCalls": 0,
+  "newAsrRun": false,
+  "neutralQuestionHeading": true,
+  "completeTwoChunkNotice": true,
+  "topExportOpensSelectedContent": true,
+  "received": {
+    "receiver": "Windows Shell folder Paste verb",
+    "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+    "fileName": "公开会议·超市运营与服务改进（软件链验收）-所选内容.docx",
+    "sha256": "ac803d5c2ebfc861b8ac4607098cee2c2356efdbd31ec38834ca3902b8a76892",
+    "bytes": 25196,
+    "actualFileReceived": true,
+    "sourcePathOrBytesSuppliedToReceiver": false,
+    "thirdPartyMessengerOrSendQualified": false,
+    "selectedContentsVerified": true
+  },
+  "aiWorkbenchAvailableAfterFinalText": true,
+  "customerOrBusinessFactQualityQualified": false,
+  "identity": {
+    "url": "http://tauri.localhost/",
+    "tauri": true,
+    "title": "Companion Type"
+  }
+}

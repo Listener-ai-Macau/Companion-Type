@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-09T08:59:32.113406+00:00",
+  "state": "WINDOWS079_GROUPED_AUDIO_REVIEWED_AI_AND_DELIVERY_RUNTIME_PASSED",
+  "testSourceCommit": "238076a4a5c94f56d591274e9dcc76c47e21192d",
+  "appSourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+  "appVersion": "0.1.79",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+  "exactMsiDllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED",
+  "reopenedImports": [
+    {
+      "id": "import-526aeba96e764fea9d073cc47bedd339",
+      "title": "public-audio-S_R004S03C01-original-兼容音频",
+      "durationMs": 2327170,
+      "audioStored": true,
+      "originalChunks": 1
+    },
+    {
+      "id": "import-7ed72194b78642399eca1629ce5a4ebe",
+      "title": "public-audio-S_R004S03C01",
+      "durationMs": 2327119,
+      "audioStored": true,
+      "originalChunks": 1
+    }
+  ],
+  "reimportedOriginalsBoundToActualWavAndDeliveredMp3": true,
+  "savedOriginalByteIdentical": true,
+  "mp3Output": {
+    "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+    "bytes": 37149710,
+    "preservedInCiArtifact": true
+  },
+  "originalInputUnchanged": true,
+  "reviewedAiUi": {
+    "exitCode": 0,
+    "state": "REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED",
+    "ordinaryFileReceived": true,
+    "cachedRealCloudAi": true,
+    "newCloudCalls": 0,
+    "newAsrRun": false
+  },
+  "publicRawReviewAndAiUnchangedByReadingAndExport": true,
+  "finishedAt": "2026-11-09T09:01:06.594792+00:00"
+}

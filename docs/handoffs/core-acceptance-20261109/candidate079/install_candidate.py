@@ -25,7 +25,26 @@ def actual_version():
  assert len(result)==1,result
  return result[0]
 assert sha(msi)==verified['msiSha256']
-assert not [p.pid for p in psutil.process_iter(['name']) if (p.info['name'] or '').lower()=='companion-type.exe'],'Owner app running; leave it intact'
+def active_daily_clients():
+ blockers=[]
+ daily=(Path(os.environ['APPDATA'])/'Companion Type').resolve()
+ local=Path(os.environ['LOCALAPPDATA']).resolve()
+ for process in psutil.process_iter(['name']):
+  if (process.info['name'] or '').lower()!='companion-type.exe':continue
+  try:
+   executable=Path(process.exe()).resolve();values=process.environ()
+   state=values.get('COMPANION_TYPE_STATE_PATH');recordings=values.get('COMPANION_TYPE_RECORDING_DIR')
+   roaming=(Path(values.get('APPDATA',os.environ['APPDATA']))/'Companion Type').resolve()
+   webview=values.get('WEBVIEW2_USER_DATA_FOLDER')
+   webview_separate=(bool(webview) and not Path(webview).resolve().is_relative_to(local)) or Path(values.get('LOCALAPPDATA',os.environ['LOCALAPPDATA'])).resolve()!=local
+   isolated=not executable.is_relative_to(installed.resolve()) and executable.with_name('companion_type_lib.dll').is_file() and state and recordings and not Path(state).resolve().is_relative_to(daily) and not Path(recordings).resolve().is_relative_to(daily) and not roaming.is_relative_to(daily) and webview_separate
+   settings=values.get('COMPANION_TYPE_PRODUCT_SETTINGS_PATH')
+   if settings and Path(settings).resolve().is_relative_to(daily):isolated=False
+   if not isolated:blockers.append({'pid':process.pid,'reason':'Installed files or daily app storage may be in use'})
+  except psutil.NoSuchProcess:continue
+  except (psutil.AccessDenied,OSError):blockers.append({'pid':process.pid,'reason':'Cannot prove independent files and storage'})
+ return blockers
+assert not active_daily_clients(),'Daily Companion may be active; leave it intact'
 previous=actual_version();assert tuple(map(int,previous.split('.')))<(0,1,79),previous
 work=Path('E:/CodexData/Companion/.build-cache/core-acceptance20261109/candidate079')/('upgrade079-private-'+str(time.time_ns()));work.mkdir(exist_ok=False)
 now=lambda:datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds')
@@ -53,7 +72,7 @@ save()
 try:
  # A second running-app observation immediately before the installer, after
  # the potentially lengthy data hashes. Do not ask RestartManager to close it.
- assert not [p.pid for p in psutil.process_iter(['name']) if (p.info['name'] or '').lower()=='companion-type.exe'],'Owner app opened meanwhile; preserve it'
+ assert not active_daily_clients(),'Daily Companion opened meanwhile; preserve it'
  run=subprocess.run(['msiexec.exe','/i',str(msi),'/qn','/norestart','REBOOT=ReallySuppress','MSIRESTARTMANAGERCONTROL=Disable','/L*v',str(work/'install.log')],capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW)
  record['installerExitCode']=run.returncode;assert run.returncode in [0,3010],run.returncode
  after=inventory();(work/'data-after.json').write_text(json.dumps(after,ensure_ascii=False,indent=2),encoding='utf8')

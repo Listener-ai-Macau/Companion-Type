@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-09T17:02:42+08:00",
+  "state": "INSTALL_DEFERRED_EXISTING_COMPANION_PROCESS_RUNNING",
+  "candidateVersion": "0.1.79",
+  "installerStarted": false,
+  "existingProcesses": [
+    {
+      "pid": 32092,
+      "executable": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\release\\windows-bin\\companion-type.exe",
+      "createTime": 1794209883.3730898
+    }
+  ],
+  "existingProcessesStopped": false,
+  "ownerForegroundUsed": false,
+  "dataReadOrChangedByInstaller": false,
+  "reason": "Existing Companion is running. Keep it intact rather than force-close a possible user or shared-device receiver. The protected candidate is ready for a later idle upgrade.",
+  "existingInstalledNativeSha256": {
+    "companion-type.exe": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+    "companion_type_lib.dll": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1"
+  }
+}

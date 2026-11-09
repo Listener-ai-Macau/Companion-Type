@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T15:43:08+08:00",
+      "updatedAt": "2026-11-09T16:57:16+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "769/3b2 +079/d00同批候选已在实板运行：原375通过现有正常准备恢复、可恢复原音已收回且captureIncomplete保留；获准第一段376十秒已封口收取。769正常OTA118.683s/结束验证87.268s、联合确认/临时区释放和原34目录均通过。只监督当前377长录/录中同步，现有采音计数若有失败则收尾修源头，否则完成原2h录音+2h录中同步及PDM/编码/前台/栈/零故障/完整原音。录中不刷写、UART/SWD、换端或新增START；手机/实体/速度与明确block仍不继承通过。",
+      "next": "当前实板仍769/3b2+079/d00的同一377长录，只监督并收尾后读取累计指标/完整原音。实物375暴露的“需启动下一场才恢复旧故障目录”已并入同批开发：770/64d552正常构建签名及真实C/NOR/Opus自动收尾模型通过，镜像405084B/静态67896B/栈21504B，正常控制原音字节与769完全相同；新自动触发尚未实板验证，不能借769长录冒充770整版通过。长录完成前不更换板上版本；读取本场实际失败后把同链必要修改集中交付，不复开速度/屏幕/明确block。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133746,7 +133746,11 @@
         "windowsCoreCandidatePackage": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\release\\Companion-Windows-0.1.79-Core-Candidate.msi",
         "windowsCoreCandidatePackageSha256": "6f4a708c9bb983f9193a7a6dc7445d830d34241452b50f45026175139d1877e3",
         "windowsCoreCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-candidate.json",
-        "windowsCoreCandidateInstalled": false
+        "windowsCoreCandidateInstalled": false,
+        "nextFaultRecoveryFirmware": 66770,
+        "nextFaultRecoveryCommit": "64d5521ca6b86df3542500d224050e87275cac47",
+        "nextFaultRecoverySourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "nextFaultRecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core770-development.json"
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -136447,7 +136451,7 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T15:43:08+08:00",
+        "at": "2026-11-09T16:57:16+08:00",
         "state": "MATCHED_CORE769_079_LONG_RECORDING_AND_SYNC_RUNNING",
         "phoneInstalled": "0.1.109",
         "firmwareInstalled": 66769,
@@ -136504,7 +136508,11 @@
           "sessionId": "0000000000000179"
         },
         "operatorReady": true,
-        "operatorPromptPending": false
+        "operatorPromptPending": false,
+        "offlineRecoveryCandidate": 66770,
+        "offlineRecoverySourceCommit": "64d5521ca6b86df3542500d224050e87275cac47",
+        "offlineRecoveryBuildRunning": false,
+        "offlineRecoveryInstalled": false
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -140937,7 +140945,23 @@
           "remaining": "One physical handoff, preserve/recover original375, normal OTA and matched recording-chain acceptance.",
           "hardwareReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
           "old375RecoveredAsIncomplete": true,
-          "old34MetadataIdentical": true
+          "old34MetadataIdentical": true,
+          "stoppedOriginalAutomaticRecovery": {
+            "at": "2026-11-09T16:57:16+08:00",
+            "sourceCommit": "64d5521ca6b86df3542500d224050e87275cac47",
+            "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+            "firmwareCandidate": 66770,
+            "installed": false,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core770-development.json",
+            "applicationBytes": 405084,
+            "staticBytes": 67896,
+            "stackBytes": 21504,
+            "softwareOldFailureReproduced": true,
+            "softwareCandidatePass": true,
+            "normalAudioByteIdentical": true,
+            "physicalAutomaticTrigger": "NOT_RUN",
+            "meaning": "Same fault/save chain: a stopped-fault event restores the validated existing original once; no new microphone/session and no endless NOR retry."
+          }
         }
       },
       "continuousGoal": {
@@ -262883,7 +262907,7 @@
         "ownerCoreAcceptanceCandidate20261109": {
           "at": "2026-11-09T13:28:17+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "CORE_ACCEPTANCE_BATCH_IN_PROGRESS_WINDOWS_SAVED_FLOW_PROVEN",
+          "state": "CORE_ACCEPTANCE_BATCH_IN_PROGRESS_WINDOWS079_GROUPED_RUNTIME_PROVEN",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -262908,8 +262932,8 @@
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
           "currentCheckpoint": {
-            "windows": "0.1.78 installed; source bb1550c42b674d7ec3e526db9f7fdefb84cff7ae; delivery a59263683fe006acab54f5e7f5dd36ef077e10f2;245 original files unchanged",
-            "windowsRemaining": "Windows079正常远端构建/包内核对/受影响界面验收；原WinRT系统分享故障与聊天应用附件仍开放。原音/MP3实际保存、Shell粘贴、重导入播放和重开已过；实体实听、手机与板卡按原任务继续。",
+            "windows": "0.1.79 installed; existing data hashes unchanged; source 471d2d019a644849578bf09f9d781be76a535d88; normal release MSI and grouped runtime passed",
+            "windowsRemaining": "旧WinRT系统分享与聊天应用附件、实体实听保留；下一批Windows阻断/双端/录音卡按原任务集中完成，不能写只剩模型。",
             "phone": "Android100已保护候选未安装，最后本聊天真机65观测后USB中断；后续先读实态，禁止根据旧收据降级",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
             "model": "普通固定基线5.53754%，复杂多人/重叠/纪要事实未合格，原记录保留",
@@ -262917,50 +262941,77 @@
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "同一批Windows079远端正常构建、包内核对和受影响普通界面确认；公开AI事实审阅链已实际跑通，保留原ASR错误/人工修订边界。随后Android/录音卡按原待办联调，不重跑未受影响旧检查。",
+          "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
           "lastOutcome": {
-            "at": "2026-11-09T14:56:27+08:00",
-            "state": "WINDOWS_SAVED_MEETING_AND_SHELL_HANDOFF_PROVEN_CORE_CANDIDATE_IN_PROGRESS",
-            "appVersion": "0.1.78",
-            "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
-            "verificationSourceCommit": "d44dc30e7e217febc3209b05fdc1265ff9c52dfc",
-            "acceptedWorkflowRun": "42575618375",
-            "runUrl": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42575618375",
-            "nativeRecompiled": false,
-            "installedNewCandidateThisBatch": false,
-            "completedOutcome": "同一份约38分钟真实公开会议的已保存转写，修订/人工标注/所选内容TXT Word PDF/新库备份恢复/保护与回收站/重开，以及真实App复制文件到Windows标准Shell粘贴落盘通过。",
-            "limits": "人工文档与人工姓名标签；没有新ASR/AI、原音回听、实体采音或手机验收。Shell实际落盘不等于聊天应用收件、发送或旧系统分享已修。",
-            "groupedUiSource": {
-              "commit": "a7e9df52db0ab4a6731ef75cf17abcde2008cf2e",
-              "changes": [
-                "会议顶部导出定位到所选内容面板",
-                "只有转写/重点/补充时也提供顶部导出入口",
-                "保留其它格式导出但不误作主入口"
-              ],
-              "typecheckPassed": true,
-              "packaged": false
+            "at": "2026-11-09T17:05:55+08:00",
+            "state": "WINDOWS079_GROUPED_CANDIDATE_INSTALLED_DATA_PRESERVED",
+            "version": "0.1.79",
+            "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+            "runtimeTestSourceCommit": "238076a4a5c94f56d591274e9dcc76c47e21192d",
+            "buildRun": 42587844329,
+            "runtimeRun": 42589879725,
+            "runtimeUrl": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42589879725",
+            "installed": true,
+            "installation": {
+              "state": "WINDOWS079_INSTALLED_EXISTING_DATA_IDENTICAL",
+              "startedAt": "2026-11-09T17:04:40+08:00",
+              "candidateVersion": "0.1.79",
+              "previousInstalledVersion": "0.1.78",
+              "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+              "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+              "existingDataFiles": 245,
+              "dataContentsPrinted": false,
+              "installerExitCode": 0,
+              "finishedAt": "2026-11-09T17:04:45+08:00",
+              "dataManifestIdentical": true,
+              "installedVersion": "0.1.79",
+              "installedExeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+              "installedDllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+              "installedHelpStartupPassed": true,
+              "ordinaryThirdPartyPasteQualified": false,
+              "oldWinRTSharePickerFixed": false,
+              "modelsRun": false,
+              "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference.",
+              "unrelatedPrivateWorkerLeftRunning": true,
+              "initialFilenameOnlyGuardRetained": "installation-first-preflight-retained.json",
+              "refinedGuardReason": "Only installed files or daily storage in use block this upgrade. The unrelated test executable has separate native DLL, state, recordings, roaming and local storage; it was not stopped."
             },
-            "verificationFailuresRetained": {
-              "runsBeforePass": [
-                "42572270357",
-                "42572635265",
-                "42573005968",
-                "42573478711",
-                "42573791912",
-                "42574369843",
-                "42574971124"
-              ],
-              "classification": "验收准备/平台启动/工具误判与错误接收端选择，不作为产品转写/分享故障或功能进展。",
-              "invalidReceiver": "7-Zip EditPaste实际为空，前面的菜单/按键尝试无效；停止使用，不再同条件重复。",
-              "officialSource": "https://github.com/ip7z/7zip/blob/d3296e39e1f1f92c7b41c0c3848e65640428d42d/CPP/7zip/UI/FileManager/PanelMenu.cpp#L429",
-              "keptLocalFailure": "原256MiB测试进程PDF失败、本机实际低内存停止及远端所有失败均保留；足够资源的远端PDF已过，不据此修改产品内存/全局设置。"
+            "remoteDraft": {
+              "at": "2026-11-09T17:00:09+08:00",
+              "state": "PRIVATE_DRAFT_MSI_DOWNLOADED_AND_HASH_VERIFIED",
+              "tag": "windows-0.1.78-bb1550c4-candidate",
+              "preferredNewTag": "windows-0.1.79-471d2d01-candidate",
+              "sharedHistoricalRecoveryContainer": true,
+              "original078AssetsReplaced": false,
+              "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+              "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+              "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+              "draft": true,
+              "published": false,
+              "readbackByteIdentical": true,
+              "saleQualified": false
             },
-            "next": "沿同一Windows完整会后目的推进实际原音回听、原音/MP3交付、AI整理及事实核对；相关阻断收敛后集中构建候选，再Android与录音卡联调。不重测已过且未受影响数据链，不再使用7-Zip空粘贴入口。",
-            "modelsRun": false,
+            "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+            "completedOutcome": [
+              "真实公开38分47秒原音系统导入、媒体播放探针、原音/MP3系统保存和Windows标准Shell粘贴、MP3重导入解码、重开",
+              "无文字时转文字/导出录音可见，未显示不可用AI工作区；有最终文字时可进入会议AI助手",
+              "实际AI纪要的会中问题、完整两段处理状态、校对后摘要、顶部直达所选内容导出、Word实际落盘",
+              "实际AI材料阅读/导出后原始转写、修订及纪要内容不变"
+            ],
+            "limits": [
+              "回听探针为实际媒体解码与运行时静音，不代替扬声器实听和全部原生拖动条操作",
+              "本批复用实际既有ASR和AI结果；30.817秒是转写文字到纪要，人工校对不等于ASR准确率提升",
+              "Windows标准Shell文件收件已过；聊天应用附件及旧WinRT系统分享仍未合格",
+              "Android、板卡、复杂多人/重叠、完整事实质量和新客户实际体验沿原待办开放"
+            ],
+            "localHeavyBuild": false,
+            "localModelsRun": false,
+            "phoneAccessed": false,
+            "boardAccessed": false,
             "wholeCoreCandidateQualified": false,
             "saleQualified": false
           },
@@ -263004,7 +263055,7 @@
             "ordinaryShellPasteQualified": true
           },
           "groupedMeetingUiSource20261109": {
-            "state": "GROUPED_UI_SOURCE_CHECKS_PASSED_NOT_YET_PACKAGED",
+            "state": "GROUPED_UI_PACKAGED_AND_ACTUAL_RUNTIME_PASSED",
             "changes": [
               "原音导出进入会议顶部工具栏，打开原有格式/保存/分享区域",
               "无最终文字时隐藏无法使用的会议AI工作区，给出简短下一步",
@@ -263013,11 +263064,14 @@
             "automaticUnresolvedQuestionResolutionStillOpen": true,
             "sourceCommit": "5e8909e514866d6b513bf436636495f273eba77b",
             "acceptedRun": 42584662552,
-            "nativePackaged": false
+            "nativePackaged": true,
+            "candidateVersion": "0.1.79",
+            "runtimeRun": 42589879725,
+            "installed": true
           },
           "groupedCandidate079": {
             "at": "2026-11-09T16:41:52+08:00",
-            "state": "GROUPED_WINDOWS079_REMOTE_BUILD_IN_PROGRESS",
+            "state": "WINDOWS079_GROUPED_CANDIDATE_INSTALLED_DATA_PRESERVED",
             "version": "0.1.79",
             "purpose": "同一场会议从原音、转写修订、AI整理到所选内容/录音交付，集中收敛Windows候选。",
             "changes": [
@@ -263029,7 +263083,7 @@
             "affectedUiSourcePassedRun": 42584662552,
             "realAudioFlowPassedRun": 42587058258,
             "nativeRecompiled": false,
-            "installed": false,
+            "installed": true,
             "wholeCoreCandidateQualified": false,
             "saleQualified": false,
             "localHeavyBuild": false,
@@ -263038,7 +263092,12 @@
             "boardAccessed": false,
             "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
             "remoteReadbackConfirmed": true,
-            "buildRun": 42587844329
+            "buildRun": 42587844329,
+            "runtimeRun": 42589879725,
+            "normalReleaseBuildPassed": true,
+            "msiPayloadAndUpgradeVerified": true,
+            "actualRuntimePassed": true,
+            "remoteDraftProtected": true
           },
           "audioAiWorkflow20261109": {
             "at": "2026-11-09T16:44:57+08:00",
@@ -263120,6 +263179,125 @@
               ],
               "evidence": "docs/handoffs/core-acceptance-20261109/ai-22512f1af147477eadece50329a12b93"
             }
+          },
+          "previousBatchOutcomes": [
+            {
+              "at": "2026-11-09T14:56:27+08:00",
+              "state": "WINDOWS_SAVED_MEETING_AND_SHELL_HANDOFF_PROVEN_CORE_CANDIDATE_IN_PROGRESS",
+              "appVersion": "0.1.78",
+              "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+              "verificationSourceCommit": "d44dc30e7e217febc3209b05fdc1265ff9c52dfc",
+              "acceptedWorkflowRun": "42575618375",
+              "runUrl": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42575618375",
+              "nativeRecompiled": false,
+              "installedNewCandidateThisBatch": false,
+              "completedOutcome": "同一份约38分钟真实公开会议的已保存转写，修订/人工标注/所选内容TXT Word PDF/新库备份恢复/保护与回收站/重开，以及真实App复制文件到Windows标准Shell粘贴落盘通过。",
+              "limits": "人工文档与人工姓名标签；没有新ASR/AI、原音回听、实体采音或手机验收。Shell实际落盘不等于聊天应用收件、发送或旧系统分享已修。",
+              "groupedUiSource": {
+                "commit": "a7e9df52db0ab4a6731ef75cf17abcde2008cf2e",
+                "changes": [
+                  "会议顶部导出定位到所选内容面板",
+                  "只有转写/重点/补充时也提供顶部导出入口",
+                  "保留其它格式导出但不误作主入口"
+                ],
+                "typecheckPassed": true,
+                "packaged": false
+              },
+              "verificationFailuresRetained": {
+                "runsBeforePass": [
+                  "42572270357",
+                  "42572635265",
+                  "42573005968",
+                  "42573478711",
+                  "42573791912",
+                  "42574369843",
+                  "42574971124"
+                ],
+                "classification": "验收准备/平台启动/工具误判与错误接收端选择，不作为产品转写/分享故障或功能进展。",
+                "invalidReceiver": "7-Zip EditPaste实际为空，前面的菜单/按键尝试无效；停止使用，不再同条件重复。",
+                "officialSource": "https://github.com/ip7z/7zip/blob/d3296e39e1f1f92c7b41c0c3848e65640428d42d/CPP/7zip/UI/FileManager/PanelMenu.cpp#L429",
+                "keptLocalFailure": "原256MiB测试进程PDF失败、本机实际低内存停止及远端所有失败均保留；足够资源的远端PDF已过，不据此修改产品内存/全局设置。"
+              },
+              "next": "沿同一Windows完整会后目的推进实际原音回听、原音/MP3交付、AI整理及事实核对；相关阻断收敛后集中构建候选，再Android与录音卡联调。不重测已过且未受影响数据链，不再使用7-Zip空粘贴入口。",
+              "modelsRun": false,
+              "wholeCoreCandidateQualified": false,
+              "saleQualified": false
+            }
+          ],
+          "lastWindowsGroupedOutcome": {
+            "at": "2026-11-09T17:05:55+08:00",
+            "state": "WINDOWS079_GROUPED_CANDIDATE_INSTALLED_DATA_PRESERVED",
+            "version": "0.1.79",
+            "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+            "runtimeTestSourceCommit": "238076a4a5c94f56d591274e9dcc76c47e21192d",
+            "buildRun": 42587844329,
+            "runtimeRun": 42589879725,
+            "runtimeUrl": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42589879725",
+            "installed": true,
+            "installation": {
+              "state": "WINDOWS079_INSTALLED_EXISTING_DATA_IDENTICAL",
+              "startedAt": "2026-11-09T17:04:40+08:00",
+              "candidateVersion": "0.1.79",
+              "previousInstalledVersion": "0.1.78",
+              "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+              "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+              "existingDataFiles": 245,
+              "dataContentsPrinted": false,
+              "installerExitCode": 0,
+              "finishedAt": "2026-11-09T17:04:45+08:00",
+              "dataManifestIdentical": true,
+              "installedVersion": "0.1.79",
+              "installedExeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+              "installedDllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+              "installedHelpStartupPassed": true,
+              "ordinaryThirdPartyPasteQualified": false,
+              "oldWinRTSharePickerFixed": false,
+              "modelsRun": false,
+              "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference.",
+              "unrelatedPrivateWorkerLeftRunning": true,
+              "initialFilenameOnlyGuardRetained": "installation-first-preflight-retained.json",
+              "refinedGuardReason": "Only installed files or daily storage in use block this upgrade. The unrelated test executable has separate native DLL, state, recordings, roaming and local storage; it was not stopped."
+            },
+            "remoteDraft": {
+              "at": "2026-11-09T17:00:09+08:00",
+              "state": "PRIVATE_DRAFT_MSI_DOWNLOADED_AND_HASH_VERIFIED",
+              "tag": "windows-0.1.78-bb1550c4-candidate",
+              "preferredNewTag": "windows-0.1.79-471d2d01-candidate",
+              "sharedHistoricalRecoveryContainer": true,
+              "original078AssetsReplaced": false,
+              "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+              "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+              "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+              "draft": true,
+              "published": false,
+              "readbackByteIdentical": true,
+              "saleQualified": false
+            },
+            "msiSha256": "40e703da7448037c750d5d9bf4cc83f2151b0f5a404df9abbc7f85935a44bd58",
+            "completedOutcome": [
+              "真实公开38分47秒原音系统导入、媒体播放探针、原音/MP3系统保存和Windows标准Shell粘贴、MP3重导入解码、重开",
+              "无文字时转文字/导出录音可见，未显示不可用AI工作区；有最终文字时可进入会议AI助手",
+              "实际AI纪要的会中问题、完整两段处理状态、校对后摘要、顶部直达所选内容导出、Word实际落盘",
+              "实际AI材料阅读/导出后原始转写、修订及纪要内容不变"
+            ],
+            "limits": [
+              "回听探针为实际媒体解码与运行时静音，不代替扬声器实听和全部原生拖动条操作",
+              "本批复用实际既有ASR和AI结果；30.817秒是转写文字到纪要，人工校对不等于ASR准确率提升",
+              "Windows标准Shell文件收件已过；聊天应用附件及旧WinRT系统分享仍未合格",
+              "Android、板卡、复杂多人/重叠、完整事实质量和新客户实际体验沿原待办开放"
+            ],
+            "localHeavyBuild": false,
+            "localModelsRun": false,
+            "phoneAccessed": false,
+            "boardAccessed": false,
+            "wholeCoreCandidateQualified": false,
+            "saleQualified": false
+          },
+          "latestOwnerContinuation": {
+            "quote": "继续集中推进",
+            "at": "2026-11-09T17:05:55+08:00",
+            "decision": "完成同一Windows会议交付链及079集中候选，承接原1–2周工程预算，不拆新任务树。",
+            "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。"
           }
         }
       },
@@ -263144,7 +263322,7 @@
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
       "result": "Windows052已交付范围保留；Android054候选PPTX/XLSX/mm/PNG与独立AI材料选择完成，实际生产Java/JVM/手机原生位图与文件结构、同源APK签名和16KiB对齐通过。保留手机053配对现场，主App054未装，系统保存/分享/升级资料保留和Owner/客户待验。",
-      "next": "沿ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.next，交付完整核心候选，先Windows后手机；模型专项和原售卖门保留。",
+      "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",
