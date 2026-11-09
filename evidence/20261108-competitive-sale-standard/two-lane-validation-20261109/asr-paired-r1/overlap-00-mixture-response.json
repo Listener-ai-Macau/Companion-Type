@@ -1,0 +1,301 @@
+{
+  "audio_info": {
+    "duration": 8000
+  },
+  "result": {
+    "additions": {
+      "log_id": "20261109083454F3C130FB173CB05C8DD5"
+    },
+    "text": "咱看能找个什么措施？这个挺普遍，咱们小区其他小区也有。挺普遍的，其他小区也有。这个他是。其他小区怎么弄？",
+    "utterances": [
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 1360,
+        "text": "咱看能找个什么措施？",
+        "words": [
+          {
+            "end_time": 80,
+            "start_time": 40,
+            "text": "咱"
+          },
+          {
+            "end_time": 240,
+            "start_time": 80,
+            "text": "看"
+          },
+          {
+            "end_time": 400,
+            "start_time": 240,
+            "text": "能"
+          },
+          {
+            "end_time": 680,
+            "start_time": 520,
+            "text": "找"
+          },
+          {
+            "end_time": 760,
+            "start_time": 680,
+            "text": "个"
+          },
+          {
+            "end_time": 880,
+            "start_time": 800,
+            "text": "什"
+          },
+          {
+            "end_time": 1000,
+            "start_time": 880,
+            "text": "么"
+          },
+          {
+            "end_time": 1200,
+            "start_time": 1000,
+            "text": "措"
+          },
+          {
+            "end_time": 1360,
+            "start_time": 1200,
+            "text": "施"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "2",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 5160,
+        "start_time": 2000,
+        "text": "这个挺普遍，咱们小区其他小区也有。",
+        "words": [
+          {
+            "end_time": 2200,
+            "start_time": 2000,
+            "text": "这"
+          },
+          {
+            "end_time": 2360,
+            "start_time": 2200,
+            "text": "个"
+          },
+          {
+            "end_time": 2600,
+            "start_time": 2360,
+            "text": "挺"
+          },
+          {
+            "end_time": 2800,
+            "start_time": 2600,
+            "text": "普"
+          },
+          {
+            "end_time": 2960,
+            "start_time": 2800,
+            "text": "遍"
+          },
+          {
+            "end_time": 3840,
+            "start_time": 3760,
+            "text": "咱"
+          },
+          {
+            "end_time": 3920,
+            "start_time": 3840,
+            "text": "们"
+          },
+          {
+            "end_time": 4080,
+            "start_time": 4000,
+            "text": "小"
+          },
+          {
+            "end_time": 4280,
+            "start_time": 4200,
+            "text": "区"
+          },
+          {
+            "end_time": 4560,
+            "start_time": 4480,
+            "text": "其"
+          },
+          {
+            "end_time": 4680,
+            "start_time": 4560,
+            "text": "他"
+          },
+          {
+            "end_time": 4800,
+            "start_time": 4720,
+            "text": "小"
+          },
+          {
+            "end_time": 4920,
+            "start_time": 4800,
+            "text": "区"
+          },
+          {
+            "end_time": 5040,
+            "start_time": 4920,
+            "text": "也"
+          },
+          {
+            "end_time": 5160,
+            "start_time": 5040,
+            "text": "有"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 6160,
+        "start_time": 5160,
+        "text": "挺普遍的，其他小区也有。",
+        "words": [
+          {
+            "end_time": 5200,
+            "start_time": 5160,
+            "text": "挺"
+          },
+          {
+            "end_time": 5240,
+            "start_time": 5200,
+            "text": "普"
+          },
+          {
+            "end_time": 5280,
+            "start_time": 5240,
+            "text": "遍"
+          },
+          {
+            "end_time": 5320,
+            "start_time": 5280,
+            "text": "的"
+          },
+          {
+            "end_time": 5360,
+            "start_time": 5320,
+            "text": "其"
+          },
+          {
+            "end_time": 5440,
+            "start_time": 5360,
+            "text": "他"
+          },
+          {
+            "end_time": 5680,
+            "start_time": 5520,
+            "text": "小"
+          },
+          {
+            "end_time": 5800,
+            "start_time": 5680,
+            "text": "区"
+          },
+          {
+            "end_time": 6000,
+            "start_time": 5840,
+            "text": "也"
+          },
+          {
+            "end_time": 6160,
+            "start_time": 6000,
+            "text": "有"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "2",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 8002,
+        "start_time": 6360,
+        "text": "这个他是。其他小区怎么弄？",
+        "words": [
+          {
+            "end_time": 6400,
+            "start_time": 6360,
+            "text": "这"
+          },
+          {
+            "end_time": 6520,
+            "start_time": 6480,
+            "text": "个"
+          },
+          {
+            "end_time": 6880,
+            "start_time": 6840,
+            "text": "他"
+          },
+          {
+            "end_time": 7080,
+            "start_time": 6880,
+            "text": "是"
+          },
+          {
+            "end_time": 7240,
+            "start_time": 7160,
+            "text": "其"
+          },
+          {
+            "end_time": 7320,
+            "start_time": 7240,
+            "text": "他"
+          },
+          {
+            "end_time": 7520,
+            "start_time": 7360,
+            "text": "小"
+          },
+          {
+            "end_time": 7600,
+            "start_time": 7520,
+            "text": "区"
+          },
+          {
+            "end_time": 7760,
+            "start_time": 7640,
+            "text": "怎"
+          },
+          {
+            "end_time": 7840,
+            "start_time": 7760,
+            "text": "么"
+          },
+          {
+            "end_time": 7960,
+            "start_time": 7840,
+            "text": "弄"
+          }
+        ]
+      }
+    ]
+  }
+}

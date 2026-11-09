@@ -1,0 +1,21 @@
+{
+  "declaredAt": "2026-11-07T17:51:07+08:00",
+  "baseControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+  "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "baseWorkerSourceSha256": null,
+  "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+  "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+  "maximumSplitDepth": 2,
+  "minimumLeafSamples": 120000,
+  "repeatCopies": 20,
+  "maximumRepeatBlockTokens": 8,
+  "rule": "On missing natural EOS or the existing short-gate20-copy token loop, retain the failed raw node, bisect the entire original input and decode both children. At most2levels; no child shorter than7.5s. Exhaustion is a failure. Early loop stop changes no generated prefix. No word deletion, VAD trimming, token-budget increase, model/prompt/weight change, reference or participant count.",
+  "normalOutputPolicy": "Keep every accepted original raw ID/text exactly; same frozen policy across both whole meetings.",
+  "modelParametersChanged": false,
+  "rawFailedParentReplacedByClaimedEos": false,
+  "qualityQualified": false,
+  "pilotCases": "Fresh ordinary first30s default/bounded IDs exact; fresh1.7B on prior0.6B failing complex1020–1050s, bounded recovery if needed; exact-zero pipeline input only (not bare-model silence). No0.6B neural output reused.",
+  "originalFailedReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\review.json",
+  "changedParameterScope": "Same frozen1.7B and recovery; six tiny original/extracted development inputs only. No answer-based prompts or model tuning.",
+  "earlyGateReusedFrom": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\pilot"
+}

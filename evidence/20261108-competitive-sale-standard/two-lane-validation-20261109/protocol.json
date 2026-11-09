@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-09T08:28:32+08:00",
+  "workerSha256": "f9dbe5c75a8562843d30081d01a60478e0e6fda7e5f00d59efb21a3d286aa62b",
+  "audioOnlySha256": "a4d43b560c83c5292c71d8606d1ee7f90b72705fa4a0d72104aae36446e3f0c4",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "policy": "Frozen17automatic profiles, originalPS4 ECAPA raw-vector mean. Earliest4 nonoverlapping queries per predictedperson, 1..4s,15s start spacing, solo predictedjournal shrunk200ms. Exclude allprofile spans and old302s analysiswindow. Allselected retained. Reference labels/text are scoring-only. No new threshold tuning or weights.",
+  "gate": "Development readiness only: report every person and every selected query, profile confusion, same-device calibration, resource/time. Not whole-meeting DER, overlap CER or generalization qualification.",
+  "queryCount": 22,
+  "queriesPerPerson": {
+    "0": 4,
+    "1": 4,
+    "2": 4,
+    "3": 2,
+    "4": 4,
+    "5": 4
+  },
+  "cpuPercentCap": 5,
+  "privateCommitCapBytes": 2147483648,
+  "systemLowMemoryStop": true,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "runtime": "Native CPU torch2.12.0+cpu; AMD runtime import failed before neural call under2GiB private cap. Preserve original cap and avoid HIP libraries for CPU task."
+}

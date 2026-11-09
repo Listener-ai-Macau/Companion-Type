@@ -1,0 +1,137 @@
+{
+  "state": "COMPLETE",
+  "rows": [
+    {
+      "id": "overlap-00-mixture",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 10.995804800011683,
+      "privateBytes": 21069824
+    },
+    {
+      "id": "overlap-00-native-1",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 10.326324100024067,
+      "privateBytes": 21856256
+    },
+    {
+      "id": "overlap-00-native-2",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 9.98644070001319,
+      "privateBytes": 22339584
+    },
+    {
+      "id": "overlap-01-mixture",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 10.448268099979032,
+      "privateBytes": 22994944
+    },
+    {
+      "id": "overlap-01-native-2",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 11.714808800024912,
+      "privateBytes": 23527424
+    },
+    {
+      "id": "overlap-01-native-3",
+      "state": "COMPLETE",
+      "retryCount": 0,
+      "providerGeneration": "bigmodel",
+      "endpoint": "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async",
+      "wireRequestWithoutCredentials": {
+        "model_name": "bigmodel",
+        "enable_itn": true,
+        "enable_punc": true,
+        "show_utterances": true,
+        "enable_speaker_info": true,
+        "result_type": "full",
+        "enable_nonstream": true,
+        "ssd_version": "200"
+      },
+      "wallSeconds": 10.159314200049266,
+      "privateBytes": 23359488
+    }
+  ],
+  "wallSeconds": 63.63535439997213,
+  "limits": {
+    "pid": 18940,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 23527424,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "saleQualified": false
+}

@@ -1,0 +1,32 @@
+{
+  "state": "READY_EXTERNAL_6800XT_REQUIRED_NOT_RUN",
+  "order": [
+    "overlap-00-mixture",
+    "overlap-00-native-1",
+    "overlap-00-native-2",
+    "overlap-01-mixture",
+    "overlap-01-native-2",
+    "overlap-01-native-3"
+  ],
+  "doNotUseWholeMeetingScorerOnClippedUtteranceBoundaries": true,
+  "referenceSuppliedToWorker": false,
+  "sameWorkerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+  "firstCommandTemplate": [
+    "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_checkpoint_worker_20261107.py",
+    "--control",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\overlap-qwen-r1",
+    "--phase",
+    "full",
+    "--index",
+    "0"
+  ],
+  "followWithIndexes": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "saleQualified": false
+}

@@ -1,0 +1,308 @@
+{
+  "license": "Derived fromAISHELL4/OpenSLR111, CC-BY-SA4.0; originalcorpus authors/attribution/source descriptions retained. PS4author originalcheckpoint Apache2.0 modelcard withupstreamcomponent licenses. Publicdevelopment audio only, no private content.",
+  "source": "https://www.openslr.org/111/",
+  "derivation": "Original PCM channel1 crops and originalPS4 speaker-conditioned float/PCM outputs. Exact sample bounds, sourceSHA and modelSHA in manifests. Reference/transcripts are not inference input.",
+  "files": [
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-4-0.wav",
+      "bytes": 256042,
+      "sha256": "8bc2d207bf4ca0a6b379d61cbd0ae922f55cb2b5078816898ad630ab5e1f80b8"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-4-1.wav",
+      "bytes": 256042,
+      "sha256": "c05b2083e53a3bd26bb31b0a07774a8aaba4a86f806870082dfcdfebe35ba5cb"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-2-0.wav",
+      "bytes": 256042,
+      "sha256": "33f5f5d29c9140fd1d400869dcfd0a26af5734711754ffb48a2a95681ed3bd56"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-2-1.wav",
+      "bytes": 190442,
+      "sha256": "3b91609b2787d5258d88c1a72bece4a6c6df308c35a63a00528b1f0f41336068"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-2.wav",
+      "archivedRelativePath": "public-audio/profiles/native-2-2.wav",
+      "bytes": 253162,
+      "sha256": "089465ef633ee3d3b9ab8ea551ed2eadd559bf420d080a0517b104367397a9bc"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-2.wav",
+      "archivedRelativePath": "public-audio/profiles/native-4-2.wav",
+      "bytes": 256042,
+      "sha256": "76c0e6213eb43ea0bb08ee77787b6d480f58494ccc80aef9d23e4fbf350032b8"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-5-0.wav",
+      "bytes": 129002,
+      "sha256": "51312337585f4faf60d416c04bacb7e8c3d70ff54c3258d4993b1b64eb9e0ee5"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-5-1.wav",
+      "bytes": 256042,
+      "sha256": "767a1f01eb213777d1e1843f177943d9a8eedf1b4f16620b89a8f2f105206a32"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-2.wav",
+      "archivedRelativePath": "public-audio/profiles/native-5-2.wav",
+      "bytes": 143402,
+      "sha256": "555cc1e274157768e20eddd31495f923fe90fc50f44be752d561c850ae127ac3"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-1-0.wav",
+      "bytes": 256042,
+      "sha256": "33c5bdefe26ec8498e4b6307b393474f7cfff2c308d40d2da044c60fde96dab9"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-1-1.wav",
+      "bytes": 77482,
+      "sha256": "887ebac12b22333daa9015dba4818e665661807411aede9bc338313c41d6ac3e"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-2.wav",
+      "archivedRelativePath": "public-audio/profiles/native-1-2.wav",
+      "bytes": 256042,
+      "sha256": "9adaea3c42b8ea380a2b0a24b8df6a070c2524d6c0d2f2fabdf7d8fccf388b2b"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-3-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-3-0.wav",
+      "bytes": 256042,
+      "sha256": "3635cc135dc5bdb57e53b61882d4f21d47d2c1a6f623fc952c8caf80c97d5ed6"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-0.wav",
+      "archivedRelativePath": "public-audio/profiles/native-0-0.wav",
+      "bytes": 74922,
+      "sha256": "839637ec75b0b82f3ee2f2544ad6f6939f3e521f6e8bd97f6b6094ab03118704"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-3-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-3-1.wav",
+      "bytes": 88682,
+      "sha256": "90db7dd476a473d53571eee5adf81befc1ec9bf3b78d9fd5de10982bc87c56d8"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-1.wav",
+      "archivedRelativePath": "public-audio/profiles/native-0-1.wav",
+      "bytes": 256042,
+      "sha256": "d3c9bc81f89cb616640387d1c7959aa842b6bb5de939ca10d9774eab63f6fc08"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-2.wav",
+      "archivedRelativePath": "public-audio/profiles/native-0-2.wav",
+      "bytes": 237482,
+      "sha256": "182f4a40888e73af7e2d8475c80a61378313e100b28eb5058d45375abd62552e"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q000.wav",
+      "archivedRelativePath": "public-audio/queries/q000.wav",
+      "bytes": 35562,
+      "sha256": "f7b03d4523c5b86c0a47e69e40c96a3970e1cfb5c5e9e52b0b6955156992f2ab"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q001.wav",
+      "archivedRelativePath": "public-audio/queries/q001.wav",
+      "bytes": 128044,
+      "sha256": "15e6f6a3a34bbd4cdd09f2d71a0d833a89181657931710411737f816e18fec4a"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q002.wav",
+      "archivedRelativePath": "public-audio/queries/q002.wav",
+      "bytes": 128044,
+      "sha256": "c715f78bc1c12859822a4becd3c4f993521ae7811e26fc8d1cd72d6ba96fd641"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q003.wav",
+      "archivedRelativePath": "public-audio/queries/q003.wav",
+      "bytes": 38122,
+      "sha256": "fea1b34da0531be569997f74a53912ea5ac936e82934f21cfcf4efc0f8780c5b"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q004.wav",
+      "archivedRelativePath": "public-audio/queries/q004.wav",
+      "bytes": 128044,
+      "sha256": "a09a8e260c0008905ba2f65d1eeaf2f992ba99e42dba627530c84f9e28e7f0dc"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q005.wav",
+      "archivedRelativePath": "public-audio/queries/q005.wav",
+      "bytes": 52202,
+      "sha256": "b69c29c12fe205f1fe82ea30fad1ec66a5286a78c45bffd77c1d460f3a6451ed"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q006.wav",
+      "archivedRelativePath": "public-audio/queries/q006.wav",
+      "bytes": 48362,
+      "sha256": "6521325a5181b4070d3e5ced26fdc1bd2bad7107d155806bae177d5505b9c672"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q007.wav",
+      "archivedRelativePath": "public-audio/queries/q007.wav",
+      "bytes": 128044,
+      "sha256": "175b826fd0242e70b5074ae84fd36e4cfedd5de87ce29daccb071556b2988495"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q008.wav",
+      "archivedRelativePath": "public-audio/queries/q008.wav",
+      "bytes": 128044,
+      "sha256": "d964956aff666568c70e9a7e71c30e2833d17f3ed5fa47e173a76280b22a65e7"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q009.wav",
+      "archivedRelativePath": "public-audio/queries/q009.wav",
+      "bytes": 128044,
+      "sha256": "547b762caeb9c2feb11a59dc4f316a149b66ecfd3eb007039935cc63ac0e760c"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q010.wav",
+      "archivedRelativePath": "public-audio/queries/q010.wav",
+      "bytes": 128044,
+      "sha256": "99925cdb11e36a1588004c66f85153786154bf9aaf5e883533d922a06d0e7d08"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q011.wav",
+      "archivedRelativePath": "public-audio/queries/q011.wav",
+      "bytes": 128044,
+      "sha256": "965540a8ae650ae841aa4be3663e586cdaade318d923254f1fbd689c0e3fad70"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q012.wav",
+      "archivedRelativePath": "public-audio/queries/q012.wav",
+      "bytes": 101162,
+      "sha256": "b508fdb86855e6615a4a8140edf46b4fcb7e2aa43593135ee2296daaeb03f763"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q013.wav",
+      "archivedRelativePath": "public-audio/queries/q013.wav",
+      "bytes": 64042,
+      "sha256": "5391e98da50ab5e63e2e7d723b738af780060808ddcbeba9bfdbd82261881fbd"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q014.wav",
+      "archivedRelativePath": "public-audio/queries/q014.wav",
+      "bytes": 111082,
+      "sha256": "7a44c8400e74c0c2f50feb1fea5728c982fbe387b38a03f68ab6981ba773c6a0"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q015.wav",
+      "archivedRelativePath": "public-audio/queries/q015.wav",
+      "bytes": 128044,
+      "sha256": "07eda887c1f44b17fd51d6e0a42f76a64d6e32be624813bbb8f37d50dc22bd4a"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q016.wav",
+      "archivedRelativePath": "public-audio/queries/q016.wav",
+      "bytes": 43242,
+      "sha256": "bc84277492efeedb79fe40db3b8597c8dabbcc19074fe7a3b4295091c13daece"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q017.wav",
+      "archivedRelativePath": "public-audio/queries/q017.wav",
+      "bytes": 39082,
+      "sha256": "48c7b25c617109adfd78c1036d954d761fb1487bbe554011fb9c9601e9adecba"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q018.wav",
+      "archivedRelativePath": "public-audio/queries/q018.wav",
+      "bytes": 40042,
+      "sha256": "a73439f4438178f855ee70e4a3968686591d7201f931eebeb1bfba8a93d85e36"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q019.wav",
+      "archivedRelativePath": "public-audio/queries/q019.wav",
+      "bytes": 128044,
+      "sha256": "8ce5cfda1462181c13418208184ad33eb09563240bfc3b2eb51e8791ac8aba24"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q020.wav",
+      "archivedRelativePath": "public-audio/queries/q020.wav",
+      "bytes": 96042,
+      "sha256": "917be54f8f402865011c1f8f88eed2a7f82e0889280114beaab25a58aca1c7c2"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q021.wav",
+      "archivedRelativePath": "public-audio/queries/q021.wav",
+      "bytes": 58282,
+      "sha256": "0289e1de3a8c184d67364843f09b8356b90c84e43235940660087f0c21fea6ca"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\profiles\\20200707_L_R001S08C01--001-M.wav",
+      "archivedRelativePath": "public-audio/calibration/cpu-author-frontend-calibration.wav",
+      "bytes": 256046,
+      "sha256": "5bde8fd555989244ae26c62351d1db3c42759c4ca94800d1fe9e5b5c249f661c"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-00-mixture.wav",
+      "archivedRelativePath": "public-audio/mixtures/overlap-00.wav",
+      "bytes": 256044,
+      "sha256": "c6b0ed025005f520721b5c1ea16a3f86233bf8d35ad6cee74401547052e56495"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-01-mixture.wav",
+      "archivedRelativePath": "public-audio/mixtures/overlap-01.wav",
+      "bytes": 256044,
+      "sha256": "a45fccb179b50b0782a712b8ebebbc43b6347459e4c764bb001bd85e17c98489"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-1-raw-f32.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-00-native-1-raw-f32.wav",
+      "bytes": 512080,
+      "sha256": "fa92c001265f76caa2b19f1b3a71bd8f19b1728c1873e3c15680ca5ffc227f4a"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-1-pcm16.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-00-native-1-pcm16.wav",
+      "bytes": 256044,
+      "sha256": "30197cbadc3a7fb5d058f5d016014f653f7688d2b2a468038ffb7171b4006162"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-2-raw-f32.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-00-native-2-raw-f32.wav",
+      "bytes": 512080,
+      "sha256": "206a7780bf3ed0ed57bdbbfd9a368c9fbac6dd7c02776a3edd589644b8f046a5"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-2-pcm16.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-00-native-2-pcm16.wav",
+      "bytes": 256044,
+      "sha256": "7a4ef43503ee73b5c549893502f0bc6e7b58d1255194dcceaae0c06a4468ae56"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-2-raw-f32.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-01-native-2-raw-f32.wav",
+      "bytes": 512080,
+      "sha256": "118b09a439c56c8fa4182689c172c33e4eb54d2efd3519f37111f57c4a420c87"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-2-pcm16.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-01-native-2-pcm16.wav",
+      "bytes": 256044,
+      "sha256": "9a17177ee1a20439bd58e52b0bb3571f2d6f1b94182cf40237db95f5eba4b734"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-3-raw-f32.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-01-native-3-raw-f32.wav",
+      "bytes": 512080,
+      "sha256": "9edcd1d8b343831c9e3a5a6acbc04e4873611abb615973643ae76fd21321e8b5"
+    },
+    {
+      "originalPath": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-3-pcm16.wav",
+      "archivedRelativePath": "public-audio/extracted/overlap-01-native-3-pcm16.wav",
+      "bytes": 256044,
+      "sha256": "aafff5f44dde6eb058089b3eed3b4549e0c7c7e7214fe309b16d0c8c960b04bd"
+    }
+  ],
+  "totalBytes": 9347248
+}

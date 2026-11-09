@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-09T08:34:54+08:00",
+  "inputs": [
+    {
+      "id": "overlap-00-mixture",
+      "case": "overlap-00",
+      "condition": "mixture",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-00-mixture.wav",
+      "audioSha256": "c6b0ed025005f520721b5c1ea16a3f86233bf8d35ad6cee74401547052e56495",
+      "sourceStartSample": 24994319,
+      "sourceEndSample": 25122319
+    },
+    {
+      "id": "overlap-00-native-1",
+      "case": "overlap-00",
+      "condition": "extracted",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-1-pcm16.wav",
+      "audioSha256": "30197cbadc3a7fb5d058f5d016014f653f7688d2b2a468038ffb7171b4006162",
+      "sourceStartSample": 24994319,
+      "sourceEndSample": 25122319
+    },
+    {
+      "id": "overlap-00-native-2",
+      "case": "overlap-00",
+      "condition": "extracted",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-00-native-2-pcm16.wav",
+      "audioSha256": "7a4ef43503ee73b5c549893502f0bc6e7b58d1255194dcceaae0c06a4468ae56",
+      "sourceStartSample": 24994319,
+      "sourceEndSample": 25122319
+    },
+    {
+      "id": "overlap-01-mixture",
+      "case": "overlap-01",
+      "condition": "mixture",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-01-mixture.wav",
+      "audioSha256": "a45fccb179b50b0782a712b8ebebbc43b6347459e4c764bb001bd85e17c98489",
+      "sourceStartSample": 25133039,
+      "sourceEndSample": 25261039
+    },
+    {
+      "id": "overlap-01-native-2",
+      "case": "overlap-01",
+      "condition": "extracted",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-2-pcm16.wav",
+      "audioSha256": "9a17177ee1a20439bd58e52b0bb3571f2d6f1b94182cf40237db95f5eba4b734",
+      "sourceStartSample": 25133039,
+      "sourceEndSample": 25261039
+    },
+    {
+      "id": "overlap-01-native-3",
+      "case": "overlap-01",
+      "condition": "extracted",
+      "nativePerson": "3",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions\\overlap-01-native-3-pcm16.wav",
+      "audioSha256": "aafff5f44dde6eb058089b3eed3b4549e0c7c7e7214fe309b16d0c8c960b04bd",
+      "sourceStartSample": 25133039,
+      "sourceEndSample": 25261039
+    }
+  ],
+  "workerSha256": "373f1419d35b120119ef8d8bd16ef18f683685916fa4353adf83c9226f026f97",
+  "serviceHelperSha256": "857b06236afb8f9c61356d4dd0b4ca042dc733ff3e980a7b20da6b1aeadcd276",
+  "extractionResultSha256": "865f24b71d34c0e59c4b93ff8da6c12839ebb0ac372d158744dd40f07a2ea85b",
+  "policy": "Six fixed8s clips,2mixtures then corresponding2targetstreams each, one configuredaccount/resource/endpoint/request, no retries, hotwords or reference answers. Alloutputs retained including empty/failures. PublicAISHELL4 only. Streaming packets100ms; timing is not optimized batch latency. This is cloud ASR after local separation, not the frozen localQwen model or whole-meeting qualification.",
+  "privateAudioUploaded": false,
+  "referencePassedToProvider": false,
+  "serviceChanged": false,
+  "newPaidService": false,
+  "saleQualified": false
+}

@@ -1,0 +1,694 @@
+{
+  "at": "2026-11-09T08:38:44+08:00",
+  "state": "TWO_LANES_EXECUTABLE_CPU_CHECKS_COMPLETE_SEPARATION_NOT_PROMOTED",
+  "encoder": {
+    "state": "COMPLETE_AUTOMATIC_PROFILE_ENCODER_DIAGNOSTIC",
+    "queries": 22,
+    "automaticJournalAgreementCount": 19,
+    "dominantReferenceMatchCount": 19,
+    "referencePureQueryCountAt95Percent": 20,
+    "perAutomaticPerson": {
+      "0": {
+        "queries": 4,
+        "journalAgreements": 3,
+        "dominantReferenceMatches": 3
+      },
+      "1": {
+        "queries": 4,
+        "journalAgreements": 4,
+        "dominantReferenceMatches": 4
+      },
+      "2": {
+        "queries": 4,
+        "journalAgreements": 4,
+        "dominantReferenceMatches": 4
+      },
+      "3": {
+        "queries": 2,
+        "journalAgreements": 2,
+        "dominantReferenceMatches": 1
+      },
+      "4": {
+        "queries": 4,
+        "journalAgreements": 2,
+        "dominantReferenceMatches": 3
+      },
+      "5": {
+        "queries": 4,
+        "journalAgreements": 4,
+        "dominantReferenceMatches": 4
+      }
+    },
+    "calibration": {
+      "sameAudioSha256": "5bde8fd555989244ae26c62351d1db3c42759c4ca94800d1fe9e5b5c249f661c",
+      "cpuVsPreviousGpuCosine": 0.9999999999921515,
+      "maximumAbsoluteVectorDifference": 3.5353004932403564e-06,
+      "bitExactClaimed": false
+    },
+    "rows": [
+      {
+        "id": "q000",
+        "start": 5.05,
+        "end": 6.1599375,
+        "seconds": 1.1099375,
+        "automaticJournalPerson": "0",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": false,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "006-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "006-M": 1.1099375
+        },
+        "matchesDominantReference": false,
+        "cosineByPerson": {
+          "4": 0.07866659760475159,
+          "2": 0.17643918097019196,
+          "5": 0.2595682442188263,
+          "1": 0.10839381068944931,
+          "3": 0.034544818103313446,
+          "0": 0.17137794196605682
+        },
+        "topTwoMargin": 0.08312906324863434
+      },
+      {
+        "id": "q001",
+        "start": 42.92,
+        "end": 46.92,
+        "seconds": 4.0,
+        "automaticJournalPerson": "4",
+        "encoderPerson": "4",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "006-M",
+        "dominantReferenceIdentityForScoringOnly": "006-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "006-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.6014801263809204,
+          "2": 0.20830044150352478,
+          "5": 0.37363311648368835,
+          "1": 0.23450195789337158,
+          "3": 0.23515011370182037,
+          "0": 0.18561239540576935
+        },
+        "topTwoMargin": 0.22784700989723206
+      },
+      {
+        "id": "q002",
+        "start": 125.09,
+        "end": 129.09,
+        "seconds": 4.0,
+        "automaticJournalPerson": "2",
+        "encoderPerson": "2",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "004-M",
+        "dominantReferenceIdentityForScoringOnly": "004-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "004-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.37477990984916687,
+          "2": 0.82239830493927,
+          "5": 0.375662624835968,
+          "1": 0.29435139894485474,
+          "3": 0.21254241466522217,
+          "0": 0.28986406326293945
+        },
+        "topTwoMargin": 0.446735680103302
+      },
+      {
+        "id": "q003",
+        "start": 152.99,
+        "end": 154.1799375,
+        "seconds": 1.189937499999985,
+        "automaticJournalPerson": "2",
+        "encoderPerson": "2",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "004-M",
+        "dominantReferenceIdentityForScoringOnly": "004-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "004-M": 1.189937499999985
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.15884193778038025,
+          "2": 0.6783361434936523,
+          "5": 0.22053959965705872,
+          "1": 0.16712729632854462,
+          "3": 0.19339799880981445,
+          "0": 0.10832700878381729
+        },
+        "topTwoMargin": 0.45779654383659363
+      },
+      {
+        "id": "q004",
+        "start": 174.79,
+        "end": 178.79,
+        "seconds": 4.0,
+        "automaticJournalPerson": "2",
+        "encoderPerson": "2",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "004-M",
+        "dominantReferenceIdentityForScoringOnly": "004-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "004-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.19017507135868073,
+          "2": 0.746898889541626,
+          "5": 0.16951243579387665,
+          "1": 0.19930671155452728,
+          "3": 0.19820159673690796,
+          "0": 0.19810907542705536
+        },
+        "topTwoMargin": 0.5475921779870987
+      },
+      {
+        "id": "q005",
+        "start": 191.93,
+        "end": 193.5599375,
+        "seconds": 1.6299374999999827,
+        "automaticJournalPerson": "4",
+        "encoderPerson": "3",
+        "agreesWithAutomaticJournal": false,
+        "predictedReferenceIdentityForScoringOnly": "003-F",
+        "dominantReferenceIdentityForScoringOnly": "006-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "006-M": 1.6299374999999827
+        },
+        "matchesDominantReference": false,
+        "cosineByPerson": {
+          "4": 0.060284506529569626,
+          "2": 0.15033653378486633,
+          "5": 0.18413057923316956,
+          "1": 0.2032550424337387,
+          "3": 0.20687554776668549,
+          "0": 0.07768289744853973
+        },
+        "topTwoMargin": 0.0036205053329467773
+      },
+      {
+        "id": "q006",
+        "start": 210.73,
+        "end": 212.2399375,
+        "seconds": 1.5099375000000066,
+        "automaticJournalPerson": "4",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": false,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "005-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "005-M": 1.5099375000000066
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.1969640851020813,
+          "2": 0.004298357758671045,
+          "5": 0.42722421884536743,
+          "1": 0.1736568808555603,
+          "3": 0.14083509147167206,
+          "0": 0.1265423595905304
+        },
+        "topTwoMargin": 0.23026013374328613
+      },
+      {
+        "id": "q007",
+        "start": 222.37,
+        "end": 226.37,
+        "seconds": 4.0,
+        "automaticJournalPerson": "5",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "005-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "005-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.3946361541748047,
+          "2": 0.23280814290046692,
+          "5": 0.7745391726493835,
+          "1": 0.24323168396949768,
+          "3": 0.3274742662906647,
+          "0": 0.3442172408103943
+        },
+        "topTwoMargin": 0.37990301847457886
+      },
+      {
+        "id": "q008",
+        "start": 238.32,
+        "end": 242.32,
+        "seconds": 4.0,
+        "automaticJournalPerson": "5",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "005-M",
+        "exclusiveDominantReferenceCoverage": 0.979025,
+        "referenceSpeechSeconds": {
+          "005-M": 3.9161
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.3442319631576538,
+          "2": 0.19356513023376465,
+          "5": 0.6584511399269104,
+          "1": 0.22676587104797363,
+          "3": 0.1890675276517868,
+          "0": 0.25535064935684204
+        },
+        "topTwoMargin": 0.3142191767692566
+      },
+      {
+        "id": "q009",
+        "start": 268.21,
+        "end": 272.21,
+        "seconds": 4.0,
+        "automaticJournalPerson": "5",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "005-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "005-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.5960718393325806,
+          "2": 0.2621542811393738,
+          "5": 0.7315759658813477,
+          "1": 0.37135711312294006,
+          "3": 0.1844247281551361,
+          "0": 0.3783533275127411
+        },
+        "topTwoMargin": 0.1355041265487671
+      },
+      {
+        "id": "q010",
+        "start": 299.34,
+        "end": 303.34,
+        "seconds": 4.0,
+        "automaticJournalPerson": "5",
+        "encoderPerson": "5",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "005-M",
+        "dominantReferenceIdentityForScoringOnly": "005-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "005-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.43531346321105957,
+          "2": 0.22692611813545227,
+          "5": 0.7775380611419678,
+          "1": 0.3268207311630249,
+          "3": 0.22650739550590515,
+          "0": 0.3640753924846649
+        },
+        "topTwoMargin": 0.3422245979309082
+      },
+      {
+        "id": "q011",
+        "start": 360.05,
+        "end": 364.05,
+        "seconds": 4.0,
+        "automaticJournalPerson": "1",
+        "encoderPerson": "1",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "002-F",
+        "dominantReferenceIdentityForScoringOnly": "002-F",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "002-F": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.2241695672273636,
+          "2": 0.1854766458272934,
+          "5": 0.2665610909461975,
+          "1": 0.7613890171051025,
+          "3": 0.383370041847229,
+          "0": 0.24264207482337952
+        },
+        "topTwoMargin": 0.37801897525787354
+      },
+      {
+        "id": "q012",
+        "start": 382.57,
+        "end": 385.7299375,
+        "seconds": 3.1599375000000123,
+        "automaticJournalPerson": "1",
+        "encoderPerson": "1",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "002-F",
+        "dominantReferenceIdentityForScoringOnly": "002-F",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "002-F": 3.1599375000000123
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.2161889523267746,
+          "2": 0.15133893489837646,
+          "5": 0.2666339576244354,
+          "1": 0.6333737373352051,
+          "3": 0.3131444454193115,
+          "0": 0.22591373324394226
+        },
+        "topTwoMargin": 0.32022929191589355
+      },
+      {
+        "id": "q013",
+        "start": 448.28,
+        "end": 450.2799375,
+        "seconds": 1.999937500000044,
+        "automaticJournalPerson": "2",
+        "encoderPerson": "2",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "004-M",
+        "dominantReferenceIdentityForScoringOnly": "004-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "004-M": 1.999937500000044
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.29908594489097595,
+          "2": 0.8144264817237854,
+          "5": 0.2731377184391022,
+          "1": 0.1951175183057785,
+          "3": 0.17513367533683777,
+          "0": 0.26006460189819336
+        },
+        "topTwoMargin": 0.5153405368328094
+      },
+      {
+        "id": "q014",
+        "start": 494.2,
+        "end": 497.6699375,
+        "seconds": 3.4699375000000146,
+        "automaticJournalPerson": "1",
+        "encoderPerson": "1",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "002-F",
+        "dominantReferenceIdentityForScoringOnly": "002-F",
+        "exclusiveDominantReferenceCoverage": 0.9858066607828031,
+        "referenceSpeechSeconds": {
+          "002-F": 3.4206875000000423
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.23412823677062988,
+          "2": 0.23890544474124908,
+          "5": 0.2731383740901947,
+          "1": 0.7151738405227661,
+          "3": 0.44524598121643066,
+          "0": 0.24467986822128296
+        },
+        "topTwoMargin": 0.26992785930633545
+      },
+      {
+        "id": "q015",
+        "start": 502.0,
+        "end": 506.0,
+        "seconds": 4.0,
+        "automaticJournalPerson": "4",
+        "encoderPerson": "4",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "006-M",
+        "dominantReferenceIdentityForScoringOnly": "006-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "006-M": 4.0
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.7487231492996216,
+          "2": 0.37779471278190613,
+          "5": 0.4542773962020874,
+          "1": 0.32599976658821106,
+          "3": 0.27225461602211,
+          "0": 0.38259685039520264
+        },
+        "topTwoMargin": 0.2944457530975342
+      },
+      {
+        "id": "q016",
+        "start": 606.79,
+        "end": 608.1399375,
+        "seconds": 1.34993750000001,
+        "automaticJournalPerson": "1",
+        "encoderPerson": "1",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "002-F",
+        "dominantReferenceIdentityForScoringOnly": "002-F",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "002-F": 1.34993750000001
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.12769342958927155,
+          "2": 0.19045473635196686,
+          "5": 0.14921963214874268,
+          "1": 0.3152617812156677,
+          "3": 0.22415553033351898,
+          "0": 0.16850095987319946
+        },
+        "topTwoMargin": 0.09110625088214874
+      },
+      {
+        "id": "q017",
+        "start": 939.2,
+        "end": 940.4199375,
+        "seconds": 1.2199374999999009,
+        "automaticJournalPerson": "0",
+        "encoderPerson": "0",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "007-M",
+        "dominantReferenceIdentityForScoringOnly": "007-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "007-M": 1.2199374999999009
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.2630893588066101,
+          "2": 0.10584501922130585,
+          "5": 0.2155424803495407,
+          "1": 0.2285473346710205,
+          "3": 0.07678697258234024,
+          "0": 0.34874552488327026
+        },
+        "topTwoMargin": 0.08565616607666016
+      },
+      {
+        "id": "q018",
+        "start": 1529.56,
+        "end": 1530.8099375,
+        "seconds": 1.2499374999999873,
+        "automaticJournalPerson": "3",
+        "encoderPerson": "3",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "003-F",
+        "dominantReferenceIdentityForScoringOnly": "003-F",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "003-F": 1.2499374999999873
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.10403592884540558,
+          "2": 0.19991780817508698,
+          "5": 0.292357861995697,
+          "1": 0.26856717467308044,
+          "3": 0.45414289832115173,
+          "0": 0.09779851138591766
+        },
+        "topTwoMargin": 0.1617850363254547
+      },
+      {
+        "id": "q019",
+        "start": 1900.96,
+        "end": 1904.96,
+        "seconds": 4.0,
+        "automaticJournalPerson": "0",
+        "encoderPerson": "0",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "007-M",
+        "dominantReferenceIdentityForScoringOnly": "007-M",
+        "exclusiveDominantReferenceCoverage": 0.88997999999998,
+        "referenceSpeechSeconds": {
+          "007-M": 3.55991999999992
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.3377491235733032,
+          "2": 0.2752645015716553,
+          "5": 0.23609328269958496,
+          "1": 0.180606409907341,
+          "3": 0.12274432927370071,
+          "0": 0.6783057451248169
+        },
+        "topTwoMargin": 0.34055662155151367
+      },
+      {
+        "id": "q020",
+        "start": 1928.05,
+        "end": 1931.0499375,
+        "seconds": 2.9999374999999873,
+        "automaticJournalPerson": "0",
+        "encoderPerson": "0",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "007-M",
+        "dominantReferenceIdentityForScoringOnly": "007-M",
+        "exclusiveDominantReferenceCoverage": 1.0,
+        "referenceSpeechSeconds": {
+          "007-M": 2.9999374999999873
+        },
+        "matchesDominantReference": true,
+        "cosineByPerson": {
+          "4": 0.13932868838310242,
+          "2": 0.11481308937072754,
+          "5": 0.1659265160560608,
+          "1": 0.19110092520713806,
+          "3": 0.14022958278656006,
+          "0": 0.46226751804351807
+        },
+        "topTwoMargin": 0.27116659283638
+      },
+      {
+        "id": "q021",
+        "start": 2263.3,
+        "end": 2265.1199375,
+        "seconds": 1.8199374999999236,
+        "automaticJournalPerson": "3",
+        "encoderPerson": "3",
+        "agreesWithAutomaticJournal": true,
+        "predictedReferenceIdentityForScoringOnly": "003-F",
+        "dominantReferenceIdentityForScoringOnly": "006-M",
+        "exclusiveDominantReferenceCoverage": 0.17643976913221265,
+        "referenceSpeechSeconds": {
+          "006-M": 1.8199374999999236,
+          "002-F": 0.16143749999991996,
+          "003-F": 1.0635907110035987,
+          "004-M": 0.416300739716462,
+          "007-M": 0.27379993666136215
+        },
+        "matchesDominantReference": false,
+        "cosineByPerson": {
+          "4": 0.16559602320194244,
+          "2": 0.18992222845554352,
+          "5": 0.21373964846134186,
+          "1": 0.3002152740955353,
+          "3": 0.4938529431819916,
+          "0": 0.1814337521791458
+        },
+        "topTwoMargin": 0.1936376690864563
+      }
+    ],
+    "elapsedSeconds": 11.61298390000593,
+    "limits": {
+      "pid": 2144,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 645308416,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "weightsChanged": false,
+    "referencePassedToInference": false,
+    "scope": "22automatic-solo clips, everyselected retained, no reference selection. Actual identity scoring is posthoc using profiles dominant mapping. Same exposed meeting and author pretraining overlap unknown. Not DER, overlap word accuracy or independent heldout.",
+    "overlapContentRecoveredMeasured": false,
+    "saleQualified": false
+  },
+  "extraction": {
+    "outputs": 4,
+    "targetStreamSeconds": 32.0,
+    "elapsedSeconds": 65.44874249998247,
+    "limits": {
+      "pid": 25364,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 935010304,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "originalAuthorDirectBranchMaximumDifference": 0.0,
+    "pcmClippedSamples": 0
+  },
+  "pairedAsr": {
+    "publicUploadedSeconds": 48,
+    "requests": 6,
+    "sameServiceAndGeneration": true,
+    "wallSeconds": 63.63535439997213,
+    "limits": {
+      "pid": 18940,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 23527424,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "formalOverlapCerMeasured": false,
+    "contentProtected": false
+  },
+  "ordinaryMeeting": {
+    "meeting": "20200805_S_R001S01C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\20200805_S_R001S01C01-channel1.wav",
+    "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+    "audioSeconds": 2195.362
+  },
+  "ordinaryFullAsrRun": false,
+  "routesSeconds": {
+    "raw_asr_unattributed": 280.9750625,
+    "raw_asr": 1903.3499375,
+    "candidate_target_extraction": 178.62
+  },
+  "sourceRouterFramesCoveredOnce": true,
+  "retainedOrdinaryBestCer": 0.055375375375375374,
+  "newOrdinaryAccuracyGainClaimed": false,
+  "weightsTrainedOrChanged": false,
+  "productInstalledOrDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。"
+}

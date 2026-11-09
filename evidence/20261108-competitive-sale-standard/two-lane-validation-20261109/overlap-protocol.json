@@ -1,0 +1,8 @@
+{
+  "workerSha256": "87ff6fb3b2895451bbe897a23e396ea874fbe218899421b1af8fba11a6d9a2ef",
+  "audioOnlySha256": "4c679d6e922bb096a80d75eec023a08258d75526fcb4a01ff0c3cd07a4fc6352",
+  "policy": "First2 disjoint8s windows centered on predicted2person overlap>=.7s in prior302s querywindow. All17automatic profiles are outside querywindow. Run originalauthor checkpoint perselected predictedidentity, conditioning on meanraw17CPUembeddings. No groundtruth labels/counts/text, threshold sweep, newtraining or originalaudio alteration. This is a targeted readiness smoke test, not allvoices/fullwindow separation claim.",
+  "preserveOriginal": true,
+  "defaultRouteChanged": false,
+  "saleQualified": false
+}

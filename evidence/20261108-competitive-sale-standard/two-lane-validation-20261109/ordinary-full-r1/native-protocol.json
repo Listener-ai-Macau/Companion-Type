@@ -1,0 +1,78 @@
+{
+  "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+  "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\README.md",
+      "bytes": 16538,
+      "sha256": "427b9a6a4a32477e9df8790ef92f5cbcde790ee148ee5dd8c36f77d9556998a2",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\chat_template.jinja",
+      "bytes": 1434,
+      "sha256": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\config.json",
+      "bytes": 2399,
+      "sha256": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\generation_config.json",
+      "bytes": 165,
+      "sha256": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\model.safetensors",
+      "bytes": 4076193080,
+      "sha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "verifiedAgainst": "Pinned expected LFS SHA256; ready receipt required before inference"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\processor_config.json",
+      "bytes": 487,
+      "sha256": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer.json",
+      "bytes": 11429653,
+      "sha256": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+      "verifiedAgainst": "LFS SHA256"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer_config.json",
+      "bytes": 998,
+      "sha256": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11",
+      "verifiedAgainst": "Pinned Git blob SHA1"
+    }
+  ],
+  "backend": "official_native_transformers",
+  "dtype": "bfloat16",
+  "attnImplementation": "eager",
+  "maxNewTokens": 512,
+  "doSample": false,
+  "language": "Chinese",
+  "prompt": null,
+  "batchSize": 1,
+  "windowSamples": 480000,
+  "cpuPercent": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "devicePolicy": "Enumerate current HIP descriptions; unique external RX6800XT only, no ordinal guess or integrated fallback.",
+  "cooperativePauseSeconds": 1.0,
+  "earlyGate": "Same exact public ordinary first30s plus prior failing complex1020–1050s, both exposed development. Fresh ordinary default versus bounded-stop generation must match IDs/text; complex must complete with bounded recovery. Exact-zero input remains skipped, not a bare-model silence pass. No reference, hotwords, provided person count or training.",
+  "qualified": false,
+  "featureDevice": "selected_gpu",
+  "textPostprocessing": "direct_tokenizer_skip_special_tokens_only_no_cleanup_no_repetition_fix",
+  "supportedGpuFeatureNumericProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\processor-numeric-proof.json",
+  "weightLoading": "bounded_streamed16MiB_exact_weight_roundtrip",
+  "streamedLoaderControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\streamed-loader-proof-r2.json",
+  "digitalSilencePolicy": "skip_only_exact_zero_no_threshold_no_nonzero_cut",
+  "digitalSilenceGuardSourceSha256": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107",
+  "speechControlBeforeGuard": null
+}
