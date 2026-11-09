@@ -1,0 +1,27 @@
+{
+  "state": "REAL_NATIVE_PUBLIC_AUDIO_IMPORT_AND_FIXED_PRODUCT_ASR_PASSED",
+  "checkpoints": [
+    {
+      "step": "import-real-public-wav",
+      "nativePicker": "open"
+    },
+    {
+      "step": "same-imported-audio-product-transcription",
+      "seconds": 136.076,
+      "provider": "local-paraformer-official",
+      "cloudAudioUploaded": false,
+      "modelTrainingOrSelectionChanged": false
+    }
+  ],
+  "newAsrRun": true,
+  "asrSeconds": 136.076,
+  "modelTrainingRun": false,
+  "cloudCalls": 0,
+  "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "modelQualityQualified": false,
+  "identity": {
+    "url": "http://tauri.localhost/",
+    "tauri": true,
+    "title": "Companion Type"
+  }
+}

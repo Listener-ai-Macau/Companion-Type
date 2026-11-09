@@ -1,0 +1,14 @@
+{
+  "baseline079Source": "471d2d019a644849578bf09f9d781be76a535d88",
+  "integrated080Source": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+  "onlyProductionCodeChanges": [
+    "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs",
+    "apps/windows/src-tauri/src/backend/ble_throughput.rs"
+  ],
+  "allAsrAiExportBackupAndUiSourceUnchanged": true,
+  "reuseActualSameMeetingAsrRun": 42592563926,
+  "reuseActualAiGeneration": "whole-805278e2b7214018a4ddef74e361a9e8",
+  "reuseActualWholeDeliveryRun": 42593867826,
+  "requiredNext": "New MSI payload identity and actual UI/document/restore on the integrated binary; no repeat model inference."
+}

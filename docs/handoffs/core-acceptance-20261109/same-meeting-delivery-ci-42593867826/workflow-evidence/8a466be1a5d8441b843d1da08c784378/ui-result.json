@@ -1,0 +1,30 @@
+{
+  "state": "ACTUAL_SAME_AUDIO_ASR_AI_READING_PLAYBACK_WORD_HANDOFF_PASSED",
+  "sourceMeeting": "S_R004S03C01",
+  "cachedRealCloudAi": true,
+  "manualSourceReviewDeclared": false,
+  "sameAudioAndActualAsrLineage": true,
+  "newCloudCalls": 0,
+  "newAsrRun": false,
+  "neutralQuestionHeading": true,
+  "completeTwoChunkNotice": true,
+  "topExportOpensSelectedContent": true,
+  "received": {
+    "receiver": "Windows Shell folder Paste verb",
+    "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+    "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+    "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+    "bytes": 45411,
+    "actualFileReceived": true,
+    "sourcePathOrBytesSuppliedToReceiver": false,
+    "thirdPartyMessengerOrSendQualified": false,
+    "selectedContentsVerified": true
+  },
+  "aiWorkbenchAvailableAfterFinalText": true,
+  "customerOrBusinessFactQualityQualified": false,
+  "identity": {
+    "url": "http://tauri.localhost/",
+    "tauri": true,
+    "title": "Companion Type"
+  }
+}

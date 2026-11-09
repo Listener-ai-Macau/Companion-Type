@@ -1,19 +1,11 @@
-# Companion 核心候选验收入口
+# Companion 完整核心候选当前状态
 
-更新：2026-11-09T17:08:34+08:00。当前这份是Windows侧集中候选0.1.79，已后台升级，原有应用资料逐文件校验一致。整体核心候选仍在推进，不能作为正式开售合格证明。
+2026-11-09T17:45:53+08:00。Windows079保留为中间已装版；正在集中合入与实卡一致的接收恢复实现，尚未交付整套核心候选。
 
-[Windows 0.1.79 候选安装包](C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-core-acceptance/candidate079/Companion-Windows-0.1.79-candidate.msi) · [私有草稿备份](https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab)
+实际结果：公开38分47秒录音，当前产品实际本地CPU转写136.076秒，已有AI服务整理49.703秒；同一会议原生阅读/回听、Word实际粘贴、原音与解码音频备份到新库恢复和重开通过。重计算在独占远端，当前电脑不跑重模型；所有音频和文字均为公开资料。
 
-验收时围绕一场会议完成下面这个目的，不需要逐页点所有按钮：
+当前产品该场严格混合字错率6.4024%，未达<5%。不把软件流程通过写成模型或全产品合格。Android/实卡匹配候选、长录与异常恢复、复杂多人/重叠与完整纪要事实、既有电源/量产等依赖仍开放；旧系统分享和聊天附件仍待补，Word已实际通过文件夹粘贴交付。
 
-1. 在“设备与同步”导入一份公开测试录音，再到“我的记录”打开它。应能找到“转文字”“回听”和顶部“导出录音”；尚无文字时，先按提示转文字。
-2. 回听确认内容与时长。通过顶部“导出录音”保存原音，或另存MP3副本。原音保留；复制录音文件后，由自己选择粘贴位置。
-3. 在已有转写和纪要的会议里核对摘要、讨论结论、待办与原文。原文字可单独修订；修订后旧整理应提示来源已变化，需要重新整理，初版应保留。
-4. 通过顶部“导出分享”选择整理结果、录音文字或补充，预览后保存Word/PDF等文件；复制文件后可到Windows文件夹粘贴，核对内容和格式。复制与保存不会自动发送。
-5. 关闭后重新打开，核对记录、修订、整理结果和待办状态是否还在。
+原11月16日至23日是完整核心验收候选工程预算，不能当作正式售卖日期。暂停/blocked不是免验。
 
-这轮工程已经实际跑过：公开38分47秒WAV与导出MP3的保存、文件粘贴、重新导入解码和重开；实际AI整理、人工校对后的重新整理与历史、Word交付，以及新版对应界面。播放检查是静音媒体探针，仍需要实际听音。没有把公开样例自动写进你的日用资料库。
-
-仍需继续：旧Windows系统分享面板、聊天应用附件收件、Android和录音卡同场联调、复杂多人/重叠模型与完整纪要事实质量、客户真实使用。没有用本轮界面或安装结果替代这些资格。
-
-唯一待办仍是[原任务书](C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json)，完整记录仍是[开发时间线](C:/Users/Billy/Desktop/Denzic/Companion/docs/development_log.md)。
+[原任务书](C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json) · [本批实际结果](C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-core-acceptance/whole-candidate-result.json)

@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery'} and spec['verification']['version']=='0.1.79'
+  assert PHASE in {'audio','whole','delivery'} and spec['verification']['version'] in {'0.1.79','0.1.80'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
  run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+record['appSourceCommit'],'--dir',artifact])

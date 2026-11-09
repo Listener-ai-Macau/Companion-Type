@@ -1,0 +1,13 @@
+[
+  {
+    "step": "import-real-public-wav",
+    "nativePicker": "open"
+  },
+  {
+    "step": "same-imported-audio-product-transcription",
+    "seconds": 136.076,
+    "provider": "local-paraformer-official",
+    "cloudAudioUploaded": false,
+    "modelTrainingOrSelectionChanged": false
+  }
+]

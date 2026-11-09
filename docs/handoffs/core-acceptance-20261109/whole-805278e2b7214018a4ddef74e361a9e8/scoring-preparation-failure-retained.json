@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-09T17:26:31+08:00",
+  "state": "SAME_MEETING_AI_CONTINUATION_STOPPED_RETAINED",
+  "root": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\whole-805278e2b7214018a4ddef74e361a9e8",
+  "sessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
+  "nativeSource": "471d2d019a644849578bf09f9d781be76a535d88",
+  "sourceAsrCi": 42592563926,
+  "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "decodedAudioSha256": "c66aa116d80a7cf4e6ea5ca91a7d3ba1ccf2945a22d95e5d8b540373fc7c3262",
+  "rawTranscriptSha256": "ecada0e12b2cc0ed74fd6c56c1ce17841586d528727034ba76c9dc27ec40d2a7",
+  "rawTranscriptCharacters": 8333,
+  "productAsrProvider": "local-paraformer-official",
+  "productAsrSeconds": 136.076,
+  "localModelInferenceOrTraining": false,
+  "publicTextCloudAiOnly": true,
+  "ownerLibraryAccess": false,
+  "steps": [
+    {
+      "name": "01-open-same-audio-transcription",
+      "exitCode": 0,
+      "seconds": 0.9083766000003379
+    },
+    {
+      "name": "02-generate-ai-from-actual-audio-asr",
+      "exitCode": 0,
+      "seconds": 49.702544700001454
+    },
+    {
+      "name": "03-reopen-same-audio-ai",
+      "exitCode": 0,
+      "seconds": 0.1665967000008095
+    }
+  ],
+  "wholeCoreCandidateQualified": false,
+  "saleQualified": false,
+  "aiSeconds": 49.702544700001454,
+  "aiSource": "llm_deepseek",
+  "processing": {
+    "strategy": "chunkedSourceBacked",
+    "sourceBytes": 24661,
+    "processedSourceBytes": 24661,
+    "totalChunks": 2,
+    "completedChunks": 2,
+    "resumedChunks": 0,
+    "complete": true
+  },
+  "audioAndRawAsrUnchanged": true,
+  "newCloudAudioUpload": false,
+  "fixtureSha256": "a6b5a008f1d0a2fc3f3cfb62b02c8f2e3a2fda68109ad49afdf925546f935db8",
+  "fixture": "tools/qa/core_acceptance20261109/fixtures/whole-meeting-ai-session.json",
+  "minutesQualityQualified": false,
+  "error": "ModuleNotFoundError(\"No module named 'praatio'\")"
+}

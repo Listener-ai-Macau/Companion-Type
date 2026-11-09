@@ -262927,7 +262927,7 @@
               "2026-11-16",
               "2026-11-23"
             ],
-            "meaning": "1–2周工程预算，用于核心验收候选，不是整机开售承诺。不能靠改名/演示回退/降低原指标过关。"
+            "meaning": "原11月16日至23日仍是完整核心验收候选工程预算，不重置起点、不滚动顺延，也不是正式售卖日期；模型、实物和完整候选未过时如实报告差距。"
           },
           "scope": [
             "录音卡采集/保存/接收/断线续传及原资料保留，沿嵌软当前原任务与同源收据",
@@ -262953,7 +262953,7 @@
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "集中构建同一Windows080：沿已通过的同场原音→当前ASR→真实AI→Word→原音备份恢复链，合入与实板相同的d00连接恢复后端；源一致后只验受影响的包内与普通UI，不重复同一ASR/AI。手机当前无连接，板卡原377长录由原任务收尾，不抢在途接收。",
+          "next": "完成同源Windows核心候选的包内核对、受影响原生UI/文档/原音恢复和原资料保留；不重跑已过同一ASR/AI。然后按实际手机/板卡可用条件接续双端同场，模型与既有硬件售卖门继续独立，不能再说只剩模型。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -263309,11 +263309,12 @@
             "at": "2026-11-09T17:16:18+08:00",
             "quote": "什么意思？那你看一下这个东西离这个交付售卖标准还差多远呢？继续做了一下，他才可以。不要老是说。就是你要完整的一块东西做完，然后再交付，不要这么零零碎碎的。然后也是要快点把这个事情做了，现在太慢了。",
             "decision": "079保留为已安装中间候选，不把一批UI/音频/缓存文字验证称为完整交付。继续同一核心批次，先把同一份真实原音经产品当前本地转写、AI整理、核对、文档交付、备份恢复和重开实际贯通；不再以小版本收尾。",
-            "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。"
+            "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。",
+            "actualCurrent": "WHOLE_MEETING_PASSED_MATCHED_WINDOWS_CORE_INTEGRATING"
           },
           "wholeMeetingContinuation": {
             "at": "2026-11-09T17:16:18+08:00",
-            "state": "FIXED_PRODUCT_ASR_TO_AI_SAME_AUDIO_INTEGRATION_STARTED",
+            "state": "SAME_REAL_AUDIO_ASR_AI_WORD_AUDIO_BACKUP_RESTORE_AND_REOPEN_PASSED",
             "frozenWindowsVersion": "0.1.79",
             "frozenNativeSource": "471d2d019a644849578bf09f9d781be76a535d88",
             "priorActualAudioPass": 42589879725,
@@ -263324,7 +263325,15 @@
             "remoteCpuOnly": true,
             "phoneObservation": "Owner已授权手机一次只读观察为absent；不催接线、不重复轮询。",
             "boardObservation": "原共享实板由另一在途377长录持有；不抢板，不停录，不替换其接收进程。",
-            "completion": "同一会议真实音频、实际ASR和AI、保存核对、所选文档、备份恢复/重开来源可追溯后，才作为Windows完整使用块；Android和实卡及模型/售卖门分别保留。"
+            "completion": "同一会议真实音频、实际ASR和AI、保存核对、所选文档、备份恢复/重开来源可追溯后，才作为Windows完整使用块；Android和实卡及模型/售卖门分别保留。",
+            "sessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
+            "asrRun": 42592563926,
+            "aiEvidence": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\whole-805278e2b7214018a4ddef74e361a9e8",
+            "deliveryRun": 42593867826,
+            "asrSeconds": 136.076,
+            "aiSeconds": 49.702544700001454,
+            "currentProductMixedTextCer": 0.06402402402402402,
+            "modelTargetPassed": false
           },
           "wholeWindowsCoreIntegration": {
             "at": "2026-11-09T17:37:14+08:00",
@@ -263360,8 +263369,130 @@
             "physicalOriginalOrPeerProcessTouched": false,
             "previousSourceKept": true,
             "wholeCoreCandidateQualified": false,
-            "saleQualified": false
-          }
+            "saleQualified": false,
+            "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+            "sourceRemoteReadbackVerified": true,
+            "buildRun": 42594837619
+          },
+          "wholeCandidateCurrent": {
+            "at": "2026-11-09T17:45:53+08:00",
+            "state": "WHOLE_MEETING_PASSED_MATCHED_WINDOWS_CORE_INTEGRATING",
+            "phase": "checkpoint",
+            "ownerPurpose": "完整一场会议的录音与会后处理，集中合并当前接收核心后再交一套候选；不是小版本计进度。",
+            "sameSessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
+            "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+            "decodedAudioSha256": "c66aa116d80a7cf4e6ea5ca91a7d3ba1ccf2945a22d95e5d8b540373fc7c3262",
+            "actualAsrRun": 42592563926,
+            "actualAiEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\whole-805278e2b7214018a4ddef74e361a9e8",
+            "wholeDeliveryRun": 42593867826,
+            "fixedProductAsrSeconds": 136.076,
+            "actualAiSeconds": 49.702544700001454,
+            "asrDiagnostic": {
+              "referenceCharacters": 8325,
+              "hypothesisCharacters": 8176,
+              "edits": {
+                "replace": 262,
+                "delete": 210,
+                "insert": 61
+              },
+              "cer": 0.06402402402402402,
+              "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+              "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+              "scope": "Current installed provider, one exposed full public meeting, chronological mixed text only; not per-speaker overlap/DER/cross-meeting acceptance",
+              "passedBelowFivePercent": false
+            },
+            "sameAudioAsrAiLineageVerified": true,
+            "actualWordReceived": true,
+            "originalAndDecodedAudioBackupRestoredByteIdentical": true,
+            "integratedWindowsCore": {
+              "at": "2026-11-09T17:37:14+08:00",
+              "state": "WHOLE_WINDOWS_CORE_SOURCE_INTEGRATED_BUILD_PENDING",
+              "version": "0.1.80",
+              "preservedFrontendNativeBase": "471d2d019a644849578bf09f9d781be76a535d88",
+              "matchedRecordingCoreSource": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
+              "reason": "此前前端079和实卡接收079实际来自不同源码；并入同一套冷目录/连接保持/开录恢复实现。",
+              "exactCoreFiles": [
+                {
+                  "path": "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+                  "prior": "836cd14baeb908766f9038c2589a225c018f5f9574809c29d83d5f9b6675202f",
+                  "core": "109358040063913a0540d051bbfdaf1d66fc923a5e42656756a8940c359806f2",
+                  "workingMatchedOwnHeadBeforeIntegration": true,
+                  "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+                },
+                {
+                  "path": "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs",
+                  "prior": "8a379b41d877fb9120f20d95efda1a1806c727c53e23000bd3cd79ae45761db9",
+                  "core": "8929fa64750ae50aa05d5e41cca64ed53e46318367ffecc04196bac6e442fe01",
+                  "workingMatchedOwnHeadBeforeIntegration": true,
+                  "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+                },
+                {
+                  "path": "apps/windows/src-tauri/src/backend/ble_throughput.rs",
+                  "prior": "a20bb96bae71e667ca4750cee8f5e642dab4ce277f96106f6c9298908d627604",
+                  "core": "1335118d32d90442cde1b2d35684ecd81785209f91eb4235727e7734e0b6d897",
+                  "workingMatchedOwnHeadBeforeIntegration": true,
+                  "sourceExactCoreCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca"
+                }
+              ],
+              "asrMinutesAndExportsChanged": false,
+              "physicalOriginalOrPeerProcessTouched": false,
+              "previousSourceKept": true,
+              "wholeCoreCandidateQualified": false,
+              "saleQualified": false,
+              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+              "sourceRemoteReadbackVerified": true,
+              "buildRun": 42594837619
+            },
+            "newProductBuildRun": 42594837619,
+            "localHeavyInference": false,
+            "modelResearchOrTraining": false,
+            "fixedProductAsrInferenceOnRemote": true,
+            "newModelProviderSelected": false,
+            "newCustomerAcceptance": false,
+            "wholeCoreCandidateQualified": false,
+            "saleQualified": false,
+            "saleGaps": [
+              {
+                "block": "双端与实卡同一候选",
+                "state": "OPEN",
+                "facts": "Windows完整公开会议链已过；Android前端本侧旧100候选未安装，但嵌软共享收据已到109，不能按100或旧65降级。一次只读检查手机absent。实板原377长录属于原会话，在途接收不抢占。",
+                "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
+              },
+              {
+                "block": "长录/连接/异常恢复可靠性",
+                "state": "OPEN",
+                "facts": "记录当前d00三处接收修复已合并；旧前端079此前不包含它们。最终2h及固件故障自动收尾等只沿嵌软当前原收据，不借软件文本链关闭。",
+                "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
+              },
+              {
+                "block": "转写/多人/纪要质量",
+                "state": "OPEN",
+                "facts": "当前产品固定提供器同场严格混合字错率6.4024%，未<5%；复杂多人/重叠与完整事实质量仍未合格，未因本轮功能链通过而改门槛。",
+                "exit": "按原多会议、逐人/重叠与事实指标达标。"
+              }
+            ],
+            "otherExistingDependencies": "实际电池/充电/低电保存与续航、生产签名/出厂及Owner暂停屏幕等仍沿原嵌软任务；不凭软件收据写全产品可售卖。旧WinRT系统分享与聊天附件收件也仍开放，普通Word交付本轮走真实Windows Shell文件粘贴。"
+          },
+          "remainingSaleBlocks": [
+            {
+              "block": "双端与实卡同一候选",
+              "state": "OPEN",
+              "facts": "Windows完整公开会议链已过；Android前端本侧旧100候选未安装，但嵌软共享收据已到109，不能按100或旧65降级。一次只读检查手机absent。实板原377长录属于原会话，在途接收不抢占。",
+              "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
+            },
+            {
+              "block": "长录/连接/异常恢复可靠性",
+              "state": "OPEN",
+              "facts": "记录当前d00三处接收修复已合并；旧前端079此前不包含它们。最终2h及固件故障自动收尾等只沿嵌软当前原收据，不借软件文本链关闭。",
+              "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
+            },
+            {
+              "block": "转写/多人/纪要质量",
+              "state": "OPEN",
+              "facts": "当前产品固定提供器同场严格混合字错率6.4024%，未<5%；复杂多人/重叠与完整事实质量仍未合格，未因本轮功能链通过而改门槛。",
+              "exit": "按原多会议、逐人/重叠与事实指标达标。"
+            }
+          ]
         }
       },
       "latestCandidate20261102": {
@@ -263380,12 +263511,12 @@
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
       "at": "2026-11-05T18:11:23+08:00",
-      "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+      "state": "WHOLE_CORE_CANDIDATE_INTEGRATING_CURRENT_WINDOWS_AND_RECORDING_CORE",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
       "result": "Windows052已交付范围保留；Android054候选PPTX/XLSX/mm/PNG与独立AI材料选择完成，实际生产Java/JVM/手机原生位图与文件结构、同源APK签名和16KiB对齐通过。保留手机053配对现场，主App054未装，系统保存/分享/升级资料保留和Owner/客户待验。",
-      "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。",
+      "next": "完成同源Windows核心候选的包内核对、受影响原生UI/文档/原音恢复和原资料保留；不重跑已过同一ASR/AI。然后按实际手机/板卡可用条件接续双端同场，模型与既有硬件售卖门继续独立，不能再说只剩模型。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",

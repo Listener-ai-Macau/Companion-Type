@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-09T17:20:57+08:00",
+  "state": "REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED",
+  "stage": "transcribe",
+  "frozenAppVersion": "0.1.79",
+  "frozenAppSource": "471d2d019a644849578bf09f9d781be76a535d88",
+  "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+  "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+  "inputKind": "Actual public S_R004S03C01 audio through the fixed current product CPU ASR; no training, provider substitution or cloud audio",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": true,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "modelResearchOrTrainingRun": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 3221225472,
+  "appPid": 5984,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 262390,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 131220,
+      "title": ""
+    },
+    {
+      "hwnd": 131218,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    7360
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 3588,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5212,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6332,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6684,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7360,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 8060,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\98d3ddee53d84854803adf8970ebac9a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 653033472,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 6098714624,
+    "systemPhysicalPercent": 29.0
+  },
+  "ui": {
+    "state": "REAL_NATIVE_PUBLIC_AUDIO_IMPORT_AND_FIXED_PRODUCT_ASR_PASSED",
+    "checkpoints": [
+      {
+        "step": "import-real-public-wav",
+        "nativePicker": "open"
+      },
+      {
+        "step": "same-imported-audio-product-transcription",
+        "seconds": 136.076,
+        "provider": "local-paraformer-official",
+        "cloudAudioUploaded": false,
+        "modelTrainingOrSelectionChanged": false
+      }
+    ],
+    "newAsrRun": true,
+    "asrSeconds": 136.076,
+    "modelTrainingRun": false,
+    "cloudCalls": 0,
+    "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "modelQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T17:23:26+08:00"
+}
