@@ -1,0 +1,236 @@
+{
+  "at": "2026-11-10T00:23:53+08:00",
+  "state": "POSTHOC_LITERAL_OTHER_SPEAKER_CONTAMINATION_DOCUMENTED",
+  "results": [
+    {
+      "id": "near-N_SPK8013",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 0,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 0,
+      "examples": []
+    },
+    {
+      "id": "near-N_SPK8014",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 31,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 24,
+      "examples": [
+        {
+          "inputWindowStartSeconds": 0.0,
+          "inputWindowEndSeconds": 16.6,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8013",
+          "literalCharacters": 19,
+          "normalizedLiteralQuote": "讨会首先咱们确认一下咱们这个产品的目标",
+          "reference": {
+            "start": 6.9,
+            "end": 18.29,
+            "speaker": "c1",
+            "text": "好嗯，咱们今天针对咱们公司新出产的新出的一款这个手机啊产品啊，进行一下这个研讨会首先咱们确认一下咱们这个产品的目标，这个人群客户群这一块儿。"
+          },
+          "modelWindowText": "啊我是今天这个公司辛苦他第立刻意把这个手机啊开出来同一的这个联讨会首先咱们确认一下咱们这个产品的目标的一个"
+        },
+        {
+          "inputWindowStartSeconds": 59.8,
+          "inputWindowEndSeconds": 76.6,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 28,
+          "normalizedLiteralQuote": "呃设定一下呃比较适合的年龄段儿啊比方说因为它是有彩色的呀",
+          "reference": {
+            "start": 52.23,
+            "end": 66.72,
+            "speaker": "c1",
+            "text": "啊，我觉得是有要要有针对性的啊，我觉得咱们的设计外观还是很时尚，还是需要去呃，设定一下呃比较适合的年龄段儿啊，比方说因为它是有彩色的呀。"
+          },
+          "modelWindowText": "呃设定一下呃比较适合的年龄段儿啊比方说因为它是有彩色的呀有蓝色的黄色呀你让老年人都不能用这东西对吧对而且你现在设计的产品主要推出的是它有照相的功能"
+        },
+        {
+          "inputWindowStartSeconds": 76.6,
+          "inputWindowEndSeconds": 92.2,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 19,
+          "normalizedLiteralQuote": "功能的话是很很很好所以是还是适适合年轻",
+          "reference": {
+            "start": 66.72,
+            "end": 81.83,
+            "speaker": "c1",
+            "text": "有蓝色的黄色你要老年人，他不可能用这种颜色，对吧，对而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人。"
+          },
+          "modelWindowText": "功能的话是很很很好所以是还是适适合年轻用的人人群我感觉可以根据年龄呃和这种就是不同的人士作下区分呃我感觉我们可以主要针对就是"
+        },
+        {
+          "inputWindowStartSeconds": 156.8,
+          "inputWindowEndSeconds": 172.4,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 42,
+          "normalizedLiteralQuote": "但是我觉得还是有针对性的好啊你现在买买手机的话他不一定都是说老年人自己去买老年人根本",
+          "reference": {
+            "start": 156.76,
+            "end": 171.87,
+            "speaker": "c1",
+            "text": "但是我觉得还是有针对性的好啊，你现在买买手机的话，他不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。"
+          },
+          "modelWindowText": "但是我觉得还是有针对性的好啊你现在买买手机的话他不一定都是说老年人自己去买老年人根本不会看一般都是子女给家长去买他会观察里面的一些功能什么的会会会去选择"
+        }
+      ]
+    },
+    {
+      "id": "near-N_SPK8015",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 17,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 12,
+      "examples": [
+        {
+          "inputWindowStartSeconds": 0.0,
+          "inputWindowEndSeconds": 16.6,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8015",
+          "otherSource": "near-N_SPK8013",
+          "literalCharacters": 13,
+          "normalizedLiteralQuote": "一下咱们这个产品的目标这个",
+          "reference": {
+            "start": 6.9,
+            "end": 18.29,
+            "speaker": "c1",
+            "text": "好嗯，咱们今天针对咱们公司新出产的新出的一款这个手机啊产品啊，进行一下这个研讨会首先咱们确认一下咱们这个产品的目标，这个人群客户群这一块儿。"
+          },
+          "modelWindowText": "好可能今天对咱们公司也客常听说一个这个啊产品啊评理意见这个研讨会首先咱们确定一下咱们这个产品的目标这个"
+        },
+        {
+          "inputWindowStartSeconds": 16.6,
+          "inputWindowEndSeconds": 33.2,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8015",
+          "otherSource": "near-N_SPK8014",
+          "literalCharacters": 24,
+          "normalizedLiteralQuote": "这个目标人群可以不不用定的那么确定然后基本上就是",
+          "reference": {
+            "start": 24.96,
+            "end": 35.74,
+            "speaker": "c1",
+            "text": "我觉得咱们这个这个目标人群可以不不用定的那么确定，然后基本上就是，嗯，让他什么什么类的人群，然后都可以这样呢咱们的面儿比较广。"
+          },
+          "modelWindowText": "人群客户群群那一块呃首先谈一谈大家伙的一个看法呃那你也谈一下吧我觉得咱们的这个目标人群可以不不用定的那么确定然后基本上就是呃让他什么什么的人群"
+        },
+        {
+          "inputWindowStartSeconds": 33.2,
+          "inputWindowEndSeconds": 49.0,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8015",
+          "otherSource": "near-N_SPK8014",
+          "literalCharacters": 18,
+          "normalizedLiteralQuote": "嗯因为咱们这个手机现在基本上外观设计",
+          "reference": {
+            "start": 36.35,
+            "end": 45.1,
+            "speaker": "c1",
+            "text": "嗯，因为咱们这个手机现在基本上外观设计得比较时尚，所以我觉得其实，嗯，不用界定于这个老年人或者年轻人之间。"
+          },
+          "modelWindowText": "可以这样咱们的面儿比较广嗯因为咱们这个手机现在基本上外观设计的比较时尚所以我觉得其实嗯不用借鉴于这个老年人或者得体的一一点吧吧对这感能和范围更广一些"
+        },
+        {
+          "inputWindowStartSeconds": 83.0,
+          "inputWindowEndSeconds": 97.6,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8015",
+          "otherSource": "near-N_SPK8016",
+          "literalCharacters": 19,
+          "normalizedLiteralQuote": "的人士做一下区分呃我感觉我们可以主要针",
+          "reference": {
+            "start": 83.78,
+            "end": 97.28,
+            "speaker": "c1",
+            "text": "我感觉可以根据年龄，呃和这这种就是不同的人士做一下区分，呃我感觉我们可以主要针对就是嗯十八到四十五之岁的中青年人人群嘛。"
+          },
+          "modelWindowText": "我感觉可以根据年龄呃和这种就是普通的人士做一下区分呃我感觉我们可以主要针的就是嗯十八到五十五五岁的中青年人没有"
+        }
+      ]
+    },
+    {
+      "id": "near-N_SPK8016",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 29,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 23,
+      "examples": [
+        {
+          "inputWindowStartSeconds": 0.0,
+          "inputWindowEndSeconds": 16.8,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8016",
+          "otherSource": "near-N_SPK8013",
+          "literalCharacters": 21,
+          "normalizedLiteralQuote": "讨会首先咱们确认一下咱们这个产品的目标这个",
+          "reference": {
+            "start": 6.9,
+            "end": 18.29,
+            "speaker": "c1",
+            "text": "好嗯，咱们今天针对咱们公司新出产的新出的一款这个手机啊产品啊，进行一下这个研讨会首先咱们确认一下咱们这个产品的目标，这个人群客户群这一块儿。"
+          },
+          "modelWindowText": "好可能今天这个公司基础上新出了一组这个东西啊看一下星期一的一个开讨会首先咱们确认一下咱们这个产品的目标这个"
+        },
+        {
+          "inputWindowStartSeconds": 33.6,
+          "inputWindowEndSeconds": 49.8,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8016",
+          "otherSource": "near-N_SPK8014",
+          "literalCharacters": 18,
+          "normalizedLiteralQuote": "嗯因为咱们这个手机现在基本上外观设计",
+          "reference": {
+            "start": 36.35,
+            "end": 45.1,
+            "speaker": "c1",
+            "text": "嗯，因为咱们这个手机现在基本上外观设计得比较时尚，所以我觉得其实，嗯，不用界定于这个老年人或者年轻人之间。"
+          },
+          "modelWindowText": "可以这样的咱们面比较广嗯因为咱们这个手机现在基本上外观设计的比较时尚所以我觉得其实呃不用界定于这个老年人或者这些知识对老年女对这样我觉得范围更广一些就什么样的人"
+        },
+        {
+          "inputWindowStartSeconds": 49.8,
+          "inputWindowEndSeconds": 66.0,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8016",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 17,
+          "normalizedLiteralQuote": "还是需要去呃设定一下呃比较适合的年",
+          "reference": {
+            "start": 52.23,
+            "end": 66.72,
+            "speaker": "c1",
+            "text": "啊，我觉得是有要要有针对性的啊，我觉得咱们的设计外观还是很时尚，还是需要去呃，设定一下呃比较适合的年龄段儿啊，比方说因为它是有彩色的呀。"
+          },
+          "modelWindowText": "都工选择呃我觉得是要要有这么性的啊我觉得咱们的设计外观还是时尚的还是需要去呃设定一下呃比较适合的年段儿啊方便面的是有材"
+        },
+        {
+          "inputWindowStartSeconds": 66.0,
+          "inputWindowEndSeconds": 81.8,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8016",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 45,
+          "normalizedLiteralQuote": "对而且你现在设计的产品主要推出的是它有照相的功能功能的话是很很很好所以是还是适适合年轻的人",
+          "reference": {
+            "start": 66.72,
+            "end": 81.83,
+            "speaker": "c1",
+            "text": "有蓝色的黄色你要老年人，他不可能用这种颜色，对吧，对而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人。"
+          },
+          "modelWindowText": "色的呀有蓝色的黄色哎你好些人他怎么能会这呢对而且你现在设计的产品主要推出的是它有照相的功能功能的话是很很很好所以是还是适适合年轻的人"
+        }
+      ]
+    }
+  ],
+  "minimumLiteralCharacters": 12,
+  "annotationWindowToleranceSeconds": 0.1,
+  "protocolType": "posthoc diagnostic examples; not preregistered acceptance or exhaustive insertion accounting",
+  "limits": [
+    "Input windows have approximate times; this is not verified word-level attribution.",
+    "Literal overlap with other speakers supports real crosstalk for these examples, not every insertion.",
+    "Headset channels are not isolated target truth; original words/output remain untouched."
+  ],
+  "modelOrCloudCalls": 0,
+  "productChanged": false,
+  "speakerQualityQualified": false
+}

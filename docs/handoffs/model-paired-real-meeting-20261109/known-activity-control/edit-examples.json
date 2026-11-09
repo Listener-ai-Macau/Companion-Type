@@ -1,0 +1,682 @@
+{
+  "near-N_SPK8013": [
+    {
+      "op": "delete",
+      "referenceIndex": 1,
+      "hypothesisIndex": 1,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 6,
+      "hypothesisIndex": 5,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上的新出了"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 7,
+      "hypothesisIndex": 6,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上的新出了一"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 14,
+      "hypothesisIndex": 13,
+      "referenceContext": "咱们今天针对咱们公司新出产的新出的一款这个手机啊产",
+      "hypothesisContext": "咱们今天就是咱们公司新出上的新出了一款这个手机啊产"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 18,
+      "hypothesisIndex": 17,
+      "referenceContext": "针对咱们公司新出产的新出的一款这个手机啊产品啊进行",
+      "hypothesisContext": "就是咱们公司新出上的新出了一款这个手机啊产品啊进行"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 43,
+      "hypothesisIndex": 42,
+      "referenceContext": "一下这个研讨会首先咱们确认一下咱们这个产品的目标这",
+      "hypothesisContext": "一下这个研讨会首先咱们确定一下咱们这个产品的目标这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 65,
+      "hypothesisIndex": 64,
+      "referenceContext": "目标这个人群客户群这一块儿嗯首先谈一下大家伙的一个",
+      "hypothesisContext": "目标这个人群客户群这一块呃首先先谈谈大家伙的一个看"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 66,
+      "hypothesisIndex": 65,
+      "referenceContext": "标这个人群客户群这一块儿嗯首先谈一下大家伙的一个看",
+      "hypothesisContext": "标这个人群客户群这一块呃首先先谈谈大家伙的一个看法"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 69,
+      "hypothesisIndex": 67,
+      "referenceContext": "人群客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯",
+      "hypothesisContext": "个人群客户群这一块呃首先先谈谈大家伙的一个看法啊呃"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 70,
+      "hypothesisIndex": 69,
+      "referenceContext": "群客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那",
+      "hypothesisContext": "群客户群这一块呃首先先谈谈大家伙的一个看法啊呃那你"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 71,
+      "hypothesisIndex": 70,
+      "referenceContext": "客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那你",
+      "hypothesisContext": "客户群这一块呃首先先谈谈大家伙的一个看法啊呃那你得"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 81,
+      "hypothesisIndex": 79,
+      "referenceContext": "谈一下大家伙的一个看法啊嗯那你给阐一下吧这个跨度大",
+      "hypothesisContext": "先谈谈大家伙的一个看法啊呃那你得谈一下吧这跨度大一"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 84,
+      "hypothesisIndex": 82,
+      "referenceContext": "大家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是",
+      "hypothesisContext": "大家伙的一个看法啊呃那你得谈一下吧这跨度大一点是吧"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 85,
+      "hypothesisIndex": 83,
+      "referenceContext": "家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是吧",
+      "hypothesisContext": "家伙的一个看法啊呃那你得谈一下吧这跨度大一点是吧嗯"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 90,
+      "hypothesisIndex": 88,
+      "referenceContext": "看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你",
+      "hypothesisContext": "看法啊呃那你得谈一下吧这跨度大一点是吧嗯好然后你就"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 103,
+      "hypothesisIndex": 100,
+      "referenceContext": "跨度大一点是吧嗯好然后你觉得嗯就针对性嗯也可也可以",
+      "hypothesisContext": "跨度大一点是吧嗯好然后你就能嗯就针对性嗯也可也可以"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 104,
+      "hypothesisIndex": 101,
+      "referenceContext": "度大一点是吧嗯好然后你觉得嗯就针对性嗯也可也可以说",
+      "hypothesisContext": "度大一点是吧嗯好然后你就能嗯就针对性嗯也可也可以说"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 122,
+      "hypothesisIndex": 119,
+      "referenceContext": "嗯也可也可以说是有一种反差嗯首先咱们就确定出这个手",
+      "hypothesisContext": "嗯也可也可以说是有一种反弹好首先咱们就确定出这个手"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 123,
+      "hypothesisIndex": 120,
+      "referenceContext": "也可也可以说是有一种反差嗯首先咱们就确定出这个手机",
+      "hypothesisContext": "也可也可以说是有一种反弹好首先咱们就确定出这个手机"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 136,
+      "hypothesisIndex": 133,
+      "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+      "hypothesisContext": "首先咱们就确定出这个手机这个外从这个特点来说就可能"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 136,
+      "hypothesisIndex": 134,
+      "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+      "hypothesisContext": "先咱们就确定出这个手机这个外从这个特点来说就可能就"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 136,
+      "hypothesisIndex": 135,
+      "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+      "hypothesisContext": "咱们就确定出这个手机这个外从这个特点来说就可能就是"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 149,
+      "hypothesisIndex": 149,
+      "referenceContext": "这个特点来说就可能就是说嗯年龄段儿要跨度大一点对吧",
+      "hypothesisContext": "这个特点来说就可能就是说呃年龄段要跨度大一点对吧大"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 153,
+      "hypothesisIndex": 153,
+      "referenceContext": "来说就可能就是说嗯年龄段儿要跨度大一点对吧大家都同",
+      "hypothesisContext": "来说就可能就是说呃年龄段要跨度大一点对吧大家都同意"
+    }
+  ],
+  "near-N_SPK8014": [
+    {
+      "op": "replace",
+      "referenceIndex": 0,
+      "hypothesisIndex": 0,
+      "referenceContext": "啊我觉得咱们这个这个目标人",
+      "hypothesisContext": "哦我觉得咱们这个这个目标人"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 32,
+      "hypothesisIndex": 32,
+      "referenceContext": "的那么确定然后基本上就是嗯让他什么什么类的人群然后",
+      "hypothesisContext": "的那么确定然后基本上就是呃让他什么样什么类的人群然"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 37,
+      "hypothesisIndex": 37,
+      "referenceContext": "然后基本上就是嗯让他什么什么类的人群然后都可以这样",
+      "hypothesisContext": "然后基本上就是呃让他什么样什么类的人群然后都可以这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 77,
+      "hypothesisIndex": 78,
+      "referenceContext": "个手机现在基本上外观设计得比较时尚所以我觉得其实嗯",
+      "hypothesisContext": "个手机现在基本上外观设计的比较时尚所以我觉得其实嗯"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 121,
+      "hypothesisIndex": 122,
+      "referenceContext": "这样我觉得范围更广一些就是什么样的人群都可以选择嘛",
+      "hypothesisContext": "这样我觉得范围更广一些就什么样的人群都可以选择嘛但"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 197,
+      "hypothesisIndex": 197,
+      "referenceContext": "然后他很喜欢那种那种特别亮丽的颜色嗯嗯但是我觉得那",
+      "hypothesisContext": "然后他很喜欢那种那种特别靓丽的颜色嗯嗯但是我觉得那"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 217,
+      "hypothesisIndex": 217,
+      "referenceContext": "是我觉得那个这个手机里边儿的呃很多这个字的东西都是",
+      "hypothesisContext": "是我觉得那个这个手机里边的呃很多这个字的东西都是可"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 248,
+      "hypothesisIndex": 247,
+      "referenceContext": "设的然后嗯而且我觉得现在老年人也不是所有的老年人都",
+      "hypothesisContext": "设的然后嗯而且我觉得现在你老年人也不是所有的老年人"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 292,
+      "hypothesisIndex": 292,
+      "referenceContext": "所以我觉得吧呃就是不用把那个界限弄得那么分明然后基",
+      "hypothesisContext": "所以我觉得吧呃就是不用把这个界限弄得那么分明然后基"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 315,
+      "hypothesisIndex": 315,
+      "referenceContext": "后基本上能适应它然后能去嗯使用它的老年人都还可以选",
+      "hypothesisContext": "后基本上能适应它然后能去呃使用它的老年人都还可以选"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 329,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "用它的老年人都还可以选择我们我你向你重来嗯对电商好"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 330,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "它的老年人都还可以选择我们我你向你重来嗯对电商好一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 331,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "的老年人都还可以选择我们我你向你重来嗯对电商好一点"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 332,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "老年人都还可以选择我们我你向你重来嗯对电商好一点然"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 333,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "年人都还可以选择我们我你向你重来嗯对电商好一点然后"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 334,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "人都还可以选择我们我你向你重来嗯对电商好一点然后我"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 329,
+      "hypothesisIndex": 335,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "都还可以选择我们我你向你重来嗯对电商好一点然后我觉"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 329,
+      "hypothesisIndex": 336,
+      "referenceContext": "用它的老年人都还可以选择嗯嗯对电商好一点儿然后我觉",
+      "hypothesisContext": "还可以选择我们我你向你重来嗯对电商好一点然后我觉得"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 337,
+      "hypothesisIndex": 344,
+      "referenceContext": "可以选择嗯嗯对电商好一点儿然后我觉得可以就是那个然",
+      "hypothesisContext": "你向你重来嗯对电商好一点然后我觉得可以就是那个然后"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 360,
+      "hypothesisIndex": 366,
+      "referenceContext": "个然后捆绑一些比如说然后它还带带着一些什么其他的东",
+      "hypothesisContext": "个然后捆绑一些比如说然后他还带带着一些什么其他的东"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 387,
+      "hypothesisIndex": 393,
+      "referenceContext": "呃明星代言这是另外一方面儿然后我觉得啊就比如说它捆",
+      "hypothesisContext": "呃明星代言这是另外一方面然后我觉得啊就比如说他捆绑"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 398,
+      "hypothesisIndex": 403,
+      "referenceContext": "面儿然后我觉得啊就比如说它捆绑着一些什么移动啊这些",
+      "hypothesisContext": "方面然后我觉得啊就比如说他捆绑着一些什么移动啊这些"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 416,
+      "hypothesisIndex": 421,
+      "referenceContext": "什么移动啊这些运营商然后它的一些产品然后其他的这样",
+      "hypothesisContext": "什么移动啊这些运营商然后他的一些产品然后其他的这样"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 437,
+      "hypothesisIndex": 442,
+      "referenceContext": "他的这样还能带动更多的东西嗯嗯我觉得可以开拓一些新",
+      "hypothesisContext": "他的这样还能带动更多的东谢谢谢谢为么什么样嗯我觉得"
+    }
+  ],
+  "near-N_SPK8015": [
+    {
+      "op": "delete",
+      "referenceIndex": 5,
+      "hypothesisIndex": 5,
+      "referenceContext": "啊我觉得是有要要有针对性的啊我觉得咱",
+      "hypothesisContext": "啊我觉得是要要有针对性的啊我觉得咱们"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 48,
+      "hypothesisIndex": 47,
+      "referenceContext": "定一下呃比较适合的年龄段儿啊比方说因为它是有彩色的",
+      "hypothesisContext": "定一下呃比较适合的年龄段啊比方说因为它是有彩色的呀"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 68,
+      "hypothesisIndex": 66,
+      "referenceContext": "是有彩色的呀有蓝色的黄色你要老年人他不可能用这种颜",
+      "hypothesisContext": "是有彩色的呀有蓝色的黄色哎你看老年人他不可能用这种"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 69,
+      "hypothesisIndex": 68,
+      "referenceContext": "有彩色的呀有蓝色的黄色你要老年人他不可能用这种颜色",
+      "hypothesisContext": "彩色的呀有蓝色的黄色哎你看老年人他不可能用这种颜色"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 84,
+      "hypothesisIndex": 83,
+      "referenceContext": "人他不可能用这种颜色对吧对而且你现在设计的产品主要",
+      "hypothesisContext": "人他不可能用这种颜色对吧嗯对而且你现在设计的产品主"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 165,
+      "hypothesisIndex": 165,
+      "referenceContext": "有一些功能你像老年人的话他需要很多的大字体或者是呃",
+      "hypothesisContext": "有一些功能你像老年人的话它需要很多的大字体或者是呃"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 238,
+      "hypothesisIndex": 238,
+      "referenceContext": "的好啊你现在买买手机的话他不一定都是说老年人自己去",
+      "hypothesisContext": "的好啊你现在买买手机的话它不一定都是说老年人自己去"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 294,
+      "hypothesisIndex": 294,
+      "referenceContext": "能什么的会会会去选择对对那咱们机型儿我觉得还是适应",
+      "hypothesisContext": "能什么的会会会去选择对对就咱们机型我觉得还是适应比"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 299,
+      "hypothesisIndex": 299,
+      "referenceContext": "会会去选择对对那咱们机型儿我觉得还是适应比较年轻年",
+      "hypothesisContext": "会会去选择对对就咱们机型我觉得还是适应比较年轻年轻"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 317,
+      "hypothesisIndex": 316,
+      "referenceContext": "适应比较年轻年轻化一点的对我觉得还是先要看一下推出",
+      "hypothesisContext": "适应比较年轻年轻化一点的嗯我觉得还是先要看一下推出"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 337,
+      "hypothesisIndex": 336,
+      "referenceContext": "看一下推出一下手机的亮点和它它有什么和其它的手机有",
+      "hypothesisContext": "看一下推出一下手机的亮点啊它他有什么和其他的手机有"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 339,
+      "hypothesisIndex": 338,
+      "referenceContext": "下推出一下手机的亮点和它它有什么和其它的手机有什么",
+      "hypothesisContext": "下推出一下手机的亮点啊它他有什么和其他的手机有什么"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 345,
+      "hypothesisIndex": 344,
+      "referenceContext": "机的亮点和它它有什么和其它的手机有什么不同的地方啊",
+      "hypothesisContext": "机的亮点啊它他有什么和其他的手机有什么不同的地方呃"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 357,
+      "hypothesisIndex": 356,
+      "referenceContext": "它的手机有什么不同的地方啊完后再就是在一些电商是呃",
+      "hypothesisContext": "他的手机有什么不同的地方呃完后再就是在一些电商呃给"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 368,
+      "hypothesisIndex": 367,
+      "referenceContext": "方啊完后再就是在一些电商是呃是给一些力度比方说京东",
+      "hypothesisContext": "方呃完后再就是在一些电商呃给一些力度比方说京东啊什"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 370,
+      "hypothesisIndex": 368,
+      "referenceContext": "完后再就是在一些电商是呃是给一些力度比方说京东啊什",
+      "hypothesisContext": "呃完后再就是在一些电商呃给一些力度比方说京东啊什么"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 471,
+      "hypothesisIndex": 468,
+      "referenceContext": "购啊呃对对对对对就是同时获手机对那可以缩短一点吗因",
+      "hypothesisContext": "购啊呃对对对对对就是同时换手机对那可以缩短一点嘛因"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 482,
+      "hypothesisIndex": 479,
+      "referenceContext": "时获手机对那可以缩短一点吗因为手机本身也没多少钱每",
+      "hypothesisContext": "时换手机对那可以缩短一点嘛因为手机本身也没多少钱每"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 511,
+      "hypothesisIndex": 508,
+      "referenceContext": "还还个什么一一两百块的话啊所以要去谈嘛找找哪个哪个",
+      "hypothesisContext": "还还个什么一一两百块的话呃所以说要去谈嘛找找哪个哪"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 514,
+      "hypothesisIndex": 511,
+      "referenceContext": "什么一一两百块的话啊所以要去谈嘛找找哪个哪个银行去",
+      "hypothesisContext": "什么一一两百块的话呃所以说要去谈嘛找找哪个哪个银行"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 534,
+      "hypothesisIndex": 532,
+      "referenceContext": "哪个银行去和哪个银行去谈完后给哪个银行利率嗯那那那",
+      "hypothesisContext": "哪个银行去和哪个银行去谈然后给哪个银行利率嗯那那那"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 573,
+      "hypothesisIndex": 571,
+      "referenceContext": "网红啊什么去推一下啊嗯不你还是要不不能同时直播我觉",
+      "hypothesisContext": "网红啊什么去推一下啊嗯不是你还是要不不能同时直播我"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 609,
+      "hypothesisIndex": 608,
+      "referenceContext": "你好多你这个平台要直播其它平台不一定把这个东西给你",
+      "hypothesisContext": "你好多你这个平台要直播其他平台不一定把这个东西给你"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 625,
+      "hypothesisIndex": 624,
+      "referenceContext": "一定把这个东西给你嗯不找着找主播的话是可以找像那种",
+      "hypothesisContext": "一定把这个东西给你嗯不找这找主播的话是可以找像那种"
+    }
+  ],
+  "near-N_SPK8016": [
+    {
+      "op": "delete",
+      "referenceIndex": 12,
+      "hypothesisIndex": 12,
+      "referenceContext": "我感觉可以根据年龄呃和这这种就是不同的人士做一下区",
+      "hypothesisContext": "我感觉可以根据年龄呃和这种就是不同的人士做一下区分"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 54,
+      "hypothesisIndex": 53,
+      "referenceContext": "八到四十五之岁的中青年人人群嘛对有有些尤其哦我感觉",
+      "hypothesisContext": "八到四十五之岁的中青年人群吧对有有些游戏哦我感觉我"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 56,
+      "hypothesisIndex": 54,
+      "referenceContext": "四十五之岁的中青年人人群嘛对有有些尤其哦我感觉我们",
+      "hypothesisContext": "到四十五之岁的中青年人群吧对有有些游戏哦我感觉我们"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 61,
+      "hypothesisIndex": 59,
+      "referenceContext": "的中青年人人群嘛对有有些尤其哦我感觉我们可以根据就",
+      "hypothesisContext": "岁的中青年人群吧对有有些游戏哦我感觉我们可以根据就"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 62,
+      "hypothesisIndex": 60,
+      "referenceContext": "中青年人人群嘛对有有些尤其哦我感觉我们可以根据就是",
+      "hypothesisContext": "的中青年人群吧对有有些游戏哦我感觉我们可以根据就是"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 77,
+      "hypothesisIndex": 75,
+      "referenceContext": "感觉我们可以根据就是不同的人群稍微做一下差别设计你",
+      "hypothesisContext": "感觉我们可以根据就是不同人群稍微做一下差别设计你像"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 100,
+      "hypothesisIndex": 97,
+      "referenceContext": "计你像如果老年人用的话可就是配置稍微低点就是字体或",
+      "hypothesisContext": "计你像如果老年人用的话可以就是配置稍微低点儿就是字"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 108,
+      "hypothesisIndex": 106,
+      "referenceContext": "用的话可就是配置稍微低点就是字体或者声音稍微大一点",
+      "hypothesisContext": "的话可以就是配置稍微低点儿就是字体或者声音稍微大一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 141,
+      "hypothesisIndex": 140,
+      "referenceContext": "能颜色选择性多点配置高点这种对对对我感觉可以先来通",
+      "hypothesisContext": "能颜色选择性多点配置高点儿这种对对可以我感觉可以现"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 145,
+      "hypothesisIndex": 145,
+      "referenceContext": "择性多点配置高点这种对对对我感觉可以先来通过比较热",
+      "hypothesisContext": "性多点配置高点儿这种对对可以我感觉可以现在通过比较"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 145,
+      "hypothesisIndex": 146,
+      "referenceContext": "择性多点配置高点这种对对对我感觉可以先来通过比较热",
+      "hypothesisContext": "多点配置高点儿这种对对可以我感觉可以现在通过比较热"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 151,
+      "hypothesisIndex": 152,
+      "referenceContext": "高点这种对对对我感觉可以先来通过比较热门的直播带货",
+      "hypothesisContext": "儿这种对对可以我感觉可以现在通过比较热门的直播带货"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 152,
+      "hypothesisIndex": 153,
+      "referenceContext": "点这种对对对我感觉可以先来通过比较热门的直播带货还",
+      "hypothesisContext": "这种对对可以我感觉可以现在通过比较热门的直播带货还"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 225,
+      "hypothesisIndex": 226,
+      "referenceContext": "前期主要是就是呃价钱可以稍就让利一些多占领一些市场",
+      "hypothesisContext": "前期主要是就是呃价钱可以收就让利一些多占领一些市场"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 256,
+      "hypothesisIndex": 257,
+      "referenceContext": "额呃慢慢做大之后就可以就价钱稍微高点我感我感觉地推",
+      "hypothesisContext": "额呃慢慢做大之后就可以就是价钱稍微高点呗我感我感觉"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 262,
+      "hypothesisIndex": 264,
+      "referenceContext": "之后就可以就价钱稍微高点我感我感觉地推这个不太适合",
+      "hypothesisContext": "后就可以就是价钱稍微高点呗我感我感觉dj这个不太适"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 267,
+      "hypothesisIndex": 270,
+      "referenceContext": "就价钱稍微高点我感我感觉地推这个不太适合手机吧好像",
+      "hypothesisContext": "价钱稍微高点呗我感我感觉dj这个不太适合手机吧好像"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 268,
+      "hypothesisIndex": 271,
+      "referenceContext": "价钱稍微高点我感我感觉地推这个不太适合手机吧好像手",
+      "hypothesisContext": "钱稍微高点呗我感我感觉dj这个不太适合手机吧好像手"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 291,
+      "hypothesisIndex": 294,
+      "referenceContext": "像手机好像一般就是有门店那种或者就是对手机附件之类",
+      "hypothesisContext": "像手机好像一般就是有门店这种或者就是对手机附件之类"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 310,
+      "hypothesisIndex": 313,
+      "referenceContext": "手机附件之类的什么手机壳儿你这个相当于就就是合约手",
+      "hypothesisContext": "手机附件之类的什么手机壳你这个相当于就就是合约手机"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 351,
+      "hypothesisIndex": 353,
+      "referenceContext": "卖的不是太多好像礼品就是哦就是分期付款那种哦对对对",
+      "hypothesisContext": "卖的不是太多好像礼品就是亏哦就是分期付款那种哦对对"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 363,
+      "hypothesisIndex": 366,
+      "referenceContext": "哦就是分期付款那种哦对对对这个主要还是看手续呃这分",
+      "hypothesisContext": "哦就是分期付款那种哦对对这个主要还是看手续这分期还"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 373,
+      "hypothesisIndex": 375,
+      "referenceContext": "对对对这个主要还是看手续呃这分期还是看手续费的因为",
+      "hypothesisContext": "哦对对这个主要还是看手续这分期还是看手续费的因为有"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 390,
+      "hypothesisIndex": 391,
+      "referenceContext": "是看手续费的因为有些银行他这个手续费比较高所以对客",
+      "hypothesisContext": "是看手续费的因为有些银行它这个手续费比较高所以对客"
+    }
+  ]
+}

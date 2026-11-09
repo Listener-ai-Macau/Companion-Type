@@ -1,0 +1,154 @@
+{
+  "at": "2026-11-10T00:20:55+08:00",
+  "state": "COMPLETE_FIVE_FIXED_PRODUCT_ASR_SCORED_EXPOSED_DIAGNOSTIC",
+  "meeting": "AliMeeting R8001_M8004",
+  "commonSeconds": 1551.82,
+  "sourceUtterances": 604,
+  "modelSha256": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+  "appSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "testSource": "98bcca6a94d3fdfe379108a11856948dd39194a9",
+  "results": [
+    {
+      "id": "near-N_SPK8013",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 4049,
+      "hypothesisCharacters": 5702,
+      "edits": {
+        "replace": 332,
+        "delete": 94,
+        "insert": 1747
+      },
+      "totalEdits": 2173,
+      "cer": 0.5366757224005927,
+      "elapsedSeconds": 92.74271120000003,
+      "realTimeFactor": 0.05976383291876637,
+      "privatePeakBytes": 355368960,
+      "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "outputSha256": "1f21996632e3a3d13b0073dabac6b57a45015676e10c7c0f9411a354ec813779",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedToInference": false
+    },
+    {
+      "id": "near-N_SPK8014",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2944,
+      "hypothesisCharacters": 7020,
+      "edits": {
+        "replace": 56,
+        "delete": 26,
+        "insert": 4102
+      },
+      "totalEdits": 4184,
+      "cer": 1.421195652173913,
+      "elapsedSeconds": 99.14280280000003,
+      "realTimeFactor": 0.06388808160740295,
+      "privatePeakBytes": 352415744,
+      "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "outputSha256": "3d86953674fe3956d89d14893acb054179d57535b74b47f937ec87e6dbe0a6cc",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedToInference": false
+    },
+    {
+      "id": "near-N_SPK8015",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2195,
+      "hypothesisCharacters": 6435,
+      "edits": {
+        "replace": 121,
+        "delete": 20,
+        "insert": 4260
+      },
+      "totalEdits": 4401,
+      "cer": 2.00501138952164,
+      "elapsedSeconds": 92.29493400000001,
+      "realTimeFactor": 0.0594752832158369,
+      "privatePeakBytes": 353697792,
+      "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+      "outputSha256": "adaf54ade53fed42d6e8017118aa38ba7f1372ab1022236f52f1f0cd6d710696",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedToInference": false
+    },
+    {
+      "id": "near-N_SPK8016",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 1527,
+      "hypothesisCharacters": 5717,
+      "edits": {
+        "replace": 97,
+        "delete": 21,
+        "insert": 4211
+      },
+      "totalEdits": 4329,
+      "cer": 2.834970530451866,
+      "elapsedSeconds": 91.03629560000002,
+      "realTimeFactor": 0.05866421079764407,
+      "privatePeakBytes": 352616448,
+      "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+      "outputSha256": "f7f1a2f92bfdf06ab995ba6a1b61b8861da9904f925b4df5bd8a00ea39baa38d",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedToInference": false
+    },
+    {
+      "id": "far-mic0-common-span",
+      "metric": "raw-mixed-chronological-CER",
+      "referenceCharacters": 10715,
+      "hypothesisCharacters": 7585,
+      "edits": {
+        "replace": 971,
+        "delete": 3263,
+        "insert": 133
+      },
+      "totalEdits": 4367,
+      "cer": 0.40755949603359776,
+      "elapsedSeconds": 93.5521956,
+      "realTimeFactor": 0.06028546841772887,
+      "privatePeakBytes": 352501760,
+      "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+      "outputSha256": "b0f71ce7d7e11f28735a0685ecf56e55af4e877bfa52df8fbc49c85efc8ece93",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedToInference": false
+    }
+  ],
+  "nearAggregate": {
+    "metric": "known-headset-source-aggregate-CER-not-diarization",
+    "referenceCharacters": 10715,
+    "edits": {
+      "replace": 606,
+      "delete": 161,
+      "insert": 14320
+    },
+    "totalEdits": 15087,
+    "cer": 1.4080261315912272
+  },
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceManifestSha256": "28af572717bd3e86126e9d51b4ce12d3758b6642f197e96fb83f6a59b59d23ba",
+  "rawRunReceiptSha256": "218db2550896c4b1e5e9bc4e3842e70e1a6af69c8678c65bef59a299a14a545a",
+  "neuralInferencePerformedByScorer": false,
+  "inferenceUsedReferenceTextOrActivity": false,
+  "knownSourceAssignmentNotAutomaticSpeakers": true,
+  "isolatedSourceTruth": false,
+  "metricComparisonLimits": [
+    "Headsets contain measured real crosstalk: non-target insertions are not automatically hallucinations.",
+    "Far mixed chronological reference has overlap ordering ambiguity; do not directly compare this CER with per-headset aggregate.",
+    "File-level source assignment is known; this is not automatic diarization, cpCER, word alignment, holdout or sale qualification.",
+    "This is deployed Paraformer on Windows, distinct from the frozen Qwen arm pending local RAM recovery."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 21864,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 201326592,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 19513344,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

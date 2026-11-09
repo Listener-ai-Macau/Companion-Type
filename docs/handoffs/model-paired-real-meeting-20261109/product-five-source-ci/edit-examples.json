@@ -1,0 +1,852 @@
+{
+  "near-N_SPK8013": [
+    {
+      "op": "delete",
+      "referenceIndex": 1,
+      "hypothesisIndex": 1,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 6,
+      "hypothesisIndex": 5,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上的新出了"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 7,
+      "hypothesisIndex": 6,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一",
+      "hypothesisContext": "好咱们今天就是咱们公司新出上的新出了一"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 14,
+      "hypothesisIndex": 13,
+      "referenceContext": "咱们今天针对咱们公司新出产的新出的一款这个手机啊产",
+      "hypothesisContext": "咱们今天就是咱们公司新出上的新出了一款这个手机啊产"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 18,
+      "hypothesisIndex": 17,
+      "referenceContext": "针对咱们公司新出产的新出的一款这个手机啊产品啊进行",
+      "hypothesisContext": "就是咱们公司新出上的新出了一款这个手机啊产品啊进行"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 43,
+      "hypothesisIndex": 42,
+      "referenceContext": "一下这个研讨会首先咱们确认一下咱们这个产品的目标这",
+      "hypothesisContext": "一下这个研讨会首先咱们确定一下咱们这个产品的目标这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 66,
+      "hypothesisIndex": 65,
+      "referenceContext": "标这个人群客户群这一块儿嗯首先谈一下大家伙的一个看",
+      "hypothesisContext": "标这个人群客户群这一块儿呃首先谈一谈大家伙的一个看"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 71,
+      "hypothesisIndex": 70,
+      "referenceContext": "客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那你",
+      "hypothesisContext": "客户群这一块儿呃首先谈一谈大家伙的一个看法啊呃那你"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 81,
+      "hypothesisIndex": 80,
+      "referenceContext": "谈一下大家伙的一个看法啊嗯那你给阐一下吧这个跨度大",
+      "hypothesisContext": "谈一谈大家伙的一个看法啊呃那你得谈一下吧我觉得咱们"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 84,
+      "hypothesisIndex": 83,
+      "referenceContext": "大家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是",
+      "hypothesisContext": "大家伙的一个看法啊呃那你得谈一下吧我觉得咱们这个这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 85,
+      "hypothesisIndex": 84,
+      "referenceContext": "家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是吧",
+      "hypothesisContext": "家伙的一个看法啊呃那你得谈一下吧我觉得咱们这个这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 89,
+      "hypothesisIndex": 88,
+      "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+      "hypothesisContext": "个看法啊呃那你得谈一下吧我觉得咱们这个这个目标人群"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 89,
+      "hypothesisIndex": 89,
+      "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+      "hypothesisContext": "看法啊呃那你得谈一下吧我觉得咱们这个这个目标人群可"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 89,
+      "hypothesisIndex": 90,
+      "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+      "hypothesisContext": "法啊呃那你得谈一下吧我觉得咱们这个这个目标人群可以"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 89,
+      "hypothesisIndex": 91,
+      "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+      "hypothesisContext": "啊呃那你得谈一下吧我觉得咱们这个这个目标人群可以不"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 89,
+      "hypothesisIndex": 92,
+      "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+      "hypothesisContext": "呃那你得谈一下吧我觉得咱们这个这个目标人群可以不不"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 95,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "得谈一下吧我觉得咱们这个这个目标人群可以不不用定的"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 96,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "谈一下吧我觉得咱们这个这个目标人群可以不不用定的那"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 97,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "一下吧我觉得咱们这个这个目标人群可以不不用定的那么"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 98,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "下吧我觉得咱们这个这个目标人群可以不不用定的那么确"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 99,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "吧我觉得咱们这个这个目标人群可以不不用定的那么确定"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 100,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "我觉得咱们这个这个目标人群可以不不用定的那么确定然"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 101,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "觉得咱们这个这个目标人群可以不不用定的那么确定然后"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 91,
+      "hypothesisIndex": 102,
+      "referenceContext": "法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你觉",
+      "hypothesisContext": "得咱们这个这个目标人群可以不不用定的那么确定然后基"
+    }
+  ],
+  "near-N_SPK8014": [
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 2,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 3,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 4,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 5,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 6,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 7,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 8,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手机"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 9,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手机啊"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 10,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手机啊开"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 11,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手机啊开出"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 12,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "啊我是今天这个公司辛苦他第立刻意把这个手机啊开出来"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 13,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "我是今天这个公司辛苦他第立刻意把这个手机啊开出来同"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 14,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "是今天这个公司辛苦他第立刻意把这个手机啊开出来同一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 15,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "今天这个公司辛苦他第立刻意把这个手机啊开出来同一的"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 16,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "天这个公司辛苦他第立刻意把这个手机啊开出来同一的这"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 17,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "这个公司辛苦他第立刻意把这个手机啊开出来同一的这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 18,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "个公司辛苦他第立刻意把这个手机啊开出来同一的这个联"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 19,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "公司辛苦他第立刻意把这个手机啊开出来同一的这个联讨"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 20,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "司辛苦他第立刻意把这个手机啊开出来同一的这个联讨会"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 21,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "辛苦他第立刻意把这个手机啊开出来同一的这个联讨会首"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 22,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "苦他第立刻意把这个手机啊开出来同一的这个联讨会首先"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 23,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "他第立刻意把这个手机啊开出来同一的这个联讨会首先咱"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 24,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "第立刻意把这个手机啊开出来同一的这个联讨会首先咱们"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 2,
+      "hypothesisIndex": 25,
+      "referenceContext": "啊我觉得咱们这个这个目标人群可",
+      "hypothesisContext": "立刻意把这个手机啊开出来同一的这个联讨会首先咱们确"
+    }
+  ],
+  "near-N_SPK8015": [
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 0,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 1,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 2,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 3,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 4,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 5,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 6,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 7,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 8,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊产"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 9,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊产品"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 10,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊产品啊"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 11,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊产品啊评"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 12,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "好可能今天对咱们公司也客常听说一个这个啊产品啊评理"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 13,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "可能今天对咱们公司也客常听说一个这个啊产品啊评理意"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 14,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "能今天对咱们公司也客常听说一个这个啊产品啊评理意见"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 15,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "今天对咱们公司也客常听说一个这个啊产品啊评理意见这"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 16,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "天对咱们公司也客常听说一个这个啊产品啊评理意见这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 17,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "对咱们公司也客常听说一个这个啊产品啊评理意见这个研"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 18,
+      "referenceContext": "啊我觉得是有要要有针对性的",
+      "hypothesisContext": "咱们公司也客常听说一个这个啊产品啊评理意见这个研讨"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 1,
+      "hypothesisIndex": 20,
+      "referenceContext": "啊我觉得是有要要有针对性的啊",
+      "hypothesisContext": "公司也客常听说一个这个啊产品啊评理意见这个研讨会首"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 1,
+      "hypothesisIndex": 21,
+      "referenceContext": "啊我觉得是有要要有针对性的啊",
+      "hypothesisContext": "司也客常听说一个这个啊产品啊评理意见这个研讨会首先"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 1,
+      "hypothesisIndex": 22,
+      "referenceContext": "啊我觉得是有要要有针对性的啊",
+      "hypothesisContext": "也客常听说一个这个啊产品啊评理意见这个研讨会首先咱"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 1,
+      "hypothesisIndex": 23,
+      "referenceContext": "啊我觉得是有要要有针对性的啊",
+      "hypothesisContext": "客常听说一个这个啊产品啊评理意见这个研讨会首先咱们"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 1,
+      "hypothesisIndex": 24,
+      "referenceContext": "啊我觉得是有要要有针对性的啊",
+      "hypothesisContext": "常听说一个这个啊产品啊评理意见这个研讨会首先咱们确"
+    }
+  ],
+  "near-N_SPK8016": [
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 0,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 1,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 2,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 3,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 4,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 5,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 6,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 7,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 8,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东西"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 9,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东西啊"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 10,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东西啊看"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 11,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东西啊看一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 12,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "好可能今天这个公司基础上新出了一组这个东西啊看一下"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 13,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "可能今天这个公司基础上新出了一组这个东西啊看一下星"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 14,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "能今天这个公司基础上新出了一组这个东西啊看一下星期"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 15,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "今天这个公司基础上新出了一组这个东西啊看一下星期一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 16,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "天这个公司基础上新出了一组这个东西啊看一下星期一的"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 17,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "这个公司基础上新出了一组这个东西啊看一下星期一的一"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 18,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "个公司基础上新出了一组这个东西啊看一下星期一的一个"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 19,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "公司基础上新出了一组这个东西啊看一下星期一的一个开"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 20,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "司基础上新出了一组这个东西啊看一下星期一的一个开讨"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 21,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "基础上新出了一组这个东西啊看一下星期一的一个开讨会"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 22,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "础上新出了一组这个东西啊看一下星期一的一个开讨会首"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 0,
+      "hypothesisIndex": 23,
+      "referenceContext": "我感觉可以根据年龄呃和这这",
+      "hypothesisContext": "上新出了一组这个东西啊看一下星期一的一个开讨会首先"
+    }
+  ],
+  "far-mic0-common-span": [
+    {
+      "op": "replace",
+      "referenceIndex": 1,
+      "hypothesisIndex": 1,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出",
+      "hypothesisContext": "好本着今天智能公司新出上新出"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 2,
+      "hypothesisIndex": 2,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产",
+      "hypothesisContext": "好本着今天智能公司新出上新出的"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 3,
+      "hypothesisIndex": 3,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 6,
+      "hypothesisIndex": 5,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 7,
+      "hypothesisIndex": 6,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这个"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 8,
+      "hypothesisIndex": 7,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一款",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这个手"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 9,
+      "hypothesisIndex": 7,
+      "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一款这",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这个手"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 14,
+      "hypothesisIndex": 11,
+      "referenceContext": "咱们今天针对咱们公司新出产的新出的一款这个手机啊产",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这个手机呃产品"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 15,
+      "hypothesisIndex": 12,
+      "referenceContext": "们今天针对咱们公司新出产的新出的一款这个手机啊产品",
+      "hypothesisContext": "好本着今天智能公司新出上新出的一款这个手机呃产品啊"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 25,
+      "hypothesisIndex": 21,
+      "referenceContext": "出产的新出的一款这个手机啊产品啊进行一下这个研讨会",
+      "hypothesisContext": "新出上新出的一款这个手机呃产品啊进行一下这个研讨会"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 66,
+      "hypothesisIndex": 62,
+      "referenceContext": "标这个人群客户群这一块儿嗯首先谈一下大家伙的一个看",
+      "hypothesisContext": "标这个人群客户群这一块儿呃首先谈大家伙的一个看法呃"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 70,
+      "hypothesisIndex": 66,
+      "referenceContext": "群客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那",
+      "hypothesisContext": "群客户群这一块儿呃首先谈大家伙的一个看法呃那直接谈"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 71,
+      "hypothesisIndex": 66,
+      "referenceContext": "客户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那你",
+      "hypothesisContext": "群客户群这一块儿呃首先谈大家伙的一个看法呃那直接谈"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 80,
+      "hypothesisIndex": 74,
+      "referenceContext": "先谈一下大家伙的一个看法啊嗯那你给阐一下吧啊我觉得",
+      "hypothesisContext": "呃首先谈大家伙的一个看法呃那直接谈一下吧我觉得咱们"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 81,
+      "hypothesisIndex": 75,
+      "referenceContext": "谈一下大家伙的一个看法啊嗯那你给阐一下吧啊我觉得咱",
+      "hypothesisContext": "首先谈大家伙的一个看法呃那直接谈一下吧我觉得咱们这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 83,
+      "hypothesisIndex": 76,
+      "referenceContext": "下大家伙的一个看法啊嗯那你给阐一下吧啊我觉得咱们这",
+      "hypothesisContext": "先谈大家伙的一个看法呃那直接谈一下吧我觉得咱们这个"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 84,
+      "hypothesisIndex": 77,
+      "referenceContext": "大家伙的一个看法啊嗯那你给阐一下吧啊我觉得咱们这个",
+      "hypothesisContext": "谈大家伙的一个看法呃那直接谈一下吧我觉得咱们这个这"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 85,
+      "hypothesisIndex": 78,
+      "referenceContext": "家伙的一个看法啊嗯那你给阐一下吧啊我觉得咱们这个这",
+      "hypothesisContext": "大家伙的一个看法呃那直接谈一下吧我觉得咱们这个这个"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 89,
+      "hypothesisIndex": 82,
+      "referenceContext": "个看法啊嗯那你给阐一下吧啊我觉得咱们这个这个目标人",
+      "hypothesisContext": "一个看法呃那直接谈一下吧我觉得咱们这个这个目标人群"
+    },
+    {
+      "op": "insert",
+      "referenceIndex": 126,
+      "hypothesisIndex": 118,
+      "referenceContext": "然后基本上就是嗯让他什么什么类的人群然后都可以这样",
+      "hypothesisContext": "然后基本上就是嗯让他什么样什么类的人群然后都可以这"
+    },
+    {
+      "op": "delete",
+      "referenceIndex": 144,
+      "hypothesisIndex": 137,
+      "referenceContext": "然后都可以这样呢咱们的面儿比较广嗯因为咱们这个手机",
+      "hypothesisContext": "然后都可以这样呢咱们的面比较广嗯因为咱们这个手机现"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 166,
+      "hypothesisIndex": 158,
+      "referenceContext": "个手机现在基本上外观设计得比较时尚所以我觉得其实嗯",
+      "hypothesisContext": "个手机现在基本上外观设计的比较时尚所以我觉得其实嗯"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 196,
+      "hypothesisIndex": 188,
+      "referenceContext": "这个老年人或者年轻人之间这个跨度大一点是吧嗯嗯对这",
+      "hypothesisContext": "这个老年人或者年轻人之间就是跨度大一点是吧嗯对这样"
+    },
+    {
+      "op": "replace",
+      "referenceIndex": 197,
+      "hypothesisIndex": 189,
+      "referenceContext": "个老年人或者年轻人之间这个跨度大一点是吧嗯嗯对这样",
+      "hypothesisContext": "个老年人或者年轻人之间就是跨度大一点是吧嗯对这样我"
+    }
+  ]
+}

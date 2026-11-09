@@ -1,0 +1,768 @@
+{
+  "deviceAccess": false,
+  "operationError": null,
+  "settings": {
+    "asrProvider": "local-paraformer",
+    "bleCompress": false,
+    "deepseekApiKeySet": false,
+    "deepseekBaseUrl": "https://api.deepseek.com/v1",
+    "deepseekMinutesEnabled": true,
+    "deepseekModel": "deepseek-v4-flash",
+    "defaultMeetingMode": "offlineStore",
+    "localAsrAvailable": true,
+    "openaiAsrApiKeySet": false,
+    "openaiAsrEndpoint": "https://api.openai.com/v1/audio/transcriptions",
+    "openaiAsrModel": "gpt-4o-transcribe",
+    "settingsPath": "D:\\a\\_temp\\companion-paired-product-asr\\near-N_SPK8016\\product-settings.json",
+    "storageSaveBlocked": false,
+    "storageWarning": null,
+    "volcAccessKeySet": false,
+    "volcAppKeySet": false,
+    "volcResourceId": "volc.bigasr.sauc.duration"
+  },
+  "snapshot": {
+    "bleName": {
+      "activeName": "companion",
+      "maxLen": 29,
+      "pendingRestart": false,
+      "stagedName": "companion",
+      "status": "clean"
+    },
+    "connected": false,
+    "device": {
+      "autoReconnectEnabled": true,
+      "boardId": null,
+      "buildId": null,
+      "connected": false,
+      "connectionPhase": "idle",
+      "deviceId": null,
+      "firmwareVersion": null,
+      "hardwareRevision": null,
+      "lastConnectedAt": null,
+      "lastReconnectAttemptAt": null,
+      "lastSeenAt": null,
+      "lastSyncAt": null,
+      "manualDisconnect": false,
+      "mcuUid": null,
+      "message": "Not scanned",
+      "mode": "windowsNative",
+      "providerId": "companion-type-windows-ble",
+      "reconnectAttemptCount": 0,
+      "recording": false,
+      "recordingCapacity": null,
+      "recordingsAvailable": 0,
+      "rememberedDeviceId": null,
+      "scanning": false,
+      "signalRssi": null,
+      "supported": true,
+      "uiGeneration": null
+    },
+    "deviceId": "fixture-companion-v1",
+    "gatt": {
+      "audioOutputServiceUuid": "8f7a000a-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "bleNameConfigUuid": "8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusServiceUuid": "8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusUuid": "8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "imuStatusUuid": "8f7a9001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingControlUuid": "8f7a8001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingServiceUuid": "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingStatusUuid": "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "sensorsServiceUuid": "8f7a0009-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "settingsServiceUuid": "8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerControlUuid": "8f7aa001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerStatusUuid": "8f7aa002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordControlUuid": "8f7aa003-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordStatusUuid": "8f7aa004-7b7d-4f3d-9d6f-6c2d1b7c0000"
+    },
+    "host": {
+      "activeSessionId": null,
+      "persistence": {
+        "message": null,
+        "recoveryPath": null,
+        "status": "ready"
+      },
+      "recordingPolicy": {
+        "asrProviderMode": "openaiCompatibleOrLocalCommand",
+        "chunkSeconds": 300,
+        "defaultMeetingMode": "offlineStore",
+        "deviceFlashRawCacheSeconds": 60,
+        "deviceRole": "triggerAndShortCache",
+        "longMeetingGuide": "Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull",
+        "longMeetingStrategy": "hostChunkedWav",
+        "maxAsrUploadBytes": 26214400,
+        "offlineStoreGuide": "Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes",
+        "oneHourChunkCount": 12,
+        "oneHourRawPcmBytes": 115200000,
+        "onlineLiveGuide": "Online: live partial transcript while recording; audio still stored as backup; stop → minutes",
+        "owner": "host",
+        "preferredLongRecordingSource": "hostMicrophone",
+        "rawPcmBytesPerSecond": 32000,
+        "shortCaptureGuide": "Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes",
+        "supportedMeetingModes": [
+          "offlineStore",
+          "onlineLive"
+        ],
+        "targetMeetingSeconds": 3600
+      },
+      "selectedSessionId": null,
+      "sessions": [
+        {
+          "audioBytes": 49658284,
+          "audioPath": "D:\\a\\_temp\\companion-paired-product-asr\\public-audio\\near-N_SPK8016-known-activity.wav",
+          "audioStored": true,
+          "bookmarkRevision": 0,
+          "calendarCopyEpoch": 0,
+          "calendarCopyRevision": 0,
+          "captureIncomplete": false,
+          "chunks": [
+            {
+              "bytes": 49658284,
+              "durationMs": 1551820,
+              "id": "near-N_SPK8016-original",
+              "path": "D:\\a\\_temp\\companion-paired-product-asr\\public-audio\\near-N_SPK8016-known-activity.wav",
+              "startedAt": null,
+              "status": "sealed",
+              "stoppedAt": null
+            }
+          ],
+          "deviceReclaimed": false,
+          "durationMs": 1551820,
+          "exportMarkdown": "",
+          "exportedAt": null,
+          "id": "near-N_SPK8016",
+          "liveTranscriptText": "",
+          "meetingMode": "offlineStore",
+          "minutes": null,
+          "minutesByMode": {},
+          "noteRevision": 0,
+          "processingPolicy": "manual",
+          "recorderControlUncertain": false,
+          "recovery": {
+            "attemptCount": 0,
+            "captureReviewConfirmed": false,
+            "intent": "none",
+            "maxAttempts": 3,
+            "requestedMeetingMode": "",
+            "retryStage": "",
+            "stage": "idle"
+          },
+          "retention": {
+            "audioCached": true,
+            "consentRequired": true,
+            "expiresAt": null,
+            "minutesCached": false,
+            "retentionLabel": "Public engineering fixture only",
+            "transcriptCached": true
+          },
+          "source": "importedAudio",
+          "startedAt": null,
+          "status": "transcribed",
+          "stoppedAt": null,
+          "title": "Public paired near-N_SPK8016",
+          "transcriptFinal": true,
+          "transcriptPreview": "我感觉可以根据年龄呃和这种就是不同的人士做一下区分呃我感觉我们可以主要针对就是嗯十八到四十五之岁的中青年人群吧\n对有有些游戏\n哦我感觉我们可以根据就是不同人群稍微做一下差别设计你像\n如果老年人用的话可以就是配置稍微低点儿就是字体或者声音稍微大一点年轻人用的话就可能颜色选择性多点配置高点儿这种\n对对可以\n我感觉可以现在通过比较热门的直播带货还有不是马上就电商双十一嘛这种活动我们都可以多参与一下就各大电商平台什么的天猫苏宁淘宝拼多多\n...",
+          "transcriptSegments": 66,
+          "transcriptText": "我感觉可以根据年龄呃和这种就是不同的人士做一下区分呃我感觉我们可以主要针对就是嗯十八到四十五之岁的中青年人群吧\n对有有些游戏\n哦我感觉我们可以根据就是不同人群稍微做一下差别设计你像\n如果老年人用的话可以就是配置稍微低点儿就是字体或者声音稍微大一点年轻人用的话就可能颜色选择性多点配置高点儿这种\n对对可以\n我感觉可以现在通过比较热门的直播带货还有不是马上就电商双十一嘛这种活动我们都可以多参与一下就各大电商平台什么的天猫苏宁淘宝拼多多\n嗯我们前期主要是就是呃价钱可以收就让利一些多占领一些市场份额等市场份额呃慢慢做大之后就可以就是价钱稍微高点呗\n我感我感觉 d j 这个不太适合手机吧好像手机好像一般就是有门店这种或者就是\n对手机附件之类的什么手机壳\n你这个相当于就就是合约手机了感觉现在合约合约机好像不是太卖的不是太多好像\n礼品就是亏哦就是分期付款那种哦对对\n这个主要还是看手续这分期还是看手续费的因为有些银行它这个手续费比较高所以对客户吸引力对对对\n找明星代言这个投入太大前期至少\n对非常非常非常贫民化了现在\n我感觉还是几个几个平台同时播比较好就看哪个平台就吸引的客户比较多嘛\n但\n哎呦\n我感觉就是还是根据客户就是活活嗯每日活跃人数嘛像抖音这种他日活跃人数可能有超过三亿嘛还有快手这种日活跃日\n自己官网嘛对对对\n反正反正前期前期我感觉可以前期我感觉可以就是借用这些成熟的平台我们在自己慢慢以后就是开拓一些自己的平台嘛就是对\n对呃呃我感觉现在不用做平台就是像各大各大\n就各大电商那种官方旗舰店都可以做直播的有这种功能\n手机赠品一般就是手手机壳就是\n手机壳屏幕贴膜什么的\n对对对而且充电宝也可以是一个选择嗯手机贴膜嗯还有那个还有那个是还有耳机对吧现在耳机也比较流行尤其尤其是无线耳机\n对对对无线耳机这个比较比较好你你你可以看一下现在很多厂家卖手机都是送耳机现在\n对这这个也比较好感觉嗯\n等于你\n玩具玩具也可以那种玩偶什么的\n我感觉反正反正这种如果他如果他\n对于对\n反正赠品的价值我感觉一般控制在五十块钱以内就可以了基本上如如果你要量产的话成本应该都会很低的\n对可以联系一些专业厂家就是跟他们商谈一下的\n闲暇自己门店或者\n也可以铺也可以铺一下广告像什么公交广告电梯广告之类的还有还有地铁广告什么什么的\n对对对对对品牌影响不好这个对\n对对想想找找一些这种\n我我感觉可以找一些就是大家比较欢比较受大家欢迎的这种嗯做盲盲盒公司司像这种种 pop 骂的这种这种挺受受欢迎的对对\n那幸运\n颜肃我感觉可以参考就是有像那其他手机厂商的就参考他们怎么设计的还还可以找一些就是这种美术设计学院的他们就专门设计\n这种产品的我感觉我感觉这个颜色可以找那种专门学美学的学美术因为因为一般都是他们设计的比较多对\n现在好好像他们都找专业人士设计的\n不是因为现在颜色手机外观很重要你知道吗因为很多人买手机第一眼就是看这种外观尤其是颜色这种\n颜色我感觉一款手机至少得有五种以上颜色要不然选择选择面太窄了\n你看日你看其他厂商的手机基本上都是这种至少有五六种颜色可以选也\n对对对\n行好的\n是这个效果比还不如直接花一下大价钱找一些比较大大牌明星的\n对不对\n我我感觉我我们可以先确定几个人选就是在组最后再商量确定对先确定几个人选就是\n对一对嗯\n对对对我们要制定一套完整的饭对\n我们可以同时同时坐标好吧\n这个不冲突反正对不是不是我问一些\n我们某些型号可以只在线上供应不在线下供应很多对\n我们可以我们可以只拿出某些颜色就是在这个直播上直接销售或者某些某些配置的\n对对对哎\n反正我们肯定首先要制作制定制作一套完整的方案这个\n对对\n这这前期可以做几次尝试我感觉就是先制制作几套方案吧\n就是供货还有就是售后这方面都要做好\n嗯\n对前前期我们就是制掉制作至少三道饭嘛就不同的平台就尝试一下\n好嗯\n对\n好好嗯好",
+          "utterances": [
+            {
+              "approximateTiming": true,
+              "endMs": 97600,
+              "speaker": null,
+              "startMs": 80000,
+              "text": "我感觉可以根据年龄呃和这种就是不同的人士做一下区分呃我感觉我们可以主要针对就是嗯十八到四十五之岁的中青年人群吧"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 145600,
+              "speaker": null,
+              "startMs": 129600,
+              "text": "对有有些游戏"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 177200,
+              "speaker": null,
+              "startMs": 161600,
+              "text": "哦我感觉我们可以根据就是不同人群稍微做一下差别设计你像"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 193200,
+              "speaker": null,
+              "startMs": 177200,
+              "text": "如果老年人用的话可以就是配置稍微低点儿就是字体或者声音稍微大一点年轻人用的话就可能颜色选择性多点配置高点儿这种"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 209200,
+              "speaker": null,
+              "startMs": 193200,
+              "text": "对对可以"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 241200,
+              "speaker": null,
+              "startMs": 225200,
+              "text": "我感觉可以现在通过比较热门的直播带货还有不是马上就电商双十一嘛这种活动我们都可以多参与一下就各大电商平台什么的天猫苏宁淘宝拼多多"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 257200,
+              "speaker": null,
+              "startMs": 241200,
+              "text": "嗯我们前期主要是就是呃价钱可以收就让利一些多占领一些市场份额等市场份额呃慢慢做大之后就可以就是价钱稍微高点呗"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 290200,
+              "speaker": null,
+              "startMs": 273200,
+              "text": "我感我感觉 d j 这个不太适合手机吧好像手机好像一般就是有门店这种或者就是"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 306200,
+              "speaker": null,
+              "startMs": 290200,
+              "text": "对手机附件之类的什么手机壳"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 323600,
+              "speaker": null,
+              "startMs": 306200,
+              "text": "你这个相当于就就是合约手机了感觉现在合约合约机好像不是太卖的不是太多好像"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 339600,
+              "speaker": null,
+              "startMs": 323600,
+              "text": "礼品就是亏哦就是分期付款那种哦对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 355600,
+              "speaker": null,
+              "startMs": 339600,
+              "text": "这个主要还是看手续这分期还是看手续费的因为有些银行它这个手续费比较高所以对客户吸引力对对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 387600,
+              "speaker": null,
+              "startMs": 371600,
+              "text": "找明星代言这个投入太大前期至少"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 403600,
+              "speaker": null,
+              "startMs": 387600,
+              "text": "对非常非常非常贫民化了现在"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 419600,
+              "speaker": null,
+              "startMs": 403600,
+              "text": "我感觉还是几个几个平台同时播比较好就看哪个平台就吸引的客户比较多嘛"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 435600,
+              "speaker": null,
+              "startMs": 419600,
+              "text": "但"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 451600,
+              "speaker": null,
+              "startMs": 435600,
+              "text": "哎呦"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 481600,
+              "speaker": null,
+              "startMs": 465600,
+              "text": "我感觉就是还是根据客户就是活活嗯每日活跃人数嘛像抖音这种他日活跃人数可能有超过三亿嘛还有快手这种日活跃日"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 496200,
+              "speaker": null,
+              "startMs": 481600,
+              "text": "自己官网嘛对对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 512200,
+              "speaker": null,
+              "startMs": 496200,
+              "text": "反正反正前期前期我感觉可以前期我感觉可以就是借用这些成熟的平台我们在自己慢慢以后就是开拓一些自己的平台嘛就是对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 528200,
+              "speaker": null,
+              "startMs": 512200,
+              "text": "对呃呃我感觉现在不用做平台就是像各大各大"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 544200,
+              "speaker": null,
+              "startMs": 528200,
+              "text": "就各大电商那种官方旗舰店都可以做直播的有这种功能"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 576200,
+              "speaker": null,
+              "startMs": 560200,
+              "text": "手机赠品一般就是手手机壳就是"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 592000,
+              "speaker": null,
+              "startMs": 576200,
+              "text": "手机壳屏幕贴膜什么的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 608000,
+              "speaker": null,
+              "startMs": 592000,
+              "text": "对对对而且充电宝也可以是一个选择嗯手机贴膜嗯还有那个还有那个是还有耳机对吧现在耳机也比较流行尤其尤其是无线耳机"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 624000,
+              "speaker": null,
+              "startMs": 608000,
+              "text": "对对对无线耳机这个比较比较好你你你可以看一下现在很多厂家卖手机都是送耳机现在"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 656000,
+              "speaker": null,
+              "startMs": 640000,
+              "text": "对这这个也比较好感觉嗯"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 672000,
+              "speaker": null,
+              "startMs": 656000,
+              "text": "等于你"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 718600,
+              "speaker": null,
+              "startMs": 704000,
+              "text": "玩具玩具也可以那种玩偶什么的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 734600,
+              "speaker": null,
+              "startMs": 718600,
+              "text": "我感觉反正反正这种如果他如果他"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 750600,
+              "speaker": null,
+              "startMs": 734600,
+              "text": "对于对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 766600,
+              "speaker": null,
+              "startMs": 750600,
+              "text": "反正赠品的价值我感觉一般控制在五十块钱以内就可以了基本上如如果你要量产的话成本应该都会很低的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 782600,
+              "speaker": null,
+              "startMs": 766600,
+              "text": "对可以联系一些专业厂家就是跟他们商谈一下的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 814600,
+              "speaker": null,
+              "startMs": 798600,
+              "text": "闲暇自己门店或者"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 830600,
+              "speaker": null,
+              "startMs": 814600,
+              "text": "也可以铺也可以铺一下广告像什么公交广告电梯广告之类的还有还有地铁广告什么什么的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 878600,
+              "speaker": null,
+              "startMs": 862600,
+              "text": "对对对对对品牌影响不好这个对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 895400,
+              "speaker": null,
+              "startMs": 878600,
+              "text": "对对想想找找一些这种"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 911400,
+              "speaker": null,
+              "startMs": 895400,
+              "text": "我我感觉可以找一些就是大家比较欢比较受大家欢迎的这种嗯做盲盲盒公司司像这种种 pop 骂的这种这种挺受受欢迎的对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 927400,
+              "speaker": null,
+              "startMs": 911400,
+              "text": "那幸运"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 961200,
+              "speaker": null,
+              "startMs": 943400,
+              "text": "颜肃我感觉可以参考就是有像那其他手机厂商的就参考他们怎么设计的还还可以找一些就是这种美术设计学院的他们就专门设计"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 977200,
+              "speaker": null,
+              "startMs": 961200,
+              "text": "这种产品的我感觉我感觉这个颜色可以找那种专门学美学的学美术因为因为一般都是他们设计的比较多对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 993200,
+              "speaker": null,
+              "startMs": 977200,
+              "text": "现在好好像他们都找专业人士设计的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1009200,
+              "speaker": null,
+              "startMs": 993200,
+              "text": "不是因为现在颜色手机外观很重要你知道吗因为很多人买手机第一眼就是看这种外观尤其是颜色这种"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1025400,
+              "speaker": null,
+              "startMs": 1009200,
+              "text": "颜色我感觉一款手机至少得有五种以上颜色要不然选择选择面太窄了"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1041400,
+              "speaker": null,
+              "startMs": 1025400,
+              "text": "你看日你看其他厂商的手机基本上都是这种至少有五六种颜色可以选也"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1057400,
+              "speaker": null,
+              "startMs": 1041400,
+              "text": "对对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1073400,
+              "speaker": null,
+              "startMs": 1057400,
+              "text": "行好的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1105200,
+              "speaker": null,
+              "startMs": 1089200,
+              "text": "是这个效果比还不如直接花一下大价钱找一些比较大大牌明星的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1121200,
+              "speaker": null,
+              "startMs": 1105200,
+              "text": "对不对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1137200,
+              "speaker": null,
+              "startMs": 1121200,
+              "text": "我我感觉我我们可以先确定几个人选就是在组最后再商量确定对先确定几个人选就是"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1169200,
+              "speaker": null,
+              "startMs": 1153200,
+              "text": "对一对嗯"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1201200,
+              "speaker": null,
+              "startMs": 1185200,
+              "text": "对对对我们要制定一套完整的饭对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1216000,
+              "speaker": null,
+              "startMs": 1201200,
+              "text": "我们可以同时同时坐标好吧"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1230400,
+              "speaker": null,
+              "startMs": 1216000,
+              "text": "这个不冲突反正对不是不是我问一些"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1246400,
+              "speaker": null,
+              "startMs": 1230400,
+              "text": "我们某些型号可以只在线上供应不在线下供应很多对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1262400,
+              "speaker": null,
+              "startMs": 1246400,
+              "text": "我们可以我们可以只拿出某些颜色就是在这个直播上直接销售或者某些某些配置的"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1294400,
+              "speaker": null,
+              "startMs": 1278400,
+              "text": "对对对哎"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1342400,
+              "speaker": null,
+              "startMs": 1326400,
+              "text": "反正我们肯定首先要制作制定制作一套完整的方案这个"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1358400,
+              "speaker": null,
+              "startMs": 1342400,
+              "text": "对对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1376400,
+              "speaker": null,
+              "startMs": 1358400,
+              "text": "这这前期可以做几次尝试我感觉就是先制制作几套方案吧"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1408400,
+              "speaker": null,
+              "startMs": 1392400,
+              "text": "就是供货还有就是售后这方面都要做好"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1440400,
+              "speaker": null,
+              "startMs": 1424400,
+              "text": "嗯"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1474000,
+              "speaker": null,
+              "startMs": 1456400,
+              "text": "对前前期我们就是制掉制作至少三道饭嘛就不同的平台就尝试一下"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1506000,
+              "speaker": null,
+              "startMs": 1490000,
+              "text": "好嗯"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1522000,
+              "speaker": null,
+              "startMs": 1506000,
+              "text": "对"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 1538000,
+              "speaker": null,
+              "startMs": 1522000,
+              "text": "好好嗯好"
+            }
+          ]
+        }
+      ]
+    },
+    "imu": {
+      "accel": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 1.0
+      },
+      "gyro": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "motion": "unknown",
+      "online": false,
+      "sampleHz": 0,
+      "supported": false
+    },
+    "lastControl": {
+      "accepted": true,
+      "action": "meetingTranscribeAudio",
+      "characteristicUuid": "host://companion-type/recording",
+      "message": "transcribed by Companion-Type provider companion-type-local-paraformer-official (offline:paraformer)",
+      "payloadHex": "4d656574696e675472616e736372696265417564696f3a6e6561722d4e5f53504b383031363a"
+    },
+    "meeting": {
+      "active": false,
+      "durationMs": 0,
+      "startedAt": null,
+      "status": "idle",
+      "supported": true,
+      "transcriptCount": 1
+    },
+    "minutesContextSupported": true,
+    "oobe": {
+      "checks": [
+        {
+          "id": "bluetooth",
+          "label": "蓝牙连接",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "firmware",
+          "label": "固件与板卡身份",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "gatt",
+          "label": "核心 GATT",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "boardMicrophone",
+          "label": "板端录音链路",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "clock",
+          "label": "自动校时",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "imu",
+          "label": "IMU",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "speaker",
+          "label": "扬声器",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "display",
+          "label": "墨水屏",
+          "message": "等待实板观察",
+          "status": "pending"
+        },
+        {
+          "id": "touch",
+          "label": "触摸",
+          "message": "等待实板操作",
+          "status": "pending"
+        },
+        {
+          "id": "power",
+          "label": "电源与充电",
+          "message": "等待实板测量",
+          "status": "pending"
+        },
+        {
+          "id": "remoteServices",
+          "label": "ASR / 纪要服务",
+          "message": "不在硬件检查中调用",
+          "status": "pending"
+        }
+      ],
+      "complete": false,
+      "lastRunAt": null
+    },
+    "privacy": {
+      "audioCacheBytes": 49658284,
+      "consentRequired": true,
+      "lastEraseAt": null,
+      "localOnly": true,
+      "minutesBytes": 0,
+      "policyLabel": "Local cache",
+      "retentionDays": 7,
+      "transcriptBytes": 4575
+    },
+    "schema": "companion.host.v1",
+    "source": "unavailable",
+    "speaker": {
+      "findSupported": false,
+      "muted": true,
+      "online": false,
+      "status": "notPopulated",
+      "supported": false,
+      "volume": 0
+    },
+    "updatedAt": "2026-11-09T16:33:00.416Z",
+    "wakeWord": {
+      "armed": false,
+      "confidence": 0.0,
+      "engine": "notPopulated",
+      "keyword": "hey companion",
+      "lastDetectedAt": null,
+      "supported": false
+    }
+  },
+  "transcriptionRequested": true
+}
