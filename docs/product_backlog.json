@@ -262919,7 +262919,7 @@
         "ownerCoreAcceptanceCandidate20261109": {
           "at": "2026-11-09T13:28:17+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "CORE_ACCEPTANCE_BATCH_IN_PROGRESS_WINDOWS079_GROUPED_RUNTIME_PROVEN",
+          "state": "WHOLE_CORE_CANDIDATE_IN_PROGRESS_INTERMEDIATE079_PRESERVED",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -262953,7 +262953,7 @@
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。",
+          "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -263306,10 +263306,25 @@
             "saleQualified": false
           },
           "latestOwnerContinuation": {
-            "quote": "继续集中推进",
-            "at": "2026-11-09T17:08:34+08:00",
-            "decision": "完成同一Windows会议交付链及079集中候选，承接原1–2周工程预算，不拆新任务树。",
-            "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。"
+            "at": "2026-11-09T17:16:18+08:00",
+            "quote": "什么意思？那你看一下这个东西离这个交付售卖标准还差多远呢？继续做了一下，他才可以。不要老是说。就是你要完整的一块东西做完，然后再交付，不要这么零零碎碎的。然后也是要快点把这个事情做了，现在太慢了。",
+            "decision": "079保留为已安装中间候选，不把一批UI/音频/缓存文字验证称为完整交付。继续同一核心批次，先把同一份真实原音经产品当前本地转写、AI整理、核对、文档交付、备份恢复和重开实际贯通；不再以小版本收尾。",
+            "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。"
+          },
+          "wholeMeetingContinuation": {
+            "at": "2026-11-09T17:16:18+08:00",
+            "state": "FIXED_PRODUCT_ASR_TO_AI_SAME_AUDIO_INTEGRATION_STARTED",
+            "frozenWindowsVersion": "0.1.79",
+            "frozenNativeSource": "471d2d019a644849578bf09f9d781be76a535d88",
+            "priorActualAudioPass": 42589879725,
+            "actualGap": "已验原音导入/导出与已有ASR/AI资料阅读，但前一批没有从这次原生导入的同一条音频重新运行产品当前默认ASR，再完成其AI后续。",
+            "samePublicMeeting": "S_R004S03C01",
+            "asrScope": "当前产品已安装并按官方SHA锁定的Paraformer-large int8；仅产品整链验证，不是研究候选切换/训练/准确率达标。",
+            "localHeavyInference": false,
+            "remoteCpuOnly": true,
+            "phoneObservation": "Owner已授权手机一次只读观察为absent；不催接线、不重复轮询。",
+            "boardObservation": "原共享实板由另一在途377长录持有；不抢板，不停录，不替换其接收进程。",
+            "completion": "同一会议真实音频、实际ASR和AI、保存核对、所选文档、备份恢复/重开来源可追溯后，才作为Windows完整使用块；Android和实卡及模型/售卖门分别保留。"
           }
         }
       },
@@ -263334,7 +263349,7 @@
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
       "result": "Windows052已交付范围保留；Android054候选PPTX/XLSX/mm/PNG与独立AI材料选择完成，实际生产Java/JVM/手机原生位图与文件结构、同源APK签名和16KiB对齐通过。保留手机053配对现场，主App054未装，系统保存/分享/升级资料保留和Owner/客户待验。",
-      "next": "先处理Windows旧系统分享和聊天附件交付的剩余实际阻断；结合当前可用条件承接Android/录音卡同场流程，沿原分工不抢板卡。模型独立，原质量门保持；完整核心候选到齐后集中交Owner和新客户体验。",
+      "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",
