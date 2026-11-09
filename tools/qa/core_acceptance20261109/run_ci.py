@@ -49,7 +49,8 @@ try:
  gui=[p for p in cases.iterdir() if p.is_dir() and not p.name.startswith('saved-')];assert len(gui)==1
  native_result=json.loads((gui[0]/'result.json').read_text(encoding='utf8'));record['nativeUiState']=native_result['state']
  record['ordinaryReceiverPassed']=native_result.get('ordinaryRecipientTested',False)
- record['state']='WINDOWS_SAVED_MEETING_AND_ORDINARY_FILE_HANDOFF_PASSED' if code==0 and gui_code==0 and record['ordinaryReceiverPassed'] else 'WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
+ record['receiverScope']='Windows standard Shell Paste; third-party messengers and actual sending remain unqualified'
+ record['state']='WINDOWS_SAVED_MEETING_AND_SHELL_FILE_HANDOFF_PASSED' if code==0 and gui_code==0 and record['ordinaryReceiverPassed'] else 'WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
  assert code==0 and gui_code==0 and record['ordinaryReceiverPassed'],'One or more core software stages remain unqualified'
 except BaseException as error:
  record.setdefault('error',repr(error));record['state']='WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
