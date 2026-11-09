@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-09T06:39:50.958890+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "5e015007ce53cd6e8f80003a8238150310085f07",
+  "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "appVersion": "0.1.78",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "exactInstalledDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "currentUiSourceTypecheckOnly": true,
+  "currentUiSourcePackaged": false,
+  "backendExitCode": 0,
+  "backendState": "SAVED_REAL_ASR_MEETING_LOCAL_REVIEW_EXPORT_BACKUP_RECYCLE_REOPEN_PASSED",
+  "nativeUiExitCode": 1,
+  "nativeUiState": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "ordinaryReceiverPassed": false,
+  "error": "AssertionError('One or more core software stages remain unqualified')",
+  "finishedAt": "2026-11-09T06:40:57.658246+00:00"
+}

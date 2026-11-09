@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-09T14:46:15+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "handoff",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 6980,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 262342,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 393396,
+      "title": ""
+    },
+    {
+      "hwnd": 262652,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    8076
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 3640,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3820,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4516,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5032,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5904,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 8076,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\a5c8a4f7ace445afbc24c60c094b8e43\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 344739840,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5797376000,
+    "systemPhysicalPercent": 32.5
+  },
+  "error": "TimeoutError('Ordinary receiver did not create the exact file; no acceptance claimed')",
+  "receiverPreferencesRestoredIdentically": true,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T14:46:47+08:00"
+}

@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Ordinary app must confirm the exact received file before next copy
+    at D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:35:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

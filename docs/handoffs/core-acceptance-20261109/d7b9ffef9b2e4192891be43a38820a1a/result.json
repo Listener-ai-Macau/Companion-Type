@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-09T14:01:24+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "handoff",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\d7b9ffef9b2e4192891be43a38820a1a",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-d7b9ffef9b2e4192891be43a38820a1a",
+  "stationVerifiedBeforeLaunch": true,
+  "appPid": 4376,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 6424050,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 5113002,
+      "title": ""
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "error": "AssertionError('Actual low-memory signal during own UI worker')",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T14:01:29+08:00"
+}

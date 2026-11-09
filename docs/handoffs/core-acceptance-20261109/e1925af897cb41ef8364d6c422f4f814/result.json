@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-09T13:54:33+08:00",
+  "state": "NATIVE_PRIVATE_UI_INSPECTED",
+  "stage": "inspect",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\e1925af897cb41ef8364d6c422f4f814",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-e1925af897cb41ef8364d6c422f4f814",
+  "stationVerifiedBeforeLaunch": true,
+  "appPid": 7188,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 5769728,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 1116416,
+      "title": ""
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "ui": {
+    "state": "ACTUAL_NATIVE_LIBRARY_INSPECTED",
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    },
+    "publicFixtureVisible": true,
+    "ordinaryRecipientTested": false,
+    "captureOrModelQualified": false
+  },
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T13:54:37+08:00"
+}

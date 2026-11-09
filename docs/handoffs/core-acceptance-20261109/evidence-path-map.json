@@ -1,0 +1,15 @@
+{
+  "reason": "Shorten only mirrored retained-failure directory for Windows MAX_PATH; canonical evidence is unchanged.",
+  "entries": [
+    {
+      "original": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-create-explicit-manual-document-83a08e21b4f94c4397ef641bb788cb71/09-create-explicit-manual-document-request.json",
+      "mirror": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-83a08e21/09-create-explicit-manual-document-request.json",
+      "sha256": "ee8d3e4a9ed0a6f3a8211b4a6704b94b1991a85cfa67ccb14afd75ecd5f18932"
+    },
+    {
+      "original": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-create-explicit-manual-document-83a08e21b4f94c4397ef641bb788cb71/09-create-explicit-manual-document.log",
+      "mirror": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-83a08e21/09-create-explicit-manual-document.log",
+      "sha256": "f6e1bb55064fdb8236273ea4d1e41105b30232f348b6eea51fcbf1c6617b96de"
+    }
+  ]
+}

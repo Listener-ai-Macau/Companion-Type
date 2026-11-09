@@ -1,5 +1,5 @@
 <!-- frontend-windows078-current -->
-Windows当前（2026-11-09T13:12:06+08:00）：已安装0.1.78，245个原资料文件hash一致；完整文件复制原生/界面/包内核对通过，普通第三方实际粘贴收件未验，旧系统分享故障开放。 手机100后置。当前点沿原待办ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109；本机收据 C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261109-windows-file-copy078\installation.json，远端证据 docs/handoffs/windows-file-copy078-20261109。
+Windows当前（2026-11-09T14:56:27+08:00）：已装0.1.78；本批同一公开会议的已保存转写→人工修订/标注→所选TXT/Word/PDF→Windows标准Shell实际粘贴，以及备份/回收站恢复/重开通过。顶部导出入口联动已修源码并过类型检查，未打入新包。原音/AI/旧系统分享、Android与卡端整链仍开放；整套候选/售卖未通过。沿原待办ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109，远端证据docs/handoffs/core-acceptance-20261109。
 <!-- /frontend-windows078-current -->
 
 ## 2026-11-09T11:02:52+08:00 — Companion当前交付收敛：电脑重启后原370收全，继续开录准备定位
@@ -38,6 +38,29 @@ Owner最新范围为“达到售卖标准，除了明确block的需求”。当�
 R2构建驱动最初按嵌套输出目录推导到新target，误开始重复依赖编译；约125秒后识别并仅取消自身进程，失败收据保留，改回已验证绝对windows051缓存路径，未改产品源、依赖锁或发布配置。
 
 R2实际完整protected probe 4187.38ms，5秒门本次样本通过；initial acquisition 2177.056ms，具体阶段{"identity": 44928, "optional_status": 57485, "local_original": 38490, "idle_clock": 75173, "exact_catalogue": 1791249}。首次直接成功，快速重试0次，偶发根因/手机/恢复未关闭。参数请求保持到目录后，实际CI12/latency0，随后释放；无永久加速或主频变更。进程启动到公开结果观察5000ms另有Windows monotonic计时量化误差，已留原值并加保守上界说明，不用该边界值冒充完整冷启动应用5秒合格；本次连接门来自高精度Rust Instant。验证版未替换正式068。
+
+<!-- complete-core-candidate-budget-20261109 -->
+2026-11-09T13:35:49+08:00 Owner优先指令完整承接：先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了。转入已有frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109同一批，1～2周预算，11-16首轮/11-23预算复核；不另开任务树、审批/巡检或逐修补日用版。嵌软负责可靠采集、原场保存/同步恢复、目录/删除回收、维护与当前资源/时间门，原block/屏幕/速度后置不复开。小提交保留，集中到完整核心候选构建与真实使用链；源码/模型检查和单样本不充当完整交付。
+
+核发现行入口别名失配：baseline761/sourceCandidate760/delivery751/phone106已落后真实767/手机最后109；原对象移至同一history.beforeCoreCandidate20261109保留，当前字段按正向收据统一。正式Windows在13:07由原交付线从068升级到078，源bb155、EXE aba8b9cf…，此次只读PE/hash及其既有安装收据核实；此前“正式068未替换”的当前描述已过时，保留并在这里纠正。手机109为最后正向观察，当前ADB离线，不能将其它聊天旧65/未装100当成当前或降级。
+
+已完成5204输运纯补丁对当前078工作树的git apply --check；571/078相关输运代码、WinRT依赖与私有079的571基础在忽略checkout行尾后相同。未修改其它模块工作树/优先级，未又起079替换当前078。合入输入与4.187秒单次原证据留core-candidate-integration.json；统一候选仍未冻结/未整链通过。板卡空闲，本轮0新START。下一执行沿embedded.next，不沿旧临时诊断/旧版本硬编码脚本继续零碎刷写。
+
+<!-- core079-forward-development-20261109 -->
+2026-11-09T13:53:17+08:00 Owner要求“开始吧, 先做开发, 避免这么多奇怪的保护防御性工作”。本轮先开发：在已有079核心工作树整合正式078源bb155的生产功能（文件复制/交付、界面、Volcengine和现行50KiB诊断），未操作其它模块工作树。整仓merge会带入无关Android/历史交付包并产生6个版本冲突，未提交即abort；改为Windows生产改动集整合，外部依赖不变，保留079产品版本。继承078文件末尾空行仅格式告知，不为此阻断或改写产品代码。
+
+源d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca继续补同一条用户链：已有准备连接的Normal分支也申请临时参数至完整目录就绪；新建/重连CMC3持有已有请求到ACK/日志耐久完成，既有录音连接不替换参数；旧版同步恢复不再顺带写录音时钟，删除仅剩定义的隐式校时重连wrapper。前端构建及原生开发编译通过，断链生命周期8项/真实C录音控制夹具8项通过；原目录/删除入口原本已持有setup，未重复改写。
+
+本轮没有刷板、开录、改网络、运行模型或逐补丁安装。不是售卖通过；未把5204实板4.187秒继承成d00已实测。源码与已集成078纯设备链增量在core-candidate-integration.json.currentDevelopment；补丁对当前前端工作树只读检查结果0。待完整候选集中构建/真机确认，原失败/block及1～2周批次预算保持。
+
+<!-- core079-matched-candidate-physical -->
+2026-11-09T14:26:33+08:00 继续按完整核心批次推进：同一源d00正常发布构建、前端与包内原生/许可证/升级身份核对完成，0.1.79候选MSI SHA 6f4a708c9bb983f9193a7a6dc7445d830d34241452b50f45026175139d1877e3；未替换正式078。无产品源再变更，本轮只用同一767/079组合。
+
+原就绪弹窗得到“可以开始”后一次完成两短录：原373首有效PCM0.328s、STOP0.171s，10.05s原音完整收取/精确回收；普通App原374录中主动断开不发STOP，15s调度重连，17.268s已验证同一key/锚点/START且仍录音，恢复完整上界2.268s<=10s，冷完整目录3.532405s<=5s。30.37s原音收全，两个WAV与设备时长误差均0，原34目录完全相同。两短录的编码/PDM3ms/零采音异常/前台/栈/61.44MHz按原门通过；原长录3.245ms失败仍留，短样本不关闭长时间峰值。
+
+初收集器仅找旧offline_reconnect日志，误记本次CMC3直接恢复计时缺失；原结果留存，按同一次正常客户端单调时钟日志与已配置15s调度修正为保守上界，包含轮询迟到/全部原生工作，不重录、不放宽10s；同时补入同版实际完整冷目录3.532s门。
+
+长录当前状态：{"at": "2026-11-09T14:24:44+08:00", "pid": 30948, "state": "LONG_FAILURE_PRESERVED_NO_NEW_START", "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca", "firmware": 66767, "boardLease": true, "newStartCommands": 1, "targetRecordingSeconds": 7380, "targetLiveSyncSeconds": 7200, "saleQualified": false, "childPid": 1564, "sessionId": "v1-real-installed-1794205222360", "recordingKey": {"deviceUid": "120011000d50335754363720", "formatEpoch": "5a6584e1707422bb", "sessionId": "0000000000000177"}, "recordingId": 132443, "sessionState": "recording", "liveRecording": true, "liveReceive": true, "sealedChunks": 1, "hostElapsedSeconds": 240.264, "sameOriginalActiveFollowWindows": 20, "conservativeLiveSyncSeconds": 89.01080069999989, "unexpectedDisconnects": 0, "maximumFilePollGapSeconds": 1.029771299999993, "firstObservedChunkAt": "2026-11-09T14:22:35+08:00", "exitCode": 1, "error": "AssertionError('Normal client failed; original retained')", "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-03\\companion-firmware-66662-luna\\recovery-work\\run_core079_long.py\", line 63, in main\n    log.close();progress['exitCode']=child.returncode;assert child.returncode==0,'Normal client failed; original retained'\n                                                             ^^^^^^^^^^^^^^^^^^^\nAssertionError: Normal client failed; original retained\n", "cleanupError": "AssertionError()"}。它另经原弹窗明确说明约2h3m采音并确认后才可开始；无UART/SWD/刷写/速度冲刺，无自动回退。只监督同一原场，结束后累计指标和原音判定；手机/首次偶发根因/Owner后置不继承通过。
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。
@@ -24987,3 +25010,14 @@ CI正常release原生编译18m48s通过，但后置源文件字节检查使整�
 承接Owner原话“先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了”。将1–2周作为核心候选预算，规划11月16–23日验收窗口，非整机开售承诺；固定录音卡、Windows、Android和资料恢复/交付的同一使用目的，先Windows后手机，保留模型独立专项、全部竞品原待办及既有数值门。纠正碎片化执行：源码检查点不逐项打包；同链问题集中修复，再集中交付；已验且未受影响部分复用，紧急数据故障立即修。
 
 实际核对发现旧installed_user_journey脚本使用synthetic录音、失败后meetingLoadDemo回退，且没有完整资料库隔离，不用于本候选通过判定。本条仅为当前批次/范围与验收依据纠偏，没有新产品修复、构建或硬件操作。当前Windows078已装且245文件一致，普通收件及旧系统分享故障开放；手机100候选/65观测及嵌软在途点保留。下一项：推进Windows完整会后流程的可执行部分，先以隔离真实App+普通接收应用补齐文件交付环节；沿同一场会议继续编辑/保存/重开和AI内容核对。继承078有效证据与旧系统分享失败；不以新增脚本数量计产品进展。
+
+
+## 2026-11-09T14:56:27+08:00 — 完整核心候选：Windows同一会议会后资料与标准文件交付通过，整套仍推进
+
+Owner要求1–2周工程预算内交完整核心验收候选，并指出工作零碎；范围沿13:28原批次，不改原质量目标，先Windows后手机，模型专项独立。
+
+复用同源0.1.78原生EXE/DLL（bb1550c4，包内哈希一致），没有本轮原生构建或安装。约38分47秒公开S_R004S03C01既有ASR，完成标题/补充/独立文字修订/人工说话人标签、所选TXT/Word/PDF、过期写入拒绝、新资料库备份恢复、保护拒删/回收站恢复及重开；原ASR、未选备注边界与对照记录均保留。原生App所选文件的真实CF_HDROP由Windows标准Shell的实际Paste菜单动作接收，三格式真实落盘/哈希/正文过，未传源路径或内容给接收器。最终远端42575618375于14:52:46通过；完整收据在docs/handoffs/20261109-core-acceptance，远端镜像docs/handoffs/core-acceptance-20261109。不把这些数据/交付验证叫新ASR、AI事实合格、聊天发送或整机售卖通过。
+
+执行返工如实保留：本机低内存停止，原256MiB测试进程PDF失败；远端较充分资源原PDF即通过。共8次远端流程尝试，前7次为验收启动/检查或错误接收端准备失败，0次原生构建/新安装/客户轮次。私有非交互桌面在远端启动不稳定，检查误判EBWebView子目录；改专用远端正常会话并核实际端口/私有目录/限额。接收端选型失误：7-Zip的EditPaste为空，菜单和按键返工没有价值，已停止并删除当前工具中的该路线，保留源码历史和原失败，改用已核微软文档的标准Shell菜单动作。最终无需键鼠/前台控制，Owner电脑前台/剪贴板未接管；不把修工具或测试次数算功能进展。
+
+产品源码a7e9df52接顺同一导出问题链：顶部直接打开所选内容面板，无纪要但有转写/重点/补充也能直接导出，旧其它格式入口保留；已过Windows类型检查，未重新打包，因此尚不称已装版改善。原音回听/原音与MP3、AI整理事实、旧WinRT分享、Android及卡端长录整链仍开放；相关可执行阻断集中修复后再一次候选打包，沿batch-result.json的next继续。quality_targets完整结构未改，旧成功/失败均保留。

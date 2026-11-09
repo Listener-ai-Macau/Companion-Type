@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 207, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 171, in main
+    received=receiver.paste(source)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_file_receiver.py", line 123, in paste
+    raise TimeoutError('Ordinary receiver did not create the exact file; no acceptance claimed')
+TimeoutError: Ordinary receiver did not create the exact file; no acceptance claimed

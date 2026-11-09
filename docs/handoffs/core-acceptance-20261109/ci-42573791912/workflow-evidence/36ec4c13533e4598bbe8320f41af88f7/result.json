@@ -1,0 +1,89 @@
+{
+  "at": "2026-11-09T14:34:56+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "handoff",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 7024,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 196834,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 459296,
+      "title": ""
+    },
+    {
+      "hwnd": 786598,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    572
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 572,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 2964,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3704,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5008,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6900,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\36ec4c13533e4598bbe8320f41af88f7\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 339795968,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5937143808,
+    "systemPhysicalPercent": 30.8
+  },
+  "error": "AssertionError()",
+  "receiverPreferencesRestoredIdentically": true,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T14:35:12+08:00"
+}

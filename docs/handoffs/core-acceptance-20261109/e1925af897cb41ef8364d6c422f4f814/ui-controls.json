@@ -1,0 +1,884 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": "切换至浅色模式",
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "使用帮助",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": "刷新",
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "我的记录",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "设备与同步",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "我的宠物",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "设置与工具",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "打开清单",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "用 Companion 录音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "只看待整理",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "搜索标题、转写、补充或整理结果",
+    "type": null
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "筛选与整理",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "",
+    "aria": "筛选录音文件夹",
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "",
+    "aria": "筛选录音标签",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "筛选录音开始日期",
+    "type": "date"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "筛选录音结束日期",
+    "type": "date"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "修改文件夹",
+    "type": "checkbox"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "目标录音文件夹",
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "",
+    "aria": "批量标签操作",
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "批量录音标签",
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "",
+    "aria": "批量收藏操作",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SELECT",
+    "text": "",
+    "aria": "批量导出格式",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "明确虚构·核心会后流程验收\n2026/10/26 11:40\n小王：采购清单需要周五前核对。 小李：追加20%的费用尚未批准，需要书面确认。\n导入文字\n手写清单已保存",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "连续回听",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "← 返回记录库",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "记录标题",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "会议纪要",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "转写原文",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "问这场会议",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "整理方式：会议",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出分享",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "重试回听",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "手写清单 · 已保存",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "行动事项1条核对负责人和时间",
+    "aria": "行动事项，1 条，核对负责人和时间",
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "待解问题1条留待下次跟进",
+    "aria": "待解问题，1 条，留待下次跟进",
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "查看全部章节",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "会议摘要",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "行动事项",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "待解问题",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "标记完成：核对采购清单（负责人：小王；截止：周五）",
+    "type": "checkbox"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "查看原话与补充",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "查看重点和完整整理",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "标记完成：核对采购清单（负责人：小王；截止：周五）",
+    "type": "checkbox"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "查看原话与补充",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "显示文字二维码",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "复制清单",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出清单",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出到日历",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "编辑清单",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "其它导出选项",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出整理全文",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出 Word 文档",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出思维导图（.mm）",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出日历待办",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "导出原话与补充",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存完整数据（JSON）",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "导出、复制与分享",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "checkbox"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "checkbox"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "checkbox"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "checkbox"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "材料与补充（已选 0 / 1）",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "选择材料：不选择的补充：内部备注不可进入本次文件",
+    "type": "checkbox"
+  },
+  {
+    "tag": "SELECT",
+    "text": "PDFWordPowerPointTXTMarkdownExcel思维导图（可编辑）思维导图 PNG字幕 SRT",
+    "aria": "所选内容文件格式",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "预览所选内容",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "复制所选内容",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存 PDF…",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "分享所选文件…",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "复制文件或在文件夹中分享",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "复制所选文件",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "在文件夹中分享所选文件…",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "核对文字",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "重新转写并对比",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "重新整理",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "本场会议",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "查找可提问的会议",
+    "type": null
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "checkbox"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "跟进草稿",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "整理周报",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "客户简报",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "设置AI服务",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "整理方式 · 会议 切换模板",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "会议访谈课堂自定义",
+    "aria": "整理视角",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "按这个视角整理",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "精简阅读",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "原始转写",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": null,
+    "type": "search"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "修正文字",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "补充一句（背景备注）",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存备注",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "编辑",
+    "aria": "编辑备注 exclude-note",
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "删除",
+    "aria": "删除备注 exclude-note",
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "更多",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "SELECT",
+    "text": "原文件 / WAV / 分段ZIPMP3 兼容副本（有损）",
+    "aria": "音频副本格式",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存原音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "分享录音…",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "其他录音分享方式",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "复制录音文件",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "在文件夹中分享录音…",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "aria": "重点名称",
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "标记回听位置",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存字幕",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "保存完整记录",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "连接 Companion",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "开始录音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "录音与同步",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "开始录电脑会议",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "选择音频文件",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "连接设备",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "查看服务设置",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "查看服务设置",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "扫描设备",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "连接 Companion",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "检查设备",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "第一次使用 · 约 1 分钟连接、听回应、录 10 秒、确认记录",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "播放宠物音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "我已听到",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "查看同步步骤",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "我已完成试录",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "打开我的录音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "我已看到记录",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "设备已静音",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "服务设置",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "设备与检查详情 · 尚未检查",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "更多录音与处理操作录音 · 同步 · 整理",
+    "aria": null,
+    "type": "button"
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "聊天怎么用？",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "开聊",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "清空本次对话",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "SUMMARY",
+    "text": "名字、性格与记忆",
+    "aria": null,
+    "type": null
+  },
+  {
+    "tag": "BUTTON",
+    "text": "检查软件更新",
+    "aria": null,
+    "type": "button"
+  }
+]

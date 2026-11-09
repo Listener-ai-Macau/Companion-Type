@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-09T14:23:40+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "handoff",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\eb7b18fb060d40899ab6cc0bc6e3138b",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-eb7b18fb060d40899ab6cc0bc6e3138b",
+  "stationVerifiedBeforeLaunch": true,
+  "cpuHardCapPercent": 100,
+  "appPid": 5936,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 196776,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 262324,
+      "title": ""
+    }
+  ],
+  "observedWebviewProfiles": [],
+  "error": "AssertionError('WebView profile is not the isolated folder')",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T14:23:57+08:00"
+}

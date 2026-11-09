@@ -1,0 +1,19 @@
+browserType.connectOverCDP: WebSocket error: connect ECONNREFUSED 127.0.0.1:54225
+Call log:
+[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:54225[22m
+[2m  - <ws connecting> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013[22m
+[2m  - <ws error> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 error connect ECONNREFUSED 127.0.0.1:54225[22m
+[2m  - <ws connect error> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 connect ECONNREFUSED 127.0.0.1:54225[22m
+[2m  - <ws disconnected> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 code=1006 reason=[22m
+
+    at C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:6:31
+    at Object.<anonymous> (C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:40:3) {
+  log: [
+    '  - <ws preparing> retrieving websocket url from http://127.0.0.1:54225',
+    '  - <ws connecting> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013',
+    '  - <ws error> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 error connect ECONNREFUSED 127.0.0.1:54225',
+    '  - <ws connect error> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 connect ECONNREFUSED 127.0.0.1:54225',
+    '  - <ws disconnected> ws://127.0.0.1:54225/devtools/browser/b6bc52aa-dbcd-4990-92c9-d797cb618013 code=1006 reason='
+  ],
+  name: 'Error'
+}

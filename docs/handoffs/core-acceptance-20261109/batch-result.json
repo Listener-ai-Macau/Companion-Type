@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-09T14:56:27+08:00",
+  "state": "WINDOWS_SAVED_MEETING_AND_SHELL_HANDOFF_PROVEN_CORE_CANDIDATE_IN_PROGRESS",
+  "appVersion": "0.1.78",
+  "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "verificationSourceCommit": "d44dc30e7e217febc3209b05fdc1265ff9c52dfc",
+  "acceptedWorkflowRun": "42575618375",
+  "runUrl": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42575618375",
+  "nativeRecompiled": false,
+  "installedNewCandidateThisBatch": false,
+  "completedOutcome": "同一份约38分钟真实公开会议的已保存转写，修订/人工标注/所选内容TXT Word PDF/新库备份恢复/保护与回收站/重开，以及真实App复制文件到Windows标准Shell粘贴落盘通过。",
+  "limits": "人工文档与人工姓名标签；没有新ASR/AI、原音回听、实体采音或手机验收。Shell实际落盘不等于聊天应用收件、发送或旧系统分享已修。",
+  "groupedUiSource": {
+    "commit": "a7e9df52db0ab4a6731ef75cf17abcde2008cf2e",
+    "changes": [
+      "会议顶部导出定位到所选内容面板",
+      "只有转写/重点/补充时也提供顶部导出入口",
+      "保留其它格式导出但不误作主入口"
+    ],
+    "typecheckPassed": true,
+    "packaged": false
+  },
+  "verificationFailuresRetained": {
+    "runsBeforePass": [
+      "42572270357",
+      "42572635265",
+      "42573005968",
+      "42573478711",
+      "42573791912",
+      "42574369843",
+      "42574971124"
+    ],
+    "classification": "验收准备/平台启动/工具误判与错误接收端选择，不作为产品转写/分享故障或功能进展。",
+    "invalidReceiver": "7-Zip EditPaste实际为空，前面的菜单/按键尝试无效；停止使用，不再同条件重复。",
+    "officialSource": "https://github.com/ip7z/7zip/blob/d3296e39e1f1f92c7b41c0c3848e65640428d42d/CPP/7zip/UI/FileManager/PanelMenu.cpp#L429",
+    "keptLocalFailure": "原256MiB测试进程PDF失败、本机实际低内存停止及远端所有失败均保留；足够资源的远端PDF已过，不据此修改产品内存/全局设置。"
+  },
+  "next": "沿同一Windows完整会后目的推进实际原音回听、原音/MP3交付、AI整理及事实核对；相关阻断收敛后集中构建候选，再Android与录音卡联调。不重测已过且未受影响数据链，不再使用7-Zip空粘贴入口。",
+  "modelsRun": false,
+  "wholeCoreCandidateQualified": false,
+  "saleQualified": false
+}

@@ -1,0 +1,191 @@
+{
+  "at": "2026-11-09T14:31:51+08:00",
+  "state": "SAVED_REAL_ASR_MEETING_LOCAL_REVIEW_EXPORT_BACKUP_RECYCLE_REOPEN_PASSED",
+  "sourceMeeting": "S_R004S03C01",
+  "sourceAudioSeconds": 2327.119,
+  "sourceAsrArtifactSha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "frozenExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "root": "D:\\a\\_temp\\companion-core-acceptance\\cache\\saved-1d06561141cb497e9eab87f13f63045e",
+  "steps": [
+    {
+      "name": "01-open-existing-asr",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.12111690000006092
+    },
+    {
+      "name": "02-save-title",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10307599999998729
+    },
+    {
+      "name": "03-save-explicit-note",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10274040000001605
+    },
+    {
+      "name": "04-save-excluded-note",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10249429999998938
+    },
+    {
+      "name": "05-reopen-after-title-notes",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10260299999993094
+    },
+    {
+      "name": "06-save-separate-transcript-review",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10265220000007957
+    },
+    {
+      "name": "07-reopen-after-review",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10286710000002586
+    },
+    {
+      "name": "08-reject-stale-title",
+      "exitCode": 1,
+      "expectedRejection": true,
+      "seconds": 0.10285569999996369
+    },
+    {
+      "name": "09-create-explicit-manual-document",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10383909999995922
+    },
+    {
+      "name": "10-reopen-after-document",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10276079999994181
+    },
+    {
+      "name": "11-export-txt",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.1026372999999694
+    },
+    {
+      "name": "11-export-docx",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10243179999997665
+    },
+    {
+      "name": "11-export-pdf",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 4.39063120000003
+    },
+    {
+      "name": "12-backup-reviewed-meeting",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10272670000006201
+    },
+    {
+      "name": "12b-restore-backup-into-fresh-library",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.4036234999999806
+    },
+    {
+      "name": "12c-reopen-restored-library",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10276039999996556
+    },
+    {
+      "name": "13-protect-current-meeting",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.1026628999999275
+    },
+    {
+      "name": "14-reject-protected-trash",
+      "exitCode": 1,
+      "expectedRejection": true,
+      "seconds": 0.10301200000003519
+    },
+    {
+      "name": "15-unprotect-current-meeting",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10350510000000668
+    },
+    {
+      "name": "16-move-to-trash",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10295730000007097
+    },
+    {
+      "name": "17-restore-from-trash",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10271529999999984
+    },
+    {
+      "name": "18-reopen-complete-library",
+      "exitCode": 0,
+      "expectedRejection": false,
+      "seconds": 0.10272190000000592
+    }
+  ],
+  "cpuHardCapPercent": 100,
+  "workerFamilyPrivateCommitCapBytes": 805306368,
+  "manualDocumentNotAiGenerated": true,
+  "humanSpeakerLabelNotRealIdentityClaim": true,
+  "originalAudioAvailability": "Not imported into this software-only phase; playback/capture remain pending",
+  "modelCalls": 0,
+  "aiServiceCalls": 0,
+  "deviceAccess": false,
+  "phoneAccess": false,
+  "guiWorkflowQualified": false,
+  "wholeCoreCandidateQualified": false,
+  "backupReportKeys": [
+    "path",
+    "sessions",
+    "files",
+    "bytes"
+  ],
+  "exports": [
+    {
+      "format": "txt",
+      "sha256": "73ab439453c8776bffbd88c4aa451766fd34a846b696e78312455af6d55915cd",
+      "bytes": 57597,
+      "selectedContentVerified": true
+    },
+    {
+      "format": "docx",
+      "sha256": "edb133931585cb353521586fd7af5aebaa89072e1f516400631109fb590908e3",
+      "bytes": 7221,
+      "selectedContentVerified": true
+    },
+    {
+      "format": "pdf",
+      "sha256": "6bf75a86c68a5be7ef593b213114a670e38dc79ae4d1b22a31b19b2bc4e7b15e",
+      "bytes": 85253,
+      "selectedContentVerified": true
+    }
+  ],
+  "originalAsrTextUnchanged": true,
+  "originalAsrUtterancesUnchanged": true,
+  "separateManualSpeakerAndTextReviewPersisted": true,
+  "selectedExportsVerified": true,
+  "secondaryRecordUnchanged": true,
+  "ordinaryRecipientTested": false,
+  "backupRestoredIntoFreshLibraryContentIdentical": true,
+  "limits": "Real native backend and fresh-process persistence only. Manual document, no new ASR/AI/capture, no native UI or ordinary recipient/phone qualification.",
+  "checkpointStateSha256": "4912b38b2689f584d4ac300125d2e6ae8f32e48c6f8b1350395826159d9160ec",
+  "finishedAt": "2026-11-09T14:31:58+08:00"
+}
