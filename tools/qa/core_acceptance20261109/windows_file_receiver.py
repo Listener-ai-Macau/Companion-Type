@@ -1,6 +1,6 @@
-"""Ordinary 7-Zip File Manager Paste, owned private desktop only.
+"""Ordinary 7-Zip File Manager Paste on the dedicated CI machine.
 
-No global input, contacts or owner clipboard. FM preferences are privately
+No owner desktop, contacts or owner clipboard. FM preferences are privately
 backed up, isolated while no other FM instance exists, then restored exactly.
 No preference values/history are printed or copied into public evidence.
 """
@@ -18,6 +18,7 @@ for lib,name,args,result in [
  (U,'OpenClipboard',[w.HWND],w.BOOL),(U,'CloseClipboard',[],w.BOOL),(U,'GetClipboardData',[w.UINT],w.HANDLE),
  (U,'SetForegroundWindow',[w.HWND],w.BOOL),(U,'GetForegroundWindow',[],w.HWND),
  (U,'SetFocus',[w.HWND],w.HWND),(U,'GetFocus',[],w.HWND),(U,'AttachThreadInput',[w.DWORD,w.DWORD,w.BOOL],w.BOOL),
+ (U,'GetKeyboardState',[ctypes.POINTER(ctypes.c_ubyte)],w.BOOL),(U,'SetKeyboardState',[ctypes.POINTER(ctypes.c_ubyte)],w.BOOL),
  (SHELL,'DragQueryFileW',[w.HANDLE,w.UINT,w.LPWSTR,w.UINT],w.UINT)]:
  f=getattr(lib,name);f.argtypes=args;f.restype=result
 FM_KEY=r'Software\7-Zip\FM'
@@ -86,25 +87,29 @@ class Receiver:
   assert self.ready,'Ordinary receiver folder was not proven in its visible controls; no Paste invoked'
  def paste(self,source):
   assert source.is_file();dest=self.destination/source.name;assert not dest.exists(),'Never overwrite an existing receiver file'
-  # Official 7-Zip has no Edit/Paste menu item. PanelKey.cpp handles Ctrl+V
-  # through ordinary keyboard input. Use it only on a dedicated hosted runner;
-  # never activate a window or send global input on the owner's computer.
+  # Official PanelKey.cpp handles Ctrl+V; its menu Paste entry is disabled:
+  # https://github.com/ip7z/7zip/blob/main/CPP/7zip/UI/FileManager/PanelKey.cpp
+  # Target the owned list's normal key handler. Hosted input desktops may be
+  # locked, so SendInput can be accepted without reaching that list. Sharing
+  # only these two threads' keyboard state avoids a global input dependency.
   assert os.environ.get('GITHUB_ACTIONS')=='true','Ordinary shortcut requires the dedicated disposable CI machine; no owner foreground fallback'
   lists=[child for child in children(self.hwnd) if class_name(child)=='SysListView32']
   assert len(lists)==1,'One explicit empty destination pane required'
   target_thread=U.GetWindowThreadProcessId(self.hwnd,None);our_thread=K.GetCurrentThreadId()
   require(U.AttachThreadInput(our_thread,target_thread,True))
+  keyboard=(ctypes.c_ubyte*256)();require(U.GetKeyboardState(keyboard));pressed=(ctypes.c_ubyte*256).from_buffer_copy(keyboard);pressed[0x11]=0x80
   try:
-   require(U.SetForegroundWindow(self.hwnd));U.SetFocus(lists[0]);assert U.GetFocus()==lists[0]
-  finally:require(U.AttachThreadInput(our_thread,target_thread,False))
-  assert U.GetForegroundWindow()==self.hwnd,'Only the owned receiver may receive remote input'
-  events=(Input*4)()
-  for event,(vk,flags) in zip(events,[(0x11,0),(0x56,0),(0x56,2),(0x11,2)]):event.type=1;event.data.keyboard=KeyboardInput(vk,0,flags,0,0)
-  self.remote_input_used=True;assert U.SendInput(4,events,ctypes.sizeof(Input))==4
+   require(U.SetKeyboardState(pressed));self.remote_input_used=True;result=ctypes.c_size_t()
+   # EditPaste may enter its ordinary modal copy dialog before returning.
+   # A bounded synchronous dispatch lets us handle that dialog below.
+   U.SendMessageTimeoutW(lists[0],0x100,0x56,0x002f0001,2,1000,ctypes.byref(result))
+  finally:
+   require(U.SetKeyboardState(keyboard));require(U.AttachThreadInput(our_thread,target_thread,False))
+  require(U.PostMessageW(lists[0],0x101,0x56,0xc02f0001))
   deadline=time.monotonic()+20;confirmed=set()
   while time.monotonic()<deadline:
    if dest.is_file() and sha(dest)==sha(source):
-    result={'receiver':'7-Zip File Manager','operation':'ordinary Ctrl+V on dedicated remote runner only','fileName':source.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'actualFileReceived':True};self.results.append(result);return result
+    result={'receiver':'7-Zip File Manager','operation':'ordinary Ctrl+V handler via owned-window message on dedicated remote runner','fileName':source.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'actualFileReceived':True};self.results.append(result);return result
    for window in windows(self.desktop,self.process.pid):
     hwnd=window['hwnd']
     if class_name(hwnd)=='#32770' and hwnd not in confirmed:
@@ -113,6 +118,8 @@ class Receiver:
       buttons=[child for child in controls if class_name(child)=='Button' and U.GetDlgCtrlID(child)==1 and U.IsWindowEnabled(child)]
       assert len(buttons)==1;require(U.PostMessageW(buttons[0],0xF5,0,0));confirmed.add(hwnd)
    time.sleep(.1)
+  observed=[{'title':window['title'],'controls':[{'class':class_name(child),'id':U.GetDlgCtrlID(child),'text':control_text(child)} for child in children(window['hwnd'])]} for window in windows(self.desktop,self.process.pid)]
+  (self.out/'ordinary-receiver-last-controls.json').write_text(json.dumps({'windows':observed,'destinationFiles':[p.name for p in self.destination.iterdir()]},ensure_ascii=False,indent=2),encoding='utf8')
   raise TimeoutError('Ordinary receiver did not create the exact file; no acceptance claimed')
  def request_close(self):
   if self.process:
