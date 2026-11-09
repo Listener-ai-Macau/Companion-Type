@@ -15,7 +15,9 @@ document.querySelector('textarea').addEventListener('paste',async event=>{
 });</script>`;
 (async()=>{
  server=http.createServer(async(req,res)=>{try{
-  if(req.method==='GET'&&req.url==='/'+token){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end(html);return;}
+  if(req.method==='GET'){
+   if(req.url==='/'+token){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end(html);}else{res.statusCode=404;res.end();}return;
+  }
   assert.equal(req.method,'POST');assert.equal(req.url,'/'+token+'/upload');assert.ok(active,'No pending attachment action');
   const chunks=[];let bytes=0;for await(const chunk of req){bytes+=chunk.length;assert.ok(bytes<100*1024**2);chunks.push(chunk);}
   const request=new Request('http://127.0.0.1/'+token+'/upload',{method:'POST',headers:req.headers,body:Buffer.concat(chunks)});

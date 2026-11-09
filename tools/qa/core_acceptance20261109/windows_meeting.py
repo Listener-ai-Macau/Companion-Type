@@ -119,7 +119,7 @@ def main():
   assert session['minutes']['source']=='llm_deepseek' and session['minutes']['processing']['complete']
  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
  whole_delivery=a.stage=='ai' and bool(os.environ.get('COMPANION_ACCEPTANCE_WHOLE_DELIVERY_DIR'))
- (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version'] in {'0.1.79','0.1.80'},'wholeMeetingDelivery':whole_delivery,'aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
+ (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version'] in {'0.1.79','0.1.80','0.1.81'},'wholeMeetingDelivery':whole_delivery,'browserAttachments':whole_delivery and os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1','aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
  if a.stage in {'audio','transcribe'}:
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
   (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),wholeMeetingAsr=a.stage=='transcribe')
@@ -147,7 +147,7 @@ def main():
   desktop_path=name+'\\'+object_name(desktop)
   record['privateStation']=name;record['stationVerifiedBeforeLaunch']=True
   record['desktopIsolation']='Dedicated disposable GitHub Windows runner; no owner desktop' if DEDICATED_CI else 'Private noninteractive window station on owner PC'
-  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if a.stage=='transcribe' and DEDICATED_CI else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
+  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if DEDICATED_CI and (a.stage=='transcribe' or os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1') else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
   env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
   for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
   if a.audio:env['COMPANION_ACCEPTANCE_AUDIO_INPUT']=str(a.audio.resolve())
@@ -207,9 +207,13 @@ def main():
     if receiver is None:
      receiver=Receiver(root,out,job,desktop,desktop_path,env);receiver.start()
     received=receiver.paste(source)
-    if a.stage=='audio':
+    audio_file=source.suffix in {'.wav','.mp3'}
+    if a.stage=='audio' or audio_file:
+     assert a.stage=='audio' or whole_delivery
      assert source.suffix in {'.wav','.mp3'}
-     if source.suffix=='.wav':assert sha(source)==plan['audioSha256'];received['originalAudioBytesIdentical']=True
+     if source.suffix=='.wav':
+      expected=plan['audioSha256'] if a.stage=='audio' else manifest['sourceAudioSha256']
+      assert sha(source)==expected;received['originalAudioBytesIdentical']=True
      else:assert source.stat().st_size>64;received['mp3DecodeQualification']='Requires subsequent actual product reimport/playback, not size alone'
     elif source.suffix=='.pdf':
      from pypdf import PdfReader
@@ -218,7 +222,7 @@ def main():
      import zipfile,xml.etree.ElementTree as ET
      with zipfile.ZipFile(receiver.destination/source.name) as archive:text=''.join(ET.fromstring(archive.read('word/document.xml')).itertext())
     else:text=(receiver.destination/source.name).read_text(encoding='utf8')
-    if a.stage!='audio':
+    if a.stage!='audio' and not audio_file:
      assert 'EXCLUDED_CORE_NOTE_20261109' not in text
      if a.stage=='ai':
       if whole_delivery:assert json.loads((out/'plan.json').read_text(encoding='utf8'))['expectedExportContains'] in text
@@ -229,7 +233,10 @@ def main():
     reply=out/request.name.replace('handoff-request-','handoff-reply-');reply.write_text(json.dumps(received,ensure_ascii=False),encoding='utf8');handled.add(request.name);save()
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
-  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 1 if a.stage=='ai' else 3))
+  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage=='ai' else 3))
+  if env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1':
+   assert record['ordinaryRecipientTested'] and all(row.get('browserAttachment',{}).get('trustedNativePaste') and row['browserAttachment']['sha256']==row['sha256'] for row in receiver.results)
+   record['standardBrowserAttachmentsReceivedByteIdentical']=True
  except BaseException as error:
   record.update(state='NATIVE_WORKFLOW_STOPPED_RETAINED',error=repr(error));save();raise
  finally:

@@ -30,15 +30,36 @@ module.exports=async function reviewedAiJourney(page,plan,out){
  const message=await feedback.innerText();assert.match(message,/文件尚未发送/);
  const fileName=message.match(/文件已复制：(.+?)。可在/s)?.[1];assert.ok(fileName?.endsWith('.docx'));
  const request=path.join(out,'handoff-request-ai-docx.json');fs.writeFileSync(request+'.tmp',JSON.stringify({fileName}));fs.renameSync(request+'.tmp',request);
- const reply=path.join(out,'handoff-reply-ai-docx.json'),until=Date.now()+30000;
+ const reply=path.join(out,'handoff-reply-ai-docx.json'),until=Date.now()+60000;
  while(!fs.existsSync(reply)&&Date.now()<until)await new Promise(resolve=>setTimeout(resolve,100));
  assert.ok(fs.existsSync(reply),'Actual Windows Shell must receive the reviewed AI document');
  const received=JSON.parse(fs.readFileSync(reply,'utf8'));assert.ok(received.actualFileReceived&&received.selectedContentsVerified);
+ const attachmentReceipts=[received];
+ if(plan.browserAttachments){
+  async function receiveAttachment(id,scope,copy){
+   await copy.click();const feedback=scope.getByText(/文件已复制：/);await feedback.waitFor({timeout:120000});
+   const message=await feedback.innerText();assert.match(message,/文件尚未发送/);const fileName=message.match(/文件已复制：(.+?)。可在/s)?.[1];assert.ok(fileName);
+   const request=path.join(out,'handoff-request-'+id+'.json');fs.writeFileSync(request+'.tmp',JSON.stringify({fileName}));fs.renameSync(request+'.tmp',request);
+   const reply=path.join(out,'handoff-reply-'+id+'.json'),until=Date.now()+60000;while(!fs.existsSync(reply)&&Date.now()<until)await new Promise(resolve=>setTimeout(resolve,100));
+   assert.ok(fs.existsSync(reply),'Actual browser and Shell must receive '+id);const result=JSON.parse(fs.readFileSync(reply,'utf8'));
+   assert.ok(result.actualFileReceived&&result.browserAttachment?.trustedNativePaste);assert.equal(result.sha256,result.browserAttachment.sha256);attachmentReceipts.push(result);
+  }
+  for(const format of ['txt','pdf']){
+   await panel.getByLabel('所选内容文件格式').selectOption(format);
+   await receiveAttachment('ai-'+format,panel.getByLabel('所选内容操作结果'),panel.getByRole('button',{name:'复制所选文件',exact:true}));
+  }
+  await workspace.getByRole('button',{name:'导出录音',exact:true}).click();const audio=workspace.locator('.ct-recording-audio-export');
+  const copy=audio.getByRole('button',{name:'复制录音文件',exact:true});
+  if(!await copy.isVisible())await audio.locator(':scope > details > summary').click();
+  for(const format of ['original','mp3']){
+   await audio.getByLabel('音频副本格式').selectOption(format);await receiveAttachment('audio-'+format,audio,copy);
+  }
+ }
  await workspace.getByRole('button',{name:'问这场会议',exact:true}).click();
  await page.getByRole('region',{name:'会议AI助手',exact:true}).waitFor({state:'visible'});
  await page.screenshot({path:path.join(out,'reviewed-ai-workbench-and-export.png'),fullPage:true});
  return {state:plan.wholeMeetingDelivery?'ACTUAL_SAME_AUDIO_ASR_AI_READING_PLAYBACK_WORD_HANDOFF_PASSED':'ACTUAL_REVIEWED_AI_READING_MAIN_EXPORT_AND_SHELL_HANDOFF_PASSED',sourceMeeting:plan.sourceMeeting,
   cachedRealCloudAi:true,manualSourceReviewDeclared:!plan.wholeMeetingDelivery,sameAudioAndActualAsrLineage:!!plan.wholeMeetingDelivery,newCloudCalls:0,newAsrRun:false,neutralQuestionHeading:true,
-  completeTwoChunkNotice:true,topExportOpensSelectedContent:true,received,aiWorkbenchAvailableAfterFinalText:true,
+  completeTwoChunkNotice:true,topExportOpensSelectedContent:true,received,attachmentReceipts,aiWorkbenchAvailableAfterFinalText:true,
   customerOrBusinessFactQualityQualified:false};
 };
