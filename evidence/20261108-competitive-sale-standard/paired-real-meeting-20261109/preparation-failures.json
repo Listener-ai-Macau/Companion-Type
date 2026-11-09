@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-11-09T11:24:04+08:00",
+  "preparationOnly": true,
+  "failures": [
+    "Python3.11 wave rejected official far WAVE_FORMAT_EXTENSIBLE65534. Added bounded PCM16 RIFF/GUID reader; first/middle/last frames on all5 sources bit-exact against scipy mmap. No transcoding or lossy decode introduced.",
+    "First extractor selected underscore-prefixed filenames and missed exact session.TextGrid; retained original incomplete manifest, fixed selection and asserted far reference presence.",
+    "Whole-utterance isolation yielded no clock window for8015 despite213.66s target-only frames. R1 retained; R2 measures interior exclusive cores in each meeting third, never uses cut phrases for CER.",
+    "R6 optional model-pack metadata was not yet exported; source pilot and model binding were already passed. Exported its existing opt-in pack, not new weights/model/installation. Actual ASR deferred due absent external GPU."
+  ],
+  "noModelInferencePerformed": true
+}

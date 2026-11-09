@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "backend": "qwen-native-bounded",
+  "createdAt": "2026-11-09T11:19:27+08:00",
+  "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
+  "pinnedFiles": {
+    "protocol.json": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "native-protocol.json": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "seed-manifest.json": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "audio-only.json": "f16a99cc52fe3fd31bcbdbc006727e5fbfa19fc98650c443bd14813caf94596b",
+    "pilot-extra-audio-only.json": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
+    "pilot/state.json": "75bb0d9bb18bab3215dcd5fa33a2be425448e29783377a53588e331e31b8d4d7",
+    "model-ready.json": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
+    "hip-inventory.json": "354df12137fbc0e09480a8984a66428e34c588d2fa9bccb8d66b32d625a992d9"
+  },
+  "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+  "workerModule": "practical_qwen_boundaries_worker_20261107.py",
+  "pythonExecutable": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+  "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "installedAppDefaultChanged": false,
+  "scope": "Explicit local research candidate pack. A passed short control is not full quality, phone/card or sale qualification. Private task contents never enter public evidence."
+}

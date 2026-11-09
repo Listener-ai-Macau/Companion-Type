@@ -1,0 +1,501 @@
+{
+  "at": "2026-11-09T11:14:12+08:00",
+  "state": "REAL_PAIR_IDENTITY_AND_ACOUSTIC_LEAKAGE_AUDITED_NO_NEW_ASR",
+  "session": "R8001_M8004",
+  "archiveSha256": "dc47343b2474b5ebcf458927e878155f6ddeb59c85e685b3645c32a1f9578d92",
+  "farAudio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\far\\R8001_M8004_MS801.wav",
+  "farAudioSha256": "f5a719e6b9d9d69b3f00d0447922c09e71320724afeefd3070d25a64b7f1dcf1",
+  "farWave": {
+    "formatTag": 65534,
+    "rate": 16000,
+    "channels": 8,
+    "width": 2,
+    "blockAlign": 16,
+    "dataOffset": 80,
+    "dataBytes": 402905600,
+    "frames": 25181600,
+    "seconds": 1573.85
+  },
+  "farReference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\far\\R8001_M8004.TextGrid",
+  "farReferenceSha256": "e5fe941174fe4140bb5923b7caf2cbdd68d8d2a86086e4f00c68afc90d09dbad",
+  "parser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceUtterances": 604,
+  "annotationScopeSeconds": 1550.94,
+  "annotatedOverlapSeconds": 456.28000000000003,
+  "rawPcmChecks": [
+    {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\far\\R8001_M8004_MS801.wav",
+      "checkedFrames": 3072,
+      "bitExactAgainstScipy": true
+    },
+    {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.wav",
+      "checkedFrames": 3072,
+      "bitExactAgainstScipy": true
+    },
+    {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+      "checkedFrames": 3072,
+      "bitExactAgainstScipy": true
+    },
+    {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.wav",
+      "checkedFrames": 3072,
+      "bitExactAgainstScipy": true
+    },
+    {
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.wav",
+      "checkedFrames": 3072,
+      "bitExactAgainstScipy": true
+    }
+  ],
+  "pairedPeople": [
+    {
+      "speaker": "N_SPK8013",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.wav",
+      "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.TextGrid",
+      "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      },
+      "referenceUtterances": 277,
+      "referenceExactlyMatchesFarTier": true,
+      "relativeLeakage": {
+        "ownOnly": {
+          "seconds": 421.8,
+          "medianRms": 0.004915541985758614,
+          "medianDbfs": -46.168571801002216,
+          "p90Rms": 0.019093960506261727
+        },
+        "otherOnly": {
+          "seconds": 613.52,
+          "medianRms": 0.0002638629155831287,
+          "medianDbfs": -71.5724328617097,
+          "p90Rms": 0.0015842883684412858
+        },
+        "overlapWithTarget": {
+          "seconds": 325.24,
+          "medianRms": 0.0052399734596846066,
+          "medianDbfs": -45.61341825399613,
+          "p90Rms": 0.02932423903229402
+        },
+        "noAnnotatedSpeech": {
+          "seconds": 59.34,
+          "medianRms": 0.0002471912054339968,
+          "medianDbfs": -72.13933969265383,
+          "p90Rms": 0.007637489152642363
+        },
+        "eachOtherOnly": {
+          "N_SPK8014": {
+            "seconds": 300.46,
+            "medianRms": 0.0002569532054171461,
+            "medianDbfs": -71.80291920493163,
+            "p90Rms": 0.0016003872995699149
+          },
+          "N_SPK8015": {
+            "seconds": 213.66,
+            "medianRms": 0.00026455963763469075,
+            "medianDbfs": -71.54952825887543,
+            "p90Rms": 0.0017639141992193488
+          },
+          "N_SPK8016": {
+            "seconds": 99.4,
+            "medianRms": 0.00028387345847753987,
+            "medianDbfs": -70.93750422243781,
+            "p90Rms": 0.0012873634012346125
+          }
+        },
+        "ownVsOtherMedianDb": 25.403861060707484
+      },
+      "fineAcousticDelayChecks": [
+        {
+          "fraction": 0.2,
+          "start": 220.135,
+          "end": 224.135,
+          "utteranceStart": 218.62,
+          "utteranceEnd": 225.65,
+          "lagSamples": 169,
+          "lagSeconds": 0.0105625,
+          "coefficient": -0.37889358918458604,
+          "absoluteCoefficient": 0.37889358918458604,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.22758677029002558
+        },
+        {
+          "fraction": 0.5,
+          "start": 790.115,
+          "end": 794.115,
+          "utteranceStart": 786.54,
+          "utteranceEnd": 797.69,
+          "lagSamples": 1028,
+          "lagSeconds": 0.06425,
+          "coefficient": 0.42046604407081856,
+          "absoluteCoefficient": 0.42046604407081856,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.3131985001856906
+        },
+        {
+          "fraction": 0.8,
+          "start": 1174.19,
+          "end": 1178.19,
+          "utteranceStart": 1170.92,
+          "utteranceEnd": 1181.46,
+          "lagSamples": 1224,
+          "lagSeconds": 0.0765,
+          "coefficient": 0.3536594848133074,
+          "absoluteCoefficient": 0.3536594848133074,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.3306996967515141
+        }
+      ],
+      "fineDelaySummary": {
+        "measuredWindows": 3,
+        "medianLagSeconds": 0.06425,
+        "lagSpreadMilliseconds": 65.9375,
+        "minimumAbsoluteCorrelation": 0.3536594848133074,
+        "searchBoundaryHit": false,
+        "sampleAccurateCleanSourceClaimed": false
+      }
+    },
+    {
+      "speaker": "N_SPK8014",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+      "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.TextGrid",
+      "referenceSha256": "43541588ec038e2af457b788a2ef38221c23d001ace76ec7d53866be617671ac",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      },
+      "referenceUtterances": 85,
+      "referenceExactlyMatchesFarTier": true,
+      "relativeLeakage": {
+        "ownOnly": {
+          "seconds": 300.46,
+          "medianRms": 0.010151491718299049,
+          "medianDbfs": -39.86940270688833,
+          "p90Rms": 0.02843253215327048
+        },
+        "otherOnly": {
+          "seconds": 734.86,
+          "medianRms": 0.00029439974031943877,
+          "medianDbfs": -70.62125154823184,
+          "p90Rms": 0.0006915519019253474
+        },
+        "overlapWithTarget": {
+          "seconds": 233.88,
+          "medianRms": 0.013874343420124887,
+          "medianDbfs": -37.15575119944076,
+          "p90Rms": 0.043882029535721505
+        },
+        "noAnnotatedSpeech": {
+          "seconds": 59.34,
+          "medianRms": 0.0001948485227832357,
+          "medianDbfs": -74.20605764803102,
+          "p90Rms": 0.0016904646603176435
+        },
+        "eachOtherOnly": {
+          "N_SPK8013": {
+            "seconds": 421.8,
+            "medianRms": 0.00028747736774386434,
+            "medianDbfs": -70.8279268073722,
+            "p90Rms": 0.0006638577260024442
+          },
+          "N_SPK8015": {
+            "seconds": 213.66,
+            "medianRms": 0.00029224664387864357,
+            "medianDbfs": -70.68500935034416,
+            "p90Rms": 0.0007015106895115033
+          },
+          "N_SPK8016": {
+            "seconds": 99.4,
+            "medianRms": 0.00034222107293551454,
+            "medianDbfs": -69.31386502869593,
+            "p90Rms": 0.0007511598879619262
+          }
+        },
+        "ownVsOtherMedianDb": 30.75184884134351
+      },
+      "fineAcousticDelayChecks": [
+        {
+          "fraction": 0.2,
+          "start": 38.725,
+          "end": 42.725,
+          "utteranceStart": 36.35,
+          "utteranceEnd": 45.1,
+          "lagSamples": 758,
+          "lagSeconds": 0.047375,
+          "coefficient": 0.2230070825761068,
+          "absoluteCoefficient": 0.2230070825761068,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.22210788613302448
+        },
+        {
+          "fraction": 0.5,
+          "start": 28.35,
+          "end": 32.35,
+          "utteranceStart": 24.96,
+          "utteranceEnd": 35.74,
+          "lagSamples": 773,
+          "lagSeconds": 0.0483125,
+          "coefficient": -0.2666197179291604,
+          "absoluteCoefficient": 0.2666197179291604,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.1935349264354813
+        },
+        {
+          "fraction": 0.8,
+          "state": "NO_DISTINCT_ISOLATED_UTTERANCE"
+        }
+      ],
+      "fineDelaySummary": {
+        "measuredWindows": 2,
+        "medianLagSeconds": 0.047843750000000004,
+        "lagSpreadMilliseconds": 0.9375000000000009,
+        "minimumAbsoluteCorrelation": 0.2230070825761068,
+        "searchBoundaryHit": false,
+        "sampleAccurateCleanSourceClaimed": false
+      }
+    },
+    {
+      "speaker": "N_SPK8015",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.wav",
+      "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.TextGrid",
+      "referenceSha256": "81e359c595f69128f3123f66c052dc9e988014ab954845f6f88c76cb9d713fdc",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      },
+      "referenceUtterances": 154,
+      "referenceExactlyMatchesFarTier": true,
+      "relativeLeakage": {
+        "ownOnly": {
+          "seconds": 213.66,
+          "medianRms": 0.007218576945386646,
+          "medianDbfs": -42.83096819730544,
+          "p90Rms": 0.02266882555500199
+        },
+        "otherOnly": {
+          "seconds": 821.66,
+          "medianRms": 0.00021666002894780984,
+          "medianDbfs": -73.28442406327429,
+          "p90Rms": 0.0004740316638474665
+        },
+        "overlapWithTarget": {
+          "seconds": 274.5,
+          "medianRms": 0.0068453630112576165,
+          "medianDbfs": -43.29207032355594,
+          "p90Rms": 0.034366510063217885
+        },
+        "noAnnotatedSpeech": {
+          "seconds": 59.34,
+          "medianRms": 0.0001562722756481304,
+          "medianDbfs": -76.12236127148152,
+          "p90Rms": 0.0007512662909241853
+        },
+        "eachOtherOnly": {
+          "N_SPK8013": {
+            "seconds": 421.8,
+            "medianRms": 0.00021948271041698393,
+            "medianDbfs": -73.17199370581663,
+            "p90Rms": 0.0005044726129112661
+          },
+          "N_SPK8014": {
+            "seconds": 300.46,
+            "medianRms": 0.00020591593088543523,
+            "medianDbfs": -73.72620104937869,
+            "p90Rms": 0.00039272340731466267
+          },
+          "N_SPK8016": {
+            "seconds": 99.4,
+            "medianRms": 0.00025290895987991675,
+            "medianDbfs": -71.94071569010062,
+            "p90Rms": 0.0005186591237463523
+          }
+        },
+        "ownVsOtherMedianDb": 30.45345586596885
+      },
+      "fineAcousticDelayChecks": [
+        {
+          "fraction": 0.2,
+          "state": "NO_DISTINCT_ISOLATED_UTTERANCE"
+        },
+        {
+          "fraction": 0.5,
+          "state": "NO_DISTINCT_ISOLATED_UTTERANCE"
+        },
+        {
+          "fraction": 0.8,
+          "state": "NO_DISTINCT_ISOLATED_UTTERANCE"
+        }
+      ],
+      "fineDelaySummary": {
+        "measuredWindows": 0,
+        "medianLagSeconds": null,
+        "lagSpreadMilliseconds": null,
+        "minimumAbsoluteCorrelation": null,
+        "searchBoundaryHit": false,
+        "sampleAccurateCleanSourceClaimed": false
+      }
+    },
+    {
+      "speaker": "N_SPK8016",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.wav",
+      "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.TextGrid",
+      "referenceSha256": "f851bd68fed0f900594f561d0db07dae7fcfd64d11785ba9aed5830eaed58299",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      },
+      "referenceUtterances": 88,
+      "referenceExactlyMatchesFarTier": true,
+      "relativeLeakage": {
+        "ownOnly": {
+          "seconds": 99.4,
+          "medianRms": 0.007917219959635152,
+          "medianDbfs": -42.028545782704334,
+          "p90Rms": 0.029293897852708133
+        },
+        "otherOnly": {
+          "seconds": 935.9200000000001,
+          "medianRms": 0.00020859105094135004,
+          "medianDbfs": -73.61408655578893,
+          "p90Rms": 0.0017598559039381395
+        },
+        "overlapWithTarget": {
+          "seconds": 180.08,
+          "medianRms": 0.01086404032448763,
+          "medianDbfs": -39.28017262145195,
+          "p90Rms": 0.0402678223212968
+        },
+        "noAnnotatedSpeech": {
+          "seconds": 59.34,
+          "medianRms": 0.00017928265492349422,
+          "medianDbfs": -74.92923450272116,
+          "p90Rms": 0.0016974694951035027
+        },
+        "eachOtherOnly": {
+          "N_SPK8013": {
+            "seconds": 421.8,
+            "medianRms": 0.00020629013753467633,
+            "medianDbfs": -73.71043069178795,
+            "p90Rms": 0.0014731159675514724
+          },
+          "N_SPK8014": {
+            "seconds": 300.46,
+            "medianRms": 0.00020792024855802825,
+            "medianDbfs": -73.64206428659763,
+            "p90Rms": 0.0020479528919292327
+          },
+          "N_SPK8015": {
+            "seconds": 213.66,
+            "medianRms": 0.00021506233366594255,
+            "medianDbfs": -73.34871291856017,
+            "p90Rms": 0.002059100423904875
+          }
+        },
+        "ownVsOtherMedianDb": 31.585540773084595
+      },
+      "fineAcousticDelayChecks": [
+        {
+          "fraction": 0.2,
+          "start": 88.53,
+          "end": 92.53,
+          "utteranceStart": 83.78,
+          "utteranceEnd": 97.28,
+          "lagSamples": 87,
+          "lagSeconds": 0.0054375,
+          "coefficient": -0.7483963827725036,
+          "absoluteCoefficient": 0.7483963827725036,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.22633887883591244
+        },
+        {
+          "fraction": 0.5,
+          "start": 1026.525,
+          "end": 1030.525,
+          "utteranceStart": 1026.17,
+          "utteranceEnd": 1030.88,
+          "lagSamples": 563,
+          "lagSeconds": 0.0351875,
+          "coefficient": -0.8044650585155042,
+          "absoluteCoefficient": 0.8044650585155042,
+          "searchBoundaryHit": false,
+          "bestAbsoluteAlternativeAtLeast10msAway": 0.26760505487317227
+        },
+        {
+          "fraction": 0.8,
+          "state": "NO_DISTINCT_ISOLATED_UTTERANCE"
+        }
+      ],
+      "fineDelaySummary": {
+        "measuredWindows": 2,
+        "medianLagSeconds": 0.020312499999999997,
+        "lagSpreadMilliseconds": 29.75,
+        "minimumAbsoluteCorrelation": 0.7483963827725036,
+        "searchBoundaryHit": false,
+        "sampleAccurateCleanSourceClaimed": false
+      }
+    }
+  ],
+  "limits": {
+    "pid": 22140,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 531509248,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "wallSeconds": 1.3577963000000182,
+  "interpretationLimits": [
+    "Relative other-only energy is leakage evidence, not a clean source guarantee.",
+    "Acoustic delays include room propagation and cannot by themselves establish a unique digital clock offset or resampling rate.",
+    "Do not align by the total-length difference; preserve each recording and annotation timeline.",
+    "This exposed26min diagnostic does not meet the >=30min full-meeting sale gate and is not a new independent heldout.",
+    "No oracle annotation or near headset is available to the ordinary product; this diagnostic is not a deployable speaker enrollment claim."
+  ],
+  "newModelCalls": 0,
+  "newTrainingRuns": 0,
+  "newAccuracyGain": false,
+  "saleQualified": false
+}

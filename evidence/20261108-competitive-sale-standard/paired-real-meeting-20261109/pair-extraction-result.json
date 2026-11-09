@@ -1,0 +1,531 @@
+{
+  "at": "2026-11-09T11:13:53+08:00",
+  "state": "ONE_REAL_SESSION_RESTORED_CRC_VERIFIED_NOT_YET_ALIGNED",
+  "selectedSession": "R8001_M8004",
+  "files": [
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8001_M8004_MS801.wav",
+      "bytes": 402905680,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\far\\R8001_M8004_MS801.wav",
+      "sha256": "f5a719e6b9d9d69b3f00d0447922c09e71320724afeefd3070d25a64b7f1dcf1",
+      "side": "far",
+      "wave": {
+        "formatTag": 65534,
+        "rate": 16000,
+        "channels": 8,
+        "width": 2,
+        "blockAlign": 16,
+        "dataOffset": 80,
+        "dataBytes": 402905600,
+        "frames": 25181600,
+        "seconds": 1573.85
+      }
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8001_M8004.TextGrid",
+      "bytes": 76496,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\far\\R8001_M8004.TextGrid",
+      "sha256": "e5fe941174fe4140bb5923b7caf2cbdd68d8d2a86086e4f00c68afc90d09dbad",
+      "side": "far"
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8013.wav",
+      "bytes": 49658284,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.wav",
+      "sha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "side": "near",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      }
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8014.wav",
+      "bytes": 49658284,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+      "sha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "side": "near",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      }
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8015.wav",
+      "bytes": 49658284,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.wav",
+      "sha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+      "side": "near",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      }
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8016.wav",
+      "bytes": 49658284,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.wav",
+      "sha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+      "side": "near",
+      "wave": {
+        "formatTag": 1,
+        "rate": 16000,
+        "channels": 1,
+        "width": 2,
+        "blockAlign": 2,
+        "dataOffset": 44,
+        "dataBytes": 49658240,
+        "frames": 24829120,
+        "seconds": 1551.82
+      }
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8013.TextGrid",
+      "bytes": 32493,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.TextGrid",
+      "sha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87",
+      "side": "near"
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8014.TextGrid",
+      "bytes": 15446,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.TextGrid",
+      "sha256": "43541588ec038e2af457b788a2ef38221c23d001ace76ec7d53866be617671ac",
+      "side": "near"
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8015.TextGrid",
+      "bytes": 17902,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.TextGrid",
+      "sha256": "81e359c595f69128f3123f66c052dc9e988014ab954845f6f88c76cb9d713fdc",
+      "side": "near"
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8016.TextGrid",
+      "bytes": 10960,
+      "regularFile": true,
+      "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.TextGrid",
+      "sha256": "f851bd68fed0f900594f561d0db07dae7fcfd64d11785ba9aed5830eaed58299",
+      "side": "near"
+    }
+  ],
+  "archiveMembers": [
+    {
+      "name": "Eval_Ali",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8001_M8004_MS801.wav",
+      "bytes": 402905680,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8003_M8001_MS801.wav",
+      "bytes": 529408080,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8007_M8010_MS803.wav",
+      "bytes": 475218496,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8007_M8011_MS806.wav",
+      "bytes": 476555856,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8008_M8013_MS807.wav",
+      "bytes": 573304528,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8009_M8018_MS809.wav",
+      "bytes": 423592272,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8009_M8019_MS810.wav",
+      "bytes": 505325136,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/audio_dir/R8009_M8020_MS810.wav",
+      "bytes": 489073632,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8001_M8004.TextGrid",
+      "bytes": 76496,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8003_M8001.TextGrid",
+      "bytes": 80400,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8007_M8010.TextGrid",
+      "bytes": 129859,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8007_M8011.TextGrid",
+      "bytes": 89858,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8008_M8013.TextGrid",
+      "bytes": 79663,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8009_M8018.TextGrid",
+      "bytes": 72975,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8009_M8019.TextGrid",
+      "bytes": 93517,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_far/textgrid_dir/R8009_M8020.TextGrid",
+      "bytes": 88614,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8013.wav",
+      "bytes": 49658284,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8014.wav",
+      "bytes": 49658284,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8015.wav",
+      "bytes": 49658284,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8001_M8004_N_SPK8016.wav",
+      "bytes": 49658284,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8003_M8001_N_SPK8001.wav",
+      "bytes": 66166444,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8003_M8001_N_SPK8002.wav",
+      "bytes": 66166444,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8003_M8001_N_SPK8003.wav",
+      "bytes": 66166444,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8003_M8001_N_SPK8004.wav",
+      "bytes": 66166444,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8010_N_SPK8050.wav",
+      "bytes": 59455180,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8010_N_SPK8054.wav",
+      "bytes": 59455180,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8010_N_SPK8055.wav",
+      "bytes": 59455180,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8010_N_SPK8056.wav",
+      "bytes": 59455180,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8011_N_SPK8066.wav",
+      "bytes": 59616684,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8011_N_SPK8067.wav",
+      "bytes": 59616684,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8011_N_SPK8068.wav",
+      "bytes": 59616684,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8007_M8011_N_SPK8069.wav",
+      "bytes": 59616684,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8008_M8013_N_SPK8047.wav",
+      "bytes": 71663100,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8008_M8013_N_SPK8048.wav",
+      "bytes": 71663100,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8008_M8013_N_SPK8049.wav",
+      "bytes": 71663100,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8018_N_SPK8021.wav",
+      "bytes": 52945124,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8018_N_SPK8022.wav",
+      "bytes": 52944726,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8019_N_SPK8023.wav",
+      "bytes": 63168044,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8019_N_SPK8024.wav",
+      "bytes": 63162868,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8020_N_SPK8025.wav",
+      "bytes": 61132076,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/audio_dir/R8009_M8020_N_SPK8026.wav",
+      "bytes": 61131936,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir",
+      "bytes": 0,
+      "regularFile": false
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8013.TextGrid",
+      "bytes": 32493,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8014.TextGrid",
+      "bytes": 15446,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8015.TextGrid",
+      "bytes": 17902,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8001_M8004_N_SPK8016.TextGrid",
+      "bytes": 10960,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8003_M8001_N_SPK8001.TextGrid",
+      "bytes": 12323,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8003_M8001_N_SPK8002.TextGrid",
+      "bytes": 20001,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8003_M8001_N_SPK8003.TextGrid",
+      "bytes": 22952,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8003_M8001_N_SPK8004.TextGrid",
+      "bytes": 25419,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8010_N_SPK8050.TextGrid",
+      "bytes": 30087,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8010_N_SPK8054.TextGrid",
+      "bytes": 36203,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8010_N_SPK8055.TextGrid",
+      "bytes": 30115,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8010_N_SPK8056.TextGrid",
+      "bytes": 33759,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8011_N_SPK8066.TextGrid",
+      "bytes": 24918,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8011_N_SPK8067.TextGrid",
+      "bytes": 18894,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8011_N_SPK8068.TextGrid",
+      "bytes": 26824,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8007_M8011_N_SPK8069.TextGrid",
+      "bytes": 19527,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8008_M8013_N_SPK8047.TextGrid",
+      "bytes": 27753,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8008_M8013_N_SPK8048.TextGrid",
+      "bytes": 27532,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8008_M8013_N_SPK8049.TextGrid",
+      "bytes": 24603,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8018_N_SPK8021.TextGrid",
+      "bytes": 42355,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8018_N_SPK8022.TextGrid",
+      "bytes": 30715,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8019_N_SPK8023.TextGrid",
+      "bytes": 49652,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8019_N_SPK8024.TextGrid",
+      "bytes": 43961,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8020_N_SPK8025.TextGrid",
+      "bytes": 49908,
+      "regularFile": true
+    },
+    {
+      "name": "Eval_Ali/Eval_Ali_near/textgrid_dir/R8009_M8020_N_SPK8026.TextGrid",
+      "bytes": 38801,
+      "regularFile": true
+    }
+  ],
+  "archiveSha256": "dc47343b2474b5ebcf458927e878155f6ddeb59c85e685b3645c32a1f9578d92",
+  "gzipCrcVerified": true,
+  "wallSeconds": 49.11396690000015,
+  "limits": {
+    "pid": 28220,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 19025920,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "newModelCalls": 0,
+  "newTrainingRuns": 0,
+  "saleQualified": false
+}

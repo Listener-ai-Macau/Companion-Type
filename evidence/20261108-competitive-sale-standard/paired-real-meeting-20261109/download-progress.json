@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-09T11:08:15+08:00",
+  "state": "DOWNLOADING_OFFICIAL_EVAL",
+  "bytes": 3588751360,
+  "totalBytes": 3673718355,
+  "fraction": 0.9768716633150828,
+  "wallSeconds": 285.1897892999999,
+  "pid": 24820,
+  "limits": {
+    "pid": 24820,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 24256512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

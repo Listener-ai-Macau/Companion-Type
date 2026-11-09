@@ -63,3 +63,13 @@ src/*sedicow*20261109.py -text
 src/companion_firered2_cpu_worker_20261109.py -text
 
 src/test_companion_overlap_posterior_20261109.py -text
+
+src/acquire_alimeeting_paired_eval_20261109.py -text
+
+src/extract_alimeeting_paired_session_20261109.py -text
+
+src/paired_meeting_pcm16_20261109.py -text
+
+src/audit_alimeeting_paired_session_20261109.py -text
+
+src/prepare_alimeeting_fixed_asr_20261109.py -text

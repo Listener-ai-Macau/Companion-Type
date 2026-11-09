@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-09T11:08:22+08:00",
+  "state": "ARCHIVE_BYTES_COMPLETE_NOT_YET_PAIR_VERIFIED",
+  "path": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\Eval_Ali.tar.gz",
+  "bytes": 3673718355,
+  "sha256": "dc47343b2474b5ebcf458927e878155f6ddeb59c85e685b3645c32a1f9578d92",
+  "etag": "\"FEA425CB59FEE8781CD152B32022C964-351\"",
+  "wallSeconds": 292.0063469999999,
+  "limits": {
+    "pid": 24820,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 24256512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "archiveCrcVerified": false,
+  "pairedSessionVerified": false,
+  "newModelCalls": 0,
+  "newTrainingRuns": 0,
+  "saleQualified": false
+}
