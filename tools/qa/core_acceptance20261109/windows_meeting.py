@@ -127,8 +127,21 @@ def main():
    except Exception:time.sleep(.3)
   else:raise TimeoutError('Private native WebView did not expose CDP; no foreground fallback')
   actual_windows=windows(desktop,p.pid);assert actual_windows,'App main window not proven on private desktop';record['nativeWindowsOnPrivateDesktop']=actual_windows
-  children=psutil.Process(p.pid).children(recursive=True);profiles=[' '.join(c.cmdline()) for c in children if '--user-data-dir=' in ' '.join(c.cmdline())]
-  assert profiles and all(str(root/'webview').lower() in value.lower() for value in profiles),'WebView profile is not the isolated folder';record['webviewProfileVerifiedPrivate']=True
+  # CDP may be listening before the browser process tree has settled. Bind
+  # the actual --user-data-dir argument; keep diagnostic paths if it differs.
+  until=time.monotonic()+8;profiles=[]
+  while time.monotonic()<until:
+   profiles=[]
+   for child in psutil.Process(p.pid).children(recursive=True):
+    try:arguments=child.cmdline()
+    except (psutil.NoSuchProcess,psutil.AccessDenied):continue
+    for argument in arguments:
+     if argument.startswith('--user-data-dir='):
+      folder=argument.split('=',1)[1].strip('"');profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve()==(root/'webview').resolve()})
+   if profiles:break
+   time.sleep(.1)
+  record['observedWebviewProfiles']=profiles;save()
+  assert profiles and all(item['matchesPrivateRoot'] for item in profiles),'WebView profile is not the isolated folder';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,name+'\\Meeting',job,log);processes.append(node)
   deadline=time.monotonic()+180
   while alive(node) and time.monotonic()<deadline:

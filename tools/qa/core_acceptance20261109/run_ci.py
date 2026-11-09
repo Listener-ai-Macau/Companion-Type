@@ -38,6 +38,8 @@ try:
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
+ run('current-source-typecheck',['node',S/'node_modules/typescript/bin/tsc','--project',S/'apps/windows/tsconfig.json','--noEmit'])
+ record['currentUiSourceTypecheckOnly']=True;record['currentUiSourcePackaged']=False;save()
  tool=S/'tools/qa/core_acceptance20261109'
  code=run('saved-meeting-backend',[sys.executable,tool/'windows_saved_meeting.py'],required=False);record['backendExitCode']=code;save()
  cases=product/'docs/handoffs/20261109-core-acceptance';saved=list(cases.glob('saved-*'));assert len(saved)==1

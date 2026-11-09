@@ -2157,7 +2157,7 @@ export function CompanionDashboard({
             {finalTranscript?<button type="button" onClick={()=>{setTranscriptReviewOpen(true);revealMeetingTool('ct-recording-text-review');}}><Headphones size={16}/>转写原文</button>:null}
             {onAskMeetings&&finalTranscript?<button type="button" disabled={controlsBusy||qaBusy} onClick={()=>{setQaSelected([selectedSession.id]);revealMeetingTool('ct-meeting-qa');}}><Search size={16}/>问这场会议</button>:null}
             {finalTranscript&&!readingPreview?<button type="button" disabled={controlsBusy} onClick={()=>revealMeetingTool('ct-meeting-templates')}><Pencil size={16}/>整理方式：{templateId==='custom'?(customTemplate.name||'自定义'):({meeting:'会议',interview:'访谈',lecture:'课堂'}[templateId])}</button>:null}
-            {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-meeting-export');}}><Download size={16}/>导出分享</button>:null}
+            {hasMinutes||finalTranscript||hasPdfHighlights||selectedSession.meetingNotes?.length?<button type="button" onClick={()=>revealMeetingTool('ct-meeting-export')}><Download size={16}/>导出分享</button>:null}
           </nav>
           {deviceStorageFullNotice(selectedSession) ? <p className="ct-recording-notice ct-step-warn" role="status">{deviceStorageFullNotice(selectedSession)}</p> : null}
           {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part !== 'minutes' ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
@@ -2398,7 +2398,7 @@ export function CompanionDashboard({
                   role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
               <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
             </MinutesModeTabs>
-            <details id="ct-meeting-export" className="ct-result-tools">
+            <details id="ct-meeting-other-export" className="ct-result-tools">
               <summary>其它导出选项</summary>
           <div className="ct-document-actions">
             <span>导出其它内容</span>
