@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-09T10:58:35+08:00",
+  "ownerQuoteSummary": "不停的尝试模型，这个方向是错的，对吧？接下来我们应该怎么做？还有什么新的方向或者正确的方向？",
+  "state": "FIXED_STACK_MATCHED_REAL_SOURCE_DIAGNOSTICS_PRIORITY_NO_NEW_MODEL_SEARCH",
+  "purpose": "Stop serial model selection as the primary development loop; execute the previously identified missing paired-source diagnostic, then repair one measured bottleneck.",
+  "priorEvidence": [
+    {
+      "name": "oracleActivity",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-target-activity-adaptation\\oracle-activity-diagnostic\\direction-decision.json",
+      "sha256": "bfd569fb33a44b9004e95fd3fb6cd7d2e5289f23ef861afc844f10207e186547"
+    },
+    {
+      "name": "dualMicIndependent",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-dual-mic-independent-meetings\\decision.json",
+      "sha256": "8cfba659766f04b271f48c013bb0f3701b4bb03be55e16232eedf8049452385a"
+    },
+    {
+      "name": "targetSupervisedAdaptation",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-supervised-adaptation\\decision.json",
+      "sha256": "ae3b0abb19951b03dfad98b17c4f242e769c81341958e7e02871fac9e0fa2366"
+    },
+    {
+      "name": "sourceSupervisedAdaptation",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\decision.json",
+      "sha256": "85b1ffa2a7823cf6eb60fe149a706c000cfe393eab3ccc93221289c5a25b1c57"
+    },
+    {
+      "name": "wordIdentityAudit",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\evidence\\20261108-competitive-sale-standard\\word-identity-audit-20261109\\result.json",
+      "sha256": "376a68b8686caab6433fd2089cc55780e6d05ae9c4aebba5018929ce139b147c"
+    },
+    {
+      "name": "lastNewCandidate",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-sedicow-r1\\real-pilot-result.json",
+      "sha256": "63e851e7622e3e1fc7ee90619b75395925f9c55f7f13f3d19a154c1b79cdcabc"
+    }
+  ],
+  "priorModelEvidenceCommit": "0b486acea3cf5479dfcc346b142c26d9cf4258f6",
+  "priorDeliveryRecordCommit": "5227dd3388944e52d58d2c88322aadd671fe7a12",
+  "findingsReusedWithoutRerun": [
+    "Correct target timing has already been tested: 256 local reference characters, oracle-gated mixture88 edits vs separated113, fully-contained deletions9 vs28. Activity alone is insufficient; distortion vs recognizer sensitivity not uniquely isolated.",
+    "Two independent dual-channel meeting diagnostics showed limited improvement, but 64 interior characters were removed before ASR by predicted activity. Public array microphones are not the actual close-spaced card geometry.",
+    "Removing the activity gate recovered some speech but greatly increased other-speaker insertions; removing all filtering is not a solution.",
+    "Two adaptation attempts failed content/ordinary-speech protection, including target energy collapse and overlap deletions increasing despite a lower aggregate error. Do not repeat generic epoch/lr/volume sweeps.",
+    "Word-time reassignment already worsened cached cpCER, and latest target-conditioned ASR pilot failed real Chinese; neither becomes a new recommended model trial."
+  ],
+  "executionCorrection": "The November8 oracle decision already prescribed matched real near/far data. Subsequent execution returned to new model trials before completing that prerequisite. This reset resumes the missing work, not a newly discovered architecture.",
+  "missingArtifact": "One verified genuine Mandarin session with far-field mixture and each person's simultaneous close-talk waveform; identity/channel mapping, clock offset/drift, headset cross-talk and target transcript correspondence must be checked. Enrollment snippets are not the overlapping utterance source targets.",
+  "sourceAvailabilityOnly": {
+    "officialDescription": "https://www.openslr.org/119/",
+    "headCheck": {
+      "at": "2026-11-09T10:41:03+08:00",
+      "url": "https://speech-lab-share-data.oss-cn-shanghai.aliyuncs.com/AliMeeting/openlr/Eval_Ali.tar.gz",
+      "method": "HEAD",
+      "audioPayloadDownloaded": false,
+      "status": 200,
+      "headers": {
+        "Content-Length": "3673718355",
+        "Accept-Ranges": "bytes",
+        "ETag": "\"FEA425CB59FEE8781CD152B32022C964-351\"",
+        "Last-Modified": "Mon, 14 Feb 2022 07:18:21 GMT",
+        "Content-Type": "application/octet-stream"
+      }
+    },
+    "audioDownloadedThisTurn": false,
+    "pairedSessionVerified": false,
+    "use": "One Eval session for exposed diagnostics only, never training. Future adaptation must use the separate Train split and separate validation meetings/rooms/people as metadata allows."
+  },
+  "frozenDiagnosticPlan": [
+    "Freeze Qwen1.7B ordinary ASR and its decoder/normalization, one existing separation checkpoint and one input convention; do not add model candidates.",
+    "Acquire and verify one paired meeting before inference: source hashes/license/split, session/person/channel identities, time offset/drift, cross-talk. Preserve raw recordings. Start with a single far-field channel; public8-channel data does not prove card dual-mic capability.",
+    "Use simultaneous non-overlap near vs far with identical target transcripts to isolate the basic acoustic/recognition penalty. Use individual near sources during overlap as diagnostic recognition ceilings after verifying source/reference quality.",
+    "Compare each separated far-field person output with the SAME person/time/reference and frozen recognizer as the paired near-source path. Record substitutions/deletions/insertions, extra words when person silent, speech preservation, identity errors, wall time and private memory. A reference-only crop is diagnostic and never a product score.",
+    "Keep raw mixed chronological CER separate from per-person CER/cpCER; do not score mixed legitimate speakers against a single person reference or compare incompatible denominators. Global identity permutation only under a fixed documented rule.",
+    "Use existing correct-activity controls and failed word reassignment evidence; do not rerun them as the next milestone.",
+    "Only after localization, implement ONE module repair and verify on disjoint meetings, preserving ordinary speech. If adaptation is justified, use true matched source supervision and content/absence protection; no large training without a falsifiable bottleneck."
+  ],
+  "repairDecisionRules": [
+    {
+      "finding": "Validated per-person near-source ASR is already wrong",
+      "action": "Audit reference/input/language recognition first; separation-only changes cannot explain or fix all errors."
+    },
+    {
+      "finding": "Near-source ASR correct, matched separated far output loses/substitutes target words",
+      "action": "Repair target content preservation in extraction/frontend; measure source fidelity and downstream text together."
+    },
+    {
+      "finding": "Correct recognizable speech consistently assigned to the wrong person",
+      "action": "Repair reference identity, clustering and stable mapping, rather than retraining the lexical recognizer."
+    },
+    {
+      "finding": "No reliable module-level gain across disjoint real meetings",
+      "action": "Stop that repair; retain failure and unfinished sale gates. Escalate a concrete hardware/service/scope decision separately instead of silently weakening the requirement."
+    }
+  ],
+  "primaryResearch": [
+    {
+      "url": "https://www.merl.com/publications/TR2026-112",
+      "support": "Real-TSE report builds on a baseline and emphasizes realistic data cleaning and processed close-talk targets; learned sound quality/similarity are not enough. Does not establish our product <5%."
+    },
+    {
+      "url": "https://www.openslr.org/119/",
+      "support": "Official AliMeeting provides same-session far-field array and each participant headset, with separate Train/Eval/Test. Headsets still require validation."
+    }
+  ],
+  "ordinaryBest": {
+    "referenceCharacters": 8325,
+    "edits": 461,
+    "strictCer": 0.055375375375375374,
+    "unchanged": true,
+    "underFivePercentPassed": false
+  },
+  "newModelCalls": 0,
+  "newTrainingRuns": 0,
+  "newModelCandidates": 0,
+  "newMeetingAudioPayloadDownloaded": false,
+  "newAccuracyGain": false,
+  "productSourceChanged": false,
+  "installedProductChanged": false,
+  "phoneOrBoardAccessed": false,
+  "formalQualityTargetsChanged": false,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "next": "停止新增模型候选和重复旧失败实验。固定现有中文Qwen识别器、一个分离对照及解码版本，优先完成一场真实中文会议远场混音与逐人近讲录音的配对、身份/声道映射、时间对齐/漂移与串音验证；近讲不是默认干净真值。按同人同时间同文字参照隔离输入/识别、分离内容损失和人物归属，不能把混音对单人参照的错误当模型幻觉。复用已有正确活动时间和归人失败证据，不重跑当新进展。定位后只修一个可归因模块，有可靠匹配中文Train数据才考虑小范围适配，Eval仅诊断不训练。普通线5.53754%仍需降至<5%，第三真实整会/跨会/留出/纪要事实/双端实卡任务全部保留未完成；不默认大规模自研、不降低售卖门、不承诺任意单麦密集重叠逐人<5%。"
+}
