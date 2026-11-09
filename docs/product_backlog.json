@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T18:18:14+08:00",
+      "updatedAt": "2026-11-09T18:45:17+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "771/fd2已装且原378短录全门过，原379录中同步PDM P95上界2000us/峰2832us及零故障过，编码峰6510us仍超6000。12ms等待尚未关闭编码峰，不继续盲增等待或原样2h；用既有最坏帧线程/IRQ观察补当前准入原因（真实quiet/query缺失/超时/音频积压旁路），先分清失效路径，再改源头。真实原769 2h零故障与771短录改善均保留范围；新录音须新原弹窗，原10s+180s已经用掉。手机/偶发连接、速度后置/明确block不继承关闭。",
+      "next": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -136466,18 +136466,18 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T18:18:14+08:00",
-        "state": "SCOPED771_SHORT_AND_LIVE_RESULTS_SAVED",
+        "at": "2026-11-09T18:45:17+08:00",
+        "state": "INSTALL_EXISTING_OPTIONAL_OBSERVER772",
         "phoneInstalled": "0.1.109",
         "firmwareInstalled": 66771,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "firmwareSource": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
-        "boardLease": false,
-        "boardItem": null,
+        "boardLease": true,
+        "boardItem": "Companion编码最坏帧准入原因：一次既有观察与正常配置返回",
         "liveRecording": false,
         "liveReceive": false,
-        "liveUpgrade": false,
+        "liveUpgrade": true,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 379,
@@ -136529,7 +136529,10 @@
         "offlineRecoveryBuildRunning": false,
         "offlineRecoveryInstalled": true,
         "targetedControllerSession": null,
-        "targetedControllerPid": null
+        "targetedControllerPid": null,
+        "codecObserverSession": 53843,
+        "codecObserverPid": 4664,
+        "activeEngineeringFirmware": null
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -141004,6 +141007,18 @@
             },
             "physicalTimingQualified": false,
             "normalAudioByteIdentical": true
+          },
+          "encodePeakAttribution772": {
+            "at": "2026-11-09T18:45:17+08:00",
+            "sourceCommit": "51f26f4e082f97e9c4443d325ea5e7b30e8d72a0",
+            "observerFirmware": 66772,
+            "observerCandidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-observer-r2-candidate.json",
+            "normalReturn": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\normal773-candidate.json",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec772-current.json",
+            "state": "INSTALL_EXISTING_OPTIONAL_OBSERVER772",
+            "newStartCommands": 0,
+            "metricMaximumUs": 6000,
+            "normalCurrentQualified": false
           }
         }
       },
@@ -263438,7 +263453,7 @@
           },
           "wholeWindowsCoreIntegration": {
             "at": "2026-11-09T17:37:14+08:00",
-            "state": "WHOLE_WINDOWS_CORE_SOURCE_INTEGRATED_BUILD_PENDING",
+            "state": "MATCHED_WINDOWS080_SOURCE_BUILT_INSTALLED_WHOLE_PUBLIC_MEETING_PROVEN",
             "version": "0.1.80",
             "preservedFrontendNativeBase": "471d2d019a644849578bf09f9d781be76a535d88",
             "matchedRecordingCoreSource": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
@@ -263507,7 +263522,7 @@
             "originalAndDecodedAudioBackupRestoredByteIdentical": true,
             "integratedWindowsCore": {
               "at": "2026-11-09T17:37:14+08:00",
-              "state": "WHOLE_WINDOWS_CORE_SOURCE_INTEGRATED_BUILD_PENDING",
+              "state": "MATCHED_WINDOWS080_SOURCE_BUILT_INSTALLED_WHOLE_PUBLIC_MEETING_PROVEN",
               "version": "0.1.80",
               "preservedFrontendNativeBase": "471d2d019a644849578bf09f9d781be76a535d88",
               "matchedRecordingCoreSource": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
@@ -263562,7 +263577,7 @@
               {
                 "block": "长录/连接/异常恢复可靠性",
                 "state": "OPEN",
-                "facts": "769/d00已实际保存约2小时3分原音，2h录中同步、完整原音、无观测意外断链等过；整轮仍因编码峰6.556ms>6ms、PDM峰3.252ms>3ms失败。771在原嵌软任务修复，软件/新模型不能替代。",
+                "facts": "769已保存2小时3分原音、录中同步与完整音频；771短录全部门通过，183.45秒录中同步的PDM峰2.832ms<3ms、零采集故障通过，编码峰6.510ms>6ms仍失败。原嵌软任务继续定位准入/中断路径，当前固件两小时与异常恢复未合格，不继承旧长录。",
                 "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
               },
               {
@@ -263858,6 +263873,62 @@
               "published": false,
               "readbackByteIdentical": true,
               "saleQualified": false
+            },
+            "ownerReviewEntry": {
+              "at": "2026-11-09T19:01:01+08:00",
+              "script": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\open_public_meeting.py",
+              "scriptSha256": "4a5bf6d2bdba8d9064182c5595d08489899b1c1e4db6bb9e923d8696e5393cf0",
+              "shortcut": "C:/Users/Billy/Desktop/Companion - 公开会议验收.lnk",
+              "sameSessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
+              "publicProfileOnly": true,
+              "checkOnlyPassed": true,
+              "appStartedByThisWork": false,
+              "qualification": "Owner-clicked review of existing actual public meeting; not a customer or physical-board acceptance."
+            },
+            "latestFirmwareScopedResult": {
+              "observedAt": "2026-11-09T19:01:01+08:00",
+              "receiptAt": "2026-11-09T18:12:20+08:00",
+              "firmware": 66771,
+              "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-device-chain-acceptance.json",
+              "receiptSha256": "4e5f1c9bbc8172bee6db755317360f70f89e28e346e4b8864a9fd4c7709fc0b8",
+              "shortGates": {
+                "encodeP95": true,
+                "encodePeak": true,
+                "pdmPeak": true,
+                "zeroCaptureFaults": true,
+                "foreground": true,
+                "stack": true,
+                "normalClock": true,
+                "firstPcm": true,
+                "stopAck": true,
+                "completeAudio": true
+              },
+              "liveGates": {
+                "encodeP95": true,
+                "encodePeak": false,
+                "pdmPeak": true,
+                "zeroCaptureFaults": true,
+                "foreground": true,
+                "stack": true,
+                "normalClock": true,
+                "completeAudio": true,
+                "sameOriginal": true,
+                "actualLiveSegmentReceived": true
+              },
+              "timing": {
+                "validMask": 15,
+                "encodeSamples": 9173,
+                "pdmSamples": 18346,
+                "encodeP95UpperUs": 5000,
+                "encodePeakUpperUs": 6510,
+                "pdmP95UpperUs": 2000,
+                "pdmPeakUpperUs": 2832
+              },
+              "twoHourCurrentFirmwareQualified": false,
+              "saleQualified": false,
+              "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
+              "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
             }
           },
           "remainingSaleBlocks": [
@@ -263870,7 +263941,7 @@
             {
               "block": "长录/连接/异常恢复可靠性",
               "state": "OPEN",
-              "facts": "769/d00已实际保存约2小时3分原音，2h录中同步、完整原音、无观测意外断链等过；整轮仍因编码峰6.556ms>6ms、PDM峰3.252ms>3ms失败。771在原嵌软任务修复，软件/新模型不能替代。",
+              "facts": "769已保存2小时3分原音、录中同步与完整音频；771短录全部门通过，183.45秒录中同步的PDM峰2.832ms<3ms、零采集故障通过，编码峰6.510ms>6ms仍失败。原嵌软任务继续定位准入/中断路径，当前固件两小时与异常恢复未合格，不继承旧长录。",
               "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
             },
             {
@@ -263936,6 +264007,51 @@
             "encodePeakUs": 6556,
             "pdmPeakUs": 3252,
             "wholeQualified": false
+          },
+          "latestFirmwareScopedResult": {
+            "observedAt": "2026-11-09T19:01:01+08:00",
+            "receiptAt": "2026-11-09T18:12:20+08:00",
+            "firmware": 66771,
+            "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-device-chain-acceptance.json",
+            "receiptSha256": "4e5f1c9bbc8172bee6db755317360f70f89e28e346e4b8864a9fd4c7709fc0b8",
+            "shortGates": {
+              "encodeP95": true,
+              "encodePeak": true,
+              "pdmPeak": true,
+              "zeroCaptureFaults": true,
+              "foreground": true,
+              "stack": true,
+              "normalClock": true,
+              "firstPcm": true,
+              "stopAck": true,
+              "completeAudio": true
+            },
+            "liveGates": {
+              "encodeP95": true,
+              "encodePeak": false,
+              "pdmPeak": true,
+              "zeroCaptureFaults": true,
+              "foreground": true,
+              "stack": true,
+              "normalClock": true,
+              "completeAudio": true,
+              "sameOriginal": true,
+              "actualLiveSegmentReceived": true
+            },
+            "timing": {
+              "validMask": 15,
+              "encodeSamples": 9173,
+              "pdmSamples": 18346,
+              "encodeP95UpperUs": 5000,
+              "encodePeakUpperUs": 6510,
+              "pdmP95UpperUs": 2000,
+              "pdmPeakUpperUs": 2832
+            },
+            "twoHourCurrentFirmwareQualified": false,
+            "saleQualified": false,
+            "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
+            "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
           }
         }
       },

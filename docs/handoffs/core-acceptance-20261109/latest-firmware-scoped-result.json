@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-11-09T19:01:01+08:00",
+  "receiptAt": "2026-11-09T18:12:20+08:00",
+  "firmware": 66771,
+  "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-device-chain-acceptance.json",
+  "receiptSha256": "4e5f1c9bbc8172bee6db755317360f70f89e28e346e4b8864a9fd4c7709fc0b8",
+  "shortGates": {
+    "encodeP95": true,
+    "encodePeak": true,
+    "pdmPeak": true,
+    "zeroCaptureFaults": true,
+    "foreground": true,
+    "stack": true,
+    "normalClock": true,
+    "firstPcm": true,
+    "stopAck": true,
+    "completeAudio": true
+  },
+  "liveGates": {
+    "encodeP95": true,
+    "encodePeak": false,
+    "pdmPeak": true,
+    "zeroCaptureFaults": true,
+    "foreground": true,
+    "stack": true,
+    "normalClock": true,
+    "completeAudio": true,
+    "sameOriginal": true,
+    "actualLiveSegmentReceived": true
+  },
+  "timing": {
+    "validMask": 15,
+    "encodeSamples": 9173,
+    "pdmSamples": 18346,
+    "encodeP95UpperUs": 5000,
+    "encodePeakUpperUs": 6510,
+    "pdmP95UpperUs": 2000,
+    "pdmPeakUpperUs": 2832
+  },
+  "twoHourCurrentFirmwareQualified": false,
+  "saleQualified": false,
+  "scope": "Consumed existing peer receipt only; no board operation, no new recording or audio upload.",
+  "nextFromOriginalFirmwareTask": "同批771已交付PDM改善，编码6510us>6000仍失败。观察772仅补同一最坏帧的准入原因/实际engine状态与已有线程IRQ分解，区分正常空档、查询缺失、超时、积压旁路和非新鲜准入（含收尾）；不凭旧733或本轮未触发结果宣称当前已定因。当前INSTALL_EXISTING_OPTIONAL_OBSERVER772；新原弹窗只有明确点击后才允许这一段180s。无触发不连续开录；已备好正常773返回，资源与771相同，观察默认关闭，不恢复CPU百分比门或扩大原预算。正常当前2h/手机/偶发连接及Owner block仍不继承关闭。"
+}
