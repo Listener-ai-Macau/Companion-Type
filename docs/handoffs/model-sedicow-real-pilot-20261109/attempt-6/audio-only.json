@@ -1,0 +1,24 @@
+{
+  "id": "native-2",
+  "nativePerson": 2,
+  "pilot": true,
+  "originalAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\original-main30.wav",
+  "originalAudioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+  "sourceStartSample": 24960000,
+  "sourceEndSample": 25440000,
+  "enrollmentAudio": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\inputs\\enroll-native-2.wav",
+  "enrollmentAudioSha256": "7c53063396de85c163c143d153158c896deb5e085653ef935b70db69fe2d29e4",
+  "enrollmentStartSample": 1779200,
+  "enrollmentEndSample": 2259200,
+  "automaticEnrollmentScoreSeconds": 28.5038320962228,
+  "modelInputs": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\author-mask-inputs\\native-2-inputs.npz",
+  "modelInputsSha256": "3e671814ac449ad99a00c3258e0a09f9858f5a225cce57d533f1c9d345f47815",
+  "stnoShape": [
+    4,
+    1500
+  ],
+  "stnoMassMaxError": 1.1920928955078125e-07,
+  "targetActivitySecondsFromSoftMask": 7.552205562591553,
+  "conditioningKind": "author-style-binary-from-existing-automatic-journal",
+  "sourceSpeakerJournalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e"
+}

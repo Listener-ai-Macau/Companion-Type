@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-09T10:25:13+08:00",
+  "workerSha256": "675268e7c8fe0c2b7ee6d19ecf5fc1822da67be26dd48a10c6b10deed22dd536",
+  "controllerSha256": "9a7d2c840697dab28ca98a20b4f1e160a556b5f67c41a3608c16af5b3e1be7df",
+  "supportSources": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_cpu_stream_20261109.py",
+      "sha256": "d3e269c084de2885ddac21c2131867db5a7fa69d80a6ded9046c3f0f0f81a88b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_checkpoint_20261109.py",
+      "sha256": "10db6bd5440acf3f82cbad865c61d4f0aaa0220564da5ea59f1daec71ae63d9d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_sedicow_decode_trace_20261109.py",
+      "sha256": "d9590d826b70412e9beb649921c099c49a8c9b65122ee69776c968652389932c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_bounded_decode_20261107.py",
+      "sha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691"
+    }
+  ],
+  "sourceManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-sedicow-r1\\source.json",
+  "sourceManifestSha256": "406e3457ec067ab73edcbbc8e692f5abf1e8a622a437610b5c6e54aa07a354d4",
+  "weightFile": "E:\\CodexData\\Companion\\.model-cache\\sedicow-20261109\\model.safetensors",
+  "isolatedRuntime": "E:/CodexData/Companion/.model-cache/sedicow-runtime-20261109",
+  "inputManifestSha256": "3e5ab1ef628cc6ddc9c897d0d7fbfe464339129c55b82d72fbe1e537890f1aff",
+  "policy": "One fixedreal30s target chosen frompredeclared1/2/3 before newoutput. Read originalF32checkpoint byencoderblock+keepdecoderresident, everytensorhashchecked; no quantization/training/audioalteration, no referencewords/peoplecount. SDPAattention isexecutionbackend change (tinymax5.96e-8vs eager), notbitexactfullpretrainedclaim. AuthorCTCgenerationweight0 modulesnotallocated, guarded against accidentaluse. Worker5percentCPU/2GiBprivate; actualLOWRAM controllerstops ownchild. No GPUoperations, no fullmeeting orproductionlatencyclaim.",
+  "targetSelectionReason": "native1 previously had PS4contentregression; original automatic identity+STNO+30sreference are unchanged. Otherpilotpeople only if first diagnosis justifies.",
+  "maximumRunSeconds": 300,
+  "referencePassedToInference": false,
+  "saleQualified": false
+}

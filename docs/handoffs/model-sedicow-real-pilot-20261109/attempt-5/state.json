@@ -1,0 +1,458 @@
+{
+  "state": "COMPLETE_REAL_CPU_TARGET_ASR_NOT_QUALIFIED",
+  "pid": 37652,
+  "at": "2026-11-09T10:25:13+08:00",
+  "newNeuralCalls": 1,
+  "referencePassedToWorker": false,
+  "training": false,
+  "results": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-sedicow-cpu-r5\\raw.json",
+      "sha256": "e3efc5ced997c91203049e025469744bdbc4a831563ff24a3a51a84f5620ab04"
+    }
+  ],
+  "trace": [
+    {
+      "module": "model.encoder.ca_enrolls.0",
+      "loadSeconds": 0.17335529997944832,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.0",
+      "loadSeconds": 0.17335529997944832,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.0",
+      "loadSeconds": 0.11269869998795912,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.0",
+      "loadSeconds": 0.11269869998795912,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.1",
+      "loadSeconds": 0.1640326000051573,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.1",
+      "loadSeconds": 0.1640326000051573,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.1",
+      "loadSeconds": 0.11994940001750365,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.1",
+      "loadSeconds": 0.11994940001750365,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.2",
+      "loadSeconds": 0.16498199995839968,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.2",
+      "loadSeconds": 0.16498199995839968,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.2",
+      "loadSeconds": 0.1258069999748841,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.2",
+      "loadSeconds": 0.1258069999748841,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.3",
+      "loadSeconds": 0.1872348000179045,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.3",
+      "loadSeconds": 0.1872348000179045,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.3",
+      "loadSeconds": 0.11766170000191778,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.3",
+      "loadSeconds": 0.11766170000191778,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.4",
+      "loadSeconds": 0.2211255999864079,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.4",
+      "loadSeconds": 0.2211255999864079,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.4",
+      "loadSeconds": 0.128160200023558,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.4",
+      "loadSeconds": 0.128160200023558,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.5",
+      "loadSeconds": 0.16599710000446066,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.5",
+      "loadSeconds": 0.16599710000446066,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.5",
+      "loadSeconds": 0.11152739997487515,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.5",
+      "loadSeconds": 0.11152739997487515,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.6",
+      "loadSeconds": 0.16695000004256144,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.6",
+      "loadSeconds": 0.16695000004256144,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.6",
+      "loadSeconds": 0.11430459999246523,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.6",
+      "loadSeconds": 0.11430459999246523,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.7",
+      "loadSeconds": 0.22238930000457913,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.7",
+      "loadSeconds": 0.22238930000457913,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.7",
+      "loadSeconds": 0.11466990003827959,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.7",
+      "loadSeconds": 0.11466990003827959,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.8",
+      "loadSeconds": 0.15373479999834672,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.8",
+      "loadSeconds": 0.15373479999834672,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.9",
+      "loadSeconds": 0.11156009999103844,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.9",
+      "loadSeconds": 0.11156009999103844,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.10",
+      "loadSeconds": 0.11311480001313612,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.10",
+      "loadSeconds": 0.11311480001313612,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.11",
+      "loadSeconds": 0.10889749997295439,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.11",
+      "loadSeconds": 0.10889749997295439,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.12",
+      "loadSeconds": 0.2020640000118874,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.12",
+      "loadSeconds": 0.2020640000118874,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.13",
+      "loadSeconds": 0.11232330003986135,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.13",
+      "loadSeconds": 0.11232330003986135,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.14",
+      "loadSeconds": 0.11189549998380244,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.14",
+      "loadSeconds": 0.11189549998380244,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.15",
+      "loadSeconds": 0.11327909998362884,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.15",
+      "loadSeconds": 0.11327909998362884,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.16",
+      "loadSeconds": 0.11411480000242591,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.16",
+      "loadSeconds": 0.11411480000242591,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.17",
+      "loadSeconds": 0.10795779997715726,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.17",
+      "loadSeconds": 0.10795779997715726,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.18",
+      "loadSeconds": 0.10853540000971407,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.18",
+      "loadSeconds": 0.10853540000971407,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.19",
+      "loadSeconds": 0.10825559997465461,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.19",
+      "loadSeconds": 0.10825559997465461,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.20",
+      "loadSeconds": 0.11800359998596832,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.20",
+      "loadSeconds": 0.11800359998596832,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.21",
+      "loadSeconds": 0.10805530002107844,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.21",
+      "loadSeconds": 0.10805530002107844,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.22",
+      "loadSeconds": 0.10647299996344373,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.22",
+      "loadSeconds": 0.10647299996344373,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.23",
+      "loadSeconds": 0.19720190000953153,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.23",
+      "loadSeconds": 0.19720190000953153,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.24",
+      "loadSeconds": 0.1095414999872446,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.24",
+      "loadSeconds": 0.1095414999872446,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.25",
+      "loadSeconds": 0.11220790003426373,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.25",
+      "loadSeconds": 0.11220790003426373,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.26",
+      "loadSeconds": 0.10611350002000108,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.26",
+      "loadSeconds": 0.10611350002000108,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.27",
+      "loadSeconds": 0.10392689995933324,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.27",
+      "loadSeconds": 0.10392689995933324,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.28",
+      "loadSeconds": 0.16117530001793057,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.28",
+      "loadSeconds": 0.16117530001793057,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.29",
+      "loadSeconds": 0.10863969998899847,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.29",
+      "loadSeconds": 0.10863969998899847,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.30",
+      "loadSeconds": 0.12735489994520321,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.30",
+      "loadSeconds": 0.12735489994520321,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.31",
+      "loadSeconds": 0.12118929997086525,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.31",
+      "loadSeconds": 0.12118929997086525,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.decoder-and-tied-projection",
+      "loadSeconds": 1.24864120001439,
+      "state": "RESIDENT_AFTER_ENCODER"
+    }
+  ],
+  "saleQualified": false,
+  "wallSeconds": 81.82661019999068,
+  "limits": {
+    "pid": 37652,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1359261696,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "checkpoint": {
+    "checkpointSha256": "7e42482cf705a422b022a6c0df84f02be60da5a2fbf454ca517001359a1b9b20",
+    "tensorCalls": 947,
+    "tensorBytesLoaded": 4076052512,
+    "wholeCpuStateDictCreated": false,
+    "mmapUsed": false,
+    "dtypeConversion": false,
+    "everyLoadedTensorHashVerified": true
+  },
+  "attentionImplementation": "sdpa",
+  "originalAuthorFloat32Weights": true,
+  "ctcOnlyModulesNotAllocatedBecauseAuthorGenerationWeightZero": true,
+  "attemptedTarget": "native-3",
+  "lastBlock": {
+    "module": "model.decoder-and-tied-projection",
+    "loadSeconds": 1.24864120001439,
+    "state": "RESIDENT_AFTER_ENCODER"
+  },
+  "text": "对对就是"
+}

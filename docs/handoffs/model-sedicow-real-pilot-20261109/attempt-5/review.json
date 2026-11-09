@@ -1,0 +1,59 @@
+{
+  "at": "2026-11-09T10:27:04+08:00",
+  "state": "REAL_TARGET_DIAGNOSTIC_SCORED_NOT_QUALIFIED",
+  "nativePerson": 3,
+  "referenceSpeakerForEvaluationOnly": "003-F",
+  "sourceWindow": [
+    1560,
+    1590
+  ],
+  "rawText": "对对就是",
+  "naturalEos": true,
+  "loop": false,
+  "referenceUtterances": [
+    {
+      "start": 1573.9445348410054,
+      "end": 1575.384549859495,
+      "speaker": "003-F",
+      "text": "对有的就是一些",
+      "lexical": "对有的就是一些",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1582.0753513478435,
+      "end": 1583.2901875,
+      "speaker": "003-F",
+      "text": "对他有的",
+      "lexical": "对他有的",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1584.0260660342376,
+      "end": 1587.25875,
+      "speaker": "003-F",
+      "text": "就是<$>专门就回收那种废纸，哦<sil>",
+      "lexical": "就是专门就回收那种废纸，哦",
+      "crossesAudioBoundary": false
+    }
+  ],
+  "strictTargetCer": {
+    "metric": "StrictCER_fixed30s_one_native_target_not_whole_meeting",
+    "referenceCharacters": 23,
+    "edits": {
+      "replace": 0,
+      "delete": 19,
+      "insert": 0
+    },
+    "totalEdits": 19,
+    "characterErrorRate": 0.8260869565217391,
+    "noSpeechFalseInsertionCharacters": null,
+    "noTraditionalSimplifiedOrSemanticRewrite": true
+  },
+  "strictCerOmittedForCrossingUtterance": false,
+  "rawSha256": "e3efc5ced997c91203049e025469744bdbc4a831563ff24a3a51a84f5620ab04",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "timeSeconds": 55.241603400034364,
+  "smallSampleNotWholeMeetingQualification": true,
+  "referencePassedToInference": false,
+  "saleQualified": false
+}

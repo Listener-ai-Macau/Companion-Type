@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-09T10:29:33+08:00",
+  "state": "REAL_TARGET_DIAGNOSTIC_SCORED_NOT_QUALIFIED",
+  "nativePerson": 2,
+  "referenceSpeakerForEvaluationOnly": "004-M",
+  "sourceWindow": [
+    1560,
+    1590
+  ],
+  "rawText": "very good yeahtiamond is r d y o so that is r d y oalrightbut it is r d still your b dgo aheadgo ahead",
+  "naturalEos": true,
+  "loop": false,
+  "referenceUtterances": [
+    {
+      "start": 1564.1070601791594,
+      "end": 1567.6192919315733,
+      "speaker": "004-M",
+      "text": "这个挺普遍，咱们小区有其他小区也有，",
+      "lexical": "这个挺普遍，咱们小区有其他小区也有，",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1568.7256449335837,
+      "end": 1569.2428750000001,
+      "speaker": "004-M",
+      "text": "嗯",
+      "lexical": "嗯",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1574.2129239110734,
+      "end": 1576.6512500000001,
+      "speaker": "004-M",
+      "text": "本小区他他就是本小区的呀",
+      "lexical": "本小区他他就是本小区的呀",
+      "crossesAudioBoundary": false
+    },
+    {
+      "start": 1588.416355724755,
+      "end": 1588.9068125000001,
+      "speaker": "004-M",
+      "text": "对",
+      "lexical": "对",
+      "crossesAudioBoundary": false
+    }
+  ],
+  "strictTargetCer": {
+    "metric": "StrictCER_fixed30s_one_native_target_not_whole_meeting",
+    "referenceCharacters": 30,
+    "edits": {
+      "replace": 30,
+      "delete": 0,
+      "insert": 48
+    },
+    "totalEdits": 78,
+    "characterErrorRate": 2.6,
+    "noSpeechFalseInsertionCharacters": null,
+    "noTraditionalSimplifiedOrSemanticRewrite": true
+  },
+  "strictCerOmittedForCrossingUtterance": false,
+  "rawSha256": "75f8191948421f01fd7356ba3031e9102fe953ef5e20425ff416eb44ef78fb31",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "timeSeconds": 57.32218830002239,
+  "smallSampleNotWholeMeetingQualification": true,
+  "referencePassedToInference": false,
+  "saleQualified": false
+}

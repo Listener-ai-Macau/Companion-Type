@@ -1,0 +1,329 @@
+{
+  "state": "FAILED",
+  "pid": 38676,
+  "at": "2026-11-09T10:15:56+08:00",
+  "newNeuralCalls": 0,
+  "referencePassedToWorker": false,
+  "training": false,
+  "results": [],
+  "trace": [
+    {
+      "module": "model.encoder.ca_enrolls.0",
+      "loadSeconds": 0.21229930000845343,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.0",
+      "loadSeconds": 0.21229930000845343,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.0",
+      "loadSeconds": 0.11550950002856553,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.0",
+      "loadSeconds": 0.11550950002856553,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.1",
+      "loadSeconds": 0.16086399997584522,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.1",
+      "loadSeconds": 0.16086399997584522,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.1",
+      "loadSeconds": 0.13190520001808181,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.1",
+      "loadSeconds": 0.13190520001808181,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.2",
+      "loadSeconds": 0.16226740001002327,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.2",
+      "loadSeconds": 0.16226740001002327,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.2",
+      "loadSeconds": 0.19007030001375824,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.2",
+      "loadSeconds": 0.19007030001375824,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.3",
+      "loadSeconds": 0.19555830000899732,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.3",
+      "loadSeconds": 0.19555830000899732,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.3",
+      "loadSeconds": 0.12343849998433143,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.3",
+      "loadSeconds": 0.12343849998433143,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.4",
+      "loadSeconds": 0.16094460000749677,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.4",
+      "loadSeconds": 0.16094460000749677,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.4",
+      "loadSeconds": 0.13498279999475926,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.4",
+      "loadSeconds": 0.13498279999475926,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.5",
+      "loadSeconds": 0.19374999997671694,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.5",
+      "loadSeconds": 0.19374999997671694,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.5",
+      "loadSeconds": 0.11025209998479113,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.5",
+      "loadSeconds": 0.11025209998479113,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.6",
+      "loadSeconds": 0.16922310000518337,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.6",
+      "loadSeconds": 0.16922310000518337,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.6",
+      "loadSeconds": 0.08600720000686124,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.6",
+      "loadSeconds": 0.08600720000686124,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.7",
+      "loadSeconds": 0.1682264999835752,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.ca_enrolls.7",
+      "loadSeconds": 0.1682264999835752,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.7",
+      "loadSeconds": 0.09115719998953864,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.7",
+      "loadSeconds": 0.09115719998953864,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.8",
+      "loadSeconds": 0.12493130000075325,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.8",
+      "loadSeconds": 0.12493130000075325,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.9",
+      "loadSeconds": 0.10898070002440363,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.9",
+      "loadSeconds": 0.10898070002440363,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.10",
+      "loadSeconds": 0.1165288999909535,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.10",
+      "loadSeconds": 0.1165288999909535,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.11",
+      "loadSeconds": 0.11057800002163276,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.11",
+      "loadSeconds": 0.11057800002163276,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.12",
+      "loadSeconds": 0.11739010002929717,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.12",
+      "loadSeconds": 0.11739010002929717,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.13",
+      "loadSeconds": 0.11872839997522533,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.13",
+      "loadSeconds": 0.11872839997522533,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.14",
+      "loadSeconds": 0.11755989998346195,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.14",
+      "loadSeconds": 0.11755989998346195,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.15",
+      "loadSeconds": 0.11449830001220107,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.15",
+      "loadSeconds": 0.11449830001220107,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.16",
+      "loadSeconds": 0.11189370002830401,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.16",
+      "loadSeconds": 0.11189370002830401,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.17",
+      "loadSeconds": 0.11267589998897165,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.17",
+      "loadSeconds": 0.11267589998897165,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.18",
+      "loadSeconds": 0.10851390002062544,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.18",
+      "loadSeconds": 0.10851390002062544,
+      "state": "RELEASED"
+    },
+    {
+      "module": "model.encoder.layers.19",
+      "loadSeconds": 0.11058139998931438,
+      "state": "LOADED"
+    },
+    {
+      "module": "model.encoder.layers.19",
+      "loadSeconds": 0.11058139998931438,
+      "state": "RELEASED"
+    }
+  ],
+  "saleQualified": false,
+  "wallSeconds": 68.36387559998548,
+  "limits": {
+    "pid": 38676,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1685434368,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "checkpoint": {
+    "checkpointSha256": "7e42482cf705a422b022a6c0df84f02be60da5a2fbf454ca517001359a1b9b20",
+    "tensorCalls": 371,
+    "tensorBytesLoaded": 718315520,
+    "wholeCpuStateDictCreated": false,
+    "mmapUsed": false,
+    "dtypeConversion": false,
+    "everyLoadedTensorHashVerified": true
+  },
+  "attentionImplementation": "sdpa",
+  "originalAuthorFloat32Weights": true,
+  "ctcOnlyModulesNotAllocatedBecauseAuthorGenerationWeightZero": true,
+  "attemptedTarget": "native-1",
+  "lastBlock": {
+    "module": "model.encoder.layers.19",
+    "loadSeconds": 0.11058139998931438,
+    "state": "RELEASED"
+  },
+  "failureType": "RuntimeError",
+  "reason": "ActualWindowsLOWRAM before loading tensor"
+}

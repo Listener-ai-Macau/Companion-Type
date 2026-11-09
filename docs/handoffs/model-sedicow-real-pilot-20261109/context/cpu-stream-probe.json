@@ -1,0 +1,101 @@
+{
+  "state": "PASS_TINY_STREAMED_EAGER_EXACT_SDPA_TOLERANCE",
+  "trainedModelInferred": false,
+  "saleQualified": false,
+  "results": [
+    {
+      "attention": "eager",
+      "bitExact": true,
+      "maxAbsError": 0.0,
+      "allcloseAtol": 1e-06,
+      "allcloseRtol": 1e-05,
+      "streamTrace": [
+        {
+          "module": "model.encoder.ca_enrolls.0",
+          "loadSeconds": 0.0004366000066511333,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.encoder.layers.0",
+          "loadSeconds": 0.0004288000054657459,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.encoder.layers.1",
+          "loadSeconds": 0.00041609996696934104,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.decoder-and-tied-projection",
+          "loadSeconds": 0.004279999993741512,
+          "state": "RESIDENT_AFTER_ENCODER"
+        }
+      ],
+      "weightReceipt": {
+        "checkpointSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+        "tensorCalls": 101,
+        "tensorBytesLoaded": 3419716,
+        "wholeCpuStateDictCreated": false,
+        "mmapUsed": false,
+        "dtypeConversion": false,
+        "everyLoadedTensorHashVerified": true
+      }
+    },
+    {
+      "attention": "sdpa",
+      "bitExact": false,
+      "maxAbsError": 5.960464477539063e-08,
+      "allcloseAtol": 1e-06,
+      "allcloseRtol": 1e-05,
+      "streamTrace": [
+        {
+          "module": "model.encoder.ca_enrolls.0",
+          "loadSeconds": 0.0004067000118084252,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.encoder.layers.0",
+          "loadSeconds": 0.0004491000436246395,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.encoder.layers.1",
+          "loadSeconds": 0.00037150003481656313,
+          "state": "RELEASED"
+        },
+        {
+          "module": "model.decoder-and-tied-projection",
+          "loadSeconds": 0.004837000044062734,
+          "state": "RESIDENT_AFTER_ENCODER"
+        }
+      ],
+      "weightReceipt": {
+        "checkpointSha256": "60e0de24495f68ca844ac3c88cd12071f3d6b1487b29bd5cff85dc077631c6ce",
+        "tensorCalls": 101,
+        "tensorBytesLoaded": 3419716,
+        "wholeCpuStateDictCreated": false,
+        "mmapUsed": false,
+        "dtypeConversion": false,
+        "everyLoadedTensorHashVerified": true
+      }
+    }
+  ],
+  "realWeightOrAudioInference": false,
+  "seconds": 12.303058099991176,
+  "limits": {
+    "pid": 20828,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 414285824,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
