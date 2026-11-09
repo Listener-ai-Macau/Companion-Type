@@ -262912,7 +262912,8 @@
             "windowsRemaining": "原音回听与原音/MP3交付、AI生成/事实核对、旧WinRT系统分享故障、聊天应用附件、集中候选包仍开放；已补Windows标准Shell文件粘贴落盘。",
             "phone": "Android100已保护候选未安装，最后本聊天真机65观测后USB中断；后续先读实态，禁止根据旧收据降级",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
-            "model": "普通固定基线5.53754%，复杂多人/重叠/纪要事实未合格，原记录保留"
+            "model": "普通固定基线5.53754%，复杂多人/重叠/纪要事实未合格，原记录保留",
+            "ai": "同一真实公开会议现有ASR经原生078+现有AI服务生成完整2/2段约30.817秒；发现工作日/零食区两处原ASR事实错误，人工参考公开标注校对后，通过旧纪要来源变化提示、旧待办拒出、重新整理约28.264秒、旧版历史保留与新导出。未提高ASR原评分，仍需完整事实/客户体验。"
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
@@ -262965,7 +262966,7 @@
           },
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
-            "state": "CONTINUOUS_REAL_AUDIO_NATIVE_FLOW_READY_FOR_REMOTE_RUN",
+            "state": "REAL_IMPORT_AND_WHOLE_AUDIO_DECODING_PROVEN_NATIVE_SAVE_PATH_COMMIT_UNDER_RECHECK",
             "nativeVersion": "0.1.78",
             "reusePassedNativeSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
             "sourceMeeting": "S_R004S03C01",
@@ -262983,7 +262984,29 @@
             "modelsRun": false,
             "previousSavedMeetingPassReused": true,
             "ownerForegroundUsed": false,
-            "hostLowMemoryObservedBytes": 369836032
+            "hostLowMemoryObservedBytes": 369836032,
+            "nativeImportAndReopenDurationMs": 2327119,
+            "decodeProbesSeconds": [
+              0,
+              1163.5595,
+              2319.119
+            ],
+            "physicalListeningQualified": false,
+            "currentVerificationSource": "38f6205660fe384333ad671b05431964dec74954",
+            "retainedFailures": [
+              "42581280155 private draft access403 before native app",
+              "42581986300 ambiguous Open buttons; now bind primary ID1",
+              "42582723892 requested Save filename not reflected in returned file; explicit field commit/readback/output verification added"
+            ]
+          },
+          "groupedMeetingUiSource20261109": {
+            "state": "SOURCE_PREPARED_REMOTE_CHECK_PENDING_NOT_PACKAGED",
+            "changes": [
+              "原音导出进入会议顶部工具栏，打开原有格式/保存/分享区域",
+              "无最终文字时隐藏无法使用的会议AI工作区，给出简短下一步",
+              "Questions按会中问题展示，不擅自宣称尚未解决；显式人工待解标题保留"
+            ],
+            "automaticUnresolvedQuestionResolutionStillOpen": true
           }
         }
       },

@@ -308,7 +308,7 @@ function localDraftForDisplay(markdown: string, source: string | undefined): str
   const parts = markdown.split(/^## /m);
   const intro = (parts.shift() ?? '').split('\n')
     .filter(line => !/^(Generated:|Duration:|Source:|Minutes engine:)/.test(line)).join('\n').trim();
-  const labels: Record<string, string> = { Summary: '摘要', Decisions: '讨论结论（需核对）', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
+  const labels: Record<string, string> = { Summary: '摘要', Decisions: '讨论结论（需核对）', 'Action Items': '待办', Questions: '会中问题', Keywords: '关键词' };
   const sections = parts.flatMap(part => {
     const [heading, ...lines] = part.split('\n');
     const body = lines.join('\n').trim();
@@ -333,7 +333,7 @@ function minutesSourceEnvelope(context: CompanionMinutesNoteContext): string {
 // including unknown provider sections, remains editable without exposing the
 // generated transport metadata. Preserve all other sections/header bytes.
 function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null, manual=false): Array<{ key: string; label: string; value: string; start: number; end: number; plain: boolean }> | null {
-  const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
+  const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '会中问题', Keywords: '关键词' };
   const envelope = noteContext ? minutesSourceEnvelope(noteContext) : '';
   if (!markdown.startsWith(envelope)) return null;
   const headings = [...markdown.slice(envelope.length).matchAll(/^## ([^\r\n]+)\r?$/gm)].map(match=>({
@@ -2153,6 +2153,7 @@ export function CompanionDashboard({
             </div> : null}
           </header>
           <nav className="ct-meeting-dock" aria-label="这场会议的工具">
+            {onExportAudio&&hasOriginalAudio?<button type="button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>{setRecordingToolsOpen(true);revealMeetingTool('ct-recording-audio-export');}}><Download size={16}/>导出录音</button>:null}
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-recording-result');}}><FileText size={16}/>会议纪要</button>:null}
             {finalTranscript?<button type="button" onClick={()=>{setTranscriptReviewOpen(true);revealMeetingTool('ct-recording-text-review');}}><Headphones size={16}/>转写原文</button>:null}
             {onAskMeetings&&finalTranscript?<button type="button" disabled={controlsBusy||qaBusy} onClick={()=>{setQaSelected([selectedSession.id]);revealMeetingTool('ct-meeting-qa');}}><Search size={16}/>问这场会议</button>:null}
@@ -2519,7 +2520,7 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
-            {onAskMeetings&&selectedSession ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
+            {onAskMeetings&&selectedSession&&finalTranscript ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
               contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}
               scopes={qaEligibleSessions.map(row=>({id:row.id,title:meetingTitle(row),binding:qaIdentity([row.id])}))}
               serviceReady={!!productSettings?.deepseekMinutesEnabled&&!!productSettings?.deepseekApiKeySet} busy={controlsBusy||storageBlocked} preview={readingPreview}
@@ -2612,7 +2613,7 @@ export function CompanionDashboard({
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
               <div hidden={transcriptReviewOpen} className="ct-transcript-reading-tools" role="group" aria-label="转写阅读方式"><button type="button" className="ct-text-button" aria-pressed={transcriptCleanView} onClick={()=>setTranscriptCleanView(true)}>精简阅读</button><button type="button" className="ct-text-button" aria-pressed={!transcriptCleanView} onClick={()=>setTranscriptCleanView(false)}>原始转写</button><span>{transcriptCleanView?'仅显示时略去“嗯、呃”，简短回应也可能被略去；原文未改变。':'显示原始文字与已保存的人工修订。'}</span></div><p className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{transcriptCleanView?cleanHesitations(companionReviewedTranscript(selectedSession)).text:companionReviewedTranscript(selectedSession)}</p>
-            </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
+            </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'原音已保留，可以先回听。点“转文字”后，可整理纪要、提取待办或向这场会议提问。'}</p>}
           {transcriptUnmappedEdges.length > 0 ? <div className="ct-step-warn" role="status" aria-label="原音与文字的时间对应">
             {transcriptUnmappedEdges.map(edge => <p key={edge.edge}>
               {edge.edge === 'start' ? '开头' : '结尾'}约 {Math.ceil(edge.durationMs / 1000)} 秒原音没有对应的识别时间标记，可能也有停顿。原音已保留，可回听核对。
@@ -2646,7 +2647,7 @@ export function CompanionDashboard({
           <details className="ct-recording-more" open={recordingToolsOpen} onToggle={event=>setRecordingToolsOpen(event.currentTarget.open)}>
             <summary>更多{titleDirty||minutesDirty||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
-            <div className="ct-recording-audio-export">
+            <div id="ct-recording-audio-export" className="ct-recording-audio-export" tabIndex={-1}>
             <label>音频格式 <select aria-label="音频副本格式" value={audioExportFormat} disabled={controlsBusy||oobeBlockedByRecording} onChange={e=>setAudioExportFormat(e.currentTarget.value as 'original'|'mp3')}><option value="original">原文件 / WAV / 分段ZIP</option><option value="mp3">MP3 兼容副本（有损）</option></select></label>
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
               onClick={() => void exportAudio(audioExportFormat)}><Download size={15} />{audioExportFormat==='mp3'?'保存 MP3 副本':selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
@@ -3850,7 +3851,7 @@ function minutesInlineText(value: string) {
 
 function translateMinutesHeading(value: string): string {
   const headings: Record<string, string> = {
-    Summary: '摘要', 摘要: '摘要', Decisions: '讨论结论（需核对）', 决定: '关键决定', 'Action Items': '行动项', Questions: '待确认问题', 问题: '待确认问题', Keywords: '关键词',
+    Summary: '摘要', 摘要: '摘要', Decisions: '讨论结论（需核对）', 决定: '关键决定', 'Action Items': '行动项', Questions: '会中问题', 问题: '会中问题', Keywords: '关键词',
   };
   return headings[value] ?? value;
 }

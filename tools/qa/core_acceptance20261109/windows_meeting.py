@@ -217,7 +217,8 @@ def main():
   require(U.SetProcessWindowStation(old_station));require(U.SetThreadDesktop(old_desktop))
   record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
   record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation']
-  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used);record['ownerKeyboardMouseOrForegroundControlUsed']=False
+  record['remotePickerFocusUsed']=any(json.loads(path.read_text(encoding='utf8')).get('focusWithinOwnedRemotePickerUsed',False) for path in out.glob('dialog-reply-*.json'))
+  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'];record['ownerKeyboardMouseOrForegroundControlUsed']=False
   if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
   if not DEDICATED_CI:U.CloseWindowStation(station)
   K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()

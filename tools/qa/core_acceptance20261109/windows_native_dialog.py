@@ -41,7 +41,7 @@ def main():
   assert items.Length<100
   for i in range(items.Length):
    node=items.GetElement(i);nodes.append(node);controls.append({'name':node.CurrentName or '', 'id':node.CurrentAutomationId,'type':kind})
- record={'action':action,'dialog':dialog,'controls':controls,'foregroundOrInputUsed':False}
+ record={'action':action,'dialog':dialog,'controls':controls,'keyboardOrMouseInputUsed':False,'ownerForegroundOrInputUsed':False}
  try:
   if target:
    matches=[i for i,c in enumerate(controls) if c['type']==UIA.UIA_EditControlTypeId and ('file name' in c['name'].lower() or '文件名' in c['name'])]
@@ -65,5 +65,6 @@ def main():
    assert target.is_file(),'Native save did not create the explicit requested output path'
   record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',path=str(target) if target else None)
  except BaseException as error:record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',error=repr(error));raise
- finally:a.reply.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+ finally:
+  staged=a.reply.with_suffix('.json.tmp');staged.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');staged.replace(a.reply)
 if __name__=='__main__':main()

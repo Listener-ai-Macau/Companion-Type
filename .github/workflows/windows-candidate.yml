@@ -13,6 +13,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  core-ui:
+    if: contains(github.event.head_commit.message, '[core-ui]')
+    runs-on: windows-2022
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.15.0
+      - run: npm ci --no-audit --no-fund
+      - name: Check the grouped meeting UI changes
+        run: node tools/qa/core_acceptance20261109/ui_source.cjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: companion-core-ui-${{ github.sha }}
+          path: core-ui-output/
+          retention-days: 7
+          if-no-files-found: warn
   core-audio:
     if: contains(github.event.head_commit.message, '[core-audio]')
     runs-on: windows-2022

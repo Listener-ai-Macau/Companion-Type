@@ -3,6 +3,7 @@ import React from 'react';
 import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {meetingHeadingForDisplay} from '../packages/ui/src/meetingReading';
 import {splitLongMinutesEvidence} from '../packages/ui/src/briefMinutes';
 import {readFileSync} from 'node:fs';
 
@@ -10,6 +11,8 @@ import {readFileSync} from 'node:fs';
 (globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
 (globalThis as any).HTMLElement=class {};
 (globalThis as any).HTMLButtonElement=class extends HTMLElement {};
+assert.equal(meetingHeadingForDisplay('Questions'),'会中问题','A generic question list has no evidence that every question remains unanswered');
+assert.equal(meetingHeadingForDisplay('待解问题'),'待解问题','Explicit authored status remains intact');
 const markdown='> 长会议已按原文顺序处理全部2段。分段原文依据见下文，识别和事实准确性仍需核对。\n\n# 两小时会议\n\nGenerated: now\nDuration: 7200000 ms\nSource: importedTranscript\nMinutes engine: llm_deepseek (final)\n\n## Summary\n- 讨论项目交付\n\n## Decisions\n- 保留原录音\n\n## Action Items\n- 待核对：准备材料 (owner: 小王)\n\n## Questions\n- None captured\n\n## Keywords\n项目\n\n## 分段原文依据\n\n### 第1段\n\n- 小王负责准备材料。\n\n### 第2段\n\n- 我们要保留原录音。\n';
 const enhancedMarkdown='## 全会重点\n\n- 会议重点：项目交付\n\n'+markdown;
 const enhancedSplit=splitLongMinutesEvidence(enhancedMarkdown);
