@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-10T00:24:52+08:00",
+  "arm": "known-reference-activity-headset-diagnostic",
+  "preregisteredBeforeThisArmInference": true,
+  "priorRawFiveInputRun": 42652152343,
+  "modelSha256": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+  "paddingSamples": 2400,
+  "sampleRate": 16000,
+  "referenceActivityConditioning": true,
+  "referenceTextPrompt": false,
+  "modifyOriginalPcm": false,
+  "derivedInput": "Original headset PCM within all own annotated utterances plus150ms each side; outside replaced with exact zero; original full duration retained. All four people, no chosen best cases.",
+  "score": "Same full per-person references, strict original normalization. Report all S/D/I; compare raw/conditioned same person only.",
+  "scope": "Diagnostic estimate with known target activity and a close headset, not automatic activity, source separation, holdout or sale qualification.",
+  "stopDecision": "One fixed construction, no padding/gain/threshold search. Persistent errors with known activity identify remaining ASR/content problems; a gain only proves the importance of target presence, not an automatic solution.",
+  "timingLimits": "TextGrid is not sample-exact clean-source truth; padding is fixed before inference and does not establish SDR/alignment qualification.",
+  "trainingAllowed": false
+}

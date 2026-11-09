@@ -1,0 +1,83 @@
+{
+  "app": {
+    "buildRun": 42612798269,
+    "sourceCommit": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+    "version": "0.1.81",
+    "exeSha256": "338a744ad729c069564d365a81c63c326bccbe16b74717a71ccc1ca59a407c53",
+    "dllSha256": "a5c07a61091f84657272565ac8caa84564eaec04b723e50a8e3b3efedf4936db"
+  },
+  "model": {
+    "at": "2026-11-09T17:19:05+08:00",
+    "state": "EXACT_CURRENT_PUBLIC_PRODUCT_ASR_COMPONENTS_PREPARED",
+    "provider": "local-paraformer-official",
+    "modelSelectionChanged": false,
+    "modelTrainingOrResearchRun": false,
+    "privateAudioOrSettingsIncluded": false,
+    "bundleBytes": 255887706,
+    "bundleSha256": "99b38ce8654c14d3d9163f7de36937f10b74a035ea49ee90512c55932085e626",
+    "files": {
+      "onnxruntime.dll": "8b695444d1a35ed0c8338b8c14438b3be5e0a3b222b88b1e7b4ce8753f135b50",
+      "onnxruntime_providers_shared.dll": "ebc55b0f28e8a79cbf78e810a7f510ba70e75a2dfbcfcc6aca31ab2b8710a59a",
+      "sherpa-onnx-c-api.dll": "94f23cb935c57fb2581c66d65f6602ab5b509d6fc269404296af0336871daba5",
+      "funasr-paraformer-large-zh-2024/model.int8.onnx": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+      "funasr-paraformer-large-zh-2024/tokens.txt": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6"
+    },
+    "readyValue": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+    "cpuAndMemoryLimits": {
+      "pid": 31548,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 134217728,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 11055104,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "privateDraftAsset": 726883034,
+    "draft": true,
+    "sourceAssetsUnchanged": true
+  },
+  "input": {
+    "privateDraftAsset": 728094471,
+    "sha256": "45ac7c250fc05bad5140c0f39475c92b164fb32f880ff9e60971a806ca6a1ab1",
+    "cases": [
+      {
+        "id": "near-N_SPK8013",
+        "wav": "near-N_SPK8013.wav",
+        "sha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+        "seconds": 1551.82
+      },
+      {
+        "id": "near-N_SPK8014",
+        "wav": "near-N_SPK8014.wav",
+        "sha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+        "seconds": 1551.82
+      },
+      {
+        "id": "near-N_SPK8015",
+        "wav": "near-N_SPK8015.wav",
+        "sha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+        "seconds": 1551.82
+      },
+      {
+        "id": "near-N_SPK8016",
+        "wav": "near-N_SPK8016.wav",
+        "sha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+        "seconds": 1551.82
+      },
+      {
+        "id": "far-mic0-common-span",
+        "wav": "far-mic0-common-span.wav",
+        "sha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+        "seconds": 1551.82
+      }
+    ]
+  },
+  "scope": "Existing deployed Paraformer comparator; distinct from pending frozen Qwen arm. Raw public WAV inputs, no references, no training, not sale qualification."
+}

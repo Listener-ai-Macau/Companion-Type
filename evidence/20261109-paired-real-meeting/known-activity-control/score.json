@@ -1,0 +1,198 @@
+{
+  "at": "2026-11-10T00:34:36+08:00",
+  "state": "COMPLETE_KNOWN_ACTIVITY_PRODUCT_DIAGNOSTIC",
+  "meeting": "AliMeeting R8001_M8004",
+  "commonSeconds": 1551.82,
+  "sourceUtterances": 604,
+  "modelSha256": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+  "appSource": "62b702d78b1258a4462d8a1fb7e49b7c0d42c9c9",
+  "testSource": "47297dae29314ee6c2f993aa19a89210bddab82c",
+  "results": [
+    {
+      "id": "near-N_SPK8013",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 4049,
+      "hypothesisCharacters": 4056,
+      "edits": {
+        "replace": 340,
+        "delete": 103,
+        "insert": 110
+      },
+      "totalEdits": 553,
+      "cer": 0.13657693257594467,
+      "elapsedSeconds": 89.91799430000003,
+      "realTimeFactor": 0.057943572257091694,
+      "privatePeakBytes": 353935360,
+      "audioSha256": "fab64f319b4a71dca2030fdf273c3ae763a3995bde72225d7b1c8461c2164748",
+      "outputSha256": "16d616f75b70c26efafd108306558881572d46e04512e68b4cc104064ceb274a",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedViaWaveform": true
+    },
+    {
+      "id": "near-N_SPK8014",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2944,
+      "hypothesisCharacters": 3047,
+      "edits": {
+        "replace": 45,
+        "delete": 31,
+        "insert": 134
+      },
+      "totalEdits": 210,
+      "cer": 0.07133152173913043,
+      "elapsedSeconds": 64.42647830000004,
+      "realTimeFactor": 0.041516721204778936,
+      "privatePeakBytes": 354816000,
+      "audioSha256": "cdefc4455055b626ae7a2222ce1c1c291259a6a68f41fbb157816f25839ffa9f",
+      "outputSha256": "2c93b7a37a025ef39aff7283246d4ab63f88753aef22ccfb45dd53c007798eee",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedViaWaveform": true
+    },
+    {
+      "id": "near-N_SPK8015",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2195,
+      "hypothesisCharacters": 2187,
+      "edits": {
+        "replace": 83,
+        "delete": 36,
+        "insert": 28
+      },
+      "totalEdits": 147,
+      "cer": 0.06697038724373576,
+      "elapsedSeconds": 72.89275750000002,
+      "realTimeFactor": 0.04697243075872203,
+      "privatePeakBytes": 357679104,
+      "audioSha256": "2162094cd51ec9034c13c9d836031d8d3956d38f3aabb403ba4fb54f1fe06d4f",
+      "outputSha256": "d00e250b56ed3cb2a9f887d8387784e566b7bda3594dd38a18156363dd156e1e",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedViaWaveform": true
+    },
+    {
+      "id": "near-N_SPK8016",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 1527,
+      "hypothesisCharacters": 1505,
+      "edits": {
+        "replace": 57,
+        "delete": 42,
+        "insert": 20
+      },
+      "totalEdits": 119,
+      "cer": 0.0779305828421742,
+      "elapsedSeconds": 60.61037879999998,
+      "realTimeFactor": 0.03905760900104392,
+      "privatePeakBytes": 351559680,
+      "audioSha256": "7c0bd7d9507185505bc69553aba4339cf293e5a6218a6f9384000b01314e8aab",
+      "outputSha256": "6f3324288440858cafa6e89c83229f42c44c5f2945843968630b25617c283ba5",
+      "allOriginalDurationSubmitted": true,
+      "referenceActivityPassedViaWaveform": true
+    }
+  ],
+  "nearAggregate": {
+    "metric": "known-headset-source-aggregate-CER-not-diarization",
+    "referenceCharacters": 10715,
+    "edits": {
+      "replace": 525,
+      "delete": 212,
+      "insert": 292
+    },
+    "totalEdits": 1029,
+    "cer": 0.09603359776014932
+  },
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceManifestSha256": "28af572717bd3e86126e9d51b4ce12d3758b6642f197e96fb83f6a59b59d23ba",
+  "rawRunReceiptSha256": "e2b28320f60e9728387fe14b282866e49fb7d6069795b8f7554b17a0ea455e9a",
+  "neuralInferencePerformedByScorer": false,
+  "inferenceUsedReferenceTextOrActivity": true,
+  "knownSourceAssignmentNotAutomaticSpeakers": true,
+  "isolatedSourceTruth": false,
+  "metricComparisonLimits": [
+    "Headsets contain measured real crosstalk: non-target insertions are not automatically hallucinations.",
+    "Far mixed chronological reference has overlap ordering ambiguity; do not directly compare this CER with per-headset aggregate.",
+    "File-level source assignment is known; this is not automatic diarization, cpCER, word alignment, holdout or sale qualification.",
+    "This is deployed Paraformer on Windows, distinct from the frozen Qwen arm pending local RAM recovery."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 38608,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 201326592,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 18477056,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "samePersonRawComparison": [
+    {
+      "id": "near-N_SPK8013",
+      "rawCer": 0.5366757224005927,
+      "knownActivityCer": 0.13657693257594467,
+      "rawEdits": {
+        "replace": 332,
+        "delete": 94,
+        "insert": 1747
+      },
+      "knownActivityEdits": {
+        "replace": 340,
+        "delete": 103,
+        "insert": 110
+      }
+    },
+    {
+      "id": "near-N_SPK8014",
+      "rawCer": 1.421195652173913,
+      "knownActivityCer": 0.07133152173913043,
+      "rawEdits": {
+        "replace": 56,
+        "delete": 26,
+        "insert": 4102
+      },
+      "knownActivityEdits": {
+        "replace": 45,
+        "delete": 31,
+        "insert": 134
+      }
+    },
+    {
+      "id": "near-N_SPK8015",
+      "rawCer": 2.00501138952164,
+      "knownActivityCer": 0.06697038724373576,
+      "rawEdits": {
+        "replace": 121,
+        "delete": 20,
+        "insert": 4260
+      },
+      "knownActivityEdits": {
+        "replace": 83,
+        "delete": 36,
+        "insert": 28
+      }
+    },
+    {
+      "id": "near-N_SPK8016",
+      "rawCer": 2.834970530451866,
+      "knownActivityCer": 0.0779305828421742,
+      "rawEdits": {
+        "replace": 97,
+        "delete": 21,
+        "insert": 4211
+      },
+      "knownActivityEdits": {
+        "replace": 57,
+        "delete": 42,
+        "insert": 20
+      }
+    }
+  ],
+  "notAutomaticSpeakerOrSaleEvidence": true,
+  "constructionProtocolSha256": "0b4c1ea7680dcd85f28efafc79076404ba21e25f8009e813fac5ebe36fba9f43"
+}

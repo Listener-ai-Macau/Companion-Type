@@ -2,6 +2,7 @@ from pathlib import Path
 from datetime import datetime
 import hashlib,json,os,shlex,subprocess,sys,wave,zipfile
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';C=Path(__file__).parent
+assert not (C/'closed-unstarted.json').exists(),'This standalone entry was retired after actual startup/install failures; do not blindly retry it'
 P=Path('E:/CodexData/Companion/.model-cache/paired-real-alimeeting-20261109/mobile-product-baseline');P.mkdir(exist_ok=True)
 A=R/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe';PKG='com.denzic.companion.app';REMOTE='/data/user/0/'+PKG+'/cache/paired-asr-20261109-r1'
 def command(args,**kwargs):
