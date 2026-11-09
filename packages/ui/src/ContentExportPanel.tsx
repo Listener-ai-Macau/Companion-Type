@@ -69,7 +69,7 @@ export function ContentExportPanel(props:Props){
  const disabled=props.blocked||phase!==null;
  const setChecked=(name:'minutes'|'transcript'|'highlights'|'timeline',checked:boolean)=>setSelection(old=>({...old,[name]:checked,...(name==='transcript'&&!checked?{timeline:false}:{})}));
  const subtitles=format==='srt';
- return <details className="ct-result-tools ct-content-export">
+ return <details id="ct-meeting-export" className="ct-result-tools ct-content-export">
    <summary>导出、复制与分享</summary>
    <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
    <fieldset disabled={disabled} style={{border:0,padding:0,margin:0}}>

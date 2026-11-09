@@ -10,6 +10,6 @@ export function splitGeneratedMeetingMetadata(markdown:string):{body:string;meta
  return {body:markdown,metadata:null};
 }
 export function meetingHeadingForDisplay(title:string):string {
- const labels:Record<string,string>={Summary:'会议摘要',Decisions:'讨论结论（需核对）','Action Items':'行动事项',Questions:'待解问题',Keywords:'关键词'};
+ const labels:Record<string,string>={Summary:'会议摘要',Decisions:'讨论结论（需核对）','Action Items':'行动事项',Questions:'会中问题',Keywords:'关键词'};
  return labels[title]||title;
 }

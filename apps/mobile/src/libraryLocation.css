@@ -1,0 +1,16 @@
+.library-location{margin:0 0 20px;padding:15px 16px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
+.library-location-heading{display:flex;align-items:center;gap:10px;min-width:0}
+.library-location-icon{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.library-location-heading>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.library-location-heading>div>span{color:var(--muted);font-size:10px}
+.library-location-heading strong{font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.library-location>p{margin:12px 0 0;color:var(--muted);font-size:11px;line-height:1.8}
+.library-location-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
+.library-location-actions button,.library-location-error button{display:inline-flex;justify-content:center;align-items:center;gap:6px;min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--accent);font:inherit;font-size:11px;line-height:1.6}
+.library-location .library-return-original{background:var(--accent-soft);border-color:transparent;font-weight:600}
+.library-location .library-manage-backups{margin-left:auto}
+.library-location>small{display:block;margin-top:10px;color:var(--muted);font-size:10px;line-height:1.7}
+.library-location-loading{margin:0 0 15px;color:var(--muted);font-size:11px;line-height:1.8}
+.library-location-error{margin:0 0 18px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.library-location-error p{margin:0 0 8px;color:var(--muted);font-size:11px;line-height:1.8}
+.library-location :is(button):focus-visible,.library-location-error button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}

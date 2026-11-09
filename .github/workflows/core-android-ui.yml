@@ -1,0 +1,26 @@
+name: Android core UI integration
+on:
+  push:
+    branches: [work/core-acceptance-android-20261109]
+permissions:
+  contents: read
+jobs:
+  mobile-ui:
+    runs-on: windows-2022
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.15.0
+      - run: npm ci --no-audit --no-fund
+      - run: node node_modules/typescript/bin/tsc --project apps/mobile/tsconfig.json --noEmit
+      - run: node tools/qa/core_acceptance20261109/ui_source.cjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: companion-android-core-ui-${{ github.sha }}
+          path: core-ui-output/
+          retention-days: 7

@@ -1,0 +1,24 @@
+{
+  "state": "ANDROID109_NATIVE_WITH_FRONTEND100_LIBRARY_AND_WINDOWS_MEETING_UI_INTEGRATED_SOURCE",
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+  "phone109Source": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
+  "backend109Source": "608790132701ede93fa24a00b687874cb7e70c6b",
+  "preservedFrontend100Source": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+  "mergedMobileFiles": [
+    "apps/mobile/src/App.tsx",
+    "apps/mobile/src/LibraryBackups.tsx",
+    "apps/mobile/src/LibraryLocation.tsx",
+    "apps/mobile/src/libraryLocation.css",
+    "apps/mobile/src/libraryStatus.ts"
+  ],
+  "sharedMeetingUiFiles": [
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/ContentExportPanel.tsx",
+    "packages/ui/src/meetingReading.ts"
+  ],
+  "native109AarAndVersionUnchanged": true,
+  "installed": false,
+  "phoneTested": false,
+  "newNativeBuild": false,
+  "sameWholeCoreBatch": true
+}
