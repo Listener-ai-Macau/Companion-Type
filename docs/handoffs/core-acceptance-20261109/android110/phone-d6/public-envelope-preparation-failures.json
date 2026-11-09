@@ -1,0 +1,7 @@
+{
+  "stage": "Public test envelope preparation, before ASR inference",
+  "first": "24kbps packets rejected; actual recorder contract is fixed40 bytes/16kbps",
+  "second": "Correct audio packets but END CDB record lacked required 248-byte page alignment",
+  "fix": "Reuse unchanged16kbps Opus packets; align END with protocol FF padding. No product decoder/model edits.",
+  "failedArchivesRetained": true
+}

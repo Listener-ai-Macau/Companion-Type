@@ -1,3 +1,9 @@
+<!-- phone-core-acceptance-20261109-current -->
+## 2026-11-09T21:39:31+08:00 — Android核心真机验收进行中
+
+实际连接d6手机，109→110升级通过，1,740份原应用文件逐字节一致；约993MB原私有资料仅在本机E盘备份，不上传。应用在非主虚拟显示5操作，未占用日用电脑前台、未连板或录音。38分47秒公开M2MET实会经普通系统选择器恢复到新资料库，原库保留；两次测试封装错误分别由生产解码器拒绝，已修准备器、保留失败，不计产品改善。随后真实发现110首次本地转写报local model metadata is missing，推理未开始：冻结AAR与APK均缺少原生后端所需的Java资源。按同一6087901来源恢复未改动metadata.bin/tokens.txt并加打包校验，源码ce81ea0已远端；111远端构建42627157009进行中。本地系统实际低内存，未启动重构建、未关闭其它程序。下一动作：安装可信同签名111，完成同场本地转写、AI整理及文件交付、备份恢复，切回原库；未宣称真机全流程或整机可售。
+<!-- /phone-core-acceptance-20261109-current -->
+
 <!-- frontend-windows078-current -->
 Windows当前（2026-11-09T20:25:01+08:00）：0.1.81已安装，原245份资料hash不变；同一实际公开会议的Word/TXT/PDF/原WAV/MP3主入口复制、真实浏览器附件和Shell落盘、带原音备份恢复通过。源码62b702d7，实际包验证与收件run42616003162，私有草稿备份回读一致。Android110沿原同批候选待真机；模型与硬件原门未因本批通过而降低。
 <!-- /frontend-windows078-current -->
@@ -117,13 +123,20 @@ R2实际完整protected probe 4187.38ms，5秒门本次样本通过；initial ac
 新的原统一就绪弹窗于19:04:16准备，19:07:18 Timeout。它提出的最多[180,10,180,7380]及4小时条件批次只是一份未确认计划，实际授予为空；没有开录、升级、占板或自动重弹，当前板上仍正常773。手机真实ADB列表为空，保留普通手机依赖而非Owner主动block。源码/产物/失败/读取器测试/未确认弹窗都入同一原待办和日志，当前未可售。下次从正常773空闲且板卡已释放。编码6510us>6000仍开放；先修好的读取器在实际发MIC前用?验证新鲜本机报告，停录后读同场缓存再返回正常配置。774/775签名包和5场景读取器验证已准备，原新批次窗口Timeout没有授予任何录音范围；下次Owner明确就绪时运行原统一弹窗续作入口 run_codec774_readback.py --retry-not-ready，未确认不录音。若确认，按弹窗最多[180,10,180,7380]且4小时内的条件批次执行：诊断、真实修复后开停/录中复核、全门过才最终同版本2h，不原样碰运气。普通手机ADB上次列表为空，手机/偶发连接与原block/速度后置不继承关闭。续作，收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\codec774-ready.json。
 
 <!-- core776-unified-actual-encode-admission -->
-2026-11-09T20:10:50+08:00 Owner继续要求处理失败并达到可售，沿原核心候选，不新建目标或零碎任务。19:47–19:50修正读取器批次原弹窗仍Timeout，0START/0升级/未占板；没有把未确认范围继承成同意。随后转为真实开发，源码确认外层RUNNING-only空档门漏过PAUSE/STOP排空与final padding两个实际编码入口，不能据此直接认定6510us峰根因。
+2026-11-09T21:01:22+08:00 Owner继续要求处理失败并达到可售，沿原核心候选，不新建目标或零碎任务。19:47–19:50修正读取器批次原弹窗仍Timeout，0START/0升级/未占板；没有把未确认范围继承成同意。随后转为真实开发，源码确认外层RUNNING-only空档门漏过PAUSE/STOP排空与final padding两个实际编码入口，不能据此直接认定6510us峰根因。
 
 正常776源码b5482668344962832142e097c4f5e8554b6367e3增加可选encode_window端口，由既有pipeline传入平台；完整帧与最终帧在任何状态都走同一DMA/蓝牙空档策略，拒绝时不消耗PCM或改变codec/包计数。首半帧、NOR/时间线工作不被外层门挡住；12ms有界等待、活动PCM>=3块紧急旁路、61.44MHz、Opus/音质/预算保持。旧51f生产核心STOP忽略端口的失败已复现；新9组真实Opus/NOR模型、提取的生产回调DMA/紧急/12ms边界、普通产品控制与旧异常原音恢复通过。普通原音6986B/140包/2780ms，SHA仍EAFFDDEB77518826D0F0588F764B5B61C093EB16063A1BFE1A7C6415A736F0AE。初始链接缺range库和fixture把不编码的flush也要求调用归准备错误，原日志保留E，未算板卡缺陷。
 
 正常构建应用406588B、静态67912B、栈21504B，在412216/69328/21504原预算内；较773增加8B/16B。20:03–20:05正常079签名OTA装好776，总119967ms<=150000、最终85755ms<=100000，联合确认/临时区释放/原目录一致均过，0MIC命令；随后释放板卡。旧774/775从未安装，因正常776已前进不再作为续作入口。
 
-新修复版本集中实板状态：{"at": "2026-11-09T20:09:25+08:00", "pid": 33516, "state": "OWNER_NOT_READY_NO_NEW_RECORDING", "firmwareInstalled": 66776, "newStartCommands": 0, "boardLease": false, "liveRecording": false, "liveReceive": false, "saleQualified": false}；就绪{"at": "2026-11-09T20:09:25+08:00", "ready": false, "firmware": 66776, "newRecordingScopeSeconds": [], "maximumBatchWallSeconds": 14400}；定向通过=False；最终长录通过=False。旧6510us峰实际原因和新版本峰值未凭源码/模型关闭，未将旧769长录或771短录直接继承为776资格。手机真实ADB仍空，正向109为历史。窗口未确认不得录；有具体确认才按10s、180s、前门全过才7380s、4小时条件续作。原block/速度后置不重开，无重启/SWD/抓包。证据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\core776-current.json；下一步正常776/b548已安装、软件回归与OTA通过。读取core776-current和E:/CodexData/Companion/.build-cache/core776-unified-admission/device-chain/progress.json，不重放已经完成的START。原集中就绪窗口未确认时新录音范围为空；Owner下一次就绪，用原入口python recovery-work/accept_core776.py --retry-not-ready在新证据目录续作，复用当前修复，不重编译或重装776，不能运行旧774/775低版本控制器。具体确认后按10秒/3分钟/仅前门全过才7380秒同版本长录；任一失败保留并修源头。普通手机当前ADB为空，偶发获取及新版本最终2h未验就保留；明确block与速度后置不重开。
+新修复版本集中实板状态：{"at": "2026-11-09T20:45:01+08:00", "pid": 5680, "state": "SCOPED776_SHORT_AND_LIVE_RESULTS_SAVED", "firmwareInstalled": 66776, "newStartCommands": 2, "boardLease": false, "liveRecording": false, "liveReceive": false, "saleQualified": false}；就绪{"at": "2026-11-09T20:37:07+08:00", "ready": true, "firmware": 66776, "newRecordingScopeSeconds": [10, 180, 7380], "maximumBatchWallSeconds": 14400}；定向通过=False；最终长录通过=False。旧6510us峰实际原因和新版本峰值未凭源码/模型关闭，未将旧769长录或771短录直接继承为776资格。手机真实ADB仍空，正向109为历史。窗口未确认不得录；有具体确认才按10s、180s、前门全过才7380s、4小时条件续作。原block/速度后置不重开，无重启/SWD/抓包。证据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\core776-current.json；下一步正常776/b548已安装。先读core776-current和E:/CodexData/Companion/.build-cache/core776-unified-admission/active-batch.json的实际终态及short/live/long门；已完成的START不重放。本轮Owner已确认10秒、3分钟、条件最终2小时，原20:37就绪与4小时期限不延期；实际失败保留并修源头，未用范围仅在原授权条件仍适用时续作。普通手机ADB为空、偶发首次获取仍保留；明确block与速度后置不重开，不运行旧774/775低版本入口。
+
+<!-- codec777-after-actual776-peak6239 -->
+2026-11-09T21:06:03+08:00 继续Owner“为啥呢, 继续很多东西做完才行啊”原完整候选。本轮20:37原统一窗口明确确认[10,180,7380]/4h；首次发现失败发生在任何START前，Owner随后一次短按，复用尚未使用的同一授权与原期限继续，无升级/复位/UART/SWD。实际新381短录10050ms：首PCM328ms、STOP171ms、编码P954500/峰5244us、PDM峰2573us、完整音频/WAV误差0及其余门过。新382录183360ms、录中真实收到封口段、完整原件/CRC/SHA/同场/回收/零故障/服务上界/栈/61.44MHz过；编码P954500us、峰6239us>6000失败，PDM峰2884us过。没有启动最终2h，也没有凭6510→6239的跨样本差异宣称根因已修。
+
+原定向读取器漏纳入5s完整冷目录门，已保留原报告，从同一次冻结普通日志读出3945.494ms（含尝试/清理），新增对应gate并补后续入口，不重复录音；不能将单次正常获取叫偶发失败已修。777同帧线程/IRQ/空档/实际编码状态观察和正常778签名包已准备，源仍b548；观察418068B/68648B/21504B仅工程用，正常返回406588B/67912B/21504B在原预算，没有新算法或放宽质量。修好的查询器MIC前验证新鲜UID/版本完整回复，停录后主动读同场缓存。20:50:49–20:53:51追加范围原窗口Timeout，0START/0升级/未占板；故777/778都未装，板上仍正常776。
+
+手机新状态：实读授权d6bd213d为0.1.110且已解锁，安装时间20:46:38；共享前端收据20:46:53核其APK/原1740文件一致，UI验收在独立display5/PID25775进行，本侧只读版本/状态，没有切其UI、占用或降级。先前手机缺席已恢复；设备链仍待同一前端现场交回。当前实物/编码依赖、失败和已过范围均保留，未可售。下一步先读codec777-ready.json及实际776短录/三分钟原件：编码6239us>6000仍失败，不以PDM/原音通过关闭。追加定位范围未确认、777/778未安装；Owner就绪后复用现有包与原统一窗口入口 C:/Users/Billy/Documents/Codex/2026-11-03/companion-firmware-66662-luna/recovery-work/run_codec777_observation.py --retry-not-ready，短按打开连接窗口后一次执行同帧线程/IRQ/状态/空档原因读取，再返回正常配置。拿到可区分原因的证据后修源头；实际新修复定向全过才做当前同版本最终2h。普通手机实读110，前端完整会议验收在途，待其现场交回再接设备链，不降级或占用其UI。旧block和速度后置不重开。；收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\codec777-ready.json。
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。

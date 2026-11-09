@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-09T21:20:03+08:00",
+  "startedUnix": 1794230403.523565,
+  "sourceMeeting": "S_R004S03C01",
+  "sourceScope": "Actual public audio encoded to COP1, restored through ordinary UI; not board capture",
+  "provider": "Existing product local phone transcription",
+  "modelSelectionChanged": false,
+  "scope": "Functional native phone pipeline; no model tuning or training",
+  "result": "REJECTED_BEFORE_INFERENCE_WRONG_TEST_ENVELOPE_PACKET_SIZE",
+  "error": "schema4 requires fixed40-byte Opus packets, first fixture used60",
+  "productOrModelChanged": false
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-09T20:46:21+08:00",
+  "pid": 28264,
+  "processCreatedAt": 1794228381.2437115,
+  "beforePrimaryFingerprint": "b806c16db3d0fc9deb4c509c1d512ef713d60eb3e12defc23b1d90c20535bb32",
+  "audioForwarding": false,
+  "clipboardForwarding": false,
+  "physicalInputForwarding": false,
+  "recordingVideo": false,
+  "videoSink": "Windows NUL; virtual-display frames discarded, not saved; no physical display capture",
+  "displayId": 5,
+  "afterPrimaryFingerprint": "b806c16db3d0fc9deb4c509c1d512ef713d60eb3e12defc23b1d90c20535bb32",
+  "primaryUnchanged": true,
+  "displayIdParser": "Explicit scrcpy (id=N), verified against actual dumpsys display"
+}

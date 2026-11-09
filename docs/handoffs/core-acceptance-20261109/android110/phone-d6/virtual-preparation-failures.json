@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-09T20:48:04+08:00",
+  "stage": "Virtual display preparation only",
+  "firstFailure": "No video sink with --no-window disables virtual video; child exited before display creation. Retained first log.",
+  "secondFailure": "Old generic numeric parser read 360 dpi as display ID; Android rejected start on absent display360; own app remained stopped.",
+  "actualDisplay": 5,
+  "fix": "Reuse the same live scrcpy process, parse explicit id=5; no physical display input or new display created"
+}
