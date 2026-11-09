@@ -152,7 +152,9 @@ def main():
       folder=argument.split('=',1)[1].strip('"');handle=require(K.OpenProcess(0x1000,False,child.pid))
       try:in_job=w.BOOL();require(K.IsProcessInJob(handle,job,ctypes.byref(in_job)))
       finally:K.CloseHandle(handle)
-      profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve()==(root/'webview').resolve(),'belongsToBoundedJob':bool(in_job.value),'cdpListener':child.pid in listeners})
+      # The hosted WebView2 runtime creates EBWebView beneath the requested
+      # data folder; both exact layouts are private to this owned test run.
+      profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve() in {(root/'webview').resolve(),(root/'webview/EBWebView').resolve()},'belongsToBoundedJob':bool(in_job.value),'cdpListener':child.pid in listeners})
    except psutil.NoSuchProcess:continue
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
