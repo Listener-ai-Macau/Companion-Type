@@ -1,0 +1,801 @@
+{
+  "meeting": "L_R003S01C02",
+  "source": {
+    "meeting": "L_R003S01C02",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "audioSeconds": 2362.945
+  },
+  "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+  "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "profiles": [
+    {
+      "id": "native-4-0",
+      "nativePerson": "4",
+      "start": 23.64,
+      "end": 31.6399375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-0.wav",
+      "audioSha256": "8bc2d207bf4ca0a6b379d61cbd0ae922f55cb2b5078816898ad630ab5e1f80b8"
+    },
+    {
+      "id": "native-4-1",
+      "nativePerson": "4",
+      "start": 67.49,
+      "end": 75.4899375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-1.wav",
+      "audioSha256": "c05b2083e53a3bd26bb31b0a07774a8aaba4a86f806870082dfcdfebe35ba5cb"
+    },
+    {
+      "id": "native-2-0",
+      "nativePerson": "2",
+      "start": 108.31,
+      "end": 116.3099375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-0.wav",
+      "audioSha256": "33f5f5d29c9140fd1d400869dcfd0a26af5734711754ffb48a2a95681ed3bd56"
+    },
+    {
+      "id": "native-2-1",
+      "nativePerson": "2",
+      "start": 146.54,
+      "end": 152.4899375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-1.wav",
+      "audioSha256": "3b91609b2787d5258d88c1a72bece4a6c6df308c35a63a00528b1f0f41336068"
+    },
+    {
+      "id": "native-2-2",
+      "nativePerson": "2",
+      "start": 182.06,
+      "end": 189.9699375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-2-2.wav",
+      "audioSha256": "089465ef633ee3d3b9ab8ea551ed2eadd559bf420d080a0517b104367397a9bc"
+    },
+    {
+      "id": "native-4-2",
+      "nativePerson": "4",
+      "start": 195.54,
+      "end": 203.5399375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-4-2.wav",
+      "audioSha256": "76c0e6213eb43ea0bb08ee77787b6d480f58494ccc80aef9d23e4fbf350032b8"
+    },
+    {
+      "id": "native-5-0",
+      "nativePerson": "5",
+      "start": 217.8,
+      "end": 221.8299375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-0.wav",
+      "audioSha256": "51312337585f4faf60d416c04bacb7e8c3d70ff54c3258d4993b1b64eb9e0ee5"
+    },
+    {
+      "id": "native-5-1",
+      "nativePerson": "5",
+      "start": 252.74,
+      "end": 260.7399375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-1.wav",
+      "audioSha256": "767a1f01eb213777d1e1843f177943d9a8eedf1b4f16620b89a8f2f105206a32"
+    },
+    {
+      "id": "native-5-2",
+      "nativePerson": "5",
+      "start": 292.9,
+      "end": 297.3799375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-5-2.wav",
+      "audioSha256": "555cc1e274157768e20eddd31495f923fe90fc50f44be752d561c850ae127ac3"
+    },
+    {
+      "id": "native-1-0",
+      "nativePerson": "1",
+      "start": 343.43,
+      "end": 351.4299375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-0.wav",
+      "audioSha256": "33c5bdefe26ec8498e4b6307b393474f7cfff2c308d40d2da044c60fde96dab9"
+    },
+    {
+      "id": "native-1-1",
+      "nativePerson": "1",
+      "start": 373.87,
+      "end": 376.2899375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-1.wav",
+      "audioSha256": "887ebac12b22333daa9015dba4818e665661807411aede9bc338313c41d6ac3e"
+    },
+    {
+      "id": "native-1-2",
+      "nativePerson": "1",
+      "start": 423.88,
+      "end": 431.8799375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-1-2.wav",
+      "audioSha256": "9adaea3c42b8ea380a2b0a24b8df6a070c2524d6c0d2f2fabdf7d8fccf388b2b"
+    },
+    {
+      "id": "native-3-0",
+      "nativePerson": "3",
+      "start": 799.57,
+      "end": 807.5699375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-3-0.wav",
+      "audioSha256": "3635cc135dc5bdb57e53b61882d4f21d47d2c1a6f623fc952c8caf80c97d5ed6"
+    },
+    {
+      "id": "native-0-0",
+      "nativePerson": "0",
+      "start": 932.76,
+      "end": 935.0999375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-0.wav",
+      "audioSha256": "839637ec75b0b82f3ee2f2544ad6f6939f3e521f6e8bd97f6b6094ab03118704"
+    },
+    {
+      "id": "native-3-1",
+      "nativePerson": "3",
+      "start": 955.4,
+      "end": 958.1699375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-3-1.wav",
+      "audioSha256": "90db7dd476a473d53571eee5adf81befc1ec9bf3b78d9fd5de10982bc87c56d8"
+    },
+    {
+      "id": "native-0-1",
+      "nativePerson": "0",
+      "start": 1889.61,
+      "end": 1897.6099375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-1.wav",
+      "audioSha256": "d3c9bc81f89cb616640387d1c7959aa842b6bb5de939ca10d9774eab63f6fc08"
+    },
+    {
+      "id": "native-0-2",
+      "nativePerson": "0",
+      "start": 1920.19,
+      "end": 1927.6099375,
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\automatic-profiles-20261109\\native-0-2.wav",
+      "audioSha256": "182f4a40888e73af7e2d8475c80a61378313e100b28eb5058d45375abd62552e"
+    }
+  ],
+  "queries": [
+    {
+      "id": "query-0000",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0000.wav",
+      "audioSha256": "f76bd3b70ea4990f94d42d498d58fb1fa0c4c8dda5525b9e5ab791e2fb9d919b",
+      "start": 315.57,
+      "end": 319.57
+    },
+    {
+      "id": "query-0001",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0001.wav",
+      "audioSha256": "5ecf1cb9b0caafdffd1d022e58d57b72c576d30265d5b74d8b1d1577802a3dbe",
+      "start": 391.99,
+      "end": 395.4399375
+    },
+    {
+      "id": "query-0002",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0002.wav",
+      "audioSha256": "0a10f37bfa76fcd0584c447548f894c82a2508893b7f10edeca6e3dd9ac6ce63",
+      "start": 451.17,
+      "end": 455.17
+    },
+    {
+      "id": "query-0003",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0003.wav",
+      "audioSha256": "49408cace6dc3b2dde819cd946410425166a76a5c613babf50a567e79a10f7d2",
+      "start": 471.69,
+      "end": 474.5399375
+    },
+    {
+      "id": "query-0004",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0004.wav",
+      "audioSha256": "4a5a6e6dbd57c486b3148459ae936e716ade8bbe8b26f7c068b84c0003a09d98",
+      "start": 475.91,
+      "end": 479.91
+    },
+    {
+      "id": "query-0005",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0005.wav",
+      "audioSha256": "106671d0be45e897687cb8e0eb06759d103728cfb9f7f950000aa053b93070a5",
+      "start": 490.18,
+      "end": 492.9199375
+    },
+    {
+      "id": "query-0006",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0006.wav",
+      "audioSha256": "9cbc948b6acd7743a122a97718472a0511330f310374d74e3780de9a18124887",
+      "start": 499.17,
+      "end": 501.5599375
+    },
+    {
+      "id": "query-0007",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0007.wav",
+      "audioSha256": "75a71c0ca060392cdfe3c6265d05d0f2862de2f5fe13c61e27434dd0cd84eef6",
+      "start": 508.52,
+      "end": 512.52
+    },
+    {
+      "id": "query-0008",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0008.wav",
+      "audioSha256": "a7245e25723037bbc73b717048552d868c9e129b76ec9559f2c19e1a97ea0f10",
+      "start": 530.14,
+      "end": 534.1399375
+    },
+    {
+      "id": "query-0009",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0009.wav",
+      "audioSha256": "9a7683acbd87ab56dc9f2a1e332b4d79a7d5e075149828b6ab36e753e13335cd",
+      "start": 550.94,
+      "end": 553.8799375
+    },
+    {
+      "id": "query-0010",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0010.wav",
+      "audioSha256": "04237d2ed8a7389f77a5a166d86e07c323a68dba144e3a66728e9f1a060b4435",
+      "start": 572.84,
+      "end": 576.84
+    },
+    {
+      "id": "query-0011",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0011.wav",
+      "audioSha256": "620a97bca886e3552c02ab15dd616216510082408baead0f34128ee757643e1a",
+      "start": 590.06,
+      "end": 594.06
+    },
+    {
+      "id": "query-0012",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0012.wav",
+      "audioSha256": "5ff7cb1f85379976deff869be67da3d2313275add60f3a6e6b1cfd25bd558409",
+      "start": 610.13,
+      "end": 612.8499375
+    },
+    {
+      "id": "query-0013",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0013.wav",
+      "audioSha256": "e4b53c7f9fbd357d6a7e06ddbf5966f07c1f8d4326acc6ee2ee14e73f94d2471",
+      "start": 626.42,
+      "end": 630.42
+    },
+    {
+      "id": "query-0014",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0014.wav",
+      "audioSha256": "7219d5e2a0334f4c815fa54de04a0170bb2dc71e03b7342777f7cc31a8849cda",
+      "start": 653.59,
+      "end": 654.7799375
+    },
+    {
+      "id": "query-0015",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0015.wav",
+      "audioSha256": "6ddf20dff984a8bb72659e6c2aefb273ce1f399683b41162962c31c4e53985ec",
+      "start": 672.35,
+      "end": 675.7999375
+    },
+    {
+      "id": "query-0016",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0016.wav",
+      "audioSha256": "dd2353fd5039334d84fcde0d1f060411ccd6fc7261d2e23c2aef542798c42a7d",
+      "start": 696.25,
+      "end": 699.5699375
+    },
+    {
+      "id": "query-0017",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0017.wav",
+      "audioSha256": "bbefecd41a57b4720dc074b3945e2803789ca185c53b28d6cc37cf9cf732b6ff",
+      "start": 714.46,
+      "end": 718.46
+    },
+    {
+      "id": "query-0018",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0018.wav",
+      "audioSha256": "66b94761f5b83ba6902e4aaa5b56ea037b4cc51cfe582df521f1cb872c4cba73",
+      "start": 729.67,
+      "end": 733.67
+    },
+    {
+      "id": "query-0019",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0019.wav",
+      "audioSha256": "18abaca7885789474122eed16dd510ecd4d1c680e701f5dc4708eae318f208e3",
+      "start": 738.21,
+      "end": 742.21
+    },
+    {
+      "id": "query-0020",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0020.wav",
+      "audioSha256": "044f8607426ed3ccc842c29e1eb5f7e9c0b108f2fad806d387bd88998ce39b14",
+      "start": 764.58,
+      "end": 768.58
+    },
+    {
+      "id": "query-0021",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0021.wav",
+      "audioSha256": "d4888b2a8c1bed1452f536b5b32894d2dd7787824c297a25a38320a467034ea7",
+      "start": 824.42,
+      "end": 825.7199375
+    },
+    {
+      "id": "query-0022",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0022.wav",
+      "audioSha256": "7b24f3a861ae8b282197c1567e80b963b2f949b39e65a45a47c1c4994f600aed",
+      "start": 837.11,
+      "end": 839.9499375
+    },
+    {
+      "id": "query-0023",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0023.wav",
+      "audioSha256": "fb39cc32a019a195ce2eab3b052ef3b27d603fab60f0ff62dcd59ff474ce01b3",
+      "start": 843.64,
+      "end": 844.9099375
+    },
+    {
+      "id": "query-0024",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0024.wav",
+      "audioSha256": "19e4ab8907d6e8edf689bb72e874405fc1f879ad190ae359b5466e6a0c20b794",
+      "start": 845.38,
+      "end": 848.3099375
+    },
+    {
+      "id": "query-0025",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0025.wav",
+      "audioSha256": "47a09e28803335ebdaae99c16be13a1d2efd405ca42189cbd70b28dca14d8eeb",
+      "start": 856.6,
+      "end": 858.4799375
+    },
+    {
+      "id": "query-0026",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0026.wav",
+      "audioSha256": "c7b3c4fbbc0575ccfe403c35235770dd2c0aadfdaeb654e5ce12cb9d4dc57906",
+      "start": 859.46,
+      "end": 861.6599375
+    },
+    {
+      "id": "query-0027",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0027.wav",
+      "audioSha256": "59dc33307567398e702b61b112ce470c44038dfe0612d284eb3aebe23b0a4c5b",
+      "start": 869.17,
+      "end": 870.1899375
+    },
+    {
+      "id": "query-0028",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0028.wav",
+      "audioSha256": "6bdad9dfb1bdf6ea9efd4fafc855664f1f7563945e9481134d12fb30721c31ed",
+      "start": 880.58,
+      "end": 884.58
+    },
+    {
+      "id": "query-0029",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0029.wav",
+      "audioSha256": "2eeca8b04fb6357f33dd6ac045b560e4fa1897feac80e02c08b344da0d283722",
+      "start": 897.8,
+      "end": 900.7299375
+    },
+    {
+      "id": "query-0030",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0030.wav",
+      "audioSha256": "85322b8b82651b37b3c932bea862d99d09df35f536dde9e0c0c612b8d43ff11b",
+      "start": 907.96,
+      "end": 909.4299375
+    },
+    {
+      "id": "query-0031",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0031.wav",
+      "audioSha256": "049811803b611a13beeea997bb3adb37cd16f95ecb62896d96ee280fe96de3ee",
+      "start": 1008.17,
+      "end": 1010.9599375
+    },
+    {
+      "id": "query-0032",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0032.wav",
+      "audioSha256": "3dabcf6ea5288939b9010fee17b3d310dc0587c9abfbf14372f5ef4494f55ba8",
+      "start": 1026.63,
+      "end": 1028.0699375
+    },
+    {
+      "id": "query-0033",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0033.wav",
+      "audioSha256": "a4f77c7f0af9405aa1aaf41c67dd2b1f8cddc8f0acb7a53efd070db24fafdfca",
+      "start": 1039.64,
+      "end": 1043.64
+    },
+    {
+      "id": "query-0034",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0034.wav",
+      "audioSha256": "d9fa3c5d514124ae2ba25560c27bdcde60328fff45eb3c4e51f309f77b913eb5",
+      "start": 1057.56,
+      "end": 1060.5199375
+    },
+    {
+      "id": "query-0035",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0035.wav",
+      "audioSha256": "eb5702a2b77da84f49f05102163e37b94ece0663a9e4a0c13e9c5941eca53539",
+      "start": 1062.99,
+      "end": 1065.5299375
+    },
+    {
+      "id": "query-0036",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0036.wav",
+      "audioSha256": "2d6e4011eb86ae1ad5c11e8262192a16d4e57d0d42b1f43a4859babfe5b2005e",
+      "start": 1087.13,
+      "end": 1091.13
+    },
+    {
+      "id": "query-0037",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0037.wav",
+      "audioSha256": "b2b5434e239afbaf7949567d08e7db85327d6b71b50c66d575fb86c570091bf9",
+      "start": 1099.65,
+      "end": 1101.6799375
+    },
+    {
+      "id": "query-0038",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0038.wav",
+      "audioSha256": "12b6d7f4726a9656bb14a0c0463f340a7646999215314d0b21f255be06844225",
+      "start": 1102.23,
+      "end": 1106.23
+    },
+    {
+      "id": "query-0039",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0039.wav",
+      "audioSha256": "9ad2842ca917c6b400b2eff31dd7796cd813f5b5f031a3ef75caea6aac612fbe",
+      "start": 1131.86,
+      "end": 1135.2699375
+    },
+    {
+      "id": "query-0040",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0040.wav",
+      "audioSha256": "096bd11a694a6f14404be5bc6383479e7a6634dbf75e44876f71a85d2d5354a5",
+      "start": 1150.37,
+      "end": 1152.8699375
+    },
+    {
+      "id": "query-0041",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0041.wav",
+      "audioSha256": "02b770c1aecee16771fda0c65808c7d591db50f963bfd9c52df5bfbb954e39f2",
+      "start": 1166.04,
+      "end": 1170.04
+    },
+    {
+      "id": "query-0042",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0042.wav",
+      "audioSha256": "39f899b5d0222d873dd7731887450f7f07c52885511f18375aca1082c547ef2e",
+      "start": 1183.93,
+      "end": 1187.8399375
+    },
+    {
+      "id": "query-0043",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0043.wav",
+      "audioSha256": "8932ad59d938a2c3c7f191e28ed49f1a3f58b0f0253cbb30ec1f994c38fd211d",
+      "start": 1202.29,
+      "end": 1206.29
+    },
+    {
+      "id": "query-0044",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0044.wav",
+      "audioSha256": "fbb26743ca5c3e3a5801ea8a6dbc7a2037ab0cf98eacbbb4f1f7a63b0a4e86c2",
+      "start": 1235.17,
+      "end": 1239.17
+    },
+    {
+      "id": "query-0045",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0045.wav",
+      "audioSha256": "0faca079bf3288180c0dcb1c8b1471c840972db13d6c52f40db164eb494c15b3",
+      "start": 1245.0,
+      "end": 1249.0
+    },
+    {
+      "id": "query-0046",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0046.wav",
+      "audioSha256": "86e1e1833144d52d9dfd06f41282c4ad53bfea633e15b73c05dca3099894f161",
+      "start": 1276.1,
+      "end": 1278.1999375
+    },
+    {
+      "id": "query-0047",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0047.wav",
+      "audioSha256": "fead8cfec4914fd5bbe0ac7932a8d6e05dca2b88b0e8ecbaf7e9b9220945801a",
+      "start": 1287.6,
+      "end": 1291.6
+    },
+    {
+      "id": "query-0048",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0048.wav",
+      "audioSha256": "fc2756f0a631de9aacdda985a549d6f801c312eb346fdb2bed67fd7bcd857062",
+      "start": 1304.89,
+      "end": 1306.5199375
+    },
+    {
+      "id": "query-0049",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0049.wav",
+      "audioSha256": "d6cdd8d0e12334c92c137d8fb1b52fd676e668834f2e3894dc8b443d1f809029",
+      "start": 1330.6,
+      "end": 1331.6599375
+    },
+    {
+      "id": "query-0050",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0050.wav",
+      "audioSha256": "d29e8dba6f8e5acdf585c20700cead13da4c42f5b99d47d9b91de02b997e6b7b",
+      "start": 1332.19,
+      "end": 1336.19
+    },
+    {
+      "id": "query-0051",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0051.wav",
+      "audioSha256": "e9d4242d92e6e2d888ed8d81d32ef4fd0fd1216f5a6a01c3250634297e777b27",
+      "start": 1354.68,
+      "end": 1358.68
+    },
+    {
+      "id": "query-0052",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0052.wav",
+      "audioSha256": "842cb75a0cf11589d85b46324ee8b10bd91a4e09960d22df5f6b47af8d6e0f65",
+      "start": 1372.39,
+      "end": 1375.9699375
+    },
+    {
+      "id": "query-0053",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0053.wav",
+      "audioSha256": "d88c16629a01ea376223a27657d3d70ba9bea56361b876297459e08e9d31a459",
+      "start": 1392.59,
+      "end": 1396.59
+    },
+    {
+      "id": "query-0054",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0054.wav",
+      "audioSha256": "8fb0f92ca7f0b6d795476ab109ae69b58215d9a5cf9857fcde698ebde0b2bf5f",
+      "start": 1428.49,
+      "end": 1432.49
+    },
+    {
+      "id": "query-0055",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0055.wav",
+      "audioSha256": "3ff809269e54cad337ad13e6eda1eb4f75aa3046b1e0e350ef373140e5f5a4d5",
+      "start": 1447.72,
+      "end": 1451.72
+    },
+    {
+      "id": "query-0056",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0056.wav",
+      "audioSha256": "6cba163ef2d875527ad04e84abee4bd936492cf29cf4812ba3b2ee467d1f9f98",
+      "start": 1460.38,
+      "end": 1462.7299375
+    },
+    {
+      "id": "query-0057",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0057.wav",
+      "audioSha256": "10b5063a31b76fb0e69109c86295cc6cc5a29d0c73b57bd9f628bf5984819391",
+      "start": 1476.25,
+      "end": 1478.3299375
+    },
+    {
+      "id": "query-0058",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0058.wav",
+      "audioSha256": "67297d6a32ea71fa99002c0fc5ee52f69cc9f1014203371394e9bc6e540bbe28",
+      "start": 1495.96,
+      "end": 1498.8899375
+    },
+    {
+      "id": "query-0059",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0059.wav",
+      "audioSha256": "8f22965d72d223218c9352f938baec0ad4f80539bffd4c012929f819b25b0499",
+      "start": 1524.56,
+      "end": 1526.9499375
+    },
+    {
+      "id": "query-0060",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0060.wav",
+      "audioSha256": "5dc7a4ddd53f380eaaa34adcf54dbd2ebbd20a5f57ec2c8bb6ac8dcf9526d58b",
+      "start": 1543.91,
+      "end": 1545.3699375
+    },
+    {
+      "id": "query-0061",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0061.wav",
+      "audioSha256": "5fb400001780ec5d6dd29fb253eddd83bcd916d596f32db6822b890134fb4714",
+      "start": 1864.93,
+      "end": 1867.6099375
+    },
+    {
+      "id": "query-0062",
+      "nativePerson": "2",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0062.wav",
+      "audioSha256": "6f86922f23b46aad420acda1d96f7bc7c9a26ef530c5be3b7b7abc6ca8cb0281",
+      "start": 1869.45,
+      "end": 1870.6099375
+    },
+    {
+      "id": "query-0063",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0063.wav",
+      "audioSha256": "94a245cce234ec1f2bc2767063e58aebff4a342f4b6c7dc9e08fc62a7f573e45",
+      "start": 1962.18,
+      "end": 1966.0999375
+    },
+    {
+      "id": "query-0064",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0064.wav",
+      "audioSha256": "2a684c058846705dfb8eb3ec01f6cf05fa6f6de7092b95e76ef21338d8cf8350",
+      "start": 1982.48,
+      "end": 1986.48
+    },
+    {
+      "id": "query-0065",
+      "nativePerson": "1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0065.wav",
+      "audioSha256": "504c1ce39073b012e6d37d9f187f829d841ae24e0d94a5e9737f31999d44107f",
+      "start": 1988.9,
+      "end": 1992.9
+    },
+    {
+      "id": "query-0066",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0066.wav",
+      "audioSha256": "8c91e9b21400661630a70130f0e77b8d55c2b8cea8edf30bd1c962852fe5d474",
+      "start": 1999.04,
+      "end": 2000.6199375
+    },
+    {
+      "id": "query-0067",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0067.wav",
+      "audioSha256": "1af97eed2f8143c111d3fc84484a55bfcdec00e5027a23d25b113056056a332f",
+      "start": 2015.99,
+      "end": 2019.99
+    },
+    {
+      "id": "query-0068",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0068.wav",
+      "audioSha256": "ab1cf462d4b9dd20e334cb7fa0dc0b33b16f13f2becf814c2581c5b2afa046f9",
+      "start": 2034.62,
+      "end": 2038.62
+    },
+    {
+      "id": "query-0069",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0069.wav",
+      "audioSha256": "19be839e8a291e7b328b09ae1302bd17a21913b111ca5df0d43dc5e81942743e",
+      "start": 2055.59,
+      "end": 2059.59
+    },
+    {
+      "id": "query-0070",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0070.wav",
+      "audioSha256": "4121b8cf86ef58ab884c74bad50fea3afa0af5e369b75c220c830fd0eb13843e",
+      "start": 2064.63,
+      "end": 2068.1499375
+    },
+    {
+      "id": "query-0071",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0071.wav",
+      "audioSha256": "5ef63f0a305895b9821f8e4b690c4b2a16db0826fe7ccede74380d3042f4d9b8",
+      "start": 2083.55,
+      "end": 2084.8199375
+    },
+    {
+      "id": "query-0072",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0072.wav",
+      "audioSha256": "7c15d90f5562e72fa4c7a6e0bf77633b25f655230065fdfe0ab2646a81ac4882",
+      "start": 2107.3,
+      "end": 2111.3
+    },
+    {
+      "id": "query-0073",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0073.wav",
+      "audioSha256": "f8327edda2324a0e31ae6e997fd09a5d4ae3091f4faeaa55460c95a7c69edf37",
+      "start": 2122.89,
+      "end": 2126.89
+    },
+    {
+      "id": "query-0074",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0074.wav",
+      "audioSha256": "c1a6e43e643cb89175cde79a52874c006edf118469175d81a56b52e257d504c9",
+      "start": 2139.66,
+      "end": 2143.66
+    },
+    {
+      "id": "query-0075",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0075.wav",
+      "audioSha256": "c7ed3aa51790bb98c251260b70c92fedca96f4f35b73c4cfe7d40e86dd2b8542",
+      "start": 2157.06,
+      "end": 2158.8199375
+    },
+    {
+      "id": "query-0076",
+      "nativePerson": "5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0076.wav",
+      "audioSha256": "c7670048f7f11f90d47d76bc7977b58d823d799503e4011c7315b2b83bfe2fd6",
+      "start": 2170.01,
+      "end": 2174.01
+    },
+    {
+      "id": "query-0077",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0077.wav",
+      "audioSha256": "41c8f6e1837aaa6e0fdbadfbdbbd5c713680ab9595a9dfe081efbea700f09330",
+      "start": 2179.81,
+      "end": 2183.81
+    },
+    {
+      "id": "query-0078",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0078.wav",
+      "audioSha256": "c4703376a3c29c68edc52c68bc7867d468b5a5779dbea0a464a7fc41ed24b0cd",
+      "start": 2197.66,
+      "end": 2200.3599375
+    },
+    {
+      "id": "query-0079",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0079.wav",
+      "audioSha256": "7c79450305c4a254ddfef837064bf26198fffc0bb1c3bf2badc6f0938de77e83",
+      "start": 2227.77,
+      "end": 2231.77
+    },
+    {
+      "id": "query-0080",
+      "nativePerson": "4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\cross-meeting-r2\\L_R003S01C02\\query-0080.wav",
+      "audioSha256": "fe29812439933c5eee563185b85f410caba2c92bd9f96dee34b298429d2b3203",
+      "start": 2246.09,
+      "end": 2247.1299375
+    }
+  ],
+  "answersReadDuringSelection": false,
+  "previousL22QueryAudioExcluded": true
+}

@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-09T09:00:56+08:00",
+  "policy": "For both same complete development meetings, use frozen powerset7 argmax local2voice count from existing neuralcache, published rounded crosswindowmean, no new threshold or min-duration/padding rule. Union with existing native8 positiveoverlap in routeplan. If localdetector flags overlap but journal supplies<2 identities, explicit identity_pending; never invent a person. Preserve rawaudio/text, no default replacement.",
+  "whyDifferent": "Prior complete diarization pipeline additionally required embeddings, globalclustering and assignedspeakerlabels. This candidate uses only independent acoustic localvoicecount to find overlap that native8journal omitted; no need re-run/checkpoint shopping.",
+  "reportBeforeDecision": "Fullsame-source overlap recall/precision, new ordinary falseoverlap seconds, coverage by2/3voices, preservedallsourceframes. No thresholdfit afterresult. Must not promote if contentprotection unresolved.",
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_overlap_regions_20261109.py",
+      "sha256": "720d95661d76a21a881ffd794847f3e26ea83c10dfa9fcfec7fff45893844b3e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_meeting_route_plan_20261109.py",
+      "sha256": "51423353e1d3d4d1c0e054289bcac3bff293f4bb7522028fe6d34bb43ac5de55"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\bounded_speaker_20261107.py",
+      "sha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_cached_overlap_candidate_20261109.py",
+      "sha256": "d47520bcae37504b8578cdf8820e6c27cc8b80424149cdebb064937cc68b1505"
+    }
+  ],
+  "cachedModelProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\protocol.json",
+  "cachedModelProtocolSha256": "c8594b528da76d5963840ca12117de9208106c041ebad1d093bf06da91364b3f",
+  "newNeuralCalls": 0,
+  "newTrainingOrDownloads": false,
+  "saleQualified": false
+}

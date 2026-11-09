@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-09T08:56:49+08:00",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "trueOverlapSeconds": 0,
+      "predictedOverlapSeconds": 2.9499999340623617,
+      "overlapDetectionRecall": null,
+      "overlapDetectionPrecision": 0.0,
+      "seconds": {
+        "ordinary_or_no_reference": 2324.169000065938,
+        "false_overlap_solo": 2.9499999340623617
+      },
+      "missedOverlapByReferencePeople": {}
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "audioSeconds": 2362.945,
+      "trueOverlapSeconds": 188.3593880675116,
+      "predictedOverlapSeconds": 178.61999600753188,
+      "overlapDetectionRecall": 0.6611406030589083,
+      "overlapDetectionPrecision": 0.6971898007069175,
+      "seconds": {
+        "ordinary_or_no_reference": 2120.497655343718,
+        "false_overlap_solo": 53.41965645336027,
+        "false_overlap_no_reference": 0.6683001354100657,
+        "caught_overlap": 124.53203941876154,
+        "missed_overlap": 63.82734864875006
+      },
+      "missedOverlapByReferencePeople": {
+        "2": {
+          "totalSeconds": 179.14177673930828,
+          "caughtSeconds": 118.65305470449908,
+          "missedSeconds": 60.488722034809214
+        },
+        "3": {
+          "totalSeconds": 9.217611328203304,
+          "caughtSeconds": 5.878984714262458,
+          "missedSeconds": 3.3386266139408463
+        }
+      }
+    }
+  ],
+  "scope": "Routing activity diagnostic only, not word recovery or diarization DER. Original fullmeeting references and cached predictions; no new model/threshold/answer-based runtime change.",
+  "criticalConsequence": "A journal-solo region can be genuinely overlapping even if a separate encoder agrees on its loudest identity. Speaker agreement must not be treated as proof of no overlap.",
+  "saleQualified": false
+}

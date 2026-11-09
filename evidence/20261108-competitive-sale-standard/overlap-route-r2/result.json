@@ -1,0 +1,124 @@
+{
+  "at": "2026-11-09T09:07:40+08:00",
+  "state": "COMPLETE_FIXED_CROSS_MEETING_AUTOMATIC_IDENTITY_DIAGNOSTIC",
+  "overall": {
+    "queries": 148,
+    "nativeJournalMatchesDominant": 142,
+    "encoderMatchesDominant": 139,
+    "agreementAccepted": 139,
+    "agreementDominantMismatch": 3,
+    "dominantMatchingJournalLabelsWithheld": 6,
+    "elapsedSeconds": 35.41800530004548,
+    "peakWorkerPrivateBytes": 645574656
+  },
+  "cases": [
+    {
+      "meeting": "S_R004S03C01",
+      "profiles": 15,
+      "profilePureAt95Percent": 15,
+      "profileMatchesExistingNativeMapping": 15,
+      "allSelectedQueries": {
+        "queries": 67,
+        "nativeJournalMatchesDominant": 67,
+        "encoderMatchesDominant": 67,
+        "agreementOnly": {
+          "accepted": 67,
+          "unconfirmed": 0,
+          "acceptedDominantMatch": 67,
+          "acceptedDominantMismatch": 0,
+          "dominantMatchingJournalLabelsWithheld": 0,
+          "coverage": 1.0
+        }
+      },
+      "pureReferenceSubsetForDiagnosticOnly": {
+        "queries": 66,
+        "nativeJournalMatchesDominant": 66,
+        "encoderMatchesDominant": 66,
+        "agreementOnly": {
+          "accepted": 66,
+          "unconfirmed": 0,
+          "acceptedDominantMatch": 66,
+          "acceptedDominantMismatch": 0,
+          "dominantMatchingJournalLabelsWithheld": 0,
+          "coverage": 1.0
+        }
+      },
+      "peopleWithoutEligibleNewQueries": [],
+      "elapsedSeconds": 19.347123500017915,
+      "limits": {
+        "pid": 12396,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 645574656,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "profiles": 17,
+      "profilePureAt95Percent": 17,
+      "profileMatchesExistingNativeMapping": 17,
+      "allSelectedQueries": {
+        "queries": 81,
+        "nativeJournalMatchesDominant": 75,
+        "encoderMatchesDominant": 72,
+        "agreementOnly": {
+          "accepted": 72,
+          "unconfirmed": 9,
+          "acceptedDominantMatch": 69,
+          "acceptedDominantMismatch": 3,
+          "dominantMatchingJournalLabelsWithheld": 6,
+          "coverage": 0.8888888888888888
+        }
+      },
+      "pureReferenceSubsetForDiagnosticOnly": {
+        "queries": 71,
+        "nativeJournalMatchesDominant": 68,
+        "encoderMatchesDominant": 67,
+        "agreementOnly": {
+          "accepted": 64,
+          "unconfirmed": 7,
+          "acceptedDominantMatch": 64,
+          "acceptedDominantMismatch": 0,
+          "dominantMatchingJournalLabelsWithheld": 4,
+          "coverage": 0.9014084507042254
+        }
+      },
+      "peopleWithoutEligibleNewQueries": [
+        "0",
+        "3"
+      ],
+      "elapsedSeconds": 16.070881800027564,
+      "limits": {
+        "pid": 21736,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 645558272,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    }
+  ],
+  "noNewDerOrAsrAccuracyClaim": true,
+  "finalHoldoutOpened": false,
+  "newTrainingOrModelDownloads": false,
+  "productInstalledOrDefaultChanged": false,
+  "saleQualified": false
+}

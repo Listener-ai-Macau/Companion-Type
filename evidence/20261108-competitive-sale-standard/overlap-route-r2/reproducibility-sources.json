@@ -1,0 +1,67 @@
+{
+  "sourceFiles": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_meeting_route_plan_20261109.py",
+      "sha256": "51423353e1d3d4d1c0e054289bcac3bff293f4bb7522028fe6d34bb43ac5de55"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\test_companion_meeting_route_plan_20261109.py",
+      "sha256": "acd59be6fb5d96c14e9c2be24ea90dbefd836ab1a4bdbfbfe309bb16953279f7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_overlap_regions_20261109.py",
+      "sha256": "720d95661d76a21a881ffd794847f3e26ea83c10dfa9fcfec7fff45893844b3e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_speaker_cross_meeting_20261109.py",
+      "sha256": "4f775606013b8841a3eff7c2c11d5d397a86fc810287b230a4a1b67f7c4505ff"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\score_companion_speaker_cross_meeting_20261109.py",
+      "sha256": "26c725bf5754901a5218565901b92ac7d6594592825126a3de0e630c8aadfad1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\audit_companion_overlap_routes_20261109.py",
+      "sha256": "220bd508d53e02dcbe9d3ba24313c8a1959479e4b909f6cb2d851a9293d0c31a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\audit_companion_cached_overlap_probabilities_20261109.py",
+      "sha256": "088a07d43d3d43174967fd195f158f9fe906a8d1c6c78dcb5449160ef4ec67e7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_cached_overlap_candidate_20261109.py",
+      "sha256": "d47520bcae37504b8578cdf8820e6c27cc8b80424149cdebb064937cc68b1505"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\evaluate_companion_overlap_candidate_20261109.py",
+      "sha256": "16589c3a026d16091bcfd07022b4c1ee8614ca6e49a5ffe14bdff98da89ce74d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\check_companion_overlap_count_recipe_20261109.py",
+      "sha256": "5cdb62c5fb00bfd443b5cf96726c303c903be8ac0471c93b26731a9a2c7f476c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_third_meeting_overlap_20261109.py",
+      "sha256": "91ab6773f51f8c0eefb92e40884541072dc3a02ff105a9bce7ed890efd5795fe"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\preserve_companion_overlap_route_r2_20261109.py",
+      "sha256": "93f0c0c12f803ea3e05cefae9a9c419a40ae4f6996b101b26384588688439bc5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\automatic_speaker_cpu_worker_20261109.py",
+      "sha256": "f9dbe5c75a8562843d30081d01a60478e0e6fda7e5f00d59efb21a3d286aa62b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\bounded_speaker_20261107.py",
+      "sha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_reference_bank_20261108.py",
+      "sha256": "55c453092cf656c284fcf26a7e2452663bdb0a1b4e0eb699223ee5919ffff890"
+    }
+  ],
+  "modelThresholdsAndWeightsChanged": false,
+  "actualRouteSafetyTestsPassed": 6,
+  "newPublicAudioUploads": 0
+}

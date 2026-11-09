@@ -55,3 +55,5 @@ evidence/20261108-competitive-sale-standard/** -text -whitespace
 # Preserve byte-bound CPU speaker and two-lane routing sources (2026-11-09).
 src/automatic_speaker_*20261109.py -text
 src/*companion_meeting_route_plan_20261109.py -text
+
+src/companion_local_overlap_regions_20261109.py -text

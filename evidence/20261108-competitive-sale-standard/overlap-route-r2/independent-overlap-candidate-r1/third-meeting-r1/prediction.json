@@ -1,0 +1,2528 @@
+{
+  "meeting": "20200805_S_R001S01C01",
+  "sourceSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+  "segmentationManifestSha256": "6cfbf5a200109aa2c6d7bb0349e42df9db28d60debcd40a1b57fd4a779aeb4d7",
+  "committedSegmentationSha256": "309dbccf1791cef843d73ba3051a8161c804165e2214a22bb7d752130bee3b65",
+  "regions": [
+    {
+      "start": 231.6234893798828,
+      "end": 235.20098876953125
+    },
+    {
+      "start": 237.8166046142578,
+      "end": 237.96849060058594
+    },
+    {
+      "start": 298.34722900390625,
+      "end": 298.83660888671875
+    },
+    {
+      "start": 327.4228515625,
+      "end": 329.1609802246094
+    },
+    {
+      "start": 329.2284851074219,
+      "end": 329.2622375488281
+    },
+    {
+      "start": 340.34912109375,
+      "end": 341.71600341796875
+    },
+    {
+      "start": 342.4753723144531,
+      "end": 343.06597900390625
+    },
+    {
+      "start": 477.28973388671875,
+      "end": 477.8128662109375
+    },
+    {
+      "start": 491.8191223144531,
+      "end": 492.3422546386719
+    },
+    {
+      "start": 517.705322265625,
+      "end": 517.7222290039062
+    },
+    {
+      "start": 517.7559814453125,
+      "end": 517.975341796875
+    },
+    {
+      "start": 518.0428466796875,
+      "end": 518.1103515625
+    },
+    {
+      "start": 541.4990844726562,
+      "end": 542.9503173828125
+    },
+    {
+      "start": 567.0816040039062,
+      "end": 567.5709838867188
+    },
+    {
+      "start": 584.6821899414062,
+      "end": 585.205322265625
+    },
+    {
+      "start": 588.4959716796875,
+      "end": 588.8840942382812
+    },
+    {
+      "start": 597.017822265625,
+      "end": 597.6084594726562
+    },
+    {
+      "start": 604.6284790039062,
+      "end": 604.729736328125
+    },
+    {
+      "start": 604.9321899414062,
+      "end": 605.0841064453125
+    },
+    {
+      "start": 619.6978149414062,
+      "end": 620.1871948242188
+    },
+    {
+      "start": 632.59033203125,
+      "end": 632.6747436523438
+    },
+    {
+      "start": 655.5740966796875,
+      "end": 656.080322265625
+    },
+    {
+      "start": 774.3740844726562,
+      "end": 774.9816284179688
+    },
+    {
+      "start": 809.5584716796875,
+      "end": 810.334716796875
+    },
+    {
+      "start": 810.8410034179688,
+      "end": 811.3978271484375
+    },
+    {
+      "start": 825.1340942382812,
+      "end": 825.7078247070312
+    },
+    {
+      "start": 860.8922119140625,
+      "end": 862.09033203125
+    },
+    {
+      "start": 864.604736328125,
+      "end": 865.4147338867188
+    },
+    {
+      "start": 905.8134765625,
+      "end": 905.948486328125
+    },
+    {
+      "start": 961.2984619140625,
+      "end": 961.8890991210938
+    },
+    {
+      "start": 1072.6904296875,
+      "end": 1073.38232421875
+    },
+    {
+      "start": 1123.0960693359375,
+      "end": 1124.749755859375
+    },
+    {
+      "start": 1155.3779296875,
+      "end": 1155.394775390625
+    },
+    {
+      "start": 1155.4285888671875,
+      "end": 1155.52978515625
+    },
+    {
+      "start": 1155.8841552734375,
+      "end": 1156.0360107421875
+    },
+    {
+      "start": 1206.7791748046875,
+      "end": 1208.0111083984375
+    },
+    {
+      "start": 1242.7567138671875,
+      "end": 1243.684814453125
+    },
+    {
+      "start": 1245.102294921875,
+      "end": 1245.1529541015625
+    },
+    {
+      "start": 1245.912353515625,
+      "end": 1246.1317138671875
+    },
+    {
+      "start": 1270.7354736328125,
+      "end": 1271.1741943359375
+    },
+    {
+      "start": 1283.3917236328125,
+      "end": 1283.881103515625
+    },
+    {
+      "start": 1376.5416259765625,
+      "end": 1376.609130859375
+    },
+    {
+      "start": 1392.2354736328125,
+      "end": 1393.3660888671875
+    },
+    {
+      "start": 1416.1304931640625,
+      "end": 1416.535400390625
+    },
+    {
+      "start": 1423.6060791015625,
+      "end": 1424.247314453125
+    },
+    {
+      "start": 1426.356689453125,
+      "end": 1426.778564453125
+    },
+    {
+      "start": 1437.88232421875,
+      "end": 1439.26611328125
+    },
+    {
+      "start": 1444.4466552734375,
+      "end": 1444.5985107421875
+    },
+    {
+      "start": 1452.259765625,
+      "end": 1452.5972900390625
+    },
+    {
+      "start": 1461.490478515625,
+      "end": 1462.4354248046875
+    },
+    {
+      "start": 1463.2791748046875,
+      "end": 1463.363525390625
+    },
+    {
+      "start": 1463.92041015625,
+      "end": 1464.021728515625
+    },
+    {
+      "start": 1468.52734375,
+      "end": 1468.79736328125
+    },
+    {
+      "start": 1487.4610595703125,
+      "end": 1488.08544921875
+    },
+    {
+      "start": 1502.12548828125,
+      "end": 1502.3448486328125
+    },
+    {
+      "start": 1511.3897705078125,
+      "end": 1511.7947998046875
+    },
+    {
+      "start": 1519.42236328125,
+      "end": 1519.7935791015625
+    },
+    {
+      "start": 1528.88916015625,
+      "end": 1529.462890625
+    },
+    {
+      "start": 1530.7960205078125,
+      "end": 1530.8973388671875
+    },
+    {
+      "start": 1535.6898193359375,
+      "end": 1536.0948486328125
+    },
+    {
+      "start": 1547.3336181640625,
+      "end": 1548.0928955078125
+    },
+    {
+      "start": 1550.556640625,
+      "end": 1553.5435791015625
+    },
+    {
+      "start": 1558.0323486328125,
+      "end": 1558.403564453125
+    },
+    {
+      "start": 1561.49169921875,
+      "end": 1561.6773681640625
+    },
+    {
+      "start": 1561.6942138671875,
+      "end": 1561.8629150390625
+    },
+    {
+      "start": 1564.3436279296875,
+      "end": 1566.3516845703125
+    },
+    {
+      "start": 1575.7679443359375,
+      "end": 1576.291015625
+    },
+    {
+      "start": 1604.961669921875,
+      "end": 1605.2991943359375
+    },
+    {
+      "start": 1605.48486328125,
+      "end": 1605.5523681640625
+    },
+    {
+      "start": 1609.58544921875,
+      "end": 1613.0111083984375
+    },
+    {
+      "start": 1632.4678955078125,
+      "end": 1632.5523681640625
+    },
+    {
+      "start": 1632.63671875,
+      "end": 1632.8729248046875
+    },
+    {
+      "start": 1771.197265625,
+      "end": 1771.6866455078125
+    },
+    {
+      "start": 1778.6561279296875,
+      "end": 1779.0780029296875
+    },
+    {
+      "start": 1786.3004150390625,
+      "end": 1787.1273193359375
+    },
+    {
+      "start": 1791.582275390625,
+      "end": 1791.68359375
+    },
+    {
+      "start": 1816.894775390625,
+      "end": 1817.3336181640625
+    },
+    {
+      "start": 1820.0335693359375,
+      "end": 1820.8604736328125
+    },
+    {
+      "start": 1823.2398681640625,
+      "end": 1823.5772705078125
+    },
+    {
+      "start": 1827.0704345703125,
+      "end": 1827.1885986328125
+    },
+    {
+      "start": 1827.8973388671875,
+      "end": 1827.9141845703125
+    },
+    {
+      "start": 1828.133544921875,
+      "end": 1829.5679931640625
+    },
+    {
+      "start": 1837.111083984375,
+      "end": 1838.66357421875
+    },
+    {
+      "start": 1900.847900390625,
+      "end": 1901.8436279296875
+    },
+    {
+      "start": 1961.85107421875,
+      "end": 1962.4586181640625
+    },
+    {
+      "start": 1962.947998046875,
+      "end": 1963.218017578125
+    },
+    {
+      "start": 1975.4185791015625,
+      "end": 1975.5367431640625
+    },
+    {
+      "start": 1975.6717529296875,
+      "end": 1975.7222900390625
+    },
+    {
+      "start": 2005.8104248046875,
+      "end": 2007.3629150390625
+    },
+    {
+      "start": 2047.204833984375,
+      "end": 2047.6942138671875
+    },
+    {
+      "start": 2047.7279052734375,
+      "end": 2047.76171875
+    },
+    {
+      "start": 2050.63037109375,
+      "end": 2051.963623046875
+    },
+    {
+      "start": 2071.84228515625,
+      "end": 2072.551025390625
+    },
+    {
+      "start": 2078.98046875,
+      "end": 2079.55419921875
+    },
+    {
+      "start": 2085.325439453125,
+      "end": 2085.8486328125
+    },
+    {
+      "start": 2098.53857421875,
+      "end": 2098.7412109375
+    },
+    {
+      "start": 2110.5029296875,
+      "end": 2111.144287109375
+    },
+    {
+      "start": 2120.644775390625,
+      "end": 2122.16357421875
+    },
+    {
+      "start": 2125.521728515625,
+      "end": 2125.994140625
+    },
+    {
+      "start": 2126.939208984375,
+      "end": 2127.6142578125
+    },
+    {
+      "start": 2134.1279296875,
+      "end": 2134.195556640625
+    },
+    {
+      "start": 2160.874755859375,
+      "end": 2161.431640625
+    },
+    {
+      "start": 2164.806640625,
+      "end": 2165.836181640625
+    },
+    {
+      "start": 2192.61669921875,
+      "end": 2192.92041015625
+    }
+  ],
+  "metadata": {
+    "frames": 130096,
+    "sourceFrames": 35125792,
+    "powersetArgmaxClassCount": 7,
+    "referenceRead": false,
+    "windowAggregation": "published rounded mean local speaker count",
+    "globalSpeakerClusteringUsed": false
+  },
+  "routes": [
+    {
+      "startSample": 0,
+      "endSample": 3705976,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 3705976,
+      "endSample": 3763216,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 3763216,
+      "endSample": 3805066,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 3805066,
+      "endSample": 3807496,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 3807496,
+      "endSample": 4773556,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 4773556,
+      "endSample": 4781386,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 4781386,
+      "endSample": 5238766,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5238766,
+      "endSample": 5266576,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5266576,
+      "endSample": 5267656,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5267656,
+      "endSample": 5268196,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5268196,
+      "endSample": 5445586,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5445586,
+      "endSample": 5467456,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5467456,
+      "endSample": 5479606,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5479606,
+      "endSample": 5489056,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 5489056,
+      "endSample": 7636636,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 7636636,
+      "endSample": 7645006,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 7645006,
+      "endSample": 7869106,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 7869106,
+      "endSample": 7877476,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 7877476,
+      "endSample": 8283285,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8283285,
+      "endSample": 8283556,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8283556,
+      "endSample": 8284096,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8284096,
+      "endSample": 8287605,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8287605,
+      "endSample": 8288686,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8288686,
+      "endSample": 8289766,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8289766,
+      "endSample": 8663985,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8663985,
+      "endSample": 8687205,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 8687205,
+      "endSample": 9073306,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9073306,
+      "endSample": 9081136,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9081136,
+      "endSample": 9354915,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9354915,
+      "endSample": 9363285,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9363285,
+      "endSample": 9415936,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9415936,
+      "endSample": 9422146,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9422146,
+      "endSample": 9552285,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9552285,
+      "endSample": 9561735,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9561735,
+      "endSample": 9674056,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9674056,
+      "endSample": 9675676,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9675676,
+      "endSample": 9678915,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9678915,
+      "endSample": 9681346,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9681346,
+      "endSample": 9915165,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9915165,
+      "endSample": 9922995,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 9922995,
+      "endSample": 10121445,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 10121445,
+      "endSample": 10122796,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 10122796,
+      "endSample": 10489186,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 10489186,
+      "endSample": 10497285,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 10497285,
+      "endSample": 12389985,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12389985,
+      "endSample": 12399706,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12399706,
+      "endSample": 12952936,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12952936,
+      "endSample": 12965355,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12965355,
+      "endSample": 12973456,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12973456,
+      "endSample": 12982365,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 12982365,
+      "endSample": 13202146,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13202146,
+      "endSample": 13211325,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13211325,
+      "endSample": 13774275,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13774275,
+      "endSample": 13793445,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13793445,
+      "endSample": 13833676,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13833676,
+      "endSample": 13846636,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 13846636,
+      "endSample": 14493016,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 14493016,
+      "endSample": 14495176,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 14495176,
+      "endSample": 15380775,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 15380775,
+      "endSample": 15390226,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 15390226,
+      "endSample": 17163047,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 17163047,
+      "endSample": 17174117,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 17174117,
+      "endSample": 17969537,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 17969537,
+      "endSample": 17995996,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 17995996,
+      "endSample": 18486047,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18486047,
+      "endSample": 18486316,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18486316,
+      "endSample": 18486857,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18486857,
+      "endSample": 18488477,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18488477,
+      "endSample": 18494146,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18494146,
+      "endSample": 18496576,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 18496576,
+      "endSample": 19308467,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19308467,
+      "endSample": 19328178,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19328178,
+      "endSample": 19884107,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19884107,
+      "endSample": 19898957,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19898957,
+      "endSample": 19921637,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19921637,
+      "endSample": 19922447,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19922447,
+      "endSample": 19934598,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19934598,
+      "endSample": 19938107,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 19938107,
+      "endSample": 20331768,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 20331768,
+      "endSample": 20338787,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 20338787,
+      "endSample": 20534268,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 20534268,
+      "endSample": 20542098,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 20542098,
+      "endSample": 22024666,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22024666,
+      "endSample": 22025746,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22025746,
+      "endSample": 22275768,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22275768,
+      "endSample": 22293857,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22293857,
+      "endSample": 22658088,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22658088,
+      "endSample": 22664566,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22664566,
+      "endSample": 22777697,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22777697,
+      "endSample": 22787957,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22787957,
+      "endSample": 22821707,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22821707,
+      "endSample": 22828457,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 22828457,
+      "endSample": 23006117,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23006117,
+      "endSample": 23028258,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23028258,
+      "endSample": 23111146,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23111146,
+      "endSample": 23113576,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23113576,
+      "endSample": 23236156,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23236156,
+      "endSample": 23241557,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23241557,
+      "endSample": 23383848,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23383848,
+      "endSample": 23398967,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23398967,
+      "endSample": 23412467,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23412467,
+      "endSample": 23413816,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23413816,
+      "endSample": 23422727,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23422727,
+      "endSample": 23424348,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23424348,
+      "endSample": 23496438,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23496438,
+      "endSample": 23500758,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23500758,
+      "endSample": 23799377,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23799377,
+      "endSample": 23809367,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 23809367,
+      "endSample": 24034008,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24034008,
+      "endSample": 24037518,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24037518,
+      "endSample": 24182236,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24182236,
+      "endSample": 24188717,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24188717,
+      "endSample": 24310758,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24310758,
+      "endSample": 24316697,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24316697,
+      "endSample": 24462227,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24462227,
+      "endSample": 24471406,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24471406,
+      "endSample": 24492736,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24492736,
+      "endSample": 24494357,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24494357,
+      "endSample": 24571037,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24571037,
+      "endSample": 24577518,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24577518,
+      "endSample": 24757338,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24757338,
+      "endSample": 24769486,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24769486,
+      "endSample": 24808906,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24808906,
+      "endSample": 24856697,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24856697,
+      "endSample": 24928518,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24928518,
+      "endSample": 24934457,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24934457,
+      "endSample": 24983867,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24983867,
+      "endSample": 24986838,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24986838,
+      "endSample": 24987107,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24987107,
+      "endSample": 24989807,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 24989807,
+      "endSample": 25029498,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25029498,
+      "endSample": 25061627,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25061627,
+      "endSample": 25212287,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25212287,
+      "endSample": 25220656,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25220656,
+      "endSample": 25679387,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25679387,
+      "endSample": 25684787,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25684787,
+      "endSample": 25687758,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25687758,
+      "endSample": 25688838,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25688838,
+      "endSample": 25753367,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25753367,
+      "endSample": 25808178,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 25808178,
+      "endSample": 26119486,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 26119486,
+      "endSample": 26120838,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 26120838,
+      "endSample": 26122188,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 26122188,
+      "endSample": 26125967,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 26125967,
+      "endSample": 28339156,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28339156,
+      "endSample": 28346986,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28346986,
+      "endSample": 28458498,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28458498,
+      "endSample": 28465248,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28465248,
+      "endSample": 28580807,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28580807,
+      "endSample": 28594037,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28594037,
+      "endSample": 28665316,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28665316,
+      "endSample": 28666938,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 28666938,
+      "endSample": 29070316,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29070316,
+      "endSample": 29077338,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29077338,
+      "endSample": 29120537,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29120537,
+      "endSample": 29133768,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29133768,
+      "endSample": 29171838,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29171838,
+      "endSample": 29177236,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29177236,
+      "endSample": 29233127,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29233127,
+      "endSample": 29235018,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29235018,
+      "endSample": 29246357,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29246357,
+      "endSample": 29246627,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29246627,
+      "endSample": 29250137,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29250137,
+      "endSample": 29273088,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29273088,
+      "endSample": 29393777,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29393777,
+      "endSample": 29418617,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 29418617,
+      "endSample": 30413566,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 30413566,
+      "endSample": 30429498,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 30429498,
+      "endSample": 31389617,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31389617,
+      "endSample": 31399338,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31399338,
+      "endSample": 31407168,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31407168,
+      "endSample": 31411488,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31411488,
+      "endSample": 31606697,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31606697,
+      "endSample": 31608588,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31608588,
+      "endSample": 31610748,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31610748,
+      "endSample": 31611557,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 31611557,
+      "endSample": 32092967,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32092967,
+      "endSample": 32117807,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32117807,
+      "endSample": 32755277,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32755277,
+      "endSample": 32763107,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32763107,
+      "endSample": 32763646,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32763646,
+      "endSample": 32764188,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32764188,
+      "endSample": 32810086,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32810086,
+      "endSample": 32831418,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 32831418,
+      "endSample": 33149477,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33149477,
+      "endSample": 33160816,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33160816,
+      "endSample": 33263688,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33263688,
+      "endSample": 33272867,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33272867,
+      "endSample": 33365207,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33365207,
+      "endSample": 33373578,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33373578,
+      "endSample": 33576617,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33576617,
+      "endSample": 33579859,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33579859,
+      "endSample": 33768047,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33768047,
+      "endSample": 33778309,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33778309,
+      "endSample": 33930316,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33930316,
+      "endSample": 33954617,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 33954617,
+      "endSample": 34008348,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34008348,
+      "endSample": 34015906,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34015906,
+      "endSample": 34031027,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34031027,
+      "endSample": 34041828,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34041828,
+      "endSample": 34146047,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34146047,
+      "endSample": 34147129,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34147129,
+      "endSample": 34573996,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34573996,
+      "endSample": 34582906,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34582906,
+      "endSample": 34636906,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34636906,
+      "endSample": 34653379,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 34653379,
+      "endSample": 35081867,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 35081867,
+      "endSample": 35086727,
+      "route": "candidate_overlap_identity_pending",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": true,
+      "targetIdentityPending": true,
+      "candidateCanReplaceRawByDefault": false
+    },
+    {
+      "startSample": 35086727,
+      "endSample": 35125792,
+      "route": "raw_asr_unattributed",
+      "predictedPeople": [],
+      "retainRawSource": true,
+      "independentOverlapDetected": false,
+      "targetIdentityPending": false,
+      "candidateCanReplaceRawByDefault": false
+    }
+  ],
+  "sourceFramesPreservedExactlyOnce": true,
+  "freshNativeJournalOrAsrNotRun": true,
+  "globalIdentityInvented": false,
+  "productDefaultChanged": false
+}

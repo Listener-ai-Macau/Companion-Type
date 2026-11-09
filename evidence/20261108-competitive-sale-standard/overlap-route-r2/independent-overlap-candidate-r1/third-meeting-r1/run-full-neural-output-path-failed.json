@@ -1,0 +1,13 @@
+{
+  "state": "FAILED_SEGMENTATION",
+  "newNeuralItems": 0,
+  "startedAt": "2026-11-09T09:07:07+08:00",
+  "exitCode": 1,
+  "workerState": null,
+  "workerPrivatePeakBytes": null,
+  "wallSeconds": 167.16233089996967,
+  "polledPrivatePeakBytes": 222969856,
+  "resourcePolicy": "Modelworker single5percent job/2GiB privatecap; controller monitors Windows actualLOWRAM without nestedCPUcap",
+  "finishedAt": "2026-11-09T09:09:54+08:00",
+  "saleQualified": false
+}

@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-09T08:58:15+08:00",
+  "state": "CACHED_ACOUSTIC_OUTPUT_REPRODUCES_JOURNAL_EXACTLY",
+  "meeting": "L_R003S01C02",
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "probabilityManifestSha256": "726456623b75c7f2a583e1da59fc54f6415bfcd26b98756d5b7c33f7b9369c49",
+  "committedProbabilityPrefixSha256": "ffa1f7d61e4cace14cdd77c28d50142afb52bbf946ee6de531dfd7e8d681647f",
+  "committedFrames": 236295,
+  "journalSegmentsReproducedExactly": 656,
+  "runtimeDecoderSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "thresholdUnchanged": 0.5,
+  "frameCentresPolicy": "Use cachednative10ms cadence atframecentre for reference diagnostics; continuous-time exact interval metrics kept separately. Fixedfullnative mapping evaluation-only.",
+  "trueOverlapFrameSeconds": 188.34999579004943,
+  "missedOverlapFrameSeconds": 63.78999857418239,
+  "missedOverlapFractionOfFrames": 0.33867799309795593,
+  "missingTrueVoicePosterior": {
+    "voiceFrames": 7335,
+    "quantiles": {
+      "0": 0.0025731599889695644,
+      "0.1": 0.0496969111263752,
+      "0.25": 0.10751549154520035,
+      "0.5": 0.25373849272727966,
+      "0.75": 0.3924518823623657,
+      "0.9": 0.45818614959716797,
+      "1": 0.49989816546440125
+    },
+    "fractionBelow0_1": 0.2332651670074983,
+    "fractionAtOrAbove0_4": 0.23776414451261077,
+    "interpretation": "Diagnostic distribution only; no cutoff selection, threshold trial or newlabel result. Missing true voice scores are read after inference with reference mapping, never supplied to runtime."
+  },
+  "conclusion": "Existingcached probabilities reconstruct all656journal segments exactly. The missedsecond-voice activity is present before source routing/separation; this batch found no journal assembly bug. Replacing groupnames or accepting two-model identity agreement cannot restore unpredicted voices. No claim nativeframework numeric equivalence or fundamentalmodel ceiling.",
+  "newModelInference": false,
+  "newWeightsOrThresholds": false,
+  "productChanged": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 14716,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 35504128,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,2848 @@
+{
+  "meeting": "L_R003S01C02",
+  "audioSeconds": 2362.945,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "countsAreUniqueActivePeopleNotDuplicateSegments": true,
+  "timing": "Continuous exact source times, zero collar, includes overlaps, no dilation/gap repair or threshold tuning. Existing lexical policy: remove source angle tags and require nonempty remaining text, as canonical original overlap breakdown.",
+  "originalOverlapReferenceSecondsReproduced": true,
+  "seconds": {
+    "ordinary_or_no_reference": 2120.497655343718,
+    "false_overlap_solo": 53.41965645336027,
+    "false_overlap_no_reference": 0.6683001354100657,
+    "caught_overlap": 124.53203941876154,
+    "missed_overlap": 63.82734864875006
+  },
+  "trueOverlapSeconds": 188.3593880675116,
+  "predictedOverlapSeconds": 178.61999600753188,
+  "overlapDetectionRecall": 0.6611406030589083,
+  "overlapDetectionPrecision": 0.6971898007069175,
+  "missedOverlapByReferencePeople": {
+    "2": {
+      "totalSeconds": 179.14177673930828,
+      "caughtSeconds": 118.65305470449908,
+      "missedSeconds": 60.488722034809214
+    },
+    "3": {
+      "totalSeconds": 9.217611328203304,
+      "caughtSeconds": 5.878984714262458,
+      "missedSeconds": 3.3386266139408463
+    }
+  },
+  "missedOverlapSpans": [
+    {
+      "start": 14.279999680817127,
+      "end": 14.306332340598185,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 157.81081610078365,
+      "end": 159.65473777080095,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 357.4999920092523,
+      "end": 357.97341810731643,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 358.38497526555625,
+      "end": 358.74999198131263,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 376.47502683068706,
+      "end": 376.48999158479273,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 381.1287339026354,
+      "end": 381.1499914806336,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 382.3699914533645,
+      "end": 382.504513789928,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 389.654406970089,
+      "end": 389.7599912881851,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 448.07998998463154,
+      "end": 448.26701631099405,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 471.48998946137726,
+      "end": 471.513375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 483.645090652223,
+      "end": 483.6499891895801,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 483.6499891895801,
+      "end": 483.69777412850925,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 493.07543290745434,
+      "end": 493.1199889779091,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 524.8498819919373,
+      "end": 524.8799882680178,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 529.9099881555885,
+      "end": 529.919988155365,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 529.939988154918,
+      "end": 530.4694535032285,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 535.3177172521879,
+      "end": 535.3299880344421,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 535.5299880299717,
+      "end": 536.87025,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 541.0426557293158,
+      "end": 541.4290012707171,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 543.5299878511578,
+      "end": 543.729375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 603.8458504733642,
+      "end": 605.408793799942,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 606.0585567559351,
+      "end": 606.23998644948,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 606.589986441657,
+      "end": 606.6727265541123,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 653.3899853955954,
+      "end": 653.452375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 656.1399853341281,
+      "end": 656.8561569368145,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 665.3606810000193,
+      "end": 665.8159375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 705.8963267227389,
+      "end": 706.159984216094,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 725.9948434452355,
+      "end": 726.5799837596714,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 727.6399837359786,
+      "end": 727.729983733967,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 727.7599837332964,
+      "end": 728.6299375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 744.083811682708,
+      "end": 744.1099833678454,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 744.6899833548814,
+      "end": 745.2469375000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 789.0810739635076,
+      "end": 789.0899823624641,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 789.0899823624641,
+      "end": 789.457848934914,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 799.3699821326882,
+      "end": 799.661125,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 810.1698646087528,
+      "end": 810.9799818731844,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 811.8999818526208,
+      "end": 811.9199818521738,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 813.4478068599884,
+      "end": 813.4899818170816,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 813.4899818170816,
+      "end": 813.519981816411,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 813.519981816411,
+      "end": 813.901375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 814.785358008481,
+      "end": 815.196,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 816.0852316598331,
+      "end": 816.4996841283801,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 818.3270427397011,
+      "end": 818.4499817062169,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 818.5599817037582,
+      "end": 818.6399817019701,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 818.6899817008525,
+      "end": 818.8331875,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 820.681886310991,
+      "end": 820.9899816494435,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 820.9899816494435,
+      "end": 821.0299816485494,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 821.0299816485494,
+      "end": 821.0399816483259,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 821.0399816483259,
+      "end": 821.1306875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 823.0799816027284,
+      "end": 823.259981598705,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 823.3499815966934,
+      "end": 823.3599815964699,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 823.6299815904349,
+      "end": 823.9399815835059,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 824.2199815772474,
+      "end": 825.2093360158334,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 825.2093360158334,
+      "end": 825.9199815392494,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 848.8392694038389,
+      "end": 848.9199810251594,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 848.9199810251594,
+      "end": 849.42998101376,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 850.5199809893966,
+      "end": 851.2275869954804,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 855.516127304963,
+      "end": 855.5199808776379,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 855.9024727977285,
+      "end": 855.9199808686972,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 855.9199808686972,
+      "end": 856.00375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 856.4995521956389,
+      "end": 858.5815625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 862.4199807234108,
+      "end": 863.2799807041883,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 863.479980699718,
+      "end": 863.5199806988239,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 863.5699806977063,
+      "end": 863.9955,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 868.7815060638042,
+      "end": 868.9399805776775,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 868.9599805772305,
+      "end": 868.9699805770069,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 868.9699805770069,
+      "end": 869.2026875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 876.4645205003601,
+      "end": 876.4999804086983,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 876.8799804002047,
+      "end": 876.9199803993106,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 876.9199803993106,
+      "end": 876.9813125000001,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 877.6799803823233,
+      "end": 877.819980379194,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 877.9199803769588,
+      "end": 878.4099803660065,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 878.5599803626537,
+      "end": 878.6299803610891,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 878.6399803608656,
+      "end": 879.0203750000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 887.2402846825828,
+      "end": 887.6885625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 895.3876166855683,
+      "end": 895.4099799860269,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 895.4399799853563,
+      "end": 895.4499799851328,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 895.4599799849093,
+      "end": 895.5199799835682,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 897.2799799442291,
+      "end": 897.5352340225847,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 902.0799798369408,
+      "end": 902.438625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 902.438625,
+      "end": 903.3599798083305,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 904.4299797844142,
+      "end": 904.5899797808379,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 904.6399797797203,
+      "end": 904.6499797794968,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 904.6599797792733,
+      "end": 905.0799797698855,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 907.7599797099829,
+      "end": 909.4224843704562,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 917.729979487136,
+      "end": 918.6550625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 920.7699794191867,
+      "end": 920.964348191455,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 935.3235894653446,
+      "end": 935.3299790937454,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 937.4399790465832,
+      "end": 937.7356875,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "0"
+      ]
+    },
+    {
+      "start": 940.7699789721519,
+      "end": 941.276822285686,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 960.2365192599106,
+      "end": 960.3499785345048,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 960.3999785333872,
+      "end": 960.479978531599,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 961.6099785063416,
+      "end": 961.6684375,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 963.3072352768726,
+      "end": 963.4899784643203,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 997.54997770302,
+      "end": 997.8435228769504,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1007.81,
+      "end": 1007.9216250000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1011.3290390993184,
+      "end": 1011.3599773943424,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1013.3599773496389,
+      "end": 1013.7435625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1025.2399770841002,
+      "end": 1025.2815,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1031.389976946637,
+      "end": 1031.3945,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1035.2209276800966,
+      "end": 1035.409976856783,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1037.0499768201262,
+      "end": 1037.0725,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1052.8370902161387,
+      "end": 1052.879976466298,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "0"
+      ]
+    },
+    {
+      "start": 1070.199976079166,
+      "end": 1070.3647869018969,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1073.379359214161,
+      "end": 1073.4199760071933,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1073.8399759978056,
+      "end": 1073.8498125,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1075.7399759553373,
+      "end": 1076.0503125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1086.9299757052213,
+      "end": 1087.3886288511915,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1135.8099746126682,
+      "end": 1135.8709436522872,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1165.8399739414454,
+      "end": 1166.0889375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1285.8282743150476,
+      "end": 1285.859376990446,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1332.0772973049632,
+      "end": 1332.2002254162978,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1341.3499700184911,
+      "end": 1341.35675,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1376.720300625931,
+      "end": 1376.8145625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1391.9085283367112,
+      "end": 1392.3099688794464,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1493.3258333230106,
+      "end": 1493.3699666205794,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1493.7699666116387,
+      "end": 1493.88425,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1495.7599665671587,
+      "end": 1495.9632581228552,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1516.9099660944194,
+      "end": 1517.4049157759143,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1517.4049157759143,
+      "end": 1517.6399660781026,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1519.0199660472572,
+      "end": 1519.389966038987,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1519.4399660378695,
+      "end": 1519.6899660322815,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1519.8999660275877,
+      "end": 1520.009966025129,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1523.0483797012323,
+      "end": 1523.179965954274,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1523.449965948239,
+      "end": 1523.679965943098,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1524.3599659278989,
+      "end": 1524.5443125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1524.5443125,
+      "end": 1524.9035315112935,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1530.8392039200949,
+      "end": 1531.0099657792598,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1531.779965762049,
+      "end": 1532.25125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1566.6599649824202,
+      "end": 1566.862,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1567.5699649620801,
+      "end": 1567.6192919315733,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1574.0799648165703,
+      "end": 1574.2129239110734,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1574.2129239110734,
+      "end": 1574.2699648123235,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1575.35996478796,
+      "end": 1575.384549859495,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1576.5260251790296,
+      "end": 1576.6512500000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1580.3206615354409,
+      "end": 1580.3499646764249,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1582.0753513478435,
+      "end": 1583.2901875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1586.9999645277858,
+      "end": 1587.25875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1588.416355724755,
+      "end": 1588.5299644935876,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1588.869964485988,
+      "end": 1588.9068125000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1596.372760228007,
+      "end": 1596.390321386769,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1597.0752065784898,
+      "end": 1597.7001875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1609.3299640286714,
+      "end": 1609.3599640280008,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1609.6999640204012,
+      "end": 1609.8999876084551,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1613.354400750928,
+      "end": 1613.7583074024558,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1636.5199634209275,
+      "end": 1636.609625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1638.1299633849412,
+      "end": 1638.3999633789062,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1639.139963362366,
+      "end": 1639.492625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1639.8636521171065,
+      "end": 1640.1199633404613,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1640.2699633371085,
+      "end": 1640.279963336885,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1640.279963336885,
+      "end": 1640.320242302399,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1642.041236077732,
+      "end": 1642.4750625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1645.5710294332616,
+      "end": 1645.672625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1651.1831114422225,
+      "end": 1651.6110625000001,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1658.1399629376829,
+      "end": 1658.3286875000001,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1658.681727177602,
+      "end": 1658.7299629244953,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1658.7299629244953,
+      "end": 1658.8199629224837,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1658.8199629224837,
+      "end": 1659.09025,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1665.5999627709389,
+      "end": 1665.6336455356734,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1671.6423316131707,
+      "end": 1671.6699626352638,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1677.8999624960124,
+      "end": 1677.9799624942243,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1677.9799624942243,
+      "end": 1678.046625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1683.636603047664,
+      "end": 1684.3903125,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1684.918567637295,
+      "end": 1685.019962336868,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1685.2299623321742,
+      "end": 1685.414,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1685.414,
+      "end": 1685.62575,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1688.4199622608721,
+      "end": 1688.459962259978,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1688.9199622496963,
+      "end": 1689.0299622472376,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1689.7999622300267,
+      "end": 1690.011303678295,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1695.750658188432,
+      "end": 1696.1703125000001,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1697.9458030336905,
+      "end": 1698.41325,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1706.2299618627876,
+      "end": 1706.5983125,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1708.144306461059,
+      "end": 1708.522,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1709.5491991620245,
+      "end": 1709.9299617800862,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1710.0599617771804,
+      "end": 1710.0999617762864,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1712.7899617161602,
+      "end": 1713.4599617011845,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1713.4599617011845,
+      "end": 1713.52925,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1714.0929405444133,
+      "end": 1714.7999616712332,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1715.6799616515636,
+      "end": 1715.7338125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1715.7338125,
+      "end": 1715.999961644411,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1716.05996164307,
+      "end": 1716.2099616397172,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1716.2399616390467,
+      "end": 1716.4830625,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1717.6402946143514,
+      "end": 1717.8399616032839,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1718.4499615896493,
+      "end": 1718.6564375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1719.5017774431308,
+      "end": 1719.5099615659565,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1720.6299615409225,
+      "end": 1720.783742032762,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1729.3023595081802,
+      "end": 1729.839961335063,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1730.6999613158405,
+      "end": 1730.7986875000001,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1743.678946310994,
+      "end": 1743.7491909460423,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1765.7599605321884,
+      "end": 1765.8521875000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1771.9461806962938,
+      "end": 1771.9799603931606,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1780.3156525672025,
+      "end": 1780.589960200712,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1785.182864229268,
+      "end": 1785.189960097894,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1785.189960097894,
+      "end": 1785.7099600862712,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1785.7199600860476,
+      "end": 1785.789960084483,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1786.5099600683898,
+      "end": 1786.5999600663781,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1787.0399600565434,
+      "end": 1787.1672754191927,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1792.453184872001,
+      "end": 1792.4799599349499,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1794.2099598962814,
+      "end": 1794.369959892705,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1794.369959892705,
+      "end": 1794.4125625000001,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1795.6493161690478,
+      "end": 1795.7599598616362,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1796.1799598522484,
+      "end": 1796.188625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1797.8934570191693,
+      "end": 1797.9199598133564,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1805.9272445486854,
+      "end": 1805.9599596336484,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1808.7599595710635,
+      "end": 1808.85575,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "004-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1820.4398760380645,
+      "end": 1820.479959309101,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1821.8399592787027,
+      "end": 1822.050625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1839.9599588736892,
+      "end": 1840.2645,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1844.3731385091426,
+      "end": 1845.5899587478489,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1850.308810170722,
+      "end": 1850.3099586423486,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1850.3199586421251,
+      "end": 1850.4899586383253,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1850.5499586369842,
+      "end": 1850.6995,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 1856.679958499968,
+      "end": 1856.699958499521,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1856.699958499521,
+      "end": 1856.7111875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1857.0828861334005,
+      "end": 1857.6116875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1859.3658367724697,
+      "end": 1859.9046875000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "005-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 1869.5661122973365,
+      "end": 1869.8997743558195,
+      "referencePeopleForScoringOnly": [
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "2"
+      ]
+    },
+    {
+      "start": 1911.6758626514106,
+      "end": 1912.027085826652,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "0"
+      ]
+    },
+    {
+      "start": 1958.0265483859293,
+      "end": 1958.1399562321603,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 1958.1399562321603,
+      "end": 1959.4499562028795,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1961.5199561566114,
+      "end": 1961.5999561548233,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 1961.9799561463296,
+      "end": 1962.0656154096698,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1970.8065414840448,
+      "end": 1970.8099559489638,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 1971.7199559286237,
+      "end": 1972.0315625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2002.6899552363902,
+      "end": 2002.8856250000001,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2032.2699545752257,
+      "end": 2032.3065467823321,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2087.5248239562825,
+      "end": 2087.619953338057,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2087.6799533367157,
+      "end": 2087.689953336492,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2087.9399533309042,
+      "end": 2087.989375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2090.6331494484652,
+      "end": 2090.6799532696605,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2091.0499532613903,
+      "end": 2091.1133125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2093.8117195845393,
+      "end": 2093.8699531983584,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2095.3395405891715,
+      "end": 2095.3799531646073,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2095.3799531646073,
+      "end": 2095.76995315589,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 2095.76995315589,
+      "end": 2095.7823125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2117.8137610581934,
+      "end": 2117.8499526623636,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2117.899952661246,
+      "end": 2117.919952660799,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2118.1599526554346,
+      "end": 2118.23522892154,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2118.8147472336423,
+      "end": 2119.599952623248,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2120.2299526091665,
+      "end": 2120.37769056022,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 2138.5317011074117,
+      "end": 2138.892125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "1"
+      ]
+    },
+    {
+      "start": 2152.577473947601,
+      "end": 2152.589951885864,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2154.684813264335,
+      "end": 2155.1708125,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2156.859951790422,
+      "end": 2156.956375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2169.809951500967,
+      "end": 2169.8384466293383,
+      "referencePeopleForScoringOnly": [
+        "005-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "5"
+      ]
+    },
+    {
+      "start": 2186.549951126799,
+      "end": 2186.64525,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2188.685668608859,
+      "end": 2188.6899510789663,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2240.73206677993,
+      "end": 2240.759949915111,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2241.0199499092996,
+      "end": 2241.029949909076,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2241.1999499052763,
+      "end": 2241.2199499048293,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2241.5199498981237,
+      "end": 2242.1324990875464,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2250.2930716504743,
+      "end": 2250.7206875,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "4"
+      ]
+    },
+    {
+      "start": 2263.084696781758,
+      "end": 2263.099949415773,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": []
+    },
+    {
+      "start": 2263.099949415773,
+      "end": 2263.4614375,
+      "referencePeopleForScoringOnly": [
+        "002-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 2263.5764092889963,
+      "end": 2264.0383242602834,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 2264.0383242602834,
+      "end": 2264.454625,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "004-M",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 2264.454625,
+      "end": 2264.64,
+      "referencePeopleForScoringOnly": [
+        "003-F",
+        "006-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 2264.8461375633387,
+      "end": 2265.3199493661523,
+      "referencePeopleForScoringOnly": [
+        "006-M",
+        "007-M"
+      ],
+      "predictedPeople": [
+        "3"
+      ]
+    },
+    {
+      "start": 2265.3199493661523,
+      "end": 2265.495899588042,
+      "referencePeopleForScoringOnly": [
+        "006-M",
+        "007-M"
+      ],
+      "predictedPeople": []
+    }
+  ],
+  "newModelInference": false,
+  "newDerOrWordCer": false,
+  "saleQualified": false
+}

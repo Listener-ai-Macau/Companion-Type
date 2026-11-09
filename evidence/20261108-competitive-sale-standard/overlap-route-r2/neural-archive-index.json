@@ -1,0 +1,36 @@
+{
+  "powerset": [
+    {
+      "meeting": "S_R004S03C01",
+      "classesSha256": "bd44124019dd5a83c82f27b9a8477be819919f62a7145a974364def604453578",
+      "rawNeuralPrefixSha256": "adeea94988306db31087a31a785f91198fa7e09d6f978a09eebb76b427a05878",
+      "shape": [
+        2319,
+        589
+      ],
+      "scope": "Exact argmaxclasses preserve all neuralinformation used by localcount method; not a fullrawlogit archive."
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "classesSha256": "272c9691bd5211b48436fb02b8b5ae07f6522e45ee1cb5d84519236a99cef9f9",
+      "rawNeuralPrefixSha256": "bd1ff48ee2a2d273d77e6afe0d7a0c3967bd94937dddec894186276751e24c34",
+      "shape": [
+        2354,
+        589
+      ],
+      "scope": "Exact argmaxclasses preserve all neuralinformation used by localcount method; not a fullrawlogit archive."
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "classesSha256": "2fc9e128129a2267498a561cc4c962ca79847b72b0a569b0f6b0bc8984606363",
+      "rawNeuralPrefixSha256": "309dbccf1791cef843d73ba3051a8161c804165e2214a22bb7d752130bee3b65",
+      "shape": [
+        2187,
+        589
+      ],
+      "scope": "Exact argmaxclasses preserve all neuralinformation used by localcount method; not a fullrawlogit archive."
+    }
+  ],
+  "native": "Fullcommitted originalfloat32 probabilities for2exposedmeetings compressed losslessly, exactsource prefixSHA in cached audit. No private content or modelweights.",
+  "newNativeInference": false
+}

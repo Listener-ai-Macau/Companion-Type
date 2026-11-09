@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-09T09:16:14+08:00",
+  "state": "ORDINARY_RETAINED_OVERLAP_ROUTING_CANDIDATE_NOT_GENERALIZED_OR_CONTENT_QUALIFIED",
+  "decision": "Retain nativejournal as primary activity/identity baseline. Do not replace identity labels with PS4encoder nearestprototype or use two-modelagreement as proof of nooverlap. Retain independent localcount union only as researchcandidate: Lrecall improves66.114→82.959%, but precision69.719→58.899%; ordinaryextra falseoverlap0.894s. Thirddevelopment meeting standalone localcount recall38.927% prevents generalization/promotionclaim; its native8/union still unmeasured. ExistingPS4contentregressions and sameQwenpending remain blockers. No threshold fitting or retraining from these recordings.",
+  "ordinaryAsrBestCerUnchanged": 0.055375375375375374,
+  "speakerQueryScope": "148newclips from2previouslyexposed fullmeetings, not wholeDER or CER. L newclips cover4/6 nativepeople; old22cliptest covers rarepeople but not reused in these counts. All32profiles had>=95% exclusive reference coverage on posthoc audit; this does not mean every future profile is safe.",
+  "agreementDiagnostic": "Agreement-dominant mismatches occur in genuine mixtures where more than one voice is present; do not call all3 arbitrary dominant-tie choices wrong realidentity. The 95%-pure subset and coverage costs remain separately reported.",
+  "referenceScopeCorrection": "Initial audit included source angle-tag-only intervals; preserved initialJSON, then aligned to canonical original lexical policy (remove source angle tags, nonempty remainder). Original fulloverlap reference seconds188.359388 reproduced exactly; ordinaryS has0 lexicaloverlap. No reference/data/model selection change, no worddeletion to improve CER.",
+  "executionFailuresRetained": [
+    "Initial nested5percent controller/worker jobs caused excessive throttling; stopped only ownfamily and kept same neuralcache. Corrected to worker-only5percent/2GiB cap plus actualLOWRAMmonitor.",
+    "Freshthird2187window neuralcache completed; final statepublication failed because nested control path made .tmp filename exceed Windows260character bound. Samefolder8.3 alias restored finalstate from verified completecache in1.017s, zero new neuralcalls; no repeat full inference. Firstfreshworker wall167.162s includes neuralwork/publicationfailure, not claimed isolated inference time."
+  ],
+  "newProductDelivery": false,
+  "installedOrDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "saleQualified": false,
+  "next": "独显恢复后先跑已固定六段8s原音/分离同Qwen1.7B对照，判定内容保护；接着用原native8 FP16同配方完成第三场36m35s人物活动，核新独立重叠候选的组合召回/误报，不把第三场单检38.9%或首场组合83%冒充跨会合格。通过内容与跨会门才扩大分离；不通过就拒绝该分离/检测候选、不扫阈值训练。普通线继续新36m35s整会冻结Qwen基线，严格字错率<5%、人物/事实/双端实卡与售卖门不变。无独显不将整场Qwen或已测很慢的native8压到CPU，不再无变化重复缓存审计。"
+}

@@ -1,0 +1,40 @@
+{
+  "state": "PASS_SAME_LOCAL_SPEAKER_COUNT_AND_COORDINATES",
+  "cases": [
+    {
+      "meeting": "S_R004S03C01",
+      "sourceFrames": 37233904,
+      "localSpeakerCountFrames": 137904,
+      "countOnlyRegionsEqualExistingPublishedRecipeExactly": true,
+      "expectedFrameCountSha256": "1aeeb1431aca1b30904641d88b26617d1fad68eef283cbecf6f6b5a5e4937981",
+      "sourceLabelNamesOrEmbeddingsUsed": false
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "sourceFrames": 37807120,
+      "localSpeakerCountFrames": 140027,
+      "countOnlyRegionsEqualExistingPublishedRecipeExactly": true,
+      "expectedFrameCountSha256": "10e5d017f2cf35ffd64b84f4438d0efde505ac41f8c013d950d441e4168890b0",
+      "sourceLabelNamesOrEmbeddingsUsed": false
+    }
+  ],
+  "zeroDurationGapFilteringExplicit": true,
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 20360,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 75644928,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "saleQualified": false
+}

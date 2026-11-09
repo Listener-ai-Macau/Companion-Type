@@ -6,12 +6,13 @@ Candidate extraction retains the raw source; promotion requires content checks.
 from collections import Counter, defaultdict
 import math
 
-def plan_routes(segments, *, source_frames, sample_rate):
+def plan_routes(segments, *, source_frames, sample_rate, overlap_regions=()):
     if not isinstance(source_frames, int) or source_frames <= 0:
         raise ValueError('positive complete source frame count required')
     if not isinstance(sample_rate, int) or sample_rate <= 0:
         raise ValueError('positive sample rate required')
     events = defaultdict(Counter)
+    overlap_events = Counter()
     events[0]; events[source_frames]
     for row in segments:
         start, end, person = row['start'], row['end'], row['speaker']
@@ -27,22 +28,44 @@ def plan_routes(segments, *, source_frames, sample_rate):
         key = str(person)
         events[first][key] += 1
         events[last][key] -= 1
+    for region in overlap_regions:
+        start, end = region['start'], region['end']
+        if any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) for v in (start, end)):
+            raise ValueError('finite independent overlap bounds required')
+        if start < 0 or end <= start or end > source_frames / sample_rate + 1e-6:
+            raise ValueError('independent overlap outside source or empty')
+        first, last = round(start * sample_rate), round(end * sample_rate)
+        if first == last:
+            continue
+        events[first]; events[last]
+        overlap_events[first] += 1
+        overlap_events[last] -= 1
     active = Counter()
+    overlap_active = 0
     rows = []
     edges = sorted(events)
     for first, last in zip(edges, edges[1:]):
         active.update(events[first])
+        overlap_active += overlap_events[first]
         assert all(value >= 0 for value in active.values())
+        assert overlap_active >= 0
         people = sorted(person for person, value in active.items() if value > 0)
         route = 'raw_asr_unattributed' if not people else 'raw_asr' if len(people) == 1 else 'candidate_target_extraction'
-        if rows and rows[-1]['route'] == route and rows[-1]['predictedPeople'] == people:
+        identity_pending = overlap_active > 0 and len(people) < 2
+        if identity_pending:
+            route = 'candidate_overlap_identity_pending'
+        if rows and rows[-1]['route'] == route and rows[-1]['predictedPeople'] == people and rows[-1]['independentOverlapDetected'] == (overlap_active > 0):
             rows[-1]['endSample'] = last
         else:
             rows.append({'startSample': first, 'endSample': last, 'route': route,
                          'predictedPeople': people, 'retainRawSource': True,
+                         'independentOverlapDetected': overlap_active > 0,
+                         'targetIdentityPending': identity_pending,
                          'candidateCanReplaceRawByDefault': False})
     active.update(events[source_frames])
+    overlap_active += overlap_events[source_frames]
     assert all(value == 0 for value in active.values())
+    assert overlap_active == 0
     assert rows[0]['startSample'] == 0 and rows[-1]['endSample'] == source_frames
     assert all(a['endSample'] == b['startSample'] for a, b in zip(rows, rows[1:]))
     assert sum(row['endSample'] - row['startSample'] for row in rows) == source_frames

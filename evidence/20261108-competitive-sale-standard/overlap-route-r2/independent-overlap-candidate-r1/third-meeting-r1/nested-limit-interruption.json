@@ -1,0 +1,10 @@
+{
+  "state": "INTERRUPTED_OWN_NESTED_CPU_CAP_SCHEDULING",
+  "newNeuralItems": 0,
+  "startedAt": "2026-11-09T09:04:42+08:00",
+  "activePid": 20620,
+  "parentPid": 8924,
+  "childCpuSeconds": 4.640625,
+  "childPrivateBytes": 222556160,
+  "reason": "Controller5percent job plus nested worker5percent job severely reduced effective throughput. Stop only ownfamily; retry same cached stage with controller monitoring and worker-only resource job. No model/input/threshold change."
+}

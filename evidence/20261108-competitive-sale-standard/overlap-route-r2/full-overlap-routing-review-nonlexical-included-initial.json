@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-09T08:55:18+08:00",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "trueOverlapSeconds": 0.6497629559930829,
+      "predictedOverlapSeconds": 2.9499999340623617,
+      "overlapDetectionRecall": 0.0,
+      "overlapDetectionPrecision": 0.0,
+      "seconds": {
+        "ordinary_or_no_reference": 2323.5192371099447,
+        "false_overlap_solo": 2.9499999340623617,
+        "missed_overlap": 0.6497629559930829
+      },
+      "missedOverlapByReferencePeople": {
+        "2": {
+          "totalSeconds": 0.6497629559930829,
+          "missedSeconds": 0.6497629559930829
+        }
+      }
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "audioSeconds": 2362.945,
+      "trueOverlapSeconds": 189.74442290007897,
+      "predictedOverlapSeconds": 178.61999600753188,
+      "overlapDetectionRecall": 0.6567889454246405,
+      "overlapDetectionPrecision": 0.6976936636561952,
+      "seconds": {
+        "ordinary_or_no_reference": 2119.2026205091393,
+        "false_overlap_solo": 53.329656455371925,
+        "false_overlap_no_reference": 0.6683001354100657,
+        "caught_overlap": 124.62203941674989,
+        "missed_overlap": 65.1223834833291
+      },
+      "missedOverlapByReferencePeople": {
+        "2": {
+          "totalSeconds": 180.01018296275947,
+          "caughtSeconds": 118.74305470248743,
+          "missedSeconds": 61.26712826027206
+        },
+        "3": {
+          "totalSeconds": 9.7342399373195,
+          "caughtSeconds": 5.878984714262458,
+          "missedSeconds": 3.8552552230570427
+        }
+      }
+    }
+  ],
+  "scope": "Routing activity diagnostic only, not word recovery or diarization DER. Original fullmeeting references and cached predictions; no new model/threshold/answer-based runtime change.",
+  "criticalConsequence": "A journal-solo region can be genuinely overlapping even if a separate encoder agrees on its loudest identity. Speaker agreement must not be treated as proof of no overlap.",
+  "saleQualified": false
+}
