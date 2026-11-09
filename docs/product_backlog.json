@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T10:22:13+08:00",
+      "updatedAt": "2026-11-09T11:13:53+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "实际761原370长录/同步仍在跑，先自动同会话收尾并保存累计指标，不换固件/另开START。并行完成的762仅开录准备分段诊断候选（startupPreparationDiagnostic762，01c3a77，已签未装/正常预算FAIL），不是开录修复。长录结束后用一次Owner明确就绪的短录分辨1867ms内擦除/扫描/校验，读完恢复正常761，再修实际最大占时；普通连接/恢复沿原优先级继续。速度后置及原硬件block/屏幕暂停不变，不把工具、编译、模型当实际性能收益。",
+      "next": "原370因电脑重启中断收取，已精确原会话停录收全且释放板卡；先用已准备762一次就绪短录定位开录准备最大占时，随即恢复正常761并修源头。原370的PDM3.245ms>3ms保留在CP23-10，2h未合格不重跑碰结果。连接/恢复和普通手机链随后继续；Owner明确block/暂停/速度后置不参与本批完成门。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133931,8 +133931,8 @@
             "order": 3,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "CURRENT_761_LONG_RUN_ACTIVE_NOT_FINAL_WHOLE_SALE",
-            "next": "已有370长录持续并自动收尾；其证据只覆盖当前761/Windows068。随后补受影响普通手机路径；仅改开录/闲置路径不机械重跑2h，改录中调度/编码/写入才需对应长录。"
+            "status": "HOST_REBOOT_INTERRUPTED_CURRENT761_87MIN_RECOVERY_PASS_PDM_PEAK3245US_OPEN",
+            "next": "保留370原件与累计指标；2h未合格，PDM峰3.245ms需定位修复；先完成开录定位，只有受影响路径修复后再安排必要长录，不立即重跑同条件。"
           }
         ],
         "doNotReopen": [
@@ -133941,8 +133941,8 @@
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
         "currentExecutable": "370长录监督21684/客户端4584继续，不换固件、不新增START；离线集中解决开录响应。每批形成可用修复后一次必要构建/安装及受影响验证；无新信息停止同条件重测。今天先给出长录实测和开录是否需要结构重构的结论，再据真实结果估剩余。",
-        "lastUpdatedAt": "2026-11-09T09:56:31+08:00",
-        "lastOwnerRaw": "然后的话，那你看下怎么样继续收敛呗，什么时候可以搞完这个事情，可以达到这个售卖标准？感觉你一直不知道为啥，不知道在干什么，有没有一个良好的工作流去做这个事情？",
+        "lastUpdatedAt": "2026-11-09T11:02:52+08:00",
+        "lastOwnerRaw": "达到这个售卖标准，除了那些我block的需求以外。",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
         ],
@@ -134021,12 +134021,12 @@
         }
       },
       "releaseReadiness": {
-        "at": "2026-11-09T08:56:32+08:00",
+        "at": "2026-11-09T11:02:52+08:00",
         "firmware": 66761,
-        "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
+        "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "761已交付同步错误回执嵌套断连导致队列计数回绕/越界的源码修复；精确竞态由ASAN验证，实板基本错误/重连过，不覆盖全部历史死机。速度按Owner明确后置且失败保留；首PCM/初连/恢复稳定性/冻结2h、普通UI与首字及原block/屏幕暂停仍未关。",
+        "openSoftware": "实际761/Windows068原370在电脑重启后继续采音，87min同会话收全且原音/校验/WAV通过，故障计数0；不等于2h通过。当前仍修首PCM、连接/恢复、PDM峰及受影响集成；实体首字/电源等Owner block不抢主线。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134039,12 +134039,17 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "Normal configuration restored; no short-speed qualification; latest OTA rate fails",
+        "completionScope": "Owner2026-11-09：除明确block/暂停/后置项外，完成Companion嵌软交付；原50KiB/s失败保留并按Owner后置，不在本批重新冲刺。",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
-        "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.109"
+        "nonBlockedCompletionScope": "CP04-01开录<=1.5s；CP09-02冷目录<=5s/原会话恢复<=10s及偶发失败；CP23-10当前匹配版本可靠性/普通手机链。PDM峰3.245ms>3ms本次实测未关，2h受电脑重启中断不合格。",
+        "phoneVersion": "0.1.109",
+        "scopeBeforeOwnerExcludedBlocked20261109": {
+          "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
+          "completionScope": "Normal configuration restored; no short-speed qualification; latest OTA rate fails",
+          "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。"
+        }
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136203,22 +136208,22 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T09:48:01+08:00",
-        "state": "NORMAL761_OWNER_APPROVED_LONG_RECORDING_AND_LIVE_RECEIVE_RUNNING",
+        "at": "2026-11-09T11:20:12.271802+08:00",
+        "state": "INSTALL_TEMPORARY764",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66761,
+        "firmwareInstalled": null,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "firmwareSource": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
         "boardLease": true,
-        "boardItem": "Companion761当前固件非速度长录及录中同步验收",
-        "liveRecording": true,
-        "liveReceive": true,
-        "liveUpgrade": false,
+        "boardItem": "Companion764一次蓝牙读取开录准备耗时，恢复正常765",
+        "liveRecording": false,
+        "liveReceive": false,
+        "liveUpgrade": true,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 370,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json",
+        "evidence": "E:\\CodexData\\Companion\\.build-cache\\startup764-hardware\\progress.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": 66761,
         "candidateSourceCommit": "872b5f3",
@@ -136228,7 +136233,7 @@
         "backendCandidateSource": null,
         "phoneBuildSession": null,
         "normalRestoreCandidate": null,
-        "longControllerSession": 21684,
+        "longControllerSession": null,
         "rangeFirmwarePrototype": "2b1a1461b51dd8defcd60cccaf46e0f71a5b4f7d",
         "rangeHostPrototype": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
         "otaControllerSession": null,
@@ -136238,9 +136243,10 @@
         "engineeringRunnerName": null,
         "phoneControllerSession": null,
         "firmwareCandidateProfile": null,
-        "windowsClientPid": 4584,
-        "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\long761\\progress.json",
-        "longObserverSession": 14504
+        "windowsClientPid": null,
+        "longRunEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\acceptance.json",
+        "longObserverSession": null,
+        "startupDiagnosticSession": 29692
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -140532,25 +140538,45 @@
         }
       },
       "long761Current": {
-        "at": "2026-11-09T09:48:01+08:00",
-        "result": "OWNER_APPROVED_REAL_LONG_RECORDING_RUNNING_NOT_PASSED",
-        "session": 370,
+        "at": "2026-11-09T11:02:52+08:00",
+        "result": "HOST_REBOOT_INTERRUPTED_2H_SYNC_UNQUALIFIED_ORIGINAL370_RECOVERED",
         "firmware": 66761,
         "sourceCommit": "872b5f39e8aa642a1872f1b987dbe1e14ac877c7",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\manifest.json",
-        "liveResult": "E:\\CodexData\\Companion\\.build-cache\\long761\\acceptance.json",
-        "scope": "Current Windows068 long recording/live sync; not yet complete and no phone/speed/whole-sale inheritance"
+        "session": 370,
+        "recordingSeconds": 5206.97,
+        "checks": {
+          "sameOriginalCrcShaReceiptsAndWav": true,
+          "old34MetadataUnchanged": true,
+          "twoHoursRecording": false,
+          "twoHoursContinuousLiveSync": false,
+          "encodeP95Within5000Us": true,
+          "encodePeakWithin6000Us": true,
+          "pdmPeakWithin3000Us": false,
+          "serviceGapWithin8Ms": true,
+          "audioFaultsZero": true,
+          "stackGuardAndLowZero": true
+        },
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\long761-20261109\\acceptance.json",
+        "scope": "Host-reboot original recovery87min only; continuous2h unqualified; observedPDM peak fails3000us."
       },
       "startupPreparationDiagnostic762": {
-        "at": "2026-11-09T10:22:13+08:00",
-        "state": "PREPARATION_PHASE_DIAGNOSIS_READY_NOT_INSTALLED_NOT_LATENCY_FIXED",
+        "at": "2026-11-09T11:20:12.271802+08:00",
+        "state": "INSTALL_TEMPORARY764",
         "sourceCommit": "01c3a77e30676ef15a91a78a9e3b7b6d076e8b08",
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\manifest.json",
         "candidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate.json",
         "installed": false,
         "latencyFixed": false,
-        "normalCurrent": 66761,
-        "next": "After370 finishes and current-version metrics are saved, owner-ready short real recording once on temporary762 to distinguish actual preparation costs, then restore signed normal761 and implement the dominant cause. Do not repeat old warm-proof cache/no-benefit batching or short-extent capacity regression; do not start speed investigation."
+        "normalCurrent": 66763,
+        "next": "After370 finishes and current-version metrics are saved, owner-ready short real recording once on temporary762 to distinguish actual preparation costs, then restore signed normal761 and implement the dominant cause. Do not repeat old warm-proof cache/no-benefit batching or short-extent capacity regression; do not start speed investigation.",
+        "queuePid": 24732,
+        "hardwareEvidence": "E:\\CodexData\\Companion\\.build-cache\\startup764-hardware\\progress.json",
+        "actualPhaseEvidence": null,
+        "normalRestored": true,
+        "hardwareTimingMeasured": false,
+        "currentDiagnosticVersion": 66764,
+        "currentDiagnosticSource": "933c24dab945fb94d3206b98e281b6f510e2b2a3",
+        "normalRestoreVersion": 66765
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -146131,11 +146157,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "FIXED_STACK_MATCHED_REAL_SOURCE_DIAGNOSTICS_PRIORITY_NO_NEW_MODEL_SEARCH",
+          "status": "PAIRED_REAL_SOURCE_RESTORED_AND_AUDITED_FIXED_ASR_PENDING_EXTERNAL_GPU",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "停止新增模型候选和重复旧失败实验。固定现有中文Qwen识别器、一个分离对照及解码版本，优先完成一场真实中文会议远场混音与逐人近讲录音的配对、身份/声道映射、时间对齐/漂移与串音验证；近讲不是默认干净真值。按同人同时间同文字参照隔离输入/识别、分离内容损失和人物归属，不能把混音对单人参照的错误当模型幻觉。复用已有正确活动时间和归人失败证据，不重跑当新进展。定位后只修一个可归因模块，有可靠匹配中文Train数据才考虑小范围适配，Eval仅诊断不训练。普通线5.53754%仍需降至<5%，第三真实整会/跨会/留出/纪要事实/双端实卡任务全部保留未完成；不默认大规模自研、不降低售卖门、不承诺任意单麦密集重叠逐人<5%。",
+          "next": "已恢复并核验原暴露AliMeeting R8001_M8004一场四路近讲/远场及604段对应参考。下一项执行已冻结五输入同Qwen1.7B识别对照：四人完整近讲＋一路共同覆盖1551.82s原混音，先量近讲识别上限，再决定是否修识别器或当前分离内容保留；混音全文与逐人CER不能直接混比。当前仅780M、无外置6800XT，本轮零模型调用，GPU恢复时先重新枚举HIP并绑定私有运行包，不能用旧ordinal；单任务5%CPU/2GiB私有内存、保留raw与断点。近讲仍有串音，局部延迟/相关性不稳定，不作为样本精确干净声源训练或SDR真值；Eval不训练。普通最佳5.53754%及第三整会/跨会/最终留出/人物/纪要事实/双端实卡待办和售卖门均保持开放，不新增模型清单。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -261188,6 +261214,174 @@
             "remoteModelReadbackConfirmed": true,
             "previousStatus": "SE_DICOW_REAL_CHINESE_PILOT_FAILED_NO_EXPANSION_OR_TRAINING",
             "previousWorkpoint": "本轮最后新增公开候选SE-DiCoW已实跑且未过中文小样本门：不扩整会、不训练、不因独显恢复原样重复。保留原先分离再转写/同Qwen六段对照与普通线<5%任务；独显可用时先执行原已固定六8s同Qwen内容保护对照及第三真实整会普通基线，不再新增模型清单。复杂多人字错/人物/事实仍未合格、不关闭任务、不自行缩减产品范围。后续若继续此类目标人物ASR研究，先解决自动参考混杂和匹配中文数据/训练验证边界，不能假定微调就能修好；原5%及跨会/留出/双端实卡门不改。"
+          },
+          "ownerPairedRealMeetingSource20261109": {
+            "at": "2026-11-09T11:24:04+08:00",
+            "ownerQuote": "那继续按照这个推进咯",
+            "state": "PAIRED_REAL_SOURCE_RESTORED_AND_AUDITED_FIXED_ASR_PENDING_EXTERNAL_GPU",
+            "historicalCorrection": {
+              "priorAvailabilityOnlyStatementTooBroad": true,
+              "actualEarlierState": {
+                "preparation": "E:\\CodexData\\Companion\\asr-accuracy-latency-20261103\\multispeaker-ai\\word-speaker-direction-control-20261104\\paired-source-preparation.json",
+                "clockReview": "E:\\CodexData\\Companion\\asr-accuracy-latency-20261103\\multispeaker-ai\\word-speaker-direction-control-20261104\\paired-clock-review.json",
+                "referenceConsistency": "E:\\CodexData\\Companion\\asr-accuracy-latency-20261103\\multispeaker-ai\\word-speaker-direction-control-20261104\\paired-reference-consistency.json",
+                "state": "TWO_REAL_MEETINGS_EIGHT_HEADSETS_PREPARED_NOT_INFERRED",
+                "newDownloadBytes": 0,
+                "existingArchiveBytesVerified": 3673718355,
+                "finding": "All8 near references match the corresponding far-person reference characters and speech bounds exactly. Raw audio durations differ22.03s/0.30s; coarse acoustic peaks are mostly20-80ms with some low-correlation windows, so duration difference must not be used as an initial offset. No verified sample-accurate alignment or clean-source SDR.",
+                "nextQuestion": "Under the same pinned ASR with full audio coverage, how much error is present on each own-headset recording versus the same conversation at the distant mic? Separate headset bleed/silence insertions and annotation scope; use each recording own timeline. This must guide ASR versus acoustic/separation investment before more model ranking/training."
+              },
+              "meaning": "November4 already prepared2 exposed meetings/8headsets, reference consistency and coarse clocks; referenced cache and archive had been cleaned. This batch restores1 of those meetings and adds explicit source/raw verification, target-only core acoustic delays and leakage measurements, not a newly discovered dataset or new independent test."
+            },
+            "source": {
+              "official": "https://www.openslr.org/119/",
+              "archiveBytes": 3673718355,
+              "archiveSha256": "dc47343b2474b5ebcf458927e878155f6ddeb59c85e685b3645c32a1f9578d92",
+              "gzipCrcVerified": true,
+              "session": "R8001_M8004",
+              "farSeconds": 1573.85,
+              "nearSeconds": [
+                1551.82,
+                1551.82,
+                1551.82,
+                1551.82
+              ],
+              "people": 4,
+              "referenceUtterances": 604,
+              "annotatedOverlapSeconds": 456.28000000000003,
+              "split": "Eval, exposed diagnostic only, not training or final holdout"
+            },
+            "actualFindings": [
+              {
+                "speaker": "N_SPK8013",
+                "referenceUtterances": 277,
+                "exactReferenceMatch": true,
+                "ownVsOtherSoloMedianRmsDb": 25.403861060707484,
+                "fineDelay": {
+                  "measuredWindows": 3,
+                  "medianLagSeconds": 0.0625625,
+                  "lagSpreadMilliseconds": 61.81250000000001,
+                  "minimumAbsoluteCorrelation": 0.2256495734505993,
+                  "searchBoundaryHit": false,
+                  "sampleAccurateCleanSourceClaimed": false
+                }
+              },
+              {
+                "speaker": "N_SPK8014",
+                "referenceUtterances": 85,
+                "exactReferenceMatch": true,
+                "ownVsOtherSoloMedianRmsDb": 30.75184884134351,
+                "fineDelay": {
+                  "measuredWindows": 3,
+                  "medianLagSeconds": 0.0729375,
+                  "lagSpreadMilliseconds": 75.18749999999999,
+                  "minimumAbsoluteCorrelation": 0.1473083118875043,
+                  "searchBoundaryHit": false,
+                  "sampleAccurateCleanSourceClaimed": false
+                }
+              },
+              {
+                "speaker": "N_SPK8015",
+                "referenceUtterances": 154,
+                "exactReferenceMatch": true,
+                "ownVsOtherSoloMedianRmsDb": 30.45345586596885,
+                "fineDelay": {
+                  "measuredWindows": 3,
+                  "medianLagSeconds": 0.06675,
+                  "lagSpreadMilliseconds": 34.5625,
+                  "minimumAbsoluteCorrelation": 0.20181351301776487,
+                  "searchBoundaryHit": false,
+                  "sampleAccurateCleanSourceClaimed": false
+                }
+              },
+              {
+                "speaker": "N_SPK8016",
+                "referenceUtterances": 88,
+                "exactReferenceMatch": true,
+                "ownVsOtherSoloMedianRmsDb": 31.585540773084595,
+                "fineDelay": {
+                  "measuredWindows": 3,
+                  "medianLagSeconds": 0.026625,
+                  "lagSpreadMilliseconds": 29.625000000000004,
+                  "minimumAbsoluteCorrelation": 0.7494173009013132,
+                  "searchBoundaryHit": false,
+                  "sampleAccurateCleanSourceClaimed": false
+                }
+              }
+            ],
+            "decision": "Matched source microphones are useful for measuring recognition ceilings; they are NOT automatically clean or sample-aligned waveform training targets. Keep source/audio clocks intact. Measured local acoustic offsets are not the22.03s file-length difference and include room propagation; weak/variable peaks do not justify global resampling.",
+            "preparation": {
+              "at": "2026-11-09T11:19:28+08:00",
+              "state": "FIXED_ASR_INPUTS_BOUND_DEFERRED_EXTERNAL_GPU_ABSENT",
+              "audioOnlySha256": "c07bd6ffbfbc069932d00f30abfff211c6c2a1ad3fc61596646ef5d9f1559ea2",
+              "scoringOnlySha256": "28af572717bd3e86126e9d51b4ce12d3758b6642f197e96fb83f6a59b59d23ba",
+              "modelPack": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+              "modelPackSha256": "281186b7cbddbf522f9578b477d59cbe3aa401de66bb3ebd203e27cdeb5572f0",
+              "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+              "modelRevision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+              "caseCount": 5,
+              "speakerHeadsetCount": 4,
+              "commonSecondsPerInput": 1551.82,
+              "runtimeHardwareRule": "Freshly identify external RX6800XT in HIP before inference; no old ordinal assumption or integrated fallback.",
+              "displayQuery": "Microsoft PnP Utility\n\nInstance ID:                PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857bc2&0&0041\nDevice Description:         AMD Radeon 780M Graphics\nClass Name:                 Display\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\nManufacturer Name:          Advanced Micro Devices, Inc.\nStatus:                     Started\nDriver Name:                oem0.inf\n\n",
+              "newModelCalls": 0,
+              "newTrainingRuns": 0,
+              "wallSeconds": 1.073071900000059,
+              "limits": {
+                "pid": 27132,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 536870912,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 536211456,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              },
+              "sourcePcmUnchanged": true,
+              "farMic0BoundedSamplesBitExact": true,
+              "saleQualified": false,
+              "notRunReason": "External6800XT absent; existing adapter also needs freshly verified HIP ordinal before running commands, not a cached ordinal."
+            },
+            "repairsAndFailures": [
+              "Python3.11 wave rejected official far WAVE_FORMAT_EXTENSIBLE65534. Added bounded PCM16 RIFF/GUID reader; first/middle/last frames on all5 sources bit-exact against scipy mmap. No transcoding or lossy decode introduced.",
+              "First extractor selected underscore-prefixed filenames and missed exact session.TextGrid; retained original incomplete manifest, fixed selection and asserted far reference presence.",
+              "Whole-utterance isolation yielded no clock window for8015 despite213.66s target-only frames. R1 retained; R2 measures interior exclusive cores in each meeting third, never uses cut phrases for CER.",
+              "R6 optional model-pack metadata was not yet exported; source pilot and model binding were already passed. Exported its existing opt-in pack, not new weights/model/installation. Actual ASR deferred due absent external GPU."
+            ],
+            "resourceAndTime": {
+              "acquisitionSeconds": 292.0063469999999,
+              "archiveReuseVerifiedSeconds": 6.267051399999673,
+              "secondExtractionSeconds": 49.11396690000015,
+              "auditWorkerSeconds": 2.9043182000000343,
+              "auditPeakJobPrivateBytes": 530784256,
+              "inferenceSeconds": null,
+              "inferenceNotPerformed": true,
+              "cpuMaximumPercent": 5,
+              "otherApplicationsClosed": false,
+              "pagefileChanged": false
+            },
+            "ordinaryBestStrictCerUnchanged": 0.055375375375375374,
+            "newModelCalls": 0,
+            "newTrainingRuns": 0,
+            "newIndependentMeetings": 0,
+            "newAccuracyGain": false,
+            "productSourceChanged": false,
+            "installedProductChanged": false,
+            "phoneOrBoardAccessed": false,
+            "finalHoldoutOpened": false,
+            "formalQualityTargetsChanged": false,
+            "saleQualified": false,
+            "next": "已恢复并核验原暴露AliMeeting R8001_M8004一场四路近讲/远场及604段对应参考。下一项执行已冻结五输入同Qwen1.7B识别对照：四人完整近讲＋一路共同覆盖1551.82s原混音，先量近讲识别上限，再决定是否修识别器或当前分离内容保留；混音全文与逐人CER不能直接混比。当前仅780M、无外置6800XT，本轮零模型调用，GPU恢复时先重新枚举HIP并绑定私有运行包，不能用旧ordinal；单任务5%CPU/2GiB私有内存、保留raw与断点。近讲仍有串音，局部延迟/相关性不稳定，不作为样本精确干净声源训练或SDR真值；Eval不训练。普通最佳5.53754%及第三整会/跨会/最终留出/人物/纪要事实/双端实卡待办和售卖门均保持开放，不新增模型清单。",
+            "modelEvidenceCommit": "de182dd93a1946fe9597fcf67f6eb2b51400449c",
+            "remoteModelReadbackConfirmed": true,
+            "previousStatus": "FIXED_STACK_MATCHED_REAL_SOURCE_DIAGNOSTICS_PRIORITY_NO_NEW_MODEL_SEARCH",
+            "previousWorkpoint": "停止新增模型候选和重复旧失败实验。固定现有中文Qwen识别器、一个分离对照及解码版本，优先完成一场真实中文会议远场混音与逐人近讲录音的配对、身份/声道映射、时间对齐/漂移与串音验证；近讲不是默认干净真值。按同人同时间同文字参照隔离输入/识别、分离内容损失和人物归属，不能把混音对单人参照的错误当模型幻觉。复用已有正确活动时间和归人失败证据，不重跑当新进展。定位后只修一个可归因模块，有可靠匹配中文Train数据才考虑小范围适配，Eval仅诊断不训练。普通线5.53754%仍需降至<5%，第三真实整会/跨会/留出/纪要事实/双端实卡任务全部保留未完成；不默认大规模自研、不降低售卖门、不承诺任意单麦密集重叠逐人<5%。"
           }
         },
         "ownerRx6800xtConnected20261104": {
