@@ -13,6 +13,7 @@ import psutil
 S=Path(__file__).resolve().parents[3];R=Path(os.environ.get('COMPANION_ACCEPTANCE_PROJECT_ROOT',str(S.parent)))
 C=R/'docs/handoffs/20261109-core-acceptance';D=Path(os.environ.get('COMPANION_ACCEPTANCE_CACHE','E:/CodexData/Companion/.build-cache/core-acceptance20261109'))
 CPU_PERCENT=100 if os.environ.get('GITHUB_ACTIONS')=='true' else 5
+DEDICATED_CI=os.environ.get('GITHUB_ACTIONS')=='true'
 K=ctypes.WinDLL('kernel32',use_last_error=True);U=ctypes.WinDLL('user32',use_last_error=True)
 class Startup(ctypes.Structure):
  _fields_=[('cb',w.DWORD),('lpReserved',w.LPWSTR),('lpDesktop',w.LPWSTR),('lpTitle',w.LPWSTR),('dwX',w.DWORD),('dwY',w.DWORD),('dwXSize',w.DWORD),('dwYSize',w.DWORD),('dwXCountChars',w.DWORD),('dwYCountChars',w.DWORD),('dwFillAttribute',w.DWORD),('dwFlags',w.DWORD),('wShowWindow',w.WORD),('cbReserved2',w.WORD),('lpReserved2',ctypes.POINTER(ctypes.c_ubyte)),('hStdInput',w.HANDLE),('hStdOutput',w.HANDLE),('hStdError',w.HANDLE)]
@@ -46,8 +47,9 @@ def require(value):
  return value
 def sha(path):
  with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
-def station_name():
- buf=ctypes.create_unicode_buffer(256);needed=w.DWORD();require(U.GetUserObjectInformationW(U.GetProcessWindowStation(),2,buf,ctypes.sizeof(buf),ctypes.byref(needed)));return buf.value
+def object_name(handle):
+ buf=ctypes.create_unicode_buffer(256);needed=w.DWORD();require(U.GetUserObjectInformationW(handle,2,buf,ctypes.sizeof(buf),ctypes.byref(needed)));return buf.value
+def station_name():return object_name(U.GetProcessWindowStation())
 def windows(desktop,pid):
  result=[]
  @EnumProc
@@ -110,21 +112,25 @@ def main():
   memory=psutil.virtual_memory();record['lastResourceObservation']={'availablePhysicalBytes':memory.available,'systemPhysicalPercent':memory.percent}
  old_station=U.GetProcessWindowStation();old_desktop=U.GetThreadDesktop(K.GetCurrentThreadId());before_clip=U.GetClipboardSequenceNumber()
  if a.library:record['inputKind']='Existing real public ASR output plus explicit engineering manual review/document; not new ASR/AI or capture'
- name='CompanionCore-'+token;station=require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set()
+ name=station_name() if DEDICATED_CI else 'CompanionCore-'+token
+ station=old_station if DEDICATED_CI else require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set()
  try:
-  require(U.SetProcessWindowStation(station));desktop=require(U.CreateDesktopW('Meeting',None,None,0,0x1ff,None));require(U.SetThreadDesktop(desktop));assert station_name()==name
+  require(U.SetProcessWindowStation(station));desktop=old_desktop if DEDICATED_CI else require(U.CreateDesktopW('Meeting',None,None,0,0x1ff,None));require(U.SetThreadDesktop(desktop));assert station_name()==name
+  desktop_path=name+'\\'+object_name(desktop)
   record['privateStation']=name;record['stationVerifiedBeforeLaunch']=True
+  record['desktopIsolation']='Dedicated disposable GitHub Windows runner; no owner desktop' if DEDICATED_CI else 'Private noninteractive window station on owner PC'
   job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=1536*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT
   env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
   for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
-  log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe'],env,app,name+'\\Meeting',job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
+  log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
   deadline=time.monotonic()+60
   import urllib.request
+  local_http=urllib.request.build_opener(urllib.request.ProxyHandler({}))
   while time.monotonic()<deadline:
    require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; stopping only this owned job'
    assert alive(p),'Frozen native app exited before CDP'
    try:
-    with urllib.request.urlopen(f'http://127.0.0.1:{port}/json/version',timeout=1) as response:record['webviewAgent']=json.load(response).get('User-Agent');break
+    with local_http.open(f'http://127.0.0.1:{port}/json/version',timeout=1) as response:record['webviewAgent']=json.load(response).get('User-Agent');break
    except Exception:time.sleep(.3)
   else:raise TimeoutError('Private native WebView did not expose CDP; no foreground fallback')
   actual_windows=windows(desktop,p.pid);assert actual_windows,'App main window not proven on private desktop';record['nativeWindowsOnPrivateDesktop']=actual_windows
@@ -150,7 +156,7 @@ def main():
    except psutil.NoSuchProcess:continue
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
-  log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,name+'\\Meeting',job,log);processes.append(node)
+  log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
   deadline=time.monotonic()+180
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
@@ -159,7 +165,7 @@ def main():
     from windows_file_receiver import Receiver,copied_path
     data=json.loads(request.read_text(encoding='utf8'));source=copied_path();assert source.name==data['fileName'] and source.parent.name and source.parent.parent.name=='content-share'
     if receiver is None:
-     receiver=Receiver(root,out,job,desktop,name+'\\Meeting',env);receiver.start()
+     receiver=Receiver(root,out,job,desktop,desktop_path,env);receiver.start()
     received=receiver.paste(source)
     if source.suffix=='.pdf':
      from pypdf import PdfReader
@@ -189,8 +195,10 @@ def main():
   for p in processes:K.CloseHandle(p.process)
   for log in logs:log.close()
   require(U.SetProcessWindowStation(old_station));require(U.SetThreadDesktop(old_desktop))
-  record['ownerClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber();record['keyboardMouseOrForegroundControlUsed']=False
-  if desktop:U.CloseDesktop(desktop)
-  U.CloseWindowStation(station);K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()
+  record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
+  record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation'];record['keyboardMouseOrForegroundControlUsed']=False
+  if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
+  if not DEDICATED_CI:U.CloseWindowStation(station)
+  K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()
  print(json.dumps({'state':record['state'],'evidence':str(out),'privateStation':name,'ownerClipboardSequenceUnchangedAtObservation':record['ownerClipboardSequenceUnchangedAtObservation'],'wholeCoreCandidateQualified':False},ensure_ascii=False))
 if __name__=='__main__':main()
