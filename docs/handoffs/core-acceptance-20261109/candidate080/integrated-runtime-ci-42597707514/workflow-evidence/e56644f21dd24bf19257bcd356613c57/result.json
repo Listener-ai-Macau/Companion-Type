@@ -1,0 +1,141 @@
+{
+  "at": "2026-11-09T18:01:42+08:00",
+  "state": "REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED",
+  "stage": "ai",
+  "frozenAppVersion": "0.1.80",
+  "frozenAppSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+  "exeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
+  "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+  "inputKind": "The same actual public imported audio and new fixed-product ASR, followed by actual cloud AI; reading/audio playback/document receipt and restoration continuation, no new ASR/cloud call in this UI stage",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": true,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "appPid": 5400,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 196784,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 393384,
+      "title": ""
+    },
+    {
+      "hwnd": 131260,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    4636
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 3584,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4636,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 5720,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6392,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6852,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7364,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e56644f21dd24bf19257bcd356613c57\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 460001280,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5778063360,
+    "systemPhysicalPercent": 32.7
+  },
+  "receivedFiles": [
+    {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+      "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+      "bytes": 45411,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "selectedContentsVerified": true
+    }
+  ],
+  "ui": {
+    "state": "ACTUAL_SAME_AUDIO_ASR_AI_READING_PLAYBACK_WORD_HANDOFF_PASSED",
+    "sourceMeeting": "S_R004S03C01",
+    "cachedRealCloudAi": true,
+    "manualSourceReviewDeclared": false,
+    "sameAudioAndActualAsrLineage": true,
+    "newCloudCalls": 0,
+    "newAsrRun": false,
+    "neutralQuestionHeading": true,
+    "completeTwoChunkNotice": true,
+    "topExportOpensSelectedContent": true,
+    "received": {
+      "receiver": "Windows Shell folder Paste verb",
+      "operation": "Shell FolderItemVerb.DoIt for the actual Paste menu command",
+      "fileName": "public-audio-S_R004S03C01-所选内容.docx",
+      "sha256": "9ef456321aa7e188cba7ea094146f903de83df71f4b035d6e44bc2c4d19bb6e6",
+      "bytes": 45411,
+      "actualFileReceived": true,
+      "sourcePathOrBytesSuppliedToReceiver": false,
+      "thirdPartyMessengerOrSendQualified": false,
+      "selectedContentsVerified": true
+    },
+    "aiWorkbenchAvailableAfterFinalText": true,
+    "customerOrBusinessFactQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "receiverPreferencesRestoredIdentically": null,
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T18:02:00+08:00"
+}

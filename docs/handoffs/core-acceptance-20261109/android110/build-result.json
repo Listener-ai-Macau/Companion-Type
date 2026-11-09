@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-09T18:16:04+08:00",
+  "state": "ANDROID110_UNIFIED_SOURCE_SIGNED_PAYLOAD_VERIFIED_PHONE_PENDING",
+  "sourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+  "versionName": "0.1.110",
+  "versionCode": 110,
+  "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+  "backendAarSha256": "af498b880338aa5b8036cbfa97ad26588fdc784ee5eaf92e15df50c06e9aaadf",
+  "newNativeBackendBuilt": false,
+  "modelsRun": false,
+  "deviceAccess": false,
+  "phoneAccess": false,
+  "installed": false,
+  "wholeProductQualified": false,
+  "privateBuildDirectory": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\android110-efccc34b460a423cae498e34043c1b22",
+  "steps": [
+    {
+      "name": "01-npm-ci",
+      "exitCode": 0,
+      "seconds": 17.12131120000049
+    },
+    {
+      "name": "02-mobile-web",
+      "exitCode": 0,
+      "seconds": 22.468194199998834
+    },
+    {
+      "name": "03-assemble-current-native-and-ui",
+      "exitCode": 0,
+      "seconds": 104.61462739999843
+    },
+    {
+      "name": "04-new-apk-signature",
+      "exitCode": 0,
+      "seconds": 1.01334389999829
+    },
+    {
+      "name": "05-known-app-signature",
+      "exitCode": 0,
+      "seconds": 0.5103593999992881
+    },
+    {
+      "name": "06-apk-alignment",
+      "exitCode": 0,
+      "seconds": 0.5755078000001959
+    },
+    {
+      "name": "07-package-identity",
+      "exitCode": 0,
+      "seconds": 0.7506848999983049
+    }
+  ],
+  "finishedAt": "2026-11-09T18:18:31+08:00",
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\android110\\Companion-Android-0.1.110-core-candidate.apk",
+  "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+  "apkBytes": 48794105,
+  "signerMatchesPreviouslyTrustedApp": true,
+  "zip16KiBAligned": true,
+  "nativeLibraries": [
+    {
+      "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+      "sha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libonnxruntime.so",
+      "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+      "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+      "elf16KiBAligned": true
+    }
+  ],
+  "webAssets": [
+    {
+      "path": "index.html",
+      "sha256": "ab236e1d3f9004be57a5f7b4fcf16998de3756cdd09d29a2b8db69c9149b1bab"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+    },
+    {
+      "path": "assets/index-BXeaSz1o.css",
+      "sha256": "8fe07f5335ec067ff3ed767f2d4c9cca25d3d9471ff1e57b2616ae877f6af6ae"
+    },
+    {
+      "path": "assets/index-DPxrSCBp.js",
+      "sha256": "6542d174161444d8be6ce212ac73153fe47caaf97b51a2979ed188891a4f14af"
+    }
+  ],
+  "cpuAndMemory": {
+    "pid": 28148,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1610612736,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1168769024,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "phoneOrdinaryFlowQualified": false
+}

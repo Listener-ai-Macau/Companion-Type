@@ -5,6 +5,13 @@ import ast,copy,hashlib,json,os,re,shutil,subprocess,sys,time,uuid
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';C=R/'docs/handoffs/20261109-core-acceptance';D=Path('E:/CodexData/Companion/.build-cache/core-acceptance20261109')
 source=D/'same-meeting-asr-ci-42592563926';proof=json.loads((source/'result.json').read_text(encoding='utf8'));assert proof['state']=='WINDOWS079_SAME_PUBLIC_AUDIO_IMPORT_AND_PRODUCT_ASR_PASSED_AI_CONTINUES'
 data=source/'same-meeting-state';manifest=json.loads((data/'manifest.json').read_text(encoding='utf8'));row=json.loads((data/'session.json').read_text(encoding='utf8'));raw=copy.deepcopy(row)
+
+previous=C/'same-meeting-ai-current.json'
+if previous.exists():
+ existing=json.loads(previous.read_text(encoding='utf8'));fixture=Path(existing['fixture'])
+ if existing['record']['rawTranscriptSha256']==manifest['rawTranscriptSha256'] and fixture.is_file() and hashlib.sha256(fixture.read_bytes()).hexdigest()==existing['fixtureSha256']:
+  print(json.dumps({'state':'REUSING_PREVIOUS_PROVEN_SAME_PUBLIC_MEETING_AI','evidence':existing['evidence'],'newInferenceOrCloudCalls':0}),flush=True);raise SystemExit(0)
+
 def sha(p):
  with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 assert hashlib.sha256(row['transcriptText'].encode('utf8')).hexdigest()==manifest['rawTranscriptSha256']

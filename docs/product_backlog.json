@@ -132986,24 +132986,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T16:57:16+08:00",
+      "updatedAt": "2026-11-09T18:18:14+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66769,
+        "firmwareVersion": 66771,
         "uiGeneration": 85,
         "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
-        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate769-build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-normal769-ota-identity.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-after-install.json",
+        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate771-build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-installed-normal771-ota-identity.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal769/3b2 installed via signed OTA; editable source exactly matches. Current matched079 long-run result is independent of previous767 short samples.",
+        "sourceRootAvailability": "Normal771/fd2 installed; actual targeted results and old769 long scope are separate.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "当前实板仍769/3b2+079/d00的同一377长录，只监督并收尾后读取累计指标/完整原音。实物375暴露的“需启动下一场才恢复旧故障目录”已并入同批开发：770/64d552正常构建签名及真实C/NOR/Opus自动收尾模型通过，镜像405084B/静态67896B/栈21504B，正常控制原音字节与769完全相同；新自动触发尚未实板验证，不能借769长录冒充770整版通过。长录完成前不更换板上版本；读取本场实际失败后把同链必要修改集中交付，不复开速度/屏幕/明确block。",
+      "next": "771/fd2已装且原378短录全门过，原379录中同步PDM P95上界2000us/峰2832us及零故障过，编码峰6510us仍超6000。12ms等待尚未关闭编码峰，不继续盲增等待或原样2h；用既有最坏帧线程/IRQ观察补当前准入原因（真实quiet/query缺失/超时/音频积压旁路），先分清失效路径，再改源头。真实原769 2h零故障与771短录改善均保留范围；新录音须新原弹窗，原10s+180s已经用掉。手机/偶发连接、速度后置/明确block不继承关闭。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133725,11 +133725,11 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
-        "installedSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
-        "installedFirmwareVersion": 66769,
-        "scope": "Firmware769 physically installed, normal Windows079/d00 long-run candidate under same complete-core batch.",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "installedSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "installedFirmwareVersion": 66771,
+        "scope": "Combined771 normal installed; current targeted acceptance remains scoped, final2h not inherited.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
         "phoneActualVersion": "0.1.109",
         "phoneObservation": "LAST_POSITIVE_NOT_CURRENT_ADB_READ",
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -133747,10 +133747,14 @@
         "windowsCoreCandidatePackageSha256": "6f4a708c9bb983f9193a7a6dc7445d830d34241452b50f45026175139d1877e3",
         "windowsCoreCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-candidate.json",
         "windowsCoreCandidateInstalled": false,
-        "nextFaultRecoveryFirmware": 66770,
-        "nextFaultRecoveryCommit": "64d5521ca6b86df3542500d224050e87275cac47",
+        "nextFaultRecoveryFirmware": 66771,
+        "nextFaultRecoveryCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
         "nextFaultRecoverySourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
-        "nextFaultRecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core770-development.json"
+        "nextFaultRecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
+        "nextCoreFirmware": 66771,
+        "nextCoreSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "nextCoreSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "nextCoreReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json"
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -133981,25 +133985,26 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66769,
+        "version": 66771,
         "installed": true,
-        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
-        "appBytes": 404964,
+        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "appBytes": 406580,
         "staticBytes": 67896,
         "stackReservedBytes": 21504,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-candidate.json",
-        "reason": "769正常OTA联合确认且临时区释放；原34目录相同。当前长录377/079按原指标验收，尚未完成。",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
+        "reason": "合并771正常OTA已安装；当前定向/最终长录分别按实际收据判定，不继承769峰值通过。",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
-        "at": "2026-11-09T15:43:08+08:00",
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
-        "actualFirmware": 66769,
+        "at": "2026-11-09T18:18:14+08:00",
+        "actualFirmware": 66771,
+        "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "firmwareInstalled": true,
         "candidateWindows": "0.1.79",
         "candidateInstalled": false,
-        "firmwareInstalled": true,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
         "wholeSaleQualified": false,
-        "scope": "Normal firmware OTA installed; Windows079 candidate private native executable reused. Long377 current, not yet qualified."
+        "scope": "Normal771 OTA installed; actual targeted recording gates separate from final current2h and ordinary phone."
       },
       "blockedItems": [
         {
@@ -134165,8 +134170,8 @@
             "order": 1,
             "task": "CP04-01",
             "scope": "正常开录至首个真实PCM<=1.5s；保留可录时长/音质/资源预算",
-            "status": "CURRENT767_SHORT_FIRST_PCM328MS_STOP171MS_ACCEPTED_SCOPED",
-            "next": "本批正常短录指标已过，复用实际原音收据；实体第一句话回听沿Owner后置，不重新刷旧版或重复同条件首样本。"
+            "status": "CURRENT771_SHORT_FIRST_PCM312MS_STOP188MS_ACCEPTED_SCOPED",
+            "next": "复用771原378十秒真实首PCM0.312s/STOP0.188s及完整原音；实体首字仍Owner后置，不因此重复录音。"
           },
           {
             "order": 2,
@@ -134179,8 +134184,8 @@
             "order": 3,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "NORMAL769_079_ORIGINAL377_FINAL_LONG_RUNNING",
-            "next": "只监督同一377，先跨原251秒失效位置，现有缓存采音计数若已失败就收尾定位；否则完成原2h录音+2h录中同步、完整原音和累计资源指标。不复开速度或Owner block。"
+            "status": "NORMAL771_TARGETED_RESULTS_PRESERVED",
+            "next": "按core771-development实际门继续；失败先修源头，只有当前定向已达门才组织有变化的最终长录。不借769零故障长录关闭771峰值。"
           }
         ],
         "doNotReopen": [
@@ -134188,7 +134193,7 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "d00核心源码已集成078前向功能并补齐热连接/重连CMC3参数生命周期及恢复时钟；前端/原生开发构建和受影响录音控制检查通过。本批作为一套核心候选的开发输入，不再为单个补丁替换日用版；冷/热连接及当前767录音/恢复在集中真机阶段一起验证。",
+        "currentExecutable": "同批771/fd2bd8c：完整单麦96x帧减少重复边界/通道判断，既有参考与ARM模型一致；编码等待不在已预告蓝牙事件前6ms强行超时。与770异常原音自动整理合并为一套正常候选，先核原预算再做有改动的定向实测，不原样重跑2h。",
         "lastUpdatedAt": "2026-11-09T13:53:17+08:00",
         "lastOwnerRaw": "开始吧, 先做开发, 避免这么多奇怪的保护防御性工作",
         "previousCompletedReliability": [
@@ -134270,12 +134275,12 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109"
       },
       "releaseReadiness": {
-        "at": "2026-11-09T15:43:08+08:00",
-        "firmware": 66769,
+        "at": "2026-11-09T17:47:56+08:00",
+        "firmware": 66771,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "实际761/Windows068原370在电脑重启后继续采音，87min同会话收全且原音/校验/WAV通过，故障计数0；不等于2h通过。当前仍修首PCM、连接/恢复、PDM峰及受影响集成；实体首字/电源等Owner block不抢主线。",
+        "openSoftware": "771短录开停/原音各门过，录中同步PDM P95上界2000us/峰2832us、零采音故障及前台7ms过；编码峰6510us>6000仍失败。暂不原样跑2h，先区分本帧执行/IRQ及编码准入原因；普通手机链/偶发连接仍开放。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134311,14 +134316,14 @@
         },
         "matchedCoreCandidateFrozen": false,
         "coreCandidateBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
-        "currentCoreShortBatchAccepted": false,
+        "currentCoreShortBatchAccepted": true,
         "currentCoreShortBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-device-chain-acceptance.json",
         "windowsCoreCandidateBuilt": true,
         "currentCoreLongPassed": false,
         "currentCoreLongReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
         "repairCandidateBuilt": true,
         "repairCandidateInstalled": true,
-        "currentCoreLongRunning": true,
+        "currentCoreLongRunning": false,
         "normal769OtaMetrics": {
           "elapsedMs": 118683,
           "maximumMs": 150000,
@@ -134327,7 +134332,17 @@
           "jointConfirmed": true,
           "temporarySpaceReleased": true,
           "gatesPass": true
-        }
+        },
+        "normal771OtaMetrics": {
+          "elapsedMs": 124929,
+          "postFinishMs": 93465,
+          "jointConfirmed": true,
+          "temporarySpaceReleased": true
+        },
+        "current771TargetedPassed": false,
+        "current771TwoHourPassed": false,
+        "current771PdmScopedPass": true,
+        "current771EncodePeakPass": false
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -134946,7 +134961,7 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-09T15:43:08+08:00",
+        "at": "2026-11-09T17:47:56+08:00",
         "text": "再试一下?",
         "decision": "新一次重连可读旧故障；Owner原统一弹窗确认后，现有正常START恢复375并用掉获准第一段10秒，恢复原音后装769，剩余一次新录音用于最终长录。"
       },
@@ -135567,7 +135582,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "769修复包已正常OTA装板（118.683秒/结束验证87.268秒均过原门），原375已收回可恢复部分并标中断，376十秒完整收取，原34目录保持；同一769/079的377长录实际进行中，不用旧短样本或恢复后的残段代替通过。"
+        "currentDelivery": "771合并修复已装板并定向：原378十秒全门过，原379三分钟录中同步PDM P95从769的3000降至2000us、峰2832us/原音/零故障过；编码峰6510us仍失败。原769的2h零故障原音保留范围，不能冒充当前771最终通过。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136451,32 +136466,32 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T16:57:16+08:00",
-        "state": "MATCHED_CORE769_079_LONG_RECORDING_AND_SYNC_RUNNING",
+        "at": "2026-11-09T18:18:14+08:00",
+        "state": "SCOPED771_SHORT_AND_LIVE_RESULTS_SAVED",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66769,
+        "firmwareInstalled": 66771,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
-        "boardLease": true,
-        "boardItem": "Companion769与核心079最终两小时录中同步，同一候选",
-        "liveRecording": true,
-        "liveReceive": true,
+        "firmwareSource": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+        "boardLease": false,
+        "boardItem": null,
+        "liveRecording": false,
+        "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 377,
+        "ownLatestSession": 379,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66769,
-        "candidateSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "firmwareCandidate": 66771,
+        "candidateSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
         "backendCandidateSource": null,
         "phoneBuildSession": null,
         "normalRestoreCandidate": null,
-        "longControllerSession": 11840,
+        "longControllerSession": null,
         "rangeFirmwarePrototype": "2b1a1461b51dd8defcd60cccaf46e0f71a5b4f7d",
         "rangeHostPrototype": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
         "otaControllerSession": null,
@@ -136486,11 +136501,11 @@
         "engineeringRunnerName": null,
         "phoneControllerSession": null,
         "firmwareCandidateProfile": null,
-        "windowsClientPid": 32092,
+        "windowsClientPid": null,
         "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core769-matched079\\long\\progress.json",
         "longObserverSession": null,
         "startupDiagnosticSession": null,
-        "firmwareSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "firmwareSourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
         "windowsInstalledVersion": "0.1.78",
@@ -136501,18 +136516,20 @@
         "windowsCoreCandidateInstalled": false,
         "windowsCoreCandidateArtifact": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\release\\Companion-Windows-0.1.79-Core-Candidate.msi",
         "coreShortBatchAccepted": true,
-        "longControllerPid": 34668,
+        "longControllerPid": null,
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "0000000000000179"
+          "sessionId": "000000000000017b"
         },
         "operatorReady": true,
         "operatorPromptPending": false,
-        "offlineRecoveryCandidate": 66770,
-        "offlineRecoverySourceCommit": "64d5521ca6b86df3542500d224050e87275cac47",
+        "offlineRecoveryCandidate": 66771,
+        "offlineRecoverySourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
         "offlineRecoveryBuildRunning": false,
-        "offlineRecoveryInstalled": false
+        "offlineRecoveryInstalled": true,
+        "targetedControllerSession": null,
+        "targetedControllerPid": null
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -140929,7 +140946,7 @@
         },
         "startupBeforeCore079Physical": "764实测准备1971ms：擦除1177、擦后验证676、查找/提交76、空白扫描38、来源4。66767源fd433ae已实现空闲准备完整270336B、不生成会话，显式START才绑定提交；准备中身份写入/取消已修。软件端口、真实产品入口、容量/原所有权/8个中断点通过。正常镜像405140/static67896/栈21504；实板首PCM1.5s尚按实际验收，不预记通过。",
         "coreRecordingRepair": {
-          "at": "2026-11-09T15:43:08+08:00",
+          "at": "2026-11-09T17:47:56+08:00",
           "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-candidate.json",
           "failedOriginal": 375,
           "failedAtMs": 251110,
@@ -140960,7 +140977,33 @@
             "softwareCandidatePass": true,
             "normalAudioByteIdentical": true,
             "physicalAutomaticTrigger": "NOT_RUN",
-            "meaning": "Same fault/save chain: a stopped-fault event restores the validated existing original once; no new microphone/session and no endless NOR retry."
+            "meaning": "Same fault/save chain: a stopped-fault event restores the validated existing original once; no new microphone/session and no endless NOR retry.",
+            "includedInFirmware": 66771,
+            "effectiveCandidateInstalled": true
+          },
+          "timingPeakRepair771": {
+            "at": "2026-11-09T18:18:14+08:00",
+            "sourceCommit": "fd2bd8c2aba43715598be0ccb1a05ac5729a0d7b",
+            "firmwareCandidate": 66771,
+            "installed": false,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core771-development.json",
+            "prior769Long": {
+              "recordedMs": 7381850,
+              "liveSyncLowerSeconds": 7248.4610108000015,
+              "captureFaults": 0,
+              "encodePeakUs": 6556,
+              "encodePeakMaximumUs": 6000,
+              "pdmPeakUs": 3252,
+              "pdmPeakMaximumUs": 3000,
+              "allGatesPass": false
+            },
+            "standaloneArmInstructionReductionPercent": {
+              "left": 20.93650202835978,
+              "right": 22.64937259305043,
+              "mix": -1.6549094100631678
+            },
+            "physicalTimingQualified": false,
+            "normalAudioByteIdentical": true
           }
         }
       },
@@ -141106,12 +141149,12 @@
       },
       "deliveryBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
       "currentCoreLong": {
-        "at": "2026-11-09T15:43:03+08:00",
+        "at": "2026-11-09T17:42:06+08:00",
         "pid": 34668,
-        "state": "RUNNING_ONE_LONG_ORIGINAL",
+        "state": "CURRENT_CORE_LONG_GAPS_RETAINED",
         "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
         "firmware": 66769,
-        "boardLease": true,
+        "boardLease": false,
         "newStartCommands": 1,
         "targetRecordingSeconds": 7380,
         "targetLiveSyncSeconds": 7200,
@@ -141124,16 +141167,18 @@
           "sessionId": "0000000000000179"
         },
         "recordingId": 132449,
-        "sessionState": "recording",
-        "liveRecording": true,
-        "liveReceive": true,
-        "sealedChunks": 2,
-        "hostElapsedSeconds": 300.303,
-        "sameOriginalActiveFollowWindows": 28,
-        "conservativeLiveSyncSeconds": 138.38315850000072,
+        "sessionState": "captured",
+        "liveRecording": false,
+        "liveReceive": false,
+        "sealedChunks": 60,
+        "hostElapsedSeconds": 7388.647,
+        "sameOriginalActiveFollowWindows": 681,
+        "conservativeLiveSyncSeconds": 7248.4610108000015,
         "unexpectedDisconnects": 0,
-        "maximumFilePollGapSeconds": 1.0139334999985294,
-        "firstObservedChunkAt": "2026-11-09T15:40:18+08:00"
+        "maximumFilePollGapSeconds": 1.1093813000006776,
+        "firstObservedChunkAt": "2026-11-09T15:40:18+08:00",
+        "exitCode": 0,
+        "releaseCode": 0
       },
       "baselineBefore769": {
         "firmwareVersion": 66767,
@@ -141149,6 +141194,25 @@
         "product": "companion",
         "buildEntryCommit": "055cd916",
         "sourceRootAvailability": "Editable worktree now contains769/3b2 repair; installed767 exact source remains fd433 commit. Both sources available via Git.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "baselineBefore771": {
+        "firmwareVersion": 66769,
+        "uiGeneration": 85,
+        "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
+        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate769-build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-normal769-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-after-install.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Normal769/3b2 installed via signed OTA; editable source exactly matches. Current matched079 long-run result is independent of previous767 short samples.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -141911,13 +141975,12 @@
           }
         },
         "latestWindowsInstalled": {
-          "version": "0.1.79",
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate079\\installation.json",
+          "version": "0.1.80",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\installation.json",
+          "source": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
           "existingFilesByteIdentical": 245,
-          "source": "471d2d019a644849578bf09f9d781be76a535d88",
-          "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
-          "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
-          "actualGroupedRuntimeRun": 42589879725,
+          "exeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
+          "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
           "wholeProductQualified": false
         },
         "windows067Issues": {
@@ -142362,14 +142425,30 @@
           }
         },
         "latestAndroidCandidate": {
-          "version": "0.1.100",
-          "code": 100,
-          "sourceCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
-          "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
-          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\Companion-Android-0.1.100-录音与内容修复候选.apk",
-          "apkSha256": "23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3",
+          "version": "0.1.110",
+          "code": 110,
+          "sourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+          "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\android110\\Companion-Android-0.1.110-core-candidate.apk",
+          "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+          "signerMatchesKnownApplication": true,
           "installed": false,
-          "scope": "Includes committed library-location/return Web source plus existing099 native/connection/Word/trash features. Phone absent before installation."
+          "actualPhoneQualified": false,
+          "wholeProductQualified": false,
+          "remoteBackup": {
+            "at": "2026-11-09T18:22:26+08:00",
+            "state": "ANDROID110_PRIVATE_DRAFT_BACKUP_DOWNLOADED_AND_HASH_VERIFIED",
+            "sourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+            "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+            "tag": "windows-0.1.78-bb1550c4-candidate",
+            "draft": true,
+            "published": false,
+            "oldArtifactsReplaced": false,
+            "downloadByteIdentical": true,
+            "installed": false,
+            "phoneOrdinaryFlowQualified": false
+          },
+          "scope": "109原生接收＋100资料库修复＋共同会议UI已集中打包；不是旧100，不自动降级任何更高实装版本。"
         },
         "embeddedFollowup070": {
           "at": "2026-11-07T00:38:03+08:00",
@@ -143290,6 +143369,28 @@
             "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\installation.json",
             "existingFilesByteIdentical": 245,
             "source": "571c577fbf546a1e157f5b2cf46e68cc45955440"
+          },
+          {
+            "version": "0.1.79",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate079\\installation.json",
+            "existingFilesByteIdentical": 245,
+            "source": "471d2d019a644849578bf09f9d781be76a535d88",
+            "exeSha256": "a6dcad71f45f0529556baa1ef6ff735cd167bc8a074506134168366611a3c01a",
+            "dllSha256": "431e35f2be83938282131917ab1404e46f07a7528774a71129a2828a452cd55c",
+            "actualGroupedRuntimeRun": 42589879725,
+            "wholeProductQualified": false
+          }
+        ],
+        "previousAndroidCandidates": [
+          {
+            "version": "0.1.100",
+            "code": 100,
+            "sourceCommit": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+            "backendSourceCommit": "b677153be43d423085e62d5a0292a3c4544c7e22",
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-mobile-library-location\\phone100\\Companion-Android-0.1.100-录音与内容修复候选.apk",
+            "apkSha256": "23a46f7697b84d12ede597ca671917e3160e8fdf77943d3216756c8de454a0c3",
+            "installed": false,
+            "scope": "Includes committed library-location/return Web source plus existing099 native/connection/Word/trash features. Phone absent before installation."
           }
         ]
       },
@@ -262919,7 +263020,7 @@
         "ownerCoreAcceptanceCandidate20261109": {
           "at": "2026-11-09T13:28:17+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "WHOLE_CORE_CANDIDATE_IN_PROGRESS_INTERMEDIATE079_PRESERVED",
+          "state": "WHOLE_CORE_CANDIDATE_WINDOWS_COMPLETE_BLOCK_PROVEN_ANDROID_CARD_AND_QUALITY_OPEN",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -262944,16 +263045,16 @@
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
           "currentCheckpoint": {
-            "windows": "0.1.79 installed; existing data hashes unchanged; source 471d2d019a644849578bf09f9d781be76a535d88; normal release MSI and grouped runtime passed",
-            "windowsRemaining": "旧WinRT系统分享与聊天应用附件、实体实听保留；下一批Windows阻断/双端/录音卡按原任务集中完成，不能写只剩模型。",
-            "phone": "Android100已保护候选未安装，最后本聊天真机65观测后USB中断；后续先读实态，禁止根据旧收据降级",
+            "windows": "0.1.80实际安装，源f339e22a45e7cb79704e0dcea707dcb3f39fecb4；原音→当前固定ASR→实际AI→回听/Word→带原音备份恢复/重开通过，并合入与实卡一致的d00接收恢复实现。",
+            "windowsRemaining": "旧WinRT系统分享、聊天应用附件仍开放；双端/实卡当前候选与模型/硬件质量门未合格。",
+            "phone": "Android110候选已签名、源码/实际APK/原生库/16KiB核验与远端下载回读；109原生后端保留，尚未安装或真机验收；实际连接恢复时先读当前包，禁止降级。",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
             "model": "普通固定基线5.53754%，复杂多人/重叠/纪要事实未合格，原记录保留",
             "ai": "同一真实公开会议现有ASR经原生078+现有AI服务生成完整2/2段约30.817秒；发现工作日/零食区两处原ASR事实错误，人工参考公开标注校对后，通过旧纪要来源变化提示、旧待办拒出、重新整理约28.264秒、旧版历史保留与新导出。未提高ASR原评分，仍需完整事实/客户体验。"
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "完成同源Windows核心候选的包内核对、受影响原生UI/文档/原音恢复和原资料保留；不重跑已过同一ASR/AI。然后按实际手机/板卡可用条件接续双端同场，模型与既有硬件售卖门继续独立，不能再说只剩模型。",
+          "next": "使用本批Android110集中验真机的整场会议、后台恢复和升级保留；授权手机当前离线，连接后先读实际包版本，不安装旧100或降级。实卡769已保存2h3m原音、两峰失败由原771修复任务接续；接收080/d00与109原生层按新共享收据联验，不重复旧769长录或已过推理。旧系统分享、模型和硬件售卖门保持开放。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -263310,7 +263411,7 @@
             "quote": "什么意思？那你看一下这个东西离这个交付售卖标准还差多远呢？继续做了一下，他才可以。不要老是说。就是你要完整的一块东西做完，然后再交付，不要这么零零碎碎的。然后也是要快点把这个事情做了，现在太慢了。",
             "decision": "079保留为已安装中间候选，不把一批UI/音频/缓存文字验证称为完整交付。继续同一核心批次，先把同一份真实原音经产品当前本地转写、AI整理、核对、文档交付、备份恢复和重开实际贯通；不再以小版本收尾。",
             "next": "复用079原生对和原公开会议，远端用当前已安装的同一固定本地ASR提供器跑实际音频到文字；不扫模型、不改指标。本机仅已有服务的公开文字AI和轻量状态处理。再承接同一会议后续与双端/录音卡实际条件。",
-            "actualCurrent": "WHOLE_MEETING_PASSED_MATCHED_WINDOWS_CORE_INTEGRATING"
+            "actualCurrent": "WINDOWS_COMPLETE_MEETING_AND_MATCHED_RECORDING_CORE_INSTALLED"
           },
           "wholeMeetingContinuation": {
             "at": "2026-11-09T17:16:18+08:00",
@@ -263375,9 +263476,9 @@
             "buildRun": 42594837619
           },
           "wholeCandidateCurrent": {
-            "at": "2026-11-09T17:45:53+08:00",
-            "state": "WHOLE_MEETING_PASSED_MATCHED_WINDOWS_CORE_INTEGRATING",
-            "phase": "checkpoint",
+            "at": "2026-11-09T18:26:19+08:00",
+            "state": "WINDOWS_COMPLETE_MEETING_AND_MATCHED_RECORDING_CORE_INSTALLED",
+            "phase": "final",
             "ownerPurpose": "完整一场会议的录音与会后处理，集中合并当前接收核心后再交一套候选；不是小版本计进度。",
             "sameSessionId": "import-00817de5e4dc4f55b9119da5a170fcaa",
             "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
@@ -263455,13 +263556,13 @@
               {
                 "block": "双端与实卡同一候选",
                 "state": "OPEN",
-                "facts": "Windows完整公开会议链已过；Android前端本侧旧100候选未安装，但嵌软共享收据已到109，不能按100或旧65降级。一次只读检查手机absent。实板原377长录属于原会话，在途接收不抢占。",
+                "facts": "Windows完整公开会议链已过；Android110已合并109原生后端、100资料库修复与共同会议UI，完成签名APK、Web/原生包内和16KiB核对及远端下载回读，尚未真机。授权手机均离线，旧系统分享/聊天附件也仍开放。",
                 "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
               },
               {
                 "block": "长录/连接/异常恢复可靠性",
                 "state": "OPEN",
-                "facts": "记录当前d00三处接收修复已合并；旧前端079此前不包含它们。最终2h及固件故障自动收尾等只沿嵌软当前原收据，不借软件文本链关闭。",
+                "facts": "769/d00已实际保存约2小时3分原音，2h录中同步、完整原音、无观测意外断链等过；整轮仍因编码峰6.556ms>6ms、PDM峰3.252ms>3ms失败。771在原嵌软任务修复，软件/新模型不能替代。",
                 "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
               },
               {
@@ -263471,19 +263572,305 @@
                 "exit": "按原多会议、逐人/重叠与事实指标达标。"
               }
             ],
-            "otherExistingDependencies": "实际电池/充电/低电保存与续航、生产签名/出厂及Owner暂停屏幕等仍沿原嵌软任务；不凭软件收据写全产品可售卖。旧WinRT系统分享与聊天附件收件也仍开放，普通Word交付本轮走真实Windows Shell文件粘贴。"
+            "otherExistingDependencies": "实际电池/充电/低电保存与续航、生产签名/出厂及Owner暂停屏幕等仍沿原嵌软任务；不凭软件收据写全产品可售卖。旧WinRT系统分享与聊天附件收件也仍开放，普通Word交付本轮走真实Windows Shell文件粘贴。",
+            "androidIntegratedSource": {
+              "state": "ANDROID109_NATIVE_WITH_FRONTEND100_LIBRARY_AND_WINDOWS_MEETING_UI_INTEGRATED_SOURCE",
+              "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+              "phone109Source": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
+              "backend109Source": "608790132701ede93fa24a00b687874cb7e70c6b",
+              "preservedFrontend100Source": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+              "mergedMobileFiles": [
+                "apps/mobile/src/App.tsx",
+                "apps/mobile/src/LibraryBackups.tsx",
+                "apps/mobile/src/LibraryLocation.tsx",
+                "apps/mobile/src/libraryLocation.css",
+                "apps/mobile/src/libraryStatus.ts"
+              ],
+              "sharedMeetingUiFiles": [
+                "packages/ui/src/CompanionDashboard.tsx",
+                "packages/ui/src/ContentExportPanel.tsx",
+                "packages/ui/src/meetingReading.ts"
+              ],
+              "native109AarAndVersionUnchanged": true,
+              "installed": false,
+              "phoneTested": false,
+              "newNativeBuild": false,
+              "sameWholeCoreBatch": true,
+              "sourceCommit": "0dee9b4b5ee37745e3ec0a2c3b53e43455391393",
+              "sourceRemoteReadbackVerified": true,
+              "sourceChecksPassed": true,
+              "sourceCheckRun": 42597136569,
+              "nativeAndroidOrdinaryFlowQualified": false,
+              "minimumNextAndroidVersionCode": 110,
+              "noNewApkBuiltOrInstalled": false,
+              "packagingSourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+              "candidateVersion": "0.1.110",
+              "candidateVersionCode": 110,
+              "native109AarUnchanged": true,
+              "newApkBuilt": true,
+              "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\android110\\Companion-Android-0.1.110-core-candidate.apk",
+              "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+              "remotePackageVerified": true
+            },
+            "androidPackage": {
+              "at": "2026-11-09T18:16:04+08:00",
+              "state": "ANDROID110_UNIFIED_SOURCE_SIGNED_PAYLOAD_VERIFIED_PHONE_PENDING",
+              "sourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+              "versionName": "0.1.110",
+              "versionCode": 110,
+              "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+              "backendAarSha256": "af498b880338aa5b8036cbfa97ad26588fdc784ee5eaf92e15df50c06e9aaadf",
+              "newNativeBackendBuilt": false,
+              "modelsRun": false,
+              "deviceAccess": false,
+              "phoneAccess": false,
+              "installed": false,
+              "wholeProductQualified": false,
+              "privateBuildDirectory": "E:\\CodexData\\Companion\\.build-cache\\core-acceptance20261109\\android110-efccc34b460a423cae498e34043c1b22",
+              "steps": [
+                {
+                  "name": "01-npm-ci",
+                  "exitCode": 0,
+                  "seconds": 17.12131120000049
+                },
+                {
+                  "name": "02-mobile-web",
+                  "exitCode": 0,
+                  "seconds": 22.468194199998834
+                },
+                {
+                  "name": "03-assemble-current-native-and-ui",
+                  "exitCode": 0,
+                  "seconds": 104.61462739999843
+                },
+                {
+                  "name": "04-new-apk-signature",
+                  "exitCode": 0,
+                  "seconds": 1.01334389999829
+                },
+                {
+                  "name": "05-known-app-signature",
+                  "exitCode": 0,
+                  "seconds": 0.5103593999992881
+                },
+                {
+                  "name": "06-apk-alignment",
+                  "exitCode": 0,
+                  "seconds": 0.5755078000001959
+                },
+                {
+                  "name": "07-package-identity",
+                  "exitCode": 0,
+                  "seconds": 0.7506848999983049
+                }
+              ],
+              "finishedAt": "2026-11-09T18:18:31+08:00",
+              "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\android110\\Companion-Android-0.1.110-core-candidate.apk",
+              "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+              "apkBytes": 48794105,
+              "signerMatchesPreviouslyTrustedApp": true,
+              "zip16KiBAligned": true,
+              "nativeLibraries": [
+                {
+                  "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+                  "sha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110",
+                  "elf16KiBAligned": true
+                },
+                {
+                  "name": "jni/arm64-v8a/libonnxruntime.so",
+                  "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+                  "elf16KiBAligned": true
+                },
+                {
+                  "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+                  "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+                  "elf16KiBAligned": true
+                }
+              ],
+              "webAssets": [
+                {
+                  "path": "index.html",
+                  "sha256": "ab236e1d3f9004be57a5f7b4fcf16998de3756cdd09d29a2b8db69c9149b1bab"
+                },
+                {
+                  "path": "manifest.webmanifest",
+                  "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+                },
+                {
+                  "path": "assets/index-BXeaSz1o.css",
+                  "sha256": "8fe07f5335ec067ff3ed767f2d4c9cca25d3d9471ff1e57b2616ae877f6af6ae"
+                },
+                {
+                  "path": "assets/index-DPxrSCBp.js",
+                  "sha256": "6542d174161444d8be6ce212ac73153fe47caaf97b51a2979ed188891a4f14af"
+                }
+              ],
+              "cpuAndMemory": {
+                "pid": 28148,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 1610612736,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 1168769024,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              },
+              "phoneOrdinaryFlowQualified": false
+            },
+            "androidPrivateBackup": {
+              "at": "2026-11-09T18:22:26+08:00",
+              "state": "ANDROID110_PRIVATE_DRAFT_BACKUP_DOWNLOADED_AND_HASH_VERIFIED",
+              "sourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+              "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+              "tag": "windows-0.1.78-bb1550c4-candidate",
+              "draft": true,
+              "published": false,
+              "oldArtifactsReplaced": false,
+              "downloadByteIdentical": true,
+              "installed": false,
+              "phoneOrdinaryFlowQualified": false
+            },
+            "latestRecordingReliability": {
+              "at": "2026-11-09T17:47:56+08:00",
+              "firmware": 66769,
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+              "receiptSha256": "662e0d2b6413928a38aedc480861dd87087b7173ad46bf1fcfc5056d8ce46d0c",
+              "recordingMs": 7381850.0,
+              "sourceAudioSha256": "0f7bd32078dddfac8d2d09676c964da4bf5e9787b654f77fbe573b94e247309e",
+              "longAndLiveSyncPassed": true,
+              "completeOriginalAudioPassed": true,
+              "unexpectedDisconnectGatePassed": true,
+              "failedGates": [
+                "encodePeak",
+                "pdmPeak"
+              ],
+              "encodePeakUs": 6556,
+              "pdmPeakUs": 3252,
+              "wholeQualified": false
+            },
+            "integratedRuntimeRun": 42597707514,
+            "installedVersion": "0.1.80",
+            "installedSource": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+            "installation": {
+              "state": "WINDOWS080_INSTALLED_EXISTING_DATA_IDENTICAL",
+              "startedAt": "2026-11-09T18:06:38+08:00",
+              "candidateVersion": "0.1.80",
+              "previousInstalledVersion": "0.1.79",
+              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+              "existingDataFiles": 245,
+              "dataContentsPrinted": false,
+              "installerExitCode": 0,
+              "finishedAt": "2026-11-09T18:06:43+08:00",
+              "dataManifestIdentical": true,
+              "installedVersion": "0.1.80",
+              "installedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
+              "installedDllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+              "installedHelpStartupPassed": true,
+              "ordinaryThirdPartyPasteQualified": false,
+              "oldWinRTSharePickerFixed": false,
+              "modelsRun": false,
+              "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+            },
+            "package": {
+              "at": "2026-11-09T17:59:48+08:00",
+              "state": "WINDOWS080_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+              "version": "0.1.80",
+              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\candidate080\\Companion-Windows-0.1.80-candidate.msi",
+              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+              "embeddedExeSha256": "6270f4c059ff38d69f10787d029d3579bda200a0c36c6eca1a69ef2f88720744",
+              "dllSha256": "1990c1ae8d925493bd97171b6af6bda17da7f6de56b7e0ccb343d61518184bb9",
+              "licenseFilesMatched": 257,
+              "sourceFilesMatched": 1228,
+              "sourceFilesWithOnlyCheckoutEolDifference": [
+                "apps/windows/src-tauri/src/backend/ble_bridge/device_clock.rs",
+                "apps/windows/src-tauri/src/backend/ble_bridge/recording_management.rs",
+                "apps/windows/src-tauri/src/backend/content_export.rs",
+                "apps/windows/src-tauri/src/backend/device_discovery.rs",
+                "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+                "apps/windows/src-tauri/src/backend/mp3_export.rs",
+                "apps/windows/src-tauri/src/backend/ota_metrics.rs",
+                "apps/windows/src-tauri/src/backend/recording_metrics/targets.rs",
+                "apps/windows/src-tauri/src/backend/recording_metrics/tests.rs",
+                "apps/windows/src-tauri/src/backend/spreadsheet_export.rs",
+                "packages/meeting-transcript/Cargo.lock",
+                "packages/meeting-transcript/Cargo.toml",
+                "packages/ui/src/CompanionCard.tsx",
+                "packages/ui/src/CompanionDeviceRecordings.tsx",
+                "packages/ui/src/ContentExportPanel.tsx",
+                "packages/ui/src/MeetingReadingFrame.tsx",
+                "packages/ui/src/TranscriptFind.tsx",
+                "packages/ui/src/aiMaterialNote.ts",
+                "packages/ui/src/meetingOutline.ts",
+                "packages/ui/src/shareHandoff.ts",
+                "packages/ui/src/transcriptFind.css",
+                "packages/ui/src/transcriptMatching.ts",
+                "third_party/btleplug-0.11.8/src/winrtble/adapter.rs",
+                "third_party/btleplug-0.11.8/src/winrtble/ble/watcher.rs"
+              ],
+              "sameUpgradeIdentity": true,
+              "newerVersionGuard": true,
+              "ciSourceAndNativeFrozenTogether": true,
+              "nativeProfile": "normal release on dedicated Windows runner",
+              "ciRunId": 42594837619,
+              "ciWrapperOverallPassed": true,
+              "localHeavyBuild": false,
+              "installed": false,
+              "wholeCoreCandidateQualified": false,
+              "oldWinRTSharePickerFixed": false,
+              "saleQualified": false,
+              "modelsRun": false,
+              "inspectionLimits": {
+                "pid": 38668,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 536870912,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 47386624,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              }
+            },
+            "remoteDraft": {
+              "at": "2026-11-09T18:01:10+08:00",
+              "state": "PRIVATE_DRAFT_MSI_DOWNLOADED_AND_HASH_VERIFIED",
+              "tag": "windows-0.1.78-bb1550c4-candidate",
+              "preferredNewTag": "windows-0.1.80-f339e22a-candidate",
+              "sharedHistoricalRecoveryContainer": true,
+              "original078AssetsReplaced": false,
+              "url": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+              "sourceCommit": "f339e22a45e7cb79704e0dcea707dcb3f39fecb4",
+              "msiSha256": "6309f54c9e98e70a7828a7d40d0f435e3632df235f6a9100e5c2d14df7609c09",
+              "draft": true,
+              "published": false,
+              "readbackByteIdentical": true,
+              "saleQualified": false
+            }
           },
           "remainingSaleBlocks": [
             {
               "block": "双端与实卡同一候选",
               "state": "OPEN",
-              "facts": "Windows完整公开会议链已过；Android前端本侧旧100候选未安装，但嵌软共享收据已到109，不能按100或旧65降级。一次只读检查手机absent。实板原377长录属于原会话，在途接收不抢占。",
+              "facts": "Windows完整公开会议链已过；Android110已合并109原生后端、100资料库修复与共同会议UI，完成签名APK、Web/原生包内和16KiB核对及远端下载回读，尚未真机。授权手机均离线，旧系统分享/聊天附件也仍开放。",
               "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
             },
             {
               "block": "长录/连接/异常恢复可靠性",
               "state": "OPEN",
-              "facts": "记录当前d00三处接收修复已合并；旧前端079此前不包含它们。最终2h及固件故障自动收尾等只沿嵌软当前原收据，不借软件文本链关闭。",
+              "facts": "769/d00已实际保存约2小时3分原音，2h录中同步、完整原音、无观测意外断链等过；整轮仍因编码峰6.556ms>6ms、PDM峰3.252ms>3ms失败。771在原嵌软任务修复，软件/新模型不能替代。",
               "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
             },
             {
@@ -263492,7 +263879,64 @@
               "facts": "当前产品固定提供器同场严格混合字错率6.4024%，未<5%；复杂多人/重叠与完整事实质量仍未合格，未因本轮功能链通过而改门槛。",
               "exit": "按原多会议、逐人/重叠与事实指标达标。"
             }
-          ]
+          ],
+          "androidWholeSourceIntegration": {
+            "state": "ANDROID109_NATIVE_WITH_FRONTEND100_LIBRARY_AND_WINDOWS_MEETING_UI_INTEGRATED_SOURCE",
+            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+            "phone109Source": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
+            "backend109Source": "608790132701ede93fa24a00b687874cb7e70c6b",
+            "preservedFrontend100Source": "c1a33e262cf7195f7070e08f7a7f399cb35d842a",
+            "mergedMobileFiles": [
+              "apps/mobile/src/App.tsx",
+              "apps/mobile/src/LibraryBackups.tsx",
+              "apps/mobile/src/LibraryLocation.tsx",
+              "apps/mobile/src/libraryLocation.css",
+              "apps/mobile/src/libraryStatus.ts"
+            ],
+            "sharedMeetingUiFiles": [
+              "packages/ui/src/CompanionDashboard.tsx",
+              "packages/ui/src/ContentExportPanel.tsx",
+              "packages/ui/src/meetingReading.ts"
+            ],
+            "native109AarAndVersionUnchanged": true,
+            "installed": false,
+            "phoneTested": false,
+            "newNativeBuild": false,
+            "sameWholeCoreBatch": true,
+            "sourceCommit": "0dee9b4b5ee37745e3ec0a2c3b53e43455391393",
+            "sourceRemoteReadbackVerified": true,
+            "sourceChecksPassed": true,
+            "sourceCheckRun": 42597136569,
+            "nativeAndroidOrdinaryFlowQualified": false,
+            "minimumNextAndroidVersionCode": 110,
+            "noNewApkBuiltOrInstalled": false,
+            "packagingSourceCommit": "03f8a7d3a5dd11b399188f4ebfcf633cb36f6855",
+            "candidateVersion": "0.1.110",
+            "candidateVersionCode": 110,
+            "native109AarUnchanged": true,
+            "newApkBuilt": true,
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-core-acceptance\\android110\\Companion-Android-0.1.110-core-candidate.apk",
+            "apkSha256": "086d79f1e9c02497de48c4f1f63a85ded05686b233fa72a4178a22c6fd90552d",
+            "remotePackageVerified": true
+          },
+          "currentRecordingReliabilityReceipt": {
+            "at": "2026-11-09T17:47:56+08:00",
+            "firmware": 66769,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+            "receiptSha256": "662e0d2b6413928a38aedc480861dd87087b7173ad46bf1fcfc5056d8ce46d0c",
+            "recordingMs": 7381850.0,
+            "sourceAudioSha256": "0f7bd32078dddfac8d2d09676c964da4bf5e9787b654f77fbe573b94e247309e",
+            "longAndLiveSyncPassed": true,
+            "completeOriginalAudioPassed": true,
+            "unexpectedDisconnectGatePassed": true,
+            "failedGates": [
+              "encodePeak",
+              "pdmPeak"
+            ],
+            "encodePeakUs": 6556,
+            "pdmPeakUs": 3252,
+            "wholeQualified": false
+          }
         }
       },
       "latestCandidate20261102": {
@@ -263510,13 +263954,13 @@
         "reference": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261105-ai-workspace050-preserved/recovery-result.json",
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
-      "at": "2026-11-05T18:11:23+08:00",
-      "state": "WHOLE_CORE_CANDIDATE_INTEGRATING_CURRENT_WINDOWS_AND_RECORDING_CORE",
+      "at": "2026-11-09T18:26:19+08:00",
+      "state": "WINDOWS_FULL_MEETING_AND_CURRENT_RECEIVER_INTEGRATED_ANDROID_AND_QUALITY_OPEN",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
-      "result": "Windows052已交付范围保留；Android054候选PPTX/XLSX/mm/PNG与独立AI材料选择完成，实际生产Java/JVM/手机原生位图与文件结构、同源APK签名和16KiB对齐通过。保留手机053配对现场，主App054未装，系统保存/分享/升级资料保留和Owner/客户待验。",
-      "next": "完成同源Windows核心候选的包内核对、受影响原生UI/文档/原音恢复和原资料保留；不重跑已过同一ASR/AI。然后按实际手机/板卡可用条件接续双端同场，模型与既有硬件售卖门继续独立，不能再说只剩模型。",
+      "result": "Windows整场真实原音→固定产品ASR→真实AI→回听与文档交付→带原音备份恢复/重开已通过，并合入当前实卡d00接收后端后完成080实装保留；Android110同批包已核验并远端保护，手机/实卡当前组合、模型和既有硬件售卖门未合格。",
+      "next": "使用本批Android110集中验真机的整场会议、后台恢复和升级保留；授权手机当前离线，连接后先读实际包版本，不安装旧100或降级。实卡769已保存2h3m原音、两峰失败由原771修复任务接续；接收080/d00与109原生层按新共享收据联验，不重复旧769长录或已过推理。旧系统分享、模型和硬件售卖门保持开放。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",

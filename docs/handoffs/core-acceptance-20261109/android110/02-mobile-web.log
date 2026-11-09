@@ -1,0 +1,13 @@
+
+> companion-type@0.1.77 build:mobile
+> tsc -p apps/mobile/tsconfig.json && vite build --config apps/mobile/vite.config.ts
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 1825 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.72 kB │ gzip:  0.53 kB
+dist/assets/index-BXeaSz1o.css   84.52 kB │ gzip: 14.64 kB
+dist/assets/index-DPxrSCBp.js   305.97 kB │ gzip: 95.90 kB
+✓ built in 5.29s
