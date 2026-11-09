@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-09T11:14:11+08:00",
+  "selection": "Restore exposed R8001_M8004; no new independent meeting claim.",
+  "speakerMapping": "Each near reference nonempty (start,end,text) sequence must match exactly one far tier; preserve original names. Then inspect own/other solo energy and same-utterance acoustic correlation, rather than trusting filenames alone.",
+  "frameSeconds": 0.02,
+  "fineClock": {
+    "fractions": [
+      0.2,
+      0.5,
+      0.8
+    ],
+    "selection": "Nearest distinct whole non-overlap utterance of >=1.5s at each fixed fraction; +/-0.1s guard against other annotated speakers.",
+    "windowMaxSeconds": 4,
+    "lagSearchSeconds": [
+      -0.5,
+      0.5
+    ],
+    "filterHz": [
+      100,
+      3800
+    ],
+    "method": "Bandpass normalized cross-correlation over actual overlapping PCM; maximize absolute coefficient, retain polarity. Acoustic propagation is included in measured lag.",
+    "lagSign": "Positive means near time t corresponds to far time t+lag.",
+    "noAutomaticClockCorrection": true
+  },
+  "bleed": "Median RMS on annotated own-only, each other-only, true-overlap, and no-annotated-speech 20ms frames within annotation scope. This is relative leakage evidence, not clean-source SDR or measured transcription accuracy.",
+  "rawPcmCheck": "Compare bounded first/middle/last sample reads with scipy WAV mmap reader, including extensible PCM16 header. No audio recoding.",
+  "newModelCalls": 0,
+  "newTrainingRuns": 0,
+  "qualityQualified": false
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "near-N_SPK8013",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.wav",
+    "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+    "audioSeconds": 1551.82,
+    "kind": "individual-headset-entire-recording",
+    "command": [
+      "E:\\CodexData\\Companion\\.model-cache\\scoring-runtime-clean-20261106\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py",
+      "--audio",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.wav",
+      "--model-pack",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+      "--work-dir",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-runs\\near-N_SPK8013"
+    ],
+    "resumeRule": "Only add --resume for an existing bound task. Never change input, pack, prompt, reference or decoder.",
+    "commandPrerequisite": "Fresh native HIP ordinal verification and private runtime pack binding required. The existing adapter uses the source inventory ordinal; do not assume a historical ordinal remains correct after reconnecting the GPU."
+  },
+  {
+    "id": "near-N_SPK8014",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+    "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+    "audioSeconds": 1551.82,
+    "kind": "individual-headset-entire-recording",
+    "command": [
+      "E:\\CodexData\\Companion\\.model-cache\\scoring-runtime-clean-20261106\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py",
+      "--audio",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+      "--model-pack",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+      "--work-dir",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-runs\\near-N_SPK8014"
+    ],
+    "resumeRule": "Only add --resume for an existing bound task. Never change input, pack, prompt, reference or decoder.",
+    "commandPrerequisite": "Fresh native HIP ordinal verification and private runtime pack binding required. The existing adapter uses the source inventory ordinal; do not assume a historical ordinal remains correct after reconnecting the GPU."
+  },
+  {
+    "id": "near-N_SPK8015",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.wav",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+    "audioSeconds": 1551.82,
+    "kind": "individual-headset-entire-recording",
+    "command": [
+      "E:\\CodexData\\Companion\\.model-cache\\scoring-runtime-clean-20261106\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py",
+      "--audio",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.wav",
+      "--model-pack",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+      "--work-dir",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-runs\\near-N_SPK8015"
+    ],
+    "resumeRule": "Only add --resume for an existing bound task. Never change input, pack, prompt, reference or decoder.",
+    "commandPrerequisite": "Fresh native HIP ordinal verification and private runtime pack binding required. The existing adapter uses the source inventory ordinal; do not assume a historical ordinal remains correct after reconnecting the GPU."
+  },
+  {
+    "id": "near-N_SPK8016",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.wav",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+    "audioSeconds": 1551.82,
+    "kind": "individual-headset-entire-recording",
+    "command": [
+      "E:\\CodexData\\Companion\\.model-cache\\scoring-runtime-clean-20261106\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py",
+      "--audio",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.wav",
+      "--model-pack",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+      "--work-dir",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-runs\\near-N_SPK8016"
+    ],
+    "resumeRule": "Only add --resume for an existing bound task. Never change input, pack, prompt, reference or decoder.",
+    "commandPrerequisite": "Fresh native HIP ordinal verification and private runtime pack binding required. The existing adapter uses the source inventory ordinal; do not assume a historical ordinal remains correct after reconnecting the GPU."
+  },
+  {
+    "id": "far-mic0-common-span",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-inputs\\R8001_M8004_mic0_common_1551p82s.wav",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+    "audioSeconds": 1551.82,
+    "kind": "unseparated-mixed-control",
+    "originalFarSeconds": 1573.85,
+    "omittedFarTailSeconds": 22.029999999999973,
+    "scope": "Matched common span only. This is not the whole original far recording or a sale full-meeting test.",
+    "command": [
+      "E:\\CodexData\\Companion\\.model-cache\\scoring-runtime-clean-20261106\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py",
+      "--audio",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-inputs\\R8001_M8004_mic0_common_1551p82s.wav",
+      "--model-pack",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\model-pack.json",
+      "--work-dir",
+      "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-asr-runs\\far-mic0-common-span"
+    ],
+    "resumeRule": "Only add --resume for an existing bound task. Never change input, pack, prompt, reference or decoder.",
+    "commandPrerequisite": "Fresh native HIP ordinal verification and private runtime pack binding required. The existing adapter uses the source inventory ordinal; do not assume a historical ordinal remains correct after reconnecting the GPU."
+  }
+]

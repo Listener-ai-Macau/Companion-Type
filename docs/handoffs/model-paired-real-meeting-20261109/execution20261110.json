@@ -1,0 +1,806 @@
+{
+  "at": "2026-11-10T00:19:12+08:00",
+  "phase": "checkpoint",
+  "state": "FIXED_PRODUCT_FIVE_INPUTS_RUNNING_ON_DEDICATED_CI_LOCAL_QWEN_STOPPED_BEFORE_MODEL",
+  "ownerLatest": "需要继续推进",
+  "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting",
+  "sourceTask": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerNightGpuModelPriority20261104.ownerPairedRealMeetingSource20261109",
+  "currentProductPair": {
+    "at": "2026-11-10T00:14:37+08:00",
+    "state": "ACTUAL_EXISTING_SAME_MEETING_PRODUCT_ASR_PAIR_SCORED",
+    "sample": "S_R004S03C01",
+    "meetingSeconds": 2327.119,
+    "sameOriginalAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sameModelSha256": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+    "windows": {
+      "referenceCharacters": 8325,
+      "hypothesisCharacters": 8176,
+      "edits": {
+        "replace": 262,
+        "delete": 210,
+        "insert": 61
+      },
+      "totalEdits": 533,
+      "cer": 0.06402402402402402,
+      "passedBelowFivePercent": false,
+      "errorInventory": {
+        "referenceSubDeleteCharacters": [
+          [
+            "儿",
+            131
+          ],
+          [
+            "嗯",
+            35
+          ],
+          [
+            "呃",
+            35
+          ],
+          [
+            "那",
+            13
+          ],
+          [
+            "啊",
+            12
+          ],
+          [
+            "它",
+            12
+          ],
+          [
+            "一",
+            10
+          ],
+          [
+            "也",
+            7
+          ],
+          [
+            "这",
+            7
+          ],
+          [
+            "的",
+            6
+          ],
+          [
+            "她",
+            6
+          ],
+          [
+            "你",
+            5
+          ],
+          [
+            "诶",
+            5
+          ],
+          [
+            "呢",
+            5
+          ],
+          [
+            "啦",
+            4
+          ],
+          [
+            "边",
+            4
+          ],
+          [
+            "咱",
+            4
+          ],
+          [
+            "以",
+            4
+          ],
+          [
+            "面",
+            4
+          ],
+          [
+            "上",
+            4
+          ]
+        ],
+        "commonSubDeletePairs": [
+          {
+            "reference": "儿",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 121
+          },
+          {
+            "reference": "呃",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 19
+          },
+          {
+            "reference": "嗯",
+            "hypothesis": "呃",
+            "kind": "replace",
+            "count": 19
+          },
+          {
+            "reference": "嗯",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 11
+          },
+          {
+            "reference": "它",
+            "hypothesis": "他",
+            "kind": "replace",
+            "count": 10
+          },
+          {
+            "reference": "那",
+            "hypothesis": "这",
+            "kind": "replace",
+            "count": 8
+          },
+          {
+            "reference": "呃",
+            "hypothesis": "嗯",
+            "kind": "replace",
+            "count": 8
+          },
+          {
+            "reference": "也",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 7
+          },
+          {
+            "reference": "一",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 6
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "呃",
+            "kind": "replace",
+            "count": 5
+          },
+          {
+            "reference": "她",
+            "hypothesis": "他",
+            "kind": "replace",
+            "count": 5
+          },
+          {
+            "reference": "啦",
+            "hypothesis": "了",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "诶",
+            "hypothesis": "哎",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "呢",
+            "hypothesis": "的",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 4
+          },
+          {
+            "reference": "那",
+            "hypothesis": "呢",
+            "kind": "replace",
+            "count": 3
+          },
+          {
+            "reference": "面",
+            "hypothesis": "边",
+            "kind": "replace",
+            "count": 3
+          },
+          {
+            "reference": "是",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 3
+          },
+          {
+            "reference": "边",
+            "hypothesis": "面",
+            "kind": "replace",
+            "count": 2
+          },
+          {
+            "reference": "呃",
+            "hypothesis": "这",
+            "kind": "replace",
+            "count": 2
+          },
+          {
+            "reference": "量",
+            "hypothesis": "院",
+            "kind": "replace",
+            "count": 2
+          },
+          {
+            "reference": "们",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 2
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "呀",
+            "kind": "replace",
+            "count": 2
+          },
+          {
+            "reference": "以",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 2
+          }
+        ],
+        "subDeleteOnFixedFillerGlyphs": 83,
+        "subDeleteOnErhuaGlyph": 131,
+        "strictScoreUnchanged": true,
+        "notFactErrorRate": "Character inventory only. These classifications do not establish semantic equivalence or justify removing words from the quality score."
+      },
+      "path": "Raw original WAV -> Windows product normalization -> saved product ASR",
+      "savedTranscriptSha256": "ecada0e12b2cc0ed74fd6c56c1ce17841586d528727034ba76c9dc27ec40d2a7",
+      "asrSeconds": 136.076
+    },
+    "phone": {
+      "referenceCharacters": 8325,
+      "hypothesisCharacters": 8185,
+      "edits": {
+        "replace": 284,
+        "delete": 204,
+        "insert": 64
+      },
+      "totalEdits": 552,
+      "cer": 0.06630630630630631,
+      "passedBelowFivePercent": false,
+      "errorInventory": {
+        "referenceSubDeleteCharacters": [
+          [
+            "儿",
+            127
+          ],
+          [
+            "嗯",
+            36
+          ],
+          [
+            "呃",
+            32
+          ],
+          [
+            "啊",
+            17
+          ],
+          [
+            "那",
+            16
+          ],
+          [
+            "一",
+            12
+          ],
+          [
+            "呢",
+            9
+          ],
+          [
+            "这",
+            8
+          ],
+          [
+            "它",
+            8
+          ],
+          [
+            "个",
+            6
+          ],
+          [
+            "的",
+            6
+          ],
+          [
+            "她",
+            6
+          ],
+          [
+            "啦",
+            5
+          ],
+          [
+            "咱",
+            5
+          ],
+          [
+            "你",
+            5
+          ],
+          [
+            "诶",
+            5
+          ],
+          [
+            "他",
+            5
+          ],
+          [
+            "上",
+            5
+          ],
+          [
+            "边",
+            4
+          ],
+          [
+            "也",
+            4
+          ]
+        ],
+        "commonSubDeletePairs": [
+          {
+            "reference": "儿",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 118
+          },
+          {
+            "reference": "嗯",
+            "hypothesis": "呃",
+            "kind": "replace",
+            "count": 21
+          },
+          {
+            "reference": "呃",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 15
+          },
+          {
+            "reference": "嗯",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 11
+          },
+          {
+            "reference": "呃",
+            "hypothesis": "嗯",
+            "kind": "replace",
+            "count": 11
+          },
+          {
+            "reference": "那",
+            "hypothesis": "这",
+            "kind": "replace",
+            "count": 9
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "呃",
+            "kind": "replace",
+            "count": 7
+          },
+          {
+            "reference": "呢",
+            "hypothesis": "的",
+            "kind": "replace",
+            "count": 7
+          },
+          {
+            "reference": "它",
+            "hypothesis": "他",
+            "kind": "replace",
+            "count": 6
+          },
+          {
+            "reference": "一",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 5
+          },
+          {
+            "reference": "她",
+            "hypothesis": "他",
+            "kind": "replace",
+            "count": 5
+          },
+          {
+            "reference": "啦",
+            "hypothesis": "了",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "也",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 4
+          },
+          {
+            "reference": "个",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 4
+          },
+          {
+            "reference": "诶",
+            "hypothesis": "哎",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "呀",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "他",
+            "hypothesis": "它",
+            "kind": "replace",
+            "count": 4
+          },
+          {
+            "reference": "啊",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 4
+          },
+          {
+            "reference": "们",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 3
+          },
+          {
+            "reference": "以",
+            "hypothesis": "",
+            "kind": "delete",
+            "count": 3
+          },
+          {
+            "reference": "那",
+            "hypothesis": "呢",
+            "kind": "replace",
+            "count": 3
+          },
+          {
+            "reference": "面",
+            "hypothesis": "边",
+            "kind": "replace",
+            "count": 3
+          },
+          {
+            "reference": "在",
+            "hypothesis": "再",
+            "kind": "replace",
+            "count": 2
+          },
+          {
+            "reference": "量",
+            "hypothesis": "院",
+            "kind": "replace",
+            "count": 2
+          }
+        ],
+        "subDeleteOnFixedFillerGlyphs": 86,
+        "subDeleteOnErhuaGlyph": 127,
+        "strictScoreUnchanged": true,
+        "notFactErrorRate": "Character inventory only. These classifications do not establish semantic equivalence or justify removing words from the quality score."
+      },
+      "path": "Same original WAV -> libopus low-delay CELT16kbps COP1 -> Android product decoding -> saved product ASR",
+      "savedTranscriptSha256": "3dc90a608b1a01a1698a718205338b0cde3b123e7224b822d089128d401d56df",
+      "observedCompletionSeconds": 143.79,
+      "timeIncludesFirstModelDownload": true,
+      "notComparableInferenceOnlyTimer": true
+    },
+    "errorOverlap": {
+      "referenceSubDeletePositionsWrongInBoth": 419,
+      "sameWrongCharacterOrDeletionInBoth": 387,
+      "windowsOnlySubDeletePositions": 53,
+      "phoneOnlySubDeletePositions": 69,
+      "hypothesisTextEditDistance": 170,
+      "netPhoneMinusWindowsErrors": 19,
+      "netCerPercentagePoints": 0.22822822822822914,
+      "alignmentAmbiguity": "Repeated words can shift a minimum edit alignment; positions are a diagnostic, not uniquely attributable events."
+    },
+    "reference": {
+      "sha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+      "parser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "normalizerSourceSha256": "45859723659b91b7ae0750331dc86eba216c631d27d35ebc4979a3663eae971e",
+      "metric": "strict text normalization, chronological all-speaker CER; overlap ordering limitations remain"
+    },
+    "sameWrongExamples": [
+      {
+        "referenceIndex": 23,
+        "referenceContext": "零零七b零零八c零零九d嗯把各个区的那个咱那个负责",
+        "referenceCharacter": "嗯",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 76,
+        "referenceContext": "期的要好呃明显的客流量也呃客流量也多啦呃咱这个销售",
+        "referenceCharacter": "呃",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 99,
+        "referenceContext": "销售这个呃营业额也上去了嗯这都是大家或者在座的嗯努",
+        "referenceCharacter": "嗯",
+        "error": {
+          "tag": "replace",
+          "hyp": "呃"
+        }
+      },
+      {
+        "referenceIndex": 121,
+        "referenceContext": "的嗯努力的出现的状况估计工作各位在下也出了在下边儿",
+        "referenceCharacter": "工",
+        "error": {
+          "tag": "replace",
+          "hyp": "估"
+        }
+      },
+      {
+        "referenceIndex": 155,
+        "referenceContext": "啊也做了很多的这个呃营销这些方案呃希望大家以后啊要",
+        "referenceCharacter": "这",
+        "error": {
+          "tag": "replace",
+          "hyp": "一"
+        }
+      },
+      {
+        "referenceIndex": 220,
+        "referenceContext": "给我这个主管提一下我这边儿尽量呃满足各位的呃呃需求",
+        "referenceCharacter": "儿",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 246,
+        "referenceContext": "在呃我的能力之上我能满足则满足呃能力呃我这能力也有",
+        "referenceCharacter": "则",
+        "error": {
+          "tag": "replace",
+          "hyp": "的"
+        }
+      },
+      {
+        "referenceIndex": 281,
+        "referenceContext": "或者要求我会上报呃进行上级上级领导进行评估一下嗯在",
+        "referenceCharacter": "级",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 330,
+        "referenceContext": "啊嗯嗯都不错尤其是那个咱那个呃日化区这边儿呃销售的",
+        "referenceCharacter": "那",
+        "error": {
+          "tag": "replace",
+          "hyp": "这"
+        }
+      },
+      {
+        "referenceIndex": 375,
+        "referenceContext": "原因呃呃呃那个呃也给客流量也有原因估计就是疫情已经",
+        "referenceCharacter": "量",
+        "error": {
+          "tag": "replace",
+          "hyp": "院"
+        }
+      },
+      {
+        "referenceIndex": 396,
+        "referenceContext": "疫情已经结束了嘛不太严重啦那个调整客流量人员也非常",
+        "referenceCharacter": "啦",
+        "error": {
+          "tag": "replace",
+          "hyp": "了"
+        }
+      },
+      {
+        "referenceIndex": 458,
+        "referenceContext": "来呃进行呃超市采购呃周一至周五呢人流量还是稍微少一",
+        "referenceCharacter": "至",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 476,
+        "referenceContext": "量还是稍微少一些呃周一周五主要是呃一些老年人呃来超",
+        "referenceCharacter": "五",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 526,
+        "referenceContext": "油啦面啦呃他们的需求量跟远远要少一些呃明显是周六周",
+        "referenceCharacter": "远",
+        "error": {
+          "tag": "replace",
+          "hyp": "原"
+        }
+      },
+      {
+        "referenceIndex": 551,
+        "referenceContext": "日人员比较多呃都是带一些那个呃都是带着孩子啦或者一",
+        "referenceCharacter": "那",
+        "error": {
+          "tag": "replace",
+          "hyp": "这"
+        }
+      },
+      {
+        "referenceIndex": 595,
+        "referenceContext": "的用品呃小孩子的一些零嘴儿呃这个有上升的趋势所以大",
+        "referenceCharacter": "儿",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      },
+      {
+        "referenceIndex": 660,
+        "referenceContext": "些新的调整啊把一些咱这个嗯比较卖的销量比较高的这个",
+        "referenceCharacter": "嗯",
+        "error": {
+          "tag": "replace",
+          "hyp": "呃"
+        }
+      },
+      {
+        "referenceIndex": 684,
+        "referenceContext": "个销售产品是否再进行一下啊优惠活动嗯或者咱们嗯嗯不",
+        "referenceCharacter": "啊",
+        "error": {
+          "tag": "replace",
+          "hyp": "呃"
+        }
+      },
+      {
+        "referenceIndex": 702,
+        "referenceContext": "或者咱们嗯嗯不好卖的产品咱是否要进行下架呃这得需要",
+        "referenceCharacter": "咱",
+        "error": {
+          "tag": "replace",
+          "hyp": "呢"
+        }
+      },
+      {
+        "referenceIndex": 727,
+        "referenceContext": "各位来进行一个评判我这边儿只是看到你们日常的一些工",
+        "referenceCharacter": "儿",
+        "error": {
+          "tag": "delete",
+          "hyp": ""
+        }
+      }
+    ],
+    "inferenceOrCloudCallsPerformed": 0,
+    "phoneAccessed": false,
+    "isolatedCodecExperiment": false,
+    "limits": "Platform/runtime, normalization, segmentation and codec differ together. Net score difference alone does not measure compression damage; these are exposed diagnostics, not holdout, speaker/overlap or sale qualification.",
+    "qualityQualified": false,
+    "resourceLimits": {
+      "pid": 35068,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 167772160,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 18739200,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "savedMinutesReview": {
+    "state": "SEVEN_DECLARED_SAVED_MINUTES_QUANTITY_CHECKS_REVIEWED",
+    "receipt": "product-existing-pair/saved-minutes-fact-review.json",
+    "allFactsQualified": false
+  },
+  "productFiveInputScore": null,
+  "dedicatedCi": {
+    "runId": 42652152343,
+    "testSource": "98bcca6a94d3fdfe379108a11856948dd39194a9",
+    "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42652152343",
+    "publicInputAsset": 728094471,
+    "published": false,
+    "newModelFamily": false,
+    "nativeUiNotInvoked": true
+  },
+  "localQwen": {
+    "inventory": {
+      "ordinal": 1,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "totalMemory": 17163091968
+    },
+    "attempt": {
+      "startedAt": "2026-11-09T23:56:23+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8013\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 36.49606389999826,
+      "privatePeakBytes": 422416384,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "actual_windows_low_ram",
+      "actualWindowsLowRam": true,
+      "explicitStopRequested": false,
+      "systemAvailableBytesAtStop": 715059200,
+      "exitCode": 15,
+      "finishedAt": "2026-11-09T23:57:00+08:00",
+      "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+    },
+    "modelLoaded": false,
+    "neuralCalls": 0,
+    "frozenPackChanged": false,
+    "qualityFailure": false,
+    "resumeBindingPreparedNoModel": true
+  },
+  "phoneComparator": {
+    "at": "2026-11-09T23:57:24+08:00",
+    "state": "PHONE_COMPARATOR_NOT_STARTED_INVENTORY_CLAIM_INVALIDATED",
+    "invalidates": "prepared.json",
+    "cause": "app_process returned zero with empty stdout and no state.json; not evidence of Java/API/model startup",
+    "instrumentationFallback": "INSTALL_FAILED_USER_RESTRICTED: Install canceled by user",
+    "instrumentationFallbackInstalled": false,
+    "neuralCalls": 0,
+    "modelQualityMeasured": false,
+    "productApkChanged": false,
+    "mainDisplayUsed": false,
+    "originalLibraryAccessed": false,
+    "noFurtherInstallRetry": true,
+    "ownPublicStagingRemoved": true
+  },
+  "originalSoftwareVersions": {
+    "windows": "0.1.81",
+    "android": "0.1.115",
+    "productApkChangedThisContinuation": false
+  },
+  "newTrainingRuns": 0,
+  "newAccuracyGain": false,
+  "newIndependentMeetings": 0,
+  "finalHoldoutOpened": false,
+  "formalQualityTargetsChanged": false,
+  "newCustomerEvaluationPerformed": false,
+  "saleQualified": false,
+  "next": "独立CI42652152343正在顺序执行同一公开AliMeeting四路近讲和一路原始远场共同覆盖音频，使用当前产品固定Paraformer原生CLI；收齐五输出后独立按对应逐人参考/混音参考评分，不混比口径。Qwen原任务因本机实际低内存在模型加载前停止，保留断点不原样自动重跑。继续原软件081/115已验范围和未完成模型/实卡门，不回退旧062/110或重做已过文件流程。"
+}

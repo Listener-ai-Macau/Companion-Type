@@ -1,0 +1,38 @@
+{
+  "parser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "sourceReferences": [
+    {
+      "id": "near-N_SPK8013",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8013.TextGrid",
+      "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87",
+      "farTier": "N_SPK8013",
+      "scope": "All source utterances wholly covered; count bleed insertions, but audit unannotated sound rather than declaring every non-reference sound invented."
+    },
+    {
+      "id": "near-N_SPK8014",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.TextGrid",
+      "referenceSha256": "43541588ec038e2af457b788a2ef38221c23d001ace76ec7d53866be617671ac",
+      "farTier": "N_SPK8014",
+      "scope": "All source utterances wholly covered; count bleed insertions, but audit unannotated sound rather than declaring every non-reference sound invented."
+    },
+    {
+      "id": "near-N_SPK8015",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8015.TextGrid",
+      "referenceSha256": "81e359c595f69128f3123f66c052dc9e988014ab954845f6f88c76cb9d713fdc",
+      "farTier": "N_SPK8015",
+      "scope": "All source utterances wholly covered; count bleed insertions, but audit unannotated sound rather than declaring every non-reference sound invented."
+    },
+    {
+      "id": "near-N_SPK8016",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8016.TextGrid",
+      "referenceSha256": "f851bd68fed0f900594f561d0db07dae7fcfd64d11785ba9aed5830eaed58299",
+      "farTier": "N_SPK8016",
+      "scope": "All source utterances wholly covered; count bleed insertions, but audit unannotated sound rather than declaring every non-reference sound invented."
+    }
+  ],
+  "rawMixedRule": "Do not score raw mixed control against one speaker. Chronological all-speaker CER has overlap-order limitations and is a separate diagnostic; do not compare it directly with per-person aggregate CER/cpCER.",
+  "nextSeparationComparison": "Only after headset transcription ceiling is measured, compare the same person/time/reference on existing separated far audio; source alignment limitations currently prevent clean-target training/SDR claims.",
+  "notSaleEvaluation": true,
+  "split": "Eval",
+  "trainingAllowed": false
+}
