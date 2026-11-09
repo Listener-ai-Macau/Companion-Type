@@ -6,7 +6,7 @@ C=R/'docs/handoffs/20261109-windows-file-copy078';D=Path('E:/CodexData/Companion
 sys.path.insert(0,str(R/'model-research/src'))
 from moss_windows_resource_limits_20261104 import WorkerLimits,SystemRamPressure
 kind=sys.argv[1] if len(sys.argv)>1 else 'check'
-assert kind in ['check','release']
+assert kind in ['check','release','release-lowram']
 limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);pressure=SystemRamPressure()
 if kind=='release':
  # Native077 measured ~2.5GiB for Rust release compilation. This build-only
@@ -25,6 +25,15 @@ source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=S,text=True).strip
 record={'at':datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),'state':'RUNNING_NATIVE_'+kind.upper(),'sourceCommit':source,'kind':kind,'log':str(logpath),'limits':limits.query(),'modelsRun':False,'installed':False}
 target=C/('native-'+kind+'-result.json');target.write_text(json.dumps(record,indent=2)+'\n',encoding='utf8')
 args=['cargo','check','--lib','--offline','--locked'] if kind=='check' else ['cargo','build','--release','--offline','--locked']
+if kind=='release-lowram':
+ # Keep dependency optimizations and the release safety/panic settings. Only
+ # this application's large crate uses smaller/basic optimization units for
+ # a bounded local candidate. The prior normal release stopped on Windows'
+ # actual low-memory notification; preserve it, do not overwrite its receipt.
+ # This is not a model/ASR change or a claimed performance improvement.
+ args.extend(['--config','profile.release.package.companion-type.opt-level=1',
+              '--config','profile.release.package.companion-type.codegen-units=256'])
+ record['applicationBuildOverrides']={'optLevel':1,'codegenUnits':256,'dependencyProfilesUnchanged':True,'runtimePerformanceQualified':False}
 with logpath.open('wb') as log:
  child=subprocess.Popen(args,cwd=S/'apps/windows/src-tauri',env=env,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
  import psutil
