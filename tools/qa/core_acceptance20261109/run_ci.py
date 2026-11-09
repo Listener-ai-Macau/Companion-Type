@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio'}
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
 private=Path(os.environ['RUNNER_TEMP'])/'companion-core-acceptance';private.mkdir()
 product=private/'product';cache=private/'cache';native=private/'frozen-native';native.mkdir()
@@ -35,23 +36,52 @@ try:
  verification=product/'docs/handoffs/20261109-windows-file-copy078';verification.mkdir(parents=True)
  (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
  record.update(exactInstalledExeSha256=v['embeddedExeSha256'],exactInstalledDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
+ if PHASE=='audio':
+  public=private/'public-input';public.mkdir();audio=public/'public-audio-S_R004S03C01.wav'
+  with audio.open('wb') as dest,(O/'download-public-audio.log').open('wb') as log:
+   download=subprocess.run(['gh','api','repos/Listener-ai-Macau/Companion-Type/releases/assets/726625128','-H','Accept: application/octet-stream'],env=env,stdout=dest,stderr=log,cwd=S)
+  assert download.returncode==0 and sha(audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f','The public audio must match its frozen source'
+  record['publicAudio']={'meeting':'S_R004S03C01','seconds':2327.119,'sha256':sha(audio),'bytes':audio.stat().st_size,'privateDraftAsset':726625128};save()
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- run('current-source-typecheck',['node',S/'node_modules/typescript/bin/tsc','--project',S/'apps/windows/tsconfig.json','--noEmit'])
- record['currentUiSourceTypecheckOnly']=True;record['currentUiSourcePackaged']=False;save()
- tool=S/'tools/qa/core_acceptance20261109'
- code=run('saved-meeting-backend',[sys.executable,tool/'windows_saved_meeting.py'],required=False);record['backendExitCode']=code;save()
- cases=product/'docs/handoffs/20261109-core-acceptance';saved=list(cases.glob('saved-*'));assert len(saved)==1
- backend=json.loads((saved[0]/'result.json').read_text(encoding='utf8'));record['backendState']=backend['state']
- assert (saved[0]/'10-reopen-after-document-result.json').is_file(),'Native UI input was not prepared; never substitute a demo'
- gui_code=run('native-ui-and-file-receiver',[sys.executable,tool/'windows_meeting.py','--stage','handoff','--library',saved[0]],required=False);record['nativeUiExitCode']=gui_code
- gui=[p for p in cases.iterdir() if p.is_dir() and not p.name.startswith('saved-')];assert len(gui)==1
- native_result=json.loads((gui[0]/'result.json').read_text(encoding='utf8'));record['nativeUiState']=native_result['state']
- record['ordinaryReceiverPassed']=native_result.get('ordinaryRecipientTested',False)
- record['receiverScope']='Windows standard Shell Paste; third-party messengers and actual sending remain unqualified'
- record['state']='WINDOWS_SAVED_MEETING_AND_SHELL_FILE_HANDOFF_PASSED' if code==0 and gui_code==0 and record['ordinaryReceiverPassed'] else 'WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
- assert code==0 and gui_code==0 and record['ordinaryReceiverPassed'],'One or more core software stages remain unqualified'
+ if PHASE=='audio':
+  run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
+  tool=S/'tools/qa/core_acceptance20261109'
+  gui_code=run('native-public-audio-flow',[sys.executable,tool/'windows_meeting.py','--stage','audio','--audio',audio],required=False);record['nativeUiExitCode']=gui_code
+  cases=product/'docs/handoffs/20261109-core-acceptance';gui=list(cases.iterdir());assert len(gui)==1
+  result=json.loads((gui[0]/'result.json').read_text(encoding='utf8'));record['nativeUiState']=result['state']
+  root=Path(result['privateRoot']);library=root/'state/sessions.json'
+  reopen_env={**env,'COMPANION_TYPE_STATE_PATH':str(library),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1'}
+  request=gui[0]/'reopen-audio-request.json';request.write_text('{}',encoding='utf8')
+  reopened=gui[0]/'reopen-audio-result.json'
+  reopen_code=run('reopen-audio-library',[root/'app/companion-type.exe','--local-recording-snapshot',request,reopened],environment=reopen_env,required=False)
+  if reopened.exists():
+   snapshot=json.loads(reopened.read_text(encoding='utf8'))['snapshot'];rows=[r for r in snapshot['host']['sessions'] if r['source']=='importedAudio']
+   record['reopenedImports']=[{'id':r['id'],'title':r['title'],'durationMs':r['durationMs'],'audioStored':r['audioStored'],'originalChunks':sum(c['status']=='importedOriginal' for c in r['chunks'])} for r in rows]
+   if gui_code==0:assert len(rows)==2 and all(r['audioStored'] and abs(r['durationMs']-2327119)<600 for r in rows)
+  if (root/'exports/original.wav').exists():assert sha(root/'exports/original.wav')==record['publicAudio']['sha256'];record['savedOriginalByteIdentical']=True
+  payload=root/'exports/compatible.mp3'
+  if payload.exists():
+   folder=O/'public-audio-output';folder.mkdir();shutil.copy2(payload,folder/payload.name);record['mp3Output']={'sha256':sha(payload),'bytes':payload.stat().st_size,'preservedInCiArtifact':True}
+  assert sha(audio)==record['publicAudio']['sha256'];record['originalInputUnchanged']=True
+  record['state']='WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED' if gui_code==0 and reopen_code==0 else 'WINDOWS_REAL_PUBLIC_AUDIO_FLOW_NOT_QUALIFIED_FAILURE_RETAINED'
+  assert gui_code==0 and reopen_code==0,'Real audio flow remains unqualified; preserve the actual failing stage'
+ else:
+  run('current-source-typecheck',['node',S/'node_modules/typescript/bin/tsc','--project',S/'apps/windows/tsconfig.json','--noEmit'])
+  record['currentUiSourceTypecheckOnly']=True;record['currentUiSourcePackaged']=False;save()
+  tool=S/'tools/qa/core_acceptance20261109'
+  code=run('saved-meeting-backend',[sys.executable,tool/'windows_saved_meeting.py'],required=False);record['backendExitCode']=code;save()
+  cases=product/'docs/handoffs/20261109-core-acceptance';saved=list(cases.glob('saved-*'));assert len(saved)==1
+  backend=json.loads((saved[0]/'result.json').read_text(encoding='utf8'));record['backendState']=backend['state']
+  assert (saved[0]/'10-reopen-after-document-result.json').is_file(),'Native UI input was not prepared; never substitute a demo'
+  gui_code=run('native-ui-and-file-receiver',[sys.executable,tool/'windows_meeting.py','--stage','handoff','--library',saved[0]],required=False);record['nativeUiExitCode']=gui_code
+  gui=[p for p in cases.iterdir() if p.is_dir() and not p.name.startswith('saved-')];assert len(gui)==1
+  native_result=json.loads((gui[0]/'result.json').read_text(encoding='utf8'));record['nativeUiState']=native_result['state']
+  record['ordinaryReceiverPassed']=native_result.get('ordinaryRecipientTested',False)
+  record['receiverScope']='Windows standard Shell Paste; third-party messengers and actual sending remain unqualified'
+  record['state']='WINDOWS_SAVED_MEETING_AND_SHELL_FILE_HANDOFF_PASSED' if code==0 and gui_code==0 and record['ordinaryReceiverPassed'] else 'WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
+  assert code==0 and gui_code==0 and record['ordinaryReceiverPassed'],'One or more core software stages remain unqualified'
 except BaseException as error:
  record.setdefault('error',repr(error));record['state']='WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED'
  (O/'failure.txt').write_text(traceback.format_exc(),encoding='utf8');raise

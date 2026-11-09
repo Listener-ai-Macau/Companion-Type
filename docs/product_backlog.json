@@ -132986,24 +132986,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T14:26:33+08:00",
+      "updatedAt": "2026-11-09T15:43:08+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66767,
+        "firmwareVersion": 66769,
         "uiGeneration": 85,
         "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
-        "sourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate767-build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\idle767-background-install-normal767-ota-identity.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\windows079-hardware-after-public-connect.json",
+        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate769-build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-normal769-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-installed-chain-after-install.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal767 full idle extent preparation installed; explicit START/first valid PCM pending matched candidate acceptance.",
+        "sourceRootAvailability": "Normal769/3b2 installed via signed OTA; editable source exactly matches. Current matched079 long-run result is independent of previous767 short samples.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -133705,7 +133705,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "同一核心候选767/fd433 + Windows079/d00：MSI已完成，首PCM0.328s、STOP0.171s、完整冷目录3.532s、普通录中断开后原场恢复上界2.268s，两段原音/物理回收与短运行指标已过，原34目录不变。若currentCoreLong正在运行则只监督并收尾，不换固件/客户端或新增START；结束按原2h录音+2h录中同步、PDM/编码/前台/栈/零故障及完整原音判定。手机109当前不在线、间歇首次连接仍开放；速度/屏幕/Owner block不复开，整套候选与售卖资格不提前关闭。",
+      "next": "769/3b2 +079/d00同批候选已在实板运行：原375通过现有正常准备恢复、可恢复原音已收回且captureIncomplete保留；获准第一段376十秒已封口收取。769正常OTA118.683s/结束验证87.268s、联合确认/临时区释放和原34目录均通过。只监督当前377长录/录中同步，现有采音计数若有失败则收尾修源头，否则完成原2h录音+2h录中同步及PDM/编码/前台/栈/零故障/完整原音。录中不刷写、UART/SWD、换端或新增START；手机/实体/速度与明确block仍不继承通过。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133725,11 +133725,11 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
-        "installedSourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
-        "installedFirmwareVersion": 66767,
-        "scope": "Firmware part of the existing complete-core candidate; private Windows recovery is an integration input, not installed RC.",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core-candidate-integration.json",
+        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "installedSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "installedFirmwareVersion": 66769,
+        "scope": "Firmware769 physically installed, normal Windows079/d00 long-run candidate under same complete-core batch.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
         "phoneActualVersion": "0.1.109",
         "phoneObservation": "LAST_POSITIVE_NOT_CURRENT_ADB_READ",
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -133977,25 +133977,25 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66767,
+        "version": 66769,
         "installed": true,
-        "sourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
-        "appBytes": 405140,
+        "sourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+        "appBytes": 404964,
         "staticBytes": 67896,
         "stackReservedBytes": 21504,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\manifest.json",
-        "reason": "Normal767 installed via signed OTA; idle preparation and screen-disabled touch reachability cut. Complete current recording acceptance still pending.",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-candidate.json",
+        "reason": "769正常OTA联合确认且临时区释放；原34目录相同。当前长录377/079按原指标验收，尚未完成。",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
-        "at": "2026-11-09T14:26:33+08:00",
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-candidate.json",
-        "actualFirmware": 66767,
+        "at": "2026-11-09T15:43:08+08:00",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+        "actualFirmware": 66769,
         "candidateWindows": "0.1.79",
         "candidateInstalled": false,
-        "matchedShortCoreChainAccepted": true,
+        "firmwareInstalled": true,
         "wholeSaleQualified": false,
-        "scope": "Same-source normal release MSI ready; ordinary recording/reconnect/audio/reclaim and firmware timing short batch accepted. Long/phone/intermittency still open."
+        "scope": "Normal firmware OTA installed; Windows079 candidate private native executable reused. Long377 current, not yet qualified."
       },
       "blockedItems": [
         {
@@ -134175,8 +134175,8 @@
             "order": 3,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "MATCHED767_079_SHORT_RUNTIME_PASS_FINAL_LONG_PENDING",
-            "next": "两短录编码/PDM3ms/零故障/7ms前台间隔/栈/61.44MHz均过；旧87min/PDM3245us不覆盖本次。只继续同一候选最终长录，结束读原场累计指标和完整原音。"
+            "status": "NORMAL769_079_ORIGINAL377_FINAL_LONG_RUNNING",
+            "next": "只监督同一377，先跨原251秒失效位置，现有缓存采音计数若已失败就收尾定位；否则完成原2h录音+2h录中同步、完整原音和累计资源指标。不复开速度或Owner block。"
           }
         ],
         "doNotReopen": [
@@ -134266,8 +134266,8 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109"
       },
       "releaseReadiness": {
-        "at": "2026-11-09T14:26:33+08:00",
-        "firmware": 66767,
+        "at": "2026-11-09T15:43:08+08:00",
+        "firmware": 66769,
         "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
@@ -134307,9 +134307,23 @@
         },
         "matchedCoreCandidateFrozen": false,
         "coreCandidateBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
-        "currentCoreShortBatchAccepted": true,
+        "currentCoreShortBatchAccepted": false,
         "currentCoreShortBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core079-device-chain-acceptance.json",
-        "windowsCoreCandidateBuilt": true
+        "windowsCoreCandidateBuilt": true,
+        "currentCoreLongPassed": false,
+        "currentCoreLongReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+        "repairCandidateBuilt": true,
+        "repairCandidateInstalled": true,
+        "currentCoreLongRunning": true,
+        "normal769OtaMetrics": {
+          "elapsedMs": 118683,
+          "maximumMs": 150000,
+          "postFinishMs": 87268,
+          "postFinishMaximumMs": 100000,
+          "jointConfirmed": true,
+          "temporarySpaceReleased": true,
+          "gatesPass": true
+        }
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -134928,8 +134942,9 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-06T18:15:14+08:00",
-        "text": "好的, 请你继续推进吧, 需要达到完整售卖标准在嵌软上"
+        "at": "2026-11-09T15:43:08+08:00",
+        "text": "再试一下?",
+        "decision": "新一次重连可读旧故障；Owner原统一弹窗确认后，现有正常START恢复375并用掉获准第一段10秒，恢复原音后装769，剩余一次新录音用于最终长录。"
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -135548,7 +135563,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "同一767/079核心候选已有可安装MSI、源码/包内/升级族核对；10s开停收取和30s录中主动断开/原场恢复/完整收取的本批现行非后置指标通过。继续同一候选最终长录，不以短样本或已有包替代全部售卖资格。"
+        "currentDelivery": "769修复包已正常OTA装板（118.683秒/结束验证87.268秒均过原门），原375已收回可恢复部分并标中断，376十秒完整收取，原34目录保持；同一769/079的377长录实际进行中，不用旧短样本或恢复后的残段代替通过。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136432,32 +136447,32 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-09T14:26:33+08:00",
-        "state": "LONG_FAILURE_PRESERVED_NO_NEW_START",
+        "at": "2026-11-09T15:43:08+08:00",
+        "state": "MATCHED_CORE769_079_LONG_RECORDING_AND_SYNC_RUNNING",
         "phoneInstalled": "0.1.109",
-        "firmwareInstalled": 66767,
+        "firmwareInstalled": 66769,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
+        "firmwareSource": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
         "boardLease": true,
-        "boardItem": "Companion767与核心079最终两小时录中同步，同一候选",
-        "liveRecording": false,
-        "liveReceive": false,
+        "boardItem": "Companion769与核心079最终两小时录中同步，同一候选",
+        "liveRecording": true,
+        "liveReceive": true,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 372,
-        "evidence": "E:\\CodexData\\Companion\\.build-cache\\idle767-background-install\\progress.json",
+        "ownLatestSession": 377,
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66767,
-        "candidateSourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
+        "firmwareCandidate": 66769,
+        "candidateSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
         "backendCandidateSource": null,
         "phoneBuildSession": null,
         "normalRestoreCandidate": null,
-        "longControllerSession": null,
+        "longControllerSession": 11840,
         "rangeFirmwarePrototype": "2b1a1461b51dd8defcd60cccaf46e0f71a5b4f7d",
         "rangeHostPrototype": "b63d2bbba50308d35c41062cded2f76aa8e479fd",
         "otaControllerSession": null,
@@ -136467,11 +136482,11 @@
         "engineeringRunnerName": null,
         "phoneControllerSession": null,
         "firmwareCandidateProfile": null,
-        "windowsClientPid": null,
-        "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\long\\progress.json",
+        "windowsClientPid": 32092,
+        "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core769-matched079\\long\\progress.json",
         "longObserverSession": null,
         "startupDiagnosticSession": null,
-        "firmwareSourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
+        "firmwareSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
         "windowsInstalledVersion": "0.1.78",
@@ -136482,12 +136497,14 @@
         "windowsCoreCandidateInstalled": false,
         "windowsCoreCandidateArtifact": "E:\\CodexData\\Companion\\.build-cache\\core079-forward078\\release\\Companion-Windows-0.1.79-Core-Candidate.msi",
         "coreShortBatchAccepted": true,
-        "longControllerPid": null,
+        "longControllerPid": 34668,
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "0000000000000177"
-        }
+          "sessionId": "0000000000000179"
+        },
+        "operatorReady": true,
+        "operatorPromptPending": false
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -140902,7 +140919,26 @@
           "anyLength50Qualified": false,
           "wholeSaleQualified": false
         },
-        "startupBeforeCore079Physical": "764实测准备1971ms：擦除1177、擦后验证676、查找/提交76、空白扫描38、来源4。66767源fd433ae已实现空闲准备完整270336B、不生成会话，显式START才绑定提交；准备中身份写入/取消已修。软件端口、真实产品入口、容量/原所有权/8个中断点通过。正常镜像405140/static67896/栈21504；实板首PCM1.5s尚按实际验收，不预记通过。"
+        "startupBeforeCore079Physical": "764实测准备1971ms：擦除1177、擦后验证676、查找/提交76、空白扫描38、来源4。66767源fd433ae已实现空闲准备完整270336B、不生成会话，显式START才绑定提交；准备中身份写入/取消已修。软件端口、真实产品入口、容量/原所有权/8个中断点通过。正常镜像405140/static67896/栈21504；实板首PCM1.5s尚按实际验收，不预记通过。",
+        "coreRecordingRepair": {
+          "at": "2026-11-09T15:43:08+08:00",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-candidate.json",
+          "failedOriginal": 375,
+          "failedAtMs": 251110,
+          "staleDmaHalves": 1,
+          "candidateFirmware": 66769,
+          "candidateSourceCommit": "3b2a1b9cf98370f75ed03b0c9692fcfc507371c4",
+          "candidateBuilt": true,
+          "candidateInstalled": true,
+          "softwareFailureReproducedAndFixed": true,
+          "physicalFixQualified": false,
+          "applicationBytes": 404964,
+          "staticBytes": 67896,
+          "remaining": "One physical handoff, preserve/recover original375, normal OTA and matched recording-chain acceptance.",
+          "hardwareReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core769-hardware.json",
+          "old375RecoveredAsIncomplete": true,
+          "old34MetadataIdentical": true
+        }
       },
       "continuousGoal": {
         "registeredAt": "2026-11-08T22:45:22+08:00",
@@ -141046,38 +141082,53 @@
       },
       "deliveryBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
       "currentCoreLong": {
-        "at": "2026-11-09T14:24:44+08:00",
-        "pid": 30948,
-        "state": "LONG_FAILURE_PRESERVED_NO_NEW_START",
+        "at": "2026-11-09T15:43:03+08:00",
+        "pid": 34668,
+        "state": "RUNNING_ONE_LONG_ORIGINAL",
         "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
-        "firmware": 66767,
+        "firmware": 66769,
         "boardLease": true,
         "newStartCommands": 1,
         "targetRecordingSeconds": 7380,
         "targetLiveSyncSeconds": 7200,
         "saleQualified": false,
-        "childPid": 1564,
-        "sessionId": "v1-real-installed-1794205222360",
+        "childPid": 32092,
+        "sessionId": "v1-real-installed-1794209887609",
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "0000000000000177"
+          "sessionId": "0000000000000179"
         },
-        "recordingId": 132443,
+        "recordingId": 132449,
         "sessionState": "recording",
         "liveRecording": true,
         "liveReceive": true,
-        "sealedChunks": 1,
-        "hostElapsedSeconds": 240.264,
-        "sameOriginalActiveFollowWindows": 20,
-        "conservativeLiveSyncSeconds": 89.01080069999989,
+        "sealedChunks": 2,
+        "hostElapsedSeconds": 300.303,
+        "sameOriginalActiveFollowWindows": 28,
+        "conservativeLiveSyncSeconds": 138.38315850000072,
         "unexpectedDisconnects": 0,
-        "maximumFilePollGapSeconds": 1.029771299999993,
-        "firstObservedChunkAt": "2026-11-09T14:22:35+08:00",
-        "exitCode": 1,
-        "error": "AssertionError('Normal client failed; original retained')",
-        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-03\\companion-firmware-66662-luna\\recovery-work\\run_core079_long.py\", line 63, in main\n    log.close();progress['exitCode']=child.returncode;assert child.returncode==0,'Normal client failed; original retained'\n                                                             ^^^^^^^^^^^^^^^^^^^\nAssertionError: Normal client failed; original retained\n",
-        "cleanupError": "AssertionError()"
+        "maximumFilePollGapSeconds": 1.0139334999985294,
+        "firstObservedChunkAt": "2026-11-09T15:40:18+08:00"
+      },
+      "baselineBefore769": {
+        "firmwareVersion": 66767,
+        "uiGeneration": 85,
+        "sourceRoot": "E:/CodexData/Companion/.build-cache/range-reclaim-source",
+        "sourceCommit": "fd433aeaa4e2d296f9acaf7be8bef69c0a22551e",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate767-build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\idle767-background-install-normal767-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\windows079-hardware-after-public-connect.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Editable worktree now contains769/3b2 repair; installed767 exact source remains fd433 commit. Both sources available via Git.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -262911,6 +262962,28 @@
             "modelsRun": false,
             "wholeCoreCandidateQualified": false,
             "saleQualified": false
+          },
+          "activeWindowsAudio20261109": {
+            "at": "2026-11-09T15:44:32+08:00",
+            "state": "CONTINUOUS_REAL_AUDIO_NATIVE_FLOW_READY_FOR_REMOTE_RUN",
+            "nativeVersion": "0.1.78",
+            "reusePassedNativeSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+            "sourceMeeting": "S_R004S03C01",
+            "audioSeconds": 2327.119,
+            "publicAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+            "privateDraftAsset": 726625128,
+            "sequence": [
+              "真实系统选择器导入",
+              "开头/中间/结尾的真实媒体解码回听",
+              "系统另存原音/MP3",
+              "Windows标准Shell粘贴录音文件",
+              "MP3重新导入解码与回听",
+              "新进程重开"
+            ],
+            "modelsRun": false,
+            "previousSavedMeetingPassReused": true,
+            "ownerForegroundUsed": false,
+            "hostLowMemoryObservedBytes": 369836032
           }
         }
       },
