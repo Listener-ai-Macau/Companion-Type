@@ -29,6 +29,7 @@ for lib,name,args,result in [
  (K,'CreateJobObjectW',[ctypes.c_void_p,w.LPCWSTR],w.HANDLE),(K,'SetInformationJobObject',[w.HANDLE,ctypes.c_int,ctypes.c_void_p,w.DWORD],w.BOOL),
  (K,'AssignProcessToJobObject',[w.HANDLE,w.HANDLE],w.BOOL),(K,'CloseHandle',[w.HANDLE],w.BOOL),
  (K,'QueryInformationJobObject',[w.HANDLE,ctypes.c_int,ctypes.c_void_p,w.DWORD,ctypes.c_void_p],w.BOOL),
+ (K,'OpenProcess',[w.DWORD,w.BOOL,w.DWORD],w.HANDLE),(K,'IsProcessInJob',[w.HANDLE,w.HANDLE,ctypes.POINTER(w.BOOL)],w.BOOL),
  (K,'CreateProcessW',[w.LPCWSTR,w.LPWSTR,ctypes.c_void_p,ctypes.c_void_p,w.BOOL,w.DWORD,ctypes.c_void_p,w.LPCWSTR,ctypes.POINTER(Startup),ctypes.POINTER(Process)],w.BOOL),
  (K,'ResumeThread',[w.HANDLE],w.DWORD),(K,'GetExitCodeProcess',[w.HANDLE,ctypes.POINTER(w.DWORD)],w.BOOL),
  (K,'CreateMemoryResourceNotification',[ctypes.c_int],w.HANDLE),(K,'QueryMemoryResourceNotification',[w.HANDLE,ctypes.POINTER(w.BOOL)],w.BOOL),
@@ -127,21 +128,28 @@ def main():
    except Exception:time.sleep(.3)
   else:raise TimeoutError('Private native WebView did not expose CDP; no foreground fallback')
   actual_windows=windows(desktop,p.pid);assert actual_windows,'App main window not proven on private desktop';record['nativeWindowsOnPrivateDesktop']=actual_windows
-  # CDP may be listening before the browser process tree has settled. Bind
-  # the actual --user-data-dir argument; keep diagnostic paths if it differs.
-  until=time.monotonic()+8;profiles=[]
-  while time.monotonic()<until:
-   profiles=[]
-   for child in psutil.Process(p.pid).children(recursive=True):
+  # Hosted Edge131's browser is broker-launched and is not exposed as an
+  # app descendant by psutil. Bind the PID listening on our freshly allocated
+  # CDP port as well as descendants, then prove the exact private profile.
+  # The browser must still belong to our bounded job, not an arbitrary browser.
+  candidates={child.pid for child in psutil.Process(p.pid).children(recursive=True)}
+  listeners={conn.pid for conn in psutil.net_connections(kind='tcp') if conn.status==psutil.CONN_LISTEN and conn.laddr.port==port and conn.pid}
+  record['cdpListenerPids']=sorted(listeners);assert len(listeners)==1,'CDP listener is not uniquely attributable'
+  candidates.update(listeners);profiles=[]
+  for child_pid in sorted(candidates):
+   try:
+    child=psutil.Process(child_pid)
     try:arguments=child.cmdline()
     except (psutil.NoSuchProcess,psutil.AccessDenied):continue
     for argument in arguments:
      if argument.startswith('--user-data-dir='):
-      folder=argument.split('=',1)[1].strip('"');profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve()==(root/'webview').resolve()})
-   if profiles:break
-   time.sleep(.1)
+      folder=argument.split('=',1)[1].strip('"');handle=require(K.OpenProcess(0x1000,False,child.pid))
+      try:in_job=w.BOOL();require(K.IsProcessInJob(handle,job,ctypes.byref(in_job)))
+      finally:K.CloseHandle(handle)
+      profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve()==(root/'webview').resolve(),'belongsToBoundedJob':bool(in_job.value),'cdpListener':child.pid in listeners})
+   except psutil.NoSuchProcess:continue
   record['observedWebviewProfiles']=profiles;save()
-  assert profiles and all(item['matchesPrivateRoot'] for item in profiles),'WebView profile is not the isolated folder';record['webviewProfileVerifiedPrivate']=True
+  assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,name+'\\Meeting',job,log);processes.append(node)
   deadline=time.monotonic()+180
   while alive(node) and time.monotonic()<deadline:
