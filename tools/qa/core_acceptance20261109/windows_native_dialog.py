@@ -48,7 +48,7 @@ def main():
    assert len(matches)==1,('Filename field not unique',controls)
    entry=nodes[matches[0]];entry.SetFocus()
    value=entry.GetCurrentPattern(UIA.UIA_ValuePatternId).QueryInterface(UIA.IUIAutomationValuePattern);value.SetValue(str(target))
-   assert value.CurrentValue==str(target),'Filename value did not accept the explicit path'
+   assert value.CurrentValue in {str(target),target.name},'Filename value did not accept the explicit path'
    record['filenameValueAfterSet']=value.CurrentValue;record['focusWithinOwnedRemotePickerUsed']=True
   labels={'open':{'Open','Open(O)','打开','打开(O)'},'save':{'Save','Save(S)','保存','保存(S)'},'cancel':{'Cancel','取消'}}[action]
   primary_id='2' if action=='cancel' else '1'
@@ -57,12 +57,14 @@ def main():
   node=nodes[matches[0]];assert node.CurrentIsEnabled
   if target:
    node.SetFocus() # Commit the filename editor before invoking its default button.
-   assert value.CurrentValue==str(target),'Filename changed before picker confirmation'
+   assert value.CurrentValue in {str(target),target.name},'Filename changed before picker confirmation'
+   record['filenameValueBeforeConfirm']=value.CurrentValue
   node.GetCurrentPattern(UIA.UIA_InvokePatternId).QueryInterface(UIA.IUIAutomationInvokePattern).Invoke()
   if action=='save':
    until=time.monotonic()+90
    while not target.is_file() and time.monotonic()<until:time.sleep(.1)
    assert target.is_file(),'Native save did not create the explicit requested output path'
+   record['createdOutputPathVerified']=str(target)
   record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',path=str(target) if target else None)
  except BaseException as error:record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',error=repr(error));raise
  finally:

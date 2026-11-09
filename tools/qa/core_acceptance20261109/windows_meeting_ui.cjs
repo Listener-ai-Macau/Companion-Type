@@ -9,6 +9,7 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
   await page.waitForLoadState('domcontentloaded');await page.locator('.ct-shell').waitFor({timeout:30000});
   const identity=await page.evaluate(()=>({url:location.href,tauri:typeof window.__TAURI_INTERNALS__?.invoke==='function',title:document.title}));
   assert.ok(identity.tauri,'Real Tauri runtime required; no browser/mock fallback');
+  await page.waitForFunction(expected=>document.body.innerText.includes(expected),plan.title,{timeout:30000});
   const text=await page.locator('body').innerText();assert.ok(text.includes(plan.title));
   fs.writeFileSync(path.join(out,'ui-body.txt'),text);
   fs.writeFileSync(path.join(out,'ui-controls.json'),JSON.stringify(await page.locator('button,input,select,summary').evaluateAll(nodes=>nodes.map(node=>({tag:node.tagName,text:node.innerText||'',aria:node.getAttribute('aria-label'),type:node.getAttribute('type')}))),null,2));

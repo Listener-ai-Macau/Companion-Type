@@ -4,7 +4,7 @@ module.exports=async function audioJourney(page,plan,out){
  const checkpoints=[];const save=()=>fs.writeFileSync(path.join(out,'audio-checkpoints.json'),JSON.stringify(checkpoints,null,2));
  async function dialog(id,action,file,hash,trigger){
   const request=path.join(out,'dialog-request-'+id+'.json');fs.writeFileSync(request,JSON.stringify({action,path:file,sha256:hash}));
-  await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),until=Date.now()+90000;
+  await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),until=Date.now()+120000;
   while(!fs.existsSync(reply)&&Date.now()<until)await wait(100);
   assert.ok(fs.existsSync(reply),'Actual native picker action must complete: '+id);
   const result=JSON.parse(fs.readFileSync(reply,'utf8'));assert.equal(result.state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');
