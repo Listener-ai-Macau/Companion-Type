@@ -59,7 +59,14 @@ try:
   if reopened.exists():
    snapshot=json.loads(reopened.read_text(encoding='utf8'))['snapshot'];rows=[r for r in snapshot['host']['sessions'] if r['source']=='importedAudio']
    record['reopenedImports']=[{'id':r['id'],'title':r['title'],'durationMs':r['durationMs'],'audioStored':r['audioStored'],'originalChunks':sum(c['status']=='importedOriginal' for c in r['chunks'])} for r in rows]
-   if gui_code==0:assert len(rows)==2 and all(r['audioStored'] and abs(r['durationMs']-2327119)<600 for r in rows)
+   if gui_code==0:
+    assert len(rows)==2 and all(r['audioStored'] and abs(r['durationMs']-2327119)<600 for r in rows)
+    copied_mp3=next(f for f in result['receivedFiles'] if f['fileName'].endswith('.mp3'))
+    expected={audio.stem:record['publicAudio']['sha256'],Path(copied_mp3['fileName']).stem:copied_mp3['sha256']}
+    for row in rows:
+     original=next(c for c in row['chunks'] if c['status']=='importedOriginal')
+     assert sha(original['path'])==expected[row['title']] and original['id'].endswith(expected[row['title']])
+    record['reimportedOriginalsBoundToActualWavAndDeliveredMp3']=True
   if (root/'exports/original.wav').exists():assert sha(root/'exports/original.wav')==record['publicAudio']['sha256'];record['savedOriginalByteIdentical']=True
   payload=root/'exports/compatible.mp3'
   if payload.exists():

@@ -36,7 +36,7 @@ module.exports=async function audioJourney(page,plan,out){
   checkpoints.push({step:id,duration,probes,playControl:'native audio Space key',seekProbe:'HTMLMediaElement.currentTime; native seek UI not qualified',mutedByTestRuntime:true,physicalListeningQualified:false});save();
  }
  async function receive(id){
-  const copy=page.getByRole('button',{name:'复制录音文件',exact:true});if(!await copy.isVisible())await page.locator('.ct-recording-more details').filter({has:copy}).last().locator(':scope > summary').click();
+  const copy=page.getByRole('button',{name:'复制录音文件',exact:true});if(!await copy.isVisible())await page.locator('.ct-recording-audio-export > details > summary').click();
   await copy.click();
   await page.getByText(/文件已复制：/).waitFor({timeout:120000});
   const message=await page.getByText(/文件已复制：/).innerText();const fileName=message.match(/文件已复制：(.+?)。可在/s)?.[1];assert.ok(fileName);assert.match(message,/文件尚未发送/);
@@ -48,7 +48,11 @@ module.exports=async function audioJourney(page,plan,out){
  await playback('play-whole-public-wav');
  // The public audio controls are inside the existing More disclosure.
  const format=page.getByLabel('音频副本格式');
- if(!await format.isVisible())await page.locator('#ct-saved-recording-workspace details').filter({has:format}).last().locator(':scope > summary').click();
+ if(!await format.isVisible()){
+  const direct=page.getByRole('button',{name:'导出录音',exact:true});
+  if(await direct.count())await direct.click();
+  else await page.locator('#ct-saved-recording-workspace details').filter({has:format}).last().locator(':scope > summary').click();
+ }
  await format.selectOption('original');
  await dialog('save-original-wav','save',path.join(plan.exportDirectory,'original.wav'),null,()=>page.getByRole('button',{name:'保存原音',exact:true}).click());
  await page.getByText('录音已保存：original.wav',{exact:true}).waitFor({timeout:30000});

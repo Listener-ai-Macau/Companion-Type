@@ -1,7 +1,8 @@
-"""Existing067 UIA picker method, scoped to this app and public test paths.
+"""Native picker on the dedicated CI machine, owned app and public paths only.
 
-No foreground, focus, keyboard, mouse or input desktop changes. Do not traverse
-the file list. Only the owned dialog's filename field and buttons are used.
+Import reuses067's UIA method. Save uses verified native filename input on the
+disposable runner only. No owner desktop or input desktop switching. Do not
+traverse the file list; only filename and button controls are inspected.
 """
 from pathlib import Path
 import argparse,ctypes,json,os,time,psutil
@@ -34,6 +35,7 @@ def enter_save_path(entry,dialog,pid,target,record):
   value=int.from_bytes(units[i:i+2],'little');keys.extend([(0,value,4),(0,value,6)])
  events=(Input*len(keys))()
  for event,(vk,scan,flags) in zip(events,keys):event.type=1;event.data.keyboard=Keyboard(vk,scan,flags,0,0)
+ assert U.GetForegroundWindow()==dialog,'Owned dialog lost foreground; no input'
  assert U.SendInput(len(events),events,ctypes.sizeof(Input))==len(events),'Native input was not accepted'
  record.update(keyboardOrMouseInputUsed=True,remoteNativeFilenameTypingUsed=True,focusWithinOwnedRemotePickerUsed=True)
 
