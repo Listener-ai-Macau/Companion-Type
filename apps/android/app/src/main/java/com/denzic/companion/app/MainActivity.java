@@ -1147,7 +1147,7 @@ public final class MainActivity extends Activity {
                 String language=a.getString("language");
                 String endpoint=a.getString("endpoint"),apiKey=a.getString("apiKey"),model=a.getString("model");
                 String translated=TranslationChunks.run(m.transcript,chunk->{
-                    JSONObject request=TranslationProtocol.request(chunk,language,model);
+                    JSONObject request=TranslationProtocol.request(chunk,language,model,endpoint);
                     String response=TranslationTransport.post(endpoint,apiKey,request.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
                     return TranslationProtocol.response(response);
                 },(done,total)->progress("正在翻译 "+done+"/"+total));

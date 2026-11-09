@@ -1,6 +1,6 @@
 """Build the frozen Android candidate remotely; local signing preserves trust."""
 from pathlib import Path
-import hashlib,json,os,subprocess,urllib.request,zipfile
+import hashlib,json,os,re,subprocess,urllib.request,zipfile
 root=Path(__file__).resolve().parents[3];output=root/'android-candidate-output';output.mkdir()
 gradle_sha='acd53f1edaf02f1a8ff99879f8a34b302661a057d9b063ae9e35b552f804d20a'
 archive=Path(os.environ['RUNNER_TEMP'])/'companion-gradle-9.7.1.zip'
@@ -23,6 +23,8 @@ with zipfile.ZipFile(apk) as package:
         web=root/'apps/mobile/dist'
         for file in web.rglob('*'):
             if file.is_file():assert package.read('assets/www/'+file.relative_to(web).as_posix())==file.read_bytes()
-target=output/'Companion-Android-0.1.111-remote-debug.apk';target.write_bytes(apk.read_bytes())
-record={'sourceCommit':os.environ['GITHUB_SHA'],'runId':os.environ['GITHUB_RUN_ID'],'versionCode':111,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'pinnedModelResources':resources,'nativeLibrariesUnchanged':True,'webAssetsMatchSourceBuild':True,'localTrustedResigningRequired':True,'phoneTested':False}
+configuration=(root/'apps/android/app/build.gradle').read_text()
+version=int(re.search(r'versionCode (\d+)',configuration)[1]);name=re.search(r"versionName '([^']+)'",configuration)[1]
+target=output/('Companion-Android-'+name+'-remote-debug.apk');target.write_bytes(apk.read_bytes())
+record={'sourceCommit':os.environ['GITHUB_SHA'],'runId':os.environ['GITHUB_RUN_ID'],'versionCode':version,'versionName':name,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'pinnedModelResources':resources,'nativeLibrariesUnchanged':True,'webAssetsMatchSourceBuild':True,'localTrustedResigningRequired':True,'phoneTested':False}
 (output/'build.json').write_text(json.dumps(record,indent=2)+'\n')

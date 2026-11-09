@@ -29,7 +29,7 @@ final class TranslationChunks {
         for(int i=0;i<chunks.size();i++) {
             String chunk=chunks.get(i),part;
             try { part=chunk.trim().isEmpty()?chunk:translate.apply(chunk); }
-            catch(Exception failure) {throw new IllegalStateException("第 "+(i+1)+"/"+chunks.size()+" 段翻译未完成；未显示不完整译文，原文仍保留。重试可能重新发送已处理的文字。");}
+            catch(Exception failure) {throw new IllegalStateException("第 "+(i+1)+"/"+chunks.size()+" 段翻译未完成；未显示不完整译文，原文仍保留。重试可能重新发送已处理的文字。",failure);}
             if(part==null||part.trim().isEmpty()&&!chunk.trim().isEmpty()||output.length()+part.length()+2>MAX_RESULT)
                 throw new IllegalStateException("译文为空或过长，未显示不完整译文；原文仍保留。");
             if(output.length()>0&&!chunk.trim().isEmpty())output.append("\n\n");output.append(part);

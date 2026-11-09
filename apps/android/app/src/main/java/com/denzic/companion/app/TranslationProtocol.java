@@ -5,6 +5,16 @@ import org.json.JSONObject;
 
 /** Translates only explicit, bounded saved text; no persistence or network side effects here. */
 final class TranslationProtocol {
+    static JSONObject request(String transcript,String language,String model,String endpoint) throws Exception {
+        JSONObject result=request(transcript,language,model);
+        // V4 enables thinking by default. Translation needs the complete text,
+        // not a reasoning trace that can outlast the mobile request deadline.
+        // Keep this vendor option out of other compatible providers' requests.
+        java.net.URI target=new java.net.URI(endpoint);
+        if("api.deepseek.com".equalsIgnoreCase(target.getHost()))
+            result.put("thinking",new JSONObject().put("type","disabled")).put("max_tokens",8192);
+        return result;
+    }
     static JSONObject request(String transcript,String language,String model) throws Exception {
         if(transcript==null || transcript.trim().isEmpty())throw new IllegalArgumentException("请先完成转写。");
         if(transcript.length()>12000)throw new IllegalArgumentException("当前转写过长，请先处理较短的录音；原文仍保留。");
