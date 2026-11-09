@@ -1,4 +1,6 @@
 import {ContentExportPanel} from './ContentExportPanel';
+import {ActionReviewTools,useActionReview} from './ActionReviewTools';
+import {savedActionReview} from './actionReview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import { cleanHesitations } from './transcriptReading';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
@@ -1262,6 +1264,7 @@ export function CompanionDashboard({
     if(phoneBusy)previewTask.current?.cancel();
   };
   const renderSavedReading = () => selectedSession ? (<MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
+                actionContextKey={`${selectedSession.id}:${minutesViewMode}`}
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
@@ -3659,9 +3662,9 @@ function meetingSource(session: CompanionV1HostSession): string {
 function MinutesReadingView(props:Parameters<typeof MinutesReadingBody>[0]) {
   return <MeetingReadingFrame markdown={props.markdown}><MinutesReadingBody {...props}/></MeetingReadingFrame>;
 }
-function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, longEvidenceAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime, ...sourceProps }: {
+function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, longEvidenceAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime,actionContextKey='', ...sourceProps }: {
   markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; longEvidenceAllowed?: boolean; noteContext?:CompanionMinutesNoteContext|null;
-  recordingTitle?:string;recordingTime?:string;
+  recordingTitle?:string;recordingTime?:string;actionContextKey?:string;
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
@@ -3678,7 +3681,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   // The detail page already owns the current recording title. Hide only its
   // duplicated leading document heading while reading; saved markdown, editor,
   // exports, source-note provenance and later authored headings remain intact.
-  const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked,compactSources:!!noteContext,recordingTime}:undefined;
+  const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked,compactSources:!!noteContext,recordingTime,contextKey:actionContextKey,title:recordingTitle}:undefined;
   const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
   if(longEvidence)return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={longEvidence.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
@@ -3737,12 +3740,11 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
 }
 
 function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
-  actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string};
+  actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string;contextKey?:string;title?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string }) {
   const lookupId=useId();
   const [overviewState,setOverviewState]=useState({source:markdown,expanded:false});
-  if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
     return saved&&saved.text===row.text&&saved.completed===row.completed?[[row.lineIndex,saved] as const]:[];
@@ -3766,6 +3768,8 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
     return next && next.type !== 'heading' && next.type !== 'title';
   });
   const visibleActions = visibleBlocks.flatMap(block => block.action ? [block.action] : []);
+  const actionReview=useActionReview(visibleActions.map(action=>savedActionReview(String(action.lineIndex),action.text,action.completed)),actionChecklist?.contextKey??'');
+  const shownActionIds=new Set(actionReview.visible.map(action=>action.id));
   const commonSupplement = actionChecklist?.compactSources && visibleActions.length === actionChecklist.items.length
     ? commonActionSupplement(visibleActions) : null;
   const firstActionIndex = visibleBlocks.findIndex(block => block.action);
@@ -3784,6 +3788,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
   const canFoldOverview=overviewCount>5&&visibleBlocks.slice(overviewStart+1,overviewEnd).every(block=>block.type==='item'&&!block.action);
   const foldAt=overviewStart+4;
   const overviewExpanded=overviewState.source===markdown&&overviewState.expanded;
+  if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   return (
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
@@ -3815,18 +3820,19 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
           const shown=actionReadingParts(parts?.title??presentation.title);
           const shownTitle=shown.title;
           return <div key={index}>
+          {index===firstActionIndex?<ActionReviewTools key={actionChecklist.contextKey??''} review={actionReview} title={actionChecklist.title} blocked={blocked||actionChecklist.blocked}/>:null}
           {index===firstActionIndex?<p className="ct-action-source-legend">这里只保存事项清单，不会定时通知。
             {needsSourceDate ? (actionChecklist.recordingTime?<><br/>本条记录：{actionChecklist.recordingTime}。相对时间请核对原始来源的日期。</>:<>相对时间请核对原始来源的日期。</>) : null}
           </p>:null}
           {commonSupplement&&index===firstActionIndex?<p className="ct-action-source-legend">{commonSupplement.text.startsWith('共同适用规则：')?'共同适用规则：':'以下事项的共同补充：'}{commonSupplement.text.startsWith('共同适用规则：')?commonSupplement.text.slice('共同适用规则：'.length):commonSupplement.text}</p>:null}
-          <div className="ct-minutes-item ct-minutes-action-item">
+          {shownActionIds.has(String(action.lineIndex))&&<div className="ct-minutes-item ct-minutes-action-item">
           <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${actionMetadataText(action.text)}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>
               <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
               {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
-            </span></label>{links}</div></div>;}
+            </span></label>{links}</div>}</div>;}
         if (block.type === 'item') return <Fragment key={index}><div className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>{canFoldOverview&&overviewExpanded&&index===overviewEnd-1?<button type="button" className="ct-text-button ct-overview-expand" aria-expanded="true" onClick={()=>setOverviewState({source:markdown,expanded:false})}>收起扩展重点</button>:null}</Fragment>;
         return <p key={index}>{minutesInlineText(block.text)}{links}</p>;
       })}

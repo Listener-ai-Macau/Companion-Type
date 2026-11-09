@@ -1,0 +1,23 @@
+.action-review-tools{margin:12px 0 16px;padding:12px;border:1px solid color-mix(in srgb,currentColor 15%,transparent);border-radius:14px;background:color-mix(in srgb,currentColor 3%,transparent);color:inherit;font-size:13px;line-height:1.5}
+.action-review-tools button,.action-review-tools input,.action-review-tools select,.action-review-tools textarea{font:inherit;color:inherit;box-sizing:border-box}
+.action-review-tools button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;border:1px solid color-mix(in srgb,currentColor 20%,transparent);border-radius:8px;background:transparent;cursor:pointer}
+.action-review-tools button:disabled{opacity:.5;cursor:default}
+.action-review-filters>summary{display:flex;align-items:center;gap:7px;cursor:pointer;list-style:none;font-weight:600}
+.action-review-filters>summary::-webkit-details-marker{display:none}
+.action-review-filters>summary small{margin-left:auto;font-size:11px;font-weight:400;text-align:right}
+.action-review-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.action-review-fields>label{display:flex;flex-direction:column;gap:5px;font-size:11px;min-width:0}
+.action-review-fields .action-review-search{grid-column:1/-1;flex-direction:row;align-items:center;border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:8px;padding:7px 9px}
+.action-review-search input{width:100%;border:0;background:transparent;outline:none;padding:0;min-width:0}
+.action-review-fields select{width:100%;min-width:0;padding:7px 6px;border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:8px;background:transparent}
+.action-review-tools option{color:CanvasText;background:Canvas}
+.action-review-result{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:9px;font-size:11px;opacity:.82}
+.action-review-result button{flex:none;padding:3px 6px}
+.action-review-tools .action-review-draft-button{margin-top:10px}
+.action-review-empty{margin:10px 0;font-size:12px}
+.action-review-draft{border-top:1px solid color-mix(in srgb,currentColor 15%,transparent);margin-top:12px;padding-top:12px}
+.action-review-draft h4{margin:0 0 6px;font-size:13px}
+.action-review-draft p{font-size:11px;margin:6px 0 10px}
+.action-review-draft textarea{width:100%;height:210px;resize:vertical;padding:10px;border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:8px;background:transparent;line-height:1.6;white-space:pre-wrap;margin-bottom:8px}
+.action-review-tools :is(button,select,textarea):focus-visible,.action-review-search:focus-within{outline:2px solid var(--ct-accent,#8b7cf8);outline-offset:2px}
+@media(max-width:500px){.action-review-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.action-review-fields>label:last-child{grid-column:1/-1}.action-review-filters>summary{flex-wrap:wrap}.action-review-filters>summary small{max-width:70%}.action-review-result{align-items:flex-start}}
