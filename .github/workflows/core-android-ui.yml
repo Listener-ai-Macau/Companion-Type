@@ -18,9 +18,13 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: node node_modules/typescript/bin/tsc --project apps/mobile/tsconfig.json --noEmit
       - run: node tools/qa/core_acceptance20261109/ui_source.cjs
+      - run: npm run build:mobile
+      - run: python tools/qa/core_acceptance20261109/package_android_candidate.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: companion-android-core-ui-${{ github.sha }}
-          path: core-ui-output/
+          path: |
+            core-ui-output/
+            android-candidate-output/
           retention-days: 7
