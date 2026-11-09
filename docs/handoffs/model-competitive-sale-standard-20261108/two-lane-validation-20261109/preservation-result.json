@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-09T08:40:56+08:00",
+  "ownerQuote": "普通会议和复杂多人分开处理，继续推进；目前进度太慢、完全不满意。",
+  "state": "TWO_LANES_EXECUTABLE_CPU_CHECKS_COMPLETE_SEPARATION_NOT_PROMOTED",
+  "modelEvidenceCommit": "5be8d7a3b8dac7a1375b6b3fff5e3f810234d651",
+  "remoteReadbackConfirmed": true,
+  "previousWorkpoint": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+  "currentDevice": "OnlyconnectedAMD780M; external6800XT absent inPnP. No wholeQwenCPU fallback.",
+  "ordinary": {
+    "bestRetainedStrictCer": 0.055375375375375374,
+    "newFullMeeting": {
+      "meeting": "20200805_S_R001S01C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\20200805_S_R001S01C01-channel1.wav",
+      "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+      "audioSeconds": 2195.362
+    },
+    "wholeRunStarted": false,
+    "sourcePreviouslyUsedForTseValidation": true,
+    "finalHoldout": false,
+    "allOriginalChannelSamplesBitExact": true,
+    "sameFrozenModelAndParameters": true,
+    "newAccuracyGainClaimed": false
+  },
+  "complex": {
+    "automaticProfiles": 17,
+    "nativePeople": 6,
+    "disjointAutomaticQueryClips": 22,
+    "agreesWithJournal": 19,
+    "matchesDominantReference": 19,
+    "referencePureAt95Percent": 20,
+    "referenceAndJournalNotAlwaysCorrect": "q000iswronglyjournaled0butreference006M; encoderalsofailed. q006encoderfixedajournalgroupbutq021ispredictedsoloandactuallyoverlap; allretained. Sameexposedmeeting,notDER/independentgeneralization.",
+    "cpuEncoderSeconds": 11.61298390000593,
+    "cpuEncoderPeakPrivateBytes": 645308416,
+    "cpuVsPriorGpuCalibrationCosine": 0.9999999999921515,
+    "targetedSeparationOutputs": 4,
+    "selectedSourceWindowSeconds": 16,
+    "targetStreamSeconds": 32,
+    "cpuSeparationSeconds": 65.44874249998247,
+    "cpuSeparationPeakPrivateBytes": 935010304,
+    "authorDirectEmbeddingBranchWaveformDifference": 0,
+    "clippedPcmSamples": 0,
+    "sameExistingCloudAsrCalls": 6,
+    "publicUploadedSeconds": 48,
+    "sameExistingCloudAsrWallSeconds": 63.63535439997213,
+    "decision": "Do not promote. Paired realaudio shows lexicalcorruption/crosstalk, e.g whollycontained挺普遍的→交通便利 in targetstream. Another对有的就是一些 remainsincorrect. Word-only output这就是本校区呗 retained by existingfallback; no falseempty. Need samefrozenQwen comparison beforepositiveclaim.",
+    "formalPureOverlapCerMeasured": false,
+    "reasonNoFormalCer": "8scontext crosses referenceutterances andother peopleoutsidecentralpair. No goldwordtimes, no fabricatedpartialreference."
+  },
+  "routePlan": {
+    "sourceFramesCoveredExactlyOnce": true,
+    "sourceSecondsByRoute": {
+      "raw_asr_unattributed": 280.9750625,
+      "raw_asr": 1903.3499375,
+      "candidate_target_extraction": 178.62
+    },
+    "ordinaryBypassesSeparation": true,
+    "noActivityAudioRetained": true,
+    "overlapRawRetainedAndCandidateNotPromoted": true,
+    "researchBackendImplemented": true,
+    "integratedProductDefault": false
+  },
+  "failuresRetained": [
+    "AMDCPUruntimeOpenBLASimportallocationfailurebeforefirstmodelcall→existingCPUtorch/samecap",
+    "PYmissingPraatIO→existingcleanSC/scorerunchanged",
+    "separationcontentregressionsinbothselectedoverlapcases"
+  ],
+  "resources": "SingleCPUmodel at a time,5%WindowsCPU jobhardcap,2GiBmodelprivatecap; actualLOWRAMstop. No training/newweights/GPUjob/otherapptermination/pagefilechange. Existingauthorizedservice/publicaudio only, no newpaidservice.",
+  "publishedPublicAudioBytes": 9347248,
+  "qualityTargetsUnchanged": true,
+  "weightsChanged": false,
+  "installedOrProductDefaultChanged": false,
+  "saleQualified": false,
+  "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。"
+}

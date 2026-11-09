@@ -1,0 +1,174 @@
+{
+  "audio_info": {
+    "duration": 8000
+  },
+  "result": {
+    "additions": {
+      "log_id": "2026110908350516C6C19E147366599CF3"
+    },
+    "text": "咱还能找个什么措施？对对对。交通便利，其他小区也有。这个，咱们。",
+    "utterances": [
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 2452,
+        "text": "咱还能找个什么措施？对对对。",
+        "words": [
+          {
+            "end_time": 80,
+            "start_time": 40,
+            "text": "咱"
+          },
+          {
+            "end_time": 280,
+            "start_time": 80,
+            "text": "还"
+          },
+          {
+            "end_time": 440,
+            "start_time": 280,
+            "text": "能"
+          },
+          {
+            "end_time": 600,
+            "start_time": 480,
+            "text": "找"
+          },
+          {
+            "end_time": 720,
+            "start_time": 600,
+            "text": "个"
+          },
+          {
+            "end_time": 880,
+            "start_time": 760,
+            "text": "什"
+          },
+          {
+            "end_time": 960,
+            "start_time": 880,
+            "text": "么"
+          },
+          {
+            "end_time": 1200,
+            "start_time": 1040,
+            "text": "措"
+          },
+          {
+            "end_time": 1280,
+            "start_time": 1200,
+            "text": "施"
+          },
+          {
+            "end_time": 2200,
+            "start_time": 2080,
+            "text": "对"
+          },
+          {
+            "end_time": 2280,
+            "start_time": 2240,
+            "text": "对"
+          },
+          {
+            "end_time": 2360,
+            "start_time": 2320,
+            "text": "对"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "2",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 7912,
+        "start_time": 3462,
+        "text": "交通便利，其他小区也有。这个，咱们。",
+        "words": [
+          {
+            "end_time": 3702,
+            "start_time": 3662,
+            "text": "交"
+          },
+          {
+            "end_time": 3902,
+            "start_time": 3862,
+            "text": "通"
+          },
+          {
+            "end_time": 4142,
+            "start_time": 4062,
+            "text": "便"
+          },
+          {
+            "end_time": 4862,
+            "start_time": 4822,
+            "text": "利"
+          },
+          {
+            "end_time": 5262,
+            "start_time": 5142,
+            "text": "其"
+          },
+          {
+            "end_time": 5382,
+            "start_time": 5262,
+            "text": "他"
+          },
+          {
+            "end_time": 5662,
+            "start_time": 5502,
+            "text": "小"
+          },
+          {
+            "end_time": 5822,
+            "start_time": 5662,
+            "text": "区"
+          },
+          {
+            "end_time": 6022,
+            "start_time": 5822,
+            "text": "也"
+          },
+          {
+            "end_time": 6262,
+            "start_time": 6022,
+            "text": "有"
+          },
+          {
+            "end_time": 6502,
+            "start_time": 6342,
+            "text": "这"
+          },
+          {
+            "end_time": 6622,
+            "start_time": 6502,
+            "text": "个"
+          },
+          {
+            "end_time": 6862,
+            "start_time": 6782,
+            "text": "咱"
+          },
+          {
+            "end_time": 6982,
+            "start_time": 6862,
+            "text": "们"
+          }
+        ]
+      }
+    ]
+  }
+}

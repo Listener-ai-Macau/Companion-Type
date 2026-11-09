@@ -1,0 +1,37 @@
+{
+  "cases": [
+    {
+      "id": "overlap-00",
+      "sourceStartSample": 24994319,
+      "sourceEndSample": 25122319,
+      "predictedOverlapStart": 1565.6299650054425,
+      "predictedOverlapEnd": 1566.6599649824202,
+      "targetNativePeople": [
+        "1",
+        "2"
+      ],
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-00-mixture.wav",
+      "audioSha256": "c6b0ed025005f520721b5c1ea16a3f86233bf8d35ad6cee74401547052e56495"
+    },
+    {
+      "id": "overlap-01",
+      "sourceStartSample": 25133039,
+      "sourceEndSample": 25261039,
+      "predictedOverlapStart": 1574.2699648123235,
+      "predictedOverlapEnd": 1575.35996478796,
+      "targetNativePeople": [
+        "2",
+        "3"
+      ],
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\overlap-01-mixture.wav",
+      "audioSha256": "a45fccb179b50b0782a712b8ebebbc43b6347459e4c764bb001bd85e17c98489"
+    }
+  ],
+  "encoderResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\encoder-result.json",
+  "encoderResultSha256": "813cf0cd7c88d44a3b033cd52f6a32f4998ff8cc6ca1f008f86afed2cc69b3d5",
+  "encoderProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\protocol.json",
+  "encoderProtocolSha256": "2aa191e1c0bd3522b93fef3d6af8b5f9fac8bdbceb7f01e2b30d659e40173058",
+  "baseAudioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\two-lane-validation-20261109\\audio-only.json",
+  "baseAudioOnlySha256": "a4d43b560c83c5292c71d8606d1ee7f90b72705fa4a0d72104aae36446e3f0c4",
+  "outputDirectory": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\extractions"
+}

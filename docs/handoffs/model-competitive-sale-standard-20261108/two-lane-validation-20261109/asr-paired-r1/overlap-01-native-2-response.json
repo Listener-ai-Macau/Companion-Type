@@ -1,0 +1,51 @@
+{
+  "audio_info": {
+    "duration": 8000
+  },
+  "result": {
+    "additions": {
+      "log_id": "2026110908353607E95626158285599C0E"
+    },
+    "utterances": [
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "0"
+        },
+        "definite": true,
+        "end_time": 7492,
+        "start_time": 1772,
+        "words": [
+          {
+            "end_time": 4612,
+            "start_time": 4532,
+            "text": "这"
+          },
+          {
+            "end_time": 4852,
+            "start_time": 4772,
+            "text": "就是"
+          },
+          {
+            "end_time": 5092,
+            "start_time": 5012,
+            "text": "本"
+          },
+          {
+            "end_time": 5332,
+            "start_time": 5252,
+            "text": "校区"
+          },
+          {
+            "end_time": 5632,
+            "start_time": 5552,
+            "text": "呗"
+          }
+        ]
+      }
+    ]
+  }
+}

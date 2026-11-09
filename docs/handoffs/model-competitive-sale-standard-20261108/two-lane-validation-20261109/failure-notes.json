@@ -1,0 +1,16 @@
+{
+  "amdRuntimeCpuAttempt": {
+    "state": "FAILED_DURING_NUMERICAL_IMPORT_BEFORE_FIRST_NEURAL_CALL",
+    "symptom": "OpenBLAS allocation failed after10retries under2GiB worker-private cap; initial result preserved as encoder-result-amd-runtime-failed-r1.json. No model inference/training performed on this attempt.",
+    "resolution": "Use existing native CPU torch2.12.0+cpu for a CPU-only task; same2GiB cap, pinnedcheckpoint and inputs. No new package, raised limit, or other-app change."
+  },
+  "scoringRuntimeAttempt": {
+    "state": "PY_PRAATIO_MISSING",
+    "resolution": "Use existing clean scoring runtime and same maintained parser. No parser/reference or test-input changes."
+  },
+  "initialPowerShellPipeline": {
+    "state": "BUILTIN_UTILITY_MODULE_UNAVAILABLE",
+    "resolution": "Pass Python code directly or run an exact script file; do not reinstall/change host shell."
+  },
+  "productQualified": false
+}

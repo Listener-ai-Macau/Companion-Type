@@ -1,0 +1,194 @@
+{
+  "sourceAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+  "sourceAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+  "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+  "queries": [
+    {
+      "id": "q000",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q000.wav",
+      "audioSha256": "f7b03d4523c5b86c0a47e69e40c96a3970e1cfb5c5e9e52b0b6955156992f2ab",
+      "start": 5.05,
+      "end": 6.1599375,
+      "expectedNativePersonForScoringOnly": "0"
+    },
+    {
+      "id": "q001",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q001.wav",
+      "audioSha256": "15e6f6a3a34bbd4cdd09f2d71a0d833a89181657931710411737f816e18fec4a",
+      "start": 42.92,
+      "end": 46.92,
+      "expectedNativePersonForScoringOnly": "4"
+    },
+    {
+      "id": "q002",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q002.wav",
+      "audioSha256": "c715f78bc1c12859822a4becd3c4f993521ae7811e26fc8d1cd72d6ba96fd641",
+      "start": 125.09,
+      "end": 129.09,
+      "expectedNativePersonForScoringOnly": "2"
+    },
+    {
+      "id": "q003",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q003.wav",
+      "audioSha256": "fea1b34da0531be569997f74a53912ea5ac936e82934f21cfcf4efc0f8780c5b",
+      "start": 152.99,
+      "end": 154.1799375,
+      "expectedNativePersonForScoringOnly": "2"
+    },
+    {
+      "id": "q004",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q004.wav",
+      "audioSha256": "a09a8e260c0008905ba2f65d1eeaf2f992ba99e42dba627530c84f9e28e7f0dc",
+      "start": 174.79,
+      "end": 178.79,
+      "expectedNativePersonForScoringOnly": "2"
+    },
+    {
+      "id": "q005",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q005.wav",
+      "audioSha256": "b69c29c12fe205f1fe82ea30fad1ec66a5286a78c45bffd77c1d460f3a6451ed",
+      "start": 191.93,
+      "end": 193.5599375,
+      "expectedNativePersonForScoringOnly": "4"
+    },
+    {
+      "id": "q006",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q006.wav",
+      "audioSha256": "6521325a5181b4070d3e5ced26fdc1bd2bad7107d155806bae177d5505b9c672",
+      "start": 210.73,
+      "end": 212.2399375,
+      "expectedNativePersonForScoringOnly": "4"
+    },
+    {
+      "id": "q007",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q007.wav",
+      "audioSha256": "175b826fd0242e70b5074ae84fd36e4cfedd5de87ce29daccb071556b2988495",
+      "start": 222.37,
+      "end": 226.37,
+      "expectedNativePersonForScoringOnly": "5"
+    },
+    {
+      "id": "q008",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q008.wav",
+      "audioSha256": "d964956aff666568c70e9a7e71c30e2833d17f3ed5fa47e173a76280b22a65e7",
+      "start": 238.32,
+      "end": 242.32,
+      "expectedNativePersonForScoringOnly": "5"
+    },
+    {
+      "id": "q009",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q009.wav",
+      "audioSha256": "547b762caeb9c2feb11a59dc4f316a149b66ecfd3eb007039935cc63ac0e760c",
+      "start": 268.21,
+      "end": 272.21,
+      "expectedNativePersonForScoringOnly": "5"
+    },
+    {
+      "id": "q010",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q010.wav",
+      "audioSha256": "99925cdb11e36a1588004c66f85153786154bf9aaf5e883533d922a06d0e7d08",
+      "start": 299.34,
+      "end": 303.34,
+      "expectedNativePersonForScoringOnly": "5"
+    },
+    {
+      "id": "q011",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q011.wav",
+      "audioSha256": "965540a8ae650ae841aa4be3663e586cdaade318d923254f1fbd689c0e3fad70",
+      "start": 360.05,
+      "end": 364.05,
+      "expectedNativePersonForScoringOnly": "1"
+    },
+    {
+      "id": "q012",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q012.wav",
+      "audioSha256": "b508fdb86855e6615a4a8140edf46b4fcb7e2aa43593135ee2296daaeb03f763",
+      "start": 382.57,
+      "end": 385.7299375,
+      "expectedNativePersonForScoringOnly": "1"
+    },
+    {
+      "id": "q013",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q013.wav",
+      "audioSha256": "5391e98da50ab5e63e2e7d723b738af780060808ddcbeba9bfdbd82261881fbd",
+      "start": 448.28,
+      "end": 450.2799375,
+      "expectedNativePersonForScoringOnly": "2"
+    },
+    {
+      "id": "q014",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q014.wav",
+      "audioSha256": "7a44c8400e74c0c2f50feb1fea5728c982fbe387b38a03f68ab6981ba773c6a0",
+      "start": 494.2,
+      "end": 497.6699375,
+      "expectedNativePersonForScoringOnly": "1"
+    },
+    {
+      "id": "q015",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q015.wav",
+      "audioSha256": "07eda887c1f44b17fd51d6e0a42f76a64d6e32be624813bbb8f37d50dc22bd4a",
+      "start": 502.0,
+      "end": 506.0,
+      "expectedNativePersonForScoringOnly": "4"
+    },
+    {
+      "id": "q016",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q016.wav",
+      "audioSha256": "bc84277492efeedb79fe40db3b8597c8dabbcc19074fe7a3b4295091c13daece",
+      "start": 606.79,
+      "end": 608.1399375,
+      "expectedNativePersonForScoringOnly": "1"
+    },
+    {
+      "id": "q017",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q017.wav",
+      "audioSha256": "48c7b25c617109adfd78c1036d954d761fb1487bbe554011fb9c9601e9adecba",
+      "start": 939.2,
+      "end": 940.4199375,
+      "expectedNativePersonForScoringOnly": "0"
+    },
+    {
+      "id": "q018",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q018.wav",
+      "audioSha256": "a73439f4438178f855ee70e4a3968686591d7201f931eebeb1bfba8a93d85e36",
+      "start": 1529.56,
+      "end": 1530.8099375,
+      "expectedNativePersonForScoringOnly": "3"
+    },
+    {
+      "id": "q019",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q019.wav",
+      "audioSha256": "8ce5cfda1462181c13418208184ad33eb09563240bfc3b2eb51e8791ac8aba24",
+      "start": 1900.96,
+      "end": 1904.96,
+      "expectedNativePersonForScoringOnly": "0"
+    },
+    {
+      "id": "q020",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q020.wav",
+      "audioSha256": "917be54f8f402865011c1f8f88eed2a7f82e0889280114beaab25a58aca1c7c2",
+      "start": 1928.05,
+      "end": 1931.0499375,
+      "expectedNativePersonForScoringOnly": "0"
+    },
+    {
+      "id": "q021",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\q021.wav",
+      "audioSha256": "0289e1de3a8c184d67364843f09b8356b90c84e43235940660087f0c21fea6ca",
+      "start": 2263.3,
+      "end": 2265.1199375,
+      "expectedNativePersonForScoringOnly": "3"
+    }
+  ],
+  "counts": {
+    "0": 4,
+    "1": 4,
+    "2": 4,
+    "3": 2,
+    "4": 4,
+    "5": 4
+  },
+  "calibrationVectorSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\reference-bank-r1\\embedding-vectors.json",
+  "profileReviewForScoringOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\word-identity-audit-20261109\\automatic-profiles-review.json"
+}

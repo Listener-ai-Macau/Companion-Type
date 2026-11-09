@@ -1,0 +1,63 @@
+{
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\automatic_speaker_cpu_worker_20261109.py",
+      "sha256": "f9dbe5c75a8562843d30081d01a60478e0e6fda7e5f00d59efb21a3d286aa62b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\automatic_speaker_extraction_cpu_20261109.py",
+      "sha256": "87ff6fb3b2895451bbe897a23e396ea874fbe218899421b1af8fba11a6d9a2ef"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_meeting_route_plan_20261109.py",
+      "sha256": "fc4102728407a1088a90fce199e16c49cdefd280a1d2c78db618cb925c4e637f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\test_companion_meeting_route_plan_20261109.py",
+      "sha256": "0d10f7001b0e5efebc32123197bdff94a6587fadd3c0fec86104f19b8f417884"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_two_lanes_20261109.py",
+      "sha256": "6bf3da6a4de9e5a315e7908d97c67beb083e01e6d33020cd4e5a48c0c884f82b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\score_companion_automatic_profiles_20261109.py",
+      "sha256": "4f1426764dbfdc63186642756568dfb59164196b2933ca4634c0bba47e6c8b50"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_ordinary_full_20261109.py",
+      "sha256": "42df8ca68a282e3467adbec5ea5d448cb78e298d779a08324f647a7f25ce461a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\prepare_companion_overlap_cpu_20261109.py",
+      "sha256": "0b3031b52d72ba5eebbb0452e3ece51e99d7db39ac65f4bf88c5424e00528e0d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\run_companion_separation_asr_20261109.py",
+      "sha256": "373f1419d35b120119ef8d8bd16ef18f683685916fa4353adf83c9226f026f97"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\probe_existing_companion_asr_20261108.py",
+      "sha256": "857b06236afb8f9c61356d4dd0b4ca042dc733ff3e980a7b20da6b1aeadcd276"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\review_companion_two_lanes_20261109.py",
+      "sha256": "5cfbda5e4e3d20e8ea3fc37dcdd0e876470f8b03983dd23b5651e27392136fb5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-02\\companion-windows-ai-plaud-granola-notta\\work\\preserve_companion_two_lanes_20261109.py",
+      "sha256": "6a68e6b996a3f3d40bb8571345eb2af43b73881b111577df30f8d024289c34c5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_tse_reference_bank_20261108.py",
+      "sha256": "55c453092cf656c284fcf26a7e2452663bdb0a1b4e0eb699223ee5919ffff890"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_word_journal_join_20261109.py",
+      "sha256": "88ad2db7adcdc0e9326b9a5bebe7f2c97c081a1a2c3d9924a3e9adbc23748b34"
+    }
+  ],
+  "nativeCpuTorch": "2.12.0+cpu",
+  "audioOnlyInputsAndReferenceScoringSeparate": true,
+  "schemaTests": "4route preservation tests passed; this is safety evidence, not modelaccuracy progress."
+}

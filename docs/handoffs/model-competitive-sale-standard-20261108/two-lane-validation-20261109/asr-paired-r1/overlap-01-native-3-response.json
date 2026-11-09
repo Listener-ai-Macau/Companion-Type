@@ -1,0 +1,217 @@
+{
+  "audio_info": {
+    "duration": 8000
+  },
+  "result": {
+    "additions": {
+      "log_id": "202611090835470718004AA315315CCBCD"
+    },
+    "text": "对，或者就是那些。就是本小区的。哼哼哼，本小区的。但是不是本小区的。",
+    "utterances": [
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 4372,
+        "start_time": 652,
+        "text": "对，或者就是那些。",
+        "words": [
+          {
+            "end_time": 3332,
+            "start_time": 3052,
+            "text": "对"
+          },
+          {
+            "end_time": 3612,
+            "start_time": 3372,
+            "text": "或"
+          },
+          {
+            "end_time": 3732,
+            "start_time": 3612,
+            "text": "者"
+          },
+          {
+            "end_time": 3892,
+            "start_time": 3732,
+            "text": "就"
+          },
+          {
+            "end_time": 4012,
+            "start_time": 3892,
+            "text": "是"
+          },
+          {
+            "end_time": 4172,
+            "start_time": 4012,
+            "text": "那"
+          },
+          {
+            "end_time": 4372,
+            "start_time": 4172,
+            "text": "些"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "2",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 5372,
+        "start_time": 4692,
+        "text": "就是本小区的。",
+        "words": [
+          {
+            "end_time": 4732,
+            "start_time": 4692,
+            "text": "就"
+          },
+          {
+            "end_time": 4812,
+            "start_time": 4772,
+            "text": "是"
+          },
+          {
+            "end_time": 4972,
+            "start_time": 4932,
+            "text": "本"
+          },
+          {
+            "end_time": 5172,
+            "start_time": 5132,
+            "text": "小"
+          },
+          {
+            "end_time": 5252,
+            "start_time": 5212,
+            "text": "区"
+          },
+          {
+            "end_time": 5372,
+            "start_time": 5332,
+            "text": "的"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 6692,
+        "start_time": 5372,
+        "text": "哼哼哼，本小区的。",
+        "words": [
+          {
+            "end_time": 5412,
+            "start_time": 5372,
+            "text": "哼"
+          },
+          {
+            "end_time": 5732,
+            "start_time": 5452,
+            "text": "哼"
+          },
+          {
+            "end_time": 5892,
+            "start_time": 5772,
+            "text": "哼"
+          },
+          {
+            "end_time": 6052,
+            "start_time": 6012,
+            "text": "本"
+          },
+          {
+            "end_time": 6292,
+            "start_time": 6132,
+            "text": "小"
+          },
+          {
+            "end_time": 6412,
+            "start_time": 6292,
+            "text": "区"
+          },
+          {
+            "end_time": 6692,
+            "start_time": 6492,
+            "text": "的"
+          }
+        ]
+      },
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "2",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 8002,
+        "start_time": 6852,
+        "text": "但是不是本小区的。",
+        "words": [
+          {
+            "end_time": 7212,
+            "start_time": 6852,
+            "text": "但"
+          },
+          {
+            "end_time": 7252,
+            "start_time": 7212,
+            "text": "是"
+          },
+          {
+            "end_time": 7692,
+            "start_time": 7532,
+            "text": "不"
+          },
+          {
+            "end_time": 7732,
+            "start_time": 7692,
+            "text": "是"
+          },
+          {
+            "end_time": 7852,
+            "start_time": 7812,
+            "text": "本"
+          },
+          {
+            "end_time": 7892,
+            "start_time": 7852,
+            "text": "小"
+          },
+          {
+            "end_time": 7932,
+            "start_time": 7892,
+            "text": "区"
+          },
+          {
+            "end_time": 7972,
+            "start_time": 7932,
+            "text": "的"
+          }
+        ]
+      }
+    ]
+  }
+}

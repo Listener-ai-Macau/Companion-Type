@@ -1,0 +1,144 @@
+{
+  "audio_info": {
+    "duration": 8000
+  },
+  "result": {
+    "additions": {
+      "log_id": "2026110908351523F2DEDCA5C5EC4C6DFD"
+    },
+    "text": "这个挺普遍，咱们小区有，其他小区也有。其他小区也有。啊。",
+    "utterances": [
+      {
+        "additions": {
+          "all_matched_hotwords": "",
+          "fixed_prefix_result": "",
+          "invoke_type": "hard_vad",
+          "source": "two_pass",
+          "speaker_id": "1",
+          "use_bigasr_post_process": "true"
+        },
+        "definite": true,
+        "end_time": 8002,
+        "start_time": 92,
+        "text": "这个挺普遍，咱们小区有，其他小区也有。其他小区也有。啊。",
+        "words": [
+          {
+            "end_time": 2172,
+            "start_time": 1932,
+            "text": "这"
+          },
+          {
+            "end_time": 2332,
+            "start_time": 2172,
+            "text": "个"
+          },
+          {
+            "end_time": 2572,
+            "start_time": 2372,
+            "text": "挺"
+          },
+          {
+            "end_time": 2812,
+            "start_time": 2612,
+            "text": "普"
+          },
+          {
+            "end_time": 2972,
+            "start_time": 2812,
+            "text": "遍"
+          },
+          {
+            "end_time": 3772,
+            "start_time": 3572,
+            "text": "咱"
+          },
+          {
+            "end_time": 3932,
+            "start_time": 3772,
+            "text": "们"
+          },
+          {
+            "end_time": 4132,
+            "start_time": 3932,
+            "text": "小"
+          },
+          {
+            "end_time": 4252,
+            "start_time": 4132,
+            "text": "区"
+          },
+          {
+            "end_time": 4372,
+            "start_time": 4292,
+            "text": "有"
+          },
+          {
+            "end_time": 4572,
+            "start_time": 4412,
+            "text": "其"
+          },
+          {
+            "end_time": 4652,
+            "start_time": 4572,
+            "text": "他"
+          },
+          {
+            "end_time": 4812,
+            "start_time": 4692,
+            "text": "小"
+          },
+          {
+            "end_time": 4932,
+            "start_time": 4812,
+            "text": "区"
+          },
+          {
+            "end_time": 5092,
+            "start_time": 4972,
+            "text": "也"
+          },
+          {
+            "end_time": 5252,
+            "start_time": 5092,
+            "text": "有"
+          },
+          {
+            "end_time": 5372,
+            "start_time": 5332,
+            "text": "其"
+          },
+          {
+            "end_time": 5412,
+            "start_time": 5372,
+            "text": "他"
+          },
+          {
+            "end_time": 5652,
+            "start_time": 5612,
+            "text": "小"
+          },
+          {
+            "end_time": 5772,
+            "start_time": 5732,
+            "text": "区"
+          },
+          {
+            "end_time": 5972,
+            "start_time": 5932,
+            "text": "也"
+          },
+          {
+            "end_time": 6052,
+            "start_time": 6012,
+            "text": "有"
+          },
+          {
+            "end_time": 6812,
+            "start_time": 6612,
+            "text": "啊"
+          }
+        ]
+      }
+    ]
+  }
+}

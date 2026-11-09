@@ -1,0 +1,189 @@
+{
+  "at": "2026-11-09T08:38:44+08:00",
+  "state": "DO_NOT_PROMOTE_SEPARATION_CONTENT_NOT_PROTECTED",
+  "cases": [
+    {
+      "case": "overlap-00",
+      "sourceStart": 1562.1449375,
+      "sourceEnd": 1570.1449375,
+      "selectedTargetPeople": [
+        {
+          "nativePerson": "1",
+          "referenceIdentityForScoringOnly": "002-F"
+        },
+        {
+          "nativePerson": "2",
+          "referenceIdentityForScoringOnly": "004-M"
+        }
+      ],
+      "allIntersectingReferenceUtterancesForInspectionOnly": [
+        {
+          "start": 1561.964598810187,
+          "end": 1563.9883750000001,
+          "speaker": "002-F",
+          "text": "咱看能不能有个什么措施",
+          "crossesWindowBoundary": true
+        },
+        {
+          "start": 1565.8104925790801,
+          "end": 1566.862,
+          "speaker": "002-F",
+          "text": "挺普遍的",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1567.3207522326181,
+          "end": 1568.6526875,
+          "speaker": "002-F",
+          "text": "其他小区也有",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1564.1070601791594,
+          "end": 1567.6192919315733,
+          "speaker": "004-M",
+          "text": "这个挺普遍，咱们小区有其他小区也有，",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1568.7256449335837,
+          "end": 1569.2428750000001,
+          "speaker": "004-M",
+          "text": "嗯",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1569.1997962201597,
+          "end": 1570.7763750000001,
+          "speaker": "005-M",
+          "text": "其他小区怎么做的呀",
+          "crossesWindowBoundary": true
+        }
+      ],
+      "recognition": {
+        "overlap-00-mixture": {
+          "textFromCompleteProviderWords": "咱看能找个什么措施这个挺普遍咱们小区其他小区也有挺普遍的其他小区也有这个他是其他小区怎么弄",
+          "wordCount": 45,
+          "wordOnlySentenceFallbackUsed": false,
+          "responseSha256": "8ed75e44cf5bbc5ff434a71026526fb2c148ec59d16c50f43f3cfaa4ae7127bd"
+        },
+        "overlap-00-native-1": {
+          "textFromCompleteProviderWords": "咱还能找个什么措施对对对交通便利其他小区也有这个咱们",
+          "wordCount": 26,
+          "wordOnlySentenceFallbackUsed": false,
+          "responseSha256": "3cb4aa85775ac95947a69e78ab32207a432bf64b052f81509b84d4cd60af207a"
+        },
+        "overlap-00-native-2": {
+          "textFromCompleteProviderWords": "这个挺普遍咱们小区有其他小区也有其他小区也有啊",
+          "wordCount": 23,
+          "wordOnlySentenceFallbackUsed": false,
+          "responseSha256": "1c82aed5537aceb659d879e426bf32a87873bad0cf402579bd95d8b3c300fff9"
+        }
+      }
+    },
+    {
+      "case": "overlap-01",
+      "sourceStart": 1570.8149375,
+      "sourceEnd": 1578.8149375,
+      "selectedTargetPeople": [
+        {
+          "nativePerson": "2",
+          "referenceIdentityForScoringOnly": "004-M"
+        },
+        {
+          "nativePerson": "3",
+          "referenceIdentityForScoringOnly": "003-F"
+        }
+      ],
+      "allIntersectingReferenceUtterancesForInspectionOnly": [
+        {
+          "start": 1571.1748434452354,
+          "end": 1574.3007297048837,
+          "speaker": "006-M",
+          "text": "这个看看是不是咱本小区的这个",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1576.5260251790296,
+          "end": 1583.65,
+          "speaker": "002-F",
+          "text": "像像像着不是本小区的有的是，像这种事儿还真避免不了。他真没办法",
+          "crossesWindowBoundary": true
+        },
+        {
+          "start": 1574.2129239110734,
+          "end": 1576.6512500000001,
+          "speaker": "004-M",
+          "text": "本小区他他就是本小区的呀",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1573.9445348410054,
+          "end": 1575.384549859495,
+          "speaker": "003-F",
+          "text": "对有的就是一些",
+          "crossesWindowBoundary": false
+        },
+        {
+          "start": 1576.1396796862641,
+          "end": 1576.877248354271,
+          "speaker": "003-F",
+          "text": "<$>",
+          "crossesWindowBoundary": false
+        }
+      ],
+      "recognition": {
+        "overlap-01-mixture": {
+          "textFromCompleteProviderWords": "这个看看是不是咱本小区的一个对价格儿那些本小区的他他就是本小区的呀本小区的像像像这不是本",
+          "wordCount": 44,
+          "wordOnlySentenceFallbackUsed": false,
+          "responseSha256": "78cfb99fb791d4e63e157a7dcc84b95395a23d39ad7581df1aa495f4f5da0778"
+        },
+        "overlap-01-native-2": {
+          "textFromCompleteProviderWords": "这就是本校区呗",
+          "wordCount": 5,
+          "wordOnlySentenceFallbackUsed": true,
+          "responseSha256": "76c31056af4df1260978c098910c985a19d86d9c038c6a7319e94570f908d8a8"
+        },
+        "overlap-01-native-3": {
+          "textFromCompleteProviderWords": "对或者就是那些就是本小区的哼哼哼本小区的但是不是本小区的",
+          "wordCount": 28,
+          "wordOnlySentenceFallbackUsed": false,
+          "responseSha256": "a99f9bde42101319516e84fe2bb4ada0064e6b991fe0944f15177bd3861c9e0c"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "case": "overlap-00",
+      "referenceIdentityForScoringOnly": "002-F",
+      "referenceCompleteUtterance": "挺普遍的",
+      "mixtureRecognizedContains": "挺普遍的",
+      "extractedNative1RecognizedInstead": "交通便利",
+      "interpretation": "Reference-backed regression candidate on a wholly-contained utterance; no source listening by a human claimed. Extraction does not show protected lexical content."
+    },
+    {
+      "case": "overlap-01",
+      "referenceIdentityForScoringOnly": "003-F",
+      "referenceCompleteUtterance": "对有的就是一些",
+      "mixtureRecognizedInstead": "对价格儿那些",
+      "extractedNative3RecognizedInstead": "对或者就是那些",
+      "interpretation": "Some surface improvement is not correct recovery; crosstalk remains. Do not claim overlap solved."
+    },
+    {
+      "case": "overlap-01",
+      "stream": "native-2",
+      "topLevelTextAbsent": true,
+      "completeWordTokensRecovered": "这就是本校区呗",
+      "interpretation": "Do not silently discard word-only response or call empty recognition; same retained fallback is used."
+    }
+  ],
+  "whyNoCer": "8s diagnostic windows cross reference utterances and contain other people outside the selected central pair. No word-level reference timing. Do not fabricate exact reference substrings, silently discard edge speech, or publish this as strict whole/pure-overlap CER. Both conditions contain same raw source interval; inspect content and retain failures.",
+  "referenceUsedOnlyAfterInference": true,
+  "cloudServiceSameAcrossConditions": true,
+  "localQwenUsed": false,
+  "sameQwenControlRequiredBeforeAnyPositivePromotion": true,
+  "defaultRouteChanged": false,
+  "wholeMeetingOrSaleQualified": false
+}

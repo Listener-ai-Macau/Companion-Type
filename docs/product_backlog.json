@@ -132986,7 +132986,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-09T07:48:25+08:00",
+      "updatedAt": "2026-11-09T08:27:39+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -133473,7 +133473,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Owner本轮要求尽快查OTA慢因，先读ota760Diagnosis。已用现存快/慢记录排除本次Flash处理变慢、实际PHY/MTU/CI降档及应用收到确认后的秒级延迟；主要差额为板端完整DATA队列EMPTY+15.634s。剩余定位边界是Windows蓝牙栈/控制器、空口与板端接收/确认送达，未有当前RF证据，不能唯一归因干扰或把旧100上传当OTA。保留正常760、不新建持续Goal，本轮无硬件访问/新固件/新录音。原短录结构、售卖未完成及明确block沿ota760Diagnosis.priorEmbeddedNext保留。",
+      "next": "Owner明确没有抓包器，OTA与同步速度优化先放下；原50门与失败保留，停止速度试验和抓包器提示。继续原CP09-02可靠性：审查真实范围同步队列在发送错误回执时嵌套断连/退订的清理路径，先用生产radio模型复现队列计数/移位问题，再修具体根因与受影响恢复，不新增行政门槛；保持旧音/当前音质/61.44MHz/原资源预算，屏幕和原硬件block不动。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -140388,7 +140388,26 @@
         "priorEmbeddedNext": "Owner已清除持续Goal，自动续跑停止；原任务与失败保留，未标完成。若后续恢复：以369真实设备阶段数据为依据处理重复读取/校验串行链路：5范围累计461ms（查找32、哈希读取126、日志阶段11、WIP阶段204、空白检查88），实际6擦除busy观测233–252ms、最大poll间隔4ms，23次program仅4ms，排除日志程序写入和严重WIP漏轮询为主要猜因。先评估将已校验传输读取的哈希证据复用于精确范围验证，并减少空白读取逐页调度；单省126ms仍未覆盖约250ms缺口，不单项装板或重复旧754批读/495/未触发对齐/预读队列微调，须保留CRC/SHA、全字节物理空白校验、断点恢复、61.44MHz/音质、原资源预算和任意长度50，旧1530B反例仍开放。当前正常760镜像412212/67896/21504；最新恢复OTA37.266693 FAIL，不能拿之前55–62通过覆盖，需后续定位但本次不再重测。首PCM/偶发初连/稳定性/冻结2h及原block和屏幕暂停仍未完成。",
         "nextScope": "仅沿数据/额度往返与控制器实际收发查因。保留正常760与旧高速源码，先核同偏移回执时序和实际空口/控制器差异；不重复Flash/CRC/频率/MTU/池/heldThroughput等旧负面，不整包盲回退，不重录/重刷碰通过值。旧100数据请求仍在；当前61和37参数相同，不能说某个PHY降档或已定位干扰。任何新试验先必须能区分剩余解释。",
         "hardwareAccessedThisRequest": false,
-        "productionCodeChanged": false
+        "productionCodeChanged": false,
+        "latestOwnerInput": "为啥差距这么远；继续修，必须达到售卖标准，不要反复承诺修不好、浪费时间。",
+        "observer761Preparation": {
+          "at": "2026-11-09T08:14:43+08:00",
+          "result": "NO_PRODUCT_SPEED_FIX_THIS_REQUEST;OBSERVER_APPLICATION_UPDATE_PREPARED_PHYSICAL_RESET_NOT_CONFIRMED",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\observer761-preparation.json",
+          "operatorResult": "Timeout",
+          "programmed": false,
+          "newSpeedTrials": 0,
+          "productCodeChanged": false,
+          "sourceBinding": "068 three transport/credit files verified equal to present source",
+          "dependency": "Nordic dongle physical bootloader reset/readiness; not a globally blocked engineering task"
+        },
+        "ownerDeferral": {
+          "at": "2026-11-09T08:27:39+08:00",
+          "raw": "先定位一下问题咯, 没有抓包器, 速度问题先放一下先修点别的",
+          "scope": "OTA与录音收取速度优化均先放下；保留失败与原50门，不追加速度试验/抓包器操作提示",
+          "status": "DEFERRED_BY_OWNER_NO_VALID_SNIFFER",
+          "priorNext": "继续原OTA慢速修复，不能称已达到售卖。当前正常760/手机109/Windows068保持；068真实源码已绑定并确认回执后续发为微秒，Condvar已存在，不重写伪轮询修复。抓包器5.0.0应用包和只选原Nordic序列号的更新程序已准备，原统一弹窗在完整PowerShell7.6.9实际显示后Timeout，未收到RESET就绪，未刷抓包器、未碰Companion、未跑新测速。下次先补抓包器实体bootloader依赖并核实际版本/CONNECT+DATA；Windows底层记录可继续后台准备，目前无在跑采集，不启动第二个WPP占用。没有新可区分证据不再相同OTA重测或扩池碰成绩。原短录结构工作点、50门、正常资源及明确block沿ota760Diagnosis.priorEmbeddedNext保留；售卖仍未完成。"
+        }
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -145973,7 +145992,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+          "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -259522,7 +259541,7 @@
             ],
             "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
             "unchangedResearchWorkpoint": "保留固定多段参考库与原模型，当前128步分离候选继续拒绝。先复核最难会议002/003/007的原音、原始说话人标注与声纹特征可分性；单纯增加参考或简单叠加双麦均未解决该场，不能按预测改标签、删难人或扫描融合权重。参考条件可靠后，在新自然会议上验证多段参考对逐人转写的效果，并固定保护真实词语、目标身份与正讲话存在的联合训练目标。原完整会议<5%、自动说话人、事实、双端实卡和售卖门保留。",
-            "next": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+            "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。",
             "qualityQualified": false,
             "saleQualified": false,
             "newModelTrainingOrInference": true,
@@ -260144,6 +260163,80 @@
               "saleQualified": false,
               "modelEvidenceCommit": "98ba01d5779d579142f1e0d5258b278fd48ddbc3",
               "remoteReadbackConfirmed": true
+            },
+            "twoLaneValidation20261109": {
+              "at": "2026-11-09T08:40:56+08:00",
+              "ownerQuote": "普通会议和复杂多人分开处理，继续推进；目前进度太慢、完全不满意。",
+              "state": "TWO_LANES_EXECUTABLE_CPU_CHECKS_COMPLETE_SEPARATION_NOT_PROMOTED",
+              "modelEvidenceCommit": "5be8d7a3b8dac7a1375b6b3fff5e3f810234d651",
+              "remoteReadbackConfirmed": true,
+              "previousWorkpoint": "普通整会保留Qwen3-ASR1.7B，优先将不同真实会议的实词/数字/否定/漏词候选核到原音与独立标注，确定跨会稳定错误后只验证一项有依据的改动；现有5.54%缺45净错误，不再无依据扫切分/解码或立即微调。用户真实事先词表可按官方context作独立对照，无词表路径保留、不喂参考答案。复杂线原17段自动声纹稳定性→仅预测重叠逐人分离→同一ASR续作，不能拿标签修正代替恢复漏话。只有跨会议同音对照证明更强且资源合适才换底座，微调需可靠数据与独立验证。原普通/逐人<5%、说话人、关键事实、独立整会、完整构建/双端实卡与售卖门保留。",
+              "currentDevice": "OnlyconnectedAMD780M; external6800XT absent inPnP. No wholeQwenCPU fallback.",
+              "ordinary": {
+                "bestRetainedStrictCer": 0.055375375375375374,
+                "newFullMeeting": {
+                  "meeting": "20200805_S_R001S01C01",
+                  "audio": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\two-lane-validation-20261109\\20200805_S_R001S01C01-channel1.wav",
+                  "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+                  "audioSeconds": 2195.362
+                },
+                "wholeRunStarted": false,
+                "sourcePreviouslyUsedForTseValidation": true,
+                "finalHoldout": false,
+                "allOriginalChannelSamplesBitExact": true,
+                "sameFrozenModelAndParameters": true,
+                "newAccuracyGainClaimed": false
+              },
+              "complex": {
+                "automaticProfiles": 17,
+                "nativePeople": 6,
+                "disjointAutomaticQueryClips": 22,
+                "agreesWithJournal": 19,
+                "matchesDominantReference": 19,
+                "referencePureAt95Percent": 20,
+                "referenceAndJournalNotAlwaysCorrect": "q000iswronglyjournaled0butreference006M; encoderalsofailed. q006encoderfixedajournalgroupbutq021ispredictedsoloandactuallyoverlap; allretained. Sameexposedmeeting,notDER/independentgeneralization.",
+                "cpuEncoderSeconds": 11.61298390000593,
+                "cpuEncoderPeakPrivateBytes": 645308416,
+                "cpuVsPriorGpuCalibrationCosine": 0.9999999999921515,
+                "targetedSeparationOutputs": 4,
+                "selectedSourceWindowSeconds": 16,
+                "targetStreamSeconds": 32,
+                "cpuSeparationSeconds": 65.44874249998247,
+                "cpuSeparationPeakPrivateBytes": 935010304,
+                "authorDirectEmbeddingBranchWaveformDifference": 0,
+                "clippedPcmSamples": 0,
+                "sameExistingCloudAsrCalls": 6,
+                "publicUploadedSeconds": 48,
+                "sameExistingCloudAsrWallSeconds": 63.63535439997213,
+                "decision": "Do not promote. Paired realaudio shows lexicalcorruption/crosstalk, e.g whollycontained挺普遍的→交通便利 in targetstream. Another对有的就是一些 remainsincorrect. Word-only output这就是本校区呗 retained by existingfallback; no falseempty. Need samefrozenQwen comparison beforepositiveclaim.",
+                "formalPureOverlapCerMeasured": false,
+                "reasonNoFormalCer": "8scontext crosses referenceutterances andother peopleoutsidecentralpair. No goldwordtimes, no fabricatedpartialreference."
+              },
+              "routePlan": {
+                "sourceFramesCoveredExactlyOnce": true,
+                "sourceSecondsByRoute": {
+                  "raw_asr_unattributed": 280.9750625,
+                  "raw_asr": 1903.3499375,
+                  "candidate_target_extraction": 178.62
+                },
+                "ordinaryBypassesSeparation": true,
+                "noActivityAudioRetained": true,
+                "overlapRawRetainedAndCandidateNotPromoted": true,
+                "researchBackendImplemented": true,
+                "integratedProductDefault": false
+              },
+              "failuresRetained": [
+                "AMDCPUruntimeOpenBLASimportallocationfailurebeforefirstmodelcall→existingCPUtorch/samecap",
+                "PYmissingPraatIO→existingcleanSC/scorerunchanged",
+                "separationcontentregressionsinbothselectedoverlapcases"
+              ],
+              "resources": "SingleCPUmodel at a time,5%WindowsCPU jobhardcap,2GiBmodelprivatecap; actualLOWRAMstop. No training/newweights/GPUjob/otherapptermination/pagefilechange. Existingauthorizedservice/publicaudio only, no newpaidservice.",
+              "publishedPublicAudioBytes": 9347248,
+              "qualityTargetsUnchanged": true,
+              "weightsChanged": false,
+              "installedOrProductDefaultChanged": false,
+              "saleQualified": false,
+              "next": "先用同一冻结Qwen1.7B跑原音/分离六段8s对照，复核现有内容损伤，不先扩长会或训练；通过后才扩原17段自动参考路线。不通过则拒绝该分离候选、保留原音/不确定人物，不把复杂能力设默认。然后跑已备36m35s整会固定Qwen基线，同原普通全会比较实词/数字/否定，严格CER原门不变。无独显时继续CPU范围的路由与源内容检查，不压整会Qwen到CPU、不无依据扫阈值/切分/新checkpoint。"
             }
           }
         },
