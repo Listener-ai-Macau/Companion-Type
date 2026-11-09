@@ -20,11 +20,12 @@ def main():
   assert sha(target)==request['sha256'] and target.suffix in {'.wav','.mp3'}
  elif action=='save':assert target.parent==root/'exports' and target.suffix in {'.wav','.mp3'} and not target.exists()
  U.GetClassNameW.argtypes=[w.HWND,w.LPWSTR,ctypes.c_int];U.GetClassNameW.restype=ctypes.c_int
+ U.IsWindowVisible.argtypes=[w.HWND];U.IsWindowVisible.restype=w.BOOL
  def class_name(hwnd):
   text=ctypes.create_unicode_buffer(256);U.GetClassNameW(hwnd,text,256);return text.value
  until=time.monotonic()+20;dialog=None
  while time.monotonic()<until:
-  found=[entry for entry in windows(desktop,a.pid) if class_name(entry['hwnd'])=='#32770']
+  found=[entry for entry in windows(desktop,a.pid) if class_name(entry['hwnd'])=='#32770' and U.IsWindowVisible(entry['hwnd'])]
   assert len(found)<=1,'Ambiguous owned native picker'
   if found:dialog=found[0];break
   time.sleep(.1)
@@ -33,6 +34,7 @@ def main():
  GetModule('UIAutomationCore.dll')
  from comtypes.gen import UIAutomationClient as UIA
  auto=CreateObject(UIA.CUIAutomation,interface=UIA.IUIAutomation);element=auto.ElementFromHandle(dialog['hwnd'])
+ element.GetCurrentPattern(UIA.UIA_WindowPatternId).QueryInterface(UIA.IUIAutomationWindowPattern).WaitForInputIdle(3000)
  controls=[];nodes=[]
  for kind in [UIA.UIA_EditControlTypeId,UIA.UIA_ButtonControlTypeId]:
   items=element.FindAll(UIA.TreeScope_Descendants,auto.CreatePropertyCondition(UIA.UIA_ControlTypePropertyId,kind))
@@ -44,13 +46,23 @@ def main():
   if target:
    matches=[i for i,c in enumerate(controls) if c['type']==UIA.UIA_EditControlTypeId and ('file name' in c['name'].lower() or '文件名' in c['name'])]
    assert len(matches)==1,('Filename field not unique',controls)
-   nodes[matches[0]].GetCurrentPattern(UIA.UIA_ValuePatternId).QueryInterface(UIA.IUIAutomationValuePattern).SetValue(str(target))
+   entry=nodes[matches[0]];entry.SetFocus()
+   value=entry.GetCurrentPattern(UIA.UIA_ValuePatternId).QueryInterface(UIA.IUIAutomationValuePattern);value.SetValue(str(target))
+   assert value.CurrentValue==str(target),'Filename value did not accept the explicit path'
+   record['filenameValueAfterSet']=value.CurrentValue;record['focusWithinOwnedRemotePickerUsed']=True
   labels={'open':{'Open','Open(O)','打开','打开(O)'},'save':{'Save','Save(S)','保存','保存(S)'},'cancel':{'Cancel','取消'}}[action]
   primary_id='2' if action=='cancel' else '1'
   matches=[i for i,c in enumerate(controls) if c['type']==UIA.UIA_ButtonControlTypeId and c['id']==primary_id and c['name'] in labels]
   assert len(matches)==1,('Picker button not unique',controls)
   node=nodes[matches[0]];assert node.CurrentIsEnabled
+  if target:
+   node.SetFocus() # Commit the filename editor before invoking its default button.
+   assert value.CurrentValue==str(target),'Filename changed before picker confirmation'
   node.GetCurrentPattern(UIA.UIA_InvokePatternId).QueryInterface(UIA.IUIAutomationInvokePattern).Invoke()
+  if action=='save':
+   until=time.monotonic()+90
+   while not target.is_file() and time.monotonic()<until:time.sleep(.1)
+   assert target.is_file(),'Native save did not create the explicit requested output path'
   record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',path=str(target) if target else None)
  except BaseException as error:record.update(state='OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',error=repr(error));raise
  finally:a.reply.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
