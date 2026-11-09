@@ -5,7 +5,7 @@ backed up, isolated while no other FM instance exists, then restored exactly.
 No preference values/history are printed or copied into public evidence.
 """
 from pathlib import Path
-import ctypes,json,time,winreg,pickle
+import ctypes,json,time,winreg,pickle,os
 import psutil
 from windows_meeting import U,K,w,EnumProc,spawn,windows,alive,require,sha
 SHELL=ctypes.WinDLL('shell32',use_last_error=True)
@@ -16,9 +16,16 @@ for lib,name,args,result in [
  (U,'GetDlgCtrlID',[w.HWND],ctypes.c_int),(U,'IsWindowEnabled',[w.HWND],w.BOOL),
  (U,'SendMessageTimeoutW',[w.HWND,w.UINT,w.WPARAM,w.LPARAM,w.UINT,w.UINT,ctypes.POINTER(ctypes.c_size_t)],w.LPARAM),
  (U,'OpenClipboard',[w.HWND],w.BOOL),(U,'CloseClipboard',[],w.BOOL),(U,'GetClipboardData',[w.UINT],w.HANDLE),
+ (U,'SetForegroundWindow',[w.HWND],w.BOOL),(U,'GetForegroundWindow',[],w.HWND),
+ (U,'SetFocus',[w.HWND],w.HWND),(U,'GetFocus',[],w.HWND),(U,'AttachThreadInput',[w.DWORD,w.DWORD,w.BOOL],w.BOOL),
  (SHELL,'DragQueryFileW',[w.HANDLE,w.UINT,w.LPWSTR,w.UINT],w.UINT)]:
  f=getattr(lib,name);f.argtypes=args;f.restype=result
 FM_KEY=r'Software\7-Zip\FM'
+class KeyboardInput(ctypes.Structure):
+ _fields_=[('vk',w.WORD),('scan',w.WORD),('flags',w.DWORD),('time',w.DWORD),('extra',ctypes.c_size_t)]
+class InputUnion(ctypes.Union):_fields_=[('keyboard',KeyboardInput),('padding',ctypes.c_ubyte*32)]
+class Input(ctypes.Structure):_fields_=[('type',w.DWORD),('data',InputUnion)]
+U.SendInput.argtypes=[w.UINT,ctypes.POINTER(Input),ctypes.c_int];U.SendInput.restype=w.UINT
 def registry_snapshot(path=FM_KEY):
  try:key=winreg.OpenKey(winreg.HKEY_CURRENT_USER,path)
  except FileNotFoundError:return None
@@ -59,7 +66,7 @@ class Receiver:
  def __init__(self,root,out,job,desktop,desktop_name,env):
   assert not [p.pid for p in psutil.process_iter(['name']) if (p.info['name'] or '').lower()=='7zfm.exe'],'An owner File Manager is running; leave its preferences intact'
   self.before=registry_snapshot();self.root=root;self.out=out;self.desktop=desktop;self.process=None;self.log=None;self.ready=False;self.results=[]
-  self.start_args=(root,out,job,desktop_name,env);self.registry_touched=False
+  self.start_args=(root,out,job,desktop_name,env);self.registry_touched=False;self.remote_input_used=False
   (root/'receiver-registry-before.private').write_bytes(pickle.dumps(self.before))
  def start(self):
   root,out,job,desktop_name,env=self.start_args
@@ -79,21 +86,25 @@ class Receiver:
   assert self.ready,'Ordinary receiver folder was not proven in its visible controls; no Paste invoked'
  def paste(self,source):
   assert source.is_file();dest=self.destination/source.name;assert not dest.exists(),'Never overwrite an existing receiver file'
-  edit=None
-  for i in range(U.GetMenuItemCount(self.menu)):
-   text=ctypes.create_unicode_buffer(256);U.GetMenuStringW(self.menu,i,text,len(text),0x400)
-   if 'edit' in text.value.lower() or '编辑' in text.value:edit=U.GetSubMenu(self.menu,i);break
-  assert edit,'Ordinary Edit menu not found'
-  paste=None
-  for i in range(U.GetMenuItemCount(edit)):
-   text=ctypes.create_unicode_buffer(256);U.GetMenuStringW(edit,i,text,len(text),0x400)
-   if 'paste' in text.value.lower() or '粘贴' in text.value:paste=U.GetMenuItemID(edit,i);break
-  assert paste is not None and paste!=0xffffffff
-  require(U.PostMessageW(self.hwnd,0x111,paste,0))
+  # Official 7-Zip has no Edit/Paste menu item. PanelKey.cpp handles Ctrl+V
+  # through ordinary keyboard input. Use it only on a dedicated hosted runner;
+  # never activate a window or send global input on the owner's computer.
+  assert os.environ.get('GITHUB_ACTIONS')=='true','Ordinary shortcut requires the dedicated disposable CI machine; no owner foreground fallback'
+  lists=[child for child in children(self.hwnd) if class_name(child)=='SysListView32']
+  assert len(lists)==1,'One explicit empty destination pane required'
+  target_thread=U.GetWindowThreadProcessId(self.hwnd,None);our_thread=K.GetCurrentThreadId()
+  require(U.AttachThreadInput(our_thread,target_thread,True))
+  try:
+   require(U.SetForegroundWindow(self.hwnd));U.SetFocus(lists[0]);assert U.GetFocus()==lists[0]
+  finally:require(U.AttachThreadInput(our_thread,target_thread,False))
+  assert U.GetForegroundWindow()==self.hwnd,'Only the owned receiver may receive remote input'
+  events=(Input*4)()
+  for event,(vk,flags) in zip(events,[(0x11,0),(0x56,0),(0x56,2),(0x11,2)]):event.type=1;event.data.keyboard=KeyboardInput(vk,0,flags,0,0)
+  self.remote_input_used=True;assert U.SendInput(4,events,ctypes.sizeof(Input))==4
   deadline=time.monotonic()+20;confirmed=set()
   while time.monotonic()<deadline:
    if dest.is_file() and sha(dest)==sha(source):
-    result={'receiver':'7-Zip File Manager','operation':'ordinary Edit/Paste menu command','fileName':source.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'actualFileReceived':True};self.results.append(result);return result
+    result={'receiver':'7-Zip File Manager','operation':'ordinary Ctrl+V on dedicated remote runner only','fileName':source.name,'sha256':sha(dest),'bytes':dest.stat().st_size,'actualFileReceived':True};self.results.append(result);return result
    for window in windows(self.desktop,self.process.pid):
     hwnd=window['hwnd']
     if class_name(hwnd)=='#32770' and hwnd not in confirmed:

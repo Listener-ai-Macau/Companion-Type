@@ -198,7 +198,8 @@ def main():
   for log in logs:log.close()
   require(U.SetProcessWindowStation(old_station));require(U.SetThreadDesktop(old_desktop))
   record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
-  record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation'];record['keyboardMouseOrForegroundControlUsed']=False
+  record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation']
+  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used);record['ownerKeyboardMouseOrForegroundControlUsed']=False
   if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
   if not DEDICATED_CI:U.CloseWindowStation(station)
   K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()
