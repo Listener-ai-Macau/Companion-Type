@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {Shield,Trash2,RotateCcw} from 'lucide-react';
+import {Shield,Trash2,RotateCcw,ChevronDown} from 'lucide-react';
 
 export type RecordingLife={key:string;revision:number;protected:boolean;trashedAt:number;purging:boolean;title?:string};
 export type RecordingLifeRequest={key:string;revision:number;libraryToken:string;action:'protect'|'unprotect'|'trash'|'restore'|'purge'};
@@ -17,7 +17,7 @@ export function RecordingManagement({life,libraryToken,title,busy,onChange}:{lif
   catch(error){if(alive.current)setMessage(error instanceof Error?error.message:String(error));}
   finally{active.current=false;if(alive.current)setPending(false);}
  };
- return <details className="recording-management"><summary>录音管理{life.protected?' · 已保护':''}</summary>
+ return <details className="recording-management"><summary><span>录音管理{life.protected?' · 已保护':''}</span><ChevronDown size={15} aria-hidden="true"/></summary>
   <p className="hint">保护可防止误删。移入回收站保留原音、转写、纪要和材料，不释放存储空间。</p>
   <div className="buttons"><button className="secondary" disabled={busy||pending} onClick={()=>void change(life.protected?'unprotect':'protect')}><Shield size={15}/>{life.protected?'解除保护':'保护录音'}</button>
    <button className="secondary" disabled={busy||pending||life.protected} onClick={()=>void change('trash')}><Trash2 size={15}/>移入本机回收站</button></div>

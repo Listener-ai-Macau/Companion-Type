@@ -171,3 +171,24 @@ details.device-bookmarks,details.meeting-assistant.existing-minutes{padding:0}
 .device-bookmarks-body,.existing-minutes-controls{padding:0 16px 16px}
 .device-bookmarks-body .device-bookmarks-heading>span{font-size:11px;color:var(--muted)}
 .device-bookmarks[open]>.device-bookmarks-summary,.meeting-assistant.existing-minutes[open]>summary{border-bottom:1px solid var(--line);margin-bottom:14px}
+
+/* Keep the saved meeting itself in the first phone viewport. */
+.meeting-audio-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.meeting-audio-tools>details{margin:0;padding:0;min-width:0}
+.meeting-audio-tools:has(>details[open]){grid-template-columns:1fr}
+.meeting-audio-tools>.recording-management>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:12px 14px;box-sizing:border-box;list-style:none;font-size:13px;font-weight:600}
+.meeting-audio-tools>.recording-management>p,.meeting-audio-tools>.recording-management>.buttons{margin-left:14px;margin-right:14px}
+.meeting-audio-tools>details>summary::after,.meeting-assistant.existing-minutes>summary::after{display:none;content:none}
+.meeting-audio-tools>details>summary::-webkit-details-marker{display:none}
+.detail-title h1{font-size:22px;line-height:1.35;margin-top:10px;margin-bottom:8px}
+@media(max-width:480px){
+ .meeting-reading-frame .meeting-outline-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .meeting-reading-frame .meeting-outline-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;min-height:62px;padding:10px 8px}
+ .meeting-reading-frame .meeting-outline-label{font-size:10.5px;gap:4px}
+ .meeting-reading-frame .meeting-outline-label>svg:first-child{width:12px;height:12px}
+ .meeting-reading-frame .meeting-outline-label>svg:last-child,.meeting-reading-frame .meeting-outline-hint{display:none}
+ .meeting-reading-frame .meeting-outline-number{font-size:20px;line-height:1.1}
+ .meeting-reading-frame .meeting-outline-number small{font-size:10px}
+ .meeting-reading-frame .meeting-outline-grid:has(.meeting-outline-questions){grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:360px){.meeting-reading-frame .meeting-outline-grid:has(.meeting-outline-questions){grid-template-columns:repeat(2,minmax(0,1fr))}}
