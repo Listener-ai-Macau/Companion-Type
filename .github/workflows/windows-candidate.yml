@@ -20,7 +20,6 @@ jobs:
     env:
       CARGO_BUILD_JOBS: '2'
       CARGO_INCREMENTAL: '0'
-      CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -32,6 +31,8 @@ jobs:
       - name: Install matching Rust toolchain
         run: rustup toolchain install 1.95.0 --profile minimal --no-self-update
       - name: Build frozen candidate and installer
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
         run: python tools/build_windows_candidate_ci.py
       - name: Preserve candidate and failure evidence
         if: always()
