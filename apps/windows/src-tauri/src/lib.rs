@@ -7,6 +7,7 @@ mod backend;
 mod cli_fallback;
 mod commands;
 mod content_handoff;
+mod file_clipboard;
 mod calendar_handoff;
 mod close_review;
 mod cache_updates;

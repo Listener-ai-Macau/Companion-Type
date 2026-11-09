@@ -2,13 +2,15 @@
 use std::path::{Path,PathBuf};
 
 #[derive(Clone,Copy,Debug,PartialEq,Eq)]
-pub enum ShareDestination {SystemPanel,FileLocation}
+pub enum ShareDestination {SystemPanel,FileLocation,FileClipboard}
 impl ShareDestination {
     pub fn parse(value:Option<&str>)->Result<Self,String>{
-        match value {None|Some("system")=>Ok(Self::SystemPanel),Some("folder")=>Ok(Self::FileLocation),_=>Err("不支持的分享方式，请重新选择。".into())}
+        match value {None|Some("system")=>Ok(Self::SystemPanel),Some("folder")=>Ok(Self::FileLocation),Some("clipboard")=>Ok(Self::FileClipboard),_=>Err("不支持的分享方式，请重新选择。".into())}
     }
-    pub fn status(self)->&'static str{match self{Self::SystemPanel=>"opened",Self::FileLocation=>"folderOpened"}}
+    pub fn status(self)->&'static str{match self{Self::SystemPanel=>"opened",Self::FileLocation=>"folderOpened",Self::FileClipboard=>"fileCopied"}}
 }
+
+pub use crate::file_clipboard::copy_file_to_clipboard;
 
 pub fn write_clipboard(owner:usize,text:&str)->Result<(),String>{
     if text.contains('\0'){return Err("所选内容含无效空字符，请保存文件后核对。".into());}

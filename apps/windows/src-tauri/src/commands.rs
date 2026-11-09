@@ -811,7 +811,11 @@ pub async fn share_companion_meeting_content(app:AppHandle,window:tauri::Window,
         let (send,receive)=tokio::sync::oneshot::channel();
         let final_coordinator=coordinator.inner().clone();let final_request=request.clone();
         app.run_on_main_thread(move||{let result=checked_content_handoff(&final_coordinator,&final_request)
-            .and_then(|_|match package{Some(package)=>crate::content_handoff::open_share(owner,package),None=>crate::content_handoff::open_file_location(&path)});let _=send.send(result);}).map_err(|_|"窗口已关闭，未打开分享。")?;
+            .and_then(|_|match destination{
+                crate::content_handoff::ShareDestination::FileClipboard=>crate::content_handoff::copy_file_to_clipboard(owner,&path),
+                crate::content_handoff::ShareDestination::FileLocation=>crate::content_handoff::open_file_location(&path),
+                crate::content_handoff::ShareDestination::SystemPanel=>crate::content_handoff::open_share(owner,package.ok_or("分享文件准备未完成。")?),
+            });let _=send.send(result);}).map_err(|_|"窗口已关闭，未完成文件操作。")?;
         receive.await.map_err(|_|"分享面板未打开，请改用保存。")??;
         return Ok(ContentHandoffResult{status:destination.status().into(),file_name:Some(name),bytes});
     }
@@ -846,7 +850,11 @@ pub async fn share_companion_audio(app:AppHandle,window:tauri::Window,coordinato
         let final_coordinator=coordinator.inner().clone();
         app.run_on_main_thread(move||{let result=final_coordinator.snapshot()
             .and_then(|snapshot|crate::backend::audio_export::source(&snapshot,&session_id))
-            .and_then(|(source,_)|if source==original{match package{Some(package)=>crate::content_handoff::open_share(owner,package),None=>crate::content_handoff::open_file_location(&path)}}else{Err("录音来源已变化，未打开分享。".into())});let _=send.send(result);}).map_err(|_|"分享未打开。")?;
+            .and_then(|(source,_)|if source==original{match destination{
+                crate::content_handoff::ShareDestination::FileClipboard=>crate::content_handoff::copy_file_to_clipboard(owner,&path),
+                crate::content_handoff::ShareDestination::FileLocation=>crate::content_handoff::open_file_location(&path),
+                crate::content_handoff::ShareDestination::SystemPanel=>crate::content_handoff::open_share(owner,package.ok_or("音频文件准备未完成。")?),
+            }}else{Err("录音来源已变化，未完成文件操作。".into())});let _=send.send(result);}).map_err(|_|"文件操作未完成。")?;
         receive.await.map_err(|_|"分享面板未打开，请保存后分享。")??;
         return Ok(ContentHandoffResult{status:destination.status().into(),file_name:Some(name),bytes});
     }

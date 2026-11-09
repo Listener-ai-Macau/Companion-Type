@@ -14,7 +14,7 @@ async function main(){
    onPreview:async(r:any)=>{calls.preview.push(r);return{contentHash:'f'.repeat(64),textContent:body};},
    onSave:async(r:any)=>{calls.save.push(r);return cancelSave?null:{path:'E:/public-file.'+r.format,bytes:200};},
    onCopy:async(r:any)=>{calls.copy.push(r);if(staleCopy)throw Error('导出内容已变化，请重新查看当前记录。');return{status:'copied'};},
-   onShare:async(r:any,destination?:string)=>{calls.share.push(r);calls.routes.push(destination);if(failedShare)throw Error('分享面板未打开，请保存后分享。');return{status:destination==='folder'&&!wrongFolderStatus?'folderOpened':'opened',fileName:'公开测试.pdf',bytes:200};}};
+   onShare:async(r:any,destination?:string)=>{calls.share.push(r);calls.routes.push(destination);if(failedShare)throw Error('分享面板未打开，请保存后分享。');return{status:destination==='clipboard'?'fileCopied':destination==='folder'&&!wrongFolderStatus?'folderOpened':'opened',fileName:'公开测试.pdf',bytes:200};}};
  await act(async()=>{tree=create(<ContentExportPanel {...props}/>);});
  const button=(name:string)=>{const n=tree.root.findAllByType('button').find((node:any)=>text(node)===name);assert.ok(n,name);return n;};
  const check=async(name:string,value:boolean)=>{const node=tree.root.findAllByType('label').find((node:any)=>text(node)===name)?.findByType('input');assert.ok(node,name);await act(async()=>node.props.onChange({currentTarget:{checked:value}}));};
@@ -25,6 +25,11 @@ async function main(){
    await act(async()=>tree.root.findByProps({'aria-label':'所选内容文件格式'}).props.onChange({currentTarget:{value:format}}));
    await act(async()=>button(`保存 ${label}…`).props.onClick());
    assert.deepEqual(calls.save.at(-1).contentSections,choice);assert.equal(calls.save.at(-1).expectedContentHash,'f'.repeat(64));assert.equal(calls.save.at(-1).format,format);
+   await act(async()=>button('复制所选文件').props.onClick());
+   assert.equal(calls.routes.at(-1),'clipboard');assert.deepEqual(calls.share.at(-1).contentSections,choice);
+   assert.equal(calls.share.at(-1).expectedContentHash,'f'.repeat(64));assert.equal(calls.share.at(-1).format,format);
+   assert.match(text(tree.root.findByProps({'aria-label':'所选内容操作结果'})),/文件已复制/);
+   assert.match(text(tree.root.findByProps({'aria-label':'所选内容操作结果'})),/文件尚未发送/);
  }
  cancelSave=true;await act(async()=>button('保存 思维导图 PNG…').props.onClick());assert.match(text(tree.root),/已取消保存/);
  await act(async()=>button('复制所选内容').props.onClick());assert.deepEqual(calls.copy.at(-1).contentSections,choice);assert.match(text(tree.root),/已复制所选内容/);
@@ -40,6 +45,8 @@ async function main(){
  assert.match(text(tree.root.findByProps({'aria-label':'所选内容操作结果'})),/分享文件夹未打开/);
  assert.throws(()=>shareHandoffMessage({status:'folderOpened',bytes:200},'system'),/分享面板未打开/);
  assert.throws(()=>shareHandoffMessage({status:'sent',bytes:200},'folder'),/分享文件夹未打开/);
+ assert.throws(()=>shareHandoffMessage({status:'opened',bytes:200},'clipboard'),/文件未能复制/);
+ assert.throws(()=>shareHandoffMessage({status:'copied',bytes:200},'clipboard'),/文件未能复制/,'text-copy status cannot claim a copied file');
  assert.doesNotMatch(shareHandoffMessage({status:'opened',bytes:200}),/已发送|已保存|已打开/);
  await act(async()=>tree.root.findByProps({'aria-label':'所选内容文件格式'}).props.onChange({currentTarget:{value:'srt'}}));
  await act(async()=>button('保存 字幕 SRT…').props.onClick());
@@ -47,6 +54,7 @@ async function main(){
  const before=calls.preview.length;
  await act(async()=>tree.update(<ContentExportPanel {...props} unsaved={{...props.unsaved,transcript:true}}/>));
  await act(async()=>button('复制所选内容').props.onClick());assert.equal(calls.preview.length,before);assert.match(text(tree.root),/未保存的修改/);
+ await act(async()=>button('复制所选文件').props.onClick());assert.equal(calls.preview.length,before);
  await act(async()=>tree.unmount());
  console.log('PASS all selected-content formats, explicit material exclusion, native copy/hash, cancel, explicit folder route with exact selection/hash, no automatic fallback or false sent/saved feedback, subtitle scope and unsaved edits');
 }

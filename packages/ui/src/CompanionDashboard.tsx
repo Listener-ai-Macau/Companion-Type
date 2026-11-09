@@ -1468,10 +1468,10 @@ export function CompanionDashboard({
   const shareAudio=async(destination:ShareDestination='system')=>{
     if(!selectedSession||!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording||exportActive.current)return;
     const sessionId=selectedSession.id;exportActive.current=true;setExportBusy(true);
-    setExportResult({sessionId,origin:'audio',kind:'pending',message:'正在准备音频分享文件…'});
+    setExportResult({sessionId,origin:'audio',kind:'pending',message:destination==='clipboard'?'正在准备并复制录音文件…':'正在准备音频分享文件…'});
     try{const result=await onShareAudio(sessionId,audioExportFormat,destination);
       setExportResult({sessionId,origin:'audio',kind:'opened',message:shareHandoffMessage(result,destination)});
-    }catch(error){setExportResult({sessionId,origin:'audio',kind:'error',message:`分享未完成：${operationErrorText(error,'export')}`});}
+    }catch(error){setExportResult({sessionId,origin:'audio',kind:'error',message:`${destination==='clipboard'?'文件复制':'分享'}未完成：${operationErrorText(error,'export')}`});}
     finally{exportActive.current=false;setExportBusy(false);}
   };
   const changeCurrentLibraryState=async(action:'protect'|'unprotect'|'trash')=>{
@@ -2652,6 +2652,7 @@ export function CompanionDashboard({
               onClick={() => void exportAudio(audioExportFormat)}><Download size={15} />{audioExportFormat==='mp3'?'保存 MP3 副本':selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
             <button type="button" className="ct-action" disabled={!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio()}>分享录音…</button>
             {onShareAudio?<details><summary>其他录音分享方式</summary>
+              <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio('clipboard')}>复制录音文件</button>
               <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio('folder')}>在文件夹中分享录音…</button>
             </details>:null}
             {renderExportFeedback('audio')}
