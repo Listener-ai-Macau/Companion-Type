@@ -262909,7 +262909,7 @@
           ],
           "currentCheckpoint": {
             "windows": "0.1.78 installed; source bb1550c42b674d7ec3e526db9f7fdefb84cff7ae; delivery a59263683fe006acab54f5e7f5dd36ef077e10f2;245 original files unchanged",
-            "windowsRemaining": "原音回听与原音/MP3交付、AI生成/事实核对、旧WinRT系统分享故障、聊天应用附件、集中候选包仍开放；已补Windows标准Shell文件粘贴落盘。",
+            "windowsRemaining": "Windows079正常远端构建/包内核对/受影响界面验收；原WinRT系统分享故障与聊天应用附件仍开放。原音/MP3实际保存、Shell粘贴、重导入播放和重开已过；实体实听、手机与板卡按原任务继续。",
             "phone": "Android100已保护候选未安装，最后本聊天真机65观测后USB中断；后续先读实态，禁止根据旧收据降级",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
             "model": "普通固定基线5.53754%，复杂多人/重叠/纪要事实未合格，原记录保留",
@@ -263017,7 +263017,7 @@
           },
           "groupedCandidate079": {
             "at": "2026-11-09T16:41:52+08:00",
-            "state": "GROUPED_WINDOWS079_SOURCE_FROZEN_REMOTE_BUILD_PENDING",
+            "state": "GROUPED_WINDOWS079_REMOTE_BUILD_IN_PROGRESS",
             "version": "0.1.79",
             "purpose": "同一场会议从原音、转写修订、AI整理到所选内容/录音交付，集中收敛Windows候选。",
             "changes": [
@@ -263035,7 +263035,91 @@
             "localHeavyBuild": false,
             "modelsRun": false,
             "phoneAccessed": false,
-            "boardAccessed": false
+            "boardAccessed": false,
+            "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+            "remoteReadbackConfirmed": true,
+            "buildRun": 42587844329
+          },
+          "audioAiWorkflow20261109": {
+            "at": "2026-11-09T16:44:57+08:00",
+            "state": "PUBLIC_AUDIO_AND_REVIEWED_AI_WORKFLOW_PROVEN_GROUPED_WINDOWS079_BUILDING",
+            "versionUnderTest": "0.1.78",
+            "audio": {
+              "at": "2026-11-09T08:36:01.583454+00:00",
+              "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
+              "testSourceCommit": "af03118156e59a17ad48bae3e54f573c690108be",
+              "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+              "appVersion": "0.1.78",
+              "nativeRecompiled": false,
+              "wholeCoreCandidateQualified": false,
+              "modelsRun": false,
+              "deviceOrPhoneAccess": false,
+              "exactInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+              "exactInstalledDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+              "frozenNativeBytesMatchedApprovedMsi": true,
+              "publicAudio": {
+                "meeting": "S_R004S03C01",
+                "seconds": 2327.119,
+                "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                "bytes": 74467886,
+                "privateDraftAsset": 726625128
+              },
+              "nativeUiExitCode": 0,
+              "nativeUiState": "REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED",
+              "reopenedImports": [
+                {
+                  "id": "import-14b406d4d71e47f290af931f4e4d4e6f",
+                  "title": "public-audio-S_R004S03C01-original-兼容音频",
+                  "durationMs": 2327170,
+                  "audioStored": true,
+                  "originalChunks": 1
+                },
+                {
+                  "id": "import-3aad4ee17df044ceb60c1eb41d39f0f7",
+                  "title": "public-audio-S_R004S03C01",
+                  "durationMs": 2327119,
+                  "audioStored": true,
+                  "originalChunks": 1
+                }
+              ],
+              "reimportedOriginalsBoundToActualWavAndDeliveredMp3": true,
+              "savedOriginalByteIdentical": true,
+              "mp3Output": {
+                "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+                "bytes": 37149710,
+                "preservedInCiArtifact": true
+              },
+              "originalInputUnchanged": true,
+              "finishedAt": "2026-11-09T08:37:33.783490+00:00"
+            },
+            "groupedCandidateSource": "471d2d019a644849578bf09f9d781be76a535d88",
+            "candidateVersion": "0.1.79",
+            "candidateBuildRun": 42587844329,
+            "candidateInstalled": false,
+            "oldWinRtSystemShareStillOpen": true,
+            "thirdPartyMessengerAttachmentStillOpen": true,
+            "physicalListeningQualified": false,
+            "wholeCoreCandidateQualified": false,
+            "saleQualified": false,
+            "localHeavyBuild": false,
+            "localModelsRun": false,
+            "phoneAccessed": false,
+            "boardAccessed": false,
+            "ai": {
+              "generationSeconds": 30.81695580000087,
+              "regenerationSeconds": 28.26366659999985,
+              "manualSourceCorrectionNotAsrImprovement": true,
+              "oldMinutesHistoryRetained": true,
+              "staleMinutesNoticeAndActionExportGuardPassed": true,
+              "checklistSaveReopenAndWordExportPassed": true,
+              "factReviewScope": "One exposed public meeting, selected high-risk facts only; not exhaustive quality or customer acceptance",
+              "factsStillOpen": [
+                "跨段问题是否已解决",
+                "任务负责人/期限不能凭空补齐",
+                "原ASR错误需要修订，未提高模型评分"
+              ],
+              "evidence": "docs/handoffs/core-acceptance-20261109/ai-22512f1af147477eadece50329a12b93"
+            }
           }
         }
       },

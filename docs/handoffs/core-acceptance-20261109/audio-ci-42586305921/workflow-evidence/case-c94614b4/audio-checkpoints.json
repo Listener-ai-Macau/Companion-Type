@@ -1,0 +1,35 @@
+[
+  {
+    "step": "import-real-public-wav",
+    "nativePicker": "open"
+  },
+  {
+    "step": "play-whole-public-wav",
+    "duration": 2327.119,
+    "probes": [
+      {
+        "meetingPosition": 0,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 1163.5595,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      },
+      {
+        "meetingPosition": 2319.119,
+        "decodedTimeAdvanced": true,
+        "mediaError": null
+      }
+    ],
+    "playControl": "native audio Space key",
+    "seekProbe": "HTMLMediaElement.currentTime; native seek UI not qualified",
+    "mutedByTestRuntime": true,
+    "physicalListeningQualified": false
+  },
+  {
+    "step": "save-original-wav",
+    "nativePicker": "save"
+  }
+]

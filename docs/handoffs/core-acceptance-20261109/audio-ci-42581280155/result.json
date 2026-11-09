@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-09T07:46:45.297337+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "2fd3a8a43dd2bf3db880d7d97c545575d73eab16",
+  "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "appVersion": "0.1.78",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "exactInstalledDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "error": "AssertionError('The public audio must match its frozen source')",
+  "finishedAt": "2026-11-09T07:46:51.566145+00:00"
+}

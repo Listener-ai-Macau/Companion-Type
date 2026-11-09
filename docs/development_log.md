@@ -61,6 +61,26 @@ R2实际完整protected probe 4187.38ms，5秒门本次样本通过；initial ac
 初收集器仅找旧offline_reconnect日志，误记本次CMC3直接恢复计时缺失；原结果留存，按同一次正常客户端单调时钟日志与已配置15s调度修正为保守上界，包含轮询迟到/全部原生工作，不重录、不放宽10s；同时补入同版实际完整冷目录3.532s门。
 
 长录当前状态：{"at": "2026-11-09T14:24:44+08:00", "pid": 30948, "state": "LONG_FAILURE_PRESERVED_NO_NEW_START", "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca", "firmware": 66767, "boardLease": true, "newStartCommands": 1, "targetRecordingSeconds": 7380, "targetLiveSyncSeconds": 7200, "saleQualified": false, "childPid": 1564, "sessionId": "v1-real-installed-1794205222360", "recordingKey": {"deviceUid": "120011000d50335754363720", "formatEpoch": "5a6584e1707422bb", "sessionId": "0000000000000177"}, "recordingId": 132443, "sessionState": "recording", "liveRecording": true, "liveReceive": true, "sealedChunks": 1, "hostElapsedSeconds": 240.264, "sameOriginalActiveFollowWindows": 20, "conservativeLiveSyncSeconds": 89.01080069999989, "unexpectedDisconnects": 0, "maximumFilePollGapSeconds": 1.029771299999993, "firstObservedChunkAt": "2026-11-09T14:22:35+08:00", "exitCode": 1, "error": "AssertionError('Normal client failed; original retained')", "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-03\\companion-firmware-66662-luna\\recovery-work\\run_core079_long.py\", line 63, in main\n    log.close();progress['exitCode']=child.returncode;assert child.returncode==0,'Normal client failed; original retained'\n                                                             ^^^^^^^^^^^^^^^^^^^\nAssertionError: Normal client failed; original retained\n", "cleanupError": "AssertionError()"}。它另经原弹窗明确说明约2h3m采音并确认后才可开始；无UART/SWD/刷写/速度冲刺，无自动回退。只监督同一原场，结束后累计指标和原音判定；手机/首次偶发根因/Owner后置不继承通过。
+
+<!-- core769-cohesive-recording-repair -->
+2026-11-09T15:02:53+08:00 Owner要求“继续吧,那, 注意不要零碎的工作”。承接同一核心候选的实际长录失败，不重建任务树。原375只录到251.11s，第二段增长前缀收取停在260375/260918；普通客户端退出和一次原凭据STOP后仍CMS3 state1/error2。加密现有CRM计数确认MIC已停、stale DMA=1，其余overflow/reject/deadline/IRQ=0；PDM峰3163us>3000，该场失败，不能按蓝牙慢或只因切段命名修补。首个物理异常的精确IRQ交错尚未取得，保留此边界。
+
+源码定位到为radio活动延后已完成DMA块的可控失效路径。实际生产HAL poll的软件场景复现：尚有3.2ms有效期时旧策略不处理，再经过允许的4ms前台片段会丢块；删除此调度及回调后即时处理，原前后拷贝校验/真stale报错/IRQ开启不变。保留Opus自己的radio窗口，未放宽10ms硬期限，未增加DMA/PCM常驻缓存。另将已停止的原场FAULT发布为idle+原error，保留原key/实际接受时长；不伪称FINALIZED。源码3b2a1b9cf98370f75ed03b0c9692fcfc507371c4，正常769编译/签名完成，404964B（比767少176B）/静态67896B/栈21504B均在原预算；尚未安装。Windows079/d00不改源码/不重编。
+
+受影响软件验证：旧HAL生产函数模型失败留存，新路径通过；原双半DMA稳定拷贝50例真实PDM字节一致、归属丢失仍拒绝；codec调度原边界通过；真实C/NOR/Opus原场故障状态、已失败Mic停机仍不谎报idle、显式恢复与取消、跨段原身份和pause/stop模型通过。两次恢复夹具的旧“MIC打开即START成功”断言与已经交付的首PCM口径不符，夹具改为实际喂首PCM后确认，失败原件留存。旧未维护mic-cleanup夹具缺当前HAL类型，不作为产品失败，也未扩散改无关shutdown实现。
+
+失败现场收尾：正常pull取消/现有REC RECOVER没有确认回复，目录仍超时；只做一次指定ST-Link故障元数据读取尝试，实际0.00V/CoreID不可读，未读到目标RAM、未复位、未写固件或NOR。所有句柄关闭并release；没有声称产品已自恢复。原本机375分段/前缀保留，故障后原34目录未完成新核对，不能继承短录完整性结论。769正常包就绪后沿原统一弹窗只集中请求一次重接/准备录音，稍后或超时不开录；接好后先收尾原375、正常OTA，再验证完整新录音链。完整候选与售卖资格仍未通过，原速度后置、硬件block、手机与实体听感未测保持。详细原件C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\core769-candidate.json。
+
+本轮统一就绪弹窗未确认开始，实际readiness=false；未安装769、未开任何新录音，当前没有正在运行的设备作业或待确认弹窗。已完成的源码/包保留，下一次从同一接板点继续，不反复派提示。
+
+<!-- core769-actual-hardware-continuation -->
+2026-11-09T15:43:08+08:00 Owner“再试一下?”后按原整套候选续作。新一次加密BLE连接确认仍为原375 state1/error2、duration251110ms，stale1/MIC已停；Owner在原低高低提示弹窗确认准备，但运行计时未归零，不能宣称完成断电。改用现有正常显式START恢复入口，单次10秒限时（用掉本次已批准第一段新录音），6.654s收到真实首PCM；原375被真实恢复封口，376录满10s并自动停录。此为原767的正常恢复行为，不叫769新首PCM指标通过。
+
+普通079客户端按原持久journal恢复375，再精确收取同一key：原375可恢复WAV250997ms、设备恢复尾251000ms，CRC/SHA/精确物理回收完成，captureIncomplete=true一直保留，原故障接受251110ms与恢复尾之差不补造、不当正常长录通过。376十秒同样完整收取回收；未访问原34音频。
+
+769正常签名OTA已装好，实际全程118683ms<=150000，结束写入后验证87268ms<=100000，WSI4联合镜像确认/临时区释放/实际版本核对通过；原34目录逐条相同。没有使用串口/SWD/复位/较高版本回退或测速冲刺。继续复用079/d00原生匹配产物，不因本次固件安装重编/替换日用078。
+
+同一原准备弹窗剩余一次约2h3m录音已开始（原377）：{"at": "2026-11-09T15:43:03+08:00", "pid": 34668, "state": "RUNNING_ONE_LONG_ORIGINAL", "sourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca", "firmware": 66769, "boardLease": true, "newStartCommands": 1, "targetRecordingSeconds": 7380, "targetLiveSyncSeconds": 7200, "saleQualified": false, "childPid": 32092, "sessionId": "v1-real-installed-1794209887609", "recordingKey": {"deviceUid": "120011000d50335754363720", "formatEpoch": "5a6584e1707422bb", "sessionId": "0000000000000179"}, "recordingId": 132449, "sessionState": "recording", "liveRecording": true, "liveReceive": true, "sealedChunks": 2, "hostElapsedSeconds": 300.303, "sameOriginalActiveFollowWindows": 28, "conservativeLiveSyncSeconds": 138.38315850000072, "unexpectedDisconnects": 0, "maximumFilePollGapSeconds": 1.0139334999985294, "firstObservedChunkAt": "2026-11-09T15:40:18+08:00"}。实际进程live=True。本轮不再另开第三段短录，原767两短录与本轮恢复376均只保留各自范围；当前769的长录/峰值/零故障及最终原音尚未通过。只看已有普通日志和现有只读缓存计数，在原失败边界先判现行门；已失败就收尾修复，不能空跑两小时或放宽门。原完整日志/原待办一次更新当前阶段，资料C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\core769-hardware.json。
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。
@@ -25021,3 +25041,14 @@ Owner要求1–2周工程预算内交完整核心验收候选，并指出工作�
 执行返工如实保留：本机低内存停止，原256MiB测试进程PDF失败；远端较充分资源原PDF即通过。共8次远端流程尝试，前7次为验收启动/检查或错误接收端准备失败，0次原生构建/新安装/客户轮次。私有非交互桌面在远端启动不稳定，检查误判EBWebView子目录；改专用远端正常会话并核实际端口/私有目录/限额。接收端选型失误：7-Zip的EditPaste为空，菜单和按键返工没有价值，已停止并删除当前工具中的该路线，保留源码历史和原失败，改用已核微软文档的标准Shell菜单动作。最终无需键鼠/前台控制，Owner电脑前台/剪贴板未接管；不把修工具或测试次数算功能进展。
 
 产品源码a7e9df52接顺同一导出问题链：顶部直接打开所选内容面板，无纪要但有转写/重点/补充也能直接导出，旧其它格式入口保留；已过Windows类型检查，未重新打包，因此尚不称已装版改善。原音回听/原音与MP3、AI整理事实、旧WinRT分享、Android及卡端长录整链仍开放；相关可执行阻断集中修复后再一次候选打包，沿batch-result.json的next继续。quality_targets完整结构未改，旧成功/失败均保留。
+
+
+## 2026-11-09T16:44:14+08:00｜核心候选同批真实录音与AI整理闭环20261109
+
+承接Owner“继续集中推进”，沿11月9日原核心候选批次，不新建任务树。实际用户结果：公开S_R004S03C01的38分47秒WAV，经真实078原生导入、开头/中间/结尾媒体播放、系统另存原音与MP3、Windows标准Shell粘贴、MP3重导入/播放、新进程重开通过（run42587058258；验证源af03118156e59a17ad48bae3e54f573c690108be）。原音SHA82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f不变；交付MP3 SHAab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e，重新导入2327170ms。媒体运行时静音；定位探针为currentTime，不代替实体实听和原生拖动条。远端普通系统对话框有输入，Owner键鼠/前台未用；未自动发送。
+
+同一公开会议现有9196字转写，经原生078和已有AI服务完成全部2/2源段，30.817秒；这是转写文字到纪要的耗时，不是音频转写速度。对照公开人工标注发现工作日/零食区两处ASR错误会进入初版AI；明确人工修订单独保存后，旧纪要显示来源变化、旧待办导出拒绝、28.264秒重新整理、初版历史保留、新版导出通过。原ASR文字/说话段未覆盖，未改变模型评分。真实AI待办勾选/新进程重开/Word交付/撤销通过；未声称业务事项真正完成。金额、优惠条件等仅做选点事实审阅，不能据此报整体准确率或客户合格；任务负责人/日期未知继续为空，跨段问题是否已解决仍开放。
+
+同批修复：顶部导出分享定位到所选内容；顶部直达录音导出；无最终文字时不展示不可用AI工作区，明确先转文字；会中问题不擅自标作待解。受影响源码类型/交互检查过（run42584662552），目前仅源码，尚未安装。已冻结0.1.79源471d2d019a644849578bf09f9d781be76a535d88并远端读回，正常优化构建run42587844329进行中。本机此前真实低内存仍按停止本机重构建处理，没有关闭Owner程序或改分页；本轮原生AI轻量进程作业5%CPU/128MiB上限，实际私有提交峰约7–9MiB。
+
+失败保留：草稿下载403、原生Open按钮歧义、另存路径未提交、初始库加载时序、对话框WaitForInputIdle未实现、隐藏分享按钮定位误判，均按具体原因修验收工具；Save As由独占远端对话框正常文件名输入完成后验证实际文件，不把这些当产品ASR/功能进展。旧源、旧安装078和每次失败保持，音频二进制留私有草稿/CI，公开文字/收据/截图入Git。没有手机、板卡、本地模型或新客户体验。原WinRT系统分享、聊天附件、模型/实体/整机售卖门保持开放。下一项仍是本批079包内核对与实际界面确认，随后双端/录音卡原待办。

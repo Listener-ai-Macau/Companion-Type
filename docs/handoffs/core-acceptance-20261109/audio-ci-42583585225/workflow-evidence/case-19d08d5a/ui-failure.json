@@ -1,0 +1,4 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(text.includes(plan.title))\n",
+  "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(text.includes(plan.title))\n\n    at D:\\a\\Companion-Type\\Companion-Type\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:12:60"
+}

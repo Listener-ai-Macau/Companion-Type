@@ -1,0 +1,60 @@
+{
+  "at": "2026-11-09T15:57:14+08:00",
+  "state": "SOURCE_REVIEW_STALE_NOTICE_ACTION_GUARD_REGENERATION_HISTORY_AND_FRESH_EXPORT_PASSED",
+  "manualCorrectionNotAsrImprovement": true,
+  "originalAsrMetricsUnchanged": true,
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "referenceFullDocumentSentToAi": false,
+  "manualEdits": [
+    {
+      "index": 5,
+      "text": "啊，周一至周五主要是呃一些老年人，呃来超市买一些生活上的嗯必备品，包括日常的一些呃呃蔬菜啦，呃油啦，面啦，啊他们的需求量跟要讲要少一些，呃明显是周六周日的人员比较多，呃都是带一些这个呃都是带着孩子啦，或者一一家三口啦，啊来超市。"
+    },
+    {
+      "index": 70,
+      "text": "你们各个部门儿，这个下边儿员工一定要培训一下。呃，马上这个这一搞个大活动嘛，就是把下边儿员工这个呃意识这个安全也要提升一下。呃，你看像一些老人、一些小孩儿，尤其这个零食区的呃小孩儿比较多，呃，让他们呃尽量的要跟在大人后边儿。我见还有的小孩儿就是他那小推车。"
+    }
+  ],
+  "steps": [
+    {
+      "name": "01-save-manual-reference-correction",
+      "exitCode": 0,
+      "seconds": 0.4111835000003339
+    },
+    {
+      "name": "02-export-marked-old-minutes",
+      "exitCode": 0,
+      "seconds": 0.21267399999851477
+    },
+    {
+      "name": "03-reject-stale-action-export",
+      "exitCode": 1,
+      "seconds": 0.21660830000109854
+    },
+    {
+      "name": "04-regenerate-reviewed-public-minutes",
+      "exitCode": 0,
+      "seconds": 28.26366659999985
+    },
+    {
+      "name": "05-export-fresh-reviewed-minutes",
+      "exitCode": 0,
+      "seconds": 0.20660589999897638
+    }
+  ],
+  "wholeCoreCandidateQualified": false,
+  "sourceReviewRevision": 1,
+  "oldMinutesHistoryRetained": true,
+  "originalRawAsrUnchanged": true,
+  "cloudAiRegeneration": true,
+  "processing": {
+    "strategy": "chunkedSourceBacked",
+    "sourceBytes": 27408,
+    "processedSourceBytes": 27408,
+    "totalChunks": 2,
+    "completedChunks": 2,
+    "resumedChunks": 0,
+    "complete": true
+  },
+  "jobPrivateCommitPeakBytes": 8536064
+}

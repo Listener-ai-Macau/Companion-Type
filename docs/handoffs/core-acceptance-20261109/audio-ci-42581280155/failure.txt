@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\run_ci.py", line 43, in <module>
+    assert download.returncode==0 and sha(audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f','The public audio must match its frozen source'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: The public audio must match its frozen source

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\run_ci.py", line 69, in <module>
+    assert gui_code==0 and reopen_code==0,'Real audio flow remains unqualified; preserve the actual failing stage'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Real audio flow remains unqualified; preserve the actual failing stage

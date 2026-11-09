@@ -1,0 +1,316 @@
+{
+  "deviceAccess": false,
+  "operationError": null,
+  "settings": {
+    "asrProvider": "local-paraformer",
+    "bleCompress": false,
+    "deepseekApiKeySet": false,
+    "deepseekBaseUrl": "https://api.deepseek.com/v1",
+    "deepseekMinutesEnabled": true,
+    "deepseekModel": "deepseek-v4-flash",
+    "defaultMeetingMode": "offlineStore",
+    "localAsrAvailable": false,
+    "openaiAsrApiKeySet": false,
+    "openaiAsrEndpoint": "https://api.openai.com/v1/audio/transcriptions",
+    "openaiAsrModel": "gpt-4o-transcribe",
+    "settingsPath": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\product-settings.json",
+    "storageSaveBlocked": false,
+    "storageWarning": null,
+    "volcAccessKeySet": false,
+    "volcAppKeySet": false,
+    "volcResourceId": "volc.bigasr.sauc.duration"
+  },
+  "snapshot": {
+    "bleName": {
+      "activeName": "companion",
+      "maxLen": 29,
+      "pendingRestart": false,
+      "stagedName": "companion",
+      "status": "clean"
+    },
+    "connected": false,
+    "device": {
+      "autoReconnectEnabled": true,
+      "boardId": null,
+      "buildId": null,
+      "connected": false,
+      "connectionPhase": "idle",
+      "deviceId": null,
+      "firmwareVersion": null,
+      "hardwareRevision": null,
+      "lastConnectedAt": null,
+      "lastReconnectAttemptAt": null,
+      "lastSeenAt": null,
+      "lastSyncAt": null,
+      "manualDisconnect": false,
+      "mcuUid": null,
+      "message": "Not scanned",
+      "mode": "windowsNative",
+      "providerId": "companion-type-windows-ble",
+      "reconnectAttemptCount": 0,
+      "recording": false,
+      "recordingCapacity": null,
+      "recordingsAvailable": 0,
+      "rememberedDeviceId": null,
+      "scanning": false,
+      "signalRssi": null,
+      "supported": true,
+      "uiGeneration": null
+    },
+    "deviceId": "fixture-companion-v1",
+    "gatt": {
+      "audioOutputServiceUuid": "8f7a000a-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "bleNameConfigUuid": "8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusServiceUuid": "8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusUuid": "8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "imuStatusUuid": "8f7a9001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingControlUuid": "8f7a8001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingServiceUuid": "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingStatusUuid": "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "sensorsServiceUuid": "8f7a0009-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "settingsServiceUuid": "8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerControlUuid": "8f7aa001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerStatusUuid": "8f7aa002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordControlUuid": "8f7aa003-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordStatusUuid": "8f7aa004-7b7d-4f3d-9d6f-6c2d1b7c0000"
+    },
+    "host": {
+      "activeSessionId": null,
+      "persistence": {
+        "message": null,
+        "recoveryPath": null,
+        "status": "ready"
+      },
+      "recordingPolicy": {
+        "asrProviderMode": "openaiCompatibleOrLocalCommand",
+        "chunkSeconds": 300,
+        "defaultMeetingMode": "offlineStore",
+        "deviceFlashRawCacheSeconds": 60,
+        "deviceRole": "triggerAndShortCache",
+        "longMeetingGuide": "Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull",
+        "longMeetingStrategy": "hostChunkedWav",
+        "maxAsrUploadBytes": 26214400,
+        "offlineStoreGuide": "Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes",
+        "oneHourChunkCount": 12,
+        "oneHourRawPcmBytes": 115200000,
+        "onlineLiveGuide": "Online: live partial transcript while recording; audio still stored as backup; stop → minutes",
+        "owner": "host",
+        "preferredLongRecordingSource": "hostMicrophone",
+        "rawPcmBytesPerSecond": 32000,
+        "shortCaptureGuide": "Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes",
+        "supportedMeetingModes": [
+          "offlineStore",
+          "onlineLive"
+        ],
+        "targetMeetingSeconds": 3600
+      },
+      "selectedSessionId": null,
+      "sessions": [
+        {
+          "audioBytes": 0,
+          "audioPath": null,
+          "audioStored": false,
+          "bookmarkRevision": 0,
+          "calendarCopyEpoch": 0,
+          "calendarCopyRevision": 0,
+          "captureIncomplete": false,
+          "chunks": [],
+          "deviceReclaimed": false,
+          "durationMs": 0,
+          "exportMarkdown": "",
+          "exportedAt": null,
+          "id": "core-public-20261109",
+          "liveTranscriptText": "",
+          "meetingMode": "offlineStore",
+          "meetingNotes": [
+            {
+              "createdAt": "2026-11-09T05:00:00Z",
+              "id": "exclude-note",
+              "text": "不选择的补充：内部备注不可进入本次文件",
+              "updatedAt": "2026-11-09T05:00:00Z"
+            }
+          ],
+          "minutes": {
+            "actionItems": [],
+            "decisions": [],
+            "generatedAt": "1793256920441",
+            "keywords": [],
+            "markdown": "## Summary\n明确虚构的工程资料，仅验证会后操作和文件交付，不代表ASR或AI质量。\n\n## Action Items\n- [ ] 核对采购清单（负责人：小王；截止：周五）\n\n## Questions\n- 追加20%的费用尚未批准，等待书面确认。",
+            "quality": "final",
+            "questions": [],
+            "source": "userAuthored",
+            "summary": []
+          },
+          "minutesByMode": {
+            "offlineStore": {
+              "generatedAt": "1793256920441",
+              "markdown": "## Summary\n明确虚构的工程资料，仅验证会后操作和文件交付，不代表ASR或AI质量。\n\n## Action Items\n- [ ] 核对采购清单（负责人：小王；截止：周五）\n\n## Questions\n- 追加20%的费用尚未批准，等待书面确认。",
+              "partialCount": 0,
+              "quality": "final",
+              "source": "userAuthored",
+              "status": "minutesReady"
+            }
+          },
+          "noteRevision": 0,
+          "processingPolicy": "manual",
+          "recorderControlUncertain": false,
+          "recovery": {
+            "attemptCount": 0,
+            "captureReviewConfirmed": false,
+            "intent": "none",
+            "maxAttempts": 3,
+            "requestedMeetingMode": "",
+            "retryStage": "",
+            "stage": "idle"
+          },
+          "retention": {
+            "audioCached": false,
+            "consentRequired": true,
+            "expiresAt": null,
+            "minutesCached": true,
+            "retentionLabel": "Local until manually deleted",
+            "transcriptCached": true
+          },
+          "source": "importedTranscript",
+          "startedAt": "2026-10-26T03:40:00Z",
+          "status": "minutesReady",
+          "stoppedAt": null,
+          "title": "明确虚构·核心会后流程验收",
+          "transcriptFinal": true,
+          "transcriptPreview": "小王：采购清单需要周五前核对。",
+          "transcriptSegments": 0,
+          "transcriptText": "小王：采购清单需要周五前核对。\n小李：追加20%的费用尚未批准，需要书面确认。",
+          "utterances": []
+        }
+      ]
+    },
+    "imu": {
+      "accel": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 1.0
+      },
+      "gyro": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "motion": "unknown",
+      "online": false,
+      "sampleHz": 0,
+      "supported": false
+    },
+    "lastControl": null,
+    "meeting": {
+      "active": false,
+      "durationMs": 0,
+      "startedAt": null,
+      "status": "idle",
+      "supported": true,
+      "transcriptCount": 0
+    },
+    "minutesContextSupported": true,
+    "oobe": {
+      "checks": [
+        {
+          "id": "bluetooth",
+          "label": "蓝牙连接",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "firmware",
+          "label": "固件与板卡身份",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "gatt",
+          "label": "核心 GATT",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "boardMicrophone",
+          "label": "板端录音链路",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "clock",
+          "label": "自动校时",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "imu",
+          "label": "IMU",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "speaker",
+          "label": "扬声器",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "display",
+          "label": "墨水屏",
+          "message": "等待实板观察",
+          "status": "pending"
+        },
+        {
+          "id": "touch",
+          "label": "触摸",
+          "message": "等待实板操作",
+          "status": "pending"
+        },
+        {
+          "id": "power",
+          "label": "电源与充电",
+          "message": "等待实板测量",
+          "status": "pending"
+        },
+        {
+          "id": "remoteServices",
+          "label": "ASR / 纪要服务",
+          "message": "不在硬件检查中调用",
+          "status": "pending"
+        }
+      ],
+      "complete": false,
+      "lastRunAt": null
+    },
+    "privacy": {
+      "audioCacheBytes": 0,
+      "consentRequired": true,
+      "lastEraseAt": null,
+      "localOnly": true,
+      "minutesBytes": 0,
+      "policyLabel": "Local cache",
+      "retentionDays": 7,
+      "transcriptBytes": 166
+    },
+    "schema": "companion.host.v1",
+    "source": "unavailable",
+    "speaker": {
+      "findSupported": false,
+      "muted": true,
+      "online": false,
+      "status": "notPopulated",
+      "supported": false,
+      "volume": 0
+    },
+    "updatedAt": "fixture",
+    "wakeWord": {
+      "armed": false,
+      "confidence": 0.0,
+      "engine": "notPopulated",
+      "keyword": "hey companion",
+      "lastDetectedAt": null,
+      "supported": false
+    }
+  },
+  "transcriptionRequested": false
+}

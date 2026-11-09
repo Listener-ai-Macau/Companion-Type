@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-09T16:30:23+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "audio",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 1244,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 262390,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 458934,
+      "title": ""
+    },
+    {
+      "hwnd": 262650,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    5084
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 1692,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3856,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4716,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5084,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 7224,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7612,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\c94614b475ff47998bfa91f7b8a6bc35\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 400805888,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5873102848,
+    "systemPhysicalPercent": 31.6
+  },
+  "error": "AssertionError('locator.click: Timeout 30000ms exceeded.\\nCall log:\\n\\x1b[2m  - waiting for locator(\\'.ct-recording-more details\\').filter({ has: getByRole(\\'button\\', { name: \\'复制录音文件\\', exact: true }) }).last().locator(\\':scope > summary\\')\\x1b[22m\\n\\n    at receive (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:39:196)\\n    at async audioJourney (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:55:2)\\n    at async D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting_ui.cjs:18:17 {\\n  log: [\\n    \"  - waiting for locator(\\'.ct-recording-more details\\').filter({ has: getByRole(\\'button\\', { name: \\'复制录音文件\\', exact: true }) }).last().locator(\\':scope > summary\\')\"\\n  ],\\n  name: \\'TimeoutError\\'\\n}\\n')",
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": true,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T16:31:10+08:00"
+}

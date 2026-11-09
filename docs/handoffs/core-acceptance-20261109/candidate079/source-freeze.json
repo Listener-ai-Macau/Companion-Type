@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-09T16:41:52+08:00",
+  "state": "GROUPED_WINDOWS079_SOURCE_FROZEN_REMOTE_BUILD_PENDING",
+  "version": "0.1.79",
+  "purpose": "同一场会议从原音、转写修订、AI整理到所选内容/录音交付，集中收敛Windows候选。",
+  "changes": [
+    "会议顶部导出定位到所选内容面板",
+    "原音导出进入会议顶部工具栏",
+    "无最终文字时明确先转文字，不展示不可用AI工作区",
+    "会中问题不擅自标成未解决"
+  ],
+  "affectedUiSourcePassedRun": 42584662552,
+  "realAudioFlowPassedRun": 42587058258,
+  "nativeRecompiled": false,
+  "installed": false,
+  "wholeCoreCandidateQualified": false,
+  "saleQualified": false,
+  "localHeavyBuild": false,
+  "modelsRun": false,
+  "phoneAccessed": false,
+  "boardAccessed": false,
+  "sourceCommit": "471d2d019a644849578bf09f9d781be76a535d88",
+  "remoteReadbackConfirmed": true
+}

@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-09T08:36:01.583454+00:00",
+  "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
+  "testSourceCommit": "af03118156e59a17ad48bae3e54f573c690108be",
+  "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "appVersion": "0.1.78",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "exactInstalledDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED",
+  "reopenedImports": [
+    {
+      "id": "import-14b406d4d71e47f290af931f4e4d4e6f",
+      "title": "public-audio-S_R004S03C01-original-兼容音频",
+      "durationMs": 2327170,
+      "audioStored": true,
+      "originalChunks": 1
+    },
+    {
+      "id": "import-3aad4ee17df044ceb60c1eb41d39f0f7",
+      "title": "public-audio-S_R004S03C01",
+      "durationMs": 2327119,
+      "audioStored": true,
+      "originalChunks": 1
+    }
+  ],
+  "reimportedOriginalsBoundToActualWavAndDeliveredMp3": true,
+  "savedOriginalByteIdentical": true,
+  "mp3Output": {
+    "sha256": "ab2afb6a8a2224eff4e74eb1ca3f8d03921fecdf2a7ba1c588f494bad5e1e39e",
+    "bytes": 37149710,
+    "preservedInCiArtifact": true
+  },
+  "originalInputUnchanged": true,
+  "finishedAt": "2026-11-09T08:37:33.783490+00:00"
+}

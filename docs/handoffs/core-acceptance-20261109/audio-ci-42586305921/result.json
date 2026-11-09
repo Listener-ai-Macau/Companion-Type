@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-09T08:29:56.042739+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "c712814be1765b2ddd4258a9a62287c286324cb7",
+  "appSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "appVersion": "0.1.78",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "exactInstalledDllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 1,
+  "nativeUiState": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "reopenedImports": [
+    {
+      "id": "import-62b65772d2e94341a10534b8ee9d6e9a",
+      "title": "public-audio-S_R004S03C01",
+      "durationMs": 2327119,
+      "audioStored": true,
+      "originalChunks": 1
+    }
+  ],
+  "savedOriginalByteIdentical": true,
+  "originalInputUnchanged": true,
+  "error": "AssertionError('Real audio flow remains unqualified; preserve the actual failing stage')",
+  "finishedAt": "2026-11-09T08:31:10.243301+00:00"
+}

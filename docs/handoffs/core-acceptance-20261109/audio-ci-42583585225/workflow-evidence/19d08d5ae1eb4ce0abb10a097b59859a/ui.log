@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(text.includes(plan.title))
+
+    at D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:12:60 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

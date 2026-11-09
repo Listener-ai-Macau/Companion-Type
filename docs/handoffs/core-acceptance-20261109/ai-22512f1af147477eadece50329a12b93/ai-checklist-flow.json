@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-09T16:18:20+08:00",
+  "state": "REAL_AI_CHECKLIST_SAVE_REOPEN_WORD_EXPORT_UNDO_PASSED",
+  "realBusinessTaskCompletionClaimed": false,
+  "localModelRun": false,
+  "cloudAiCalls": 0,
+  "steps": [
+    {
+      "name": "06-mark-real-ai-checklist-item",
+      "seconds": 0.2153388000006089
+    },
+    {
+      "name": "07-reopen-marked-ai-checklist",
+      "seconds": 0.1081436999993457
+    },
+    {
+      "name": "08-export-reviewed-ai-word",
+      "seconds": 0.10984720000124071
+    },
+    {
+      "name": "09-undo-software-checkmark",
+      "seconds": 0.10703030000149738
+    },
+    {
+      "name": "10-reopen-ai-after-undo",
+      "seconds": 0.10790130000168574
+    }
+  ],
+  "retainedPreparationFailure": {
+    "error": "AssertionError()",
+    "cause": "Document save normalizes surrounding whitespace; stored body matches requested checkbox edit after trim. Source review, quality and original ASR were preserved."
+  },
+  "checkedItemPersisted": true,
+  "rawAsrUnchanged": true,
+  "sourceEvidencePreserved": true,
+  "sourceReviewRevisionPreserved": 1,
+  "wordSha256": "599c04ea1180a6961ed801c60f1c2697669e498da11155f1ee1164ca1ee5a48d",
+  "physicalBusinessTaskCompletionQualified": false
+}

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 225, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 202, in main
+    assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+                                                                                                                                                                 ^^^^^^^^^^^^^
+AssertionError: AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(text.includes(plan.title))
+
+    at D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:12:60 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+

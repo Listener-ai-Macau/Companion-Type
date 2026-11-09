@@ -1,0 +1,4 @@
+{
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ct-recording-more details').filter({ has: getByRole('button', { name: '复制录音文件', exact: true }) }).last().locator(':scope > summary')\u001b[22m\n",
+  "stack": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.ct-recording-more details').filter({ has: getByRole('button', { name: '复制录音文件', exact: true }) }).last().locator(':scope > summary')\u001b[22m\n\n    at receive (D:\\a\\Companion-Type\\Companion-Type\\tools\\qa\\core_acceptance20261109\\windows_audio_ui.cjs:39:196)\n    at async audioJourney (D:\\a\\Companion-Type\\Companion-Type\\tools\\qa\\core_acceptance20261109\\windows_audio_ui.cjs:55:2)\n    at async D:\\a\\Companion-Type\\Companion-Type\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:18:17"
+}

@@ -1,0 +1,148 @@
+{
+  "action": "save",
+  "dialog": {
+    "hwnd": 262886,
+    "title": "Save As"
+  },
+  "controls": [
+    {
+      "name": "File name:",
+      "id": "1001",
+      "type": 50004
+    },
+    {
+      "name": "Search Box",
+      "id": "SearchEditBox",
+      "type": 50004
+    },
+    {
+      "name": "&Help",
+      "id": "HelpButton",
+      "type": 50000
+    },
+    {
+      "name": "View Slider",
+      "id": "SplitMenuButton",
+      "type": 50000
+    },
+    {
+      "name": "Organize",
+      "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}",
+      "type": 50000
+    },
+    {
+      "name": "New folder",
+      "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}",
+      "type": 50000
+    },
+    {
+      "name": "Column left",
+      "id": "UpButton",
+      "type": 50000
+    },
+    {
+      "name": "Page right",
+      "id": "DownPageButton",
+      "type": 50000
+    },
+    {
+      "name": "Column right",
+      "id": "DownButton",
+      "type": 50000
+    },
+    {
+      "name": "Filter dropdown",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Filter dropdown",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Filter dropdown",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Filter dropdown",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Open",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Open",
+      "id": "DropDown",
+      "type": 50000
+    },
+    {
+      "name": "Hide Folders",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Save",
+      "id": "1",
+      "type": 50000
+    },
+    {
+      "name": "Cancel",
+      "id": "2",
+      "type": 50000
+    },
+    {
+      "name": "Back (Alt + Left Arrow)",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Forward (Alt + Right Arrow)",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Recent locations",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Up to \"752787a6893b4ce891bab2c8442d06ff\" (Alt + Up Arrow)",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Previous Locations",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Refresh \"exports\" (F5)",
+      "id": "",
+      "type": 50000
+    },
+    {
+      "name": "Search",
+      "id": "SearchBoxSearchButton",
+      "type": 50000
+    },
+    {
+      "name": "Close",
+      "id": "",
+      "type": 50000
+    }
+  ],
+  "keyboardOrMouseInputUsed": true,
+  "ownerForegroundOrInputUsed": false,
+  "remoteNativeFilenameTypingUsed": true,
+  "focusWithinOwnedRemotePickerUsed": true,
+  "filenameValueAfterSet": "D:\\a\\_temp\\companion-core-acceptance\\cache\\752787a6893b4ce891bab2c8442d06ff\\exports\\compatible.mp3",
+  "filenameValueBeforeConfirm": "D:\\a\\_temp\\companion-core-acceptance\\cache\\752787a6893b4ce891bab2c8442d06ff\\exports\\compatible.mp3",
+  "createdOutputPathVerified": "D:\\a\\_temp\\companion-core-acceptance\\cache\\752787a6893b4ce891bab2c8442d06ff\\exports\\compatible.mp3",
+  "state": "OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED",
+  "path": "D:\\a\\_temp\\companion-core-acceptance\\cache\\752787a6893b4ce891bab2c8442d06ff\\exports\\compatible.mp3"
+}

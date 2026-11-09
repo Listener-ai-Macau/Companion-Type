@@ -1,0 +1,20 @@
+{
+  "state": "GROUPED_MEETING_UI_SOURCE_CONTRACTS_PASSED",
+  "sourceCommit": "5e8909e514866d6b513bf436636495f273eba77b",
+  "nativePackaged": false,
+  "actualRuntimeQualified": false,
+  "results": [
+    {
+      "name": "windows-typecheck",
+      "exitCode": 0
+    },
+    {
+      "name": "test_meeting_track_dashboard",
+      "exitCode": 0
+    },
+    {
+      "name": "test_long_minutes_reading",
+      "exitCode": 0
+    }
+  ]
+}

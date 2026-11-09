@@ -1,0 +1,57 @@
+{
+  "state": "ENGINEERING_SPOT_FACT_REVIEW_WITH_DECLARED_MANUAL_SOURCE_CORRECTIONS",
+  "reviewScope": "One already-exposed public meeting; selected high-risk facts, not an exhaustive quality score or customer assessment.",
+  "referenceNotSentAsFullDocumentToAi": true,
+  "manualCorrectionsWereSentAsUserReviewedSource": true,
+  "asrModelOrCerChanged": false,
+  "observations": [
+    {
+      "id": "weekday-audience",
+      "referenceSeconds": [
+        141.24,
+        165.16
+      ],
+      "initialResult": "ASR substituted weekend for weekday and AI inherited the error",
+      "reviewedResult": "Manual source correction saved separately; new AI summary correctly attributes elderly shoppers to weekdays",
+      "qualifiedScope": "Manual review and regeneration workflow only"
+    },
+    {
+      "id": "snack-area",
+      "referenceSeconds": [
+        2184.46,
+        2198.51
+      ],
+      "initialResult": "ASR and first AI summary used the incorrect area name 临时区",
+      "reviewedResult": "Source review contains 零食区; regenerated document no longer repeats the incorrect name. It does not restate every original detail.",
+      "qualifiedScope": "Error no longer propagated; comprehensive coverage not qualified"
+    },
+    {
+      "id": "promotion-terms",
+      "referenceTerms": [
+        "三百",
+        "七折",
+        "二十元",
+        "三十",
+        "四桶",
+        "三个月",
+        "四十五"
+      ],
+      "result": "Reviewed selected amounts, promotional conditions and time spans against public human annotations; no new price, radius or approved budget asserted."
+    },
+    {
+      "id": "unknown-task-owners-dates",
+      "result": "All12 current task owners and deadlines remain null; no personal names or calendar deadlines fabricated.",
+      "automaticOwnerRecognitionQualified": false
+    },
+    {
+      "id": "question-resolution",
+      "result": "Stored Questions includes questions raised during discussion; unresolved status has not been established across all later chapters. UI label corrected to 会中问题; automatic resolution remains open.",
+      "qualified": false
+    }
+  ],
+  "generationSeconds": 30.81695580000087,
+  "regenerationSeconds": 28.26366659999985,
+  "rawAsrUnchanged": true,
+  "wholeCoreCandidateQualified": false,
+  "meetingBusinessFactQualityQualified": false
+}

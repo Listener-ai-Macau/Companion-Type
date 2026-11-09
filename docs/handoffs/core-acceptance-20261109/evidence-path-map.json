@@ -10,6 +10,581 @@
       "original": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-create-explicit-manual-document-83a08e21b4f94c4397ef641bb788cb71/09-create-explicit-manual-document.log",
       "mirror": "saved-5320d5810f7f4acc8b8eadf29390fce4/retained-09-83a08e21/09-create-explicit-manual-document.log",
       "sha256": "f6e1bb55064fdb8236273ea4d1e41105b30232f348b6eea51fcbf1c6617b96de"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/app.log",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/app.log",
+      "sha256": "ed32674279bbc3cf4f8c9f845a381ba915f709113801cfa671d72d17df64a908"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/dialog-reply-import-real-public-wav.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/dialog-reply-import-real-public-wav.json",
+      "sha256": "ba2db4fe803925923a571e9eaa6e603dcda7a34f42ff1bf5077e69be3d53f461"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/dialog-request-import-real-public-wav.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/dialog-request-import-real-public-wav.json",
+      "sha256": "f4811362c950058a94ea8be1d6190f2c270f190f05d192ed130f5df10f7d4214"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/dialog-request-import-real-public-wav.log",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/dialog-request-import-real-public-wav.log",
+      "sha256": "ca6389cb943de85007965f54647babe072a1b8409875f13a093118aee1f2938b"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/native-workspace.png",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/native-workspace.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/plan.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/plan.json",
+      "sha256": "01c86e08faf718f7cf36bcc62a1c537f7711d0dee3f513051f402894c659329a"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/reopen-audio-request.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/reopen-audio-result.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/reopen-audio-result.json",
+      "sha256": "a23046051086aae4871bc779f9fe4f82e6413888de6fbd6037f3fc232956fa0e"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/result.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/result.json",
+      "sha256": "859d445665b0fc6fa371354b54760a9de72fe7fc69e9aee627b4d586accf152c"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui-body.txt",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui-controls.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui-controls.json",
+      "sha256": "5122279e825a35bac1414f618c288f3978526b69f7a11d75b9cbb2b955f3fe83"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui-failure-body.txt",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui-failure-body.txt",
+      "sha256": "f92d0ba509bee2c03c54e900e2686bb02ee183b4ae702cba67a6c97c0919f02d"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui-failure.json",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui-failure.json",
+      "sha256": "1dd85c244976aabbb42cc8ad115a77f7b1aa1ccee9407e1c88b49c87a6f12959"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui-failure.png",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui-failure.png",
+      "sha256": "bc6770e1c3156878ca3dcd407560aff504ca1bb614e9611ac626e19a42877506"
+    },
+    {
+      "original": "audio-ci-42581986300/workflow-evidence/041a91cad9fe4531a8925b4cfd903989/ui.log",
+      "mirror": "audio-ci-42581986300/workflow-evidence/case-041a91ca/ui.log",
+      "sha256": "9c4b55fd055071896b686eb6ae2575fe69a474d2040e65b34c1beee205e26a41"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/app.log",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/app.log",
+      "sha256": "2950ea143e659b0624eed718094f518b73eff587f917fd93de0d95995880962b"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/audio-checkpoints.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/audio-checkpoints.json",
+      "sha256": "32d64636f1e6c4bdc3ad8657fda2899ceb43b53cbcd195614626db0fbfcaeeca"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-reply-import-real-public-wav.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-reply-import-real-public-wav.json",
+      "sha256": "9e6c24fdc6f913bf46f972cc08b3e36fd7136fcb8e5cd0672b605c7d93d1e0fe"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-reply-save-original-wav.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-reply-save-original-wav.json",
+      "sha256": "20243d88c6539d62db64474715a730768fe32fa7301f16c35ec8a94d003d7c33"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-request-import-real-public-wav.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-request-import-real-public-wav.json",
+      "sha256": "f4811362c950058a94ea8be1d6190f2c270f190f05d192ed130f5df10f7d4214"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-request-import-real-public-wav.log",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-request-import-real-public-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-request-save-original-wav.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-request-save-original-wav.json",
+      "sha256": "26daf6026e1326f8bceadcc7ac8cb1b5f7ddd261141db071a0b95c46ce65fb31"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/dialog-request-save-original-wav.log",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/dialog-request-save-original-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/native-workspace.png",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/native-workspace.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/plan.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/plan.json",
+      "sha256": "4642a013a273d42cb6559e9cc4102ea3b27bd9afd56c9edde85fd7a0c63ecfec"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/reopen-audio-request.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/reopen-audio-result.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/reopen-audio-result.json",
+      "sha256": "5b1ac967bb42f71f6e737f504dbd7b0b8eab6dc763babd9f4a7d3f045d890757"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/result.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/result.json",
+      "sha256": "86169d049362669cac670e38c5c565967488527a9a6ff1b2eba042bebd6716a8"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui-body.txt",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui-controls.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui-controls.json",
+      "sha256": "5122279e825a35bac1414f618c288f3978526b69f7a11d75b9cbb2b955f3fe83"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui-failure-body.txt",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui-failure-body.txt",
+      "sha256": "802c566fe323385ea8ec4cc290d4191933fb0df6d3e01f074c1ddfbbde5b8370"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui-failure.json",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui-failure.json",
+      "sha256": "8be26d21641a85b5882582b16e102e31f8966972c2fcc7b03bc314bfc921127d"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui-failure.png",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui-failure.png",
+      "sha256": "62009f5a4b0f05e7926392aca314ce06f3dbfd4ef47e40a7cc4832cd242e94ea"
+    },
+    {
+      "original": "audio-ci-42582723892/workflow-evidence/ed6296c1f78b41de8469df15648f9b78/ui.log",
+      "mirror": "audio-ci-42582723892/workflow-evidence/case-ed6296c1/ui.log",
+      "sha256": "a6811980f525596052f75da882d6546edad0b43ed39fcdffca3fe0a2611018b7"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/app.log",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/app.log",
+      "sha256": "3e17ad5428c81dc02c8adaf08d020aa43eb38729bd6be93e814e13be1670f52e"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/plan.json",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/plan.json",
+      "sha256": "9c6d018fe1c1e154e8a68b3e87228d82057fb7968cf568f83fb4ffb805def1fc"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/reopen-audio-request.json",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/reopen-audio-result.json",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/reopen-audio-result.json",
+      "sha256": "16a8bf8837360c65b4e499278000aa7a3da0ea9224a84e762e36940f115b50f4"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/result.json",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/result.json",
+      "sha256": "70beb03aacca8220650dc060363d60b5867106f59d0c0786c35e60cea097da84"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/ui-failure-body.txt",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/ui-failure-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/ui-failure.json",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/ui-failure.json",
+      "sha256": "e9b2cf01dcc840f0b708bbff329b37bec69734321c24635e2f0ae63a20bfb365"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/ui-failure.png",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/ui-failure.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42583585225/workflow-evidence/19d08d5ae1eb4ce0abb10a097b59859a/ui.log",
+      "mirror": "audio-ci-42583585225/workflow-evidence/case-19d08d5a/ui.log",
+      "sha256": "572d6d2c5b1e9aeee2740267710312a23cdb187f2dde28185606eb7eaa2bb896"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/app.log",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/app.log",
+      "sha256": "4de5b0ea60c5eb0e6bc87f6937d304fcc64674db5f700e54c7bfc23f6fe3f0a5"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/dialog-reply-import-real-public-wav.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/dialog-reply-import-real-public-wav.json",
+      "sha256": "3e02e4d9afd026a6425a691c29a4ab7194459f24a4ad5a1994992732bb72be72"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/dialog-request-import-real-public-wav.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/dialog-request-import-real-public-wav.json",
+      "sha256": "f4811362c950058a94ea8be1d6190f2c270f190f05d192ed130f5df10f7d4214"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/dialog-request-import-real-public-wav.log",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/dialog-request-import-real-public-wav.log",
+      "sha256": "beb98be86bfba090d635bd4d9a250acb20a6c1f65b36fa2d0c9cff60797e3ebd"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/native-workspace.png",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/native-workspace.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/plan.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/plan.json",
+      "sha256": "527cc36f433aa7f51215f2cadceac052669497824846fdd0fb8a092ff572bc9a"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/reopen-audio-request.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/reopen-audio-result.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/reopen-audio-result.json",
+      "sha256": "2920fba833eb7530b127ce7765f7d84a676475cb134b83e58c6e0ccf519d2807"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/result.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/result.json",
+      "sha256": "4b677079c0be39fc7e25c7fd257b5e8459f836eff0fe2bdb402de9539d7f5974"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui-body.txt",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui-controls.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui-controls.json",
+      "sha256": "5122279e825a35bac1414f618c288f3978526b69f7a11d75b9cbb2b955f3fe83"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui-failure-body.txt",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui-failure-body.txt",
+      "sha256": "f92d0ba509bee2c03c54e900e2686bb02ee183b4ae702cba67a6c97c0919f02d"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui-failure.json",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui-failure.json",
+      "sha256": "074ed7f9c43badc008c48aadb404e406397263fa7d0798ebe078a1140e2b512c"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui-failure.png",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui-failure.png",
+      "sha256": "bc6770e1c3156878ca3dcd407560aff504ca1bb614e9611ac626e19a42877506"
+    },
+    {
+      "original": "audio-ci-42585441545/workflow-evidence/e2327b3b14704d32860eb4afd3e65d9e/ui.log",
+      "mirror": "audio-ci-42585441545/workflow-evidence/case-e2327b3b/ui.log",
+      "sha256": "52fc9ebda54c11debf546e62f96d0051a5e5ef22a86e25568532ac4138e83573"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/app.log",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/app.log",
+      "sha256": "0b4473ac3a45b44c5985ec18503cacef2eebb440bad9a90a2fe0dc53781a7240"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/audio-checkpoints.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/audio-checkpoints.json",
+      "sha256": "32d64636f1e6c4bdc3ad8657fda2899ceb43b53cbcd195614626db0fbfcaeeca"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-reply-import-real-public-wav.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-reply-import-real-public-wav.json",
+      "sha256": "5d59fe56f40d92c577a89eacc3a33be2227d7b24ab10ae2f4e5e714196be134b"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-reply-save-original-wav.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-reply-save-original-wav.json",
+      "sha256": "93e87ab314d7e3c31ff112bfe323a067f4272bc4c4cb26859b324857acfa77f1"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-request-import-real-public-wav.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-request-import-real-public-wav.json",
+      "sha256": "f4811362c950058a94ea8be1d6190f2c270f190f05d192ed130f5df10f7d4214"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-request-import-real-public-wav.log",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-request-import-real-public-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-request-save-original-wav.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-request-save-original-wav.json",
+      "sha256": "28607c248ebfd5875d6142a461b6733451ffd4b7fb9d955aa1fe6321e8cb0001"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/dialog-request-save-original-wav.log",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/dialog-request-save-original-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/native-workspace.png",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/native-workspace.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/plan.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/plan.json",
+      "sha256": "a801e784df82c08613b9c43e3a503f44c416486f739ef2f1e91e81deb78380b6"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/reopen-audio-request.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/reopen-audio-result.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/reopen-audio-result.json",
+      "sha256": "8be87b0ef1abce0f364475817338810e4fee576c02d189556d2460c37ee9aafa"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/result.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/result.json",
+      "sha256": "f553c5807be15217368fb7d58bf8ef7f17add47093f3a10f3245347aa63a9a2a"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui-body.txt",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui-controls.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui-controls.json",
+      "sha256": "5122279e825a35bac1414f618c288f3978526b69f7a11d75b9cbb2b955f3fe83"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui-failure-body.txt",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui-failure-body.txt",
+      "sha256": "0bc328a45815698da1fd8749c6ba4200bb524668c343e9fae70c765fccc7b70e"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui-failure.json",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui-failure.json",
+      "sha256": "f68f3878c46a59e5ea5ae0ebae8dbb30b91839c6fa1be8eaa3574dac3abcdff2"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui-failure.png",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui-failure.png",
+      "sha256": "a616a19fb81711f850b76e3a016942b361c45f6a104dc6baeed59aec460b3eb0"
+    },
+    {
+      "original": "audio-ci-42586305921/workflow-evidence/c94614b475ff47998bfa91f7b8a6bc35/ui.log",
+      "mirror": "audio-ci-42586305921/workflow-evidence/case-c94614b4/ui.log",
+      "sha256": "eec0c845728a809a35fe81d288b484f8b73e87893e8d66b9bd5716451fb7d5e3"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/download-frozen-native.log",
+      "mirror": "audio-ci-42587058258/artifact/download-frozen-native.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/download-public-audio.log",
+      "mirror": "audio-ci-42587058258/artifact/download-public-audio.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/install-locked-node-tools.log",
+      "mirror": "audio-ci-42587058258/artifact/install-locked-node-tools.log",
+      "sha256": "05b65d7de1a01c5f456ac63339fbf19b42fc55d78e8e0ae9492d583517c38ae5"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/install-native-picker-dependency.log",
+      "mirror": "audio-ci-42587058258/artifact/install-native-picker-dependency.log",
+      "sha256": "a689619dff66502522044e0a40ff4c5e2d1d46b51c340d198978d5c93a3cfad1"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/install-test-dependencies.log",
+      "mirror": "audio-ci-42587058258/artifact/install-test-dependencies.log",
+      "sha256": "ef61f35a1052eb2662694a68ed9a239cc1bd1c44bc212a2b1df1791f9fb245cd"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/native-public-audio-flow.log",
+      "mirror": "audio-ci-42587058258/artifact/native-public-audio-flow.log",
+      "sha256": "0031a7e3a9e4a0d7a3a72f8a637ba8614b5fd9da9ad33cf78b54605a4ebeed91"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/reopen-audio-library.log",
+      "mirror": "audio-ci-42587058258/artifact/reopen-audio-library.log",
+      "sha256": "ab42deeb54d6391af7eee60c33a352ac4bc333507ccca9adb39d7638c6b1addb"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/result.json",
+      "mirror": "audio-ci-42587058258/artifact/result.json",
+      "sha256": "bf810f24f56c0db0bf9253c493e1206694a32c7c09a0667a1d5eccb4328e1e8c"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/app.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/app.log",
+      "sha256": "98702ecd422d853293856bd19e755d10dd4fa43f60430caaa38db7a0b2e3f6f7"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/audio-checkpoints.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/audio-checkpoints.json",
+      "sha256": "6b2754ffad5df7344a44bedf61d959ba7ba846420a08dc9863b04995783f25a2"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-reply-decode-exported-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-reply-decode-exported-mp3.json",
+      "sha256": "8e97e77561782d39dcedb3673e12b732d23f8022570c526d1f2ba9d94c2dfd4e"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-reply-import-real-public-wav.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-reply-import-real-public-wav.json",
+      "sha256": "8313b996a1b822c133dd59b10d4dcdcf860cc9720da837562b1f27e4820da44e"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-reply-save-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-reply-save-mp3.json",
+      "sha256": "7e85a884b8e613ce7a0a06195cf0da80cf20365bbe5c38093af9c82fd8c647e3"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-reply-save-original-wav.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-reply-save-original-wav.json",
+      "sha256": "558b64df64ce6823f7e733474ede93280bc1692aa9e77c5086e2ea770d0bb905"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-decode-exported-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-decode-exported-mp3.json",
+      "sha256": "cc8c4807bef5163b577db3749fa382cda0bcf268c738fd3bc1063c129775e4a9"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-decode-exported-mp3.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-decode-exported-mp3.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-import-real-public-wav.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-import-real-public-wav.json",
+      "sha256": "f4811362c950058a94ea8be1d6190f2c270f190f05d192ed130f5df10f7d4214"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-import-real-public-wav.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-import-real-public-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-save-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-save-mp3.json",
+      "sha256": "193b1ae4c6428ce75269f9220fdbefb0e4b900eff87be9c5b03404fe21623a3f"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-save-mp3.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-save-mp3.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-save-original-wav.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-save-original-wav.json",
+      "sha256": "de5389cb9917e704adecaafd607c632b4a35e18f664db9b1eb452ef976f858ae"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/dialog-request-save-original-wav.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/dialog-request-save-original-wav.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/handoff-reply-audio-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/handoff-reply-audio-mp3.json",
+      "sha256": "722428681d996f73802a6c698d75fde15a645dbd3c4f57dadf165fdd36118963"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/handoff-reply-audio-original.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/handoff-reply-audio-original.json",
+      "sha256": "79d4c63e595ad2949c732af2703a5fea51674dce39d74161ffba5551e3fb7685"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/handoff-request-audio-mp3.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/handoff-request-audio-mp3.json",
+      "sha256": "8209cce54ea97cbf635a7bf23ed083bb0aaa187cfdc583cb55ea70df24c77be1"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/handoff-request-audio-original.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/handoff-request-audio-original.json",
+      "sha256": "b23ee7c062fff0f53f9a9bebef1ec655a2a53d9c98e22bb1d5c72ddfa289abbd"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/native-real-audio-roundtrip.png",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/native-real-audio-roundtrip.png",
+      "sha256": "b0c9a1d7a86eb94153dd20871efc029c672e0c28431d9afa355afff1877d50f9"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/native-workspace.png",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/native-workspace.png",
+      "sha256": "fd3ad047b7e05906f3f518420dd843d44416b81959474d82ee10a05c8139455d"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ordinary-shell-receiver-0.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ordinary-shell-receiver-0.log",
+      "sha256": "f7a9514f2a24f978ffc1b246eb50088fe8b316926ad28bb3d9729082f4ea45c4"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ordinary-shell-receiver-1.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ordinary-shell-receiver-1.log",
+      "sha256": "f7a9514f2a24f978ffc1b246eb50088fe8b316926ad28bb3d9729082f4ea45c4"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/plan.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/plan.json",
+      "sha256": "e618cafadc49706640d44fcc880ab54e6ed14890bc4afb3b8e7198f2644676d3"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/reopen-audio-request.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/reopen-audio-request.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/reopen-audio-result.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/reopen-audio-result.json",
+      "sha256": "822afe940f8d2b482794474668d40e1f4ba2dbe8996ffcc2ee69510c6e082013"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/result.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/result.json",
+      "sha256": "134cfab736e2d31d1d13b67b2971305ca2751dfea07924a8a99db4b63aaa94ae"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ui-body.txt",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ui-body.txt",
+      "sha256": "ca285f3bdca0995561527c6bc49f37370b18c61fdd6e533a3ccfe8751248ce0c"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ui-controls.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ui-controls.json",
+      "sha256": "5122279e825a35bac1414f618c288f3978526b69f7a11d75b9cbb2b955f3fe83"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ui-result.json",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ui-result.json",
+      "sha256": "cde033a7bca7bd21f6944c99671952c58a908d5d26a64a93969467ea4c6e14fc"
+    },
+    {
+      "original": "audio-ci-42587058258/companion-core-audio-af03118156e59a17ad48bae3e54f573c690108be/workflow-evidence/752787a6893b4ce891bab2c8442d06ff/ui.log",
+      "mirror": "audio-ci-42587058258/artifact/workflow-evidence/case-752787a6/ui.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ]
 }

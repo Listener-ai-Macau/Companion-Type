@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_native_dialog.py", line 72, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_native_dialog.py", line 37, in main
+    element.GetCurrentPattern(UIA.UIA_WindowPatternId).QueryInterface(UIA.IUIAutomationWindowPattern).WaitForInputIdle(3000)
+_ctypes.COMError: (-2147467263, 'Not implemented', (None, None, None, 0, None))

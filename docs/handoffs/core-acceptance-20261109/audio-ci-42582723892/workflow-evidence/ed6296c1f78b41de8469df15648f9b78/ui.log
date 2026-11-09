@@ -1,0 +1,11 @@
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('录音已保存：original.wav', { exact: true }) to be visible[22m
+
+    at audioJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:54:58)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:17:17 {
+  log: [
+    "  - waiting for getByText('录音已保存：original.wav', { exact: true }) to be visible"
+  ],
+  name: 'TimeoutError'
+}

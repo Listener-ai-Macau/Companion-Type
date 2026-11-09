@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-09T15:52:57+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "audio",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 868,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 262652,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 459196,
+      "title": ""
+    },
+    {
+      "hwnd": 262242,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    7372
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 952,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5308,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6604,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6924,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7372,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 7460,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\041a91cad9fe4531a8925b4cfd903989\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 377143296,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5899235328,
+    "systemPhysicalPercent": 31.3
+  },
+  "error": "AssertionError(\"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED'\\n- 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED'\\n\\n    at dialog (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:10:65)\\n    at async openAudio (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:15:3)\\n    at async audioJourney (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:47:2)\\n    at async D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting_ui.cjs:17:17 {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',\\n  expected: 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\")",
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T15:53:07+08:00"
+}

@@ -1,0 +1,90 @@
+{
+  "at": "2026-11-09T16:23:09+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "audio",
+  "frozenAppVersion": "0.1.78",
+  "frozenAppSource": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
+  "exeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+  "dllSha256": "42fffcf0dfc3bba7c348fcfb9906bff70a8ce120559be03d5fd0769bf70825d1",
+  "inputKind": "Actual public S_R004S03C01 audio; native import, playback and export only, no ASR/AI or capture",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "appPid": 8148,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 131224,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 786596,
+      "title": ""
+    },
+    {
+      "hwnd": 786598,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    4768
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 1748,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 3424,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4768,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 5984,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6028,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\e2327b3b14704d32860eb4afd3e65d9e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 384094208,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5957726208,
+    "systemPhysicalPercent": 30.6
+  },
+  "error": "AssertionError(\"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED'\\n- 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED'\\n\\n    at dialog (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:10:65)\\n    at async openAudio (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:15:3)\\n    at async audioJourney (D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_audio_ui.cjs:47:2)\\n    at async D:\\\\a\\\\Companion-Type\\\\Companion-Type\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting_ui.cjs:18:17 {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',\\n  expected: 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\")",
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-09T16:23:19+08:00"
+}

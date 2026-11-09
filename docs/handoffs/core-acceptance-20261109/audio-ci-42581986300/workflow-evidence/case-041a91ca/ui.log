@@ -1,0 +1,17 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED'
+- 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED'
+
+    at dialog (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:10:65)
+    at async openAudio (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:15:3)
+    at async audioJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:47:2)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:17:17 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'OWNED_NATIVE_FILE_PICKER_ACTION_FAILED',
+  expected: 'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

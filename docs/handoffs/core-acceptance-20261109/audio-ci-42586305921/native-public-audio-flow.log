@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 226, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 202, in main
+    assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+                                                                                                                                                                 ^^^^^^^^^^^^^
+AssertionError: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.ct-recording-more details').filter({ has: getByRole('button', { name: '\u590d\u5236\u5f55\u97f3\u6587\u4ef6', exact: true }) }).last().locator(':scope > summary')[22m
+
+    at receive (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:39:196)
+    at async audioJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_audio_ui.cjs:55:2)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:18:17 {
+  log: [
+    "  - waiting for locator('.ct-recording-more details').filter({ has: getByRole('button', { name: '\u590d\u5236\u5f55\u97f3\u6587\u4ef6', exact: true }) }).last().locator(':scope > summary')"
+  ],
+  name: 'TimeoutError'
+}
+
