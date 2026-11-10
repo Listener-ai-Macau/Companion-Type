@@ -59,6 +59,15 @@ public struct InputStatus: Equatable {
         request = UInt32(p.uint(8,4)); sequence = UInt32(p.uint(12,4)); eventTick = UInt32(p.uint(16,4))
         events = UInt16(p.uint(20,2)); token = UInt32(p.uint(24,4)); session = p.uint(28,8); bookmark = UInt32(p.uint(36,4))
     }
+    // An intermediate running-MIC notification can be coalesced on a short
+    // capture. The current token's durable SAVED notice is sufficient, but a
+    // query can only finish a physical token already owned by this host.
+    public func savedSession(forPhysicalToken physicalToken: UInt32, observedSession: UInt64?) -> UInt64? {
+        guard result == 0, token != 0, token == physicalToken, feedback == 6,
+              flags & 6 == 0, session != 0,
+              observedSession == nil || observedSession == session else { return nil }
+        return session
+    }
 }
 public struct SegmentDescriptor: Equatable, Codable {
     public let recordingID, index, encodedLength, contentCRC, totalSegments: UInt32

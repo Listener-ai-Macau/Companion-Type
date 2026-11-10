@@ -39,6 +39,25 @@ final class RecorderCoreTests: XCTestCase {
         XCTAssertEqual(Data(request.prefix(32)).crc32,UInt32(request.uint(32,4)))
         var bad = wire; bad[28] ^= 1; XCTAssertThrowsError(try InputStatus(bad,peer: p))
     }
+    func testSavedShortCaptureWithoutIntermediateMicNotice() throws {
+        let p = try peer()
+        func input(_ feedback: UInt8,flags: UInt8 = 0,token: UInt32 = 17,session: UInt64 = 42,result: UInt8 = 0) throws -> InputStatus {
+            var wire = Data(repeating: 0,count: 64)
+            wire.replaceSubrange(0..<4,with: Data("CIN1".utf8)); wire[4] = 1; wire[5] = result; wire[6] = 1
+            wire[7] = flags; wire[23] = feedback; wire.put(token,at: 24); wire.put(session,at: 28)
+            wire.replaceSubrange(40..<52,with: p.uid); wire.put(p.epoch,at: 52); wire.put(Data(wire.prefix(60)).crc32,at: 60)
+            return try InputStatus(wire,peer: p)
+        }
+        XCTAssertNil(try input(2,flags: 5).savedSession(forPhysicalToken: 17,observedSession: nil))
+        XCTAssertEqual(try input(6).savedSession(forPhysicalToken: 17,observedSession: nil),42)
+        XCTAssertEqual(try input(6).savedSession(forPhysicalToken: 17,observedSession: 42),42)
+        XCTAssertNil(try input(6).savedSession(forPhysicalToken: 18,observedSession: nil))
+        XCTAssertNil(try input(6).savedSession(forPhysicalToken: 17,observedSession: 41))
+        XCTAssertNil(try input(6,session: 0).savedSession(forPhysicalToken: 17,observedSession: nil))
+        XCTAssertNil(try input(6,flags: 2).savedSession(forPhysicalToken: 17,observedSession: nil))
+        XCTAssertNil(try input(6,result: 1).savedSession(forPhysicalToken: 17,observedSession: nil))
+        XCTAssertNil(try input(1).savedSession(forPhysicalToken: 17,observedSession: nil))
+    }
     func testPacketCRCResumeAndTerminalSHA() throws {
         let f = try fixture("recording-wire"), p = try peer(), payload = bytes(f["payloadHex"] as! String)
         let d = try SegmentDescriptor(bytes((f["descriptorsHex"] as! [String])[0]),peer: p)

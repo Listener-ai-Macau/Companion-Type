@@ -22,7 +22,7 @@ import CompanionRecorderCore
     @ObservationIgnored let insertion = TextInsertion()
     @ObservationIgnored private let library: LocalLibrary
     @ObservationIgnored private var lastSequence: UInt32 = 0
-    private struct Dictation { var session: UInt64?; let peer: RecorderPeer; let target: TextInsertion.Target?; var cancelled = false, submit = false, finished = false; let config: TranscriptionConfig }
+    private struct Dictation { var session: UInt64?; let token: UInt32; let peer: RecorderPeer; let target: TextInsertion.Target?; var cancelled = false, submit = false, finished = false; let config: TranscriptionConfig }
     @ObservationIgnored private var dictations: [String:Dictation] = [:]
     @ObservationIgnored private var pending: [(UInt64,Dictation)] = []
     @ObservationIgnored private var processing = false
@@ -51,7 +51,7 @@ import CompanionRecorderCore
     }
     func saveProvider() { do { try ProviderKey.save(apiKey); UserDefaults.standard.set(endpoint,forKey: "asr.endpoint"); UserDefaults.standard.set(model,forKey: "asr.model"); status = "转写配置已保存在本机，密钥存入系统钥匙串。" } catch { status = error.localizedDescription } }
     private func receive(_ value: InputStatus) {
-        guard let peer = bluetooth.peer else { return }
+        guard let peer = bluetooth.peer, value.result == 0 else { return }
         let key = peer.uid.hex+"-"+String(peer.epoch)+"-"+String(value.token)
         desktop = value.mode == 1
         let phases = ["状态未知","已就绪","准备录音","正在采音","已暂停","正在保存","原音已保存","存储空间不足","录音异常","正在升级","正在暂停","正在继续"]
@@ -61,10 +61,10 @@ import CompanionRecorderCore
             if Int(value.feedback) < phases.count { status = phases[Int(value.feedback)] }
             if value.flags & 16 != 0 { status += " · 重点已保存" } else if value.flags & 8 != 0 { status += " · 正在保存重点" }
         }
-        if value.sequence != lastSequence {
+        if value.request == 0, value.sequence != lastSequence {
             lastSequence = value.sequence
-            if value.events & 1 != 0, value.mode == 1 {
-                dictations[key] = Dictation(peer: peer,target: insertion.capture(),config: TranscriptionConfig(endpoint: endpoint,model: model,key: apiKey))
+            if value.events & 1 != 0, value.mode == 1, value.token != 0, dictations[key] == nil {
+                dictations[key] = Dictation(token: value.token,peer: peer,target: insertion.capture(),config: TranscriptionConfig(endpoint: endpoint,model: model,key: apiKey))
             }
             if value.events & 16 != 0 { dictations[key]?.cancelled = true }
             if value.events & 32 != 0 { dictations[key]?.submit = true }
@@ -74,9 +74,13 @@ import CompanionRecorderCore
             if value.events & 128 != 0 { insertion.slide(previous: true) }
         }
         if value.flags & 2 != 0, value.session != 0 { dictations[key]?.session = value.session }
-        if value.feedback == 6, var context = dictations[key], let session = context.session, value.session == session {
-            context.finished = true; dictations[key] = context
+        if var context = dictations[key], let session = value.savedSession(forPhysicalToken: context.token,observedSession: context.session) {
+            context.session = session; context.finished = true; dictations[key] = context
             enqueue(session,context: context)
+        }
+        if value.feedback == 1, value.flags & 7 == 0, let context = dictations[key], context.session == nil {
+            dictations.removeValue(forKey: key)
+            if !processing { status = "按键已松开，但这次没有生成录音；请等待麦克风就绪后说话。" }
         }
     }
     private func enqueue(_ session: UInt64,context: Dictation) {
