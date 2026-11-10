@@ -1,0 +1,25 @@
+{
+  "state": "GROUPED_MEETING_UI_SOURCE_NOT_QUALIFIED",
+  "sourceCommit": "b3f443378efb4896f40a65ee3e4b3829f4a25d59",
+  "nativePackaged": false,
+  "actualRuntimeQualified": false,
+  "results": [
+    {
+      "name": "windows-typecheck",
+      "exitCode": 0
+    },
+    {
+      "name": "test_meeting_track_dashboard",
+      "exitCode": 0
+    },
+    {
+      "name": "test_long_minutes_reading",
+      "exitCode": 0
+    },
+    {
+      "name": "test_action_review_tools",
+      "exitCode": 1
+    }
+  ],
+  "error": "Error: test_action_review_tools failed; retained log"
+}

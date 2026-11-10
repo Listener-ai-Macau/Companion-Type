@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: A long saved list must share one complete filter scope across its folded cards
+
+2 !== 1
+
+    at file:///D:/a/Companion-Type/Companion-Type/.cache/core-meeting-ui/test_action_review_tools.mjs:794:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T00:18:07.402Z",
+  "versionCode": 117,
+  "ownVirtualDisplay": 9,
+  "physicalMainDisplayOperated": false,
+  "newAsrOrCloudCalls": 0,
+  "externalSend": false,
+  "ownerRecordOpened": false,
+  "ownedLibraryConfirmations": 2,
+  "priorPublicTestCompletionRestored": true,
+  "copyNativeCallbackConfirmed": true,
+  "durableCompletionAndOriginalIndexPassed": true,
+  "filteredOriginalSourceOpened": true,
+  "state": "ANDROID117_ACTION_UI_NOT_QUALIFIED_FAILURE_RETAINED",
+  "error": "AssertionError [ERR_ASSERTION]: Traceback (most recent call last):\r\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-actions-followup\\phone_native116.py\", line 28, in <module>\r\n    assert row,(output[-1900:]);result=json.loads(row.split('=',1)[1]);assert result['display']==state['displayId']\r\n           ^^^\r\nAssertionError: ompanion.qa.NativeUiStandard110\r\nINSTRUMENTATION_STATUS: current=1\r\nINSTRUMENTATION_STATUS_CODE: 1\r\nCOMPANION_UI_STAGE=started pid=32732\r\nINSTRUMENTATION_STATUS: numtests=1\r\nINSTRUMENTATION_STATUS: stream=\r\nError in testRun:\r\njava.lang.IllegalStateException: Observed control missing\r\n\tat com.denzic.companion.qa.NativeUiStandard110.testRun(NativeUiStandard110.java:31)\r\n\tat com.android.uiautomator.testrunner.UiAutomatorTestRunner.start(UiAutomatorTestRunner.java:160)\r\n\tat com.android.uiautomator.testrunner.UiAutomatorTestRunner.run(UiAutomatorTestRunner.java:96)\r\n\tat com.android.commands.uiautomator.RunTestCommand.run(RunTestCommand.java:91)\r\n\tat com.android.commands.uiautomator.Launcher.main(Launcher.java:83)\r\n\tat com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)\r\n\tat com.android.internal.os.RuntimeInit.main(RuntimeInit.java:404)\r\n\r\nINSTRUMENTATION_STATUS: id=UiAutomatorTestRunner\r\nINSTRUMENTATION_STATUS: test=testRun\r\nINSTRUMENTATION_STATUS: class=com.denzic.companion.qa.NativeUiStandard110\r\nINSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Observed control missing\r\n\tat com.denzic.companion.qa.NativeUiStandard110.testRun(NativeUiStandard110.java:31)\r\n\tat com.android.uiautomator.testrunner.UiAutomatorTestRunner.start(UiAutomatorTestRunner.java:160)\r\n\tat com.android.uiautomator.testrunner.UiAutomatorTestRunner.run(UiAutomatorTestRunner.java:96)\r\n\tat com.android.commands.uiautomator.RunTestCommand.run(RunTestCommand.java:91)\r\n\tat com.android.commands.uiautomator.Launcher.main(Launcher.java:83)\r\n\tat com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)\r\n\tat com.android.internal.os.RuntimeInit.main(RuntimeInit.java:404)\r\n\r\nINSTRUMENTATION_STATUS: current=1\r\nINSTRUMENTATION_STATUS_CODE: -1\r\nINSTRUMENTATION_STATUS: stream=\r\nTest results for WatcherResultPrinter=.E\r\nTime: 0.399\r\n\r\nFAILURES!!!\r\nTests run: 1,  Failures: 0,  Errors: 1\r\n\r\n\r\nINSTRUMENTATION_STATUS_CODE: -1\r\n\r\n\n\n1 !== 0\n",
+  "originalLibraryRestored": true
+}

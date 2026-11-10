@@ -1,0 +1,103 @@
+{
+  "at": "2026-11-10T08:14:19+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "actions",
+  "frozenAppVersion": "0.1.82",
+  "frozenAppSource": "e72d16ed941cb7070cc7bd6e8d21f3b830192254",
+  "exeSha256": "205bebb9e5ca5117bc3545fac81ab9e5fece47dab26c47b7d7889d432a3a26f9",
+  "dllSha256": "f6ae62933945cd6a69d94e65ff788f9b4124a44fac5e4b55ea17559fc2a1d74e",
+  "inputKind": "Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "normalVisibleWindowOnDedicatedRunner": true,
+  "appPid": 7584,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 131266,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 262574,
+      "title": ""
+    },
+    {
+      "hwnd": 328178,
+      "title": "MSCTFIME UI"
+    },
+    {
+      "hwnd": 196652,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    708
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 668,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 708,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 1888,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6496,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7348,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 7780,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\f35f992fa28645dd86ce205b64e62967\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 341970944,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5697019904,
+    "systemPhysicalPercent": 33.6
+  },
+  "error": "AssertionError('Actual Windows clipboard does not match filtered public followup')",
+  "testStationClipboardSequenceUnchangedAtObservation": false,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-10T08:14:32+08:00"
+}

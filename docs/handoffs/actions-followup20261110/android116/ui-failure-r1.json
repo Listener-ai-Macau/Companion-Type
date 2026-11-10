@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-09T23:59:04.551Z",
+  "versionCode": 116,
+  "ownVirtualDisplay": 7,
+  "physicalMainDisplayOperated": false,
+  "newAsrOrCloudCalls": 0,
+  "externalSend": false,
+  "ownerRecordOpened": false,
+  "state": "ANDROID116_ACTION_UI_NOT_QUALIFIED_FAILURE_RETAINED",
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.library-backups-retained').locator(':scope > div').last().getByRole('button', { name: '打开这份资料', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\">打开这份资料</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n",
+  "originalLibraryRestored": false,
+  "restoreError": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '录音', exact: true })\u001b[22m\n"
+}

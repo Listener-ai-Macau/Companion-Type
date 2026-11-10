@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 296, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 264, in main
+    assert actual==expected,'Actual Windows clipboard does not match filtered public followup'
+           ^^^^^^^^^^^^^^^^
+AssertionError: Actual Windows clipboard does not match filtered public followup
