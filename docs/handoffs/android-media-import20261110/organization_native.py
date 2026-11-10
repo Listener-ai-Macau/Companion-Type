@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,zipfile,os,shlex,json,base64,sys,time
-R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;CODE=int(os.environ.get('COMPANION_PHONE_QA_CODE','125'));assert CODE in [125,126,127,128,130,131,132,133];SESSION=os.environ.get('COMPANION_PHONE_QA_SESSION');assert not SESSION or __import__('re').fullmatch(r'customer-edit(?:131|132|133)-[0-9]{8}',SESSION);P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/(SESSION or 'phone'+str(CODE));O=P/'ui-standard';O.mkdir(exist_ok=True)
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;CODE=int(os.environ.get('COMPANION_PHONE_QA_CODE','125'));assert CODE in [125,126,127,128,130,131,132,133,134];SESSION=os.environ.get('COMPANION_PHONE_QA_SESSION');assert not SESSION or __import__('re').fullmatch(r'customer-edit(?:131|132|133|134)-[0-9]{8}',SESSION);P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/(SESSION or 'phone'+str(CODE));O=P/'ui-standard';O.mkdir(exist_ok=True)
 A=R/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe'
 def adb(args,timeout=30):
  q=subprocess.run([str(A),'-s','d6bd213d',*map(str,args)],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout);assert q.returncode==0,(q.stdout+q.stderr)[-1600:];return q.stdout

@@ -1,0 +1,371 @@
+{
+  "at": "2026-11-11T05:31:54+08:00",
+  "state": "REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED",
+  "stage": "documents",
+  "frozenAppVersion": "0.1.98",
+  "frozenAppSource": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+  "exeSha256": "406f765673464131edf2fcdb5c2617839687a1ade2bfe8114ed25c8e6a6e9f0b",
+  "dllSha256": "2da6dbc0baab8f5b9d86c95d76ddced1848ffb81ce6570e654a29b29f98d32a6",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "normalVisibleWindowOnDedicatedRunner": true,
+  "appPid": 4644,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 131224,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 393404,
+      "title": ""
+    },
+    {
+      "hwnd": 262456,
+      "title": "MSCTFIME UI"
+    },
+    {
+      "hwnd": 131262,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    6272
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 1116,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 1488,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 1892,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 2464,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6088,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6272,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\818c7b0ffe8647cd883d0a15960bdc6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 407842816,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5793492992,
+    "systemPhysicalPercent": 32.5
+  },
+  "ui": {
+    "state": "REAL_TAURI_DOCUMENT_ORIGINAL_IMPORT_EXTRACTION_RETRY_READ_SEARCH_REOPEN_AND_NATIVE_SAVE_PASSED",
+    "sessionId": "core-public-20261109",
+    "documents": [
+      {
+        "id": "9478e850-b768-4702-8962-7ff17b866f48",
+        "name": "material.docx",
+        "format": "docx",
+        "file": "document-913ebed8eb9877902d576eae-9478e850-b768-4702-8962-7ff17b866f48-e31c3694268ca199.docx",
+        "bytes": 37839,
+        "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+        "createdAt": 1794346327366,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-9478e850-b768-4702-8962-7ff17b866f48-82bd08dff2c1e88b.read.json",
+          "sha256": "82bd08dff2c1e88b7a53d9f91cb0876f54eea639f8c71990fe6df34b53878ad5",
+          "bytes": 717,
+          "characters": 96,
+          "readerVersion": "2026-11-11.1"
+        }
+      },
+      {
+        "id": "6d969c61-e52a-42ef-a633-50b655debc39",
+        "name": "material.xlsx",
+        "format": "xlsx",
+        "file": "document-913ebed8eb9877902d576eae-6d969c61-e52a-42ef-a633-50b655debc39-aaa25e00e633a671.xlsx",
+        "bytes": 5636,
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "createdAt": 1794346329044,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-6d969c61-e52a-42ef-a633-50b655debc39-5d3bedc699c3f90d.read.json",
+          "sha256": "5d3bedc699c3f90d45a9b92026797cd4967c1a8020dc0222ea20ecfdf9de9220",
+          "bytes": 1201,
+          "characters": 131,
+          "readerVersion": "2026-11-11.1"
+        }
+      },
+      {
+        "id": "f6a02c5e-ee9d-44a4-b826-0c725d02c0ab",
+        "name": "material.pptx",
+        "format": "pptx",
+        "file": "document-913ebed8eb9877902d576eae-f6a02c5e-ee9d-44a4-b826-0c725d02c0ab-87deffe929a19146.pptx",
+        "bytes": 2308,
+        "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+        "createdAt": 1794346330041,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-f6a02c5e-ee9d-44a4-b826-0c725d02c0ab-29157f6ab58f6709.read.json",
+          "sha256": "29157f6ab58f6709098c6f54f8d1515c8049c38440809403d5c4cd5f929975c9",
+          "bytes": 520,
+          "characters": 24,
+          "readerVersion": "2026-11-11.1"
+        }
+      },
+      {
+        "id": "54004751-0501-4cb4-a0bd-b141ad80e042",
+        "name": "chinese.pdf",
+        "format": "pdf",
+        "file": "document-913ebed8eb9877902d576eae-54004751-0501-4cb4-a0bd-b141ad80e042-703c7d8a5766b9e9.pdf",
+        "bytes": 2416,
+        "sourceSha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+        "createdAt": 1794346331042,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-54004751-0501-4cb4-a0bd-b141ad80e042-c7cf995f72d059a3.read.json",
+          "sha256": "c7cf995f72d059a3db4b6c7d8d33aedd9926b1c2e55e266f633a1fa6e99c0510",
+          "bytes": 390,
+          "characters": 28,
+          "readerVersion": "2026-11-11.1"
+        }
+      },
+      {
+        "id": "c8b32b5c-5c2a-421f-b884-bfa208df4574",
+        "name": "protected.pdf",
+        "format": "pdf",
+        "file": "document-913ebed8eb9877902d576eae-c8b32b5c-5c2a-421f-b884-bfa208df4574-40c0ac535f958f58.pdf",
+        "bytes": 2339,
+        "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+        "createdAt": 1794346332715,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-c8b32b5c-5c2a-421f-b884-bfa208df4574-d8bdcbc933b958ac.read.json",
+          "sha256": "d8bdcbc933b958ac723070eacfbcc9d323e608cabad21fbacf7f973636b97db6",
+          "bytes": 484,
+          "characters": 117,
+          "readerVersion": "2026-11-11.1"
+        }
+      },
+      {
+        "id": "11cb10e9-2f9f-4376-babe-d18c5d1225a2",
+        "name": "no-text.pdf",
+        "format": "pdf",
+        "file": "document-913ebed8eb9877902d576eae-11cb10e9-2f9f-4376-babe-d18c5d1225a2-e9841134c18e98b3.pdf",
+        "bytes": 1331,
+        "sourceSha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db",
+        "createdAt": 1794346334469
+      },
+      {
+        "id": "519804ef-c1ea-42f9-8bbb-ea796b435045",
+        "name": "material-gb.txt",
+        "format": "txt",
+        "file": "document-913ebed8eb9877902d576eae-519804ef-c1ea-42f9-8bbb-ea796b435045-0dc004541235573d.txt",
+        "bytes": 38,
+        "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+        "createdAt": 1794346335522,
+        "extraction": {
+          "file": "document-913ebed8eb9877902d576eae-519804ef-c1ea-42f9-8bbb-ea796b435045-b302e07da4dd41d4.read.json",
+          "sha256": "b302e07da4dd41d4ec6f218060542cd09d788292b87bc4a192624333a80f32eb",
+          "bytes": 292,
+          "characters": 21,
+          "readerVersion": "2026-11-11.1"
+        }
+      }
+    ],
+    "checkpoints": [
+      {
+        "step": "native-recent-notes-presentation",
+        "latestUpdatedFirst": true,
+        "createdOrderSelectable": true,
+        "oldLongNoteFoldedAndReversible": true,
+        "editLoadsCompleteSource": true,
+        "searchDisplaysCompleteMatchingNote": true
+      },
+      {
+        "step": "ordinary-reference-pane-routing",
+        "manualDraftRetainedAcrossDocumentReading": true,
+        "onlySelectedPaneVisible": true
+      },
+      {
+        "step": "document-cancel",
+        "actualNativePicker": "cancel"
+      },
+      {
+        "step": "document-import-material_docx",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-material.docx",
+        "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+        "characters": 96,
+        "warnings": [
+          "部分文档对象未能按原版呈现，请对照原件核对提取文字。",
+          "文字按文档结构提取，不对应Word页码；排版、修订和隐藏样式请以原件为准。"
+        ]
+      },
+      {
+        "step": "document-import-material_xlsx",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-material.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "characters": 131,
+        "warnings": [
+          "隐藏工作表没有纳入提取文字。",
+          "有 1 处公式没有已保存结果；本次没有运行或重算公式。",
+          "单元格使用原件保存的值和显示格式；公式、外部链接与宏不会运行。"
+        ]
+      },
+      {
+        "step": "document-import-material_pptx",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-material.pptx",
+        "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+        "characters": 24,
+        "warnings": [
+          "隐藏幻灯片没有纳入提取文字。",
+          "演讲者备注没有纳入本次幻灯片正文。",
+          "文字按幻灯片对象顺序提取，复杂排版请对照原件。"
+        ]
+      },
+      {
+        "step": "document-import-chinese_pdf",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-chinese.pdf",
+        "sourceSha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+        "characters": 28,
+        "warnings": [
+          "分栏、竖排和复杂排版请对照原件；本次没有识别图中文字。"
+        ]
+      },
+      {
+        "step": "document-import-protected_pdf",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-protected.pdf",
+        "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+        "characters": 117,
+        "warnings": [
+          "分栏、竖排和复杂排版请对照原件；本次没有识别图中文字。"
+        ]
+      },
+      {
+        "step": "document-import-no_text_pdf",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "document-import-material_gb_txt",
+        "actualNativePicker": "open"
+      },
+      {
+        "step": "native-material-gb.txt",
+        "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+        "characters": 21,
+        "warnings": []
+      },
+      {
+        "step": "extreme-row-number-readable",
+        "actualTextRange": {
+          "cellWidth": 77.609375,
+          "textRects": [
+            {
+              "width": 48.609375,
+              "height": 17
+            }
+          ]
+        }
+      },
+      {
+        "step": "native-structured-table-reading",
+        "savedLayoutPresent": true,
+        "rawTextExact": true,
+        "literalSearchMatched": true,
+        "ordinaryThemeScreens": true
+      },
+      {
+        "step": "document-save-original",
+        "actualNativePicker": "save"
+      },
+      {
+        "step": "ordinary-ai-drafts-document-notes-return",
+        "unconfiguredServiceNotCalled": true,
+        "questionDraftRetained": true
+      },
+      {
+        "step": "native-explicit-ai-source-scope",
+        "readyDocuments": 6,
+        "documentsUncheckedByDefault": true,
+        "noTextDocumentExcluded": true,
+        "unconfiguredServiceNotClaimedAsOnlineSuccess": true
+      },
+      {
+        "step": "preserved-installed089-desktop-input-entry",
+        "ordinaryDisconnectedEntryReadable": true,
+        "enableDisabledWithoutDevice": true,
+        "pasteModesSelectable": true,
+        "actualTauriStatusCommandUsed": true,
+        "physicalInputCaptureAsrPasteQualified": false
+      },
+      {
+        "step": "reopen-search-save-original",
+        "literalSearchMatched": true,
+        "originalSaveSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "originalTranscriptMinutesAndNotesUnchanged": true
+      }
+    ],
+    "modelCalls": 0,
+    "aiServiceCalls": 0,
+    "sourceAudioInvented": false,
+    "ownerDataUsed": false,
+    "wholeSaleQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": true,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": true,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-11T05:32:19+08:00"
+}

@@ -1,0 +1,310 @@
+{
+  "at": "2026-11-11T05:37:13+08:00",
+  "state": "WINDOWS098_ANDROID134_MEETING_REFERENCE_WORKSPACE_DELIVERED_PRIVATE_FULL_READBACK_IDENTICAL",
+  "versions": {
+    "windows": "0.1.98",
+    "android": "0.1.134"
+  },
+  "sources": {
+    "windows": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+    "android": "e8ffdd520e2aa6ac7484157a0a0c01b1abdbbc9b"
+  },
+  "windows": {
+    "normalBuild": 42901088770,
+    "matchedRuntime": 42905758641,
+    "runtimeToolSource": "2f43e643ba4f9f3510d6406afec065415c4b20a9",
+    "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows098\\windows-verification.json",
+    "runtime": {
+      "at": "2026-11-10T21:31:27.780349+00:00",
+      "state": "WINDOWS098_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
+      "testSourceCommit": "2f43e643ba4f9f3510d6406afec065415c4b20a9",
+      "appSourceCommit": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+      "appVersion": "0.1.98",
+      "nativeRecompiled": false,
+      "wholeCoreCandidateQualified": false,
+      "modelsRun": false,
+      "deviceOrPhoneAccess": false,
+      "exactMsiExeSha256": "406f765673464131edf2fcdb5c2617839687a1ade2bfe8114ed25c8e6a6e9f0b",
+      "exactMsiDllSha256": "2da6dbc0baab8f5b9d86c95d76ddced1848ffb81ce6570e654a29b29f98d32a6",
+      "frozenNativeBytesMatchedApprovedMsi": true,
+      "nativeUiExitCode": 0,
+      "nativeUiState": "REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED",
+      "documentBackendExitCode": 0,
+      "documentBackendState": "ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+      "newCloudOrAsrCalls": 0,
+      "finishedAt": "2026-11-10T21:32:21.906414+00:00",
+      "runtimeRun": 42905758641
+    },
+    "installation": {
+      "state": "WINDOWS098_INSTALLED_EXISTING_DATA_IDENTICAL",
+      "startedAt": "2026-11-11T05:34:16+08:00",
+      "candidateVersion": "0.1.98",
+      "previousInstalledVersion": "0.1.97",
+      "sourceCommit": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+      "msiSha256": "1f1349f49aefcb68cfea27bf267781e9800997664e0719676113287792a2b179",
+      "existingDataFiles": 245,
+      "dataContentsPrinted": false,
+      "installerExitCode": 0,
+      "finishedAt": "2026-11-11T05:34:20+08:00",
+      "dataManifestIdentical": true,
+      "installedVersion": "0.1.98",
+      "installedExeSha256": "406f765673464131edf2fcdb5c2617839687a1ade2bfe8114ed25c8e6a6e9f0b",
+      "installedDllSha256": "2da6dbc0baab8f5b9d86c95d76ddced1848ffb81ce6570e654a29b29f98d32a6",
+      "installedHelpStartupPassed": true,
+      "ordinaryThirdPartyPasteQualified": false,
+      "oldWinRTSharePickerFixed": false,
+      "modelsRun": false,
+      "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+    },
+    "privateInstaller": {
+      "at": "2026-11-11T05:25:29+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 733003516,
+      "fileName": "Companion-Windows-0.1.98-candidate.msi",
+      "msiSha256": "1f1349f49aefcb68cfea27bf267781e9800997664e0719676113287792a2b179",
+      "bytes": 16703700,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false,
+      "readback": {
+        "method": "four-bounded-official-CDN-range-readers",
+        "workers": 4,
+        "sections": 4,
+        "bufferBytesPerWorker": 131072,
+        "bytes": 16703700,
+        "sha256": "1f1349f49aefcb68cfea27bf267781e9800997664e0719676113287792a2b179",
+        "seconds": 3.5780000000086147,
+        "retainedTransientReads": [],
+        "authSentOnlyToGitHubApi": true,
+        "signedUrlOrTokenPersisted": false,
+        "routingModified": false
+      }
+    }
+  },
+  "android": {
+    "build": 42901113910,
+    "apkSha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221",
+    "nativeBackendUnchanged": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+    "installation": {
+      "at": "2026-11-11T05:08:19+08:00",
+      "state": "ANDROID134_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+      "sourceCommit": "e8ffdd520e2aa6ac7484157a0a0c01b1abdbbc9b",
+      "apkSha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221",
+      "existingFilesByteIdentical": 4390,
+      "mainUnchangedDuringInstall": true
+    },
+    "stableDraftAndSourceRouting": {
+      "at": "2026-11-10T21:09:41.062Z",
+      "actualVersion": "0.1.134",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID134_ORDINARY_REFERENCE_PANES_MANUAL_DRAFT_AI_QUESTION_AND_SOURCE_RETURN_PASSED",
+      "onlySelectedPaneVisible": true,
+      "manualDraftRetained": true,
+      "fullStoredNotesUnchanged": true,
+      "unsentAiQuestionRetained": true,
+      "aiRequests": 0
+    },
+    "recordingToolsEntry": {
+      "at": "2026-11-10T21:09:33.631Z",
+      "actualVersion": "0.1.134",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID134_ORDINARY_GROUPED_RECORDING_TOOLS_ENTRY_PASSED",
+      "readingPathInitiallyCollapsed": true,
+      "managementMarksAndAudioEditEntrancesRetained": true,
+      "businessActionInvoked": false
+    },
+    "notesReading": {
+      "at": "2026-11-10T21:09:37.921Z",
+      "actualVersion": "0.1.134",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID134_ACTUAL_ORDINARY_RECENT_ORDER_FOLD_EXPAND_FULL_ORIGINAL_EDIT_CANCEL_AND_LITERAL_SEARCH_PASSED",
+      "newTestNoteIds": [
+        "96c8b3dd-1cc2-40a5-93bf-083b30a50f52",
+        "49bf8a37-69f1-4604-ae72-a5f3410e5bbd"
+      ],
+      "storedBodiesUnchanged": true,
+      "searchHitFullAndHighlighted": true
+    },
+    "documents": {
+      "at": "2026-11-10T21:09:43.436Z",
+      "actualVersion": "0.1.134",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID134_ACTUAL_DOCUMENT_FOCUS_LIST_RETURN_MAX_ROW_SINGLE_LINE_AND_BOTH_THEMES_PASSED",
+      "rowShape": {
+        "rects": 1,
+        "textWidth": 52.76740646362305,
+        "cellWidth": 76.76570129394531,
+        "whiteSpace": "nowrap"
+      },
+      "viewport": {
+        "width": 391,
+        "document": 391,
+        "main": 391,
+        "client": 391
+      },
+      "reextraction": "Not repeated: exact known public133 cached grid retained; native parser/storage unchanged."
+    },
+    "closed": {
+      "at": "2026-11-11T05:11:53+08:00",
+      "state": "ANDROID134_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.134",
+      "toolSessionCode": 134,
+      "retainedNewPublicRestoreLibrary": "f5a6e984-98df-406f-9311-53e170c0eed7",
+      "preexistingFilesChecked": 4390,
+      "preexistingFilesByteIdentical": 4389,
+      "expectedIndexChange": true,
+      "authorizedPublicQaMetadataChanges": 0,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "newFilesOnlyInAuthorizedPublicSourceAndDeclaredRestoreLibraries": 55,
+      "newEmptyExistingStoreReadLocks": 0,
+      "publicOriginalMediaUnchanged": true,
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedTemporaryFiles": [
+        "companion-organization134-ui.jar"
+      ],
+      "manifestVerificationSeconds": 2.7190000000118744,
+      "ownerMainUnchangedDuringClose": true,
+      "ownerMainDisplayOperated": false,
+      "resumedVerifierAfterHandlesClosed": false,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false
+    },
+    "privateInstaller": {
+      "at": "2026-11-11T05:08:23+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "e8ffdd520e2aa6ac7484157a0a0c01b1abdbbc9b",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 732955108,
+      "fileName": "Companion-Android-0.1.134-core-candidate.apk",
+      "apkSha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221",
+      "bytes": 51159837,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false,
+      "readback": {
+        "method": "four-bounded-official-CDN-range-readers",
+        "workers": 4,
+        "sections": 13,
+        "bufferBytesPerWorker": 131072,
+        "bytes": 51159837,
+        "sha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221",
+        "seconds": 8.094000000011874,
+        "retainedTransientReads": [],
+        "authSentOnlyToGitHubApi": true,
+        "signedUrlOrTokenPersisted": false,
+        "routingModified": false
+      }
+    }
+  },
+  "customers": {
+    "presale": {
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit134\\customer-presale.md",
+      "sha256": "d6f1559a4895214b56b2dd1cab1aeeb75fa0421c8a1bf0ab2c42cd0df22083dc",
+      "fullRawRead": true,
+      "type": "Independent AI simulated presale FIRST_USE; no real order/customer",
+      "actual": "Self-chosen meeting preparation through minutes/raw+clean transcript, human notes/image, DOCX/XLSX; own full preparation memo saved, left and searched back to highlighted full note.",
+      "auxiliaryConditions": "Four public records; old visible human engineering notes materially assisted source interpretation; only the meaningful Chinese-titled record used. Extreme worksheet cells are a deliberately prepared public edge-case input.",
+      "remaining": "Manual linked evidence/follow-up card wish; saved source/model question noise and formal AI service/price remain unqualified.",
+      "notUsed": "No audio/ASR/online AI/hardware/import/export/global clipboard/share/long-term use qualification."
+    },
+    "afteruse": {
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit134\\customer-afteruse.md",
+      "sha256": "6b3ba3776fde768bc5d3cc3131976da98f556fd6126d9543be7ac46bd8516dd0",
+      "fullRawRead": true,
+      "type": "Independent AI simulated hypothetical after-purchase FIRST_USE; no real order/customer",
+      "actual": "Self-chosen meeting preparation through minutes/raw+clean transcript, human notes/image, DOCX/XLSX; own full preparation memo saved, left and searched back to highlighted full note.",
+      "auxiliaryConditions": "Four public records; old visible human engineering notes materially assisted source interpretation; only the meaningful Chinese-titled record used. Extreme worksheet cells are a deliberately prepared public edge-case input.",
+      "remaining": "Manual linked evidence/follow-up card wish; saved source/model question noise and formal AI service/price remain unqualified.",
+      "notUsed": "No audio/ASR/online AI/hardware/import/export/global clipboard/share/long-term use qualification."
+    }
+  },
+  "customerWorkspaceClosed": {
+    "at": "2026-11-11T05:27:39+08:00",
+    "state": "ANDROID134_FRESH_PUBLIC_CUSTOMER_WORKSPACES_CLOSED_OLD_CONTENT_PRESERVED",
+    "actualVersion": "0.1.134",
+    "preexistingFiles": 4445,
+    "preexistingFilesByteIdentical": 4444,
+    "onlyOldChangeLibraryIndex": true,
+    "allPreviousLibrariesRetained": true,
+    "newPublicLibraries": [
+      "a9c12bac-e058-4889-866f-e63c3ae39a00",
+      "5fe0fad7-8c06-4592-b7e7-c339b194dc2d"
+    ],
+    "newFilesOnlyInDeclaredPublicLibraries": 110,
+    "ownerMainDisplayOperated": false,
+    "ownedAppDisplayForwardJarClosed": true,
+    "publicTemporaryZipRemovedByExactSha": true,
+    "modelsCloudMicBleUsed": false,
+    "usbKeepAwakeUnchanged": true
+  },
+  "package": {
+    "at": "2026-11-11T05:34:31+08:00",
+    "state": "REFERENCE_WORKSPACE_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+    "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows098-android134.zip",
+    "bytes": 44302677,
+    "sha256": "e71502a95cfa17b4f1a5fbc0a768ae158be88d46fda47ecd90a2ec5622def954",
+    "files": [
+      {
+        "path": "firmware/companion-update.cup",
+        "bytes": 1360220,
+        "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+      },
+      {
+        "path": "firmware/ota_manifest.json",
+        "bytes": 1548,
+        "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+      },
+      {
+        "path": "macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      },
+      {
+        "path": "windows/Companion-Windows-0.1.98.msi",
+        "bytes": 16703700,
+        "sha256": "1f1349f49aefcb68cfea27bf267781e9800997664e0719676113287792a2b179"
+      },
+      {
+        "path": "android/Companion-Android-0.1.134.apk",
+        "bytes": 51159837,
+        "sha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221"
+      }
+    ],
+    "draftOnly": true,
+    "saleQualified": false,
+    "ownerPrivateDataUploaded": false,
+    "assetId": 733032530,
+    "readback": {
+      "method": "four-bounded-official-CDN-range-readers",
+      "workers": 4,
+      "sections": 11,
+      "bufferBytesPerWorker": 131072,
+      "bytes": 44302677,
+      "sha256": "e71502a95cfa17b4f1a5fbc0a768ae158be88d46fda47ecd90a2ec5622def954",
+      "seconds": 7.625,
+      "retainedTransientReads": [],
+      "authSentOnlyToGitHubApi": true,
+      "signedUrlOrTokenPersisted": false,
+      "routingModified": false
+    },
+    "finishedAt": "2026-11-11T05:34:54+08:00",
+    "readbackByteIdentical": true
+  },
+  "scope": "Stable separate notes/images, documents, and AI panes with ordinary source routing; hidden panes stay mounted, preserving unsaved note and unsent AI question. Mobile recording management/marks/editing grouped outside primary reading. Prior097/133 reading and096/132 native document storage plus095/131 editing scopes explicitly retained.",
+  "failuresRetained": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows098\\runtime-attempt1-classification.json"
+  ],
+  "efficiency": "One native candidate build/install per platform. First Windows UI attempt used an outdated direct-document locator after reload; repaired only ordinary test navigation and reused the identical MSI. Initial Android screenshot caught declared loading; ready-content frame separately captured, not treated as product failure.",
+  "modelCalls": 0,
+  "ownerPrivateDataUploaded": false,
+  "saleQualified": false,
+  "allNonmodelComplete": false
+}
