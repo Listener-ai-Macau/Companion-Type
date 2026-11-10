@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+(globalThis as any).document={activeElement:null,getElementById:()=>null};
+(globalThis as any).HTMLElement=class {};
+(globalThis as any).HTMLButtonElement=class extends HTMLElement {};
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
+const fixture=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+function recording(id:string,source:'importedAudio'|'derivedAudio'){
+ const row=structuredClone(fixture.host.sessions[0]);Object.assign(row,{id,title:id,source,status:'captured',transcriptText:'',transcriptPreview:'',transcriptFinal:false,utterances:[],meetingNotes:[],minutes:null,minutesByMode:{offlineStore:null,onlineLive:null},audioStored:true,audioBytes:32044,durationMs:1000,audioPath:'C:/explicit-generated-component-fixture/'+id+'.wav',pendingReason:'needs_transcription',captureIncomplete:false,recorderControlUncertain:false,recovery:{intent:'none',requestedMeetingMode:'offlineStore',stage:'idle',attemptCount:0,maxAttempts:3}});
+ row.retention.audioCached=true;return row;
+}
+const original=recording('audio-only-original','importedAudio'),child=recording('audio-only-derived','derivedAudio');
+const incomplete=recording('unfinished-audio','importedAudio');incomplete.captureIncomplete=true;
+const textOnly=recording('text-only','importedAudio');textOnly.audioStored=false;textOnly.retention.audioCached=false;
+const trashed=recording('trashed-audio','derivedAudio');trashed.organization={...trashed.organization!,trashedAt:'2026-11-11T00:00:00Z'};
+let snapshot=createCompanionV1Fixture();snapshot.host.sessions=[original,child,incomplete,textOnly,trashed];snapshot.host.selectedSessionId=original.id;snapshot.meeting.active=false;snapshot.device.recording=false;
+let captured:any;let renderer:any;
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},renderAudioEditor:(p:any)=>{captured=p;return <div/>;}});
+act(()=>{renderer=create(<CompanionDashboard {...props()}/>);});
+assert(captured,'audio-only details must expose editor before transcription');
+assert.deepEqual(captured.rows.filter((r:any)=>r.state==='COMPLETE').map((r:any)=>r.key).sort(),[original.id,child.id].sort(),'merging must include original and derived audio with no text, exclude incomplete/text-only/trash');
+assert.equal(captured.rows.find((r:any)=>r.key===original.id).title,original.title);
+snapshot=structuredClone(snapshot);snapshot.host.selectedSessionId=child.id;snapshot.host.sessions[1].audioStored=false;snapshot.host.sessions[1].retention.audioCached=false;captured=null;
+act(()=>renderer.update(<CompanionDashboard {...props()}/>));
+assert(captured,'audio-only cleanup must not remove the independent source-map entrance');
+assert.equal(captured.canEdit,false,'missing child audio disables new edits but preserves source lookup');
+act(()=>renderer.unmount());
+console.log('Actual Dashboard audio-only merge and audio-free source-entry regression passed; no native/audio/model/Owner data used.');

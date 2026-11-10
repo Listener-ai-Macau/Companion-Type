@@ -2684,8 +2684,8 @@ export function CompanionDashboard({
               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>
-          {renderAudioEditor&&!readingPreview&&hasOriginalAudio&&!selectedSession.captureIncomplete&&!selectedSession.recorderControlUncertain?
-            renderAudioEditor({contextId:selectedSession.id,title:selectedSession.title,rows:readableLibrary.map(row=>({key:row.id,title:row.title,state:row.audioStored&&row.retention.audioCached&&!row.captureIncomplete&&row.status!=='recording'?'COMPLETE':'INCOMPLETE'})),
+          {renderAudioEditor&&!readingPreview&&(hasOriginalAudio||selectedSession.source==='derivedAudio')&&!selectedSession.captureIncomplete&&!selectedSession.recorderControlUncertain?
+            renderAudioEditor({contextId:selectedSession.id,title:selectedSession.title,canEdit:hasOriginalAudio,rows:recordingLibrary.map(row=>({key:row.id,title:row.title,state:row.audioStored&&row.retention.audioCached&&!row.captureIncomplete&&!row.recorderControlUncertain&&row.status!=='recording'&&!['needs_device_sync','needs_local_audio','needs_segments'].includes(row.pendingReason??'')?'COMPLETE':'INCOMPLETE'})),
               busy:controlsBusy||storageBlocked||oobeBlockedByRecording||noteUnsaved||minutesDirty||titleDirty||transcriptReviewUnsaved,
               onChanged:onRefresh,onLibrary:()=>{setDetailSessionId(null);navigatePage('library');},onDirty:setAudioEditUnsaved,onSource:openEditSource}):null}
           {documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} openSource={documentSource} onChanged={onRefresh}/></div>:null}
