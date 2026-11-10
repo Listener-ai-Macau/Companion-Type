@@ -57,6 +57,7 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
     }
     let mut rows=snapshot.host.sessions.clone();let mut anchors=Vec::new();let mut imported_names=HashSet::new();
     for row in &rows {
+        if !row.document_context.is_empty(){anchors.push(super::document_context::owner_path(row,root).to_string_lossy().into_owned());}
         if row.source=="importedAudio" && row.audio_stored {
             let original=super::import_audio::verify_original(row,root)?;
             imported_names.insert(leaf(&original.to_string_lossy(),root)?.to_lowercase());

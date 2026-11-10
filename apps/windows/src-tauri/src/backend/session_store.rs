@@ -90,6 +90,7 @@ fn removes_private_data(old: &[CompanionV1HostSession], new: &[CompanionV1HostSe
         let Some(after) = new.iter().find(|after| after.id == before.id) else { return true; };
         (!before.transcript_text.is_empty() && after.transcript_text.is_empty())
             || before.meeting_notes.iter().any(|note| !after.meeting_notes.iter().any(|n| n.id == note.id && n.text == note.text))
+            || before.document_context.rows.iter().any(|document|!after.document_context.rows.iter().any(|next|next.id==document.id&&next.source_sha256==document.source_sha256))
             || (!before.live_transcript_text.is_empty() && after.live_transcript_text.is_empty())
             || (before.minutes.is_some() && after.minutes.is_none())
             || (before.minutes_by_mode.offline_store.is_some() && after.minutes_by_mode.offline_store.is_none())
@@ -195,6 +196,7 @@ fn save_locked(
                 next.note_revision < row.note_revision || (next.note_revision == row.note_revision && next.meeting_notes != row.meeting_notes)) {
                 return Err("磁盘中的会议备注已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());
             }
+            if sessions.iter().find(|s|s.id==row.id).is_some_and(|next|next.document_context.revision<row.document_context.revision||next.document_context.revision==row.document_context.revision&&next.document_context!=row.document_context){return Err("磁盘中的文档材料已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());}
         }
     }
     if privacy_change {
@@ -224,6 +226,7 @@ pub(crate) fn privacy_authorization(row: &CompanionV1HostSession) -> Result<(Str
         "minutes":row.minutes,"minutesByMode":row.minutes_by_mode,"organization":row.organization
     });
     // Preserve the historical authorization digest for ordinary sessions.
+    if !row.document_context.is_empty(){value.as_object_mut().unwrap().insert("documentContext".into(),serde_json::to_value(&row.document_context).map_err(|_|"材料清理身份无法核对。")?);}
     if let Some(tracks) = &row.meeting_tracks {
         value.as_object_mut().unwrap().insert("meetingTracks".into(),
             serde_json::to_value(tracks).map_err(|e| format!("核对录音音轨失败：{e}"))?);

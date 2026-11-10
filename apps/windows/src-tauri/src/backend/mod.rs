@@ -3020,7 +3020,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     }
                 }
                 }
-                privacy_report = Some(self.privacy.erase_selected_audio(&snapshot));
+                privacy_report = Some(self.privacy.erase_selected_recording(&snapshot));
             }
             CompanionV1ControlAction::PrivacyEraseAll => {
                 privacy_report = Some(self.privacy.erase_all_audio(&snapshot));

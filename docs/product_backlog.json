@@ -132987,7 +132987,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T18:51:41+08:00",
+      "updatedAt": "2026-11-10T19:10:22+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133729,7 +133729,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "当前389长录17:49失败且Owner选择稍后接回，先保留原库28段与未知实卡状态，不开新录音；已提交Windows089复用Listener文字交付，完成同源候选安装包后，在原设备恢复并空闲的条件下验实体按住说话→本机保存→现有识别→编辑器。手机127完整实卡链、最终2h和IMU自然拿起/携带/误触、真实Mac沿原四组继续；原block/后置不重开。",
+      "next": "Windows089同源安装包已构建并核对，原生离线入口通过；原389接回被Owner选择稍后，当前无长录/接收/升级作业，保留28段本机原件与未知实卡状态。接回后先原389收尾，再集中验手机127完整实卡恢复、匹配最终长录、IMU自然拿起/携带/误触与电脑按住说话（Windows089及真实Mac），不重开原block/后置项。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134263,8 +134263,8 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "无当前长录/接收作业；原389接回收尾等待Owner。继续完成Windows089同源可用候选与Listener复用，不碰板卡或手机，不以模拟客户/源码编译关闭实机链。",
-        "lastUpdatedAt": "2026-11-10T18:51:41+08:00",
+        "currentExecutable": "已完成可后台推进的Windows089可用候选；下一最高动作是原389接回收尾，当前Owner选择稍后。当前仍装088，不再重复构建或以离线UI通过冒充实体链。",
+        "lastUpdatedAt": "2026-11-10T19:09:03+08:00",
         "lastOwnerRaw": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
@@ -134348,7 +134348,7 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-10T18:51:41+08:00",
+        "at": "2026-11-10T19:10:22+08:00",
         "firmware": 66788,
         "coreDelivery": "WINDOWS088_ANDROID127_INSTALLED_INPUT089_SOURCE_CANDIDATE_FULL_CHAIN_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
@@ -134504,8 +134504,8 @@
               "CP15-09",
               "CP15-02"
             ],
-            "status": "WINDOWS089_IMPLEMENTED_BUILDING_MAC_CANDIDATE_REAL_HOST_CHAIN_PENDING",
-            "remaining": "原CP15-09同时承接已发现的Windows入口缺口：089复用Listener交付与现有原音/ASR，当前源码和本机受影响检查通过，安装包在构建；实体Windows与Mac BLE/权限/识别/编辑器链仍未完整资格。可选高级手势/空鼠继续后置。",
+            "status": "WINDOWS089_BUILT_OFFLINE_IPC_PASS_REAL_WINDOWS_MAC_CHAIN_PENDING",
+            "remaining": "Windows089/1025b4bd同源MSI已构建、源/包/资源核对通过，实际隔离窗口的新入口与原生IPC通过；实体Windows按住说话→BLE原音→现有识别→编辑器及真实Mac链尚未取得资格。原音/文字落普通录音库的实现已接通，未以编译或离线界面代替实际说话体验。",
             "type": "Host application integration and actual-device qualification; distinct from current MCU basic recorder"
           }
         ],
@@ -134522,14 +134522,18 @@
         "phoneOrdinaryColdEvidenceVersion": "0.1.124",
         "phoneOrdinaryColdPriorUnchangedNativePass": true,
         "currentCandidateArchive": {
-          "path": "E:\\CodexData\\Companion\\deliveries\\20261110-core088-android127.zip",
-          "bytes": 38640175,
-          "sha256": "b1b8dcbc43f45db3fcdedde16b4cad93305cd281855ec9e56104d244b1ea863a"
+          "path": "E:\\CodexData\\Companion\\deliveries\\20261110-core089-android127-candidate.zip",
+          "bytes": 38826783,
+          "sha256": "437a400c22f13f49c976ccc6497cd7b76aee40e22aa62770d67caf5d6f8fce93"
         },
         "windowsDesktopInputCandidate": "0.1.89",
         "windowsDesktopInputCandidateSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
         "windowsDesktopInputCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
-        "windowsDesktopInputPhysicalQualified": false
+        "windowsDesktopInputPhysicalQualified": false,
+        "windowsDesktopInputCandidateBuilt": true,
+        "windowsDesktopInputCandidateInstalled": false,
+        "desktopInput089PackageReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\candidate-current089-phone127.json",
+        "desktopInput089OfflineUiPassed": true
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136691,8 +136695,8 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-10T18:51:41+08:00",
-        "state": "ORIGINAL389_RECOVERY_DEFERRED_INPUT089_CANDIDATE_BUILD",
+        "at": "2026-11-10T19:10:22+08:00",
+        "state": "INPUT089_CANDIDATE_PACKAGED_NO_ACTIVE_DEVICE_WORK",
         "phoneInstalled": "0.1.127",
         "firmwareInstalled": 66788,
         "phoneSourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
@@ -136769,7 +136773,7 @@
         "candidateWindows": "0.1.86",
         "installedWindows": "0.1.88",
         "installedWindowsSource": "d9aec243aa29d1d170d626937736012afe27a8ee",
-        "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-core088-android127.zip",
+        "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-core089-android127-candidate.zip",
         "phoneOrdinaryColdMs": 2294.699999988079,
         "preparedObserver": 66789,
         "preparedNormalReturn": 66790,
@@ -136790,19 +136794,17 @@
         "installedPhone": "0.1.127",
         "functionalLongControllerPid": null,
         "functionalLongFinishPid": null,
-        "actualPhysicalRecordingState": "UNKNOWN_AFTER_HOST_EXIT_OWNER_DEFERRED_RECONNECT",
+        "actualPhysicalRecordingState": "UNKNOWN_AFTER_ORIGINAL389_HOST_EXIT_OWNER_DEFERRED_RECONNECT",
         "lastObservedSession": 389,
         "input089Source": "1025b4bdf81d9fe814baa872ee537415509e0f01",
-        "input089BuildRun": {
-          "conclusion": "",
-          "databaseId": 42802045850,
-          "headSha": "1025b4bdf81d9fe814baa872ee537415509e0f01",
-          "status": "in_progress",
-          "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42802045850"
-        },
+        "input089BuildRun": 42802045850,
         "input089Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
         "input089Installed": false,
-        "original389RecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovery-state.json"
+        "original389RecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovery-state.json",
+        "input089Built": true,
+        "windowsDesktopInputInstalled": false,
+        "input089BuildCompleted": true,
+        "input089UiProcessRunning": false
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -142921,7 +142923,7 @@
         "closedAt": "2026-11-10T17:55:02+08:00"
       },
       "listenerReuseReview": {
-        "at": "2026-11-10T18:51:41+08:00",
+        "at": "2026-11-10T19:10:22+08:00",
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\listener-reuse-and-product-scope.json",
         "originalTasks": [
           "CP15-09",
@@ -142938,7 +142940,18 @@
         "windowsDesktopDictationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
         "candidateInstalled": false,
         "actualReuse": "Pinned Listener5a51c8d text insertion/selection/IME adapter, wrapped as companion-desktop-input; existing exact receive/library/ASR reused. No device driver/model/recording app fork and no firmware growth.",
-        "actualGaps": "Windows physical held capture/BLE/original/provider/editor not qualified; real Mac remains pending. No optional advanced gesture prerequisites added."
+        "actualGaps": "Windows physical held capture/BLE/original/provider/editor not qualified; real Mac remains pending. No optional advanced gesture prerequisites added.",
+        "candidateBuilt": true,
+        "candidateInstaller": "E:\\CodexData\\Companion\\.build-cache\\desktop-input089\\Companion-Windows-0.1.89-candidate.msi",
+        "candidateInstallerSha256": "c91c0c9205e3b3323a89378d71772bc997e8c6a0256ae88e8110554c0a97635d",
+        "offlineNativeUiIpcPassed": true,
+        "candidateArchive": {
+          "path": "E:\\CodexData\\Companion\\deliveries\\20261110-core089-android127-candidate.zip",
+          "bytes": 38826783,
+          "sha256": "437a400c22f13f49c976ccc6497cd7b76aee40e22aa62770d67caf5d6f8fce93"
+        },
+        "candidateBuiltAndPackageInspected": true,
+        "ownerDesktopOrClipboardUsed": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -268388,8 +268401,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T18:54:51+08:00",
-            "status": "DOCUMENT_ORIGINAL_READING_AND_EXPLICIT_AI_SOURCE_NATIVE_UI_IMPLEMENTATION_WIP",
+            "at": "2026-11-10T19:12:23+08:00",
+            "status": "DOCUMENT_CONTEXT_COMPLETE_NATIVE_UI_CANDIDATES_REMOTE_BUILD_PENDING",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268397,18 +268410,21 @@
               "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document-reader-offline-final.json",
               "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document-native-storage.json"
             ],
-            "checked": "共享Office/PDF实际生产worker与离线中文字表、密码/权限/取消；Android原件/提取文字真实JVM存储、重试、实际备份恢复、保留已移除原件及精确清除；双端UI类型与前端构建通过。Windows新原生语法检查通过，完整Rust编译/受影响测试及原生打包/实际界面验收尚未完成。",
+            "checked": "双端已接原件/分块读取/可取消后台提取/保存阅读/重试/另存原件/材料显式AI选择与来源回找；共享Office/PDF/离线中文/密码权限检查及受影响UI、Android原件与提取文字真实备份恢复/精确清除通过。Windows材料独立归属会议，音频清理与完整会议删除分开；完整Rust编译与对应测试及候选实际界面验收待本轮作业。",
             "failuresRetained": [
               "SheetJS默认丢掉没有保存结果的公式，启用stub并识别t=z的合成0，不能当作公式结果。",
               "HTML纯文字投影保留段落间空行，工程检查断言修正，不改变原件。",
               "saxes npm包未附完整LICENSE，从作者v6.0.0标签取得3011字节原文并加入既有材料；初次下载SSL失败后官方GitHub API成功。",
-              "新增中文CID PDF在独立worker中无文字，查明PDF.js默认DOM binary factory依赖document.baseURI；显式useWorkerFetch并停用页面渲染后本地CMap读取通过。纯文字读取不随包分发可选Liberation TTF或图像WASM；系统字体模式及所有本地资源请求通过。"
+              "新增中文CID PDF在独立worker中无文字，查明PDF.js默认DOM binary factory依赖document.baseURI；显式useWorkerFetch并停用页面渲染后本地CMap读取通过。纯文字读取不随包分发可选Liberation TTF或图像WASM；系统字体模式及所有本地资源请求通过。",
+              "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "完成本批受影响UI检查与原生Windows编译，再集中Android128/Windows088候选打包，验普通入口原件/提取阅读/主动AI引用/来源回找/备份恢复/移除清除；不把源码当交付。",
+            "next": "等待本批匹配Windows088/Android128原生构建；失败先修实际原因，成功后验证匹配候选原件/提取阅读/主动AI引用/来源回找及备份恢复和清除，再一并打包与远端保护。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
-            "saleQualified": false
+            "saleQualified": false,
+            "windowsVersion": "0.1.88",
+            "androidVersion": "0.1.128"
           }
         }
       },

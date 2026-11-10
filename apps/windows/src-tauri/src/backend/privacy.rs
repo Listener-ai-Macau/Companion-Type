@@ -16,9 +16,10 @@ fn session_audio_paths(session: &CompanionV1HostSession) -> impl Iterator<Item =
 /// index when capture stopped unexpectedly. Only the selected recording is
 /// checkpointed for deletion; retained sessions are used solely to protect it.
 fn cleanup_audio_paths<'a>(sessions: impl Iterator<Item = &'a CompanionV1HostSession>,
-    checkpoint: bool) -> Result<Vec<String>, String> {
+    checkpoint: bool,documents:bool) -> Result<Vec<String>, String> {
     let mut paths = Vec::new();
     for session in sessions {
+        if documents&&!session.document_context.is_empty(){paths.push(super::document_context::owner_path(session,&super::audio_storage::recording_root()?).to_string_lossy().into_owned());}
         if checkpoint && session.source=="importedAudio" && session.audio_stored {
             let original=super::import_audio::original_chunk(session)?;
             if let Some(_path)=original.path.as_deref().filter(|path|std::path::Path::new(path).exists()) {
@@ -178,6 +179,12 @@ impl PrivacyManager {
     }
 
     pub fn erase_selected_audio(&self, snapshot: &CompanionV1Snapshot) -> PrivacyEraseReport {
+        self.erase_selected(snapshot,false)
+    }
+    pub fn erase_selected_recording(&self,snapshot:&CompanionV1Snapshot)->PrivacyEraseReport{
+        self.erase_selected(snapshot,true)
+    }
+    fn erase_selected(&self,snapshot:&CompanionV1Snapshot,documents:bool)->PrivacyEraseReport{
         let mut report = PrivacyEraseReport::default();
         let mut seen = HashSet::new();
         let Some(selected_id) = snapshot.host.selected_session_id.as_ref().filter(|id| {
@@ -190,10 +197,10 @@ impl PrivacyManager {
             report.failed_files = 1;
             return report;
         };
-        let retained_paths = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id != selected_id), false) {
+        let retained_paths = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id != selected_id), false,true) {
             Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
         };
-        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id == selected_id), true) {
+        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id == selected_id), true,documents) {
             Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
         };
         if !self.erase_cache(snapshot, false, &sources, &retained_paths, &mut report) { return report; }
@@ -215,7 +222,7 @@ impl PrivacyManager {
         let mut report = PrivacyEraseReport::default();
         let mut seen = HashSet::new();
         let protected = HashSet::new();
-        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter(), true) {
+        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter(), true,true) {
             Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
         };
         if !self.erase_cache(snapshot, true, &sources, &[], &mut report) { return report; }

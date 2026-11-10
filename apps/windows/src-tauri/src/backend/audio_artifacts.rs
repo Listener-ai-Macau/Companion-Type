@@ -29,6 +29,7 @@ pub(crate) enum Purpose {
     NotePreview,
     DocumentOriginal,
     DocumentText,
+    DocumentOwner,
 }
 impl Purpose {
     pub(super) fn accepts(self, path: &Path) -> bool {
@@ -46,6 +47,7 @@ impl Purpose {
             Self::NotePreview => ext.eq_ignore_ascii_case("jpg"),
             Self::DocumentOriginal => ["pdf","docx","xlsx","pptx","txt","md","csv"].iter().any(|allowed|ext.eq_ignore_ascii_case(allowed)),
             Self::DocumentText => ext.eq_ignore_ascii_case("json"),
+            Self::DocumentOwner => ext.eq_ignore_ascii_case("json"),
             _ => ext.eq_ignore_ascii_case("wav"),
         }
     }
@@ -507,8 +509,15 @@ impl Drop for WriteLease {
 /// Finish the exact product-owned raster left after an interrupted note save.
 /// The current user-selected image must reproduce its bytes; no unknown file,
 /// different owner, deletion-in-progress or conflicting saved identity is adopted.
+/// Read-only verification of an independently owned immutable context root.
+pub(crate) fn verify_owned_leaf(path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
+    let root=managed_root(path).ok_or_else(fail)?;let leaf=path.file_name().and_then(|v|v.to_str()).filter(|v|component(v)).ok_or_else(fail)?;
+    let _lock=lock(&root)?;let data=load(&root)?;let key=reference_key(path)?;let expected=Identity{bytes,sha256:sha.into()};
+    let item=data.files.iter().find(|item|item.file==leaf).ok_or_else(fail)?;
+    if item.purpose!=purpose||item.phase!=Phase::Sealed||!item.sources.contains(&key)||item.identity.as_ref()!=Some(&expected)||fingerprint(path)?.as_ref()!=Some(&expected){return Err(fail());}Ok(())
+}
 pub(crate) fn seal_note_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
-    if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview|Purpose::DocumentOriginal|Purpose::DocumentText)||!purpose.accepts(path){return Err(fail());}
+    if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview|Purpose::DocumentOriginal|Purpose::DocumentText|Purpose::DocumentOwner)||!purpose.accepts(path){return Err(fail());}
     let root=managed_root(path).ok_or_else(fail)?;let leaf=path.file_name().and_then(|v|v.to_str()).filter(|v|component(v)).ok_or_else(fail)?;
     let _lease=lease(&root,leaf)?;let _lock=lock(&root)?;let mut data=load(&root)?;let owner=reference_key(source)?;
     let expected=Identity{bytes,sha256:sha.into()};let item=data.files.iter_mut().find(|i|i.file==leaf).ok_or_else(fail)?;

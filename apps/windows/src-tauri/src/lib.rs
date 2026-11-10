@@ -557,6 +557,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-note-request" => Some((i,4)),
         "--meeting-image-note-request" => Some((i,17)),
         "--meeting-note-image-preview" => Some((i,18)),
+        "--meeting-document-request" => Some((i,19)),
         "--meeting-speakers-request" => Some((i,5)),
         "--device-connect-request" => Some((i,6)),
         "--library-organize-request" => Some((i,7)),
@@ -694,6 +695,24 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
             let data=backend::content_export::materialize(&session.title,export)?;
             backend::export::write_atomic(Path::new(destination), &data)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
+        } else if operation==19 {
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
+            struct DocumentRequest{action:String,session_id:String,#[serde(default)]revision:u64,document_id:Option<String>,source_path:Option<PathBuf>,offset:Option<u64>,extraction:Option<backend::document_context::Extraction>}
+            let request:DocumentRequest=serde_json::from_reader(file).map_err(|_|"文档材料请求格式不正确。")?;
+            let result=if matches!(request.action.as_str(),"import"|"commit"|"remove"){
+                let change=match request.action.as_str(){"import"=>backend::document_context::Change::Import(request.source_path.ok_or("所选原件路径缺失。")?),"commit"=>backend::document_context::Change::Commit(request.extraction.ok_or("提取文字缺失。")?),_=>backend::document_context::Change::Remove};
+                serde_json::to_value(coordinator.change_document_context(backend::document_context::Request{session_id:request.session_id,document_id:request.document_id.ok_or("材料标识缺失。")?,expected_revision:request.revision,change})?).map_err(|_|"材料保存结果无法读取。")?
+            }else{
+                let snapshot=coordinator.snapshot()?;let row=snapshot.host.sessions.iter().find(|r|r.id==request.session_id).ok_or("这场会议已不存在。")?;
+                match request.action.as_str(){
+                    "list"=>serde_json::to_value(backend::document_context::describe(row)?).map_err(|_|"材料目录无法读取。")?,
+                    "chunk"=>backend::document_context::chunk(row,request.document_id.as_deref().ok_or("材料标识缺失。")?,request.revision,request.offset.ok_or("读取位置缺失。")?)?,
+                    "read"=>serde_json::to_value(backend::document_context::extraction(row,request.document_id.as_deref().ok_or("材料标识缺失。")?,request.revision)?).map_err(|_|"材料文字无法读取。")?,
+                    "original"=>{backend::document_context::save_original(row,request.document_id.as_deref().ok_or("材料标识缺失。")?,request.revision,Path::new(destination))?;println!("meeting_workspace_result=EXPORTED_LOCAL_DOCUMENT_ORIGINAL");return Ok(());},
+                    _=>return Err("不支持的文档材料操作。".into()),
+                }
+            };
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|_|"材料结果无法保存。")?)?;println!("meeting_workspace_result=LOCAL_DOCUMENT_OPERATION_COMPLETED");
         } else if operation==17 {
             let request:backend::meeting_note_images::Request=serde_json::from_reader(file).map_err(|_|"图片备注请求格式不正确。")?;let id=request.session_id.clone();let snapshot=coordinator.save_meeting_image_note(request)?;let session=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("图片备注保存结果缺失。")?;
             backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({"result":"SAVED_LOCAL_IMAGE_NOTE","session":session,"persistenceStatus":snapshot.host.persistence.status,"nativePickerAcceptance":"NOT_RUN"})).map_err(|_|"图片备注结果无法保存。")?)?;println!("meeting_workspace_result=SAVED_LOCAL_IMAGE_NOTE");

@@ -11,7 +11,7 @@ function run(name,args){
 (async()=>{try{
  run('windows-typecheck',[path.join(root,'node_modules/typescript/bin/tsc'),'--project',path.join(root,'apps/windows/tsconfig.json'),'--noEmit']);
  const cache=path.join(root,'.cache/core-meeting-ui');fs.mkdirSync(cache,{recursive:true});
- for(const name of ['test_content_export_panel051','test_selected_content_copy','test_action_review_tools','test_windows_note_images']){
+ for(const name of ['test_content_export_panel051','test_selected_content_copy','test_action_review_tools','test_windows_note_images','test_document_context_panel']){
   const output=path.join(cache,name+'.mjs');await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:output,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'}});
   run(name,['--import',require('node:url').pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,output]);
  }

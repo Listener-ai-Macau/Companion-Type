@@ -9,7 +9,8 @@ type Props={contextId:string;contextVersion:string;title:string;scopes:AiScope[]
  onAsk:(question:string,ids:string[],jobId:string,resume?:AiAnswer,purpose?:string)=>Promise<AiAnswer>;onCancel?:(jobId:string)=>Promise<boolean>;
  onSave:(value:AiSave)=>Promise<AiMaterial|void>;onLoadSaved:()=>Promise<AiMaterial[]>;onOpenSource:(id:string,quote:string)=>void;onSetup:()=>void;onCopy?:(text:string)=>Promise<void>};
 const suggestions=[['跟进草稿','请整理本次会议需要跟进的事项、已明确的负责人和时间。保留未确认事项，不补造承诺。'],['整理周报','请按进展、已作决定、风险和下一步整理所选会议，保留重要数字和原文依据。'],['客户简报','请从所选会议中提取适合向客户说明的结论、已确认事项及还需确认的问题。不要补造承诺。']] as const;
-function bodyFor(result:AiAnswer,purpose='会议问答'){const facts=result.items.map(item=>'• '+item.text).join('\n\n');
+function bodyFor(result:AiAnswer,purpose='会议问答'){const supplemented=result.items.some(item=>item.citation.sessionId.startsWith('document:'));const facts=result.items.map(item=>'• '+(supplemented?(item.citation.sessionId.startsWith('document:')?'【人工补充材料】':'【会议转写】'):'')+item.text).join('\n\n');
+ if(supplemented){if(purpose==='跟进草稿')return '您好，\n\n根据所选会议转写与补充材料，以下内容需要继续核对：\n\n'+facts+'\n\n材料中的计划不代表会议已作决定；请核对来源、负责人和时间。';if(purpose==='整理周报')return '资料周报（草稿）\n\n相关进展与待核对内容：\n\n'+facts+'\n\n请分别核对会议原话与人工材料，不把材料中的计划当作已作决定。';if(purpose==='客户简报')return '资料简报（草稿）\n\n'+facts+'\n\n请分别核对会议与材料来源；未确认安排不作为承诺。';return facts;}
  if(purpose==='跟进草稿')return '您好，\n\n根据本次会议，以下事项需要继续跟进：\n\n'+facts+'\n\n请核对以上安排；尚未明确的负责人和时间，请进一步确认。';
  if(purpose==='整理周报')return '会议周报（草稿）\n\n相关进展与下一步：\n\n'+facts+'\n\n待核对：请确认各事项的负责人、时间与实际进度。';
  if(purpose==='客户简报')return '会议简报（草稿）\n\n'+facts+'\n\n以上内容需结合原话核对；未明确的事项不作为承诺。';return facts;}
