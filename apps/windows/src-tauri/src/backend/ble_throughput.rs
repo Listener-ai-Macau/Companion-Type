@@ -357,6 +357,32 @@ pub(super) fn trace_native_link(
         chrono::Utc::now().timestamp_micros());
 }
 
+impl TransferPreference {
+    /// A pre-connection request can be accepted while the newly active link
+    /// still uses60ms. Refresh once on that real link before GATT discovery;
+    /// requests at15ms or faster are retained without another operation.
+    pub(super) fn refresh_connected_setup(&mut self) {
+        let (interval,_,_)=observed_parameters(&self.device);
+        if !interval.is_some_and(|i|i>12) {return;}
+        eprintln!("BLE setup_preference_refresh before_interval_units={interval:?} once=1");
+        if let Some(old)=self.request.take() {
+            if let Err(error)=old.Close() {
+                self.request=Some(old);
+                eprintln!("BLE setup_preference_refresh refreshed=0 close_error={error}");return;
+            }
+        }
+        let result=BluetoothLEPreferredConnectionParameters::ThroughputOptimized()
+            .and_then(|parameters|self.device.RequestPreferredConnectionParameters(&parameters));
+        match result {
+            Ok(request)=>{
+                trace_native_link(&self.device,self.scope,"connected_setup_refresh",Some(&request));
+                self.request=Some(request);
+            }
+            Err(error)=>eprintln!("BLE setup_preference_refresh refreshed=0 request_error={error}"),
+        }
+    }
+}
+
 impl Drop for TransferPreference {
     fn drop(&mut self) {
         let observer_registered = self.parameter_token.is_some();

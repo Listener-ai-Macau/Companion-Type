@@ -2758,6 +2758,10 @@ async fn connect_known_native_device_setup_observed(mut device: NativeDevice,syn
             .map_err(|err| format!("connect BLE device {device_id}: {err}"))?;
         eprintln!("BLE connection_setup phase=connect elapsed_ms={}", connect_begun.elapsed().as_millis());
     }
+    #[cfg(windows)]
+    if intent==ConnectionIntent::Normal {
+        if let Some(preference)=setup_preference.as_mut() {preference.refresh_connected_setup();}
+    }
     let discovery_begun = StdInstant::now();
     let discovery = async {
         // Product callers use characteristic operations and WinRT's CCCD API,
