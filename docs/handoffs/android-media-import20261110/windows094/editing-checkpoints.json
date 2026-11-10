@@ -1,0 +1,40 @@
+[
+  {
+    "step": "unsaved-edit-navigation-retains-input"
+  },
+  {
+    "step": "ordinary-save",
+    "names": [
+      "公开验收093 · 裁剪15秒"
+    ],
+    "ids": [
+      "edit-50c61936deac48df8dfe140692904cfb"
+    ]
+  },
+  {
+    "step": "ordinary-save",
+    "names": [
+      "公开验收093 · 全场切分 · 第1段",
+      "公开验收093 · 全场切分 · 第2段"
+    ],
+    "ids": [
+      "edit-c199d46ffba3486887cb2852bc4584f3",
+      "edit-1c761706d0884dc8880236977a7a7e25"
+    ]
+  },
+  {
+    "step": "ordinary-save",
+    "names": [
+      "公开验收093 · 重排合并8秒"
+    ],
+    "ids": [
+      "edit-e286ab8b2fa2426ba956cd0ea002e418"
+    ]
+  },
+  {
+    "step": "reopen-and-native-validated-original-position",
+    "sourceSessionId": "edit-50c61936deac48df8dfe140692904cfb",
+    "positionMs": 5000,
+    "physicalListeningQualified": false
+  }
+]

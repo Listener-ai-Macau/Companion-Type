@@ -23,6 +23,7 @@ else:
  assert win["sourceCommit"]==runtime["appSourceCommit"]==installed["sourceCommit"]
  assert installed["dataManifestIdentical"] and installed["installedExeSha256"]==win["embeddedExeSha256"] and installed["installedDllSha256"]==win["dllSha256"]
  assert phone["ownerOriginalContentByteIdentical"] and phone["ownAppDisplayForwardAndExactTemporaryFilesClosed"]
+ customer=json.loads((C/"customer-edit131/end-session.json").read_text(encoding="utf8"));assert customer["ownedAppDisplayForwardJarClosed"] and customer["onlyOldChangeLibraryIndex"] and customer["allPreviousLibrariesRetained"]
  assert sha(Path(win["msi"]))==win["msiSha256"] and sha(Path(apk["apk"]))==apk["apkSha256"]
  base=Path("E:/CodexData/Companion/deliveries/20261110-companion-core-windows091-android129.zip")
  base_sha="a86747698f8e868901cbf6b0cc600620f50f3af9357e560ae7a1a00ebf286824";assert sha(base)==base_sha
@@ -49,6 +50,8 @@ else:
   z.writestr("SHA256SUMS.txt","".join(f["sha256"]+"  "+f["path"]+"\n" for f in files))
   evidence=["windows094/windows-verification.json","windows094/runtime-result.json","windows094/runtime-backend-result.json","windows094/installation.json","windows094/source-freeze.json","android131/build-result.json","android131/editing-control-final.json","android131/editing-control-pcm.json","android131/end-session.json","android130/editing-backup-bytes.json","android130/editing-split-merge-pcm.json"]
   for name in evidence:z.write(C/name,"evidence/"+name)
+  for name in ["customer-presale.md","customer-afteruse.md","customer-presale-dispatch.txt","customer-afteruse-dispatch.txt","end-session.json"]:
+   z.write(C/"customer-edit131"/name,"evidence/customer-edit131/"+name)
   z.writestr("README.txt","Companion 核心录音编辑验收候选\nWindows 0.1.94 / Android 0.1.131\n\n通过覆盖更新保留原有资料，不卸载、不清数据。详情内可裁剪、按时间切分或重排合并完整本机音频，另存独立录音。成品保留原音范围；旧原件、转写和纪要不变。成品使用16kHz单声道本机格式，不把多场会议当成连续发生。重新转写与AI整理需另行主动操作，本批没有调用模型或云AI。\n\n处理中可停止剩余片段，已保存部分保留；中断后核对任务并只重试未完成片段。完整资料库备份包含原音及来源映射。移入回收站可恢复，永久清除只删除所选记录的归属文件。\n\nmanifest.json 与 evidence/ 记录实际源码、校验和及验收范围。保留的固件仍为前批开发候选，Mac仍为adhoc候选，本轮未重新实物/Mac验收。正式签名/渠道、实际服务、模型与实物长期资格仍沿原任务，本包不是公开售卖批准。不含Owner录音、私人库索引、访问令牌或签名密钥。\n")
  with zipfile.ZipFile(temp) as z:
   assert z.testzip() is None
