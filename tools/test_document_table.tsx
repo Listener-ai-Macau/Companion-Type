@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
 import React from 'react';
 import {act,create,type ReactTestRenderer} from 'react-test-renderer';
 import * as XLSX from 'xlsx';
@@ -16,7 +19,8 @@ const parts=unzipSync(new Uint8Array(XLSX.write(book,{type:'array',bookType:'xls
 parts['xl/worksheets/sheet1.xml']=strToU8(strFromU8(parts['xl/worksheets/sheet1.xml']).replace('ref="A1:C3"','ref="A1:XFD1048576"').replace('</sheetData>','<row r="1048576"><c r="XFD1048576" t="inlineStr"><is><t>边界单元格</t></is></c></row></sheetData>'));
 const original=zipSync(parts),collector=new SectionCollector();
 readSpreadsheet(new DocumentArchive(original),collector,{});
-const saved=JSON.parse(JSON.stringify(collector.finish('xlsx','a'.repeat(64)))),section=saved.sections[0] as DocumentSection;
+const saved=JSON.parse(JSON.stringify(collector.finish('xlsx',createHash('sha256').update(original).digest('hex')))),section=saved.sections[0] as DocumentSection;
+if(process.argv[2]){mkdirSync(process.argv[2],{recursive:true});writeFileSync(join(process.argv[2],'table.xlsx'),original);writeFileSync(join(process.argv[2],'table.extraction.json'),JSON.stringify(saved));}
 const rows=verifiedDocumentTable(section)!;assert(rows);assert.equal(rows.length,4);assert.equal(rows[1].cells[0].text,sheet.A2.v);
 assert.equal(rows[1].cells[1].text,'FALSE','Never turn saved false into an empty/true value');
 assert.equal(rows[2].cells[0].text,'[公式没有已保存结果]');assert.equal(rows[3].row,1048576);assert.equal(rows[3].cells[0].column,'XFD');
