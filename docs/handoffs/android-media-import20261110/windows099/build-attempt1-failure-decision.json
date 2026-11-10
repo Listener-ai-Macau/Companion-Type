@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-11T06:48:29+08:00",
+  "state": "NORMAL_PRODUCT_RELEASE_COMPILED_TEST_FIXTURE_COMPILE_FAILED",
+  "sourceCommit": "eae17fa840c43c7784b8d008094945df4d8f56bf",
+  "run": 42915702572,
+  "productCargoReleasePassed": true,
+  "error": "Existing image-note unit fixture Request literal omitted new optional kind/references fields; cfg(test) build failed E0063.",
+  "repair": "Add None/None to the existing fixture only; no runtime behavior change, retain099 version because no matching MSI has been produced/installed. Rebuild exact source and affected tests before any qualification.",
+  "retainedNativeSourceAndLogs": true,
+  "saleQualified": false
+}
