@@ -23,14 +23,14 @@ module.exports=async function actionsJourney(page,plan,out){
  const reply=path.join(out,'text-clipboard-reply.json'),deadline=Date.now()+15000;while(!fs.existsSync(reply)&&Date.now()<deadline)await new Promise(r=>setTimeout(r,100));assert.ok(fs.existsSync(reply),'Native clipboard readback required');
  const clipboard=JSON.parse(fs.readFileSync(reply,'utf8'));assert.equal(clipboard.actualWindowsUnicodeClipboardMatched,true);
  await page.screenshot({path:path.join(out,'actions-filtered-followup.png'),fullPage:true});
- await rows().getByRole('checkbox').check();await page.waitForFunction(()=>document.querySelectorAll('.ct-minutes-action-item').length===0);
+ await rows().getByRole('checkbox').click();await page.waitForFunction(()=>document.querySelectorAll('.ct-minutes-action-item').length===0);
  await tools.getByLabel('筛选完成状态',{exact:true}).selectOption('done');assert.equal(await rows().count(),1);assert.equal(await rows().getByRole('checkbox').isChecked(),true);assert.match(await draft.inputValue(),/已标记完成/);assert.match(await draft.inputValue(),/仍保留待核对标记/);
  // Reload proves native persistence, rather than a React-only optimistic toggle.
  await page.reload();await page.locator('.ct-shell').waitFor();workspace=await open();tools=workspace.getByLabel('事项筛选与跟进',{exact:true});assert.equal(await rows().count(),count,'Record reload must reset the ephemeral filter');
  assert.equal(await rows().getByRole('checkbox').count(),count);
  const completed=rows().filter({hasText:'广告宣传海报'});assert.equal(await completed.getByRole('checkbox').isChecked(),true);
  assert.equal(await rows().getByRole('checkbox').evaluateAll(nodes=>nodes.filter(node=>node.checked).length),1,'Only the selected original action may change');
- await completed.getByRole('checkbox').uncheck();
+ await completed.getByRole('checkbox').click();await page.waitForFunction(()=>[...document.querySelectorAll('.ct-minutes-action-item input[type=checkbox]')].every(node=>!node.checked));
  await page.reload();await page.locator('.ct-shell').waitFor();workspace=await open();tools=workspace.getByLabel('事项筛选与跟进',{exact:true});assert.equal(await rows().count(),count);assert.equal(await rows().getByRole('checkbox').evaluateAll(nodes=>nodes.filter(node=>node.checked).length),0);
  await tools.locator('.action-review-filters > summary').click();await tools.getByLabel('查找事项',{exact:true}).fill('广告宣传海报');assert.equal(await rows().count(),1);
  const source=rows().getByRole('button').first();assert.ok(await source.isVisible());assert.match(await source.innerText(),/原文|原话/);await source.click();

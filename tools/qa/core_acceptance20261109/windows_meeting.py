@@ -261,8 +261,12 @@ def main():
      try:actual=ctypes.wstring_at(pointer)
      finally:K.GlobalUnlock(handle)
     finally:require(U.CloseClipboard())
-    assert actual==expected,'Actual Windows clipboard does not match filtered public followup'
-    result={'actualWindowsUnicodeClipboardMatched':True,'sha256':hashlib.sha256(actual.encode('utf8')).hexdigest(),'characters':len(actual),'scope':'Only the public draft copied by the immediately preceding ordinary button; no original owner clipboard read'}
+    # CF_UNICODETEXT uses Windows CRLF. Compare only that representation change;
+    # words, spaces, item selection and uncertainty must remain exact.
+    comparison={'byteExactTextMatch':actual==expected,'matchesAfterWindowsCrLfOnly':actual.replace('\r\n','\n')==expected,'actualCharacters':len(actual),'expectedCharacters':len(expected),'actualCrLf':actual.count('\r\n'),'expectedCrLf':expected.count('\r\n'),'actualSha256':hashlib.sha256(actual.encode('utf8')).hexdigest(),'expectedSha256':hashlib.sha256(expected.encode('utf8')).hexdigest()}
+    (out/'text-clipboard-comparison.json').write_text(json.dumps(comparison,indent=2),encoding='utf8')
+    assert comparison['matchesAfterWindowsCrLfOnly'],'Actual Windows clipboard differs beyond the Windows newline representation'
+    result={'actualWindowsUnicodeClipboardMatched':True,**comparison,'scope':'Only the public draft copied by the immediately preceding ordinary button; no original owner clipboard read. CRLF-to-LF comparison only.'}
     (out/'text-clipboard-reply.json').write_text(json.dumps(result),encoding='utf8');handled.add(request.name)
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
