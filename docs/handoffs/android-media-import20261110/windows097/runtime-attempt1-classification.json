@@ -1,0 +1,8 @@
+{
+  "state": "TEST_ASSUMED_NO_PREEXISTING_NOTE_BUT_FIXTURE_HAS_EXCLUDE_NOTE",
+  "productFailure": false,
+  "run": 42896933959,
+  "actualObservation": "Created order shows retained exclude-note, then new noteA, then new noteB. Product order correct; only assertion first()==A was wrong. Recent order and both full original saves already passed.",
+  "correction": "Check relative A-before-B while retaining existing note; do not change fixture data or product. Reuse exact097 MSI.",
+  "nativeBuildRepeated": false
+}

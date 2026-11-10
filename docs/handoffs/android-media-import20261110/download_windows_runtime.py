@@ -34,6 +34,9 @@ result["runtimeRun"]=run_id
 shutil.copyfile(case/("audio-edit-backend/result.json" if mode=="editing" else "document-backend/result.json"),O/"runtime-backend-result.json")
 names=["audio-edit-dark.png","audio-edit-light.png","audio-edit-ui.json","editing-checkpoints.json"] if mode=="editing" else ["documents-dark.png","documents-light.png","table-reading-dark.png","table-reading-light.png","document-checkpoints.json","preserved-desktop-input.png"]
 for name in names:shutil.copyfile(case/name,O/name)
-if mode=="documents":shutil.copyfile(case/"result.json",O/"document-ui.json")
+if mode=="documents":
+ shutil.copyfile(case/"result.json",O/"document-ui.json")
+ if int(code)>=97:
+  for name in ["notes-reading-recent.png","notes-reading-created.png","notes-reading-source-search.png","notes-reading-ui.json"]:shutil.copyfile(case/name,O/name)
 (O/"runtime-artifact-readback.json").write_text(json.dumps(proof,indent=2)+"\n",encoding="utf8")
 print(json.dumps({"state":result["state"],"run":run_id,"appSource":v["sourceCommit"],"exactPcmOutputs":backend.get("generatedOutputRows"),"restoredFiles":backend.get("restoreFilesByteIdentical",backend.get("restoredOriginalAndExtractionFilesByteIdentical"))}))

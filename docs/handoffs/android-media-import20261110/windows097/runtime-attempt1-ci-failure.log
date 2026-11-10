@@ -1,0 +1,24 @@
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	﻿2026-11-10T20:36:48.3785328Z ##[group]Run python tools/qa/core_acceptance20261109/run_ci.py
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3785696Z ^[[36;1mpython tools/qa/core_acceptance20261109/run_ci.py^[[0m
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3984910Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3985154Z env:
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3986666Z   GH_TOKEN: ***
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3986797Z   COMPANION_CORE_PHASE: documents
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3987268Z   COMPANION_ACCEPTANCE_CANDIDATE_SPEC: docs/handoffs/android-media-import20261110/windows097/runtime-spec.json
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:48.3987564Z ##[endgroup]
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:50.5054574Z Starting download-frozen-native
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:55.8787363Z download-frozen-native exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:36:56.1377285Z Starting install-test-dependencies
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:00.4355390Z install-test-dependencies exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:00.4355897Z Starting install-locked-node-tools
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:10.9264709Z install-locked-node-tools exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:10.9265252Z Starting install-native-picker-dependency
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:12.8313937Z install-native-picker-dependency exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:12.8314601Z Starting native-document-context-ui
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4200384Z native-document-context-ui exit=1
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4275253Z Traceback (most recent call last):
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4277079Z   File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\run_ci.py", line 97, in <module>
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4278718Z     assert code==0 and (paths[0]/'result.json').is_file(),'Native document preparation/UI failed; retained native-document-context-ui.log is the primary failure'
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4280134Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.4281114Z AssertionError: Native document preparation/UI failed; retained native-document-context-ui.log is the primary failure
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-10T20:37:21.5184425Z ##[error]Process completed with exit code 1.
