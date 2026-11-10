@@ -57,10 +57,23 @@ try:
  assert preflight['result']=='TARGET_IDLE_AT_OBSERVATION',preflight['result']
  record['state']='BUILDING_NORMAL_RELEASE';save()
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
- run('recording-context-tests',['cargo','+1.95.0','test','--release','--locked','--lib','meeting_note','--','--test-threads=1'],N)
- run('document-context-tests',['cargo','+1.95.0','test','--release','--locked','--lib','document_context','--','--test-threads=1'],N)
- for scope in ['privacy','session_store','audio_artifacts']:
-  run(scope+'-context-regression',['cargo','+1.95.0','test','--release','--locked','--lib',scope,'--','--test-threads=1'],N)
+ # Tauri's build script changes generated inputs between Cargo invocations.
+ # Repeating cargo test per filter rebuilt the optimized lib test five times
+ # and exhausted the 45-minute job. Build the real test binary once, then run
+ # only the same affected filters directly. No checks are removed or skipped.
+ run('context-test-build',['cargo','+1.95.0','test','--release','--locked','--lib','--no-run','--message-format=json'],N)
+ artifacts=[]
+ for line in (C/'context-test-build.log').read_text(encoding='utf8',errors='replace').splitlines():
+  try:item=json.loads(line)
+  except json.JSONDecodeError:continue
+  if item.get('reason')=='compiler-artifact' and item.get('profile',{}).get('test') and item.get('executable'):
+   artifacts.append(Path(item['executable']))
+ assert len(artifacts)==1,artifacts
+ test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['meeting_note','document_context','privacy','session_store','audio_artifacts']};save()
+ for scope in record['affectedTestBinary']['filters']:
+  run(scope+'-context-regression',[str(test),scope,'--test-threads=1'],N)
+ assert sha(test)==record['affectedTestBinary']['sha256']
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)
  record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]

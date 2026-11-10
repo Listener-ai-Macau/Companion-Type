@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-10T20:01:58+08:00",
+  "state": "WINDOWS088_NATIVE_BUILD_PASSED_REPEATED_TEST_COMPILATION_EXHAUSTED_CI_TIMEOUT",
+  "failedRun": 42805669767,
+  "failedSource": "187141890f4642f002126153e0833bbfeac8b8a9",
+  "releaseCompilePassed": true,
+  "passedRelatedChecks": {
+    "meeting_note": 5,
+    "document_context": 1,
+    "privacy": 31,
+    "session_store": 11
+  },
+  "explicitlyIgnoredExistingPrivacyTests": 2,
+  "audio_artifacts": "interrupted during repeated compilation; not passed",
+  "installerBuilt": false,
+  "cause": "Five separate Cargo test invocations recompiled the optimized Tauri lib test for about seven minutes each; CI cancelled at 45 minutes.",
+  "fix": "Build exactly one normal optimized library test executable through Cargo JSON artifacts, verify path/hash, then run each unchanged affected filter directly before MSI packaging.",
+  "localHeavyBuild": false
+}
