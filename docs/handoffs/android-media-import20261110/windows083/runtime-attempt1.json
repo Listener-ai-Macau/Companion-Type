@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-10T14:09:29+08:00",
+  "state": "MATCHED_WINDOWS083_CONTEXT_RUNTIME_STARTED",
+  "testSourceCommit": "8504f794775fcd071ec3bd7542e39c4f08acdc00",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "buildRun": 42762906819,
+  "nativeRecompiled": false,
+  "ownerForegroundUsed": false,
+  "runtimeQualified": false,
+  "run": 42766607290,
+  "result": "UI failed at hidden bookmark control before picture operations; actual public import/playback preparation succeeded. More disclosure must be opened by test. Candidate not rebuilt.",
+  "remainingUX": "Notes time association currently depends on a bookmark inside More; direct time action belongs to next related usability/document-image work, not declared fixed."
+}
