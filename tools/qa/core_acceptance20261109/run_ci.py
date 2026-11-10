@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
 from candidate_contract import grouped_meeting_candidate
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
-PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context','documents'}
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context','documents','editing'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
 spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
@@ -25,7 +25,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery','actions','context','documents'} and grouped_meeting_candidate(spec['verification']['version'])
+  assert PHASE in {'audio','whole','delivery','actions','context','documents','editing'} and grouped_meeting_candidate(spec['verification']['version'])
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
@@ -47,7 +47,7 @@ try:
  (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
  env['COMPANION_ACCEPTANCE_VERIFICATION']=str(verification/'windows-verification.json')
  record.update(exactMsiExeSha256=v['embeddedExeSha256'],exactMsiDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
- if PHASE in {'audio','whole','delivery','context'}:
+ if PHASE in {'audio','whole','delivery','context','editing'}:
   public=private/'public-input';public.mkdir();audio=public/'public-audio-S_R004S03C01.wav'
   with audio.open('wb') as dest,(O/'download-public-audio.log').open('wb') as log:
    download=subprocess.run(['gh','api','repos/Listener-ai-Macau/Companion-Type/releases/assets/726625128','-H','Accept: application/octet-stream'],env=env,stdout=dest,stderr=log,cwd=S)
@@ -76,7 +76,20 @@ try:
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- if PHASE=='documents':
+ if PHASE=='editing':
+  run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
+  tool=S/'tools/qa/core_acceptance20261109'
+  code=run('native-audio-edit-ui',[sys.executable,tool/'windows_meeting.py','--stage','editing','--audio',audio],required=False)
+  cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
+  assert code==0 and (paths[0]/'result.json').is_file(),'Native audio editing preparation/UI failed; retain primary UI log'
+  native_result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=native_result['state']);save()
+  assert native_result['ui']['state']=='REAL_TAURI_PUBLIC_AUDIO_TRIM_FULL_SPLIT_REORDER_MERGE_SOURCE_RETURN_AND_REOPEN_PASSED'
+  backend=run('native-audio-edit-retry-backup-and-scoped-cleanup',[sys.executable,tool/'windows_audio_edit_backend.py','--case',paths[0]],required=False)
+  detail=json.loads((paths[0]/'audio-edit-backend/result.json').read_text(encoding='utf8'));record.update(audioEditBackendExitCode=backend,audioEditBackendState=detail['state']);save();assert backend==0
+  assert detail['state']=='ACTUAL_PACKAGED_AUDIO_EDIT_PCM_CANCEL_RESTART_PENDING_ONLY_RETRY_BACKUP_RESTORE_AND_SCOPED_PURGE_PASSED'
+  record.update(state='WINDOWS'+spec['verification']['version'].split('.')[-1].zfill(3)+'_NATIVE_AUDIO_EDIT_COMPLETE_WORKFLOW_PASSED',modelsRun=False,newCloudOrAsrCalls=0,wholeCoreCandidateQualified=False)
+ elif PHASE=='documents':
+
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   tool=S/'tools/qa/core_acceptance20261109'
   code=run('native-document-context-ui',[sys.executable,tool/'windows_meeting.py','--stage','documents'],required=False)

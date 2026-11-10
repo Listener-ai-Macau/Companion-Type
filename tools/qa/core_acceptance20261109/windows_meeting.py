@@ -85,7 +85,7 @@ def frozen_app(root):
  shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
  return app,v
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents','editing'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  if a.stage=='documents':
@@ -130,7 +130,7 @@ def main():
  (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':grouped_meeting_candidate(v['version']),'wholeMeetingDelivery':whole_delivery,'browserAttachments':whole_delivery and os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1','aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
  if a.stage=='actions':
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan['savedActionCount']=len(session['minutes']['actionItems']);(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
- if a.stage in {'audio','transcribe','context'}:
+ if a.stage in {'audio','transcribe','context','editing'}:
   assert a.audio and sha(a.audio)=='82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f'
   (root/'exports').mkdir();plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(audioInput=str(a.audio.resolve()),audioSha256=sha(a.audio),audioTitle=a.audio.stem,audioSeconds=2327.119,exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),wholeMeetingAsr=a.stage=='transcribe')
   (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
@@ -145,6 +145,11 @@ def main():
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
   session['retention']['audioCached']=False;(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],imageInput=str(image),imageSha256=sha(image),invalidImage=str(bad),invalidImageSha256=sha(bad),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+ if a.stage=='editing':
+  assert DEDICATED_CI
+  session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
+  session['retention']['audioCached']=False;(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  if a.stage=='documents':
   assert DEDICATED_CI,'Document native pickers only on the disposable CI machine'
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
@@ -186,7 +191,7 @@ def main():
   if a.stage=='transcribe':
    assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
    env['COMPANION_TYPE_LOCAL_ASR_DIR']=os.environ['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']
-  if a.stage in {'actions','context','documents'}:
+  if a.stage in {'actions','context','documents','editing'}:
    assert DEDICATED_CI,'The normal visible-window clipboard journey runs only on an owned dedicated CI runner'
    env['COMPANION_TYPE_BACKGROUND_WINDOW']='0'
    record['normalVisibleWindowOnDedicatedRunner']=True
@@ -227,7 +232,7 @@ def main():
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
-  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents'} else 180)
+  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents','editing'} else 180)
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
    for request in sorted(out.glob('dialog-request-*.json')):
@@ -299,6 +304,7 @@ def main():
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
   record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage=='ai' else 3))
   if a.stage=='context':record['state']='REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED';record['remoteOwnedWindowFocused']=True
+  if a.stage=='editing':record['state']='REAL_NATIVE_AUDIO_EDITING_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='documents':record['state']='REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='actions':record['state']='REAL_NATIVE_ACTION_REVIEW_FOLLOWUP_AND_COPY_PASSED';record['remoteOwnedWindowFocused']=True
   if env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1':
@@ -321,7 +327,7 @@ def main():
   record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
   record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation']
   record['remotePickerFocusUsed']=any(json.loads(path.read_text(encoding='utf8')).get('focusWithinOwnedRemotePickerUsed',False) for path in out.glob('dialog-reply-*.json'))
-  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context','documents'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
+  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context','documents','editing'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
   if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
   if not DEDICATED_CI:U.CloseWindowStation(station)
   K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()

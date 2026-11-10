@@ -38564,7 +38564,7 @@
           ],
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
-            "at": "2026-11-11T00:42:14+08:00",
+            "at": "2026-11-11T00:54:40+08:00",
             "state": "ANDROID131_QUALIFIED_WINDOWS093_UNIFIED_COMPLETE_EDIT_SOURCE_WEB_PASSED_NATIVE_BUILD_PENDING",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
@@ -38576,10 +38576,10 @@
               "tools/qa/core_acceptance20261109/DerivedAudioPublicationTest.java"
             ],
             "actual": "Validated immutable source identities, sample-accurate trim/reorder/multi-source maps, half-open boundaries, full last partial millisecond, range-to-original intersections, stale/damaged map rejection and safe-integer overflow. Pure source strict typecheck and actual bundled assertions pass.",
-            "notImplementedYet": "Native service/source resolver, atomic library publication and provenance/backup/purge integration, ordinary trim/split/merge UI, Windows native materialization and full installed qualification remain open.",
+            "notImplementedYet": "Windows093 source and ordinary frontend build ready; native compile/runtime, exact MSI upgrade, dual-client final archive and new customer experience remain unqualified. Android131 editing/control recovery is actually qualified; phone owned session is closed.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
             "currentDependency": "Android131 installed, exact private installer readback verified and own phone session closed. Complete corresponding Windows editor chain from unified091; no extra unchanged phone package/runtime now.",
-            "next": "一次远端原生构建并运行真实PCM/备份恢复/分范围删除检查；核对匹配MSI后验普通页面和中断/取消剩余重试，完成Windows093+Android131整包与私有远端回读，再安排中性完整目的体验。",
+            "next": "Continue exact Windows093 native build42858186629; inspect matching MSI then run the prepared ordinary public-audio editor plus actual PCM/cancel/process-exit/pending-only retry/backup/restore/scoped purge. Complete one Windows093+Android131 full archive/private readback; new neutral customers after complete usable benefit. No unchanged phone/model rerun.",
             "renderer": {
               "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
               "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
@@ -38841,7 +38841,31 @@
               "boardOrPhoneAccessed": false,
               "wholeSaleQualified": false,
               "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source."
-            }
+            },
+            "windowsSourceCommit": "62d2dc175964010769ae6f813514225d44cfbd8b",
+            "windowsBuildRun": 42858186629,
+            "actualActiveJob": {
+              "kind": "remote-native-windows-candidate",
+              "runId": 42858186629,
+              "sourceCommit": "62d2dc175964010769ae6f813514225d44cfbd8b",
+              "lastObservedState": "in_progress",
+              "observedAt": "2026-11-11T00:54:40+08:00"
+            },
+            "windowsBuildAttempts": [
+              {
+                "at": "2026-11-11T00:47:38+08:00",
+                "state": "UNINSTALLED_ATTEMPT_CANCELLED_FOR_IDENTIFIED_RESUME_SOURCE_CORRECTION",
+                "runId": 42857248736,
+                "sourceCommit": "4ffcd1d227c20e64336df9c2ef72cfe94c161cb1",
+                "reason": "Source review identified durable index success followed by job receipt/backup failure could be treated as an ID conflict. Corrected exact existing-row adoption without replacing later user edits; reconcile saved outputs before resolving remaining parent sources.",
+                "nativeBuildDidNotFinish": true,
+                "installed": false,
+                "failureArtifact": 13783526901,
+                "retainedLocal": "E:/CodexData/Companion/.build-cache/audio-derivation20261110/windows093-attempt1",
+                "modelsRun": false,
+                "previousInstalled091Unchanged": true
+              }
+            ]
           },
           "beforeAndroidEditing130": {
             "phase": "R48本机显式保护及所有旧隐私入口后端门已装并后台核对；非破坏裁剪/切分/合并未做",
