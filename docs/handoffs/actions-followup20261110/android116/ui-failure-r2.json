@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-10T00:02:38.839Z",
+  "versionCode": 116,
+  "ownVirtualDisplay": 7,
+  "physicalMainDisplayOperated": false,
+  "newAsrOrCloudCalls": 0,
+  "externalSend": false,
+  "ownerRecordOpened": false,
+  "state": "ANDROID116_ACTION_UI_NOT_QUALIFIED_FAILURE_RETAINED",
+  "error": "Error: locator.waitFor: Error: strict mode violation: getByLabel('事项筛选与跟进', { exact: true }) resolved to 2 elements:\n    1) <div aria-label=\"事项筛选与跟进\" class=\"action-review-tools\">…</div> aka getByLabel('事项筛选与跟进').first()\n    2) <div aria-label=\"事项筛选与跟进\" class=\"action-review-tools\">…</div> aka getByRole('group').filter({ hasText: '查看其余 17 项筛选事项显示 17 / 17 项 ·' }).getByLabel('事项筛选与跟进')\n\nCall log:\n\u001b[2m  - waiting for getByLabel('事项筛选与跟进', { exact: true }) to be visible\u001b[22m\n",
+  "originalLibraryRestored": true,
+  "restoreError": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '当前资料位置', exact: true }).getByText('原有资料', { exact: true }) to be visible\u001b[22m\n",
+  "restoredAfterRetainedFailure": true,
+  "restoredAt": "2026-11-10T00:05:51.119Z"
+}

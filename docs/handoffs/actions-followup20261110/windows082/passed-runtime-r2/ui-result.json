@@ -1,0 +1,33 @@
+{
+  "state": "REAL_TAURI_SAVED_ACTION_FILTER_FOLLOWUP_NATIVE_COPY_AND_DURABLE_COMPLETION_PASSED",
+  "publicMeeting": "S_R004S03C01",
+  "savedActionCount": 12,
+  "missingOwnerNotInferred": true,
+  "pendingContentPreserved": true,
+  "zeroResultAndClearPassed": true,
+  "scopeOnlySelectedAction": true,
+  "completionSurvivedReload": true,
+  "completionRestoredAfterReload": true,
+  "sourceButtonUsedFromFilteredOriginal": true,
+  "nativeClipboard": {
+    "actualWindowsUnicodeClipboardMatched": true,
+    "byteExactTextMatch": false,
+    "matchesAfterWindowsCrLfOnly": true,
+    "actualCharacters": 99,
+    "expectedCharacters": 92,
+    "actualCrLf": 7,
+    "expectedCrLf": 0,
+    "actualSha256": "5594400e09623c47b5e559543f87dc46395318807c7e395e8145e986c8882304",
+    "expectedSha256": "9b62b3fda61f0d33e0bc8848e1fd9e7dbd1ceb8bd076a08133cd695b76e0e5d0",
+    "scope": "Only the public draft copied by the immediately preceding ordinary button; no original owner clipboard read. CRLF-to-LF comparison only."
+  },
+  "newAsrOrCloudCalls": 0,
+  "externalSend": false,
+  "ownerDataUsed": false,
+  "modelQualityQualified": false,
+  "identity": {
+    "url": "http://tauri.localhost/",
+    "tauri": true,
+    "title": "Companion Type"
+  }
+}

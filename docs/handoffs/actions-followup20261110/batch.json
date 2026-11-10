@@ -1,0 +1,127 @@
+{
+  "at": "2026-11-10T07:39:57+08:00",
+  "state": "SAVED_ACTION_FILTER_FOLLOWUP_NATIVE_COPY_AND_DURABLE_COMPLETION_DELIVERED_BOTH_PLATFORMS",
+  "owner": "需要继续推进",
+  "userOutcome": "Find relevant saved meeting actions, review original evidence, use existing durable edits/completion, copy a followup draft from the current filtered saved items with uncertain content explicitly separated.",
+  "modelDependency": {
+    "state": "ACTUAL_WINDOWS_LOW_MEMORY_BEFORE_ANY_MODEL",
+    "availableBytes": 391340032,
+    "retained": "docs/handoffs/20261109-paired-real-meeting/paired-product-decision20261110.json",
+    "retryWithoutResourceChange": false
+  },
+  "existingTasks": [
+    "CP12-01",
+    "CP12-02",
+    "CP12-08",
+    "CP27-01/actions"
+  ],
+  "boundaries": {
+    "savedTextsIdsAndRawAiUnchangedByFilter": true,
+    "noInferenceOrCloudRequestForDraft": true,
+    "noExternalSend": true,
+    "noNewModelOrQualityTargetChange": true,
+    "ownerOriginalRecordingsUntouched": true
+  },
+  "sourceRoots": {
+    "windows": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "android": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109"
+  },
+  "baseline": {
+    "windows": "0.1.81",
+    "android": "0.1.115"
+  },
+  "completedAt": "2026-11-10T08:24:23+08:00",
+  "windows": {
+    "version": "0.1.82",
+    "source": "e72d16ed941cb7070cc7bd6e8d21f3b830192254",
+    "buildRun": 42723975145,
+    "runtimeSource": "0c54134e640bca6cc1ccd3fc0e6626367dff0c96",
+    "runtimeRun": 42726992295,
+    "installed": true,
+    "originalFilesByteIdentical": 245,
+    "nativeClipboardReadbackMatched": true,
+    "clipboardComparison": "Windows CF_UNICODETEXT CRLF to LF only; words and selection exact",
+    "privateDraftReadbackVerified": true
+  },
+  "android": {
+    "version": "0.1.117",
+    "source": "9b6b8858d36feb170a9347a56f57b0e0ee5980d2",
+    "buildRun": 42725482756,
+    "frozenBackendSource": "608790132701ede93fa24a00b687874cb7e70c6b",
+    "installed": true,
+    "installFilesByteIdentical": 1907,
+    "actualPublicSavedActions": 21,
+    "pendingFilterMatches": 20,
+    "normalNativeCopyAndActualKeyboardPastePassed": true,
+    "clipboardCharacters": 104,
+    "clipboardSha256": "6bf58e478b9927f003020db6ea8a068d67d5a1c760d415c8bc87e982a16619b7",
+    "originalLibraryRestored": true,
+    "primaryDisplayUnchanged": true,
+    "ownedTestDisplayClosed": true,
+    "privateDraftReadbackVerified": true
+  },
+  "delivered": [
+    "Shared owner, completion, missing-owner/time/review and literal keyword filters over saved action identities.",
+    "One full-list filter and scope across Android folded remainder; default reading still folds after four.",
+    "Read-only local followup draft from the current saved filtered items. Existing original-item editing is the edit authority.",
+    "Explicit pending/unconfirmed and marked-complete groups, unknown owners/dates remain unknown.",
+    "Actual clipboard copy on both native runtimes, durable completion/reopen and original-source entry preserved."
+  ],
+  "failuresRetained": [
+    {
+      "stage": "Android116 native public meeting",
+      "finding": "The original MinutesDocument fold rendered two MobileActionCards, creating separate 4/17 item scopes.",
+      "fix": "Android117 renders the full action section once; cards own folding and reveal all filter matches. Integrated full MinutesDocument test now protects the real composition.",
+      "evidence": "android116/ui-failure-r2.json"
+    },
+    {
+      "stage": "Windows native runtime r1",
+      "finding": "Literal clipboard comparison failed on Windows CRLF representation.",
+      "fix": "Same exact082 MSI, compare CRLF to LF only and retain both raw hashes/character counts. Actual words/selection unchanged.",
+      "failedRun": 42726625518,
+      "passedRun": 42726992295
+    },
+    {
+      "stage": "Android owned display harness",
+      "finding": "Native confirm requires scoped native control, asynchronous completion must await saved state, and the background accessibility tree does not expose the WebView receiver label. USB disconnects destroyed displays7/8.",
+      "fix": "Owned-display native confirm, await saved state/reopen, and actual Control+V into an ordinary unsent question field on display9. No receiver text injected by the harness.",
+      "evidence": [
+        "android117/ui-failure-r1.json",
+        "android117/ui-failure-r2.json",
+        "android117/native-clipboard-result.json"
+      ]
+    },
+    {
+      "stage": "Android117 first source-only CI42725435616",
+      "finding": "The selective first commit omitted the modified MinutesDocument parent; the new integrated scope test rejected it before APK packaging.",
+      "fix": "Committed the missing parent, source9b6b8858d36feb170a9347a56f57b0e0ee5980d2; full source checks and packaging42725482756 passed.",
+      "evidence": "android117/incomplete-source-r1",
+      "failedSource": "b3f443378efb4896f40a65ee3e4b3829f4a25d59"
+    }
+  ],
+  "scopeLimits": {
+    "modelQualityChanged": false,
+    "newAsrOrCloudInference": 0,
+    "timeRangeFilterDelivered": false,
+    "independentlyEditableAiMaterialDeliveredByThisChange": false,
+    "globalContentExportChangedToFilteredActions": false,
+    "remindersDelivered": false,
+    "newHumanCustomerQualified": false,
+    "boardAccessed": false,
+    "ownerAcceptanceChanged": false,
+    "wholeCoreCandidateQualified": false,
+    "saleQualified": false
+  },
+  "next": "沿原核心候选继续固定Qwen完整实会对照与复杂多人/事实门；本机实际资源具备后才从原断点恢复。非模型方面复用082/117已交付流程，后续只处理原清单未验的实际阻断；可编辑AI材料、提醒、实卡和真人客户按各原验收项保留，不将本批筛选/本地跟进文字等同全部竞品能力。",
+  "endOfBatchHardwareObservation": {
+    "at": "2026-11-10T08:27:13+08:00",
+    "presentDisplayAdapters": [
+      "AMD Radeon 780M Graphics"
+    ],
+    "external6800XTPresent": false,
+    "availablePhysicalBytes": 1076453376,
+    "initialActualLowMemoryFailureRetained": true,
+    "modelsStarted": 0,
+    "userApplicationsClosed": false
+  }
+}
