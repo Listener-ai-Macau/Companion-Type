@@ -527,6 +527,16 @@ fn windows_commit_error(error:windows::core::Error)->String {
 }
 
 pub fn write_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
+    write_atomic_with_commit(path, bytes, replace_file)
+}
+
+/// Mutable session metadata is already serialized by the session-store lock.
+/// Let a short snapshot reader finish before failing this durable publication.
+pub(crate) fn write_snapshot_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
+    write_atomic_with_commit(path, bytes, replace_snapshot_file)
+}
+
+fn write_atomic_with_commit(path: &Path, bytes: &[u8], commit: fn(&Path, &Path) -> Result<(), String>) -> Result<u64, String> {
     let file_name = path.file_name().ok_or("export destination has no file name")?;
     let parent = path.parent().filter(|parent| !parent.as_os_str().is_empty())
         .unwrap_or_else(|| Path::new("."));
@@ -551,7 +561,7 @@ pub fn write_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
         file.sync_all()
             .map_err(|error| local_write_error("提交保存文件",&error))?;
         drop(file);
-        replace_file(&temp_path, &destination)?;
+        commit(&temp_path, &destination)?;
         Ok(bytes.len() as u64)
     })();
     if result.is_err() {
@@ -562,6 +572,16 @@ pub fn write_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
 
 #[cfg(windows)]
 pub(crate) fn replace_file(source: &Path, destination: &Path) -> Result<(), String> {
+    replace_file_impl(source, destination, false)
+}
+
+#[cfg(windows)]
+fn replace_snapshot_file(source: &Path, destination: &Path) -> Result<(), String> {
+    replace_file_impl(source, destination, true)
+}
+
+#[cfg(windows)]
+fn replace_file_impl(source: &Path, destination: &Path, snapshot_retry: bool) -> Result<(), String> {
     use std::os::windows::ffi::OsStrExt;
     use windows::core::PCWSTR;
     use windows::Win32::Storage::FileSystem::{
@@ -587,14 +607,35 @@ pub(crate) fn replace_file(source: &Path, destination: &Path) -> Result<(), Stri
         .encode_wide()
         .chain(std::iter::once(0))
         .collect::<Vec<_>>();
-    unsafe {
-        MoveFileExW(
+    let began = std::time::Instant::now();
+    let budget = std::time::Duration::from_millis(200);
+    let mut delay = std::time::Duration::from_millis(2);
+    loop {
+        let result = unsafe { MoveFileExW(
             PCWSTR(source_wide.as_ptr()),
             PCWSTR(destination_wide.as_ptr()),
             MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
-        )
-        .map_err(windows_commit_error)
+        ) };
+        match result {
+            Ok(()) => return Ok(()),
+            Err(error) => {
+                let code = error.code().0 as u32;
+                let short_reader_conflict = code & 0xffff0000 == 0x80070000
+                    && matches!(code & 0xffff, 5 | 32 | 33);
+                let remaining = budget.saturating_sub(began.elapsed());
+                if !snapshot_retry || !short_reader_conflict || remaining.is_zero() {
+                    return Err(windows_commit_error(error));
+                }
+                std::thread::sleep(delay.min(remaining));
+                delay = (delay * 2).min(std::time::Duration::from_millis(25));
+            }
+        }
     }
+}
+
+#[cfg(not(windows))]
+fn replace_snapshot_file(source: &Path, destination: &Path) -> Result<(), String> {
+    replace_file(source, destination)
 }
 
 #[cfg(not(windows))]
@@ -1196,6 +1237,49 @@ mod tests {
             "temporary file must not remain after commit"
         );
         std::fs::remove_dir_all(directory).unwrap();
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn windows_atomic_commit_waits_for_a_short_reader() {
+        let root = std::env::temp_dir().join(format!("companion-short-reader-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let destination = root.join("state.json");
+        fs::write(&destination, b"previous durable state").unwrap();
+        // Even Rust's default DELETE-shared reader makes MoveFileEx's replace
+        // fail on this Windows/NTFS path until the short snapshot read closes.
+        let reader = fs::File::open(&destination).unwrap();
+        let result = std::thread::scope(|scope| {
+            scope.spawn(move || {
+                std::thread::sleep(std::time::Duration::from_millis(35));
+                drop(reader);
+            });
+            write_snapshot_atomic(&destination, b"new durable state")
+        });
+        assert!(result.is_ok(), "a short snapshot reader must not abort durable recording publication: {result:?}");
+        assert_eq!(fs::read(&destination).unwrap(), b"new durable state");
+        assert_eq!(fs::read_dir(&root).unwrap().count(), 1);
+        fs::remove_file(destination).unwrap();
+        fs::remove_dir(root).unwrap();
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn windows_snapshot_commit_still_reports_a_persistent_reader_and_keeps_old_state() {
+        let root = std::env::temp_dir().join(format!("companion-held-reader-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let destination = root.join("state.json");
+        fs::write(&destination, b"previous durable state").unwrap();
+        let reader = fs::File::open(&destination).unwrap();
+        let began = std::time::Instant::now();
+        let result = write_snapshot_atomic(&destination, b"new durable state");
+        assert!(result.is_err());
+        assert!(began.elapsed() < std::time::Duration::from_secs(2), "no indefinite file-lock retry");
+        assert_eq!(fs::read(&destination).unwrap(), b"previous durable state");
+        assert_eq!(fs::read_dir(&root).unwrap().count(), 1);
+        drop(reader);
+        fs::remove_file(destination).unwrap();
+        fs::remove_dir(root).unwrap();
     }
     #[test]
     fn r64_storage_full_and_permission_errors_offer_the_matching_recovery_action() {

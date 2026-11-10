@@ -108,7 +108,7 @@ fn preserve_corrupt(path: &Path, bytes: &[u8]) -> Result<(), String> {
         if existing != bytes { return Err("损坏索引保留文件冲突；拒绝覆盖".into()); }
         return Ok(());
     }
-    super::export::write_atomic(&destination, bytes).map(|_| ())
+    super::export::write_snapshot_atomic(&destination, bytes).map(|_| ())
 }
 
 fn clear_corrupt_copies(path: &Path) -> Result<(), String> {
@@ -289,11 +289,11 @@ pub(crate) fn save_snapshot_checked(path: &Path, sessions: &[CompanionV1HostSess
             }
         }
     }
-    save_locked(path, sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))
+    save_locked(path, sessions, |destination, bytes| super::export::write_snapshot_atomic(destination, bytes).map(|_| ()))
 }
 
 pub fn save(path: &Path, sessions: &[CompanionV1HostSession]) -> Result<(), String> {
-    save_with(path, sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))
+    save_with(path, sessions, |destination, bytes| super::export::write_snapshot_atomic(destination, bytes).map(|_| ()))
 }
 
 /// The transport commits its verified recording before acknowledging deletion
@@ -309,11 +309,11 @@ pub(crate) fn update_checked(path: &Path, edit: impl FnOnce(&mut Vec<CompanionV1
     let loaded = load_locked(path)?;
     let mut sessions = loaded.bytes.map(|bytes| decode(&bytes)).transpose()?.unwrap_or_default();
     edit(&mut sessions)?;
-    save_locked(path, &sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))?;
+    save_locked(path, &sessions, |destination, bytes| super::export::write_snapshot_atomic(destination, bytes).map(|_| ()))?;
     // An ACK makes the board copy reclaimable, so unlike ordinary UI edits
     // this recording must also exist in the fallback before returning success.
     let json = serde_json::to_vec_pretty(&sessions).map_err(|e| e.to_string())?;
-    super::export::write_atomic(&sibling(path, ".bak"), &json).map(|_| ())
+    super::export::write_snapshot_atomic(&sibling(path, ".bak"), &json).map(|_| ())
 }
 
 /// An explicit user-selected backup may repair an entirely unreadable index.
@@ -338,8 +338,8 @@ pub(crate) fn restore_backup(path:&Path,rows:&[CompanionV1HostSession])->Result<
             }
             for (file,bytes) in &copies {if let Some(bytes)=bytes {if decode(bytes).is_err(){preserve_corrupt(file,bytes)?;}}}
             let json=serde_json::to_vec_pretty(rows).map_err(|e|e.to_string())?;decode(&json)?;
-            super::export::write_atomic(&backup,&json)?;
-            super::export::write_atomic(path,&json)?;
+            super::export::write_snapshot_atomic(&backup,&json)?;
+            super::export::write_snapshot_atomic(path,&json)?;
             if pending.exists(){fs::remove_file(&pending).map_err(|e|format!("恢复已保存，但旧清理记录仍需处理：{e}"))?;}
             return Ok(());
         }
@@ -353,9 +353,9 @@ pub(crate) fn restore_backup(path:&Path,rows:&[CompanionV1HostSession])->Result<
             }
         }else{ids.insert(row.id.clone());current.push(row.clone());}
     }
-    save_locked(path,&current,|destination,bytes|super::export::write_atomic(destination,bytes).map(|_|()))?;
+    save_locked(path,&current,|destination,bytes|super::export::write_snapshot_atomic(destination,bytes).map(|_|()))?;
     let json=serde_json::to_vec_pretty(&current).map_err(|e|e.to_string())?;
-    super::export::write_atomic(&sibling(path,".bak"),&json).map(|_|())
+    super::export::write_snapshot_atomic(&sibling(path,".bak"),&json).map(|_|())
 }
 
 #[cfg(test)]
@@ -451,7 +451,7 @@ mod tests {
         let mut data = crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(), request).unwrap().host.sessions;
         data.truncate(1); data[0].id = id.into(); data
     }
-    fn write(path: &Path, bytes: &[u8]) -> Result<(), String> { super::super::export::write_atomic(path, bytes).map(|_| ()) }
+    fn write(path: &Path, bytes: &[u8]) -> Result<(), String> { super::super::export::write_snapshot_atomic(path, bytes).map(|_| ()) }
     #[test]
     fn corrupt_primary_recovers_good_backup_and_preserves_original_bytes() {
         let path = workspace(); let first = data("kept");

@@ -1258,6 +1258,19 @@ fn capture_start_duration(args: &[String], seconds: u64, follow: bool, recover_a
     }
 }
 
+// Observe the coordinator's existing in-memory snapshot. Acceptance consumers
+// must not repeatedly open the mutable session index while it is being saved.
+fn emit_capture_progress(row: &companion_v1::CompanionV1HostSession, elapsed_ms: u128) {
+    println!("v1_real_meeting_progress_json={}", serde_json::json!({
+        "id": row.id,
+        "status": row.status,
+        "deviceRecordingId": row.device_recording_id,
+        "deviceRecordingKey": row.device_recording_key,
+        "sealedChunks": row.chunks.iter().filter(|chunk| chunk.status == "sealed").count(),
+        "captureElapsedMs": elapsed_ms,
+    }));
+}
+
 fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
     if !args.iter().any(|arg| arg == "--v1-real-meeting") {
         return None;
@@ -1359,6 +1372,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             .ok_or_else(|| "V1 START did not surface the board recording id".to_string())?;
         let started_logical_key = started_session.device_recording_key.clone();
         eprintln!("recording_capture_stage stage=started physical_anchor={} logical={}",start_recording_id,started_logical_key.is_some());
+        emit_capture_progress(started_session, 0);
         let recovery_link_disconnected = if recover_after_limit {
             let mut disconnect = control_request(
                 companion_v1::CompanionV1ControlAction::DeviceDisconnect,
@@ -1504,6 +1518,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
                 sealed_segments_during_capture = sealed_segments_during_capture.max(
                     row.chunks.iter().filter(|c| c.status == "sealed").count());
                 followed_during_capture = sealed_segments_during_capture > 0;
+                emit_capture_progress(row, capture_started.elapsed().as_millis());
             }
         }
 
