@@ -1,0 +1,28 @@
+{
+  "schema": "companion.engineering-endpoint-selection.v1",
+  "observedAt": "2026-11-10T10:11:31+08:00",
+  "observation": {
+    "availability": "not_probed_previous_operation_unresolved"
+  },
+  "stageBoundary": "unfinished_or_idle_unconfirmed",
+  "startsOperation": false,
+  "requiredBeforeHardware": [
+    "board_turn",
+    "shared_file_lease",
+    "current_source_binding",
+    "normal_uart_admission"
+  ],
+  "boardTurn": {
+    "next": null,
+    "liveLeases": 0,
+    "mayClaim": {
+      "codex": true,
+      "grok": true
+    },
+    "turnMinutes": 0
+  },
+  "endpoint": "offline",
+  "action": "reconcile_previous_operation",
+  "reason": "Previous operation has no closed-handle and physical-idle proof; do not switch centrals.",
+  "previousStageReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\.cache\\selected-delete66685\\result.json"
+}

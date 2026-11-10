@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T10:43:39.775290+08:00",
+  "ownerRequested": true,
+  "setting": "stay_on_while_plugged_in",
+  "before": "0",
+  "after": 2,
+  "usbKeepAwakeBitEnabled": true,
+  "existingOtherPowerBitsPreserved": true,
+  "readback": [
+    "mWakefulness=Awake",
+    "mStayOn=true",
+    "mStayOnWhilePluggedInSetting=2",
+    "AC powered: false",
+    "USB powered: true",
+    "Wireless powered: false"
+  ]
+}

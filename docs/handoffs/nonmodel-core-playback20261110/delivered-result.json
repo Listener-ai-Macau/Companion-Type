@@ -1,0 +1,184 @@
+{
+  "at": "2026-11-10T10:51:28+08:00",
+  "state": "ANDROID121_PLAYBACK_CORRECTION_SETTINGS_AND_PUBLIC_BACKUP_LIFECYCLE_DELIVERED",
+  "windowsVersion": "0.1.82",
+  "androidVersion": "0.1.121",
+  "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
+  "nativeBuildRun": 42743230795,
+  "apkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
+  "installed": true,
+  "remotePackageReadbackVerified": true,
+  "nativePhoneQualifiedForDeclaredScope": true,
+  "phoneResults": {
+    "playbackCorrection": {
+      "at": "2026-11-10T02:27:02.073Z",
+      "versionCode": 120,
+      "ownedDisplay": 10,
+      "ordinaryUiActions": true,
+      "readback": "Only libraryStatus/detail/playbackStatus; no backend mutation",
+      "ownerRecordingOpened": false,
+      "cloudOrAsrCalls": 0,
+      "pausedRateChangeDidNotStart": true,
+      "pausedSourceTimeJumps": true,
+      "realMediaPlayerClock": {
+        "wallMs": 1427,
+        "sourceMs": 2023,
+        "rate": 1.5
+      },
+      "savedAndReopened": {
+        "positionMs": 12207,
+        "speed": 1.5
+      },
+      "literalCorrection": {
+        "replacements": 29,
+        "draftNotAutoSaved": true,
+        "undo": true,
+        "originalAsrRetained": true,
+        "staleMinutesMarked": true
+      },
+      "correctionReopened": true,
+      "state": "PASSED"
+    },
+    "interruption": {
+      "at": "2026-11-10T02:33:00.399Z",
+      "state": "OWNED_PROCESS_INTERRUPTION_AND_NATIVE_RESUME_PASSED",
+      "beforeExitPosition": 88506,
+      "checkpointPosition": 86189,
+      "resumedPosition": 86189,
+      "speed": 1.5,
+      "ordinaryUiPlay": true,
+      "ownedProcessForceStopped": true,
+      "ownerMainDisplayOperated": false
+    },
+    "settings": {
+      "at": "2026-11-10T02:38:23.694Z",
+      "versionCode": 121,
+      "ownedDisplay": 10,
+      "ownerRecordingOpened": false,
+      "cloudOrAsrCalls": 0,
+      "generalSettingsBeforeCollapsedAi": true,
+      "appearance": {
+        "dark": true,
+        "light": true,
+        "followActualNativeSystem": true,
+        "systemModeChangedByTest": false
+      },
+      "webReloadRetainedSettings": true,
+      "nativePermissions": {
+        "bluetoothAllowed": true,
+        "notificationsAllowed": true
+      },
+      "resumeOffStartsAtBeginningAndRetainsRecordingRate": true,
+      "unsavedAiConfig": {
+        "cancelKeptDraft": true,
+        "confirmedReturnUsedSameGuard": true,
+        "keySaved": false,
+        "requestsSent": 0
+      },
+      "state": "PASSED"
+    },
+    "backupRestorePurge": {
+      "at": "2026-11-10T02:45:09.920Z",
+      "versionCode": 121,
+      "ordinarySafBackupAndRestore": true,
+      "ownerRecordingOpened": false,
+      "ownerRecordDeleted": false,
+      "boardAccessed": false,
+      "settingsRetainedAfterFullProcessRestart": true,
+      "restoredCheckpointAndCorrection": {
+        "positionMs": 86412,
+        "speed": 1.5,
+        "originalAsrRetained": true
+      },
+      "nativeCheckpointFileExistsBeforePurge": true,
+      "trashRestoreKeptCheckpointAndCorrection": true,
+      "exactPurge": {
+        "onlyNewRestoredLibrary": true,
+        "checkpointRemoved": true,
+        "allPriorLibrariesRetained": true
+      },
+      "state": "PASSED"
+    },
+    "finalUi": {
+      "at": "2026-11-10T02:46:47.349Z",
+      "versionCode": 121,
+      "ownerRecordOpened": false,
+      "ownerRecordChanged": false,
+      "modelsRun": false,
+      "defaultRateAppliedToNewRecording": true,
+      "sameRecordingKeyAcrossLibrariesKeptSeparateProgressAndCorrection": true,
+      "testPreferencesRestored": true,
+      "originalLibraryRestored": true,
+      "state": "PASSED"
+    },
+    "installation": {
+      "at": "2026-11-10T10:37:27+08:00",
+      "state": "ANDROID121_EXACT_APK_INSTALLED_EXISTING_FILES_IDENTICAL",
+      "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
+      "apkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
+      "existingFilesByteIdentical": 1928,
+      "ownerMainUnchangedDuringInstall": true,
+      "nativeBackendAndModelsUnchanged": true
+    },
+    "packageBackup": {
+      "at": "2026-11-10T10:36:36+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 729828276,
+      "fileName": "Companion-Android-0.1.121-core-candidate.apk",
+      "apkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
+      "bytes": 48852348,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false
+    },
+    "usbAwake": {
+      "at": "2026-11-10T10:43:39.775290+08:00",
+      "ownerRequested": true,
+      "setting": "stay_on_while_plugged_in",
+      "before": "0",
+      "after": 2,
+      "usbKeepAwakeBitEnabled": true,
+      "existingOtherPowerBitsPreserved": true,
+      "readback": [
+        "mWakefulness=Awake",
+        "mStayOn=true",
+        "mStayOnWhilePluggedInSetting=2",
+        "AC powered: false",
+        "USB powered: true",
+        "Wireless powered: false"
+      ]
+    }
+  },
+  "cleanup": {
+    "at": "2026-11-10T10:48:04+08:00",
+    "state": "PHONE121_ORIGINAL_LIBRARY_RESTORED_SESSION_CLOSED_AND_ORIGINAL_CONTENT_IDENTICAL",
+    "version": "0.1.121",
+    "originalFilesChecked": 1912,
+    "originalContentFilesByteIdentical": 1911,
+    "expectedLibraryIndexChangeOnly": true,
+    "allPreexistingLibrariesRetained": true,
+    "newPublicQaLibrariesRetained": 3,
+    "ownerMainUnchangedDuringClose": true,
+    "ownedAppAndVirtualDisplayClosed": true,
+    "ownedCdpForwardRemoved": true,
+    "exactPublicTemporaryFilesRemoved": true,
+    "usbKeepAwakeRetainedAsOwnerRequested": true,
+    "boardAccessed": false,
+    "modelsRun": false
+  },
+  "notCovered": [
+    "Native transition between multiple decoded WAV parts was not separately triggered by this public sample.",
+    "Physical listening quality, microphone/recording-card capture, BLE, OTA and power/battery qualification were outside this local UI batch.",
+    "Model quality and complex overlapping speakers were not improved or retested.",
+    "No new customer or real buyer trial; owner acceptance remains pending."
+  ],
+  "saleQualified": false,
+  "allNonmodelComplete": false,
+  "newModelRuns": 0,
+  "boardAccessed": false,
+  "ownerPrivateDataUploaded": false
+}

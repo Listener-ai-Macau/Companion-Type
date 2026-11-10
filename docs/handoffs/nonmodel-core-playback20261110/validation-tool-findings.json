@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-10T10:51:28+08:00",
+  "productRegressionsObservedInPassedScope": false,
+  "retainedToolFindings": [
+    {
+      "finding": "First restore selector included an ellipsis absent from actual button text.",
+      "decision": "Corrected selector to actual UI; no product/source change."
+    },
+    {
+      "finding": "Session-long main-screen fingerprint changed independently when phone locked.",
+      "decision": "Guard owned-app restart against its actual per-operation main fingerprint and reject own package on main display; never manipulate owner main display."
+    },
+    {
+      "finding": "Immediate pidof after app restart returned empty before process launch completed.",
+      "decision": "Preserved failed attempt and checkpoint; bounded wait for actual PID, then resumed the same interrupted state; actual resume passed."
+    },
+    {
+      "finding": "Initial installation adapter omitted the re import required by retained version primitive.",
+      "decision": "Fixed adapter before installation; no product change."
+    },
+    {
+      "finding": "Phone entered Dozing/secure keyguard; CDP connection and file selection did not complete.",
+      "decision": "No locked-screen completion claim. After explicit unlock reply, actual picker selection/restore passed. Owner then explicitly requested USB keep-awake; original0 changed to2, actual USB powered/StayOn true verified."
+    },
+    {
+      "finding": "DocumentsUI accessibility click acknowledgement was not proof that file selection completed.",
+      "decision": "Used input at observed owned-display bounds after unlock and waited for durable library publication before continuing. Native UI, source/default playback, backup/purge and final original-library result passed."
+    }
+  ]
+}
