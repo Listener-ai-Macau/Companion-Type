@@ -55,8 +55,7 @@ try:
  preflight=inspect(T,S,source_dir=S)
  (C/'native-target-preflight.json').write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
  assert preflight['result']=='TARGET_IDLE_AT_OBSERVATION',preflight['result']
- record['state']='BUILDING_NORMAL_RELEASE';save()
- run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
+ record['state']='CHECKING_AFFECTED_NATIVE_SOURCE';save()
  # Tauri's build script changes generated inputs between Cargo invocations.
  # Repeating cargo test per filter rebuilt the optimized lib test five times
  # and exhausted the 45-minute job. Build the real test binary once, then run
@@ -75,6 +74,11 @@ try:
   run(scope.replace('::','-')+'-context-regression',[str(test),scope,'--test-threads=1'],N)
  run('audio-edit-native-library-isolated',[str(test),'backend::audio_editing::tests::derived_recording_exact_pcm_backup_restore_and_scoped_purge','--ignored','--exact','--test-threads=1'],N)
  assert sha(test)==record['affectedTestBinary']['sha256']
+ # Fail native test-source/API checks before spending a normal app build.
+ # All affected checks remain unchanged; the shipped pair is still built last
+ # by the same locked normal-release command, then independently inspected.
+ record['state']='BUILDING_NORMAL_RELEASE';save()
+ run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)
  record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]
