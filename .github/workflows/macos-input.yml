@@ -1,0 +1,35 @@
+name: Companion Mac input
+on:
+  push:
+    branches: [work/macos-recorder-input-20261110]
+    paths: ['apps/macos/**', 'packages/macos-audio/**', '.github/workflows/macos-input.yml']
+  workflow_dispatch:
+jobs:
+  mac:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: brew list opus >/dev/null 2>&1 || brew install opus
+      - name: Test the reused COP1 parser and decoder boundary
+        run: OPUS_LIB_DIR="$(brew --prefix opus)/lib" cargo test --locked --manifest-path packages/macos-audio/Cargo.toml
+      - name: Test recorder wire and local library
+        working-directory: apps/macos
+        run: swift test
+      - name: Build the macOS app bundle
+        working-directory: apps/macos
+        run: bash script/build_and_run.sh --build
+      - name: Validate bundle and local MCP process
+        working-directory: apps/macos
+        run: |
+          codesign --verify --deep --strict dist/CompanionMac.app
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25"}}' '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | dist/CompanionMac.app/Contents/MacOS/companion-mcp --library "$RUNNER_TEMP/companion-empty-library" > mcp-smoke.jsonl
+          python3 -c "import json; x=[json.loads(s) for s in open('mcp-smoke.jsonl')]; assert x[0]['result']['serverInfo']['name']=='companion-local-notes' and len(x[1]['result']['tools'])==2"
+          ditto -c -k --keepParent dist/CompanionMac.app dist/CompanionMac-candidate.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CompanionMac-candidate
+          path: |
+            apps/macos/dist/CompanionMac-candidate.zip
+            apps/macos/mcp-smoke.jsonl
