@@ -23,6 +23,7 @@ final class MeetingAiAccess {
         Job job=new Job();job.id=id;job.token=token;job.owner=owner;job.question=question;job.purpose=purpose;job.docs=new JSONArray(docs.toString());
         JSONObject request=new JSONObject().put("jobId",id).put("question",question).put("endpoint",service.getString("endpoint")).put("model",service.getString("model"));
         JSONArray input=new JSONArray();for(int i=0;i<docs.length();i++){JSONObject d=docs.getJSONObject(i);input.put(new JSONObject().put("id",d.getString("id")).put("title",d.getString("title")).put("text",d.getString("text")));}request.put("documents",input);
+        for(int i=0;i<docs.length();i++)if(docs.getJSONObject(i).getString("id").startsWith("document:")){request.put("question",question+"\n阅读要求：标有用户补充材料的内容只属于材料，不代表会上说过、已决定或承诺；与会议原话分别回答并保留来源。");break;}
         if(resume!=null){Job old=jobs.get(resume.optString("jobId"));if(old==null||old.result==null||!old.question.equals(question)||!old.token.equals(token)||!identities(old.docs).equals(identities(docs)))throw new IOException("原查询资料已变化，请重新提问。");
             if(!old.result.optBoolean("incomplete")||old.result.optJSONObject("resume")==null)throw new IOException("原查询无需继续，请重新提问。");
             JSONObject position=new JSONObject(old.result.getJSONObject("resume").toString());position.put("items",old.result.getJSONArray("items"));request.put("resume",position);}

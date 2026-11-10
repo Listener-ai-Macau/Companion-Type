@@ -187,7 +187,7 @@ public final class MainActivity extends Activity {
                     name.append(part);
                 }
                 String asset = name.toString();
-                String mime = asset.endsWith(".js") ? "text/javascript" : asset.endsWith(".css") ? "text/css" : asset.endsWith(".html") ? "text/html" : "application/octet-stream";
+                String mime = (asset.endsWith(".js") || asset.endsWith(".mjs")) ? "text/javascript" : asset.endsWith(".css") ? "text/css" : asset.endsWith(".html") ? "text/html" : "application/octet-stream";
                 try { return new WebResourceResponse(mime, "UTF-8", getAssets().open(asset)); }
                 catch (java.io.IOException error) { return blockedAsset(); }
             }
@@ -214,7 +214,7 @@ public final class MainActivity extends Activity {
     @Override protected void onResume() {
         super.onResume();
         notifySystemAppearance();
-        if(noteImageRestored&&noteImageRequestId!=0){noteImageRequestId=0;noteImageRestored=false;android.widget.Toast.makeText(this,"图片选择已中断，请重新选择；已保存备注仍保留。",android.widget.Toast.LENGTH_LONG).show();}
+        if(noteImageRestored&&noteImageRequestId!=0){noteImageRequestId=0;noteImageRestored=false;android.widget.Toast.makeText(this,"文件选择已中断，请重新选择；已保存材料和备注仍保留。",android.widget.Toast.LENGTH_LONG).show();}
         if(audioImportRequestRestored&&audioImportRequestId!=0){audioImportRequestId=0;audioImportRequestRestored=false;audioImportLibraryToken=null;android.widget.Toast.makeText(this,"文件选择已中断，请重新选择导入；原文件未改变。",android.widget.Toast.LENGTH_LONG).show();}
         if(updateRequestRestored&&updateRequestId!=0){updateRequestId=0;updateRequestRestored=false;android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择。设备保持原状态。",android.widget.Toast.LENGTH_LONG).show();}
         if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
@@ -315,6 +315,8 @@ public final class MainActivity extends Activity {
             } catch(Exception e) { replyDocument(id,null,"导出未完成；所选位置可能留有不完整文件。"+(e.getMessage()==null?"":e.getMessage()),restored); }
         });
     }
+    private DocumentContextStore documentContexts()throws Exception{return new DocumentContextStore(libraries().meetings(),MainActivity::syncLifecycleDirectory);}
+    private JSONObject documentDescription(String key)throws Exception{return documentContexts().read(key).put("libraryToken",libraries().token());}
     private RecordingNotes recordingNotes()throws Exception{return new RecordingNotes(libraries().meetings(),MainActivity::syncLifecycleDirectory);}
     private RecordingLibrary.Session noteSession(JSONObject a)throws Exception{
         if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开这条录音；输入尚未保存。");return session(a.getString("key"));
@@ -325,10 +327,17 @@ public final class MainActivity extends Activity {
     }
     private void finishNoteImagePicker(int resultCode,Intent data){
         final long id=noteImageRequestId;final JSONObject args=noteImageRequest;final boolean restored=noteImageRestored;noteImageRequestId=0;noteImageRequest=null;noteImageRestored=false;
-        if(id==0)return;if(restored||args==null){android.widget.Toast.makeText(this,"图片选择已中断，请重新选择；已保存备注仍保留。",android.widget.Toast.LENGTH_LONG).show();return;}
+        if(id==0)return;if(restored||args==null){android.widget.Toast.makeText(this,"文件选择已中断，请重新选择；已保存材料和备注仍保留。",android.widget.Toast.LENGTH_LONG).show();return;}
         if(resultCode!=RESULT_OK||data==null||data.getData()==null){try{reply(id,new JSONObject().put("cancelled",true),null);}catch(Exception ignored){}return;}
         final android.net.Uri uri=data.getData();worker.execute(()->{boolean locked=false;try{
-            if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("正在保存其它资料，请稍后重试；输入仍保留。");locked=true;RecordingLibrary.Session selected=noteSession(args);String key=args.getString("key");String mime=getContentResolver().getType(uri),extension="image/jpeg".equals(mime)?"jpg":"image/png".equals(mime)?"png":"image/webp".equals(mime)?"webp":null;
+            if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("正在保存其它资料，请稍后重试；输入仍保留。");locked=true;RecordingLibrary.Session selected=noteSession(args);String key=args.getString("key");
+            if("document".equals(args.optString("attachmentKind"))){
+                String name=null;try(android.database.Cursor cursor=getContentResolver().query(uri,new String[]{android.provider.OpenableColumns.DISPLAY_NAME},null,null,null)){if(cursor!=null&&cursor.moveToFirst())name=cursor.getString(0);}
+                if(name==null)throw new java.io.IOException("无法确认文档名称和格式，请另存后重试。");
+                try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("所选文档暂不可读取。");documentContexts().add(key,args.getLong("revision"),args.getString("id"),name,input);}
+                reply(id,documentDescription(key),null);return;
+            }
+            String mime=getContentResolver().getType(uri),extension="image/jpeg".equals(mime)?"jpg":"image/png".equals(mime)?"png":"image/webp".equals(mime)?"webp":null;
             if(extension==null)throw new java.io.IOException("请选择JPEG、PNG或WebP图片。");String name="图片."+extension;
             try(android.database.Cursor cursor=getContentResolver().query(uri,new String[]{android.provider.OpenableColumns.DISPLAY_NAME},null,null,null)){if(cursor!=null&&cursor.moveToFirst())name=cursor.getString(0);}
             final String type=extension;try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("所选图片暂不可读取。");recordingNotes().addImage(key,args.getLong("revision"),args.optString("text",""),noteTime(args),completeAudioDurationMs(selected),name,extension,input,path->RecordingNoteImages.validate(path,type));}
@@ -393,6 +402,12 @@ public final class MainActivity extends Activity {
         return true;
     }
     private final class Bridge {
+        @JavascriptInterface public void pickContextDocument(long id,String json){
+            worker.execute(()->{try{JSONObject args=new JSONObject(json);noteSession(args);args.put("attachmentKind","document");if(LocalLibraryBackups.BUSY.get())throw new java.io.IOException("资料正在保存，请稍后重试。");runOnUiThread(()->{
+                if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0||noteImageRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                noteImageRequestId=id;noteImageRequest=args;noteImageRestored=false;try{startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*").putExtra(Intent.EXTRA_MIME_TYPES,new String[]{"application/pdf","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","application/vnd.openxmlformats-officedocument.presentationml.presentation","text/plain","text/markdown","text/csv"}),35);}catch(Exception e){noteImageRequestId=0;noteImageRequest=null;reply(id,null,"无法打开系统文档选择器，请重试。");}
+            });}catch(Exception e){reply(id,null,e.getMessage());}});
+        }
         @JavascriptInterface public void pickNoteImage(long id,String json){
             worker.execute(()->{try{JSONObject args=new JSONObject(json);noteSession(args);if(LocalLibraryBackups.BUSY.get())throw new java.io.IOException("资料正在保存，请稍后重试。");runOnUiThread(()->{
                 if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0||noteImageRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
@@ -906,6 +921,7 @@ public final class MainActivity extends Activity {
     private final MeetingAiAccess meetingAi=new MeetingAiAccess();
     private AiServiceVault aiServices(){if(aiServices==null)aiServices=new AiServiceVault(this);return aiServices;}
     private JSONObject aiDocument(String key) throws Exception {
+        if(key.startsWith("document:")){int split=key.lastIndexOf(':');if(split<10)throw new java.io.IOException("材料来源标识无效。");String owner=key.substring(9,split);session(owner);return documentContexts().aiDocument(owner,key.substring(split+1));}
         RecordingLibrary.Session recording=session(key);MeetingStore.Snapshot meeting=store().load(key);
         if(meeting==null||meeting.transcript.trim().isEmpty())throw new java.io.IOException("请先完成这场会议的转写。");
         return new JSONObject().put("id",key).put("title",recordingTitle(key,recording)).put("text",meeting.transcript).put("revision",meeting.revision)
@@ -922,6 +938,13 @@ public final class MainActivity extends Activity {
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "documentContexts":{String key=a.getString("key");session(key);return documentDescription(key);}
+            case "documentContextChunk":{noteSession(a);return documentContexts().chunk(a.getString("key"),a.getLong("revision"),a.getString("id"),a.getInt("offset"));}
+            case "documentContextRead":{noteSession(a);return documentContexts().extraction(a.getString("key"),a.getLong("revision"),a.getString("id"));}
+            case "documentContextCommit":{noteSession(a);String key=a.getString("key");documentContexts().saveExtraction(key,a.getLong("revision"),a.getString("id"),a.getJSONObject("extraction"));return documentDescription(key);}
+            case "documentContextRemove":{noteSession(a);String key=a.getString("key");documentContexts().remove(key,a.getLong("revision"),a.getString("id"));return documentDescription(key);}
+            case "documentContextOriginal":{noteSession(a);String key=a.getString("key"),id=a.getString("id");long revision=a.getLong("revision");JSONObject list=documentContexts().read(key),entry=null;JSONArray documents=list.getJSONArray("rows");for(int i=0;i<documents.length();i++)if(id.equals(documents.getJSONObject(i).getString("id")))entry=documents.getJSONObject(i);if(entry==null)throw new java.io.IOException("材料已移除。");Path file=documentContexts().original(key,revision,id);String ext=entry.getString("format"),mime="pdf".equals(ext)?"application/pdf":"docx".equals(ext)?"application/vnd.openxmlformats-officedocument.wordprocessingml.document":"xlsx".equals(ext)?"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":"pptx".equals(ext)?"application/vnd.openxmlformats-officedocument.presentationml.presentation":"text/plain";
+                return preparedExports().create(new JSONObject().put("key",key).put("libraryToken",libraries().token()).put("title",entry.getString("name")),PreparedExports.filename(entry.getString("name"),"原件",ext),mime,null,out->java.nio.file.Files.copy(file,out)).dto();}
             case "recordingNotes":{String key=a.getString("key");session(key);return noteDescription(key);}
             case "saveRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");recordingNotes().save(key,a.getLong("revision"),a.optString("id",""),a.optString("text",""),noteTime(a),completeAudioDurationMs(selected));return noteDescription(key);}
             case "removeRecordingNote":{noteSession(a);String key=a.getString("key");recordingNotes().remove(key,a.getLong("revision"),a.getString("id"));return noteDescription(key);}
@@ -979,13 +1002,14 @@ public final class MainActivity extends Activity {
                 JSONArray available=new JSONArray();int problems=0;StringBuilder identity=new StringBuilder();
                 for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){String key=row.key();
                     try{lifecycle().requireVisible(key);MeetingStore.Snapshot value=store().load(key);if(value==null||value.transcript.trim().isEmpty())continue;JSONObject doc=aiDocument(key);identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}
+                if(a.has("ownerKey")){String owner=a.getString("ownerKey");session(owner);try{JSONObject context=documentContexts().read(owner);JSONArray rows=context.getJSONArray("rows");for(int i=0;i<rows.length();i++){JSONObject row=rows.getJSONObject(i);if(!row.has("extraction"))continue;try{JSONObject doc=documentContexts().aiDocument(owner,row.getString("id"));identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}}catch(Exception unavailable){problems++;}}
                 return new JSONObject().put("libraryToken",libraries().token()).put("available",available).put("sourceVersion",AiMaterialStore.hash(identity.toString())).put("problems",problems);
             }
             case "askMeeting":{
                 String token=a.getString("libraryToken"),owner=a.getString("ownerKey");session(owner);
                 if(!token.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择会议。");
                 JSONArray selection=a.getJSONArray("sources"),docs=new JSONArray();java.util.Set<String> seen=new java.util.HashSet<>();
-                if(selection.length()<1||selection.length()>12)throw new java.io.IOException("请选择1到12场会议。");
+                if(selection.length()<1||selection.length()>12)throw new java.io.IOException("请选择1到12项会议转写或补充材料。");
                 for(int i=0;i<selection.length();i++){JSONObject selected=selection.getJSONObject(i),doc=aiDocument(selected.getString("id"));if(!seen.add(doc.getString("id"))||!doc.getString("binding").equals(selected.getString("binding")))throw new java.io.IOException("会议范围或文字已变化，请重新读取。");docs.put(doc);}
                 JSONObject result=meetingAi.ask(a.getString("jobId"),token,owner,a.getString("question"),docs,aiServices().credentials(),a.optJSONObject("resume"),this::requireAiSources,a.optString("purpose","会议问答"));aiServices().verified();return result;
             }
@@ -1093,7 +1117,7 @@ public final class MainActivity extends Activity {
             case "stopSync": RecordingSyncService.stop(this); return syncStatus();
             case "status": return syncStatus();
             case "licenses": {
-                String[] files = {"ShadcnDashboardMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-document-font-OFL.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
+                String[] files = {"www/document-engine/ThirdPartyNotices.txt", "ShadcnDashboardMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-document-font-OFL.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
                 StringBuilder text = new StringBuilder();
                 for (String file : files) {
                     text.append("\n\n--- ").append(file).append(" ---\n");

@@ -1,2 +1,6 @@
 /apps/windows/src-tauri/resources/licenses/texts/*.txt -text
 /apps/windows/src-tauri/resources/licenses/ThirdPartyNotices.txt text eol=lf
+
+/packages/document-context/ThirdPartyNotices.txt text eol=lf -whitespace
+
+/vendor/document-context/*LICENSE -text -whitespace

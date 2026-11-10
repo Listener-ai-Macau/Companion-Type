@@ -48,7 +48,13 @@
     "lucide-react": "^1.22.0",
     "qrcode": "1.5.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "fflate": "0.8.3",
+    "htmlparser2": "12.0.0",
+    "mammoth": "1.13.0",
+    "pdfjs-dist": "6.5.438",
+    "saxes": "6.0.0",
+    "xlsx": "file:vendor/document-context/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",

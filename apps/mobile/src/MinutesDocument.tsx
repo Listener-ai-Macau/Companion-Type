@@ -14,12 +14,12 @@ export function splitMinutesSections(markdown:string):Section[] {
  }
  flush();return sections;
 }
-function excerpt(body:string):{first:string;remaining:string;count:number}|null {
+function excerpt(body:string):{first:string;remaining:string;count:number;next:string}|null {
  const lines=body.split('\n');
  if(lines.some(line=>line.trim()&&!/^[-*]\s+\S/.test(line)))return null;
  const starts=lines.map((line,index)=>/^[-*]\s+\S/.test(line)?index:-1).filter(i=>i>=0);
  if(starts.length<=5)return null;
- const split=starts[4];return {first:lines.slice(0,split).join('\n'),remaining:lines.slice(split).join('\n'),count:starts.length-4};
+ const split=starts[4],next=lines[split].replace(/^[-*]\s+/,'').slice(0,36);return {first:lines.slice(0,split).join('\n'),remaining:lines.slice(split).join('\n'),count:starts.length-4,next};
 }
 export function MinutesDocument({markdown,renderText,renderSource,generationNote,manualReview=false}:{markdown:string;renderText:(text:string,section?:string,position?:{sectionOccurrence:number;itemOffset:number})=>React.ReactNode;renderSource?:(text:string)=>React.ReactNode;generationNote?:string;manualReview?:boolean}) {
  const manualNotice='> 人工修订：此版本包含使用者的核对或修改，不代表重新生成的 AI 结果；新增负责人和时间请按实际安排确认。\n\n';
@@ -36,6 +36,6 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
   const sectionOccurrence=sections.slice(0,index).filter(previous=>previous.title===section.title).length;
   const emptyCopy:Record<string,string>={Decisions:'这份纪要未记录明确结论。','Action Items':'这份纪要尚未提取到明确的行动事项。',Questions:'这份纪要未记录会中问题。',Keywords:'这份纪要未提取关键词。'};
   const empty=/^(?:[-*]\s+)?None captured[.。]?$/i.test(section.body.trim())?emptyCopy[section.title!]:undefined;
-  return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&!empty&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&!empty&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{section.title==='会议概览'&&<p className="hint">概览可能遗漏细节。整段录音会一起整理；处理分段不代表会议场次，请结合完整纪要和原话查看。</p>}{empty?<p className="hint">{empty}</p>:renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<details className="minutes-more"><summary>查看其余 {remaining.count} 项</summary>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</details>}</section>;
+  return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&!empty&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&!empty&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{section.title==='会议概览'&&<p className="hint">概览可能遗漏细节。整段录音会一起整理；处理分段不代表会议场次，请结合完整纪要和原话查看。</p>}{empty?<p className="hint">{empty}</p>:renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<details className="minutes-more"><summary>查看其余 {remaining.count} 项{remaining.next&&<small className="minutes-more-next"> · {remaining.next}{remaining.next.length>=36?'…':''}</small>}</summary>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</details>}</section>;
  })}{display.metadata&&<details className="minutes-more minutes-generation"><summary>查看生成说明</summary><p>{generationNote||'这是已保存的整理结果，内容请结合转写核对。人工修改会单独标示；生成说明不代表转写或事实准确性已经验证。'}</p></details>}</div></MeetingReadingFrame>;
 }

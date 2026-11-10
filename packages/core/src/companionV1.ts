@@ -515,6 +515,7 @@ export interface CompanionV1HostSession {
   deviceBookmarkImports?: string[];
   noteRevision?: number;
   meetingNotes?: import('./meetingNotes').CompanionMeetingNote[];
+  documentContext?: Pick<import('../../document-context/src/storageTypes').ContextDocuments,'revision'|'rows'>;
   minutes: CompanionV1MeetingMinutes | null;
   /** Independently persisted minutes products for the same durable recording. */
   minutesByMode?: CompanionV1MinutesByMode;
