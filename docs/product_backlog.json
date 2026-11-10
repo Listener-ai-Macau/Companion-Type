@@ -268527,8 +268527,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T21:25:40+08:00",
-            "status": "UNIFIED091_SOURCE_VALIDATED_LATEST_HOST_FIXES_PRESERVED_BUILD_NEXT",
+            "at": "2026-11-10T21:30:13+08:00",
+            "status": "SHARED_UNIFIED091_BUILD_RUNNING_ANDROID129_COMPLETE",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268545,7 +268545,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "091冻结同一原生程序：合并753800da实际已装090修复到已验047f41a4文档源，避免同号不同源替换；在共享项目入口记录统一源，再匹配构建/原生运行/升级及完整归档。Android129和已验088/090文档结果保留。",
+            "next": "沿共享统一源b170264a/091续作：构建42824564396运行中，出包后核来源/载荷/许可/升级，再以同包完成文档及保留输入入口运行、升级和完整归档。两条已验090/已装753分开保留，不再按版本号混同来源。Android129与已承接顾客复用，CP27-16映射基础在A树89c8作为下一完整批次。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268752,7 +268752,10 @@
               "installed": false,
               "modelsOrBoardCalls": false,
               "sharedCoordination": "owner_module_execution.sharedWindowsIntegration20261110"
-            }
+            },
+            "windows091Source": "b170264a7f0693847ea17ef85901f5411280f266",
+            "windows091BuildRun": 42824564396,
+            "windows091Built": false
           }
         }
       },
@@ -274094,8 +274097,8 @@
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
     },
     "sharedWindowsIntegration20261110": {
-      "at": "2026-11-10T21:25:40+08:00",
-      "state": "UNIFIED091_MERGE_SOURCE_VALIDATED_NORMAL_BUILD_NEXT",
+      "at": "2026-11-10T21:30:13+08:00",
+      "state": "UNIFIED091_MERGE_SOURCE_FROZEN_NORMAL_NATIVE_BUILD_RUNNING",
       "reservedVersion": "0.1.91",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
@@ -274107,7 +274110,10 @@
       "installedSourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
       "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
       "canonicalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.documentContext20261110",
-      "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json"
+      "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json",
+      "sourceCommit": "b170264a7f0693847ea17ef85901f5411280f266",
+      "normalBuildRun": 42824564396,
+      "installedFalseUntilActualUpgrade": true
     }
   }
 }
