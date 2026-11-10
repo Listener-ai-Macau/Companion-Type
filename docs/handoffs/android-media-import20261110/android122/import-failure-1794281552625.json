@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-10T03:32:32.613Z",
+  "file": "Companion-public-meeting-90s.wav",
+  "expected": "complete",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "error": "Error: page.evaluate: Error: 正在备份或恢复资料，请等待完成。\n    at window.companionReply (eval at evaluate (:303:30), <anonymous>:1:295)\n    at <anonymous>:1:8"
+}

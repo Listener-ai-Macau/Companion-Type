@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T03:44:42.921Z",
+  "file": "Companion-public-truncated.wav",
+  "expected": "failed",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "084491cc-4d9e-422b-b0a4-65c8156c9f54",
+    "key": "388c88a3fc1086b21c7955cc6f92ddcbc6cc04e994eae1a273de4a45c81faeb6:1:1",
+    "name": "Companion-public-truncated.wav",
+    "running": false,
+    "state": "failed",
+    "message": "音频文件不完整，请重新获取原文件。",
+    "processed": 2048,
+    "total": 2048
+  },
+  "afterSelectionMs": 4,
+  "failureOrCancelDidNotPublishRecording": true,
+  "state": "PASSED"
+}

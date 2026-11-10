@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T11:15:18.062193+08:00",
+  "state": "PASSED",
+  "results": [
+    {
+      "name": "compile",
+      "exit": 0
+    },
+    {
+      "name": "ImportedAudioIntegrationTest",
+      "exit": 0
+    },
+    {
+      "name": "SpeechPcmConverterTest",
+      "exit": 0
+    },
+    {
+      "name": "PlaybackLifecycleTest",
+      "exit": 0
+    }
+  ],
+  "fixtureDataOnly": true,
+  "nativePhoneTested": false,
+  "modelsRun": false,
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\software-cases-1794280516613537700"
+}

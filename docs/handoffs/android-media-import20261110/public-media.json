@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-10T11:22:52+08:00",
+  "source": "Existing public real M2MET S_R004S03C01 original; no owner recording. Video uses generated plain colour plus the real public audio.",
+  "sourceSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "fixtures": [
+    {
+      "name": "Companion-public-invalid.mp3",
+      "bytes": 1000,
+      "sha256": "9e80150e8b1a5084eb76d975e24fc4777c95f21fae70269ae41962646a59f0ef"
+    },
+    {
+      "name": "Companion-public-meeting-90s.m4a",
+      "bytes": 740167,
+      "sha256": "fd6c1f0cee33173fc51065f4c0fc7330bca00966f4acb304e11e961d610ff781"
+    },
+    {
+      "name": "Companion-public-meeting-90s.mp3",
+      "bytes": 360513,
+      "sha256": "29f07b26e4c136368c764d4686a77146f1a981f7e9c120772723a39af1e2aa32"
+    },
+    {
+      "name": "Companion-public-meeting-90s.wav",
+      "bytes": 17280078,
+      "sha256": "cf90bfb045b0c5b7ad5c2e0b3405c30e79eea732b8d7d8c5b292f3799e5c31a6"
+    },
+    {
+      "name": "Companion-public-meeting-long38m.mp3",
+      "bytes": 6981885,
+      "sha256": "5981ef30c7c2ca87931c77f0b7d18273fe79bfa26b4a2fdb9afd1cdfb489ad52"
+    },
+    {
+      "name": "Companion-public-meeting-video-30s.mp4",
+      "bytes": 208259,
+      "sha256": "8fb26c986fdcd12b52b31a2039f21d748cd6727e615532959d8c067608c098de"
+    },
+    {
+      "name": "Companion-public-truncated.wav",
+      "bytes": 2048,
+      "sha256": "45d3c8e5ada55c1414bcd769ed708825c3ff17106ae00f35b009f5ebbfb77985"
+    },
+    {
+      "name": "Companion-public-without-audio.mp4",
+      "bytes": 4864,
+      "sha256": "48fdadf68d88e0982fb1fc724e980c9dec2d3f1f062eb1c1fa4aa985c2207e11"
+    }
+  ],
+  "threads": 1,
+  "gpuUsed": false
+}

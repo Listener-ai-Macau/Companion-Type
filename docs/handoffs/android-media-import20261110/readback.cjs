@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict');
+async function read(page,method,args={}){assert(['libraryStatus','library','detail','playbackStatus','appPreferences','audioImportStatus','aiServiceStatus','timing'].includes(method));return page.evaluate(({method,args})=>new Promise((resolve,reject)=>{const id=-Date.now(),old=window.companionReply,t=setTimeout(()=>{window.companionReply=old;reject(Error('Readback timeout'));},10000);window.companionReply=r=>{if(r.id!==id){old(r);return;}clearTimeout(t);window.companionReply=old;r.error?reject(Error(r.error)):resolve(r.result);};window.CompanionNative.call(id,method,JSON.stringify(args));}),{method,args});}
+module.exports={read};

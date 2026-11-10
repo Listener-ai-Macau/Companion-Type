@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T03:42:25.242Z",
+  "file": "Companion-public-meeting-video-30s.mp4",
+  "expected": "complete",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "90577210-a923-425b-a1d5-a5cacc64ec8b",
+    "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+    "name": "Companion-public-meeting-video-30s.mp4",
+    "running": false,
+    "state": "complete",
+    "message": "录音已保存在本机，可回听或开始转写。",
+    "processed": 22976000,
+    "total": 30064000,
+    "durationMs": 30016,
+    "originalBytes": 208259,
+    "parts": 1
+  },
+  "afterSelectionMs": 965,
+  "nativePlaybackStarted": true,
+  "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+  "state": "PASSED"
+}
