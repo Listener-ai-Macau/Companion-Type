@@ -4,7 +4,7 @@ from datetime import datetime
 import hashlib,json,msilib,os,shutil,subprocess,sys
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055'
 C=R/'docs/handoffs/20261110-android-media-import/windows099';D=Path('E:/CodexData/Companion/.build-cache/windows-note-context20261110')
-A=next((D/'ci-artifact099').iterdir());run_id=42915702572
+A=next((D/'ci-artifact099').iterdir());run_id=42919920321
 sys.path.insert(0,str(R/'model-research/src'))
 from moss_windows_resource_limits_20261104 import WorkerLimits
 limits=WorkerLimits(cpu_percent=5,memory_bytes=512*1024**2)

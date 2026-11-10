@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-11T07:15:40+08:00",
+  "state": "ANDROID136_MATCHED_NATIVE_MANUAL_CONTEXT_AND_VISUAL_REPAIR_QUALIFIED_WINDOWS099_PENDING",
+  "version": "0.1.136",
+  "sourceCommit": "298bef1b49c949237f90677b68161e0617c7891c",
+  "run": 42919946525,
+  "apkSha256": "2f0dfea9cbd5eca3ab6c13c6395330dc7064181a55ae87c2b214ef487329d61a",
+  "nativeFunctionalBaseline": {
+    "version": "0.1.135",
+    "sourceCommit": "71b33214443bb7e66e675ea77151bbd8b721f46e",
+    "javaAarAndModelSourcesUnchanged": true,
+    "realPublicSourceStoreBackupRestore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-restore-integrity.json",
+    "realSelectedTextAndImageBundle": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-export-readback.json",
+    "exactSourcePreservationAndScopedPurge": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-purge-integrity.json",
+    "visualFailureRetained": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-visual-block.json"
+  },
+  "actual136": [
+    "New literal table source capture preserves entered draft; follow-up save and one-marker toggle, current source return, full edit/cancel.",
+    "New source-only raw transcript citation bound to exact full transcriptSHA; current-source native return.",
+    "Actual native18CSSpx checkbox under both themes, readable horizontal text and source, one ordered body; second marker save preserves references.",
+    "Actual app process restart retains both checks and references, existing old notes/transcript/minutes exact, verified document return."
+  ],
+  "actual136Evidence": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-followup.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-speech.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-native-layout.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-reopened.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\end-session.json"
+  ],
+  "engineeringSessionClosed": true,
+  "customerPhase": "Fresh neutral136 presale currently active in separate owned display31; final feedback pending.",
+  "remoteApk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\remote-candidate-backup.json",
+  "windowsCandidate": {
+    "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+    "run": 42919920321,
+    "state": "NORMAL_BUILD_RUNNING",
+    "priorNativeFunctionalChecksRun": 42917980577,
+    "priorNativeFunctionalChecksConclusion": "success",
+    "priorKnownBadVisualMsiNotInstalled": true
+  },
+  "newGroupCompleteArchive": false,
+  "modelsRun": false,
+  "saleQualified": false
+}

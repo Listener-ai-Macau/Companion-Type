@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-10T23:08:52.656Z",
+  "actualVersion": "0.1.136",
+  "modelsOrCloudCalled": false,
+  "state": "ANDROID136_MATCHED_NATIVE_CHECKLIST_NORMAL_DIMENSIONS_SINGLE_ORDERED_BODY_BOTH_THEMES_AND_LITERAL_SAVE_PASSED",
+  "shapes": [
+    {
+      "theme": "dark",
+      "checkWidth": 17.996604919433594,
+      "checkHeight": 17.996604919433594,
+      "textWidth": 245.56027221679688,
+      "textHeight": 23.794567108154297,
+      "viewport": 391,
+      "documentWidth": 391
+    },
+    {
+      "theme": "light",
+      "checkWidth": 17.996604919433594,
+      "checkHeight": 17.996604919433594,
+      "textWidth": 245.56027221679688,
+      "textHeight": 23.794567108154297,
+      "viewport": 391,
+      "documentWidth": 391
+    }
+  ],
+  "note": {
+    "id": "673ab42b-4285-44ed-a2a2-e469a51742f4",
+    "createdAt": 1794352105547,
+    "kind": "followup",
+    "references": [
+      {
+        "id": "b0d45444-a827-4582-86c8-41bf96136682",
+        "kind": "document",
+        "documentId": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+        "name": "Companion-public-公开预算草案128.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "extractionSha256": "5d3bedc699c3f90d45a9b92026797cd4967c1a8020dc0222ea20ecfdf9de9220",
+        "sectionId": "part-1",
+        "sectionLabel": "工作表：预算草案",
+        "row": 2,
+        "quote": "A2\t人工补充\nB2\t12,000.00\nC2\tFALSE\nD2\t0\nE2\t2026-11-10\nF2\t[公式没有已保存结果]"
+      }
+    ],
+    "text": "公开人工跟进卡｜下次沟通准备\n- [x] 核对预算原件\n- [x] 确认待定负责人",
+    "atMs": null,
+    "updatedAt": 1794352130625
+  },
+  "nativeStoreAndExportBackupReuse": "135 full native functional source unchanged;56-file backup/restore,30-file scoped purge and literal TXT/ZIP/image evidence remain actual135 receipts."
+}

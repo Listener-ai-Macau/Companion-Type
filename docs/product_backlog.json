@@ -56243,14 +56243,14 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": false,
-          "reservedFor": "Companion135 public recording-library acceptance",
+          "active": true,
+          "reservedFor": "Companion136 fresh public customer workspace",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-11T06:40:13+08:00",
+          "requestedAt": "2026-11-11T07:10:42+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Own non-main display; fresh declared public134 entry and backup-restored copies only. Human follow-up/checklist, literal transcript/document/table evidence, save/reopen/source removal/export and backup restore/purge. No model/cloud/BLE/microphone/Owner private text.",
-          "releasedAt": "2026-11-11T06:54:43+08:00",
-          "releaseReason": "Android135 public reference/notes/document reading checked per actual receipt; all old library contents retained, owned display and temporary inputs closed. No model/cloud/board.",
+          "scope": "Only new libraries restored through ordinary UI from the known public136 backup; ordinary AI simulated customer use on owned non-main display. No actual listening, microphone/recording, BLE/device, models/ASR/cloud AI, global clipboard/share or Owner/private libraries.",
+          "releasedAt": "2026-11-11T07:09:54+08:00",
+          "releaseReason": "Android136 public reference/notes/document reading checked per actual receipt; all old library contents retained, owned display and temporary inputs closed. No model/cloud/board.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
           ],
@@ -270773,8 +270773,8 @@
               "windowsInstalled": "0.1.98"
             },
             "manualFollowupSources20261111": {
-              "at": "2026-11-11T07:02:18+08:00",
-              "state": "135_NATIVE_FUNCTIONAL_CHAIN_PASSED_ACTUAL_VISUAL_BLOCK_099136_REPAIR_SOURCE_READY",
+              "at": "2026-11-11T07:15:40+08:00",
+              "state": "ANDROID136_MATCHED_NATIVE_MANUAL_CONTEXT_AND_VISUAL_REPAIR_QUALIFIED_WINDOWS099_PENDING",
               "originalItems": [
                 "CP27-01/notes_images",
                 "CP27-01/actions",
@@ -270803,7 +270803,7 @@
                 "Android .context.json is checksummed and revised; editing retains the JSON entry and current source library checks remain at the existing app boundary.",
                 "Source references must bind current library/record at resolution, never persist ephemeral library tokens or arbitrary file/URL paths."
               ],
-              "next": "Use grouped099/136 rendering repair builds, verify actual native checkbox dimensions and single ordered body in both themes, retain13556-file restore/export/scoped purge qualification only for unchanged native functions; then finish099 ordinary source/backup/export flow, coherent private archive and neutral customer experience.",
+              "next": "Read full136 presale return before another customer; complete hypothetical afteruse on a separate fresh copy. Finish exact099 source/MSI inspection, ordinary manual context/source flow and selected export/backup/lifecycle; package099/136 with scoped135 native baseline and privately read back, installWindows only after exact matched checks.",
               "modelsRun": false,
               "saleQualified": false,
               "windowsVersion": "0.1.99",
@@ -270833,14 +270833,14 @@
               ],
               "appDelivered": false,
               "nativeWindowsQualified": false,
-              "phoneQualified": false,
+              "phoneQualified": true,
               "ordinaryBackupRestoreQualified": false,
-              "windowsSource": "eae17fa840c43c7784b8d008094945df4d8f56bf",
-              "androidSource": "71b33214443bb7e66e675ea77151bbd8b721f46e",
-              "windowsBuildRun": 42915702572,
-              "androidBuildRun": 42915729180,
+              "windowsSource": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+              "androidSource": "298bef1b49c949237f90677b68161e0617c7891c",
+              "windowsBuildRun": 42919920321,
+              "androidBuildRun": 42919946525,
               "androidBuildState": "SUCCESS_EXACT_ARTIFACT_SIGNING_NEXT",
-              "windowsBuildState": "IN_PROGRESS",
+              "windowsBuildState": "NORMAL099_LAYOUT_REPAIR_BUILD_RUNNING",
               "android135FunctionalEvidence": [
                 "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-followup.json",
                 "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-speech.json",
@@ -270876,6 +270876,61 @@
                 "functionalNativeSourcesUnchanged": true,
                 "modelsRun": false,
                 "saleQualified": false
+              },
+              "priorWindowsFunctionalBuild": {
+                "run": 42917980577,
+                "source": "e308cfa55e09a1a2a891feabe9affcad69095eff",
+                "scope": "Normal native and affected backend tests; checklist layout known to be superseded before any installation."
+              },
+              "androidActual136": {
+                "at": "2026-11-11T07:15:40+08:00",
+                "state": "ANDROID136_MATCHED_NATIVE_MANUAL_CONTEXT_AND_VISUAL_REPAIR_QUALIFIED_WINDOWS099_PENDING",
+                "version": "0.1.136",
+                "sourceCommit": "298bef1b49c949237f90677b68161e0617c7891c",
+                "run": 42919946525,
+                "apkSha256": "2f0dfea9cbd5eca3ab6c13c6395330dc7064181a55ae87c2b214ef487329d61a",
+                "nativeFunctionalBaseline": {
+                  "version": "0.1.135",
+                  "sourceCommit": "71b33214443bb7e66e675ea77151bbd8b721f46e",
+                  "javaAarAndModelSourcesUnchanged": true,
+                  "realPublicSourceStoreBackupRestore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-restore-integrity.json",
+                  "realSelectedTextAndImageBundle": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-export-readback.json",
+                  "exactSourcePreservationAndScopedPurge": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-purge-integrity.json",
+                  "visualFailureRetained": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-visual-block.json"
+                },
+                "actual136": [
+                  "New literal table source capture preserves entered draft; follow-up save and one-marker toggle, current source return, full edit/cancel.",
+                  "New source-only raw transcript citation bound to exact full transcriptSHA; current-source native return.",
+                  "Actual native18CSSpx checkbox under both themes, readable horizontal text and source, one ordered body; second marker save preserves references.",
+                  "Actual app process restart retains both checks and references, existing old notes/transcript/minutes exact, verified document return."
+                ],
+                "actual136Evidence": [
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-followup.json",
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-speech.json",
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-native-layout.json",
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\manual-reopened.json",
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\end-session.json"
+                ],
+                "engineeringSessionClosed": true,
+                "customerPhase": "Fresh neutral136 presale currently active in separate owned display31; final feedback pending.",
+                "remoteApk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\remote-candidate-backup.json",
+                "windowsCandidate": {
+                  "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+                  "run": 42919920321,
+                  "state": "NORMAL_BUILD_RUNNING",
+                  "priorNativeFunctionalChecksRun": 42917980577,
+                  "priorNativeFunctionalChecksConclusion": "success",
+                  "priorKnownBadVisualMsiNotInstalled": true
+                },
+                "newGroupCompleteArchive": false,
+                "modelsRun": false,
+                "saleQualified": false
+              },
+              "customer136Presale": {
+                "state": "ACTIVE",
+                "task": "/root/customer136_presale",
+                "ownedDisplay": 31,
+                "scope": "Only one fresh public four-record library; no engineering history, model/cloud, hardware or real purchase; complete feedback pending."
               }
             }
           },
@@ -276619,8 +276674,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "eae17fa840c43c7784b8d008094945df4d8f56bf",
-      "pendingUnifiedBuildRun": 42915702572,
+      "pendingUnifiedSource": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+      "pendingUnifiedBuildRun": 42919920321,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00"
     }
   }

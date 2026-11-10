@@ -38,5 +38,10 @@ if mode=="documents":
  shutil.copyfile(case/"result.json",O/"document-ui.json")
  if int(code)>=97:
   for name in ["notes-reading-recent.png","notes-reading-created.png","notes-reading-source-search.png","notes-reading-ui.json"]:shutil.copyfile(case/name,O/name)
+if mode=="documents" and int(code)>=99:
+ manual=json.loads((case/"manual-followup-ui.json").read_text(encoding="utf8"))
+ assert manual["state"]=="ORDINARY_PACKAGED_MANUAL_FOLLOWUP_LITERAL_EVIDENCE_REOPEN_SOURCE_REMOVAL_PASSED"
+ assert backend["manualFollowup"]["noteKindChecklistAndLiteralReferencesRestoredExactly"] and backend["manualFollowup"]["selectedTextAndFullJsonEvidencePreserved"] and backend["manualFollowup"]["forgedOrMissingSourceEditRejectedWithoutStateChange"]
+ for name in ["manual-followup-ui.json","manual-followup-evidence.png"]:shutil.copyfile(case/name,O/name)
 (O/"runtime-artifact-readback.json").write_text(json.dumps(proof,indent=2)+"\n",encoding="utf8")
 print(json.dumps({"state":result["state"],"run":run_id,"appSource":v["sourceCommit"],"exactPcmOutputs":backend.get("generatedOutputRows"),"restoredFiles":backend.get("restoreFilesByteIdentical",backend.get("restoredOriginalAndExtractionFilesByteIdentical"))}))
