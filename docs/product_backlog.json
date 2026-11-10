@@ -38540,18 +38540,26 @@
           ],
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
-            "at": "2026-11-10T21:02:59+08:00",
-            "state": "SOURCE_CHECKPOINT_ONLY_PCM_MAPPING_FOUNDATION_NATIVE_EDITING_OPEN",
+            "at": "2026-11-10T21:43:22+08:00",
+            "state": "SOURCE_CHECKPOINT_PCM_MAPPING_AND_ACTUAL_BOUNDED_RENDERER_NATIVE_PUBLICATION_UI_OPEN",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
               "packages/audio-derivation/src/plan.ts",
               "tools/test_audio_derivation_plan.ts"
             ],
             "actual": "Validated immutable source identities, sample-accurate trim/reorder/multi-source maps, half-open boundaries, full last partial millisecond, range-to-original intersections, stale/damaged map rejection and safe-integer overflow. Pure source strict typecheck and actual bundled assertions pass.",
-            "notImplementedYet": "Native streaming audio materialization, atomic publication/provenance/backup/purge, ordinary trim/split/merge UI and installed/runtime qualification remain open.",
+            "notImplementedYet": "Native service/source resolver, atomic library publication and provenance/backup/purge integration, ordinary trim/split/merge UI, Windows native materialization and full installed qualification remain open.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
-            "currentDependency": "Main complete document batch remains active; unified Windows090 normal build42818029062 is running. This unused source foundation was prepared in Android tree during that dependency and does not change Android129 shipped bytes or trigger a native build.",
-            "next": "After main unified document batch is frozen, continue native bounded PCM rendering and durable source maps using existing import/backup/lifecycle mechanisms, then one complete trim/split/merge user batch on both clients."
+            "currentDependency": "Main document batch remains active; shared unifiedWindows091/b170 build42824564396 is running. Renderer is a protected unused source checkpoint in Android tree;129 shipped bytes unchanged, no native package requested.",
+            "next": "After main unified document batch is frozen, continue native bounded PCM rendering and durable source maps using existing import/backup/lifecycle mechanisms, then one complete trim/split/merge user batch on both clients.",
+            "renderer": {
+              "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
+              "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
+              "implemented": "64KiB streaming from SHA-verified multipart16k mono PCM; exact half-open sample slices, ordered multi-source output, immutable sources, forced WAV output and SHA; only newly created private temporary retired on cancel/failure.",
+              "actualChecks": "Java8-target standalone compile, generated actual PCM samples across source parts and reordered recordings, exact last sample/WAV/hash, invalid ranges/hash/format/truncation, mid-render cancellation cleanup and intentional test-copy mutation rejection passed.",
+              "inputBoundary": "Trusted private canonical PCM sources resolved by future library adapter. The adapter must hold source leases, revalidate library/snapshot identity, enforce storage budget, and publish source provenance atomically. This engine does not accept public IPC filenames or publish recordings.",
+              "runtime": "Single CPU/JVM128MiB; no audio capture, model, phone or Owner media used."
+            }
           }
         },
         {
@@ -136823,7 +136831,8 @@
         "input090Source": "753800da8f500440e9f753dece3d1f6b02578252",
         "input090BuildRun": 42819548838,
         "input090Installed": false,
-        "recovery090Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json"
+        "recovery090Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json",
+        "frontendIntegrationHandoff": "owner_module_execution.sharedWindowsIntegration20261110 — Windows091 source merge in progress; preserve both source lineages without changing the firmware/physical task priority."
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -268526,8 +268535,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T20:44:29+08:00",
-            "status": "UNIFIED_WINDOWS090_REMOTE_BUILD_RUNNING_ANDROID129_COMPLETE",
+            "at": "2026-11-10T21:30:13+08:00",
+            "status": "SHARED_UNIFIED091_BUILD_RUNNING_ANDROID129_COMPLETE",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268544,7 +268553,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "统一090/047f41a4正常原生构建42818029062运行中；原088文档真实UI/备份恢复/精确删除已通过并保留，089实际安装收据已读取，拒绝降级。构建后匹配090文档+保留桌面输入入口验收、静默升级及完整归档；Android129和两类顾客已交结果复用，不新录音/模型。",
+            "next": "沿共享统一源b170264a/091续作：构建42824564396运行中，出包后核来源/载荷/许可/升级，再以同包完成文档及保留输入入口运行、升级和完整归档。两条已验090/已装753分开保留，不再按版本号混同来源。Android129与已承接顾客复用，CP27-16映射基础在A树89c8作为下一完整批次。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268707,7 +268716,54 @@
             "windows090Source": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
             "windows090BuildRun": 42818029062,
             "windows090Built": false,
-            "windows088QualifiedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows088\\runtime-result.json"
+            "windows088QualifiedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows088\\runtime-result.json",
+            "windows090RuntimeQualified": true,
+            "windows090RuntimeRun": 42822638071,
+            "installedLatestSourceHandoff": {
+              "at": "2026-11-10T21:23:24+08:00",
+              "state": "SAME_VERSION_DIFFERENT_SOURCE090_INSTALLATION_REFUSED_MERGE_LATEST_HOST_FIXES",
+              "qualifiedDocumentSource": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+              "qualifiedRuntime": 42822638071,
+              "installedVersion": "0.1.90",
+              "installedSource": "753800da8f500440e9f753dece3d1f6b02578252",
+              "installedReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
+              "installedReceiptSha256": "2fc786f4c8a3521793028dcb6e125beb76d48b48c262bcfd0f159ea2b6e08b64",
+              "installedExeSha256": "4014e618ea492bc298ff7fb4ad59a8cb779305ce8225db579c40966e9973ad6a",
+              "installedDllSha256": "798987c6bcb5416d1b4178dadb8cbc97ef5c54d22b0fba184d813db1c3176bf7",
+              "document090MsiexecInvoked": false,
+              "decision": "Preserve the newly installed host pairing/input fixes; merge753800da into the qualified document lineage and freeze one091 source. Publish the coordination at shared project scope to prevent independent version-only replacement.",
+              "ownerDataChanged": false,
+              "modelsOrBoardCalls": false
+            },
+            "windows091Integration": {
+              "at": "2026-11-10T21:25:40+08:00",
+              "state": "UNIFIED091_LATEST_INSTALLED_INPUT_AND_QUALIFIED_DOCUMENT_SOURCE_READY",
+              "version": "0.1.91",
+              "documentParent": "dbecfc33a6a9f4bdda84cb3df0db813eaef682fa",
+              "latestInstalledInputParent": "753800da8f500440e9f753dece3d1f6b02578252",
+              "documentSourceUnchanged": true,
+              "latestInputSourceFilesUnchanged": [
+                "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+                "apps/windows/src-tauri/src/backend/ble_bridge/desktop_input.rs",
+                "apps/windows/src-tauri/src/backend/ble_pairing.rs",
+                "apps/windows/src-tauri/src/backend/desktop_dictation.rs",
+                "apps/windows/src-tauri/src/backend/recorder_input.rs",
+                "apps/windows/src/DesktopDictation.tsx",
+                "apps/windows/src/workspaceRefinement.css"
+              ],
+              "windowsTypecheckPassed": true,
+              "exactLicenseInventoryPassed": {
+                "components": 403,
+                "texts": 286,
+                "sourceArchives": 17
+              },
+              "installed": false,
+              "modelsOrBoardCalls": false,
+              "sharedCoordination": "owner_module_execution.sharedWindowsIntegration20261110"
+            },
+            "windows091Source": "b170264a7f0693847ea17ef85901f5411280f266",
+            "windows091BuildRun": 42824564396,
+            "windows091Built": false
           }
         }
       },
@@ -274047,6 +274103,25 @@
       "qualityCorrection": "用户认为现有设计太像AI作文；参考真实竞品，做克制、精致、有实际产品密度的Windows及手机统一界面，避免宣传式大标题、装饰性波形及虚构数据。",
       "workpoint": "E:/CodexData/Companion/unified-frontends-r2-20261102/source；已有未提交的Windows视觉探索及Android工程骨架，均未完成、未验收。手机真实后端桥接待做。",
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
+    },
+    "sharedWindowsIntegration20261110": {
+      "at": "2026-11-10T21:30:13+08:00",
+      "state": "UNIFIED091_MERGE_SOURCE_FROZEN_NORMAL_NATIVE_BUILD_RUNNING",
+      "reservedVersion": "0.1.91",
+      "sourceBranch": "work/device-phone-closure055-20261106",
+      "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+      "mustIncludeSources": [
+        "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+        "753800da8f500440e9f753dece3d1f6b02578252"
+      ],
+      "verifiedDocumentRuntime": 42822638071,
+      "installedSourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
+      "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
+      "canonicalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.documentContext20261110",
+      "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json",
+      "sourceCommit": "b170264a7f0693847ea17ef85901f5411280f266",
+      "normalBuildRun": 42824564396,
+      "installedFalseUntilActualUpgrade": true
     }
   }
 }
