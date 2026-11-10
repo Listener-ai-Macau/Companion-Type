@@ -13,9 +13,14 @@ await act(async()=>button('添加文档').props.onClick());assert.equal(value.ro
 cancel=false;await act(async()=>button('添加文档').props.onClick());assert.equal(value.rows.length,1);assert.equal(chunkReads,0,'Import must not automatically parse or send a file');assert(text(tree.toJSON()).includes('<img onerror=bad()>.txt'));assert.equal(tree.root.findAllByType('img').length,0,'Document names must be literal text');
 await act(async()=>tree.root.findByProps({className:'document-open'}).props.onClick());assert.equal(chunkReads,0,'Opening an unextracted document must preserve the explicit extraction step');assert(button('在本机提取文字'));assert(button('另存原件'));
 await act(async()=>tree.root.findAllByType('button').find(n=>String(n.props['aria-label']).startsWith('移除材料'))!.props.onClick());assert.equal(removed.length,36);assert.equal(value.rows.length,0);act(()=>tree.unmount());
+let documentVisits=0,noteVisits=0;
 const scopes=[{id:'fixture',title:'本场转写',binding:'transcript'},{id:'document:fixture:one',title:'补充材料 · 议程',binding:'doc-source',kind:'supplement' as const}];
-await act(async()=>{tree=create(<MeetingAiWorkbench contextId="fixture" contextVersion="1" title="公开会议" scopes={scopes} serviceReady onLoadSaved={async()=>[]} onSave={async()=>{}} onSetup={()=>{}} onOpenSource={()=>{}} onAsk={async(_q,ids)=>{asked=ids;return {items:[],totalChunks:1,completedChunks:1,incomplete:false,cancelled:false};}}/>);});
+await act(async()=>{tree=create(<MeetingAiWorkbench contextId="fixture" contextVersion="1" title="公开会议" scopes={scopes} serviceReady onOpenDocuments={()=>documentVisits++} onOpenNotes={()=>noteVisits++} onLoadSaved={async()=>[]} onSave={async()=>{}} onSetup={()=>{}} onOpenSource={()=>{}} onAsk={async(_q,ids)=>{asked=ids;return {items:[],totalChunks:1,completedChunks:1,incomplete:false,cancelled:false};}}/>);});
 const choices=()=>tree.root.findAllByProps({type:'checkbox'});assert.equal(choices()[0].props.checked,true);assert.equal(choices()[1].props.checked,false,'Human documents must not be selected automatically');
 act(()=>tree.root.findByProps({'aria-label':'会议AI问题'}).props.onChange({target:{value:'请比较所选材料。'}}));await act(async()=>button('开始整理').props.onClick());assert.deepEqual(asked,['fixture']);
-act(()=>choices()[1].props.onChange({target:{checked:true}}));await act(async()=>button('开始整理').props.onClick());assert.deepEqual(asked,['fixture','document:fixture:one']);assert(text(tree.toJSON()).includes('含人工补充材料'));act(()=>tree.unmount());
+act(()=>choices()[1].props.onChange({target:{checked:true}}));await act(async()=>button('开始整理').props.onClick());assert.deepEqual(asked,['fixture','document:fixture:one']);assert(text(tree.toJSON()).includes('含人工补充材料'));
+act(()=>tree.root.findByProps({'aria-label':'会议AI问题'}).props.onChange({target:{value:'保留我的问题输入'}}));
+act(()=>button('阅读补充文档').props.onClick());act(()=>button('查看人工备注').props.onClick());
+assert.equal(documentVisits,1);assert.equal(noteVisits,1);assert.equal(tree.root.findByProps({'aria-label':'会议AI问题'}).props.value,'保留我的问题输入');assert(text(tree.toJSON()).includes('已保存的 AI 草稿'));assert(text(tree.toJSON()).includes('不计入 AI 草稿数量'));
+act(()=>tree.unmount());
 console.log('PASS document import cancellation, literal filenames, explicit extraction, scoped removal and AI source selection default/exact opt-in. Native storage and worker parsing verified separately.');
