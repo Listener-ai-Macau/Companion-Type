@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-10T06:32:03.068462+00:00",
+  "state": "WINDOWS083_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED",
+  "testSourceCommit": "421a418e3c8c3078d7be8acf02d119cd75030fb6",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "appVersion": "0.1.83",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "aa6275059e44476f74fdd2d7e1ffadfa3737748c90138c59397ec0ad2a002ecd",
+  "exactMsiDllSha256": "36dc8a7f6fac083218e1ea0e315baf84d599bd44c202a68523b0dfbaccfa0542",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED",
+  "contextBackendExitCode": 0,
+  "contextBackendState": "ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED",
+  "sourceAudioUnchanged": true,
+  "finishedAt": "2026-11-10T06:32:44.750197+00:00",
+  "runtimeRun": 42769086328,
+  "evidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\windows-note-context20261110\\context-passed083\\companion-context-421a418e3c8c3078d7be8acf02d119cd75030fb6",
+  "installationDecision": "Keep installed082 until grouped image usability corrections are packaged and verified, then perform one083-successor upgrade.083 is remote-protected working candidate, not installed."
+}
