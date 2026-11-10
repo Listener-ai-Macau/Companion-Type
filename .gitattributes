@@ -1,5 +1,6 @@
-/apps/windows/src-tauri/resources/licenses/texts/*.txt -text
-/apps/windows/src-tauri/resources/licenses/ThirdPartyNotices.txt text eol=lf
+/apps/windows/src-tauri/resources/licenses/texts/*.txt -text -whitespace
+/apps/windows/src-tauri/resources/licenses/ThirdPartyNotices.txt text eol=lf -whitespace
+/vendor/document-context/*LICENSE -text -whitespace
 
 docs/handoffs/model-rapid-r3-20261109/** -text -whitespace
 

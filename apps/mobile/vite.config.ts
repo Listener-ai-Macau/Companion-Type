@@ -1,11 +1,12 @@
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import {documentEngineAssets} from '../../packages/document-context/viteAssets';
 
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
   base: './',
-  plugins: [react()],
+  plugins: [react(),documentEngineAssets()],
   resolve: {
     alias: {
       '@companion-type/core': fileURLToPath(new URL('../../packages/core/src/index.ts', import.meta.url)),

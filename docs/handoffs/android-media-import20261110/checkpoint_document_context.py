@@ -1,0 +1,19 @@
+from pathlib import Path
+from datetime import datetime
+import ast,json,os,subprocess,shutil
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';C=Path(__file__).parent
+receipt=json.loads((C/'document-reader-browser.json').read_text(encoding='utf-8'))
+assert receipt['state']=='SHARED_DOCUMENT_READER_PRODUCTION_WORKER_OFFLINE_FIXTURES_PASS'
+path=R/'docs/product_backlog.json';before=path.read_bytes();data=json.loads(before)
+point=data['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']
+point['documentContext20261110']={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'status':'SHARED_LOCAL_READER_SOURCE_CHECKPOINT_NOT_APP_DELIVERY','userResult':'在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。','baseline':'Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609','originalItem':'CP27-01/import; CP27-03/05','evidence':str(C/'document-reader-browser.json'),'checked':'独立DOCX正文/表格/附注/页眉、稀疏XLSX格式/隐藏表/缺失公式、PPTX关系顺序/隐藏页、文字编码和原件SHA；实际生产worker浏览器本地PDF分页/密码/取消/再读；Office ZIP与XML容量/CRC/来源边界。','failuresRetained':['SheetJS默认丢掉没有保存结果的公式，启用stub并识别t=z的合成0，不能当作公式结果。','HTML纯文字投影保留段落间空行，工程检查断言修正，不改变原件。','saxes npm包未附完整LICENSE，从作者v6.0.0标签取得3011字节原文并加入既有材料；初次下载SSL失败后官方GitHub API成功。'],'appDelivered':False,'next':'接入两端本机原件/提取结果持久保存、读取与取消、材料界面及显式AI来源选择，再集中构建验原件/备份/恢复/精确清除；127非阻断阅读意见同批处理。','ownerPrivateDataUploaded':False,'modelsRun':False,'saleQualified':False}
+body=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode('utf-8');temp=path.with_suffix('.document-checkpoint.tmp');temp.write_bytes(body);assert path.read_bytes()==before;temp.replace(path)
+dest=S/'docs/handoffs/android-media-import20261110';dest.mkdir(exist_ok=True)
+for name in ['checkpoint_document_context.py','document-reader-browser.json']:shutil.copyfile(C/name,dest/name)
+shutil.copyfile(path,S/'docs/product_backlog.json')
+env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_SSH_COMMAND':'ssh -o HostName=github.com -p 22 -o ProxyCommand=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=2'}
+tree=ast.parse((S/'docs/handoffs/model-joint-neural-spatial-20261108/preserve_joint_neural_spatial_20261108.py').read_text(encoding='utf-8'));scope={'subprocess':subprocess,'env':env};exec(compile(ast.Module(body=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ['git','ship']],type_ignores=[]),'selective-publisher','exec'),scope)
+files=['packages/document-context','vendor/document-context','package.json','package-lock.json','apps/windows/vite.config.ts','apps/mobile/vite.config.ts','apps/windows/src-tauri/resources/licenses','tools/test_document_context_archive.ts','tools/test_document_context_formats.ts','tools/qa/core_acceptance20261109/document_archive_fixtures.py','tools/qa/core_acceptance20261109/document_format_fixtures.py','tools/qa/core_acceptance20261109/document_reader_harness.html','tools/qa/core_acceptance20261109/document_reader_harness.ts','tools/qa/core_acceptance20261109/document_reader_browser.ts','tools/qa/core_acceptance20261109/document_reader_notices.py','docs/handoffs/android-media-import20261110/checkpoint_document_context.py','docs/handoffs/android-media-import20261110/document-reader-browser.json','docs/product_backlog.json']
+files.append('.gitattributes')
+result=scope['ship'](S,files,'[skip ci] Preserve bounded shared local document reader and independent fixtures')
+record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'DOCUMENT_READER_SOURCE_CHECKPOINT_REMOTE_VERIFIED','appDelivered':False,'publication':result};(C/'document-source-checkpoint.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8');print(json.dumps(record))

@@ -3,7 +3,7 @@
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
     "apps/windows/src-tauri/Cargo.lock": "622414925ba2c1b2d63111d2ecbd19ea2d9d6b4e26d52117217a389327fa2eeb",
-    "package-lock.json": "474b7bc1342c2b06d4c4751e03697ceaab2928ae1fb8cfde922ad089f98adc10"
+    "package-lock.json": "e43c935fa0db9931b38fe760169edd3140defc88860ed14e3dc9be5b2a13d27f"
   },
   "components": [
     {
@@ -8135,6 +8135,619 @@
           "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
         }
       ]
+    },
+    {
+      "name": "@xmldom/xmldom",
+      "version": "0.8.15",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.8.15.tgz",
+      "integrity": "sha512-/5NV/vDALVFDXgLmfsy9TRCBlKwO2LNBFzpzvb9iIj+jR+eSc6DLYYvVOdivT/jm7MtU6TebYuRmzEOI7w40UA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "4da724fc305d81606b245b324d4d2586916b9d248b23d82183df753ace0fdf71",
+          "file": "texts/4da724fc305d81606b245b324d4d2586916b9d248b23d82183df753ace0fdf71.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "argparse",
+      "version": "1.0.10",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz",
+      "integrity": "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "c8442419dc614089ea022b3da6bfc089b41a58fb7b9030d1e651f2f36189dce2",
+          "file": "texts/c8442419dc614089ea022b3da6bfc089b41a58fb7b9030d1e651f2f36189dce2.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+      "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "5b37224c080cdcc97c871ada971c224e9926370fe74f11b539aa1cf9f3b1aca1",
+          "file": "texts/5b37224c080cdcc97c871ada971c224e9926370fe74f11b539aa1cf9f3b1aca1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
+      "integrity": "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "33b734d60042d0fe0c92dd1fc1e874193a1c899ec3e276a2eb935d2d0bf5b710",
+          "file": "texts/33b734d60042d0fe0c92dd1fc1e874193a1c899ec3e276a2eb935d2d0bf5b710.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "dingbat-to-unicode",
+      "version": "1.0.2",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/dingbat-to-unicode/-/dingbat-to-unicode-1.0.2.tgz",
+      "integrity": "sha512-R0bRerYzy/EZP6QzD3Hkl6JjUDA1Mnn+pd928w0nWjPzihnbAR6dcjGJGiRyznj5E4S1duEKzWrTqw02DPcdzg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "1013cef4b629a3c7eaf737c110fb5bebbf3abbc16e154d769468d71c3653fa37",
+          "file": "texts/1013cef4b629a3c7eaf737c110fb5bebbf3abbc16e154d769468d71c3653fa37.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "dom-serializer",
+      "version": "3.1.1",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/dom-serializer/-/dom-serializer-3.1.1.tgz",
+      "integrity": "sha512-4MEa38/QexBob6gFNwu+EGdWvhJ1OKuNwdYY3Y3NyeWDQfnGeDYQUDfIRzWu5B5gsv03so2Uxd28YC6zrsx3Lw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fd495b1bdd024995c6b3bd612584a4e37513250317bb5a6586f62c7756f9aff1",
+          "file": "texts/fd495b1bdd024995c6b3bd612584a4e37513250317bb5a6586f62c7756f9aff1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "domelementtype",
+      "version": "3.0.0",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/domelementtype/-/domelementtype-3.0.0.tgz",
+      "integrity": "sha512-umCQid3jKbDmVjx8jGaW7uUykm4DEUeyV21hPxNMo2nV955DhUThwqyOIDtreepP31hl84X7G5U9ZfsWvIB3Pg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+          "file": "texts/cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "domhandler",
+      "version": "6.0.1",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/domhandler/-/domhandler-6.0.1.tgz",
+      "integrity": "sha512-gYzvtM72ZtxQO0T048kd6HWSbbGCNOUwcnfQ01cqIJ4X2IYKFFHZ5mKvrQETcFXxsRObZulDaKmy//R7TPtsBg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+          "file": "texts/cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "domutils",
+      "version": "4.0.2",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/domutils/-/domutils-4.0.2.tgz",
+      "integrity": "sha512-qI4JLRKnSzqFqr7hAlS5xQDusBCjKSEG4t4+7aNrIQMHBcsC2TGEhuyABJdYkgSewL57PNLYEiibY2iPKhKpaA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+          "file": "texts/cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "duck",
+      "version": "0.1.12",
+      "license": "BSD",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/duck/-/duck-0.1.12.tgz",
+      "integrity": "sha512-wkctla1O6VfP89gQ+J/yDesM0S7B7XLXjKGzXxMDVFg7uEn706niAtyYovKbyq1oT9YwDcly721/iUWoc8MVRg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1",
+          "file": "texts/6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "entities",
+      "version": "8.1.0",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/entities/-/entities-8.1.0.tgz",
+      "integrity": "sha512-kxL7msIffSuh9aaFAMD7rxAIuTRMAHMeBtgHW2yUdWw732ZNh4MehkF2gdjvtdmikkaIP9bFDDJOPlsvm7avrA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164",
+          "file": "texts/cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.3",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz",
+      "integrity": "sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551",
+          "file": "texts/0a1df3a083d0c010560aa342e87959c8c1070e6fd54545741f083f22d0c8b551.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "htmlparser2",
+      "version": "12.0.0",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/htmlparser2/-/htmlparser2-12.0.0.tgz",
+      "integrity": "sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "204cfa747341660e4da64cd23e8c876c6b20279d247f48564993d3fc4a2eab47",
+          "file": "texts/204cfa747341660e4da64cd23e8c876c6b20279d247f48564993d3fc4a2eab47.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/immediate/-/immediate-3.0.6.tgz",
+      "integrity": "sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==",
+      "texts": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "809e66de579fb7d92503848bbe6d1f348f4f6521a71e5d294fe7cc0c87a3b4ff",
+          "file": "texts/809e66de579fb7d92503848bbe6d1f348f4f6521a71e5d294fe7cc0c87a3b4ff.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "license": "ISC",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b",
+          "file": "texts/5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
+      "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==",
+      "texts": [
+        {
+          "path": "README.md",
+          "sha256": "ff138e683771b187f3629c383db72ee7d632009010a36d08e18e8d2a34222ec7",
+          "file": "texts/ff138e683771b187f3629c383db72ee7d632009010a36d08e18e8d2a34222ec7.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "jszip",
+      "version": "3.10.2",
+      "license": "(MIT OR GPL-3.0-or-later)",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/jszip/-/jszip-3.10.2.tgz",
+      "integrity": "sha512-3l+rb15IOWtUhU0H5MFqES/T6Kh7abYwjosBey/vD6hDt8zoEffkSC5Ws5SGtgVw3gBx2NEbhTeSW1+kWkpyTQ==",
+      "texts": [
+        {
+          "path": "LICENSE.markdown",
+          "sha256": "566c953c6090b1218ca6217dd7359d45dde46581968586dc607d59a78af6a9c4",
+          "file": "texts/566c953c6090b1218ca6217dd7359d45dde46581968586dc607d59a78af6a9c4.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/lie/-/lie-3.3.0.tgz",
+      "integrity": "sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==",
+      "texts": [
+        {
+          "path": "license.md",
+          "sha256": "5c81b0caa98593408b03125efa25efe622341ed87ae55561968828cd887d64a4",
+          "file": "texts/5c81b0caa98593408b03125efa25efe622341ed87ae55561968828cd887d64a4.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "lop",
+      "version": "0.4.2",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/lop/-/lop-0.4.2.tgz",
+      "integrity": "sha512-RefILVDQ4DKoRZsJ4Pj22TxE3omDO47yFpkIBoDKzkqPRISs5U1cnAdg/5583YPkWPaLIYHOKRMQSvjFsO26cw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1",
+          "file": "texts/6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "mammoth",
+      "version": "1.13.0",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/mammoth/-/mammoth-1.13.0.tgz",
+      "integrity": "sha512-2cawcYFcP7ISfXbBcL9lmVgTNWo88v/52ND1gnywHtVT/pX0//puPnf0iMPV9ZgmuvNOE+zkIhDgZ9M2c2dDDg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1",
+          "file": "texts/6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "option",
+      "version": "0.2.4",
+      "license": "BSD-2-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/option/-/option-0.2.4.tgz",
+      "integrity": "sha512-pkEqbDyl8ou5cpq+VsnQbe/WlEy5qS7xPzMS1U55OCG9KPvwFD46zDbxQIj3egJSFc3D+XhYOPUzz49zQAVy7A==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1",
+          "file": "texts/6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "license": "(MIT AND Zlib)",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
+      "integrity": "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539",
+          "file": "texts/a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "pdfjs-dist",
+      "version": "6.5.438",
+      "license": "Apache-2.0",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-6.5.438.tgz",
+      "integrity": "sha512-vg8Pw1x+AFKy4AMDvhuWl5cOYV8d698UoEANoFFhc79hqXDnZQqnOXoxw3HG907WHOg1JYOvLhP756boddFxpA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        },
+        {
+          "path": "cmaps/LICENSE",
+          "sha256": "aa92ab5a472974865a96fd4a4e9c13bb41bf6fe1b309cb6b8da48bc9e19839a2",
+          "file": "texts/aa92ab5a472974865a96fd4a4e9c13bb41bf6fe1b309cb6b8da48bc9e19839a2.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        },
+        {
+          "path": "standard_fonts/LICENSE_FOXIT",
+          "sha256": "b578cdd2345840ada550bd12519533812320d5f1d21cf4c1c7e1b1b0a31c98b7",
+          "file": "texts/b578cdd2345840ada550bd12519533812320d5f1d21cf4c1c7e1b1b0a31c98b7.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        },
+        {
+          "path": "standard_fonts/LICENSE_LIBERATION",
+          "sha256": "d2c4d5b3e115a519cb58eb691aa64538397e2611f9ebe801392cf9667997e7dc",
+          "file": "texts/d2c4d5b3e115a519cb58eb691aa64538397e2611f9ebe801392cf9667997e7dc.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
+      "integrity": "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==",
+      "texts": [
+        {
+          "path": "license.md",
+          "sha256": "ecdccbcf39024f624ded480c01c0b25458e1eca8f26ecf040933865ce56d9a4f",
+          "file": "texts/ecdccbcf39024f624ded480c01c0b25458e1eca8f26ecf040933865ce56d9a4f.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
+      "integrity": "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54",
+          "file": "texts/ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
+      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac",
+          "file": "texts/c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "saxes",
+      "version": "6.0.0",
+      "license": "ISC",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/saxes/-/saxes-6.0.0.tgz",
+      "integrity": "sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==",
+      "texts": [
+        {
+          "path": "LICENSE (upstream v6.0.0 tag)",
+          "sha256": "0fac2374380621b22e6b50451057721a9c52935b02d16d106a9f04897f061d0e",
+          "file": "texts/0fac2374380621b22e6b50451057721a9c52935b02d16d106a9f04897f061d0e.txt",
+          "provenance": "https://raw.githubusercontent.com/lddubeau/saxes/v6.0.0/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "setimmediate",
+      "version": "1.0.5",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/setimmediate/-/setimmediate-1.0.5.tgz",
+      "integrity": "sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==",
+      "texts": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "c4b4ad3a5746f1f5249a6dd90396ec519264e1bb02e01e48a6522c48a3a97cb4",
+          "file": "texts/c4b4ad3a5746f1f5249a6dd90396ec519264e1bb02e01e48a6522c48a3a97cb4.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "sprintf-js",
+      "version": "1.0.3",
+      "license": "BSD-3-Clause",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz",
+      "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "a4cdda44b5adea4731d53dcae78fb5124f8fd853e994f01e25d8c33a7daf818b",
+          "file": "texts/a4cdda44b5adea4731d53dcae78fb5124f8fd853e994f01e25d8c33a7daf818b.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
+      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "11f2aafb37d06b3ee5bdaf06e9811141d0da05263c316f3d627f45c20d43261b",
+          "file": "texts/11f2aafb37d06b3ee5bdaf06e9811141d0da05263c316f3d627f45c20d43261b.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "underscore",
+      "version": "1.13.8",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/underscore/-/underscore-1.13.8.tgz",
+      "integrity": "sha512-DXtD3ZtEQzc7M8m4cXotyHR+FAS18C64asBYY5vqZexfYryNNnDc02W4hKg3rdQuqOYas1jkseX0+nZXjTXnvQ==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "92905fb54f5d168a27e6d5dc7c2197020add11842be4c70689d084bae3bfe37a",
+          "file": "texts/92905fb54f5d168a27e6d5dc7c2197020add11842be4c70689d084bae3bfe37a.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
+      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "0154425673db15cdfa80ecba2c9b1f1a867f7197a006764712849bfc3a93cbb7",
+          "file": "texts/0154425673db15cdfa80ecba2c9b1f1a867f7197a006764712849bfc3a93cbb7.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "xlsx",
+      "version": "0.20.3",
+      "license": "Apache-2.0",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "file:vendor/document-context/xlsx-0.20.3.tgz",
+      "integrity": "sha512-oLDq3jw7AcLqKWH2AhCpVTZl8mf6X2YReP+Neh0SJUzV/BdZYjth94tG5toiMB1PPrYtxOCfaoUCkvtuH+3AJA==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64",
+          "file": "texts/4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "xmlbuilder",
+      "version": "10.1.1",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-10.1.1.tgz",
+      "integrity": "sha512-OyzrcFLL/nb6fMGHbiRDuPup9ljBycsdCypwuyg5AAHvyWzGfChJpCXMG88AGTIMFhGZ9RccFN1e6lhg3hkwKg==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "8ad16994acb18814fcd2ff6d0b559906b842047b995baf33fd0c55e4d24cbac8",
+          "file": "texts/8ad16994acb18814fcd2ff6d0b559906b842047b995baf33fd0c55e4d24cbac8.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
+    },
+    {
+      "name": "xmlchars",
+      "version": "2.2.0",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Conservative normal input closure for local supplementary document reading; Node canvas, ICC and WASM assets are not bundled.",
+      "source": "https://registry.npmjs.org/xmlchars/-/xmlchars-2.2.0.tgz",
+      "integrity": "sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "45d196313c2647d313cc65ca9b093d2d6974b64d35ee7346f2c60c9d518dff2c",
+          "file": "texts/45d196313c2647d313cc65ca9b093d2d6974b64d35ee7346f2c60c9d518dff2c.txt",
+          "provenance": "Exact text from the integrity-locked installed package; official SheetJS vendored tarball is independently SHA256 pinned."
+        }
+      ]
     }
   ],
   "localCompanyInputs": [
@@ -8160,5 +8773,5 @@
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 234
+  "licenseTextCount": 271
 }
