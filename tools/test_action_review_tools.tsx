@@ -4,6 +4,7 @@ import {act,create,type ReactTestRenderer} from 'react-test-renderer';
 import {ActionReviewTools,useActionReview} from '../packages/ui/src/ActionReviewTools';
 import {savedActionReview} from '../packages/ui/src/actionReview';
 import {MobileActionCards} from '../apps/mobile/src/MobileActionCards';
+import {MinutesDocument} from '../apps/mobile/src/MinutesDocument';
 import {savedActions,markSavedAction} from '../packages/ui/src/savedActions';
 import publicActions from './qa/actions_followup20261110/public-phone-actions.json';
 
@@ -59,11 +60,14 @@ assert.equal(mobileText,'- 第一项 (owner: 甲)\n- 待核对：第二项\n- �
 act(()=>tree.unmount());
 
 const publicSource=publicActions.actionItems.map(item=>'- '+item.text).join('\n');
-act(()=>{tree=create(<MobileActionCards contextKey="actual-public-phone" recordingTitle="S_R004S03C01" text={publicSource} fallback="fallback"/>);});
+act(()=>{tree=create(<MinutesDocument markdown={'## Action Items\n'+publicSource} renderText={(value,section,position)=>section==='Action Items'?<MobileActionCards contextKey="actual-public-phone" recordingTitle="S_R004S03C01" text={value} itemOffset={position?.itemOffset} fallback="fallback"/>:value}/>);});
+assert.equal(tree.root.findAllByProps({'aria-label':'事项筛选与跟进'}).length,1,'A long saved list must share one complete filter scope across its folded cards');
+assert.equal(tree.root.findAll(n=>n.type==='details'&&n.props.className==='minutes-more mobile-action-more').length,1,'Default reading remains folded without splitting action identity or filter scope');
 assert.match(text(tree.toJSON()),/显示 21 \/ 21 项 · 20 项待核对/);
 select('筛选待补信息','review');act(()=>button('整理当前事项为跟进草稿').props.onClick());
 draft=tree.root.findByType('textarea').props.value;assert.ok(draft.includes('待核对事项')&&!draft.includes('\n\n待跟进\n'));
 assert.equal(tree.root.findAll(n=>n.props.className==='mobile-action-card').length,20);
+assert.equal(tree.root.findAll(n=>n.type==='details'&&n.props.className==='minutes-more mobile-action-more').length,0,'All filtered matches must be visible, including the original folded remainder');
 assert.deepEqual(publicActions.actionItems.map(item=>item.text),publicSource.split('\n').map(line=>line.slice(2)));
 act(()=>tree.unmount());
 console.log('PASS saved-action filters and followup: exact identities after hidden rows, completion persistence roundtrip, owner/missing/date/review scope, source-bound copy success/failure, record switch reset, native mobile target preservation and all21actual public phone items. No model, external send or source mutation.');
