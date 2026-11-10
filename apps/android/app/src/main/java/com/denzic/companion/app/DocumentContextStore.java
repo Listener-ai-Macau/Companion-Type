@@ -33,7 +33,15 @@ final class DocumentContextStore {
     private static JSONObject object(Path p,long max)throws Exception{if(!Files.isRegularFile(p,LinkOption.NOFOLLOW_LINKS)||Files.size(p)>max)throw new IOException("材料文件缺失或过大，原件保留。");return new JSONObject(new String(Files.readAllBytes(p),StandardCharsets.UTF_8));}
     private JSONObject expected(String key,long revision)throws Exception{JSONObject value=read(key);if(value.getLong("revision")!=revision)throw new IOException("材料已更新，请重新读取后重试。");return value;}
     private static JSONObject row(JSONObject value,String id)throws Exception{JSONArray rows=value.getJSONArray("rows");for(int i=0;i<rows.length();i++)if(id.equals(rows.getJSONObject(i).getString("id")))return rows.getJSONObject(i);throw new IOException("这份材料已移除，请重新读取。");}
-    private void publish(Path temp,Path target,boolean replace)throws Exception{if(replace)Files.move(temp,target,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);else{Files.createLink(target,temp);Files.delete(temp);}sync.sync(directory);}
+    private void publish(Path temp,Path target,boolean replace)throws Exception{
+        // All document writers hold DocumentContextStore.class in this single
+        // app process. Android's private-data policy can reject hard links;
+        // use the same durable atomic rename as recording notes. A fresh leaf
+        // is prechecked while that writer lock remains held.
+        if(!replace&&Files.exists(target,LinkOption.NOFOLLOW_LINKS))throw new IOException("材料文件已存在但尚未确认，原文件保留，请重新读取后重试。");
+        try{if(replace)Files.move(temp,target,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);else Files.move(temp,target,StandardCopyOption.ATOMIC_MOVE);sync.sync(directory);}
+        catch(IOException error){throw new IOException("材料尚未安全保存，原件和已保存内容保留；请重新读取后重试。",error);}
+    }
     private void write(String key,JSONObject value)throws Exception{value.put("schema",1);String body=value.toString();byte[] bytes=new JSONObject().put("body",body).put("sha256",hash(body)).toString().getBytes(StandardCharsets.UTF_8);if(bytes.length>256*1024)throw new IOException("材料目录过大。");writeBytes(index(key),bytes,true);}
     private void writeBytes(Path target,byte[] bytes,boolean replace)throws Exception{Files.createDirectories(directory);safe(target.getFileName().toString());Path temp=Files.createTempFile(directory,".document-",".tmp");try{try(FileOutputStream out=new FileOutputStream(temp.toFile())){out.write(bytes);out.getFD().sync();}publish(temp,target,replace);}finally{Files.deleteIfExists(temp);}}
     private Path verified(JSONObject file,int max)throws Exception{Path p=safe(file.getString("file"));long size=file.getLong("bytes");String sha=file.has("sourceSha256")?file.getString("sourceSha256"):file.getString("sha256");if(size<1||size>max||!Files.isRegularFile(p,LinkOption.NOFOLLOW_LINKS)||Files.size(p)!=size)throw new IOException("材料文件缺失或大小已变化，原件与目录保留。");MessageDigest hash=MessageDigest.getInstance("SHA-256");try(InputStream in=Files.newInputStream(p)){byte[] b=new byte[65536];int n;while((n=in.read(b))!=-1)hash.update(b,0,n);}if(!hex(hash.digest()).equals(sha))throw new IOException("材料文件校验失败，原件与目录保留。");return p;}

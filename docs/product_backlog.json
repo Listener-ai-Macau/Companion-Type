@@ -55481,12 +55481,12 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": false,
-          "reservedFor": "Companion127 public recording-library acceptance",
+          "active": true,
+          "reservedFor": "Companion128 public recording-library acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-10T16:50:38+08:00",
+          "requestedAt": "2026-11-10T19:21:30+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Own app only, owned non-main display18 and known public QA library0a2cc0ac. Read/save human notes, literal search/direct location, image preview/guard, compact reading and AI-simulated natural after-use. No BLE, mic, model, online AI, main display or owner-private content.",
+          "scope": "Own app on owned non-main display; public QA library only. Document originals/local extraction/reading/save, explicit public AI source selection and source return, backup/lifecycle. No BLE, microphone, ASR/training or Owner private text.",
           "releasedAt": "2026-11-10T17:10:33+08:00",
           "releaseReason": "Android127 first-screen, search/filter/selection/recycle and picker cancellation verified; scoped AI public-library use completed, original library restored and own session closed."
         },
@@ -268401,8 +268401,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T19:12:23+08:00",
-            "status": "DOCUMENT_CONTEXT_COMPLETE_NATIVE_UI_CANDIDATES_REMOTE_BUILD_PENDING",
+            "at": "2026-11-10T19:35:41+08:00",
+            "status": "ANDROID129_PHONE_ORIGINAL_PUBLICATION_REPAIR_BUILD_PENDING_WINDOWS088_BUILD_RUNNING",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268419,12 +268419,33 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "等待本批匹配Windows088/Android128原生构建；失败先修实际原因，成功后验证匹配候选原件/提取阅读/主动AI引用/来源回找及备份恢复和清除，再一并打包与远端保护。",
+            "next": "同一完整文档批次续作：构建Android129原件原子提交修复包，在当前已授权独立手机显示区替换失败128并复验原件/提取/重开/AI来源/导出备份恢复；Windows088匹配原生构建仍在运行，实际结果出现后接续。127/087已验基线和128失败包保留。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
             "windowsVersion": "0.1.88",
-            "androidVersion": "0.1.128"
+            "androidVersion": "0.1.129",
+            "android128Failure": {
+              "at": "2026-11-10T19:35:41+08:00",
+              "state": "ANDROID128_REAL_PHONE_ORIGINAL_PUBLISH_FAILED_129_ATOMIC_RENAME_REPAIR_SOURCE_READY",
+              "failedSource": "92283dd2c1d9b229b0236f1696af3b2cb0ac073a",
+              "failedApkSha256": "4c9c1e435d97252050497455b879cc5dc8b4a5e57d9a5ebb84ecba2656c5b924",
+              "failedInstallerDraftAsset": 731173518,
+              "actualPhone": "d6bd213d owned display19",
+              "failure": "The selected public Word file reached the app, then Files.createLink(target,temp) failed in Android private data. No original or context row was committed. Initial accessibility click did not close the picker; an observed ordinary touch did. CDP timeout while picker remained foreground was not an app crash.",
+              "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android128\\post-picker-diagnostic.json",
+              "fix": "Use the already verified Android atomic-rename publication pattern, with existing-target precheck under the single-process document writer lock. Keep original/source identity and retry guards; show a clear save failure without an internal path.",
+              "checks": [
+                "Full Java app compile passed",
+                "Document original/extraction storage, exact backup restore and scoped purge JVM test passed after the fix"
+              ],
+              "nativeRevalidationPending": true,
+              "modelsChangedOrRun": false,
+              "ownerPrivateDataUsed": false
+            },
+            "windowsBuildRun": 42805669767,
+            "android128BuildRun": 42805693619,
+            "ownedPhoneDisplay": 19
           }
         }
       },
