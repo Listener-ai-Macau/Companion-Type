@@ -38564,8 +38564,8 @@
           ],
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
-            "at": "2026-11-11T01:26:25+08:00",
-            "state": "ANDROID131_QUALIFIED_WINDOWS093_UI_MERGE_DEFECT_REPAIRED094_WEB_AND_ENTRY_REGRESSION_PASSED_NATIVE_PENDING",
+            "at": "2026-11-11T01:53:27+08:00",
+            "state": "WINDOWS094_NATIVE_AND_MSI_VERIFIED_MATCHED_ORDINARY_WORKFLOW_PENDING_ANDROID131_RETAINED",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
               "packages/audio-derivation/src/plan.ts",
@@ -38579,7 +38579,7 @@
             "notImplementedYet": "Windows093 source and ordinary frontend build ready; native compile/runtime, exact MSI upgrade, dual-client final archive and new customer experience remain unqualified. Android131 editing/control recovery is actually qualified; phone owned session is closed.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
             "currentDependency": "Android131 installed, exact private installer readback verified and own phone session closed. Complete corresponding Windows editor chain from unified091; no extra unchanged phone package/runtime now.",
-            "next": "Freeze unified094 with preserved091/input092/093 native editing source; normal remote native build and exact installed-runtime qualification, then guarded upgrade after original399 host process ends and one complete094/131 archive/private readback. No Android rebuild or unchanged qualification.",
+            "next": "Run matching094 ordinary full editor/cancel/process-exit/retry/backup/scoped-cleanup on CI; continue fresh afteruse on own phone public workspace, close exact session, then guarded Windows upgrade after shared original399 ends and full094/131 private archive/readback.",
             "renderer": {
               "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
               "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
@@ -38677,7 +38677,17 @@
                 "routingModified": false
               }
             },
-            "activePhoneSession": null,
+            "activePhoneSession": {
+              "session": "customer-edit131-20261111",
+              "display": 22,
+              "app": "0.1.131",
+              "library": [
+                "d53f8f50-75ff-4d46-b66d-595e49acdef5"
+              ],
+              "presale": "finished; all clients closed",
+              "afteruse": "not dispatched; fresh restored public workspace next",
+              "noModelCloudBleMic": true
+            },
             "actualPhoneEvidence": [
               "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-trim-pcm.json",
               "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-split-merge-pcm.json",
@@ -38842,13 +38852,13 @@
               "wholeSaleQualified": false,
               "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source."
             },
-            "windowsSourceCommit": "62d2dc175964010769ae6f813514225d44cfbd8b",
-            "windowsBuildRun": 42858186629,
+            "windowsSourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
+            "windowsBuildRun": 42864987320,
             "actualActiveJob": {
-              "kind": "native094-source-freeze-ready",
-              "previousRuntimeRun": 42862353965,
-              "previousRuntimeState": "failure",
-              "failed093Installed": false
+              "kind": "matched094-native-runtime-ready-dispatch",
+              "source": "1af27a43f865818f5944668c0b0d6370f461a7b4",
+              "buildRun": 42864987320,
+              "buildStatus": "success"
             },
             "windowsBuildAttempts": [
               {
@@ -38866,14 +38876,14 @@
               }
             ],
             "windowsMsiVerification": {
-              "at": "2026-11-11T01:06:40+08:00",
-              "state": "WINDOWS093_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-              "version": "0.1.93",
-              "sourceCommit": "62d2dc175964010769ae6f813514225d44cfbd8b",
-              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows093\\Companion-Windows-0.1.93-candidate.msi",
-              "msiSha256": "e49b1d14c2dbdf733d81232d7c2bc46116f8c830c1f72acbb46f85061d272110",
-              "embeddedExeSha256": "9c36e8350913dd495acc22d04d60d61d26566f998443317c5fe45a5c0e4e9372",
-              "dllSha256": "ca50f546184e0d0805e75676f408b41fb6c007d06baefd20db0dcf05ba2d62b3",
+              "at": "2026-11-11T01:51:45+08:00",
+              "state": "WINDOWS094_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+              "version": "0.1.94",
+              "sourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
+              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows094\\Companion-Windows-0.1.94-candidate.msi",
+              "msiSha256": "962d9f5d173dba4da04e77df26f66d021573dbd4a06df44a9e42021c51b097fa",
+              "embeddedExeSha256": "15b2dd2c4e06254a1163acc761dcc277bfd62625d4dd240dd060eaa82bf6f83c",
+              "dllSha256": "28fcfc0667fb407fc4c9b37b7be8e4124ad6781a49c78af637712042ca08bab3",
               "licenseFilesMatched": 309,
               "sourceFilesMatched": 1336,
               "sourceFilesWithOnlyCheckoutEolDifference": [
@@ -38952,7 +38962,7 @@
               "newerVersionGuard": true,
               "ciSourceAndNativeFrozenTogether": true,
               "nativeProfile": "normal release on dedicated Windows runner",
-              "ciRunId": 42858186629,
+              "ciRunId": 42864987320,
               "ciWrapperOverallPassed": true,
               "localHeavyBuild": false,
               "installed": false,
@@ -38961,14 +38971,14 @@
               "saleQualified": false,
               "modelsRun": false,
               "inspectionLimits": {
-                "pid": 26056,
+                "pid": 3888,
                 "cpuRate": 500,
                 "cpuControlFlags": 5,
                 "cpuPercentMaximum": 5.0,
                 "inLimitedJob": true,
                 "jobPrivateCommitLimitBytes": 536870912,
                 "jobMemoryLimitEnabled": true,
-                "jobPeakPrivateCommitBytes": 48472064,
+                "jobPeakPrivateCommitBytes": 48316416,
                 "cpuPriorityClass": 64,
                 "memoryPagePriority": 1,
                 "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -39030,7 +39040,19 @@
                 "noOwnerInstall": true
               }
             ],
-            "currentWindowsUserBenefit": "Complete local recordings can be merged before transcription; actual audio-only parent and derived rows have names/options. Independent source card remains after child audio cleanup."
+            "currentWindowsUserBenefit": "Complete local recordings can be merged before transcription; actual audio-only parent and derived rows have names/options. Independent source card remains after child audio cleanup.",
+            "customerPresale131": {
+              "at": "2026-11-11T01:53:27+08:00",
+              "role": "AI simulated presale FIRST_USE; not a real customer/order",
+              "app": "Android0.1.131",
+              "source": "docs/handoffs/20261110-android-media-import/customer-edit131/customer-presale.md",
+              "sha256": "0d21517be2a6946fe866d9d73a5dd9232c553cb1860105ffc274b67aeffb9441",
+              "actual": "Self-chosen read public meeting/documents, distinguish proposal from speech, save own procurement follow-up note, leave and search-return to saved note. Existing public engineering notes were auxiliary context.",
+              "value": "Content search and saved resumption point useful; interest without purchase decision.",
+              "remaining": "Reading density; spreadsheet cell-coordinate burden; DOCX body/note relation; AI-generated materials0 wording confused with uploaded documents.",
+              "notUsed": "No edit/cut/merge, playback/listening, recording, ASR, online AI, device, export or real physical purchase qualification.",
+              "decision": "Preserve all feedback in original document workpoint, aggregate same-batch afteruse before next related material-reading improvement. Do not rebuild Android just for each wording wish or ask unchanged-condition purchase answers."
+            }
           },
           "beforeAndroidEditing130": {
             "phase": "R48本机显式保护及所有旧隐私入口后端门已装并后台核对；非破坏裁剪/切分/合并未做",
@@ -55978,14 +56000,18 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": false,
-          "reservedFor": "Companion131 public recording-library acceptance",
+          "active": true,
+          "reservedFor": "Companion131 fresh public customer workspace",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-10T23:53:21+08:00",
+          "requestedAt": "2026-11-11T01:35:12+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Own app on owned non-main display; existing public QA recordings only. Queued cancellation, acknowledged task interruption/process restart and pending-only retry, exact new derived outputs. No BLE, microphone, model, online AI or Owner private recording content.",
+          "scope": "Only new libraries restored through ordinary UI from the known public129 backup; ordinary AI simulated customer use on owned non-main display. No actual listening, microphone/recording, BLE/device, models/ASR/cloud AI, global clipboard/share or Owner/private libraries.",
           "releasedAt": "2026-11-11T00:06:22+08:00",
-          "releaseReason": "Android131 public task-control and restart checks ended; qualification remains in actual receipts. Original library restored and owned session closed; no model/cloud/board/customer actions."
+          "releaseReason": "Android131 public task-control and restart checks ended; qualification remains in actual receipts. Original library restored and owned session closed; no model/cloud/board/customer actions.",
+          "publicLibraries": [
+            "d53f8f50-75ff-4d46-b66d-595e49acdef5"
+          ],
+          "customerPresale": "finished; complete raw feedback saved; ordinary input clients closed"
         },
         "previousSourceCommit": "7e38e89f6d9808348dff0e2e034341640b5dbdd2",
         "multiPhoneFixEvidence": "docs/releases/20261029-multiphone-endpoint-selection-source-fix.json",
@@ -134226,7 +134252,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Complete unified094 source/build and affected real acceptance; original399 recovered, no active recording. Phone core, physical Windows, natural IMU and actual Mac remain open; Owner-blocked/deferred items unchanged.",
+      "next": "Normal094 candidate and source/payload/licensing checks complete. Original popup visible, await one natural held phrase; no active board lease or MIC. Then close affected real input and one matched 2h recording/sync, normal phone chain, natural IMU and actual Mac. No Owner-block/deferred expansion.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -137194,8 +137220,8 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-11T01:02:58+08:00",
-        "state": "UNIFIED094_BUILD_RUNNING_ORIGINAL399_RECOVERED_NO_ACTIVE_CAPTURE",
+        "at": "2026-11-11T01:44:37+08:00",
+        "state": "WAIT_OWNER_ONE_HELD_UTTERANCE",
         "phoneInstalled": "0.1.131",
         "firmwareInstalled": 66791,
         "phoneSourceCommit": "5461aa68d470930ebbdcb9a41e5052e85a3bcbbb",
@@ -137251,7 +137277,7 @@
           "sessionId": "000000000000018f"
         },
         "operatorReady": false,
-        "operatorPromptPending": false,
+        "operatorPromptPending": true,
         "offlineRecoveryCandidate": 66776,
         "offlineRecoverySourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "offlineRecoveryBuildRunning": false,
@@ -137269,7 +137295,7 @@
         "windowsUsabilitySource": "24304ea96c43f1f43701e4ae39d05cbd18ef9ff3",
         "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
         "windowsUsabilityCandidate": "0.1.86",
-        "candidateWindows": "0.1.92",
+        "candidateWindows": "0.1.94",
         "installedWindows": "0.1.91",
         "installedWindowsSource": "b170264a7f0693847ea17ef85901f5411280f266",
         "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-companion-fw791-win092-android130-candidate.zip",
@@ -137319,7 +137345,12 @@
         "longObservedAt": "2026-11-10T23:53:24+08:00",
         "fileCommitSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
         "fileCommitNextCandidate": "0.1.94",
-        "fileCommitBuildRun": 42864056041
+        "fileCommitBuildRun": 42864056041,
+        "physicalInputControllerPid": 36324,
+        "physicalInputAppPid": 18904,
+        "input094CandidateReady": true,
+        "input094CandidateSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
+        "input094BuildRun": 42864056041
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -143851,7 +143882,7 @@
       },
       "pendingSharedWindowsIntegration092": {
         "at": "2026-11-10T23:44:40+08:00",
-        "state": "RECORDER_INPUT092_SOURCE_AND_NORMAL_MSI_READY_FOR_NEXT_UNIFIED_WINDOWS",
+        "state": "SOURCE_RETAINED_IN_UNIFIED094_CANDIDATE",
         "sourceCommit": "7046f32d587e1be88e6feb3aa539580a2f72333e",
         "baseUnifiedSource": "b170264a7f0693847ea17ef85901f5411280f266",
         "sourceWorkspace": "C:/Users/Billy/Desktop/Denzic/Companion/companion-recorder-usability",
@@ -143861,8 +143892,10 @@
         "currentlyInstalledWindows": "0.1.91",
         "nextUnifiedVersion": "Use the next free version after092; preserve both this source and ongoing audio-editing/document sources. Do not replace one lineage with another independently versioned092.",
         "changes": "sealed-short-capture delivery, actual preparation/current utterance phase, bounded opt-in physical event metadata",
-        "boardAndLong": "FW791/frozen091 original399 remains running; no installer/board handoff before that process closes.",
-        "physicalChainQualified": false
+        "boardAndLong": "Original399 recovered and lease released; no active MIC. Original physical094 window is waiting and does not claim board until Owner click.",
+        "physicalChainQualified": false,
+        "supersededCandidate": "0.1.94",
+        "supersededSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23"
       },
       "currentPhone130Observed": {
         "at": "2026-11-10T23:53:38+08:00",
@@ -143891,8 +143924,8 @@
         "candidateFreeze": "Packaged130 remains an immutable candidate; stop repackaging for every concurrent phone update. Freeze the final integrated version once current core/host gates close."
       },
       "fileCommit094Current": {
-        "at": "2026-11-11T01:21:05+08:00",
-        "state": "NORMAL_UNIFIED094_CI_LOG_FILENAME_FIXED_REBUILD_RUNNING",
+        "at": "2026-11-11T01:44:37+08:00",
+        "state": "NORMAL094_MSI_VERIFIED_ORIGINAL_WINDOW_WAIT_OWNER",
         "repairSource": "027657fd275bf2c13479ff237efbcaa83be63dd8",
         "mergeSource": "2554320963a36146f64b9958f2f9fee1f1b96dd5",
         "retains": [
@@ -143919,7 +143952,20 @@
         "supersededRun": 42860106666,
         "supersededSource": "88e6a58a728ef03b34091d91b76554af17a3e148",
         "ownBuildFailure": "Own added exact Rust test filter contained colons in generated Windows log filename; compilation succeeded, no MSI was generated. Corrected filename on actual Windows filesystem. App Rust/UI/dependency sources unchanged; notice JSON content identical, original line endings restored.",
-        "noNewMic": true
+        "noNewMic": true,
+        "candidateVersion": "0.1.94",
+        "msi": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\Companion-Windows-0.1.94-candidate.msi",
+        "msiSha256": "efbb9f41152b80b6d82781c4978a9201b226636385c14c9d65db2fd77dbb2a38",
+        "nativeRoot": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\frozen-msi-native",
+        "sourceFilesMatched": 1336,
+        "licenseFilesMatched": 309,
+        "ciPassed": true,
+        "physicalChainQualified": false,
+        "actualPhysicalProgress": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\physical-held-final094\\progress.json",
+        "actualOriginalWindowVisible": true,
+        "ownedPromptPid": 20168,
+        "boardHeldBeforeOwnerReady": false,
+        "newHostStartCommands": 0
       },
       "state": "DELIVERY_FIRST_FIX_REPRODUCED_LOCAL_FILE_COMMIT_THEN_CORE_ACCEPTANCE",
       "activeDeliveryGoal20261110": {
@@ -269642,6 +269688,18 @@
               },
               "finishedAt": "2026-11-10T21:58:58+08:00",
               "readbackByteIdentical": true
+            },
+            "customer131Presale": {
+              "at": "2026-11-11T01:53:27+08:00",
+              "role": "AI simulated presale FIRST_USE; not a real customer/order",
+              "app": "Android0.1.131",
+              "source": "docs/handoffs/20261110-android-media-import/customer-edit131/customer-presale.md",
+              "sha256": "0d21517be2a6946fe866d9d73a5dd9232c553cb1860105ffc274b67aeffb9441",
+              "actual": "Self-chosen read public meeting/documents, distinguish proposal from speech, save own procurement follow-up note, leave and search-return to saved note. Existing public engineering notes were auxiliary context.",
+              "value": "Content search and saved resumption point useful; interest without purchase decision.",
+              "remaining": "Reading density; spreadsheet cell-coordinate burden; DOCX body/note relation; AI-generated materials0 wording confused with uploaded documents.",
+              "notUsed": "No edit/cut/merge, playback/listening, recording, ASR, online AI, device, export or real physical purchase qualification.",
+              "decision": "Preserve all feedback in original document workpoint, aggregate same-batch afteruse before next related material-reading improvement. Do not rebuild Android just for each wording wish or ask unchanged-condition purchase answers."
             }
           },
           "completeDocumentCandidateArchive20261110": {
