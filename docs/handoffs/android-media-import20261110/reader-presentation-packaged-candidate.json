@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-11T04:45:57+08:00",
+  "state": "READER_PRESENTATION_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+  "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows097-android133.zip",
+  "bytes": 44311583,
+  "sha256": "6c714df6e49883ce56a4a0fc964279475490005800e4bb004523e5a678470aa4",
+  "files": [
+    {
+      "path": "firmware/companion-update.cup",
+      "bytes": 1360220,
+      "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+    },
+    {
+      "path": "firmware/ota_manifest.json",
+      "bytes": 1548,
+      "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+    },
+    {
+      "path": "macos/CompanionMac-candidate.zip",
+      "bytes": 736161,
+      "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+    },
+    {
+      "path": "windows/Companion-Windows-0.1.97.msi",
+      "bytes": 16715988,
+      "sha256": "4d18874d12e49c92d5640b24cefebacdc0d580f3e89c8aaa4af727e2fca98d1c"
+    },
+    {
+      "path": "android/Companion-Android-0.1.133.apk",
+      "bytes": 51159837,
+      "sha256": "a3bac47aa8a9f067b29c44e705f846ad26f067b96a4ffb700bb559b43779b2ba"
+    }
+  ],
+  "draftOnly": true,
+  "saleQualified": false,
+  "ownerPrivateDataUploaded": false,
+  "assetId": 732890742,
+  "readback": {
+    "method": "four-bounded-official-CDN-range-readers",
+    "workers": 4,
+    "sections": 11,
+    "bufferBytesPerWorker": 131072,
+    "bytes": 44311583,
+    "sha256": "6c714df6e49883ce56a4a0fc964279475490005800e4bb004523e5a678470aa4",
+    "seconds": 7.155999999988126,
+    "retainedTransientReads": [],
+    "authSentOnlyToGitHubApi": true,
+    "signedUrlOrTokenPersisted": false,
+    "routingModified": false
+  },
+  "finishedAt": "2026-11-11T04:46:18+08:00",
+  "readbackByteIdentical": true
+}
