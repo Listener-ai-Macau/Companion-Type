@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 import ast,hashlib,json,os,re,shlex,subprocess,sys,time,psutil
-CODE=int(sys.argv[2]) if len(sys.argv)>2 else 125;assert CODE in [125,126,127,128];PREVIOUS=CODE-1
+CODE=int(sys.argv[2]) if len(sys.argv)>2 else 125;assert CODE in [125,126,127,128,130];PREVIOUS=CODE-1
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('phone'+str(CODE));A=R/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe';SERIAL='d6bd213d';PKG='com.denzic.companion.app';now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 tree=ast.parse((R/'docs/handoffs/20261109-core-acceptance/android110/phone_session.py').read_text(encoding='utf8'));exec(compile(ast.Module(body=[n for n in tree.body if isinstance(n,ast.FunctionDef)],type_ignores=[]),'retained-phone-primitives','exec'))
 def fastFiles():return adb(['shell','run-as',PKG,'sh','-c','find files -type f -print0 | xargs -0 -r sha256sum'],timeout=120)
@@ -10,6 +10,7 @@ if action=='prepare':
  assert version()==PREVIOUS and not adb(['shell','pidof',PKG],required=False).strip();P.mkdir(exist_ok=False)
  path=R/'docs/product_backlog.json';raw=path.read_bytes();d=json.loads(raw);h=d['recorder_core']['speed_investigation_handoff']['endpointSelection']['ownerPhoneHold'];assert not h['active'];h.update(active=True,serial=SERIAL,reservedFor='Companion'+str(CODE)+' public recording-library acceptance',requestedAt=now(),scope='Own app only, owned non-main display; own public QA library0a2cc0ac and newly restored copy. Folders/tags/selected-record management and backup lifecycle only; no BLE, mic, model or private owner data.');
  if CODE==128:h['scope']='Own app on owned non-main display; public QA library only. Document originals/local extraction/reading/save, explicit public AI source selection and source return, backup/lifecycle. No BLE, microphone, ASR/training or Owner private text.'
+ if CODE==130:h['scope']='Own app on owned non-main display; explicit public QA recordings only. Non-destructive trim/split/merge, source return, retry/cancel, playback, backup/restore/scoped purge. No BLE, microphone, ASR/training, online AI or Owner private recording content.'
  temp=path.with_suffix('.notes-hold.tmp');save(temp,d);assert path.read_bytes()==raw;os.replace(temp,path)
  index=adb(['shell','run-as',PKG,'cat','files/companion-library-index.json']);assert json.loads(index)['activeId']=='original';(P/'original-index.private.json').write_text(index);snapshot=fastFiles();(P/'before-install.sha256').write_text(snapshot);save(P/'preparation.json',{'at':now(),'files':len(hashes(snapshot)),'version':version(),'mainFingerprint':primary()});print(f'Phone{PREVIOUS} idle; original library and complete private hash manifest retained; scoped hold acquired.')
 elif action=='install':
@@ -35,7 +36,7 @@ elif action in ['attach','restart']:
   time.sleep(.2)
  assert pid.isdigit();port=adb(['forward','tcp:0','localabstract:webview_devtools_remote_'+pid]).strip();save(P/'cdp.json',{'at':now(),'displayId':state['displayId'],'pid':int(pid),'cdpPort':int(port),'mainBefore':before,'mainUnchangedDuringOperation':primary()==before});print('Attached only own secondary-display app WebView.')
 elif action in ['close','finishClose']:
- assert CODE in [126,127,128] and json.loads((C/('android'+str(CODE))/'original-library-restored.json').read_text())['activeId']=='original'
+ assert CODE in [126,127,128,130] and json.loads((C/('android'+str(CODE))/'original-library-restored.json').read_text())['activeId']=='original'
  index=json.loads(adb(['shell','run-as',PKG,'cat','files/companion-library-index.json']));assert index['activeId']=='original';assert 'AudioImportService' not in adb(['shell','dumpsys','activity','services',PKG])
  if action=='close':
   session=json.loads((P/'cdp.json').read_text());state=json.loads((P/'virtual.json').read_text());before=primary();main=next(s for s in adb(['shell','dumpsys','activity','activities']).split('Display #') if s.startswith('0 (activities from top to bottom):'));assert not any(PKG in line for line in main.splitlines() if 'Hist  #' in line);assert adb(['shell','pidof',PKG]).strip()==str(session['pid']);adb(['shell','am','force-stop',PKG]);adb(['forward','--remove','tcp:'+str(session['cdpPort'])]);assert primary()==before

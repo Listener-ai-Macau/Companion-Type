@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-10T22:54:44+08:00",
+  "state": "ACTUAL_PHONE_TRIM_PCM_BYTE_EXACT_AND_ATOMIC_SOURCE_MAP_VERIFIED",
+  "sourceKey": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+  "derivedKey": "eb42601023867d313ef3bd727d999f8ff5b5543ab6ba0e709ccdcabb2833a746:1:1",
+  "frames": 240000,
+  "derivedWavSha256": "77b639690f072e2c779299c35a053c48020508eca76f596d634a9daea639fa34",
+  "sourceRangeFrames": [
+    160000,
+    400000
+  ],
+  "newTranscriptOrMinutesCopied": false,
+  "readScope": "Only the explicitly selected existing public QA recording canonical PCM and this newly created derived recording; no Owner audio.",
+  "nativeInstalled": 130,
+  "modelsRun": false
+}

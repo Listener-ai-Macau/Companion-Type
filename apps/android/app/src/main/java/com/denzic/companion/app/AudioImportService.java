@@ -20,14 +20,14 @@ public final class AudioImportService extends Service {
  private static final AtomicBoolean RUNNING=new AtomicBoolean(),CANCELLED=new AtomicBoolean(),COMMITTING=new AtomicBoolean();private static volatile JSONObject current;private static volatile AudioImportService instance;
  private PowerManager.WakeLock wake;private volatile Thread job;
  static boolean isRunning(){return RUNNING.get();}
- static void cancel(){if(RUNNING.get()&&!COMMITTING.get())CANCELLED.set(true);}
+ static void cancel(){if(RUNNING.get()&&(!COMMITTING.get()||current!=null&&"derive".equals(current.optString("operation"))))CANCELLED.set(true);}
  private static android.content.SharedPreferences preferences(Context context){return context.getSharedPreferences("companion-file-import",MODE_PRIVATE);}
  static synchronized JSONObject status(Context context)throws Exception {
   if(current!=null){JSONObject result=new JSONObject(current.toString());if(RUNNING.get()&&!result.optBoolean("running"))result.put("running",true).put("state","finishing").put("retryAvailable",false).put("message","正在完成最后的本机保存与收尾…");return result;}String saved=preferences(context).getString("job",null);if(saved==null)return new JSONObject().put("running",false).put("state","idle");JSONObject record=new JSONObject(saved);
   if(record.optBoolean("running")){
    // A process restart has no in-memory worker. Recover only its exact owned stage.
    if(RUNNING.get())return new JSONObject().put("running",true).put("state","starting");
-   Path root=context.getFilesDir().toPath().toAbsolutePath().normalize(),stage=root.resolve(record.getString("stage"));retireStage(root,stage);
+   Path root=context.getFilesDir().toPath().toAbsolutePath().normalize();if(record.has("stage"))retireStage(root,root.resolve(record.getString("stage")));
    Path target=root.resolve(record.getString("target"));String key=record.getString("key");boolean committed=false;
    if(target.getParent().equals(root)&&target.getFileName().toString().matches("companion-recordings(?:-[0-9a-f-]{36})?")){
     if("derive".equals(record.optString("operation"))){int recoveredCount=AudioDerivationJob.recover(record,target,AudioImportService::syncDirectory);committed=recoveredCount==record.getJSONObject("request").getJSONArray("outputs").length();}
@@ -50,7 +50,14 @@ public final class AudioImportService extends Service {
   synchronized(AudioImportService.class){if(RUNNING.get())throw new IOException("已有录音任务正在进行，请等完成或取消。");status(context);String saved=preferences(context).getString("job",null);if(saved==null)throw new IOException("找不到上次编辑，请重新选择录音。");JSONObject record=new JSONObject(saved);if(!"derive".equals(record.optString("operation"))||!id.equals(record.optString("id"))||!AudioDerivationJob.publicDetails(record).optBoolean("retryAvailable"))throw new IOException("上次编辑状态已变化，请刷新后重试。");launchDerivation(context,record);}
  }
  private static void launchDerivation(Context context,JSONObject record)throws Exception {
-  synchronized(AudioImportService.class){if(RUNNING.get())throw new IOException("已有录音任务正在进行，请等完成或取消。");status(context);if(!record.getJSONObject("request").getString("libraryToken").equals(new LocalLibraryBackups(context.getFilesDir().toPath()).token()))throw new IOException("资料库已切换，请重新选择录音编辑。");record.put("running",true).put("state","starting").put("message","正在准备录音编辑");current=publicStatus(record);RUNNING.set(true);CANCELLED.set(false);COMMITTING.set(false);}
+  synchronized(AudioImportService.class){
+   if(RUNNING.get())throw new IOException("已有录音任务正在进行，请等完成或取消。");status(context);LocalLibraryBackups library=new LocalLibraryBackups(context.getFilesDir().toPath());if(!record.getJSONObject("request").getString("libraryToken").equals(library.token()))throw new IOException("资料库已切换，请重新选择录音编辑。");
+   record.put("running",true).put("state","starting").put("message","正在准备录音编辑").put("target",library.recordings().getFileName().toString()).put("key",record.getJSONObject("request").getJSONArray("outputs").getJSONObject(0).getString("key"));
+   // A successful start reply must already retain all exact pending keys and
+   // plans. A process exit before the worker creates its stage remains retryable.
+   if(!preferences(context).edit().putString("job",record.toString()).commit())throw new IOException("编辑任务尚未安全保存，请重试；原录音未改变。");
+   current=publicStatus(record);RUNNING.set(true);CANCELLED.set(false);COMMITTING.set(false);
+  }
   try{context.startForegroundService(new Intent(context,AudioImportService.class).putExtra("derivationJob",record.toString()));}catch(Exception error){RUNNING.set(false);current=null;throw error;}
  }
  static void start(Context context,Uri uri,String token)throws Exception {
@@ -61,7 +68,7 @@ public final class AudioImportService extends Service {
  @Override public int onStartCommand(Intent intent,int flags,int startId){
   if(intent!=null&&CANCEL.equals(intent.getAction())){cancel();if(!RUNNING.get())stopSelf();return START_NOT_STICKY;}
   if(job!=null)return START_NOT_STICKY;
-  try{startForeground(NOTIFICATION,notification("正在导入录音"));wake=((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"Companion:media-import");wake.acquire(60L*60*1000);}catch(Exception error){RUNNING.set(false);try{current=new JSONObject().put("running",false).put("state","failed").put("message","暂不能在后台导入，请保持应用打开后重试。");}catch(Exception ignored){}stopSelf();return START_NOT_STICKY;}
+  try{startForeground(NOTIFICATION,notification("正在准备本机音频任务"));wake=((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"Companion:media-import");wake.acquire(60L*60*1000);}catch(Exception error){RUNNING.set(false);try{if(current!=null&&"derive".equals(current.optString("operation"))){String saved=preferences(this).getString("job",null);JSONObject record=saved==null?new JSONObject():new JSONObject(saved);record.put("running",false).put("state","interrupted").put("message","暂不能在后台整理，请保持应用打开后重试未完成片段。原录音和已保存片段保留。");preferences(this).edit().putString("job",record.toString()).commit();current=publicStatus(record);}else current=new JSONObject().put("running",false).put("state","failed").put("message","暂不能在后台导入，请保持应用打开后重试。");}catch(Exception ignored){}if(wake!=null&&wake.isHeld())wake.release();stopForeground(STOP_FOREGROUND_REMOVE);stopSelf();return START_NOT_STICKY;}
   String derivation=intent==null?null:intent.getStringExtra("derivationJob");if(intent==null||(intent.getData()==null&&derivation==null)){RUNNING.set(false);stopForeground(STOP_FOREGROUND_REMOVE);stopSelf();return START_NOT_STICKY;}
   RUNNING.set(true);Uri uri=intent.getData();String token=intent.getStringExtra("libraryToken");job=new Thread(()->{if(derivation!=null)runDerivation(derivation);else runImport(uri,token);},"Companion-media-import");job.setPriority(Thread.MIN_PRIORITY+1);job.start();return START_NOT_STICKY;
  }

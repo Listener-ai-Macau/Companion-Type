@@ -38564,8 +38564,8 @@
           ],
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
-            "at": "2026-11-10T22:40:18+08:00",
-            "state": "ANDROID130_GROUPED_TRIM_SPLIT_MERGE_AND_SOURCE_RETURN_SOURCE_READY_NATIVE_BUILD_PENDING",
+            "at": "2026-11-10T23:13:39+08:00",
+            "state": "ANDROID130_ACTUAL_TRIM_SPLIT_MERGE_SOURCE_RETURN_EXACT_PCM_PASSED_BACKUP_RESTORE_OPEN_RELIABILITY_REPAIR_SOURCE_UNPACKAGED",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
               "packages/audio-derivation/src/plan.ts",
@@ -38578,8 +38578,8 @@
             "actual": "Validated immutable source identities, sample-accurate trim/reorder/multi-source maps, half-open boundaries, full last partial millisecond, range-to-original intersections, stale/damaged map rejection and safe-integer overflow. Pure source strict typecheck and actual bundled assertions pass.",
             "notImplementedYet": "Native service/source resolver, atomic library publication and provenance/backup/purge integration, ordinary trim/split/merge UI, Windows native materialization and full installed qualification remain open.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
-            "currentDependency": "Android130 grouped native build requested by the protected source commit; actual phone qualification remains pending. Shared Windows091 document/input baseline remains installed. Continue matching Windows edit implementation while remote build runs.",
-            "next": "Read actual Android130 CI result, verify/sign/preserve exact payload, then isolated phone edit chain; implement matching Windows source/PCM/provenance adapter and the same ordinary editor before declaring this full dual-client batch delivered.",
+            "currentDependency": "Android130 installed on owned secondary display. Ordinary trim/split/merge/source-return completed;36 split/merge PCM outputs verified plus trim;37 new details contain no copied transcript/minutes. Backup saved through ordinary system picker; exact archive/restore/purge and original-library restoration still pending. Cancellation attempt completed all32 after an ordinary click, so cancellation/retry is not yet qualified.",
+            "next": "Finish current130 backup/restore/scoped purge, restore original library and close owned phone/display. Group source repairs for queued cancellation after current commit and durable start acknowledgement; final matching repair candidate needs actual process-restart/pending-only retry. Continue Windows editing adapter from protected091. Do not call the full dual-client editing or sale batch complete.",
             "renderer": {
               "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
               "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
@@ -38639,6 +38639,65 @@
               ],
               "sourceCommit": "33ccbd683535e9c293106ace3409b139b25dfae9",
               "remoteVerified": true
+            },
+            "androidBuildRun": 42836455614,
+            "androidInstalled": {
+              "at": "2026-11-10T22:48:46+08:00",
+              "state": "ANDROID130_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+              "sourceCommit": "33ccbd683535e9c293106ace3409b139b25dfae9",
+              "apkSha256": "44f32d6a3a7497cde36be9f7f8344eebf40a428ca17d4566e03bf2153b4d4a04",
+              "existingFilesByteIdentical": 2135,
+              "mainUnchangedDuringInstall": true
+            },
+            "androidPrivateReadback": {
+              "at": "2026-11-10T22:48:26+08:00",
+              "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+              "sourceCommit": "33ccbd683535e9c293106ace3409b139b25dfae9",
+              "repo": "Listener-ai-Macau/Companion-Type",
+              "tag": "windows-0.1.78-bb1550c4-candidate",
+              "draft": true,
+              "assetId": 731787126,
+              "fileName": "Companion-Android-0.1.130-core-candidate.apk",
+              "apkSha256": "44f32d6a3a7497cde36be9f7f8344eebf40a428ca17d4566e03bf2153b4d4a04",
+              "bytes": 51155741,
+              "readbackByteIdentical": true,
+              "published": false,
+              "ownerPrivateDataUploaded": false,
+              "readback": {
+                "method": "four-bounded-official-CDN-range-readers",
+                "workers": 4,
+                "sections": 13,
+                "bufferBytesPerWorker": 131072,
+                "bytes": 51155741,
+                "sha256": "44f32d6a3a7497cde36be9f7f8344eebf40a428ca17d4566e03bf2153b4d4a04",
+                "seconds": 8.98399999999674,
+                "retainedTransientReads": [],
+                "authSentOnlyToGitHubApi": true,
+                "signedUrlOrTokenPersisted": false,
+                "routingModified": false
+              }
+            },
+            "activePhoneSession": {
+              "sessionCode": 130,
+              "installedVersion": "0.1.130",
+              "root": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\phone130",
+              "display": 20,
+              "originalLibraryRetained": true,
+              "activePublicLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a"
+            },
+            "actualPhoneEvidence": [
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-trim-pcm.json",
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-split-merge-pcm.json",
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-source-return.json",
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android130\\editing-backup.json"
+            ],
+            "pendingReliabilityRepair": {
+              "sourceOnly": true,
+              "installed130Changed": false,
+              "cancelObservation": "Ordinary cancel clicked during32-piece task; it finished32/32, with no pending retry. Exact click-time native phase was not captured, so completion race versus dropped commit-phase request is not isolated by that single run.",
+              "sourceCauseAndChange": "130 drops cancel requests while committing. New source queues a derive cancellation through the current atomic commit and offers stop-after-current-piece, so the next piece sees it. Single-file import final-commit behavior remains unchanged.",
+              "durableStart": "Persist exact new keys/plans/target before successful start reply; recovery accepts interruption before any stage was created, and foreground-service startup failure retains a retryable task.",
+              "notQualified": "Repair source not packaged or tested on phone yet; native131 number not yet frozen."
             }
           }
         },
@@ -55583,12 +55642,12 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": false,
-          "reservedFor": "Companion128 public recording-library acceptance",
+          "active": true,
+          "reservedFor": "Companion130 public recording-library acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-10T19:21:30+08:00",
+          "requestedAt": "2026-11-10T22:48:25+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Own app on owned non-main display; public QA library only. Document originals/local extraction/reading/save, explicit public AI source selection and source return, backup/lifecycle. No BLE, microphone, ASR/training or Owner private text.",
+          "scope": "Own app on owned non-main display; explicit public QA recordings only. Non-destructive trim/split/merge, source return, retry/cancel, playback, backup/restore/scoped purge. No BLE, microphone, ASR/training, online AI or Owner private recording content.",
           "releasedAt": "2026-11-10T20:19:24+08:00",
           "releaseReason": "Android129 complete public document originals/local extraction/reading, explicit AI source choice without online generation, save/backup/restore/scoped purge and ordinary simulated customer workflows completed; original library restored and own session closed."
         },
@@ -136913,7 +136972,10 @@
         "input090BuildRun": 42819548838,
         "input090Installed": true,
         "recovery090Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json",
-        "frontendIntegrationHandoff": "owner_module_execution.sharedWindowsIntegration20261110 — Windows091 source merge in progress; preserve both source lineages without changing the firmware/physical task priority."
+        "frontendIntegrationHandoff": "owner_module_execution.sharedWindowsIntegration20261110 — Windows091 source merge in progress; preserve both source lineages without changing the firmware/physical task priority.",
+        "input092Source": "7046f32d587e1be88e6feb3aa539580a2f72333e",
+        "input092BuildRun": 42840509205,
+        "input092Installed": false
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -143296,6 +143358,34 @@
         "shared091ArchiveStillContainsFirmware788": true,
         "phone": "Last installed evidence127;129 candidate available, actual phone absent at last ADB inventory. No current-phone full chain claim.",
         "mac": "Source and CI candidate retained; actual Mac BLE/permissions/editor chain remains open."
+      },
+      "desktopInput092Current": {
+        "at": "2026-11-10T23:04:06+08:00",
+        "state": "ONE_MATCHED_FINAL092_NATIVE_CANDIDATE_BUILD",
+        "sourceCommit": "7046f32d587e1be88e6feb3aa539580a2f72333e",
+        "base": "b170264a7f0693847ea17ef85901f5411280f266",
+        "version": "0.1.92",
+        "branch": "work/recorder-core-integration-20261110",
+        "installed": false,
+        "firmwareChanged": false,
+        "oldSourceReproducerFailed": true,
+        "affectedTestsPassed": 7,
+        "physicalChainQualified": false,
+        "saleQualified": false,
+        "currentLongPreserved": "Frozen791/091 original399; this source only changes desktop dictation/parser metadata, not follower/receive/firmware.",
+        "supersededSource": "c0e908199b77a43e72f750fdef294173091ee8ef",
+        "supersededRun": 42837769967,
+        "supersessionReason": "Before installation, UI review found a fixed recording label overriding PREPARING. Added actual-phase presentation and kept a previous ASR completion from replacing the current utterance phase; no firmware/follower change.",
+        "webBuildPassed": true,
+        "run": {
+          "conclusion": "",
+          "databaseId": 42840509205,
+          "headSha": "7046f32d587e1be88e6feb3aa539580a2f72333e",
+          "status": "in_progress",
+          "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42840509205"
+        },
+        "candidateInstalled": false,
+        "ordinaryPhysicalChainQualified": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
