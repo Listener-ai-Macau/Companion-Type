@@ -64,6 +64,7 @@ public final class MainActivity extends Activity {
     private Path recordings() throws java.io.IOException { return libraries().recordings(); }
     private MeetingStore store() throws java.io.IOException { return new MeetingStore(libraries().meetings()); }
     private LocalRecordingLifecycle lifecycle()throws Exception{return new LocalRecordingLifecycle(root(),recordings(),libraries().meetings(),MainActivity::syncLifecycleDirectory);}
+    private RecordingOrganization recordingOrganization()throws Exception{return new RecordingOrganization(libraries().meetings(),MainActivity::syncLifecycleDirectory);}
     private static void syncLifecycleDirectory(Path directory)throws java.io.IOException{
         java.io.FileDescriptor fd=null;
         try{
@@ -619,6 +620,47 @@ public final class MainActivity extends Activity {
             synchronized(RecordingSyncService.class){requireLifecycleIdle();return lifecycle.change(key,revision,action,title).put("libraryToken",token);}
         }finally{LocalLibraryBackups.BUSY.set(false);}
     }
+    private JSONObject changeRecordingOrganization(JSONObject a)throws Exception{
+        requireLifecycleIdle();String token=a.getString("libraryToken");
+        if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新选择录音。");
+        if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
+        try{synchronized(RecordingSyncService.class){
+            requireLifecycleIdle();if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，本次未修改。");
+            java.util.Set<String> visible=new java.util.HashSet<>();LocalRecordingLifecycle life=lifecycle();
+            for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){
+                try{JSONObject state=life.get(row.key());if(state.getLong("trashedAt")==0&&!state.getBoolean("purging"))visible.add(row.key());}catch(Exception unreadable){/* Exclude unreadable identities; never change them. */}
+            }
+            JSONObject value=recordingOrganization().change(a.getLong("revision"),a.getJSONArray("keys"),a.getString("action"),a.optString("folder",""),a.optJSONArray("tags"),visible);
+            return new JSONObject().put("revision",value.getLong("revision")).put("available",true).put("libraryToken",token);
+        }}finally{LocalLibraryBackups.BUSY.set(false);}
+    }
+    private JSONObject changeRecordingBatch(JSONObject a)throws Exception{
+        requireLifecycleIdle();String token=a.getString("libraryToken"),action=a.getString("action");JSONArray targets=a.getJSONArray("targets");
+        if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新选择录音。");
+        if(!java.util.Arrays.asList("trash","protect","unprotect").contains(action)||targets.length()==0||targets.length()>500)throw new java.io.IOException("请选择1到500条录音进行保护或移入回收站。");
+        if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
+        try{synchronized(RecordingSyncService.class){
+            requireLifecycleIdle();if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，本批未修改。");
+            LocalRecordingLifecycle life=lifecycle();java.util.Map<String,RecordingLibrary.Session> originals=new java.util.HashMap<>();for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions)originals.put(row.key(),row);
+            java.util.Set<String> seen=new java.util.HashSet<>();java.util.Map<String,String> titles=new java.util.HashMap<>();
+            // Validate the entire selection before the first reversible state write.
+            for(int i=0;i<targets.length();i++){
+                JSONObject target=targets.getJSONObject(i);String key=target.getString("key");JSONObject current=life.get(key);
+                if(!seen.add(key)||!originals.containsKey(key)||current.getLong("revision")!=target.getLong("revision")||current.getLong("trashedAt")!=0||current.getBoolean("purging"))throw new java.io.IOException("所选录音状态已变化，本批未修改，请刷新后重新选择。");
+                if(action.equals("trash")&&current.getBoolean("protected"))throw new java.io.IOException("所选内容含受保护录音，本批未移入回收站；请先解除保护。");
+                if(action.equals("trash"))titles.put(key,recordingTitle(key,originals.get(key)));
+            }
+            if(action.equals("trash")){stopPlayback();playbackEvent("stopped","");}
+            JSONArray completed=new JSONArray(),pending=new JSONArray();String warning=null;
+            for(int i=0;i<targets.length();i++){
+                JSONObject target=targets.getJSONObject(i);String key=target.getString("key");
+                if(warning!=null){pending.put(key);continue;}
+                try{life.change(key,target.getLong("revision"),action,titles.getOrDefault(key,""));completed.put(key);}
+                catch(Exception uncertain){pending.put(key);warning="部分管理状态尚未确认，请刷新录音库和回收站核对；原音没有永久清除。";}
+            }
+            return new JSONObject().put("completed",completed).put("pending",pending).put("warning",warning==null?JSONObject.NULL:warning).put("libraryToken",token);
+        }}finally{LocalLibraryBackups.BUSY.set(false);}
+    }
     private JSONObject syncStatus() throws Exception {
         RecordingSyncStatus s = RecordingSyncService.status(this);
         String saved=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("directory",null);
@@ -912,6 +954,8 @@ public final class MainActivity extends Activity {
             case "libraryStatus":return libraries().status();
             case "recordingTrash":return lifecycle().trash().put("libraryToken",libraries().token());
             case "recordingLifecycle":return changeLocalRecording(a);
+            case "recordingOrganization":return changeRecordingOrganization(a);
+            case "recordingLifecycleBatch":return changeRecordingBatch(a);
             case "exportInfo":return exportSource(a.getString("key")).info();
             case "prepareExport":return prepareContent(a).dto();
             case "copyExport":{
@@ -1103,6 +1147,9 @@ public final class MainActivity extends Activity {
             }
             case "library": {
                 RecordingLibrary.Inventory inv = RecordingLibrary.inspect(recordings()); JSONArray rows = new JSONArray(); int titleProblems=0,searchProblems=0;
+                JSONObject organization=null,organizationStatus=new JSONObject().put("available",true).put("libraryToken",libraries().token());
+                try{organization=recordingOrganization().read();organizationStatus.put("revision",organization.getLong("revision"));}
+                catch(Exception unreadable){organizationStatus.put("available",false).put("revision",0).put("error","分类资料暂不能读取，原文件保留；可以继续打开录音或先备份，分类操作暂停。");}
                 String query=a.optString("query","").trim();
                 MeetingLibrarySearch search=query.isEmpty()?null:new MeetingLibrarySearch(query,!"title".equals(a.optString("scope","all")));
                 MeetingLibrarySearch.Reader reader=(key,source)->{
@@ -1128,11 +1175,13 @@ public final class MainActivity extends Activity {
                             .put("state", s.state.name()).put("segments",s.imported==null?s.segments.size():s.imported.partCount()).put("lifecycle",life).put("libraryToken",libraries().token())
                             .put("recordedAtUnixSeconds",s.startedUnixSeconds>0?Long.valueOf(s.startedUnixSeconds):JSONObject.NULL);
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
+                    row.put("organization",organization==null?new JSONObject().put("folder","").put("tags",new JSONArray()):RecordingOrganization.item(organization,key));
                     if(found!=null)row.put("matchSource",found.match.source).put("matchSnippet",found.match.snippet)
                         .put("matchStart",found.match.start).put("matchEnd",found.match.end).put("matchStale",found.match.stale);
                     rows.put(row);
                 }
                 return new JSONObject().put("rows", rows).put("problems", inv.problems.size()+titleProblems).put("searchProblems",searchProblems)
+                    .put("organization",organizationStatus)
                     .put("searchQuery",query).put("searchScope","title".equals(a.optString("scope","all"))?"title":"all");
             }
             case "detail": {

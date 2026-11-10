@@ -177,6 +177,7 @@ final class LocalRecordingLifecycle {
         }
     }
     JSONObject preparePurge(String key,long expected)throws Exception{return locked(()->{
+        new RecordingOrganization(meetings,sync::sync).read();
         JSONObject s=read(key);if(s.getLong("revision")!=expected||s.getLong("trashedAt")==0||s.getBoolean("protected"))throw new IOException("回收站状态已变化，请刷新后重试。");
         JSONObject plan=s.getBoolean("purging")?object(planPath(key),2*1024*1024):inventory(key);
         if(!key.equals(plan.getString("key")))throw new IOException("清除核对身份不符。");validate(plan,s.getBoolean("purging"));
@@ -191,6 +192,7 @@ final class LocalRecordingLifecycle {
         JSONObject s=read(key),plan=object(planPath(key),2*1024*1024);
         if(s.getLong("revision")!=expected||s.getLong("trashedAt")==0||s.getBoolean("protected")||!key.equals(plan.getString("key"))||plan.getLong("revision")!=expected||!plan.getString("token").equals(token))throw new IOException("清除确认已过期，请重新核对。");
         validate(plan,s.getBoolean("purging")); // Entire set before the first irreversible operation.
+        new RecordingOrganization(meetings,sync::sync).read();
         JSONObject result=offer(s,plan);s.put("purging",true).put("revision",expected+1);write(statePath(key),s);
         JSONArray files=plan.getJSONArray("files");
         // Audio metadata is removed after audio bytes, so a partial failure is not
@@ -204,6 +206,7 @@ final class LocalRecordingLifecycle {
             Path imported=recordings.resolve(com.denzic.companion.mobile.ImportedAudio.folder(key));managedPath(imported);
             if(Files.isDirectory(imported,LinkOption.NOFOLLOW_LINKS))try(DirectoryStream<Path> remaining=Files.newDirectoryStream(imported)){if(!remaining.iterator().hasNext()){Files.delete(imported);sync.sync(recordings);}}
         }
+        new RecordingOrganization(meetings,sync::sync).remove(key);
         // Retain only identity/revision so an old revision-zero request cannot
         // affect a later re-import of the same immutable recording (ABA).
         s.remove("title");s.put("trashedAt",0).put("purging",false).put("purged",true).put("revision",expected+2);
