@@ -37,7 +37,7 @@ fn group(entries:Vec<RecordingEntry>)->Vec<DeviceRecording> {
 
 pub(crate) fn list_device_recordings(device_id:&str)->Result<Vec<DeviceRecording>,String> {
     run_native_blocking(async {
-        let setup=connect_native_device_setup_with_intent(Some(device_id),false,ConnectionIntent::Normal).await?;
+        let setup=connect_native_device_setup_with_intent(Some(device_id),false,ConnectionIntent::RecorderCore).await?;
         let device=setup.device;
         let result=on_native_link(&device,async {
             let chars=device.peripheral.characteristics();
