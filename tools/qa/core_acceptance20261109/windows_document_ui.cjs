@@ -7,7 +7,35 @@ module.exports=async function documentJourney(page,plan,out){
  async function dialog(id,action,file,hash,trigger){fs.writeFileSync(path.join(out,'dialog-request-'+id+'.json'),JSON.stringify({action,path:file,sha256:hash}));await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),until=Date.now()+90000;while(!fs.existsSync(reply)&&Date.now()<until)await wait(100);assert(fs.existsSync(reply),'Native picker result required: '+id);const result=JSON.parse(fs.readFileSync(reply));assert.equal(result.state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');steps.push({step:id,actualNativePicker:result.action});save();}
  function row(){return JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);}
  async function openMeeting(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await page.locator('#ct-saved-recording-workspace').waitFor();}
- await page.bringToFront();await openMeeting();const panel=page.getByRole('region',{name:'补充文档材料'});await panel.getByRole('button',{name:'添加文档',exact:true}).waitFor();const before=row();
+ await page.bringToFront();await openMeeting();const panel=page.getByRole('region',{name:'补充文档材料'});await panel.getByRole('button',{name:'添加文档',exact:true}).waitFor();let before=row();
+ if(Number(plan.appVersion.split('.').at(-1))>=97){
+  const notes=page.locator('#ct-recording-notes'),sourceBefore=row();
+  const oldBody='公开阅读便签甲｜'+('这是一份公开软件检查中的人工说明，不是录音结论。'.repeat(20))+'原样保留的旧便签末尾';
+  const newBody='公开阅读便签乙｜'+('这是一份新写的人工接续卡，保留全部原文字。'.repeat(20))+'原样保留的新便签末尾';
+  async function addNote(body){
+   const composer=notes.locator('.ct-note-composer');if(!await composer.evaluate(node=>node.open))await composer.locator(':scope > summary').click();
+   await notes.getByRole('textbox',{name:'新录音备注',exact:true}).fill(body);await notes.getByRole('button',{name:'保存备注',exact:true}).click();
+   await notes.locator('.ct-note-body').filter({hasText:body.slice(0,12)}).waitFor();
+   const actual=row().meetingNotes.find(note=>note.text===body);assert(actual,'Ordinary save must durably retain the complete body');return actual;
+  }
+  const oldNote=await addNote(oldBody),newNote=await addNote(newBody);
+  const cards=notes.locator('.ct-notes-list > li');assert((await cards.first().innerText()).includes('原样保留的新便签末尾'));
+  const oldCard=cards.filter({hasText:'公开阅读便签甲'});assert(!(await oldCard.locator('.ct-note-body').innerText()).includes('原样保留的旧便签末尾'));
+  await notes.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'notes-reading-recent.png')});
+  await notes.getByRole('combobox',{name:'备注排序',exact:true}).selectOption('created');assert((await cards.first().innerText()).includes('公开阅读便签甲'));
+  await oldCard.getByRole('button',{name:'展开全文',exact:true}).click();assert((await oldCard.locator('.ct-note-body').innerText()).includes('原样保留的旧便签末尾'));
+  await oldCard.getByRole('button',{name:'编辑备注 '+oldNote.id,exact:true}).click();assert.equal(await oldCard.getByRole('textbox',{name:'编辑备注 '+oldNote.id,exact:true}).inputValue(),oldBody);
+  await oldCard.getByRole('button',{name:'取消编辑',exact:true}).click();assert.equal(row().meetingNotes.find(n=>n.id===oldNote.id).text,oldBody);
+  await oldCard.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'notes-reading-created.png')});
+  await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.getByPlaceholder('搜索录音和补充',{exact:true}).fill('原样保留的旧便签末尾');await page.locator('.ct-library-card').filter({hasText:plan.title}).click();
+  await notes.locator('.ct-note-body').filter({hasText:'原样保留的旧便签末尾'}).waitFor();assert((await notes.locator('.ct-note-body').filter({hasText:'原样保留的旧便签末尾'}).innerText()).includes(oldBody));
+  await notes.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'notes-reading-source-search.png')});
+  await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.getByPlaceholder('搜索录音和补充',{exact:true}).fill('');await openMeeting();
+  before=row();assert.equal(before.transcriptText,sourceBefore.transcriptText);assert.deepEqual(before.minutes,sourceBefore.minutes);
+  for(const note of sourceBefore.meetingNotes||[])assert.deepEqual(before.meetingNotes.find(n=>n.id===note.id),note);
+  fs.writeFileSync(path.join(out,'notes-reading-ui.json'),JSON.stringify({state:'ORDINARY_NATIVE_RECENT_CREATED_COMPLETE_EDIT_AND_SEARCH_READING_PASSED',oldNoteId:oldNote.id,newNoteId:newNote.id,oldBodyPreserved:true,newBodyPreserved:true,sourceTranscriptMinutesAndPreviousNotesUnchanged:true},null,2));
+  steps.push({step:'native-recent-notes-presentation',latestUpdatedFirst:true,createdOrderSelectable:true,oldLongNoteFoldedAndReversible:true,editLoadsCompleteSource:true,searchDisplaysCompleteMatchingNote:true});save();
+ }
  await dialog('document-cancel','cancel',null,null,()=>panel.getByRole('button',{name:'添加文档',exact:true}).click());await panel.getByText('已取消选择，已有材料保留。',{exact:true}).waitFor();assert.equal(row().documentContext?.rows?.length??0,0);
  const docs=[];
  for(const input of plan.documentInputs){
@@ -24,6 +52,12 @@ module.exports=async function documentJourney(page,plan,out){
  const grid=panel.locator('.document-table-reader');await grid.getByRole('table').waitFor();
  const storedWorkbook=row().documentContext.rows.find(d=>d.name==='material.xlsx'),storedTable=JSON.parse(fs.readFileSync(path.join(plan.recordingDirectory,storedWorkbook.extraction.file),'utf8'));
  assert(storedTable.sections.some(section=>section.tableRows?.length),'New extraction must durably preserve real row/column layout');
+ if(Number(plan.appVersion.split('.').at(-1))>=97){
+  const rowHeader=grid.getByRole('rowheader',{name:'1048576',exact:true});await rowHeader.scrollIntoViewIfNeeded();
+  const shape=await rowHeader.evaluate(element=>{const range=document.createRange();range.selectNodeContents(element);return {cellWidth:element.getBoundingClientRect().width,textRects:Array.from(range.getClientRects()).map(rect=>({width:rect.width,height:rect.height}))};});
+  assert.equal(shape.textRects.length,1,'The full saved row number must remain on one visible line');assert(shape.textRects[0].width<=shape.cellWidth);
+  steps.push({step:'extreme-row-number-readable',actualTextRange:shape});save();
+ }
  await grid.getByRole('button',{name:'原始文字',exact:true}).click();assert.equal(await grid.locator('pre').innerText(),storedTable.sections[0].text);
  await grid.getByRole('button',{name:'表格阅读',exact:true}).click();
  await panel.getByRole('textbox',{name:'查找材料文字',exact:true}).fill('12,000.00');await panel.locator('.document-pages mark').filter({hasText:'12,000.00'}).waitFor();await panel.getByRole('textbox',{name:'查找材料文字',exact:true}).fill('');
