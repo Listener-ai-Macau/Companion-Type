@@ -20,7 +20,7 @@ public final class AudioImportService extends Service {
  private static final AtomicBoolean RUNNING=new AtomicBoolean(),CANCELLED=new AtomicBoolean(),COMMITTING=new AtomicBoolean();private static volatile JSONObject current;private static volatile AudioImportService instance;
  private PowerManager.WakeLock wake;private volatile Thread job;
  static boolean isRunning(){return RUNNING.get();}
- static void cancel(){if(RUNNING.get()&&(!COMMITTING.get()||current!=null&&"derive".equals(current.optString("operation"))))CANCELLED.set(true);}
+ static void cancel(){JSONObject task=current;if(RUNNING.get()&&(!COMMITTING.get()||task!=null&&"derive".equals(task.optString("operation"))))CANCELLED.set(true);}
  private static android.content.SharedPreferences preferences(Context context){return context.getSharedPreferences("companion-file-import",MODE_PRIVATE);}
  static synchronized JSONObject status(Context context)throws Exception {
   if(current!=null){JSONObject result=new JSONObject(current.toString());if(RUNNING.get()&&!result.optBoolean("running"))result.put("running",true).put("state","finishing").put("retryAvailable",false).put("message","正在完成最后的本机保存与收尾…");return result;}String saved=preferences(context).getString("job",null);if(saved==null)return new JSONObject().put("running",false).put("state","idle");JSONObject record=new JSONObject(saved);

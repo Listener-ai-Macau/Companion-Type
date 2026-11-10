@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T23:42:08+08:00",
+  "state": "ANDROID131_GROUPED_QUEUED_CANCEL_DURABLE_START_SOURCE_FROZEN_NATIVE_BUILD_PENDING",
+  "previousInstalledSource": "33ccbd683535e9c293106ace3409b139b25dfae9",
+  "baseline130Runtime": "Actual ordinary trim/split/merge, exact PCM/source return, backup/restore and scoped purge completed; original library restored and session closed.",
+  "baseline130Cancel": "Ordinary cancellation clicked during32-piece operation; all32 finished. No cancellation qualification. Exact click-time native phase unknown; source130 explicitly dropped cancellation during committing.",
+  "changes": [
+    "Queue cancellation during a derived piece commit; finish that atomic piece, observe request before the next piece. Ordinary UI offers stop-after-current-piece.",
+    "Persist exact task keys/plans/target before successful start reply; interruption before stage creation remains recoverable.",
+    "Retain a retryable durable task on foreground-service startup failure; preserve existing single-import final commit semantics."
+  ],
+  "affectedChecks": {
+    "fullJavaAppCompile": "service131-1794325143543142300/compile.log",
+    "mobileStrictTypecheck": true,
+    "ordinarySharedEditorInputs": 5,
+    "uiEvidence": "ui131-case01/result.json"
+  },
+  "backendAndModelSourceUnchanged": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "phoneRepairQualified": false,
+  "windowsEditingQualified": false,
+  "modelsRun": false
+}
