@@ -1,0 +1,139 @@
+{
+  "at": "2026-11-10T12:00:41.983Z",
+  "actualVersion": "0.1.129",
+  "phoneNative": true,
+  "onlineAiCalled": false,
+  "state": "PHONE_ORDINARY_PUBLIC_DOCUMENT_LIBRARY_BACKUP_SYSTEM_SAVE_COMPLETED_READBACK_REQUIRED",
+  "file": "Companion-public-documents129-backup.zip",
+  "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+  "documents": {
+    "contextId": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+    "revision": 13,
+    "rows": [
+      {
+        "id": "b6f9bbda-e191-411e-b846-e4fd583e8620",
+        "name": "Companion-public-公开补充材料128.docx",
+        "format": "docx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.docx",
+        "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+        "bytes": 37839,
+        "createdAt": 1794311228123,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.read-a77ea8ec56790667.json",
+          "sha256": "a77ea8ec56790667c62dff15de920190223112702860edfd0ab571e96e41af1d",
+          "bytes": 717,
+          "characters": 96,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      {
+        "id": "aa3ad963-6e17-49c3-bf19-6bf3ba11b518",
+        "name": "Companion-public-公开中文128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.pdf",
+        "sourceSha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+        "bytes": 2416,
+        "createdAt": 1794311341718,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.read-c97795cbb8312893.json",
+          "sha256": "c97795cbb8312893194f890ef868bd356fd3c56194bf7c2bab28ff0e00351f7e",
+          "bytes": 390,
+          "characters": 28,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      {
+        "id": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+        "name": "Companion-public-公开预算草案128.xlsx",
+        "format": "xlsx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "bytes": 5636,
+        "createdAt": 1794311632241,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.read-2331f00b03946af6.json",
+          "sha256": "2331f00b03946af68309fb1899b801407b4725d5348f1e11383982735a0f6832",
+          "bytes": 671,
+          "characters": 131,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      {
+        "id": "351e1aa4-f70f-4b85-bbcb-24ba23728a37",
+        "name": "Companion-public-公开方案128.pptx",
+        "format": "pptx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.pptx",
+        "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+        "bytes": 2308,
+        "createdAt": 1794311638686,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.read-6e14af3ec8baa6c8.json",
+          "sha256": "6e14af3ec8baa6c88abfca914c29d33d555f18574ea5be5b3d27b1649e831fd1",
+          "bytes": 520,
+          "characters": 24,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      {
+        "id": "1e1ccf45-5f20-4396-ae1a-0dc61254942d",
+        "name": "Companion-public-有密码128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.pdf",
+        "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+        "bytes": 2339,
+        "createdAt": 1794311728182,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.read-38a5184cfcfb78d1.json",
+          "sha256": "38a5184cfcfb78d161a2a362a3a9d765995c25749487cdf25e0117b09fc8f0d3",
+          "bytes": 484,
+          "characters": 117,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      {
+        "id": "4c16ec9a-a29e-40cd-922e-b37608df797f",
+        "name": "Companion-public-无文字128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-4c16ec9a-a29e-40cd-922e-b37608df797f.pdf",
+        "sourceSha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db",
+        "bytes": 1331,
+        "createdAt": 1794311737563
+      },
+      {
+        "id": "77452b48-ab60-4e58-bf9a-075d1b9de052",
+        "name": "Companion-public-中文编码128.txt",
+        "format": "txt",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.txt",
+        "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+        "bytes": 38,
+        "createdAt": 1794311744504,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.read-11c9a4f2058e3a9a.json",
+          "sha256": "11c9a4f2058e3a9a030300515ff264ac31ed269d8f810e0451c5d3ed96dd8163",
+          "bytes": 292,
+          "characters": 21,
+          "readerVersion": "2026-11-10.1"
+        }
+      }
+    ],
+    "schema": 1,
+    "libraryToken": "7b1017e9e78022ab78ddeae6f10f67824afd33e3195ea599cd928be491d587a9"
+  },
+  "beforeLibraryIds": [
+    "original",
+    "88cb8efc-fe3e-4810-994b-c45ad777c0f0",
+    "78e1de49-c282-4234-9920-d4416d16ba2d",
+    "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+    "d8d24a5e-7daf-4cd3-871c-586a47ae145b",
+    "427ca777-3755-40cd-84bf-26cbade2afec",
+    "26036c18-2856-4bc8-804a-7969473fdb9b",
+    "51a383b0-f3d2-4204-9d05-76da7cdeb4d4"
+  ],
+  "beforeRecordingKeys": [
+    "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+    "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+    "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+    "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1"
+  ],
+  "oldNotesUnchanged": true
+}

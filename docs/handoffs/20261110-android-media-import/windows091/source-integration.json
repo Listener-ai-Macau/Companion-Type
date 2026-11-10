@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T21:25:40+08:00",
+  "state": "UNIFIED091_LATEST_INSTALLED_INPUT_AND_QUALIFIED_DOCUMENT_SOURCE_READY",
+  "version": "0.1.91",
+  "documentParent": "dbecfc33a6a9f4bdda84cb3df0db813eaef682fa",
+  "latestInstalledInputParent": "753800da8f500440e9f753dece3d1f6b02578252",
+  "documentSourceUnchanged": true,
+  "latestInputSourceFilesUnchanged": [
+    "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge/desktop_input.rs",
+    "apps/windows/src-tauri/src/backend/ble_pairing.rs",
+    "apps/windows/src-tauri/src/backend/desktop_dictation.rs",
+    "apps/windows/src-tauri/src/backend/recorder_input.rs",
+    "apps/windows/src/DesktopDictation.tsx",
+    "apps/windows/src/workspaceRefinement.css"
+  ],
+  "windowsTypecheckPassed": true,
+  "exactLicenseInventoryPassed": {
+    "components": 403,
+    "texts": 286,
+    "sourceArchives": 17
+  },
+  "installed": false,
+  "modelsOrBoardCalls": false,
+  "sharedCoordination": "owner_module_execution.sharedWindowsIntegration20261110"
+}

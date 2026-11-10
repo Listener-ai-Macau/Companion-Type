@@ -1,3 +1,18 @@
+<!-- document-context091-android129-delivered -->
+## 2026-11-10T21:59:12+08:00 — 文档原件—本机阅读—显式AI来源—保存恢复完整批次，统一Windows091与Android129归档
+
+沿原CP27-01/import与上下文事项交付：PDF/DOCX/XLSX/PPTX/TXT/MD/CSV原件先保存、独立有界本机worker提取、按段阅读/字面搜索/重开、取消和密码/编码/无文字错误重试、原件另存、整库备份恢复与准确清除。人工材料与录音原话分别保留；AI助手文档默认未选，明确按需发送提取文字，不发送原件/音频/密码。未配置服务的本轮只验实际来源选择与服务门，没有把它当在线文档生成或模型质量通过。普通原音、修订、图文备注与旧功能不因本批重写。
+
+Android129源672d1c223d656bcc37eb6d72f2365ec31f9a0cad，后端/JNI/模型仍f55f8e8；128在实际手机暴露private-data硬链接发布失败，原目录保持未提交，修正为既有原子重命名模式后同机129原件/提取真实通过。7原件/6结果、中文PDF、Word附注/页眉、稀疏表格/公式无缓存/零/日期、PPT真实顺序/隐藏页提示、密码错误重试、无文字保留、GB18030、普通取消/重开搜索/系统另存、54备份内容文件恢复逐字节一致。只在新恢复副本删除选中记录，源54文件和其它资料不变。原2093文件中2091一致，另2为授权公开备注及资料索引；原库/全部旧库/媒体保留，独立显示/端口/驱动关闭，USB唤醒2。APK私有asset731239640回读一致。
+
+Windows文档088源1a71b667实际UI与备份/恢复/精确清除42816055543已通过；第一次构建因五次重复Cargo test重编触发45min，修为只编译一次真实优化验收二进制，逐个运行原受影响filter，保留失败。首次运行准备缺4份清单原件，应用尚未启动，补齐全部11份且核Git blob/哈希；同一088包复验，不另编产品。安装保护发现19:37已装共享089/1025b4bd，实际收据与EXE/DLL已核；拒绝降级，真合并两条源为090/047f41a400ff9d68e74a85b15ad165ca043fd7e3，原桌面输入源及文档读取源逐字节/仅EOL一致。合并许可403组件/286引用原文/17对应源码归档核对，正常发布构建与受影响原生检查通过；090匹配运行含普通文档整链、14原件/结果/独立owner备份恢复、入口移除保留原件、旧版本拒绝、回收站/恢复/仅选中永久清除及089未连接输入入口。第一次090运行在文档页面完成后，工具错误地从会议页点击仅设备页可见的输入控件而停止；修正为普通“设备与同步”路线并等实际原生状态，同一090包续验，未额外重编。实际按住说话/硬件/识别/编辑器粘贴仍未继承资格。准备090安装时再次检测到另一条已于21:08实际安装的090/753800da不同源，未调用msiexec替换它；保留两条090验证及原件，将最新配对/输入修复原样合并到091，并在项目共享入口固定统一源。最终091源b170264a7f0693847ea17ef85901f5411280f266匹配运行与静默升级通过，原数据逐字节相同；MSI私有asset731606342全包回读一致。
+
+两位新AI模拟顾客完整原话在android129/customer-presale.md、customer-afteruse.md：都自选“读会议与补充—留接续便签—离开回找”，实际Word/Excel/PPT和普通备注搜索后接续完成；售前表达兴趣而未购买，假设售后未编造收货/客服。App原有公开阅读便签及入口读取范围是辅助条件，不能称完全盲测或真人。表格列名/值对照、当前便签可见与手工来源跳转愿望合并保留，非阻断不逐条重包。127旧意见中的闲置备注默认整场、保存可见反馈和折叠主题提示已随本批交付；语义模型疑点仍开放。
+
+完整归档E:\CodexData\Companion\deliveries\20261110-companion-core-windows091-android129.zip，SHAa86747698f8e868901cbf6b0cc600620f50f3af9357e560ae7a1a00ebf286824，私有草稿asset731634183上传及完整回读一致。精确091/129安装包、来源/哈希/上述边界/AI模拟原话随包，FW66788和Mac11509eb2保留前包原字节，本轮不新刷机或Mac资格。旧088、089、087/127和所有失败保留，不公开发布、无Owner私有录音/密钥/索引上传。详见docs/handoffs/20261110-android-media-import/documents-delivered-result.json。
+
+下一项沿CP27-16非破坏剪辑/切分/合并。等待Windows远端依赖时已在Android树保护89c8c8fe样本级来源映射及2d405c95有界PCM渲染基础，映射边界/跨源/身份/溢出与真实生成PCM的多分片/乱序/取消/格式校验通过；未接产品入口或持久发布，仍非原生剪辑交付。Android工作流新增纯文档变更忽略和显式source-only检查点跳过原生打包，避免记录/未使用基础模块每次都重编。接着完成有界PCM原件/映射/保存、普通入口和完整双端批次；整体非模型、模型/真实多人、原实物/跨端/服务/正式渠道/真人/Owner门未关闭。
+
 <!-- android-reading127-delivered -->
 ## 2026-11-10T17:20:27+08:00 — Android127阅读—留备注—回找整链返修交付，统一候选完整归档
 
@@ -420,6 +435,30 @@ Owner继续催售卖、竞品查漏与客户体验。原弹窗16:50:23实际选�
 2026-11-10T17:06:44+08:00 Owner所问此前功能/竞品是否全有已沿原36项并集查漏，未新增第二任务树或百分比。官方复核Plaud一键/重点、原音文字导出、现成MCP（云同步条件）、Soundcore离线后连接自动同步、Notta套餐区分及Granola外部工作流；产品实际与竞品宣传分开。基础录音/App能力有交付但当前手机整链/长录/自然IMU/Mac仍开，完整电话双向采集/云账号团队企业生态/语言分人语义普遍质量等不冒充全有。此前Owner高级手势按源/实际结果区分，空中鼠标未交付、物理断麦仍硬件提案。原MCP可取本地数据/用户key路径为差异，但不能再把协议本身称独有。完整映射/当前收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\competitor-and-owner-features-current.json。本步仅复核/承接，零产品构建/设备操作/新客户，不能当新功能进展。真人售前未招募/付款，现有AI回传有限；下一实质新顾客需中性给199美元与实际能力/费用，不重派同条件求购买肯定。
 
 2026-11-10T17:11:30+08:00 Fully received Android127 hypothetical-after-use67-line feedback, SHA1cd24e382cfbd0a8677712dd5954432e7093f921a5d851f46368c4127441bfcc. Actual public reading/save/leave/note-keyword return completed; exact one human-note match, direct selected/highlighted note, no blocking UI issue observed. Existing public notes exposed prior reading hints, no hardware/audio/newASR/real customer/price validation. Preserve four non-blocking discoverability/default-time/save-notice observations in original reading batch, no per-sentence native rebuild. Receipt C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\customer127-afteruse-reconciled.json. Local result follower replaced with corrected terminal-state updates (local indentation error corrected before restart); new follower PID16044, recorder35684/native17380 continued untouched. A PowerShell pipeline failed before the previous receipt-write attempt executed, no product action; this file-based retry avoids missing built-in modules.
+
+2026-11-10T17:25:37+08:00 Owner询问嵌软是否全完成并要求审核测试窗口。实际弹共用原operator窗口与提示音，17:20:46选择长录结束后提醒，17:20:50关窗；保持现有389长录，未写cancel、未开新MIC。关闭窗口不吞掉已选提醒，后台实际PID3384等待该原场终态，再弹同版式按键/一组双敲/停录/精确收取/可选本机回听窗口，收到实际按钮和实体开录后才测试。首窗可选现在短体验，但未被选择，不中止两小时。改编旧788驱动到同MSI冻结088、独立新输出、移除覆盖旧input788收据的末尾复制；编译通过且0设备命令，尚无新实物结果。完整初窗事件/当前句柄/小收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\owner-acceptance-20261110；当前四组与原block不变，不以弹窗/源码准备当售卖通过。
+
+2026-11-10T17:34:20+08:00 Owner要求讲清当前产品及Listener功能遗漏/移植。核当前Listener284/runtimeba074499、Companion088/d9aec及Mac11509源码：已有4类平台共用，但Windows没有完整CIN1听写/目标输入器，原CP15-09确有主机缺口，不能只说Mac待验。保留原20组Listener映射，旧20261011本地ASR/云冻结/OTA速度描述不恢复为现行。移植方向为主机目标文字交付/服务/风格词表，板卡保留WBA采音存储和离线原音；会议不套只听主人或静音自动STOP。完整产品分层/来源/复用决策见C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\listener-reuse-and-product-scope.json。本步只读核对/承接，无Listener改动/构建/设备/MIC或新功能交付，现有389长录和Owner选定的结束后原窗提醒继续。
+
+2026-11-10T17:49:50+08:00 本批唯一正常788/冻结088长录实际终态=CURRENT_FUNCTIONAL_LONG_NOT_QUALIFIED_RETAINED，passed=False；控制器已退出，原始progress/acceptance/就绪及小收据在C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\functional788-088，全部原音/完整native日志留E。没有重开START或固件/时钟变化；内部编码/PDM/调度耗时按Owner仅观察，原始值仍保留。实际gates=null，本结果不替代手机/IMU/Mac或原block。下一步当前正常788/冻结088长录未取得通过，先按本批result/acceptance定位实际失败，不新开录碰结果。继续手机当前完整录音/恢复链、IMU实际拿起/携带误触及真实Mac按住说话范围；Android备注检索/图片修复按原前端最新实际交付与完整客户回传接续，不沿旧版本别名重做。内部耗时及原速度/硬件/屏幕/生产block后置保持，整机售卖尚未关闭。
+
+### 2026-11-10 Windows089复用Listener与原389实际终态
+
+- 18:42源码提交1025b4bd，18:47已推送并派出唯一Windows089构建42802045850。复用Listener5a51c8d的文字交付/选区/IME实现，接入现有精确收取、录音库和转写；新增普通产品入口及显式复制。固件未改，内部Flash/RAM不增加；此前601个锁定依赖版本未被更新。
+- 本机Windows/mobile前端构建、原生应用编译与两项会话归属/重复消息检查、复用模块两项实际worker检查通过。初始独立测试缺dev依赖已修，网络SSH代理/Schannel推送失败保留，经实测成功的原生SSH直连443推送；未改全局线路。当前仍装088，089不是已交付实机通过。
+- 更正实际长录：17:49:27原生读不到芯片状态退出，主机3483.959s、保守持续同步3336.784s、28段本机原件留存；并非完成2h，也并非仍在运行。17:55提醒被关闭、18:17原版接回弹窗Owner选择稍后，零新增START。已释放过期主机占用；板卡物理采音未知，不推定死机或手动拔插。下一步接回后只收尾原389，再做受影响验证。
+- 手机127既有售前/假设售后AI体验与完整反馈承接继续复用，不冒充真人或硬件通过。亮点集中在一键录音/敲击重点、按住说话输入、原音可导出与自选识别；高级IMU/空鼠仅愿望，不扩大发售前任务。真实Mac、自然拿起/携带误触、手机完整实卡恢复链和当前最终长录仍开放；原明确block/后置保持。
+
+- 19:05正常release/MSI完成并独立核对：同一源码1025b4bd，唯一构建42802045850成功，1273个源输入/278个许可资源以及MSI内原生对、版本/升级身份匹配；没有再做原生重包。19:06实际MSI原生对在隔离窗口的电脑输入入口/IPC通过，BLE关闭，0开录/转写/剪贴板操作。首次UI断言误把云识别当必选，保留失败后按真实本机配置修正适配器；复用相同MSI通过，产品未因该断言重建。
+- 19:09候选整包 `E:\CodexData\Companion\deliveries\20261110-core089-android127-candidate.zip`，38826783B，SHA256 `437a400c22f13f49c976ccc6497cd7b76aee40e22aa62770d67caf5d6f8fce93`，内含Windows089、既有Android127/FW66788/Mac候选；旧088整包保留。Windows089尚未替换日用088，实体电脑输入/真实Mac/手机完整实卡恢复/最终长录/IMU自然使用仍开放，整机未售卖合格。当前无本侧设备作业或等待弹窗；原389物理采音未知，Owner选择稍后接回。
+
+### 2026-11-10T20:55:30+08:00｜实际推进：恢复389/391、安装089，修连接恢复源头为090
+
+- 19:30在实际COM9重新枚举后接回原389；原库恢复29段、3496.9175s原音，CRC/SHA/连续性与末段/WAV校验通过，时长误差2.5ms、回收确认；未开新MIC。389为何终止仍未知，不推定死机或人为操作。19:37正常MSI静默升级089，原245份用户文件内容未变。真实模式1/0 ACK及已加载本机模型可用，未用旧录音跑识别。
+- 089默认“连接Companion”实测12778.320ms>5000ms，含固定4007ms扫描；显式MAC另测2783.163ms保留，不能替换默认失败。19:55原版实体按住输入窗Owner点开始后，19:55:39出现真实Active->Closed，089交互功能退出；未收到物理START、没有本场音频/编辑器输入，Owner选有问题；不猜其是否按键。
+- 第二次最终长录391经Owner20:08:45单次就绪后只START一次，20:34:51原生同样在必读DEVICE_STATUS返回None时退出，host1501.41s、保守同步1354.876s、已封12段；无此前native first_loss。随后精确391 STOP正常ACK，state2/error0/1536170ms、旧34目录一致，COM9仍在；不推定固件重启。恢复最初Python辅助目录查询又断链，失败保留；改用原正常原生精确收取，在同一原库收齐13段（含末段）1536.17s，SHA/CRC/连续性/WAV误差10ms通过，原空间回收，不开新MIC。两次都没有2h资格。
+- 修正归因：普通GUI原已有后台重连，长录CLI关闭自动线程又直接传播None，因此不能把该入口退出泛化为所有App必然退出。源码090 `753800da8f500440e9f753dece3d1f6b02578252` 使必读状态保留ATT错误/超时并在读取失败时先退旧句柄、只重建一次同设备连接，再核UID/epoch/session/request后续传；身份改变仍报真实失败。电脑输入跟随实际失链重连并查询补回已观察过的物理段，接收与重建连接串行、ASR不挡连接，不合成START。默认冷连接先查唯一OS已配对产品，省固定扫描，多产品仍走选择。23项受影响原生检查及Windows前端构建通过；一次recorder_input过滤匹配0项明确不计为测试通过，未更新第三方依赖。已提交并推送，唯一正常MSI构建 `42819548838` 在运行；固件未改，090尚未安装/实体资格未过。
+- Owner要求设置正确目标并承担通过责任，已建立持续Goal收原四组，不以源码/包/测试数冒充售卖。当前无本侧MIC/接收/升级/弹窗；先实际验证这批修复再最终长录。手机127完整实卡恢复、IMU自然拿起/携带误触、Windows完整按住输入及真实Mac仍开放；原明确block/后置不重开。
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。

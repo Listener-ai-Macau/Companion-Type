@@ -1,0 +1,239 @@
+{
+  "at": "2026-11-10T16:09:46+08:00",
+  "state": "WINDOWS087_IMAGE_CONTEXT_SCOPED_DELIVERY_COMPLETE",
+  "version": "0.1.87",
+  "sourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+  "nativeCiRun": 42772579089,
+  "runtimeRun": 42778070163,
+  "checks": {
+    "windows-verification": {
+      "at": "2026-11-10T15:46:44+08:00",
+      "state": "WINDOWS087_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+      "version": "0.1.87",
+      "sourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+      "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows087\\Companion-Windows-0.1.87-candidate.msi",
+      "msiSha256": "4c8c31cd1e365a603c62c199c2cc8f3dffd3d45104c88934649311852d929ab7",
+      "embeddedExeSha256": "3b52987b6552f26be11f82f3719ba808ede9b396c12c8ecd68e31fdfe644c6b3",
+      "dllSha256": "a9ec909b135bc42b1bf96c180afef4302fee0ea706136aa5a615b99c709c507c",
+      "licenseFilesMatched": 263,
+      "sourceFilesMatched": 1240,
+      "sourceFilesWithOnlyCheckoutEolDifference": [
+        "apps/windows/src-tauri/src/backend/ble_bridge/device_clock.rs",
+        "apps/windows/src-tauri/src/backend/ble_bridge/recording_management.rs",
+        "apps/windows/src-tauri/src/backend/content_export.rs",
+        "apps/windows/src-tauri/src/backend/device_discovery.rs",
+        "apps/windows/src-tauri/src/backend/device_discovery/acquisition.rs",
+        "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+        "apps/windows/src-tauri/src/backend/mp3_export.rs",
+        "apps/windows/src-tauri/src/backend/ota_metrics.rs",
+        "apps/windows/src-tauri/src/backend/recording_metrics/targets.rs",
+        "apps/windows/src-tauri/src/backend/recording_metrics/tests.rs",
+        "apps/windows/src-tauri/src/backend/spreadsheet_export.rs",
+        "packages/meeting-transcript/Cargo.lock",
+        "packages/meeting-transcript/Cargo.toml",
+        "packages/ui/src/ActionReviewTools.tsx",
+        "packages/ui/src/CompanionCard.tsx",
+        "packages/ui/src/CompanionDeviceRecordings.tsx",
+        "packages/ui/src/ContentExportPanel.tsx",
+        "packages/ui/src/MeetingReadingFrame.tsx",
+        "packages/ui/src/NoteImagePreview.tsx",
+        "packages/ui/src/TranscriptFind.tsx",
+        "packages/ui/src/actionReview.ts",
+        "packages/ui/src/actionReviewTools.css",
+        "packages/ui/src/aiMaterialNote.ts",
+        "packages/ui/src/meetingOutline.ts",
+        "packages/ui/src/shareHandoff.ts",
+        "packages/ui/src/transcriptFind.css",
+        "packages/ui/src/transcriptMatching.ts",
+        "third_party/btleplug-0.11.8/src/winrtble/adapter.rs",
+        "third_party/btleplug-0.11.8/src/winrtble/ble/watcher.rs"
+      ],
+      "sameUpgradeIdentity": true,
+      "newerVersionGuard": true,
+      "ciSourceAndNativeFrozenTogether": true,
+      "nativeProfile": "normal release on dedicated Windows runner",
+      "ciRunId": 42772579089,
+      "ciWrapperOverallPassed": true,
+      "localHeavyBuild": false,
+      "installed": false,
+      "wholeCoreCandidateQualified": false,
+      "oldWinRTSharePickerFixed": false,
+      "saleQualified": false,
+      "modelsRun": false,
+      "inspectionLimits": {
+        "pid": 24828,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 536870912,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 48328704,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    },
+    "runtime-result": {
+      "at": "2026-11-10T07:50:47.262250+00:00",
+      "state": "WINDOWS087_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED",
+      "testSourceCommit": "b695c60f0d4e3c816f74170b233a57e5c365d5fb",
+      "appSourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+      "appVersion": "0.1.87",
+      "nativeRecompiled": false,
+      "wholeCoreCandidateQualified": false,
+      "modelsRun": false,
+      "deviceOrPhoneAccess": false,
+      "exactMsiExeSha256": "3b52987b6552f26be11f82f3719ba808ede9b396c12c8ecd68e31fdfe644c6b3",
+      "exactMsiDllSha256": "a9ec909b135bc42b1bf96c180afef4302fee0ea706136aa5a615b99c709c507c",
+      "frozenNativeBytesMatchedApprovedMsi": true,
+      "publicAudio": {
+        "meeting": "S_R004S03C01",
+        "seconds": 2327.119,
+        "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "bytes": 74467886,
+        "privateDraftAsset": 726625128
+      },
+      "nativeUiExitCode": 0,
+      "nativeUiState": "REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED",
+      "contextBackendExitCode": 0,
+      "contextBackendState": "ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED",
+      "sourceAudioUnchanged": true,
+      "finishedAt": "2026-11-10T07:51:36.450892+00:00",
+      "runtimeRun": 42778070163,
+      "evidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\windows-note-context20261110\\context-passed087\\companion-context-b695c60f0d4e3c816f74170b233a57e5c365d5fb"
+    },
+    "runtime-backend-result": {
+      "at": "2026-11-10T07:51:32.016339+00:00",
+      "state": "ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED",
+      "appSource": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+      "imageSha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855",
+      "modelCalls": 0,
+      "aiServiceCalls": 0,
+      "deviceAccess": false,
+      "ownerDataUsed": false,
+      "steps": [
+        {
+          "name": "source-preview",
+          "exitCode": 0,
+          "seconds": 0.10268230000002632,
+          "expectedFailure": false
+        },
+        {
+          "name": "library-backup",
+          "exitCode": 0,
+          "seconds": 1.5076312999999573,
+          "expectedFailure": false
+        },
+        {
+          "name": "library-restore",
+          "exitCode": 0,
+          "seconds": 1.60710499999999,
+          "expectedFailure": false
+        },
+        {
+          "name": "restored-preview",
+          "exitCode": 0,
+          "seconds": 0.1025913000000287,
+          "expectedFailure": false
+        },
+        {
+          "name": "trash",
+          "exitCode": 0,
+          "seconds": 0.10261330000003,
+          "expectedFailure": false
+        },
+        {
+          "name": "trashed-preview-rejected",
+          "exitCode": 1,
+          "seconds": 0.10246010000003025,
+          "expectedFailure": true
+        },
+        {
+          "name": "restore-trash",
+          "exitCode": 0,
+          "seconds": 0.10293770000004088,
+          "expectedFailure": false
+        },
+        {
+          "name": "restored-from-trash-preview",
+          "exitCode": 0,
+          "seconds": 0.10283270000002176,
+          "expectedFailure": false
+        },
+        {
+          "name": "trash-for-permanent-cleanup",
+          "exitCode": 0,
+          "seconds": 0.10278620000002547,
+          "expectedFailure": false
+        },
+        {
+          "name": "purge",
+          "exitCode": 0,
+          "seconds": 0.3032617000000073,
+          "expectedFailure": false
+        }
+      ],
+      "sameSourceLibraryIndexAndAudioImageBytesUnchanged": true,
+      "unrelatedRestoredControlPreserved": true,
+      "originalSelectedInputFilesUnchanged": true,
+      "selectedZipContainsExactOriginalImage": true,
+      "restoredNotesAndBookmarksExact": true,
+      "restoredPreviewVerified": true,
+      "modelOrAiCalled": false,
+      "wholeSaleQualified": false
+    },
+    "installation": {
+      "at": "2026-11-10T15:56:57+08:00",
+      "state": "WINDOWS087_SHARED_INSTALL_REUSED_EXACT_FROZEN_NATIVE_VERIFIED",
+      "version": "0.1.87",
+      "sourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+      "installerStartedByThisTask": false,
+      "existingFilesByteIdenticalReportedBySharedInstallation": 245,
+      "installedExeSha256": "3b52987b6552f26be11f82f3719ba808ede9b396c12c8ecd68e31fdfe644c6b3",
+      "installedDllSha256": "a9ec909b135bc42b1bf96c180afef4302fee0ea706136aa5a615b99c709c507c",
+      "installedHelpStartupPassed": true,
+      "sharedDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\usability087\\candidate-delivery.json",
+      "actualColdConnectionReportedMs": 2869.109,
+      "physicalConnectionRetestedHere": false,
+      "originalFilesReadOrPrintedHere": false,
+      "modelsRun": false,
+      "saleQualified": false
+    },
+    "remote-candidate-backup": {
+      "at": "2026-11-10T15:51:15+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 730583012,
+      "fileName": "Companion-Windows-0.1.87-candidate.msi",
+      "msiSha256": "4c8c31cd1e365a603c62c199c2cc8f3dffd3d45104c88934649311852d929ab7",
+      "bytes": 14031723,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false
+    }
+  },
+  "scope": [
+    "Original JPEG/PNG/WebP plus bounded aspect-preserving previews, captions and recording ownership",
+    "Direct current-playback position bookmark and note anchor, precise authored validation failures, draft/retry protection",
+    "Only-selected image context ZIP with exact originals and offline reading page",
+    "Packaged backup/restore, note edit/reopen, recycle restore and exact permanent image cleanup"
+  ],
+  "existingInstallationReused": true,
+  "nativeRecompiledForFinalRuntime": false,
+  "modelsRun": false,
+  "ownerForegroundOperated": false,
+  "saleQualified": false,
+  "limits": [
+    "Word/PDF/other text formats include captions and source position; original images are in the explicit context ZIP.",
+    "Shared installation preserved 245 prior files and passed current cold connection; this task verified installed native hashes without another installer or physical retest.",
+    "Earlier failed UI/verifier attempts083 and084 retained; their corrections did not replace production native bytes.",
+    "Original cross-platform, AI usage, formal signing/channel, real customer and physical gates remain open."
+  ]
+}

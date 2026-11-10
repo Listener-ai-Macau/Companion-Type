@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-10T11:09:28.094Z",
+  "state": "DOCUMENT_CONTEXT_AND_RELATED_READING_SOURCE_CHECKS_PASS",
+  "checks": [
+    {
+      "name": "android-typecheck",
+      "exit": 0
+    },
+    {
+      "name": "windows-typecheck",
+      "exit": 0
+    },
+    {
+      "name": "test_recording_notes",
+      "exit": 0
+    },
+    {
+      "name": "test_long_minutes_reading",
+      "exit": 0
+    },
+    {
+      "name": "test_document_context_panel",
+      "exit": 0
+    }
+  ],
+  "nativePackaged": false,
+  "phoneTested": false,
+  "modelsRun": false
+}

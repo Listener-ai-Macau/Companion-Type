@@ -1,0 +1,742 @@
+{
+  "at": "2026-11-10T20:20:31+08:00",
+  "state": "ANDROID129_DOCUMENT_ORIGINALS_LOCAL_READING_SAVE_BACKUP_RESTORE_EXACT_PURGE_AND_CUSTOMER_WORKFLOWS_DELIVERED_WINDOWS_CONTINUES",
+  "version": "0.1.129",
+  "sourceCommit": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+  "backendSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "apkSha256": "e02120653e47d675e64ace7a16cf0d781cfe26352cb3e9d8f99687f1dc411fb3",
+  "privateInstallerAsset": 731239640,
+  "remoteInstallerReadbackIdentical": true,
+  "installedExact": {
+    "at": "2026-11-10T19:45:23+08:00",
+    "state": "ANDROID129_EXACT_REPAIR_INSTALLED_WITHIN_EXISTING_OWNED_DISPLAY_SESSION",
+    "sourceCommit": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+    "apkSha256": "e02120653e47d675e64ace7a16cf0d781cfe26352cb3e9d8f99687f1dc411fb3",
+    "previousVersion": 128,
+    "version": 129,
+    "existingFilesByteIdentical": 2093,
+    "ownerMainUnchangedDuringInstall": true,
+    "ownedDisplayId": 19,
+    "priorFailureRetained": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document129-repair.json",
+    "modelsRun": false,
+    "boardAccessed": false
+  },
+  "formats": {
+    "docx": {
+      "at": "2026-11-10T11:47:13.553Z",
+      "actualVersion": "0.1.129",
+      "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+      "document": {
+        "id": "b6f9bbda-e191-411e-b846-e4fd583e8620",
+        "name": "Companion-public-公开补充材料128.docx",
+        "format": "docx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.docx",
+        "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+        "bytes": 37839,
+        "createdAt": 1794311228123,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.read-a77ea8ec56790667.json",
+          "sha256": "a77ea8ec56790667c62dff15de920190223112702860edfd0ab571e96e41af1d",
+          "bytes": 717,
+          "characters": 96,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "characters": 96,
+      "sections": [
+        {
+          "id": "part-1",
+          "label": "正文与附注",
+          "text": "公开采购讨论补充材料\n\n这不是录音事实。预算草案为12000元，由Alex在周二核对。\n\n事项\t状态\n工程需求\t待收集\n\n[1]\n\n• 附注：人工提供，不是会议结论。 ↑\n\n\n\n"
+        },
+        {
+          "id": "part-2",
+          "label": "页眉补充 1",
+          "text": "虚构材料页眉\n"
+        }
+      ],
+      "warnings": [
+        "部分文档对象未能按原版呈现，请对照原件核对提取文字。",
+        "文字按文档结构提取，不对应Word页码；排版、修订和隐藏样式请以原件为准。"
+      ],
+      "phoneNative": true,
+      "onlineAiCalled": false
+    },
+    "pdf": {
+      "at": "2026-11-10T11:49:06.691Z",
+      "actualVersion": "0.1.129",
+      "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+      "document": {
+        "id": "aa3ad963-6e17-49c3-bf19-6bf3ba11b518",
+        "name": "Companion-public-公开中文128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.pdf",
+        "sourceSha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+        "bytes": 2416,
+        "createdAt": 1794311341718,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.read-c97795cbb8312893.json",
+          "sha256": "c97795cbb8312893194f890ef868bd356fd3c56194bf7c2bab28ff0e00351f7e",
+          "bytes": 390,
+          "characters": 28,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "characters": 28,
+      "sections": [
+        {
+          "id": "part-1",
+          "label": "PDF 第 1 页",
+          "text": "公开补充材料：预算12000元，周二核对，不是录音转写。"
+        }
+      ],
+      "warnings": [
+        "分栏、竖排和复杂排版请对照原件；本次没有识别图中文字。"
+      ],
+      "phoneNative": true,
+      "onlineAiCalled": false
+    },
+    "xlsx": {
+      "at": "2026-11-10T11:53:56.796Z",
+      "actualVersion": "0.1.129",
+      "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+      "document": {
+        "id": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+        "name": "Companion-public-公开预算草案128.xlsx",
+        "format": "xlsx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "bytes": 5636,
+        "createdAt": 1794311632241,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.read-2331f00b03946af6.json",
+          "sha256": "2331f00b03946af68309fb1899b801407b4725d5348f1e11383982735a0f6832",
+          "bytes": 671,
+          "characters": 131,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "characters": 131,
+      "sections": [
+        {
+          "id": "part-1",
+          "label": "工作表：预算草案",
+          "text": "A1: 项目\tB1: 金额\tC1: 确认\tD1: 数量\tE1: 日期\tF1: 公式\nA2: 人工补充\tB2: 12,000.00\tC2: FALSE\tD2: 0\tE2: 2026-11-10\tF2: [公式没有已保存结果]\nXFD1048576: 稀疏末尾单元格"
+        }
+      ],
+      "warnings": [
+        "隐藏工作表没有纳入提取文字。",
+        "有 1 处公式没有已保存结果；本次没有运行或重算公式。",
+        "单元格使用原件保存的值和显示格式；公式、外部链接与宏不会运行。"
+      ],
+      "phoneNative": true,
+      "onlineAiCalled": false
+    },
+    "pptx": {
+      "at": "2026-11-10T11:54:03.294Z",
+      "actualVersion": "0.1.129",
+      "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+      "document": {
+        "id": "351e1aa4-f70f-4b85-bbcb-24ba23728a37",
+        "name": "Companion-public-公开方案128.pptx",
+        "format": "pptx",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.pptx",
+        "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+        "bytes": 2308,
+        "createdAt": 1794311638686,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.read-6e14af3ec8baa6c8.json",
+          "sha256": "6e14af3ec8baa6c88abfca914c29d33d555f18574ea5be5b3d27b1649e831fd1",
+          "bytes": 520,
+          "characters": 24,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "characters": 24,
+      "sections": [
+        {
+          "id": "part-1",
+          "label": "幻灯片 1",
+          "text": "第一张：人工材料的来源\n"
+        },
+        {
+          "id": "part-2",
+          "label": "幻灯片 2",
+          "text": "第二张：工程需求待收集\n"
+        }
+      ],
+      "warnings": [
+        "隐藏幻灯片没有纳入提取文字。",
+        "演讲者备注没有纳入本次幻灯片正文。",
+        "文字按幻灯片对象顺序提取，复杂排版请对照原件。"
+      ],
+      "phoneNative": true,
+      "onlineAiCalled": false
+    }
+  },
+  "checks": {
+    "document-password.json": {
+      "at": "2026-11-10T11:55:35.554Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_PASSWORD_REQUIRED_WRONG_RETRY_AND_SUCCESS_PASSED",
+      "document": {
+        "id": "1e1ccf45-5f20-4396-ae1a-0dc61254942d",
+        "name": "Companion-public-有密码128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.pdf",
+        "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+        "bytes": 2339,
+        "createdAt": 1794311728182,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.read-38a5184cfcfb78d1.json",
+          "sha256": "38a5184cfcfb78d161a2a362a3a9d765995c25749487cdf25e0117b09fc8f0d3",
+          "bytes": 484,
+          "characters": 117,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "extracted": {
+        "schema": 1,
+        "readerVersion": "2026-11-10.1",
+        "format": "pdf",
+        "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+        "sections": [
+          {
+            "id": "part-1",
+            "label": "PDF 第 1 页",
+            "text": "PUBLIC SUPPLEMENT: 12000, Alex, Tuesday. Not recorded speech."
+          },
+          {
+            "id": "part-2",
+            "label": "PDF 第 2 页",
+            "text": "Second page: verify the source before making a decision."
+          }
+        ],
+        "warnings": [
+          "分栏、竖排和复杂排版请对照原件；本次没有识别图中文字。"
+        ],
+        "characters": 117
+      },
+      "passwordPersisted": false,
+      "failedAttemptsMetadataUnchanged": true
+    },
+    "document-no-text.json": {
+      "at": "2026-11-10T11:55:42.581Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_NO_TEXT_ORIGINAL_RETAINED_NO_FALSE_EXTRACTION_PASSED",
+      "document": {
+        "id": "4c16ec9a-a29e-40cd-922e-b37608df797f",
+        "name": "Companion-public-无文字128.pdf",
+        "format": "pdf",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-4c16ec9a-a29e-40cd-922e-b37608df797f.pdf",
+        "sourceSha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db",
+        "bytes": 1331,
+        "createdAt": 1794311737563
+      },
+      "metadataUnchanged": true
+    },
+    "document-encoding.json": {
+      "at": "2026-11-10T11:55:49.553Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_EXPLICIT_GB18030_RETRY_PASSED",
+      "initialError": "文字编码无法读取，请选择正确编码或另存为UTF-8后导入。",
+      "document": {
+        "id": "77452b48-ab60-4e58-bf9a-075d1b9de052",
+        "name": "Companion-public-中文编码128.txt",
+        "format": "txt",
+        "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.txt",
+        "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+        "bytes": 38,
+        "createdAt": 1794311744504,
+        "extraction": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.read-11c9a4f2058e3a9a.json",
+          "sha256": "11c9a4f2058e3a9a030300515ff264ac31ed269d8f810e0451c5d3ed96dd8163",
+          "bytes": 292,
+          "characters": 21,
+          "readerVersion": "2026-11-10.1"
+        }
+      },
+      "extracted": {
+        "schema": 1,
+        "readerVersion": "2026-11-10.1",
+        "format": "txt",
+        "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+        "sections": [
+          {
+            "id": "part-1",
+            "label": "原文件文字",
+            "text": "  人工材料，保留空白。\n不是会议转写。\n"
+          }
+        ],
+        "warnings": [],
+        "characters": 21
+      }
+    },
+    "document-cancel.json": {
+      "at": "2026-11-10T11:56:06.525Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_ORDINARY_PICKER_CANCEL_RETAINS_ALL_DOCUMENTS_PASSED",
+      "rows": 7,
+      "revision": 13
+    },
+    "document-read-search.json": {
+      "at": "2026-11-10T11:56:07.916Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_DURABLE_DOCUMENT_REOPEN_AND_LITERAL_SEARCH_PASSED",
+      "rows": 7,
+      "revision": 13
+    },
+    "document-ai-scope.json": {
+      "at": "2026-11-10T12:00:34.403Z",
+      "actualVersion": "0.1.129",
+      "phoneNative": true,
+      "onlineAiCalled": false,
+      "state": "PHONE_NATIVE_AI_DOCUMENT_SOURCES_UNCHECKED_EXPLICIT_OPT_IN_AND_CONFIGURED_SERVICE_GATE_PASSED",
+      "defaultSelectedCount": 1,
+      "readyDocuments": 6,
+      "noTextDocumentExcluded": true,
+      "defaultDocumentsUnchecked": true,
+      "onlySelectedTextDisclosureVisible": true,
+      "onlineServiceConfigured": false,
+      "onlineGenerationQualified": false
+    },
+    "document-delivery-readback.json": {
+      "at": "2026-11-10T20:03:40+08:00",
+      "files": [
+        {
+          "name": "Companion-public-original129.docx",
+          "phonePath": "/sdcard/Download/Companion-public-original129.docx",
+          "bytes": 37839,
+          "sha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497"
+        },
+        {
+          "name": "Companion-public-documents129-backup.zip",
+          "phonePath": "/sdcard/Download/Companion-public-documents129-backup.zip",
+          "bytes": 14548553,
+          "sha256": "0c0b786b81555bf52e04c85f0e6bc1fdc5ce86463a9a0940faf2b9bdda75c565"
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-公开补充材料128.docx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.docx",
+          "sha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-公开补充材料128.docx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.read-a77ea8ec56790667.json",
+          "sha256": "a77ea8ec56790667c62dff15de920190223112702860edfd0ab571e96e41af1d",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-公开中文128.pdf",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.pdf",
+          "sha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-公开中文128.pdf",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.read-c97795cbb8312893.json",
+          "sha256": "c97795cbb8312893194f890ef868bd356fd3c56194bf7c2bab28ff0e00351f7e",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-公开预算草案128.xlsx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.xlsx",
+          "sha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-公开预算草案128.xlsx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.read-2331f00b03946af6.json",
+          "sha256": "2331f00b03946af68309fb1899b801407b4725d5348f1e11383982735a0f6832",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-公开方案128.pptx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.pptx",
+          "sha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-公开方案128.pptx",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.read-6e14af3ec8baa6c8.json",
+          "sha256": "6e14af3ec8baa6c88abfca914c29d33d555f18574ea5be5b3d27b1649e831fd1",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-有密码128.pdf",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.pdf",
+          "sha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-有密码128.pdf",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.read-38a5184cfcfb78d1.json",
+          "sha256": "38a5184cfcfb78d161a2a362a3a9d765995c25749487cdf25e0117b09fc8f0d3",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-无文字128.pdf",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-4c16ec9a-a29e-40cd-922e-b37608df797f.pdf",
+          "sha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db",
+          "exact": true
+        },
+        {
+          "part": "original",
+          "name": "Companion-public-中文编码128.txt",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.txt",
+          "sha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+          "exact": true
+        },
+        {
+          "part": "extraction",
+          "name": "Companion-public-中文编码128.txt",
+          "entry": "meetings/b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.read-11c9a4f2058e3a9a.json",
+          "sha256": "11c9a4f2058e3a9a030300515ff264ac31ed269d8f810e0451c5d3ed96dd8163",
+          "exact": true
+        }
+      ],
+      "backupEntries": 55,
+      "state": "PHONE_ORDINARY_ORIGINAL_SAVE_AND_BACKUP_ALL_DOCUMENT_BYTES_IDENTICAL",
+      "originalCount": 7,
+      "extractionCount": 6,
+      "ownerPrivateDataUploaded": false
+    },
+    "document-restored.json": {
+      "at": "2026-11-10T12:05:05.152Z",
+      "actualVersion": "0.1.129",
+      "state": "PHONE_ORDINARY_BACKUP_RESTORE_ALL_DOCUMENT_METADATA_EXTRACTIONS_NOTES_AND_READING_PASSED",
+      "sourceLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "restoredLibrary": "2a9492d2-2664-4c79-824e-e3d770004570",
+      "documents": {
+        "contextId": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+        "revision": 13,
+        "rows": [
+          {
+            "id": "b6f9bbda-e191-411e-b846-e4fd583e8620",
+            "name": "Companion-public-公开补充材料128.docx",
+            "format": "docx",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.docx",
+            "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+            "bytes": 37839,
+            "createdAt": 1794311228123,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-b6f9bbda-e191-411e-b846-e4fd583e8620.read-a77ea8ec56790667.json",
+              "sha256": "a77ea8ec56790667c62dff15de920190223112702860edfd0ab571e96e41af1d",
+              "bytes": 717,
+              "characters": 96,
+              "readerVersion": "2026-11-10.1"
+            }
+          },
+          {
+            "id": "aa3ad963-6e17-49c3-bf19-6bf3ba11b518",
+            "name": "Companion-public-公开中文128.pdf",
+            "format": "pdf",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.pdf",
+            "sourceSha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d",
+            "bytes": 2416,
+            "createdAt": 1794311341718,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-aa3ad963-6e17-49c3-bf19-6bf3ba11b518.read-c97795cbb8312893.json",
+              "sha256": "c97795cbb8312893194f890ef868bd356fd3c56194bf7c2bab28ff0e00351f7e",
+              "bytes": 390,
+              "characters": 28,
+              "readerVersion": "2026-11-10.1"
+            }
+          },
+          {
+            "id": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+            "name": "Companion-public-公开预算草案128.xlsx",
+            "format": "xlsx",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.xlsx",
+            "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+            "bytes": 5636,
+            "createdAt": 1794311632241,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.read-2331f00b03946af6.json",
+              "sha256": "2331f00b03946af68309fb1899b801407b4725d5348f1e11383982735a0f6832",
+              "bytes": 671,
+              "characters": 131,
+              "readerVersion": "2026-11-10.1"
+            }
+          },
+          {
+            "id": "351e1aa4-f70f-4b85-bbcb-24ba23728a37",
+            "name": "Companion-public-公开方案128.pptx",
+            "format": "pptx",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.pptx",
+            "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+            "bytes": 2308,
+            "createdAt": 1794311638686,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.read-6e14af3ec8baa6c8.json",
+              "sha256": "6e14af3ec8baa6c88abfca914c29d33d555f18574ea5be5b3d27b1649e831fd1",
+              "bytes": 520,
+              "characters": 24,
+              "readerVersion": "2026-11-10.1"
+            }
+          },
+          {
+            "id": "1e1ccf45-5f20-4396-ae1a-0dc61254942d",
+            "name": "Companion-public-有密码128.pdf",
+            "format": "pdf",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.pdf",
+            "sourceSha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948",
+            "bytes": 2339,
+            "createdAt": 1794311728182,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-1e1ccf45-5f20-4396-ae1a-0dc61254942d.read-38a5184cfcfb78d1.json",
+              "sha256": "38a5184cfcfb78d161a2a362a3a9d765995c25749487cdf25e0117b09fc8f0d3",
+              "bytes": 484,
+              "characters": 117,
+              "readerVersion": "2026-11-10.1"
+            }
+          },
+          {
+            "id": "4c16ec9a-a29e-40cd-922e-b37608df797f",
+            "name": "Companion-public-无文字128.pdf",
+            "format": "pdf",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-4c16ec9a-a29e-40cd-922e-b37608df797f.pdf",
+            "sourceSha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db",
+            "bytes": 1331,
+            "createdAt": 1794311737563
+          },
+          {
+            "id": "77452b48-ab60-4e58-bf9a-075d1b9de052",
+            "name": "Companion-public-中文编码128.txt",
+            "format": "txt",
+            "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.txt",
+            "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+            "bytes": 38,
+            "createdAt": 1794311744504,
+            "extraction": {
+              "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.read-11c9a4f2058e3a9a.json",
+              "sha256": "11c9a4f2058e3a9a030300515ff264ac31ed269d8f810e0451c5d3ed96dd8163",
+              "bytes": 292,
+              "characters": 21,
+              "readerVersion": "2026-11-10.1"
+            }
+          }
+        ],
+        "schema": 1,
+        "libraryToken": "63ee92aeba059f670568b2e6444aed32a22bb1f395d5615deade53c75f855c55"
+      },
+      "allPreexistingLibrariesRetained": true,
+      "restoredRecordingKeys": [
+        "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+        "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+        "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+        "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1"
+      ],
+      "modelOrAiCalled": false
+    },
+    "document-restore-content.json": {
+      "at": "2026-11-10T20:05:47+08:00",
+      "sourceLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "restoredLibrary": "2a9492d2-2664-4c79-824e-e3d770004570",
+      "ownerPrivateDataUploaded": false,
+      "state": "ACTUAL_PHONE_RESTORED_ALL_BACKUP_RECORDING_DOCUMENT_AND_NOTE_BYTES_IDENTICAL",
+      "backupContentFilesChecked": 54,
+      "allPreexistingFilesIdenticalExceptActiveLibraryIndex": true,
+      "preexistingFilesChecked": 2107,
+      "newLibraryOnlyPublicBackup": true
+    },
+    "document-restored-purge.json": {
+      "at": "2026-11-10T12:06:04.035Z",
+      "actualVersion": "0.1.129",
+      "state": "PHONE_ORDINARY_RESTORED_COPY_ONLY_DOCUMENT_RECORD_PURGE_COMPLETED_HASH_CHECK_REQUIRED",
+      "restoredLibrary": "2a9492d2-2664-4c79-824e-e3d770004570",
+      "purgedKey": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "remainingRows": 3,
+      "sourceLibraryPurged": false,
+      "ownerLibraryPurged": false
+    },
+    "document-purge-content.json": {
+      "at": "2026-11-10T20:06:06+08:00",
+      "sourceLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "restoredLibrary": "2a9492d2-2664-4c79-824e-e3d770004570",
+      "ownerPrivateDataUploaded": false,
+      "state": "ACTUAL_PHONE_RESTORED_ONLY_PURGE_REMOVES_ALL_DOCUMENTS_AUDIO_NOTES_OTHER_CONTENT_IDENTICAL",
+      "changedTargetFiles": 28,
+      "allOtherExistingFilesByteIdentical": 2133,
+      "sourcePublicLibraryFilesUnchanged": 54,
+      "sourceAndOwnerLibrariesNotPurged": true,
+      "documentsAndExtractionsRemovedOnlyFromRestoredRecord": true
+    },
+    "document-process-reopened.json": {
+      "at": "2026-11-10T12:18:18.055Z",
+      "state": "PHONE_REAL_NATIVE_PROCESS_RESTART_REOPEN_ALL_DOCUMENTS_AND_CUSTOMER_NOTES_PASSED",
+      "actualVersion": "0.1.129",
+      "sourceLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "documentOriginals": 7,
+      "savedExtractions": 6,
+      "originalNotesUnchanged": 5,
+      "newOrdinaryCustomerNotesPersisted": 2,
+      "shape": {
+        "width": 391,
+        "document": 391,
+        "main": 391,
+        "client": 391
+      },
+      "onlineAiCalled": false,
+      "ownerMainDisplayOperated": false
+    },
+    "document-temporary-download-cleanup.json": {
+      "at": "2026-11-10T20:19:21+08:00",
+      "state": "EXACT_NEW_PUBLIC_DOCUMENT_DOWNLOAD_FIXTURES_AND_OUTPUTS_REMOVED_AFTER_HASH_READBACK",
+      "removed": [
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-公开补充材料128.docx",
+          "sha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-公开预算草案128.xlsx",
+          "sha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-公开方案128.pptx",
+          "sha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-公开中文128.pdf",
+          "sha256": "703c7d8a5766b9e964217a89e6be6ad25339c57fa639442c9215ce0e9f44969d"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-有密码128.pdf",
+          "sha256": "40c0ac535f958f583e7d48c6271c957ff94fea77ebcdbc783f271b7175464948"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-无文字128.pdf",
+          "sha256": "e9841134c18e98b35c326f3ddabf8f8500dabd317db6759f09a1d667138e95db"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents128/Companion-public-中文编码128.txt",
+          "sha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-original129.docx",
+          "sha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497"
+        },
+        {
+          "path": "/sdcard/Download/Companion-public-documents129-backup.zip",
+          "sha256": "0c0b786b81555bf52e04c85f0e6bc1fdc5ce86463a9a0940faf2b9bdda75c565"
+        }
+      ],
+      "onlyNewDeclaredFiles": true,
+      "sourceLibraryDocumentsRetained": true,
+      "otherDownloadsUntouched": true
+    },
+    "end-session.json": {
+      "at": "2026-11-10T20:19:24+08:00",
+      "state": "ANDROID129_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.129",
+      "toolSessionCode": 128,
+      "retainedNewPublicRestoreLibrary": "2a9492d2-2664-4c79-824e-e3d770004570",
+      "preexistingFilesChecked": 2093,
+      "preexistingFilesByteIdentical": 2091,
+      "expectedIndexChange": true,
+      "authorizedPublicQaMetadataChanges": 1,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "newFilesOnlyInAuthorizedPublicSourceAndDeclaredRestoreLibraries": 42,
+      "newEmptyExistingStoreReadLocks": 0,
+      "publicOriginalMediaUnchanged": true,
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedTemporaryFiles": [
+        "companion-organization128-ui.jar"
+      ],
+      "manifestVerificationSeconds": 1.7339999999967404,
+      "ownerMainUnchangedDuringClose": true,
+      "ownerMainDisplayOperated": false,
+      "resumedVerifierAfterHandlesClosed": false,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false
+    }
+  },
+  "customers": {
+    "customerPresale129": {
+      "at": "2026-11-10T20:12:24+08:00",
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-presale.md",
+      "sha256": "59204918b943bca09f0a4f3fd370b65ed9e142b671e51928ea8fce3e34119642",
+      "allFeedbackRead": true,
+      "type": "AI simulated FIRST_USE, visible prior public human reading notes as auxiliary condition",
+      "actualPurpose": "辨清会议原话与预算补充，保存会后准备便签，再按自己的备注用词找回",
+      "outcome": "完成公开样例的阅读、人工备注和搜索回找，对资料与会议放在一起有兴趣；未给购买决定，不代表真人/售卖验收",
+      "issues": [
+        {
+          "kind": "nonblocking usability wish",
+          "quote": "阅读表格是这次最不舒服的部分。它按A1、B1、A2、B2这样的坐标输出，列头和下一行要在脑中对齐。",
+          "decision": "保留原件和坐标文本准确性；结构化表格阅读愿望并入原文档事项下一相关实质批次，不为单条细节重新构建129。"
+        },
+        {
+          "kind": "nonblocking information hierarchy wish",
+          "quote": "备注页的东西越来越多：旧便签、图片、材料列表、下方AI区都在一页里。",
+          "decision": "并入原详情阅读呈现事项，随下一相关批次集中处理；本轮普通备注搜索已完成完整目的。"
+        },
+        {
+          "kind": "tool observation, unproven product failure",
+          "quote": "另有一次我想展开纪要中的“查看其余2项”，使用当前文字定位的点击没有完成，工具等待后超时。",
+          "decision": "129实际折叠按钮文案已含下一项文字；保留定位超时，不据此把未证实按钮故障当作产品回归。"
+        }
+      ],
+      "remaining": "价格/套餐/售后未确定；实物、声音、新转写、在线AI和长期资料规模未体验"
+    },
+    "customerAfteruse129": {
+      "at": "2026-11-10T20:17:44+08:00",
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-afteruse.md",
+      "sha256": "985a119f821d6b24a366df039fd3dc50bcfd79a1ae4c92c3cc50155fd5a40059",
+      "allFeedbackRead": true,
+      "type": "AI hypothetical after-purchase FIRST_USE; not real order, ordinary public app UI",
+      "auxiliaryConditions": [
+        "Initial read included the entire Denzic role entry with general engineering references/principles, without opening linked engineering files",
+        "Visible public existing human reading notes and prior search term provided guidance"
+      ],
+      "actualPurpose": "将会议与Word/Excel/PPT补充对照，保存下次开会先问人工便签，离开后按自己的词找到并接续",
+      "outcome": "目的完成；认为材料集中、原话/人工来源和备注搜索回找有用；没有工程或售卖验收，也无真实购买",
+      "nonblockingWishes": [
+        "结构化表格对应列头和值，同时保留原始单元格信息",
+        "当前准备便签更易找到/置顶，手工便签可选择跳到引用材料",
+        "正式AI服务、费用和售后条件需真实交付说明"
+      ],
+      "decision": "与同批售前反馈合并到原文档/详情阅读事项；保留准确坐标文本和原件。未有日常阻断，不为细节另做129原生包。正式服务/价格继续保留未定，不能假称只剩模型。",
+      "toolObservations": "初始用button定位tab与纪要文字歧义属于已说明的输入定位问题；实际改用tab后可用，不列为产品故障。",
+      "remaining": "实物/声音/新转写/在线AI/图文新增/导出恢复/长期使用未体验"
+    }
+  },
+  "phoneSessionClosed": true,
+  "ownerOriginalContentPreserved": true,
+  "previousVersionsRetained": true,
+  "modelsChangedOrRun": false,
+  "onlineGenerationQualified": false,
+  "windowsDocumentBatchDelivered": false,
+  "windowsBuildRun": 42812317637,
+  "windowsSource": "1a71b66754771f6a82428482daed171363975b6f",
+  "saleQualified": false,
+  "remaining": "Windows088 matching MSI/runtime/backup/purge and coherent package continuation; actual online generation with selected document sources not exercised on unconfigured phone; structured table/current-note/source-link wishes retained for next related substantive batch. Original competitor, physical, service, release, model and real-customer gates remain open.",
+  "failedCandidateRetained": {
+    "android128": "Real private-storage hard-link publication failed;129 atomic rename passed same phone",
+    "windows088Run42805669767": "Repeated Cargo test recompilation reached45min; wrapper fixed without dropping affected filters"
+  }
+}

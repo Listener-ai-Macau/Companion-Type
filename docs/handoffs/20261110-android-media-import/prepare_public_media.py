@@ -1,0 +1,11 @@
+from pathlib import Path
+from datetime import datetime
+import subprocess,hashlib,json,shutil
+P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110');D=P/'public-media';D.mkdir(exist_ok=True);source=Path('E:/CodexData/Companion/.build-cache/core-acceptance20261109/source-fixture/public-audio-S_R004S03C01.wav');ff=shutil.which('ffmpeg');assert ff and source.exists()
+jobs=[('Companion-public-meeting-90s.wav',['-i',source,'-t','90','-ar','48000','-ac','2','-c:a','pcm_s16le']),('Companion-public-meeting-90s.mp3',['-i',source,'-t','90','-ar','16000','-ac','1','-c:a','libmp3lame','-b:a','32k']),('Companion-public-meeting-90s.m4a',['-i',source,'-t','90','-ar','48000','-ac','2','-c:a','aac','-b:a','64k']),('Companion-public-meeting-video-30s.mp4',['-f','lavfi','-i','color=c=0x15151a:s=320x180:r=1:d=30','-i',source,'-t','30','-c:v','mpeg4','-q:v','15','-c:a','aac','-b:a','48k']),('Companion-public-meeting-long38m.mp3',['-i',source,'-ar','16000','-ac','1','-c:a','libmp3lame','-b:a','24k']),('Companion-public-without-audio.mp4',['-f','lavfi','-i','color=c=0x15151a:s=320x180:r=1:d=5','-c:v','mpeg4','-q:v','15','-an'])]
+for name,args in jobs:
+ out=D/name
+ if out.exists():continue
+ command=[ff,'-hide_banner','-loglevel','error','-nostdin','-threads','1','-filter_threads','1',*map(str,args),'-threads','1',str(out)];q=subprocess.run(command,capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS,timeout=90);assert q.returncode==0,q.stderr.decode(errors='replace')[-1800:]
+(D/'Companion-public-truncated.wav').write_bytes(source.read_bytes()[:2048]);(D/'Companion-public-invalid.mp3').write_bytes(b'EXPLICIT PUBLIC INVALID AUDIO IMPORT FIXTURE ONLY\n'*20)
+record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'source':'Existing public real M2MET S_R004S03C01 original; no owner recording. Video uses generated plain colour plus the real public audio.','sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'fixtures':[{'name':f.name,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in D.iterdir() if f.is_file()],'threads':1,'gpuUsed':False};(Path(__file__).parent/'public-media.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps(record))
