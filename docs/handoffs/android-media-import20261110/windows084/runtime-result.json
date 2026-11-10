@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-10T07:04:46.391879+00:00",
+  "state": "WINDOWS084_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED",
+  "testSourceCommit": "f1c4f6a5b82151214314d5e62cdaad2c780c4fda",
+  "appSourceCommit": "927ff63644f80b22739d370273e15c6d803276e8",
+  "appVersion": "0.1.84",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "9cfe7a9fb6998bf5cdafbe5f31beb09d03c1443012fe72a89d77e31a683017fd",
+  "exactMsiDllSha256": "05b0bcaf7d22ddb270ffb4c9b729d0f6c0422653f501a4421293f4665b8c038c",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED",
+  "contextBackendExitCode": 0,
+  "contextBackendState": "ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED",
+  "sourceAudioUnchanged": true,
+  "finishedAt": "2026-11-10T07:05:39.270024+00:00",
+  "runtimeRun": 42772711862,
+  "evidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\windows-note-context20261110\\context-passed084\\companion-context-f1c4f6a5b82151214314d5e62cdaad2c780c4fda"
+}

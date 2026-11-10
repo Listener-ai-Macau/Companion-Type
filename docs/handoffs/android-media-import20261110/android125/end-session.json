@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-10T15:48:55+08:00",
+  "state": "ANDROID125_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+  "version": "0.1.125",
+  "preexistingFilesChecked": 2051,
+  "preexistingFilesByteIdentical": 2050,
+  "expectedIndexChange": true,
+  "authorizedPublicQaMetadataChanges": 0,
+  "ownerOriginalContentByteIdentical": true,
+  "allPreviousLibrariesRetained": true,
+  "newPublicRestoredLibrary": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+  "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+  "removedPublicTemporaryFiles": [
+    "Companion-public-organization125.zip",
+    "Companion-Public-Invalid125.png",
+    "companion-organization125-ui.jar"
+  ],
+  "manifestVerificationSeconds": 1.4060000000026776,
+  "ownerMainUnchangedDuringClose": true,
+  "usbKeepAwakeUnchanged": true,
+  "boardAccessed": false,
+  "modelsOrAiCalled": false
+}

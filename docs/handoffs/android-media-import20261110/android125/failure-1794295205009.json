@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-10T07:20:05.009Z",
+  "version": "0.1.125",
+  "error": "TimeoutError: locator.fill: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '录音分类与批量管理' }).getByRole('textbox', { name: '目标文件夹', exact: true })\u001b[22m\n"
+}

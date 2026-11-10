@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-10T15:07:19+08:00",
+  "state": "ANDROID125_RECORDING_ORGANIZATION_SOURCE_REMOTE_BUILD_STARTED",
+  "sourceCommit": "cd66759a5a3bfef24ebb0764dcd7db69cc518048",
+  "versionCode": 125,
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "scope": [
+    "Atomic selected-record folder/tag edits with revision and library identity",
+    "Visible nested-folder/tag filters and selection retained on errors",
+    "Batch protection/reversible trash with prevalidation and honest partial results",
+    "Full-library metadata backup and exact-record purge",
+    "Single precise note error feedback; no duplicated page/child error"
+  ],
+  "checks": {
+    "results": [
+      {
+        "name": "organization",
+        "exit": 0
+      },
+      {
+        "name": "notes-regression",
+        "exit": 0
+      }
+    ],
+    "case": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\organization-check-1794293885364634600",
+    "nativePhoneQualified": false
+  },
+  "modelsChangedOrRun": false,
+  "installed": false,
+  "phoneQualified": false,
+  "saleQualified": false
+}
