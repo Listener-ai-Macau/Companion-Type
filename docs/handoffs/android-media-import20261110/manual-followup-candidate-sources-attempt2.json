@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-11T06:33:38+08:00",
+  "state": "GROUPED_MANUAL_FOLLOWUP_SOURCES_PUSHED_REMOTE_VERIFIED_BUILDS_PENDING",
+  "windowsSource": "e308cfa55e09a1a2a891feabe9affcad69095eff",
+  "androidSource": "71b33214443bb7e66e675ea77151bbd8b721f46e",
+  "windowsVersion": "0.1.99",
+  "androidVersion": "0.1.135",
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "installedBaselineRetained": "098/134",
+  "modelsRun": false,
+  "saleQualified": false,
+  "windowsAttempt1": {
+    "source": "eae17fa840c43c7784b8d008094945df4d8f56bf",
+    "run": 42915702572,
+    "state": "NORMAL_RELEASE_OK_TEST_FIXTURE_COMPILE_FAILED"
+  },
+  "windowsState": "REPAIRED_SAME099_SOURCE_PUSHED_NATIVE_REBUILD_PENDING"
+}

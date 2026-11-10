@@ -57,7 +57,7 @@ elif action in ['close','finishClose']:
     remote=item['path'];assert remote.startswith('/sdcard/Download/Companion-public-table132-') and adb(['shell','sha256sum',remote]).split()[0]==item['sha256'];adb(['shell','rm',remote])
   if CODE in [133,134,135]:
    for item in json.loads((C/('android'+str(CODE))/'reader-external-files.json').read_text())['files']:
-    remote=item['path'];assert remote.startswith('/sdcard/Download/Companion-public-reader'+str(CODE)+'-') and adb(['shell','sha256sum',remote]).split()[0]==item['sha256'];adb(['shell','rm',remote])
+    remote=item['path'];assert remote.startswith(('/sdcard/Download/Companion-public-reader135-','/sdcard/Download/Companion-public-manual135-') if CODE==135 else ('/sdcard/Download/Companion-public-reader'+str(CODE)+'-',)) and adb(['shell','sha256sum',remote]).split()[0]==item['sha256'];adb(['shell','rm',remote])
   save(P/'close-phase.private.json',{'at':now(),'ownerMainUnchangedDuringClose':primary()==before,'ownedHandlesClosed':True})
  else:
   session=json.loads((P/'cdp.json').read_text());state=json.loads((P/'virtual.json').read_text());before=primary();assert not adb(['shell','pidof',PKG],required=False).strip();assert not psutil.pid_exists(state['pid']) or psutil.Process(state['pid']).create_time()!=state['createdAt'];assert ('tcp:'+str(session['cdpPort'])) not in adb(['forward','--list']);adb(['shell','test','!','-e','/data/local/tmp/companion-organization'+str(CODE)+'-ui.jar'])

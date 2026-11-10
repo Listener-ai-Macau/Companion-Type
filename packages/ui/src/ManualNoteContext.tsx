@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import type {ManualNoteEvidence,ManualNoteKind} from '../../core/src/manualNoteContext';
 import {manualChecklist,MANUAL_CONTEXT_LIMITS} from '../../core/src/manualNoteContext';
 import './manualNoteContext.css';
@@ -17,7 +18,10 @@ export function ManualEvidenceList({references,onRemove,onOpen,disabled=false}:{
 export function ManualContextControls({kind,references,onKind,onReferences,onChecklist,disabled=false}:{kind:ManualNoteKind;references:ManualNoteEvidence[];onKind:(kind:ManualNoteKind)=>void;onReferences:(references:ManualNoteEvidence[])=>void;onChecklist:()=>void;disabled?:boolean}){
  return <div className="manual-context-controls"><label>补充类型<select aria-label="补充类型" value={kind} disabled={disabled} onChange={e=>onKind(e.target.value as ManualNoteKind)}><option value="note">普通备注</option><option value="followup">人工跟进</option></select></label>{kind==='followup'&&<><button type="button" disabled={disabled} onClick={onChecklist}>添加可勾选事项</button><small>自己写的跟进清单；每行用 - [ ] 开头，保存后可勾选。它不代表会议已作决定。</small></>}<ManualEvidenceList references={references} onRemove={id=>onReferences(references.filter(item=>item.id!==id))} disabled={disabled}/></div>;
 }
-export function ManualChecklist({text,onToggle,disabled=false}:{text:string;onToggle:(offset:number,checked:boolean)=>void;disabled?:boolean}){
- const items=manualChecklist(text);if(!items.length)return null;
- return <fieldset className="manual-checklist"><legend>人工跟进 · {items.filter(item=>item.checked).length}/{items.length} 已完成</legend>{items.map(item=><label key={item.markerOffset}><input type="checkbox" checked={item.checked} disabled={disabled} onChange={e=>onToggle(item.markerOffset,e.target.checked)}/><span>{item.text}</span></label>)}</fieldset>;
+export function ManualChecklist({text,onToggle,disabled=false,renderText}:{text:string;onToggle:(offset:number,checked:boolean)=>void;disabled?:boolean;renderText?:(text:string)=>ReactNode}){
+ const items=manualChecklist(text),byLine=new Map(items.map(item=>[item.line,item]));
+ const show=(value:string)=>renderText?renderText(value):value;
+ return <fieldset className="manual-checklist"><legend>人工跟进{items.length?' · '+items.filter(item=>item.checked).length+'/'+items.length+' 已完成':''}</legend>{text.split('\n').map((raw,line)=>{
+  const item=byLine.get(line);return item?<label key={line}><input type="checkbox" checked={item.checked} disabled={disabled} onChange={e=>onToggle(item.markerOffset,e.target.checked)}/><span>{show(item.text)}</span></label>:<p key={line} className="manual-followup-line">{show(raw.replace(/\r$/,''))||'\u00a0'}</p>;
+ })}</fieldset>;
 }

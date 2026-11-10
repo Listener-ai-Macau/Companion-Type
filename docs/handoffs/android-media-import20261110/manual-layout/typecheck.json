@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-11T07:00:42+08:00",
+  "state": "CHECKLIST_RENDERING_REPAIR_TYPES_PASSED",
+  "results": [
+    {
+      "platform": "windows",
+      "exitCode": 0
+    },
+    {
+      "platform": "mobile",
+      "exitCode": 0
+    }
+  ],
+  "limits": {
+    "pid": 33372,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 520335360,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "javaAndRustNativeFunctionalSourcesChanged": false,
+  "modelsRun": false
+}
