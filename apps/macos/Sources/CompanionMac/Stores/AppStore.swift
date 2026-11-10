@@ -21,11 +21,11 @@ import CompanionRecorderCore
     @ObservationIgnored let insertion = TextInsertion()
     @ObservationIgnored private let library: LocalLibrary
     @ObservationIgnored private var lastSequence: UInt32 = 0
-    private struct Dictation { var session: UInt64?; let target: TextInsertion.Target?; var cancelled = false, submit = false; let config: TranscriptionConfig }
-    @ObservationIgnored private var dictations: [UInt32:Dictation] = [:]
+    private struct Dictation { var session: UInt64?; let peer: RecorderPeer; let target: TextInsertion.Target?; var cancelled = false, submit = false, finished = false; let config: TranscriptionConfig }
+    @ObservationIgnored private var dictations: [String:Dictation] = [:]
     @ObservationIgnored private var pending: [(UInt64,Dictation)] = []
     @ObservationIgnored private var processing = false
-    @ObservationIgnored private var queued: Set<UInt64> = []
+    @ObservationIgnored private var queued: Set<String> = []
     init() {
         library = LocalLibrary()
         bluetooth.devicesChanged = { [weak self] in self?.devices = $0 }
@@ -37,7 +37,7 @@ import CompanionRecorderCore
     func scan() { do { try bluetooth.scan(); status = "请选择这块录音卡，再连接。" } catch { status = error.localizedDescription } }
     func connect() {
         guard let selectedDevice else { return }; busy = true
-        Task { defer { busy = false }; do { try await bluetooth.connect(selectedDevice); connected = true; let current = try await bluetooth.mode(nil); lastSequence = current.sequence; status = "已连接。录音模式单击开停；电脑模式按住说话。" } catch { status = error.localizedDescription } }
+        Task { defer { busy = false }; do { try await bluetooth.connect(selectedDevice); connected = true; let current = try await bluetooth.mode(nil); lastSequence = current.sequence; receive(current); resumeReceive(); status = "已连接。录音模式单击开停；电脑模式按住说话。" } catch { status = error.localizedDescription } }
     }
     func setDesktop(_ enabled: Bool) {
         busy = true
@@ -50,6 +50,8 @@ import CompanionRecorderCore
     }
     func saveProvider() { do { try ProviderKey.save(apiKey); UserDefaults.standard.set(endpoint,forKey: "asr.endpoint"); UserDefaults.standard.set(model,forKey: "asr.model"); status = "转写配置已保存在本机，密钥存入系统钥匙串。" } catch { status = error.localizedDescription } }
     private func receive(_ value: InputStatus) {
+        guard let peer = bluetooth.peer else { return }
+        let key = peer.uid.hex+"-"+String(peer.epoch)+"-"+String(value.token)
         desktop = value.mode == 1
         let phases = ["状态未知","已就绪","准备录音","正在采音","已暂停","正在保存","原音已保存","存储空间不足","录音异常","正在升级","正在暂停","正在继续"]
         if Int(value.feedback) < phases.count { status = phases[Int(value.feedback)] }
@@ -57,40 +59,69 @@ import CompanionRecorderCore
         if value.sequence != lastSequence {
             lastSequence = value.sequence
             if value.events & 1 != 0, value.mode == 1 {
-                dictations[value.token] = Dictation(target: insertion.capture(),config: TranscriptionConfig(endpoint: endpoint,model: model,key: apiKey))
+                dictations[key] = Dictation(peer: peer,target: insertion.capture(),config: TranscriptionConfig(endpoint: endpoint,model: model,key: apiKey))
             }
-            if value.events & 16 != 0 { dictations[value.token]?.cancelled = true }
-            if value.events & 32 != 0 { dictations[value.token]?.submit = true }
+            if value.events & 16 != 0 { dictations[key]?.cancelled = true }
+            if value.events & 32 != 0 { dictations[key]?.submit = true }
+            if value.events & 2 != 0 { dictations[key]?.finished = true }
             if value.events & 8 != 0 { do { try insertion.undo(); status = "已撤销上一次语音输入。" } catch { status = error.localizedDescription } }
             if value.events & 64 != 0 { insertion.slide(previous: false) }
             if value.events & 128 != 0 { insertion.slide(previous: true) }
         }
-        if value.flags & 2 != 0, value.session != 0 { dictations[value.token]?.session = value.session }
-        if value.feedback == 6, let context = dictations[value.token], let session = context.session, value.session == session, !queued.contains(session) {
-            queued.insert(session); pending.append((session,context)); processNext()
+        if value.flags & 2 != 0, value.session != 0 { dictations[key]?.session = value.session }
+        if value.feedback == 6, var context = dictations[key], let session = context.session, value.session == session {
+            context.finished = true; dictations[key] = context
+            enqueue(session,context: context)
         }
     }
+    private func enqueue(_ session: UInt64,context: Dictation) {
+        let id = RecorderNote.identity(peer: context.peer,session: session)
+        guard !queued.contains(id) else { return }; queued.insert(id); pending.append((session,context)); processNext()
+    }
+    func resumeReceive() {
+        guard let peer = bluetooth.peer else { return }
+        for context in Array(dictations.values) where context.finished && context.peer.uid == peer.uid && context.peer.epoch == peer.epoch {
+            if let session = context.session { enqueue(session,context: context) }
+        }
+        processNext()
+    }
     private func processNext() {
-        guard !processing, !pending.isEmpty, let peer = bluetooth.peer else { return }
-        processing = true; let (session,context) = pending.removeFirst()
+        guard !processing, let peer = bluetooth.peer,
+              let index = pending.firstIndex(where: { $0.1.peer.uid == peer.uid && $0.1.peer.epoch == peer.epoch }) else { return }
+        processing = true; let (session,context) = pending.remove(at: index)
         Task {
             defer { processing = false; processNext() }
             do {
                 status = "正在收取原音…"
-                let descriptors = try await bluetooth.receive(session: session,library: library)
                 let folder = try library.folder(RecorderNote.identity(peer: peer,session: session))
-                let marks = try await AudioDecoder.decode(descriptors,folder: folder)
-                var note = RecorderNote(peer: peer,session: session,originals: descriptors,marks: marks); note.cancelled = context.cancelled
+                var note: RecorderNote
+                if let saved = try? library.load(RecorderNote.identity(peer: peer,session: session)) { note = saved }
+                else {
+                    let descriptors = try await bluetooth.receive(session: session,library: library)
+                    let marks = try await AudioDecoder.decode(descriptors,folder: folder)
+                    note = RecorderNote(peer: peer,session: session,originals: descriptors,marks: marks); note.cancelled = context.cancelled
+                }
                 try library.save(note); reload(); selectedNote = note.id
-                do { try await bluetooth.confirmSaved(note,library: library); note.reclaimed = true; try library.save(note) }
+                do { if !note.reclaimed { try await bluetooth.confirmSaved(note,library: library); note.reclaimed = true; try library.save(note) } }
                 catch { status = "原音已保存，设备空间确认稍后可重试。" }
                 if context.cancelled { status = "这次输入已取消，原音保留在本机。"; return }
+                if note.transcript != nil { status = "原音与文字已经保存在本机，可以复制或导出。"; return }
                 status = "正在转写…"
                 let text = try await TranscriptionService().transcribe(folder.appendingPathComponent("audio.wav"),config: context.config)
                 note.transcript = text; try library.save(note); reload()
                 try await insertion.insert(text,target: context.target,submit: context.submit); status = "文字已发送到输入位置。"
-            } catch { status = error.localizedDescription; queued.remove(session); reload() }
+            } catch { status = error.localizedDescription; queued.remove(RecorderNote.identity(peer: peer,session: session)); reload() }
         }
+    }
+    func retryTranscription() {
+        guard var note = currentNote else { return }; busy = true
+        let config = TranscriptionConfig(endpoint: endpoint,model: model,key: apiKey)
+        Task { defer { busy = false }; do {
+            status = "正在转写已保存的原音…"
+            let folder = try library.folder(note.id)
+            let text = try await TranscriptionService().transcribe(folder.appendingPathComponent("audio.wav"),config: config)
+            note.transcript = text; try library.save(note); reload(); status = "转写完成，可以复制文字。"
+        } catch { status = error.localizedDescription } }
     }
     var currentNote: RecorderNote? { notes.first { $0.id == selectedNote } }
     func reveal() { do { guard let note = currentNote else { return }; NSWorkspace.shared.activateFileViewerSelecting([try library.folder(note.id).appendingPathComponent("audio.wav")]) } catch { status = error.localizedDescription } }
