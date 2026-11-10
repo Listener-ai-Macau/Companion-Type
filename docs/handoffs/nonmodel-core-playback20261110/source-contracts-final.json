@@ -1,0 +1,32 @@
+{
+  "state": "GROUPED_MEETING_UI_SOURCE_CONTRACTS_PASSED",
+  "sourceCommit": "3dfb6742127b1173dc52dd068122cb2bb28a1ca2",
+  "nativePackaged": false,
+  "actualRuntimeQualified": false,
+  "results": [
+    {
+      "name": "windows-typecheck",
+      "exitCode": 0
+    },
+    {
+      "name": "test_meeting_track_dashboard",
+      "exitCode": 0
+    },
+    {
+      "name": "test_long_minutes_reading",
+      "exitCode": 0
+    },
+    {
+      "name": "test_action_review_tools",
+      "exitCode": 0
+    },
+    {
+      "name": "test_playback_tools",
+      "exitCode": 0
+    },
+    {
+      "name": "test_transcript_replace",
+      "exitCode": 0
+    }
+  ]
+}

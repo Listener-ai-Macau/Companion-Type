@@ -1,0 +1,118 @@
+{
+  "at": "2026-11-10T09:18:50+08:00",
+  "state": "ANDROID120_SIGNED_CANDIDATE_PROTECTED_NATIVE_PHONE_RUNTIME_PENDING",
+  "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
+  "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
+  "existingTask": "CP27-01/playback",
+  "baseline": {
+    "windows": "0.1.82",
+    "android": "0.1.117",
+    "androidSource": "9b6b8858d36feb170a9347a56f57b0e0ee5980d2",
+    "backendAarUnchanged": true
+  },
+  "scope": [
+    "原生倍速和暂停状态保持",
+    "逐录音续听位置、异常退出前定期保存及资料库隔离",
+    "前后10秒/从头重听/分段切换",
+    "原文和设备重点回听仍用原始时间轴",
+    "一次合并后构建、原生验证、保护与安装",
+    "手机转写草稿批量替换、精确匹配和安全撤销；不自动保存、不改首次识别原文"
+  ],
+  "notQualifiedByThisBatch": [
+    "模型质量",
+    "复杂多人",
+    "硬件长录/电池/实体体验",
+    "账号/团队/平台资质等原外部依赖"
+  ],
+  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+  "priorDeliveryPreserved": "docs/handoffs/20261110-actions-followup/batch.json",
+  "saleQualified": false,
+  "modelsRun": false,
+  "relatedExistingTasks": [
+    "CP27-01/playback",
+    "CP27-01/editing"
+  ],
+  "dependencyObservation": {
+    "authorizedAndroidOnline": false,
+    "checkedThrough": "adb devices -l",
+    "action": "No repeated phone prompt. Continue the independent draft-correction source and one complete candidate; native phone qualification remains open."
+  },
+  "updatedAt": "2026-11-10T09:49:20+08:00",
+  "sourceCommit": "3dfb6742127b1173dc52dd068122cb2bb28a1ca2",
+  "candidateVersion": "0.1.120",
+  "candidateApkSha256": "d2707bd0e1c139679f38a322be0a5cbbb2f21b4b69462ff0ae71008a2ad835dd",
+  "buildRun": 42737582298,
+  "sourceAndNativePackagePassed": true,
+  "checkpointPersistenceBackupAndLifecycle": {
+    "state": "OWNED_PLAYBACK_REOPEN_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+    "results": [
+      {
+        "name": "compile",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackProgressTest",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackBackupCompatibilityTest",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackLifecycleTest",
+        "exitCode": 0
+      }
+    ],
+    "playbackSourceSha256": "004b4c202a20706283f4e77186560876834f80472be6389529fb808568958a9d",
+    "nativeMediaPlayerTested": false,
+    "phoneTested": false,
+    "modelsRun": false
+  },
+  "remotePackageReadbackByteIdentical": true,
+  "nativePhoneRuntimeQualified": false,
+  "installed": false,
+  "currentInstalledAndroid": "0.1.117",
+  "currentInstalledWindows": "0.1.82",
+  "authorizedPhoneOnlineAtPackageCompletion": false,
+  "sourceImplemented": [
+    "Native .75/1/1.25/1.5/1.75/2x rate and original-time10s jumps.",
+    "Per-record/per-library descriptor-bound durable resume, periodic checkpoint, explicit restart and completed-recording restart.",
+    "Paused speed changes deferred until resume; serialized seek waits for native completion before saving.",
+    "Checkpoint included in existing backup and exact-record purge ownership, including interrupted-write temporaries.",
+    "Draft-only literal transcript replacement, match count, safe undo and bounded expansion, using existing revision/first-original save path."
+  ],
+  "retainedSourceCheckpoints": [
+    {
+      "source": "9697968da4aa9abc32cef5b85da3b95282990473",
+      "run": 42735769810,
+      "scope": "Initial playback native bridge and source checks/package passed; never installed."
+    },
+    {
+      "source": "a6876984d4d7ec9411d9dfa4d233b726a0391ba6",
+      "run": 42736712959,
+      "scope": "Playback plus draft correction source and package passed; replaced before install to cover exact-record purge ownership."
+    }
+  ],
+  "actualFailuresAndCorrections": [
+    {
+      "finding": "Initial progress subdirectory would not be included in the existing per-record purge planner.",
+      "resolution": "Use existing digest-prefixed owned metadata naming instead of changing/broadening deletion rules. Actual unchanged LocalRecordingLifecycle trash/restore/purge and another-record preservation passed."
+    },
+    {
+      "finding": "Interrupted atomic writes need record ownership too.",
+      "resolution": "Record-prefixed pending filenames; explicit interrupted-write fixture is removed by exact-record purge."
+    },
+    {
+      "finding": "Local TypeScript checker hit explicit256MiB heap cap.",
+      "resolution": "Original failure retained; complete mobile typecheck and affected component tests passed on dedicated CI. No owner application closed or new model loaded."
+    }
+  ],
+  "nativeAcceptanceRemaining": [
+    "Actual phone speed and paused-rate behavior, original-time seeking across available parts.",
+    "Exit/reopen and process interruption resume, separate public recordings and library switching.",
+    "Bulk replace then save/reopen with first ASR text retained; old minutes clearly stale after corrections.",
+    "Ordinary backup/restore and exact purge of only a new public QA copy including its checkpoint."
+  ],
+  "next": "非模型核心收尾优先。手机在线后只验这批120受影响的回听/修订/保存恢复流程并修实际阻断；离线继续原import/notes_images/organization/trim_merge等可独立软件事项。录音卡长录/恢复/电源和正式签名沿原分工，不冒充模型问题或已完工。固定Qwen与复杂多人质量点保留，完成非模型核心前不切回训练。",
+  "allNonmodelComplete": false
+}

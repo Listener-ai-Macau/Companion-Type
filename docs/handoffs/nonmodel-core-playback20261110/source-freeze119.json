@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T09:34:10+08:00",
+  "state": "ANDROID119_COMPLETE_REVIEW_SOURCE_FROZEN_REMOTE_BUILD_PENDING",
+  "version": "0.1.119",
+  "supersedesUninstalledCandidate": "0.1.118",
+  "priorNativeAndPlaybackUiBuildPassedRun": 42735769810,
+  "priorSource": "9697968da4aa9abc32cef5b85da3b95282990473",
+  "newNativeControlChangesSince118": false,
+  "backendAarUnchanged": true,
+  "additionalOutcome": "Literal find/replace and safe undo in the existing native transcript correction editor; existing revision/first-original preservation and dirty-exit guards retained.",
+  "installed": false,
+  "nativeRuntimeQualified": false,
+  "modelsRun": false,
+  "saleQualified": false,
+  "sourceCommit": "a6876984d4d7ec9411d9dfa4d233b726a0391ba6",
+  "remoteReadbackVerified": true
+}

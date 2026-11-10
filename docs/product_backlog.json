@@ -132974,7 +132974,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T08:25:53+08:00",
+      "updatedAt": "2026-11-10T09:18:07+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133247,8 +133247,8 @@
           "title": "Companion录音卡IMU交互：敲击重点",
           "status": "open",
           "category": "Owner最新优先插入；原编号复用，屏幕/宠物仍暂停",
-          "current": "正常FW66785/942e117已装。修复TAP_SRC轮询会提前复位双击识别：录中INT1只路由完整双击，P3实际高电平触发一次读取。ST行为模型旧0/5->新5/5；实物385仍0重点/0读取，未通过。实际55.49s原音完整；编码P95/峰5000/4867us、PDM峰2537us、音频故障0。app407484B、静态67928B、栈21504B均在预算。",
-          "next": "先核对385实际动作及当前板INT1/P3/PC13数字通路，不再盲改阈值重录。当前空闲UART入口0B，未进SWD/未RAM加载/未复位；原唤醒窗口超时，后续只需一次短按唤醒后继续后台数字通路检查。数字通路确认后再按结果修事件识别；无新录音范围不启动MIC。",
+          "current": "正常785/942e117已装，提前读TAP_SRC的源头用法已修并过软件模型。Owner最新确认原385完全未操作：0标记/0读取改记“未实施手势验收”，不是修复版实物失败；旧782/383已确认五组0标记仍保留。",
+          "next": "Owner现可操作：保持同一正常785，经原窗口唤醒并准备后仅录一场55秒，实际五组轻敲与同场芯片计数、原音CPG1标记联合核对；无动作不判固件失败。",
           "remaining": [
             "确认真实录音期间417Hz模式/芯片双击事件与零重点的断点，并修复。",
             "当前实板轻敲与普通拿起/放下/走动误触、原音绑定；最终外壳资格仍待实际条件。"
@@ -133711,7 +133711,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "先核对385实际动作及当前板INT1/P3/PC13数字通路，不再盲改阈值重录。当前空闲UART入口0B，未进SWD/未RAM加载/未复位；原唤醒窗口超时，后续只需一次短按唤醒后继续后台数字通路检查。数字通路确认后再按结果修事件识别；无新录音范围不启动MIC。 若依赖Owner则保留实体未验，推进原CP23-10编码峰值6239us定位；最终同版本2h/普通手机链仍未关。速度、屏幕、硬件block不重开。",
+      "next": "Owner现可操作：保持同一正常785，经原窗口唤醒并准备后仅录一场55秒，实际五组轻敲与同场芯片计数、原音CPG1标记联合核对；无动作不判固件失败。 当前先完成本项，再按结果决定是否需要已准备的中断线路诊断；编码6239us和最终长录/普通手机待办保留，速度和原block不重开。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134195,8 +134195,8 @@
           {
             "task": "CP04-08",
             "scope": "录音卡IMU双击重点，关联CP27-17",
-            "status": "CLEAR_ON_READ_FIXED_MODEL_PASS_REAL_MARKS_STILL_ZERO",
-            "next": "先核对385实际动作及当前板INT1/P3/PC13数字通路，不再盲改阈值重录。当前空闲UART入口0B，未进SWD/未RAM加载/未复位；原唤醒窗口超时，后续只需一次短按唤醒后继续后台数字通路检查。数字通路确认后再按结果修事件识别；无新录音范围不启动MIC。",
+            "status": "FIXED785_PHYSICAL_NOT_EXERCISED_OWNER_CONFIRMED",
+            "next": "Owner现可操作：保持同一正常785，经原窗口唤醒并准备后仅录一场55秒，实际五组轻敲与同场芯片计数、原音CPG1标记联合核对；无动作不判固件失败。",
             "order": 1
           },
           {
@@ -134226,9 +134226,9 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "先核对385实际动作及当前板INT1/P3/PC13数字通路，不再盲改阈值重录。当前空闲UART入口0B，未进SWD/未RAM加载/未复位；原唤醒窗口超时，后续只需一次短按唤醒后继续后台数字通路检查。数字通路确认后再按结果修事件识别；无新录音范围不启动MIC。 若依赖Owner则保留实体未验，推进原CP23-10编码峰值6239us定位；最终同版本2h/普通手机链仍未关。速度、屏幕、硬件block不重开。",
-        "lastUpdatedAt": "2026-11-10T08:25:53+08:00",
-        "lastOwnerRaw": "继续推进",
+        "currentExecutable": "Owner现可操作：保持同一正常785，经原窗口唤醒并准备后仅录一场55秒，实际五组轻敲与同场芯片计数、原音CPG1标记联合核对；无动作不判固件失败。 当前先完成本项，再按结果决定是否需要已准备的中断线路诊断；编码6239us和最终长录/普通手机待办保留，速度和原block不重开。",
+        "lastUpdatedAt": "2026-11-10T09:18:07+08:00",
+        "lastOwnerRaw": "啥都没有搞, 现在搞",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
         ],
@@ -135657,7 +135657,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "正常FW66785/942e117已装。修复TAP_SRC轮询会提前复位双击识别：录中INT1只路由完整双击，P3实际高电平触发一次读取。ST行为模型旧0/5->新5/5；实物385仍0重点/0读取，未通过。实际55.49s原音完整；编码P95/峰5000/4867us、PDM峰2537us、音频故障0。app407484B、静态67928B、栈21504B均在预算。"
+        "currentDelivery": "正常785/942e117已装，提前读TAP_SRC的源头用法已修并过软件模型。Owner最新确认原385完全未操作：0标记/0读取改记“未实施手势验收”，不是修复版实物失败；旧782/383已确认五组0标记仍保留。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136541,8 +136541,8 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-10T08:25:53+08:00",
-        "state": "IMU785_ZERO_MARKS_IRQ_DIAGNOSTIC_ENTRY_NOT_STARTED",
+        "at": "2026-11-10T09:18:07+08:00",
+        "state": "IMU785_OWNER_NO_ACTION_CORRECTED_AWAIT_FRESH_PHYSICAL_TRIAL",
         "phoneInstalled": "0.1.110",
         "firmwareInstalled": 66785,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -136556,7 +136556,7 @@
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 385,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu785-current.json",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu785-owner-no-action-correction.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": 66785,
         "candidateSourceCommit": "942e11701efb38c275355af0841417ad2049ab15",
@@ -136598,13 +136598,13 @@
           "sessionId": "0000000000000181"
         },
         "operatorReady": true,
-        "operatorPromptPending": false,
+        "operatorPromptPending": true,
         "offlineRecoveryCandidate": 66776,
         "offlineRecoverySourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "offlineRecoveryBuildRunning": false,
         "offlineRecoveryInstalled": true,
         "targetedControllerSession": null,
-        "targetedControllerPid": null,
+        "targetedControllerPid": 33444,
         "codecObserverSession": null,
         "codecObserverPid": null,
         "activeEngineeringFirmware": null,
@@ -141594,7 +141594,7 @@
         },
         "sourceCommitEditable": "942e11701efb38c275355af0841417ad2049ab15",
         "physicalResult": "FAILED_ACTUAL_FIVE_GROUPS_ZERO_MARKS",
-        "sourceAndHardwareDistinction": "Normal785 source942e117 installed. Clear-on-read defect fixed and model0->5; actual385 still0marks/0IRQreads, not physically fixed. Actual383 confirmed5/0 and3840marks/2752reads retained.",
+        "sourceAndHardwareDistinction": "385 involved no Owner taps. Zero marks/reads is not a failed physical test of repaired785. Old383 Owner-confirmed5/0 on782 remains historical failure;384 action remains unconfirmed.",
         "latest784": {
           "at": "2026-11-09T23:51:07+08:00",
           "ownerRaw": "继续做把",
@@ -142046,7 +142046,35 @@
             "result": "PASS_C_PRODUCER_TO_HOST_DECODER_SOFTWARE_ONLY",
             "cases": 10,
             "scope": "Actual C serializer to host decoder; engineering cache reader only, no new hardware data or normal performance pass."
+          },
+          "ownerActionCorrection": {
+            "at": "2026-11-10T09:18:07+08:00",
+            "ownerRaw": "啥都没有搞, 现在搞",
+            "sessionId": "0000000000000181",
+            "firmware": 66785,
+            "operatorPerformedGroups": 0,
+            "classification": "NOT_EXERCISED_NO_GESTURE_VERDICT",
+            "rawEvidenceUnchanged": true,
+            "recordingComplete": true,
+            "marksObserved": 0,
+            "tapReadsObserved": 0,
+            "conclusion": "385 involved no Owner taps. Zero marks/reads is not a failed physical test of repaired785. Old383 Owner-confirmed5/0 on782 remains historical failure;384 action remains unconfirmed.",
+            "next": "Same785, wake through original popup then one fresh55s trial, no build/OTA/RAM diagnostic before that trial."
           }
+        },
+        "ownerCorrection785": {
+          "at": "2026-11-10T09:18:07+08:00",
+          "ownerRaw": "啥都没有搞, 现在搞",
+          "sessionId": "0000000000000181",
+          "firmware": 66785,
+          "operatorPerformedGroups": 0,
+          "classification": "NOT_EXERCISED_NO_GESTURE_VERDICT",
+          "rawEvidenceUnchanged": true,
+          "recordingComplete": true,
+          "marksObserved": 0,
+          "tapReadsObserved": 0,
+          "conclusion": "385 involved no Owner taps. Zero marks/reads is not a failed physical test of repaired785. Old383 Owner-confirmed5/0 on782 remains historical failure;384 action remains unconfirmed.",
+          "next": "Same785, wake through original popup then one fresh55s trial, no build/OTA/RAM diagnostic before that trial."
         }
       },
       "workpointBeforeImuPriority20261109": {
@@ -145860,7 +145888,7 @@
                 "notta",
                 "plaud_export"
               ],
-              "current": "手机已有转写修订/首次原文保留和近似回听；查找替换、完整分人修订等双端一致性待核。",
+              "current": "Windows082已有逐段/分人修订和批量替换。Android117已有修订与首次原文保留；120候选新增当前草稿精确批量替换/次数/安全撤销和键盘焦点联动，沿原修订保存，源检查/包已过，普通手机保存重开和首次原文联动待验。",
               "acceptance": "去语气词的阅读稿与原始转写分开；修改后引用/定位不串，数字/承诺/否定不被润色改变。",
               "order": "P1",
               "dependency": "software",
@@ -145891,6 +145919,14 @@
                 ],
                 "expected": "去语气词的阅读稿与原始转写分开；修改后引用/定位不串，数字/承诺/否定不被润色改变。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
+              },
+              "continuousReviewCandidate20261110": {
+                "receipt": "docs/handoffs/20261110-nonmodel-core-playback/batch.json",
+                "sourceCommit": "3dfb6742127b1173dc52dd068122cb2bb28a1ca2",
+                "candidateVersion": "0.1.120",
+                "installed": false,
+                "nativePhoneRuntimeQualified": false,
+                "modelsRun": false
               }
             },
             {
@@ -146579,7 +146615,7 @@
               "competitorSources": [
                 "notta"
               ],
-              "current": "Windows已有倍速/续听/A-B等交付；手机当前播放暂停/定位已验，速度/续听等待补齐。",
+              "current": "Windows082原倍速/续听/A-B保留；Android117原播放暂停定位已验。Android120候选已实现倍速、原音时间轴前后跳转、逐录音续听和从头播放；重开/跨库/备份/恢复/回收站/精确清除的软件联动通过，已签名远端保护，实际手机回听尚待，未计交付。",
               "acceptance": "位置和原音绑定，速度/续听/关键区间可控；静音跳过不跳掉弱声，未知/缺段不编造时间。",
               "order": "P1",
               "dependency": "software",
@@ -146610,6 +146646,44 @@
                 ],
                 "expected": "位置和原音绑定，速度/续听/关键区间可控；静音跳过不跳掉弱声，未知/缺段不编造时间。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
+              },
+              "continuousPlayback20261110": {
+                "at": "2026-11-10T09:18:50+08:00",
+                "state": "IMPLEMENTING_ANDROID_CONTINUOUS_PLAYBACK",
+                "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
+                "userOutcome": "在手机随时暂停或离开会议，重开继续回听，可倍速和前后跳转；原文定位保持原音时间轴，进度不串会议或资料库。",
+                "existingTask": "CP27-01/playback",
+                "baseline": {
+                  "windows": "0.1.82",
+                  "android": "0.1.117",
+                  "androidSource": "9b6b8858d36feb170a9347a56f57b0e0ee5980d2",
+                  "backendAarUnchanged": true
+                },
+                "scope": [
+                  "原生倍速和暂停状态保持",
+                  "逐录音续听位置、异常退出前定期保存及资料库隔离",
+                  "前后10秒/从头重听/分段切换",
+                  "原文和设备重点回听仍用原始时间轴",
+                  "一次合并后构建、原生验证、保护与安装"
+                ],
+                "notQualifiedByThisBatch": [
+                  "模型质量",
+                  "复杂多人",
+                  "硬件长录/电池/实体体验",
+                  "账号/团队/平台资质等原外部依赖"
+                ],
+                "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+                "priorDeliveryPreserved": "docs/handoffs/20261110-actions-followup/batch.json",
+                "saleQualified": false,
+                "modelsRun": false
+              },
+              "continuousReviewCandidate20261110": {
+                "receipt": "docs/handoffs/20261110-nonmodel-core-playback/batch.json",
+                "sourceCommit": "3dfb6742127b1173dc52dd068122cb2bb28a1ca2",
+                "candidateVersion": "0.1.120",
+                "installed": false,
+                "nativePhoneRuntimeQualified": false,
+                "modelsRun": false
               }
             },
             {
@@ -146665,7 +146739,7 @@
                 "plaud_manage",
                 "notta"
               ],
-              "current": "Windows原已交付；Android069新增保护/回收站/恢复及明确范围清除，候选已生成与后台核对，未装手机/未实际验收。",
+              "current": "Windows既有保护/回收站保留。Android117沿112公开录音实际移入回收站和恢复证据；120新增续听记录使用原逐录音元数据归属，原清除实现的软件联动检查已过，真实手机新记录永久清除与其余未验条件保留。旧“069未装”不再作为当前安装状态。",
               "acceptance": "普通删除可恢复原内容，永久清除范围/确认清楚；共享原件、活动录音和保护项不误删。",
               "order": "P0",
               "dependency": "software",
@@ -146729,7 +146803,7 @@
                 "notta_fill",
                 "notta_brain"
               ],
-              "current": "Windows067已安装，原245文件不变；八格式实际系统保存/取消/内容通过，复制文字匹配。普通App真实系统分享打开后显示无法列出共享方式；资源管理器同公开PDF可列本机接收应用，正常Windows环境仍失败，根因待定位。最小原生窗口对照被Owner物理Esc停止，未发文件。Android066合并Word候选待共享手机释放后实验，原音/SRT/AI填外部表样及完整交付仍开。",
+              "current": "Windows082当前安装，文件交付沿081实际证据：Word/TXT/PDF/原WAV/MP3主入口复制为完整文件、标准浏览器附件粘贴和Shell落盘、原音备份恢复已过。Android117沿111/112系统Word/TXT/WAV、实际复制粘贴、PDF本机接收及导图XML保存证据。旧WinRT面板与具体聊天客户端仍未资格，不重跑未受影响已过路径。",
               "acceptance": "原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
               "order": "P0",
               "dependency": "software",
@@ -265104,7 +265178,15 @@
           "newModelStartGate": "原约定非模型范围的开放缺口处理完，使用现有模型完成一遍真实完整会议链后才恢复新模型研发；不以构建、模拟、局部保存链或新文档代替。",
           "normalModelUse": "允许现有本地转写与已配置AI服务用于产品功能、完整流程和错误定位；不启动新模型比较、微调、训练或GPU环境探索。",
           "deviceDependency": "17:42端点选择报告旧作业未收尾且板租约仍被另一Codex实体工作持有；不据此判断手机缺席。先推进无设备依赖交付。",
-          "next": "先完成既定录音卡产品范围内的非模型交付：安装/升级与资料保留、Windows实际界面、Android实际使用、现有AI纪要/来源/导出、设备完整流程和既有异常恢复；对照原六模块明确尚缺范围，不将原已延后事项当本轮新增功能。缺口修复后用现有模型跑一遍完整真实链并保留结果，才恢复新模型/训练/选型实验。当前先完成0.1.36可用交付和真实软件操作，实卡作业由当前持有者完成关闭前不抢占或切中央。"
+          "next": "先完成既定录音卡产品范围内的非模型交付：安装/升级与资料保留、Windows实际界面、Android实际使用、现有AI纪要/来源/导出、设备完整流程和既有异常恢复；对照原六模块明确尚缺范围，不将原已延后事项当本轮新增功能。缺口修复后用现有模型跑一遍完整真实链并保留结果，才恢复新模型/训练/选型实验。当前先完成0.1.36可用交付和真实软件操作，实卡作业由当前持有者完成关闭前不抢占或切中央。",
+          "ownerContinuation20261110": {
+            "at": "2026-11-10T09:49:20+08:00",
+            "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
+            "priority": "Finish non-model core before returning to model experiments/training",
+            "previousModelWorkpointPreserved": "沿原核心候选继续固定Qwen完整实会对照与复杂多人/事实门；本机实际资源具备后才从原断点恢复。非模型方面复用082/117已交付流程，后续只处理原清单未验的实际阻断；可编辑AI材料、提醒、实卡和真人客户按各原验收项保留，不将本批筛选/本地跟进文字等同全部竞品能力。",
+            "activeReceipt": "docs/handoffs/20261110-nonmodel-core-playback/batch.json",
+            "allNonmodelComplete": false
+          }
         },
         "latestStatusClarification": {
           "at": "2026-11-04T17:40:20+08:00",
@@ -265281,7 +265363,7 @@
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "沿原核心候选继续固定Qwen完整实会对照与复杂多人/事实门；本机实际资源具备后才从原断点恢复。非模型方面复用082/117已交付流程，后续只处理原清单未验的实际阻断；可编辑AI材料、提醒、实卡和真人客户按各原验收项保留，不将本批筛选/本地跟进文字等同全部竞品能力。",
+          "next": "非模型核心收尾优先。手机在线后只验这批120受影响的回听/修订/保存恢复流程并修实际阻断；离线继续原import/notes_images/organization/trim_merge等可独立软件事项。录音卡长录/恢复/电源和正式签名沿原分工，不冒充模型问题或已完工。固定Qwen与复杂多人质量点保留，完成非模型核心前不切回训练。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -266347,7 +266429,7 @@
             {
               "block": "长录/连接/异常恢复可靠性",
               "state": "OPEN",
-              "facts": "769已保存2小时3分原音、录中同步与完整音频；771短录全部门通过，183.45秒录中同步的PDM峰2.832ms<3ms、零采集故障通过，编码峰6.510ms>6ms仍失败。原嵌软任务继续定位准入/中断路径，当前固件两小时与异常恢复未合格，不继承旧长录。",
+              "facts": "此前771/769为原已保存范围。当前固件工作点按owner_module_execution.embedded接续，最新读取更新时间2026-11-10T09:18:07+08:00；当前长录/普通手机/编码峰/电源的未验项不继承关闭，也不沿较早771数字重复派发。",
               "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
             },
             {
@@ -266621,7 +266703,7 @@
             "saleQualified": false,
             "verificationPreparationFailure": "PDF exact-string check encountered layout newlines; preserved native receipt and same-MSI headless diagnosis, then normalized whitespace only. No product source, source wording, model or installer was changed for this retry."
           },
-          "lastOwnerQuote": "你不要老是说还有什么东西没做，你说什么东西没做难道是因为你不能做吗？直接把它做了就好了。",
+          "lastOwnerQuote": "快点把它搞完，然后搞得只剩下模型",
           "androidPhoneAcceptance": {
             "at": "2026-11-09T23:17:21+08:00",
             "state": "ANDROID115_PHONE_MEETING_PROCESSING_DELIVERY_RESTORE_AND_READING_BATCH_COMPLETED",
@@ -266925,6 +267007,131 @@
               "modelsStarted": 0,
               "userApplicationsClosed": false
             }
+          },
+          "activeNonmodelCompletion20261110": {
+            "at": "2026-11-10T09:18:50+08:00",
+            "state": "ANDROID120_SIGNED_CANDIDATE_PROTECTED_NATIVE_PHONE_RUNTIME_PENDING",
+            "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
+            "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
+            "existingTask": "CP27-01/playback",
+            "baseline": {
+              "windows": "0.1.82",
+              "android": "0.1.117",
+              "androidSource": "9b6b8858d36feb170a9347a56f57b0e0ee5980d2",
+              "backendAarUnchanged": true
+            },
+            "scope": [
+              "原生倍速和暂停状态保持",
+              "逐录音续听位置、异常退出前定期保存及资料库隔离",
+              "前后10秒/从头重听/分段切换",
+              "原文和设备重点回听仍用原始时间轴",
+              "一次合并后构建、原生验证、保护与安装",
+              "手机转写草稿批量替换、精确匹配和安全撤销；不自动保存、不改首次识别原文"
+            ],
+            "notQualifiedByThisBatch": [
+              "模型质量",
+              "复杂多人",
+              "硬件长录/电池/实体体验",
+              "账号/团队/平台资质等原外部依赖"
+            ],
+            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+            "priorDeliveryPreserved": "docs/handoffs/20261110-actions-followup/batch.json",
+            "saleQualified": false,
+            "modelsRun": false,
+            "relatedExistingTasks": [
+              "CP27-01/playback",
+              "CP27-01/editing"
+            ],
+            "dependencyObservation": {
+              "authorizedAndroidOnline": false,
+              "checkedThrough": "adb devices -l",
+              "action": "No repeated phone prompt. Continue the independent draft-correction source and one complete candidate; native phone qualification remains open."
+            },
+            "updatedAt": "2026-11-10T09:49:20+08:00",
+            "sourceCommit": "3dfb6742127b1173dc52dd068122cb2bb28a1ca2",
+            "candidateVersion": "0.1.120",
+            "candidateApkSha256": "d2707bd0e1c139679f38a322be0a5cbbb2f21b4b69462ff0ae71008a2ad835dd",
+            "buildRun": 42737582298,
+            "sourceAndNativePackagePassed": true,
+            "checkpointPersistenceBackupAndLifecycle": {
+              "state": "OWNED_PLAYBACK_REOPEN_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+              "results": [
+                {
+                  "name": "compile",
+                  "exitCode": 0
+                },
+                {
+                  "name": "PlaybackProgressTest",
+                  "exitCode": 0
+                },
+                {
+                  "name": "PlaybackBackupCompatibilityTest",
+                  "exitCode": 0
+                },
+                {
+                  "name": "PlaybackLifecycleTest",
+                  "exitCode": 0
+                }
+              ],
+              "playbackSourceSha256": "004b4c202a20706283f4e77186560876834f80472be6389529fb808568958a9d",
+              "nativeMediaPlayerTested": false,
+              "phoneTested": false,
+              "modelsRun": false
+            },
+            "remotePackageReadbackByteIdentical": true,
+            "nativePhoneRuntimeQualified": false,
+            "installed": false,
+            "currentInstalledAndroid": "0.1.117",
+            "currentInstalledWindows": "0.1.82",
+            "authorizedPhoneOnlineAtPackageCompletion": false,
+            "sourceImplemented": [
+              "Native .75/1/1.25/1.5/1.75/2x rate and original-time10s jumps.",
+              "Per-record/per-library descriptor-bound durable resume, periodic checkpoint, explicit restart and completed-recording restart.",
+              "Paused speed changes deferred until resume; serialized seek waits for native completion before saving.",
+              "Checkpoint included in existing backup and exact-record purge ownership, including interrupted-write temporaries.",
+              "Draft-only literal transcript replacement, match count, safe undo and bounded expansion, using existing revision/first-original save path."
+            ],
+            "retainedSourceCheckpoints": [
+              {
+                "source": "9697968da4aa9abc32cef5b85da3b95282990473",
+                "run": 42735769810,
+                "scope": "Initial playback native bridge and source checks/package passed; never installed."
+              },
+              {
+                "source": "a6876984d4d7ec9411d9dfa4d233b726a0391ba6",
+                "run": 42736712959,
+                "scope": "Playback plus draft correction source and package passed; replaced before install to cover exact-record purge ownership."
+              }
+            ],
+            "actualFailuresAndCorrections": [
+              {
+                "finding": "Initial progress subdirectory would not be included in the existing per-record purge planner.",
+                "resolution": "Use existing digest-prefixed owned metadata naming instead of changing/broadening deletion rules. Actual unchanged LocalRecordingLifecycle trash/restore/purge and another-record preservation passed."
+              },
+              {
+                "finding": "Interrupted atomic writes need record ownership too.",
+                "resolution": "Record-prefixed pending filenames; explicit interrupted-write fixture is removed by exact-record purge."
+              },
+              {
+                "finding": "Local TypeScript checker hit explicit256MiB heap cap.",
+                "resolution": "Original failure retained; complete mobile typecheck and affected component tests passed on dedicated CI. No owner application closed or new model loaded."
+              }
+            ],
+            "nativeAcceptanceRemaining": [
+              "Actual phone speed and paused-rate behavior, original-time seeking across available parts.",
+              "Exit/reopen and process interruption resume, separate public recordings and library switching.",
+              "Bulk replace then save/reopen with first ASR text retained; old minutes clearly stale after corrections.",
+              "Ordinary backup/restore and exact purge of only a new public QA copy including its checkpoint."
+            ],
+            "next": "非模型核心收尾优先。手机在线后只验这批120受影响的回听/修订/保存恢复流程并修实际阻断；离线继续原import/notes_images/organization/trim_merge等可独立软件事项。录音卡长录/恢复/电源和正式签名沿原分工，不冒充模型问题或已完工。固定Qwen与复杂多人质量点保留，完成非模型核心前不切回训练。",
+            "allNonmodelComplete": false
+          },
+          "latestSharedFirmwareWorkpoint20261110": {
+            "observedAt": "2026-11-10T09:49:20+08:00",
+            "source": "docs/product_backlog.json#/owner_module_execution/embedded",
+            "updatedAt": "2026-11-10T09:18:07+08:00",
+            "active": "CP04-08",
+            "scope": "Use that original task next and current receipt; do not restart its previously failed measurements or overwrite its owner-prioritized action."
           }
         }
       },
