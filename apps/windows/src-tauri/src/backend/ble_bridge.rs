@@ -40,7 +40,7 @@ mod segmented;
 mod batch_interval;
 mod recorder_control;
 mod desktop_input;
-pub(crate) use desktop_input::listen as listen_desktop_input;
+pub(crate) use desktop_input::{listen as listen_desktop_input, Update as DesktopInputUpdate};
 mod legacy_reclaim;
 pub(crate) mod pet_caption;
 pub(crate) mod pet_profile;
@@ -1638,8 +1638,8 @@ pub(crate) fn prepared_segmented_recording(device_id: &str) -> bool {
             peer.mcu_uid.is_some() && peer.device.user_connection && peer.device.recording_peer.is_some()))
 }
 
-// A bounded follower borrows only the already verified user connection. It
-// never scans, pairs, starts/stops MIC or resumes a user-paused synchronization.
+// A bounded follower keeps the already verified original. A transport failure
+// may renew its link once; no path starts/stops MIC or resumes a user pause.
 pub(crate) struct FollowObservation {
     pub(super) identity: CompanionDeviceIdentity,
     pub(super) operation: Option<CompanionBleOperation>,
@@ -1654,6 +1654,70 @@ fn use_active_follow_preference(verified_recorder_state: Option<u8>) -> bool {
 
 fn use_early_active_follow_preference(state: Option<u8>, growing_tail: bool, original_scope: bool) -> bool {
     use_active_follow_preference(state) && growing_tail && original_scope
+}
+
+enum FollowReadFailure {
+    Transport(String),
+    Invalid(String),
+}
+
+impl FollowReadFailure {
+    fn message(self) -> String {
+        match self { Self::Transport(error) | Self::Invalid(error) => error }
+    }
+}
+
+async fn read_owned_follow_observation(device: &NativeDevice,
+    lease: &offline_connection::Lease<NativeDevice>)
+    -> Result<(CompanionDeviceIdentity, MeetingStatus), FollowReadFailure> {
+    let chars = device.peripheral.characteristics();
+    let identity_char = find_characteristic(&chars, DEVICE_STATUS_UUID)
+        .map_err(FollowReadFailure::Invalid)?;
+    let recorder_char = find_characteristic(&chars, MEETING_STATUS_UUID)
+        .map_err(FollowReadFailure::Invalid)?;
+    // This is required control state, not an optional connect decoration.
+    // Keep the native error/deadline so a lost ATT read is distinguishable
+    // from a changed UID, epoch or original recording.
+    let (wire, recorder) = on_native_link(device, async {
+        let wire = bounded_ble_result("read original follower identity", OPTIONAL_STATUS_READ_TIMEOUT,
+            device.peripheral.read(&identity_char)).await?;
+        let recorder = bounded_ble_result("read original follower recorder", StdDuration::from_secs(3),
+            device.peripheral.read(&recorder_char)).await?;
+        Ok((wire, recorder))
+    }).await.map_err(FollowReadFailure::Transport)?;
+    let actual_peer = super::recording_wire::transport::Peer::from_status(&wire)
+        .map_err(FollowReadFailure::Invalid)?;
+    require_same_recorder(lease.device.recording_peer.as_ref(), actual_peer.as_ref())
+        .map_err(FollowReadFailure::Invalid)?;
+    let identity = parse_device_identity(Some(&wire), None, None);
+    let status = parse_meeting_status(&recorder).map_err(FollowReadFailure::Invalid)?;
+    lease.verify_observation(lease.device.verified_uid.as_deref(), &device.device_id(),
+        &identity, &status, lease.start_token).map_err(FollowReadFailure::Invalid)?;
+    Ok((identity, status))
+}
+
+async fn observe_owned_follower(device: &mut NativeDevice,
+    lease: &offline_connection::Lease<NativeDevice>) -> Result<(CompanionDeviceIdentity, MeetingStatus), String> {
+    match read_owned_follow_observation(device, lease).await {
+        Ok(observation) => Ok(observation),
+        Err(FollowReadFailure::Invalid(error)) => Err(error),
+        Err(FollowReadFailure::Transport(error)) => {
+            eprintln!("recording_follow_recovery stage=read_failed cause={error} new_start_sent=false");
+            // Retire the pending native read before opening a successor. The
+            // unchanged lease/durable cursor must still match fresh protected
+            // UID+epoch+session+request observations before any audio is read.
+            retire_native_device(device, "original follower status read failed").await;
+            *device = connect_recorder_device_with_clock(Some(&lease.device_id), false).await?;
+            let observation = read_owned_follow_observation(device, lease).await
+                .map_err(FollowReadFailure::message)?;
+            device.verified_uid = lease.device.verified_uid.clone();
+            device.recording_peer = lease.device.recording_peer.clone();
+            device.user_connection = lease.device.user_connection;
+            device.observed_identity = Some(observation.0.clone());
+            eprintln!("recording_follow_recovery stage=same_original_verified physical_anchor={} new_start_sent=false", lease.recording_id);
+            Ok(observation)
+        }
+    }
 }
 
 pub(crate) fn follow_prepared_recording_once(device_id: &str,
@@ -1683,26 +1747,22 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 .ok_or("连续录音连接已断开；设备继续离线录音，接收断点保留。")?
         };
         let mut identity = device.observed_identity.clone();
+        let mut original_finalized = false;
+        let mut verified_recorder_state = None;
+        if let Some(lease) = owned.as_ref() {
+            let (current, status) = match observe_owned_follower(&mut device, lease).await {
+                Ok(observation) => observation,
+                Err(error) => { close_native_device(&device).await; return Err(error); }
+            };
+            original_finalized = status.state == MEETING_STATE_FINALIZED;
+            verified_recorder_state = Some(status.state);
+            if let Some(cursor) = live.as_deref_mut() { cursor.observe_verified_recorder_state(status.state); }
+            identity = Some(current);
+        }
         let link = NativeLinkGuard::capture(&device);
         let result = link.run(async {
-            let mut original_finalized = false;
-            let mut verified_recorder_state = None;
             let peer = device.recording_peer.clone().ok_or("连续录音连接身份不可用。")?;
             let chars = device.peripheral.characteristics();
-            if let Some(lease) = owned.as_ref() {
-                let wire = read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
-                    .ok_or("录中同步未读到当前芯片状态；设备继续离线采音。")?;
-                let current = parse_device_identity(Some(&wire),None,None);
-                let status = find_characteristic(&chars,MEETING_STATUS_UUID)?;
-                let status = bounded_ble_result("read logical recorder for follower",StdDuration::from_secs(3),
-                    device.peripheral.read(&status)).await?;
-                let status = parse_meeting_status(&status)?;
-                lease.verify_observation(device.verified_uid.as_deref(),&device.device_id(),&current,&status,lease.start_token)?;
-                original_finalized = status.state == MEETING_STATE_FINALIZED;
-                verified_recorder_state = Some(status.state);
-                if let Some(cursor) = live.as_deref_mut() { cursor.observe_verified_recorder_state(status.state); }
-                identity = Some(current);
-            }
             let job = RecordingSyncJob::begin_background(device_id)?;
             let tail_scope=owned.as_ref().and_then(|lease| lease.logical_key.as_ref());
             let mut policy = SealedLinkPolicy::default();
@@ -2452,7 +2512,17 @@ async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeD
 
 #[cfg(windows)]
 async fn paired_windows_device(requested_device_id: Option<&str>) -> Option<NativeDevice> {
-    let requested = requested_device_id?;
+    let suggested;
+    let requested = match requested_device_id.filter(|id|scan_exact_address_match(Some(id),id)) {
+        Some(requested)=>requested,
+        None=>{
+            let started=StdInstant::now();
+            let address=super::ble_pairing::unique_paired_product_address().await?;
+            suggested=format!("{address:012X}");
+            eprintln!("BLE known_device unique_paired_product=1 metadata_only=1 elapsed_ms={} advertisement_wait=0 protected_setup_required=1",started.elapsed().as_millis());
+            &suggested
+        },
+    };
     // An explicit exact MAC may resolve an already-paired Windows peer,
     // including a disconnected one. This is metadata acquisition only; the
     // existing owned connect/security/GATT/UID path still establishes readiness.
@@ -2471,6 +2541,7 @@ async fn paired_windows_device(requested_device_id: Option<&str>) -> Option<Nati
     };
     let device = scan_candidate(peripheral).await.ok()??;
     if !scan_exact_address_match(Some(requested), &device.address) { return None; }
+    if companion_candidate_score(&device,requested_device_id).is_none() {return None;}
     eprintln!("BLE known_device exact_paired=1 metadata_only=1 elapsed_ms={} advertisement_wait=0 protected_setup_required=1", started.elapsed().as_millis());
     Some(device)
 }

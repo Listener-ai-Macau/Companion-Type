@@ -85,13 +85,20 @@ pub fn start(
     let spawn=thread::Builder::new().name("companion-desktop-input".into()).spawn(move||{
         let _lease=lease;
         let (send,receive)=mpsc::sync_channel::<Work>(4);
+        let connection=Arc::new(tokio::sync::Mutex::new(()));
+        let receive_connection=connection.clone();
         let processing_device=device.clone();
         let processing=thread::Builder::new().name("companion-dictation-delivery".into()).spawn(move||{
             for work in receive {
+                // Only acquisition/receive share this owner. ASR does not
+                // prevent the input listener from recovering its live link.
+                let receiving=std::cell::RefCell::new(Some(receive_connection.blocking_lock()));
                 change(|s|{s.processing=true;s.stage="receiving".into();s.message="正在接收本次原音…".into();});
                 let result=coordinator.complete_desktop_dictation(&processing_device,&work.key,&work.cancel,|stage|{
+                    if stage=="transcribing" {receiving.borrow_mut().take();}
                     change(|s|{s.stage=stage.into();s.message=if stage=="transcribing"{"原音已保存，正在识别…"}else{"正在接收本次原音…"}.into();});
                 });
+                drop(receiving);
                 match result {
                     Ok((session,text))=>{
                         // Text is already durable in the normal recording library.
@@ -108,8 +115,8 @@ pub fn start(
         if processing.is_err(){change(|s|{s.stage="error".into();s.message="电脑输入任务未能启动。".into();s.enabled=false;});}
         else {
             let captures=Arc::new(Mutex::new((None::<u32>,HashMap::<u32,Capture>::new(),VecDeque::<u32>::new())));
-            let result=super::ble_bridge::listen_desktop_input(&device,stop,move|input|{
-                observe(input,&peer,&captures,&send);
+            let result=super::ble_bridge::listen_desktop_input(&device,peer.clone(),stop,connection,move|input|{
+                observe_update(input,&peer,&captures,&send);
             });
             change(|s|{s.enabled=false;s.ready=false;s.capturing=false;
                 if let Err(error)=&result{s.stage="error".into();s.message=error.clone();}
@@ -134,8 +141,38 @@ pub fn start(
 }
 
 type Captures = Arc<Mutex<(Option<u32>, HashMap<u32, Capture>, VecDeque<u32>)>>;
-fn observe(input: InputStatus, peer: &Peer, captures: &Captures, send: &mpsc::SyncSender<Work>) {
-    observe_with_target(input, peer, captures, send, Target::capture);
+fn observe_update(
+    input: super::ble_bridge::DesktopInputUpdate,
+    peer: &Peer,
+    captures: &Captures,
+    send: &mpsc::SyncSender<Work>,
+) {
+    use super::ble_bridge::DesktopInputUpdate;
+    match input {
+        DesktopInputUpdate::Physical(input) => {
+            observe_with_target(input, peer, captures, send, Target::capture)
+        }
+        DesktopInputUpdate::Reconcile(input) => reconcile(input, peer, captures, send),
+        DesktopInputUpdate::Ready(input) => {
+            reconcile(input, peer, captures, send);
+            change(|s| {
+                s.ready = true;
+                if !s.capturing && !s.processing {
+                    s.stage = "ready".into();
+                    s.message =
+                        "已就绪：把光标放在目标输入框，按住卡片按键说话，松开后等待文字。".into();
+                }
+            });
+        }
+        DesktopInputUpdate::Reconnecting(message) => change(|s| {
+            s.ready = false;
+            s.stage = "reconnecting".into();
+            s.message = message;
+        }),
+    }
+}
+fn reconcile(input: InputStatus, peer: &Peer, captures: &Captures, send: &mpsc::SyncSender<Work>) {
+    apply_observation(input, peer, captures, send, false, || None);
 }
 fn observe_with_target(
     input: InputStatus,
@@ -144,21 +181,28 @@ fn observe_with_target(
     send: &mpsc::SyncSender<Work>,
     target: impl FnOnce() -> Option<Target>,
 ) {
-    if input.request != 0 {
-        change(|s| {
-            s.ready = true;
-            s.stage = "ready".into();
-            s.message = "已就绪：把光标放在目标输入框，按住卡片按键说话，松开后等待文字。".into();
-        });
+    if input.request != 0 || input.mode != 1 {
         return;
     }
-    if input.result != 0 || input.mode != 1 {
+    apply_observation(input, peer, captures, send, true, target);
+}
+fn apply_observation(
+    input: InputStatus,
+    peer: &Peer,
+    captures: &Captures,
+    send: &mpsc::SyncSender<Work>,
+    physical: bool,
+    target: impl FnOnce() -> Option<Target>,
+) {
+    if input.result != 0 {
         return;
     }
     let mut guard = captures.lock().unwrap_or_else(|e| e.into_inner());
     let (last, items, order) = &mut *guard;
-    let new_event = *last != Some(input.sequence);
-    *last = Some(input.sequence);
+    let new_event = physical && *last != Some(input.sequence);
+    if physical {
+        *last = Some(input.sequence);
+    }
     if new_event && input.events & 1 != 0 && input.token != 0 && !items.contains_key(&input.token) {
         items.insert(
             input.token,
@@ -175,6 +219,11 @@ fn observe_with_target(
                 items.remove(&token);
             }
         }
+    }
+    // Query/reconnect replies can only finish a physical capture already seen
+    // by this host. Retained event bits never create a new target or utterance.
+    if !physical && !items.contains_key(&input.token) {
+        return;
     }
     change(|s| {
         s.capturing = input.flags & 6 != 0;
@@ -225,7 +274,8 @@ fn observe_with_target(
     }
 }
 pub fn stop() -> Result<Status, String> {
-    if status().capturing {
+    let current = status();
+    if current.capturing && current.ready {
         return Err("请先松开卡片按键，等这段录音保存后再切回录音模式。".into());
     }
     request_stop();
@@ -301,5 +351,40 @@ mod tests {
         let (send, recv) = mpsc::sync_channel(4);
         observe_with_target(event(9, 2, 0, 6, 41), &peer(), &captures, &send, || None);
         assert!(recv.try_recv().is_err());
+    }
+    #[test]
+    fn reconnect_after_release_finishes_only_the_previously_observed_capture_once() {
+        let captures = Arc::new(Mutex::new((None, HashMap::new(), VecDeque::new())));
+        let (send, recv) = mpsc::sync_channel(4);
+        let peer = peer();
+        observe_with_target(event(1, 1, 1, 2, 41), &peer, &captures, &send, || None);
+        observe_with_target(event(1, 1, 7, 3, 42), &peer, &captures, &send, || None);
+        // Link loss may reset the firmware to recorder mode. A verified query
+        // finds the same token/session saved after the missed release notice.
+        let mut closed = event(2, 2, 0, 6, 42);
+        closed.mode = 0;
+        closed.request = 123;
+        reconcile(closed.clone(), &peer, &captures, &send);
+        let work = recv.try_recv().unwrap();
+        assert_eq!(work.key.session_id, "000000000000002a");
+        reconcile(closed, &peer, &captures, &send);
+        assert!(recv.try_recv().is_err());
+    }
+    #[test]
+    fn retained_start_bits_in_a_reconnect_query_never_capture_a_new_editor() {
+        let captures = Arc::new(Mutex::new((None, HashMap::new(), VecDeque::new())));
+        let (send, recv) = mpsc::sync_channel(4);
+        let peer = peer();
+        let mut stale = event(5, 1, 7, 3, 41);
+        stale.request = 123;
+        apply_observation(stale, &peer, &captures, &send, false, || {
+            panic!("a query cannot acquire the foreground editor")
+        });
+        let mut closed = event(6, 2, 0, 6, 41);
+        closed.mode = 0;
+        closed.request = 124;
+        reconcile(closed, &peer, &captures, &send);
+        assert!(recv.try_recv().is_err());
+        assert!(captures.lock().unwrap().1.is_empty());
     }
 }
