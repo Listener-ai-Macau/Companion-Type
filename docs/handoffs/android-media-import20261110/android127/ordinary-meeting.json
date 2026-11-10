@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-10T09:00:28.638Z",
+  "version": "0.1.127",
+  "state": "ORDINARY_PHONE_NOTES_SAVE_SEARCH_DIRECT_HIGHLIGHT_REOPEN_IMAGE_AND_COMPACT_READING_PASSED",
+  "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+  "oldNotesUnchanged": 3,
+  "newHumanNoteSavedWithoutFalseAudioTime": true,
+  "photosRetainedAndRendered": true,
+  "previewResponses": [
+    {
+      "status": 200,
+      "cacheControl": "no-store",
+      "mime": "image/jpeg"
+    },
+    {
+      "status": 200,
+      "cacheControl": "no-store",
+      "mime": "image/jpeg"
+    }
+  ],
+  "wrongTokenGuard": {
+    "status": 404,
+    "cacheControl": "no-store",
+    "bytes": 0
+  },
+  "idlePlayerHeight": 67.62307739257812,
+  "sourceAudioOrTranscriptChanged": false,
+  "modelsOrAiCalled": false,
+  "limits": [
+    "Same-process lock race reproduced before/fixed after in deterministic JVM test; the earlier customer transient has no request trace and is not retrospectively assigned a proven single cause.",
+    "Canonical hexadecimal recorder identity verified against source contract and real Java implementation; this phone fixture remains imported audio, no physical recorder run."
+  ]
+}

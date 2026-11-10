@@ -1,0 +1,274 @@
+{
+  "at": "2026-11-10T17:14:03+08:00",
+  "state": "ANDROID127_READING_NOTES_SEARCH_AND_IMAGE_RELIABILITY_SCOPED_DELIVERY_COMPLETE",
+  "version": "0.1.127",
+  "sourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "ciRun": 42785160233,
+  "checks": {
+    "build-result": {
+      "sourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
+      "runId": "42785160233",
+      "versionCode": 127,
+      "versionName": "0.1.127",
+      "sha256": "928b6d1a24aac3476213653a080a6b41684692c13c89e6a648ca1539191deeed",
+      "pinnedModelResources": {
+        "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+        "reason": "Frozen AAR omitted Java classpath resources required by LocalModelPreparation.resource(); host supplies unchanged pinned metadata and vocabulary. Native libraries and model weights are unchanged.",
+        "resources": [
+          {
+            "name": "metadata.bin",
+            "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c",
+            "bytes": 11352,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/metadata.bin"
+          },
+          {
+            "name": "tokens.txt",
+            "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+            "bytes": 75756,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/tokens.txt"
+          }
+        ]
+      },
+      "nativeLibrariesUnchanged": true,
+      "webAssetsMatchSourceBuild": true,
+      "localTrustedResigningRequired": false,
+      "phoneTested": false,
+      "at": "2026-11-10T16:58:50+08:00",
+      "state": "ANDROID127_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
+      "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android127\\Companion-Android-0.1.127-core-candidate.apk",
+      "apkSha256": "1a6be5ca7749a4987d39d88b88b0d6c9ff392cf6bac812cea0df0eadfb3979a1",
+      "apkBytes": 48897404,
+      "signerSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+      "signerMatchesPreviouslyTrustedApp": true,
+      "zip16KiBAligned": true,
+      "installed": false
+    },
+    "installation": {
+      "at": "2026-11-10T16:59:52+08:00",
+      "state": "ANDROID127_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+      "sourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
+      "apkSha256": "1a6be5ca7749a4987d39d88b88b0d6c9ff392cf6bac812cea0df0eadfb3979a1",
+      "existingFilesByteIdentical": 2085,
+      "mainUnchangedDuringInstall": true
+    },
+    "ordinary-meeting": {
+      "at": "2026-11-10T09:00:28.638Z",
+      "version": "0.1.127",
+      "state": "ORDINARY_PHONE_NOTES_SAVE_SEARCH_DIRECT_HIGHLIGHT_REOPEN_IMAGE_AND_COMPACT_READING_PASSED",
+      "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "oldNotesUnchanged": 3,
+      "newHumanNoteSavedWithoutFalseAudioTime": true,
+      "photosRetainedAndRendered": true,
+      "previewResponses": [
+        {
+          "status": 200,
+          "cacheControl": "no-store",
+          "mime": "image/jpeg"
+        },
+        {
+          "status": 200,
+          "cacheControl": "no-store",
+          "mime": "image/jpeg"
+        }
+      ],
+      "wrongTokenGuard": {
+        "status": 404,
+        "cacheControl": "no-store",
+        "bytes": 0
+      },
+      "idlePlayerHeight": 67.62307739257812,
+      "sourceAudioOrTranscriptChanged": false,
+      "modelsOrAiCalled": false,
+      "limits": [
+        "Same-process lock race reproduced before/fixed after in deterministic JVM test; the earlier customer transient has no request trace and is not retrospectively assigned a proven single cause.",
+        "Canonical hexadecimal recorder identity verified against source contract and real Java implementation; this phone fixture remains imported audio, no physical recorder run."
+      ]
+    },
+    "original-library-restored": {
+      "at": "2026-11-10T09:07:33.136Z",
+      "version": "0.1.127",
+      "state": "ORIGINAL_LIBRARY_RESTORED_THROUGH_ORDINARY_COMPACT_CONTROL",
+      "activeId": "original",
+      "appearanceRestored": "dark"
+    },
+    "end-session": {
+      "at": "2026-11-10T17:10:33+08:00",
+      "state": "ANDROID127_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.127",
+      "preexistingFilesChecked": 2085,
+      "preexistingFilesByteIdentical": 2084,
+      "expectedIndexChange": false,
+      "authorizedPublicQaMetadataChanges": 1,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "newFilesOnlyInAuthorizedPublicLibrary": 0,
+      "newEmptyExistingStoreReadLocks": 8,
+      "publicOriginalMediaUnchanged": true,
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedTemporaryFiles": [
+        "companion-organization127-ui.jar"
+      ],
+      "manifestVerificationSeconds": 1.4689999999973224,
+      "ownerMainUnchangedDuringClose": null,
+      "ownerMainDisplayOperated": false,
+      "resumedVerifierAfterHandlesClosed": true,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false,
+      "exactTemporaryFileAbsenceReadback": true,
+      "ownedDisplayAbsenceReadback": true
+    },
+    "remote-candidate-backup": {
+      "at": "2026-11-10T17:00:01+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 730769907,
+      "fileName": "Companion-Android-0.1.127-core-candidate.apk",
+      "apkSha256": "1a6be5ca7749a4987d39d88b88b0d6c9ff392cf6bac812cea0df0eadfb3979a1",
+      "bytes": 48897404,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false,
+      "readback": {
+        "method": "four-bounded-official-CDN-range-readers",
+        "workers": 4,
+        "sections": 12,
+        "bufferBytesPerWorker": 131072,
+        "bytes": 48897404,
+        "sha256": "1a6be5ca7749a4987d39d88b88b0d6c9ff392cf6bac812cea0df0eadfb3979a1",
+        "seconds": 3.4219999999913853,
+        "authSentOnlyToGitHubApi": true,
+        "signedUrlOrTokenPersisted": false,
+        "routingModified": false
+      }
+    }
+  },
+  "reliabilityChecks": {
+    "at": "2026-11-10T16:43:19+08:00",
+    "phase": "final",
+    "state": "PASSED",
+    "logs": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\note-reliability-1794300199085772900",
+    "results": [
+      {
+        "name": "compile",
+        "exit": 0
+      },
+      {
+        "name": "LocalRecordingLifecycleConcurrencyTest",
+        "exit": 0
+      },
+      {
+        "name": "PlaybackLifecycleTest",
+        "exit": 0
+      },
+      {
+        "name": "RecordingNotesIntegrationTest",
+        "exit": 0
+      },
+      {
+        "name": "RecordingOrganizationIntegrationTest",
+        "exit": 0
+      },
+      {
+        "name": "MeetingLibrarySearchTest",
+        "exit": 0
+      }
+    ],
+    "modelsRun": false,
+    "phoneTested": false
+  },
+  "retainedFailures": [
+    "note-reliability-baseline.json",
+    "note-reliability-final-attempt1.json",
+    "android127/close-verifier-attempt1.json",
+    "package-readback-attempt1.json"
+  ],
+  "customer": {
+    "phase": "AI_SIMULATED_ASSUMED_AFTER_PURCHASE_FIRST_USE",
+    "feedback": "docs/handoffs/20261110-android-media-import/android127/customer-afteruse.md",
+    "sha256": "1cd24e382cfbd0a8677712dd5954432e7093f921a5d851f46368c4127441bfcc",
+    "actual": "独立新上下文自然完成纪要展开、精简/原文对照、人工备注与图片、写整场便签，离开按新便签关键词只找到一条，直接定位并高亮已保存备注；未遇目的阻断。",
+    "value": "愿继续使用阅读—留下个人判断—按便签找回的整理方式；人工来源与转写分开理解。",
+    "limitations": "实际App内看到了上一位公开阅读备注及工程公开检验备注，反馈明确受到这些文字提示；不是完全无辅助资料的盲测，不是旧反馈文件或工程历史。短公开样例/无实物听音、新录音ASR/AI、价格权益或长期条件，未提供范围未知；非真人、非订单。",
+    "remainingUsability": [
+      "摘要折叠部分主题提示",
+      "没有正在回听时新增备注默认整场，实际回听时再显式关联位置",
+      "离开详情后仍能看见短暂保存完成反馈"
+    ],
+    "decision": "上述非阻断项并入原notes/premium_ui，在下一批相关文档/材料阅读一起改，不为每条意见追加原生包或同条件新顾客。恢复资料身份提示继续保留，不能为了少一次确认隐藏来源。",
+    "purchase": "没有给出购买承诺或工程/整机/售卖签署。"
+  },
+  "phoneSessionClosed": true,
+  "ownerOriginalContentPreserved": true,
+  "remoteInstallerReadbackIdentical": true,
+  "nativeBuilds127": 1,
+  "nativeRework127": 0,
+  "modelsOrOnlineAiRun": false,
+  "ownerMainDisplayOperated": false,
+  "saleQualified": false,
+  "ownerAcceptanceClosed": false,
+  "scope": "Saved human notes discoverable in local full-content search, source-labeled direct navigation and highlights; same-process lifecycle reader serialization; canonical hexadecimal recorder identities; verified protected image preview/no-store and explicit retry; compact idle playback and exact generated-empty localization.",
+  "limits": [
+    "Earlier customer transient has no captured request trace: deterministic same-process failure mechanism fixed, not retrospectively asserted as its sole cause.",
+    "Hexadecimal recorder note identity verified through real Java storage/search contract; this phone fixture is imported media and does not qualify a fresh physical recorder chain.",
+    "Eight newly created normal empty MeetingStore read-lock files retained after returning original library; strict close verifier corrected only this exact pattern/hash. All2085 prior files preserved except one authorized public note metadata file.",
+    "No model accuracy, complete competitor parity, release/business/service or physical/customer gate is inherited from this scope."
+  ],
+  "package": {
+    "at": "2026-11-10T17:14:09+08:00",
+    "state": "CORE_CANDIDATE_ARCHIVE_PRIVATE_DRAFT_READBACK_IDENTICAL",
+    "package": "E:\\CodexData\\Companion\\deliveries\\20261110-companion-core-windows087-android127.zip",
+    "bytes": 39366248,
+    "sha256": "45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
+    "files": [
+      {
+        "path": "firmware/companion-update.cup",
+        "bytes": 1360156,
+        "sha256": "3d2cacefeb49d0bac5f837a7566a3462f6386c3e6fe5d6ae3bba7321f3ba06c9"
+      },
+      {
+        "path": "firmware/ota_manifest.json",
+        "bytes": 1548,
+        "sha256": "e18935f1b3011784d0f53609105a012e38615afc4d2d9ba9ab9219aefafea1bd"
+      },
+      {
+        "path": "macos/CompanionMac-candidate.zip",
+        "bytes": 733799,
+        "sha256": "bf7a8b693744cf1d4a9e2c25ea12703a79b025e1076e1d917ed5f45063d12657"
+      },
+      {
+        "path": "windows/Companion-Windows-0.1.87.msi",
+        "sha256": "4c8c31cd1e365a603c62c199c2cc8f3dffd3d45104c88934649311852d929ab7",
+        "bytes": 14031723
+      },
+      {
+        "path": "android/Companion-Android-0.1.127.apk",
+        "sha256": "1a6be5ca7749a4987d39d88b88b0d6c9ff392cf6bac812cea0df0eadfb3979a1",
+        "bytes": 48897404
+      }
+    ],
+    "draftOnly": true,
+    "saleQualified": false,
+    "ownerPrivateDataUploaded": false,
+    "assetId": 730809940,
+    "readback": {
+      "method": "four-bounded-official-CDN-range-readers",
+      "workers": 4,
+      "sections": 10,
+      "bufferBytesPerWorker": 131072,
+      "bytes": 39366248,
+      "sha256": "45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
+      "seconds": 1.4680000000080327,
+      "retainedTransientReads": [],
+      "authSentOnlyToGitHubApi": true,
+      "signedUrlOrTokenPersisted": false,
+      "routingModified": false
+    },
+    "finishedAt": "2026-11-10T17:19:17+08:00",
+    "readbackByteIdentical": true
+  }
+}

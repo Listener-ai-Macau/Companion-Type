@@ -1,3 +1,18 @@
+<!-- android-reading127-delivered -->
+## 2026-11-10T17:20:27+08:00 — Android127阅读—留备注—回找整链返修交付，统一候选完整归档
+
+接126完整售前回传，集中127源c9554c282056fca3aaf2340ce7ef7d2171e98ed7、CI42785160233，一次原生包，原信任签名安装、2085旧文件安装前后全部相同。后端AAR/JNI/权重仍f55f8e8，无模型/在线AI/录音卡或Owner前台动作。确定性JVM在旧生命周期类复现WebView/桥不同实例同进程持锁时OverlappingFileLockException；新进程内串行后保留跨进程锁、旧版本拒绝及回收站可见性。原顾客瞬时图片无请求日志，不追改为已证实唯一起因。
+
+受影响搜索实测暴露真实卡的epoch/session是十六进制，备注误限数字；按MeetingStore源契约改为有界hex，保留任意路径拒绝。真实Java保存/字面搜索、损坏不完整提醒及原件不变通过。人工备注/图片名纳入本机内容检索，单独来源及直接打开高亮；保护预览成功与拒绝均no-store、有明确重读。未启动播放时收敛禁用控件，确切生成空结论中文化，已保存原文/纪要不改。
+
+实际127手机公共库：原售前备注词命中一条、直接备注高亮，原图片两次重开200/no-store；错误token404空体/no-store，未放松原件/库身份。新增无假时间的公开备注，离开搜回直接定位，原3条备注与图片身份不变；闲置播放器67.623px。全Java编译及受影响生命周期、图文/分类备份精确清除、检索及前端实际组件/完整源预览分别留证。APK SHA1a6be5ca…，私有asset730769907回读全包一致；4×128KiB缓冲范围读48,897,404字节实测3.422秒，未改网络规则。后续CI源取件复用同工具，预检纠正artifact的Accept415，单字节范围/尺寸契约已验，不把未来速度当已实测。
+
+新AI假设售后完整原话`docs/handoffs/20261110-android-media-import/android127/customer-afteruse.md`，自选“阅读工程需求—留接续便签—离开找回”，新增整场便签并按独特词命中、直接定位和高亮，未遇目的阻断；愿继续此整理方式，未给购买或售卖签署。明确其在实际App读到旧公开阅读/工程备注，判断有辅助提示，不是完全无提示盲测，不冒充真人/长期/新录音AI。关心内容在折叠部分、默认旧播放时间、离开后保存反馈等非阻断愿望随下一相关材料阅读批次，恢复资料身份继续真实显示；不再每条重包。
+
+收尾回原库、App/独立显示18/CDP/驱动关闭，原外观恢复、USB唤醒2。2085旧文件中2084相同，另1只属授权公开context，原音/图和全部旧库不变。严格收尾器先拒绝8个新文件，检查均为现有MeetingStore正常新增的空读锁：仅按该根/64hex.lock/空SHA精确放行并保留，未删用户内容、未追加原生构建。首次关闭已完成句柄后再续验证，主屏前后指纹该次未完整留证，保留null而非硬称通过；后续只读确认驱动及显示均已消失。原始失败与私有清单保留，未上传用户资料。
+
+统一归档`E:\CodexData\Companion\deliveries\20261110-companion-core-windows087-android127.zip`，SHA45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609，私有草稿asset730809940上传/全包回读一致；首次只读分段请求失败留证，同一归档仅续回读1.468秒成功，没有重包/重编。含精确Windows087/Android127及原字节保留FW66788/Mac候选，安装/来源/哈希/已验边界在包内，不公开发布。固件dev_only/Macadhoc与原实物、模型、服务、正式分发、真人/Owner及完整竞品门不继承关闭。详情`docs/handoffs/20261110-android-media-import/reading127-delivered-result.json`。下一项沿原import完成文档上下文与材料阅读，同批承接上述阅读意见；剪辑/切分/合并等原软件项保留，继续执行。
+
 <!-- android-library126-first-use -->
 ## 2026-11-10T16:41:26+08:00 — Android126录音库首屏交付并自然首次使用，集中修阅读/备注回找
 
@@ -392,6 +407,19 @@ Owner继续收尾并问四组跑完是否整个Companion/Capture完成。按原�
 同时发现本侧先前“手机还要合共享Setup/Help长按指引”的判断缺乏入口核对：Android是apps/mobile独立App，没有导入CompanionSetup/Help/Dashboard，实际设备指南直接说明App录音控制，并无所称旧长按文本。已明确撤去该重复移植/重包前置，旧评估原件保留，不拿规则整理充作新功能。当前普通手机录音/接收/回听/恢复仍未完整资格；旧124冷连2.295s保留为未改native参考，不算126当前首屏整链通过。
 
 仅核验并收拢当前真实组件，未新构建/安装/录音：FW788+Windows088+Android126+Mac11509eb2候选封存E:\CodexData\Companion\deliveries\20261110-core088-android126.zip，38638741B，SHA6541f708e1b984ed371499223b0bbc14b021f5e677e204b78e94cc8c74f87b5a，所有白名单组件SHA及ZIP CRC过，无Owner内容/key。下一步Windows088已实装且首用/帮助实链过；手机已由原模块升级126，实际baseAPK/sourcecd82与签名产物核对一致，原资料2084文件不变。更正：手机独立App并不使用共享Desktop Setup/Help，不为该旧假设再造APK或覆盖126在途源；撤去手机指引移植前置。四组当前边界保持：现版用户完整录音保存/回听与手机断链恢复、当前788至少2h录音并同步、IMU实际拿起/普通携带误触、真实Mac按住说话整链。先等原手机126私有体验结束再做本侧受影响手机入口；当前无新具体MIC就绪，不暗中开录或反复派旧窗。全部实际通过后关闭约定共用录音核心与配套App，不临时加内部指标或高级手势；不宣称Companion暂停屏幕/电源/生产已完成，也不宣称Capture新硬件适配已做。原速度/内部耗时/硬件/屏幕/生产block或后置保持。。
+
+
+### 2026-11-10T17:03:17+08:00｜正常788/冻结088唯一长录已实际执行；承接完整售前反馈及Android127交付
+
+Owner继续催售卖、竞品查漏与客户体验。原弹窗16:50:23实际选择可以开始，控制器35684/原生17380开始唯一原场389/185，正常788、61.44MHz、冻结088完全同MSI原生。目标录7380秒/同步7200秒，已有封口段在同原场持续收取、当前无意外断链；真实终态未到，不报通过。完成观察器17412只跟随现存控制器，零新START；原就绪/进程/进展小收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\functional788-088，原音/日志E。板卡保持本轮占用，无SWD/UART/复位/OTA/抢手机。内部编码/PDM耗时仅观察，不作为再录前置。
+
+已完整读取原Android126售前AI首用79行/a8eec51d：阅读原文纪要、留整场判断并重开、按转写回找、可逆改名真实完成；自己写的备注词无法搜索、图片瞬时不可读再入恢复、详情阅读拥挤、None captured和待解问题语义疑点等全部承接。原报告未给199美元/套餐，不能追称价格验证；不是实际真人/硬件/录音ASR/付款。没有再派同版客户。原Android模块已集中c9554c28、一次CI42785160233并16:59:52装127，原2085文件一致，普通手机备注保存/搜索/直接高亮/重开、图片与紧凑阅读通过；此前图片当场无请求轨迹，不追认确定根因，语义/模型质量未关闭。来源原报告和逐项决定在C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\presale126-full-feedback-127-disposition.json；不覆盖原模块源码/显示、不重复APK构建安装。
+
+仅核同批已有组件SHA并收拢FW788/Windows088/Android127/Mac11509eb2候选E:\CodexData\Companion\deliveries\20261110-core088-android127.zip，38640175B、SHAb1b8dcbc43f45db3fcdedde16b4cad93305cd281855ec9e56104d244b1ea863a；包组件SHA和ZIP CRC过，无Owner原音/资料/key。长录封包时还在运行，此包不叫售卖通过。修正旧当前别名124/086/无MIC就绪为实际127/088/389在录，历史旧失败保留。下一步保持已真实开始的正常788/冻结088唯一长录389及同步，等其实际终态并核原音/采音异常/原目录，不重启、不插其他中央或内部耗时优化。Android127原阅读批次已实装并受影响路径通过，本侧已承接126顾客整段反馈及修复；不重做同版首用或覆盖其显示。长录收尾释放板卡后继续当前手机实卡完整录音/回听/恢复链、IMU实际拿起/普通携带误触与真实Mac按住说话整链，需实体操作集中原弹窗。仅四组全部实际通过才关闭本轮约定共用核心；原速度/硬件/屏幕/生产block后置保持，竞品平台级缺口沿原任务保留，整机售卖未关闭。
+
+2026-11-10T17:06:44+08:00 Owner所问此前功能/竞品是否全有已沿原36项并集查漏，未新增第二任务树或百分比。官方复核Plaud一键/重点、原音文字导出、现成MCP（云同步条件）、Soundcore离线后连接自动同步、Notta套餐区分及Granola外部工作流；产品实际与竞品宣传分开。基础录音/App能力有交付但当前手机整链/长录/自然IMU/Mac仍开，完整电话双向采集/云账号团队企业生态/语言分人语义普遍质量等不冒充全有。此前Owner高级手势按源/实际结果区分，空中鼠标未交付、物理断麦仍硬件提案。原MCP可取本地数据/用户key路径为差异，但不能再把协议本身称独有。完整映射/当前收据C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\competitor-and-owner-features-current.json。本步仅复核/承接，零产品构建/设备操作/新客户，不能当新功能进展。真人售前未招募/付款，现有AI回传有限；下一实质新顾客需中性给199美元与实际能力/费用，不重派同条件求购买肯定。
+
+2026-11-10T17:11:30+08:00 Fully received Android127 hypothetical-after-use67-line feedback, SHA1cd24e382cfbd0a8677712dd5954432e7093f921a5d851f46368c4127441bfcc. Actual public reading/save/leave/note-keyword return completed; exact one human-note match, direct selected/highlighted note, no blocking UI issue observed. Existing public notes exposed prior reading hints, no hardware/audio/newASR/real customer/price validation. Preserve four non-blocking discoverability/default-time/save-notice observations in original reading batch, no per-sentence native rebuild. Receipt C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\customer127-afteruse-reconciled.json. Local result follower replaced with corrected terminal-state updates (local indentation error corrected before restart); new follower PID16044, recorder35684/native17380 continued untouched. A PowerShell pipeline failed before the previous receipt-write attempt executed, no product action; this file-based retry avoids missing built-in modules.
 ## 2026-11-09T10:22:13+08:00 — Owner要求继续并质疑非速度复杂度；370继续，开录准备分段诊断762已备好但未装
 
 完整承接Owner“开始录音，继续；除了蓝牙速度以外都没什么很难的问题”。只读核对确认同370已在录音，09:59约26分钟/12段，不重复START。明确其它是常规收尾，不泛化成底层难题；真正已测单点为首有效2.157秒中准备阶段1867ms，但尚无查找/提交、空白扫描、物理擦除、擦后验证及provenance的分段实测，不能凭总耗时选择架构。当前16步/1ms批处理已存在，729缩首段损时长的旧方案不重做。
