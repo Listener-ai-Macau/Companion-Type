@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-10T02:27:02.073Z",
+  "versionCode": 120,
+  "ownedDisplay": 10,
+  "ordinaryUiActions": true,
+  "readback": "Only libraryStatus/detail/playbackStatus; no backend mutation",
+  "ownerRecordingOpened": false,
+  "cloudOrAsrCalls": 0,
+  "pausedRateChangeDidNotStart": true,
+  "pausedSourceTimeJumps": true,
+  "realMediaPlayerClock": {
+    "wallMs": 1427,
+    "sourceMs": 2023,
+    "rate": 1.5
+  },
+  "savedAndReopened": {
+    "positionMs": 12207,
+    "speed": 1.5
+  },
+  "literalCorrection": {
+    "replacements": 29,
+    "draftNotAutoSaved": true,
+    "undo": true,
+    "originalAsrRetained": true,
+    "staleMinutesMarked": true
+  },
+  "correctionReopened": true,
+  "state": "PASSED"
+}

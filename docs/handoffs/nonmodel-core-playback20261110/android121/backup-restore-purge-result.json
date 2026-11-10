@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T02:45:09.920Z",
+  "versionCode": 121,
+  "ordinarySafBackupAndRestore": true,
+  "ownerRecordingOpened": false,
+  "ownerRecordDeleted": false,
+  "boardAccessed": false,
+  "settingsRetainedAfterFullProcessRestart": true,
+  "restoredCheckpointAndCorrection": {
+    "positionMs": 86412,
+    "speed": 1.5,
+    "originalAsrRetained": true
+  },
+  "nativeCheckpointFileExistsBeforePurge": true,
+  "trashRestoreKeptCheckpointAndCorrection": true,
+  "exactPurge": {
+    "onlyNewRestoredLibrary": true,
+    "checkpointRemoved": true,
+    "allPriorLibrariesRetained": true
+  },
+  "state": "PASSED"
+}
