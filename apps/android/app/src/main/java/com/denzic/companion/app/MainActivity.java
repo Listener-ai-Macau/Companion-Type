@@ -177,7 +177,7 @@ public final class MainActivity extends Activity {
                 List<String> segments = uri.getPathSegments();
                 if(segments.size()==5&&"notes".equals(segments.get(0))){try{
                     String token=segments.get(1),key=segments.get(2),id=segments.get(3),sha=segments.get(4);if(!token.equals(libraries().token()))return blockedAsset();session(key);JSONObject value=recordingNotes().read(key);JSONArray entries=value.getJSONArray("entries");
-                    for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);if(id.equals(e.getString("id"))&&e.has("image")&&sha.equals(e.getJSONObject("image").getString("sha256"))){Path file=recordingNotes().verifiedImage(key,e.getJSONObject("image"));return new WebResourceResponse("image/jpeg",null,RecordingNoteImages.thumbnail(file));}}
+                    for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);if(id.equals(e.getString("id"))&&e.has("image")&&sha.equals(e.getJSONObject("image").getString("sha256"))){Path file=recordingNotes().verifiedImage(key,e.getJSONObject("image"));return new WebResourceResponse("image/jpeg",null,200,"OK",java.util.Collections.singletonMap("Cache-Control","no-store"),RecordingNoteImages.thumbnail(file));}}
                 }catch(Exception unavailable){}return blockedAsset();}
                 if (segments.isEmpty() || !"www".equals(segments.get(0))) return blockedAsset();
                 StringBuilder name = new StringBuilder();
@@ -197,7 +197,7 @@ public final class MainActivity extends Activity {
         web.loadUrl("https://appassets.androidplatform.net/www/index.html");
     }
     private static WebResourceResponse blockedAsset() {
-        return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", java.util.Collections.emptyMap(), new ByteArrayInputStream(new byte[0]));
+        return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", java.util.Collections.singletonMap("Cache-Control","no-store"), new ByteArrayInputStream(new byte[0]));
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
@@ -1153,6 +1153,11 @@ public final class MainActivity extends Activity {
                 String query=a.optString("query","").trim();
                 MeetingLibrarySearch search=query.isEmpty()?null:new MeetingLibrarySearch(query,!"title".equals(a.optString("scope","all")));
                 MeetingLibrarySearch.Reader reader=(key,source)->{
+                    if("notes".equals(source)){
+                        try{return new MeetingLibrarySearch.SavedText(RecordingNotes.searchableText(recordingNotes().read(key)),false);}
+                        catch(java.io.IOException error){throw error;}
+                        catch(Exception error){throw new java.io.IOException("人工备注暂不能读取，原文件保留。",error);}
+                    }
                     if("transcript".equals(source)){
                         MeetingStore.Snapshot saved=store().load(key);
                         return saved==null?null:new MeetingLibrarySearch.SavedText(saved.transcript,false);

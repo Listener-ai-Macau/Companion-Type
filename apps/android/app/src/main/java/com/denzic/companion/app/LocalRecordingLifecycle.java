@@ -10,6 +10,10 @@ import java.util.*;
 
 /** Local-library metadata only. No Bluetooth, model, network or device deletion. */
 final class LocalRecordingLifecycle {
+    // The bridge worker and WebView asset reader use separate instances. JVM
+    // file locks reject overlapping threads rather than queueing them; serialize
+    // our own operations before retaining the cross-process file-lock guard.
+    private static final Object PROCESS_LOCK=new Object();
     private final Path appRoot,recordings,meetings,directory;
     interface Deleter{boolean remove(Path path)throws IOException;}
     interface DirectorySync{void sync(Path path)throws IOException;}
@@ -36,6 +40,7 @@ final class LocalRecordingLifecycle {
         if(!Files.isDirectory(p,LinkOption.NOFOLLOW_LINKS))throw new IOException("资料目录无法读取。");
     }
     private <T>T locked(Action<T> action)throws Exception{
+      synchronized(PROCESS_LOCK){
         safeDirectory(meetings);safeDirectory(directory);
         Path path=meetings.resolve(".recording-lifecycle.lock");
         if(Files.isSymbolicLink(path))throw new IOException("资料操作锁无效，原文件保留。");
@@ -44,6 +49,7 @@ final class LocalRecordingLifecycle {
             if(lock==null)throw new IOException("录音资料正在更新，请稍后重试。");
             try{return action.run();}finally{lock.release();}
         }
+      }
     }
     static String hash(String value)throws Exception{
         return hex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8)));

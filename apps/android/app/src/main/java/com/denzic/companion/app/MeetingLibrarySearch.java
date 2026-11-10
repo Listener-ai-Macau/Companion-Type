@@ -30,7 +30,7 @@ final class MeetingLibrarySearch {
     Result find(String key,String title,Reader reader){
         Match match=match(title,"title",false);if(match!=null||!fullText)return new Result(match,0);
         int unreadable=0;
-        for(String source:new String[]{"transcript","minutes"}){
+        for(String source:new String[]{"transcript","minutes","notes"}){
             try{
                 SavedText saved=reader.read(key,source);
                 if(saved!=null&&(match=match(saved.text,source,saved.stale))!=null)return new Result(match,unreadable);

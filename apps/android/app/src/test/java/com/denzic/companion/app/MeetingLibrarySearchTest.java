@@ -38,6 +38,19 @@ public final class MeetingLibrarySearchTest {
         store.saveTranscriptCorrection("meeting-a",first.revision,"现在改为番茄，旧关键词不再存在。");
         check(new MeetingLibrarySearch("土豆",true).find("meeting-a","运营复盘",reader).match==null,"search used old recognition instead of saved correction");
         check(new MeetingLibrarySearch("番茄",true).find("meeting-a","运营复盘",reader).match!=null,"new correction missing");
+        String noteKey="5055423131304d324d455421:f0110a:1100901";
+        RecordingNotes notes=new RecordingNotes(root,path->{});notes.save(noteKey,0,"","首次阅读备忘：工程需求还有谁跟进？",null,1000);
+        MeetingLibrarySearch.Reader onlyNotes=(key,source)->{
+            if(!source.equals("notes"))return null;
+            try{return new MeetingLibrarySearch.SavedText(RecordingNotes.searchableText(notes.read(key)),false);}
+            catch(Exception error){throw new IOException(error);}
+        };
+        MeetingLibrarySearch.Result noteMatch=new MeetingLibrarySearch("首次阅读备忘",true).find(noteKey,"公开会后阅读",onlyNotes);
+        check(noteMatch.match!=null&&noteMatch.match.source.equals("notes")&&!noteMatch.match.stale,"saved human note not found as its own source");
+        check(noteMatch.match.snippet.substring(noteMatch.match.start,noteMatch.match.end).equals("首次阅读备忘"),"note snippet lost literal match");
+        check(new MeetingLibrarySearch("首次阅读备忘",false).find(noteKey,"公开会后阅读",(key,source)->{throw new AssertionError("title-only search read human notes");}).match==null,"notes leaked into title-only search");
+        MeetingLibrarySearch.Result brokenNote=new MeetingLibrarySearch("唯一人工词",true).find(noteKey,"公开会后阅读",(key,source)->{if(source.equals("notes"))throw new IOException("unreadable human note");return null;});
+        check(brokenNote.match==null&&brokenNote.unreadable==1,"unreadable notes disappeared without incomplete-search disclosure");
         Map<String,String> before=hashes(root);
         for(String query:new String[]{"番茄","日历","无结果"})new MeetingLibrarySearch(query,true).find("meeting-a","运营复盘",reader);
         check(before.equals(hashes(root)),"search altered stored files");
@@ -47,6 +60,6 @@ public final class MeetingLibrarySearchTest {
         check(match.snippet.substring(match.start,match.end).equals("目标关键词"),"clipped snippet lost match offsets");
         check(!Character.isLowSurrogate(match.snippet.charAt(1)),"snippet began inside an emoji");
         try{new MeetingLibrarySearch(" ",true);throw new AssertionError("empty query accepted");}catch(IllegalArgumentException expected){}
-        System.out.println("PASS local title/transcript/minutes search, literal and Unicode snippets, saved corrections, partial unreadability and unchanged stored payloads");
+        System.out.println("PASS local title/transcript/minutes/human-notes search, source identities, title-only isolation, literal Unicode snippets, saved corrections, partial unreadability and unchanged stored payloads");
     }
 }

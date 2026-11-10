@@ -21,7 +21,9 @@ final class RecordingNotes {
         if(Files.isSymbolicLink(p)||!p.toAbsolutePath().normalize().getParent().equals(directory.toAbsolutePath().normalize()))throw new IOException("备注文件位置无效，原资料保留。");
     }
     private static void key(String key)throws IOException{
-        if(key==null||!key.matches("[0-9a-f]{24,64}:[0-9]+:[0-9]+"))throw new IOException("录音标识无效。");
+        // MeetingStore.sessionKey encodes recorder epoch/session as unsigned hex;
+        // imported audio also uses this bounded identity shape (hash:1:1).
+        if(key==null||!key.matches("[0-9a-f]{24,64}:[0-9a-f]{1,16}:[0-9a-f]{1,16}"))throw new IOException("录音标识无效。");
     }
     JSONObject read(String key)throws Exception{
         synchronized(RecordingNotes.class){
@@ -97,6 +99,11 @@ final class RecordingNotes {
         java.security.MessageDigest sha=java.security.MessageDigest.getInstance("SHA-256");try(InputStream in=Files.newInputStream(p)){byte[] b=new byte[65536];int n;while((n=in.read(b))!=-1)sha.update(b,0,n);}StringBuilder s=new StringBuilder();for(byte b:sha.digest())s.append(String.format(Locale.ROOT,"%02x",b&255));if(!s.toString().equals(image.getString("sha256")))throw new IOException("图片校验失败，原备注保留。");return p;
     }
     static String clock(long ms){return String.format(Locale.ROOT,"%02d:%02d:%02d",ms/3600000,ms/60000%60,ms/1000%60);}
+    static String searchableText(JSONObject notes)throws Exception{
+        StringBuilder text=new StringBuilder();JSONArray entries=notes.getJSONArray("entries");
+        for(int i=0;i<entries.length();i++){JSONObject entry=entries.getJSONObject(i);text.append(entry.getString("text")).append('\n');if(entry.has("image"))text.append(entry.getJSONObject("image").getString("name")).append('\n');}
+        return text.toString();
+    }
     static String text(JSONObject notes)throws Exception{
         StringBuilder out=new StringBuilder();JSONArray entries=notes.getJSONArray("entries");if(entries.length()>0)out.append("用户备注与图片（人工补充，不是录音转写或AI结论）\n");
         for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);out.append('\n').append(e.isNull("atMs")?"整场备注":clock(e.getLong("atMs"))).append("\n").append(e.getString("text")).append('\n');if(e.has("image"))out.append("图片：").append(e.getJSONObject("image").getString("name")).append("（原图见图文ZIP）\n");}return out.toString();

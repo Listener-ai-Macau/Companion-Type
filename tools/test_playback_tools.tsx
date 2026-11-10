@@ -11,6 +11,7 @@ act(()=>button('前进10秒').props.onClick());assert.equal(seeks.at(-1),15000);
 act(()=>tree.update(view(18000)));act(()=>button('前进10秒').props.onClick());assert.equal(seeks.at(-1),19999);
 act(()=>tree.root.findByType('select').props.onChange({target:{value:'0.75'}}));assert.equal(speeds.at(-1),.75);
 act(()=>tree.root.findByProps({className:'playback-restart'}).props.onClick());assert.equal(restarts,1);
-act(()=>tree.update(view(15000,false)));assert.equal(button('后退10秒').props.disabled,true);assert.equal(tree.root.findByType('select').props.disabled,true);assert.equal(tree.root.findByProps({className:'playback-restart'}).props.disabled,false);
+act(()=>tree.update(view(15000,false)));assert.equal(tree.root.findAllByType('select').length,0);assert.equal(tree.root.findAllByProps({'aria-label':'后退10秒'}).length,0);assert.equal(tree.root.findByProps({className:'playback-restart'}).props.disabled,false);
+act(()=>tree.update(view(0,false)));assert.equal(tree.toJSON(),null,'Unstarted audio needs no duplicate restart or disabled transport');
 act(()=>tree.update(view(15000,true,true)));assert.equal(button('前进10秒').props.disabled,true);assert.equal(tree.root.findByProps({className:'playback-restart'}).props.disabled,true);
 act(()=>tree.unmount());console.log('PASS playback tools: bounded original-time jumps, explicit rate, restart and busy/inactive controls.');

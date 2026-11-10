@@ -13,4 +13,8 @@ saveFails=true;await act(async()=>{button('保存备注').props.onClick();});ass
 saveFails=false;await act(async()=>{button('保存备注').props.onClick();});assert(!dirty);assert.equal(value.entries[0].atMs,12000,'Time should be captured when composing, not after async picker');assert(text(tree.toJSON()).includes('预算要复核'));
 await act(async()=>{button('00:00:12').props.onClick();});assert.equal(played,'one');
 await act(async()=>{tree.root.findAllByType('button').find(n=>String(n.props['aria-label']).startsWith('删除备注'))!.props.onClick();});assert.equal(value.entries.length,0);
-act(()=>tree.unmount());assert(!dirty);console.log('PASS notes UI: cancel/failure retain draft, capture time, saved view, native play request and deletion.');
+act(()=>tree.unmount());assert(!dirty);
+value={...value,revision:3,entries:[{id:'photo',text:'首次阅读备忘：工程需求待确认。',atMs:null,createdAt:1,updatedAt:1,image:{name:'公开工程需求.png',file:'fixture.png',sha256:'a'.repeat(64),bytes:20}}]};const retained=JSON.stringify(value);
+await act(async()=>{tree=create(<RecordingNotes {...props} searchTerm="工程需求"/>);});assert.equal(tree.root.findAllByType('mark').length,2);assert(text(tree.toJSON()).includes('从资料库找到的人工备注'));assert.equal(JSON.stringify(value),retained,'Search presentation changed saved notes');
+act(()=>tree.root.findByType('img').props.onError());assert(button('重新读取图片'));await act(async()=>button('重新读取图片').props.onClick());assert.equal(tree.root.findAllByType('img').length,1);assert.equal(JSON.stringify(value),retained,'Preview retry must not rewrite original image metadata');
+act(()=>tree.unmount());assert(!dirty);console.log('PASS notes UI: cancel/failure retain draft, capture time, saved view, native play request, deletion, human-note search marks and explicit preview retry without source changes.');
