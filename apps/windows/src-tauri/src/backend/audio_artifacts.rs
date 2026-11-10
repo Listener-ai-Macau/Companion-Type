@@ -25,6 +25,8 @@ pub(crate) enum Purpose {
     AsrTemporary,
     TransferCursor,
     SessionReceipt,
+    NoteImage,
+    NotePreview,
 }
 impl Purpose {
     pub(super) fn accepts(self, path: &Path) -> bool {
@@ -38,6 +40,8 @@ impl Purpose {
             Self::LivePrefix => ext.eq_ignore_ascii_case("cop1"),
             Self::TransferCursor => ext.eq_ignore_ascii_case("part"),
             Self::SessionReceipt => ext.eq_ignore_ascii_case("json"),
+            Self::NoteImage => ["jpg","png","webp"].iter().any(|allowed| ext.eq_ignore_ascii_case(allowed)),
+            Self::NotePreview => ext.eq_ignore_ascii_case("jpg"),
             _ => ext.eq_ignore_ascii_case("wav"),
         }
     }
@@ -495,6 +499,18 @@ impl Drop for WriteLease {
             eprintln!("audio artifact checkpoint pending; original and ownership intent preserved");
         }
     }
+}
+/// Finish the exact product-owned raster left after an interrupted note save.
+/// The current user-selected image must reproduce its bytes; no unknown file,
+/// different owner, deletion-in-progress or conflicting saved identity is adopted.
+pub(crate) fn seal_note_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
+    if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview)||!purpose.accepts(path){return Err(fail());}
+    let root=managed_root(path).ok_or_else(fail)?;let leaf=path.file_name().and_then(|v|v.to_str()).filter(|v|component(v)).ok_or_else(fail)?;
+    let _lease=lease(&root,leaf)?;let _lock=lock(&root)?;let mut data=load(&root)?;let owner=reference_key(source)?;
+    let expected=Identity{bytes,sha256:sha.into()};let item=data.files.iter_mut().find(|i|i.file==leaf).ok_or_else(fail)?;
+    if item.purpose!=purpose||!item.sources.contains(&owner)||matches!(item.phase,Phase::Deleting|Phase::Gone)
+        ||item.identity.as_ref().is_some_and(|v|v!=&expected)||fingerprint(path)?.as_ref()!=Some(&expected){return Err(fail());}
+    item.identity=Some(expected);item.phase=Phase::Sealed;save(&root,&data)
 }
 pub(crate) fn generated<T>(
     source: &Path,

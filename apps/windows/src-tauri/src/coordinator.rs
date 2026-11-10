@@ -453,6 +453,9 @@ impl CompanionCoordinator {
     pub fn preview_meeting_transcription(&self,id:&str,job_id:&str)->Result<crate::backend::transcription::TranscriptionPreview,String> {self.backend.preview_meeting_transcription(id,job_id)}
     pub fn preview_meeting_gap(&self,id:&str,job_id:&str,range:crate::backend::transcription::TranscriptionRange)->Result<crate::backend::transcription::TranscriptionPreview,String> {self.backend.preview_meeting_gap(id,job_id,range)}
 
+    pub fn save_meeting_image_note(&self,request:crate::backend::meeting_note_images::Request)->Result<CompanionV1Snapshot,String>{
+        if self.device_operation.load(Ordering::Acquire)==11{return Err("软件正在更新，请稍后保存图片。".into());}self.backend.save_meeting_image_note(request)
+    }
     pub fn save_meeting_note(&self, request: crate::backend::meeting_notes::Request) -> Result<CompanionV1Snapshot, String> {
         if self.device_operation.load(Ordering::Acquire) == 11 { return Err("软件正在更新，请稍后保存备注。".into()); }
         self.backend.save_meeting_note(request)

@@ -196,7 +196,7 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'pptx' | 'png' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'pptx' | 'png' | 'bundle' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
   contentSections?: import('./ContentExportPanel').ContentSelection;
   expectedContentHash?:string;
@@ -283,6 +283,8 @@ export interface CompanionDashboardProps {
   onPreviewRetranscription?: (sessionId:string) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onPreviewGap?: (sessionId:string,range:{startMs:number;endMs:number}) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
+  onAddImageNote?:(request:import('@companion-type/core').CompanionMeetingImageNoteRequest)=>Promise<CompanionV1Snapshot|null>;
+  onPreviewNoteImage?:(sessionId:string,noteId:string)=>Promise<string>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
@@ -448,6 +450,8 @@ export function CompanionDashboard({
   onPreviewGap,
   onSaveBookmark,
   onSaveNote,
+  onAddImageNote,
+  onPreviewNoteImage,
   onSaveLibraryOrganization,
   onExportLibrary,
   onBackupLibrary,
@@ -1860,6 +1864,9 @@ export function CompanionDashboard({
       </details> : null}
         </>} />);
 
+  const readBookmarkPosition=()=>!selectedSession?null:selectedSession.source==='hostMeeting'&&meetingAudioControl.current?Math.round(meetingAudioControl.current.position()*1000)
+    :segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000)
+    :audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)?Math.round(audioElement.current.currentTime*1000):null;
   return (
     <main className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
       {previewWaiting?<div className="ct-status-banner" role="status">
@@ -2634,7 +2641,8 @@ export function CompanionDashboard({
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
           <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
-            persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
+            persistenceReady={!storageBlocked} onSave={onSaveNote} onAddImage={onAddImageNote} onPreviewImage={onPreviewNoteImage} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
+            onSaveAnchor={onSaveBookmark} playbackPosition={readBookmarkPosition}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
               && selectedSession.durationMs>=0 && selectedSession.durationMs<=120000 ? ()=>runOrganizationControl({
                 action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
@@ -2664,9 +2672,7 @@ export function CompanionDashboard({
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}
-            playbackPosition={()=>selectedSession.source==='hostMeeting' && meetingAudioControl.current ? Math.round(meetingAudioControl.current.position()*1000)
-              : segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000):audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
-              ? Math.round(audioElement.current.currentTime*1000):null}
+            playbackPosition={readBookmarkPosition}
             onSeek={seekBookmark} onShowOriginal={()=>setRecordingToolsOpen(true)}
             onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
           {renderExportFeedback('bookmarks')}

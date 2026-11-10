@@ -1,0 +1,10 @@
+from pathlib import Path
+import subprocess,os,time,json
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');A=R/'companion-core-android20261109';P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110');C=Path(__file__).parent;J=Path('C:/Program Files/Eclipse Adoptium/jdk-25.0.0.36-hotspot/bin');sdk=Path('E:/CodexData/Companion/.build-cache/android-sdk/platforms/android-35/android.jar');jar=Path('E:/CodexData/Companion/.build-cache/android054-materials/json-20240303.jar');tests=A/'apps/android/app/src/test/java/com/denzic/companion/app'
+case=P/('notes-check-'+str(time.time_ns()));case.mkdir();cp=os.pathsep.join(map(str,[P/'app-classes',P/'backend-classes',jar,P/'base-classes.jar']))
+jobs=[('app-compile',[J/'javac.exe','-J-Xmx256m','-J-XX:ActiveProcessorCount=1','--release','8','-encoding','UTF-8','-cp',os.pathsep.join(map(str,[sdk,P/'backend-classes',P/'base-classes.jar'])),'-d',P/'app-classes',*list((A/'apps/android/app/src/main/java').rglob('*.java'))]),('test-compile',[J/'javac.exe','-J-Xmx128m','--release','8','-encoding','UTF-8','-cp',cp,'-d',P/'app-classes',tests/'ImportedAudioIntegrationTest.java',tests/'RecordingNotesIntegrationTest.java']),('notes-integration',[J/'java.exe','-Xmx128m','-XX:ActiveProcessorCount=1','-cp',cp,'com.denzic.companion.app.RecordingNotesIntegrationTest',case/'fixture']),('mobile-typecheck',['node',A/'node_modules/typescript/bin/tsc','--project',A/'apps/mobile/tsconfig.json','--noEmit'])]
+results=[]
+for name,args in jobs:
+ q=subprocess.run(list(map(str,args)),cwd=A,capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW,timeout=90);(case/(name+'.log')).write_bytes(q.stdout+q.stderr);results.append({'name':name,'exit':q.returncode});print(name,q.returncode,(q.stdout+q.stderr).decode(errors='replace')[-2800:])
+ if q.returncode:break
+record={'at':__import__('datetime').datetime.now().astimezone().isoformat(),'results':results,'nativePhoneQualified':False,'case':str(case)};(C/'notes-check.json').write_text(json.dumps(record,indent=2)+'\n');assert len(results)==len(jobs) and all(x['exit']==0 for x in results)

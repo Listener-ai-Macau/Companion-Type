@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
-PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions'}
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
 spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery','actions'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82'}
+  assert PHASE in {'audio','whole','delivery','actions','context'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
@@ -46,7 +46,7 @@ try:
  (verification/'windows-verification.json').write_text(json.dumps(v,ensure_ascii=False),encoding='utf8')
  env['COMPANION_ACCEPTANCE_VERIFICATION']=str(verification/'windows-verification.json')
  record.update(exactMsiExeSha256=v['embeddedExeSha256'],exactMsiDllSha256=v['dllSha256'],frozenNativeBytesMatchedApprovedMsi=True);save()
- if PHASE in {'audio','whole','delivery'}:
+ if PHASE in {'audio','whole','delivery','context'}:
   public=private/'public-input';public.mkdir();audio=public/'public-audio-S_R004S03C01.wav'
   with audio.open('wb') as dest,(O/'download-public-audio.log').open('wb') as log:
    download=subprocess.run(['gh','api','repos/Listener-ai-Macau/Companion-Type/releases/assets/726625128','-H','Accept: application/octet-stream'],env=env,stdout=dest,stderr=log,cwd=S)
@@ -75,7 +75,19 @@ try:
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- if PHASE=='actions':
+ if PHASE=='context':
+  run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
+  tool=S/'tools/qa/core_acceptance20261109'
+  code=run('native-image-context-ui',[sys.executable,tool/'windows_meeting.py','--stage','context','--audio',audio],required=False)
+  cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
+  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save();assert code==0
+  assert result['ui']['state']=='REAL_TAURI_PUBLIC_AUDIO_IMAGE_NOTE_CANCEL_REJECT_EDIT_REOPEN_TIME_AND_SELECTED_ZIP_PASSED'
+  backend=run('native-image-context-backup-restore-cleanup',[sys.executable,tool/'windows_context_backend.py','--case',paths[0]],required=False)
+  detail=json.loads((paths[0]/'context-backend/result.json').read_text(encoding='utf8'));record.update(contextBackendExitCode=backend,contextBackendState=detail['state']);save();assert backend==0
+  assert detail['state']=='ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED'
+  assert sha(audio)==record['publicAudio']['sha256']
+  record.update(state='WINDOWS083_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED',modelsRun=False,sourceAudioUnchanged=sha(audio)==record['publicAudio']['sha256'],wholeCoreCandidateQualified=False)
+ elif PHASE=='actions':
   fixture=S/spec['actionsFixture'];assert sha(fixture)==spec['actionsFixtureSha256']
   source_row=json.loads(fixture.read_text(encoding='utf8'))
   code=run('native-saved-action-followup',[sys.executable,S/'tools/qa/core_acceptance20261109/windows_meeting.py','--stage','actions','--reviewed-ai',fixture],required=False)

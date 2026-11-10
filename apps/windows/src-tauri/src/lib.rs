@@ -326,6 +326,8 @@ pub fn run() {
             commands::preview_companion_meeting_transcription,
             commands::preview_companion_meeting_gap,
             commands::save_companion_meeting_note,
+            commands::add_companion_image_note,
+            commands::preview_companion_note_image,
             commands::save_companion_bookmark,
             commands::import_companion_audio,
             commands::cancel_companion_audio_import,
@@ -549,6 +551,8 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-minutes-request" => Some((i,2)),
         "--meeting-bookmark-request" => Some((i,3)),
         "--meeting-note-request" => Some((i,4)),
+        "--meeting-image-note-request" => Some((i,17)),
+        "--meeting-note-image-preview" => Some((i,18)),
         "--meeting-speakers-request" => Some((i,5)),
         "--device-connect-request" => Some((i,6)),
         "--library-organize-request" => Some((i,7)),
@@ -686,6 +690,12 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
             let data=backend::content_export::materialize(&session.title,export)?;
             backend::export::write_atomic(Path::new(destination), &data)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
+        } else if operation==17 {
+            let request:backend::meeting_note_images::Request=serde_json::from_reader(file).map_err(|_|"图片备注请求格式不正确。")?;let id=request.session_id.clone();let snapshot=coordinator.save_meeting_image_note(request)?;let session=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("图片备注保存结果缺失。")?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({"result":"SAVED_LOCAL_IMAGE_NOTE","session":session,"persistenceStatus":snapshot.host.persistence.status,"nativePickerAcceptance":"NOT_RUN"})).map_err(|_|"图片备注结果无法保存。")?)?;println!("meeting_workspace_result=SAVED_LOCAL_IMAGE_NOTE");
+        } else if operation==18 {
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)] struct Preview {session_id:String,note_id:String}
+            let request:Preview=serde_json::from_reader(file).map_err(|_|"图片预览请求无效。")?;let snapshot=coordinator.snapshot()?;let session=snapshot.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("会议不存在。")?;let data=backend::meeting_note_images::preview(session,&request.note_id)?;backend::export::write_atomic(Path::new(destination),&serde_json::to_vec(&serde_json::json!({"dataUri":data})).map_err(|_|"预览结果无法保存。")?)?;println!("meeting_workspace_result=READ_LOCAL_IMAGE_PREVIEW");
         } else if operation == 4 {
             let request: backend::meeting_notes::Request = serde_json::from_reader(file).map_err(|_| "会议备注请求格式不正确。")?;
             let id = request.session_id.clone();
@@ -796,6 +806,7 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
                 Some("docx") => backend::export::MeetingExportFormat::Docx,
                 Some("pptx") => backend::export::MeetingExportFormat::Pptx,
                 Some("png") => backend::export::MeetingExportFormat::Png,
+                Some("bundle") => backend::export::MeetingExportFormat::Bundle,
                 Some("mindmap") => backend::export::MeetingExportFormat::Mindmap,
                 Some("todo") => backend::export::MeetingExportFormat::Todo,
                 Some("ics") => backend::export::MeetingExportFormat::Ics,

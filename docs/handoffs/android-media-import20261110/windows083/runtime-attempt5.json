@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-10T14:28:48+08:00",
+  "state": "MATCHED_WINDOWS083_CONTEXT_RUNTIME_STARTED",
+  "testSourceCommit": "e4ee96e3a4f29bcdee10d7b5efe5625029a59afd",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "buildRun": 42762906819,
+  "nativeRecompiled": false,
+  "ownerForegroundUsed": false,
+  "runtimeQualified": false,
+  "run": 42768765829,
+  "result": "Actual UI/packaged preview/backup/restore/restored preview passed; restored notes/bookmark/original and preview hashes exact. Helper assumed default organization metadata serialized; product intentionally omits empty Metadata via serde and defaults revision0. Correct reader; trash/purge not yet attempted. No product rebuild.",
+  "uiScopePassed": true,
+  "wholeRuntimePassed": false
+}

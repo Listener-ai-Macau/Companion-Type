@@ -208,6 +208,12 @@ export async function saveCompanionBookmark(request:CompanionBookmarkRequest):Pr
   return invoke('save_companion_bookmark',{request});
 }
 
+export async function addCompanionImageNote(request:import('@companion-type/core').CompanionMeetingImageNoteRequest):Promise<CompanionV1Snapshot|null>{
+  if(!isTauriRuntime())throw Error('请在桌面版添加本机图片。');return invoke('add_companion_image_note',{request});
+}
+export async function previewCompanionNoteImage(sessionId:string,noteId:string):Promise<string>{
+  if(!isTauriRuntime())throw Error('请在桌面版查看本机图片。');return invoke('preview_companion_note_image',{sessionId,noteId});
+}
 export async function saveCompanionMeetingNote(request:CompanionMeetingNoteRequest):Promise<CompanionV1Snapshot> {
   if (!isTauriRuntime()) throw new Error('请在 Companion Type 桌面版保存备注。');
   return invoke('save_companion_meeting_note',{request});

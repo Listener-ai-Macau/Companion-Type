@@ -67,7 +67,7 @@ fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,l
 }
 
 pub fn prepare(session:&CompanionV1HostSession,mode:&str,format:Format,choice:&Selection)->Result<PreparedMeetingExport,String>{
-    if !matches!(format,Format::Markdown|Format::Txt|Format::Docx|Format::Pdf|Format::Mindmap|Format::Xlsx|Format::Srt|Format::Pptx|Format::Png){
+    if !matches!(format,Format::Markdown|Format::Txt|Format::Docx|Format::Pdf|Format::Mindmap|Format::Xlsx|Format::Srt|Format::Pptx|Format::Png|Format::Bundle){
         return Err("此格式不支持内容选择，请使用对应的完整数据或日历入口。".into());
     }
     if format==Format::Srt {
@@ -77,6 +77,7 @@ pub fn prepare(session:&CompanionV1HostSession,mode:&str,format:Format,choice:&S
     let rich_document=matches!(format,Format::Docx|Format::Pdf|Format::Mindmap|Format::Pptx|Format::Png);
     let content=selected_source(session,mode,choice,rich_document)?;
     let bytes=match format {
+        Format::Bundle=>super::meeting_note_images::bundle(session,&content,&choice.note_ids)?,
         Format::Docx=>super::meeting_document_export::word(&session.title,&content)?,
         Format::Mindmap=>super::meeting_document_export::mindmap(&session.title,&content),
         Format::Xlsx=>super::spreadsheet_export::render(&session.title,&content)?,
@@ -106,7 +107,7 @@ mod tests {
     fn sample()->CompanionV1HostSession {
         let mut rows:Vec<CompanionV1HostSession>=serde_json::from_str(include_str!("../calendar_test_fixtures/p738-sessions.json")).unwrap();
         let mut row=rows.remove(0);row.transcript_text="李明：11月8日前核对20%差额，尚未确认采购。".into();row.transcript_final=true;
-        row.meeting_notes=vec![super::super::meeting_notes::Note{id:"11111111-1111-4111-8111-111111111111".into(),text:"AI 材料（请核对）｜英语译文\nThe purchase has not been approved.\n原文依据：尚未确认采购。".into(),bookmark_id:None,created_at:"2026-11-05T00:00:00Z".into(),updated_at:"2026-11-05T00:00:00Z".into()},super::super::meeting_notes::Note{id:"22222222-2222-4222-8222-222222222222".into(),text:"UNSELECTED_PRIVATE_MATERIAL".into(),bookmark_id:None,created_at:"2026-11-05T00:00:00Z".into(),updated_at:"2026-11-05T00:00:00Z".into()}];row
+        row.meeting_notes=vec![super::super::meeting_notes::Note{id:"11111111-1111-4111-8111-111111111111".into(),text:"AI 材料（请核对）｜英语译文\nThe purchase has not been approved.\n原文依据：尚未确认采购。".into(),bookmark_id:None,image:None,created_at:"2026-11-05T00:00:00Z".into(),updated_at:"2026-11-05T00:00:00Z".into()},super::super::meeting_notes::Note{id:"22222222-2222-4222-8222-222222222222".into(),text:"UNSELECTED_PRIVATE_MATERIAL".into(),bookmark_id:None,image:None,created_at:"2026-11-05T00:00:00Z".into(),updated_at:"2026-11-05T00:00:00Z".into()}];row
     }
     #[test]
     fn content051_selection_is_identical_across_text_and_document_routes_without_unselected_data(){

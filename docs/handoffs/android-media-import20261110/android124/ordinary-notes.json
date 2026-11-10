@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-10T04:46:45.520Z",
+  "version": "0.1.124",
+  "state": "PASSED",
+  "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+  "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+  "textSavedEdited": true,
+  "imageOriginalSha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855",
+  "invalidRasterRejectedWithoutRow": true,
+  "cancelRetainsDraft": true,
+  "timePlayback": 12000,
+  "exactNoteDeletion": true,
+  "aiOrModelCalled": false,
+  "notes": {
+    "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+    "revision": 5,
+    "entries": [
+      {
+        "id": "2ceb4b61-ee2d-4cb6-9057-329fb9abc2d5",
+        "createdAt": 1794285900681,
+        "text": "公开验收已核对：周二复核12000元预算，负责人 Alex。",
+        "atMs": 12000,
+        "updatedAt": 1794286002203
+      },
+      {
+        "id": "ac4ff1f0-7a1f-479c-a5d4-e95a9c73f804",
+        "text": "公开白板资料：这是人工补充，不是转写事实。",
+        "atMs": 25000,
+        "image": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.context-ac4ff1f0-7a1f-479c-a5d4-e95a9c73f804.png",
+          "name": "Companion-Public-Whiteboard124.png",
+          "bytes": 35518,
+          "sha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855"
+        },
+        "createdAt": 1794286001595,
+        "updatedAt": 1794286001595
+      }
+    ],
+    "schema": 1,
+    "libraryToken": "2a8565481ed6bd0be27cde6ef56b8d11a827b64fe533bc3d5b51e01a7bf6e885"
+  }
+}

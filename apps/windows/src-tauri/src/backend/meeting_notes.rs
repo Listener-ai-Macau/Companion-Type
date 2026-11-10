@@ -9,6 +9,8 @@ pub struct Note {
     pub text: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bookmark_id: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub image: Option<super::meeting_note_images::Attachment>,
     pub created_at: String,
     pub updated_at: String,
 }
@@ -69,7 +71,7 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request, now
         Action::Add => {
             if next.len() >= 128 { return Err("这场会议已有128条备注，请整理后再添加。".into()); }
             next.push(Note { id: request.note_id.clone(), text: text.unwrap(), bookmark_id: request.bookmark_id.clone(),
-                created_at: now.into(), updated_at: now.into() });
+                image: None, created_at: now.into(), updated_at: now.into() });
         }
         Action::Edit => {
             let note = next.iter_mut().find(|n| n.id == request.note_id).unwrap();
@@ -124,6 +126,7 @@ pub(crate) fn render(session: &CompanionV1HostSession) -> String {
         // Quote all lines, including Markdown-looking user text; never create
         // an Action Items heading or task in the generated document.
         for line in note.text.lines() { text.push_str("> "); text.push_str(line); text.push('\n'); }
+        if let Some(image)=&note.image {text.push_str(&format!("> 图片：{}（原图见图文ZIP；文字格式不嵌入原图）\n",image.name.replace(['\r','\n']," ")));}
     }
     text
 }

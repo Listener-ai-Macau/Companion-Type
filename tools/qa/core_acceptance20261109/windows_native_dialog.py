@@ -49,8 +49,8 @@ def main():
  if action=='open':
   allowed=Path(os.environ['COMPANION_ACCEPTANCE_AUDIO_INPUT']).resolve()
   assert target==allowed or target.parent in {root/'received-files',root/'exports'}
-  assert sha(target)==request['sha256'] and target.suffix in {'.wav','.mp3'}
- elif action=='save':assert target.parent==root/'exports' and target.suffix in {'.wav','.mp3'} and not target.exists()
+  assert sha(target)==request['sha256'] and target.suffix in {'.wav','.mp3','.png','.jpg','.jpeg','.webp'}
+ elif action=='save':assert target.parent==root/'exports' and target.suffix in {'.wav','.mp3','.zip','.docx'} and not target.exists()
  U.GetClassNameW.argtypes=[w.HWND,w.LPWSTR,ctypes.c_int];U.GetClassNameW.restype=ctypes.c_int
  U.IsWindowVisible.argtypes=[w.HWND];U.IsWindowVisible.restype=w.BOOL
  def class_name(hwnd):
