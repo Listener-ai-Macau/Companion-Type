@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T20:39:45+08:00",
+  "state": "UNIFIED090_MERGE_SOURCE_TYPECHECK_AND_EXACT_LICENSE_INVENTORY_READY",
+  "documentParent": "5e2a796bad0b4055382a9a1bc3810a79f12fd2d6",
+  "installedInputParent": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+  "version": "0.1.90",
+  "nativeBuildRequiredBecause": "Merge two already delivered feature sets into one newer installer;088 cannot replace installed089. Neither source lineage may be dropped.",
+  "documentReaderIdenticalToQualified129": true,
+  "desktopInputSourceFilesUnchangedFromInstalled089": 17,
+  "windowsTypecheckPassed": true,
+  "components": 403,
+  "exactReferencedLicenseTexts": 286,
+  "correspondingSourceArchives": 17,
+  "localHeavyNativeBuild": false,
+  "modelsOrBoardAccess": false,
+  "remaining": "Remote normal optimized build, same packaged document runtime, preserved offline input entry, silent non-downgrade upgrade and combined archive."
+}

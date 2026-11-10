@@ -1,0 +1,65 @@
+{
+  "repository": "Listener-ai-Macau/Listener-Type",
+  "commit": "5a51c8d75c8f1a9720b276dde927039b309c4f62",
+  "files": [
+    {
+      "path": "insertion.rs",
+      "sha256": "a7701371fd5c53073fe79b1c8fb48773c29558e4ce88c00e753da82f1c3298ad",
+      "upstreamPath": "src-tauri/src/insertion.rs",
+      "companionSha256": "f451c6e7860a8e17984a7c7668e1ca97cc66cd9dc837eac39820099704aa7ef3"
+    },
+    {
+      "path": "insertion/clipboard_handoff.rs",
+      "sha256": "62838d07d16f2a805cc0c68b55c7a32eac8492d17fb546f32327d1c4bb109055",
+      "upstreamPath": "src-tauri/src/insertion/clipboard_handoff.rs",
+      "companionSha256": "62838d07d16f2a805cc0c68b55c7a32eac8492d17fb546f32327d1c4bb109055"
+    },
+    {
+      "path": "insertion/clipboard_handoff/native_supplement_test.rs",
+      "sha256": "c8dd68094ed17d0cc6c0611a1c298e51decf642e0f97e8e30ff67a78f6b978ef",
+      "upstreamPath": "src-tauri/src/insertion/clipboard_handoff/native_supplement_test.rs",
+      "companionSha256": "c8dd68094ed17d0cc6c0611a1c298e51decf642e0f97e8e30ff67a78f6b978ef"
+    },
+    {
+      "path": "insertion/clipboard_handoff/native_recording_retention_test.rs",
+      "sha256": "6fb7f0d6688842ae9d05e5d0c3c5501fd5f80ae0a83e4cc397963c5d05cbf6a3",
+      "upstreamPath": "src-tauri/src/insertion/clipboard_handoff/native_recording_retention_test.rs",
+      "companionSha256": "6fb7f0d6688842ae9d05e5d0c3c5501fd5f80ae0a83e4cc397963c5d05cbf6a3"
+    },
+    {
+      "path": "selection.rs",
+      "sha256": "0ecf3970199faba22ee57af108b894d82cda27bb9c0d3c3f3bad8c478cf829af",
+      "upstreamPath": "src-tauri/src/selection.rs",
+      "companionSha256": "0ecf3970199faba22ee57af108b894d82cda27bb9c0d3c3f3bad8c478cf829af"
+    },
+    {
+      "path": "selection/windows_uia.rs",
+      "sha256": "803831327105f22d1b16d290d40698025eeb4974f06815d20ecd4fdf116c3ef3",
+      "upstreamPath": "src-tauri/src/selection/windows_uia.rs",
+      "companionSha256": "803831327105f22d1b16d290d40698025eeb4974f06815d20ecd4fdf116c3ef3"
+    },
+    {
+      "path": "unicode_keystroke.rs",
+      "sha256": "ce006acfa36cc03446c33fbf129a9119dae88a53ee4851279b9d08853da96530",
+      "upstreamPath": "src-tauri/src/unicode_keystroke.rs",
+      "companionSha256": "c1fa21ad4748dd1d1e6674254c5dedb1874bbfc27f11babb3ff955d593c7cb77"
+    },
+    {
+      "path": "transcript_boundary.rs",
+      "sha256": "04bbe5768b9cfcf5b3fafe1f53f5701f340c8cb4bf9c720faa89d81af71ea575",
+      "upstreamPath": "src-tauri/src/transcript_boundary.rs",
+      "companionSha256": "04bbe5768b9cfcf5b3fafe1f53f5701f340c8cb4bf9c720faa89d81af71ea575"
+    }
+  ],
+  "changes": [
+    "Only export clipboard_handoff::ticket within this crate for a captured delivery target.",
+    "Extract Windows-only unicode native input; omit unused Tauri/macOS/Linux wrapper helpers, preserving used IME-safe function."
+  ],
+  "scope": "Reuse text insertion/selection and IME adapter; no Listener recording, wake, device, settings, model or coordinator copied.",
+  "adapterFiles": [
+    "src/lib.rs",
+    "src/types.rs",
+    "Cargo.toml"
+  ],
+  "verification": "Native application type-check and same-token capture tests; pinned input worker tests. No physical recording/editor chain is claimed from these checks."
+}

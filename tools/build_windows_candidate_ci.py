@@ -70,7 +70,7 @@ try:
    artifacts.append(Path(item['executable']))
  assert len(artifacts)==1,artifacts
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
- record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['meeting_note','document_context','privacy','session_store','audio_artifacts']};save()
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input']};save()
  for scope in record['affectedTestBinary']['filters']:
   run(scope+'-context-regression',[str(test),scope,'--test-threads=1'],N)
  assert sha(test)==record['affectedTestBinary']['sha256']

@@ -21,7 +21,7 @@ assert.match(html, /浏览器演示/);
 assert.match(html, /不代表真实设备/);
 assert.match(html, /第一次使用/);
 assert.match(html, /浏览器演示不能完成这一步/);
-assert.match(button(html, '我已看到记录'), /disabled/);
+assert.match(button(html, '我已找到并回听'), /disabled/);
 assert.match(button(html, '听一声回应'), /disabled/);
 assert.doesNotMatch(html, /已装配|未装配|全部通过/);
 assert.doesNotMatch(button(html, '连接 Companion'), /disabled/);
@@ -59,6 +59,20 @@ assert.match(button(html, '听一声回应'), /disabled/);
 html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={real} />);
 assert.doesNotMatch(button(html, '听一声回应'), /disabled/);
 
+const recorder = structuredClone(real);
+recorder.device.boardId = 0x57424155;
+recorder.device.firmwareVersion = 66788;
+html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
+assert.match(html, /短按实体键一次并松开开始/);
+assert.match(html, /敲两下机身标记重点/);
+assert.doesNotMatch(html, /长按实体键约 1 秒/);
+recorder.device.firmwareVersion = 66786;
+html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
+assert.match(html, /长按实体键约 1 秒开始/);
+recorder.device.firmwareVersion = null;
+html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
+assert.match(html, /先连接设备，再按本页显示的实体键用法/);
+
 const settings = { asrProvider: 'volcengine', volcAppKeySet: true, volcAccessKeySet: false } as any;
 html = renderToStaticMarkup(<CompanionSetup {...props} settings={settings} />);
 assert.match(html, /准备转写方式后/);
@@ -89,6 +103,8 @@ const storage = new Map<string, string>();
 };
 const guided = applyCompanionV1ControlFixture(real, { action: 'meetingLoadDemo' });
 guided.device.deviceId = 'AA:BB:CC:DD:EE:FF';
+guided.speaker.supported = false;
+guided.speaker.online = false;
 let renderer: any;
 act(() => { renderer = create(<CompanionSetup {...props} snapshot={guided} />); });
 const nodeText = (node: any): string => typeof node === 'string' ? node : (node.children ?? []).map(nodeText).join('');
@@ -96,10 +112,12 @@ const clickGuide = (label: string) => act(() => {
   const node = renderer.root.findAllByType('button').find((item: any) => nodeText(item).includes(label));
   assert.ok(node, `missing guide button ${label}`); node.props.onClick();
 });
-clickGuide('我已听到'); clickGuide('我已完成试录'); clickGuide('我已看到记录');
+clickGuide('我已完成试录'); clickGuide('我已找到并回听');
 assert.equal(renderer.root.findAllByProps({ 'aria-label': '第一次使用向导' })[0].findAllByType('ol').length, 0,
   'completed guide collapses for the current device');
 assert.match([...storage.values()][0], /"sawRecording":true/);
+assert.equal(JSON.parse([...storage.values()][0]).heardReply,false,
+  'recording onboarding completes without pretending an unavailable speaker was heard');
 act(() => renderer.unmount());
 act(() => { renderer = create(<CompanionSetup {...props} snapshot={guided} />); });
 assert.equal(renderer.root.findAllByProps({ 'aria-label': '第一次使用向导' })[0].findAllByType('ol').length, 0,

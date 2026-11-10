@@ -55481,14 +55481,14 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": true,
+          "active": false,
           "reservedFor": "Companion128 public recording-library acceptance",
           "serial": "d6bd213d",
           "requestedAt": "2026-11-10T19:21:30+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Own app on owned non-main display; public QA library only. Document originals/local extraction/reading/save, explicit public AI source selection and source return, backup/lifecycle. No BLE, microphone, ASR/training or Owner private text.",
-          "releasedAt": "2026-11-10T17:10:33+08:00",
-          "releaseReason": "Android127 first-screen, search/filter/selection/recycle and picker cancellation verified; scoped AI public-library use completed, original library restored and own session closed."
+          "releasedAt": "2026-11-10T20:19:24+08:00",
+          "releaseReason": "Android129 complete public document originals/local extraction/reading, explicit AI source choice without online generation, save/backup/restore/scoped purge and ordinary simulated customer workflows completed; original library restored and own session closed."
         },
         "previousSourceCommit": "7e38e89f6d9808348dff0e2e034341640b5dbdd2",
         "multiPhoneFixEvidence": "docs/releases/20261029-multiphone-endpoint-selection-source-fix.json",
@@ -268401,8 +268401,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T20:01:58+08:00",
-            "status": "ANDROID129_NATIVE_FORMATS_PASSED_WINDOWS088_BUILD_WRAPPER_REPAIR",
+            "at": "2026-11-10T20:39:45+08:00",
+            "status": "UNIFIED_WINDOWS090_MERGE_SOURCE_READY_REMOTE_BUILD_NEXT",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268419,7 +268419,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "同一文档批次：安卓129普通原件另存和整份备份已生成，继续精确回读、恢复及回收；Windows088保留超时失败证据，修复重复编译流程后出包并跑匹配原生运行验收。",
+            "next": "统一090已合并文档与已实装089输入源，Windows类型/合并后的精确许可通过；继续远端一次编译原生程序与受影响验收二进制，再复用普通文档/输入入口运行验收。保留已验088/129、089实装及失败证据，不降级、不接板或模型。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268443,7 +268443,7 @@
               "modelsChangedOrRun": false,
               "ownerPrivateDataUsed": false
             },
-            "windowsBuildRun": 42805669767,
+            "windowsBuildRun": 42812317637,
             "android128BuildRun": 42805693619,
             "ownedPhoneDisplay": 19,
             "android129Source": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
@@ -268478,6 +268478,106 @@
               "cause": "Five separate Cargo test invocations recompiled the optimized Tauri lib test for about seven minutes each; CI cancelled at 45 minutes.",
               "fix": "Build exactly one normal optimized library test executable through Cargo JSON artifacts, verify path/hash, then run each unchanged affected filter directly before MSI packaging.",
               "localHeavyBuild": false
+            },
+            "customerPresale129": {
+              "at": "2026-11-10T20:12:24+08:00",
+              "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-presale.md",
+              "sha256": "59204918b943bca09f0a4f3fd370b65ed9e142b671e51928ea8fce3e34119642",
+              "allFeedbackRead": true,
+              "type": "AI simulated FIRST_USE, visible prior public human reading notes as auxiliary condition",
+              "actualPurpose": "辨清会议原话与预算补充，保存会后准备便签，再按自己的备注用词找回",
+              "outcome": "完成公开样例的阅读、人工备注和搜索回找，对资料与会议放在一起有兴趣；未给购买决定，不代表真人/售卖验收",
+              "issues": [
+                {
+                  "kind": "nonblocking usability wish",
+                  "quote": "阅读表格是这次最不舒服的部分。它按A1、B1、A2、B2这样的坐标输出，列头和下一行要在脑中对齐。",
+                  "decision": "保留原件和坐标文本准确性；结构化表格阅读愿望并入原文档事项下一相关实质批次，不为单条细节重新构建129。"
+                },
+                {
+                  "kind": "nonblocking information hierarchy wish",
+                  "quote": "备注页的东西越来越多：旧便签、图片、材料列表、下方AI区都在一页里。",
+                  "decision": "并入原详情阅读呈现事项，随下一相关批次集中处理；本轮普通备注搜索已完成完整目的。"
+                },
+                {
+                  "kind": "tool observation, unproven product failure",
+                  "quote": "另有一次我想展开纪要中的“查看其余2项”，使用当前文字定位的点击没有完成，工具等待后超时。",
+                  "decision": "129实际折叠按钮文案已含下一项文字；保留定位超时，不据此把未证实按钮故障当作产品回归。"
+                }
+              ],
+              "remaining": "价格/套餐/售后未确定；实物、声音、新转写、在线AI和长期资料规模未体验"
+            },
+            "customerAfteruse129": {
+              "at": "2026-11-10T20:17:44+08:00",
+              "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-afteruse.md",
+              "sha256": "985a119f821d6b24a366df039fd3dc50bcfd79a1ae4c92c3cc50155fd5a40059",
+              "allFeedbackRead": true,
+              "type": "AI hypothetical after-purchase FIRST_USE; not real order, ordinary public app UI",
+              "auxiliaryConditions": [
+                "Initial read included the entire Denzic role entry with general engineering references/principles, without opening linked engineering files",
+                "Visible public existing human reading notes and prior search term provided guidance"
+              ],
+              "actualPurpose": "将会议与Word/Excel/PPT补充对照，保存下次开会先问人工便签，离开后按自己的词找到并接续",
+              "outcome": "目的完成；认为材料集中、原话/人工来源和备注搜索回找有用；没有工程或售卖验收，也无真实购买",
+              "nonblockingWishes": [
+                "结构化表格对应列头和值，同时保留原始单元格信息",
+                "当前准备便签更易找到/置顶，手工便签可选择跳到引用材料",
+                "正式AI服务、费用和售后条件需真实交付说明"
+              ],
+              "decision": "与同批售前反馈合并到原文档/详情阅读事项；保留准确坐标文本和原件。未有日常阻断，不为细节另做129原生包。正式服务/价格继续保留未定，不能假称只剩模型。",
+              "toolObservations": "初始用button定位tab与纪要文字歧义属于已说明的输入定位问题；实际改用tab后可用，不列为产品故障。",
+              "remaining": "实物/声音/新转写/在线AI/图文新增/导出恢复/长期使用未体验"
+            },
+            "androidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\documents-android129-result.json",
+            "androidSource": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+            "androidDelivered": true,
+            "phoneSessionClosed": true,
+            "windowsSource": "1a71b66754771f6a82428482daed171363975b6f",
+            "windowsDelivered": false,
+            "windowsBuildPassed": true,
+            "windowsMsiSha256": "ed3c8494b3a37ea3685c3f611051264f870a10eab4a6ca1ba094628319dc16be",
+            "windowsPrivateInstallerAsset": 731350538,
+            "windowsInstallerReadbackIdentical": true,
+            "windowsNativeRuntimeRun": 42815596116,
+            "windowsRuntimeTestSource": "5e2a796bad0b4055382a9a1bc3810a79f12fd2d6",
+            "windowsRuntimeQualified": true,
+            "windows088RuntimeQualified": true,
+            "windows088NativeRuntimeRun": 42816055543,
+            "windowsCandidateNotInstalled": true,
+            "actualInstalledWindows": "0.1.89",
+            "actualInstalledWindowsSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+            "sharedInstalledReceiptConsumed": {
+              "at": "2026-11-10T20:34:58+08:00",
+              "state": "DOCUMENT_WINDOWS088_INSTALLATION_SAFELY_REFUSED_NEWER_DIFFERENT_LINEAGE089_ALREADY_INSTALLED",
+              "documentCandidateSource": "1a71b66754771f6a82428482daed171363975b6f",
+              "documentCandidateMsiSha256": "ed3c8494b3a37ea3685c3f611051264f870a10eab4a6ca1ba094628319dc16be",
+              "documentNativeRuntimePassed": 42816055543,
+              "actualInstalledVersion": "0.1.89",
+              "actualInstalledSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+              "actualInstalledReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input089\\installation.json",
+              "actualReceiptSha256": "b11b7fe94fbbd44ec48c67484fd8188f60fff575ab624b4c41cf006178405bc1",
+              "actualInstalledExeSha256": "b4f361fbc64a0c4493a9b04637e0e1260212a3f740916d629acc45911cb3dc8d",
+              "actualInstalledDllSha256": "5969a977b6c3651cabfa1faaea9f834f29f2d238bd3fe9bd8ff90c35665a78d4",
+              "msiexecInvokedFor088": false,
+              "ownerDataChanged": false,
+              "decision": "Merge the already installed recorder guidance/push-to-talk input lineage into the fully qualified document candidate; package a single newer090 without downgrading or dropping either feature set. Preserve088 document runtime and089 actual install/source evidence.",
+              "newModelsOrBoardOperationRequired": false
+            },
+            "windows090Integration": {
+              "at": "2026-11-10T20:39:45+08:00",
+              "state": "UNIFIED090_MERGE_SOURCE_TYPECHECK_AND_EXACT_LICENSE_INVENTORY_READY",
+              "documentParent": "5e2a796bad0b4055382a9a1bc3810a79f12fd2d6",
+              "installedInputParent": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+              "version": "0.1.90",
+              "nativeBuildRequiredBecause": "Merge two already delivered feature sets into one newer installer;088 cannot replace installed089. Neither source lineage may be dropped.",
+              "documentReaderIdenticalToQualified129": true,
+              "desktopInputSourceFilesUnchangedFromInstalled089": 17,
+              "windowsTypecheckPassed": true,
+              "components": 403,
+              "exactReferencedLicenseTexts": 286,
+              "correspondingSourceArchives": 17,
+              "localHeavyNativeBuild": false,
+              "modelsOrBoardAccess": false,
+              "remaining": "Remote normal optimized build, same packaged document runtime, preserved offline input entry, silent non-downgrade upgrade and combined archive."
             }
           }
         }

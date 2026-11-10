@@ -14,6 +14,7 @@ import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,pre
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import {CloseReview} from './CloseReview';
+import {DesktopDictation} from './DesktopDictation';
 import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
@@ -305,6 +306,8 @@ export function App() {
     <div className="ct-window-shell">
     {isTauriRuntime()?<CloseReview unsaved={hasUnsavedEdits} client={nativeCloseReview}/>:null}
     <CompanionDashboard
+      deviceExtra={isTauriRuntime()?<DesktopDictation connected={Boolean(snapshot?.device.connected&&snapshot.device.mode==='windowsNative')}
+        blocked={busyAction!==null||boardOnlineBusy||Boolean(snapshot?.device.recording||snapshot?.meeting.active)}/>:null}
       petPanel={isTauriRuntime()?<PetChat onUnsavedChange={setPetUnsavedEdits} connected={Boolean(snapshot?.device.connected)} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}

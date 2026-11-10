@@ -83,6 +83,7 @@ fn operation_name(kind: u8) -> &'static str {
         19 => "library protection/trash",
         20 => "pet finding",
         21 => "pet personality and memory",
+        22 => "desktop dictation",
         _ => "unknown device operation",
     }
 }
@@ -136,6 +137,7 @@ fn device_recording_blocks_control(
 impl CompanionCoordinator {
     pub(crate) fn is_shutting_down(&self)->bool {self.shutdown.requested()}
     pub(crate) fn request_shutdown(&self) {
+        crate::backend::desktop_dictation::request_stop();
         self.shutdown.request();
         crate::backend::recording_sync::request_process_shutdown();
         crate::backend::meeting_processing_job::cancel_for_shutdown();
@@ -399,6 +401,35 @@ impl CompanionCoordinator {
         let _lease=self.begin_board_recording_operation()?;
         crate::backend::sync_selected_recording_key(&self.management_device()?,key)?;
         self.backend.refresh_device_recording_library()
+    }
+
+    pub(crate) fn begin_desktop_dictation(&self)->Result<(String,crate::backend::recording_wire::transport::Peer,CompanionDeviceOperationLease),String>{
+        if !cfg!(windows){return Err("电脑输入当前支持Windows客户端。".into());}
+        let lease=self.begin_foreground_operation_kind(22)?;
+        let snapshot=self.backend.snapshot()?;
+        if snapshot_has_active_recording(&snapshot)||snapshot.device.recording{return Err("请先结束并保存当前录音，再切换按住说话。".into());}
+        let device=self.management_device()?;
+        let peer=crate::backend::known_segmented_peer(&device).ok_or("请先正常连接录音卡并读取目录。")?;
+        Ok((device,peer,lease))
+    }
+    pub(crate) fn complete_desktop_dictation(&self,device:&str,key:&crate::companion_v1::CompanionV1RecordingKey,
+        cancelled:&AtomicBool,stage:impl Fn(&str))->Result<(String,String),String>{
+        // The desktop-mode operation lease already owns these existing services.
+        crate::backend::sync_selected_recording_key(device,key)?;
+        let snapshot=self.backend.refresh_device_recording_library()?;
+        let row=snapshot.host.sessions.iter().find(|s|s.device_recording_key.as_ref()==Some(key))
+            .ok_or("本次原音已接收，请在录音库查看；尚未找到对应输入会话。")?;
+        let id=row.id.clone();
+        if cancelled.load(Ordering::Acquire){return Ok((id,String::new()));}
+        stage("transcribing");
+        let request=CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingTranscribeAudio,
+            session_id:Some(id.clone()),minutes_template:None,recording_source:None,context_note_revision:None,
+            ble_name:None,prompt_id:Some(format!("__meeting_job__desktop-{}",uuid::Uuid::new_v4())),title:None,transcript_text:None,meeting_mode:None,audio_path:None,
+            audio_bytes:None,device_id:None,duration_ms:None};
+        let snapshot=self.backend.apply_control(request)?;
+        let result=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("原文结果保存在录音库，请重新打开查看。")?;
+        if !result.transcript_final||result.transcript_text.trim().is_empty(){return Err("本次没有得到可交付的完整文字。".into());}
+        Ok((id,result.transcript_text.clone()))
     }
 
     pub fn discard_oldest_recording<F>(&self, seconds: u16, confirm: F)

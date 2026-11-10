@@ -9,6 +9,7 @@ from datetime import datetime,timezone,timedelta
 from ctypes import wintypes as w
 import argparse,ctypes,hashlib,json,os,socket,subprocess,sys,time,uuid,msvcrt,shutil
 import psutil
+from candidate_contract import grouped_meeting_candidate
 
 S=Path(__file__).resolve().parents[3];R=Path(os.environ.get('COMPANION_ACCEPTANCE_PROJECT_ROOT',str(S.parent)))
 C=R/'docs/handoffs/20261109-core-acceptance';D=Path(os.environ.get('COMPANION_ACCEPTANCE_CACHE','E:/CodexData/Companion/.build-cache/core-acceptance20261109'))
@@ -126,7 +127,7 @@ def main():
   assert session['minutes']['source']=='llm_deepseek' and session['minutes']['processing']['complete']
  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
  whole_delivery=a.stage=='ai' and bool(os.environ.get('COMPANION_ACCEPTANCE_WHOLE_DELIVERY_DIR'))
- (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':v['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83'},'wholeMeetingDelivery':whole_delivery,'browserAttachments':whole_delivery and os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1','aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
+ (out/'plan.json').write_text(json.dumps({'sessionId':session['id'],'title':session['title'],'sourceMeeting':prior['sourceMeeting'] if a.library else 'S_R004S03C01' if a.stage=='ai' else None,'selectedNoteId':(session.get('meetingNotes') or [{}])[0].get('id'),'expectedManualDocument':session['minutesByMode']['offlineStore']['markdown'],'realAsrInput':bool(a.library) or a.stage=='ai','requireGroupedUi':grouped_meeting_candidate(v['version']),'wholeMeetingDelivery':whole_delivery,'browserAttachments':whole_delivery and os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1','aiChunks':session['minutes']['processing']['totalChunks'] if whole_delivery else 2,'expectedExportContains':session['minutes']['summary'][0][:50] if whole_delivery else None},ensure_ascii=False),encoding='utf8')
  if a.stage=='actions':
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan['savedActionCount']=len(session['minutes']['actionItems']);(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  if a.stage in {'audio','transcribe','context'}:
