@@ -19,3 +19,12 @@ value={...value,revision:3,entries:[{id:'photo',text:'首次阅读备忘：工�
 await act(async()=>{tree=create(<RecordingNotes {...props} searchTerm="工程需求"/>);});assert.equal(tree.root.findAllByType('mark').length,2);assert(text(tree.toJSON()).includes('从资料库找到的人工备注'));assert.equal(JSON.stringify(value),retained,'Search presentation changed saved notes');
 act(()=>tree.root.findByType('img').props.onError());assert(button('重新读取图片'));await act(async()=>button('重新读取图片').props.onClick());assert.equal(tree.root.findAllByType('img').length,1);assert.equal(JSON.stringify(value),retained,'Preview retry must not rewrite original image metadata');
 act(()=>tree.unmount());assert(!dirty);console.log('PASS notes UI: cancel/failure retain draft, capture time, saved view, native play request, deletion, human-note search marks and explicit preview retry without source changes.');
+
+const oldBody='较早便签｜'+('保留原始人工内容。'.repeat(45))+'旧卡末尾',newBody='最新准备卡｜'+('下一步需要核对。'.repeat(45))+'新卡末尾';
+value={...value,revision:5,entries:[{id:'old-card',text:oldBody,atMs:null,createdAt:1,updatedAt:1},{id:'new-card',text:newBody,atMs:null,createdAt:2,updatedAt:20}]};const untouched=JSON.stringify(value);
+await act(async()=>{tree=create(<RecordingNotes {...props}/>);});assert(text(tree.root.findAllByType('article')[0]).includes('新卡末尾'));assert(!text(tree.root.findAllByType('article')[1]).includes('旧卡末尾'));
+act(()=>tree.root.findByProps({'aria-label':'备注排序'}).props.onChange({target:{value:'created'}}));assert(text(tree.root.findAllByType('article')[0]).includes('较早便签'));
+act(()=>tree.root.findAllByType('button').find(n=>n.props['aria-label']==='编辑备注 '+oldBody)!.props.onClick());assert.equal(textarea().props.value,oldBody,'Editing a collapsed note must load the complete stored body');assert(!dirty);
+act(()=>tree.root.findByProps({'aria-label':'取消编辑备注'}).props.onClick());assert.equal(JSON.stringify(value),untouched);
+await act(async()=>{tree.update(<RecordingNotes {...props} searchTerm="旧卡末尾"/>);});assert(text(tree.toJSON()).includes('旧卡末尾'));assert(tree.root.findAllByType('mark').some(n=>text(n)==='旧卡末尾'));assert.equal(JSON.stringify(value),untouched);
+act(()=>tree.unmount());console.log('PASS actual mobile notes: recent first, original chronological view, full collapsed-note editing and complete search-target reading without saved-data changes.');
