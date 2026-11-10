@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create,type ReactTestRenderer} from 'react-test-renderer';
+import {RecordingNotes,type RecordingNoteList,type RecordingNoteDraft} from '../apps/mobile/src/RecordingNotes';
+import type {ManualEvidenceDraft,ManualNoteEvidence} from '../packages/core/src/manualNoteContext';
+let value:RecordingNoteList={key:'fixture',libraryToken:'own',revision:0,entries:[]},tree:ReactTestRenderer,dirty=false,fail=false,opened='',consumed=0;
+const evidence:ManualNoteEvidence={id:'11111111-1111-4111-8111-111111111111',kind:'transcript',name:'会议转写',sourceSha256:'a'.repeat(64),quote:'预算尚未确认。\n负责人待定。'};
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find(n=>text(n)===label)!;
+const props={recordingKey:'fixture',busy:false,positionMs:0,durationMs:0,onLoad:async()=>value,onImage:async()=>({cancelled:true as const}),onRemove:async()=>value,onPlay:async()=>{},onExport:()=>{},onDirtyChange:(v:boolean)=>dirty=v,onIncomingConsumed:()=>consumed++,onOpenEvidence:async(current:RecordingNoteList,note:any,reference:ManualNoteEvidence)=>{assert.equal(current.revision,value.revision);opened=note.id+':'+reference.id;},onSave:async(current:RecordingNoteList,draft:RecordingNoteDraft)=>{if(fail)throw Error('未保存，请重试。');assert.equal(current.revision,value.revision);value={...value,revision:value.revision+1,entries:[{id:draft.id??'one',text:draft.text,atMs:draft.atMs,kind:draft.kind,references:draft.references,createdAt:1,updatedAt:2}]};return value;}};
+await act(async()=>{tree=create(<RecordingNotes {...props}/>);});act(()=>button('添加备注或图片').props.onClick());act(()=>tree.root.findByProps({'aria-label':'备注内容'}).props.onChange({target:{value:'我的准备卡\n- [ ] 核实预算\n- [ ] 确认负责人'}}));
+await act(async()=>tree.update(<RecordingNotes {...props} incoming={{contextId:'fixture',evidence}}/>));assert.equal(consumed,1);assert.equal(tree.root.findByProps({'aria-label':'备注内容'}).props.value,'我的准备卡\n- [ ] 核实预算\n- [ ] 确认负责人');assert(dirty);
+act(()=>tree.root.findByProps({'aria-label':'补充类型'}).props.onChange({target:{value:'followup'}}));fail=true;await act(async()=>button('保存备注').props.onClick());assert(dirty);assert.equal(value.entries.length,0);assert(text(tree.toJSON()).includes(evidence.quote));
+fail=false;await act(async()=>button('保存备注').props.onClick());assert(!dirty);assert.equal(value.entries[0].kind,'followup');assert.deepEqual(value.entries[0].references,[evidence]);
+await act(async()=>tree.root.findAllByProps({type:'checkbox'})[0].props.onChange({target:{checked:true}}));assert.equal(value.entries[0].text,'我的准备卡\n- [x] 核实预算\n- [ ] 确认负责人');assert.deepEqual(value.entries[0].references,[evidence]);
+await act(async()=>button('查看当前依据').props.onClick());assert.equal(opened,'one:'+evidence.id);
+act(()=>button('编辑').props.onClick());assert(!dirty);act(()=>button('移除此引用').props.onClick());assert(dirty);await act(async()=>button('保存备注').props.onClick());assert.deepEqual(value.entries[0].references,[]);assert.equal(value.entries[0].kind,'followup');act(()=>tree.unmount());
+console.log('PASS mobile manual follow-up: preserve draft while adding literal evidence, failed save retains it, saved checklist and source actions bind note revision, explicit edit removes only the reference.');

@@ -321,6 +321,19 @@ public final class MainActivity extends Activity {
     private RecordingLibrary.Session noteSession(JSONObject a)throws Exception{
         if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开这条录音；输入尚未保存。");return session(a.getString("key"));
     }
+    private static String manualNoteKind(JSONObject a)throws Exception{return !a.has("kind")||a.isNull("kind")?null:a.getString("kind");}
+    private static JSONArray manualNoteReferences(JSONObject a)throws Exception{return !a.has("references")||a.isNull("references")?null:a.getJSONArray("references");}
+    private void verifyManualEvidence(String key,JSONObject reference)throws Exception {
+        if("document".equals(reference.getString("kind"))){
+            JSONObject value=documentContexts().read(key),entry=null;JSONArray rows=value.getJSONArray("rows");
+            for(int i=0;i<rows.length();i++)if(reference.getString("documentId").equals(rows.getJSONObject(i).getString("id")))entry=rows.getJSONObject(i);
+            if(entry==null)throw new java.io.IOException("这份材料已移除；已有引文仍保留，请重新选择新的依据。");
+            ManualNoteContext.verifyDocument(reference,entry,documentContexts().extraction(key,value.getLong("revision"),entry.getString("id")));
+        }else{
+            MeetingStore.Snapshot saved=store().load(key);if(saved==null||saved.transcript.trim().isEmpty())throw new java.io.IOException("这场会议的转写暂不可读取；已有引文仍保留。");
+            ManualNoteContext.verifyTranscript(reference,saved.transcript);
+        }
+    }
     private static Long noteTime(JSONObject a)throws Exception{return !a.has("atMs")||a.isNull("atMs")?null:a.getLong("atMs");}
     private JSONObject noteDescription(String key)throws Exception{
         JSONObject value=recordingNotes().read(key);return value.put("libraryToken",libraries().token());
@@ -340,7 +353,7 @@ public final class MainActivity extends Activity {
             String mime=getContentResolver().getType(uri),extension="image/jpeg".equals(mime)?"jpg":"image/png".equals(mime)?"png":"image/webp".equals(mime)?"webp":null;
             if(extension==null)throw new java.io.IOException("请选择JPEG、PNG或WebP图片。");String name="图片."+extension;
             try(android.database.Cursor cursor=getContentResolver().query(uri,new String[]{android.provider.OpenableColumns.DISPLAY_NAME},null,null,null)){if(cursor!=null&&cursor.moveToFirst())name=cursor.getString(0);}
-            final String type=extension;try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("所选图片暂不可读取。");recordingNotes().addImage(key,args.getLong("revision"),args.optString("text",""),noteTime(args),completeAudioDurationMs(selected),name,extension,input,path->RecordingNoteImages.validate(path,type));}
+            final String type=extension;try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("所选图片暂不可读取。");recordingNotes().addImageContext(key,args.getLong("revision"),args.optString("text",""),noteTime(args),completeAudioDurationMs(selected),name,extension,input,path->RecordingNoteImages.validate(path,type),manualNoteKind(args),manualNoteReferences(args),reference->verifyManualEvidence(key,reference));}
             reply(id,noteDescription(key),null);
         }catch(Exception e){reply(id,null,e.getMessage()==null?"图片保存未完成，输入仍保留，请重试。":e.getMessage());}finally{if(locked)LocalLibraryBackups.BUSY.set(false);}});
     }
@@ -946,7 +959,15 @@ public final class MainActivity extends Activity {
             case "documentContextOriginal":{noteSession(a);String key=a.getString("key"),id=a.getString("id");long revision=a.getLong("revision");JSONObject list=documentContexts().read(key),entry=null;JSONArray documents=list.getJSONArray("rows");for(int i=0;i<documents.length();i++)if(id.equals(documents.getJSONObject(i).getString("id")))entry=documents.getJSONObject(i);if(entry==null)throw new java.io.IOException("材料已移除。");Path file=documentContexts().original(key,revision,id);String ext=entry.getString("format"),mime="pdf".equals(ext)?"application/pdf":"docx".equals(ext)?"application/vnd.openxmlformats-officedocument.wordprocessingml.document":"xlsx".equals(ext)?"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":"pptx".equals(ext)?"application/vnd.openxmlformats-officedocument.presentationml.presentation":"text/plain";
                 return preparedExports().create(new JSONObject().put("key",key).put("libraryToken",libraries().token()).put("title",entry.getString("name")),PreparedExports.filename(entry.getString("name"),"原件",ext),mime,null,out->java.nio.file.Files.copy(file,out)).dto();}
             case "recordingNotes":{String key=a.getString("key");session(key);return noteDescription(key);}
-            case "saveRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");recordingNotes().save(key,a.getLong("revision"),a.optString("id",""),a.optString("text",""),noteTime(a),completeAudioDurationMs(selected));return noteDescription(key);}
+            case "saveRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");recordingNotes().saveContext(key,a.getLong("revision"),a.optString("id",""),a.optString("text",""),noteTime(a),completeAudioDurationMs(selected),manualNoteKind(a),manualNoteReferences(a),reference->verifyManualEvidence(key,reference));return noteDescription(key);}
+            case "recordingNoteEvidenceStatus":{
+                noteSession(a);String key=a.getString("key");JSONObject value=recordingNotes().read(key);if(value.getLong("revision")!=a.getLong("revision"))throw new java.io.IOException("备注已更新，请重新读取后核对引用；当前输入保留。");
+                JSONArray entries=value.getJSONArray("entries");JSONObject reference=null;
+                for(int i=0;i<entries.length();i++){JSONObject entry=entries.getJSONObject(i);if(a.getString("noteId").equals(entry.getString("id"))){JSONArray refs=ManualNoteContext.references(entry);for(int j=0;j<refs.length();j++)if(a.getString("referenceId").equals(refs.getJSONObject(j).getString("id")))reference=refs.getJSONObject(j);}}
+                if(reference==null)throw new java.io.IOException("这条引用已不存在，请重新读取备注；已有文字保留。");
+                verifyManualEvidence(key,reference);
+                return new JSONObject().put("key",key).put("libraryToken",libraries().token()).put("revision",value.getLong("revision")).put("noteId",a.getString("noteId")).put("referenceId",a.getString("referenceId")).put("ready",true);
+            }
             case "removeRecordingNote":{noteSession(a);String key=a.getString("key");recordingNotes().remove(key,a.getLong("revision"),a.getString("id"));return noteDescription(key);}
             case "playRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");JSONObject value=recordingNotes().read(key);if(value.getLong("revision")!=a.getLong("revision"))throw new java.io.IOException("备注已更新，请重新读取后回听。");JSONArray entries=value.getJSONArray("entries");Long target=null;
                 for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);if(a.getString("id").equals(e.getString("id"))&&!e.isNull("atMs"))target=e.getLong("atMs");}
