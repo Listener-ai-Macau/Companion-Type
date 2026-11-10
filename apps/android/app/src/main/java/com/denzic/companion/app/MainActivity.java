@@ -55,6 +55,7 @@ public final class MainActivity extends Activity {
     private long libraryRequestId;
     private String libraryRequestKind,libraryRequestToken,documentLibraryToken;
     private boolean libraryRequestRestored;
+    private long audioImportRequestId;private String audioImportLibraryToken;private boolean audioImportRequestRestored;
     private long updateRequestId;
     private boolean updateRequestRestored;
     private Path root() { return getFilesDir().toPath(); }
@@ -95,6 +96,7 @@ public final class MainActivity extends Activity {
             if (base.exists() || new File(base.getPath()+".bak").exists())
                 throw new java.io.IOException("录音名称暂不可读；原文件已保留。",missing);
         }
+        if(session.imported!=null){String name=session.imported.name;return name.substring(0,Math.min(name.length(),100));}
         return defaultRecordingTitle(session.segments.get(0).descriptor.sessionId, false);
     }
 
@@ -104,6 +106,7 @@ public final class MainActivity extends Activity {
         return (unreadable?"名称暂不可用 · ":"未命名录音 · ")+suffix;
     }
     private static long completeAudioDurationMs(RecordingLibrary.Session session) {
+        if(session.imported!=null)return session.imported.samples/16;
         if(session.state!=RecordingLibrary.SessionState.COMPLETE)return -1;
         long samples=0;
         try { for(RecordingLibrary.Entry entry:session.segments) samples=Math.addExact(samples,entry.descriptor.sampleCount); }
@@ -116,6 +119,7 @@ public final class MainActivity extends Activity {
         super.onCreate(state);
         worker.scheduleAtFixedRate(()->savePlaybackProgress(false),5,5,java.util.concurrent.TimeUnit.SECONDS);
         if (state != null) {
+            audioImportRequestId=state.getLong("audioImportRequestId",0);audioImportLibraryToken=state.getString("audioImportLibraryToken");audioImportRequestRestored=audioImportRequestId!=0;
             updateRequestId=state.getLong("updateRequestId",0);updateRequestRestored=updateRequestId!=0;
             libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
             libraryRequestRestored=libraryRequestId!=0;documentLibraryToken=state.getString("documentLibraryToken");documentPreparedId=state.getString("documentPreparedId");
@@ -190,6 +194,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
+        state.putLong("audioImportRequestId",audioImportRequestId);state.putString("audioImportLibraryToken",audioImportLibraryToken);
         state.putLong("updateRequestId",updateRequestId);
         state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);state.putString("documentPreparedId",documentPreparedId);
         if (documentRequestId!=0) {
@@ -201,6 +206,7 @@ public final class MainActivity extends Activity {
     @Override protected void onResume() {
         super.onResume();
         notifySystemAppearance();
+        if(audioImportRequestRestored&&audioImportRequestId!=0){audioImportRequestId=0;audioImportRequestRestored=false;audioImportLibraryToken=null;android.widget.Toast.makeText(this,"文件选择已中断，请重新选择导入；原文件未改变。",android.widget.Toast.LENGTH_LONG).show();}
         if(updateRequestRestored&&updateRequestId!=0){updateRequestId=0;updateRequestRestored=false;android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择。设备保持原状态。",android.widget.Toast.LENGTH_LONG).show();}
         if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
         // If a restored picker never delivers a result, do not block future exports.
@@ -241,6 +247,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==34){finishAudioImportPicker(resultCode,data);return;}
         if(requestCode==33){finishUpdatePicker(resultCode,data);return;}
         if(requestCode==32){finishLibraryPicker(resultCode,data);return;}
         if (requestCode != 31) return;
@@ -298,7 +305,14 @@ public final class MainActivity extends Activity {
             } catch(Exception e) { replyDocument(id,null,"导出未完成；所选位置可能留有不完整文件。"+(e.getMessage()==null?"":e.getMessage()),restored); }
         });
     }
+    private void finishAudioImportPicker(int resultCode,Intent data){
+        final long id=audioImportRequestId;final String token=audioImportLibraryToken;final boolean restored=audioImportRequestRestored;audioImportRequestId=0;audioImportLibraryToken=null;audioImportRequestRestored=false;
+        if(id==0)return;if(resultCode!=RESULT_OK||data==null||data.getData()==null){if(!restored)reply(id,false,null);return;}
+        try{AudioImportService.start(this,data.getData(),token);if(!restored)reply(id,new JSONObject().put("started",true),null);else android.widget.Toast.makeText(this,"正在导入，进度可在录音库查看。",android.widget.Toast.LENGTH_LONG).show();}
+        catch(Exception e){if(!restored)reply(id,null,e.getMessage());else android.widget.Toast.makeText(this,e.getMessage(),android.widget.Toast.LENGTH_LONG).show();}
+    }
     private void requireLibraryIdle() throws Exception {
+        if(AudioImportService.isRunning())throw new java.io.IOException("正在导入录音，请等完成或取消后再操作资料。");
         if(DeviceUpdateService.isRunning())throw new java.io.IOException("正在升级录音卡，请等待完成后再操作资料备份。");
         if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成或暂停接收后再操作资料备份。");
     }
@@ -349,6 +363,13 @@ public final class MainActivity extends Activity {
         return true;
     }
     private final class Bridge {
+        @JavascriptInterface public void cancelAudioImport(){AudioImportService.cancel();}
+        @JavascriptInterface public void pickAudioImport(long id,String token){
+            worker.execute(()->{try{requireLibraryIdle();if(LocalLibraryBackups.BUSY.get()||!token.equals(libraries().token()))throw new java.io.IOException("资料库已变化或正在更新，请稍后重试。");runOnUiThread(()->{
+                if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                audioImportRequestId=id;audioImportLibraryToken=token;audioImportRequestRestored=false;try{Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*").putExtra(Intent.EXTRA_MIME_TYPES,new String[]{"audio/*","video/*"});startActivityForResult(intent,34);}catch(Exception e){audioImportRequestId=0;audioImportLibraryToken=null;reply(id,null,"无法打开系统文件选择器，请重试。");}
+            });}catch(Exception e){reply(id,null,e.getMessage());}});
+        }
         @JavascriptInterface public void libraryArchive(long id,String kind,String token){
             worker.execute(()->{
                 try{
@@ -513,7 +534,7 @@ public final class MainActivity extends Activity {
     }
     private RecordingLibrary.Session storedSession(String key) throws Exception {
         for (RecordingLibrary.Session s : RecordingLibrary.inspectSession(recordings(),key).sessions)
-            if (!s.segments.isEmpty() && MeetingStore.sessionKey(s.segments.get(0).descriptor).equals(key)) return s;
+            if (s.key().equals(key)) return s;
         throw new IllegalStateException("找不到这条本机录音，请刷新列表。");
     }
     private void requireLifecycleIdle()throws Exception{
@@ -822,6 +843,7 @@ public final class MainActivity extends Activity {
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "audioImportStatus":return AudioImportService.status(this);
             case "appPreferences":return appPreferences();
             case "saveAppPreferences":{
                 if(a.length()==0)throw new IllegalArgumentException("没有需要保存的设置。");
@@ -866,7 +888,7 @@ public final class MainActivity extends Activity {
             case "aiServiceClear":return aiServices().clear();
             case "aiContext":{
                 JSONArray available=new JSONArray();int problems=0;StringBuilder identity=new StringBuilder();
-                for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){if(row.segments.isEmpty())continue;String key=MeetingStore.sessionKey(row.segments.get(0).descriptor);
+                for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){String key=row.key();
                     try{lifecycle().requireVisible(key);MeetingStore.Snapshot value=store().load(key);if(value==null||value.transcript.trim().isEmpty())continue;JSONObject doc=aiDocument(key);identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}
                 return new JSONObject().put("libraryToken",libraries().token()).put("available",available).put("sourceVersion",AiMaterialStore.hash(identity.toString())).put("problems",problems);
             }
@@ -1050,16 +1072,15 @@ public final class MainActivity extends Activity {
                     return new MeetingLibrarySearch.SavedText((String)markdown,saved.sourceChanged||saved.sourceMissing);
                 };
                 for (RecordingLibrary.Session s : inv.sessions) {
-                    if (s.segments.isEmpty()) continue;
-                    RecorderWire.Descriptor d = s.segments.get(0).descriptor;
-                    String key=MeetingStore.sessionKey(d);
+                    RecorderWire.Descriptor d = s.imported==null?s.segments.get(0).descriptor:null;
+                    String key=s.key();
                     JSONObject life;try{life=lifecycle().get(key);}catch(Exception unreadable){titleProblems++;continue;}
                     if(life.getLong("trashedAt")!=0)continue;
-                    String title;try { title=recordingTitle(key,s); } catch (java.io.IOException error) {title=defaultRecordingTitle(d.sessionId,true);titleProblems++;}
+                    String title;try { title=recordingTitle(key,s); } catch (java.io.IOException error) {title=d==null?"导入录音 · 名称暂不可用":defaultRecordingTitle(d.sessionId,true);titleProblems++;}
                     MeetingLibrarySearch.Result found=search==null?null:search.find(key,title,reader);
                     if(found!=null){searchProblems+=found.unreadable;if(found.match==null)continue;}
-                    JSONObject row=new JSONObject().put("key", key).put("title",title).put("session", Long.toUnsignedString(d.sessionId))
-                            .put("state", s.state.name()).put("segments", s.segments.size()).put("lifecycle",life).put("libraryToken",libraries().token())
+                    JSONObject row=new JSONObject().put("key", key).put("title",title).put("session",d==null?"文件导入":Long.toUnsignedString(d.sessionId)).put("source",d==null?"importedAudio":"recorder")
+                            .put("state", s.state.name()).put("segments",s.imported==null?s.segments.size():s.imported.partCount()).put("lifecycle",life).put("libraryToken",libraries().token())
                             .put("recordedAtUnixSeconds",s.startedUnixSeconds>0?Long.valueOf(s.startedUnixSeconds):JSONObject.NULL);
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
                     if(found!=null)row.put("matchSource",found.match.source).put("matchSnippet",found.match.snippet)

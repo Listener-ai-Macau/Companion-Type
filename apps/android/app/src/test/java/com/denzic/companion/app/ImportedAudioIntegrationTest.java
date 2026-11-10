@@ -1,0 +1,25 @@
+package com.denzic.companion.app;
+import com.denzic.companion.mobile.*;
+import org.json.*;
+import java.io.*;
+import java.nio.*;
+import java.nio.file.*;
+import java.util.*;
+
+public final class ImportedAudioIntegrationTest {
+ static void check(boolean value,String message){if(!value)throw new AssertionError(message);}
+ static byte[] wav(int frames){ByteBuffer b=ByteBuffer.allocate(44+frames*2).order(ByteOrder.LITTLE_ENDIAN);b.put(new byte[]{'R','I','F','F'}).putInt(frames*2+36).put(new byte[]{'W','A','V','E','f','m','t',' '}).putInt(16).putShort((short)1).putShort((short)1).putInt(16000).putInt(32000).putShort((short)2).putShort((short)16).put(new byte[]{'d','a','t','a'}).putInt(frames*2);for(int i=0;i<frames;i++)b.putShort((short)(Math.sin(i*.13)*12000));return b.array();}
+ static ImportedAudio create(Path root,Path rec,String salt,boolean bad)throws Exception {Path stage=root.resolve("stage-"+salt);Files.createDirectory(stage);byte[] original=wav(48000);Files.write(stage.resolve("original.audio"),original);Files.write(ImportedAudio.part(stage,0),wav(32000));Files.write(ImportedAudio.part(stage,1),wav(16000));return ImportedAudio.publish(stage,rec,ImportedAudio.hash(salt.getBytes("UTF-8"))+":1:1","公开软件测试.wav","audio/wav",original.length,bad?String.join("",Collections.nCopies(64,"0")):ImportedAudio.hash(original),Arrays.asList(32000L,16000L),p->{});}
+ public static void main(String[] args)throws Exception {
+  Path root=Paths.get(args[0]),rec=root.resolve("recordings"),meet=root.resolve("meetings");Files.createDirectories(rec);Files.createDirectories(meet);ImportedAudio a=create(root,rec,"A",false),b=create(root,rec,"B",false);byte[] preserved=Files.readAllBytes(b.original);
+  try{create(root,rec,"bad",true);throw new AssertionError("Bad source must not publish");}catch(IOException expected){}check(RecordingLibrary.inspect(rec).sessions.size()==2,"Failed stage appeared as a recording");
+  RecordingLibrary.Session session=RecordingLibrary.inspectSession(rec,a.key).sessions.get(0);check(session.imported!=null&&session.segments.isEmpty(),"Imported source was disguised as a device descriptor");check(session.key().equals(a.key),"Import identity missing");NativeAudio.PartsResult parts=ManagedAudioParts.prepare(session,root.resolve("unused-cache"));check(parts.samples==48000&&parts.parts.size()==2&&parts.parts.get(1).firstSample==32000,"Original time axis across parts changed");check(!Files.exists(root.resolve("unused-cache")),"Import unnecessarily re-decoded into cache");
+  MeetingStore store=new MeetingStore(meet);String text="这是明确的虚构软件夹具，不是周五，是周二前交付。";store.saveTranscription(a.key,null,text);store.saveTranscriptTimingParts(a.key,text,session,parts.directory,3000,Arrays.asList(new MeetingStore.TranscriptWindow(text,0,3000)));check(store.loadTranscriptTimingParts(a.key,session,parts.directory)!=null,"Imported transcript lost source timing binding");
+  String binding=RecordingBookmarkAccess.binding(session);new PlaybackProgress(meet,p->{}).save(a.key,binding,2100,1.5,false);
+  ByteArrayOutputStream archive=new ByteArrayOutputStream();LibraryBackup.write(archive,rec,meet,null);Path restored=root.resolve("restored");LibraryBackup.restore(new ByteArrayInputStream(archive.toByteArray()),restored);RecordingLibrary.Session copy=RecordingLibrary.inspectSession(restored.resolve("recordings"),a.key).sessions.get(0);check(Arrays.equals(Files.readAllBytes(copy.imported.original),Files.readAllBytes(a.original)),"Backup changed original media");check(NativeAudio.loadParts(copy,copy.imported.directory).samples==48000,"Restored import lost playable parts");check(new MeetingStore(restored.resolve("meetings")).loadTranscriptTimingParts(a.key,copy,copy.imported.directory)!=null,"Restored imported timing lost binding");
+  LocalRecordingLifecycle life=new LocalRecordingLifecycle(root,rec,meet,p->{});life.change(a.key,0,"trash","公开导入软件测试");life.change(a.key,1,"restore",null);check(Files.exists(a.original),"Trash/restore removed original");life.change(a.key,2,"trash","公开导入软件测试");JSONObject offer=life.preparePurge(a.key,3);life.purge(a.key,3,offer.getString("token"));check(!Files.exists(a.directory),"Purged imported directory remains as a damaged library item");check(Arrays.equals(Files.readAllBytes(b.original),preserved),"Exact purge affected another import");check(RecordingLibrary.inspect(rec).problems.isEmpty()&&RecordingLibrary.inspect(rec).sessions.size()==1,"Purge polluted inventory");
+  // Damaged saved audio is rejected without modifying its preserved original.
+  byte[] changed=Files.readAllBytes(ImportedAudio.part(b.directory,0));changed[70]^=1;Files.write(ImportedAudio.part(b.directory,0),changed);try{b.verifiedParts();throw new AssertionError("Corrupt WAV accepted");}catch(IOException expected){}check(Arrays.equals(Files.readAllBytes(b.original),preserved),"Corrupt-part check changed original media");
+  System.out.println("PASS independent imports: atomic visibility, original/part verification, shared playback and timing, actual backup restore, trash/restore/exact purge and other-source preservation. Software fixtures only.");
+ }
+}

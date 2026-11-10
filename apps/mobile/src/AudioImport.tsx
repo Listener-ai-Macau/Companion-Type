@@ -1,0 +1,16 @@
+import {useEffect,useRef,useState} from 'react';
+import {FileAudio,Upload} from 'lucide-react';
+import './audioImport.css';
+export type AudioImportStatus={id?:string;key?:string;name?:string;running:boolean;state:string;message?:string;processed?:number;total?:number;durationMs?:number;originalBytes?:number;parts?:number};
+export function AudioImport({busy,onChoose,onLoad,onCancel,onChanged}:{busy:boolean;onChoose:()=>Promise<boolean>;onLoad:()=>Promise<AudioImportStatus>;onCancel:()=>void;onChanged:()=>void}){
+ const [status,setStatus]=useState<AudioImportStatus|null>(null),[error,setError]=useState(''),[choosing,setChoosing]=useState(false),[refresh,setRefresh]=useState(0),[cancelling,setCancelling]=useState(false);
+ const load=useRef(onLoad),changed=useRef(onChanged),awaiting=useRef(false);load.current=onLoad;changed.current=onChanged;
+ useEffect(()=>{let alive=true,timer:number|undefined;const poll=async()=>{try{const next=await load.current();if(!alive)return;setStatus(next);setError('');if(next.running)awaiting.current=true;else if(awaiting.current){awaiting.current=false;changed.current();}if(next.running)timer=window.setTimeout(()=>void poll(),700);else setCancelling(false);}catch(e){if(alive)setError(e instanceof Error?e.message:String(e));}};void poll();return()=>{alive=false;window.clearTimeout(timer);};},[refresh]);
+ async function choose(){if(busy||choosing||status?.running)return;setChoosing(true);setError('');try{if(await onChoose()){awaiting.current=true;setCancelling(false);setRefresh(value=>value+1);}}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setChoosing(false);}}
+ return <section className="audio-import" aria-label="导入音视频"><div className="audio-import-heading"><span className="audio-import-icon"><FileAudio size={19}/></span><div><strong>已有录音，也可以从这里开始</strong><p>导入音频，或提取视频中的声音</p></div></div>
+ <button type="button" className="secondary" disabled={busy||choosing||!!status?.running} onClick={()=>void choose()}><Upload size={16}/>{choosing?'正在选择…':'导入音频或视频'}</button>
+ {status?.running&&<div className="audio-import-progress" role="status"><strong>{status.name||'正在导入'}</strong><p>{status.message||'正在处理文件…'}</p>{!!status.total&&status.total>0&&<progress aria-label="当前导入步骤进度" value={status.processed??0} max={status.total}/>}<button type="button" className="text-button" disabled={cancelling||status.state==='committing'} onClick={()=>{onCancel();setCancelling(true);}}>{cancelling?'正在取消…':status.state==='committing'?'正在完成保存…':'取消导入'}</button><small>原文件会保留。离开此页后，通知中仍可查看进度或取消。</small></div>}
+ {status&&!status.running&&status.state!=='idle'&&<p className={status.state==='complete'?'audio-import-result':'audio-import-error'} role="status">{status.message}</p>}
+ {error&&<div className="audio-import-error" role="alert"><p>{error}</p><button type="button" className="text-button" disabled={choosing} onClick={()=>setRefresh(value=>value+1)}>重新读取导入状态</button></div>}
+ <details><summary>支持的文件与保存方式</summary><p>可选择常见音频或带音轨的视频，如 WAV、MP3、M4A、FLAC、MP4。实际支持取决于手机的系统解码器；没有音轨或不支持的文件会说明原因。单个原文件最多 2GB、音轨最多 24 小时。</p><p>原文件完整保存在本机，同时生成用于回听与转写的音频，不上传文件。导入后可沿用转写、纪要、导出、备份和回收站。</p></details></section>;
+}

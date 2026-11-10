@@ -10,6 +10,7 @@ import org.json.*;
 final class RecordingBookmarkAccess {
     private static final long SAFE=9007199254740991L;
     static String binding(RecordingLibrary.Session session)throws Exception{
+        if(session.imported!=null)return ImportedAudio.hash(session.imported.fingerprint());
         MessageDigest hash=MessageDigest.getInstance("SHA-256");
         for(RecordingLibrary.Entry entry:session.segments){byte[] wire=entry.descriptor.wireBytes();wire[95]=0;Arrays.fill(wire,108,112,(byte)0);hash.update(wire);}
         StringBuilder value=new StringBuilder();for(byte b:hash.digest())value.append(String.format(Locale.ROOT,"%02x",b&255));return value.toString();

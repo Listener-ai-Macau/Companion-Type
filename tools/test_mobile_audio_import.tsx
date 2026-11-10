@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create,type ReactTestRenderer} from 'react-test-renderer';
+import {AudioImport,type AudioImportStatus} from '../apps/mobile/src/AudioImport';
+const timers=new Map<number,()=>void>();let timerId=0;window.setTimeout=((callback:()=>void)=>{const id=++timerId;timers.set(id,callback);return id;}) as typeof window.setTimeout;window.clearTimeout=(id)=>{if(id)timers.delete(id);};
+let tree:ReactTestRenderer,status:AudioImportStatus={running:false,state:'idle'},changed=0,cancelled=0,choose=false;
+const props={busy:false,onChoose:async()=>choose,onLoad:async()=>status,onCancel:()=>{cancelled++;},onChanged:()=>{changed++;}};
+const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');const button=(label:string)=>tree.root.findAllByType('button').find(node=>text(node)===label)!;
+await act(async()=>{tree=create(<AudioImport {...props}/>);});
+await act(async()=>{button('导入音频或视频').props.onClick();});assert.equal(changed,0,'Cancelled picker must not claim import completion');
+choose=true;status={running:true,id:'new-job',state:'processing',message:'正在处理音轨'};await act(async()=>{button('导入音频或视频').props.onClick();});assert.equal(button('导入音频或视频').props.disabled,true);assert(button('取消导入'));
+act(()=>{button('取消导入').props.onClick();});assert.equal(cancelled,1);assert(button('正在取消…'));status={...status,running:false,state:'cancelled',message:'已取消导入，所选原文件未改变。'};
+await act(async()=>{const next=timers.entries().next().value!;timers.delete(next[0]);next[1]();});assert.equal(changed,1);assert(button('导入音频或视频'));
+// A short file may finish before the first post-picker poll.
+status={running:false,id:'fast-job',state:'complete',message:'录音已保存在本机，可回听或开始转写。'};await act(async()=>{button('导入音频或视频').props.onClick();});assert.equal(changed,2,'Fast completion must refresh library even if no running state was polled');
+act(()=>tree.unmount());assert.equal(timers.size,0);
+console.log('PASS mobile import: picker cancellation, pending progress, cancellation waits for actual result, fast completion refresh and polling cleanup.');

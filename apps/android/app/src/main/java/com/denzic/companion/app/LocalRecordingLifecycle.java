@@ -135,6 +135,14 @@ final class LocalRecordingLifecycle {
                 else if(n.startsWith("damaged-"))retained++;
             }
         }
+        if(com.denzic.companion.mobile.ImportedAudio.validKey(key)){
+            Path directory=recordings.resolve(com.denzic.companion.mobile.ImportedAudio.folder(key));
+            if(Files.exists(directory,LinkOption.NOFOLLOW_LINKS)){
+                managedPath(directory);com.denzic.companion.mobile.ImportedAudio imported=com.denzic.companion.mobile.ImportedAudio.read(directory);Set<Path> owned=new HashSet<>(imported.ownedFiles());
+                for(Path file:owned)add(files,"recordings",recordings,file);
+                try(DirectoryStream<Path> remaining=Files.newDirectoryStream(directory)){for(Path file:remaining)if(!owned.contains(file))retained++;}
+            }
+        }
         try(DirectoryStream<Path> entries=Files.newDirectoryStream(meetings)){
             for(Path p:entries){String n=p.getFileName().toString();if(n.startsWith(digest+".")&&!n.equals(digest+".lock"))add(files,"meetings",meetings,p);else if(n.startsWith("damaged-meeting-"))retained++;}
         }
@@ -158,6 +166,7 @@ final class LocalRecordingLifecycle {
             JSONObject row=files.getJSONObject(i);String scope=row.getString("scope"),name=row.getString("path");
             boolean owned=scope.equals("recordings")?name.matches(java.util.regex.Pattern.quote(prefix)+"[0-9]+-[0-9]+-[0-9a-f]{64}\\.(cop1|part|meta)"):
                 name.startsWith(digest+".")&&!name.contains("/")&&!name.equals(digest+".lock")||name.startsWith("translations/"+digest+".translation");
+            if(scope.equals("recordings")&&com.denzic.companion.mobile.ImportedAudio.validKey(key))owned=name.matches(java.util.regex.Pattern.quote(com.denzic.companion.mobile.ImportedAudio.folder(key))+"/(original\\.audio|import\\.json|part-[0-9]{8}\\.wav)");
             if(scope.equals("meetings")&&name.matches("ai-materials/[0-9a-f-]{36}\\.json")){
                 Path p=resolve(scope,name);owned=!Files.exists(p,LinkOption.NOFOLLOW_LINKS)&&allowMissing||key.equals(object(p,1024*1024).getString("ownerKey"));
             }
@@ -187,10 +196,14 @@ final class LocalRecordingLifecycle {
         // Audio metadata is removed after audio bytes, so a partial failure is not
         // silently treated as a complete, playable recording. Persisted plan can retry.
         List<JSONObject> ordered=new ArrayList<>();for(int i=0;i<files.length();i++)ordered.add(files.getJSONObject(i));
-        ordered.sort(Comparator.comparing(v->v.optString("path").endsWith(".meta")));
+        ordered.sort(Comparator.comparing(v->v.optString("path").endsWith(".meta")||v.optString("path").endsWith("/import.json")));
         Set<Path> parents=new HashSet<>();
         for(JSONObject row:ordered){Path path=resolve(row.getString("scope"),row.getString("path"));delete.remove(path);parents.add(path.getParent());}
-        for(Path parent:parents)sync.sync(parent);
+        for(Path parent:parents)if(Files.exists(parent,LinkOption.NOFOLLOW_LINKS))sync.sync(parent);else sync.sync(recordings);
+        if(com.denzic.companion.mobile.ImportedAudio.validKey(key)){
+            Path imported=recordings.resolve(com.denzic.companion.mobile.ImportedAudio.folder(key));managedPath(imported);
+            if(Files.isDirectory(imported,LinkOption.NOFOLLOW_LINKS))try(DirectoryStream<Path> remaining=Files.newDirectoryStream(imported)){if(!remaining.iterator().hasNext()){Files.delete(imported);sync.sync(recordings);}}
+        }
         // Retain only identity/revision so an old revision-zero request cannot
         // affect a later re-import of the same immutable recording (ABA).
         s.remove("title");s.put("trashedAt",0).put("purging",false).put("purged",true).put("revision",expected+2);
