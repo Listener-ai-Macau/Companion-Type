@@ -58,7 +58,7 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   core-audio:
-    if: contains(github.event.head_commit.message, '[core-audio]') || contains(github.event.head_commit.message, '[core-candidate]') || contains(github.event.head_commit.message, '[core-whole-meeting]') || contains(github.event.head_commit.message, '[core-whole-delivery]')
+    if: contains(github.event.head_commit.message, '[core-actions]') || contains(github.event.head_commit.message, '[core-audio]') || contains(github.event.head_commit.message, '[core-candidate]') || contains(github.event.head_commit.message, '[core-whole-meeting]') || contains(github.event.head_commit.message, '[core-whole-delivery]')
     runs-on: windows-2022
     timeout-minutes: 25
     permissions:
@@ -76,8 +76,8 @@ jobs:
       - name: Run the real public audio import, playback and delivery workflow
         env:
           GH_TOKEN: ${{ github.token }}
-          COMPANION_CORE_PHASE: ${{ contains(github.event.head_commit.message, '[core-whole-delivery]') && 'delivery' || contains(github.event.head_commit.message, '[core-whole-meeting]') && 'whole' || 'audio' }}
-          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ contains(github.event.head_commit.message, '[core-whole-delivery]') && 'docs/handoffs/core-acceptance-20261109/whole-delivery-spec.json' || contains(github.event.head_commit.message, '[core-whole-meeting]') && 'docs/handoffs/core-acceptance-20261109/whole-meeting-spec.json' || contains(github.event.head_commit.message, '[core-candidate]') && 'docs/handoffs/core-acceptance-20261109/candidate079/runtime-spec.json' || '' }}
+          COMPANION_CORE_PHASE: ${{ contains(github.event.head_commit.message, '[core-actions]') && 'actions' || contains(github.event.head_commit.message, '[core-whole-delivery]') && 'delivery' || contains(github.event.head_commit.message, '[core-whole-meeting]') && 'whole' || 'audio' }}
+          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ contains(github.event.head_commit.message, '[core-actions]') && 'docs/handoffs/actions-followup20261110/windows082/runtime-spec.json' || contains(github.event.head_commit.message, '[core-whole-delivery]') && 'docs/handoffs/core-acceptance-20261109/whole-delivery-spec.json' || contains(github.event.head_commit.message, '[core-whole-meeting]') && 'docs/handoffs/core-acceptance-20261109/whole-meeting-spec.json' || contains(github.event.head_commit.message, '[core-candidate]') && 'docs/handoffs/core-acceptance-20261109/candidate079/runtime-spec.json' || '' }}
         run: python tools/qa/core_acceptance20261109/run_ci.py
       - name: Preserve audio workflow results and failures
         if: always()

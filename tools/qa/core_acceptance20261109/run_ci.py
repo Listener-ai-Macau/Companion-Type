@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
-PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery'}
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
 spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81'}
+  assert PHASE in {'audio','whole','delivery','actions'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
@@ -75,7 +75,22 @@ try:
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- if PHASE=='delivery':
+ if PHASE=='actions':
+  fixture=S/spec['actionsFixture'];assert sha(fixture)==spec['actionsFixtureSha256']
+  source_row=json.loads(fixture.read_text(encoding='utf8'))
+  code=run('native-saved-action-followup',[sys.executable,S/'tools/qa/core_acceptance20261109/windows_meeting.py','--stage','actions','--reviewed-ai',fixture],required=False)
+  cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
+  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save();assert code==0
+  assert result['ui']['state']=='REAL_TAURI_SAVED_ACTION_FILTER_FOLLOWUP_NATIVE_COPY_AND_DURABLE_COMPLETION_PASSED'
+  after=json.loads((Path(result['privateRoot'])/'state/sessions.json').read_text(encoding='utf8'))[0]
+  for key in ['transcriptText','utterances','transcriptReview']:assert after[key]==source_row[key],key+' must stay unchanged by action completion'
+  original=source_row['minutesByMode']['offlineStore']['markdown'].strip();target='- 待核对：制作广告宣传海报'
+  assert original.splitlines().count(target)==1
+  expected='\n'.join('- [ ] 待核对：制作广告宣传海报' if line==target else line for line in original.split('\n'))
+  assert after['minutes']['markdown']==expected and after['minutesByMode']['offlineStore']['markdown']==expected
+  assert after['minutes']['source']=='userEdited','A completion edit must keep the existing manual provenance'
+  record.update(state='WINDOWS082_NATIVE_ACTION_FILTER_FOLLOWUP_COPY_AND_REOPEN_PASSED',rawAsrUnchanged=True,savedMarkdownOnlyIntentionalUncheckedMarkerChanged=True,existingManualEditProvenancePreserved=True,nativeClipboardMatched=result['ui']['nativeClipboard']['actualWindowsUnicodeClipboardMatched'],nativeActionUi=result['ui'],modelsRun=False,newCloudOrAsrCalls=0,saleQualified=False)
+ elif PHASE=='delivery':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   fixture=S/spec['sameMeetingAiFixture'];assert sha(fixture)==spec['sameMeetingAiFixtureSha256']
   source_row=json.loads(fixture.read_text(encoding='utf8'));assert source_row['id']==manifest['sessionId'] and hashlib.sha256(source_row['transcriptText'].encode('utf8')).hexdigest()==manifest['rawTranscriptSha256']
