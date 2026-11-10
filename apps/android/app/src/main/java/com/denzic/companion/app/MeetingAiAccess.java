@@ -42,8 +42,10 @@ final class MeetingAiAccess {
     boolean cancel(String id) throws Exception {return jobs.containsKey(id)&&NativeMeetingQa.cancel(id);}
     void cancelAll(){for(String id:jobs.keySet())try{NativeMeetingQa.cancel(id);}catch(Exception ignored){}}
     static String draftBody(JSONArray items,String purpose) throws Exception {
-        StringBuilder body=new StringBuilder();for(int i=0;i<items.length();i++){if(i>0)body.append("\n\n");body.append("• ").append(items.getJSONObject(i).getString("text"));}
-        String facts=body.toString();if("跟进草稿".equals(purpose))return "您好，\n\n根据本次会议，以下事项需要继续跟进：\n\n"+facts+"\n\n请核对以上安排；尚未明确的负责人和时间，请进一步确认。";
+        boolean supplemented=false;for(int i=0;i<items.length();i++)if(items.getJSONObject(i).getJSONObject("citation").getString("sessionId").startsWith("document:"))supplemented=true;
+        StringBuilder body=new StringBuilder();for(int i=0;i<items.length();i++){if(i>0)body.append("\n\n");body.append("• ");if(supplemented)body.append(items.getJSONObject(i).getJSONObject("citation").getString("sessionId").startsWith("document:")?"【人工补充材料】":"【会议转写】");body.append(items.getJSONObject(i).getString("text"));}
+        String facts=body.toString();if(supplemented){if("跟进草稿".equals(purpose))return "您好，\n\n根据所选会议转写与补充材料，以下内容需要继续核对：\n\n"+facts+"\n\n材料中的计划不代表会议已作决定；请核对来源、负责人和时间。";if("整理周报".equals(purpose))return "资料周报（草稿）\n\n相关进展与待核对内容：\n\n"+facts+"\n\n请分别核对会议原话与人工材料，不把材料中的计划当作已作决定。";if("客户简报".equals(purpose))return "资料简报（草稿）\n\n"+facts+"\n\n请分别核对会议与材料来源；未确认安排不作为承诺。";return facts;}
+        if("跟进草稿".equals(purpose))return "您好，\n\n根据本次会议，以下事项需要继续跟进：\n\n"+facts+"\n\n请核对以上安排；尚未明确的负责人和时间，请进一步确认。";
         if("整理周报".equals(purpose))return "会议周报（草稿）\n\n相关进展与下一步：\n\n"+facts+"\n\n待核对：请确认各事项的负责人、时间与实际进度。";
         if("客户简报".equals(purpose))return "会议简报（草稿）\n\n"+facts+"\n\n以上内容需结合原话核对；未明确的事项不作为承诺。";
         return facts;

@@ -4,3 +4,5 @@
 /packages/document-context/ThirdPartyNotices.txt text eol=lf -whitespace
 
 /vendor/document-context/*LICENSE -text -whitespace
+
+/tools/qa/core_acceptance20261109/fixtures/document-context/*.pdf binary
