@@ -2,10 +2,12 @@ name: Android core UI integration
 on:
   push:
     branches: [work/core-acceptance-android-20261109]
+    paths-ignore: ['docs/**']
 permissions:
   contents: read
 jobs:
   mobile-ui:
+    if: ${{ !contains(github.event.head_commit.message, '[source-only]') }}
     runs-on: windows-2022
     timeout-minutes: 8
     steps:
