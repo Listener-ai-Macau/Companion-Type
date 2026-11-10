@@ -80,7 +80,8 @@ try:
   tool=S/'tools/qa/core_acceptance20261109'
   code=run('native-document-context-ui',[sys.executable,tool/'windows_meeting.py','--stage','documents'],required=False)
   cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
-  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save();assert code==0
+  assert code==0 and (paths[0]/'result.json').is_file(),'Native document preparation/UI failed; retained native-document-context-ui.log is the primary failure'
+  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save()
   assert result['ui']['state']=='REAL_TAURI_DOCUMENT_ORIGINAL_IMPORT_EXTRACTION_RETRY_READ_SEARCH_REOPEN_AND_NATIVE_SAVE_PASSED'
   backend=run('native-document-context-backup-restore-cleanup',[sys.executable,tool/'windows_document_backend.py','--case',paths[0]],required=False)
   detail=json.loads((paths[0]/'document-backend/result.json').read_text(encoding='utf8'));record.update(documentBackendExitCode=backend,documentBackendState=detail['state']);save();assert backend==0

@@ -87,6 +87,13 @@ def main():
  parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
+ if a.stage=='documents':
+  fixture_root=Path(__file__).parent/'fixtures/document-context';fixture_manifest=json.loads((fixture_root/'manifest.json').read_text(encoding='utf8'));failures=[]
+  for name,item in fixture_manifest.items():
+   file=fixture_root/name
+   if not file.is_file():failures.append(name+': missing')
+   elif file.stat().st_size!=item['bytes'] or sha(file)!=item['sha256']:failures.append(name+': identity mismatch')
+  assert not failures,'Complete public document fixture preflight failed: '+repr(failures)
  token=uuid.uuid4().hex;root=D/token;root.mkdir(parents=True);out=C/token;out.mkdir(parents=True)
  app,v=frozen_app(root)
  state=root/'state';state.mkdir();session=json.loads((S/'apps/windows/src-tauri/src/calendar_test_fixtures/p738-sessions.json').read_text(encoding='utf8'))[0]
