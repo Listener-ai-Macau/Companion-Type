@@ -14,4 +14,17 @@ await act(async()=>{const next=timers.entries().next().value!;timers.delete(next
 // A short file may finish before the first post-picker poll.
 status={running:false,id:'fast-job',state:'complete',message:'录音已保存在本机，可回听或开始转写。'};await act(async()=>{button('导入音频或视频').props.onClick();});assert.equal(changed,2,'Fast completion must refresh library even if no running state was polled');
 act(()=>tree.unmount());assert.equal(timers.size,0);
-console.log('PASS mobile import: picker cancellation, pending progress, cancellation waits for actual result, fast completion refresh and polling cleanup.');
+// A historical success must not displace the library; a result from this session must remain visible.
+changed=0;choose=false;status={running:false,id:'old-completed-job',state:'complete',message:'以前的导入已完成'};
+await act(async()=>{tree=create(<AudioImport {...props} compact/>);});
+assert.equal(tree.root.findAllByProps({role:'status'}).length,0,'Compact library should not repeat a historical success');
+await act(async()=>{button('导入音频或视频').props.onClick();});assert.equal(changed,0);
+choose=true;status={running:true,id:'current-job',state:'processing',message:'正在处理新文件'};
+await act(async()=>{button('导入音频或视频').props.onClick();});assert.ok(tree.root.findAllByProps({role:'status'}).some(node=>text(node).includes('正在处理新文件')));assert(button('取消导入'));
+status={running:false,id:'current-job',state:'complete',message:'新文件已保存'};
+await act(async()=>{const next=timers.entries().next().value!;timers.delete(next[0]);next[1]();});
+assert.equal(changed,1);assert.ok(tree.root.findAllByProps({role:'status'}).some(node=>text(node).includes('新文件已保存')));
+act(()=>tree.unmount());assert.equal(timers.size,0);
+status={running:false,state:'failed',message:'文件没有可用音轨'};
+await act(async()=>{tree=create(<AudioImport {...props} compact/>);});assert.ok(tree.root.findAllByProps({role:'status'}).some(node=>text(node).includes('文件没有可用音轨')),'Failures remain visible even when opening an existing library');act(()=>tree.unmount());
+console.log('PASS mobile import: picker cancellation, pending progress, actual cancellation, fast refresh, compact historical-success suppression, current completion/failure visibility and polling cleanup.');

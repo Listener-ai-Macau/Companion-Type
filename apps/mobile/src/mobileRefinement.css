@@ -32,6 +32,7 @@
 .recording-entry-copy{flex:1;min-width:0}.recording-entry-copy strong,.recording-entry-copy small{display:block;overflow-wrap:anywhere}
 .recording-entry-copy strong{font-size:14px}.recording-entry-copy small{margin-top:5px;color:var(--muted);font-size:12px;line-height:1.5}
 .recording-entry>svg{flex:none;color:var(--muted)}
+.library-maintenance{margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}.library-maintenance .recording-entry{margin-bottom:14px}.library-sync-history{margin:14px 0;color:var(--muted);font-size:12px;line-height:1.7}.library-sync-history>summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.library-sync-history>p{margin:0 0 12px;font-size:11px;overflow-wrap:anywhere}
 .empty{padding:48px 22px;border-radius:20px}
 .empty>svg{box-sizing:content-box;padding:15px;border-radius:16px;color:var(--accent);background:var(--accent-soft)}
 .status{padding:17px 19px;border-radius:16px}
