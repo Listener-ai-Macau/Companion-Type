@@ -1626,8 +1626,15 @@ impl CompanionBackend for FixtureCompanionBackend {
         if audio_editing::context_token()?!=token{return Err("资料库已切换，已停止保存。".into());}
         session_store::update_checked(&persistence::state_file_path(),|rows|{
             let mut current=snapshot.clone();current.host.sessions=rows.clone();
+            if let Some(saved)=rows.iter().find(|r|r.id==row.id){
+                if saved.source!="derivedAudio"||audio_editing::provenance(saved)?!=audio_editing::provenance(&row)?{
+                    return Err("该成品标识的来源不同，拒绝覆盖。".into());
+                }
+                // A committed row can outlive its unfinished job receipt.
+                // Adopt it without replacing later title/notes/audio cleanup.
+                return Ok(());
+            }
             audio_editing::validate_sources(&current,sources)?;
-            if rows.iter().any(|r|r.id==row.id){return Err("这份成品已存在，请重新读取任务状态。".into());}
             rows.insert(0,row.clone());Ok(())
         })?;
         snapshot.host.sessions=persistence::load_sessions_from(&persistence::state_file_path()).ok_or("录音已写入，请重新载入资料库。")?;

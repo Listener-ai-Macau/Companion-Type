@@ -409,6 +409,25 @@ fn execute(
     job: &mut Journal,
 ) -> Result<(), String> {
     let stage = Stage::open(&job.id)?;
+    // Reconcile already durable rows first. Their parent may since have been
+    // purged; a saved child must not require that parent or be recreated.
+    let snapshot = coordinator.snapshot()?;
+    for output in &mut job.outputs {
+        if output.state == "complete" {
+            continue;
+        }
+        if let Some(saved) = snapshot.host.sessions.iter().find(|r| r.id == output.key) {
+            if output.row.is_none()
+                || saved.source != "derivedAudio"
+                || edit::provenance(saved)?.as_ref()
+                    != Some(&output.plan.provenance(&output.sources)?)
+            {
+                return Err("已保存成品的来源不符，拒绝覆盖。".into());
+            }
+            output.state = "complete".into();
+        }
+    }
+    persist(m, job)?;
     // Validate all planned ranges before publishing any output.
     let snapshot = coordinator.snapshot()?;
     let keys = job

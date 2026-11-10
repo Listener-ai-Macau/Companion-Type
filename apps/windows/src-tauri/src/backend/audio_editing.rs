@@ -475,6 +475,31 @@ mod tests {
         backend
             .commit_audio_edit(child.clone(), &map.sources, &context_token().unwrap())
             .unwrap();
+        // Simulate a row ACK committed before the task receipt. A later user
+        // rename must survive exact-job adoption, not be replaced by old row.
+        super::super::session_store::update_checked(
+            &super::super::persistence::state_file_path(),
+            |rows| {
+                rows.iter_mut().find(|r| r.id == id).unwrap().title = "已经修改的成品标题".into();
+                Ok(())
+            },
+        )
+        .unwrap();
+        backend
+            .commit_audio_edit(child.clone(), &map.sources, &context_token().unwrap())
+            .unwrap();
+        assert_eq!(
+            backend
+                .snapshot()
+                .unwrap()
+                .host
+                .sessions
+                .iter()
+                .find(|r| r.id == id)
+                .unwrap()
+                .title,
+            "已经修改的成品标题"
+        );
         let mut snapshot = backend.snapshot().unwrap();
         snapshot.host.selected_session_id = Some(id.clone());
         assert_eq!(snapshot.host.sessions.len(), 2);

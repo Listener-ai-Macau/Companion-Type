@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-11T00:47:38+08:00",
+  "state": "UNINSTALLED_ATTEMPT_CANCELLED_FOR_IDENTIFIED_RESUME_SOURCE_CORRECTION",
+  "runId": 42857248736,
+  "sourceCommit": "4ffcd1d227c20e64336df9c2ef72cfe94c161cb1",
+  "reason": "Source review identified durable index success followed by job receipt/backup failure could be treated as an ID conflict. Corrected exact existing-row adoption without replacing later user edits; reconcile saved outputs before resolving remaining parent sources.",
+  "nativeBuildDidNotFinish": true,
+  "installed": false,
+  "failureArtifact": 13783526901,
+  "retainedLocal": "E:/CodexData/Companion/.build-cache/audio-derivation20261110/windows093-attempt1",
+  "modelsRun": false,
+  "previousInstalled091Unchanged": true
+}
