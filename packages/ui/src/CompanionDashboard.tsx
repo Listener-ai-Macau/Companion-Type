@@ -2572,6 +2572,8 @@ export function CompanionDashboard({
                 if(ids.some(id=>id.startsWith('document:')?!qaSessionsRef.current.some(row=>!row.organization?.trashedAt&&(row.documentContext?.rows??[]).some(doc=>'document:'+row.id+':'+doc.id===id&&!!doc.extraction)):!qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))throw Error('来源会议或材料已移除，请重新选择。');
                 return {...result,jobId};}finally{setQaBusy(false);}}}
               onCancel={onCancelMeetingQuestion}
+              onOpenDocuments={documentAdapter&&!readingPreview?()=>document.getElementById('ct-document-context')?.scrollIntoView({block:'start'}):undefined}
+              onOpenNotes={()=>document.getElementById('ct-recording-notes')?.scrollIntoView({block:'start'})}
               onOpenSource={(id,quote)=>{if(id.startsWith('document:')){setDocumentSource({id:id.slice(id.lastIndexOf(':')+1),quote,nonce:crypto.randomUUID()});document.getElementById('ct-document-context')?.scrollIntoView({block:'start'});return;}setQaPendingCitation({sessionId:id,title:meetingTitle(allLibrarySessions.find(row=>row.id===id)??selectedSession),quote});setOpenSavedRecordingId(id);setOpenSavedRecordingTarget('source');if(selectedSession.id!==id)onControl({action:'meetingSelectSession',sessionId:id});}}
               onLoadSaved={async()=> (selectedSession.meetingNotes??[]).map(readMaterialNote).filter((value):value is NonNullable<typeof value>=>value!==null)}
               onSave={async value=>{if(!onSaveNote)throw Error('当前环境未提供材料保存，请复制文字保留。');const source=qaSessionsRef.current.find(row=>row.id===selectedSession.id&&!row.organization?.trashedAt);if(!source)throw Error('当前会议已移除，未保存到其他会议。');

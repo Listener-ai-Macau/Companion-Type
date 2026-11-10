@@ -1,12 +1,13 @@
 /** Local, supplementary source documents. These are never recorded speech. */
-export const DOCUMENT_READER_VERSION='2026-11-10.1';
+export const DOCUMENT_READER_VERSION='2026-11-11.1';
 export const DOCUMENT_LIMITS=Object.freeze({fileBytes:20*1024*1024,zipEntries:4096,archiveBytes:32*1024*1024,partBytes:8*1024*1024,xmlNodes:300000,xmlDepth:128,textCharacters:300000,sections:300,pdfPages:200,spreadsheetCells:100000,spreadsheetRows:10000,deadlineMs:45000});
 export type DocumentFormat='pdf'|'docx'|'xlsx'|'pptx'|'txt'|'md'|'csv';
 export type DocumentFailureCode='unsupported-format'|'invalid-file'|'capacity'|'cancelled'|'password-required'|'wrong-password'|'no-text'|'environment';
 export class DocumentReadError extends Error {
  constructor(readonly code:DocumentFailureCode,message:string){super(message);this.name='DocumentReadError';}
 }
-export type DocumentSection={id:string;label:string;text:string};
+export type DocumentTableRow={row:number;cells:Array<{column:string;text:string}>};
+export type DocumentSection={id:string;label:string;text:string;tableRows?:DocumentTableRow[]};
 export type DocumentExtraction={schema:1;readerVersion:string;format:DocumentFormat;sourceSha256:string;sections:DocumentSection[];warnings:string[];characters:number};
 export type DocumentReadOptions={password?:string;encoding?:'utf-8'|'gb18030'|'utf-16le'|'utf-16be';signal?:AbortSignal;engineBaseUrl?:string;onProgress?:(message:string)=>void};
 export function capacity(message='文件内容超过本机处理范围，请拆分后导入。'):never{throw new DocumentReadError('capacity',message);}
@@ -21,6 +22,13 @@ export class SectionCollector {
  }
  finish(format:DocumentFormat,sourceSha256:string):DocumentExtraction {
   if(!this.sections.length)throw new DocumentReadError('no-text','未提取到可读取文字；扫描图片或特殊排版可能需要另行识别，原件仍保留。');
-  return {schema:1,readerVersion:DOCUMENT_READER_VERSION,format,sourceSha256,sections:this.sections,warnings:[...this.warnings],characters:this.characters};
+  const result:DocumentExtraction={schema:1,readerVersion:DOCUMENT_READER_VERSION,format,sourceSha256,sections:this.sections,warnings:[...this.warnings],characters:this.characters};
+  // Layout is optional. Keep the entire cited text and the existing native
+  // 2MiB save limit instead of letting duplicated grid data prevent a save.
+  if(this.sections.some(section=>section.tableRows)&&new TextEncoder().encode(JSON.stringify(result)).length>1536*1024){
+   for(const section of this.sections)delete section.tableRows;
+   result.warnings.push('大表的完整文字已保留；表格布局超过本机保存范围，请另存原件查看行列。');
+  }
+  return result;
  }
 }

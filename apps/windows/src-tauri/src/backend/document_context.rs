@@ -65,6 +65,20 @@ pub struct Section {
     pub id: String,
     pub label: String,
     pub text: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub table_rows: Option<Vec<TableRow>>,
+}
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TableRow {
+    pub row: u32,
+    pub cells: Vec<TableCell>,
+}
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TableCell {
+    pub column: String,
+    pub text: String,
 }
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -321,6 +335,7 @@ fn validate_extraction(value: &Extraction, row: &Document) -> Result<(), String>
     }
     let mut ids = HashSet::new();
     let mut characters = 0usize;
+    let mut table_cells = 0usize;
     for section in &value.sections {
         let number = section
             .id
@@ -338,6 +353,12 @@ fn validate_extraction(value: &Extraction, row: &Document) -> Result<(), String>
         if characters > 300000 {
             return Err("提取文字超过30万字符，原件保留。".into());
         }
+        if let Some(rows) = &section.table_rows {
+            if value.format != "xlsx" {
+                return Err("表格布局与材料格式不符。".into());
+            }
+            validate_table(section, rows, &mut table_cells)?;
+        }
     }
     if characters == 0
         || characters != value.characters
@@ -347,6 +368,60 @@ fn validate_extraction(value: &Extraction, row: &Document) -> Result<(), String>
             .any(|w| w.encode_utf16().count() > 500)
     {
         return Err("材料文字长度或提示无法确认。".into());
+    }
+    Ok(())
+}
+fn validate_table(section: &Section, rows: &[TableRow], count: &mut usize) -> Result<(), String> {
+    if rows.is_empty() || rows.len() > 10000 {
+        return Err("表格行数超出读取范围。".into());
+    }
+    let mut previous_row = 0;
+    let mut canonical = String::new();
+    for (i, row) in rows.iter().enumerate() {
+        if row.row <= previous_row
+            || row.row > 1048576
+            || row.cells.is_empty()
+            || row.cells.len() > 16384
+        {
+            return Err("表格行号或列数无效。".into());
+        }
+        previous_row = row.row;
+        let mut previous_column = 0u32;
+        if i > 0 {
+            canonical.push('\n');
+        }
+        for (j, cell) in row.cells.iter().enumerate() {
+            *count += 1;
+            if cell.column.is_empty()
+                || cell.column.len() > 3
+                || !cell.column.bytes().all(|b| b.is_ascii_uppercase())
+                || cell.text.is_empty()
+                || *count > 100000
+            {
+                return Err("表格单元格无效。".into());
+            }
+            let column = cell
+                .column
+                .bytes()
+                .fold(0u32, |n, b| n * 26 + (b - b'A' + 1) as u32);
+            if column <= previous_column || column > 16384 {
+                return Err("表格列顺序无效。".into());
+            }
+            previous_column = column;
+            if j > 0 {
+                canonical.push('\t');
+            }
+            canonical.push_str(&cell.column);
+            canonical.push_str(&row.row.to_string());
+            canonical.push_str(": ");
+            canonical.push_str(&cell.text);
+            if canonical.len() > 1200000 {
+                return Err("表格文字超出范围。".into());
+            }
+        }
+    }
+    if canonical != section.text {
+        return Err("表格布局与保留的原文字不符，未替换已保存内容。".into());
     }
     Ok(())
 }
