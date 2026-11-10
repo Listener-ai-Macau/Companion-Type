@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-11T07:25:09+08:00",
+  "roles": [
+    {
+      "task": "/root/customer136_presale",
+      "forkTurns": "none",
+      "rawDispatchFile": "customer-presale-dispatch.txt",
+      "rawDispatchSha256": "a5a1586860be5e8fb32267a56ca4fab98a047ce9e1a9a193d8dd0d8a76f600eb"
+    },
+    {
+      "task": "/root/customer136_afteruse",
+      "forkTurns": "none",
+      "rawDispatchFile": "customer-afteruse-dispatch.txt",
+      "rawDispatchSha256": "f3e470c1e554a33dbfa8790fcdbec6eee2b23422271fed3dd7779e0b139c97e2"
+    }
+  ],
+  "knownAuxiliaryCondition": "Existing old public engineering human notes, disclosed; no engineering history or old feedback passed.",
+  "priceAndHostedServiceTerms": "Not specified; no invented value/rights.",
+  "productVersion": "0.1.136",
+  "ownedDisplay": 31
+}

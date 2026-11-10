@@ -1,0 +1,2 @@
+const {connect}=require('C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261110-android-media-import/organization_ui.cjs');
+(async()=>{const {page,browser}=await connect();try{await page.screenshot({path:'C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261110-android-media-import/customer-edit136/customer-presale-search.png'});await page.getByText('超市交流｜工程需求待收集（公开样例）',{exact:true}).click();console.log(await page.locator('body').innerText());}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
