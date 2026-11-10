@@ -57,6 +57,7 @@ try:
  assert preflight['result']=='TARGET_IDLE_AT_OBSERVATION',preflight['result']
  record['state']='BUILDING_NORMAL_RELEASE';save()
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
+ run('recording-context-tests',['cargo','+1.95.0','test','--release','--locked','--lib','meeting_note','--','--test-threads=1'],N)
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)
  record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "3f8c3daa30acd14dea4dbad128755a75c1e6b40874f77c07a600d1c541f04a2f",
-    "package-lock.json": "bc3aeda25a85731146801b6008422a66f10342ee47d3b74c53f8f81760145fdc"
+    "apps/windows/src-tauri/Cargo.lock": "cf9b9855076476f8184693595506cafbb577a77fe7ea39d8cc36995e82222c57",
+    "package-lock.json": "6a6e7cf231ea3fe3a4964023eeb60dfb1831a9a2c9430ca673e40c4c6b911b26"
   },
   "components": [
     {
@@ -7937,6 +7937,204 @@
         "sha256": "ee27c85ab799a338446b68eec77abf42e1a6f1bb490656e121c6e27bfbab9f16",
         "status": "unmodified exact public crate, checksum verified"
       }
+    },
+    {
+      "name": "byteorder-lite",
+      "version": "0.1.0",
+      "license": "Unlicense OR MIT",
+      "repository": "https://github.com/image-rs/byteorder-lite",
+      "crateSha256": "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/byteorder-lite/0.1.0/download",
+      "texts": [
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f",
+          "file": "texts/0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "image",
+      "version": "0.25.9",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/image-rs/image",
+      "crateSha256": "e6506c6c10786659413faa717ceebcb8f70731c0a60cbae39795fdf114519c1a",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/image/0.25.9/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3",
+          "file": "texts/c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "image-webp",
+      "version": "0.2.4",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/image-rs/image-webp",
+      "crateSha256": "525e9ff3e1a4be2fbea1fdf0e98686a6d98b4d8f937e1bf7402245af1909e8c3",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/image-webp/0.2.4/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3",
+          "file": "texts/c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "moxcms",
+      "version": "0.7.11",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "repository": "https://github.com/awxkee/moxcms.git",
+      "crateSha256": "ac9557c559cd6fc9867e122e20d2cbefc9ca29d80d027a8e39310920ed2f0a97",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/moxcms/0.7.11/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE.md",
+          "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5",
+          "file": "texts/90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE.md",
+          "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff",
+          "file": "texts/2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "pxfm",
+      "version": "0.1.30",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "repository": "https://github.com/awxkee/pxfm",
+      "crateSha256": "d55d956fa96f5ec02be2e13af0e20391a5aa83d6a074e3ad368959d0fab299ea",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/pxfm/0.1.30/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE.md",
+          "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5",
+          "file": "texts/90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE.md",
+          "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff",
+          "file": "texts/2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "quick-error",
+      "version": "2.0.1",
+      "license": "MIT/Apache-2.0",
+      "repository": "http://github.com/tailhook/quick-error",
+      "crateSha256": "a993555f31e5a609f617c12db6250dedcac1b0a85076912c436e6fc9b2c8e6a3",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/quick-error/2.0.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+          "file": "texts/c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "058f01fe181608d027fcde7e528fc03ea3cf90f30903c407644b0a9bbc54f500",
+          "file": "texts/058f01fe181608d027fcde7e528fc03ea3cf90f30903c407644b0a9bbc54f500.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "zune-core",
+      "version": "0.5.3",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "repository": "https://github.com/etemesi254/zune-image",
+      "crateSha256": "d56377fd46368984a170bc5aac5567e52ca5da874caa60bea39fcbca78fb658b",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/zune-core/0.5.3/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "file": "texts/c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745",
+          "file": "texts/d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-ZLIB",
+          "sha256": "d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c",
+          "file": "texts/d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
+    },
+    {
+      "name": "zune-jpeg",
+      "version": "0.5.15",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "repository": "https://github.com/etemesi254/zune-image/tree/dev/crates/zune-jpeg",
+      "crateSha256": "27bc9d5b815bc103f142aa054f561d9187d191692ec7c2d1e2b4737f8dbd7296",
+      "ecosystem": "cargo",
+      "role": "active Windows normal image-note decoder/preview input; original files stay byte-identical",
+      "source": "https://crates.io/api/v1/crates/zune-jpeg/0.5.15/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "file": "texts/c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745",
+          "file": "texts/d30047bca3b516639339a3c279bb84c3483124fb5a9dafe3c75056a85090e745.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        },
+        {
+          "path": "LICENSE-ZLIB",
+          "sha256": "d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c",
+          "file": "texts/d201d14804d3bcd3b944147173175e4abfbd838b7c8069b6bd3452496bf13e6c.txt",
+          "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [

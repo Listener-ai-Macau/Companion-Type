@@ -229,7 +229,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     transcript_session.note_revision=1;
     transcript_session.meeting_notes.push(super::super::meeting_notes::Note {
         id:uuid::Uuid::new_v4().to_string(),text:"Controlled user note".into(),bookmark_id:None,
-        created_at:"controlled".into(),updated_at:"controlled".into(),
+        image:None,created_at:"controlled".into(),updated_at:"controlled".into(),
     });
     install_snapshot(&backend, snapshot(vec![transcript_session],Some("transcript-only")))?;
     let text_erased=backend.apply_control(request(Action::PrivacyEraseTranscript,Some("transcript-only"))?)?;

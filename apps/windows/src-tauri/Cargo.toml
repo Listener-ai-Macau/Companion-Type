@@ -1,6 +1,6 @@
 [package]
 name = "companion-type"
-version = "0.1.82"
+version = "0.1.83"
 description = "Standalone Companion Type host app"
 authors = ["Listener AI"]
 edition = "2021"
@@ -46,6 +46,7 @@ tauri-plugin-updater = "=2.12.0"
 semver = "1"
 minisign-verify = "0.2"
 base64 = "0.22"
+image = { version = "=0.25.9", default-features = false, features = ["jpeg", "png", "webp"] }
 msi = "0.10.0"
 symphonia = { version = "=0.5.5", default-features = false, features = ["aac", "alac", "isomp4", "mp3", "flac", "ogg", "vorbis", "wav", "pcm"] }
 

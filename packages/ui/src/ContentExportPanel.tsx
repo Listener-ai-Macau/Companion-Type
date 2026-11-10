@@ -4,8 +4,8 @@ import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import type {CompanionMeetingExportRequest} from './CompanionDashboard';
 export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
-type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png';
-const formats:readonly [Format,string][]=[['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
+type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
+const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
 type Preview={contentHash:string;textContent?:string|null};
 type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
@@ -86,6 +86,7 @@ export function ContentExportPanel(props:Props){
        {formats.map(([value,label])=><option key={value} value={value} disabled={value==='srt'&&!props.exactTiming}>{label}</option>)}
      </select></label>
    </fieldset>
+   {format==='bundle'&&<p className="ct-step-meta">图文 ZIP 解压后打开“打开阅读.html”即可离线阅读。仅包含勾选内容及其中原图，每次图片合计不超过64MB。其它格式保留文字、时间与图片名称，不嵌入原图。</p>}
    {subtitles?<p className="ct-step-meta">字幕只包含有真实时间轴的原文；近似分段不能作为精确字幕。</p>:format==='xlsx'?<p className="ct-step-meta">Excel按章节保留所选正文，适合筛选和后续编辑。</p>:format==='pptx'?<p className="ct-step-meta">按已保存内容分页，文字可在PowerPoint中继续编辑；材料和原文依据一起保留。</p>:format==='png'?<p className="ct-step-meta">将所选内容绘成完整导图图片。长会议建议只选需要的材料；可编辑版本请选“思维导图（可编辑）”。</p>:null}
    <div className="ct-button-row" style={{marginTop:12}}>
      <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>

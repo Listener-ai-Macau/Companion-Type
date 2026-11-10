@@ -196,7 +196,7 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'pptx' | 'png' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'pptx' | 'png' | 'bundle' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
   contentSections?: import('./ContentExportPanel').ContentSelection;
   expectedContentHash?:string;
@@ -283,6 +283,8 @@ export interface CompanionDashboardProps {
   onPreviewRetranscription?: (sessionId:string) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onPreviewGap?: (sessionId:string,range:{startMs:number;endMs:number}) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
+  onAddImageNote?:(request:import('@companion-type/core').CompanionMeetingImageNoteRequest)=>Promise<CompanionV1Snapshot|null>;
+  onPreviewNoteImage?:(sessionId:string,noteId:string)=>Promise<string>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
@@ -448,6 +450,8 @@ export function CompanionDashboard({
   onPreviewGap,
   onSaveBookmark,
   onSaveNote,
+  onAddImageNote,
+  onPreviewNoteImage,
   onSaveLibraryOrganization,
   onExportLibrary,
   onBackupLibrary,
@@ -2634,7 +2638,7 @@ export function CompanionDashboard({
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
           <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
-            persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
+            persistenceReady={!storageBlocked} onSave={onSaveNote} onAddImage={onAddImageNote} onPreviewImage={onPreviewNoteImage} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
               && selectedSession.durationMs>=0 && selectedSession.durationMs<=120000 ? ()=>runOrganizationControl({
                 action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,

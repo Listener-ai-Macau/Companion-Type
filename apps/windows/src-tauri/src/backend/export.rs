@@ -51,6 +51,7 @@ pub enum MeetingExportFormat {
     Xlsx,
     Pptx,
     Png,
+    Bundle,
     Todo,
     TodoText,
     Ics,
@@ -73,6 +74,7 @@ impl MeetingExportFormat {
             Self::Xlsx => "xlsx",
             Self::Pptx => "pptx",
             Self::Png => "png",
+            Self::Bundle => "zip",
             Self::Todo => "md",
             Self::TodoText => "txt",
             Self::Ics | Self::Calendar | Self::CalendarReminder | Self::CalendarReminder30 | Self::CalendarReminder60 => "ics",
@@ -91,6 +93,7 @@ impl MeetingExportFormat {
             Self::Xlsx => "Excel 工作簿",
             Self::Pptx => "PowerPoint 演示文稿",
             Self::Png => "思维导图 PNG",
+            Self::Bundle => "图文 ZIP（含原图）",
             Self::Todo => "待办清单 Markdown",
             Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
@@ -366,6 +369,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
             render_txt(session)
         }
+        MeetingExportFormat::Bundle => return Err("图文 ZIP 请在导出面板选择要保存的内容。".into()),
         MeetingExportFormat::Json => {
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
             render_json_for_mode(session, meeting_mode)?
@@ -392,6 +396,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
         MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf | MeetingExportFormat::Xlsx | MeetingExportFormat::Pptx | MeetingExportFormat::Png => "整理结果",
         MeetingExportFormat::Txt => "文字与补充",
         MeetingExportFormat::Json => "完整资料",
+        MeetingExportFormat::Bundle => "图文资料",
         MeetingExportFormat::Srt => "字幕",
         MeetingExportFormat::Todo => "待办清单",
         MeetingExportFormat::TodoText => "待办清单",
@@ -828,7 +833,7 @@ mod tests {
         let mut m=minutes();m.markdown="## 摘要\n只在纪要中的秘密".into();
         let utterance=CompanionV1UtteranceSegment{text:"小王交报价".into(),start_ms:3_600_000,end_ms:3_601_000,speaker:Some(0),approximate_timing:true};
         let mut s=session("仅在原文中的内容",vec![utterance],Some(m));
-        s.meeting_notes.push(super::super::meeting_notes::Note{id:"n1".into(),text:"用户补充内容".into(),bookmark_id:None,created_at:"2026-01-01".into(),updated_at:"2026-01-01".into()});
+        s.meeting_notes.push(super::super::meeting_notes::Note{id:"n1".into(),text:"用户补充内容".into(),bookmark_id:None,image:None,created_at:"2026-01-01".into(),updated_at:"2026-01-01".into()});
         let selection=PdfSections{minutes:false,transcript:true,highlights:false,timeline:true};
         let preview=prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&selection)).unwrap();
         let body=std::str::from_utf8(&preview.bytes).unwrap();

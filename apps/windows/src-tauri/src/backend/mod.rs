@@ -60,6 +60,7 @@ mod recording_metrics;
 pub(crate) mod recording_bookmarks;
 pub(crate) mod recording_pause_view;
 pub(crate) mod meeting_notes;
+pub(crate) mod meeting_note_images;
 pub(crate) mod minutes_context;
 pub(crate) mod library_organization;
 pub(crate) mod calendar_copy;
@@ -766,6 +767,7 @@ pub trait CompanionBackend: Send + Sync {
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
     fn refresh_device_recording_library(&self)->Result<CompanionV1Snapshot,String> {self.snapshot()}
     fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String>;
+    fn save_meeting_image_note(&self,_request:meeting_note_images::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境未提供图片备注。".into())}
     fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
         -> Result<CompanionV1Snapshot,String>;
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
@@ -1775,6 +1777,12 @@ impl CompanionBackend for FixtureCompanionBackend {
             }
         }
         Ok(report)
+    }
+    fn save_meeting_image_note(&self,request:meeting_note_images::Request)->Result<CompanionV1Snapshot,String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂不可用。")?;
+        if snapshot.host.persistence.status!="ready"{return Err("请先恢复或重试保存会议库；输入仍保留。".into());}
+        let row=snapshot.host.sessions.iter_mut().find(|s|s.id==request.session_id).ok_or("这场会议已不存在，未修改其它会议。")?;
+        meeting_note_images::commit(row,&request,&connection_timestamp())?;snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
     }
     fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String> {
         let mut snapshot = self.snapshot.lock().map_err(|_| "会议库暂时不可用。")?;

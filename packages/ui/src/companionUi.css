@@ -1724,3 +1724,5 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-calendar-comparison-columns section {min-width:0;padding:10px;background:#f4f7f2;border-radius:8px;overflow-wrap:anywhere;}
 .ct-calendar-comparison h4 {margin:0 0 8px;}
 @media(max-width:600px){.ct-calendar-comparison-columns{grid-template-columns:1fr;}}
+
+.ct-note-image{display:grid;gap:8px;margin:12px 0 16px;max-width:680px}.ct-note-image>button{padding:0;border:0;background:transparent;text-align:left;cursor:zoom-in}.ct-note-image img{display:block;width:100%;max-height:280px;object-fit:cover;border:1px solid var(--ct-border,#dedde3);border-radius:12px}.ct-note-image>.expanded img{max-height:none;object-fit:contain}.ct-note-image small{font-size:11px;color:var(--ct-text-muted,#8d94a3);overflow-wrap:anywhere}.ct-note-image>div{font-size:12px;padding:18px;border:1px solid var(--ct-border,#dedde3);border-radius:12px;color:var(--ct-text-muted,#8d94a3)}

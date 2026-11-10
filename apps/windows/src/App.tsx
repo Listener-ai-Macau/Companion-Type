@@ -45,6 +45,8 @@ import {
   saveCompanionMeetingEdit,
   saveCompanionBookmark,
   saveCompanionMeetingNote,
+  addCompanionImageNote,
+  previewCompanionNoteImage,
   saveCompanionLibraryOrganization,
   isTauriRuntime,
   getBoardOnlineLiveStatus,
@@ -410,6 +412,8 @@ export function App() {
         try { const saved=await saveCompanionBookmark(request);setSnapshot(saved);return saved; }
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* keep the last readable library */ } throw error; }
       }):undefined}
+      onAddImageNote={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{try{const saved=await addCompanionImageNote(request);if(saved)setSnapshot(saved);return saved;}catch(error){try{setSnapshot(await getCompanionSnapshot());}catch{}throw error;}}):undefined}
+      onPreviewNoteImage={isTauriRuntime()?previewCompanionNoteImage:undefined}
       onSaveNote={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
         try { const saved=await saveCompanionMeetingNote(request);setSnapshot(saved);return saved; }
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* retain the last readable library */ } throw error; }

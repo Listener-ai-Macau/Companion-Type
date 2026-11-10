@@ -1766,7 +1766,7 @@ mod tests {
         session.duration_ms = 180_000;
         session.meeting_notes.push(crate::backend::meeting_notes::Note {
             id: "note".into(), text: "这项安排已经取消".into(), bookmark_id: None,
-            created_at: "now".into(), updated_at: "now".into(),
+            image:None,created_at: "now".into(), updated_at: "now".into(),
         });
         let l0 = rules_l0_minutes(&session, "now");
         let mut model = l0.clone();

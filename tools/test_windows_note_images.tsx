@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create,type ReactTestRenderer} from 'react-test-renderer';
+import {CompanionMeetingNotes} from '../packages/ui/src/CompanionMeetingNotes';
+import type {CompanionMeetingImageNoteRequest,CompanionV1HostSession,CompanionV1Snapshot} from '../packages/core/src';
+let tree:ReactTestRenderer,mode:'cancel'|'fail'|'save'='cancel',dirty=false;const ids:string[]=[];
+const session={id:'import-fixture',audioStored:true,noteRevision:0,meetingNotes:[],bookmarks:[]} as unknown as CompanionV1HostSession;
+const props={session,blocked:false,persistenceReady:true,anyRecording:false,onSave:async()=>{throw Error('unused');},onSeek:async()=>{},onUnsavedChange:(value:boolean)=>{dirty=value;},onAddImage:async(request:CompanionMeetingImageNoteRequest)=>{ids.push(request.noteId);if(mode==='cancel')return null;if(mode==='fail')throw Error('磁盘暂不可写');return {host:{persistence:{status:'ready'},sessions:[{...session,noteRevision:1,meetingNotes:[{id:request.noteId,text:request.text,bookmarkId:request.bookmarkId,image:{name:'public.png',file:'owned.png',sha256:'a'.repeat(64),bytes:120,preview:'owned.preview.jpg',previewBytes:100,previewSha256:'b'.repeat(64)},createdAt:'now',updatedAt:'now'}]}]}} as unknown as CompanionV1Snapshot;}};
+const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');const button=(label:string)=>tree.root.findAllByType('button').find(n=>text(n)===label)!;const draft=()=>tree.root.findByProps({'aria-label':'新录音备注'});
+await act(async()=>{tree=create(<CompanionMeetingNotes {...props}/>);});act(()=>draft().props.onChange({target:{value:'公开白板：预算12000元'}}));assert(dirty);
+await act(async()=>{button('添加图片').props.onClick();});assert.equal(draft().props.value,'公开白板：预算12000元');assert(dirty,'Cancelling picker should retain entered context');
+mode='fail';await act(async()=>{button('添加图片').props.onClick();});assert.equal(draft().props.value,'公开白板：预算12000元');assert(button('重试添加图片'));
+mode='save';await act(async()=>{button('重试添加图片').props.onClick();});assert.equal(ids[1],ids[2],'Lost-reply retry must keep same note identity');assert.equal(draft().props.value,'');assert(!dirty);assert(text(tree.toJSON()).includes('图片与备注已保存在本机'));
+act(()=>tree.unmount());console.log('PASS Windows image-note UI: native-picker cancellation and failure preserve draft, same request identity for retry, saved snapshot checked before clearing draft.');

@@ -2,6 +2,7 @@ export interface CompanionMeetingNote {
   id: string;
   text: string;
   bookmarkId?: string | null;
+  image?: {file:string;name:string;bytes:number;sha256:string;preview:string;previewBytes:number;previewSha256:string}|null;
   createdAt: string;
   updatedAt: string;
 }
@@ -14,3 +15,4 @@ export interface CompanionMeetingNoteRequest {
   bookmarkId?: string | null;
 }
 export const normalizeCompanionNoteText = (value: string) => value.replace(/\r\n?/g, '\n').trim();
+export type CompanionMeetingImageNoteRequest=Omit<CompanionMeetingNoteRequest,'action'|'text'>&{text:string};
