@@ -8,7 +8,10 @@ export async function readPdf(bytes:Uint8Array,collector:SectionCollector,option
  const base=new URL(options.engineBaseUrl,globalThis.location.href);if(base.origin!==globalThis.location.origin)throw new DocumentReadError('environment','PDF读取组件位置无法确认，请更新应用后重试。');
  let engine:PdfModule;try{engine=await import(/* @vite-ignore */ new URL('pdf.min.mjs',base).href) as PdfModule;}catch{throw new DocumentReadError('environment','当前系统组件暂不能读取PDF，请更新系统WebView或应用后重试。');}
  engine.GlobalWorkerOptions.workerSrc=new URL('pdf.worker.min.mjs',base).href;
- const task=engine.getDocument({data:bytes,password:options.password,useSystemFonts:false,disableFontFace:true,useWasm:false,stopAtErrors:true,cMapPacked:true,cMapUrl:new URL('cmaps/',base).href,standardFontDataUrl:new URL('standard_fonts/',base).href});
+ // PDF.js's default display-side binary factory uses document.baseURI, which
+ // does not exist inside this dedicated reader worker. Fetch local CMaps in
+ // its PDF worker instead; no page renderer or image WASM is needed for text.
+ const task=engine.getDocument({data:bytes,password:options.password,useSystemFonts:true,disableFontFace:true,useWasm:false,useWorkerFetch:true,disableWorkerRendering:true,stopAtErrors:true,cMapPacked:true,cMapUrl:new URL('cmaps/',base).href,standardFontDataUrl:new URL('standard_fonts/',base).href});
  const abort=()=>{void task.destroy().catch(()=>{});};options.signal?.addEventListener('abort',abort,{once:true});
  try{
   const document=await task.promise;checkpoint(options);if(document.numPages>DOCUMENT_LIMITS.pdfPages)capacity('PDF页数超过200页，请拆分后导入。');

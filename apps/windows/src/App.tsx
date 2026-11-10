@@ -10,7 +10,7 @@ import {
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
-import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,previewCompanionMeetingGap,controlCompanionPetFind,askCompanionMeetings,cancelCompanionMeetingQuestion } from './companionClient';
+import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,previewCompanionMeetingGap,controlCompanionPetFind,askCompanionMeetings,cancelCompanionMeetingQuestion,companionDocumentAdapter } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import {CloseReview} from './CloseReview';
@@ -308,6 +308,7 @@ export function App() {
       petPanel={isTauriRuntime()?<PetChat onUnsavedChange={setPetUnsavedEdits} connected={Boolean(snapshot?.device.connected)} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}
+      documentAdapter={isTauriRuntime()?companionDocumentAdapter:undefined}
       onCancelMeetingQuestion={isTauriRuntime()?cancelCompanionMeetingQuestion:undefined}
       onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw'), import('../src-tauri/resources/licenses/ShadcnDashboardMIT.txt?raw')]).then(([components, models, template]) => `${components.default}\n\n${models.default}\n\nShadcn Dashboard — https://github.com/shadcndashboard/shadcndashboard\n${template.default}`)}
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}

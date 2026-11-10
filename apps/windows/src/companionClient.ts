@@ -32,6 +32,15 @@ import {
 export const askCompanionMeetings = (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) =>
   invoke<import('@companion-type/core').MeetingQaResult>('ask_companion_meetings',{question,sessionIds,jobId,resume});
 export const cancelCompanionMeetingQuestion = (jobId:string) => invoke<boolean>('cancel_companion_meeting_question',{jobId});
+export function companionDocumentAdapter(sessionId:string):import('../../../packages/document-context/src/storageTypes').DocumentContextAdapter{
+ const command=<T,>(action:string,value?:import('../../../packages/document-context/src/storageTypes').ContextDocuments,id?:string,extra:object={})=>invoke<T>('read_companion_document_context',{action,request:{sessionId,revision:value?.revision??0,documentId:id,...extra}});
+ return {load:()=>command('list'),
+  import:async(value,id)=>await invoke<import('../../../packages/document-context/src/storageTypes').ContextDocuments|null>('import_companion_document',{sessionId,documentId:id,revision:value.revision})??{cancelled:true},
+  chunk:(value,id,offset)=>command('chunk',value,id,{offset}),read:(value,id)=>command('read',value,id),
+  commit:(value,id,extraction)=>command('commit',value,id,{extraction}),remove:(value,id)=>command('remove',value,id),
+  saveOriginal:(value,id)=>invoke<boolean>('save_companion_document_original',{sessionId,documentId:id,revision:value.revision}),
+ };
+}
 
 let fixtureSnapshot: CompanionV1Snapshot = createCompanionV1Fixture();
 export const refineCompanionMeetingSpeakers = (sessionId:string) =>

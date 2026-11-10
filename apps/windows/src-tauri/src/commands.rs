@@ -189,9 +189,14 @@ pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,qu
     tauri::async_runtime::spawn_blocking(move|| {
         let snapshot=coordinator.snapshot()?;
         if snapshot.host.persistence.status!="ready" {return Err("会议资料尚未就绪，请稍后重试。".into());}
-        if session_ids.is_empty(){return Err("请选择至少一场已转写会议。".into());}
+        if session_ids.is_empty()||session_ids.len()>12||session_ids.iter().collect::<std::collections::HashSet<_>>().len()!=session_ids.len(){return Err("请选择1到12项不重复的会议转写或补充材料。".into());}
         let mut documents=Vec::new();
         for id in session_ids {
+            if let Some(value)=id.strip_prefix("document:"){
+                let (owner,document_id)=value.rsplit_once(':').ok_or("材料来源标识无效。")?;
+                let session=snapshot.host.sessions.iter().find(|row|row.id==owner).ok_or("材料所属会议已不存在。")?;
+                documents.push(crate::backend::document_context::ai_document(session,document_id)?);continue;
+            }
             let session=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("所选会议已不存在，请刷新后重试。")?;
             if session.organization.trashed_at.is_some() || !crate::backend::transcript_review::final_transcript_available(session)
                 || crate::backend::transcript_review::review_is_stale(session) {
@@ -204,7 +209,10 @@ pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,qu
         let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|key|!key.trim().is_empty()).ok_or("请先配置 AI 整理服务。")?;
         let base=std::env::var("DEEPSEEK_BASE_URL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"https://api.deepseek.com/v1".into());
         let model=std::env::var("DEEPSEEK_MODEL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"deepseek-v4-flash".into());
-        crate::backend::meeting_qa::ask(&crate::backend::meeting_qa::Request{question,documents,endpoint:format!("{}/chat/completions",base.trim_end_matches('/')),model,job_id:Some(job_id),resume},&key)
+        let question=if documents.iter().any(|doc|doc.id.starts_with("document:")){format!("{question}\n阅读要求：标有用户补充材料的内容只属于材料，不代表会上说过、已决定或承诺；与会议原话分别回答并保留来源。") }else{question};
+        let result=crate::backend::meeting_qa::ask(&crate::backend::meeting_qa::Request{question,documents:documents.clone(),endpoint:format!("{}/chat/completions",base.trim_end_matches('/')),model,job_id:Some(job_id),resume},&key)?;
+        let current=coordinator.snapshot()?;for document in documents.iter().filter(|doc|doc.id.starts_with("document:")){let value=document.id.strip_prefix("document:").unwrap();let (owner,id)=value.rsplit_once(':').ok_or("材料来源无法确认。")?;let session=current.host.sessions.iter().find(|row|row.id==owner).ok_or("材料所属会议已移除，结果未作为会议事实保存。")?;let now=crate::backend::document_context::ai_document(session,id)?;if now.text!=document.text||now.title!=document.title{return Err("材料在查询期间变化，请重新读取后再提问。".into());}}
+        Ok(result)
     }).await.map_err(|_|"本次问答未完成，请重试。".to_string())?
 }
 

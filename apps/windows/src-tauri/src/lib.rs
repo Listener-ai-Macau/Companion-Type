@@ -6,6 +6,7 @@
 mod backend;
 mod cli_fallback;
 mod commands;
+mod document_commands;
 mod content_handoff;
 mod file_clipboard;
 mod calendar_handoff;
@@ -328,6 +329,9 @@ pub fn run() {
             commands::save_companion_meeting_note,
             commands::add_companion_image_note,
             commands::preview_companion_note_image,
+            document_commands::read_companion_document_context,
+            document_commands::import_companion_document,
+            document_commands::save_companion_document_original,
             commands::save_companion_bookmark,
             commands::import_companion_audio,
             commands::cancel_companion_audio_import,

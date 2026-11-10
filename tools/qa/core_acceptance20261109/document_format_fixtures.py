@@ -9,6 +9,8 @@ from docx import Document
 from openpyxl import Workbook
 from reportlab.pdfgen import canvas
 from reportlab.lib.pdfencrypt import StandardEncryption
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 
 root = Path(sys.argv[1]).resolve()
 root.mkdir(parents=True, exist_ok=True)
@@ -63,12 +65,15 @@ text = '  人工材料，保留空白。\n不是会议转写。\n'
 (root / 'material.txt').write_text(text, encoding='utf-8', newline='')
 (root / 'material-utf16.txt').write_bytes(text.encode('utf-16'))
 (root / 'material-gb.txt').write_bytes(text.encode('gb18030'))
-for name, encrypt in [('material.pdf', None), ('protected.pdf', StandardEncryption('local-password', canCopy=1)), ('restricted.pdf', StandardEncryption('local-password', canCopy=0))]:
+for name, encrypt in [('material.pdf', None), ('protected.pdf', StandardEncryption('local-password', ownerPassword='fixture-owner-only', canCopy=1)), ('restricted.pdf', StandardEncryption('local-password', ownerPassword='fixture-owner-only', canCopy=0))]:
     pdf = canvas.Canvas(str(root / name), encrypt=encrypt)
     pdf.drawString(72, 750, 'PUBLIC SUPPLEMENT: 12000, Alex, Tuesday. Not recorded speech.')
     pdf.showPage()
     pdf.drawString(72, 750, 'Second page: verify the source before making a decision.')
     pdf.save()
+pdfmetrics.registerFont(UnicodeCIDFont('STSong-Light'))
+pdf=canvas.Canvas(str(root/'chinese.pdf'));pdf.setFont('STSong-Light',14);pdf.drawString(72,750,'公开补充材料：预算12000元，周二核对，不是录音转写。');pdf.save()
+pdf=canvas.Canvas(str(root/'no-text.pdf'));pdf.rect(72,700,200,50);pdf.save()
 manifest = {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in root.iterdir() if p.is_file() and p.name != 'manifest.json'}
 (root / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
 print(json.dumps({'root': str(root), 'files': len(manifest), 'state': 'FICTIONAL_DOCUMENT_FIXTURES_GENERATED'}))

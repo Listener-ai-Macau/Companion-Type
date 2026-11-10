@@ -409,6 +409,8 @@ pub struct CompanionV1HostSession {
     pub note_revision: u64,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub meeting_notes: Vec<crate::backend::meeting_notes::Note>,
+    #[serde(default,skip_serializing_if="crate::backend::document_context::Metadata::is_empty")]
+    pub document_context: crate::backend::document_context::Metadata,
     pub minutes: Option<CompanionV1MeetingMinutes>,
     /// Two independently persisted products may coexist for one durable board recording.
     #[serde(default)]
@@ -1639,7 +1641,7 @@ pub(crate) fn create_host_session(
     let processing_policy=if request.prompt_id.as_deref()==Some(CAPTURE_ONLY_PROMPT) {
         CompanionV1ProcessingPolicy::Manual
     } else {CompanionV1ProcessingPolicy::Automatic};
-    CompanionV1HostSession { meeting_tracks: None,
+    CompanionV1HostSession { document_context: Default::default(), meeting_tracks: None,
         note_revision: 0, meeting_notes: vec![],
         bookmark_revision: 0,
         bookmarks: vec![],

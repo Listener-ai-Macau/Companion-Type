@@ -13,6 +13,7 @@ async function read(name:string,encoding?:'gb18030'){
 }
 const word=await read('material.docx'),wordText=word.sections.map(s=>s.text).join('\n');
 for(const text of ['公开采购讨论补充材料','12000元','工程需求','待收集','虚构材料页眉','附注：人工提供，不是会议结论。'])assert(wordText.includes(text),'Word missing '+text);
+fs.writeFileSync(path.join(root,'material.docx.extraction.json'),JSON.stringify(word));
 const sheet=await read('material.xlsx'),sheetText=sheet.sections.map(s=>s.text).join('\n');
 for(const text of ['12,000.00','FALSE','0','2026-11-10','公式没有已保存结果','XFD1048576: 稀疏末尾单元格'])assert(sheetText.includes(text),'Sheet missing '+text);
 assert(!sheetText.includes('隐藏内容不能悄悄使用'));assert(sheet.warnings.some(w=>w.includes('隐藏')));

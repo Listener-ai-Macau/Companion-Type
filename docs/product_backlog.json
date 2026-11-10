@@ -132987,7 +132987,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T17:49:50+08:00",
+      "updatedAt": "2026-11-10T18:51:41+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133729,7 +133729,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "当前正常788/冻结088长录未取得通过，先按本批result/acceptance定位实际失败，不新开录碰结果。继续手机当前完整录音/恢复链、IMU实际拿起/携带误触及真实Mac按住说话范围；Android备注检索/图片修复按原前端最新实际交付与完整客户回传接续，不沿旧版本别名重做。内部耗时及原速度/硬件/屏幕/生产block后置保持，整机售卖尚未关闭。",
+      "next": "当前389长录17:49失败且Owner选择稍后接回，先保留原库28段与未知实卡状态，不开新录音；已提交Windows089复用Listener文字交付，完成同源候选安装包后，在原设备恢复并空闲的条件下验实体按住说话→本机保存→现有识别→编辑器。手机127完整实卡链、最终2h和IMU自然拿起/携带/误触、真实Mac沿原四组继续；原block/后置不重开。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134263,8 +134263,8 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "当前唯一长录与同步已执行，等待真实完整终态；其间只推进不碰板卡/手机占用的候选收拢与原竞品缺口。",
-        "lastUpdatedAt": "2026-11-10T16:01:25+08:00",
+        "currentExecutable": "无当前长录/接收作业；原389接回收尾等待Owner。继续完成Windows089同源可用候选与Listener复用，不碰板卡或手机，不以模拟客户/源码编译关闭实机链。",
+        "lastUpdatedAt": "2026-11-10T18:51:41+08:00",
         "lastOwnerRaw": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
@@ -134348,12 +134348,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-10T17:49:50+08:00",
+        "at": "2026-11-10T18:51:41+08:00",
         "firmware": 66788,
-        "coreDelivery": "GUIDANCE088_DELIVERED_FUNCTIONAL_LONG_PHONE_RECOVERY_PHYSICAL_MAC_OPEN",
+        "coreDelivery": "WINDOWS088_ANDROID127_INSTALLED_INPUT089_SOURCE_CANDIDATE_FULL_CHAIN_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "Current FW788 + installed Windows087 + Android124. Ordinary first-use instructions still describe old long-press and require optional pet sound; fixing in shared088 UI. Single-click and one persistent double-tap physical sample passed. Pickup/final-case behavior, matched functional long-run, phone recovery and realMac pending. Old6239us remains measured failure only; not a current release prerequisite.",
+        "openSoftware": "FW66788 + installed Windows088/d9aec243 and Android127/c9554c2. Ordinary key guidance and phone note search/image reading have been delivered. Current long389 failed after58min host observation; original session recovery deferred. Windows089/1025b4bd now implements held-input integration reusing Listener but is a candidate, not physically qualified. Phone complete device/recovery, natural IMU and realMac remain open.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134482,8 +134482,8 @@
             "tasks": [
               "CP23-10"
             ],
-            "status": "CURRENT_FUNCTIONAL_LONG_NOT_QUALIFIED_RETAINED",
-            "remaining": "保留当前原场实际失败/未覆盖项，按acceptance和原日志定位，不新开录碰结果。",
+            "status": "FAILED_AT58MIN_ORIGINAL389_RECOVERY_OWNER_DEFERRED",
+            "remaining": "17:49读不到当前芯片状态后原生客户端退出；主机3483.959s，保守录中同步3336.784s，28段本机原件保留。当前物理采音未知；接回后先原389收尾和核验，不开新场碰结果。",
             "type": "Actual user-function reliability qualification, not a new codec optimization project",
             "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
             "passed": false
@@ -134504,8 +134504,8 @@
               "CP15-09",
               "CP15-02"
             ],
-            "status": "APP_BUILT_REAL_MAC_CHAIN_PENDING",
-            "remaining": "Native Mac candidate built, software checks pass; actual BLE/permissions/provider/transcription/focused editor insertion not yet qualified. This approved core promise is not complete merely because firmware emits events. Advanced optional gestures/air pointer are not newly inserted ahead of the basic release.",
+            "status": "WINDOWS089_IMPLEMENTED_BUILDING_MAC_CANDIDATE_REAL_HOST_CHAIN_PENDING",
+            "remaining": "原CP15-09同时承接已发现的Windows入口缺口：089复用Listener交付与现有原音/ASR，当前源码和本机受影响检查通过，安装包在构建；实体Windows与Mac BLE/权限/识别/编辑器链仍未完整资格。可选高级手势/空鼠继续后置。",
             "type": "Host application integration and actual-device qualification; distinct from current MCU basic recorder"
           }
         ],
@@ -134525,7 +134525,11 @@
           "path": "E:\\CodexData\\Companion\\deliveries\\20261110-core088-android127.zip",
           "bytes": 38640175,
           "sha256": "b1b8dcbc43f45db3fcdedde16b4cad93305cd281855ec9e56104d244b1ea863a"
-        }
+        },
+        "windowsDesktopInputCandidate": "0.1.89",
+        "windowsDesktopInputCandidateSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+        "windowsDesktopInputCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
+        "windowsDesktopInputPhysicalQualified": false
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136687,17 +136691,17 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-10T17:49:50+08:00",
-        "state": "CURRENT_FUNCTIONAL_LONG_NOT_QUALIFIED_RETAINED",
+        "at": "2026-11-10T18:51:41+08:00",
+        "state": "ORIGINAL389_RECOVERY_DEFERRED_INPUT089_CANDIDATE_BUILD",
         "phoneInstalled": "0.1.127",
         "firmwareInstalled": 66788,
         "phoneSourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
         "backendSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
         "firmwareSource": "a26ed28ba6387d7089bd529b2365d193c70791b2",
-        "boardLease": true,
-        "boardItem": "Companion正常788与冻结088：一次最终功能长录并同步，内部耗时仅观察",
-        "liveRecording": true,
-        "liveReceive": true,
+        "boardLease": false,
+        "boardItem": null,
+        "liveRecording": null,
+        "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
@@ -136756,7 +136760,7 @@
         "activeEngineeringFirmware": null,
         "codecObserverProgress": "E:\\CodexData\\Companion\\.build-cache\\codec777-attribution\\hardware-retry-1\\progress.json",
         "actualRecordingScopeReceipt": "E:\\CodexData\\Companion\\.build-cache\\functional788-win088\\long\\readiness.json",
-        "activeSession": 389,
+        "activeSession": null,
         "windowsUsabilitySourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/companion-recorder-usability",
         "windowsUsabilityBase": "28a79cdcaef6cfc1a9326f5fb70c6b6e6955bd5a",
         "windowsUsabilitySource": "24304ea96c43f1f43701e4ae39d05cbd18ef9ff3",
@@ -136785,7 +136789,20 @@
         "windowsGuidanceDeliveryProgress": "E:\\CodexData\\Companion\\.build-cache\\recorder-guidance088\\delivery-progress.json",
         "installedPhone": "0.1.127",
         "functionalLongControllerPid": null,
-        "functionalLongFinishPid": null
+        "functionalLongFinishPid": null,
+        "actualPhysicalRecordingState": "UNKNOWN_AFTER_HOST_EXIT_OWNER_DEFERRED_RECONNECT",
+        "lastObservedSession": 389,
+        "input089Source": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+        "input089BuildRun": {
+          "conclusion": "",
+          "databaseId": 42802045850,
+          "headSha": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+          "status": "in_progress",
+          "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42802045850"
+        },
+        "input089Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
+        "input089Installed": false,
+        "original389RecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovery-state.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -141475,12 +141492,12 @@
           "saleQualified": false
         },
         "newStartCommands": 1,
-        "boardLease": true,
+        "boardLease": false,
         "saleQualified": false,
         "running": false,
         "controllerPid": null,
         "finishPid": null,
-        "childPid": 17380,
+        "childPid": null,
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
@@ -141490,7 +141507,13 @@
         "operatorReadyAt": "2026-11-10T16:50:23+08:00",
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
         "terminalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
-        "passed": false
+        "passed": false,
+        "hostElapsedSeconds": 3483.959,
+        "conservativeLiveSyncSeconds": 3336.784,
+        "sealedLocalChunks": 28,
+        "terminalAt": "2026-11-10T17:49:27+08:00",
+        "recoveryState": "OWNER_DEFERRED_ORIGINAL389_UNCONFIRMED",
+        "actualPhysicalRecordingState": "UNKNOWN_AFTER_HOST_EXIT"
       },
       "baselineBefore769": {
         "firmwareVersion": 66767,
@@ -142888,16 +142911,17 @@
         "at": "2026-11-10T17:25:37+08:00",
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\owner-acceptance-20261110\\window-request-and-choice.json",
         "choice": "AFTER_EXISTING_LONG",
-        "stateAtCheckpoint": "WAIT_EXISTING_LONG_BEFORE_REMINDER",
-        "pidAtCheckpoint": 3384,
+        "stateAtCheckpoint": "OWNER_DEFERRED_NO_DEVICE_ACTION",
+        "pidAtCheckpoint": null,
         "liveProgress": "E:\\CodexData\\Companion\\.build-cache\\owner-acceptance-20261110-172028\\after-long-reminder\\progress.json",
         "statusRule": "Read live receipt and actual process; checkpoint PID/state is not a perpetual live claim. No future action is considered performed from a ready click alone.",
         "physicalReceiptWhenAvailable": "E:\\CodexData\\Companion\\.build-cache\\owner-acceptance-20261110-172028\\after-long-reminder\\physical\\result.json",
         "subjectiveReceiptWhenAvailable": "E:\\CodexData\\Companion\\.build-cache\\owner-acceptance-20261110-172028\\after-long-reminder\\progress.json",
-        "wholeProductQualified": false
+        "wholeProductQualified": false,
+        "closedAt": "2026-11-10T17:55:02+08:00"
       },
       "listenerReuseReview": {
-        "at": "2026-11-10T17:34:20+08:00",
+        "at": "2026-11-10T18:51:41+08:00",
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\listener-reuse-and-product-scope.json",
         "originalTasks": [
           "CP15-09",
@@ -142908,7 +142932,13 @@
         "macDesktopDictationCandidateOnly": true,
         "existingPlatformShared": true,
         "firmwareFunctionsAllQualified": false,
-        "scopeNotSilentlyExpanded": true
+        "scopeNotSilentlyExpanded": true,
+        "windowsDesktopDictationSourceImplemented": true,
+        "windowsDesktopDictationSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+        "windowsDesktopDictationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
+        "candidateInstalled": false,
+        "actualReuse": "Pinned Listener5a51c8d text insertion/selection/IME adapter, wrapped as companion-desktop-input; existing exact receive/library/ASR reused. No device driver/model/recording app fork and no firmware growth.",
+        "actualGaps": "Windows physical held capture/BLE/original/provider/editor not qualified; real Mac remains pending. No optional advanced gesture prerequisites added."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -268358,20 +268388,24 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T18:13:29+08:00",
-            "status": "SHARED_LOCAL_READER_SOURCE_CHECKPOINT_NOT_APP_DELIVERY",
+            "at": "2026-11-10T18:54:51+08:00",
+            "status": "DOCUMENT_ORIGINAL_READING_AND_EXPLICIT_AI_SOURCE_NATIVE_UI_IMPLEMENTATION_WIP",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document-reader-browser.json",
-            "checked": "独立DOCX正文/表格/附注/页眉、稀疏XLSX格式/隐藏表/缺失公式、PPTX关系顺序/隐藏页、文字编码和原件SHA；实际生产worker浏览器本地PDF分页/密码/取消/再读；Office ZIP与XML容量/CRC/来源边界。",
+            "evidence": [
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document-reader-offline-final.json",
+              "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\document-native-storage.json"
+            ],
+            "checked": "共享Office/PDF实际生产worker与离线中文字表、密码/权限/取消；Android原件/提取文字真实JVM存储、重试、实际备份恢复、保留已移除原件及精确清除；双端UI类型与前端构建通过。Windows新原生语法检查通过，完整Rust编译/受影响测试及原生打包/实际界面验收尚未完成。",
             "failuresRetained": [
               "SheetJS默认丢掉没有保存结果的公式，启用stub并识别t=z的合成0，不能当作公式结果。",
               "HTML纯文字投影保留段落间空行，工程检查断言修正，不改变原件。",
-              "saxes npm包未附完整LICENSE，从作者v6.0.0标签取得3011字节原文并加入既有材料；初次下载SSL失败后官方GitHub API成功。"
+              "saxes npm包未附完整LICENSE，从作者v6.0.0标签取得3011字节原文并加入既有材料；初次下载SSL失败后官方GitHub API成功。",
+              "新增中文CID PDF在独立worker中无文字，查明PDF.js默认DOM binary factory依赖document.baseURI；显式useWorkerFetch并停用页面渲染后本地CMap读取通过。纯文字读取不随包分发可选Liberation TTF或图像WASM；系统字体模式及所有本地资源请求通过。"
             ],
             "appDelivered": false,
-            "next": "接入两端本机原件/提取结果持久保存、读取与取消、材料界面及显式AI来源选择，再集中构建验原件/备份/恢复/精确清除；127非阻断阅读意见同批处理。",
+            "next": "完成本批受影响UI检查与原生Windows编译，再集中Android128/Windows088候选打包，验普通入口原件/提取阅读/主动AI引用/来源回找/备份恢复/移除清除；不把源码当交付。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false

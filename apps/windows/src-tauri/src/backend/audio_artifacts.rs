@@ -27,6 +27,8 @@ pub(crate) enum Purpose {
     SessionReceipt,
     NoteImage,
     NotePreview,
+    DocumentOriginal,
+    DocumentText,
 }
 impl Purpose {
     pub(super) fn accepts(self, path: &Path) -> bool {
@@ -42,6 +44,8 @@ impl Purpose {
             Self::SessionReceipt => ext.eq_ignore_ascii_case("json"),
             Self::NoteImage => ["jpg","png","webp"].iter().any(|allowed| ext.eq_ignore_ascii_case(allowed)),
             Self::NotePreview => ext.eq_ignore_ascii_case("jpg"),
+            Self::DocumentOriginal => ["pdf","docx","xlsx","pptx","txt","md","csv"].iter().any(|allowed|ext.eq_ignore_ascii_case(allowed)),
+            Self::DocumentText => ext.eq_ignore_ascii_case("json"),
             _ => ext.eq_ignore_ascii_case("wav"),
         }
     }
@@ -504,7 +508,7 @@ impl Drop for WriteLease {
 /// The current user-selected image must reproduce its bytes; no unknown file,
 /// different owner, deletion-in-progress or conflicting saved identity is adopted.
 pub(crate) fn seal_note_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
-    if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview)||!purpose.accepts(path){return Err(fail());}
+    if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview|Purpose::DocumentOriginal|Purpose::DocumentText)||!purpose.accepts(path){return Err(fail());}
     let root=managed_root(path).ok_or_else(fail)?;let leaf=path.file_name().and_then(|v|v.to_str()).filter(|v|component(v)).ok_or_else(fail)?;
     let _lease=lease(&root,leaf)?;let _lock=lock(&root)?;let mut data=load(&root)?;let owner=reference_key(source)?;
     let expected=Identity{bytes,sha256:sha.into()};let item=data.files.iter_mut().find(|i|i.file==leaf).ok_or_else(fail)?;

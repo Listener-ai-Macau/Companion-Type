@@ -47,6 +47,7 @@ import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence, splitShortMinutesOverview } from './briefMinutes';
 import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
 import {MeetingAiWorkbench} from './MeetingAiWorkbench';
+import {DocumentContextPanel} from './DocumentContextPanel';
 import {materialNote,readMaterialNote} from './aiMaterialNote';
 import {ActionListEditor} from './ActionListEditor';
 
@@ -223,6 +224,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  documentAdapter?:(sessionId:string)=>import('../../document-context/src/storageTypes').DocumentContextAdapter;
   readingPreview?:boolean;
   onAskMeetings?: (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) => Promise<import('@companion-type/core').MeetingQaResult>;
   onCancelMeetingQuestion?: (jobId:string) => Promise<boolean>;
@@ -452,6 +454,7 @@ export function CompanionDashboard({
   onSaveNote,
   onAddImageNote,
   onPreviewNoteImage,
+  documentAdapter,
   onSaveLibraryOrganization,
   onExportLibrary,
   onBackupLibrary,
@@ -550,6 +553,7 @@ export function CompanionDashboard({
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
+  const [documentSource,setDocumentSource]=useState<{id:string;quote:string;nonce:string}|undefined>();
   const [qaQuestion,setQaQuestion]=useState('');
   const [qaSelected,setQaSelected]=useState<string[]>([]);
   const [qaBusy,setQaBusy]=useState(false);
@@ -682,7 +686,8 @@ export function CompanionDashboard({
   const qaEligibleSessions=allLibrarySessions.filter(row=>!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row));
   const qaSelectedEligible=qaSelected.filter(id=>qaEligibleSessions.some(row=>row.id===id));
   const qaSessionsRef=useRef(allLibrarySessions);qaSessionsRef.current=allLibrarySessions;
-  const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{const row=allLibrarySessions.find(session=>session.id===id);
+  const documentScopes=selectedSession&&!selectedSession.organization?.trashedAt?(selectedSession.documentContext?.rows??[]).filter(row=>row.extraction).map(row=>({id:'document:'+selectedSession.id+':'+row.id,title:'补充材料 · '+row.name,kind:'supplement' as const,binding:row.extraction!.sha256})):[];
+  const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{if(id.startsWith('document:'))return documentScopes.find(s=>s.id===id)??null;const row=allLibrarySessions.find(session=>session.id===id);
     return row?[row.id,row.title,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
   const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
   const qaSourceRemoved=Boolean(qaSourceSnapshot&&qaSourceSnapshot.ids.some(id=>!qaEligibleSessions.some(row=>row.id===id)));
@@ -2530,16 +2535,16 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
-            {onAskMeetings&&selectedSession&&finalTranscript ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
+            {onAskMeetings&&selectedSession&&(finalTranscript||documentScopes.length>0) ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
               contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}
-              scopes={qaEligibleSessions.map(row=>({id:row.id,title:meetingTitle(row),binding:qaIdentity([row.id])}))}
+              scopes={[...qaEligibleSessions.map(row=>({id:row.id,title:meetingTitle(row),binding:qaIdentity([row.id])})),...documentScopes]}
               serviceReady={!!productSettings?.deepseekMinutesEnabled&&!!productSettings?.deepseekApiKeySet} busy={controlsBusy||storageBlocked} preview={readingPreview}
               onSetup={()=>{setShowAdvanced(true);setSettingsReturn('recording');navigatePage('settings','ct-service-settings');}}
               onAsk={async(question,ids,jobId,resume)=>{const source=qaIdentity(ids);setQaBusy(true);try{const result=await onAskMeetings(question,ids,jobId,resume?.resume?{...resume.resume,items:resume.items}:undefined);
-                if(ids.some(id=>!qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))throw Error('来源会议已移除，请重新选择。');
+                if(ids.some(id=>id.startsWith('document:')?!qaSessionsRef.current.some(row=>!row.organization?.trashedAt&&(row.documentContext?.rows??[]).some(doc=>'document:'+row.id+':'+doc.id===id&&!!doc.extraction)):!qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))throw Error('来源会议或材料已移除，请重新选择。');
                 return {...result,jobId};}finally{setQaBusy(false);}}}
               onCancel={onCancelMeetingQuestion}
-              onOpenSource={(id,quote)=>{setQaPendingCitation({sessionId:id,title:meetingTitle(allLibrarySessions.find(row=>row.id===id)??selectedSession),quote});setOpenSavedRecordingId(id);setOpenSavedRecordingTarget('source');if(selectedSession.id!==id)onControl({action:'meetingSelectSession',sessionId:id});}}
+              onOpenSource={(id,quote)=>{if(id.startsWith('document:')){setDocumentSource({id:id.slice(id.lastIndexOf(':')+1),quote,nonce:crypto.randomUUID()});document.getElementById('ct-document-context')?.scrollIntoView({block:'start'});return;}setQaPendingCitation({sessionId:id,title:meetingTitle(allLibrarySessions.find(row=>row.id===id)??selectedSession),quote});setOpenSavedRecordingId(id);setOpenSavedRecordingTarget('source');if(selectedSession.id!==id)onControl({action:'meetingSelectSession',sessionId:id});}}
               onLoadSaved={async()=> (selectedSession.meetingNotes??[]).map(readMaterialNote).filter((value):value is NonNullable<typeof value>=>value!==null)}
               onSave={async value=>{if(!onSaveNote)throw Error('当前环境未提供材料保存，请复制文字保留。');const source=qaSessionsRef.current.find(row=>row.id===selectedSession.id&&!row.organization?.trashedAt);if(!source)throw Error('当前会议已移除，未保存到其他会议。');
                 const note=materialNote(value),saved=await onSaveNote({sessionId:source.id,noteId:value.id,expectedRevision:source.noteRevision??0,action:'add',text:note,bookmarkId:null});
@@ -2651,6 +2656,7 @@ export function CompanionDashboard({
               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>
+          {documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} openSource={documentSource} onChanged={onRefresh}/></div>:null}
           {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
             {snapshot?.minutesContextSupported?'补充单独保存；整理时可选择仅用原话，或一起参考已保存补充。':'补充已单独保存；当前整理程序仅使用原话。'}
           </p> : null}

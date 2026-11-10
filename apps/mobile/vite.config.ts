@@ -6,7 +6,7 @@ import {documentEngineAssets} from '../../packages/document-context/viteAssets';
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
   base: './',
-  plugins: [react(),documentEngineAssets()],
+  plugins: [react(),documentEngineAssets(fileURLToPath(new URL('../../packages/document-context/ThirdPartyNotices.txt',import.meta.url)))],
   resolve: {
     alias: {
       '@companion-type/core': fileURLToPath(new URL('../../packages/core/src/index.ts', import.meta.url)),

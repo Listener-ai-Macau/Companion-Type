@@ -5,7 +5,7 @@ import {documentEngineAssets} from '../../packages/document-context/viteAssets';
 
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
-  plugins: [react(),documentEngineAssets()],
+  plugins: [react(),documentEngineAssets(fileURLToPath(new URL('../../packages/document-context/ThirdPartyNotices.txt',import.meta.url)))],
   // Must match apps/windows/src-tauri/tauri.conf.json build.devUrl
   server: {
     port: 1421,
