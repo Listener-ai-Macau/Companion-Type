@@ -25,6 +25,21 @@ use crate::coordinator::CompanionCoordinator;
 
 type CompanionCoordinatorState<'a> = State<'a, Arc<CompanionCoordinator>>;
 type BoardOnlineLiveManagerState<'a> = State<'a, Arc<CompanionBoardOnlineLiveManager>>;
+
+#[tauri::command]
+pub fn get_companion_desktop_input()->crate::backend::desktop_dictation::Status {crate::backend::desktop_dictation::status()}
+#[tauri::command]
+pub async fn start_companion_desktop_input(coordinator:CompanionCoordinatorState<'_>,shortcut:Option<companion_desktop_input::PasteShortcut>)
+    ->Result<crate::backend::desktop_dictation::Status,String>{
+    let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||crate::backend::desktop_dictation::start(coordinator,shortcut.unwrap_or_default()))
+        .await.map_err(|_|"电脑输入切换未完成。".to_string())?
+}
+#[tauri::command]
+pub fn stop_companion_desktop_input()->Result<crate::backend::desktop_dictation::Status,String>{crate::backend::desktop_dictation::stop()}
+#[tauri::command]
+pub async fn copy_companion_desktop_input(session_id:String)->Result<crate::backend::desktop_dictation::Status,String>{
+    tauri::async_runtime::spawn_blocking(move||crate::backend::desktop_dictation::copy(&session_id)).await.map_err(|_|"复制未完成。".to_string())?
+}
 #[tauri::command]
 pub async fn save_companion_library_organization(coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_organization::Request)->Result<CompanionV1Snapshot,String>{
     let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||coordinator.save_library_organization(request))

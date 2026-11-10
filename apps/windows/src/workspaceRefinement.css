@@ -82,3 +82,8 @@
 .ct-windows .ct-overview-expand{display:inline-flex;align-items:center;min-height:38px;margin:10px 0 18px;padding:7px 12px;border:1px solid #e3daed;border-radius:9px;background:#f8f4fc;color:#72528d;font-size:12px}.ct-windows.ct-theme-dark .ct-overview-expand{background:#352a40;border-color:#584368;color:#d7bdea}
 
 .ct-ai-service-fields{grid-column:1/-1;border:1px solid var(--ct-border,#dedbe4);border-radius:12px;padding:13px}.ct-ai-service-fields>summary{cursor:pointer;font-weight:600;font-size:13px}.ct-ai-service-fields>.ct-field{margin-top:12px}.ct-template-picker>summary{display:flex;justify-content:space-between;gap:12px}.ct-template-picker>summary>span{font-size:12px;opacity:.7}.ct-meeting-doc .meeting-ai-workbench{max-width:900px}
+/* Desktop dictation stays secondary to ordinary recording and first use. */
+.ct-desktop-input { margin: 16px 0; padding: 16px; border: 1px solid var(--ct-border, #c9c6d1); border-radius: 16px; }
+.ct-desktop-input summary { cursor: pointer; font-weight: 650; }
+.ct-desktop-input p { line-height: 1.6; overflow-wrap: anywhere; }
+.ct-desktop-input select { max-width: 100%; margin: 6px; padding: 6px; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 8px; }

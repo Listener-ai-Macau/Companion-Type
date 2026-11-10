@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "7498cb9243ef22f7eb7ebb79fbf9bc6e8edc76eca112737f14588ede69859c43",
-    "package-lock.json": "2697e93be99b7d8cb09bbdafad1f90b127000252d922bd6a2a403f3bca47cd53"
+    "apps/windows/src-tauri/Cargo.lock": "67818c3b4264922e52f0440224a401ea7733dbb49034924458c07477fa695953",
+    "package-lock.json": "8cf05bb78b174e6fca430a4e694f7c2a7e8eec33586de8565a8a20edde43cada"
   },
   "components": [
     {
@@ -8135,6 +8135,420 @@
           "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
         }
       ]
+    },
+    {
+      "name": "adler2",
+      "version": "2.0.1",
+      "license": "0BSD OR MIT OR Apache-2.0",
+      "repository": "https://github.com/oyvindln/adler2",
+      "crateSha256": "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/adler2/2.0.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-0BSD",
+          "sha256": "861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17",
+          "file": "texts/861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb",
+          "file": "texts/8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "arboard",
+      "version": "3.6.1",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/1Password/arboard",
+      "crateSha256": "0348a1c054491f4bfe6ab86a7b6ab1e44e45d899005de92f58b3df180b36ddaf",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/arboard/3.6.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE.txt",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT.txt",
+          "sha256": "f35468024534e0f4f16bb94cd0e88c87fbd1314f919c2645a07d350fb77b40c0",
+          "file": "texts/f35468024534e0f4f16bb94cd0e88c87fbd1314f919c2645a07d350fb77b40c0.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "clipboard-win",
+      "version": "5.4.3",
+      "license": "BSL-1.0",
+      "repository": "https://github.com/DoumanAsh/clipboard-win",
+      "crateSha256": "052af7878466feccda12ba7a6a67d019d712f296809559b47c12c8cc196d3a9a",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/clipboard-win/5.4.3/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+          "file": "texts/c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566.txt",
+          "origin": "https://raw.githubusercontent.com/DoumanAsh/clipboard-win/ed27008ae5d1f10cfbb266de039f0fb35fd05a56/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "enigo",
+      "version": "0.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/enigo-rs/enigo",
+      "crateSha256": "0087a01fc8591217447d28005379fb5a183683cc83f0a4707af28cc6603f70fb",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/enigo/0.2.1/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "f4d766d1551a41e213da39e009ea71674e06c7203bcf9526beee583d920ae4eb",
+          "file": "texts/f4d766d1551a41e213da39e009ea71674e06c7203bcf9526beee583d920ae4eb.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "error-code",
+      "version": "3.4.0",
+      "license": "BSL-1.0",
+      "repository": "https://github.com/DoumanAsh/error-code",
+      "crateSha256": "0b5343afd4a8365a643ac588dab4cf234a190c7f6c88c9f6dd6ffe00837661b7",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/error-code/3.4.0/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+          "file": "texts/c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "fax",
+      "version": "0.2.7",
+      "license": "MIT",
+      "repository": "https://github.com/pdf-rs/fax",
+      "crateSha256": "caf1079563223d5d59d83c85886a56e586cfd5c1a26292e971a0fa266531ac5a",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/fax/0.2.7/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "7101390b4c8edd752f4c0de47f35d61b44d9cf0ee8dd032115e25644e277cfff",
+          "file": "texts/7101390b4c8edd752f4c0de47f35d61b44d9cf0ee8dd032115e25644e277cfff.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "fdeflate",
+      "version": "0.3.7",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/image-rs/fdeflate",
+      "crateSha256": "1e6853b52649d4ac5c0bd02320cddc5ba956bdb407c4b75a2c6b75bf51500f8c",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/fdeflate/0.3.7/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3",
+          "file": "texts/c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "flate2",
+      "version": "1.1.9",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/flate2-rs",
+      "crateSha256": "843fba2746e448b37e26a819579957415c8cef339bf08564fe8b7ddbd959573c",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/flate2/1.1.9/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112",
+          "file": "texts/025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "half",
+      "version": "2.7.1",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/VoidStarKat/half-rs",
+      "crateSha256": "6ea2d84b969582b4b1864a92dc5d27cd2b77b622a8d79306834f1be5ba20d84b",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/half/2.7.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+          "file": "texts/a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1",
+          "file": "texts/508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.8.9",
+      "license": "MIT OR Zlib OR Apache-2.0",
+      "repository": "https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide",
+      "crateSha256": "1fa76a2c86f704bdb222d66965fb3d63269ce38518b83cb0575fca855ebb6316",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/miniz_oxide/0.8.9/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "4108245a1f2df9d4e94df8abed5b4ba0759bb2f9b40a6b939f1be141077ae50b",
+          "file": "texts/4108245a1f2df9d4e94df8abed5b4ba0759bb2f9b40a6b939f1be141077ae50b.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-APACHE.md",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "file": "texts/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT.md",
+          "sha256": "799e9ca9d179295ef372f25d3769cdda7d25bb2668add6a6a1e22d1e4c678b8d",
+          "file": "texts/799e9ca9d179295ef372f25d3769cdda7d25bb2668add6a6a1e22d1e4c678b8d.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-ZLIB.md",
+          "sha256": "0a54e647fe54104658b5e563c04c6f9edf251710e47bce692e0bd990a4ddaa39",
+          "file": "texts/0a54e647fe54104658b5e563c04c6f9edf251710e47bce692e0bd990a4ddaa39.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "png",
+      "version": "0.18.1",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/image-rs/image-png",
+      "crateSha256": "60769b8b31b2a9f263dae2776c37b1b28ae246943cf719eb6946a1db05128a61",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/png/0.18.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "eaf40297c75da471f7cda1f3458e8d91b4b2ec866e609527a13acfa93b638652",
+          "file": "texts/eaf40297c75da471f7cda1f3458e8d91b4b2ec866e609527a13acfa93b638652.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "simd-adler32",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/mcountryman/simd-adler32",
+      "crateSha256": "703d5c7ef118737c72f1af64ad2f6f8c5e1921f818cdcb97b8fe6fc69bf66214",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/simd-adler32/0.3.9/download",
+      "texts": [
+        {
+          "path": "LICENSE.md",
+          "sha256": "42a35170233e83e18856792e748de4c1ce4a63b2afce9a370c89ef3fe23f9f2d",
+          "file": "texts/42a35170233e83e18856792e748de4c1ce4a63b2afce9a370c89ef3fe23f9f2d.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "tiff",
+      "version": "0.10.3",
+      "license": "MIT",
+      "repository": "https://github.com/image-rs/image-tiff",
+      "crateSha256": "af9605de7fee8d9551863fd692cce7637f548dbd9db9180fcc07ccc6d26c336f",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/tiff/0.10.3/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "20c097d0de27e2adc179140a3d542091951a030699c7e1c78655f2a2d08d4e3e",
+          "file": "texts/20c097d0de27e2adc179140a3d542091951a030699c7e1c78655f2a2d08d4e3e.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "weezl",
+      "version": "0.1.12",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/image-rs/weezl",
+      "crateSha256": "a28ac98ddc8b9274cb41bb4d9d4d5c425b6020c50c46f25559911905610b4a88",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/weezl/0.1.12/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb",
+          "file": "texts/769f80b5bcb42ed0af4e4d2fd74e1ac9bf843cb80c5a29219d1ef3544428a6bb.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "573f5227db835cd30bbdd3aed3f82615f80119a4d5c82b4daf642dbfe2b6afde",
+          "file": "texts/573f5227db835cd30bbdd3aed3f82615f80119a4d5c82b4daf642dbfe2b6afde.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "version": "0.56.0",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/microsoft/windows-rs",
+      "crateSha256": "1de69df01bdf1ead2f4ac895dc77c9351aefff65b2f3db429a343f9cbf05e132",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/windows/0.56.0/download",
+      "texts": [
+        {
+          "path": "license-apache-2.0",
+          "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+          "file": "texts/c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "license-mit",
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+          "file": "texts/c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "windows-core",
+      "version": "0.56.0",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/microsoft/windows-rs",
+      "crateSha256": "4698e52ed2d08f8658ab0c39512a7c00ee5fe2688c65f8c0a4f06750d729f2a6",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/windows-core/0.56.0/download",
+      "texts": [
+        {
+          "path": "license-apache-2.0",
+          "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+          "file": "texts/c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "license-mit",
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+          "file": "texts/c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "zune-core",
+      "version": "0.4.12",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "repository": null,
+      "crateSha256": "3f423a2c17029964870cfaabb1f13dfab7d092a62a29a89264f4d36990ca414a",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/zune-core/0.4.12/download",
+      "texts": [
+        {
+          "path": "LICENSE-ZLIB",
+          "sha256": "7fa429541e55b1509909e058f2d21a37467e4958ec713b357f6e0cf9dc4ee352",
+          "file": "texts/7fa429541e55b1509909e058f2d21a37467e4958ec713b357f6e0cf9dc4ee352.txt",
+          "origin": "https://raw.githubusercontent.com/etemesi254/zune-image/f8fbb123d5ed04441e8324a555bfcda0cb1bd28f/LICENSE-ZLIB"
+        },
+        {
+          "path": "LICENSE.md",
+          "sha256": "c6dff146a9f31848ac296faa5a08a4253caf2c384c86f906dc99e7fc0a39cc8c",
+          "file": "texts/c6dff146a9f31848ac296faa5a08a4253caf2c384c86f906dc99e7fc0a39cc8c.txt",
+          "origin": "https://raw.githubusercontent.com/etemesi254/zune-image/f8fbb123d5ed04441e8324a555bfcda0cb1bd28f/LICENSE.md"
+        }
+      ]
+    },
+    {
+      "name": "zune-jpeg",
+      "version": "0.4.21",
+      "license": "MIT OR Apache-2.0 OR Zlib",
+      "repository": "https://github.com/etemesi254/zune-image/tree/dev/crates/zune-jpeg",
+      "crateSha256": "29ce2c8a9384ad323cf564b67da86e21d3cfdff87908bc1223ed5c99bc792713",
+      "ecosystem": "cargo",
+      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "source": "https://crates.io/api/v1/crates/zune-jpeg/0.4.21/download",
+      "texts": [
+        {
+          "path": "LICENSE-ZLIB",
+          "sha256": "7fa429541e55b1509909e058f2d21a37467e4958ec713b357f6e0cf9dc4ee352",
+          "file": "texts/7fa429541e55b1509909e058f2d21a37467e4958ec713b357f6e0cf9dc4ee352.txt",
+          "origin": "https://raw.githubusercontent.com/etemesi254/zune-image/fa2c767a01d7d9373911d0bf63e0588553d67e0e/LICENSE-ZLIB"
+        },
+        {
+          "path": "LICENSE.md",
+          "sha256": "c6dff146a9f31848ac296faa5a08a4253caf2c384c86f906dc99e7fc0a39cc8c",
+          "file": "texts/c6dff146a9f31848ac296faa5a08a4253caf2c384c86f906dc99e7fc0a39cc8c.txt",
+          "origin": "https://raw.githubusercontent.com/etemesi254/zune-image/fa2c767a01d7d9373911d0bf63e0588553d67e0e/LICENSE.md"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [
@@ -8157,8 +8571,14 @@
       "name": "denzic-ota-core",
       "version": "0.1.0",
       "license": null
+    },
+    {
+      "name": "companion-desktop-input",
+      "version": "0.1.0",
+      "license": null,
+      "provenance": "packages/desktop-input/upstream.json"
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 234
+  "licenseTextCount": 255
 }

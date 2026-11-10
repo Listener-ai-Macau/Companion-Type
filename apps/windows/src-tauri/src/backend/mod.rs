@@ -97,6 +97,8 @@ pub(crate) mod audio_components;
 pub(crate) use audio_decode::decode_recording;
 pub(crate) use ble_bridge::pull_device_diagnostics;
 mod device_connection;
+pub(crate) mod recorder_input;
+pub(crate) mod desktop_dictation;
 pub(crate) mod hardware_identity;
 pub(crate) mod desktop_update;
 mod diarization;

@@ -39,6 +39,8 @@ mod prepared_connection;
 mod segmented;
 mod batch_interval;
 mod recorder_control;
+mod desktop_input;
+pub(crate) use desktop_input::listen as listen_desktop_input;
 mod legacy_reclaim;
 pub(crate) mod pet_caption;
 pub(crate) mod pet_profile;

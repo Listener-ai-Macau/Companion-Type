@@ -229,6 +229,7 @@ export interface CompanionDashboardProps {
   onCancelMeetingQuestion?: (jobId:string) => Promise<boolean>;
   onReadLicenses?: () => Promise<string>;
   settingsFooter?: ReactNode;
+  deviceExtra?: ReactNode;
   petPanel?: ReactNode;
   onFindPet?: (request:PetFindRequest)=>Promise<PetFindReport>;
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
@@ -407,6 +408,7 @@ export function CompanionDashboard({
   readingPreview=false,
   onReadLicenses,
   settingsFooter,
+  deviceExtra,
   petPanel,
   onFindPet,
   recordingSync = null,
@@ -2748,6 +2750,7 @@ export function CompanionDashboard({
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
         onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
+      {deviceExtra}
       {onFindPet && connected && device?.deviceId ? <CompanionPetFind
         deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
         blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
