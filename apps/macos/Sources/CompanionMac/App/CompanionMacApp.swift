@@ -1,7 +1,7 @@
 import SwiftUI
 import AppKit
 
-@main struct CompanionMacApp: App {
+@main @MainActor struct CompanionMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @State private var store = AppStore()
     var body: some Scene {

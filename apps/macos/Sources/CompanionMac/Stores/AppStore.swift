@@ -3,20 +3,29 @@ import Observation
 import CompanionRecorderCore
 
 @MainActor @Observable final class AppStore {
-    var devices: [RecorderDevice] = [], selectedDevice: UUID?, connected = false, desktop = false
-    var status = "连接录音卡后，可以选择按住说话。", busy = false
-    var notes: [RecorderNote] = [], selectedNote: String?
+    var devices: [RecorderDevice] = []
+    var selectedDevice: UUID?
+    var connected = false
+    var desktop = false
+    var status = "连接录音卡后，可以选择按住说话。"
+    var busy = false
+    var notes: [RecorderNote] = []
+    var selectedNote: String?
     var endpoint = UserDefaults.standard.string(forKey: "asr.endpoint") ?? ""
     var model = UserDefaults.standard.string(forKey: "asr.model") ?? ""
     var apiKey = ProviderKey.load()
-    var flick = false, shake = false, undo = true
+    var flick = false
+    var shake = false
+    var undo = true
     @ObservationIgnored let bluetooth = RecorderBluetooth()
     @ObservationIgnored let insertion = TextInsertion()
     @ObservationIgnored private let library: LocalLibrary
     @ObservationIgnored private var lastSequence: UInt32 = 0
     private struct Dictation { var session: UInt64?; let target: TextInsertion.Target?; var cancelled = false, submit = false; let config: TranscriptionConfig }
     @ObservationIgnored private var dictations: [UInt32:Dictation] = [:]
-    @ObservationIgnored private var pending: [(UInt64,Dictation)] = [], processing = false, queued: Set<UInt64> = []
+    @ObservationIgnored private var pending: [(UInt64,Dictation)] = []
+    @ObservationIgnored private var processing = false
+    @ObservationIgnored private var queued: Set<UInt64> = []
     init() {
         library = LocalLibrary()
         bluetooth.devicesChanged = { [weak self] in self?.devices = $0 }

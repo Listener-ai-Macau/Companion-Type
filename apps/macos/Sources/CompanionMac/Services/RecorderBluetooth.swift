@@ -4,7 +4,7 @@ import CompanionRecorderCore
 
 struct RecorderDevice: Identifiable { let id: UUID; let name: String; let rssi: Int }
 
-@MainActor final class RecorderBluetooth: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+@MainActor final class RecorderBluetooth: NSObject, @preconcurrency CBCentralManagerDelegate, @preconcurrency CBPeripheralDelegate {
     var devicesChanged: (([RecorderDevice]) -> Void)?
     var statusChanged: ((InputStatus) -> Void)?
     var disconnected: ((String) -> Void)?
