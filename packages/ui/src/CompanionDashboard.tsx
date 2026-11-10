@@ -19,6 +19,7 @@ import {splitGeneratedMeetingMetadata} from './meetingReading';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import { CompanionHelp } from './CompanionHelp';
+import {recorderKeyGuide} from './recorderKeyGuide';
 import { CompanionPrivacyCleanup } from './CompanionPrivacyCleanup';
 import { MinutesModeTabs } from './MinutesModeTabs';
 import { MeetingReadingFrame } from './MeetingReadingFrame';
@@ -1899,7 +1900,7 @@ export function CompanionDashboard({
         </button>
         </div>
       </header>
-      {helpOpen ? <CompanionHelp onReadLicenses={onReadLicenses} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
+      {helpOpen ? <CompanionHelp device={device} onReadLicenses={onReadLicenses} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
         onDiagnostics={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}
@@ -2703,7 +2704,7 @@ export function CompanionDashboard({
           <p>{devicePageConnected
             ? unlimitedDeviceRecording ? '只保存原音，转写与纪要稍后手动启动。录音持续到手动停止或设备空间用完。'
               : `只保存原音，转写与纪要稍后手动启动。当前设备最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整或升级设备。`
-            : '设备离线也能录：长按实体键约 1 秒开始，再长按约 1 秒停止；睡着时先短按唤醒。'}</p>
+            : `设备离线也能录。${recorderKeyGuide(device).start} ${recorderKeyGuide(device).stop}`}</p>
           {!durationValid && !unlimitedDeviceRecording ? <p role="alert">请输入有效的录音时长。</p> : null}
         </div>
         <div className="ct-button-row">
