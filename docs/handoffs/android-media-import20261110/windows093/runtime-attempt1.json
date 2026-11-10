@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-11T01:11:18+08:00",
+  "state": "FIRST_NATIVE_EDIT_RUNTIME_STOPPED_BY_OPTIONAL_EMPTY_FIELD_ASSERTION",
+  "runId": 42861690123,
+  "toolSource": "a40b7ec2f7808011967516c2c2eafce83ba85431",
+  "appSource": "62d2dc175964010769ae6f813514225d44cfbd8b",
+  "msiSha256": "e49b1d14c2dbdf733d81232d7c2bc46116f8c830c1f72acbb46f85061d272110",
+  "actualBeforeStop": "Ordinary native picker imported the frozen real public meeting, ordinary editor created the15s derived recording, dirty navigation retained range, current job result visible. Native row source/empty transcript/null minutes assertions passed; optional omitted meetingNotes then raised TypeError.",
+  "cause": "The check used row.meetingNotes.length although empty notes are omitted by the production serializer; corrected to empty-default read. No product source or binary changed.",
+  "fullWorkflowQualified": false,
+  "modelsRun": false,
+  "installed": false,
+  "localEvidence": "E:/CodexData/Companion/.build-cache/audio-derivation20261110/windows093-runtime1"
+}

@@ -22,7 +22,7 @@ module.exports=async function editingJourney(page,plan,out){
  async function finish(edit,names){
   const until=Date.now()+180000;
   while(Date.now()<until){if(names.every(name=>rows().some(r=>r.title===name))&&await edit.locator('.audio-derivation-result').isVisible())break;await wait(200);}
-  for(const name of names){await edit.getByText('已保存：'+name,{exact:true}).waitFor({timeout:20000});const row=rows().find(r=>r.title===name);assert(row);assert.equal(row.source,'derivedAudio');assert.equal(row.transcriptText,'');assert.equal(row.minutes,null);assert.equal(row.meetingNotes.length,0);outputs.push(row.id);}
+  for(const name of names){await edit.getByText('已保存：'+name,{exact:true}).waitFor({timeout:20000});const row=rows().find(r=>r.title===name);assert(row);assert.equal(row.source,'derivedAudio');assert.equal(row.transcriptText,'');assert.equal(row.minutes,null);assert.equal((row.meetingNotes||[]).length,0);outputs.push(row.id);}
   assert.equal(new Set(outputs).size,outputs.length);steps.push({step:'ordinary-save',names,ids:outputs.slice(-names.length)});save();
  }
  await page.bringToFront();await page.getByRole('button',{name:'设备与同步',exact:true}).click();
