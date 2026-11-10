@@ -18,6 +18,28 @@ fn fixture() -> (Peer, Vec<Descriptor>, Vec<u8>) {
     }).collect();
     (peer, ds, raw)
 }
+
+#[test]
+fn streaming_directory_preserves_snapshot_and_only_falls_back_before_any_row() {
+    let (peer,ds,_)=fixture();
+    let mut d=Directory::new(&peer,91).unwrap();d.streaming(true);d.calendar(true);
+    assert_eq!(d.request()[2],3);
+    let mut error=b"CRE2\x02\x00\x10\x00".to_vec();
+    error.extend_from_slice(&91u32.to_le_bytes());error.extend_from_slice(&3u32.to_le_bytes());
+    assert_eq!(d.accept(&error).unwrap_err(),STREAM_UNSUPPORTED);
+    error[8..12].copy_from_slice(&90u32.to_le_bytes());assert!(!d.accept(&error).unwrap());
+    error[8..12].copy_from_slice(&91u32.to_le_bytes());error[12..16].copy_from_slice(&8u32.to_le_bytes());
+    assert_ne!(d.accept(&error).unwrap_err(),STREAM_UNSUPPORTED,"stale snapshots do not disable streaming");
+    let mut d=Directory::new(&peer,92).unwrap();d.streaming(true);
+    let first=Page{snapshot:7,nonce:92,start:0,total:3,entries:ds[..2].to_vec()};
+    assert!(d.accept(&first.encode().unwrap()).unwrap());assert!(!d.finished());
+    error[8..12].copy_from_slice(&92u32.to_le_bytes());error[12..16].copy_from_slice(&3u32.to_le_bytes());
+    assert_ne!(d.accept(&error).unwrap_err(),STREAM_UNSUPPORTED,"mid-stream errors are not compatibility fallback");
+    let last=Page{snapshot:7,nonce:92,start:2,total:3,entries:ds[2..].to_vec()};
+    assert!(d.accept(&last.encode().unwrap()).unwrap());assert!(d.finished());
+    assert_eq!(d.entries(),ds);
+    let fallback=Directory::new(&peer,93).unwrap();assert_eq!(fallback.request()[2],0);
+}
 fn status(peer: &Peer) -> Vec<u8> {
     let mut s = vec![0; 116]; s[0] = 1;
     s[12..16].copy_from_slice(&0x5742_4155u32.to_le_bytes());

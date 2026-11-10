@@ -255,7 +255,7 @@ pub(super) async fn execute_owned(
     let mut device=match retained {Some(lease)=>lease.device,
         // Retrying an original capture must not rewrite its clock.
         None=>{
-            let setup=connect_native_device_setup(Some(device_id),false).await?;
+            let setup=connect_native_device_setup_with_intent(Some(device_id),false,ConnectionIntent::RecorderCore).await?;
             #[cfg(windows)]
             {control_preference=setup.preference;}
             setup.device

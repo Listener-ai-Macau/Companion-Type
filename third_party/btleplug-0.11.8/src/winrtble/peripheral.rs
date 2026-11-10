@@ -78,6 +78,7 @@ struct Shared {
     address: BDAddr,
     connection: Arc<ConnectionState>,
     ble_services: DashMap<Uuid, BLEService>,
+    complete_characteristics: std::sync::atomic::AtomicBool,
     notifications_channel: broadcast::Sender<((ValueNotification, Instant), u64)>,
 
     // Mutable, advertised, state...
@@ -210,6 +211,7 @@ impl Peripheral {
                 address,
                 connection: Arc::new(ConnectionState::default()),
                 ble_services: DashMap::new(),
+                complete_characteristics: std::sync::atomic::AtomicBool::new(false),
                 notifications_channel: broadcast_sender,
                 address_type: RwLock::new(None),
                 local_name: RwLock::new(None),
@@ -284,7 +286,16 @@ impl Peripheral {
     /// descriptor discovery, not encryption, live GATT discovery or access
     /// checks. The ordinary trait preserves full descriptor discovery.
     pub async fn discover_services_without_descriptors(&self) -> Result<()> {
-        self.discover_services_impl(false).await
+        self.discover_services_impl(false,None).await
+    }
+
+    /// Initial recorder readiness can enumerate only its required services.
+    /// A later full discovery adds the remaining services on this same link.
+    pub async fn discover_selected_services_without_descriptors(&self, services:&[Uuid]) -> Result<()> {
+        self.discover_services_impl(false,Some(services)).await
+    }
+    pub fn has_complete_characteristic_discovery(&self)->bool {
+        self.shared.complete_characteristics.load(std::sync::atomic::Ordering::Acquire)
     }
 
     /// Refresh one incomplete required service on this same connection. This
@@ -311,12 +322,14 @@ impl Peripheral {
         Ok(())
     }
 
-    async fn discover_services_impl(&self, include_descriptors: bool) -> Result<()> {
+    async fn discover_services_impl(&self, include_descriptors: bool, selected:Option<&[Uuid]>) -> Result<()> {
         let mut device = self.shared.device.lock().await;
         if let Some(ref mut device) = *device {
             let gatt_services = device.discover_services().await?;
+            let mut complete=selected.is_none();
             for service in gatt_services {
                 let uuid = utils::to_uuid(&service.Uuid().unwrap());
+                if selected.is_some_and(|services|!services.contains(&uuid)) {continue;}
                 if !self.shared.ble_services.contains_key(&uuid) {
                     match BLEDevice::get_characteristics(service).await {
                         Ok(characteristics) => {
@@ -374,11 +387,13 @@ impl Peripheral {
                             );
                         }
                         Err(e) => {
+                            complete=false;
                             warn!("get_characteristics_async {:?}", e);
                         }
                     }
                 }
             }
+            if complete {self.shared.complete_characteristics.store(true,std::sync::atomic::Ordering::Release);}
             return Ok(());
         }
         Err(Error::NotConnected)
@@ -646,6 +661,7 @@ impl ApiPeripheral for Peripheral {
         let mut attempt=self.shared.connection.begin();
         let generation=attempt.generation;
         self.shared.ble_services.clear();
+        self.shared.complete_characteristics.store(false,std::sync::atomic::Ordering::Release);
         drop(current.take());
         let shared_clone = Arc::downgrade(&self.shared);
         let adapter_clone = self.shared.adapter.clone();
@@ -684,6 +700,7 @@ impl ApiPeripheral for Peripheral {
         // unusable before callbacks can run during resource teardown.
         drop(self.shared.connection.begin());
         self.shared.ble_services.clear();
+        self.shared.complete_characteristics.store(false,std::sync::atomic::Ordering::Release);
         *device = None;
         self.emit_event(CentralEvent::DeviceDisconnected(self.shared.address.into()));
         Ok(())
@@ -691,7 +708,7 @@ impl ApiPeripheral for Peripheral {
 
     /// Discovers all characteristics for the device. This is a synchronous operation.
     async fn discover_services(&self) -> Result<()> {
-        self.discover_services_impl(true).await
+        self.discover_services_impl(true,None).await
     }
 
     /// Write some data to the characteristic. Returns an error if the write couldn't be send or (in

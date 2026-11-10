@@ -1061,7 +1061,7 @@ fn oobe_checks_from_probe(
             "bluetooth",
             "蓝牙连接",
             "pass",
-            format!("已临时连接并完成服务发现，检查后已断开：{}", report.device_id),
+            format!("已连接录音卡并完成服务发现：{}", report.device_id),
         ),
         firmware,
         gatt,
