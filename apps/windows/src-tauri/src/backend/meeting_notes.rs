@@ -126,7 +126,7 @@ pub(crate) fn render(session: &CompanionV1HostSession) -> String {
         // Quote all lines, including Markdown-looking user text; never create
         // an Action Items heading or task in the generated document.
         for line in note.text.lines() { text.push_str("> "); text.push_str(line); text.push('\n'); }
-        if let Some(image)=&note.image {text.push_str(&format!("> 图片：{}（原图见图文ZIP；文字格式不嵌入原图）\n",image.name.replace(['\r','\n'],' ')));}
+        if let Some(image)=&note.image {text.push_str(&format!("> 图片：{}（原图见图文ZIP；文字格式不嵌入原图）\n",image.name.replace(['\r','\n']," ")));}
     }
     text
 }

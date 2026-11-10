@@ -46,12 +46,23 @@ fn write_new(source:&Path,target:&Path,purpose:Purpose,bytes:&[u8])->Result<(),S
         verify(target,bytes.len() as u64,&hash(bytes))?;
         return audio_artifacts::seal_note_retry(source,target,purpose,bytes.len() as u64,&hash(bytes));
     }
-    audio_artifacts::generated(source,target,purpose,||{
+    let lease=match audio_artifacts::WriteLease::begin(source,target,purpose){
+        Ok(lease)=>lease,
+        Err(first)=>{
+            let root=target.parent().ok_or("图片目录无效。")?;let source_leaf=source.file_name().and_then(|n|n.to_str()).ok_or("图片来源无效。")?;let file=target.file_name().and_then(|n|n.to_str()).ok_or("图片名称无效。")?;
+            let item=audio_artifacts::BackupFile{file:file.into(),sources:vec![source_leaf.into()],purpose,bytes:bytes.len() as u64,sha256:hash(bytes)};
+            // An earlier failed write may have safely checkpointed this exact
+            // absent owned leaf as Gone. Reuse backup's proven no-file retry.
+            audio_artifacts::retry_absent_backup_file(root,&item).map_err(|_|first)?;
+            audio_artifacts::WriteLease::begin(source,target,purpose)?
+        }
+    };
+    let result=(||{
         let temp=target.with_file_name(format!(".note-image-{}.tmp",uuid::Uuid::new_v4()));
         let result=(||{let mut file=OpenOptions::new().write(true).create_new(true).open(&temp).map_err(|_|"图片暂不能保存，输入仍保留。")?;file.write_all(bytes).and_then(|_|file.sync_all()).map_err(|_|"图片写入未完成，输入仍保留。")?;drop(file);
             // Publish only a previously absent leaf, as in library backup restore.
             fs::hard_link(&temp,target).map_err(|_|"图片尚未提交，已有资料未覆盖，请重试。")?;Ok(())})();let _=fs::remove_file(temp);result
-    })
+    })();if result.is_ok(){if let Some(lease)=lease{lease.finish()?;}}result
 }
 fn prepare(session:&CompanionV1HostSession,request:&Request)->Result<Attachment,String>{
     let root=root()?;let source=anchor(session,&root)?;
@@ -135,6 +146,7 @@ mod tests {
     // Reproduce an interrupted ownership checkpoint, then retry with identical
     // selected bytes. Only this known image can be sealed; no unknown adoption.
     let manifest=source.join(".audio-artifacts.json");let mut intent:serde_json::Value=serde_json::from_slice(&fs::read(&manifest).unwrap()).unwrap();for item in intent["files"].as_array_mut().unwrap(){if item["file"]==attachment.file{item["phase"]="prepared".into();item["identity"]=serde_json::Value::Null;}}fs::write(&manifest,serde_json::to_vec(&intent).unwrap()).unwrap();commit(&mut row,&request,"retry").unwrap();
+    fs::remove_file(source.join(&attachment.preview)).unwrap();let mut intent:serde_json::Value=serde_json::from_slice(&fs::read(&manifest).unwrap()).unwrap();for item in intent["files"].as_array_mut().unwrap(){if item["file"]==attachment.preview{item["phase"]="gone".into();item["identity"]=serde_json::Value::Null;}}fs::write(&manifest,serde_json::to_vec(&intent).unwrap()).unwrap();commit(&mut row,&request,"retry-absent-owned-preview").unwrap();assert!(preview(&row,&request.note_id).is_ok());assert_eq!(row.note_revision,1);
     let hidden=meeting_notes::Request{session_id:row.id.clone(),note_id:uuid::Uuid::new_v4().to_string(),expected_revision:1,action:Action::Add,text:Some("UNSELECTED_PRIVATE_NOTE".into()),bookmark_id:None};meeting_notes::commit(&mut row,&hidden,"now").unwrap();
     let choice=super::super::content_export::Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![request.note_id.clone()]};let prepared=super::super::content_export::prepare(&row,"offlineStore",super::super::export::MeetingExportFormat::Bundle,&choice).unwrap();let mut archive=zip::ZipArchive::new(Cursor::new(prepared.bytes)).unwrap();let mut html=String::new();archive.by_name("打开阅读.html").unwrap().read_to_string(&mut html).unwrap();assert!(html.contains("&lt;script&gt;")&&!html.contains("<script>")&&!html.contains("UNSELECTED_PRIVATE_NOTE"));let image_name=format!("images/{}.png",request.note_id);let mut packed=Vec::new();archive.by_name(&image_name).unwrap().read_to_end(&mut packed).unwrap();assert_eq!(packed,original_image);
     snapshot.host.sessions=vec![row.clone(),second.clone()];let report=super::super::library_backup::save(&snapshot,&source,&backups).unwrap();assert_eq!(report.files,4);std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&target);let restored=super::super::library_backup::restore_files(Path::new(&report.path),&target).unwrap();let mut copy=restored.iter().find(|r|r.id==row.id).unwrap().clone();assert_eq!(copy.meeting_notes,row.meeting_notes);assert_eq!(fs::read(original(&copy,&request.note_id).unwrap()).unwrap(),original_image);assert!(preview(&copy,&request.note_id).is_ok());
