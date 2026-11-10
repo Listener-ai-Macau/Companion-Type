@@ -500,7 +500,7 @@ public final class MeetingStore {
         PartsIdentity(byte[] hash,long durationMs){this.hash=hash;this.durationMs=durationMs;}
     }
     private static PartsIdentity partsIdentity(RecordingLibrary.Session session,Path directory)throws IOException {
-        Path root=directory.toAbsolutePath();Path receipt=root.resolve(".companion-parts");
+        Path root=directory.toAbsolutePath();Path receipt=root.resolve(session.imported!=null?"import.json":".companion-parts");
         if(!Files.exists(receipt))return null;
         if(!Files.isRegularFile(receipt,java.nio.file.LinkOption.NOFOLLOW_LINKS))throw new IOException("audio parts receipt unavailable");
         byte[] before=hashFile(receipt);

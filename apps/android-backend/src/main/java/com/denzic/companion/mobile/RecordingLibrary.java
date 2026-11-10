@@ -37,8 +37,11 @@ public final class RecordingLibrary {
         public final SessionState state;
         public final List<Entry> segments;
         public final long startedUnixSeconds;
+        public final ImportedAudio imported;
+        public String key(){return imported!=null?imported.key:MeetingStore.sessionKey(segments.get(0).descriptor);}
+        private Session(ImportedAudio value){state=SessionState.COMPLETE;segments=Collections.emptyList();startedUnixSeconds=0;imported=value;}
         private Session(SessionState state,List<Entry> entries) {
-            this.state=state;this.segments=Collections.unmodifiableList(new ArrayList<>(entries));
+            this.imported=null;this.state=state;this.segments=Collections.unmodifiableList(new ArrayList<>(entries));
             long date=0;for(Entry e:entries)if(e.descriptor.startedUnixSeconds!=0){date=e.descriptor.startedUnixSeconds;break;}
             this.startedUnixSeconds=date;
         }
@@ -72,6 +75,7 @@ public final class RecordingLibrary {
     }
     /** Verify one selected session without reading any other recording's audio. */
     public static Inventory inspectSession(Path directory,String key)throws IOException {
+        if(ImportedAudio.validKey(key)){List<Session> found=new ArrayList<>();List<MetadataProblem> issues=new ArrayList<>();Path p=directory.resolve(ImportedAudio.folder(key));if(Files.exists(p,LinkOption.NOFOLLOW_LINKS))try{found.add(new Session(ImportedAudio.read(p)));}catch(IOException e){issues.add(new MetadataProblem(p,e.getMessage()));}return new Inventory(Collections.unmodifiableList(found),issues);}
         if(key==null||!key.matches("[0-9a-f]{24}:(0|[1-9a-f][0-9a-f]{0,15}):(0|[1-9a-f][0-9a-f]{0,15})"))
             throw new IllegalArgumentException("canonical recording key required");
         return inspectMatching(directory,key.replace(':','-')+"-");
@@ -92,6 +96,7 @@ public final class RecordingLibrary {
             for(MetadataProblem problem:problems)if(problem.file.getFileName().toString().startsWith(prefix)){damaged=true;break;}
             sessions.add(damaged?new Session(SessionState.DAMAGED,session.segments):session);
         }
+        if(selectedPrefix==null&&Files.exists(directory))try(DirectoryStream<Path> imports=Files.newDirectoryStream(directory,"import-*")){for(Path folder:imports){if(!folder.getFileName().toString().matches("import-[0-9a-f]{64}"))continue;try{sessions.add(new Session(ImportedAudio.read(folder)));}catch(IOException error){problems.add(new MetadataProblem(folder,error.getMessage()));}}}
         return new Inventory(Collections.unmodifiableList(sessions),problems);
     }
     /** The exact previously selected segment whose device confirmation is unresolved, or null. */

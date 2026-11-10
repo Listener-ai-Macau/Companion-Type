@@ -40,11 +40,12 @@ public final class DeviceBookmarkCache {
         StringBuilder result=new StringBuilder();for(byte b:value)result.append(String.format(Locale.ROOT,"%02x",b&255));return result.toString();
     }
     private Path path(RecordingLibrary.Session session) {
-        String key=MeetingStore.sessionKey(session.segments.get(0).descriptor);
+        String key=session.key();
         return directory.resolve(hex(digest().digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8)))+".device-marks");
     }
     /* syncState can change after a receipt; it does not change the recording. */
     static byte[] fingerprint(RecordingLibrary.Session session)throws IOException {
+        if(session!=null&&session.imported!=null)return session.imported.fingerprint();
         if(session==null||session.segments.isEmpty())throw new IllegalArgumentException("recording session required");
         if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("recording is damaged; originals retained");
         MessageDigest hash=digest();

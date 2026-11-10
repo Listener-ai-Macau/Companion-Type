@@ -46,6 +46,7 @@ public final class ManagedAudioParts {
      */
     public static NativeAudio.PartsResult prepare(RecordingLibrary.Session session,Path cacheRoot)throws IOException {
         if(session==null||cacheRoot==null)throw new IllegalArgumentException("recording and private cache required");
+        if(session.imported!=null)return session.imported.verifiedParts();
         byte[] fingerprint=DeviceBookmarkCache.fingerprint(session);
         byte[] identity=sessionIdentity(session);
         Path root=cacheRoot.toAbsolutePath();Files.createDirectories(root);

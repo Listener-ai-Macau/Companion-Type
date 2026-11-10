@@ -61,6 +61,7 @@ public final class NativeAudio {
     /** Validate the locally saved contiguous sealed prefix, without touching the device. */
     public static VerifiedPrefix inspectPrefix(RecordingLibrary.Session session) throws IOException {
         if(session==null)throw new IllegalArgumentException("session required");
+        if(session.imported!=null)return new VerifiedPrefix(session.imported.samples,true,Collections.emptyList());
         if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("recording is damaged; originals retained");
         int count=session.segments.size();String[] paths=new String[count];byte[][] descriptors=new byte[count][];
         for(int i=0;i<count;i++) {
@@ -137,6 +138,7 @@ public final class NativeAudio {
     /** Reopen only a complete saved set bound to this exact recording. */
     public static PartsResult loadParts(RecordingLibrary.Session session,Path directory)throws IOException {
         if(session==null||directory==null)throw new IllegalArgumentException("session and output directory required");
+        if(session.imported!=null){if(!session.imported.directory.equals(directory.toAbsolutePath().normalize()))throw new IOException("导入音频来源不符。");return session.imported.verifiedParts();}
         return DecodedAudioParts.load(directory.toAbsolutePath(),DeviceBookmarkCache.fingerprint(session));
     }
 }
