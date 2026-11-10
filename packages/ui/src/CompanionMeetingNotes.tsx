@@ -1,3 +1,5 @@
+import {ManualContextControls,ManualEvidenceList,ManualChecklist,addManualReference,sameManualReferences} from './ManualNoteContext';
+import {toggleManualChecklist,type ManualNoteKind,type ManualNoteEvidence,type ManualEvidenceDraft} from '../../core/src/manualNoteContext';
 import {ReadableNoteBody} from './ReadableNoteBody';
 import {readingOrder,noteTimestamp,type NoteReadingOrder} from './noteReading';
 import {transcriptMatches} from './transcriptMatching';
@@ -10,11 +12,14 @@ import { CompanionExportFeedback, type CompanionExportFeedbackValue } from './Co
 import { type CompanionMeetingNoteRequest, type CompanionV1HostSession, type CompanionV1Snapshot,
   companionBookmarkAudioPosition, normalizeCompanionNoteText } from '@companion-type/core';
 
-type Edit = { text:string; anchor:string; originalText:string; originalAnchor:string; revision:number };
-type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
+type Edit = { kind:ManualNoteKind;references:ManualNoteEvidence[];originalKind:ManualNoteKind;originalReferences:ManualNoteEvidence[];text:string; anchor:string; originalText:string; originalAnchor:string; revision:number };
+type Draft = { kind?:ManualNoteKind;references?:ManualNoteEvidence[];text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
+export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
+  incoming?:ManualEvidenceDraft;
+  onIncomingConsumed?:()=>void;
+  onOpenEvidence?:(noteId:string,reference:ManualNoteEvidence,revision:number)=>Promise<void>;
   compact?:boolean;
   searchTerm?:string;
   resultEditLabel?:string;
@@ -47,12 +52,18 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   const notes=session.meetingNotes??[];
   const orderedNotes=readingOrder(notes,noteOrder),latest=readingOrder(notes)[0],latestId=latest&&(noteTimestamp(latest.updatedAt)||noteTimestamp(latest.createdAt))?latest.id:null;
   const points=session.bookmarks??[];
-  const dirty=Object.values(drafts).some((d)=>Boolean(d.text?.trim()||d.anchor||d.pending||d.pendingImage||d.pendingAnchor
-    ||Object.values(d.edits??{}).some((e)=>e.text!==e.originalText||e.anchor!==e.originalAnchor)));
+  const dirty=Object.values(drafts).some((d)=>Boolean(d.text?.trim()||d.references?.length||d.anchor||d.pending||d.pendingImage||d.pendingAnchor
+    ||Object.values(d.edits??{}).some((e)=>e.text!==e.originalText||e.anchor!==e.originalAnchor||e.kind!==e.originalKind||!sameManualReferences(e.references,e.originalReferences))));
   useEffect(()=>{onUnsavedChange?.(dirty);},[dirty,onUnsavedChange]);
   useEffect(()=>()=>{onUnsavedChange?.(false);onBusyChange?.(false);},[onUnsavedChange,onBusyChange]);
   const change=(id:string,update:(d:Draft)=>Draft)=>setDrafts((all)=>({...all,[id]:update(all[id]??{})}));
   const message=(id:string,value:string)=>setMessages((all)=>({...all,[id]:value}));
+  const seenIncoming=useRef('');
+  useEffect(()=>{if(!incoming||incoming.contextId!==session.id||seenIncoming.current===incoming.evidence.id)return;seenIncoming.current=incoming.evidence.id;
+    try{const references=addManualReference(draft.references??[],incoming.evidence);change(session.id,d=>({...d,references,pending:undefined,pendingImage:undefined}));setComposers(all=>({...all,[session.id]:true}));message(session.id,'依据已加入备注草稿，保存后可回找。');}catch(e){message(session.id,e instanceof Error?e.message:String(e));}onIncomingConsumed?.();
+  },[incoming?.evidence.id,session.id]);
+  const openEvidence=async(noteId:string,reference:ManualNoteEvidence)=>{if(active.current||disabled||!onOpenEvidence)return;active.current=true;setBusy(true);onBusyChange?.(true);message(session.id,'');try{await onOpenEvidence(noteId,reference,session.noteRevision??0);}catch(e){message(session.id,e instanceof Error?e.message:String(e));}finally{active.current=false;setBusy(false);onBusyChange?.(false);}};
+
   const save=async(request:CompanionMeetingNoteRequest)=>{
     if(active.current||disabled||!onSave)return;
     active.current=true;setBusy(true);onBusyChange?.(true);message(request.sessionId,'');
@@ -62,12 +73,12 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
       const row=saved.host.sessions.find((s)=>s.id===request.sessionId);
       const note=row?.meetingNotes?.find((n)=>n.id===request.noteId);
       if(!row||saved.host.persistence?.status!=='ready'||(request.action==='delete'?Boolean(note)
-        : !note||note.text!==normalizeCompanionNoteText(request.text??'')||(note.bookmarkId??null)!==(request.bookmarkId??null))) {
+        : !note||note.text!==normalizeCompanionNoteText(request.text??'')||(note.bookmarkId??null)!==(request.bookmarkId??null)||(request.kind!==undefined&&(note.kind??'note')!==request.kind)||(request.references!==undefined&&!sameManualReferences(note.references,request.references)))) {
         throw new Error('尚未确认备注已保存到本机；输入仍保留，可以重试。');
       }
       change(request.sessionId,(d)=>{
         const edits={...d.edits};delete edits[request.noteId];
-        return {...d,pending:undefined,pendingImage:undefined,pendingAnchor:undefined,edits,text:request.action==='add'?'':d.text,anchor:request.action==='add'?'':d.anchor};
+        return {...d,kind:request.action==='add'?'note':d.kind,references:request.action==='add'?[]:d.references,pending:undefined,pendingImage:undefined,pendingAnchor:undefined,edits,text:request.action==='add'?'':d.text,anchor:request.action==='add'?'':d.anchor};
       });
       message(request.sessionId,request.action==='delete'?'备注已删除，原始录音和转写保留。':'备注已保存到本机。');
       if(compact&&request.action==='add')setComposers(all=>({...all,[request.sessionId]:false}));
@@ -75,8 +86,8 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     finally {active.current=false;setBusy(false);onBusyChange?.(false);}
   };
   const addImage=async()=>{
-    if(active.current||disabled||!onAddImage)return;const request=draft.pendingImage??{sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,text:draft.text??'',bookmarkId:draft.anchor||null};active.current=true;setBusy(true);onBusyChange?.(true);message(session.id,'');change(session.id,d=>({...d,pendingImage:request}));
-    try{const saved=await onAddImage(request);if(!saved){change(session.id,d=>({...d,pendingImage:undefined}));message(session.id,'已取消选择，输入仍保留。');return;}const row=saved.host.sessions.find(s=>s.id===request.sessionId),note=row?.meetingNotes?.find(n=>n.id===request.noteId);if(saved.host.persistence?.status!=='ready'||!note?.image||note.text!==(normalizeCompanionNoteText(request.text??'')||'图片备注')||(note.bookmarkId??null)!==(request.bookmarkId??null))throw Error('图片尚未确认保存，输入仍保留。');change(session.id,d=>({...d,text:'',anchor:'',pending:undefined,pendingImage:undefined,pendingAnchor:undefined}));message(session.id,'图片与备注已保存在本机，原图会随录音备份。');}
+    if(active.current||disabled||!onAddImage)return;const request=draft.pendingImage??{sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,text:draft.text??'',kind:draft.kind??'note',references:draft.references??[],bookmarkId:draft.anchor||null};active.current=true;setBusy(true);onBusyChange?.(true);message(session.id,'');change(session.id,d=>({...d,pendingImage:request}));
+    try{const saved=await onAddImage(request);if(!saved){change(session.id,d=>({...d,pendingImage:undefined}));message(session.id,'已取消选择，输入仍保留。');return;}const row=saved.host.sessions.find(s=>s.id===request.sessionId),note=row?.meetingNotes?.find(n=>n.id===request.noteId);if(saved.host.persistence?.status!=='ready'||!note?.image||note.text!==(normalizeCompanionNoteText(request.text??'')||'图片备注')||(note.bookmarkId??null)!==(request.bookmarkId??null)||(note.kind??'note')!==(request.kind??'note')||!sameManualReferences(note.references,request.references))throw Error('图片尚未确认保存，输入仍保留。');change(session.id,d=>({...d,text:'',kind:'note',references:[],anchor:'',pending:undefined,pendingImage:undefined,pendingAnchor:undefined}));message(session.id,'图片与备注已保存在本机，原图会随录音备份。');}
     catch(error){message(session.id,operationErrorText(error,'save'));}finally{active.current=false;setBusy(false);onBusyChange?.(false);}
   };
   const markPosition=async()=>{
@@ -110,13 +121,14 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     <p>{compact?`这里单独记背景，不改原话，也不自动加入整理。${resultEditLabel?`要修改整理内容，请在“整理结果”里选“${resultEditLabel}”。`:''}`:'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写，也不自动加入整理。'}</p>
     <textarea aria-label="新录音备注" maxLength={4000} rows={3} placeholder="记下背景，或需要回头核对的事情…"
       value={draft.text??''} disabled={busy} onChange={(event)=>{message(session.id,'');change(session.id,(d)=>({...d,text:event.target.value,pending:undefined,pendingImage:undefined}));}}/>
+    <ManualContextControls kind={draft.kind??'note'} references={draft.references??[]} disabled={busy} onKind={kind=>change(session.id,d=>({...d,kind,pending:undefined,pendingImage:undefined}))} onReferences={references=>change(session.id,d=>({...d,references,pending:undefined,pendingImage:undefined}))} onChecklist={()=>change(session.id,d=>({...d,text:(d.text??'')+(d.text&&!d.text.endsWith('\n')?'\n':'')+'- [ ] ',pending:undefined,pendingImage:undefined}))}/>
     <div className="ct-notes-controls">
       {!compact||points.length>0||draft.anchor?selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined,pendingAnchor:undefined,pendingImage:undefined})),'新备注关联重点'):null}
       {onSaveAnchor&&playbackPosition?<button type="button" className="ct-action" disabled={disabled||anyRecording||!session.audioStored} onClick={()=>void markPosition()}>{draft.pendingAnchor?'重试关联位置':'关联当前回听位置'}</button>:null}
 
-      <button type="button" className="ct-action" disabled={disabled||(!draft.pending&&!draft.text?.trim())} onClick={()=>void save(draft.pending??{
+      <button type="button" className="ct-action" disabled={disabled||(!draft.pending&&!draft.text?.trim()&&!draft.references?.length)} onClick={()=>void save(draft.pending??{
         sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,action:'add',
-        text:draft.text??'',bookmarkId:draft.anchor||null,
+        text:draft.text??'',kind:draft.kind??'note',references:draft.references??[],bookmarkId:draft.anchor||null,
       })}>{busy?'正在保存…':draft.pending?'重试保存备注':'保存备注'}</button>
       {onAddImage?<button type="button" className="ct-action" disabled={disabled||anyRecording||!session.audioStored} onClick={()=>void addImage()}>{draft.pendingImage?'重试添加图片':'添加图片'}</button>:null}
       {draft.pendingImage||draft.pending||draft.pendingAnchor?<button type="button" className="ct-action" disabled={busy} onClick={recheck}>保留输入，重新核对</button>:null}
@@ -133,7 +145,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         field?.focus({preventScroll:true});
         field?.scrollIntoView({block:'center'});
       }
-    }}><summary>添加备注或图片{draft.text?.trim()||draft.anchor||draft.pending||draft.pendingImage||draft.pendingAnchor?' · 未保存':''}</summary>{composer}</details>:composer}
+    }}><summary>添加备注或图片{draft.text?.trim()||draft.references?.length||draft.anchor||draft.pending||draft.pendingImage||draft.pendingAnchor?' · 未保存':''}</summary>{composer}</details>:composer}
     {messages[session.id]?<p role="status" className="ct-notes-message">{messages[session.id]}{draft.pending&&onHelp?<button type="button" className="ct-text-button" onClick={onHelp}>查看恢复方法</button>:null}</p>:null}
     {onOrganizeSaved && notes.length>0 && messages[session.id]==='备注已保存到本机。' ? <div className="ct-notes-controls">
       <button type="button" className="ct-action" disabled={disabled||anyRecording||dirty||organizeSavedBlocked}
@@ -148,22 +160,23 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         {edit?<div className="ct-notes-edit">
           <textarea aria-label={`编辑备注 ${note.id}`} maxLength={4000} rows={3} value={edit.text} disabled={busy}
             onChange={(event)=>change(session.id,(d)=>({...d,pending:undefined,edits:{...d.edits,[note.id]:{...edit,text:event.target.value}}}))}/>
+          <ManualContextControls kind={edit.kind} references={edit.references} disabled={busy} onKind={kind=>change(session.id,d=>({...d,pending:undefined,edits:{...d.edits,[note.id]:{...edit,kind}}}))} onReferences={references=>change(session.id,d=>({...d,pending:undefined,edits:{...d.edits,[note.id]:{...edit,references}}}))} onChecklist={()=>change(session.id,d=>({...d,pending:undefined,edits:{...d.edits,[note.id]:{...edit,text:edit.text+(edit.text&&!edit.text.endsWith('\n')?'\n':'')+'- [ ] '}}}))}/>
           <div className="ct-notes-controls">
             {selectAnchor(edit.anchor,(anchor)=>change(session.id,(d)=>({...d,pending:undefined,edits:{...d.edits,[note.id]:{...edit,anchor}}})),`备注关联重点 ${note.id}`)}
-            <button type="button" className="ct-action" disabled={disabled||!edit.text.trim()} onClick={()=>void save({
-              sessionId:session.id,noteId:note.id,expectedRevision:edit.revision,action:'edit',text:edit.text,bookmarkId:edit.anchor||null,
+            <button type="button" className="ct-action" disabled={disabled||(!edit.text.trim()&&!note.image&&!edit.references.length)} onClick={()=>void save({
+              sessionId:session.id,noteId:note.id,expectedRevision:edit.revision,action:'edit',text:edit.text,kind:edit.kind,references:edit.references,bookmarkId:edit.anchor||null,
             })}>保存修改</button>
             <button type="button" className="ct-action" disabled={busy} onClick={()=>change(session.id,(d)=>{
               const edits={...d.edits};delete edits[note.id];return {...d,edits,pending:undefined};
             })}>取消编辑</button>
           </div>
-        </div>:<>{note.id===latestId?<span className="note-reading-recent">最近更新</span>:null}<ReadableNoteBody text={note.text} className="ct-note-body" defaultExpanded={note.id===latestId||notes.length===1} forceExpanded={!!searchTerm.trim()&&transcriptMatches([note.text],searchTerm.trim()).length>0}/></>}{note.image?<NoteImagePreview sessionId={session.id} note={note} onLoad={onPreviewImage}/>:null}
+        </div>:<>{note.kind==='followup'?<><span className="manual-followup-label">人工跟进 · 自己记录的事项</span><ManualChecklist text={note.text} disabled={disabled||!!edit} onToggle={(offset,checked)=>{const text=toggleManualChecklist(note.text,note.text,offset,checked);if(text!==null)void save({sessionId:session.id,noteId:note.id,expectedRevision:session.noteRevision??0,action:'edit',text,bookmarkId:note.bookmarkId??null,kind:note.kind,references:note.references??[]});}}/></>:null}{note.id===latestId?<span className="note-reading-recent">最近更新</span>:null}<ReadableNoteBody text={note.text} className="ct-note-body" defaultExpanded={note.id===latestId||notes.length===1} forceExpanded={!!searchTerm.trim()&&transcriptMatches([note.text],searchTerm.trim()).length>0}/></>}<ManualEvidenceList references={note.references??[]} disabled={disabled} onOpen={onOpenEvidence?reference=>openEvidence(note.id,reference):undefined}/>{note.image?<NoteImagePreview sessionId={session.id} note={note} onLoad={onPreviewImage}/>:null}
         <div className="ct-notes-controls">
           {!compact||note.bookmarkId?<small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>:null}
           {point?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null} onClick={()=>void onSeek(session.id,point.id,position!)
             .catch((error)=>message(session.id,operationErrorText(error,'playback')))}>定位原音</button>:null}
           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{
-            text:note.text,anchor:note.bookmarkId??'',originalText:note.text,originalAnchor:note.bookmarkId??'',revision:session.noteRevision??0,
+            kind:note.kind??'note',references:note.references??[],originalKind:note.kind??'note',originalReferences:note.references??[],text:note.text,anchor:note.bookmarkId??'',originalText:note.text,originalAnchor:note.bookmarkId??'',revision:session.noteRevision??0,
           }}}))}><Pencil size={13}/>编辑</button>:null}
           <button type="button" className="ct-action" aria-label={`删除备注 ${note.id}`} disabled={disabled} onClick={()=>{if(note.image&&!window.confirm('删除这条人工图片备注？原图会随录音保留至整条录音永久清除。'))return;void save({
             sessionId:session.id,noteId:note.id,expectedRevision:session.noteRevision??0,action:'delete',

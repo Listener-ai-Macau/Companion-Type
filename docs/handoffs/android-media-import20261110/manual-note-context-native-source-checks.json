@@ -1,0 +1,59 @@
+{
+  "state": "ANDROID35_API_AND_REAL_RETAINED_SOURCE_CONTRACT_PASSED_STORE_UI_NOT_INTEGRATED",
+  "results": [
+    {
+      "check": "compile",
+      "exitCode": 0
+    },
+    {
+      "check": "real-source-contract",
+      "exitCode": 0
+    }
+  ],
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-note-native-1794347628234787200",
+  "limits": {
+    "pid": 37668,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 402653184,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 185430016,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "storeIntegrated": false,
+  "phoneOrApkTested": false,
+  "modelsRun": false,
+  "sourcePreparationFinding": {
+    "actualAndroidSdkCompileFailedBeforeAnyCandidate": true,
+    "unsupportedHostOnlyJsonMethods": [
+      "JSONObject.keySet",
+      "JSONObject.similar"
+    ],
+    "initialSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-note-context-initial-host-json-api.java",
+    "initialSourceSha256": "52f0b2b758d116e5774e4b47f5298c3eaa6583f02101455a662a861a9f5309eb",
+    "log": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-sdk-prepare-1794347729360677700\\initial-sdk-check.log",
+    "repair": "Use the actual Android JSONObject.keys iterator, explicit flat-reference equality and explicit string value types; verify both Android SDK compilation and real fixture JVM behavior."
+  },
+  "actualPlatformRetest": [
+    {
+      "check": "actual-android35-api",
+      "exitCode": 0
+    },
+    {
+      "check": "host-source-compile",
+      "exitCode": 0
+    },
+    {
+      "check": "actual-grid-and-text-source-contract",
+      "exitCode": 0
+    }
+  ],
+  "actualPlatformLogs": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-context-sdk-fixed-1794347812524147500"
+}

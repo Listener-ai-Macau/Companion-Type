@@ -227,7 +227,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     let audio_before=fs::read(&transcript_audio).map_err(|_|"Cannot inspect transcript-case audio")?;
     let mut transcript_session=session("transcript-only",&transcript_audio)?;
     transcript_session.note_revision=1;
-    transcript_session.meeting_notes.push(super::super::meeting_notes::Note {
+    transcript_session.meeting_notes.push(super::super::meeting_notes::Note {kind:Default::default(),references:vec![],
         id:uuid::Uuid::new_v4().to_string(),text:"Controlled user note".into(),bookmark_id:None,
         image:None,created_at:"controlled".into(),updated_at:"controlled".into(),
     });

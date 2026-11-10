@@ -82,16 +82,25 @@ pub async fn save_companion_bookmark(coordinator: CompanionCoordinatorState<'_>,
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-pub struct NoteImageChoice {session_id:String,note_id:String,expected_revision:u64,text:String,bookmark_id:Option<String>}
+pub struct NoteImageChoice {session_id:String,note_id:String,expected_revision:u64,text:String,bookmark_id:Option<String>,kind:Option<crate::backend::meeting_notes::NoteKind>,references:Option<Vec<crate::backend::meeting_notes::Evidence>>}
 #[tauri::command]
 pub async fn add_companion_image_note(app:AppHandle,coordinator:CompanionCoordinatorState<'_>,request:NoteImageChoice)->Result<Option<CompanionV1Snapshot>,String>{
     let chosen=app.dialog().file().add_filter("图片（每张最多20MB）",&["jpg","jpeg","png","webp"]).blocking_pick_file();
     let Some(chosen)=chosen else{return Ok(None);};let path=chosen.into_path().map_err(|_|"请选择保存在本机的图片。")?;let coordinator=coordinator.inner().clone();
-    tauri::async_runtime::spawn_blocking(move||coordinator.save_meeting_image_note(crate::backend::meeting_note_images::Request{session_id:request.session_id,note_id:request.note_id,expected_revision:request.expected_revision,text:request.text,bookmark_id:request.bookmark_id,image_path:path.to_string_lossy().into_owned()})).await.map_err(|_|"图片保存任务未完成，输入仍保留。".to_string())?.map(Some)
+    tauri::async_runtime::spawn_blocking(move||coordinator.save_meeting_image_note(crate::backend::meeting_note_images::Request{session_id:request.session_id,note_id:request.note_id,expected_revision:request.expected_revision,text:request.text,bookmark_id:request.bookmark_id,kind:request.kind,references:request.references,image_path:path.to_string_lossy().into_owned()})).await.map_err(|_|"图片保存任务未完成，输入仍保留。".to_string())?.map(Some)
 }
 #[tauri::command]
 pub async fn preview_companion_note_image(coordinator:CompanionCoordinatorState<'_>,session_id:String,note_id:String)->Result<String,String>{
     let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||{let snapshot=coordinator.snapshot()?;let row=snapshot.host.sessions.iter().find(|s|s.id==session_id).ok_or("这场会议已不存在。")?;crate::backend::meeting_note_images::preview(row,&note_id)}).await.map_err(|_|"图片预览尚未完成。".to_string())?
+}
+#[tauri::command]
+pub async fn check_companion_note_evidence(coordinator:CompanionCoordinatorState<'_>,session_id:String,note_id:String,reference_id:String,revision:u64)->Result<(),String>{
+ let coordinator=coordinator.inner().clone();
+ tauri::async_runtime::spawn_blocking(move||{
+  let snapshot=coordinator.snapshot()?;
+  let row=snapshot.host.sessions.iter().find(|s|s.id==session_id).ok_or("这场会议已不存在。")?;
+  crate::backend::meeting_notes::evidence_status(row,&note_id,&reference_id,revision)
+ }).await.map_err(|_|"暂不能核对依据；保存的引文仍保留。".to_string())?
 }
 #[tauri::command]
 pub async fn save_companion_meeting_note(coordinator: CompanionCoordinatorState<'_>, request: crate::backend::meeting_notes::Request)

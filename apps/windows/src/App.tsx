@@ -46,7 +46,7 @@ import {
   prepareCompanionAudio,
   saveCompanionMeetingEdit,
   saveCompanionBookmark,
-  saveCompanionMeetingNote,
+  saveCompanionMeetingNote,checkCompanionNoteEvidence,
   addCompanionImageNote,
   previewCompanionNoteImage,
   saveCompanionLibraryOrganization,
@@ -420,6 +420,7 @@ export function App() {
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* keep the last readable library */ } throw error; }
       }):undefined}
       onAddImageNote={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{try{const saved=await addCompanionImageNote(request);if(saved)setSnapshot(saved);return saved;}catch(error){try{setSnapshot(await getCompanionSnapshot());}catch{}throw error;}}):undefined}
+      onCheckNoteEvidence={isTauriRuntime()?checkCompanionNoteEvidence:undefined}
       onPreviewNoteImage={isTauriRuntime()?previewCompanionNoteImage:undefined}
       onSaveNote={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
         try { const saved=await saveCompanionMeetingNote(request);setSnapshot(saved);return saved; }

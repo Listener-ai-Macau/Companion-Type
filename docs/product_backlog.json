@@ -270773,8 +270773,8 @@
               "windowsInstalled": "0.1.98"
             },
             "manualFollowupSources20261111": {
-              "at": "2026-11-11T05:37:13+08:00",
-              "state": "EXISTING_NOTE_AND_SOURCE_CONTRACTS_INSPECTED_IMPLEMENTATION_NEXT",
+              "at": "2026-11-11T06:33:38+08:00",
+              "state": "SOURCE_COMPLETE_NATIVE_CANDIDATES_BUILD_NEXT",
               "originalItems": [
                 "CP27-01/notes_images",
                 "CP27-01/actions",
@@ -270797,18 +270797,44 @@
                 "Captured evidence must be literal source text with saved identity; stale/missing source stays explicit, never silently matches another record/library.",
                 "Include save/reopen, edit/retry/concurrency, source return, affected exports and backup/restore/lifecycle in one grouped candidate."
               ],
-              "notImplementedYet": [
-                "persistent note source references",
-                "standalone human follow-up/checklist card"
-              ],
+              "notImplementedYet": [],
               "nativeFindings": [
                 "Windows Note/Request use strict serde fields and revision/UUID/source ownership checks; all literal construction sites and formats need a compatible optional extension.",
                 "Android .context.json is checksummed and revised; editing retains the JSON entry and current source library checks remain at the existing app boundary.",
                 "Source references must bind current library/record at resolution, never persist ephemeral library tokens or arbitrary file/URL paths."
               ],
-              "next": "Design the smallest compatible shared manual-source/card contract against existing note stores; implement and validate the complete flow before any new native candidate.",
+              "next": "Use one grouped099/135 native candidate build. Fix actual failures, then verify ordinary save/reopen/checklist/source navigation, affected export, backup/restore, source removal and scoped lifecycle before delivery; retain098/134 installed qualification until exact new artifacts pass.",
               "modelsRun": false,
-              "saleQualified": false
+              "saleQualified": false,
+              "windowsVersion": "0.1.99",
+              "androidVersion": "0.1.135",
+              "implementedSource": [
+                "Human note/follow-up kind and literal - [ ] checklist, reusing existing revision/ownership stores.",
+                "Literal document paragraph/table-row and full-current-transcript identity capture, saving original/extraction hashes and location without file paths or ephemeral tokens.",
+                "Append evidence without erasing existing manual draft; explicit reference removal and follow-up editing; checkbox changes only one literal marker.",
+                "Stored-reference current-source validation; missing/changed source retains saved excerpt and gives an explicit error; no silent source matching.",
+                "Selected note text/JSON/portable image export and library search include human evidence, distinct from original transcript/generated decisions; metadata privacy deletion covers references."
+              ],
+              "checked": [
+                "Actual Windows/mobile TypeScript projects passed.",
+                "All current Android application Java sources compiled together against actual Android35 API, resolving obsolete retained derivation API classes in the earlier partial preparer.",
+                "Affected real React composer/table/checklist/cancel/retry/edit/source-change checks passed.",
+                "Current platform-compiled Android note/document files passed actual public XLSX identity, literal values, counterfeit/revision/foreign-record rejection, image+context preservation, legacy edit, source removal/new-root reopen, text/search/HTML+JSON bundle checks; directory sync/raster checks explicitly mocked."
+              ],
+              "sourceChecks": [
+                "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-complete-source-checks.json",
+                "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-ui-source-checks.json",
+                "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-current-store-checks.json"
+              ],
+              "failuresRetained": [
+                "Initial host JSON helper used APIs absent Android35; replaced with supported keys iterator/flat comparison and explicit string types before any candidate.",
+                "Partial app API preparer used older retained AudioDerivation classes; compiling all current app sources succeeds.",
+                "Source-check wrapper initially supplied bytes incorrectly and later called nonexistent snapshot(); no child failure in final source check, raw successful output/logs retained; runner now uses query()."
+              ],
+              "appDelivered": false,
+              "nativeWindowsQualified": false,
+              "phoneQualified": false,
+              "ordinaryBackupRestoreQualified": false
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -276416,7 +276442,7 @@
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
     },
     "sharedWindowsIntegration20261110": {
-      "at": "2026-11-11T05:37:13+08:00",
+      "at": "2026-11-11T06:33:38+08:00",
       "state": "UNIFIED098_REFERENCE_WORKSPACE_RUNTIME_UPGRADE_AND_PRIVATE_PACKAGE_PASSED",
       "reservedVersion": "0.1.98",
       "sourceBranch": "work/device-phone-closure055-20261106",
@@ -276533,9 +276559,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": null,
+      "pendingUnifiedVersion": "0.1.99",
       "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
-      "pendingUnifiedReason": "Grouped reference workspace and source routing; preserve full installed097 functional native input and existing physical priorities.",
+      "pendingUnifiedReason": "One coherent human follow-up and literal evidence workflow; preserve installed098 functions and independent physical app.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",

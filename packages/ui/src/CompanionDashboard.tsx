@@ -49,6 +49,9 @@ import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence, spli
 import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
 import {MeetingReferenceWorkspace,type ReferenceView} from './MeetingReferenceWorkspace';
 import {MeetingAiWorkbench} from './MeetingAiWorkbench';
+import {TranscriptQuoteCapture} from './TranscriptQuoteCapture';
+import type {ManualEvidenceDraft} from '../../core/src/manualNoteContext';
+import type {DocumentSourceRequest} from './DocumentContextPanel';
 import {DocumentContextPanel} from './DocumentContextPanel';
 import {materialNote,readMaterialNote} from './aiMaterialNote';
 import {ActionListEditor} from './ActionListEditor';
@@ -292,6 +295,7 @@ export interface CompanionDashboardProps {
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onAddImageNote?:(request:import('@companion-type/core').CompanionMeetingImageNoteRequest)=>Promise<CompanionV1Snapshot|null>;
   onPreviewNoteImage?:(sessionId:string,noteId:string)=>Promise<string>;
+  onCheckNoteEvidence?:(sessionId:string,noteId:string,referenceId:string,revision:number)=>Promise<void>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
@@ -457,7 +461,7 @@ export function CompanionDashboard({
   onPreviewRetranscription,
   onPreviewGap,
   onSaveBookmark,
-  onSaveNote,
+  onSaveNote,onCheckNoteEvidence,
   onAddImageNote,
   onPreviewNoteImage,
   documentAdapter,renderAudioEditor,audioEditNotice,
@@ -559,7 +563,8 @@ export function CompanionDashboard({
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
-  const [documentSource,setDocumentSource]=useState<{id:string;quote:string;nonce:string}|undefined>();
+  const [manualEvidence,setManualEvidence]=useState<ManualEvidenceDraft|undefined>();
+  const [documentSource,setDocumentSource]=useState<DocumentSourceRequest|undefined>();
   const [qaQuestion,setQaQuestion]=useState('');
   const [qaSelected,setQaSelected]=useState<string[]>([]);
   const [qaBusy,setQaBusy]=useState(false);
@@ -667,7 +672,7 @@ export function CompanionDashboard({
     () => {const row=snapshot?selectedCompanionHostSession(snapshot):null;return row&&!row.organization?.trashedAt&&!libraryFilters.trash?row:null;},
     [snapshot,libraryFilters.trash],
   );
-  useEffect(()=>setReferenceView('notes'),[selectedSession?.id]);
+  useEffect(()=>{setReferenceView('notes');setManualEvidence(undefined);},[selectedSession?.id]);
   const savedDetailOpen=Boolean(selectedSession&&detailSessionId===selectedSession.id);
   const qaDefaulted=useRef(false);
   useEffect(()=>{if(selectedSession&&!qaDefaulted.current&&companionSessionHasFinalTranscript(selectedSession)){qaDefaulted.current=true;setQaSelected([selectedSession.id]);}},[selectedSession?.id,selectedSession?.transcriptFinal]);
@@ -2646,7 +2651,7 @@ export function CompanionDashboard({
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
-              <div hidden={transcriptReviewOpen} className="ct-transcript-reading-tools" role="group" aria-label="转写阅读方式"><button type="button" className="ct-text-button" aria-pressed={transcriptCleanView} onClick={()=>setTranscriptCleanView(true)}>精简阅读</button><button type="button" className="ct-text-button" aria-pressed={!transcriptCleanView} onClick={()=>setTranscriptCleanView(false)}>原始转写</button><span>{transcriptCleanView?'仅显示时略去“嗯、呃”，简短回应也可能被略去；原文未改变。':'显示原始文字与已保存的人工修订。'}</span></div><p className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{transcriptCleanView?cleanHesitations(companionReviewedTranscript(selectedSession)).text:companionReviewedTranscript(selectedSession)}</p>
+              <div hidden={transcriptReviewOpen} className="ct-transcript-reading-tools" role="group" aria-label="转写阅读方式"><button type="button" className="ct-text-button" aria-pressed={transcriptCleanView} onClick={()=>setTranscriptCleanView(true)}>精简阅读</button><button type="button" className="ct-text-button" aria-pressed={!transcriptCleanView} onClick={()=>setTranscriptCleanView(false)}>原始转写</button><span>{transcriptCleanView?'仅显示时略去“嗯、呃”，简短回应也可能被略去；原文未改变。':'显示原始文字与已保存的人工修订。'}</span></div><p className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{transcriptCleanView?cleanHesitations(companionReviewedTranscript(selectedSession)).text:companionReviewedTranscript(selectedSession)}</p>{!readingPreview&&onSaveNote&&!transcriptReviewOpen&&<TranscriptQuoteCapture key={'manual-quote:'+selectedSession.id} contextId={selectedSession.id} text={companionReviewedTranscript(selectedSession)} busy={recordingControlBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}}/>}
             </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'原音已保留，可以先回听。点“转文字”后，可整理纪要、提取待办或向这场会议提问。'}</p>}
           {transcriptUnmappedEdges.length > 0 ? <div className="ct-step-warn" role="status" aria-label="原音与文字的时间对应">
             {transcriptUnmappedEdges.map(edge => <p key={edge.edge}>
@@ -2660,11 +2665,15 @@ export function CompanionDashboard({
             blocked={recordingControlBusy || selectedRecordingBeingCaptured || storageBlocked}
             sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
             lookup={transcriptLookup?.sessionId===selectedSession.id?transcriptLookup:null}
-            onReturnLookup={()=>{setRecordingResultOpen(true);window.requestAnimationFrame(()=>{const target=transcriptLookup?.returnId?document.getElementById(transcriptLookup.returnId):document.getElementById('ct-recording-result');target?.scrollIntoView({block:'center'});target?.focus({preventScroll:true});});}}
+            onReturnLookup={()=>{if(transcriptLookup?.returnId==='ct-recording-notes'){revealMeetingTool('ct-recording-notes');return;}setRecordingResultOpen(true);window.requestAnimationFrame(()=>{const target=transcriptLookup?.returnId?document.getElementById(transcriptLookup.returnId):document.getElementById('ct-recording-result');target?.scrollIntoView({block:'center'});target?.focus({preventScroll:true});});}}
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
-          <MeetingReferenceWorkspace id="ct-recording-references" view={referenceView} onViewChange={setReferenceView} notes={<CompanionMeetingNotes searchTerm={libraryQuery} resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
+          <MeetingReferenceWorkspace id="ct-recording-references" view={referenceView} onViewChange={setReferenceView} notes={<CompanionMeetingNotes incoming={manualEvidence} onIncomingConsumed={()=>setManualEvidence(undefined)} onOpenEvidence={onCheckNoteEvidence?async(noteId,reference,revision)=>{
+              await onCheckNoteEvidence(selectedSession.id,noteId,reference.id,revision);
+              if(reference.kind==='document'){setDocumentSource({id:reference.documentId,contextId:selectedSession.id,quote:reference.quote,nonce:crypto.randomUUID(),evidence:reference});revealMeetingTool('ct-document-context');}
+              else{setTranscriptReviewOpen(true);setTranscriptLookup({id:crypto.randomUUID(),text:reference.quote,sessionId:selectedSession.id,returnId:'ct-recording-notes'});window.requestAnimationFrame(()=>document.getElementById('ct-recording-text-review')?.scrollIntoView({block:'start'}));}
+            }:undefined} searchTerm={libraryQuery} resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onAddImage={onAddImageNote} onPreviewImage={onPreviewNoteImage} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onSaveAnchor={onSaveBookmark} playbackPosition={readBookmarkPosition}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
@@ -2674,7 +2683,7 @@ export function CompanionDashboard({
             organizeSavedBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||titleDirty
               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
-            exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>} documents={documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} openSource={documentSource} onChanged={onRefresh}/></div>:null} assistant={onAskMeetings&&selectedSession&&(finalTranscript||documentScopes.length>0) ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
+            exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>} documents={documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}} openSource={documentSource} onChanged={onRefresh}/></div>:null} assistant={onAskMeetings&&selectedSession&&(finalTranscript||documentScopes.length>0) ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
               contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}
               scopes={[...qaEligibleSessions.map(row=>({id:row.id,title:meetingTitle(row),binding:qaIdentity([row.id])})),...documentScopes]}
               serviceReady={!!productSettings?.deepseekMinutesEnabled&&!!productSettings?.deepseekApiKeySet} busy={controlsBusy||storageBlocked} preview={readingPreview}
@@ -3684,7 +3693,7 @@ function meetingSearchText(session: CompanionV1HostSession): string {
     meetingTitle(session),
     session.transcriptText,
     companionReviewedTranscript(session),
-    ...(session.meetingNotes ?? []).map(note => note.text),
+    ...(session.meetingNotes ?? []).flatMap(note => [note.text,...(note.references??[]).flatMap(reference=>[reference.name,reference.quote,reference.kind==='document'?reference.sectionLabel:''])]),
     session.minutes?.markdown,
     session.minutesByMode?.offlineStore?.markdown,
     session.minutesByMode?.onlineLive?.markdown,

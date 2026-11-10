@@ -7,7 +7,7 @@ fn session() -> CompanionV1HostSession {
 }
 fn add(session:&CompanionV1HostSession,text:&str)->Request {
     Request { session_id:session.id.clone(), note_id:uuid::Uuid::new_v4().to_string(), expected_revision:session.note_revision,
-        action:Action::Add, text:Some(text.into()), bookmark_id:None }
+        action:Action::Add, text:Some(text.into()), bookmark_id:None,kind:None,references:None }
 }
 fn source(session:&CompanionV1HostSession)->serde_json::Value {
     serde_json::json!([session.audio_path,session.audio_bytes,session.device_sha256,session.transcript_text,
@@ -104,4 +104,45 @@ fn notes_export_without_asr_and_privacy_clear_removes_context() {
     let id=snapshot.host.sessions[0].id.clone();
     let erased=apply_fixture_control(snapshot,serde_json::from_value(serde_json::json!({"action":"privacyEraseTranscript","sessionId":id})).unwrap()).unwrap();
     assert!(erased.host.sessions[0].meeting_notes.is_empty());assert_eq!(erased.host.sessions[0].note_revision,2);
+}
+
+#[test]
+fn human_evidence_is_literal_retryable_and_survives_later_source_change() {
+    let mut row=session();let original=source(&row);
+    let transcript=super::context::hash(&super::super::transcript_review::effective_text(&row));
+    let quote=super::super::transcript_review::effective_text(&row);
+    assert!(!quote.is_empty());
+    let reference:Evidence=serde_json::from_value(serde_json::json!({
+        "id":uuid::Uuid::new_v4().to_string(),"kind":"transcript","name":"会议转写",
+        "sourceSha256":transcript,"quote":quote
+    })).unwrap();
+    let mut request=add(&row,"");
+    request.references=Some(vec![reference.clone()]);
+    assert!(apply(&mut row,&request,"one").unwrap(),"A literal citation can be saved without inventing a note body");
+    assert_eq!(source(&row),original);
+    let stored=serde_json::to_value(&row).unwrap();
+    let restored:CompanionV1HostSession=serde_json::from_value(stored.clone()).unwrap();
+    assert_eq!(restored.meeting_notes[0].references,vec![reference.clone()]);
+    assert!(stored["meetingNotes"][0].get("kind").is_none(),"Old plain notes do not acquire a new serialized kind");
+    assert!(!apply(&mut row,&request,"lost-reply").unwrap());
+    row.transcript_text.push_str("\n这是后来才补充的原文。");
+    assert!(!apply(&mut row,&request,"late-retry").unwrap(),"An exact committed retry remains safe after the source changes");
+    let source_after=source(&row);
+    let mut edit=request.clone();edit.action=Action::Edit;edit.expected_revision=row.note_revision;edit.text=Some("这是我的人工跟进说明，不是会议决定。".into());
+    assert!(apply(&mut row,&edit,"two").unwrap(),"Unchanged older evidence must not prevent editing one's own note");
+    assert_eq!(row.meeting_notes[0].references[0],reference);
+    let unchanged=serde_json::to_value(&row).unwrap();
+    let mut forged=edit.clone();forged.expected_revision=row.note_revision;forged.references.as_mut().unwrap()[0].quote="会议已经批准这笔费用".into();
+    assert!(apply(&mut row,&forged,"three").is_err());
+    assert_eq!(serde_json::to_value(&row).unwrap(),unchanged);
+    assert_eq!(source(&row),source_after);
+    let delete=Request{session_id:row.id.clone(),note_id:request.note_id,expected_revision:row.note_revision,action:Action::Delete,text:None,bookmark_id:None,kind:None,references:None};
+    apply(&mut row,&delete,"four").unwrap();assert!(row.meeting_notes.is_empty());assert_eq!(source(&row),source_after);
+}
+
+#[test]
+fn old_note_json_remains_readable_without_implicit_evidence_or_followup() {
+    let note:Note=serde_json::from_value(serde_json::json!({"id":uuid::Uuid::new_v4().to_string(),"text":"原样的旧便签","createdAt":"1","updatedAt":"1"})).unwrap();
+    assert_eq!(note.kind,NoteKind::Note);assert!(note.references.is_empty());
+    let saved=serde_json::to_value(note).unwrap();assert!(saved.get("kind").is_none()&&saved.get("references").is_none());
 }

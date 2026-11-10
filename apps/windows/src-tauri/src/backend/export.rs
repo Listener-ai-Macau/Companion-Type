@@ -874,7 +874,7 @@ mod tests {
         let mut m=minutes();m.markdown="## 摘要\n只在纪要中的秘密".into();
         let utterance=CompanionV1UtteranceSegment{text:"小王交报价".into(),start_ms:3_600_000,end_ms:3_601_000,speaker:Some(0),approximate_timing:true};
         let mut s=session("仅在原文中的内容",vec![utterance],Some(m));
-        s.meeting_notes.push(super::super::meeting_notes::Note{id:"n1".into(),text:"用户补充内容".into(),bookmark_id:None,image:None,created_at:"2026-01-01".into(),updated_at:"2026-01-01".into()});
+        s.meeting_notes.push(super::super::meeting_notes::Note{kind:Default::default(),references:vec![],id:"n1".into(),text:"用户补充内容".into(),bookmark_id:None,image:None,created_at:"2026-01-01".into(),updated_at:"2026-01-01".into()});
         let selection=PdfSections{minutes:false,transcript:true,highlights:false,timeline:true};
         let preview=prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&selection)).unwrap();
         let body=std::str::from_utf8(&preview.bytes).unwrap();

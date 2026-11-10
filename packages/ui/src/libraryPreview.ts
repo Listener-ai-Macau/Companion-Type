@@ -49,7 +49,7 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
   const query=rawQuery.trim().toLocaleLowerCase();
   if(!query)return{text:excerpt(reviewed),label:originalLabel};
   const candidates:Candidate[]=[
-    ...(session.meetingNotes??[]).map(note=>({text:note.text,label:'补充'})),
+    ...(session.meetingNotes??[]).flatMap(note=>[{text:note.text,label:note.kind==='followup'?'人工跟进':'补充'},...(note.references??[]).map(reference=>({text:reference.name+'\n'+reference.quote,label:'人工引用'}))]),
     {text:reviewed,label:originalLabel},
     ...(session.transcriptText!==reviewed?[{text:session.transcriptText,label:'原始转写'}]:[]),
   ];

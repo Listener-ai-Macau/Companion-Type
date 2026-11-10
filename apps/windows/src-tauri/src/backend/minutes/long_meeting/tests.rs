@@ -87,7 +87,7 @@ fn long_context_reconciles_later_cancellation_and_keeps_separate_sources() {
         }
     });
     let mut s=session(&"小王周五发送报价。".repeat(1300));s.duration_ms=7_200_000;s.note_revision=1;
-    s.meeting_notes.push(super::super::super::meeting_notes::Note{id:"n".into(),text:"取消发送报价".into(),bookmark_id:None,image:None,created_at:"now".into(),updated_at:"now".into()});
+    s.meeting_notes.push(super::super::super::meeting_notes::Note{kind:Default::default(),references:vec![],id:"n".into(),text:"取消发送报价".into(),bookmark_id:None,image:None,created_at:"now".into(),updated_at:"now".into()});
     let original=s.transcript_text.clone();let endpoint=format!("http://{address}/chat/completions");
     let client=reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
     assert!(super::super::super::minutes_context::validate(&s,1).is_ok());

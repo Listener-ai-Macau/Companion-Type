@@ -332,6 +332,7 @@ pub fn run() {
             commands::preview_companion_meeting_transcription,
             commands::preview_companion_meeting_gap,
             commands::save_companion_meeting_note,
+            commands::check_companion_note_evidence,
             commands::add_companion_image_note,
             commands::preview_companion_note_image,
             audio_edit_commands::control_companion_audio_edit,

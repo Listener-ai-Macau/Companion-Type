@@ -1764,7 +1764,7 @@ mod tests {
     fn natural_assignment_does_not_revive_supplemented_or_ambiguous_source() {
         let mut session = session_with_text("小王明天安排客户回访。");
         session.duration_ms = 180_000;
-        session.meeting_notes.push(crate::backend::meeting_notes::Note {
+        session.meeting_notes.push(crate::backend::meeting_notes::Note {kind:Default::default(),references:vec![],
             id: "note".into(), text: "这项安排已经取消".into(), bookmark_id: None,
             image:None,created_at: "now".into(), updated_at: "now".into(),
         });
