@@ -1,15 +1,39 @@
 {
-  "at": "2026-11-10T09:34:10+08:00",
-  "state": "ANDROID119_COMPLETE_REVIEW_SOURCE_FROZEN_REMOTE_BUILD_PENDING",
-  "version": "0.1.119",
-  "supersedesUninstalledCandidate": "0.1.118",
-  "priorNativeAndPlaybackUiBuildPassedRun": 42735769810,
-  "priorSource": "9697968da4aa9abc32cef5b85da3b95282990473",
-  "newNativeControlChangesSince118": false,
+  "at": "2026-11-10T09:41:32+08:00",
+  "state": "ANDROID120_COMPLETE_NONMODEL_REVIEW_CANDIDATE_REMOTE_BUILD_PENDING",
+  "version": "0.1.120",
+  "prior119RunPassed": 42736712959,
+  "prior119Source": "a6876984d4d7ec9411d9dfa4d233b726a0391ba6",
+  "nativeMediaPlayerCodeUnchangedSince118": true,
+  "finalStorageChange": "Use existing <record-digest>.* ownership for progress and crash temporaries. Existing exact-record deletion now includes both without changing or broadening the purge implementation.",
+  "ownedStorageProof": {
+    "state": "OWNED_PLAYBACK_REOPEN_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+    "results": [
+      {
+        "name": "compile",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackProgressTest",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackBackupCompatibilityTest",
+        "exitCode": 0
+      },
+      {
+        "name": "PlaybackLifecycleTest",
+        "exitCode": 0
+      }
+    ],
+    "playbackSourceSha256": "004b4c202a20706283f4e77186560876834f80472be6389529fb808568958a9d",
+    "nativeMediaPlayerTested": false,
+    "phoneTested": false,
+    "modelsRun": false
+  },
   "backendAarUnchanged": true,
-  "additionalOutcome": "Literal find/replace and safe undo in the existing native transcript correction editor; existing revision/first-original preservation and dirty-exit guards retained.",
   "installed": false,
-  "nativeRuntimeQualified": false,
+  "nativePhonePlaybackQualified": false,
   "modelsRun": false,
   "saleQualified": false
 }

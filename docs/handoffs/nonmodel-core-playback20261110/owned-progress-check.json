@@ -1,0 +1,25 @@
+{
+  "state": "OWNED_PLAYBACK_REOPEN_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+  "results": [
+    {
+      "name": "compile",
+      "exitCode": 0
+    },
+    {
+      "name": "PlaybackProgressTest",
+      "exitCode": 0
+    },
+    {
+      "name": "PlaybackBackupCompatibilityTest",
+      "exitCode": 0
+    },
+    {
+      "name": "PlaybackLifecycleTest",
+      "exitCode": 0
+    }
+  ],
+  "playbackSourceSha256": "004b4c202a20706283f4e77186560876834f80472be6389529fb808568958a9d",
+  "nativeMediaPlayerTested": false,
+  "phoneTested": false,
+  "modelsRun": false
+}

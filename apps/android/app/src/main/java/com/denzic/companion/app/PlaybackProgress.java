@@ -14,12 +14,14 @@ final class PlaybackProgress {
     interface DirectorySync { void sync(Path directory)throws IOException; }
     private final Path root;
     private final DirectorySync sync;
-    PlaybackProgress(Path meetings,DirectorySync sync){this.root=meetings.resolve("playback");this.sync=sync;}
+    PlaybackProgress(Path meetings,DirectorySync sync){this.root=meetings;this.sync=sync;}
     static boolean validSpeed(double speed){return speed==.75||speed==1||speed==1.25||speed==1.5||speed==1.75||speed==2;}
     private Path file(String key)throws Exception{
         StringBuilder id=new StringBuilder();for(byte b:MessageDigest.getInstance("SHA-256").digest(key.getBytes(StandardCharsets.UTF_8)))id.append(String.format(Locale.ROOT,"%02x",b&255));
         if(Files.isSymbolicLink(root)||Files.exists(root,LinkOption.NOFOLLOW_LINKS)&&!Files.isDirectory(root,LinkOption.NOFOLLOW_LINKS))throw new IOException("续听位置目录暂时无法读取，原录音仍可回听。");
-        Path p=root.resolve(id+".json");if(Files.isSymbolicLink(p))throw new IOException("续听位置无法读取，原录音仍保留。");return p;
+        // Existing library lifecycle owns every <record-digest>.* metadata file.
+        // Keeping the checkpoint here also includes it in exact-record purge.
+        Path p=root.resolve(id+".playback.json");if(Files.isSymbolicLink(p))throw new IOException("续听位置无法读取，原录音仍保留。");return p;
     }
     JSONObject load(String key,String binding,long durationMs)throws Exception{
         JSONObject empty=new JSONObject().put("positionMs",0).put("speed",1).put("completed",false).put("saved",false);
@@ -39,7 +41,7 @@ final class PlaybackProgress {
         if(positionMs<0||positionMs>9007199254740991L||!validSpeed(speed)||!binding.matches("[0-9a-f]{64}"))throw new IOException("续听位置无效，原录音仍保留。");
         Path p=file(key);Files.createDirectories(root);sync.sync(root.getParent());
         byte[] bytes=new JSONObject().put("version",1).put("binding",binding).put("positionMs",completed?0:positionMs).put("speed",speed).put("completed",completed).toString().getBytes(StandardCharsets.UTF_8);
-        Path temp=Files.createTempFile(root,"progress-",".tmp");
+        Path temp=Files.createTempFile(root,p.getFileName().toString()+".pending-",".tmp");
         try{
             try(FileChannel channel=FileChannel.open(temp,StandardOpenOption.WRITE)){ByteBuffer buffer=ByteBuffer.wrap(bytes);while(buffer.hasRemaining())channel.write(buffer);channel.force(true);}
             Files.move(temp,p,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);sync.sync(root);
