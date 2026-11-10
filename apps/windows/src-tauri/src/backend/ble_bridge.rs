@@ -2583,6 +2583,11 @@ async fn initial_native_device_once(requested_device_id: Option<&str>,sync_clock
     let released_lost_owner=AtomicBool::new(false);
     super::lifecycle::PROCESS.run(async {
         let device=scan_native_device(requested_device_id).await?;
+        // No advertisement wait before connecting. Scope our own watcher to
+        // this setup attempt, so a failed/cancelled attempt also stops it and
+        // bulk transfer never competes with a leftover scanner.
+        #[cfg(windows)]
+        let _acquisition_scan=super::device_discovery::Acquisition::begin(&device.address);
         connect_known_native_device_setup_observed(device,sync_clock,intent,false,Some(&released_lost_owner)).await
     }).await.map_err(|error|InitialConnectFailure {
         error,released_lost_owner:released_lost_owner.load(Ordering::SeqCst),

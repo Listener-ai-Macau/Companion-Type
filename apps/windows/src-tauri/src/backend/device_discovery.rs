@@ -1,4 +1,9 @@
 //! Product names used when the advertisement does not carry service UUIDs.
+#[cfg(windows)]
+mod acquisition;
+#[cfg(windows)]
+pub(super) use acquisition::Acquisition;
+
 pub(crate) fn product_name(value:&str)->bool {
     let name=value.trim().to_ascii_lowercase();
     name.contains("companion")||name=="capture"||name.starts_with("capture ")||name.starts_with("capture-")
