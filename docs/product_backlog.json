@@ -270773,8 +270773,8 @@
               "windowsInstalled": "0.1.98"
             },
             "manualFollowupSources20261111": {
-              "at": "2026-11-11T06:33:38+08:00",
-              "state": "SOURCE_COMPLETE_NATIVE_CANDIDATES_BUILD_NEXT",
+              "at": "2026-11-11T06:39:29+08:00",
+              "state": "GROUPED099135_SOURCES_REMOTE_VERIFIED_NATIVE_BUILDS_RUNNING",
               "originalItems": [
                 "CP27-01/notes_images",
                 "CP27-01/actions",
@@ -270834,7 +270834,13 @@
               "appDelivered": false,
               "nativeWindowsQualified": false,
               "phoneQualified": false,
-              "ordinaryBackupRestoreQualified": false
+              "ordinaryBackupRestoreQualified": false,
+              "windowsSource": "eae17fa840c43c7784b8d008094945df4d8f56bf",
+              "androidSource": "71b33214443bb7e66e675ea77151bbd8b721f46e",
+              "windowsBuildRun": 42915702572,
+              "androidBuildRun": 42915729180,
+              "androidBuildState": "SUCCESS_EXACT_ARTIFACT_SIGNING_NEXT",
+              "windowsBuildState": "IN_PROGRESS"
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -276577,8 +276583,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": null,
-      "pendingUnifiedBuildRun": null,
+      "pendingUnifiedSource": "eae17fa840c43c7784b8d008094945df4d8f56bf",
+      "pendingUnifiedBuildRun": 42915702572,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00"
     }
   }
