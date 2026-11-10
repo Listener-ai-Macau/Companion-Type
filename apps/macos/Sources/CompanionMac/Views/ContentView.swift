@@ -26,6 +26,9 @@ struct ContentView: View {
                     Text(store.desktop ? "按住说话 · 松开输入" : "单击开始 · 再单击停止").foregroundStyle(.secondary)
                 }
                 Text(store.status).foregroundStyle(.secondary).textSelection(.enabled).accessibilityLabel("设备状态："+store.status)
+                if store.spaceConfirmationPending {
+                    Text("原音已保存在本机。设备空间确认未完成，可点“继续收取”重试。").font(.caption).foregroundStyle(.orange)
+                }
                 Divider()
                 if let note = store.currentNote {
                     ScrollView { VStack(alignment: .leading,spacing: 16) {

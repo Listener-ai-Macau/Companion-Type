@@ -9,6 +9,7 @@ import CompanionRecorderCore
     var desktop = false
     var status = "连接录音卡后，可以选择按住说话。"
     var busy = false
+    var spaceConfirmationPending = false
     var notes: [RecorderNote] = []
     var selectedNote: String?
     var endpoint = UserDefaults.standard.string(forKey: "asr.endpoint") ?? ""
@@ -54,8 +55,12 @@ import CompanionRecorderCore
         let key = peer.uid.hex+"-"+String(peer.epoch)+"-"+String(value.token)
         desktop = value.mode == 1
         let phases = ["状态未知","已就绪","准备录音","正在采音","已暂停","正在保存","原音已保存","存储空间不足","录音异常","正在升级","正在暂停","正在继续"]
-        if Int(value.feedback) < phases.count { status = phases[Int(value.feedback)] }
-        if value.flags & 16 != 0 { status += " · 重点已保存" } else if value.flags & 8 != 0 { status += " · 正在保存重点" }
+        // Idle/old-session device notices must not overwrite progress while a
+        // saved recording is being received, transcribed or inserted.
+        if !processing || value.flags & 2 != 0 {
+            if Int(value.feedback) < phases.count { status = phases[Int(value.feedback)] }
+            if value.flags & 16 != 0 { status += " · 重点已保存" } else if value.flags & 8 != 0 { status += " · 正在保存重点" }
+        }
         if value.sequence != lastSequence {
             lastSequence = value.sequence
             if value.events & 1 != 0, value.mode == 1 {
@@ -102,14 +107,30 @@ import CompanionRecorderCore
                     note = RecorderNote(peer: peer,session: session,originals: descriptors,marks: marks); note.cancelled = context.cancelled
                 }
                 try library.save(note); reload(); selectedNote = note.id
-                do { if !note.reclaimed { try await bluetooth.confirmSaved(note,library: library); note.reclaimed = true; try library.save(note) } }
-                catch { status = "原音已保存，设备空间确认稍后可重试。" }
-                if context.cancelled { status = "这次输入已取消，原音保留在本机。"; return }
-                if note.transcript != nil { status = "原音与文字已经保存在本机，可以复制或导出。"; return }
-                status = "正在转写…"
-                let text = try await TranscriptionService().transcribe(folder.appendingPathComponent("audio.wav"),config: context.config)
-                note.transcript = text; try library.save(note); reload()
-                try await insertion.insert(text,target: context.target,submit: context.submit); status = "文字已发送到输入位置。"
+                let saved = note
+                try await SavedDelivery.run(reclaim: { [self] in
+                    guard !saved.reclaimed else { return }
+                    do {
+                        try await bluetooth.confirmSaved(saved,library: library)
+                        // Delivery may have saved a transcript while BLE was
+                        // awaiting its receipt. Merge, never overwrite it.
+                        var current = try library.load(saved.id)
+                        current.reclaimed = true; try library.save(current)
+                        spaceConfirmationPending = false; reload()
+                    } catch { spaceConfirmationPending = true }
+                }, deliver: { [self] in
+                    if context.cancelled { status = "这次输入已取消，原音保留在本机。"; return }
+                    if saved.transcript != nil { status = "原音与文字已经保存在本机，可以复制或导出。"; return }
+                    status = "原音已保存，正在转写…"
+                    do {
+                        let text = try await TranscriptionService().transcribe(folder.appendingPathComponent("audio.wav"),config: context.config)
+                        var current = try library.load(saved.id)
+                        current.transcript = text; try library.save(current); reload()
+                        try await insertion.insert(text,target: context.target,submit: context.submit)
+                        status = "文字已发送到输入位置。"
+                    } catch { status = error.localizedDescription; throw error }
+                })
+                if (try? library.load(saved.id).reclaimed) != true { queued.remove(saved.id) }
             } catch { status = error.localizedDescription; queued.remove(RecorderNote.identity(peer: peer,session: session)); reload() }
         }
     }
