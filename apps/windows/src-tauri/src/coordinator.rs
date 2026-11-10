@@ -371,6 +371,15 @@ impl CompanionCoordinator {
         Ok(lease)
     }
 
+    pub(crate) fn begin_audio_edit(&self)->Result<CompanionDeviceOperationLease,String>{
+        let lease=self.begin_device_operation_kind(19)?;
+        crate::backend::audio_editing::available(&self.backend.snapshot()?)?;Ok(lease)
+    }
+    pub(crate) fn commit_audio_edit(&self,row:crate::companion_v1::CompanionV1HostSession,
+        sources:&[crate::backend::audio_derivation::SourceIdentity],token:&str)->Result<(),String>{
+        if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}
+        self.backend.commit_audio_edit(row,sources,token)
+    }
     pub fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
         if self.is_shutting_down() {return Err(crate::backend::lifecycle::CLOSING.into());}
         self.backend.import_audio_file(path)

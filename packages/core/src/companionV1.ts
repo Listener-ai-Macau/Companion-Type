@@ -251,6 +251,7 @@ export type CompanionV1HostSessionSource =
   | 'hostMicrophone'
   | 'hostMeeting'
   | 'importedAudio'
+  | 'derivedAudio'
   | 'importedTranscript';
 
 export type CompanionV1HostSessionStatus =
@@ -1846,7 +1847,7 @@ function refreshPrivacyState(
   lastEraseAt: string | null,
 ): CompanionV1PrivacyState {
   const encoder = new TextEncoder();
-  const audioCacheBytes = snapshot.host.sessions.reduce((sum, session) => sum + session.audioBytes + (session.source === 'importedAudio' ? session.chunks.filter(chunk => chunk.status === 'importedOriginal').reduce((total, chunk) => total + chunk.bytes, 0) : 0), 0);
+  const audioCacheBytes = snapshot.host.sessions.reduce((sum, session) => sum + session.audioBytes + (['importedAudio','derivedAudio'].includes(session.source) ? session.chunks.filter(chunk => chunk.status === 'importedOriginal').reduce((total, chunk) => total + chunk.bytes, 0) : 0), 0);
   const transcriptBytes = snapshot.host.sessions.reduce(
     (sum, session) => sum + encoder.encode(session.transcriptText).length,
     0,

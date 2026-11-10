@@ -32,7 +32,7 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
         let extension=audio.extension()?;
         return Ok((audio,format!("{title}-meeting.{extension}")));
     }
-    if session.source=="importedAudio" {
+    if matches!(session.source.as_str(),"importedAudio"|"derivedAudio") {
         super::library_lifecycle::require_available(session)?;
         if !session.audio_stored || !session.retention.audio_cached {return Err("这场录音的本机音频已删除。".into());}
         let root=super::audio_storage::recording_root()?;

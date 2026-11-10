@@ -126,6 +126,8 @@ mod host_recording;
 pub(crate) mod host_segmented_capture;
 pub(crate) mod import_audio;
 pub(crate) mod audio_derivation;
+pub(crate) mod audio_editing;
+pub(crate) mod audio_edit_job;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
 mod meeting_audio_recovery;
@@ -765,6 +767,7 @@ pub trait CompanionBackend: Send + Sync {
     fn finish_host_recording_on_exit(&self) -> Result<(), String>;
     fn finish_meeting_processing_on_exit(&self, budget: std::time::Duration) -> Result<(), String>;
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
+    fn commit_audio_edit(&self,_row:CompanionV1HostSession,_sources:&[audio_derivation::SourceIdentity],_token:&str)->Result<(),String>{Err("当前环境不支持另存编辑录音。".into())}
     fn import_audio_file(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持导入音频。".into())}
     fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
@@ -1616,6 +1619,19 @@ impl CompanionBackend for FixtureCompanionBackend {
         if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){library_lifecycle::apply(&mut snapshot.host.sessions,&request,&connection_timestamp())?;}
         else{snapshot.host.sessions=library_lifecycle::commit(&persistence::state_file_path(),&request,&connection_timestamp())?;}
         snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
+    fn commit_audio_edit(&self,row:CompanionV1HostSession,sources:&[audio_derivation::SourceIdentity],token:&str)->Result<(),String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"资料库暂时不可用。")?;
+        audio_editing::available(&snapshot)?;
+        if audio_editing::context_token()?!=token{return Err("资料库已切换，已停止保存。".into());}
+        session_store::update_checked(&persistence::state_file_path(),|rows|{
+            let mut current=snapshot.clone();current.host.sessions=rows.clone();
+            audio_editing::validate_sources(&current,sources)?;
+            if rows.iter().any(|r|r.id==row.id){return Err("这份成品已存在，请重新读取任务状态。".into());}
+            rows.insert(0,row.clone());Ok(())
+        })?;
+        snapshot.host.sessions=persistence::load_sessions_from(&persistence::state_file_path()).ok_or("录音已写入，请重新载入资料库。")?;
+        snapshot.updated_at=observation_timestamp();refresh_privacy_counts(&mut snapshot);Ok(())
     }
     fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String> {
         {
@@ -4656,7 +4672,7 @@ fn requested_or_selected_session_mut<'a>(
 fn transcription_chunk_paths(session: &CompanionV1HostSession) -> Result<Vec<String>, String> {
     // The preserved input is a library asset, not another speech segment.
     let filtered;
-    let session=if session.source=="importedAudio" {
+    let session=if matches!(session.source.as_str(),"importedAudio"|"derivedAudio") {
         filtered={let mut row=session.clone();row.chunks.retain(|chunk|chunk.status!="importedOriginal");row};
         &filtered
     } else {session};
@@ -4955,7 +4971,7 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
         .sessions
         .iter()
         .map(|session| session.audio_bytes.saturating_add(session.chunks.iter()
-            .filter(|chunk|session.source=="importedAudio" && chunk.status=="importedOriginal")
+            .filter(|chunk|matches!(session.source.as_str(),"importedAudio"|"derivedAudio") && chunk.status=="importedOriginal")
             .fold(0u64,|total,chunk|total.saturating_add(chunk.bytes))))
         .sum();
     snapshot.privacy.transcript_bytes = snapshot

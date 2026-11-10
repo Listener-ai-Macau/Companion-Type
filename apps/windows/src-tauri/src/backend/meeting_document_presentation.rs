@@ -27,7 +27,7 @@ pub(crate) fn readable_lines(title:&str,content:&str)->Vec<String> {
         let seconds=ms/1000;format!("{:02}:{:02}:{:02}",seconds/3600,(seconds/60)%60,seconds%60)
     }).unwrap_or_else(||duration.to_owned());
     let source=lines[start+4].trim_start_matches("Source: ");
-    let source=match source {"importedAudio"=>"导入的音频","boardDevice"=>"录音卡", "hostMicrophone"=>"电脑麦克风", "hostMeeting"=>"电脑会议", "importedTranscript"=>"导入的文字", _=>source};
+    let source=match source {"derivedAudio"=>"编辑另存的录音","importedAudio"=>"导入的音频","boardDevice"=>"录音卡", "hostMicrophone"=>"电脑麦克风", "hostMeeting"=>"电脑会议", "importedTranscript"=>"导入的文字", _=>source};
     let engine=lines[start+5].trim_start_matches("Minutes engine: ");
     let engine=if engine.starts_with("llm_") {"AI 整理"} else if engine.starts_with("rules_") {"本地整理"} else {engine};
     let mut out=Vec::new();let mut i=0;

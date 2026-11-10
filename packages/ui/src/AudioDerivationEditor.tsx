@@ -14,6 +14,7 @@ export type AudioEditAdapter={
  playSource:(index:number)=>Promise<void>;
 };
 type Clip={id:number;key:string;start:string;end:string};
+export type AudioEditHostProps={contextId:string;title:string;rows:AudioEditRow[];busy?:boolean;onChanged:()=>void;onLibrary:()=>void;onDirty?:(dirty:boolean)=>void;onSource:(id:string,positionMs:number)=>Promise<void>};
 type Props={contextId:string;libraryToken:string;title:string;rows:AudioEditRow[];adapter:AudioEditAdapter;busy?:boolean;onChanged:()=>void;onLibrary:()=>void;onDirty?:(dirty:boolean)=>void};
 function time(ms:number){const value=Math.max(0,Math.ceil(ms)),s=Math.floor(value/1000),fraction=value%1000;return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}${fraction?'.'+String(fraction).padStart(3,'0'):''}`;}
 function milliseconds(text:string){const value=text.trim();if(!/^\d+(?::[0-5]\d){0,2}(?:\.\d{1,3})?$/.test(value))throw Error('时间请填写为 分:秒，可精确到三位小数，例如 1:20.500。');const parts=value.split(':').map(Number);let seconds=0;for(const part of parts)seconds=seconds*60+part;const result=Math.round(seconds*1000);if(!Number.isSafeInteger(result))throw Error('所填时间超出当前处理范围。');return result;}

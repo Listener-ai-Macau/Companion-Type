@@ -38564,8 +38564,8 @@
           ],
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
-            "at": "2026-11-11T00:06:22+08:00",
-            "state": "ANDROID131_NATIVE_EDIT_AND_CONTROL_RESTART_QUALIFIED_PHONE_CLOSED_WINDOWS_ENGINE_SOURCE_ONLY",
+            "at": "2026-11-11T00:42:14+08:00",
+            "state": "ANDROID131_QUALIFIED_WINDOWS093_UNIFIED_COMPLETE_EDIT_SOURCE_WEB_PASSED_NATIVE_BUILD_PENDING",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
               "packages/audio-derivation/src/plan.ts",
@@ -38579,7 +38579,7 @@
             "notImplementedYet": "Native service/source resolver, atomic library publication and provenance/backup/purge integration, ordinary trim/split/merge UI, Windows native materialization and full installed qualification remain open.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
             "currentDependency": "Android131 installed, exact private installer readback verified and own phone session closed. Complete corresponding Windows editor chain from unified091; no extra unchanged phone package/runtime now.",
-            "next": "Implement Windows native source resolution with existing usage leases, independent derived WAV/import original and separately self-owned SessionReceipt provenance; integrate existing backup/full-purge versus audio-only cleanup, native job/CLI/coordinator and identical editor. One matched Windows native candidate/runtime then grouped full archive; new neutral customer use after real full-batch benefit is available.",
+            "next": "一次远端原生构建并运行真实PCM/备份恢复/分范围删除检查；核对匹配MSI后验普通页面和中断/取消剩余重试，完成Windows093+Android131整包与私有远端回读，再安排中性完整目的体验。",
             "renderer": {
               "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
               "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
@@ -38816,7 +38816,32 @@
               "actual": "Sample-map native types/strict validation and64KiB canonical WAV streaming renderer, multipart/reordered source slices, SHA recheck and cancellation-owned-temp retirement written; actual rustfmt parser/format passed. Same frontend editor copied byte-identically.",
               "notQualified": "Rust generated-PCM test written but not executed; native resolver, durable publication/provenance, library/coordinator/CLI/UI adapters and installed Windows workflow remain open."
             },
-            "windowsArchitectureDecision": "Keep parent references as provenance, never deletion ownership. A derived record gets independent audio; source-map owner is a separate self-owned SessionReceipt JSON with deterministic record ID, retained by audio-only cleanup and included in backup/full purge. Reuse existing storage/index mechanisms and native adapters; no model stack fork."
+            "windowsArchitectureDecision": "Keep parent references as provenance, never deletion ownership. A derived record gets independent audio; source-map owner is a separate self-owned SessionReceipt JSON with deterministic record ID, retained by audio-only cleanup and included in backup/full purge. Reuse existing storage/index mechanisms and native adapters; no model stack fork.",
+            "windowsReservation": "0.1.93",
+            "windowsVersion": "0.1.93",
+            "windowsEditSource": {
+              "at": "2026-11-11T00:42:14+08:00",
+              "state": "WINDOWS093_UNIFIED_EDIT_SOURCE_WEB_READY_NATIVE_BUILD_PENDING",
+              "version": "0.1.93",
+              "mustRetain": [
+                "b170264a7f0693847ea17ef85901f5411280f266",
+                "7046f32d587e1be88e6feb3aa539580a2f72333e"
+              ],
+              "mergeCommit": "a48c0aa81ec5f37b54d13e1b2fe3670ec1da31f3",
+              "userOutcome": "本机原音裁剪、切分和重排合并，另存独立录音；保存来源位置、全库备份恢复和分范围清理；后台取消、中断后沿原ID只重试未完成部分。",
+              "localChecks": {
+                "windowsTypes": true,
+                "normalWindowsWebBuild": true,
+                "newRustModulesParsedByRustfmt": true,
+                "lockedNotices": true
+              },
+              "nativeCompiled": false,
+              "installed": false,
+              "modelsRun": false,
+              "boardOrPhoneAccessed": false,
+              "wholeSaleQualified": false,
+              "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source."
+            }
           },
           "beforeAndroidEditing130": {
             "phase": "R48本机显式保护及所有旧隐私入口后端门已装并后台核对；非破坏裁剪/切分/合并未做",
@@ -274806,7 +274831,7 @@
       },
       "next": "CP27-16: continue the already protected sample-map foundation into bounded native PCM materialization, durable source ownership, ordinary trim/split/merge controls and one matched dual-client delivery.",
       "pendingAudioEditingWorkpoint": "groups/CP27-16/nonDestructiveSourceMapping20261110",
-      "pendingAudioEditingVersionReservation": "0.1.92",
+      "pendingAudioEditingVersionReservation": "0.1.93",
       "pendingAudioEditingBranch": "work/device-phone-closure055-20261106",
       "recorderInput092Pending": {
         "at": "2026-11-10T23:44:40+08:00",
@@ -274822,6 +274847,12 @@
         "changes": "sealed-short-capture delivery, actual preparation/current utterance phase, bounded opt-in physical event metadata",
         "boardAndLong": "FW791/frozen091 original399 remains running; no installer/board handoff before that process closes.",
         "physicalChainQualified": false
+      },
+      "audioEditingSourceIntegrationDecision20261111": {
+        "at": "2026-11-11T00:23:04+08:00",
+        "decision": "Preserve recorder input092 source7046f32d and current audio-edit source1658d2a5 together before one unified093 build; neither separately versioned092 may replace the other.",
+        "currentlyInstalledUnchanged": "0.1.91",
+        "physicalRecordingUntouched": true
       }
     }
   }

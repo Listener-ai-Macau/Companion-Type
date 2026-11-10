@@ -134,6 +134,7 @@ pub(super) struct InputPart {
 pub(super) struct Input {
     pub source: SourceIdentity,
     pub parts: Vec<InputPart>,
+    pub meeting: Option<crate::companion_v1::CompanionV1MeetingTracks>,
 }
 pub(super) struct Rendered {
     pub temporary: PathBuf,
@@ -242,6 +243,18 @@ fn inspect(
     })
 }
 
+pub(super) fn probe(path: &Path) -> Result<(u64, String), String> {
+    let (_, sha256) = super::audio_storage::fingerprint(path)?;
+    let part = inspect(
+        &InputPart {
+            path: path.into(),
+            sha256: sha256.clone(),
+        },
+        &mut |_, _| Ok(()),
+    )?;
+    Ok((part.frames, sha256))
+}
+
 /// Only creates one unique private temporary. No library row or source file is
 /// changed, including on cancellation. Publication is a separate native step.
 pub(super) fn render(
@@ -278,7 +291,7 @@ pub(super) fn render(
             total = total.checked_add(part.frames).ok_or("原音时长无效。")?;
             parts.push(part);
         }
-        if total != input.source.frames {
+        if input.meeting.is_none() && total != input.source.frames {
             return Err("原音长度在编辑前发生变化。".into());
         }
         prepared.insert(input.source.key.as_str(), parts);
@@ -301,6 +314,27 @@ pub(super) fn render(
         let mut buffer = [0u8; BUFFER];
         let mut copied = 0u64;
         for slice in &plan.slices {
+            let source = inputs
+                .iter()
+                .find(|i| i.source.key == slice.source_key)
+                .ok_or("找不到原音。")?;
+            if let Some(tracks) = &source.meeting {
+                super::meeting_audio_mix::mix_range(
+                    &tracks.microphone,
+                    &tracks.system,
+                    slice.start_frame,
+                    slice.end_frame,
+                    |samples| {
+                        check(copied, plan.frames)?;
+                        for sample in samples {
+                            out.write_all(&sample.to_le_bytes()).map_err(io)?;
+                        }
+                        copied += samples.len() as u64;
+                        Ok(())
+                    },
+                )?;
+                continue;
+            }
             let parts = prepared
                 .get(slice.source_key.as_str())
                 .ok_or("所选原音分段缺失。")?;
@@ -390,10 +424,12 @@ mod tests {
         let inputs = vec![
             Input {
                 source: sa.clone(),
+                meeting: None,
                 parts: vec![part(a.clone()), part(a2.clone())],
             },
             Input {
                 source: sb.clone(),
+                meeting: None,
                 parts: vec![part(b.clone())],
             },
         ];

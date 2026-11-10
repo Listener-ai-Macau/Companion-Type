@@ -70,9 +70,10 @@ try:
    artifacts.append(Path(item['executable']))
  assert len(artifacts)==1,artifacts
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
- record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input']};save()
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio']};save()
  for scope in record['affectedTestBinary']['filters']:
   run(scope+'-context-regression',[str(test),scope,'--test-threads=1'],N)
+ run('audio-edit-native-library-isolated',[str(test),'backend::audio_editing::tests::derived_recording_exact_pcm_backup_restore_and_scoped_purge','--ignored','--exact','--test-threads=1'],N)
  assert sha(test)==record['affectedTestBinary']['sha256']
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)

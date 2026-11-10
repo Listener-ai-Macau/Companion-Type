@@ -518,6 +518,23 @@ pub(crate) fn verify_owned_leaf(path:&Path,purpose:Purpose,bytes:u64,sha:&str)->
 }
 pub(crate) fn seal_note_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
     if !matches!(purpose,Purpose::NoteImage|Purpose::NotePreview|Purpose::DocumentOriginal|Purpose::DocumentText|Purpose::DocumentOwner)||!purpose.accepts(path){return Err(fail());}
+    seal_immutable_retry(source,path,purpose,bytes,sha)
+}
+/// Only native edit-generated leaves may resume this bounded immutable write.
+pub(crate) fn seal_audio_edit_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
+    let leaf=path.file_name().and_then(|n|n.to_str()).ok_or_else(fail)?;
+    let parent=source.file_name().and_then(|n|n.to_str()).ok_or_else(fail)?;
+    let edit_id=|s:&str|s.strip_prefix("edit-").is_some_and(|id|id.len()==32&&id.bytes().all(|b|b.is_ascii_hexdigit()));
+    let valid=match purpose{
+        Purpose::Recording=>source==path&&leaf.strip_suffix(".wav").is_some_and(edit_id),
+        Purpose::ImportedOriginal=>parent.strip_suffix(".wav").is_some_and(edit_id)&&leaf==parent.trim_end_matches(".wav").to_owned()+".original.wav",
+        Purpose::SessionReceipt=>source==path&&leaf.strip_prefix("audio-edit-owner-").and_then(|s|s.strip_suffix(".json")).is_some_and(|s|s.len()==64&&s.bytes().all(|b|b.is_ascii_hexdigit())),
+        _=>false
+    };
+    if !valid||!purpose.accepts(path){return Err(fail());}
+    seal_immutable_retry(source,path,purpose,bytes,sha)
+}
+fn seal_immutable_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
     let root=managed_root(path).ok_or_else(fail)?;let leaf=path.file_name().and_then(|v|v.to_str()).filter(|v|component(v)).ok_or_else(fail)?;
     let _lease=lease(&root,leaf)?;let _lock=lock(&root)?;let mut data=load(&root)?;let owner=reference_key(source)?;
     let expected=Identity{bytes,sha256:sha.into()};let item=data.files.iter_mut().find(|i|i.file==leaf).ok_or_else(fail)?;
