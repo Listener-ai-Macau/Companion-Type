@@ -18,6 +18,41 @@ const OPEN_TIMEOUT: Duration = Duration::from_secs(8);
 const PAIR_TIMEOUT: Duration = Duration::from_secs(45);
 const PAIR_ERROR: &str = "Windows BLE pairing required:";
 
+fn unique_product_peer(peers:&[(String,String)])->Option<&str> {
+    let mut found=None;
+    for (id,name) in peers {
+        if !super::device_discovery::product_name(name) {continue;}
+        if found.is_some_and(|current|current!=id.as_str()) {return None;}
+        found=Some(id.as_str());
+    }
+    found
+}
+
+/// Resolve a sole already-paired product before starting advertisement discovery.
+/// This reads Windows metadata only; protected GATT/UID validation stays in the
+/// ordinary connection path. Multiple products retain the normal picker/scan.
+pub(super) async fn unique_paired_product_address()->Option<u64> {
+    let cancel=Arc::new(AtomicBool::new(false));
+    let _cancel_on_drop=CancelOnDrop(cancel.clone());
+    tokio::task::spawn_blocking(move|| {
+        let cancel=BleCancel::new(cancel,"cancelled paired Companion lookup");
+        let budget=Duration::from_secs(1);
+        let selector=BluetoothLEDevice::GetDeviceSelectorFromPairingState(true).ok()?;
+        let operation=DeviceInformation::FindAllAsyncAqsFilter(&selector).ok()?;
+        let items=wait_async_operation_with_cancel(operation,budget,"paired Companion enumeration",&cancel).ok()?;
+        let mut peers=Vec::new();
+        for index in 0..items.Size().ok()? {
+            let item=items.GetAt(index).ok()?;
+            if let (Ok(id),Ok(name))=(item.Id(),item.Name()) {peers.push((id.to_string_lossy(),name.to_string_lossy()));}
+        }
+        let id=unique_product_peer(&peers)?;
+        let operation=BluetoothLEDevice::FromIdAsync(&windows::core::HSTRING::from(id)).ok()?;
+        let device=DeviceHandle(wait_async_operation_with_cancel(operation,budget,"paired Companion metadata",&cancel).ok()?);
+        if !device.0.DeviceInformation().ok()?.Pairing().ok()?.IsPaired().ok()? {return None;}
+        device.0.BluetoothAddress().ok()
+    }).await.ok().flatten()
+}
+
 struct CancelOnDrop(Arc<AtomicBool>);
 impl Drop for CancelOnDrop {
     fn drop(&mut self) { self.0.store(true, Ordering::SeqCst); }
@@ -264,5 +299,13 @@ mod tests {
         for value in ["Companion", "C8:92:FF:DD:3B", "C8:92:FF:DD:3B:CZ", "C892FFDD3BCA00"] {
             assert!(parse_address(value).is_err());
         }
+    }
+    #[test]
+    fn default_paired_selection_is_unique_and_does_not_take_an_unrelated_or_second_product() {
+        let peer=|id:&str,name:&str|(id.to_owned(),name.to_owned());
+        assert_eq!(unique_product_peer(&[peer("a","Headphones"),peer("b","Companion")]),Some("b"));
+        assert_eq!(unique_product_peer(&[peer("a","Companion"),peer("b","Capture")]),None);
+        assert_eq!(unique_product_peer(&[peer("a","Headphones")]),None);
+        assert_eq!(unique_product_peer(&[peer("a","Companion"),peer("a","Companion")]),Some("a"));
     }
 }

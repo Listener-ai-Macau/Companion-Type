@@ -83,7 +83,7 @@
 
 .ct-ai-service-fields{grid-column:1/-1;border:1px solid var(--ct-border,#dedbe4);border-radius:12px;padding:13px}.ct-ai-service-fields>summary{cursor:pointer;font-weight:600;font-size:13px}.ct-ai-service-fields>.ct-field{margin-top:12px}.ct-template-picker>summary{display:flex;justify-content:space-between;gap:12px}.ct-template-picker>summary>span{font-size:12px;opacity:.7}.ct-meeting-doc .meeting-ai-workbench{max-width:900px}
 /* Desktop dictation stays secondary to ordinary recording and first use. */
-.ct-desktop-input { margin: 16px 0; padding: 16px; border: 1px solid var(--ct-border, #c9c6d1); border-radius: 16px; }
+.ct-desktop-input { margin: 16px 0; padding: 16px; border: 1px solid var(--ct-border, #c9c6d1); border-radius: 16px; font-family: var(--font-sans, system-ui, sans-serif); }
 .ct-desktop-input summary { cursor: pointer; font-weight: 650; }
 .ct-desktop-input p { line-height: 1.6; overflow-wrap: anywhere; }
 .ct-desktop-input select { max-width: 100%; margin: 6px; padding: 6px; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 8px; }

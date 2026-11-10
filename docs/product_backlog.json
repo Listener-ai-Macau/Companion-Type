@@ -38538,7 +38538,21 @@
             "Companion-Type/docs/releases/recording/20261016-library-r48-installed-background-checked.json",
             "type-source:84782aafe4871adae179731b1695bfe56b596110"
           ],
-          "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。"
+          "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
+          "nonDestructiveSourceMapping20261110": {
+            "at": "2026-11-10T21:02:59+08:00",
+            "state": "SOURCE_CHECKPOINT_ONLY_PCM_MAPPING_FOUNDATION_NATIVE_EDITING_OPEN",
+            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+            "sourceFiles": [
+              "packages/audio-derivation/src/plan.ts",
+              "tools/test_audio_derivation_plan.ts"
+            ],
+            "actual": "Validated immutable source identities, sample-accurate trim/reorder/multi-source maps, half-open boundaries, full last partial millisecond, range-to-original intersections, stale/damaged map rejection and safe-integer overflow. Pure source strict typecheck and actual bundled assertions pass.",
+            "notImplementedYet": "Native streaming audio materialization, atomic publication/provenance/backup/purge, ordinary trim/split/merge UI and installed/runtime qualification remain open.",
+            "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
+            "currentDependency": "Main complete document batch remains active; unified Windows090 normal build42818029062 is running. This unused source foundation was prepared in Android tree during that dependency and does not change Android129 shipped bytes or trigger a native build.",
+            "next": "After main unified document batch is frozen, continue native bounded PCM rendering and durable source maps using existing import/backup/lifecycle mechanisms, then one complete trim/split/merge user batch on both clients."
+          }
         },
         {
           "beforeOwnerFullParity20261105": {
@@ -132987,7 +133001,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T19:10:22+08:00",
+      "updatedAt": "2026-11-10T20:55:30+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133729,7 +133743,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Windows089同源安装包已构建并核对，原生离线入口通过；原389接回被Owner选择稍后，当前无长录/接收/升级作业，保留28段本机原件与未知实卡状态。接回后先原389收尾，再集中验手机127完整实卡恢复、匹配最终长录、IMU自然拿起/携带/误触与电脑按住说话（Windows089及真实Mac），不重开原block/后置项。",
+      "next": "Windows090/753800da同一批修复原会话状态读取恢复、按住说话断链恢复和已配对默认冷连固定4s扫描，唯一候选42819548838在构建。先完成同源包并实际验空闲连接/断连恢复，再用原版窗口集中实体Windows与IMU、手机127完整录音/收取/回听/原会话恢复；修正恢复链并验证后才做当前匹配最终2h，不盲跑第三场。原389及391均已在原库收齐/校验/回收，当前无本侧MIC/接收/升级；真实Mac仍需可用Mac端实测，原block/后置保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134240,15 +134254,15 @@
             "order": 2,
             "task": "CP23-10",
             "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "FUNCTIONAL_RECORDING_AND_MATCHED_LONG_FIRST_INTERNAL_TIMING_DEFERRED",
-            "next": "取消6239us归因作为前置；当前正常788/统一App按完整原音、零采音异常、保存/回听/录中同步/恢复和用户等待验收。短/live到最终2h按功能结果推进；真实采样就绪仍不足，不暗中开录。"
+            "status": "LONG389_AND391_FAILED_SAME_STATUS_READ_BOTH_ORIGINALS_RECOVERED_SOURCE090_FIX",
+            "next": "原38958min与39125min均未完成2h；两场原音已在各自原库完整校验和回收。先验证090读取恢复源头修复，再做最终匹配长录/同步；原失败保留，内部编码耗时仍只观察。"
           },
           {
             "order": 3,
             "task": "CP09-02",
             "scope": "首次连接及原会话中断恢复；冷目录<=5s、恢复<=10s、不重复START",
-            "status": "UNIFIED087_FULL_COLD_PASS_PHONE124_COLD_PASS_RECOVERY_AND_INTERMITTENCY_OPEN",
-            "next": "复用087完整冷连2.869s、未改086三场3.987/2.401/4.497s和同连接扩展，及当前Android124普通冷连2.295s；不无改动重复测速，手机同任务恢复/完整链与历史偶发仍保留。"
+            "status": "089_DEFAULT_COLD12778MS_AND_HELD_LINK_LOSS_FAILED_090_SOURCE_REPAIR_BUILDING",
+            "next": "087及显式MAC既有快样本保留；089普通默认连接多4s扫描导致总12.778s，不能用显式MAC2.783s替代。090先查唯一OS已配对产品及原会话恢复；实际恢复<=10s和冷连<=5s仍待当前包验证。"
           },
           {
             "task": "CP04-08",
@@ -134263,8 +134277,8 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "已完成可后台推进的Windows089可用候选；下一最高动作是原389接回收尾，当前Owner选择稍后。当前仍装088，不再重复构建或以离线UI通过冒充实体链。",
-        "lastUpdatedAt": "2026-11-10T19:09:03+08:00",
+        "currentExecutable": "先交付并验证090这批实际连接恢复修复。389/391原音已收齐，无需Owner再接回389；不可沿过期19:10工作点重复处理。默认冷连089实测12.778s不合格，实体电脑输入断链、当前2h仍不合格；不再把版本/包/单测数当实体通过。",
+        "lastUpdatedAt": "2026-11-10T20:55:30+08:00",
         "lastOwnerRaw": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
@@ -134348,12 +134362,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-10T19:10:22+08:00",
+        "at": "2026-11-10T20:55:30+08:00",
         "firmware": 66788,
-        "coreDelivery": "WINDOWS088_ANDROID127_INSTALLED_INPUT089_SOURCE_CANDIDATE_FULL_CHAIN_OPEN",
+        "coreDelivery": "WINDOWS089_ANDROID127_INSTALLED_090_RECOVERY_FIX_BUILDING_FULL_CHAIN_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "FW66788 + installed Windows088/d9aec243 and Android127/c9554c2. Ordinary key guidance and phone note search/image reading have been delivered. Current long389 failed after58min host observation; original session recovery deferred. Windows089/1025b4bd now implements held-input integration reusing Listener but is a candidate, not physically qualified. Phone complete device/recovery, natural IMU and realMac remain open.",
+        "openSoftware": "Current FW66788, Windows089 and Android127. Both original389 and391 recovered/verified/reclaimed. Current long391 failed after25min on required status read; physical held089 failed native link loss; default cold089 12.778s failed5s. Source090/753800da repairs these connection paths and is building once. Phone full original/recovery chain, natural IMU and realMac remain open.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134473,7 +134487,7 @@
               "CP09-02",
               "CP23-10"
             ],
-            "status": "WINDOWS088_ANDROID127_DELIVERED_PHONE_DEVICE_COMPLETE_CHAIN_OPEN",
+            "status": "WINDOWS089_ANDROID127_INSTALLED_NORMAL_PHONE_COMPLETE_CHAIN_OPEN",
             "remaining": "127已实装，备注保存/全库搜索/直接高亮/重开/图片普通手机受影响路径通过；当前实卡录音/收取/回听/断链恢复仍未完整资格。",
             "type": "Implemented source plus delivery and affected end-to-end qualification"
           },
@@ -134482,10 +134496,10 @@
             "tasks": [
               "CP23-10"
             ],
-            "status": "FAILED_AT58MIN_ORIGINAL389_RECOVERY_OWNER_DEFERRED",
-            "remaining": "17:49读不到当前芯片状态后原生客户端退出；主机3483.959s，保守录中同步3336.784s，28段本机原件保留。当前物理采音未知；接回后先原389收尾和核验，不开新场碰结果。",
+            "status": "391_FAILED25MIN_ORIGINAL_COMPLETE_SOURCE_RECOVERY_REPAIR090_BUILDING",
+            "remaining": "两次均未满2h，原389/391已收齐。391原音1536.17s，13段含末段，完整性和回收通过；正常跟随入口误把一次可恢复状态读取失败当终局，090修复源头后再验证，不开第三场碰结果。",
             "type": "Actual user-function reliability qualification, not a new codec optimization project",
-            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original391-failed-long.json",
             "passed": false
           },
           {
@@ -134504,12 +134518,12 @@
               "CP15-09",
               "CP15-02"
             ],
-            "status": "WINDOWS089_BUILT_OFFLINE_IPC_PASS_REAL_WINDOWS_MAC_CHAIN_PENDING",
-            "remaining": "Windows089/1025b4bd同源MSI已构建、源/包/资源核对通过，实际隔离窗口的新入口与原生IPC通过；实体Windows按住说话→BLE原音→现有识别→编辑器及真实Mac链尚未取得资格。原音/文字落普通录音库的实现已接通，未以编译或离线界面代替实际说话体验。",
+            "status": "WINDOWS089_MODE_ACK_PASS_PHYSICAL_LINK_LOSS_090_REPAIR_REALMAC_OPEN",
+            "remaining": "Windows089真实安装，本机识别服务/模式ACK通过；实体尝试断链，未观察到物理START，不推定Owner动作。090修复实际断链恢复并保留同token原音交付；完整Windows识别输入及真实Mac链尚未通过。",
             "type": "Host application integration and actual-device qualification; distinct from current MCU basic recorder"
           }
         ],
-        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\release-assessment-current.json",
+        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json",
         "completionMeaning": {
           "at": "2026-11-10T16:30:56+08:00",
           "ownerQuestion": "这几组收尾都跑完后，是不是整个Companion或Capture都完成？",
@@ -134531,9 +134545,10 @@
         "windowsDesktopInputCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
         "windowsDesktopInputPhysicalQualified": false,
         "windowsDesktopInputCandidateBuilt": true,
-        "windowsDesktopInputCandidateInstalled": false,
+        "windowsDesktopInputCandidateInstalled": true,
         "desktopInput089PackageReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\candidate-current089-phone127.json",
-        "desktopInput089OfflineUiPassed": true
+        "desktopInput089OfflineUiPassed": true,
+        "windowsDesktopInputInstalled": true
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -135773,7 +135788,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "Windows088已实装并过实际首用/帮助/原文件一致；四组件候选E:\\CodexData\\Companion\\deliveries\\20261110-guidance088-android124.zip已封存。Android124需下一批合入共享指引；当前录音/恢复/实体/Mac证据缺口仍开放，不报整机可售。"
+        "currentDelivery": "Windows089已实际安装，原245份用户文件内容未变。090连接恢复批已提交推送，唯一候选构建中；最终日期不凭重复构建推算，以当前实际核心链通过为准。原四组与原block不变。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136695,8 +136710,8 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-10T19:10:22+08:00",
-        "state": "INPUT089_CANDIDATE_PACKAGED_NO_ACTIVE_DEVICE_WORK",
+        "at": "2026-11-10T20:55:30+08:00",
+        "state": "SOURCE_REPAIRED_ONE090_CANDIDATE_BUILD_NO_ACTIVE_RECORDING",
         "phoneInstalled": "0.1.127",
         "firmwareInstalled": 66788,
         "phoneSourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
@@ -136704,7 +136719,7 @@
         "firmwareSource": "a26ed28ba6387d7089bd529b2365d193c70791b2",
         "boardLease": false,
         "boardItem": null,
-        "liveRecording": null,
+        "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
@@ -136794,17 +136809,22 @@
         "installedPhone": "0.1.127",
         "functionalLongControllerPid": null,
         "functionalLongFinishPid": null,
-        "actualPhysicalRecordingState": "UNKNOWN_AFTER_ORIGINAL389_HOST_EXIT_OWNER_DEFERRED_RECONNECT",
-        "lastObservedSession": 389,
+        "actualPhysicalRecordingState": "ORIGINAL391_FINALIZED_AND_EXACT_RECEIVE_COMPLETE_LAST_OBSERVED2044",
+        "lastObservedSession": 391,
         "input089Source": "1025b4bdf81d9fe814baa872ee537415509e0f01",
         "input089BuildRun": 42802045850,
         "input089Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
-        "input089Installed": false,
+        "input089Installed": true,
         "original389RecoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovery-state.json",
         "input089Built": true,
-        "windowsDesktopInputInstalled": false,
+        "windowsDesktopInputInstalled": true,
         "input089BuildCompleted": true,
-        "input089UiProcessRunning": false
+        "input089UiProcessRunning": false,
+        "input090Source": "753800da8f500440e9f753dece3d1f6b02578252",
+        "input090BuildRun": 42819548838,
+        "input090Installed": false,
+        "recovery090Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json",
+        "frontendIntegrationHandoff": "owner_module_execution.sharedWindowsIntegration20261110 — Windows091 source merge in progress; preserve both source lineages without changing the firmware/physical task priority."
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -141476,10 +141496,10 @@
       },
       "deliveryBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
       "currentCoreLong": {
-        "at": "2026-11-10T17:49:50+08:00",
+        "at": "2026-11-10T20:55:30+08:00",
         "firmware": 66788,
         "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
-        "state": "CURRENT_FUNCTIONAL_LONG_NOT_QUALIFIED_RETAINED",
+        "state": "FAILED_REQUIRED_STATUS_READ_ORIGINAL391_RECOVERED",
         "targetRecordingSeconds": 7380,
         "targetLiveSyncSeconds": 7200,
         "internalTimingBlockingStart": false,
@@ -141503,19 +141523,22 @@
         "recordingKey": {
           "deviceUid": "120011000d50335754363720",
           "formatEpoch": "5a6584e1707422bb",
-          "sessionId": "0000000000000185"
+          "sessionId": "0000000000000187"
         },
-        "recordingId": 132536,
-        "operatorReadyAt": "2026-11-10T16:50:23+08:00",
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
-        "terminalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
+        "recordingId": 132568,
+        "operatorReadyAt": "2026-11-10T20:08:45+08:00",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original391-failed-long.json",
+        "terminalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original391-failed-long.json",
         "passed": false,
-        "hostElapsedSeconds": 3483.959,
-        "conservativeLiveSyncSeconds": 3336.784,
-        "sealedLocalChunks": 28,
-        "terminalAt": "2026-11-10T17:49:27+08:00",
-        "recoveryState": "OWNER_DEFERRED_ORIGINAL389_UNCONFIRMED",
-        "actualPhysicalRecordingState": "UNKNOWN_AFTER_HOST_EXIT"
+        "hostElapsedSeconds": 1501.41,
+        "conservativeLiveSyncSeconds": 1354.8764519000106,
+        "sealedLocalChunks": 12,
+        "terminalAt": "2026-11-10T20:34:51+08:00",
+        "recoveryState": "ORIGINAL391_COMPLETE_LOCAL_INTEGRITY_AND_RECLAIM_PASS_LONG_TARGET_NOT_PASS",
+        "actualPhysicalRecordingState": "FINALIZED_AND_RECEIVED",
+        "installedWindows": "0.1.89",
+        "windowsSourceCommit": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+        "recoveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original391-recovered-integrity.json"
       },
       "baselineBefore769": {
         "firmwareVersion": 66767,
@@ -142923,7 +142946,7 @@
         "closedAt": "2026-11-10T17:55:02+08:00"
       },
       "listenerReuseReview": {
-        "at": "2026-11-10T19:10:22+08:00",
+        "at": "2026-11-10T20:55:30+08:00",
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\listener-reuse-and-product-scope.json",
         "originalTasks": [
           "CP15-09",
@@ -142938,9 +142961,9 @@
         "windowsDesktopDictationSourceImplemented": true,
         "windowsDesktopDictationSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
         "windowsDesktopDictationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input089-source-and-build.json",
-        "candidateInstalled": false,
+        "candidateInstalled": true,
         "actualReuse": "Pinned Listener5a51c8d text insertion/selection/IME adapter, wrapped as companion-desktop-input; existing exact receive/library/ASR reused. No device driver/model/recording app fork and no firmware growth.",
-        "actualGaps": "Windows physical held capture/BLE/original/provider/editor not qualified; real Mac remains pending. No optional advanced gesture prerequisites added.",
+        "actualGaps": "089 installed; mode1/mode0 and loaded local model passed. Physical attempt lost BLE before any observed physical START; no ASR/editor full-chain qualification. 090 source repairs connection recovery; actual candidate qualification and real Mac remain open.",
         "candidateBuilt": true,
         "candidateInstaller": "E:\\CodexData\\Companion\\.build-cache\\desktop-input089\\Companion-Windows-0.1.89-candidate.msi",
         "candidateInstallerSha256": "c91c0c9205e3b3323a89378d71772bc997e8c6a0256ae88e8110554c0a97635d",
@@ -142951,7 +142974,110 @@
           "sha256": "437a400c22f13f49c976ccc6497cd7b76aee40e22aa62770d67caf5d6f8fce93"
         },
         "candidateBuiltAndPackageInspected": true,
-        "ownerDesktopOrClipboardUsed": false
+        "ownerDesktopOrClipboardUsed": false,
+        "actualModeAckAndLocalProviderReadyPassed": true,
+        "windowsPhysicalHeldFailed": true
+      },
+      "functionalLongAttempts": [
+        {
+          "at": "2026-11-10T17:49:50+08:00",
+          "firmware": 66788,
+          "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+          "state": "CURRENT_FUNCTIONAL_LONG_NOT_QUALIFIED_RETAINED",
+          "targetRecordingSeconds": 7380,
+          "targetLiveSyncSeconds": 7200,
+          "internalTimingBlockingStart": false,
+          "previousUnstartedWorkpoint": {
+            "at": "2026-11-09T21:01:22+08:00",
+            "firmware": 66776,
+            "state": "NOT_STARTED_PRECONDITION_FAILED_ENCODE6239US",
+            "boardLease": false,
+            "newStartCommands": 0,
+            "targetRecordingSeconds": 7380,
+            "targetLiveSyncSeconds": 7200,
+            "saleQualified": false
+          },
+          "newStartCommands": 1,
+          "boardLease": false,
+          "saleQualified": false,
+          "running": false,
+          "controllerPid": null,
+          "finishPid": null,
+          "childPid": null,
+          "recordingKey": {
+            "deviceUid": "120011000d50335754363720",
+            "formatEpoch": "5a6584e1707422bb",
+            "sessionId": "0000000000000185"
+          },
+          "recordingId": 132536,
+          "operatorReadyAt": "2026-11-10T16:50:23+08:00",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
+          "terminalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\functional788-088\\result.json",
+          "passed": false,
+          "hostElapsedSeconds": 3483.959,
+          "conservativeLiveSyncSeconds": 3336.784,
+          "sealedLocalChunks": 28,
+          "terminalAt": "2026-11-10T17:49:27+08:00",
+          "recoveryState": "OWNER_DEFERRED_ORIGINAL389_UNCONFIRMED",
+          "actualPhysicalRecordingState": "UNKNOWN_AFTER_HOST_EXIT"
+        }
+      ],
+      "original389RecoveryCurrent": {
+        "at": "2026-11-10T20:55:30+08:00",
+        "state": "FULL_ORIGINAL_RECOVERED_LOCAL_INTEGRITY_AND_RECLAIM_PASS",
+        "seconds": 3496.9175,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovered-integrity.json",
+        "longQualified": false
+      },
+      "recovery090Workpoint": {
+        "at": "2026-11-10T20:55:30+08:00",
+        "source090": "753800da8f500440e9f753dece3d1f6b02578252",
+        "installedWindows": "0.1.89",
+        "firmware": 66788,
+        "state": "SOURCE_REPAIRED_ONE090_CANDIDATE_BUILD_NO_ACTIVE_RECORDING",
+        "realFailures": [
+          {
+            "case": "default generic cold connect089",
+            "elapsedMs": 12778.32,
+            "limitMs": 5000,
+            "fixedScanMs": 4007,
+            "passed": false
+          },
+          {
+            "case": "physical held input089",
+            "at": "2026-11-10T19:55:39+08:00",
+            "result": "actual native link loss, feature exited; no physical START observed; Owner chose problem",
+            "passed": false
+          },
+          {
+            "case": "long391",
+            "at": "2026-11-10T20:34:51+08:00",
+            "hostSeconds": 1501.41,
+            "liveLowerSeconds": 1354.8764519,
+            "result": "required DEVICE_STATUS read returned None; no preceding native first_loss; exact391 STOP confirmed state2/error0/1536170ms",
+            "passed": false
+          }
+        ],
+        "original389RecoveredSeconds": 3496.9175,
+        "original391RecoveredSeconds": 1536.17,
+        "old34MetadataIdenticalAt391Stop": true,
+        "oldAudioRead": false,
+        "oldAudioConsumed": false,
+        "sourceRepairs": [
+          "mandatory follower read retains native error and renews link once then verifies exact UID/epoch/session/request before receive",
+          "held input retries actual observed lost link, reconciles only previously observed physical capture and serializes receiver connection acquisition",
+          "sole OS-paired product metadata lookup removes unconditional four-second advertisement scan for returning paired users"
+        ],
+        "physicalFixQualified": false,
+        "twoHoursRecordingPassed": false,
+        "twoHoursLiveSyncPassed": false,
+        "saleQualified": false,
+        "normalGuiRecoveryAlreadyExisted": "The CLI qualification path disabled automatic recovery and terminated on the optional-status None; do not generalize that test entry behavior to every ordinary App path.",
+        "receipts": {
+          "original389": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original389-recovered-integrity.json",
+          "original391": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\original391-recovered-integrity.json",
+          "source090": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\windows090-source-and-build.json"
+        }
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -268401,8 +268527,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T20:44:29+08:00",
-            "status": "UNIFIED_WINDOWS090_REMOTE_BUILD_RUNNING_ANDROID129_COMPLETE",
+            "at": "2026-11-10T21:25:40+08:00",
+            "status": "UNIFIED091_SOURCE_VALIDATED_LATEST_HOST_FIXES_PRESERVED_BUILD_NEXT",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268419,7 +268545,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "统一090/047f41a4正常原生构建42818029062运行中；原088文档真实UI/备份恢复/精确删除已通过并保留，089实际安装收据已读取，拒绝降级。构建后匹配090文档+保留桌面输入入口验收、静默升级及完整归档；Android129和两类顾客已交结果复用，不新录音/模型。",
+            "next": "091冻结同一原生程序：合并753800da实际已装090修复到已验047f41a4文档源，避免同号不同源替换；在共享项目入口记录统一源，再匹配构建/原生运行/升级及完整归档。Android129和已验088/090文档结果保留。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268582,7 +268708,51 @@
             "windows090Source": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
             "windows090BuildRun": 42818029062,
             "windows090Built": false,
-            "windows088QualifiedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows088\\runtime-result.json"
+            "windows088QualifiedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows088\\runtime-result.json",
+            "windows090RuntimeQualified": true,
+            "windows090RuntimeRun": 42822638071,
+            "installedLatestSourceHandoff": {
+              "at": "2026-11-10T21:23:24+08:00",
+              "state": "SAME_VERSION_DIFFERENT_SOURCE090_INSTALLATION_REFUSED_MERGE_LATEST_HOST_FIXES",
+              "qualifiedDocumentSource": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+              "qualifiedRuntime": 42822638071,
+              "installedVersion": "0.1.90",
+              "installedSource": "753800da8f500440e9f753dece3d1f6b02578252",
+              "installedReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
+              "installedReceiptSha256": "2fc786f4c8a3521793028dcb6e125beb76d48b48c262bcfd0f159ea2b6e08b64",
+              "installedExeSha256": "4014e618ea492bc298ff7fb4ad59a8cb779305ce8225db579c40966e9973ad6a",
+              "installedDllSha256": "798987c6bcb5416d1b4178dadb8cbc97ef5c54d22b0fba184d813db1c3176bf7",
+              "document090MsiexecInvoked": false,
+              "decision": "Preserve the newly installed host pairing/input fixes; merge753800da into the qualified document lineage and freeze one091 source. Publish the coordination at shared project scope to prevent independent version-only replacement.",
+              "ownerDataChanged": false,
+              "modelsOrBoardCalls": false
+            },
+            "windows091Integration": {
+              "at": "2026-11-10T21:25:40+08:00",
+              "state": "UNIFIED091_LATEST_INSTALLED_INPUT_AND_QUALIFIED_DOCUMENT_SOURCE_READY",
+              "version": "0.1.91",
+              "documentParent": "dbecfc33a6a9f4bdda84cb3df0db813eaef682fa",
+              "latestInstalledInputParent": "753800da8f500440e9f753dece3d1f6b02578252",
+              "documentSourceUnchanged": true,
+              "latestInputSourceFilesUnchanged": [
+                "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+                "apps/windows/src-tauri/src/backend/ble_bridge/desktop_input.rs",
+                "apps/windows/src-tauri/src/backend/ble_pairing.rs",
+                "apps/windows/src-tauri/src/backend/desktop_dictation.rs",
+                "apps/windows/src-tauri/src/backend/recorder_input.rs",
+                "apps/windows/src/DesktopDictation.tsx",
+                "apps/windows/src/workspaceRefinement.css"
+              ],
+              "windowsTypecheckPassed": true,
+              "exactLicenseInventoryPassed": {
+                "components": 403,
+                "texts": 286,
+                "sourceArchives": 17
+              },
+              "installed": false,
+              "modelsOrBoardCalls": false,
+              "sharedCoordination": "owner_module_execution.sharedWindowsIntegration20261110"
+            }
           }
         }
       },
@@ -273922,6 +274092,22 @@
       "qualityCorrection": "用户认为现有设计太像AI作文；参考真实竞品，做克制、精致、有实际产品密度的Windows及手机统一界面，避免宣传式大标题、装饰性波形及虚构数据。",
       "workpoint": "E:/CodexData/Companion/unified-frontends-r2-20261102/source；已有未提交的Windows视觉探索及Android工程骨架，均未完成、未验收。手机真实后端桥接待做。",
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
+    },
+    "sharedWindowsIntegration20261110": {
+      "at": "2026-11-10T21:25:40+08:00",
+      "state": "UNIFIED091_MERGE_SOURCE_VALIDATED_NORMAL_BUILD_NEXT",
+      "reservedVersion": "0.1.91",
+      "sourceBranch": "work/device-phone-closure055-20261106",
+      "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+      "mustIncludeSources": [
+        "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+        "753800da8f500440e9f753dece3d1f6b02578252"
+      ],
+      "verifiedDocumentRuntime": 42822638071,
+      "installedSourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
+      "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
+      "canonicalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.documentContext20261110",
+      "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json"
     }
   }
 }
