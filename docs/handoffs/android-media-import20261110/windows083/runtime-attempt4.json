@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-10T14:25:22+08:00",
+  "state": "MATCHED_WINDOWS083_CONTEXT_RUNTIME_STARTED",
+  "testSourceCommit": "a311b64643130fde98d04dbef9f3ed64fe0cdd91",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "buildRun": 42762906819,
+  "nativeRecompiled": false,
+  "ownerForegroundUsed": false,
+  "runtimeQualified": false,
+  "run": 42768390891,
+  "result": "Actual UI chain passed again. Actual packaged preview and whole-library backup succeeded (2 sessions/4files/149038231 bytes). Helper compared normal drive path against Windows canonical extended-path prefix; compare exact directory file identity instead. Restore/purge not yet attempted. Same frozen MSI reused.",
+  "uiScopePassed": true,
+  "wholeRuntimePassed": false
+}

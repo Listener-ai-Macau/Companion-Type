@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-10T14:19:34+08:00",
+  "state": "MATCHED_WINDOWS083_CONTEXT_RUNTIME_STARTED",
+  "testSourceCommit": "0619e198dcb3a6db26fb4858d80a1a67631d75af",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "buildRun": 42762906819,
+  "nativeRecompiled": false,
+  "ownerForegroundUsed": false,
+  "runtimeQualified": false,
+  "run": 42767737032,
+  "result": "Public audio import/bookmark/cancel passed. Invalid PNG rejected and draft retained; component operationErrorText obscures native input-validation error with generic save fallback. Test incorrectly expected raw native message. Exact fallback is now observed, usability repair retained for related product batch, same MSI reused.",
+  "remainingUX": "Direct note time discovery and precise image input error remain related product work; invalid image rejection alone is not qualified as good feedback."
+}

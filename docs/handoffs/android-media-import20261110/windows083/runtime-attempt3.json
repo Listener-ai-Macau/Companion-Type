@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-10T14:22:37+08:00",
+  "state": "MATCHED_WINDOWS083_CONTEXT_RUNTIME_STARTED",
+  "testSourceCommit": "19fd5fa880af878931aa5ed2078fb20603a55180",
+  "appSourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "buildRun": 42762906819,
+  "nativeRecompiled": false,
+  "ownerForegroundUsed": false,
+  "runtimeQualified": false,
+  "run": 42768082573,
+  "result": "Actual native public audio import/bookmark/photo cancel/invalid reject/valid save/preview/time replay/edit/reopen/selected ZIP all passed. Backend continuation failed in Python before operation because default cp1252 tried reading production UTF-8 state. Fix helper to explicit UTF-8 throughout; no product rebuild.",
+  "uiScopePassed": true,
+  "wholeRuntimePassed": false
+}

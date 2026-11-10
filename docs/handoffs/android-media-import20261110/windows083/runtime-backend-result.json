@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-10T06:32:41.404389+00:00",
+  "state": "ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED",
+  "appSource": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "imageSha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855",
+  "modelCalls": 0,
+  "aiServiceCalls": 0,
+  "deviceAccess": false,
+  "ownerDataUsed": false,
+  "steps": [
+    {
+      "name": "source-preview",
+      "exitCode": 0,
+      "seconds": 0.10269970000001649,
+      "expectedFailure": false
+    },
+    {
+      "name": "library-backup",
+      "exitCode": 0,
+      "seconds": 0.9053687999999909,
+      "expectedFailure": false
+    },
+    {
+      "name": "library-restore",
+      "exitCode": 0,
+      "seconds": 1.005721699999981,
+      "expectedFailure": false
+    },
+    {
+      "name": "restored-preview",
+      "exitCode": 0,
+      "seconds": 0.10263009999999895,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash",
+      "exitCode": 0,
+      "seconds": 0.10239849999999251,
+      "expectedFailure": false
+    },
+    {
+      "name": "trashed-preview-rejected",
+      "exitCode": 1,
+      "seconds": 0.10252610000000573,
+      "expectedFailure": true
+    },
+    {
+      "name": "restore-trash",
+      "exitCode": 0,
+      "seconds": 0.10250089999999545,
+      "expectedFailure": false
+    },
+    {
+      "name": "restored-from-trash-preview",
+      "exitCode": 0,
+      "seconds": 0.10263539999999693,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash-for-permanent-cleanup",
+      "exitCode": 0,
+      "seconds": 0.10374730000000909,
+      "expectedFailure": false
+    },
+    {
+      "name": "purge",
+      "exitCode": 0,
+      "seconds": 0.3048345999999924,
+      "expectedFailure": false
+    }
+  ],
+  "sameSourceLibraryIndexAndAudioImageBytesUnchanged": true,
+  "unrelatedRestoredControlPreserved": true,
+  "originalSelectedInputFilesUnchanged": true,
+  "selectedZipContainsExactOriginalImage": true,
+  "restoredNotesAndBookmarksExact": true,
+  "restoredPreviewVerified": true,
+  "modelOrAiCalled": false,
+  "wholeSaleQualified": false
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-10T14:36:01+08:00",
+  "state": "WINDOWS084_CONTEXT_USABILITY_CANDIDATE_REMOTE_BUILD_STARTED",
+  "sourceCommit": "927ff63644f80b22739d370273e15c6d803276e8",
+  "version": "0.1.84",
+  "priorNativeCandidatePassed": "0.1.83/ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+  "priorRuntimeRun": 42769086328,
+  "uiSourceRun": 42769157968,
+  "externalDependenciesUnchanged": true,
+  "modelsChangedOrRun": false,
+  "localHeavyBuild": false,
+  "installed": false,
+  "saleQualified": false,
+  "cache": "Pinned official actions/cache v4.3.0; Rust still rebuilds changed sources with --locked and freeze/payload checks. First cache population does not promise a speedup."
+}
