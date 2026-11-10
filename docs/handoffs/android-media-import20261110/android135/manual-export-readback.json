@@ -1,0 +1,23 @@
+{
+  "state": "ANDROID135_ORDINARY_NOTES_ONLY_TXT_AND_ZIP_LITERAL_REFERENCES_KIND_JSON_AND_ORIGINAL_IMAGES_EXACT",
+  "files": [
+    {
+      "format": "txt",
+      "path": "/sdcard/Download/Companion-public-manual135-notes.txt",
+      "sha256": "e658550b47723c1419b4ebc2a4526eb614898b00424ef5de9d756f1c357fe353",
+      "bytes": 2191
+    },
+    {
+      "format": "bundle",
+      "path": "/sdcard/Download/Companion-public-manual135-notes.zip",
+      "sha256": "fa4eb0faa8b045b2a7588e07c98cc6435e99b90ab252048e90efaa18b2686a49",
+      "bytes": 65170
+    }
+  ],
+  "noteCount": 8,
+  "referenceCount": 3,
+  "originalImageCount": 2,
+  "generatedMinutesNotIncluded": true,
+  "notesExact": true,
+  "modelsOrServicesCalled": false
+}

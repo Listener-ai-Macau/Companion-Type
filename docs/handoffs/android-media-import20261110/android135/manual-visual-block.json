@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-11T06:57:02+08:00",
+  "state": "ACTUAL_SCREENSHOT_CHECKLIST_LAYOUT_BLOCKS_DELIVERY",
+  "actualVersion": "0.1.135",
+  "evidence": "manual-followup-evidence.png",
+  "observed": "App text-input width/padding styles expanded unbounded checkbox; checklist text wrapped vertically; raw Markdown body repeated the same items.",
+  "repair": "Explicit 18px native checkbox dimensions with scoped app selectors, flexible remaining text; render authored lines and checklist items once in original order. Storage/native backend unchanged.",
+  "retainedFunctionalResults": "Source/capture/checklist writes, image, missing source, process restart/search, full56-file backup/restore and scoped30-file purge all remain true for135; visual qualification withheld.",
+  "next": "Actual computed layout with all mobile global styles, grouped099/136 web candidates and actual matching native screenshots; no customer sent to known broken135.",
+  "saleQualified": false
+}

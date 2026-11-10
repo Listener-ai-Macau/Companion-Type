@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-10T22:48:29.048Z",
+  "actualVersion": "0.1.135",
+  "modelsOrCloudCalled": false,
+  "state": "ANDROID135_ORDINARY_REMOVED_SOURCE_EXPLICIT_SAVED_EVIDENCE_RETAINED_AND_NOTE_STILL_EDITABLE_PASSED",
+  "note": {
+    "id": "fce298a9-c439-4dbb-a823-f0f4b6b2d245",
+    "createdAt": 1794350704171,
+    "kind": "followup",
+    "references": [
+      {
+        "id": "746cf9a7-6543-4232-9d65-8d9fe94b3807",
+        "kind": "document",
+        "documentId": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+        "name": "Companion-public-公开预算草案128.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "extractionSha256": "5d3bedc699c3f90d45a9b92026797cd4967c1a8020dc0222ea20ecfdf9de9220",
+        "sectionId": "part-1",
+        "sectionLabel": "工作表：预算草案",
+        "row": 2,
+        "quote": "A2\t人工补充\nB2\t12,000.00\nC2\tFALSE\nD2\t0\nE2\t2026-11-10\nF2\t[公式没有已保存结果]"
+      }
+    ],
+    "text": "公开人工跟进卡｜下次沟通准备\n- [x] 核对预算原件\n- [ ] 确认待定负责人\n依据入口暂已移除，保存的摘录仍保留供人工核对。",
+    "atMs": null,
+    "updatedAt": 1794350907102
+  },
+  "removedDocumentId": "a012a77f-d260-4b95-a83e-e5ccf5f868d9"
+}
