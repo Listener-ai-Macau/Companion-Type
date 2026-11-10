@@ -84,7 +84,7 @@ def frozen_app(root):
  shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
  return app,v
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  token=uuid.uuid4().hex;root=D/token;root.mkdir(parents=True);out=C/token;out.mkdir(parents=True)
@@ -137,6 +137,17 @@ def main():
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
   session['retention']['audioCached']=False;(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],imageInput=str(image),imageSha256=sha(image),invalidImage=str(bad),invalidImageSha256=sha(bad),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+ if a.stage=='documents':
+  assert DEDICATED_CI,'Document native pickers only on the disposable CI machine'
+  session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
+  session['retention']['audioCached']=False
+  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
+  control=json.loads(json.dumps(session));control.update(id='core-public-document-unrelated',title='明确虚构·不参与本次材料操作的记录');control.pop('documentContext',None);sessions.append(control);(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
+  source=Path(__file__).parent/'fixtures/document-context';manifest=json.loads((source/'manifest.json').read_text(encoding='utf8'))
+  received=root/'received-files';received.mkdir();(root/'exports').mkdir();inputs=[]
+  for name,expected in [('material.docx','预算草案为12000元'),('material.xlsx','12,000.00'),('material.pptx','第一张'),('chinese.pdf','预算12000元'),('protected.pdf',None),('no-text.pdf',None),('material-gb.txt','人工')]:
+   assert sha(source/name)==manifest[name]['sha256'];shutil.copy2(source/name,received/name);inputs.append({'name':name,'path':str(received/name),'sha256':manifest[name]['sha256'],'expected':expected})
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],documentInputs=inputs,exportDirectory=str(root/'exports'),receivedDirectory=str(received),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir(exist_ok=True)
  # A missing private settings file means valid fresh defaults. Writing '{}'
  # would be a corrupt product store, not an empty configured user profile.
@@ -167,7 +178,7 @@ def main():
   if a.stage=='transcribe':
    assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
    env['COMPANION_TYPE_LOCAL_ASR_DIR']=os.environ['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']
-  if a.stage in {'actions','context'}:
+  if a.stage in {'actions','context','documents'}:
    assert DEDICATED_CI,'The normal visible-window clipboard journey runs only on an owned dedicated CI runner'
    env['COMPANION_TYPE_BACKGROUND_WINDOW']='0'
    record['normalVisibleWindowOnDedicatedRunner']=True
@@ -208,7 +219,7 @@ def main():
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
-  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context'} else 180)
+  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents'} else 180)
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
    for request in sorted(out.glob('dialog-request-*.json')):
@@ -280,6 +291,7 @@ def main():
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
   record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage=='ai' else 3))
   if a.stage=='context':record['state']='REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED';record['remoteOwnedWindowFocused']=True
+  if a.stage=='documents':record['state']='REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='actions':record['state']='REAL_NATIVE_ACTION_REVIEW_FOLLOWUP_AND_COPY_PASSED';record['remoteOwnedWindowFocused']=True
   if env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1':
    assert record['ordinaryRecipientTested'] and all(row.get('browserAttachment',{}).get('trustedNativePaste') and row['browserAttachment']['sha256']==row['sha256'] for row in receiver.results)
@@ -301,7 +313,7 @@ def main():
   record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
   record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation']
   record['remotePickerFocusUsed']=any(json.loads(path.read_text(encoding='utf8')).get('focusWithinOwnedRemotePickerUsed',False) for path in out.glob('dialog-reply-*.json'))
-  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
+  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context','documents'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
   if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
   if not DEDICATED_CI:U.CloseWindowStation(station)
   K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()

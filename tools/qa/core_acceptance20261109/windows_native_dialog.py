@@ -47,10 +47,10 @@ def main():
  request=json.loads(a.request.read_text(encoding='utf8'));action=request['action'];assert action in {'open','save','cancel'}
  target=Path(request['path']).resolve() if action!='cancel' else None
  if action=='open':
-  allowed=Path(os.environ['COMPANION_ACCEPTANCE_AUDIO_INPUT']).resolve()
+  allowed=Path(os.environ['COMPANION_ACCEPTANCE_AUDIO_INPUT']).resolve() if os.environ.get('COMPANION_ACCEPTANCE_AUDIO_INPUT') else None
   assert target==allowed or target.parent in {root/'received-files',root/'exports'}
-  assert sha(target)==request['sha256'] and target.suffix in {'.wav','.mp3','.png','.jpg','.jpeg','.webp'}
- elif action=='save':assert target.parent==root/'exports' and target.suffix in {'.wav','.mp3','.zip','.docx'} and not target.exists()
+  assert sha(target)==request['sha256'] and target.suffix in {'.wav','.mp3','.png','.jpg','.jpeg','.webp','.docx','.xlsx','.pptx','.pdf','.txt','.md','.csv'}
+ elif action=='save':assert target.parent==root/'exports' and target.suffix in {'.wav','.mp3','.zip','.docx','.xlsx','.pptx','.pdf','.txt','.md','.csv'} and not target.exists()
  U.GetClassNameW.argtypes=[w.HWND,w.LPWSTR,ctypes.c_int];U.GetClassNameW.restype=ctypes.c_int
  U.IsWindowVisible.argtypes=[w.HWND];U.IsWindowVisible.restype=w.BOOL
  def class_name(hwnd):

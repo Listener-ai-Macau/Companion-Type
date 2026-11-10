@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
-PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context'}
+PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context','documents'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
 spec=json.loads((S/SPEC).read_text(encoding='utf8')) if SPEC else None
 assert os.environ.get('GITHUB_ACTIONS')=='true' and os.name=='nt'
@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery','actions','context'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83','0.1.84','0.1.87'}
+  assert PHASE in {'audio','whole','delivery','actions','context','documents'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83','0.1.84','0.1.87','0.1.88'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
@@ -75,7 +75,18 @@ try:
  for key in ['GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
  run('install-test-dependencies',[sys.executable,'-m','pip','install','--disable-pip-version-check','psutil==7.2.2','pypdf==6.11.0'])
  run('install-locked-node-tools',['npm.cmd','ci','--no-audit','--no-fund'])
- if PHASE=='context':
+ if PHASE=='documents':
+  run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
+  tool=S/'tools/qa/core_acceptance20261109'
+  code=run('native-document-context-ui',[sys.executable,tool/'windows_meeting.py','--stage','documents'],required=False)
+  cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
+  result=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=result['state']);save();assert code==0
+  assert result['ui']['state']=='REAL_TAURI_DOCUMENT_ORIGINAL_IMPORT_EXTRACTION_RETRY_READ_SEARCH_REOPEN_AND_NATIVE_SAVE_PASSED'
+  backend=run('native-document-context-backup-restore-cleanup',[sys.executable,tool/'windows_document_backend.py','--case',paths[0]],required=False)
+  detail=json.loads((paths[0]/'document-backend/result.json').read_text(encoding='utf8'));record.update(documentBackendExitCode=backend,documentBackendState=detail['state']);save();assert backend==0
+  assert detail['state']=='ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED'
+  record.update(state='WINDOWS088_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED',modelsRun=False,newCloudOrAsrCalls=0,wholeCoreCandidateQualified=False)
+ elif PHASE=='context':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   tool=S/'tools/qa/core_acceptance20261109'
   code=run('native-image-context-ui',[sys.executable,tool/'windows_meeting.py','--stage','context','--audio',audio],required=False)
