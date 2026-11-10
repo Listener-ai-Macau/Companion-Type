@@ -87,7 +87,7 @@ try:
   backend=run('native-document-context-backup-restore-cleanup',[sys.executable,tool/'windows_document_backend.py','--case',paths[0]],required=False)
   detail=json.loads((paths[0]/'document-backend/result.json').read_text(encoding='utf8'));record.update(documentBackendExitCode=backend,documentBackendState=detail['state']);save();assert backend==0
   assert detail['state']=='ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED'
-  record.update(state='WINDOWS088_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED',modelsRun=False,newCloudOrAsrCalls=0,wholeCoreCandidateQualified=False)
+  record.update(state='WINDOWS'+spec['verification']['version'].split('.')[-1].zfill(3)+'_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED',modelsRun=False,newCloudOrAsrCalls=0,wholeCoreCandidateQualified=False)
  elif PHASE=='context':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   tool=S/'tools/qa/core_acceptance20261109'

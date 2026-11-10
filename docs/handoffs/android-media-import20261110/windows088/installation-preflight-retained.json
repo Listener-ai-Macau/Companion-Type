@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T20:34:58+08:00",
+  "state": "DOCUMENT_WINDOWS088_INSTALLATION_SAFELY_REFUSED_NEWER_DIFFERENT_LINEAGE089_ALREADY_INSTALLED",
+  "documentCandidateSource": "1a71b66754771f6a82428482daed171363975b6f",
+  "documentCandidateMsiSha256": "ed3c8494b3a37ea3685c3f611051264f870a10eab4a6ca1ba094628319dc16be",
+  "documentNativeRuntimePassed": 42816055543,
+  "actualInstalledVersion": "0.1.89",
+  "actualInstalledSource": "1025b4bdf81d9fe814baa872ee537415509e0f01",
+  "actualInstalledReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input089\\installation.json",
+  "actualReceiptSha256": "b11b7fe94fbbd44ec48c67484fd8188f60fff575ab624b4c41cf006178405bc1",
+  "actualInstalledExeSha256": "b4f361fbc64a0c4493a9b04637e0e1260212a3f740916d629acc45911cb3dc8d",
+  "actualInstalledDllSha256": "5969a977b6c3651cabfa1faaea9f834f29f2d238bd3fe9bd8ff90c35665a78d4",
+  "msiexecInvokedFor088": false,
+  "ownerDataChanged": false,
+  "decision": "Merge the already installed recorder guidance/push-to-talk input lineage into the fully qualified document candidate; package a single newer090 without downgrading or dropping either feature set. Preserve088 document runtime and089 actual install/source evidence.",
+  "newModelsOrBoardOperationRequired": false
+}

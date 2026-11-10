@@ -15,5 +15,6 @@
   "allManifestFilesReconciled": 11,
   "fix": "Restore all exact already-generated public source files, force-add text fixtures ignored by broad cleanup patterns, preflight all declared identities together before native launch, and preserve primary preparation failure without expecting an app result.",
   "nativeRebuildRequired": false,
-  "failedEvidence": "E:/CodexData/Companion/.build-cache/windows-note-context20261110/runtime088-failed1"
+  "failedEvidence": "E:/CodexData/Companion/.build-cache/windows-note-context20261110/runtime088-failed1",
+  "repairTestSource": "5e2a796bad0b4055382a9a1bc3810a79f12fd2d6"
 }

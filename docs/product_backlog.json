@@ -268401,8 +268401,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T20:39:45+08:00",
-            "status": "UNIFIED_WINDOWS090_MERGE_SOURCE_READY_REMOTE_BUILD_NEXT",
+            "at": "2026-11-10T20:44:29+08:00",
+            "status": "UNIFIED_WINDOWS090_REMOTE_BUILD_RUNNING_ANDROID129_COMPLETE",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268419,7 +268419,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "统一090已合并文档与已实装089输入源，Windows类型/合并后的精确许可通过；继续远端一次编译原生程序与受影响验收二进制，再复用普通文档/输入入口运行验收。保留已验088/129、089实装及失败证据，不降级、不接板或模型。",
+            "next": "统一090/047f41a4正常原生构建42818029062运行中；原088文档真实UI/备份恢复/精确删除已通过并保留，089实际安装收据已读取，拒绝降级。构建后匹配090文档+保留桌面输入入口验收、静默升级及完整归档；Android129和两类顾客已交结果复用，不新录音/模型。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268578,7 +268578,11 @@
               "localHeavyNativeBuild": false,
               "modelsOrBoardAccess": false,
               "remaining": "Remote normal optimized build, same packaged document runtime, preserved offline input entry, silent non-downgrade upgrade and combined archive."
-            }
+            },
+            "windows090Source": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+            "windows090BuildRun": 42818029062,
+            "windows090Built": false,
+            "windows088QualifiedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows088\\runtime-result.json"
           }
         }
       },
