@@ -38565,7 +38565,7 @@
           "core_release_scope": "已做部分保留；只修会影响核心录音/原音使用的缺陷，附加能力及视觉润色不列本轮必须补全。",
           "nonDestructiveSourceMapping20261110": {
             "at": "2026-11-11T02:27:47+08:00",
-            "state": "UNIFIED095_NATIVE_BUILD_AND_INDEPENDENT_MSI_INSPECTION_PASSED_MATCHED_RUNTIME_NEXT",
+            "state": "ANDROID131_AND_UNIFIED_WINDOWS095_EDIT_CORE_DELIVERED_PACKAGED_REMOTE_READBACK_IDENTICAL",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "sourceFiles": [
               "packages/audio-derivation/src/plan.ts",
@@ -38579,7 +38579,7 @@
             "notImplementedYet": "Windows093 source and ordinary frontend build ready; native compile/runtime, exact MSI upgrade, dual-client final archive and new customer experience remain unqualified. Android131 editing/control recovery is actually qualified; phone owned session is closed.",
             "decision": "Use verified local canonical PCM and keep original source records unchanged. New derived record gets its own identity and new transcript/minutes; never shift old ASR or claim separate meetings are continuous.",
             "currentDependency": "Android131 installed, exact private installer readback verified and own phone session closed. Complete corresponding Windows editor chain from unified091; no extra unchanged phone package/runtime now.",
-            "next": "Inspect unified095 normal MSI; run its matched edit/native recovery after snapshot publication change, preserve private installer, silently upgrade independent daily install, package095/131 with latest FW791/Mac retained bytes and full private readback. Then resume original highest executable item.",
+            "next": "Resume ownerCoreAcceptanceCandidate20261109.documentContext20261110.nextReadingBatchSource20261111: Windows optional table schema/source tests are ready for grouped compilation; finish dual-client reading, matched runtime and one delivery. No re-run of unchanged131 editing, board or model paths.",
             "renderer": {
               "source": "apps/android/app/src/main/java/com/denzic/companion/app/CanonicalPcmRenderer.java",
               "test": "tools/qa/core_acceptance20261109/CanonicalPcmRendererTest.java",
@@ -38818,7 +38818,7 @@
             },
             "windowsArchitectureDecision": "Keep parent references as provenance, never deletion ownership. A derived record gets independent audio; source-map owner is a separate self-owned SessionReceipt JSON with deterministic record ID, retained by audio-only cleanup and included in backup/full purge. Reuse existing storage/index mechanisms and native adapters; no model stack fork.",
             "windowsReservation": "0.1.95",
-            "windowsVersion": "0.1.94",
+            "windowsVersion": "0.1.95",
             "windowsEditSource": {
               "at": "2026-11-11T00:42:14+08:00",
               "state": "WINDOWS093_UNIFIED_EDIT_SOURCE_WEB_READY_NATIVE_BUILD_PENDING",
@@ -38842,12 +38842,15 @@
               "wholeSaleQualified": false,
               "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source."
             },
-            "windowsSourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
-            "windowsBuildRun": 42864987320,
+            "windowsSourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+            "windowsBuildRun": 42876404149,
             "actualActiveJob": {
-              "kind": "unified095-matched-native-edit-runtime-prepared",
-              "buildRun": 42876404149,
-              "noLocalHeavyBuildModelPhoneOrBoardJob": true
+              "kind": "grouped-table-reading-source-and-native-adaptation",
+              "remoteBuildOrPhoneSession": null,
+              "sourceCheckpoints": [
+                "d1a9cbbc7a78c1fae98102535335c68d421baa82",
+                "0158d1411aeb36bda4cf672f32850940c37a7b9b"
+              ]
             },
             "windowsBuildAttempts": [
               {
@@ -38865,14 +38868,14 @@
               }
             ],
             "windowsMsiVerification": {
-              "at": "2026-11-11T01:51:45+08:00",
-              "state": "WINDOWS094_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-              "version": "0.1.94",
-              "sourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
-              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows094\\Companion-Windows-0.1.94-candidate.msi",
-              "msiSha256": "962d9f5d173dba4da04e77df26f66d021573dbd4a06df44a9e42021c51b097fa",
-              "embeddedExeSha256": "15b2dd2c4e06254a1163acc761dcc277bfd62625d4dd240dd060eaa82bf6f83c",
-              "dllSha256": "28fcfc0667fb407fc4c9b37b7be8e4124ad6781a49c78af637712042ca08bab3",
+              "at": "2026-11-11T02:50:52+08:00",
+              "state": "WINDOWS095_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+              "version": "0.1.95",
+              "sourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+              "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows095\\Companion-Windows-0.1.95-candidate.msi",
+              "msiSha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90",
+              "embeddedExeSha256": "18b1c8be01a2170dc4c8b483d10db03f6969e0935ebec6d3f616e4682dc72968",
+              "dllSha256": "c189dba5d0d180aae710853749130ceb74c1ca97ae1c767c9b12ddba734aa220",
               "licenseFilesMatched": 309,
               "sourceFilesMatched": 1336,
               "sourceFilesWithOnlyCheckoutEolDifference": [
@@ -38951,7 +38954,7 @@
               "newerVersionGuard": true,
               "ciSourceAndNativeFrozenTogether": true,
               "nativeProfile": "normal release on dedicated Windows runner",
-              "ciRunId": 42864987320,
+              "ciRunId": 42876404149,
               "ciWrapperOverallPassed": true,
               "localHeavyBuild": false,
               "installed": false,
@@ -38960,14 +38963,14 @@
               "saleQualified": false,
               "modelsRun": false,
               "inspectionLimits": {
-                "pid": 3888,
+                "pid": 23664,
                 "cpuRate": 500,
                 "cpuControlFlags": 5,
                 "cpuPercentMaximum": 5.0,
                 "inLimitedJob": true,
                 "jobPrivateCommitLimitBytes": 536870912,
                 "jobMemoryLimitEnabled": true,
-                "jobPeakPrivateCommitBytes": 48316416,
+                "jobPeakPrivateCommitBytes": 48160768,
                 "cpuPriorityClass": 64,
                 "memoryPagePriority": 1,
                 "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -38997,8 +39000,8 @@
                 "recorder_input"
               ]
             },
-            "windowsRuntimeRun": 42869571875,
-            "windowsRuntimeToolSource": "a40b7ec2f7808011967516c2c2eafce83ba85431",
+            "windowsRuntimeRun": 42879438519,
+            "windowsRuntimeToolSource": "efa6dc3efbd5b564312679d5f1c8a774afed08ce",
             "windowsRuntimeAttempts": [
               {
                 "at": "2026-11-11T01:11:18+08:00",
@@ -39042,8 +39045,8 @@
               "notUsed": "No edit/cut/merge, playback/listening, recording, ASR, online AI, device, export or real physical purchase qualification.",
               "decision": "Preserve all feedback in original document workpoint, aggregate same-batch afteruse before next related material-reading improvement. Do not rebuild Android just for each wording wish or ask unchanged-condition purchase answers."
             },
-            "windowsRuntimeResult": "docs/handoffs/20261110-android-media-import/windows094/runtime-result.json",
-            "windowsNativeBackendResult": "docs/handoffs/20261110-android-media-import/windows094/runtime-backend-result.json",
+            "windowsRuntimeResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows095\\runtime-result.json",
+            "windowsNativeBackendResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows095\\runtime-backend-result.json",
             "customerAfteruse131": {
               "at": "2026-11-11T02:27:47+08:00",
               "role": "AI simulated hypothetical afteruse; full Denzic entry exposure, not fully isolated FIRST_USE; no real order/customer",
@@ -39085,7 +39088,7 @@
               "qualifiedPriorRuntime": 42869571875,
               "androidRetained": "0.1.131",
               "modelsRun": false,
-              "installed": false,
+              "installed": true,
               "saleQualified": false,
               "buildRun": 42876404149,
               "verification": {
@@ -39212,7 +39215,86 @@
                   "audio_edit_job",
                   "recorder_input"
                 ]
-              }
+              },
+              "delivered": true,
+              "runtimeRun": 42879438519,
+              "packageSha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2"
+            },
+            "deliveredAt": "2026-11-11T02:57:44+08:00",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\audio-edit-delivered-result.json",
+            "windowsInstallation": {
+              "state": "WINDOWS095_INSTALLED_EXISTING_DATA_IDENTICAL",
+              "startedAt": "2026-11-11T02:55:06+08:00",
+              "candidateVersion": "0.1.95",
+              "previousInstalledVersion": "0.1.91",
+              "sourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+              "msiSha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90",
+              "existingDataFiles": 245,
+              "dataContentsPrinted": false,
+              "installerExitCode": 0,
+              "finishedAt": "2026-11-11T02:55:11+08:00",
+              "dataManifestIdentical": true,
+              "installedVersion": "0.1.95",
+              "installedExeSha256": "18b1c8be01a2170dc4c8b483d10db03f6969e0935ebec6d3f616e4682dc72968",
+              "installedDllSha256": "c189dba5d0d180aae710853749130ceb74c1ca97ae1c767c9b12ddba734aa220",
+              "installedHelpStartupPassed": true,
+              "ordinaryThirdPartyPasteQualified": false,
+              "oldWinRTSharePickerFixed": false,
+              "modelsRun": false,
+              "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+            },
+            "completePackage": {
+              "at": "2026-11-11T02:55:33+08:00",
+              "state": "AUDIO_EDIT_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+              "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows095-android131.zip",
+              "bytes": 44204397,
+              "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+              "files": [
+                {
+                  "path": "firmware/companion-update.cup",
+                  "bytes": 1360220,
+                  "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+                },
+                {
+                  "path": "firmware/ota_manifest.json",
+                  "bytes": 1548,
+                  "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+                },
+                {
+                  "path": "macos/CompanionMac-candidate.zip",
+                  "bytes": 736161,
+                  "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+                },
+                {
+                  "path": "windows/Companion-Windows-0.1.95.msi",
+                  "bytes": 16617684,
+                  "sha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90"
+                },
+                {
+                  "path": "android/Companion-Android-0.1.131.apk",
+                  "bytes": 51155741,
+                  "sha256": "3a0bc8333df21d9dff849dba2f970cc27c2bf8f23d0f97cd54adc1062031d965"
+                }
+              ],
+              "draftOnly": true,
+              "saleQualified": false,
+              "ownerPrivateDataUploaded": false,
+              "assetId": 732574111,
+              "readback": {
+                "method": "four-bounded-official-CDN-range-readers",
+                "workers": 4,
+                "sections": 11,
+                "bufferBytesPerWorker": 131072,
+                "bytes": 44204397,
+                "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+                "seconds": 7.530999999988126,
+                "retainedTransientReads": [],
+                "authSentOnlyToGitHubApi": true,
+                "signedUrlOrTokenPersisted": false,
+                "routingModified": false
+              },
+              "finishedAt": "2026-11-11T02:55:55+08:00",
+              "readbackByteIdentical": true
             }
           },
           "beforeAndroidEditing130": {
@@ -137423,9 +137505,9 @@
         "firmwareSourceCommit": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": true,
-        "windowsInstalledVersion": "0.1.91",
-        "windowsInstalledSourceCommit": "b170264a7f0693847ea17ef85901f5411280f266",
-        "windowsInstalledExeSha256": "60020c9de8a40b4bdfc8df11d172699aa74b1ece34ad81bd02d84ceac150a023",
+        "windowsInstalledVersion": "0.1.95",
+        "windowsInstalledSourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+        "windowsInstalledExeSha256": "18b1c8be01a2170dc4c8b483d10db03f6969e0935ebec6d3f616e4682dc72968",
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
         "windowsCoreCandidateSourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
         "windowsCoreCandidateInstalled": true,
@@ -137457,8 +137539,8 @@
         "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
         "windowsUsabilityCandidate": "0.1.86",
         "candidateWindows": "0.1.94",
-        "installedWindows": "0.1.91",
-        "installedWindowsSource": "b170264a7f0693847ea17ef85901f5411280f266",
+        "installedWindows": "0.1.95",
+        "installedWindowsSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-companion-fw791-win092-android130-candidate.zip",
         "phoneOrdinaryColdMs": 2294.699999988079,
         "preparedObserver": 66789,
@@ -137495,7 +137577,7 @@
         "input090BuildRun": 42819548838,
         "input090Installed": true,
         "recovery090Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\recovery090-workpoint.json",
-        "frontendIntegrationHandoff": "owner_module_execution.sharedWindowsIntegration20261110 — editor094 and input/save094 qualified/source lineages are being true-merged into unified095; keep current physical operator/app18904 and firmware priorities unchanged.",
+        "frontendIntegrationHandoff": "sharedWindowsIntegration20261110 — unified095 installed and packaged; all input094 and editing changes retained. Isolated physical app18904/controller36324 and firmware priorities remain untouched.",
         "input092Source": "7046f32d587e1be88e6feb3aa539580a2f72333e",
         "input092BuildRun": 42840509205,
         "input092Installed": false,
@@ -137511,7 +137593,8 @@
         "physicalInputAppPid": 18904,
         "input094CandidateReady": true,
         "input094CandidateSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
-        "input094BuildRun": 42864056041
+        "input094BuildRun": 42864056041,
+        "windowsInstalledDllSha256": "c189dba5d0d180aae710853749130ceb74c1ca97ae1c767c9b12ddba734aa220"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -148771,7 +148854,7 @@
               "competitorSources": [
                 "plaud_manage"
               ],
-              "current": "保护与回收站已有Windows实现；完整非破坏裁剪/合并用户链未交付。",
+              "current": "Android131与统一Windows095已实装并完整私有打包：普通裁剪/切分/重排合并、来源回听、取消/同ID剩余重试/进程退出恢复及备份恢复/精确清除通过。原音与原有资料保留；未据工程结果代签Owner/售卖验收。",
               "acceptance": "原音保留，派生时间映射正确；取消/失败不改源；多源合并仍标原身份与来源。",
               "order": "P1",
               "dependency": "software",
@@ -148780,11 +148863,16 @@
               "acceptanceNumber": 23,
               "acceptanceKey": "CP27-01/trim_merge",
               "engineering": {
-                "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成（已有部分成果）",
-                "readyForOwnerAcceptance": false,
-                "deliveredVersion": null,
-                "evidence": []
+                "status": "SCOPED_CORE_DELIVERED_READY_FOR_OWNER_ACCEPTANCE",
+                "label": "录音编辑核心已交付，原用户验收保留",
+                "readyForOwnerAcceptance": true,
+                "deliveredVersion": "Windows0.1.95 / Android0.1.131",
+                "evidence": [],
+                "audioEdit20261111": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\audio-edit-delivered-result.json",
+                  "qualifiedScope": "Ordinary edit/source return, exact PCM, durable task cancellation/recovery, backup restore, scoped lifecycle",
+                  "ownerAccepted": false
+                }
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -267515,14 +267603,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": {
-            "windows": "统一Windows091已安装；合并已实装090/753800da最新输入与已验文档，匹配普通文档/本地提取/显式来源/原件另存/备份恢复/精确清除及未连接输入入口通过，原有应用数据逐字节保留。",
-            "windowsRemaining": "当前Windows其它未验门按原待办和实际收据保留，不沿旧080/110状态重复派发。",
-            "phone": "Android131/5461aa68实装，保留130已验裁剪/切分/合并/原音回找和202文件备份恢复/精确清除；普通取消重试、进程中断恢复3段后只补29段，64个成品PCM/身份准确。2483旧文件2482一致、另1仅库索引，原音/全部旧库保留，副屏21会话关闭，未跑模型/AI。",
-            "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
-            "model": "原模型质量门仍开放；本批无训练/推理/新准确率结果，固定基线和复杂多人待办保留。",
-            "ai": "同一真实公开会议现有ASR经原生078+现有AI服务生成完整2/2段约30.817秒；发现工作日/零食区两处原ASR事实错误，人工参考公开标注校对后，通过旧纪要来源变化提示、旧待办拒出、重新整理约28.264秒、旧版历史保留与新导出。未提高ASR原评分，仍需完整事实/客户体验。"
-          },
+          "currentCheckpoint": "Windows095/Android131录音编辑整批已交付；按原文档工作点集中处理结构化表格阅读与材料去向。整体非模型与售卖仍开放。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "Implement Windows native source resolution with existing usage leases, independent derived WAV/import original and separately self-owned SessionReceipt provenance; integrate existing backup/full-purge versus audio-only cleanup, native job/CLI/coordinator and identical editor. One matched Windows native candidate/runtime then grouped full archive; new neutral customer use after real full-batch benefit is available.",
@@ -268466,7 +268547,7 @@
             {
               "block": "非模型软件完整性",
               "state": "OPEN",
-              "facts": "Android123普通音视频导入完整链已交付；文档/图片与时间备注、分类批量、非破坏剪辑及原跨端/分享差异继续沿coverage。",
+              "facts": "Windows095/Android131整批录音编辑及此前文档/图文备注/分类/导出/设置已分别按原收据交付；结构化表格/材料呈现、具体客户端/跨端差异及原完整用户/服务范围仍开放。",
               "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。"
             },
             {
@@ -269406,16 +269487,16 @@
             "functionalFlow": "普通选择→原文件完整保留→后台可取消转换→本地转写/原文时间→现有AI纪要→Word/SRT系统保存→整库备份恢复→原音/结果校验→回收站/精确清除"
           },
           "nonmodelSaleStatus20261110": {
-            "at": "2026-11-10T21:59:12+08:00",
-            "phase": "完整文档核心批次已交付，整体非模型尚未售卖验收达标",
+            "at": "2026-11-11T02:57:44+08:00",
+            "phase": "录音编辑完整软件批次095/131已交付，整体非模型售卖门仍开放",
             "percentage": null,
             "percentageReason": "原对标项同时包含已验子范围、未实现能力、物理/外部依赖与用户待验，不能按提交、包或全为pending的行数编造整体百分比。",
             "delivered": {
               "windows": "统一Windows091已安装；合并已实装090/753800da最新输入与已验文档，匹配普通文档/本地提取/显式来源/原件另存/备份恢复/精确清除及未连接输入入口通过，原有应用数据逐字节保留。",
-              "android": "Android129/672d1c2已实装；7原件/6提取、异常重试、普通另存、整库恢复/原件精确清除、重启及两类公开模拟顾客便签回找完成；原有内容及所有旧库保留，独立会话关闭，USB唤醒2。"
+              "android": "Android129/672d1c2已实装；7原件/6提取、异常重试、普通另存、整库恢复/原件精确清除、重启及两类公开模拟顾客便签回找完成；原有内容及所有旧库保留，独立会话关闭，USB唤醒2。",
+              "audioEditing": "Windows095/Android131完整包，匹配普通编辑/来源/任务恢复/备份与分范围清理实际通过；安装升级保留245旧文件，整包私有完整回读一致。"
             },
             "openSoftware": [
-              "非破坏剪辑/切分/合并：样本级来源映射基础已保护，原生音频/保存/UI/完整验收未完成",
               "文档后续结构化表格/当前便签呈现及原跨端差异；在线选文档AI真实服务未验证",
               "原具体客户端/旧WinRT分享、实体换机及其余软件门"
             ],
@@ -269591,7 +269672,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": true,
-            "next": "CP27-16: continue the already protected sample-map foundation into bounded native PCM materialization, durable source ownership, ordinary trim/split/merge controls and one matched dual-client delivery.",
+            "next": "Continue nextReadingBatchSource20261111 as one related material-reading batch; editing batch delivered095/131. Avoid per-word packaging/customer repeats.",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -269891,7 +269972,8 @@
               "currentDeliveryUnchanged": "Windows095 native build42876404149 / Android131 editing batch remains first; do not install this source checkpoint.",
               "nativeSource": "0158d1411aeb36bda4cf672f32850940c37a7b9b",
               "nativeResult": "E:/CodexData/Companion/.build-cache/document-context20261110/table-native-1794336513534718000/result.json",
-              "nativeActual": "Compiled current DocumentContextStore source and executed prior document storage plus real reader-generated sparse worksheet tests; exact optional layout reopen/backup/restore, invalid/fractional rejection without revision mutation, original bytes and unrelated recording preserved. No phone/APK rebuild."
+              "nativeActual": "Compiled current DocumentContextStore source and executed prior document storage plus real reader-generated sparse worksheet tests; exact optional layout reopen/backup/restore, invalid/fractional rejection without revision mutation, original bytes and unrelated recording preserved. No phone/APK rebuild.",
+              "windowsSourceChecks": "Same shared source copied without dropping any Windows changes; strict optional native table structs and canonical validation added, Rustfmt parsing/Windows types/actual XLSX UI source checks passed. Full native compile/runtime not yet passed."
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -269945,6 +270027,59 @@
               "routingModified": false
             },
             "finishedAt": "2026-11-10T21:58:58+08:00",
+            "readbackByteIdentical": true
+          },
+          "completeAudioEditCandidateArchive20261111": {
+            "at": "2026-11-11T02:55:33+08:00",
+            "state": "AUDIO_EDIT_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+            "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows095-android131.zip",
+            "bytes": 44204397,
+            "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+            "files": [
+              {
+                "path": "firmware/companion-update.cup",
+                "bytes": 1360220,
+                "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+              },
+              {
+                "path": "firmware/ota_manifest.json",
+                "bytes": 1548,
+                "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+              },
+              {
+                "path": "macos/CompanionMac-candidate.zip",
+                "bytes": 736161,
+                "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+              },
+              {
+                "path": "windows/Companion-Windows-0.1.95.msi",
+                "bytes": 16617684,
+                "sha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90"
+              },
+              {
+                "path": "android/Companion-Android-0.1.131.apk",
+                "bytes": 51155741,
+                "sha256": "3a0bc8333df21d9dff849dba2f970cc27c2bf8f23d0f97cd54adc1062031d965"
+              }
+            ],
+            "draftOnly": true,
+            "saleQualified": false,
+            "ownerPrivateDataUploaded": false,
+            "assetId": 732574111,
+            "readback": {
+              "method": "four-bounded-official-CDN-range-readers",
+              "workers": 4,
+              "sections": 11,
+              "bufferBytesPerWorker": 131072,
+              "bytes": 44204397,
+              "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+              "seconds": 7.530999999988126,
+              "retainedTransientReads": [],
+              "authSentOnlyToGitHubApi": true,
+              "signedUrlOrTokenPersisted": false,
+              "routingModified": false
+            },
+            "finishedAt": "2026-11-11T02:55:55+08:00",
             "readbackByteIdentical": true
           }
         }
@@ -275287,9 +275422,9 @@
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
     },
     "sharedWindowsIntegration20261110": {
-      "at": "2026-11-10T21:59:12+08:00",
-      "state": "UNIFIED091_NATIVE_DOCUMENT_INPUT_AND_UPGRADE_PASSED_PACKAGED_REMOTE_READBACK_IDENTICAL",
-      "reservedVersion": "0.1.91",
+      "at": "2026-11-11T02:57:44+08:00",
+      "state": "UNIFIED095_EDITING_SNAPSHOT_SAVE_NATIVE_RUNTIME_UPGRADE_AND_PRIVATE_PACKAGE_PASSED",
+      "reservedVersion": "0.1.95",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "mustIncludeSources": [
@@ -275301,87 +275436,87 @@
       "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
       "canonicalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.documentContext20261110",
       "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json",
-      "sourceCommit": "b170264a7f0693847ea17ef85901f5411280f266",
-      "normalBuildRun": 42824564396,
+      "sourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+      "normalBuildRun": 42876404149,
       "installedFalseUntilActualUpgrade": false,
       "installation": {
-        "state": "WINDOWS091_INSTALLED_EXISTING_DATA_IDENTICAL",
-        "startedAt": "2026-11-10T21:50:34+08:00",
-        "candidateVersion": "0.1.91",
-        "previousInstalledVersion": "0.1.90",
-        "sourceCommit": "b170264a7f0693847ea17ef85901f5411280f266",
-        "msiSha256": "ab504d2d5aecbeae1edf993999cb223d0c6b409452fd999298abcb8528af64fe",
+        "state": "WINDOWS095_INSTALLED_EXISTING_DATA_IDENTICAL",
+        "startedAt": "2026-11-11T02:55:06+08:00",
+        "candidateVersion": "0.1.95",
+        "previousInstalledVersion": "0.1.91",
+        "sourceCommit": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+        "msiSha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90",
         "existingDataFiles": 245,
         "dataContentsPrinted": false,
         "installerExitCode": 0,
-        "finishedAt": "2026-11-10T21:50:39+08:00",
+        "finishedAt": "2026-11-11T02:55:11+08:00",
         "dataManifestIdentical": true,
-        "installedVersion": "0.1.91",
-        "installedExeSha256": "60020c9de8a40b4bdfc8df11d172699aa74b1ece34ad81bd02d84ceac150a023",
-        "installedDllSha256": "e59b9f7aa4a1dfc41d2eb3d6cb930cb50cc2a3e42ac7788be08e93ad62db893c",
+        "installedVersion": "0.1.95",
+        "installedExeSha256": "18b1c8be01a2170dc4c8b483d10db03f6969e0935ebec6d3f616e4682dc72968",
+        "installedDllSha256": "c189dba5d0d180aae710853749130ceb74c1ca97ae1c767c9b12ddba734aa220",
         "installedHelpStartupPassed": true,
         "ordinaryThirdPartyPasteQualified": false,
         "oldWinRTSharePickerFixed": false,
         "modelsRun": false,
         "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
       },
-      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\documents-delivered-result.json",
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\audio-edit-delivered-result.json",
       "package": {
-        "at": "2026-11-10T21:57:34+08:00",
-        "state": "COMPLETE_DOCUMENT_CANDIDATE_ARCHIVE_PRIVATE_DRAFT_READBACK_IDENTICAL",
-        "package": "E:\\CodexData\\Companion\\deliveries\\20261110-companion-core-windows091-android129.zip",
-        "bytes": 43983836,
-        "sha256": "a86747698f8e868901cbf6b0cc600620f50f3af9357e560ae7a1a00ebf286824",
+        "at": "2026-11-11T02:55:33+08:00",
+        "state": "AUDIO_EDIT_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+        "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows095-android131.zip",
+        "bytes": 44204397,
+        "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
         "files": [
           {
             "path": "firmware/companion-update.cup",
-            "bytes": 1360156,
-            "sha256": "3d2cacefeb49d0bac5f837a7566a3462f6386c3e6fe5d6ae3bba7321f3ba06c9"
+            "bytes": 1360220,
+            "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
           },
           {
             "path": "firmware/ota_manifest.json",
             "bytes": 1548,
-            "sha256": "e18935f1b3011784d0f53609105a012e38615afc4d2d9ba9ab9219aefafea1bd"
+            "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
           },
           {
             "path": "macos/CompanionMac-candidate.zip",
-            "bytes": 733799,
-            "sha256": "bf7a8b693744cf1d4a9e2c25ea12703a79b025e1076e1d917ed5f45063d12657"
+            "bytes": 736161,
+            "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
           },
           {
-            "path": "windows/Companion-Windows-0.1.91.msi",
-            "sha256": "ab504d2d5aecbeae1edf993999cb223d0c6b409452fd999298abcb8528af64fe",
-            "bytes": 16445652
+            "path": "windows/Companion-Windows-0.1.95.msi",
+            "bytes": 16617684,
+            "sha256": "4fafd28b20785cfa5d6ce9089b9028fdd1cbb6566e96dab677d8c53ebfe44b90"
           },
           {
-            "path": "android/Companion-Android-0.1.129.apk",
-            "sha256": "e02120653e47d675e64ace7a16cf0d781cfe26352cb3e9d8f99687f1dc411fb3",
-            "bytes": 51135261
+            "path": "android/Companion-Android-0.1.131.apk",
+            "bytes": 51155741,
+            "sha256": "3a0bc8333df21d9dff849dba2f970cc27c2bf8f23d0f97cd54adc1062031d965"
           }
         ],
         "draftOnly": true,
         "saleQualified": false,
         "ownerPrivateDataUploaded": false,
-        "assetId": 731634183,
+        "assetId": 732574111,
         "readback": {
           "method": "four-bounded-official-CDN-range-readers",
           "workers": 4,
           "sections": 11,
           "bufferBytesPerWorker": 131072,
-          "bytes": 43983836,
-          "sha256": "a86747698f8e868901cbf6b0cc600620f50f3af9357e560ae7a1a00ebf286824",
-          "seconds": 7.73399999999674,
+          "bytes": 44204397,
+          "sha256": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+          "seconds": 7.530999999988126,
           "retainedTransientReads": [],
           "authSentOnlyToGitHubApi": true,
           "signedUrlOrTokenPersisted": false,
           "routingModified": false
         },
-        "finishedAt": "2026-11-10T21:58:58+08:00",
+        "finishedAt": "2026-11-11T02:55:55+08:00",
         "readbackByteIdentical": true
       },
-      "next": "CP27-16: continue the already protected sample-map foundation into bounded native PCM materialization, durable source ownership, ordinary trim/split/merge controls and one matched dual-client delivery.",
+      "next": "Continue nextReadingBatchSource20261111 as one related material-reading batch; editing batch delivered095/131. Avoid per-word packaging/customer repeats.",
       "pendingAudioEditingWorkpoint": "groups/CP27-16/nonDestructiveSourceMapping20261110",
-      "pendingAudioEditingVersionReservation": "0.1.95",
+      "pendingAudioEditingVersionReservation": null,
       "pendingAudioEditingBranch": "work/device-phone-closure055-20261106",
       "recorderInput092Pending": {
         "at": "2026-11-10T23:44:40+08:00",
@@ -275404,9 +275539,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": "0.1.95",
+      "pendingUnifiedVersion": "0.1.96",
       "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
-      "pendingUnifiedReason": "Both editor094/1af27a43 and separate input/save094/397148f7 exist. Retain both; don't replace one same-number lineage with another.",
+      "pendingUnifiedReason": "Next grouped table-reading batch preserves installed095/c6ea5e32 and Android source0158d141; do not replace latest host fixes with old same-number lineage.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
@@ -275416,10 +275551,14 @@
         "original399State": "ORIGINAL399_FINALIZED_RECEIVED_RECLAIMED",
         "original399Receipt": "docs/handoffs/20261106-companion-device-management/full-media66762/delivery-first-20261110/file-commit094/original399-integrity.json",
         "physicalAppPid18904Preserved": true,
-        "installedWindowsRetained": "0.1.91"
+        "installedWindowsRetained": "0.1.91",
+        "state": "PRESERVED_IN_INSTALLED_UNIFIED095",
+        "consumedAt": "2026-11-11T02:57:44+08:00",
+        "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
+        "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
-      "pendingUnifiedBuildRun": 42876404149,
+      "pendingUnifiedSource": null,
+      "pendingUnifiedBuildRun": null,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00"
     }
   }
