@@ -7,6 +7,7 @@ const STATUS_PREFIX: usize = 84; // Existing status + CCP1 capacity, unchanged.
 const CAP_BYTES: usize = 32;
 const REQUIRED_CAPS: u32 = 7; // sealed pull, exact physical consume, continuous
 pub(crate) const STALE_SNAPSHOT: u32 = 8; // comp_segment_result_t
+pub(crate) const STREAM_UNSUPPORTED: &str = "V2 directory streaming request unsupported";
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub(crate) struct Peer {
@@ -109,18 +110,20 @@ pub(crate) struct Directory {
     peer: Peer,
     catalog: Catalog,
     calendar: bool,
+    streaming: bool,
     dates: std::collections::BTreeMap<u32,u32>,
 }
 impl Directory {
     pub(crate) fn new(peer: &Peer, nonce: u32) -> Result<Self, String> {
-        Ok(Self { peer: peer.clone(), catalog: Catalog::new(nonce)?, calendar:false,
+        Ok(Self { peer: peer.clone(), catalog: Catalog::new(nonce)?, calendar:false, streaming:false,
             dates:Default::default() })
     }
     pub(crate) fn calendar(&mut self, enabled: bool) { self.calendar=enabled; }
+    pub(crate) fn streaming(&mut self, enabled: bool) { self.streaming=enabled; }
     pub(crate) fn dates(&self)->std::collections::BTreeMap<u32,u32> { self.dates.clone() }
     pub(crate) fn request(&self) -> [u8; 16] {
         let mut p = [0; 16]; p[0] = 2; p[1] = 0x20;
-        p[2]=u8::from(self.calendar);
+        p[2]=u8::from(self.calendar) | (u8::from(self.streaming)<<1);
         p[4..8].copy_from_slice(&self.catalog.identity.map(|(s, _)| s).unwrap_or(0).to_le_bytes());
         p[8..12].copy_from_slice(&self.catalog.nonce.to_le_bytes());
         p[12..16].copy_from_slice(&(self.catalog.entries.len() as u32).to_le_bytes());
@@ -133,6 +136,11 @@ impl Directory {
             if u32le(payload, 8) != self.catalog.nonce { return Ok(false); }
             if payload.len() != 16 || u16le(payload, 4) != 2 || u16le(payload, 6) != 16 {
                 return Err(fail("invalid V2 directory error"));
+            }
+            if self.streaming && self.catalog.entries.is_empty() && u32le(payload,12)==3 {
+                // Older firmware rejects the optional read-only bit before
+                // emitting any rows. Retry a fresh nonce in ordinary mode.
+                return Err(STREAM_UNSUPPORTED.into());
             }
             return Err(if u32le(payload, 12) == STALE_SNAPSHOT {
                 "录音目录正在更新，请重新取得同一快照。".into()

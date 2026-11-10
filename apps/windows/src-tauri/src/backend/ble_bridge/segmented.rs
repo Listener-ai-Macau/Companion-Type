@@ -2,7 +2,7 @@
 //! service or file-name-only consume. V1 keeps its original transfer path.
 use super::*;
 use crate::backend::recording_wire::{Descriptor, SessionKey, receiver::{Receiver,SyncRepair,PendingScan},
-    transport::{Directory, Peer, receipt_matches}};
+    transport::{Directory, Peer, receipt_matches, STREAM_UNSUPPORTED}};
 use crate::backend::recording_wire::tail::{Tail,Prefix};
 use std::collections::BTreeMap;
 use std::sync::atomic::AtomicU32;
@@ -74,10 +74,14 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
                 return Err("设备拒绝了当前连续录音协商，尚未开始收取。".into());
             }
         }
-        for _ in 0..3 {
+        let mut streaming=true;
+        // Up to three stale snapshots plus one optional old-firmware fallback.
+        for _ in 0..4 {
             let mut directory = Directory::new(&peer, nonce())?;
             directory.calendar(calendar);
+            directory.streaming(streaming);
             let mut stale = false;
+            let mut unsupported=false;
             while !directory.finished() {
                 let request = directory.request();
                 bounded_ble_result("request V2 directory page", remaining_deadline_budget(deadline, budget),
@@ -86,15 +90,27 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
                     let n = notifications.next().await.ok_or("连续录音目录流已断开。")?;
                     if n.uuid != RECORDING_LIST_UUID { continue; }
                     match directory.accept(&n.value) {
-                        Ok(true) => break,
+                        Ok(true) => {
+                            // In streaming mode the same snapshot/nonce emits
+                            // all pages. Do not enqueue duplicate next-page
+                            // requests while the peripheral is still sending.
+                            if streaming && !directory.finished() {continue;}
+                            break;
+                        }
                         Ok(false) => continue,
+                        Err(e) if e == STREAM_UNSUPPORTED => {
+                            streaming=false;unsupported=true;
+                            eprintln!("recording_directory streaming=unsupported fallback=paged fresh_nonce=1");
+                            break;
+                        }
                         Err(e) if e == STALE => { stale = true; break; }
                         Err(e) => return Err(e),
                     }
                 }
-                if stale { break; }
+                if stale || unsupported { break; }
             }
-            if !stale {
+            if !stale && !unsupported {
+                eprintln!("recording_directory streaming={streaming} complete=1");
                 let generation = directory.generation();
                 let dates=directory.dates();
                 return Ok(RecordingCatalog { entries: directory.entries().into_iter().map(|d| {
