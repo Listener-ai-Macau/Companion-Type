@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 import argparse,hashlib,json,os,re,subprocess,zipfile
 parser=argparse.ArgumentParser();parser.add_argument('--code',type=int,default=111);parser.add_argument('--run',type=int,default=42627556502);parser.add_argument('--source',default='491b967b5fd78b089bb45fee3e07e4fbee15db46');args=parser.parse_args()
-code=args.code;run=args.run;source=args.source;assert code in [122,123,124,125,126,127,128,129] and re.fullmatch('[a-f0-9]{40}',source)
+code=args.code;run=args.run;source=args.source;assert code in [122,123,124,125,126,127,128,129,130,131] and re.fullmatch('[a-f0-9]{40}',source)
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;O=C/('android'+str(code));O.mkdir(exist_ok=True)
 D=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('candidate125' if code==125 else 'android'+str(code)+'-ci')
 def sha(p):

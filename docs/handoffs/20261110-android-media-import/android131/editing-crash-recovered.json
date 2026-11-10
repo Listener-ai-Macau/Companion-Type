@@ -1,0 +1,181 @@
+{
+  "at": "2026-11-10T16:00:17.735Z",
+  "installedVersion": "0.1.131",
+  "state": "ACTUAL_PROCESS_REOPEN_RETAINED_ACKNOWLEDGED_KEYS_AND_COMMITTED_PIECES",
+  "beforeCompleted": 0,
+  "status": {
+    "id": "5d6aefd8-7e02-41ce-9305-836603f931fb",
+    "operation": "derive",
+    "running": false,
+    "state": "interrupted",
+    "message": "上次录音编辑已中断，原录音及已保存片段保留，可重试未完成片段。",
+    "key": "8e033dd05d93d1b3d93d84e9c5591147d0b0ce4d748173d791ec496ed33d0ae1:1:1",
+    "processed": 0,
+    "total": 0,
+    "outputs": [
+      {
+        "key": "8e033dd05d93d1b3d93d84e9c5591147d0b0ce4d748173d791ec496ed33d0ae1:1:1",
+        "name": "公开编辑131 · 进程接续 · 第1段",
+        "saved": true
+      },
+      {
+        "key": "2e207bd5e9f2358fdc6bb1f603c031582205e5d432f050438b306fb980b4f17c:1:1",
+        "name": "公开编辑131 · 进程接续 · 第2段",
+        "saved": true
+      },
+      {
+        "key": "62d2587e0b480032a95d97c3441614ec3f6f4b21e2617c8a183a79815b980dd1:1:1",
+        "name": "公开编辑131 · 进程接续 · 第3段",
+        "saved": true
+      },
+      {
+        "key": "1597f2dd462c25f038f0ef4923426e9e5da2cd584f51aabb9954bb3394b3bd5b:1:1",
+        "name": "公开编辑131 · 进程接续 · 第4段",
+        "saved": false
+      },
+      {
+        "key": "7dc17fea549afa5d030c0321d6d2c23288f1098e78816f3de7f142e8f281b3ed:1:1",
+        "name": "公开编辑131 · 进程接续 · 第5段",
+        "saved": false
+      },
+      {
+        "key": "fc694186cb24bb3197d33c182a459a46a89a38df64a398cdd909d9c93a4ceda5:1:1",
+        "name": "公开编辑131 · 进程接续 · 第6段",
+        "saved": false
+      },
+      {
+        "key": "8e6657bb89a28328cb7ad5aad9c96ddc5982e8bfc72d3137ecee4490fef9877a:1:1",
+        "name": "公开编辑131 · 进程接续 · 第7段",
+        "saved": false
+      },
+      {
+        "key": "c796611a9ea4591c72b90f47c098790c80e9ed72ec89b6f6e37946d813d470db:1:1",
+        "name": "公开编辑131 · 进程接续 · 第8段",
+        "saved": false
+      },
+      {
+        "key": "179c68b6e069f013511e6c9d1d75339935e17d95e9917be21e0efb07d02ec1c7:1:1",
+        "name": "公开编辑131 · 进程接续 · 第9段",
+        "saved": false
+      },
+      {
+        "key": "78a802bc716ffd24cc343a234e08b7d7e216e1f73bb0fc778a14fca1ee568897:1:1",
+        "name": "公开编辑131 · 进程接续 · 第10段",
+        "saved": false
+      },
+      {
+        "key": "e3c5390295d826fb689b292b84531ceb32d69d6a7ab66eba2f0301ba5bda7c43:1:1",
+        "name": "公开编辑131 · 进程接续 · 第11段",
+        "saved": false
+      },
+      {
+        "key": "4c7010292ac0d22dd10f340c752091307d8942e6b03768f22ba2181748940f44:1:1",
+        "name": "公开编辑131 · 进程接续 · 第12段",
+        "saved": false
+      },
+      {
+        "key": "dceac79a113ed62bb7383dc97f4cfd9c4c106f3e2fac656502430297fa3a1483:1:1",
+        "name": "公开编辑131 · 进程接续 · 第13段",
+        "saved": false
+      },
+      {
+        "key": "5bbcf2800a91aea18c5f5c24ba5d90fd230309abd32eedc8a74a972543f37ce2:1:1",
+        "name": "公开编辑131 · 进程接续 · 第14段",
+        "saved": false
+      },
+      {
+        "key": "3bc847aac0db262c82061076b7709120b985c0dc125d5def6cfbc791b6c0feb4:1:1",
+        "name": "公开编辑131 · 进程接续 · 第15段",
+        "saved": false
+      },
+      {
+        "key": "9d1fe1dffb5607d82650c2d2b2358f16fa55ac4d1e0118004543c3f7f038343f:1:1",
+        "name": "公开编辑131 · 进程接续 · 第16段",
+        "saved": false
+      },
+      {
+        "key": "ef2003b18568f5d425341d20ef5af4f6c887bc6de61b9a6ccd87631abb303e05:1:1",
+        "name": "公开编辑131 · 进程接续 · 第17段",
+        "saved": false
+      },
+      {
+        "key": "a38c415a8bacc4d3f7d8c4ef14f62ac002667e9f8a340c7845f3ffc434e89386:1:1",
+        "name": "公开编辑131 · 进程接续 · 第18段",
+        "saved": false
+      },
+      {
+        "key": "fe1d9ee09b4532e6757b215cd435be7e74b0d319b267a784f89c3c95e552167d:1:1",
+        "name": "公开编辑131 · 进程接续 · 第19段",
+        "saved": false
+      },
+      {
+        "key": "37c4a2ee7bb194c23dae04012729f42a50c1ef9a23189a48403fb66a243a8e0a:1:1",
+        "name": "公开编辑131 · 进程接续 · 第20段",
+        "saved": false
+      },
+      {
+        "key": "0582c12ffbe314180b38626ef5712fa76c36120dfa67c230bc0d0d82484f3f64:1:1",
+        "name": "公开编辑131 · 进程接续 · 第21段",
+        "saved": false
+      },
+      {
+        "key": "d75d0864e0265ae6048fb3e514de2f6b63c0b621390e2a1bfd23bb533c62a10a:1:1",
+        "name": "公开编辑131 · 进程接续 · 第22段",
+        "saved": false
+      },
+      {
+        "key": "b3953564ca382ef66c27a5aa46d86abed7e246ee28f94606b7bef3a42bee9590:1:1",
+        "name": "公开编辑131 · 进程接续 · 第23段",
+        "saved": false
+      },
+      {
+        "key": "f599d811a52f8278402cc70cec5bdad5d8576f1ea8aaed284a7adc9fbdd82b85:1:1",
+        "name": "公开编辑131 · 进程接续 · 第24段",
+        "saved": false
+      },
+      {
+        "key": "ddcb979379199d9de8c72a7870ffc759d4ccae25a3a12d90cf806b93a740448a:1:1",
+        "name": "公开编辑131 · 进程接续 · 第25段",
+        "saved": false
+      },
+      {
+        "key": "094f2a94d8dcc644ae6053d253d45f53ceca002468d6aaba114ee36b48593205:1:1",
+        "name": "公开编辑131 · 进程接续 · 第26段",
+        "saved": false
+      },
+      {
+        "key": "6166b2f14a38acf15e5fccdf9f4b8e72972d460ea38121979be3426825f4845e:1:1",
+        "name": "公开编辑131 · 进程接续 · 第27段",
+        "saved": false
+      },
+      {
+        "key": "890ba956051e8e22f82df6f755d688095b5395c2c74aedf889d74a8a82d5e7af:1:1",
+        "name": "公开编辑131 · 进程接续 · 第28段",
+        "saved": false
+      },
+      {
+        "key": "d48db43f02eb26768950e742912a7f365b4b495907609b4de736c664d5eeccef:1:1",
+        "name": "公开编辑131 · 进程接续 · 第29段",
+        "saved": false
+      },
+      {
+        "key": "8cb82e2a55d1dad8038f49e708833012a30444d0bd7138b441419628186704ee:1:1",
+        "name": "公开编辑131 · 进程接续 · 第30段",
+        "saved": false
+      },
+      {
+        "key": "fa2cac671f93aa27b20cf624fe73640cfb779fcf12aff6f39670cc7e10181442:1:1",
+        "name": "公开编辑131 · 进程接续 · 第31段",
+        "saved": false
+      },
+      {
+        "key": "d0fae2c7d195488a7696f701ef4a0870adbd23909388752991e8f1b565f7b4c9:1:1",
+        "name": "公开编辑131 · 进程接续 · 第32段",
+        "saved": false
+      }
+    ],
+    "completed": 3,
+    "totalOutputs": 32,
+    "retryAvailable": true
+  }
+}

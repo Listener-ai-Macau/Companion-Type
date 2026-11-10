@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T14:53:09.996Z",
+  "installedVersion": "0.1.130",
+  "state": "ORDINARY_INSTALLED_ANDROID130_TRIM_REQUEST_COMPLETED",
+  "sourceKey": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+  "status": {
+    "id": "fb16bc35-5d67-4f17-b4de-4a60f7ad035d",
+    "operation": "derive",
+    "running": false,
+    "state": "complete",
+    "message": "编辑片段已保存在本机。原录音和原纪要保留，新片段可独立回听、转写。",
+    "key": "eb42601023867d313ef3bd727d999f8ff5b5543ab6ba0e709ccdcabb2833a746:1:1",
+    "processed": 0,
+    "total": 0,
+    "outputs": [
+      {
+        "key": "eb42601023867d313ef3bd727d999f8ff5b5543ab6ba0e709ccdcabb2833a746:1:1",
+        "name": "公开编辑130 · 10至25秒",
+        "saved": true
+      }
+    ],
+    "completed": 1,
+    "totalOutputs": 1,
+    "retryAvailable": false
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-10T14:58:52.728Z",
+  "installedVersion": "0.1.130",
+  "state": "ORDINARY_INSTALLED_ANDROID130_REORDERED_MULTI_SOURCE_MERGE_COMPLETED",
+  "sources": [
+    {
+      "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+      "rangeFrames": [
+        16000,
+        64000
+      ]
+    },
+    {
+      "key": "eb42601023867d313ef3bd727d999f8ff5b5543ab6ba0e709ccdcabb2833a746:1:1",
+      "rangeFrames": [
+        80000,
+        160000
+      ]
+    }
+  ],
+  "status": {
+    "id": "fb72b409-4e2a-4eaf-9aba-159785164c51",
+    "operation": "derive",
+    "running": false,
+    "state": "complete",
+    "message": "编辑片段已保存在本机。原录音和原纪要保留，新片段可独立回听、转写。",
+    "key": "30fb3b0ce8753b4689811bdaebb64496a6f2a553f035e133b830191935a9a368:1:1",
+    "processed": 0,
+    "total": 0,
+    "outputs": [
+      {
+        "key": "30fb3b0ce8753b4689811bdaebb64496a6f2a553f035e133b830191935a9a368:1:1",
+        "name": "公开编辑130 · 排序合并",
+        "saved": true
+      }
+    ],
+    "completed": 1,
+    "totalOutputs": 1,
+    "retryAvailable": false
+  }
+}

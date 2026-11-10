@@ -125,6 +125,7 @@ mod ota_readiness;
 mod host_recording;
 pub(crate) mod host_segmented_capture;
 pub(crate) mod import_audio;
+pub(crate) mod audio_derivation;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
 mod meeting_audio_recovery;
