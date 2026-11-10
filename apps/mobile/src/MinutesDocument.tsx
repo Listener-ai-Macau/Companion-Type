@@ -30,7 +30,9 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
   const title=section.title?meetingHeadingForDisplay(section.title):null;
   if(!title)return <div key={index} className={/^>\s*整理视角：[^\r\n]+$/.test(section.body.trim())?'minutes-preamble minutes-preamble-generated':'minutes-preamble'}>{renderText(section.body)}</div>;
   if(/^(分段原文依据|原文依据)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
-  const remaining=excerpt(section.body);
+  // Action cards own their one shared filter and their folding. Splitting the
+  // source into two render calls would produce two incomplete action scopes.
+  const remaining=['Action Items','行动事项'].includes(section.title!)?null:excerpt(section.body);
   const sectionOccurrence=sections.slice(0,index).filter(previous=>previous.title===section.title).length;
   return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{section.title==='会议概览'&&<p className="hint">概览可能遗漏细节。整段录音会一起整理；处理分段不代表会议场次，请结合完整纪要和原话查看。</p>}{renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<details className="minutes-more"><summary>查看其余 {remaining.count} 项</summary>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</details>}</section>;
  })}{display.metadata&&<details className="minutes-more minutes-generation"><summary>查看生成说明</summary><p>{generationNote||'这是已保存的整理结果，内容请结合转写核对。人工修改会单独标示；生成说明不代表转写或事实准确性已经验证。'}</p></details>}</div></MeetingReadingFrame>;
