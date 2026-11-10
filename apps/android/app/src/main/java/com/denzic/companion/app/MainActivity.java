@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /** Local-only presentation bridge. Device and file work never runs on the UI thread. */
 public final class MainActivity extends Activity {
     private WebView web;
-    private final ExecutorService worker = Executors.newSingleThreadExecutor();
+    private final java.util.concurrent.ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
     private final DeviceConnectionOwner<RecordingClient> deviceConnection=new DeviceConnectionOwner<>(RecordingClient::isConnected);
     private List<BluetoothDevice> devices = new ArrayList<>();
     private List<RecorderWire.Descriptor> segments = new ArrayList<>();
@@ -39,6 +39,13 @@ public final class MainActivity extends Activity {
     private MediaPlayer player;
     private List<NativeAudio.Part> playingParts = new ArrayList<>();
     private int playingIndex;
+    private String playingKey,playingBinding;
+    private Path playingMeetings;
+    private long playingDurationMs,lastPlaybackSave;
+    private double playingSpeed=1;
+    private boolean playingComplete;
+    private boolean playbackPaused;
+    private String playbackSaveWarning;
     private final AtomicBoolean cancelTranscription = new AtomicBoolean();
     private final AtomicBoolean cancelMinutes = new AtomicBoolean();
     private long documentRequestId;
@@ -107,6 +114,7 @@ public final class MainActivity extends Activity {
 
     @SuppressLint("SetJavaScriptEnabled") @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        worker.scheduleAtFixedRate(()->savePlaybackProgress(false),5,5,java.util.concurrent.TimeUnit.SECONDS);
         if (state != null) {
             updateRequestId=state.getLong("updateRequestId",0);updateRequestRestored=updateRequestId!=0;
             libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
@@ -202,7 +210,7 @@ public final class MainActivity extends Activity {
         }
     }
     @Override protected void onStop(){
-        if(!worker.isShutdown())worker.execute(this::closeSelectedDevice);
+        if(!worker.isShutdown())worker.execute(()->{savePlaybackProgress(true);closeSelectedDevice();});
         super.onStop();
     }
     @Override protected void onDestroy() {
@@ -532,7 +540,7 @@ public final class MainActivity extends Activity {
             }
             RecordingLibrary.Session original=storedSession(key);
             String title="";if(action.equals("trash"))title=recordingTitle(key,original);
-            if(action.equals("trash"))onUi(()->{stopPlayback();playbackEvent("stopped","");return true;});
+            if(action.equals("trash")){stopPlayback();playbackEvent("stopped","");}
             synchronized(RecordingSyncService.class){requireLifecycleIdle();return lifecycle.change(key,revision,action,title).put("libraryToken",token);}
         }finally{LocalLibraryBackups.BUSY.set(false);}
     }
@@ -561,16 +569,52 @@ public final class MainActivity extends Activity {
         runOnUiThread(() -> { if (!isFinishing() && !isDestroyed()) web.evaluateJavascript("window.companionProgress(" + JSONObject.quote(message) + ")", null); });
     }
     private void stopPlayback() {
+        savePlaybackProgress(true);
         if (player != null) { player.release(); player = null; }
         playingParts = new ArrayList<>();
+        playingKey=null;playingBinding=null;playingMeetings=null;playingDurationMs=0;playingSpeed=1;playbackPaused=false;
+    }
+    private long playbackPosition(){return player==null||playingIndex>=playingParts.size()?0:Math.max(0,Math.min(playingDurationMs,playingParts.get(playingIndex).firstSample/16+player.getCurrentPosition()));}
+    private void savePlaybackProgress(boolean force){
+        if(player==null||playingKey==null||playingMeetings==null)return;
+        long now=android.os.SystemClock.elapsedRealtime();if(!force&&(playbackPaused||now-lastPlaybackSave<5000))return;
+        try{new PlaybackProgress(playingMeetings,MainActivity::syncLifecycleDirectory).save(playingKey,playingBinding,playbackPosition(),playingSpeed,false);lastPlaybackSave=now;playbackSaveWarning=null;}
+        catch(Exception error){playbackSaveWarning="续听位置暂未保存；原录音仍保留，请稍后重试。";}
+    }
+    private void requirePlayback(JSONObject args)throws Exception{
+        if(player==null||playingParts.isEmpty())throw new IllegalStateException("请先播放这条录音。");
+        if(args.has("key")&&!args.getString("key").equals(playingKey)||args.has("libraryToken")&&!args.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("回听对象已变化，请重新打开这条录音。");
+    }
+    private void seekPlayer(MediaPlayer target,int offset)throws Exception{
+        java.util.concurrent.CompletableFuture<Void> done=new java.util.concurrent.CompletableFuture<>();
+        target.setOnSeekCompleteListener(ignored->done.complete(null));
+        try{target.seekTo(offset,MediaPlayer.SEEK_CLOSEST);done.get(5,java.util.concurrent.TimeUnit.SECONDS);}
+        finally{target.setOnSeekCompleteListener(null);}
+    }
+    private void seekPlayback(long requested)throws Exception{
+        long target=Math.max(0,Math.min(Math.max(0,playingDurationMs-1),requested));int index=playingParts.size()-1;
+        for(int i=0;i<playingParts.size();i++){NativeAudio.Part part=playingParts.get(i);if(target<(part.firstSample+part.samples)/16){index=i;break;}}
+        NativeAudio.Part part=playingParts.get(index);int within=(int)Math.max(0,Math.min(Math.max(0,part.samples/16-1),target-part.firstSample/16));
+        if(index==playingIndex&&player!=null)seekPlayer(player,within);
+        else{if(player!=null)player.release();player=null;playingIndex=index;playPart(within,!playbackPaused);}
+        savePlaybackProgress(true);
+    }
+    private void beginPlayback(RecordingLibrary.Session source,String key,NativeAudio.PartsResult parts,long position,double speed)throws Exception{
+        playingParts=parts.parts;playingIndex=0;playingKey=key;playingBinding=RecordingBookmarkAccess.binding(source);playingMeetings=libraries().meetings();playingDurationMs=parts.samples/16;playingComplete=parts.captureComplete;playingSpeed=speed;playbackPaused=false;playbackSaveWarning=null;lastPlaybackSave=0;
+        if(position>0)seekPlayback(position);else playPart();savePlaybackProgress(true);
     }
     private void playPart() throws Exception { playPart(0); }
     private void playPart(int positionMs) throws Exception { playPart(positionMs, true); }
     private void playPart(int positionMs, boolean startImmediately) throws Exception {
-        if (playingIndex >= playingParts.size()) { stopPlayback(); playbackEvent("stopped", "回听结束"); return; }
+        if (playingIndex >= playingParts.size()) {
+            try{if(playingKey!=null)new PlaybackProgress(playingMeetings,MainActivity::syncLifecycleDirectory).save(playingKey,playingBinding,playingComplete?0:Math.max(0,playingDurationMs-1),playingSpeed,playingComplete);}catch(Exception ignored){}
+            stopPlayback();playbackEvent("stopped","回听结束");return;
+        }
         MediaPlayer next = new MediaPlayer();
         try {
             next.setDataSource(playingParts.get(playingIndex).path.toString());
+            // Initialized state: setting rate here must not auto-start a paused seek.
+            next.setPlaybackParams(new android.media.PlaybackParams().allowDefaults().setSpeed((float)playingSpeed).setPitch(1));
             next.setOnCompletionListener(done -> {
                 if(worker.isShutdown())return;
                 try { worker.execute(() -> {
@@ -580,9 +624,9 @@ public final class MainActivity extends Activity {
                 }); } catch(java.util.concurrent.RejectedExecutionException ignored) { /* Activity is closing. */ }
             });
             next.prepare(); player = next;
-            if (positionMs > 0) next.seekTo(positionMs);
-            if (startImmediately) next.start();
-        } catch (Exception error) { next.release(); throw error; }
+            if (positionMs > 0) seekPlayer(next,positionMs);
+            playbackPaused=!startImmediately;if (startImmediately) next.start();
+        } catch (Exception error) { if(player==next)player=null;next.release();throw error; }
     }
     private void finishUpdatePicker(int resultCode,Intent data){
         final long id=updateRequestId;final boolean restored=updateRequestRestored;updateRequestId=0;updateRequestRestored=false;
@@ -998,8 +1042,9 @@ public final class MainActivity extends Activity {
                     .put("searchQuery",query).put("searchScope","title".equals(a.optString("scope","all"))?"title":"all");
             }
             case "detail": {
-                String key = a.getString("key"); session(key);
-                return MeetingDetailAccess.read(store(),key,translations()).put("lifecycle",lifecycle().get(key)).put("libraryToken",libraries().token());
+                String key = a.getString("key");RecordingLibrary.Session selected=session(key);
+                JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(selected),completeAudioDurationMs(selected));
+                return MeetingDetailAccess.read(store(),key,translations()).put("lifecycle",lifecycle().get(key)).put("libraryToken",libraries().token()).put("playback",resume);
             }
             case "minutesHistory": {
                 String key=a.getString("key");session(key);
@@ -1070,11 +1115,13 @@ public final class MainActivity extends Activity {
             }
             case "play": {
                 stopPlayback();
-                RecordingLibrary.Session s = session(a.getString("key"));
+                String key=a.getString("key");RecordingLibrary.Session s = session(key);
                 NativeAudio.PartsResult parts = ManagedAudioParts.prepare(s, root().resolve("companion-decoded-audio"));
                 if (parts.parts.isEmpty()) throw new IllegalStateException("没有可回听的音频。");
-                playingParts = parts.parts; playingIndex = 0; playPart();
-                return new JSONObject().put("complete", parts.captureComplete).put("durationMs", parts.samples / 16);
+                JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(s),parts.samples/16);
+                long position=a.optBoolean("restart",false)?0:resume.getLong("positionMs");
+                try{beginPlayback(s,key,parts,position,resume.getDouble("speed"));}catch(Exception error){stopPlayback();throw error;}
+                return new JSONObject().put("complete", parts.captureComplete).put("durationMs", parts.samples / 16).put("positionMs",playbackPosition()).put("speed",playingSpeed);
             }
             case "bookmarks":{
                 String key=a.getString("key");RecordingLibrary.Session selected=session(key);
@@ -1088,40 +1135,32 @@ public final class MainActivity extends Activity {
                 if(!a.getString("binding").equals(RecordingBookmarkAccess.binding(selected)))throw new java.io.IOException("已保存的录音分段已更新，请重新读取重点后回听。");
                 NativeAudio.PartsResult parts=ManagedAudioParts.prepare(selected,root().resolve("companion-decoded-audio"));
                 RecordingBookmarkAccess.Playback target=RecordingBookmarkAccess.playback(parts,a.getString("sequence"),a.getLong("sourceSamples"),a.getLong("elapsedMs"));
-                stopPlayback();playingParts=parts.parts;playingIndex=target.part;
-                try{playPart(target.offsetMs);}catch(Exception error){stopPlayback();throw error;}
-                return new JSONObject().put("complete",parts.captureComplete).put("durationMs",parts.samples/16).put("positionMs",target.positionMs);
+                String key=a.getString("key");stopPlayback();JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(selected),parts.samples/16);
+                try{beginPlayback(selected,key,parts,target.positionMs,resume.getDouble("speed"));}catch(Exception error){stopPlayback();throw error;}
+                return new JSONObject().put("complete",parts.captureComplete).put("durationMs",parts.samples/16).put("positionMs",target.positionMs).put("speed",playingSpeed);
             }
             case "stopPlayback": stopPlayback(); return JSONObject.NULL;
             case "pausePlayback": {
-                if (player == null || playingParts.isEmpty()) throw new IllegalStateException("请先播放录音。");
-                if (player.isPlaying()) player.pause();
-                return new JSONObject().put("positionMs",playingParts.get(playingIndex).firstSample/16 + player.getCurrentPosition());
+                requirePlayback(a);if(!playbackPaused)player.pause();playbackPaused=true;savePlaybackProgress(true);
+                return new JSONObject().put("positionMs",playbackPosition()).put("speed",playingSpeed);
             }
             case "resumePlayback": {
-                if (player == null || playingParts.isEmpty()) throw new IllegalStateException("回听已结束，请重新播放。");
-                if (!player.isPlaying()) player.start();
-                return JSONObject.NULL;
+                requirePlayback(a);player.setPlaybackParams(new android.media.PlaybackParams().allowDefaults().setSpeed((float)playingSpeed).setPitch(1));playbackPaused=false;
+                return new JSONObject().put("positionMs",playbackPosition()).put("speed",playingSpeed);
             }
             case "playbackStatus": {
                 if (player == null || playingParts.isEmpty()) return new JSONObject().put("playing",false);
                 NativeAudio.Part part = playingParts.get(playingIndex);
-                boolean active=player.isPlaying();
-                return new JSONObject().put("playing",active).put("paused",!active).put("positionMs",part.firstSample/16 + player.getCurrentPosition());
+                boolean active=!playbackPaused&&player.isPlaying();savePlaybackProgress(false);
+                return new JSONObject().put("playing",active).put("paused",playbackPaused).put("positionMs",playbackPosition()).put("speed",playingSpeed).put("key",playingKey).put("saveWarning",playbackSaveWarning==null?JSONObject.NULL:playbackSaveWarning);
+            }
+            case "setPlaybackSpeed":{
+                requirePlayback(a);double rate=a.getDouble("speed");if(!PlaybackProgress.validSpeed(rate))throw new IllegalArgumentException("请选择支持的回听速度。");
+                if(!playbackPaused)player.setPlaybackParams(new android.media.PlaybackParams().allowDefaults().setSpeed((float)rate).setPitch(1));
+                playingSpeed=rate;savePlaybackProgress(true);return new JSONObject().put("speed",playingSpeed).put("paused",playbackPaused);
             }
             case "seekPlayback": {
-                if (player == null || playingParts.isEmpty()) throw new IllegalStateException("请先播放录音。");
-                long target = Math.max(0,a.getLong("positionMs"));
-                int index = playingParts.size()-1;
-                for (int i=0;i<playingParts.size();i++) {
-                    NativeAudio.Part part = playingParts.get(i);
-                    if (target < (part.firstSample+part.samples)/16) { index=i; break; }
-                }
-                NativeAudio.Part part = playingParts.get(index);
-                int within = (int)Math.max(0,Math.min(Math.max(0,part.samples/16-1),target-part.firstSample/16));
-                if (index == playingIndex) player.seekTo(within);
-                else { boolean wasPlaying=player.isPlaying(); player.release(); player=null; playingIndex=index; playPart(within,wasPlaying); }
-                return JSONObject.NULL;
+                requirePlayback(a);seekPlayback(a.getLong("positionMs"));return new JSONObject().put("positionMs",playbackPosition()).put("speed",playingSpeed);
             }
             case "correct": {
                 String key=a.getString("key"); session(key);
