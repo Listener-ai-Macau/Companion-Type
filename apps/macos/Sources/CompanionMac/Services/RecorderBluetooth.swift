@@ -145,16 +145,29 @@ struct RecorderDevice: Identifiable { let id: UUID; let name: String; let rssi: 
         let capacity = UInt16(min(509,peripheral.maximumWriteValueLength(for: .withoutResponse)))
         let negotiate = try peer.negotiate(capacity: capacity,nonce: nonce())
         _ = try await exchange(negotiate,on: 0x3001,reply: 0x3001) { $0 == negotiate }
-        let requestNonce = nonce(); var entries: [SegmentDescriptor] = [], generation: UInt32 = 0
-        while true {
-            var p = Data(repeating: 0,count: 16); p[0] = 2; p[1] = 0x20; p[2] = 1
-            p.put(generation,at: 4); p.put(requestNonce,at: 8); p.put(UInt32(entries.count),at: 12)
-            let raw = try await exchange(p,on: 0x3001,reply: 0x3002) { $0.count >= 20 && $0[0] == 2 && $0.uint(16,4) == requestNonce || $0.prefix(4) == Data("CRE2".utf8) }
-            let page = try DirectoryPage(raw,peer: peer)
-            guard page.start == entries.count, generation == 0 || generation == page.generation else { throw RecorderError.invalid("录音目录正在变化，请重新收取。") }
-            generation = page.generation; entries.append(contentsOf: page.entries)
-            if entries.count == page.total { return entries }
+        var streaming = true
+        for _ in 0..<4 {
+            let requestNonce = nonce(); var entries: [SegmentDescriptor] = [], generation: UInt32 = 0
+            while true {
+                var p = Data(repeating: 0,count: 16); p[0] = 2; p[1] = 0x20; p[2] = streaming ? 3 : 1
+                p.put(generation,at: 4); p.put(requestNonce,at: 8); p.put(UInt32(entries.count),at: 12)
+                let matching: (Data) -> Bool = { DirectoryPage.matches($0,nonce: requestNonce) }
+                let raw: Data
+                if streaming && !entries.isEmpty { raw = try await value(0x3002,matching: matching) }
+                else { raw = try await exchange(p,on: 0x3001,reply: 0x3002,matching: matching) }
+                if raw.count == 16 {
+                    let reason = raw.uint(12,4)
+                    if reason == 3 && streaming && entries.isEmpty { streaming = false; break }
+                    if reason == 8 { break }
+                    throw RecorderError.invalid("设备暂时无法提供录音目录，请稍后继续收取。")
+                }
+                let page = try DirectoryPage(raw,peer: peer)
+                guard page.start == entries.count, generation == 0 || generation == page.generation else { throw RecorderError.invalid("录音目录正在变化，请重新收取。") }
+                generation = page.generation; entries.append(contentsOf: page.entries)
+                if entries.count == page.total { return entries }
+            }
         }
+        throw RecorderError.invalid("录音目录持续变化，已保留原音，请稍后继续收取。")
     }
     func receive(session: UInt64,library: LocalLibrary) async throws -> [SegmentDescriptor] {
         guard let peer else { throw RecorderError.invalid("请先连接录音卡。") }

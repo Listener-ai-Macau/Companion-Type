@@ -95,6 +95,10 @@ public struct SegmentDescriptor: Equatable, Codable {
     }
 }
 public struct DirectoryPage {
+    public static func matches(_ data: Data,nonce: UInt32) -> Bool {
+        if data.count == 16 && data.prefix(8) == Data([67,82,69,50,2,0,16,0]) { return data.uint(8,4) == nonce }
+        return data.count >= 24 && data[0] == 2 && data.uint(16,4) == nonce
+    }
     public let generation, start, total, nonce: UInt32
     public let entries: [SegmentDescriptor]
     public init(_ p: Data, peer: RecorderPeer) throws {

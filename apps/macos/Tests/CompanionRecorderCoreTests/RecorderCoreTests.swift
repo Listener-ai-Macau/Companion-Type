@@ -18,6 +18,13 @@ final class RecorderCoreTests: XCTestCase {
         let descriptors = try (f["descriptorsHex"] as! [String]).map { try SegmentDescriptor(bytes($0),peer: p) }
         XCTAssertEqual(descriptors.map(\.index),[0,1,2]); XCTAssertEqual(descriptors.last?.totalSegments,3)
         let pages = try (f["pagesHex"] as! [String]).map { try DirectoryPage(bytes($0),peer: p) }
+        for wire in (f["pagesHex"] as! [String]).map(bytes) {
+            XCTAssertTrue(DirectoryPage.matches(wire,nonce: UInt32(wire.uint(16,4))))
+            XCTAssertFalse(DirectoryPage.matches(wire,nonce: UInt32(wire.uint(16,4)) &+ 1))
+        }
+        var refusal = Data([67,82,69,50,2,0,16,0]); refusal.append(contentsOf: [9,0,0,0,3,0,0,0])
+        XCTAssertTrue(DirectoryPage.matches(refusal,nonce: 9)); XCTAssertFalse(DirectoryPage.matches(refusal,nonce: 10))
+        refusal[4] = 3; XCTAssertFalse(DirectoryPage.matches(refusal,nonce: 9))
         XCTAssertEqual(pages.flatMap(\.entries),descriptors)
         let payload = bytes(f["payloadHex"] as! String); try descriptors[0].verify(payload)
         var changed = payload; changed[14] ^= 1; XCTAssertThrowsError(try descriptors[0].verify(changed))
