@@ -93,10 +93,10 @@ pub fn start(
                 // Only acquisition/receive share this owner. ASR does not
                 // prevent the input listener from recovering its live link.
                 let receiving=std::cell::RefCell::new(Some(receive_connection.blocking_lock()));
-                change(|s|{s.processing=true;s.stage="receiving".into();s.message="正在接收本次原音…".into();});
+                change(|s|{s.processing=true;if !s.capturing {s.stage="receiving".into();s.message="正在接收本次原音…".into();}});
                 let result=coordinator.complete_desktop_dictation(&processing_device,&work.key,&work.cancel,|stage|{
                     if stage=="transcribing" {receiving.borrow_mut().take();}
-                    change(|s|{s.stage=stage.into();s.message=if stage=="transcribing"{"原音已保存，正在识别…"}else{"正在接收本次原音…"}.into();});
+                    change(|s|{if !s.capturing {s.stage=stage.into();s.message=if stage=="transcribing"{"原音已保存，正在识别…"}else{"正在接收本次原音…"}.into();}});
                 });
                 drop(receiving);
                 match result {
@@ -105,8 +105,8 @@ pub fn start(
                         let delivery=if work.cancel.load(Ordering::Acquire){None}
                             else{work.target.map(|target|target.deliver(&text,shortcut))};
                         change(|s|{s.session_id=Some(session);s.transcript=text;s.delivery=delivery;s.processing=false;
-                            s.stage="saved".into();s.message=if work.cancel.load(Ordering::Acquire){"本次输入已取消，原音和文字保留在录音库。"}
-                            else{match delivery {Some(InsertStatus::Inserted)=>"文字已写入输入位置。",Some(InsertStatus::PasteSent|InsertStatus::SubmittedUnconfirmed)=>"文字已发送；请核对输入框，完整结果也已保存。",_=>"文字已保存。输入位置已变化或不支持自动输入，可点复制。"}}.into();});
+                            if !s.capturing {s.stage="saved".into();s.message=if work.cancel.load(Ordering::Acquire){"本次输入已取消，原音和文字保留在录音库。"}
+                            else{match delivery {Some(InsertStatus::Inserted)=>"文字已写入输入位置。",Some(InsertStatus::PasteSent|InsertStatus::SubmittedUnconfirmed)=>"文字已发送；请核对输入框，完整结果也已保存。",_=>"文字已保存。输入位置已变化或不支持自动输入，可点复制。"}}.into();}});
                     },
                     Err(error)=>change(|s|{s.processing=false;s.stage="error".into();s.message=format!("{error} 原音保留，可在录音库继续处理。");}),
                 }
