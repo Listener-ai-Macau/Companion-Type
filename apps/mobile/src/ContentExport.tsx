@@ -3,7 +3,7 @@ import {Check,ChevronDown,Copy,Download,FileAudio,GitBranch,RefreshCw,Share2} fr
 import './contentExport.css';
 type BaseContent='minutes'|'transcript'|'translation'|'notes';
 type Content=BaseContent|`material:${string}`;
-export type ExportInfo={key:string;title:string;libraryToken:string;binding:string;available:Record<BaseContent,boolean>;materials?:Array<{id:Content;title:string;edited:boolean}>;minutesStale:boolean;minutesDraft:boolean;minutesManual:boolean;translationStale:boolean;translationLanguage:string;problems:string[]};
+export type ExportInfo={key:string;title:string;libraryToken:string;binding:string;available:Record<BaseContent,boolean>;materials?:Array<{id:Content;title:string;edited:boolean}>;minutesStale:boolean;minutesDraft:boolean;minutesManual:boolean;translationStale:boolean;translationLanguage:string;problems:string[];noteImages?:number};
 export type PreparedExport={id:string;filename:string;mime:string;bytes:number;copyAllowed:boolean;preview:string;warnings:string[]};
 type Call=<T>(method:string,args?:object)=>Promise<T>;
 type Run=<T>(label:string,work:()=>Promise<T>)=>Promise<T|undefined>;
@@ -41,8 +41,8 @@ export function ContentExport({recordingKey,busy,readingPreview,panelRef,initial
   {selected.includes('minutes')&&(info.minutesStale||info.minutesDraft||info.minutesManual)&&<p className="export-warning" role="status">{info.minutesStale?'纪要来源已变化，请先核对。 ':''}{info.minutesDraft?'包含未完成草稿。 ':''}{info.minutesManual?'包含人工核对或安排。 ':''}这些提示会保留在文件和复制的文字中。</p>}
   {selected.includes('translation')&&info.translationStale&&<p className="export-warning" role="status">译文依据较早的原文版本，文件和复制文字会保留来源提示。</p>}
   {selected.includes('translation')&&selected.includes('transcript')&&<p className="export-help">原文与译文将分节排列，不做逐句对齐。</p>}
-  <label className="export-format">文件格式<select aria-label="导出文件格式" value={format} disabled={busy||loading} onChange={e=>{setFormat(e.target.value);setPrepared(null);setNotice('');}}><option value="pdf">PDF · 便于阅读</option><option value="word">Word · 可编辑文档</option><option value="pptx">PowerPoint · 可编辑演示</option><option value="xlsx">Excel · 按章节整理</option><option value="mindmap">思维导图 · 可编辑</option><option value="png">思维导图 PNG · 完整图片</option><option value="txt">TXT · 纯文字</option><option value="markdown">Markdown · 保留结构</option><option value="srt" disabled={selected.length!==1||selected[0]!=='transcript'}>SRT · 转写字幕</option></select></label>
-  {format==='pptx'&&<p className="export-help">按所选已保存内容自动分页，文字可继续编辑；不会重新生成或补写事实。</p>}
+  <label className="export-format">文件格式<select aria-label="导出文件格式" value={format} disabled={busy||loading} onChange={e=>{setFormat(e.target.value);setPrepared(null);setNotice('');}}><option value="bundle">图文 ZIP · 备注与原图</option><option value="pdf">PDF · 便于阅读</option><option value="word">Word · 可编辑文档</option><option value="pptx">PowerPoint · 可编辑演示</option><option value="xlsx">Excel · 按章节整理</option><option value="mindmap">思维导图 · 可编辑</option><option value="png">思维导图 PNG · 完整图片</option><option value="txt">TXT · 纯文字</option><option value="markdown">Markdown · 保留结构</option><option value="srt" disabled={selected.length!==1||selected[0]!=='transcript'}>SRT · 转写字幕</option></select></label>
+  {selected.includes('notes')&&!!info.noteImages&&<p className="export-help">图文 ZIP 包含所选备注的原图片和可离线阅读的网页。其它格式与复制保留文字、时间和图片名称，不嵌入原图。</p>}{format==='bundle'&&<p className="export-help">解压后打开“打开阅读.html”即可阅读；原图片放在 images 文件夹。仅包含本次选中的内容。</p>}{format==='pptx'&&<p className="export-help">按所选已保存内容自动分页，文字可继续编辑；不会重新生成或补写事实。</p>}
   {format==='png'&&<p className="export-help">导出完整导图图片。长会议建议只选需要的纪要或材料；尺寸过大会提示减少内容，不裁切正文。</p>}
   {format==='xlsx'&&<p className="export-help">按章节与原文行保留正文，适合筛选和后续编辑；不会自动填写外部表样。</p>}
   {format==='srt'&&<p className="export-warning">仅导出当前原文已有的分段时间，属于近似时间，不是逐字对齐。没有可核验时间时会提示选择其它格式。</p>}

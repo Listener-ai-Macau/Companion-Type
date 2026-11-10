@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create,type ReactTestRenderer} from 'react-test-renderer';
+import {RecordingNotes,type RecordingNoteList,type RecordingNoteDraft} from '../apps/mobile/src/RecordingNotes';
+let value:RecordingNoteList={key:'fixture',libraryToken:'fixture-library',revision:0,entries:[]},tree:ReactTestRenderer,dirty=false,saveFails=false,imageCancelled=true,played='';
+window.confirm=()=>true;
+const props={recordingKey:'fixture',busy:false,positionMs:12500,durationMs:90000,onLoad:async()=>value,onDirtyChange:(v:boolean)=>dirty=v,onExport:()=>{},onSave:async(_v:RecordingNoteList,d:RecordingNoteDraft)=>{if(saveFails)throw Error('Disk unavailable');value={...value,revision:value.revision+1,entries:[{id:'one',text:d.text,atMs:d.atMs,createdAt:1,updatedAt:1}]};return value;},onImage:async()=>imageCancelled?{cancelled:true as const}:value,onRemove:async()=>{value={...value,revision:value.revision+1,entries:[]};return value;},onPlay:async(_v:RecordingNoteList,id:string)=>{played=id;}};
+const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');const button=(label:string)=>tree.root.findAllByType('button').find(node=>text(node)===label)!;const textarea=()=>tree.root.findByType('textarea');
+await act(async()=>{tree=create(<RecordingNotes {...props}/>);});assert(button('添加备注或图片'));
+act(()=>button('添加备注或图片').props.onClick());act(()=>textarea().props.onChange({target:{value:'预算要复核'}}));assert(dirty);
+await act(async()=>{button('添加图片').props.onClick();});assert.equal(textarea().props.value,'预算要复核','Cancelled picker erased draft');assert(dirty);
+saveFails=true;await act(async()=>{button('保存备注').props.onClick();});assert.equal(textarea().props.value,'预算要复核','Failed save erased draft');assert.equal(value.entries.length,0);
+saveFails=false;await act(async()=>{button('保存备注').props.onClick();});assert(!dirty);assert.equal(value.entries[0].atMs,12000,'Time should be captured when composing, not after async picker');assert(text(tree.toJSON()).includes('预算要复核'));
+await act(async()=>{button('00:00:12').props.onClick();});assert.equal(played,'one');
+await act(async()=>{tree.root.findAllByType('button').find(n=>String(n.props['aria-label']).startsWith('删除备注'))!.props.onClick();});assert.equal(value.entries.length,0);
+act(()=>tree.unmount());assert(!dirty);console.log('PASS notes UI: cancel/failure retain draft, capture time, saved view, native play request and deletion.');

@@ -55,6 +55,7 @@ public final class MainActivity extends Activity {
     private long libraryRequestId;
     private String libraryRequestKind,libraryRequestToken,documentLibraryToken;
     private boolean libraryRequestRestored;
+    private long noteImageRequestId;private JSONObject noteImageRequest;private boolean noteImageRestored;
     private long audioImportRequestId;private String audioImportLibraryToken;private boolean audioImportRequestRestored;
     private long updateRequestId;
     private boolean updateRequestRestored;
@@ -119,6 +120,7 @@ public final class MainActivity extends Activity {
         super.onCreate(state);
         worker.scheduleAtFixedRate(()->savePlaybackProgress(false),5,5,java.util.concurrent.TimeUnit.SECONDS);
         if (state != null) {
+            noteImageRequestId=state.getLong("noteImageRequestId",0);noteImageRestored=noteImageRequestId!=0;
             audioImportRequestId=state.getLong("audioImportRequestId",0);audioImportLibraryToken=state.getString("audioImportLibraryToken");audioImportRequestRestored=audioImportRequestId!=0;
             updateRequestId=state.getLong("updateRequestId",0);updateRequestRestored=updateRequestId!=0;
             libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
@@ -172,6 +174,10 @@ public final class MainActivity extends Activity {
                 if (!"https".equals(uri.getScheme()) || !"appassets.androidplatform.net".equals(uri.getHost()))
                     return blockedAsset();
                 List<String> segments = uri.getPathSegments();
+                if(segments.size()==5&&"notes".equals(segments.get(0))){try{
+                    String token=segments.get(1),key=segments.get(2),id=segments.get(3),sha=segments.get(4);if(!token.equals(libraries().token()))return blockedAsset();session(key);JSONObject value=recordingNotes().read(key);JSONArray entries=value.getJSONArray("entries");
+                    for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);if(id.equals(e.getString("id"))&&e.has("image")&&sha.equals(e.getJSONObject("image").getString("sha256"))){Path file=recordingNotes().verifiedImage(key,e.getJSONObject("image"));return new WebResourceResponse("image/jpeg",null,RecordingNoteImages.thumbnail(file));}}
+                }catch(Exception unavailable){}return blockedAsset();}
                 if (segments.isEmpty() || !"www".equals(segments.get(0))) return blockedAsset();
                 StringBuilder name = new StringBuilder();
                 for (String part : segments) {
@@ -194,6 +200,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
+        state.putLong("noteImageRequestId",noteImageRequestId);
         state.putLong("audioImportRequestId",audioImportRequestId);state.putString("audioImportLibraryToken",audioImportLibraryToken);
         state.putLong("updateRequestId",updateRequestId);
         state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);state.putString("documentPreparedId",documentPreparedId);
@@ -206,6 +213,7 @@ public final class MainActivity extends Activity {
     @Override protected void onResume() {
         super.onResume();
         notifySystemAppearance();
+        if(noteImageRestored&&noteImageRequestId!=0){noteImageRequestId=0;noteImageRestored=false;android.widget.Toast.makeText(this,"图片选择已中断，请重新选择；已保存备注仍保留。",android.widget.Toast.LENGTH_LONG).show();}
         if(audioImportRequestRestored&&audioImportRequestId!=0){audioImportRequestId=0;audioImportRequestRestored=false;audioImportLibraryToken=null;android.widget.Toast.makeText(this,"文件选择已中断，请重新选择导入；原文件未改变。",android.widget.Toast.LENGTH_LONG).show();}
         if(updateRequestRestored&&updateRequestId!=0){updateRequestId=0;updateRequestRestored=false;android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择。设备保持原状态。",android.widget.Toast.LENGTH_LONG).show();}
         if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
@@ -247,6 +255,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==35){finishNoteImagePicker(resultCode,data);return;}
         if(requestCode==34){finishAudioImportPicker(resultCode,data);return;}
         if(requestCode==33){finishUpdatePicker(resultCode,data);return;}
         if(requestCode==32){finishLibraryPicker(resultCode,data);return;}
@@ -304,6 +313,26 @@ public final class MainActivity extends Activity {
                 replyDocument(id,true,null,restored);
             } catch(Exception e) { replyDocument(id,null,"导出未完成；所选位置可能留有不完整文件。"+(e.getMessage()==null?"":e.getMessage()),restored); }
         });
+    }
+    private RecordingNotes recordingNotes()throws Exception{return new RecordingNotes(libraries().meetings(),MainActivity::syncLifecycleDirectory);}
+    private RecordingLibrary.Session noteSession(JSONObject a)throws Exception{
+        if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开这条录音；输入尚未保存。");return session(a.getString("key"));
+    }
+    private static Long noteTime(JSONObject a)throws Exception{return !a.has("atMs")||a.isNull("atMs")?null:a.getLong("atMs");}
+    private JSONObject noteDescription(String key)throws Exception{
+        JSONObject value=recordingNotes().read(key);return value.put("libraryToken",libraries().token());
+    }
+    private void finishNoteImagePicker(int resultCode,Intent data){
+        final long id=noteImageRequestId;final JSONObject args=noteImageRequest;final boolean restored=noteImageRestored;noteImageRequestId=0;noteImageRequest=null;noteImageRestored=false;
+        if(id==0)return;if(restored||args==null){android.widget.Toast.makeText(this,"图片选择已中断，请重新选择；已保存备注仍保留。",android.widget.Toast.LENGTH_LONG).show();return;}
+        if(resultCode!=RESULT_OK||data==null||data.getData()==null){try{reply(id,new JSONObject().put("cancelled",true),null);}catch(Exception ignored){}return;}
+        final android.net.Uri uri=data.getData();worker.execute(()->{boolean locked=false;try{
+            if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("正在保存其它资料，请稍后重试；输入仍保留。");locked=true;RecordingLibrary.Session selected=noteSession(args);String key=args.getString("key");String mime=getContentResolver().getType(uri),extension="image/jpeg".equals(mime)?"jpg":"image/png".equals(mime)?"png":"image/webp".equals(mime)?"webp":null;
+            if(extension==null)throw new java.io.IOException("请选择JPEG、PNG或WebP图片。");String name="图片."+extension;
+            try(android.database.Cursor cursor=getContentResolver().query(uri,new String[]{android.provider.OpenableColumns.DISPLAY_NAME},null,null,null)){if(cursor!=null&&cursor.moveToFirst())name=cursor.getString(0);}
+            final String type=extension;try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("所选图片暂不可读取。");recordingNotes().addImage(key,args.getLong("revision"),args.optString("text",""),noteTime(args),completeAudioDurationMs(selected),name,extension,input,path->RecordingNoteImages.validate(path,type));}
+            reply(id,noteDescription(key),null);
+        }catch(Exception e){reply(id,null,e.getMessage()==null?"图片保存未完成，输入仍保留，请重试。":e.getMessage());}finally{if(locked)LocalLibraryBackups.BUSY.set(false);}});
     }
     private void finishAudioImportPicker(int resultCode,Intent data){
         final long id=audioImportRequestId;final String token=audioImportLibraryToken;final boolean restored=audioImportRequestRestored;audioImportRequestId=0;audioImportLibraryToken=null;audioImportRequestRestored=false;
@@ -363,10 +392,16 @@ public final class MainActivity extends Activity {
         return true;
     }
     private final class Bridge {
+        @JavascriptInterface public void pickNoteImage(long id,String json){
+            worker.execute(()->{try{JSONObject args=new JSONObject(json);noteSession(args);if(LocalLibraryBackups.BUSY.get())throw new java.io.IOException("资料正在保存，请稍后重试。");runOnUiThread(()->{
+                if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0||noteImageRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                noteImageRequestId=id;noteImageRequest=args;noteImageRestored=false;try{startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*").putExtra(Intent.EXTRA_MIME_TYPES,new String[]{"image/jpeg","image/png","image/webp"}),35);}catch(Exception e){noteImageRequestId=0;noteImageRequest=null;reply(id,null,"无法打开系统图片选择器，输入仍保留。");}
+            });}catch(Exception e){reply(id,null,e.getMessage());}});
+        }
         @JavascriptInterface public void cancelAudioImport(){AudioImportService.cancel();}
         @JavascriptInterface public void pickAudioImport(long id,String token){
             worker.execute(()->{try{requireLibraryIdle();if(LocalLibraryBackups.BUSY.get()||!token.equals(libraries().token()))throw new java.io.IOException("资料库已变化或正在更新，请稍后重试。");runOnUiThread(()->{
-                if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                if(isFinishing()||isDestroyed())return;if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0||noteImageRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
                 audioImportRequestId=id;audioImportLibraryToken=token;audioImportRequestRestored=false;try{Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*").putExtra(Intent.EXTRA_MIME_TYPES,new String[]{"audio/*","video/*"});startActivityForResult(intent,34);}catch(Exception e){audioImportRequestId=0;audioImportLibraryToken=null;reply(id,null,"无法打开系统文件选择器，请重试。");}
             });}catch(Exception e){reply(id,null,e.getMessage());}});
         }
@@ -378,7 +413,7 @@ public final class MainActivity extends Activity {
                     if(!("backup".equals(kind)||"restore".equals(kind)))throw new java.io.IOException("不支持的资料操作。");
                     runOnUiThread(()->{
                         if(isFinishing()||isDestroyed())return;
-                        if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                        if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||audioImportRequestId!=0||noteImageRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
                         libraryRequestId=id;libraryRequestKind=kind;libraryRequestToken=token;libraryRequestRestored=false;
                         try{
                             Intent intent=new Intent("backup".equals(kind)?Intent.ACTION_CREATE_DOCUMENT:Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/zip");
@@ -774,8 +809,9 @@ public final class MainActivity extends Activity {
         try{minutes=ms.loadMinutes(key);}catch(java.io.IOException error){problems.put("纪要暂不可读取，原文件保留。");}
         try{translation=translations().load(key);}catch(java.io.IOException error){problems.put("译文暂不可读取，原文件保留。");}
         JSONArray materials=new JSONArray();try{materials=new AiMaterialStore(libraries().meetings()).list(key);}catch(Exception error){problems.put("部分AI材料暂不可读取，原文件保留；可先导出其它内容。");}
-        return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems,materials);
+        return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems,materials,readNotesForExport(key,problems));
     }
+    private JSONObject readNotesForExport(String key,JSONArray problems)throws Exception{try{return recordingNotes().read(key);}catch(Exception e){problems.put("备注与图片暂不可读取，原文件保留；可先导出其它内容。");return null;}}
     private boolean confirmDeviceRecordingDelete(com.denzic.companion.mobile.DeviceRecordings.Offer offer)throws java.io.IOException {
         java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
         java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
@@ -802,7 +838,7 @@ public final class MainActivity extends Activity {
         ExportContents.Source source=exportSource(a.getString("key"));JSONObject info=source.info();
         if(!info.getString("binding").equals(a.getString("binding"))||!source.token.equals(a.getString("libraryToken")))throw new java.io.IOException("资料内容已更新，请重新读取导出选项后再操作。");
         JSONArray selected=a.getJSONArray("sections");List<MeetingDocumentSections.Section> sections=source.select(selected);String format=a.getString("format"),extension,mime;
-        switch(format){case "txt":extension="txt";mime="text/plain";break;case "markdown":extension="md";mime="text/markdown";break;case "pdf":extension="pdf";mime="application/pdf";break;case "word":extension="docx";mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";break;case "srt":extension="srt";mime="application/x-subrip";break;case "pptx":extension="pptx";mime="application/vnd.openxmlformats-officedocument.presentationml.presentation";break;case "png":extension="png";mime="image/png";break;case "mindmap":extension="mm";mime="application/x-freemind";break;case "xlsx":extension="xlsx";mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";break;default:throw new java.io.IOException("不支持的文件格式。");}
+        switch(format){case "bundle":extension="zip";mime="application/zip";break;case "txt":extension="txt";mime="text/plain";break;case "markdown":extension="md";mime="text/markdown";break;case "pdf":extension="pdf";mime="application/pdf";break;case "word":extension="docx";mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";break;case "srt":extension="srt";mime="application/x-subrip";break;case "pptx":extension="pptx";mime="application/vnd.openxmlformats-officedocument.presentationml.presentation";break;case "png":extension="png";mime="image/png";break;case "mindmap":extension="mm";mime="application/x-freemind";break;case "xlsx":extension="xlsx";mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";break;default:throw new java.io.IOException("不支持的文件格式。");}
         String plain=MeetingDocumentSections.plain(sections);JSONArray warnings=ExportContents.warnings(info,selected);String subtitle=null;
         if("srt".equals(format)){
             if(selected.length()!=1||!"transcript".equals(selected.getString(0)))throw new java.io.IOException("SRT只用于有分段时间的当前原文，请只选择会议转写。");
@@ -812,7 +848,8 @@ public final class MainActivity extends Activity {
         final String srt=subtitle;String suffix=selected.length()==1?sections.get(0).title:"会议资料";if("srt".equals(format))suffix+="-分段时间";
         JSONObject meta=new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("binding",info.getString("binding")).put("warnings",warnings).put("sections",selected);
         return preparedExports().create(meta,PreparedExports.filename(source.title,suffix,extension),mime,plain,out->{
-            if("pdf".equals(format))MeetingPdf.writeSelected(source.title,sections,out,android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
+            if("bundle".equals(format))recordingNotes().bundle(source.key,!selected.toString().contains("\"notes\"")||source.notes==null?new JSONObject().put("entries",new JSONArray()):source.notes,source.title,MeetingDocumentSections.markdown(sections),out);
+            else if("pdf".equals(format))MeetingPdf.writeSelected(source.title,sections,out,android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
             else if("word".equals(format))out.write(MeetingDocumentSections.word(source.title,MaterialLayout.wordSections(sections)));
             else if("pptx".equals(format))PresentationDocuments.write(source.title,sections,out);
             else if("png".equals(format))MindmapImage.write(source.title,sections,out);
@@ -843,6 +880,14 @@ public final class MainActivity extends Activity {
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "recordingNotes":{String key=a.getString("key");session(key);return noteDescription(key);}
+            case "saveRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");recordingNotes().save(key,a.getLong("revision"),a.optString("id",""),a.optString("text",""),noteTime(a),completeAudioDurationMs(selected));return noteDescription(key);}
+            case "removeRecordingNote":{noteSession(a);String key=a.getString("key");recordingNotes().remove(key,a.getLong("revision"),a.getString("id"));return noteDescription(key);}
+            case "playRecordingNote":{RecordingLibrary.Session selected=noteSession(a);String key=a.getString("key");JSONObject value=recordingNotes().read(key);if(value.getLong("revision")!=a.getLong("revision"))throw new java.io.IOException("备注已更新，请重新读取后回听。");JSONArray entries=value.getJSONArray("entries");Long target=null;
+                for(int i=0;i<entries.length();i++){JSONObject e=entries.getJSONObject(i);if(a.getString("id").equals(e.getString("id"))&&!e.isNull("atMs"))target=e.getLong("atMs");}
+                if(target==null)throw new java.io.IOException("这条备注没有已保存的时间点。");NativeAudio.PartsResult parts=ManagedAudioParts.prepare(selected,root().resolve("companion-decoded-audio"));if(target<0||target>=parts.samples/16)throw new java.io.IOException("备注位置尚无可用音频，请完成接收后重试。");
+                stopPlayback();JSONObject resume=savedPlaybackProgress(selected,key,parts.samples/16);try{beginPlayback(selected,key,parts,target,resume.getDouble("speed"));}catch(Exception e){stopPlayback();throw e;}return new JSONObject().put("durationMs",parts.samples/16).put("positionMs",target).put("speed",playingSpeed);
+            }
             case "audioImportStatus":return AudioImportService.status(this);
             case "appPreferences":return appPreferences();
             case "saveAppPreferences":{

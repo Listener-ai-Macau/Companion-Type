@@ -10,17 +10,19 @@ final class ExportContents {
     static final String[] IDS={"minutes","transcript","translation","notes"};
     static String language(String id){if("en".equals(id))return "英语";if("zh".equals(id))return "简体中文";if("ja".equals(id))return "日语";if("ko".equals(id))return "韩语";return id;}
     static final class Source{
-        final String key,title,token;final MeetingStore.Snapshot meeting;final MeetingStore.Minutes minutes;final TranslationStore.Entry translation;final JSONArray problems,materials;
+        final String key,title,token;final MeetingStore.Snapshot meeting;final MeetingStore.Minutes minutes;final TranslationStore.Entry translation;final JSONArray problems,materials;final JSONObject notes;
         Source(String key,String title,String token,MeetingStore.Snapshot m,MeetingStore.Minutes n,TranslationStore.Entry tr,JSONArray errors){this(key,title,token,m,n,tr,errors,new JSONArray());}
-        Source(String key,String title,String token,MeetingStore.Snapshot m,MeetingStore.Minutes n,TranslationStore.Entry tr,JSONArray errors,JSONArray savedMaterials){this.key=key;this.title=title;this.token=token;meeting=m;minutes=n;translation=tr;problems=errors;materials=savedMaterials;}
+        Source(String key,String title,String token,MeetingStore.Snapshot m,MeetingStore.Minutes n,TranslationStore.Entry tr,JSONArray errors,JSONArray savedMaterials){this(key,title,token,m,n,tr,errors,savedMaterials,null);}
+        Source(String key,String title,String token,MeetingStore.Snapshot m,MeetingStore.Minutes n,TranslationStore.Entry tr,JSONArray errors,JSONArray savedMaterials,JSONObject savedNotes){notes=savedNotes;this.key=key;this.title=title;this.token=token;meeting=m;minutes=n;translation=tr;problems=errors;materials=savedMaterials;}
         JSONObject info()throws Exception{
-            boolean text=meeting!=null&&!meeting.transcript.trim().isEmpty(),note=meeting!=null&&(!meeting.notes.trim().isEmpty()||!meeting.tasks.isEmpty());
+            boolean text=meeting!=null&&!meeting.transcript.trim().isEmpty(),note=meeting!=null&&(!meeting.notes.trim().isEmpty()||!meeting.tasks.isEmpty())||notes!=null&&notes.getJSONArray("entries").length()>0;
             JSONObject min=null;if(minutes!=null)try{min=new JSONObject(minutes.json);}catch(JSONException ignored){}
             boolean hasMinutes=min!=null&&!min.optString("markdown","").trim().isEmpty();boolean stale=minutes!=null&&(minutes.sourceChanged||minutes.sourceMissing||meeting==null||minutes.sourceMeetingRevision!=meeting.revision);
             boolean trStale=translation!=null&&(meeting==null||!translation.matches(meeting.transcript));
-            String binding=MinutesTemplateLibrary.hash((token+"\u0000"+key+"\u0000"+title+"\u0000"+(meeting==null?0:meeting.revision)+"\u0000"+(minutes==null?0:minutes.revision)+"\u0000"+(translation==null?"":translation.source+"\u0000"+translation.text+"\u0000"+translation.language)+"\u0000"+materialBinding()).getBytes(StandardCharsets.UTF_8));
-            return new JSONObject().put("key",key).put("title",title).put("libraryToken",token).put("binding",binding).put("available",new JSONObject().put("minutes",hasMinutes).put("transcript",text).put("translation",translation!=null).put("notes",note)).put("minutesStale",stale).put("minutesDraft",hasMinutes&&("draft".equals(min.optString("quality"))||min.optJSONObject("processing")!=null&&!min.getJSONObject("processing").optBoolean("complete",true))).put("minutesManual",hasMinutes&&min.optJSONObject("manualReview")!=null).put("translationStale",trStale).put("translationLanguage",translation==null?"":language(translation.language)).put("problems",problems).put("materials",materialInfo());
+            String binding=MinutesTemplateLibrary.hash((token+"\u0000"+key+"\u0000"+title+"\u0000"+(meeting==null?0:meeting.revision)+"\u0000"+(minutes==null?0:minutes.revision)+"\u0000"+(translation==null?"":translation.source+"\u0000"+translation.text+"\u0000"+translation.language)+"\u0000"+materialBinding()+"\u0000"+(notes==null?"":canonical(notes))).getBytes(StandardCharsets.UTF_8));
+            return new JSONObject().put("key",key).put("title",title).put("libraryToken",token).put("binding",binding).put("available",new JSONObject().put("minutes",hasMinutes).put("transcript",text).put("translation",translation!=null).put("notes",note)).put("minutesStale",stale).put("minutesDraft",hasMinutes&&("draft".equals(min.optString("quality"))||min.optJSONObject("processing")!=null&&!min.getJSONObject("processing").optBoolean("complete",true))).put("minutesManual",hasMinutes&&min.optJSONObject("manualReview")!=null).put("translationStale",trStale).put("translationLanguage",translation==null?"":language(translation.language)).put("problems",problems).put("materials",materialInfo()).put("noteImages",imageCount());
         }
+        private int imageCount()throws Exception{int count=0;if(notes!=null){JSONArray entries=notes.getJSONArray("entries");for(int i=0;i<entries.length();i++)if(entries.getJSONObject(i).has("image"))count++;}return count;}
         private boolean hasMaterial(String id)throws Exception{
             if(!id.startsWith("material:"))return false;
             for(int i=0;i<materials.length();i++)if(id.equals("material:"+materials.getJSONObject(i).getString("id")))return true;
@@ -60,7 +62,8 @@ final class ExportContents {
             if(ids.contains("transcript"))result.add(new MeetingDocumentSections.Section("会议转写",meeting.transcript,false));
             if(ids.contains("translation")){String body=translation.text;if(info.getBoolean("translationStale"))body="来源提示：译文依据较早或暂不可读取的原文版本，请核对。\n\n"+body;result.add(new MeetingDocumentSections.Section("译文（"+language(translation.language)+"）",body,false));}
             if(ids.contains("notes")){
-                StringBuilder text=new StringBuilder(meeting.notes);for(MeetingStore.Task task:meeting.tasks){text.append('\n').append(task.completed?"[已完成] ":"[待跟进] ").append(task.text);if(task.owner!=null&&!task.owner.trim().isEmpty())text.append("\n负责人：").append(task.owner);if(task.due!=null&&!task.due.trim().isEmpty())text.append("\n时间：").append(task.due);text.append('\n');}
+                StringBuilder text=new StringBuilder(meeting==null?"":meeting.notes);for(MeetingStore.Task task:meeting==null?Collections.<MeetingStore.Task>emptyList():meeting.tasks){text.append('\n').append(task.completed?"[已完成] ":"[待跟进] ").append(task.text);if(task.owner!=null&&!task.owner.trim().isEmpty())text.append("\n负责人：").append(task.owner);if(task.due!=null&&!task.due.trim().isEmpty())text.append("\n时间：").append(task.due);text.append('\n');}
+                if(notes!=null)text.append("\n").append(RecordingNotes.text(notes));
                 result.add(new MeetingDocumentSections.Section("用户补充与事项",text.toString(),false));
             }
             for(int i=0;i<materials.length();i++){
