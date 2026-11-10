@@ -1,0 +1,220 @@
+{
+  "at": "2026-11-10T16:08:33+08:00",
+  "state": "ANDROID125_RECORDING_ORGANIZATION_SCOPED_DELIVERY_COMPLETE",
+  "version": "0.1.125",
+  "sourceCommit": "cd66759a5a3bfef24ebb0764dcd7db69cc518048",
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "ciRun": 42773070743,
+  "nativeBuilds": 1,
+  "nativeProductRework": 0,
+  "checks": {
+    "build-result": {
+      "sourceCommit": "cd66759a5a3bfef24ebb0764dcd7db69cc518048",
+      "runId": "42773070743",
+      "versionCode": 125,
+      "versionName": "0.1.125",
+      "sha256": "b7d55733e3454ebdf3d20815e8c51648ba83e39af80be1781099447aa99d86a3",
+      "pinnedModelResources": {
+        "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+        "reason": "Frozen AAR omitted Java classpath resources required by LocalModelPreparation.resource(); host supplies unchanged pinned metadata and vocabulary. Native libraries and model weights are unchanged.",
+        "resources": [
+          {
+            "name": "metadata.bin",
+            "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c",
+            "bytes": 11352,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/metadata.bin"
+          },
+          {
+            "name": "tokens.txt",
+            "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+            "bytes": 75756,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/tokens.txt"
+          }
+        ]
+      },
+      "nativeLibrariesUnchanged": true,
+      "webAssetsMatchSourceBuild": true,
+      "localTrustedResigningRequired": false,
+      "phoneTested": false,
+      "at": "2026-11-10T15:13:15+08:00",
+      "state": "ANDROID125_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
+      "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android125\\Companion-Android-0.1.125-core-candidate.apk",
+      "apkSha256": "242ca7976e3ed5847301e8e27e09b5cc60a81f8aeda70b53e88d9e1d9f22a464",
+      "apkBytes": 48897404,
+      "signerSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+      "signerMatchesPreviouslyTrustedApp": true,
+      "zip16KiBAligned": true,
+      "installed": false
+    },
+    "installation": {
+      "at": "2026-11-10T15:14:04+08:00",
+      "state": "ANDROID125_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+      "sourceCommit": "cd66759a5a3bfef24ebb0764dcd7db69cc518048",
+      "apkSha256": "242ca7976e3ed5847301e8e27e09b5cc60a81f8aeda70b53e88d9e1d9f22a464",
+      "existingFilesByteIdentical": 2051,
+      "mainUnchangedDuringInstall": true
+    },
+    "remote-candidate-backup": {
+      "at": "2026-11-10T15:20:36+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "cd66759a5a3bfef24ebb0764dcd7db69cc518048",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 730485080,
+      "fileName": "Companion-Android-0.1.125-core-candidate.apk",
+      "apkSha256": "242ca7976e3ed5847301e8e27e09b5cc60a81f8aeda70b53e88d9e1d9f22a464",
+      "bytes": 48897404,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false
+    },
+    "ordinary-organization": {
+      "at": "2026-11-10T07:21:28.463Z",
+      "version": "0.1.125",
+      "state": "ORDINARY_PHONE_FOLDER_TAG_FILTER_VALIDATION_PROTECTION_BATCH_TRASH_AND_RESTORE_PASSED",
+      "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "targets": [
+        {
+          "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+          "title": "Companion-public-meeting-90s.wav"
+        },
+        {
+          "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+          "title": "Companion-public-meeting-90s.mp3"
+        }
+      ],
+      "unselectedRowsPreserved": true,
+      "noPartialInvalidEdit": true,
+      "failedDraftAndSelectionRetained": true,
+      "actualNativeBatchLifecycle": true,
+      "finalOrganization": {
+        "available": true,
+        "libraryToken": "c585bdd67a791bde9e1560b0e4107473b986a169f36957c1ca9a16266b7469e4",
+        "revision": 2
+      },
+      "modelCalls": 0,
+      "aiServiceCalls": 0,
+      "ownerMainDisplayOperated": false
+    },
+    "reopened": {
+      "at": "2026-11-10T07:24:56.206Z",
+      "version": "0.1.125",
+      "state": "NATIVE_PROCESS_REOPEN_FOLDERS_TAGS_AND_LIGHT_DARK_VERIFIED",
+      "rows": 4,
+      "revision": 2,
+      "originalDarkAppearanceRestored": true
+    },
+    "backup-content": {
+      "at": "2026-11-10T15:25:59+08:00",
+      "state": "ORDINARY_PUBLIC_BACKUP_CONTAINS_EXACT_REVISIONED_FOLDER_TAG_METADATA",
+      "backup": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\phone125\\Companion-public-organization125.zip",
+      "backupSha256": "05129b2d5ffed1994c90a95edb35174bca7423d4d596cbe562f149b792b7edbc",
+      "bytes": 14492550,
+      "archiveEntries": 40,
+      "classifiedRecordings": 2,
+      "ownerPrivateDataIncluded": false
+    },
+    "restored-ui": {
+      "at": "2026-11-10T07:25:19.587Z",
+      "version": "0.1.125",
+      "state": "ORDINARY_BACKUP_RESTORE_FOLDERS_TAGS_AND_ALL_RECORDINGS_VERIFIED",
+      "beforeLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "restoredLibrary": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+      "notesAndAudioLifecycleContinues": true
+    },
+    "restored-content": {
+      "at": "2026-11-10T15:25:58+08:00",
+      "state": "RESTORED_SELECTED_LIBRARY_FOLDERS_TAGS_NOTES_IMAGES_AND_ORIGINAL_MEDIA_HASHES_VERIFIED",
+      "sourceLibrary": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "restoredLibrary": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+      "selectedFiles": 39,
+      "byteIdentical": 39,
+      "playbackProgressChangedByActualRestoredPlayback": 0,
+      "notesAndOriginalImagesByteIdentical": true,
+      "fourOriginalMediaPreserved": true
+    },
+    "restored-purge": {
+      "at": "2026-11-10T07:27:55.115Z",
+      "version": "0.1.125",
+      "state": "ORDINARY_RESTORED_ONLY_EXACT_RECORD_PURGE_OTHER_CLASSIFICATIONS_PRESERVED",
+      "library": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+      "purgedKey": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "remainingRows": 3,
+      "ownerOriginalLibraryOrOtherPublicLibrariesPurged": false,
+      "nativeConfirmationAcceptedForExactPublicRecord": true
+    },
+    "purge-content": {
+      "at": "2026-11-10T15:29:28+08:00",
+      "state": "ACTUAL_RESTORED_ONLY_PURGE_REMOVES_EXACT_AUDIO_NOTES_AND_CLASSIFICATION_OTHER_FILES_IDENTICAL",
+      "restoredLibrary": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+      "changedTargetFiles": 13,
+      "allOtherPreexistingFilesByteIdentical": 2082,
+      "otherClassifiedRecordingPreserved": true,
+      "sourceAndOwnerLibrariesUnchanged": true
+    },
+    "note-error-feedback": {
+      "at": "2026-11-10T07:44:57.187Z",
+      "state": "CONTROLLED_UI_NATIVE_INVALID_IMAGE_ERROR_SHOWN_ONCE_DRAFT_RETAINED",
+      "pageErrors": 0,
+      "localErrors": 1,
+      "entries": 2,
+      "ordinarySystemPickerUsed": true,
+      "imageEntryActivation": "DOM UI button click fallback after standard input generated zero click events; ordinary touch entry not newly qualified",
+      "modelCalls": 0
+    },
+    "original-library-restored": {
+      "at": "2026-11-10T07:47:44.751Z",
+      "state": "ORIGINAL_LIBRARY_RESTORED",
+      "activeId": "original",
+      "cleanupUiActivation": "Existing UI controls with DOM activation after ordinary input adapter stopped generating click events; no direct backend mutation"
+    },
+    "end-session": {
+      "at": "2026-11-10T15:48:55+08:00",
+      "state": "ANDROID125_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.125",
+      "preexistingFilesChecked": 2051,
+      "preexistingFilesByteIdentical": 2050,
+      "expectedIndexChange": true,
+      "authorizedPublicQaMetadataChanges": 0,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "newPublicRestoredLibrary": "51a383b0-f3d2-4204-9d05-76da7cdeb4d4",
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedPublicTemporaryFiles": [
+        "Companion-public-organization125.zip",
+        "Companion-Public-Invalid125.png",
+        "companion-organization125-ui.jar"
+      ],
+      "manifestVerificationSeconds": 1.4060000000026776,
+      "ownerMainUnchangedDuringClose": true,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false
+    },
+    "public-backup-remote": {
+      "at": "2026-11-10T15:58:06+08:00",
+      "state": "PUBLIC_IMPORT_BACKUP_PRIVATE_DRAFT_READBACK_IDENTICAL",
+      "assetId": 730585891,
+      "sha256": "05129b2d5ffed1994c90a95edb35174bca7423d4d596cbe562f149b792b7edbc",
+      "bytes": 14492550,
+      "ownerPrivateDataUploaded": false,
+      "credentialIncluded": false,
+      "draftOnly": true
+    }
+  },
+  "modelsChangedOrRun": false,
+  "aiServiceCalls": 0,
+  "ownerMainDisplayOperated": false,
+  "saleQualified": false,
+  "ownerAcceptanceClosed": false,
+  "scope": "Offline folders, tags, selection, protected/reversible batch management, persistent metadata and exact library backup/purge integration.",
+  "limits": [
+    "Batch folder/tag edits publish one revisioned atomic metadata file; hidden/foreign/stale/over-limit targets reject before file publication.",
+    "Batch protection/trash prevalidates all identities; a later storage failure reports confirmed/pending targets and does not claim all-or-nothing filesystem writes. Permanent purge stays per recording with final native confirmation.",
+    "Only the authorized public test library and its new restored copy were modified. Original files and all previous libraries retained.",
+    "Precise native invalid-image feedback was checked via controlled UI activation and ordinary system picker. The input adapter stopped generating clicks in this note composer; this condition is retained, not called ordinary touch acceptance. Existing124 ordinary image entry is unchanged.",
+    "Actual dark/light first-screen capture showed import/library/status administration preceding the recordings; improve the library hierarchy next, with a usable source-library indicator retained.",
+    "Windows087 matched runtime/installed coherence, documents, non-destructive editing, cross-platform/service/release/customer and physical gates still follow the original backlog."
+  ]
+}
