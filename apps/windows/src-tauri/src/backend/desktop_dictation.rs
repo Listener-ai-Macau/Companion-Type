@@ -93,10 +93,10 @@ pub fn start(
                 // Only acquisition/receive share this owner. ASR does not
                 // prevent the input listener from recovering its live link.
                 let receiving=std::cell::RefCell::new(Some(receive_connection.blocking_lock()));
-                change(|s|{s.processing=true;s.stage="receiving".into();s.message="正在接收本次原音…".into();});
+                change(|s|{s.processing=true;if !s.capturing {s.stage="receiving".into();s.message="正在接收本次原音…".into();}});
                 let result=coordinator.complete_desktop_dictation(&processing_device,&work.key,&work.cancel,|stage|{
                     if stage=="transcribing" {receiving.borrow_mut().take();}
-                    change(|s|{s.stage=stage.into();s.message=if stage=="transcribing"{"原音已保存，正在识别…"}else{"正在接收本次原音…"}.into();});
+                    change(|s|{if !s.capturing {s.stage=stage.into();s.message=if stage=="transcribing"{"原音已保存，正在识别…"}else{"正在接收本次原音…"}.into();}});
                 });
                 drop(receiving);
                 match result {
@@ -105,8 +105,8 @@ pub fn start(
                         let delivery=if work.cancel.load(Ordering::Acquire){None}
                             else{work.target.map(|target|target.deliver(&text,shortcut))};
                         change(|s|{s.session_id=Some(session);s.transcript=text;s.delivery=delivery;s.processing=false;
-                            s.stage="saved".into();s.message=if work.cancel.load(Ordering::Acquire){"本次输入已取消，原音和文字保留在录音库。"}
-                            else{match delivery {Some(InsertStatus::Inserted)=>"文字已写入输入位置。",Some(InsertStatus::PasteSent|InsertStatus::SubmittedUnconfirmed)=>"文字已发送；请核对输入框，完整结果也已保存。",_=>"文字已保存。输入位置已变化或不支持自动输入，可点复制。"}}.into();});
+                            if !s.capturing {s.stage="saved".into();s.message=if work.cancel.load(Ordering::Acquire){"本次输入已取消，原音和文字保留在录音库。"}
+                            else{match delivery {Some(InsertStatus::Inserted)=>"文字已写入输入位置。",Some(InsertStatus::PasteSent|InsertStatus::SubmittedUnconfirmed)=>"文字已发送；请核对输入框，完整结果也已保存。",_=>"文字已保存。输入位置已变化或不支持自动输入，可点复制。"}}.into();}});
                     },
                     Err(error)=>change(|s|{s.processing=false;s.stage="error".into();s.message=format!("{error} 原音保留，可在录音库继续处理。");}),
                 }
@@ -228,18 +228,13 @@ fn apply_observation(
     change(|s| {
         s.capturing = input.flags & 6 != 0;
         if s.capturing {
-            s.stage = if input.feedback == 5 {
-                "saving"
-            } else {
-                "recording"
-            }
-            .into();
-            s.message = if input.feedback == 5 {
-                "正在保存，先不用再按键。"
-            } else {
-                "正在录音，松开按键后开始识别。"
-            }
-            .into();
+            let (stage, message) = match input.feedback {
+                2 => ("preparing", "麦克风正在准备，请继续按住按键；显示正在录音后说话。"),
+                5 => ("saving", "正在保存，先不用再按键。"),
+                _ => ("recording", "正在录音，松开按键后开始识别。"),
+            };
+            s.stage = stage.into();
+            s.message = message.into();
         }
     });
     let Some(capture) = items.get_mut(&input.token) else {
@@ -253,6 +248,24 @@ fn apply_observation(
     }
     if input.flags & 2 != 0 && input.session != 0 {
         capture.session = Some(input.session);
+    }
+    // SAVED means the firmware's current token has a sealed, catalog-durable
+    // original. A very short capture need not have a separate live-MIC notice:
+    // do not silently abandon it merely because that intermediate update was
+    // coalesced. Never replace an already observed different session, and
+    // never infer an original from PREPARING or an empty canceled request.
+    if input.feedback == 6 && input.flags & 6 == 0 && input.session != 0 && capture.session.is_none() {
+        capture.session = Some(input.session);
+    }
+    if input.feedback == 1 && input.flags & 7 == 0 && !capture.queued && capture.session.is_none() {
+        items.remove(&input.token);
+        change(|s| {
+            if !s.processing {
+                s.stage = "error".into();
+                s.message = "按键已松开，但这次没有生成录音；请等待麦克风就绪后说话。".into();
+            }
+        });
+        return;
     }
     if input.feedback == 6 && !capture.queued && capture.session == Some(input.session) {
         let work = Work {
@@ -322,6 +335,7 @@ mod tests {
             feedback,
             request: 0,
             sequence,
+            event_ms: sequence * 100,
             events,
             token: 17,
             session,
@@ -344,6 +358,48 @@ mod tests {
         // Cancellation still reaches an already queued, same-token capture.
         observe_with_target(event(3, 16, 0, 6, 42), &peer, &captures, &send, || None);
         assert!(work.cancel.load(Ordering::Acquire));
+    }
+    #[test]
+    fn durable_short_capture_is_delivered_when_the_live_mic_notice_was_coalesced() {
+        let captures = Arc::new(Mutex::new((None, HashMap::new(), VecDeque::new())));
+        let (send, recv) = mpsc::sync_channel(4);
+        let peer = peer();
+        observe_with_target(event(1, 1, 5, 2, 42), &peer, &captures, &send, || None);
+        // Firmware may seal a short utterance before a separate running-MIC
+        // notification can be published. The accepted physical token and
+        // durable SAVED identity still name the same newly requested original.
+        observe_with_target(event(2, 2, 0, 6, 42), &peer, &captures, &send, || {
+            panic!("release cannot acquire a new editor")
+        });
+        let work = recv.try_recv().expect("a saved original must not remain stuck at saving");
+        assert_eq!(work.key.session_id, "000000000000002a");
+        observe_with_target(event(2, 0, 0, 6, 42), &peer, &captures, &send, || None);
+        assert!(recv.try_recv().is_err());
+    }
+    #[test]
+    fn saved_short_original_must_match_the_observed_physical_token() {
+        let captures = Arc::new(Mutex::new((None, HashMap::new(), VecDeque::new())));
+        let (send, recv) = mpsc::sync_channel(4);
+        let peer = peer();
+        observe_with_target(event(1, 1, 5, 2, 42), &peer, &captures, &send, || None);
+        let mut unrelated = event(2, 2, 0, 6, 43);
+        unrelated.token = 18;
+        observe_with_target(unrelated, &peer, &captures, &send, || None);
+        assert!(recv.try_recv().is_err());
+        observe_with_target(event(3, 0, 0, 6, 42), &peer, &captures, &send, || None);
+        assert_eq!(recv.try_recv().unwrap().key.session_id, "000000000000002a");
+    }
+    #[test]
+    fn preparation_canceled_before_mic_does_not_receive_a_previous_original() {
+        let captures = Arc::new(Mutex::new((None, HashMap::new(), VecDeque::new())));
+        let (send, recv) = mpsc::sync_channel(4);
+        let peer = peer();
+        observe_with_target(event(1, 1, 5, 2, 0), &peer, &captures, &send, || None);
+        observe_with_target(event(2, 2, 0, 1, 42), &peer, &captures, &send, || None);
+        assert!(recv.try_recv().is_err());
+        assert!(captures.lock().unwrap().1.is_empty());
+        observe_with_target(event(2, 0, 0, 6, 42), &peer, &captures, &send, || None);
+        assert!(recv.try_recv().is_err());
     }
     #[test]
     fn closed_notices_without_a_physical_start_never_receive_or_type_old_audio() {

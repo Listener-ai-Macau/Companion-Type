@@ -16,6 +16,23 @@ pub(crate) enum Update {
 type Notifications =
     std::pin::Pin<Box<dyn futures::Stream<Item = btleplug::api::ValueNotification> + Send>>;
 
+fn trace_input(source: &str, status: &InputStatus) {
+    use std::sync::{atomic::AtomicUsize, LazyLock};
+    static ENABLED: LazyLock<bool> = LazyLock::new(|| std::env::var_os("COMPANION_DESKTOP_INPUT_DIAGNOSTICS").is_some());
+    static COUNT: AtomicUsize = AtomicUsize::new(0);
+    if !*ENABLED { return; }
+    let count = COUNT.fetch_add(1, Ordering::Relaxed);
+    if count < 512 {
+        let host_ms = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_millis();
+        // Only the already received physical protocol metadata, never audio,
+        // transcript, editor content, extra polling or synthesized MIC commands.
+        eprintln!("desktop_input_wire source={source} host_unix_ms={host_ms} request={} sequence={} event_ms={} mode={} flags={} feedback={} events={} token={} session={}",
+            status.request,status.sequence,status.event_ms,status.mode,status.flags,status.feedback,status.events,status.token,status.session);
+    } else if count == 512 {
+        eprintln!("desktop_input_wire trace_limit=512 no_more_metadata=1");
+    }
+}
+
 async fn exchange(
     device: &NativeDevice,
     characteristic: &Characteristic,
@@ -38,6 +55,7 @@ async fn exchange(
             if value.uuid == SETTINGS_UUID {
                 if let Ok(status) = InputStatus::parse(&value.value, peer) {
                     if status.request == nonce {
+                        trace_input("reply", &status);
                         return Ok(status);
                     }
                 }
@@ -132,7 +150,7 @@ pub(crate) fn listen(
                                 let value=value.ok_or("录音卡交互连接已断开。")?;
                                 if value.uuid==SETTINGS_UUID {
                                     if let Ok(status)=InputStatus::parse(&value.value,&peer) {
-                                        if status.request==0 {notify(Update::Physical(status));}
+                                        if status.request==0 {trace_input("physical", &status);notify(Update::Physical(status));}
                                     }
                                 }
                             }

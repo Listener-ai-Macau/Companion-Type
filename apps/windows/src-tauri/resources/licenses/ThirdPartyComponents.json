@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "1600cfd9401e60251d7cdd0f34ccd9fd7a4f0d749547247066111c07f301add3",
-    "package-lock.json": "89b6480e115450365ffc130161bb8000a24446e2073318967354a10d65fd7f33"
+    "apps/windows/src-tauri/Cargo.lock": "97a6d1c3ddef806120d46fcaeeb9340704cb23c0ae9668553c574d8cc09eecbd",
+    "package-lock.json": "d0e06e90f8eb64847ae9c46666b26f6dcc3c45411a47fcc4346d625a7d4cacf8"
   },
   "components": [
     {
