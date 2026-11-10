@@ -1,0 +1,14 @@
+import type {Appearance} from './appearance';
+import './commonSettings.css';
+export type AppPreferences={defaultPlaybackSpeed:number;resumePlayback:boolean;systemDark:boolean;bluetoothAllowed:boolean;notificationsAllowed:boolean;version:string};
+export function CommonSettings({appearance,preferences,busy,error,onAppearance,onChange,onRetry,onPermissions,onSystemSettings}:{appearance:Appearance;preferences:AppPreferences|null;busy:boolean;error:string;onAppearance:(value:Appearance)=>void;onChange:(value:Partial<Pick<AppPreferences,'defaultPlaybackSpeed'|'resumePlayback'>>)=>Promise<void>;onRetry:()=>void;onPermissions:()=>void;onSystemSettings:()=>void}){
+ return <section className="common-settings" aria-label="常用设置"><div className="settings-section-heading"><span>日常使用</span><h2>按你的习惯来</h2></div>
+ <fieldset className="appearance-choice" disabled={busy}><legend>界面外观</legend><div>{([['system','跟随系统'],['light','浅色'],['dark','深色']] as const).map(([value,label])=><label key={value}><input type="radio" name="appearance" value={value} checked={appearance===value} onChange={()=>onAppearance(value)}/><span>{label}</span></label>)}</div></fieldset>
+ {error&&<div className="settings-error" role="alert"><p>{error}</p><button type="button" disabled={busy} onClick={onRetry}>重新读取设置</button></div>}
+ {!preferences&&!error&&<p role="status" className="hint">正在读取手机设置…</p>}
+ <div className="settings-preference-row"><label htmlFor="default-playback-speed"><strong>默认回听倍速</strong><small>用于尚未播放的录音；已播放的录音保留上次倍速。</small></label><select id="default-playback-speed" aria-label="默认回听倍速" disabled={busy||!preferences} value={preferences?.defaultPlaybackSpeed??1} onChange={e=>void onChange({defaultPlaybackSpeed:Number(e.target.value)}).catch(()=>{})}>{[.75,1,1.25,1.5,1.75,2].map(rate=><option key={rate} value={rate}>{rate}×</option>)}</select></div>
+ <label className="settings-preference-row settings-resume"><span><strong>从上次位置开始播放</strong><small>手动点击播放后继续；关闭后从头开始。</small></span><input type="checkbox" checked={preferences?.resumePlayback??true} disabled={busy||!preferences} onChange={e=>void onChange({resumePlayback:e.target.checked}).catch(()=>{})}/></label>
+ <details className="settings-permissions"><summary>手机权限<span>{preferences?(preferences.bluetoothAllowed&&preferences.notificationsAllowed?'已就绪':'查看状态'):'读取中'}</span></summary><p>附近设备用于连接录音卡，通知用于显示后台接收进度。</p><dl><div><dt>附近设备</dt><dd>{!preferences?'尚未读取':preferences.bluetoothAllowed?'已允许':'未允许'}</dd></div><div><dt>通知</dt><dd>{!preferences?'尚未读取':preferences.notificationsAllowed?'已允许':'未允许'}</dd></div></dl><div className="buttons"><button type="button" className="secondary" disabled={busy} onClick={onPermissions}>申请所需权限</button><button type="button" className="text-button" disabled={busy} onClick={onSystemSettings}>打开系统应用设置</button></div></details>
+ {preferences&&<p className="settings-version">Companion Android · {preferences.version}</p>}
+ </section>;
+}

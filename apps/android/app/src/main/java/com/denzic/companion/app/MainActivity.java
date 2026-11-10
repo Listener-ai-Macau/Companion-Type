@@ -200,6 +200,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onResume() {
         super.onResume();
+        notifySystemAppearance();
         if(updateRequestRestored&&updateRequestId!=0){updateRequestId=0;updateRequestRestored=false;android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择。设备保持原状态。",android.widget.Toast.LENGTH_LONG).show();}
         if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
         // If a restored picker never delivers a result, do not block future exports.
@@ -221,6 +222,23 @@ public final class MainActivity extends Activity {
         super.onDestroy();
     }
     @Override public void onBackPressed() { web.evaluateJavascript("window.companionBack()", null); }
+    @Override public void onConfigurationChanged(android.content.res.Configuration configuration){super.onConfigurationChanged(configuration);notifySystemAppearance();}
+    private boolean systemDark(){return (getResources().getConfiguration().uiMode&android.content.res.Configuration.UI_MODE_NIGHT_MASK)==android.content.res.Configuration.UI_MODE_NIGHT_YES;}
+    private void notifySystemAppearance(){if(web!=null)web.evaluateJavascript("if(typeof window.companionSystemAppearance==='function')window.companionSystemAppearance("+systemDark()+")",null);}
+    private android.content.SharedPreferences userPreferences(){return getSharedPreferences("companion-user-preferences",MODE_PRIVATE);}
+    private JSONObject appPreferences()throws Exception{
+        android.content.SharedPreferences prefs=userPreferences();double speed=prefs.getFloat("defaultPlaybackSpeed",1);
+        if(!PlaybackProgress.validSpeed(speed))throw new java.io.IOException("回听设置暂时无法读取，请重新设置。");
+        boolean bluetooth=Build.VERSION.SDK_INT<31||checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT)==PackageManager.PERMISSION_GRANTED;
+        boolean notifications=(Build.VERSION.SDK_INT<33||checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED)&&getSystemService(android.app.NotificationManager.class).areNotificationsEnabled();
+        return new JSONObject().put("defaultPlaybackSpeed",speed).put("resumePlayback",prefs.getBoolean("resumePlayback",true)).put("systemDark",systemDark()).put("bluetoothAllowed",bluetooth).put("notificationsAllowed",notifications).put("version",getPackageManager().getPackageInfo(getPackageName(),0).versionName);
+    }
+    private JSONObject savedPlaybackProgress(RecordingLibrary.Session selected,String key,long duration)throws Exception{
+        JSONObject result=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(selected),duration),prefs=appPreferences();
+        if(!result.getBoolean("saved"))result.put("speed",prefs.getDouble("defaultPlaybackSpeed"));
+        if(!prefs.getBoolean("resumePlayback"))result.put("positionMs",0);
+        return result;
+    }
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==33){finishUpdatePicker(resultCode,data);return;}
@@ -471,6 +489,7 @@ public final class MainActivity extends Activity {
                 if (!needed.isEmpty()) requestPermissions(needed.toArray(new String[0]), 17);
             });
         }
+        @JavascriptInterface public void openAppSettings(){runOnUiThread(()->startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+getPackageName()))));}
         @JavascriptInterface public void call(long id, String method, String json) {
             if("cancelMeetingQuestion".equals(method)){try{reply(id,meetingAi.cancel(new JSONObject(json).getString("jobId")),null);}catch(Exception e){reply(id,null,"停止查询未确认，请重试。");}return;}
             if ("transcribe".equals(method) || "transcribeCloud".equals(method)) cancelTranscription.set(false);
@@ -803,6 +822,15 @@ public final class MainActivity extends Activity {
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "appPreferences":return appPreferences();
+            case "saveAppPreferences":{
+                if(a.length()==0)throw new IllegalArgumentException("没有需要保存的设置。");
+                java.util.Iterator<String> keys=a.keys();while(keys.hasNext()){String key=keys.next();if(!key.equals("defaultPlaybackSpeed")&&!key.equals("resumePlayback"))throw new IllegalArgumentException("不支持的设置项。");}
+                android.content.SharedPreferences.Editor edit=userPreferences().edit();
+                if(a.has("defaultPlaybackSpeed")){double speed=a.getDouble("defaultPlaybackSpeed");if(!PlaybackProgress.validSpeed(speed))throw new IllegalArgumentException("请选择支持的回听速度。");edit.putFloat("defaultPlaybackSpeed",(float)speed);}
+                if(a.has("resumePlayback")){if(!(a.get("resumePlayback") instanceof Boolean))throw new IllegalArgumentException("续听设置无效。");edit.putBoolean("resumePlayback",a.getBoolean("resumePlayback"));}
+                if(!edit.commit())throw new java.io.IOException("设置尚未保存，请重试；原录音仍保留。");return appPreferences();
+            }
             case "deviceUpdateStatus":return DeviceUpdateService.status(this);
             case "cancelDeviceUpdate":return DeviceUpdateService.cancel(this);
             case "startDeviceUpdate":case "verifyDeviceUpdate":{
@@ -1043,7 +1071,7 @@ public final class MainActivity extends Activity {
             }
             case "detail": {
                 String key = a.getString("key");RecordingLibrary.Session selected=session(key);
-                JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(selected),completeAudioDurationMs(selected));
+                JSONObject resume=savedPlaybackProgress(selected,key,completeAudioDurationMs(selected));
                 return MeetingDetailAccess.read(store(),key,translations()).put("lifecycle",lifecycle().get(key)).put("libraryToken",libraries().token()).put("playback",resume);
             }
             case "minutesHistory": {
@@ -1118,7 +1146,7 @@ public final class MainActivity extends Activity {
                 String key=a.getString("key");RecordingLibrary.Session s = session(key);
                 NativeAudio.PartsResult parts = ManagedAudioParts.prepare(s, root().resolve("companion-decoded-audio"));
                 if (parts.parts.isEmpty()) throw new IllegalStateException("没有可回听的音频。");
-                JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(s),parts.samples/16);
+                JSONObject resume=savedPlaybackProgress(s,key,parts.samples/16);
                 long position=a.optBoolean("restart",false)?0:resume.getLong("positionMs");
                 try{beginPlayback(s,key,parts,position,resume.getDouble("speed"));}catch(Exception error){stopPlayback();throw error;}
                 return new JSONObject().put("complete", parts.captureComplete).put("durationMs", parts.samples / 16).put("positionMs",playbackPosition()).put("speed",playingSpeed);
@@ -1135,7 +1163,7 @@ public final class MainActivity extends Activity {
                 if(!a.getString("binding").equals(RecordingBookmarkAccess.binding(selected)))throw new java.io.IOException("已保存的录音分段已更新，请重新读取重点后回听。");
                 NativeAudio.PartsResult parts=ManagedAudioParts.prepare(selected,root().resolve("companion-decoded-audio"));
                 RecordingBookmarkAccess.Playback target=RecordingBookmarkAccess.playback(parts,a.getString("sequence"),a.getLong("sourceSamples"),a.getLong("elapsedMs"));
-                String key=a.getString("key");stopPlayback();JSONObject resume=new PlaybackProgress(libraries().meetings(),MainActivity::syncLifecycleDirectory).load(key,RecordingBookmarkAccess.binding(selected),parts.samples/16);
+                String key=a.getString("key");stopPlayback();JSONObject resume=savedPlaybackProgress(selected,key,parts.samples/16);
                 try{beginPlayback(selected,key,parts,target.positionMs,resume.getDouble("speed"));}catch(Exception error){stopPlayback();throw error;}
                 return new JSONObject().put("complete",parts.captureComplete).put("durationMs",parts.samples/16).put("positionMs",target.positionMs).put("speed",playingSpeed);
             }
