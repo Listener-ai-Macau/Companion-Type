@@ -1,0 +1,422 @@
+{
+  "at": "2026-11-10T12:11:05+08:00",
+  "state": "ANDROID123_ORDINARY_MEDIA_IMPORT_AND_EXISTING_MEETING_DELIVERY_CHAIN_INSTALLED_AND_VERIFIED",
+  "windowsVersion": "0.1.82",
+  "androidVersion": "0.1.123",
+  "appSource": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd",
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "nativeBuild": 42750362910,
+  "nativeLibrariesAndModelWeightsUnchanged": true,
+  "modelsTrained": 0,
+  "modelResearchRuns": 0,
+  "functionalExistingLocalAsrRuns": 1,
+  "functionalPublicAiRequests": 1,
+  "actualCases": {
+    "Companion-public-meeting-90s.wav": {
+      "at": "2026-11-10T03:34:41.334Z",
+      "file": "Companion-public-meeting-90s.wav",
+      "expected": "complete",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "69a4a75e-e880-49b9-a1b6-34fc97e45531",
+        "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+        "name": "Companion-public-meeting-90s.wav",
+        "running": false,
+        "state": "complete",
+        "message": "录音已保存在本机，可回听或开始转写。",
+        "processed": 71850666,
+        "total": 90000000,
+        "durationMs": 90000,
+        "originalBytes": 17280078,
+        "parts": 1
+      },
+      "afterSelectionMs": 7,
+      "nativePlaybackStarted": true,
+      "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "state": "PASSED"
+    },
+    "Companion-public-meeting-90s.mp3": {
+      "at": "2026-11-10T03:42:06.760Z",
+      "file": "Companion-public-meeting-90s.mp3",
+      "expected": "complete",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "dbe5041e-346b-456a-abf9-c615c91af7e0",
+        "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+        "name": "Companion-public-meeting-90s.mp3",
+        "running": false,
+        "state": "complete",
+        "message": "录音已保存在本机，可回听或开始转写。",
+        "processed": 78626937,
+        "total": 90072000,
+        "durationMs": 90000,
+        "originalBytes": 360513,
+        "parts": 1
+      },
+      "afterSelectionMs": 3182,
+      "nativePlaybackStarted": true,
+      "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+      "state": "PASSED"
+    },
+    "Companion-public-meeting-90s.m4a": {
+      "at": "2026-11-10T03:42:14.736Z",
+      "file": "Companion-public-meeting-90s.m4a",
+      "expected": "complete",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "6e4bdb87-9779-4548-af91-e1f7711a49f6",
+        "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+        "name": "Companion-public-meeting-90s.m4a",
+        "running": false,
+        "state": "complete",
+        "message": "录音已保存在本机，可回听或开始转写。",
+        "processed": 89600000,
+        "total": 90021333,
+        "durationMs": 90005,
+        "originalBytes": 740167,
+        "parts": 1
+      },
+      "afterSelectionMs": 5991,
+      "nativePlaybackStarted": true,
+      "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+      "state": "PASSED"
+    },
+    "Companion-public-meeting-video-30s.mp4": {
+      "at": "2026-11-10T03:42:25.242Z",
+      "file": "Companion-public-meeting-video-30s.mp4",
+      "expected": "complete",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "90577210-a923-425b-a1d5-a5cacc64ec8b",
+        "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+        "name": "Companion-public-meeting-video-30s.mp4",
+        "running": false,
+        "state": "complete",
+        "message": "录音已保存在本机，可回听或开始转写。",
+        "processed": 22976000,
+        "total": 30064000,
+        "durationMs": 30016,
+        "originalBytes": 208259,
+        "parts": 1
+      },
+      "afterSelectionMs": 965,
+      "nativePlaybackStarted": true,
+      "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+      "state": "PASSED"
+    },
+    "Companion-public-truncated.wav": {
+      "at": "2026-11-10T03:44:42.921Z",
+      "file": "Companion-public-truncated.wav",
+      "expected": "failed",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "084491cc-4d9e-422b-b0a4-65c8156c9f54",
+        "key": "388c88a3fc1086b21c7955cc6f92ddcbc6cc04e994eae1a273de4a45c81faeb6:1:1",
+        "name": "Companion-public-truncated.wav",
+        "running": false,
+        "state": "failed",
+        "message": "音频文件不完整，请重新获取原文件。",
+        "processed": 2048,
+        "total": 2048
+      },
+      "afterSelectionMs": 4,
+      "failureOrCancelDidNotPublishRecording": true,
+      "state": "PASSED"
+    },
+    "Companion-public-without-audio.mp4": {
+      "at": "2026-11-10T03:44:44.230Z",
+      "file": "Companion-public-without-audio.mp4",
+      "expected": "failed",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "9bfdf71d-7eb1-40c3-aa2d-d9a47e687ae8",
+        "key": "d862257121eb5483704e6df0a07cbf53b1eac8249847bba8f79a91554fe5c5de:1:1",
+        "name": "Companion-public-without-audio.mp4",
+        "running": false,
+        "state": "failed",
+        "message": "文件中没有可用音轨，请选择音频或带声音的视频。",
+        "processed": 4864,
+        "total": 4864
+      },
+      "afterSelectionMs": 343,
+      "failureOrCancelDidNotPublishRecording": true,
+      "state": "PASSED"
+    },
+    "Companion-public-invalid.mp3": {
+      "at": "2026-11-10T03:44:48.837Z",
+      "file": "Companion-public-invalid.mp3",
+      "expected": "failed",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "4a7e2ba2-3a0b-4ea3-9aea-3819b40dae6c",
+        "key": "8bff605f77b80362165b0e47a86db90416501de43e2342c44273b9167bf7be5e:1:1",
+        "name": "Companion-public-invalid.mp3",
+        "running": false,
+        "state": "failed",
+        "message": "Failed to instantiate extractor.",
+        "processed": 1000,
+        "total": 1000
+      },
+      "afterSelectionMs": 329,
+      "failureOrCancelDidNotPublishRecording": true,
+      "state": "PASSED"
+    },
+    "Companion-public-meeting-long38m.mp3": {
+      "at": "2026-11-10T03:44:53.278Z",
+      "file": "Companion-public-meeting-long38m.mp3",
+      "expected": "cancelled",
+      "ordinaryPicker": true,
+      "ownedDisplay": 12,
+      "ownerDataUsed": false,
+      "newModelsTrained": 0,
+      "result": {
+        "id": "635c03f4-bf74-40a9-b627-3798aee604f3",
+        "key": "0116b136c23243a79f301c0d173d9f97ef6984a879548c049c040b86f8163f2c:1:1",
+        "name": "Companion-public-meeting-long38m.mp3",
+        "running": false,
+        "state": "cancelled",
+        "message": "已取消导入，所选原文件未改变。",
+        "processed": 65536,
+        "total": 6981885
+      },
+      "afterSelectionMs": 320,
+      "failureOrCancelDidNotPublishRecording": true,
+      "state": "PASSED"
+    }
+  },
+  "checks": {
+    "background": {
+      "at": "2026-11-10T03:48:37.360Z",
+      "version": "0.1.123",
+      "file": "Companion-public-meeting-long38m.mp3",
+      "ordinaryPickerAndAndroidBack": true,
+      "ownerMainDisplayOperated": false,
+      "startedState": "copying",
+      "job": "508fb23c-c786-4681-a066-e1550b4b6f4e",
+      "ownActivityExitedWhileImportRunning": true,
+      "backgroundToDurableCompleteMs": 52943,
+      "savedDurationMs": 2327119,
+      "key": "e0c3b42bc75e846d77c7062f886edf28a71f8165b2c8a6b436bac89bc0ee4965:1:1",
+      "completedBeforeReopeningActivity": true,
+      "state": "PASSED"
+    },
+    "processing": {
+      "at": "2026-11-10T03:36:21.883Z",
+      "sourceVersion": 122,
+      "file": "Companion-public-meeting-90s.wav",
+      "ownerRecordingUsed": false,
+      "modelTraining": false,
+      "recognizerChanged": false,
+      "clickToSavedTranscriptMs": 8137,
+      "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "savedTranscriptCharacters": 299,
+      "state": "IMPORTED_LOCAL_TRANSCRIPTION_TIMING_AND_AI_MINUTES_SAVED",
+      "aiGeneratedOnVersion": "0.1.123",
+      "minutesSaved": true,
+      "minutesComplete": true,
+      "minutesSource": "llm_deepseek",
+      "minutesQuality": "final",
+      "originalTimeWindows": 6,
+      "aiUsedOnlyPublicImportedTranscript": true,
+      "rawAudioSentToAi": false,
+      "serviceCredentialKeptOnlyInCurrentProcess": true,
+      "ownerServiceCredentialChanged": false,
+      "aiClickToSavedMs": null,
+      "timingNote": "Generation saved successfully; the first check wrongly required a chunk-processing marker on a short meeting. No second AI request was sent. Exact click-to-save time was not retained."
+    },
+    "lifecycle": {
+      "at": "2026-11-10T03:55:38.782Z",
+      "version": "0.1.123",
+      "onlyOwnPublicQaImports": true,
+      "purged": [
+        "1f927d3a608cf2b3372a170b68d3c76eb0c1074dc6e4ea3420b5f35c85bdffae:1:1",
+        "e0c3b42bc75e846d77c7062f886edf28a71f8165b2c8a6b436bac89bc0ee4965:1:1"
+      ],
+      "importedTrashRestorePassed": true,
+      "otherImportsRetained": 4,
+      "noDamagedDirectoryRemnants": true,
+      "state": "PASSED"
+    },
+    "restoredUi": {
+      "at": "2026-11-10T04:01:16.155Z",
+      "version": "0.1.123",
+      "state": "RESTORED_PUBLIC_IMPORTED_LIBRARY_AND_SAVED_RESULTS_PASSED",
+      "imports": [
+        {
+          "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+          "title": "Companion-public-meeting-video-30s.mp4",
+          "durationMs": 30016
+        },
+        {
+          "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+          "title": "Companion-public-meeting-90s.m4a",
+          "durationMs": 90005
+        },
+        {
+          "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+          "title": "Companion-public-meeting-90s.wav",
+          "durationMs": 90000
+        },
+        {
+          "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+          "title": "Companion-public-meeting-90s.mp3",
+          "durationMs": 90000
+        }
+      ],
+      "transcriptCharacters": 299,
+      "originalTimeWindows": 6,
+      "minutesPreserved": true,
+      "ownerOriginalLibraryRetained": true,
+      "restoredLibraryId": "427ca777-3755-40cd-84bf-26cbade2afec"
+    },
+    "bytes": {
+      "at": "2026-11-10T12:02:12+08:00",
+      "state": "PUBLIC_IMPORTED_ORIGINALS_RESULTS_BACKUP_RESTORE_AND_DOCUMENT_BYTES_VERIFIED",
+      "savedAndRestoredFilesIdentical": 33,
+      "originalMediaByteIdentical": [
+        {
+          "file": "Companion-public-meeting-video-30s.mp4",
+          "bytes": 208259,
+          "sha256": "8fb26c986fdcd12b52b31a2039f21d748cd6727e615532959d8c067608c098de"
+        },
+        {
+          "file": "Companion-public-meeting-90s.m4a",
+          "bytes": 740167,
+          "sha256": "fd6c1f0cee33173fc51065f4c0fc7330bca00966f4acb304e11e961d610ff781"
+        },
+        {
+          "file": "Companion-public-meeting-90s.wav",
+          "bytes": 17280078,
+          "sha256": "cf90bfb045b0c5b7ad5c2e0b3405c30e79eea732b8d7d8c5b292f3799e5c31a6"
+        },
+        {
+          "file": "Companion-public-meeting-90s.mp3",
+          "bytes": 360513,
+          "sha256": "29f07b26e4c136368c764d4686a77146f1a981f7e9c120772723a39af1e2aa32"
+        }
+      ],
+      "backupSha256": "c7a24fbccfd735f47537541c11bc1a8a1123870ec66039531fcb0085d6353aa4",
+      "backupBytes": 14460154,
+      "wordSha256": "a73d070a90df598be576f9986fe082c7ad9e3f66c9bc37e99366ed8da6f25b28",
+      "wordRetainsWholeImportedTranscript": true,
+      "srtSha256": "44d888c0d157f30cdfb53804d9f28466b15cb0a6f69219150c284ddbfd668dca",
+      "srtWindows": 6,
+      "srtRetainsWholeRecognizedText": true,
+      "credentialsOrModelsInBackup": false,
+      "ownerDataUsed": false
+    },
+    "finalUi": {
+      "at": "2026-11-10T04:03:32.579Z",
+      "version": "0.1.123",
+      "state": "RESTORED_IMPORT_PLAYBACK_PASSED_AND_OWNER_ORIGINAL_LIBRARY_RESTORED",
+      "restoredNativePlayback": true,
+      "originalLibraryActive": true,
+      "ownerRecordingOpened": false,
+      "serviceCredentialPersisted": false,
+      "boardAccessed": false
+    },
+    "packageRemote": {
+      "at": "2026-11-10T11:41:19+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 729984089,
+      "fileName": "Companion-Android-0.1.123-core-candidate.apk",
+      "apkSha256": "a4f7a3839766abf9639e2398291ceb141f125da4518c083934868cb5dabb41da",
+      "bytes": 48868732,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false
+    },
+    "publicBackupRemote": {
+      "at": "2026-11-10T12:08:04+08:00",
+      "state": "PUBLIC_IMPORT_BACKUP_PRIVATE_DRAFT_READBACK_IDENTICAL",
+      "assetId": 730045350,
+      "sha256": "c7a24fbccfd735f47537541c11bc1a8a1123870ec66039531fcb0085d6353aa4",
+      "bytes": 14460154,
+      "ownerPrivateDataUploaded": false,
+      "credentialIncluded": false,
+      "draftOnly": true
+    },
+    "installation": {
+      "at": "2026-11-10T11:41:04+08:00",
+      "state": "ANDROID123_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+      "source": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd",
+      "apkSha256": "a4f7a3839766abf9639e2398291ceb141f125da4518c083934868cb5dabb41da",
+      "existingFilesByteIdentical": 1961,
+      "primaryUnchangedDuringInstall": true,
+      "nativeBackendAndModelsUnchangedFrom122": true
+    }
+  },
+  "phoneClose": {
+    "at": "2026-11-10T12:04:49+08:00",
+    "state": "ANDROID123_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+    "installedVersion": "0.1.123",
+    "preexistingFilesChecked": 1946,
+    "preexistingFilesByteIdentical": 1945,
+    "expectedIndexChange": true,
+    "authorizedPublicQaMetadataChanges": 0,
+    "ownerOriginalContentByteIdentical": true,
+    "allPreviousLibrariesRetained": true,
+    "oneNewPublicRestoredLibraryRetained": true,
+    "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+    "publicTemporaryFilesRemoved": [
+      "Companion-public-import-123.docx",
+      "Companion-public-import-123.srt",
+      "Companion-public-import-backup-123.zip",
+      "Companion-public-invalid.mp3",
+      "Companion-public-meeting-90s.m4a",
+      "Companion-public-meeting-90s.mp3",
+      "Companion-public-meeting-90s.wav",
+      "Companion-public-meeting-long38m.mp3",
+      "Companion-public-meeting-video-30s.mp4",
+      "Companion-public-truncated.wav",
+      "Companion-public-without-audio.mp4"
+    ],
+    "unfinishedImportStages": 0,
+    "manifestVerificationSeconds": 2.172000000005937,
+    "ownerMainUnchangedDuringClose": true,
+    "testAiCredentialNotSavedAndOwnProcessTerminated": true,
+    "usbKeepAwakeUnchanged": true,
+    "boardAccessed": false
+  },
+  "remainingSaleQualification": {
+    "allNonmodelComplete": false,
+    "saleQualified": false,
+    "scope": "Audio/video import subset delivered. Original document/image import, notes/images/time context, organization/batch management, non-destructive edit and full cross-device/Windows share scopes remain in their original tasks.",
+    "hardware": "Current card/long-record/power/normal recovery gates continue under embedded module; no board access in this batch.",
+    "releaseService": "Formal distribution/signing/licensing, service/account/team/integration/business conditions remain under original scope.",
+    "customer": "No new customer or purchase qualification was performed."
+  },
+  "notClaimed": [
+    "New transcription accuracy or complex-speaker qualification",
+    "Every Android codec/container supported",
+    "Native transition at a multiple-WAV part boundary",
+    "Real second-phone migration or full Windows/Android library interchange",
+    "All competitor features or full product sale qualification"
+  ],
+  "phoneScope": "Only own non-main display12 and explicit public QA libraries; owner main display not operated, original content preserved."
+}

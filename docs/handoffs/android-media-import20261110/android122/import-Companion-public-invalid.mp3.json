@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T03:44:48.837Z",
+  "file": "Companion-public-invalid.mp3",
+  "expected": "failed",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "4a7e2ba2-3a0b-4ea3-9aea-3819b40dae6c",
+    "key": "8bff605f77b80362165b0e47a86db90416501de43e2342c44273b9167bf7be5e:1:1",
+    "name": "Companion-public-invalid.mp3",
+    "running": false,
+    "state": "failed",
+    "message": "Failed to instantiate extractor.",
+    "processed": 1000,
+    "total": 1000
+  },
+  "afterSelectionMs": 329,
+  "failureOrCancelDidNotPublishRecording": true,
+  "state": "PASSED"
+}

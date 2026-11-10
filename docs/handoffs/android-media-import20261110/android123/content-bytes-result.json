@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-10T12:02:12+08:00",
+  "state": "PUBLIC_IMPORTED_ORIGINALS_RESULTS_BACKUP_RESTORE_AND_DOCUMENT_BYTES_VERIFIED",
+  "savedAndRestoredFilesIdentical": 33,
+  "originalMediaByteIdentical": [
+    {
+      "file": "Companion-public-meeting-video-30s.mp4",
+      "bytes": 208259,
+      "sha256": "8fb26c986fdcd12b52b31a2039f21d748cd6727e615532959d8c067608c098de"
+    },
+    {
+      "file": "Companion-public-meeting-90s.m4a",
+      "bytes": 740167,
+      "sha256": "fd6c1f0cee33173fc51065f4c0fc7330bca00966f4acb304e11e961d610ff781"
+    },
+    {
+      "file": "Companion-public-meeting-90s.wav",
+      "bytes": 17280078,
+      "sha256": "cf90bfb045b0c5b7ad5c2e0b3405c30e79eea732b8d7d8c5b292f3799e5c31a6"
+    },
+    {
+      "file": "Companion-public-meeting-90s.mp3",
+      "bytes": 360513,
+      "sha256": "29f07b26e4c136368c764d4686a77146f1a981f7e9c120772723a39af1e2aa32"
+    }
+  ],
+  "backupSha256": "c7a24fbccfd735f47537541c11bc1a8a1123870ec66039531fcb0085d6353aa4",
+  "backupBytes": 14460154,
+  "wordSha256": "a73d070a90df598be576f9986fe082c7ad9e3f66c9bc37e99366ed8da6f25b28",
+  "wordRetainsWholeImportedTranscript": true,
+  "srtSha256": "44d888c0d157f30cdfb53804d9f28466b15cb0a6f69219150c284ddbfd668dca",
+  "srtWindows": 6,
+  "srtRetainsWholeRecognizedText": true,
+  "credentialsOrModelsInBackup": false,
+  "ownerDataUsed": false
+}

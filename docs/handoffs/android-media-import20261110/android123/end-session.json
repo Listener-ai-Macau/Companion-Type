@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-10T12:04:49+08:00",
+  "state": "ANDROID123_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+  "installedVersion": "0.1.123",
+  "preexistingFilesChecked": 1946,
+  "preexistingFilesByteIdentical": 1945,
+  "expectedIndexChange": true,
+  "authorizedPublicQaMetadataChanges": 0,
+  "ownerOriginalContentByteIdentical": true,
+  "allPreviousLibrariesRetained": true,
+  "oneNewPublicRestoredLibraryRetained": true,
+  "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+  "publicTemporaryFilesRemoved": [
+    "Companion-public-import-123.docx",
+    "Companion-public-import-123.srt",
+    "Companion-public-import-backup-123.zip",
+    "Companion-public-invalid.mp3",
+    "Companion-public-meeting-90s.m4a",
+    "Companion-public-meeting-90s.mp3",
+    "Companion-public-meeting-90s.wav",
+    "Companion-public-meeting-long38m.mp3",
+    "Companion-public-meeting-video-30s.mp4",
+    "Companion-public-truncated.wav",
+    "Companion-public-without-audio.mp4"
+  ],
+  "unfinishedImportStages": 0,
+  "manifestVerificationSeconds": 2.172000000005937,
+  "ownerMainUnchangedDuringClose": true,
+  "testAiCredentialNotSavedAndOwnProcessTerminated": true,
+  "usbKeepAwakeUnchanged": true,
+  "boardAccessed": false
+}

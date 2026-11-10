@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-10T11:43:19.725581+08:00",
+  "cases": [
+    {
+      "file": "Companion-public-meeting-90s.mp3",
+      "expected": "complete",
+      "exit": 0
+    },
+    {
+      "file": "Companion-public-meeting-90s.m4a",
+      "expected": "complete",
+      "exit": 0
+    },
+    {
+      "file": "Companion-public-meeting-video-30s.mp4",
+      "expected": "complete",
+      "exit": 0
+    },
+    {
+      "file": "Companion-public-truncated.wav",
+      "expected": "failed",
+      "exit": 1
+    }
+  ]
+}

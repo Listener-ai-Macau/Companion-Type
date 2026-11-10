@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T03:44:53.278Z",
+  "file": "Companion-public-meeting-long38m.mp3",
+  "expected": "cancelled",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "635c03f4-bf74-40a9-b627-3798aee604f3",
+    "key": "0116b136c23243a79f301c0d173d9f97ef6984a879548c049c040b86f8163f2c:1:1",
+    "name": "Companion-public-meeting-long38m.mp3",
+    "running": false,
+    "state": "cancelled",
+    "message": "已取消导入，所选原文件未改变。",
+    "processed": 65536,
+    "total": 6981885
+  },
+  "afterSelectionMs": 320,
+  "failureOrCancelDidNotPublishRecording": true,
+  "state": "PASSED"
+}

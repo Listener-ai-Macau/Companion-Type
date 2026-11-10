@@ -1,0 +1,6 @@
+{
+  "seconds": 2.0056879999901867,
+  "files": 1961,
+  "algorithm": "SHA256 unchanged; find-print0, serial xargs -0 -r sha256sum; avoids one shell process per file",
+  "scope": "Own app files only; raw manifest private"
+}

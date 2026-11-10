@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-10T11:44:57.448075+08:00",
+  "cases": [
+    {
+      "file": "Companion-public-without-audio.mp4",
+      "expected": "failed",
+      "exit": 0
+    },
+    {
+      "file": "Companion-public-invalid.mp3",
+      "expected": "failed",
+      "exit": 0
+    },
+    {
+      "file": "Companion-public-meeting-long38m.mp3",
+      "expected": "cancelled",
+      "exit": 0
+    }
+  ]
+}

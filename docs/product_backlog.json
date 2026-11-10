@@ -55469,13 +55469,13 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion120 local playback correction and settings closure",
+          "reservedFor": "Companion media import122 local public QA",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-10T10:16:59+08:00",
-          "ownerInstruction": "测试手机一直插着，USB调试已开启；尽快完成并考虑设置",
-          "scope": "Own APK117 to120, new public QA copy and owned virtual display only. No Bluetooth connection, capture, board access or owner recording mutation.",
-          "releasedAt": "2026-11-10T10:48:04+08:00",
-          "releaseReason": "Android121 local playback/correction/settings/backup/purge closure; original library restored and owned session closed."
+          "requestedAt": "2026-11-10T11:24:00+08:00",
+          "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
+          "scope": "Own APK/UI on non-main display. Reuse own empty public QA library0a2cc0ac-149a-4688-8ff8-3180d987144a and newly restored test copies. Public media only; no BLE, board access or owner-record mutation.",
+          "releasedAt": "2026-11-10T12:04:49+08:00",
+          "releaseReason": "Android123 local import/processing/export/backup/restore lifecycle complete; original library restored, exact private contents verified, owned session closed."
         },
         "previousSourceCommit": "7e38e89f6d9808348dff0e2e034341640b5dbdd2",
         "multiPhoneFixEvidence": "docs/releases/20261029-multiphone-endpoint-selection-source-fix.json",
@@ -132979,26 +132979,26 @@
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
       "baseline": {
-        "firmwareVersion": 66786,
+        "firmwareVersion": 66788,
         "uiGeneration": 85,
         "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
-        "sourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate786.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-ota786-identity.json",
+        "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate788.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\input788-ota788-identity.json",
         "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-ota786-identity.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal786/265d808 installed. Motion wake source and original resource budgets pass; physical pickup, recording and endurance not qualified for786.",
+        "sourceRootAvailability": "Normal788 installed: recorder/desktop CIN1 input, first-pair key and durable mark feedback. Physical inputs, actual Mac runtime and final audio gates pending.",
         "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
         "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-cached-imu-power.json",
-        "appBytes": 408124,
-        "staticRamBytes": 67928,
+        "appBytes": 409708,
+        "staticRamBytes": 67960,
         "stackReservedBytes": 21504,
         "physicalQualification": "Installation/idle/catalog only; no physical pickup, recording or endurance pass for786"
       },
@@ -133736,9 +133736,9 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
-        "installedSourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
-        "installedFirmwareVersion": 66786,
+        "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+        "installedSourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+        "installedFirmwareVersion": 66788,
         "scope": "Idle motion IRQ wakes core after filter settling; recording double tap preserved. Normal61.44MHz, screen OFF; no new button or Mac behavior installed. Physical motion qualification pending.",
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-development-and-approved-interaction.json",
         "phoneActualVersion": "0.1.110",
@@ -135050,10 +135050,9 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "processedAt": "2026-11-10T10:38:46+08:00",
-        "text": "那你记录一下, 要做一下",
-        "context": "三个核心功能\n\n一键录音（手机模式）： 按一下开始或停止。敲两下机身做标记，拿起来自动唤醒，这两项都靠 IMU 识别。\n按住说话（电脑模式）： 按住说话，松开就把文字打到当前光标位置，适合 vibe coding。需要做一个 Mac 桌面 App 来接收音频、转成文字。卡没法直接当电脑麦克风用，因为 BLE 不支持。\n数据归自己： 录音原文件随时能导出，不强制订阅，转写可以用用户自己的 AI key。还可以开放 MCP 接口，让 Claude 或 Cursor 直接读录音笔记，这点对开发者很有吸引力。\n\n按键不够的问题\n\n用\"一个按键 + IMU 手势\"补上，不加新按键：\n按住 + 甩一下 = 发送并回车\n敲两下 = 撤销\n摇一摇 = 取消\n按住 + 倾斜 = 空中鼠标\n空中鼠标精度差、用得少，建议当彩蛋或演讲翻页笔，不要当主卖点。\n那个开关建议改成物理断麦的隐私开关，它本身就是卖点；关机改成长按按键。 这个是大概的想法, 好弄吗, 或者说相当于多一路IMU信号通道，然后可以从算法角度多很多创新功能的空间 或者说你看看有啥更好的想法",
-        "decision": "Accepted into original CP04-08/CP15-09 and related existing work; preserve current motion-wake development and existing blockers, no separate task tree or premature feature PASS."
+        "processedAt": "2026-11-10T10:53:03+08:00",
+        "text": "速速, 继续把它全部做完",
+        "decision": "Continue approved complete recorder/desktop interaction batch; implement coherent mode-aware input, preserve current786 baseline and explicit hardware blocks."
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -136556,13 +136555,13 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-10T10:45:00+08:00",
-        "state": "IMU786_NORMAL_INSTALLED_PHYSICAL_PICKUP_PENDING",
+        "at": "2026-11-10T10:53:03+08:00",
+        "state": "NORMAL788_INSTALLED_MAC_CI_AND_PHYSICAL_INPUT_PREPARATION",
         "phoneInstalled": "0.1.110",
-        "firmwareInstalled": 66786,
+        "firmwareInstalled": 66788,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
-        "firmwareSource": "265d808d7a9a9debd8cefb85e60906850610a9d4",
+        "firmwareSource": "a26ed28ba6387d7089bd529b2365d193c70791b2",
         "boardLease": false,
         "boardItem": null,
         "liveRecording": false,
@@ -136573,8 +136572,8 @@
         "ownLatestSession": 387,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu785-usability-and-competitors.json",
         "firmwareBuildSession": null,
-        "firmwareCandidate": 66786,
-        "candidateSourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
+        "firmwareCandidate": 66788,
+        "candidateSourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
         "externalSnifferSession": null,
         "phoneCandidate": null,
         "phoneCandidateSource": null,
@@ -136595,7 +136594,7 @@
         "longRunEvidence": "E:\\CodexData\\Companion\\.build-cache\\core769-matched079\\long\\progress.json",
         "longObserverSession": null,
         "startupDiagnosticSession": null,
-        "firmwareSourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
+        "firmwareSourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
         "windowsInstalledVersion": "0.1.78",
@@ -142153,7 +142152,7 @@
         "approvedCoreInteraction20261110": {
           "at": "2026-11-10T10:38:46+08:00",
           "ownerConfirmation": "那你记录一下, 要做一下",
-          "state": "APPROVED_FOR_IMPLEMENTATION_NOT_DELIVERED",
+          "state": "IMPLEMENTING_RECORDER_AND_DESKTOP_INPUT",
           "currentProduct": "Companion WBA55 shared recording core, screen remains paused; future Capture board not yet qualified",
           "currentBatch": "Finish idle motion wake and existing durable double-tap highlight; no gesture verdict from unperformed Owner actions.",
           "implementationOrder": [
@@ -142222,8 +142221,8 @@
           },
           "technicalCorrection": "Current custom GATT recorder is not a system microphone. BLE in general does support LE Audio; adding that would require a separate compatible controller/profile/codec/host integration and is not this dictation route.",
           "saleBoundary": "New proposals remain in original project backlog; preserve all existing failures, explicit blocks and current release gates. Do not silently claim new Mac/gesture/hardware features already delivered.",
-          "firmwareInstalled": 66786,
-          "sourceCheckpoint": "265d808d7a9a9debd8cefb85e60906850610a9d4",
+          "firmwareInstalled": 66788,
+          "sourceCheckpoint": "a26ed28ba6387d7089bd529b2365d193c70791b2",
           "physicalAccessThisCheckpoint": false,
           "ownerSummary": "三个核心功能：一键录音（手机模式），按一下开始或停止，敲两下机身做标记，拿起来自动唤醒；按住说话（电脑模式），松开就把文字打到当前光标位置，Mac桌面App接收和转写；数据归自己，原文件导出、不强制订阅、自带AI key、开放MCP。一个按键+IMU补充：按住+甩一下发送并回车、敲两下撤销、摇一摇取消、按住+倾斜空中鼠标，空中鼠标做彩蛋或翻页。开关改物理断麦、关机改长按。",
           "ownerRaw": "三个核心功能\n\n一键录音（手机模式）： 按一下开始或停止。敲两下机身做标记，拿起来自动唤醒，这两项都靠 IMU 识别。\n按住说话（电脑模式）： 按住说话，松开就把文字打到当前光标位置，适合 vibe coding。需要做一个 Mac 桌面 App 来接收音频、转成文字。卡没法直接当电脑麦克风用，因为 BLE 不支持。\n数据归自己： 录音原文件随时能导出，不强制订阅，转写可以用用户自己的 AI key。还可以开放 MCP 接口，让 Claude 或 Cursor 直接读录音笔记，这点对开发者很有吸引力。\n\n按键不够的问题\n\n用\"一个按键 + IMU 手势\"补上，不加新按键：\n按住 + 甩一下 = 发送并回车\n敲两下 = 撤销\n摇一摇 = 取消\n按住 + 倾斜 = 空中鼠标\n空中鼠标精度差、用得少，建议当彩蛋或演讲翻页笔，不要当主卖点。\n那个开关建议改成物理断麦的隐私开关，它本身就是卖点；关机改成长按按键。 这个是大概的想法, 好弄吗, 或者说相当于多一路IMU信号通道，然后可以从算法角度多很多创新功能的空间 或者说你看看有啥更好的想法"
@@ -142237,6 +142236,22 @@
           "applicationIncreaseBytes": 640,
           "staticIncreaseBytes": 0,
           "newButtonMappingInstalled": false
+        },
+        "input787": {
+          "sourceCommit": "ab346f62fcb5c4498d5affaac690c18700bcccea",
+          "installed": true,
+          "protocolReceipt": "docs/handoffs/20261106-companion-device-management/full-media66762/input787-protocol.json",
+          "physicalInputsQualified": false,
+          "macRuntimeQualified": false
+        },
+        "input788": {
+          "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+          "installed": true,
+          "physicalInputsQualified": false,
+          "macSourceCommit": "5309db56",
+          "macSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-macos-input",
+          "priorMacCi": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/42751873799",
+          "priorMacCiStage": "Swift tests, bundle build, signing verification and MCP smoke steps passed; latest retry binding source CI pending"
         }
       },
       "workpointBeforeImuPriority20261109": {
@@ -142375,6 +142390,54 @@
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
         "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu-current-irq-attempt-before.json"
+      },
+      "baselineBefore787": {
+        "firmwareVersion": 66786,
+        "uiGeneration": 85,
+        "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "sourceCommit": "265d808d7a9a9debd8cefb85e60906850610a9d4",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate786.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-ota786-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-ota786-identity.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Normal786/265d808 installed. Motion wake source and original resource budgets pass; physical pickup, recording and endurance not qualified for786.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently",
+        "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-cached-imu-power.json",
+        "appBytes": 408124,
+        "staticRamBytes": 67928,
+        "stackReservedBytes": 21504,
+        "physicalQualification": "Installation/idle/catalog only; no physical pickup, recording or endurance pass for786"
+      },
+      "baselineBefore788": {
+        "firmwareVersion": 66787,
+        "uiGeneration": 85,
+        "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\stopped-recovery-source",
+        "sourceCommit": "ab346f62fcb5c4498d5affaac690c18700bcccea",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate787.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\input787-ota787-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-ota786-identity.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Normal787 installed; CIN1 mode and actual idle undo arming confirmed without recording; physical inputs and Mac runtime pending.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently",
+        "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-cached-imu-power.json",
+        "appBytes": 409684,
+        "staticRamBytes": 67960,
+        "stackReservedBytes": 21504,
+        "physicalQualification": "Installation/idle/catalog only; no physical pickup, recording or endurance pass for786"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -145740,7 +145803,7 @@
                 "notta",
                 "notta_brain"
               ],
-              "current": "Windows常见外部音频导入有交付；Android当前普通音频/视频/附件导入用户链未齐。",
+              "current": "Windows既有导入保留；Android123实际普通系统选择WAV/MP3/M4A/MP4音轨、原件完整保存、后台继续/取消、不支持输入不入库、统一转写/纪要/Word/SRT/备份恢复及精确清除通过。文档/图片导入、其它编解码器和完整用户验收未因此关闭。",
               "acceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "order": "P1",
               "dependency": "software",
@@ -145753,7 +145816,16 @@
                 "label": "工程待完成（已有部分成果）",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "android123ScopedDelivery": {
+                  "version": "0.1.123",
+                  "source": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd",
+                  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\delivered-result.json",
+                  "scope": "普通音视频导入到现有会议软件链",
+                  "nativePassed": true,
+                  "ownerAccepted": false
+                }
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -145778,7 +145850,8 @@
                 "requirement": "AI附件上下文需覆盖实际支持的文档/图片；Notta Brain的PDF/DOCX/XLSX/PPTX是外部文件分析参考，不把它等同手机已交付导入。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "currentImportWorkpoint": "ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110"
             },
             {
               "id": "notes_images",
@@ -146937,7 +147010,7 @@
                 "plaud_manage",
                 "notta"
               ],
-              "current": "Windows既有保护/回收站保留。Android117沿112公开录音实际移入回收站和恢复证据；120新增续听记录使用原逐录音元数据归属，原清除实现的软件联动检查已过，真实手机新记录永久清除与其余未验条件保留。旧“069未装”不再作为当前安装状态。",
+              "current": "Android121既有保护/回收站和续听归属保留；123实际公开导入录音移入/恢复、精确清除原件/分段/元数据和空目录通过，另外四份导入保留，未删除用户资料或录音卡内容。Windows原路径保留。",
               "acceptance": "普通删除可恢复原内容，永久清除范围/确认清楚；共享原件、活动录音和保护项不误删。",
               "order": "P0",
               "dependency": "software",
@@ -147199,7 +147272,7 @@
                 "soundcore",
                 "plaud_export"
               ],
-              "current": "Windows已有备份，043/044手机备份恢复/切回原库实际通过；实体换机/双端互通未齐。",
+              "current": "Android123普通整库备份/恢复四份公开导入媒体，原件和已保存转写/时间/AI纪要/续听等33文件hash完全一致；121既有录音卡格式资料备份结果保留。实体第二手机/全量双端互通仍未覆盖。",
               "acceptance": "录音/文字/人工事项/译文/历史/模板/组织信息整体保留，校验后非覆盖恢复；实际换设备验证，不仅同机。",
               "order": "P0",
               "dependency": "second_device",
@@ -147594,7 +147667,7 @@
                 "notta",
                 "granola"
               ],
-              "current": "Windows060实装及原245文件一致；Android最新共享观察065，066合并候选未装。本侧复用064/FW66688普通OTA指标与原34目录保持通过证据，不重复升级；最新收取速度、恢复资格、清配对和正式签名等原范围仍沿原待办。",
+              "current": "Windows082、Android123已实际更新并验证原文件，123源码/安装包/公开备份在私有远端回读一致。固件OTA按embedded原收据；正式签名/分发和完整恢复资格仍开。",
               "acceptance": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
               "order": "P0",
               "dependency": "signing_service",
@@ -265562,19 +265635,19 @@
           "currentCheckpoint": {
             "windows": "0.1.82实际安装，源e72d16ed941cb7070cc7bd6e8d21f3b830192254；本批Windows未改，既有事项跟进/复制等证据沿原收据。",
             "windowsRemaining": "当前Windows其它未验门按原待办和实际收据保留，不沿旧080/110状态重复派发。",
-            "phone": "0.1.121实际同签名安装，源76da5cf6ec359f49aa36b618d4710159c9431569；回听/文字校对/设置/公开备份恢复及精确清除真机通过，原资料恢复、会话关闭、原1911内容文件完全一致。",
+            "phone": "Android0.1.123实装，源663a0b83c9fd3a7666e3631996c4cc46f87f1dcd、后端Java f55f8e8、JNI/模型未变。公开音视频普通导入、后台/取消、原音完整保存、本地转写/时间、现有AI、Word/SRT、备份恢复与精确清除通过；原1945内容文件不变、原库恢复、会话关闭。",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
             "model": "原模型质量门仍开放；本批无训练/推理/新准确率结果，固定基线和复杂多人待办保留。",
             "ai": "同一真实公开会议现有ASR经原生078+现有AI服务生成完整2/2段约30.817秒；发现工作日/零食区两处原ASR事实错误，人工参考公开标注校对后，通过旧纪要来源变化提示、旧待办拒出、重新整理约28.264秒、旧版历史保留与新导出。未提高ASR原评分，仍需完整事实/客户体验。"
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "本批手机回听/校对/设置/备份恢复与精确清除已交付并关闭会话，不重跑未受影响流程。下一完整软件缺口沿CP27-01/import：Android普通音频/视频系统导入→原音耐久保存→本地转写/纪要→导出备份；复用现有后端与数据模型。模型训练继续后置，硬件门沿原分工。",
+          "next": "沿CP27-01/notes_images集中补齐文字备注/图片与录音时间点的保存、回看、导出和备份；连同本批实际发现的系统错误中文化、文件来源/导入日期提示一起收敛。原文档/图片导入、分类批量、非破坏剪辑和其它售卖门仍保留，模型研究继续后置。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
-          "lastOutcome": "ANDROID121_PLAYBACK_CORRECTION_SETTINGS_AND_PUBLIC_BACKUP_LIFECYCLE_DELIVERED",
+          "lastOutcome": "ANDROID123_ORDINARY_MEDIA_IMPORT_AND_EXISTING_MEETING_DELIVERY_CHAIN_INSTALLED_AND_VERIFIED",
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
             "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
@@ -265854,10 +265927,10 @@
             "saleQualified": false
           },
           "latestOwnerContinuation": {
-            "at": "2026-11-10T10:33:48+08:00",
-            "quote": "已经开了usb调试了",
-            "decision": "授权手机已真实ADB在线，继续已授权后台本机流程；原非模型优先和设置要求保留。",
-            "workpoint": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
+            "at": "2026-11-10T11:21:56+08:00",
+            "quote": "除了模型以外的东西，都要达到售卖标准；加快开发效率，现在太慢了。",
+            "decision": "保持所有原非模型售卖/竞品范围。当前完整批次交付安卓文件导入到既有会议处理、保存和恢复链；同链路收敛后一次打包/真机验收，保留已有121交付。",
+            "workpoint": "ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110"
           },
           "wholeMeetingContinuation": {
             "at": "2026-11-09T17:16:18+08:00",
@@ -266560,13 +266633,13 @@
             {
               "block": "双端与实卡同一候选",
               "state": "OPEN",
-              "facts": "Windows081同场实际ASR/AI结果、Word/TXT/PDF/WAV/MP3直接复制、标准浏览器真实附件粘贴及Shell实际落盘、原音备份恢复已过并安装；Android110签名包已远端保护，授权手机最近观察离线，真机/实卡匹配全链待续。旧WinRT面板及具体聊天客户端不由标准浏览器收件继承通过。",
+              "facts": "Windows082、Android123已实装；手机普通媒体导入/回听/转写/纪要/文件保存/恢复通过所述本机公开范围。当前固件匹配的实卡长录/普通接收/异常恢复与旧WinRT/具体聊天客户端门仍开放，不能用本批软件通过代替。",
               "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
             },
             {
               "block": "长录/连接/异常恢复可靠性",
               "state": "OPEN",
-              "facts": "此前771/769为原已保存范围。当前固件工作点按owner_module_execution.embedded接续，最新读取更新时间2026-11-10T09:18:07+08:00；当前长录/普通手机/编码峰/电源的未验项不继承关闭，也不沿较早771数字重复派发。",
+              "facts": "最新共享嵌软记录2026-11-10T10:45:00+08:00，正常固件66786。其安装与明确已验范围只按原收据，长录、实物唤醒、电源与原未通过指标不继承关闭；本侧不抢板卡或手机中央设备。",
               "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
             },
             {
@@ -266574,6 +266647,24 @@
               "state": "OPEN",
               "facts": "当前产品固定提供器同场严格混合字错率6.4024%，未<5%；复杂多人/重叠与完整事实质量仍未合格，未因本轮功能链通过而改门槛。",
               "exit": "按原多会议、逐人/重叠与事实指标达标。"
+            },
+            {
+              "block": "非模型软件完整性",
+              "state": "OPEN",
+              "facts": "Android123普通音视频导入完整链已交付；文档/图片与时间备注、分类批量、非破坏剪辑及原跨端/分享差异继续沿coverage。",
+              "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。"
+            },
+            {
+              "block": "正式发布与服务边界",
+              "state": "OPEN",
+              "facts": "正式签名/分发、许可/隐私、支持/费用、账号跨端/团队及第三方服务等完整原对标仍开放；工程候选和AI模拟不代替售卖资格。",
+              "exit": "按真实发布身份、服务条件与原对标逐项完成，不虚构权益或资质。"
+            },
+            {
+              "block": "完整用户验收",
+              "state": "OPEN",
+              "facts": "已交付局部流程和工程验证不能替代客户围绕完整会议目的使用；本批未新派顾客。",
+              "exit": "完成可用整批后沿原客户流程承接实际收益、困惑与错误，工程解决真实阻断。"
             }
           ],
           "androidWholeSourceIntegration": {
@@ -267264,7 +267355,7 @@
               "Model quality and complex overlapping speakers were not improved or retested.",
               "No new customer or real buyer trial; owner acceptance remains pending."
             ],
-            "next": "本批手机回听/校对/设置/备份恢复与精确清除已交付并关闭会话，不重跑未受影响流程。下一完整软件缺口沿CP27-01/import：Android普通音频/视频系统导入→原音耐久保存→本地转写/纪要→导出备份；复用现有后端与数据模型。模型训练继续后置，硬件门沿原分工。",
+            "next": "121已交付范围保留；后续沿ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110接续。",
             "allNonmodelComplete": false,
             "nativePhoneResults": {
               "playbackCorrection": {
@@ -267453,6 +267544,96 @@
             "updatedAt": "2026-11-10T09:18:07+08:00",
             "active": "CP04-08",
             "scope": "Use that original task next and current receipt; do not restart its previously failed measurements or overwrite its owner-prioritized action."
+          },
+          "activeAndroidMediaImport20261110": {
+            "at": "2026-11-10T11:21:56+08:00",
+            "state": "ANDROID123_ORDINARY_MEDIA_IMPORT_AND_EXISTING_MEETING_DELIVERY_CHAIN_INSTALLED_AND_VERIFIED",
+            "userOutcome": "手机普通音视频通过系统选择器导入，保留原文件，解码后可沿用回听、转写、纪要、导出、备份和回收站。",
+            "existingTask": "CP27-01/import",
+            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+            "source": {
+              "sourceCommit": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd",
+              "versionCode": 123,
+              "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+              "remoteSourceReadbackVerified": true,
+              "phoneQualified": true,
+              "qualifiedScope": "Installed123 public audio/video import and declared shared meeting workflow only",
+              "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\delivered-result.json",
+              "saleQualified": false
+            },
+            "buildRun": 42750362910,
+            "backendNativeAndModelBinariesChanged": false,
+            "softwareTests": [
+              "原文件/分段校验、失败不发布",
+              "相同时间轴/转写时间来源绑定",
+              "实际LibraryBackup保存恢复",
+              "回收站恢复、精确删除后无损坏空目录",
+              "其它录音保留、损坏音频不改原文件",
+              "重采样不依赖编解码包边界、抗混叠与立体声反相"
+            ],
+            "runtimeQualified": true,
+            "ownerDataUsed": false,
+            "modelsTrained": false,
+            "next": "沿CP27-01/notes_images集中补齐文字备注/图片与录音时间点的保存、回看、导出和备份；连同本批实际发现的系统错误中文化、文件来源/导入日期提示一起收敛。原文档/图片导入、分类批量、非破坏剪辑和其它售卖门仍保留，模型研究继续后置。",
+            "updatedAt": "2026-11-10T12:11:05+08:00",
+            "currentInstalledAndroid": "0.1.123",
+            "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\delivered-result.json",
+            "ownerOriginalContentByteIdentical": true,
+            "phoneSessionClosed": true,
+            "allNonmodelComplete": false,
+            "saleQualified": false,
+            "publicCaseFormats": [
+              "WAV",
+              "MP3",
+              "M4A/AAC",
+              "MP4音轨"
+            ],
+            "functionalFlow": "普通选择→原文件完整保留→后台可取消转换→本地转写/原文时间→现有AI纪要→Word/SRT系统保存→整库备份恢复→原音/结果校验→回收站/精确清除"
+          },
+          "nonmodelSaleStatus20261110": {
+            "at": "2026-11-10T12:11:05+08:00",
+            "phase": "可用核心候选，非模型尚未整体验收达标",
+            "percentage": null,
+            "percentageReason": "原对标项同时包含已验子范围、未实现能力、物理/外部依赖与用户待验，不能按提交、包或全为pending的行数编造整体百分比。",
+            "delivered": {
+              "windows": "0.1.82原已验核心保留",
+              "android": "0.1.123新增完整普通媒体导入/处理/保存恢复链；121回听、校对和设置保留"
+            },
+            "openSoftware": [
+              "文档/图片导入与时间备注",
+              "安卓分类、标签和批量管理",
+              "非破坏剪辑、切分与合并",
+              "旧WinRT/具体客户端分享、实体换机及原跨端差异"
+            ],
+            "openHardware": "沿embedded当前匹配长录、连接/异常恢复、电源与实物门，不由应用通过继承关闭。",
+            "openReleaseAndService": "正式签名/渠道、许可隐私/支持费用及原账号跨端、团队、集成等范围待完成。",
+            "customerAcceptance": "仍按原用户/顾客完整用途验收，不以工程结果虚关。",
+            "efficiencyEvidence": {
+              "unit": "一次可独立使用的完整流程",
+              "groupedBuilds": {
+                "backendJavaPackage": 1,
+                "appNativeBuilds": [
+                  {
+                    "version": 122,
+                    "run": 42748629840,
+                    "source": "f96f7b4dd222482a698eb7dab4f49498e48648d1"
+                  },
+                  {
+                    "version": 123,
+                    "run": 42750362910,
+                    "source": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd"
+                  }
+                ],
+                "reworkReason": "One actual native progress/exclusion integration defect. Other preparation corrections reused the same app packages."
+              },
+              "fullManifest": {
+                "seconds": 2.0056879999901867,
+                "files": 1961,
+                "algorithm": "SHA256 unchanged; find-print0, serial xargs -0 -r sha256sum; avoids one shell process per file",
+                "scope": "Own app files only; raw manifest private"
+              },
+              "next": "只复验受影响链路；准备器/选择器修复复用有效包，源码和交付及时远端核验。"
+            }
           }
         }
       },

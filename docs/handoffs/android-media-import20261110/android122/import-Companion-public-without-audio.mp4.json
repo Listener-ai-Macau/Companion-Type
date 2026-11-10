@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-10T03:44:44.230Z",
+  "file": "Companion-public-without-audio.mp4",
+  "expected": "failed",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "9bfdf71d-7eb1-40c3-aa2d-d9a47e687ae8",
+    "key": "d862257121eb5483704e6df0a07cbf53b1eac8249847bba8f79a91554fe5c5de:1:1",
+    "name": "Companion-public-without-audio.mp4",
+    "running": false,
+    "state": "failed",
+    "message": "文件中没有可用音轨，请选择音频或带声音的视频。",
+    "processed": 4864,
+    "total": 4864
+  },
+  "afterSelectionMs": 343,
+  "failureOrCancelDidNotPublishRecording": true,
+  "state": "PASSED"
+}

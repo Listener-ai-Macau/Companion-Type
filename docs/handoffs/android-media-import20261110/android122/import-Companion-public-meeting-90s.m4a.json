@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T03:42:14.736Z",
+  "file": "Companion-public-meeting-90s.m4a",
+  "expected": "complete",
+  "ordinaryPicker": true,
+  "ownedDisplay": 12,
+  "ownerDataUsed": false,
+  "newModelsTrained": 0,
+  "result": {
+    "id": "6e4bdb87-9779-4548-af91-e1f7711a49f6",
+    "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+    "name": "Companion-public-meeting-90s.m4a",
+    "running": false,
+    "state": "complete",
+    "message": "录音已保存在本机，可回听或开始转写。",
+    "processed": 89600000,
+    "total": 90021333,
+    "durationMs": 90005,
+    "originalBytes": 740167,
+    "parts": 1
+  },
+  "afterSelectionMs": 5991,
+  "nativePlaybackStarted": true,
+  "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+  "state": "PASSED"
+}
