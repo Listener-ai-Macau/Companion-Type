@@ -50,7 +50,11 @@ elif action=="display":
  assert pid.isdigit();port=adb(["forward","tcp:0","localabstract:webview_devtools_remote_"+pid]).strip();save(P/"cdp.json",{"at":now(),"displayId":state["displayId"],"pid":int(pid),"cdpPort":int(port),"mainBefore":before,"mainUnchangedDuringOperation":primary()==before})
  print("Owned non-main customer display ready; original library has not been inspected.")
 elif action=="close":
- index=json.loads(adb(["shell","run-as",PKG,"cat","files/companion-library-index.json"]));assert index["activeId"]=="original"
+ for attempt in range(30):
+  index=json.loads(adb(["shell","run-as",PKG,"cat","files/companion-library-index.json"]))
+  if index["activeId"]=="original":break
+  time.sleep(.1)
+ assert index["activeId"]=="original"
  assert "AudioImportService" not in adb(["shell","dumpsys","activity","services",PKG])
  state=json.loads((P/"virtual.json").read_text());session=json.loads((P/"cdp.json").read_text());before=primary()
  main=next(s for s in adb(["shell","dumpsys","activity","activities"]).split("Display #") if s.startswith("0 (activities from top to bottom):"));assert not any(PKG in line for line in main.splitlines() if "Hist  #" in line)
