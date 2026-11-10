@@ -133716,7 +133716,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "冻结新手势/功能，沿原基本录音链收敛体验：保留当前788实体单击开停/1次双敲落盘与完整原音结果；先落实客户端已定位的冷连接服务发现/全目录查询等待，避免验收前后多次重连与无关核对阻塞用户。Mac并行转写/回收候选82db5dcc已实际macOS CI过，仍须真实Mac权限/BLE/转写/光标验收，不能以CI替代。实体拿起/首句回听需要Owner时再用同一原版式窗口一次提示；原6239us失败、最终匹配长录/手机链继续开放。屏幕/速度及Owner明确硬件block不重开。",
+      "next": "完成当前085链路建立后单次参数申请的真实整段5秒验证；失败先按实际分段修，不能把连接段或单次外部实验当普通完整连接合格。通过后同一候选集中打包/提交FW788、Windows及Mac11509eb2，更新原任务与一次完整时间线，随后推进原6239us/匹配长录与手机链；明确block不重开，不反复要求Owner操作。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134322,12 +134322,12 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109"
       },
       "releaseReadiness": {
-        "at": "2026-11-10T08:25:53+08:00",
-        "firmware": 66776,
-        "coreDelivery": "OPEN_NONBLOCKED_STARTUP_CONNECTION_RECOVERY_CURRENT_INTEGRATION",
+        "at": "2026-11-10T13:27:14+08:00",
+        "firmware": 66788,
+        "coreDelivery": "OPEN_NORMAL_CONNECTION5S_ENCODER_AND_MATCHED_FINAL_GATES",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "IMU actual5groups/0marks failed; next actual ODR/event read, lower threshold hypothesis not installed. Encoder6239us and final2h/phone chain remain open.",
+        "openSoftware": "Normal788 single click plus one actual double-tap/one persistent mark passed scoped9.28s original. Windows083 streamed catalogue improves5094->1612ms but whole normal connection7888ms fails5s. Built-in active scan084 improves physical connect to1071ms, full7161ms still fails due actual60ms interval. On-active-link preference experiment2621ms;085 source integrates one conditional refresh, build in progress. Retain6239us and final current2h/phone, pickup/first-word and actualMac gaps.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -134429,9 +134429,9 @@
           "maximumMs": 5000,
           "scope": "Same frozen native ordinary full identity/catalogue probe, all attempts/cleanup included; extracted from existing actual log, no repeated board operation. One sample, not intermittent root closure."
         },
-        "firmwareVersion": 66785,
+        "firmwareVersion": 66788,
         "saleQualified": false,
-        "imuPhysicalSample": false
+        "imuPhysicalSample": true
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -136555,8 +136555,8 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-10T12:22:59+08:00",
-        "state": "CONTINUOUS_DIRECTORY_ACTUAL_NATIVE_PASS_MATCHED_MSI_PACKAGING",
+        "at": "2026-11-10T13:27:14+08:00",
+        "state": "WINDOWS085_BUILD_AFTER083_DIRECTORY_GAIN_084_LINK_GAIN_AND_RETAINED_FULL5S_FAILURE",
         "phoneInstalled": "0.1.110",
         "firmwareInstalled": 66788,
         "phoneSourceCommit": "78ff8562a44c4cced814647fb1d71ac316ebd8da",
@@ -136597,9 +136597,9 @@
         "firmwareSourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
         "windowsRecoverySourceCommit": "5204b1a27024d821584b2db44f5686b5c121e575",
         "windowsRecoveryInstalled": false,
-        "windowsInstalledVersion": "0.1.78",
-        "windowsInstalledSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
-        "windowsInstalledExeSha256": "aba8b9cfa777d76b019cdd0d7521ba0ccdd6e8f4747501cd58ed47ce557fb383",
+        "windowsInstalledVersion": "0.1.84",
+        "windowsInstalledSourceCommit": "9e93757cdd3d6fa52cf50c4cb58f9e24965977d9",
+        "windowsInstalledExeSha256": "f42432f97b203d16fcabb131c88112360431be3b7efd83a3bd1d03d06290c609",
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
         "windowsCoreCandidateSourceCommit": "d00e5080cbe10b9b7fcd661841f4fa796a4ee4ca",
         "windowsCoreCandidateInstalled": false,
@@ -136627,8 +136627,9 @@
         "activeSession": null,
         "windowsUsabilitySourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/companion-recorder-usability",
         "windowsUsabilityBase": "28a79cdcaef6cfc1a9326f5fb70c6b6e6955bd5a",
-        "windowsUsabilitySource": "9bb192df",
-        "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json"
+        "windowsUsabilitySource": "9fc8711641d61ea8c64d36722956013d54bcf49d",
+        "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
+        "windowsUsabilityCandidate": "0.1.85"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -267743,7 +267744,23 @@
             "nativeBuilds": 1,
             "installedAndRestored": true,
             "sourceAndPackageRemoteVerified": true,
-            "ownerAcceptanceClosed": false
+            "ownerAcceptanceClosed": false,
+            "windowsContinuation": {
+              "at": "2026-11-10T13:34:46+08:00",
+              "phase": "native-correction-remote-building",
+              "source": "companion-device-closure055",
+              "scope": "沿既有文字备注和重点关联补图片保存/有界预览/图文ZIP/同一备份和精确清除；Android124交付不变。",
+              "nativeBuild": "not started; owner memory currently3.6GiB free, complete package will use remote CI",
+              "latest": "新候选源ff025d6；原生保存/有界预览/所选图文ZIP/原备份与精确清除已接通，补了同请求失败预览恢复检查。先等同一原生构建与实际模块检查，再按匹配MSI/独立公开资料普通界面验证，不改原082日用。",
+              "saleQualified": false,
+              "version": "0.1.83",
+              "sourceCommit": "ff025d6f9e1bf84bbcbf9a77940e84b9f9f0bc8b",
+              "receipt": "docs/handoffs/20261110-android-media-import/windows083/source-freeze.json",
+              "firstSource": "dd86a6d1b8b6c366b5c6d04d6946a8684126136a",
+              "firstRun": 42762083736,
+              "firstResult": "Own first native candidate cancelled before delivery after source review found replace parameter type and incomplete absent-preview retry. No 083 installed. First UI job passed and source unchanged there.",
+              "next": "等待最终083 CI结果并验证匹配MSI及实际原生/普通UI图文链；制作验证器时复用windows_meeting/windows_native_dialog，不用Owner前台。"
+            }
           }
         }
       },
