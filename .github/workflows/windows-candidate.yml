@@ -4,6 +4,16 @@ on:
   push:
     branches: [work/device-phone-closure055-20261106]
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Build a candidate or verify an existing matched candidate
+        type: choice
+        options: [candidate, context]
+        default: candidate
+      candidate_spec:
+        description: Repository path to the independently inspected candidate spec
+        type: string
+        default: docs/handoffs/android-media-import20261110/windows083/runtime-spec.json
 
 permissions:
   contents: read
@@ -88,7 +98,7 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   context-acceptance:
-    if: contains(github.event.head_commit.message, '[core-context]')
+    if: contains(github.event.head_commit.message, '[core-context]') || (github.event_name == 'workflow_dispatch' && inputs.operation == 'context')
     runs-on: windows-2022
     timeout-minutes: 20
     permissions:
@@ -105,7 +115,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           COMPANION_CORE_PHASE: context
-          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: docs/handoffs/android-media-import20261110/windows083/runtime-spec.json
+          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ github.event_name == 'workflow_dispatch' && inputs.candidate_spec || 'docs/handoffs/android-media-import20261110/windows083/runtime-spec.json' }}
         run: python tools/qa/core_acceptance20261109/run_ci.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
@@ -142,7 +152,7 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   candidate:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[windows-build]')
+    if: (github.event_name == 'workflow_dispatch' && inputs.operation != 'context') || contains(github.event.head_commit.message, '[windows-build]')
     runs-on: windows-2022
     timeout-minutes: 45
     env:

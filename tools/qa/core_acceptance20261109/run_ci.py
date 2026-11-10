@@ -2,6 +2,7 @@
 from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,sys,traceback,zipfile
+from candidate_contract import grouped_meeting_candidate
 S=Path(__file__).resolve().parents[3];O=S/'core-ci-output';O.mkdir()
 PHASE=os.environ.get('COMPANION_CORE_PHASE','saved');assert PHASE in {'saved','audio','whole','delivery','actions','context'}
 SPEC=os.environ.get('COMPANION_ACCEPTANCE_CANDIDATE_SPEC')
@@ -24,7 +25,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery','actions','context'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83'}
+  assert PHASE in {'audio','whole','delivery','actions','context'} and grouped_meeting_candidate(spec['verification']['version'])
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
