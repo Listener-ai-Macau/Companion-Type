@@ -1,0 +1,261 @@
+{
+  "at": "2026-11-10T16:41:26+08:00",
+  "state": "ANDROID126_LIBRARY_HIERARCHY_DELIVERED_FIRST_USE_RELIABILITY_REPAIR_NEXT",
+  "sourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+  "ciRun": 42781446935,
+  "version": "0.1.126",
+  "checks": {
+    "build-result": {
+      "sourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+      "runId": "42781446935",
+      "versionCode": 126,
+      "versionName": "0.1.126",
+      "sha256": "a968a8d4ce2fe33b1ac988a903aee9744d891f4c05fb3fea444f22563c2d42f8",
+      "pinnedModelResources": {
+        "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+        "reason": "Frozen AAR omitted Java classpath resources required by LocalModelPreparation.resource(); host supplies unchanged pinned metadata and vocabulary. Native libraries and model weights are unchanged.",
+        "resources": [
+          {
+            "name": "metadata.bin",
+            "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c",
+            "bytes": 11352,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/metadata.bin"
+          },
+          {
+            "name": "tokens.txt",
+            "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+            "bytes": 75756,
+            "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/tokens.txt"
+          }
+        ]
+      },
+      "nativeLibrariesUnchanged": true,
+      "webAssetsMatchSourceBuild": true,
+      "localTrustedResigningRequired": false,
+      "phoneTested": false,
+      "at": "2026-11-10T16:22:13+08:00",
+      "state": "ANDROID126_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
+      "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android126\\Companion-Android-0.1.126-core-candidate.apk",
+      "apkSha256": "72e361e2f92f543894d595e07327354f6f92f9671b58b74ad434680077a87cd8",
+      "apkBytes": 48897404,
+      "signerSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+      "signerMatchesPreviouslyTrustedApp": true,
+      "zip16KiBAligned": true,
+      "installed": false
+    },
+    "installation": {
+      "at": "2026-11-10T16:22:31+08:00",
+      "state": "ANDROID126_EXACT_APK_INSTALLED_EXISTING_CONTENT_IDENTICAL",
+      "sourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+      "apkSha256": "72e361e2f92f543894d595e07327354f6f92f9671b58b74ad434680077a87cd8",
+      "existingFilesByteIdentical": 2084,
+      "mainUnchangedDuringInstall": true
+    },
+    "source-visual-result": {
+      "at": "2026-11-10T08:16:39.692Z",
+      "state": "PRODUCTION_MOBILE_APP_FICTIONAL_BRIDGE_LIBRARY_HIERARCHY_PASSED",
+      "widths": [
+        {
+          "width": 360,
+          "height": 780,
+          "documentWidth": 360,
+          "mainWidth": 360,
+          "mainClient": 360,
+          "search": {
+            "top": 378.796875,
+            "bottom": 430.296875,
+            "left": 20,
+            "right": 340
+          },
+          "filters": {
+            "top": 497.296875,
+            "bottom": 540.296875,
+            "left": 20,
+            "right": 340
+          },
+          "first": {
+            "top": 600.296875,
+            "bottom": 678.296875,
+            "left": 21,
+            "right": 339
+          },
+          "nav": {
+            "top": 711,
+            "bottom": 780,
+            "left": 0,
+            "right": 360
+          },
+          "maintenance": {
+            "top": 848.296875,
+            "bottom": 1091.296875,
+            "left": 20,
+            "right": 340
+          }
+        },
+        {
+          "width": 393,
+          "height": 852,
+          "documentWidth": 393,
+          "mainWidth": 393,
+          "mainClient": 393,
+          "search": {
+            "top": 378.796875,
+            "bottom": 430.296875,
+            "left": 24,
+            "right": 369
+          },
+          "filters": {
+            "top": 497.296875,
+            "bottom": 540.296875,
+            "left": 24,
+            "right": 369
+          },
+          "first": {
+            "top": 600.296875,
+            "bottom": 678.296875,
+            "left": 25,
+            "right": 368
+          },
+          "nav": {
+            "top": 783,
+            "bottom": 852,
+            "left": 0,
+            "right": 393
+          },
+          "maintenance": {
+            "top": 848.296875,
+            "bottom": 1091.296875,
+            "left": 24,
+            "right": 369
+          }
+        },
+        {
+          "width": 430,
+          "height": 932,
+          "documentWidth": 430,
+          "mainWidth": 430,
+          "mainClient": 430,
+          "search": {
+            "top": 378.796875,
+            "bottom": 430.296875,
+            "left": 24,
+            "right": 406
+          },
+          "filters": {
+            "top": 497.296875,
+            "bottom": 540.296875,
+            "left": 24,
+            "right": 406
+          },
+          "first": {
+            "top": 600.296875,
+            "bottom": 678.296875,
+            "left": 25,
+            "right": 405
+          },
+          "nav": {
+            "top": 863,
+            "bottom": 932,
+            "left": 0,
+            "right": 430
+          },
+          "maintenance": {
+            "top": 848.296875,
+            "bottom": 1091.296875,
+            "left": 24,
+            "right": 406
+          }
+        }
+      ],
+      "errors": [],
+      "checks": [
+        "First recording/search/classification visible in 360/393/430 viewports",
+        "No horizontal overflow",
+        "Parent folder and literal search remain usable",
+        "Running and paused sync action remains prominent",
+        "Empty library retains full import welcome and device action"
+      ],
+      "nativePhoneQualified": false,
+      "ownerDataUsed": false,
+      "modelsRun": false
+    },
+    "ordinary-library": {
+      "at": "2026-11-10T08:23:29.582Z",
+      "version": "0.1.126",
+      "state": "ORDINARY_PHONE_LIBRARY_FIRST_SCREEN_SEARCH_FILTER_SELECTION_RECYCLE_AND_IMPORT_CANCELLATION_PASSED",
+      "library": "0a2cc0ac-149a-4688-8ff8-3180d987144a",
+      "rows": 4,
+      "organizationRevision": 2,
+      "metadataEdited": false,
+      "nativePickerCancelled": true,
+      "modelsOrAiCalled": false,
+      "ownerMainOperated": false
+    },
+    "original-library-restored": {
+      "at": "2026-11-10T08:33:53.167Z",
+      "version": "0.1.126",
+      "state": "ORIGINAL_LIBRARY_RESTORED_THROUGH_ORDINARY_COMPACT_CONTROL",
+      "activeId": "original",
+      "appearanceRestored": "dark"
+    },
+    "end-session": {
+      "at": "2026-11-10T16:34:02+08:00",
+      "state": "ANDROID126_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.126",
+      "preexistingFilesChecked": 2084,
+      "preexistingFilesByteIdentical": 2083,
+      "expectedIndexChange": false,
+      "authorizedPublicQaMetadataChanges": 1,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "publicOriginalMediaUnchanged": true,
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedTemporaryFiles": [
+        "companion-organization126-ui.jar"
+      ],
+      "manifestVerificationSeconds": 1.7189999999973224,
+      "ownerMainUnchangedDuringClose": true,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false,
+      "newFilesOnlyInAuthorizedPublicLibrary": 1
+    },
+    "remote-candidate-backup": {
+      "at": "2026-11-10T16:37:53+08:00",
+      "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+      "sourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+      "repo": "Listener-ai-Macau/Companion-Type",
+      "tag": "windows-0.1.78-bb1550c4-candidate",
+      "draft": true,
+      "assetId": 730668172,
+      "fileName": "Companion-Android-0.1.126-core-candidate.apk",
+      "apkSha256": "72e361e2f92f543894d595e07327354f6f92f9671b58b74ad434680077a87cd8",
+      "bytes": 48897404,
+      "readbackByteIdentical": true,
+      "published": false,
+      "ownerPrivateDataUploaded": false
+    }
+  },
+  "feedback": {
+    "source": "docs/handoffs/20261110-android-media-import/android126/customer-presale.md",
+    "sha256": "a8eec51deb025779b39a7d679a79a3fc36ad81d6daa1a5d8b846d31199a48fe0",
+    "type": "FIRST_USE_AI_SIMULATED_PRE_SALE_NOT_REAL_CUSTOMER",
+    "purpose": "阅读保存纪要/转写，留下自己的阅读判断，再从库回找",
+    "actual": "读纪要/精简原文和3处需求命中；保存整场人工备注，离开重开后保留；按工程找到转写，按自己的备注词未找到；可逆改成内容标题。",
+    "benefit": "摘要/原文回找与人工内容来源区分有用；深色统一可读，能完成其自选目的。",
+    "remaining": [
+      "全部内容不含刚写备注",
+      "图片曾暂不可读，正常重入又恢复；当时没有工程请求日志，不能追改为确定同一根因",
+      "详情未开始播放时仍占一大块禁用播放控制，阅读首屏拥挤",
+      "确切空结论占位None captured未本地化",
+      "已保存质量疑点被列为待解问题，模型/纪要语义门仍开",
+      "短公开样例/未提供新录音AI、真实硬件、价格服务与长期条件不足，购买暂不判断"
+    ],
+    "purchase": "保留兴趣，正式价格与套餐未知，不作购买承诺，无真人或付款",
+    "retainedUserWork": "只修改本轮公开库一条context备注文件并新增同一条录音可逆标题；其它原文件和公开原图/原音保持。"
+  },
+  "nativeBuilds": 1,
+  "modelsOrAiCalled": false,
+  "saleQualified": false,
+  "next": "集中127：消除WebView读取与桥线程同进程文件锁假失败；人工备注本机搜索/直接打开定位；图片明确重读和禁止缓存失败；闲置播放器收紧与精确空结论显示。归属同一阅读—留判断—再回找收益，不逐句重包重派。"
+}

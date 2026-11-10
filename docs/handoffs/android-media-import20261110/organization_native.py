@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,zipfile,os,shlex,json,base64,sys,time
-R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110/phone125');O=P/'ui-standard';O.mkdir(exist_ok=True)
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;CODE=int(os.environ.get('COMPANION_PHONE_QA_CODE','125'));assert CODE in [125,126];P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('phone'+str(CODE));O=P/'ui-standard';O.mkdir(exist_ok=True)
 A=R/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe'
 def adb(args,timeout=30):
  q=subprocess.run([str(A),'-s','d6bd213d',*map(str,args)],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout);assert q.returncode==0,(q.stdout+q.stderr)[-1600:];return q.stdout
@@ -13,17 +13,20 @@ if sys.argv[1]=='build':
  with zipfile.ZipFile(jar,'w') as z:
   for f in classes.rglob('*.class'):z.write(f,f.relative_to(classes).as_posix())
  q=subprocess.run(list(map(str,[J/'java.exe','-Xmx192m','-XX:ActiveProcessorCount=1','-cp',SDK/'build-tools/36.0.0/lib/d8.jar','com.android.tools.r8.D8','--min-api','30','--lib',API/'android.jar','--output',dex,jar])),capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW);assert q.returncode==0,q.stderr.decode()[-1600:]
- out=O/'companion-organization125-ui.jar'
+ out=O/f'companion-organization{CODE}-ui.jar'
  with zipfile.ZipFile(out,'w') as z:z.write(dex/'classes.dex','classes.dex')
- adb(['push',out,'/data/local/tmp/companion-organization125-ui.jar']);print('Built standard UiAutomator driver without installing an APK')
+ adb(['push',out,f'/data/local/tmp/companion-organization{CODE}-ui.jar']);print('Built standard UiAutomator driver without installing an APK')
 else:
  state=json.loads((P/'virtual.json').read_text(encoding='utf8'));assert state['displayId']>0
- desired=sys.argv[1];request={'display':state['displayId'],'action':'dump' if desired=='tap' else desired}
+ desired=sys.argv[1]
+ if desired=='back':
+  adb(['shell','input','-d',state['displayId'],'keyevent','KEYCODE_BACK']);print(json.dumps({'display':state['displayId'],'action':'back','ordinaryOwnedDisplayInput':True}));sys.exit(0)
+ request={'display':state['displayId'],'action':'dump' if desired=='tap' else desired}
  if len(sys.argv)>2:request['id' if sys.argv[2].startswith('id:') else 'label']=sys.argv[2].removeprefix('id:')
  if request['action']=='setText':request['value']=sys.argv[3]
  if len(sys.argv)>3 and request['action']=='click':request['index']=int(sys.argv[3])
  encoded=base64.b64encode(json.dumps(request).encode()).decode()
- cmd='uiautomator runtest /data/local/tmp/companion-organization125-ui.jar /system/framework/android.test.base.jar /system/framework/android.test.runner.jar -c com.denzic.companion.qa.NativeUiStandard110 -e requestB64 '+encoded
+ cmd=f'uiautomator runtest /data/local/tmp/companion-organization{CODE}-ui.jar /system/framework/android.test.base.jar /system/framework/android.test.runner.jar -c com.denzic.companion.qa.NativeUiStandard110 -e requestB64 '+encoded
  output=adb(['shell',cmd]);(O/('result-'+str(time.time_ns())+'.private.txt')).write_text(output,encoding='utf8');row=next((line for line in output.splitlines() if line.startswith('COMPANION_UI=')),None)
  assert row,(output[-1900:]);result=json.loads(row.split('=',1)[1]);assert result['display']==state['displayId']
  if desired=='tap':

@@ -55482,13 +55482,13 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion125 public recording organization acceptance",
+          "reservedFor": "Companion126 public recording-library acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-10T15:13:56+08:00",
+          "requestedAt": "2026-11-10T16:18:52+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Own app only, owned non-main display; own public QA library0a2cc0ac and newly restored copy. Folders/tags/selected-record management and backup lifecycle only; no BLE, mic, model or private owner data.",
-          "releasedAt": "2026-11-10T15:48:55+08:00",
-          "releaseReason": "Android125 folder/tag and selected-record management, backup/restore and exact purge verified in owned public library; original library and content protected, owned app/display/forward/temp files closed."
+          "releasedAt": "2026-11-10T16:34:02+08:00",
+          "releaseReason": "Android126 first-screen, search/filter/selection/recycle and picker cancellation verified; scoped AI public-library use completed, original library restored and own session closed."
         },
         "previousSourceCommit": "7e38e89f6d9808348dff0e2e034341640b5dbdd2",
         "multiPhoneFixEvidence": "docs/releases/20261029-multiphone-endpoint-selection-source-fix.json",
@@ -132987,7 +132987,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T16:01:25+08:00",
+      "updatedAt": "2026-11-10T16:32:12+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133729,7 +133729,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "先完成普通App售卖体验修复088：当前已发现三个入口仍错误指导长按开停，而正常788为单击；首次向导又把未接扬声器的提示音当必做。共享UI按已读真实WBA固件显示单击/旧版长按/未知说明，连接->十秒试录->找到回听，听音为可选；同一批编译、打包并交付，不改固件或重验未改BLE/图文。之后按真实完整录音/保存/回听/断链续录续传和用户等待验当前短/live及最终2h；6239us等内部耗时取消前置并转后续优化，原失败保留。IMU当前单击及一次双敲耐久重点已实板过，拿起唤醒/误触/最终外壳与扩展手势真实Mac仍未完整验，不能称全可以。仍无本轮具体录音就绪，不弹旧催促窗口、不暗中MIC；原速度/电池硬件/屏幕/生产block保持。",
+      "next": "Windows088已实装且首用/帮助实链过；手机已由原模块升级126，实际baseAPK/sourcecd82与签名产物核对一致，原资料2084文件不变。更正：手机独立App并不使用共享Desktop Setup/Help，不为该旧假设再造APK或覆盖126在途源；撤去手机指引移植前置。四组当前边界保持：现版用户完整录音保存/回听与手机断链恢复、当前788至少2h录音并同步、IMU实际拿起/普通携带误触、真实Mac按住说话整链。先等原手机126私有体验结束再做本侧受影响手机入口；当前无新具体MIC就绪，不暗中开录或反复派旧窗。全部实际通过后关闭约定共用录音核心与配套App，不临时加内部指标或高级手势；不宣称Companion暂停屏幕/电源/生产已完成，也不宣称Capture新硬件适配已做。原速度/内部耗时/硬件/屏幕/生产block或后置保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133756,7 +133756,7 @@
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\imu786-development-and-approved-interaction.json",
         "phoneActualVersion": "0.1.124",
         "phoneObservation": "INSTALLED_APK_HASH_MATCHED_PRIVATE_DISPLAY_ORDINARY_COLD2294_7MS_PASS_ONE_SAMPLE",
-        "phoneSourceCommit": "045e81c12f2246db69a54a55502afba339a68b18",
+        "phoneSourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
         "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
         "windowsInstalledVersion": "0.1.78",
         "windowsInstalledSourceCommit": "bb1550c42b674d7ec3e526db9f7fdefb84cff7ae",
@@ -133799,13 +133799,16 @@
           "installed": false,
           "supersededBy": 66784
         },
-        "windowsVersion": "0.1.87",
-        "windowsSourceCommit": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
+        "windowsVersion": "0.1.88",
+        "windowsSourceCommit": "d9aec243aa29d1d170d626937736012afe27a8ee",
         "windowsBranch": "work/recorder-core-integration-20261110",
         "windowsInstalled": true,
-        "windowsReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\usability087\\candidate-delivery.json",
+        "windowsReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\candidate-delivery088.json",
         "phoneBackendSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
-        "preparedCurrentObserverReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec789-prepared\\receipt.json"
+        "preparedCurrentObserverReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\codec789-prepared\\receipt.json",
+        "phoneVersion": "0.1.126",
+        "phoneInstalled": true,
+        "phoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\phone126-current-identity.json"
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -134230,8 +134233,8 @@
             "order": 1,
             "task": "CP04-01",
             "scope": "正常开录至首个真实PCM<=1.5s；保留可录时长/音质/资源预算",
-            "status": "GUIDANCE088_SOURCE_REPAIR_IN_PROGRESS",
-            "next": "旧App试录/离线/帮助仍写长按，与当前788单击逻辑冲突；改为按实际WBA固件显示单击/旧版长按/未知中性说明，取消首用强制听宠物音。保留源头首PCM修复与第一句话实听待验。"
+            "status": "GUIDANCE088_INSTALLED_NATIVE_FIRST_USE_PASS_PHYSICAL_FIRST_WORD_PENDING",
+            "next": "新/旧/未知按键说明、可选提示音和实际设备首用/帮助已完成；复用已有首PCM修复，实体第一句话回听按原Owner后置保持。"
           },
           {
             "order": 2,
@@ -134260,7 +134263,7 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "先修已发现的普通App错误按键指引与强制听音步骤，集中088候选；不先装789/790或继续追6ms数字。其后按用户可感知结果验正常录音保存/回听/同步恢复和IMU基础功能，真实依赖保留。",
+        "currentExecutable": "当前Windows088收尾已交付；手机126身份已对齐并撤去无证据的重复UI移植，继续当前四组实际功能范围。",
         "lastUpdatedAt": "2026-11-10T16:01:25+08:00",
         "lastOwnerRaw": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
         "previousCompletedReliability": [
@@ -134345,9 +134348,9 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-10T16:01:25+08:00",
+        "at": "2026-11-10T16:30:58+08:00",
         "firmware": 66788,
-        "coreDelivery": "DELIVERY_FIRST_GUIDANCE088_OPEN_MATCHED_FUNCTIONAL_LONG_PHONE_PHYSICAL_MAC_OPEN",
+        "coreDelivery": "GUIDANCE088_DELIVERED_FUNCTIONAL_LONG_PHONE_RECOVERY_PHYSICAL_MAC_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
         "openSoftware": "Current FW788 + installed Windows087 + Android124. Ordinary first-use instructions still describe old long-press and require optional pet sound; fixing in shared088 UI. Single-click and one persistent double-tap physical sample passed. Pickup/final-case behavior, matched functional long-run, phone recovery and realMac pending. Old6239us remains measured failure only; not a current release prerequisite.",
@@ -134368,7 +134371,7 @@
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "Owner2026-11-10：内部编码/PDM/调度耗时仅观察，不单独挡交付。正常录音/停录/耐久保存/完整回听/同步及同任务恢复、零实际漏音/采音异常、用户连接/控制/等待与原资源预算仍必需；当前匹配最终2h与实体/Mac范围按原任务验，原明确block/后置保持。",
-        "phoneVersion": "0.1.124",
+        "phoneVersion": "0.1.126",
         "scopeBeforeOwnerExcludedBlocked20261109": {
           "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
           "completionScope": "Normal configuration restored; no short-speed qualification; latest OTA rate fails",
@@ -134458,10 +134461,69 @@
         "windowsNormalColdCurrentCasesPass": true,
         "windowsNormalColdReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\usability087\\installed-normal-connect-unified-first\\result.json",
         "windowsNormalScopeUpgradePass": true,
-        "phoneOrdinaryColdCurrentSamplePass": true,
-        "phoneOrdinaryColdCurrentMs": 2294.699999988079,
-        "phoneCurrentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\usability083-086\\phone124-current.json",
-        "internalTimingBlockingRelease": false
+        "phoneOrdinaryColdCurrentSamplePass": false,
+        "phoneOrdinaryColdCurrentMs": null,
+        "phoneCurrentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\phone126-current-identity.json",
+        "internalTimingBlockingRelease": false,
+        "currentRemainingScope": [
+          {
+            "id": "normal-app-and-phone-chain",
+            "tasks": [
+              "CP04-01",
+              "CP09-02",
+              "CP23-10"
+            ],
+            "status": "WINDOWS088_DELIVERED_PHONE126_CURRENT_COMPLETE_RECORDING_RECOVERY_OPEN",
+            "remaining": "Windows088 installed/affected ordinary UI passed; actual phone126 exactAPK/source matched and original content preserved. Android uses a separate UI; no duplicate shared-desktop guide port needed. Current ordinary phone complete recording/receive/playback/recovery remains to qualify.",
+            "type": "Implemented source plus delivery and affected end-to-end qualification"
+          },
+          {
+            "id": "current-functional-two-hour",
+            "tasks": [
+              "CP23-10"
+            ],
+            "status": "NOT_STARTED_CURRENT_MATCHED_FUNCTIONAL_LONG",
+            "remaining": "One current normal-version continuous recording>=2h and live synchronization>=2h, original/save/decode/CRC/SHA/timeline and no actual capture faults. Old version2h evidence retained; no current full pass. Internal encode/PDM/service-gap reference alone does not fail this release scope.",
+            "type": "Actual user-function reliability qualification, not a new codec optimization project"
+          },
+          {
+            "id": "imu-basic-natural-use",
+            "tasks": [
+              "CP04-08",
+              "CP27-17"
+            ],
+            "status": "ONE_INTENDED_DOUBLE_TAP_AND_SINGLE_CLICK_PASS_PICKUP_FALSE_TRIGGERS_PENDING",
+            "remaining": "Current788/session388 single-click start/stop and one intended double-tap -> one durable source-bound mark passed. Real pickup/wake and ordinary pickup/putdown/carry false triggers remain unqualified. Final unavailable hardware/enclosure and first-word/acoustic items retain their existing Owner-deferred scope.",
+            "type": "Existing implementation needs scoped actual natural-use confirmation"
+          },
+          {
+            "id": "mac-held-dictation-core-promise",
+            "tasks": [
+              "CP15-09",
+              "CP15-02"
+            ],
+            "status": "APP_BUILT_REAL_MAC_CHAIN_PENDING",
+            "remaining": "Native Mac candidate built, software checks pass; actual BLE/permissions/provider/transcription/focused editor insertion not yet qualified. This approved core promise is not complete merely because firmware emits events. Advanced optional gestures/air pointer are not newly inserted ahead of the basic release.",
+            "type": "Host application integration and actual-device qualification; distinct from current MCU basic recorder"
+          }
+        ],
+        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\release-assessment-current.json",
+        "completionMeaning": {
+          "at": "2026-11-10T16:30:56+08:00",
+          "ownerQuestion": "这几组收尾都跑完后，是不是整个Companion或Capture都完成？",
+          "decision": "After all four current core groups actually pass, close this agreed shared recording-core and companion-app scope, excluding existing Owner blocks/pauses/deferrals; no new internal timing/optional gesture project is inserted before closure. This does not declare the entire Companion or future Capture hardware complete.",
+          "companionRemainder": "Screen/touch/pet work remains paused; power, acoustic and production/factory conditions retain their original scope.",
+          "captureRemainder": "New Capture board has not arrived. Shared core is reusable, but its actual MCU/pins/flash/power/feedback/RF and complete-device qualification remain future hardware work in the independent Capture project.",
+          "noScopeExpansion": "Optional advanced gestures and air pointer keep their existing proposed/later status; confirmed real core failures are fixed within the same batch.",
+          "currentSaleQualified": false
+        },
+        "phoneOrdinaryColdEvidenceVersion": "0.1.124",
+        "phoneOrdinaryColdPriorUnchangedNativePass": true,
+        "currentCandidateArchive": {
+          "path": "E:\\CodexData\\Companion\\deliveries\\20261110-core088-android126.zip",
+          "bytes": 38638741,
+          "sha256": "6541f708e1b984ed371499223b0bbc14b021f5e677e204b78e94cc8c74f87b5a"
+        }
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -135080,9 +135142,9 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "processedAt": "2026-11-10T16:01:25+08:00",
-        "text": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
-        "decision": "Release and ordinary recording usability first. Codec/PDM processing duration and internal service-gap/CPU figures are diagnostic optimization references, not independent sale blockers. Retain all measurements/failures and resource caps. Actual missing audio, corrupt/incomplete saved originals, wrong marks, crashes and user-facing control/connection/recovery waits remain required."
+        "processedAt": "2026-11-10T16:30:58+08:00",
+        "text": "这几组收尾都跑完后，是不是整个Companion或Capture都完成？",
+        "decision": "After all four current core groups actually pass, close this agreed shared recording-core and companion-app scope, excluding existing Owner blocks/pauses/deferrals; no new internal timing/optional gesture project is inserted before closure. This does not declare the entire Companion or future Capture hardware complete."
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -135701,7 +135763,7 @@
         "exclusionsRef": "docs/product_backlog.json#/owner_module_execution/embedded/blockedItems",
         "speedWork": "OWNER_DEFERRED_ORIGINAL_FAILURES_AND_50_GATE_PRESERVED",
         "wholeSaleDate": null,
-        "currentDelivery": "正常788+Windows087+Android124+Mac候选已打包；088共享首用/按键说明修复正在开发。售卖主线已取消内部6ms单项前置，最终仍以当前实际录音/完整性/恢复与用户体验为据，不以改口径假称全通过。"
+        "currentDelivery": "Windows088已实装并过实际首用/帮助/原文件一致；四组件候选E:\\CodexData\\Companion\\deliveries\\20261110-guidance088-android124.zip已封存。Android124需下一批合入共享指引；当前录音/恢复/实体/Mac证据缺口仍开放，不报整机可售。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -136597,11 +136659,23 @@
           "sourceBranch": "work/recorder-core-integration-20261110",
           "completeCoreCandidateStillNeedsMergedFrontendBaseline": false,
           "saleQualified": false
+        },
+        "recorderGuidance088": {
+          "at": "2026-11-10T16:23:50+08:00",
+          "fact": "Windows088/d9aec243 now quietly installed; original files identical and actual788 private ordinary UI setup/help passed. Android124 APK still does not include these shared UI changes; next mobile delivery must merge them. No peer checkout/message altered.",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\candidate-delivery088.json"
+        },
+        "phone126CurrentCoreBaseline": {
+          "at": "2026-11-10T16:30:58+08:00",
+          "fact": "Android uses its own apps/mobile App and does not mount CompanionSetup/CompanionHelp/CompanionDashboard. No wrong long-press text found in that active phone flow. There is no evidence requiring a duplicate shared-desktop guidance port or another APK build. Actual installed phone is126/sourcecd82, exact installed SHA matches preserved trusted126 artifact.",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\phone126-current-identity.json",
+          "oldMobileGuidancePortAssumptionWithdrawn": true,
+          "peerWorktreeAndDisplayUntouched": true
         }
       },
       "runningWork": {
-        "at": "2026-11-10T16:01:25+08:00",
-        "state": "GUIDANCE088_DEVELOPMENT_RELEASE_FIRST_NO_MIC_OR_BOARD",
+        "at": "2026-11-10T16:30:58+08:00",
+        "state": "WINDOWS088_DELIVERED_PHONE126_RECONCILED_CORE_SCOPE_OPEN",
         "phoneInstalled": "0.1.124",
         "firmwareInstalled": 66788,
         "phoneSourceCommit": "045e81c12f2246db69a54a55502afba339a68b18",
@@ -136676,9 +136750,9 @@
         "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
         "windowsUsabilityCandidate": "0.1.86",
         "candidateWindows": "0.1.86",
-        "installedWindows": "0.1.87",
-        "installedWindowsSource": "cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f",
-        "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-unified087-android124.zip",
+        "installedWindows": "0.1.88",
+        "installedWindowsSource": "d9aec243aa29d1d170d626937736012afe27a8ee",
+        "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-core088-android126.zip",
         "phoneOrdinaryColdMs": 2294.699999988079,
         "preparedObserver": 66789,
         "preparedNormalReturn": 66790,
@@ -136688,7 +136762,15 @@
         "windowsIntegrationRuntimeTools": "c133fee6f5d6b5428ea3f52a8e734964d1217950",
         "windowsIntegrationRunId": 42772579089,
         "windowsIntegrationMonitorPid": null,
-        "windowsIntegrationRuntimeRunId": 42777129550
+        "windowsIntegrationRuntimeRunId": 42777129550,
+        "windowsGuidanceCandidate": "0.1.88",
+        "windowsGuidanceSource": "d9aec243aa29d1d170d626937736012afe27a8ee",
+        "windowsGuidanceRunId": 42779647728,
+        "windowsGuidanceMonitorPid": null,
+        "windowsGuidanceDeliveryPid": null,
+        "windowsGuidanceDeliveryScript": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-03\\companion-firmware-66662-luna\\recovery-work\\finish_guidance088.py",
+        "windowsGuidanceDeliveryProgress": "E:\\CodexData\\Companion\\.build-cache\\recorder-guidance088\\delivery-progress.json",
+        "installedPhone": "0.1.126"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -141360,13 +141442,25 @@
       },
       "deliveryBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
       "currentCoreLong": {
-        "at": "2026-11-09T21:01:22+08:00",
-        "firmware": 66776,
-        "state": "NOT_STARTED_PRECONDITION_FAILED_ENCODE6239US",
-        "boardLease": false,
-        "newStartCommands": 0,
+        "at": "2026-11-10T16:22:20+08:00",
+        "firmware": 66788,
+        "sourceCommit": "a26ed28ba6387d7089bd529b2365d193c70791b2",
+        "state": "NOT_STARTED_CURRENT_FUNCTIONAL_LONG_RECORDING_READINESS_PENDING",
         "targetRecordingSeconds": 7380,
         "targetLiveSyncSeconds": 7200,
+        "internalTimingBlockingStart": false,
+        "previousUnstartedWorkpoint": {
+          "at": "2026-11-09T21:01:22+08:00",
+          "firmware": 66776,
+          "state": "NOT_STARTED_PRECONDITION_FAILED_ENCODE6239US",
+          "boardLease": false,
+          "newStartCommands": 0,
+          "targetRecordingSeconds": 7380,
+          "targetLiveSyncSeconds": 7200,
+          "saleQualified": false
+        },
+        "newStartCommands": 0,
+        "boardLease": false,
         "saleQualified": false
       },
       "baselineBefore769": {
@@ -141418,11 +141512,11 @@
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-targeted-readiness.json"
       },
       "currentConnectionDependency": {
-        "at": "2026-11-10T14:30:13+08:00",
-        "phoneAdb": "AUTHORIZED_D6_ONLINE_VERSION124",
-        "phoneCurrentVersion": "0.1.124",
-        "owner": "本侧普通连接私有display15已结束；原主屏未切换，自有app/forward/显示区及BLE已关闭；未升级APK。",
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\usability083-086\\phone124-current.json",
+        "at": "2026-11-10T16:30:58+08:00",
+        "phoneAdb": "AUTHORIZED_D6_ONLINE_VERSION126_EXACT_APK",
+        "phoneCurrentVersion": "0.1.126",
+        "owner": "原前端模块126仍在自身私有显示/资料体验；本侧仅核包身份，不启动其App、不抢其显示/旧任务。",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\phone126-current-identity.json",
         "newMicScope": "本轮没有新录音开始/就绪点击，旧4h编码观察范围已过期，不能挪用为新录音。"
       },
       "baselineBefore776": {
@@ -142711,6 +142805,43 @@
         "decision": "Release and ordinary recording usability first. Codec/PDM processing duration and internal service-gap/CPU figures are diagnostic optimization references, not independent sale blockers. Retain all measurements/failures and resource caps. Actual missing audio, corrupt/incomplete saved originals, wrong marks, crashes and user-facing control/connection/recovery waits remain required.",
         "removedPrerequisite": "No789 observer OTA or codec<=6000us gate before functional short/live/long acceptance. Prepared789/790 retained offline; not installed for this reprioritization.",
         "sameScope": "No new recording authorization inferred; physical/Mac evidence remains scoped. Existing explicitly blocked/deferred speed/power/screen/production unchanged."
+      },
+      "guidance088": {
+        "at": "2026-11-10T16:23:50+08:00",
+        "state": "GUIDANCE088_INSTALLED_AFFECTED_NATIVE_UI_PASS_PACKAGED",
+        "appSourceCommit": "d9aec243aa29d1d170d626937736012afe27a8ee",
+        "testSourceCommit": "4f6bc1d3fe8b70a03a378a3cfdb193c3b062f2bf",
+        "version": "0.1.88",
+        "runId": 42779647728,
+        "monitorPid": 18168,
+        "actualObservedRemoteStatus": "in_progress",
+        "actualObservedRemoteConclusion": null,
+        "checks": {
+          "windowsWebAndTypecheck": true,
+          "mobileWebAndTypecheck": true,
+          "matchedNoticesComponents": 350,
+          "correspondingSourceArchives": 17,
+          "affectedSetupComponent": true,
+          "currentOldUnknownKeyInstructions": true,
+          "completeWithoutSpeaker": true,
+          "independentDeviceProgress": true
+        },
+        "nativeBackendAndBleUnchanged": true,
+        "installed": true,
+        "dailyStill": "0.1.87",
+        "phoneStill": "0.1.124",
+        "newRecordings": 0,
+        "ownerPromptShown": false,
+        "boardAccessed": false,
+        "saleQualified": false,
+        "boundary": "Mobile shared web source compiles; existing Android124 APK is unchanged and is not claimed to contain this088 UI fix. Native package build/inspection and actual installed private UI check remain.",
+        "unchangedUserFiles": 245,
+        "actualUiReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\088-first-use-result.json",
+        "archive": {
+          "path": "E:\\CodexData\\Companion\\deliveries\\20261110-guidance088-android124.zip",
+          "bytes": 38624829,
+          "sha256": "71049ac4d5a54c20c91c7881562d38e23515aaf05483f267e7e25ea67ae2dba2"
+        }
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -146205,6 +146336,13 @@
                 "installedNativeMatched": true,
                 "runtimePassed": true,
                 "ownerAccepted": false
+              },
+              "android126CustomerIssue": {
+                "at": "2026-11-10T16:41:26+08:00",
+                "feedback": "docs/handoffs/20261110-android-media-import/android126/customer-presale.md",
+                "issue": "顾客暂时图片失败后重入恢复；工程已确定性复现同进程生命周期锁冲突并修源头，127实际UI待验。",
+                "status": "REPAIR127_IN_PROGRESS",
+                "saleQualified": false
               }
             },
             {
@@ -147122,6 +147260,13 @@
                 ],
                 "expected": "大库检索能找到目标并返回具体会议/内容/时间；回收站/删源不泄漏旧结果，普通检索可离线。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
+              },
+              "android126CustomerIssue": {
+                "at": "2026-11-10T16:41:26+08:00",
+                "feedback": "docs/handoffs/20261110-android-media-import/android126/customer-presale.md",
+                "issue": "人工备注未被全部内容查找包含，新建备注回找受阻；127补同源字面查找/来源标记及直接定位。",
+                "status": "REPAIR127_IN_PROGRESS",
+                "saleQualified": false
               }
             },
             {
@@ -148110,7 +148255,27 @@
                 ],
                 "finding": "真实首屏被导入卡/资料位置/闲置接收状态/回收站占据，实际录音与分类在下方；功能通过不等于一目了然。",
                 "decision": "沿原录音库布局集中修已有内容优先、紧凑导入/位置、真实进行中状态与维护入口，复用125保存/备份/清除，不加新模型。",
-                "status": "SOURCE_REFINEMENT_NEXT"
+                "status": "ANDROID126_INSTALLED_FIRST_USE_OBSERVED_REPAIR127_IN_PROGRESS",
+                "source": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+                "receipt": "docs/handoffs/20261110-android-media-import/library126-iteration.json",
+                "customer": {
+                  "source": "docs/handoffs/20261110-android-media-import/android126/customer-presale.md",
+                  "sha256": "a8eec51deb025779b39a7d679a79a3fc36ad81d6daa1a5d8b846d31199a48fe0",
+                  "type": "FIRST_USE_AI_SIMULATED_PRE_SALE_NOT_REAL_CUSTOMER",
+                  "purpose": "阅读保存纪要/转写，留下自己的阅读判断，再从库回找",
+                  "actual": "读纪要/精简原文和3处需求命中；保存整场人工备注，离开重开后保留；按工程找到转写，按自己的备注词未找到；可逆改成内容标题。",
+                  "benefit": "摘要/原文回找与人工内容来源区分有用；深色统一可读，能完成其自选目的。",
+                  "remaining": [
+                    "全部内容不含刚写备注",
+                    "图片曾暂不可读，正常重入又恢复；当时没有工程请求日志，不能追改为确定同一根因",
+                    "详情未开始播放时仍占一大块禁用播放控制，阅读首屏拥挤",
+                    "确切空结论占位None captured未本地化",
+                    "已保存质量疑点被列为待解问题，模型/纪要语义门仍开",
+                    "短公开样例/未提供新录音AI、真实硬件、价格服务与长期条件不足，购买暂不判断"
+                  ],
+                  "purchase": "保留兴趣，正式价格与套餐未知，不作购买承诺，无真人或付款",
+                  "retainedUserWork": "只修改本轮公开库一条context备注文件并新增同一条录音可逆标题；其它原文件和公开原图/原音保持。"
+                }
               }
             },
             {
@@ -265954,14 +266119,14 @@
           "currentCheckpoint": {
             "windows": "Windows087统一候选源cff4250已安装；本侧实际EXE/DLL与冻结MSI逐字节一致，图文完整UI及备份/恢复/精确清除通过；复用共享安装及冷连接证据，不降级/重复安装或抢用录音卡。",
             "windowsRemaining": "当前Windows其它未验门按原待办和实际收据保留，不沿旧080/110状态重复派发。",
-            "phone": "Android125实装源cd66759a5a3bfef24ebb0764dcd7db69cc518048，分类/标签/多选、保护/可恢复批量删除、进程重开、整库恢复及精确清除已验；原库恢复并关闭测试显示。JNI/模型未变，普通图片错误入口本轮受输入适配器限制，受控UI单一明确错误已验。",
+            "phone": "Android126已实装并核原文件，首屏/搜索筛选/选择/回收站/导入取消普通真机通过；AI独立首次使用完成阅读/备注/回找，发现备注搜索、瞬时图片失败与详情密度。原库恢复、占用释放；127同批源码修复中。",
             "embedded": "沿embedded.next及原共享板卡占用，不抢其他在途测试",
             "model": "原模型质量门仍开放；本批无训练/推理/新准确率结果，固定基线和复杂多人待办保留。",
             "ai": "同一真实公开会议现有ASR经原生078+现有AI服务生成完整2/2段约30.817秒；发现工作日/零食区两处原ASR事实错误，人工参考公开标注校对后，通过旧纪要来源变化提示、旧待办拒出、重新整理约28.264秒、旧版历史保留与新导出。未提高ASR原评分，仍需完整事实/客户体验。"
           },
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "沿原premium_ui集中修安卓录音库首屏，让录音/搜索/分类优先、导入/资料位置紧凑且真实进度和错误可见；后续回读原待办推进下一完整软件项。",
+          "next": "集中127：消除WebView读取与桥线程同进程文件锁假失败；人工备注本机搜索/直接打开定位；图片明确重读和禁止缓存失败；闲置播放器收紧与精确空结论显示。归属同一阅读—留判断—再回找收益，不逐句重包重派。",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
@@ -267910,7 +268075,7 @@
             "functionalFlow": "普通选择→原文件完整保留→后台可取消转换→本地转写/原文时间→现有AI纪要→Word/SRT系统保存→整库备份恢复→原音/结果校验→回收站/精确清除"
           },
           "nonmodelSaleStatus20261110": {
-            "at": "2026-11-10T16:09:46+08:00",
+            "at": "2026-11-10T16:41:26+08:00",
             "phase": "可用核心候选，非模型尚未整体验收达标",
             "percentage": null,
             "percentageReason": "原对标项同时包含已验子范围、未实现能力、物理/外部依赖与用户待验，不能按提交、包或全为pending的行数编造整体百分比。",
@@ -267919,7 +268084,7 @@
               "android": "Android125分类/标签/批量管理与完整资料恢复清除已交付，原121/123/124能力保留。"
             },
             "openSoftware": [
-              "安卓录音库首屏层级与完整用户用途",
+              "Android127阅读—备注—回找同批可靠性修复及完整用户用途",
               "文档导入和原跨端差异",
               "非破坏剪辑、切分与合并",
               "旧WinRT/具体客户端分享、实体换机及原其它软件门"
@@ -268035,6 +268200,17 @@
             "installed": true,
             "sharedInstallationReused": true,
             "saleQualified": false
+          },
+          "activeAndroidLibraryReading20261110": {
+            "at": "2026-11-10T16:41:26+08:00",
+            "state": "ANDROID126_LIBRARY_HIERARCHY_DELIVERED_FIRST_USE_RELIABILITY_REPAIR_NEXT",
+            "sourceCommit": "cd82e0529a3ec984cd40cf6e316cc410257c7ec1",
+            "receipt": "docs/handoffs/20261110-android-media-import/library126-iteration.json",
+            "feedback": "docs/handoffs/20261110-android-media-import/android126/customer-presale.md",
+            "next": "集中127：消除WebView读取与桥线程同进程文件锁假失败；人工备注本机搜索/直接打开定位；图片明确重读和禁止缓存失败；闲置播放器收紧与精确空结论显示。归属同一阅读—留判断—再回找收益，不逐句重包重派。",
+            "nativeBuilds126": 1,
+            "phoneSessionClosed": true,
+            "ownerAcceptanceClosed": false
           }
         }
       },
