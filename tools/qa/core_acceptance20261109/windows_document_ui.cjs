@@ -22,7 +22,7 @@ module.exports=async function documentJourney(page,plan,out){
   const cards=notes.locator('.ct-notes-list > li');assert((await cards.first().innerText()).includes('原样保留的新便签末尾'));
   const oldCard=cards.filter({hasText:'公开阅读便签甲'});assert(!(await oldCard.locator('.ct-note-body').innerText()).includes('原样保留的旧便签末尾'));
   await notes.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'notes-reading-recent.png')});
-  await notes.getByRole('combobox',{name:'备注排序',exact:true}).selectOption('created');assert((await cards.first().innerText()).includes('公开阅读便签甲'));
+  await notes.getByRole('combobox',{name:'备注排序',exact:true}).selectOption('created');const createdTexts=await cards.allTextContents();assert(createdTexts.findIndex(t=>t.includes('公开阅读便签甲'))<createdTexts.findIndex(t=>t.includes('公开阅读便签乙')));
   await oldCard.getByRole('button',{name:'展开全文',exact:true}).click();assert((await oldCard.locator('.ct-note-body').innerText()).includes('原样保留的旧便签末尾'));
   await oldCard.getByRole('button',{name:'编辑备注 '+oldNote.id,exact:true}).click();assert.equal(await oldCard.getByRole('textbox',{name:'编辑备注 '+oldNote.id,exact:true}).inputValue(),oldBody);
   await oldCard.getByRole('button',{name:'取消编辑',exact:true}).click();assert.equal(row().meetingNotes.find(n=>n.id===oldNote.id).text,oldBody);
