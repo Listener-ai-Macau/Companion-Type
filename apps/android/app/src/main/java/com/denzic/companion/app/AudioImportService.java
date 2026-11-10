@@ -52,7 +52,7 @@ public final class AudioImportService extends Service {
  private void runImport(Uri uri,String token){Path stage=null;boolean locked=false;JSONObject record=null;
   try{
    if(RecordingSyncService.isRunning()||DeviceUpdateService.isRunning())throw new IOException("正在接收或升级录音卡，请等完成后再导入。");
-   if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new IOException("正在操作本机资料，请稍后导入。");locked=true;
+   if(LocalLibraryBackups.BUSY.get())throw new IOException("正在操作本机资料，请稍后导入。");
    Path root=getFilesDir().toPath();LocalLibraryBackups library=new LocalLibraryBackups(root);if(token==null||!token.equals(library.token()))throw new IOException("当前资料库已变化，请重新选择导入文件。");
    String name="导入的录音",mime=getContentResolver().getType(uri);long expected=-1;
    try(android.database.Cursor c=getContentResolver().query(uri,new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE},null,null,null)){if(c!=null&&c.moveToFirst()){int n=c.getColumnIndex(OpenableColumns.DISPLAY_NAME),s=c.getColumnIndex(OpenableColumns.SIZE);if(n>=0&&!c.isNull(n))name=c.getString(n);if(s>=0&&!c.isNull(s))expected=c.getLong(s);}}
@@ -65,7 +65,9 @@ public final class AudioImportService extends Service {
    try(InputStream in=getContentResolver().openInputStream(uri);FileOutputStream out=new FileOutputStream(stage.resolve("original.audio").toFile())){if(in==null)throw new IOException("无法读取所选文件，请重新选择。");byte[] bytes=new byte[65536];int n;while((n=in.read(bytes))!=-1){checkCancel();total+=n;if(total>2L*1024*1024*1024)throw new IOException("原文件超过2GB，请先分成较短的文件。");if(work.toFile().getUsableSpace()<n+16L*1024*1024)throw new IOException("手机存储空间不足，所选原文件未改变。");out.write(bytes,0,n);long now=SystemClock.elapsedRealtime();if(now-lastNotice>400){progress(active,"正在保留原文件",total,expected);lastNotice=now;}}out.getFD().sync();}
    if(total<=0||expected>=0&&total!=expected)throw new IOException("所选文件为空或读取不完整，请重新获取原文件。");checkCancel();String sourceHash=ImportedAudio.fileHash(stage.resolve("original.audio"));final long[] notice={0};
    List<Long> parts=PlatformMediaImport.decode(stage.resolve("original.audio"),stage,(phase,done,length)->{checkCancel();long now=SystemClock.elapsedRealtime();if(now-notice[0]>400){progress(active,phase,done,length);notice[0]=now;}});
-   checkCancel();if(!token.equals(library.token()))throw new IOException("资料库已变化，本次没有提交导入。");
+   checkCancel();long waiting=SystemClock.elapsedRealtime();
+   while(!LocalLibraryBackups.BUSY.compareAndSet(false,true)){checkCancel();progress(active,"等待当前资料操作完成",0,0);if(SystemClock.elapsedRealtime()-waiting>600000)throw new IOException("当前资料操作尚未完成，请稍后重新导入。");Thread.sleep(300);}
+   locked=true;checkCancel();if(!token.equals(library.token()))throw new IOException("资料库已变化，本次没有提交导入。");
    COMMITTING.set(true);checkCancel();record.put("state","committing").put("message","正在校验并完成保存");current=publicStatus(record);
    ImportedAudio saved=ImportedAudio.publish(stage,target,key,name,mime,total,sourceHash,parts,AudioImportService::syncDirectory);stage=null;
    record.put("running",false).put("state","complete").put("message","录音已保存在本机，可回听或开始转写。").put("durationMs",saved.samples/16).put("originalBytes",saved.originalBytes).put("parts",saved.partCount());current=publicStatus(record);preferences(this).edit().putString("job",record.toString()).commit();

@@ -838,7 +838,7 @@ public final class MainActivity extends Activity {
     }
     private Object execute(String method, JSONObject a) throws Exception {
         if(DeviceUpdateService.isRunning()&&java.util.Arrays.asList("devices","discoverDevices","pairDevice","connectDevice","catalog","deviceMaintenance","deleteDeviceRecording","sync","resume","resumeConfirmation","controlInventory","control","libraryActivate").contains(method))throw new java.io.IOException("录音卡正在升级，请等待完成后再操作设备。");
-        if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
+        if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method)&&!"audioImportStatus".equals(method))throw new IllegalStateException(AudioImportService.isRunning()?"正在完成导入保存，请稍后重试。":"正在备份或恢复资料，请等待完成。");
         if(("minutes".equals(method)||"translate".equals(method))&&a.optString("apiKey","").isEmpty()){
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
