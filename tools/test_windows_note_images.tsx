@@ -27,3 +27,11 @@ mode='save';await act(async()=>{button('添加图片').props.onClick();});assert
 assert.equal(operationErrorText('图片无法读取，请选择JPEG、PNG或WebP。','save'),'图片无法读取，请选择JPEG、PNG或WebP。');
 assert(!operationErrorText('unexpected provider C:\\private\\secret.png','save').includes('secret'),'Unknown error details stay private');
 act(()=>tree.unmount());console.log('PASS Windows image-note UI: cancel/failure preserve draft; note and bookmark retries keep identity; prepared original time is explicit; precise authored image guards retain private fallback.');
+
+const oldBody='较早人工内容｜'+('预算仍需原件核对。'.repeat(40))+'旧便签末尾',newBody='最近联系卡｜'+('下次需要继续确认。'.repeat(40))+'新便签末尾';
+const noteSession={...session,meetingNotes:[{id:'old',text:oldBody,createdAt:'1794300000000',updatedAt:'1794300000000'},{id:'new',text:newBody,createdAt:'1794310000000',updatedAt:'1794330000000'}]} as CompanionV1HostSession,untouched=JSON.stringify(noteSession);
+await act(async()=>{tree=create(<CompanionMeetingNotes {...props} session={noteSession} compact/>);});assert(text(tree.root.findAllByType('li')[0]).includes('新便签末尾'));assert(!text(tree.root.findAllByType('li')[1]).includes('旧便签末尾'));
+act(()=>tree.root.findByProps({'aria-label':'备注排序'}).props.onChange({target:{value:'created'}}));assert(text(tree.root.findAllByType('li')[0]).includes('较早人工内容'));
+act(()=>tree.root.findAllByType('button').find(n=>n.props['aria-label']==='编辑备注 old')!.props.onClick());assert.equal(tree.root.findByProps({'aria-label':'编辑备注 old',maxLength:4000}).props.value,oldBody);assert.equal(JSON.stringify(noteSession),untouched);
+act(()=>button('取消编辑').props.onClick());await act(async()=>{tree.update(<CompanionMeetingNotes {...props} session={noteSession} compact searchTerm="旧便签末尾"/>);});assert(text(tree.toJSON()).includes('旧便签末尾'));assert.equal(JSON.stringify(noteSession),untouched);
+act(()=>tree.unmount());console.log('PASS actual Windows notes: recent/chronological views, complete collapsed-note edit source and search expansion preserve all saved note content.');

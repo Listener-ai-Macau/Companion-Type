@@ -2675,7 +2675,7 @@ export function CompanionDashboard({
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
-          <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
+          <CompanionMeetingNotes searchTerm={libraryQuery} resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onAddImage={onAddImageNote} onPreviewImage={onPreviewNoteImage} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onSaveAnchor={onSaveBookmark} playbackPosition={readBookmarkPosition}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)

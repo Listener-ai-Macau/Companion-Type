@@ -1,3 +1,6 @@
+import {ReadableNoteBody} from './ReadableNoteBody';
+import {readingOrder,noteTimestamp,type NoteReadingOrder} from './noteReading';
+import {transcriptMatches} from './transcriptMatching';
 import {NoteImagePreview} from './NoteImagePreview';
 import type {CompanionBookmarkRequest,CompanionMeetingImageNoteRequest} from '@companion-type/core';
 import {operationErrorText} from './operationFailure';
@@ -11,8 +14,9 @@ type Edit = { text:string; anchor:string; originalText:string; originalAnchor:st
 type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel}: {
+export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
   compact?:boolean;
+  searchTerm?:string;
   resultEditLabel?:string;
   onHelp?:()=>void;
   session:CompanionV1HostSession;
@@ -39,7 +43,9 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   const active=useRef(false);
   const draft=drafts[session.id]??{};
   const disabled=blocked||busy||!onSave||!persistenceReady;
+  const [noteOrder,setNoteOrder]=useState<NoteReadingOrder>('recent');
   const notes=session.meetingNotes??[];
+  const orderedNotes=readingOrder(notes,noteOrder),latest=readingOrder(notes)[0],latestId=latest&&(noteTimestamp(latest.updatedAt)||noteTimestamp(latest.createdAt))?latest.id:null;
   const points=session.bookmarks??[];
   const dirty=Object.values(drafts).some((d)=>Boolean(d.text?.trim()||d.anchor||d.pending||d.pendingImage||d.pendingAnchor
     ||Object.values(d.edits??{}).some((e)=>e.text!==e.originalText||e.anchor!==e.originalAnchor)));
@@ -133,7 +139,8 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
       <button type="button" className="ct-action" disabled={disabled||anyRecording||dirty||organizeSavedBlocked}
         onClick={onOrganizeSaved}>用原话＋补充整理</button>
     </div> : null}
-    {notes.length?<ol className="ct-notes-list">{notes.map((note)=>{
+    {notes.length>1?<div className="note-reading-toolbar"><span>已保存 · {notes.length} 条</span><label>查看顺序<select aria-label="备注排序" value={noteOrder} disabled={busy} onChange={e=>setNoteOrder(e.target.value as NoteReadingOrder)}><option value="recent">最近更新</option><option value="created">按创建时间</option></select></label></div>:null}
+    {notes.length?<ol className="ct-notes-list">{orderedNotes.map((note)=>{
       const edit=draft.edits?.[note.id];
       const point=points.find((p)=>p.id===note.bookmarkId);
       const position=point?companionBookmarkAudioPosition(session,point):null;
@@ -150,7 +157,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
               const edits={...d.edits};delete edits[note.id];return {...d,edits,pending:undefined};
             })}>取消编辑</button>
           </div>
-        </div>:<p className="ct-note-body">{note.text}</p>}{note.image?<NoteImagePreview sessionId={session.id} note={note} onLoad={onPreviewImage}/>:null}
+        </div>:<>{note.id===latestId?<span className="note-reading-recent">最近更新</span>:null}<ReadableNoteBody text={note.text} className="ct-note-body" defaultExpanded={note.id===latestId||notes.length===1} forceExpanded={!!searchTerm.trim()&&transcriptMatches([note.text],searchTerm.trim()).length>0}/></>}{note.image?<NoteImagePreview sessionId={session.id} note={note} onLoad={onPreviewImage}/>:null}
         <div className="ct-notes-controls">
           {!compact||note.bookmarkId?<small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>:null}
           {point?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null} onClick={()=>void onSeek(session.id,point.id,position!)
