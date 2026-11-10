@@ -1,0 +1,214 @@
+{
+  "at": "2026-11-10T16:45:47+08:00",
+  "state": "ANDROID127_READING_CONTEXT_SOURCE_REMOTE_BUILD_STARTED",
+  "sourceCommit": "c9554c282056fca3aaf2340ce7ef7d2171e98ed7",
+  "versionCode": 127,
+  "backendSource": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "scope": [
+    "Serialize bridge/asset lifecycle operations in one process; preserve external lock, stale revision and visibility guards",
+    "Accept canonical hexadecimal real-recorder identities in notes",
+    "Search saved human text/captions with source labels and direct highlighted notes tab",
+    "Explicit preview re-read and no-store for protected asset responses",
+    "Compact idle playback and localized exact generated empty-section placeholders"
+  ],
+  "checks": {
+    "at": "2026-11-10T08:42:11.471Z",
+    "state": "ANDROID_LIBRARY_SOURCE_AND_IMPORT_RESULT_BEHAVIOR_PASSED",
+    "results": [
+      {
+        "name": "mobile-typecheck",
+        "exit": 0
+      },
+      {
+        "name": "test_mobile_audio_import",
+        "exit": 0
+      },
+      {
+        "name": "test_recording_notes",
+        "exit": 0
+      },
+      {
+        "name": "test_playback_tools",
+        "exit": 0
+      },
+      {
+        "name": "test_long_minutes_reading",
+        "exit": 0
+      },
+      {
+        "name": "mobile-build",
+        "exit": 0
+      }
+    ],
+    "nativePhoneQualified": false,
+    "modelsRun": false
+  },
+  "sourceVisual": {
+    "at": "2026-11-10T08:44:54.290Z",
+    "state": "PRODUCTION_MOBILE_APP_FICTIONAL_BRIDGE_LIBRARY_HIERARCHY_PASSED",
+    "widths": [
+      {
+        "width": 360,
+        "height": 780,
+        "documentWidth": 360,
+        "mainWidth": 360,
+        "mainClient": 360,
+        "search": {
+          "top": 378.796875,
+          "bottom": 430.296875,
+          "left": 20,
+          "right": 340
+        },
+        "filters": {
+          "top": 497.296875,
+          "bottom": 540.296875,
+          "left": 20,
+          "right": 340
+        },
+        "first": {
+          "top": 600.296875,
+          "bottom": 678.296875,
+          "left": 21,
+          "right": 339
+        },
+        "nav": {
+          "top": 711,
+          "bottom": 780,
+          "left": 0,
+          "right": 360
+        },
+        "maintenance": {
+          "top": 848.296875,
+          "bottom": 1091.296875,
+          "left": 20,
+          "right": 340
+        }
+      },
+      {
+        "width": 393,
+        "height": 852,
+        "documentWidth": 393,
+        "mainWidth": 393,
+        "mainClient": 393,
+        "search": {
+          "top": 378.796875,
+          "bottom": 430.296875,
+          "left": 24,
+          "right": 369
+        },
+        "filters": {
+          "top": 497.296875,
+          "bottom": 540.296875,
+          "left": 24,
+          "right": 369
+        },
+        "first": {
+          "top": 600.296875,
+          "bottom": 678.296875,
+          "left": 25,
+          "right": 368
+        },
+        "nav": {
+          "top": 783,
+          "bottom": 852,
+          "left": 0,
+          "right": 393
+        },
+        "maintenance": {
+          "top": 848.296875,
+          "bottom": 1091.296875,
+          "left": 24,
+          "right": 369
+        }
+      },
+      {
+        "width": 430,
+        "height": 932,
+        "documentWidth": 430,
+        "mainWidth": 430,
+        "mainClient": 430,
+        "search": {
+          "top": 378.796875,
+          "bottom": 430.296875,
+          "left": 24,
+          "right": 406
+        },
+        "filters": {
+          "top": 497.296875,
+          "bottom": 540.296875,
+          "left": 24,
+          "right": 406
+        },
+        "first": {
+          "top": 600.296875,
+          "bottom": 678.296875,
+          "left": 25,
+          "right": 405
+        },
+        "nav": {
+          "top": 863,
+          "bottom": 932,
+          "left": 0,
+          "right": 430
+        },
+        "maintenance": {
+          "top": 848.296875,
+          "bottom": 1091.296875,
+          "left": 24,
+          "right": 406
+        }
+      }
+    ],
+    "errors": [],
+    "checks": [
+      "First recording/search/classification visible in 360/393/430 viewports",
+      "No horizontal overflow",
+      "Parent folder and literal search remain usable",
+      "Running and paused sync action remains prominent",
+      "Empty library retains full import welcome and device action"
+    ],
+    "nativePhoneQualified": false,
+    "ownerDataUsed": false,
+    "modelsRun": false
+  },
+  "nativeBackendChanged": false,
+  "modelsChangedOrRun": false,
+  "installed": false,
+  "phoneQualified": false,
+  "saleQualified": false,
+  "reliabilityChecks": {
+    "at": "2026-11-10T16:43:19+08:00",
+    "phase": "final",
+    "state": "PASSED",
+    "logs": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\note-reliability-1794300199085772900",
+    "results": [
+      {
+        "name": "compile",
+        "exit": 0
+      },
+      {
+        "name": "LocalRecordingLifecycleConcurrencyTest",
+        "exit": 0
+      },
+      {
+        "name": "PlaybackLifecycleTest",
+        "exit": 0
+      },
+      {
+        "name": "RecordingNotesIntegrationTest",
+        "exit": 0
+      },
+      {
+        "name": "RecordingOrganizationIntegrationTest",
+        "exit": 0
+      },
+      {
+        "name": "MeetingLibrarySearchTest",
+        "exit": 0
+      }
+    ],
+    "modelsRun": false,
+    "phoneTested": false
+  },
+  "nativeProductChanged": true
+}

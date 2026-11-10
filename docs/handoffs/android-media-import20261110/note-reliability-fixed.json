@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-10T16:36:33+08:00",
+  "phase": "fixed",
+  "state": "PASSED",
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\note-reliability-1794299793342308900",
+  "results": [
+    {
+      "name": "compile",
+      "exit": 0
+    },
+    {
+      "name": "LocalRecordingLifecycleConcurrencyTest",
+      "exit": 0
+    },
+    {
+      "name": "PlaybackLifecycleTest",
+      "exit": 0
+    },
+    {
+      "name": "RecordingNotesIntegrationTest",
+      "exit": 0
+    },
+    {
+      "name": "RecordingOrganizationIntegrationTest",
+      "exit": 0
+    }
+  ],
+  "modelsRun": false,
+  "phoneTested": false
+}

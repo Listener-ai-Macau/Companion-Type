@@ -1,0 +1,6 @@
+{
+  "at": "2026-11-10T16:16:20.914914+08:00",
+  "state": "SOURCE_PREVIEW_VERIFIER_FILTER_RESET_FAILED",
+  "finding": "Verifier reset folder to empty/unclassified instead of all (*) before the literal search; existing named-folder recordings were correctly filtered out. Correct verifier and reuse same source build; no product failure inferred.",
+  "phoneTested": false
+}
