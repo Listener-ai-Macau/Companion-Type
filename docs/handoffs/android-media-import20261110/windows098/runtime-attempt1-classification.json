@@ -1,0 +1,9 @@
+{
+  "state": "TOOL_REOPEN_ASSUMED_DOCUMENTS_VISIBLE_WITHOUT_CHOOSING_NEW_PANE",
+  "run": 42904974165,
+  "productFailure": false,
+  "actualObservation": "After page reload/open, the notes pane is correctly selected. Native import/extraction/table/search/original-save and new manual draft/pane checks completed before the old direct document locator timed out.",
+  "correction": "Ordinary choose Supplementary documents after reload and before final document screenshots; do not bypass visibility or mutate state through a bridge.",
+  "nativeBuildRepeated": false,
+  "msiUnchanged": true
+}
