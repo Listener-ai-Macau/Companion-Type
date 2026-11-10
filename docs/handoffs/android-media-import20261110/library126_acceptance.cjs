@@ -1,11 +1,12 @@
 const {connect,native,root}=require('./organization_ui.cjs'),{read}=require('./organization_readback.cjs'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const code=process.env.COMPANION_PHONE_QA_CODE;assert(['126','127'].includes(code));const O=path.join(__dirname,'android'+code),QA='0a2cc0ac-149a-4688-8ff8-3180d987144a';
-function save(name,value){fs.writeFileSync(path.join(O,name+'.json'),JSON.stringify({at:new Date().toISOString(),version:'0.1.'+code,...value},null,2)+'\n');}
+const code=process.env.COMPANION_PHONE_QA_CODE;assert(['126','127','128'].includes(code));const O=path.join(__dirname,'android'+code),QA='0a2cc0ac-149a-4688-8ff8-3180d987144a';
+let actualVersion;
+function save(name,value){fs.writeFileSync(path.join(O,name+'.json'),JSON.stringify({at:new Date().toISOString(),version:actualVersion||'0.1.'+code,toolSessionCode:code,...value},null,2)+'\n');}
 function dialog(page){page.on('dialog',d=>{assert.equal(d.type(),'confirm');assert.match(d.message(),/打开这份保留的资料|打开原有资料|分类输入尚未应用|修改尚未保存/);native('click','id:android:id/button1');});}
 async function library(page,id){const status=await read(page,'libraryStatus'),index=status.libraries.findIndex(x=>x.id===id);assert(index>=0);await page.getByRole('navigation',{name:'主导航'}).getByRole('button',{name:'设置',exact:true}).click();if(id==='original')await page.locator('.library-backups-original').getByRole('button').click();else{const list=page.locator('.library-backups-retained');if(!await list.evaluate(n=>n.open))await list.locator(':scope > summary').click();await list.locator(':scope > div').nth(index).getByRole('button',{name:'打开这份资料',exact:true}).click();}await page.getByRole('navigation',{name:'主导航'}).getByRole('button',{name:'录音',exact:true}).click();assert.equal((await read(page,'libraryStatus')).activeId,id);}
 async function clearToast(page){for(const label of ['关闭提示','关闭错误提示']){const b=page.getByRole('button',{name:label,exact:true});if(await b.count())await b.click();}}
 (async()=>{const{page,browser}=await connect();dialog(page);try{
- const action=process.argv[2];
+ actualVersion=(await read(page,'appPreferences')).version;const action=process.argv[2];
  if(action==='select'){
   assert.equal((await read(page,'libraryStatus')).activeId,'original');const appearance=await page.evaluate(()=>localStorage.getItem('companion-appearance'));fs.writeFileSync(path.join(root,'original-appearance.private.json'),JSON.stringify(appearance));await library(page,QA);const value=await read(page,'library');assert.equal(value.rows.length,4);assert.equal(value.organization.revision,2);save('public-scope',{state:'PUBLIC_LIBRARY_SELECTED_THROUGH_SETTINGS',library:QA,baselineRows:4,organizationRevision:2});
  }else if(action==='library'){

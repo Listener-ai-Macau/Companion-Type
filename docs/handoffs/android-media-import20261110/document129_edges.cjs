@@ -1,0 +1,24 @@
+const {connect,native}=require('./organization_ui.cjs'),{read}=require('./organization_readback.cjs'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const O=path.join(__dirname,'android129'),base=JSON.parse(fs.readFileSync(path.join(__dirname,'android128/public-document-before.json'))),QA='0a2cc0ac-149a-4688-8ff8-3180d987144a';
+(async()=>{const {page,browser}=await connect();try{
+ assert.equal((await read(page,'appPreferences')).version,'0.1.129');assert.equal((await read(page,'libraryStatus')).activeId,QA);
+ const panel=page.getByRole('region',{name:'补充文档材料'}),action=process.argv[2],before=await read(page,'documentContexts',{key:base.key});let result;
+ async function open(name){await panel.locator('.document-list article').filter({hasText:name}).getByRole('button').first().click();}
+ async function extract(){await panel.getByRole('button',{name:'在本机提取文字',exact:true}).click();}
+ async function unchanged(){const after=await read(page,'documentContexts',{key:base.key});assert.deepEqual(after,before);}
+ if(action==='password'){
+  const name='Companion-public-有密码128.pdf';await open(name);await extract();await panel.getByRole('alert').filter({hasText:'需要密码'}).waitFor();await unchanged();
+  await panel.getByLabel('PDF密码',{exact:true}).fill('deliberately-wrong-public-password');await extract();await panel.getByRole('alert').filter({hasText:'PDF密码不正确'}).waitFor();assert.equal(await panel.getByLabel('PDF密码',{exact:true}).inputValue(),'');await unchanged();
+  await panel.getByLabel('PDF密码',{exact:true}).fill('local-password');await extract();await panel.getByText('文字已提取并保存在本机，可随会议备份恢复。',{exact:true}).waitFor({timeout:55000});
+  const after=await read(page,'documentContexts',{key:base.key}),doc=after.rows.find(d=>d.name===name);assert(doc.extraction);const extracted=await read(page,'documentContextRead',{key:base.key,libraryToken:after.libraryToken,revision:after.revision,id:doc.id});assert.equal(extracted.sourceSha256,doc.sourceSha256);assert(!JSON.stringify(after).includes('local-password'));result={state:'PHONE_PASSWORD_REQUIRED_WRONG_RETRY_AND_SUCCESS_PASSED',document:doc,extracted,passwordPersisted:false,failedAttemptsMetadataUnchanged:true};
+ }else if(action==='no-text'){
+  const name='Companion-public-无文字128.pdf';await open(name);await extract();await panel.getByRole('alert').filter({hasText:'未提取到可读取文字'}).waitFor();await unchanged();result={state:'PHONE_NO_TEXT_ORIGINAL_RETAINED_NO_FALSE_EXTRACTION_PASSED',document:before.rows.find(d=>d.name===name),metadataUnchanged:true};
+ }else if(action==='encoding'){
+  const name='Companion-public-中文编码128.txt';await open(name);await extract();await panel.getByRole('alert').waitFor();await unchanged();const initialError=await panel.getByRole('alert').innerText();await panel.getByRole('combobox',{name:'文档文字编码',exact:true}).selectOption('gb18030');await extract();await panel.getByText('文字已提取并保存在本机，可随会议备份恢复。',{exact:true}).waitFor({timeout:55000});const after=await read(page,'documentContexts',{key:base.key}),doc=after.rows.find(d=>d.name===name);assert(doc.extraction);const extracted=await read(page,'documentContextRead',{key:base.key,libraryToken:after.libraryToken,revision:after.revision,id:doc.id});assert.equal(extracted.sourceSha256,doc.sourceSha256);assert(extracted.sections.some(s=>s.text.includes('人工')));result={state:'PHONE_EXPLICIT_GB18030_RETRY_PASSED',initialError,document:doc,extracted};
+ }else if(action==='cancel'){
+  await panel.getByRole('button',{name:'添加文档',exact:true}).click();native('back');await panel.getByText('已取消选择，已有材料保留。',{exact:true}).waitFor();await unchanged();result={state:'PHONE_ORDINARY_PICKER_CANCEL_RETAINS_ALL_DOCUMENTS_PASSED',rows:before.rows.length,revision:before.revision};
+ }else if(action==='read-search'){
+  await open('Companion-public-公开预算草案128.xlsx');await panel.getByRole('textbox',{name:'查找材料文字',exact:true}).fill('12,000.00');await panel.locator('.document-pages mark').filter({hasText:'12,000.00'}).waitFor();assert.equal(await panel.locator('.document-pages section').count(),1);await panel.getByRole('textbox',{name:'查找材料文字',exact:true}).fill('');await page.getByRole('tab',{name:'纪要',exact:true}).click();await page.getByRole('tab',{name:'备注',exact:true}).click();await open('Companion-public-公开预算草案128.xlsx');await panel.locator('.document-pages').getByText(/12,000\.00/).waitFor();await unchanged();result={state:'PHONE_DURABLE_DOCUMENT_REOPEN_AND_LITERAL_SEARCH_PASSED',rows:before.rows.length,revision:before.revision};
+ }else throw Error(action);
+ fs.writeFileSync(path.join(O,'document-'+action+'.json'),JSON.stringify({at:new Date().toISOString(),actualVersion:'0.1.129',phoneNative:true,onlineAiCalled:false,...result},null,2)+'\n');await page.screenshot({path:path.join(O,'document-'+action+'.png')});console.log(result.state);
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-10T11:53:56.796Z",
+  "actualVersion": "0.1.129",
+  "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+  "document": {
+    "id": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+    "name": "Companion-public-公开预算草案128.xlsx",
+    "format": "xlsx",
+    "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.xlsx",
+    "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+    "bytes": 5636,
+    "createdAt": 1794311632241,
+    "extraction": {
+      "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-a012a77f-d260-4b95-a83e-e5ccf5f868d9.read-2331f00b03946af6.json",
+      "sha256": "2331f00b03946af68309fb1899b801407b4725d5348f1e11383982735a0f6832",
+      "bytes": 671,
+      "characters": 131,
+      "readerVersion": "2026-11-10.1"
+    }
+  },
+  "characters": 131,
+  "sections": [
+    {
+      "id": "part-1",
+      "label": "工作表：预算草案",
+      "text": "A1: 项目\tB1: 金额\tC1: 确认\tD1: 数量\tE1: 日期\tF1: 公式\nA2: 人工补充\tB2: 12,000.00\tC2: FALSE\tD2: 0\tE2: 2026-11-10\tF2: [公式没有已保存结果]\nXFD1048576: 稀疏末尾单元格"
+    }
+  ],
+  "warnings": [
+    "隐藏工作表没有纳入提取文字。",
+    "有 1 处公式没有已保存结果；本次没有运行或重算公式。",
+    "单元格使用原件保存的值和显示格式；公式、外部链接与宏不会运行。"
+  ],
+  "phoneNative": true,
+  "onlineAiCalled": false
+}

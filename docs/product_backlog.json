@@ -55481,14 +55481,14 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": true,
+          "active": false,
           "reservedFor": "Companion128 public recording-library acceptance",
           "serial": "d6bd213d",
           "requestedAt": "2026-11-10T19:21:30+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Own app on owned non-main display; public QA library only. Document originals/local extraction/reading/save, explicit public AI source selection and source return, backup/lifecycle. No BLE, microphone, ASR/training or Owner private text.",
-          "releasedAt": "2026-11-10T17:10:33+08:00",
-          "releaseReason": "Android127 first-screen, search/filter/selection/recycle and picker cancellation verified; scoped AI public-library use completed, original library restored and own session closed."
+          "releasedAt": "2026-11-10T20:19:24+08:00",
+          "releaseReason": "Android129 complete public document originals/local extraction/reading, explicit AI source choice without online generation, save/backup/restore/scoped purge and ordinary simulated customer workflows completed; original library restored and own session closed."
         },
         "previousSourceCommit": "7e38e89f6d9808348dff0e2e034341640b5dbdd2",
         "multiPhoneFixEvidence": "docs/releases/20261029-multiphone-endpoint-selection-source-fix.json",
@@ -268401,8 +268401,8 @@
             "saleQualified": false
           },
           "documentContext20261110": {
-            "at": "2026-11-10T19:35:41+08:00",
-            "status": "ANDROID129_PHONE_ORIGINAL_PUBLICATION_REPAIR_BUILD_PENDING_WINDOWS088_BUILD_RUNNING",
+            "at": "2026-11-10T20:20:31+08:00",
+            "status": "ANDROID129_COMPLETE_NATIVE_DOCUMENT_WORKFLOW_DELIVERED_WINDOWS088_MATCHED_BUILD_RUNNING",
             "userResult": "在会议旁保留并阅读本机文档，主动选择给AI使用，保留原件与来源，不混入录音事实。",
             "baseline": "Android127 c9554c282056fca3aaf2340ce7ef7d2171e98ed7 / Windows087 cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f / complete private candidate archive 45f4df9b8bff84d0e3bb52e594a8e6464866ee221f88d604c22a265d67350609",
             "originalItem": "CP27-01/import; CP27-03/05",
@@ -268419,7 +268419,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": false,
-            "next": "同一完整文档批次续作：构建Android129原件原子提交修复包，在当前已授权独立手机显示区替换失败128并复验原件/提取/重开/AI来源/导出备份恢复；Windows088匹配原生构建仍在运行，实际结果出现后接续。127/087已验基线和128失败包保留。",
+            "next": "继续同一双端文档完整批次：取得修复构建流程后的Windows088实际MSI，核对来源/载荷/升级身份；用已保护的普通UI和原生CLI验收文档原件/本地读取/显式AI来源/另存/备份恢复/精确清除，匹配安装后合并完整归档并上传。已交Android129真机与顾客结果复用，不重跑；非阻断表格/当前便签愿望留下一相关实质批次。",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -268443,9 +268443,96 @@
               "modelsChangedOrRun": false,
               "ownerPrivateDataUsed": false
             },
-            "windowsBuildRun": 42805669767,
+            "windowsBuildRun": 42812317637,
             "android128BuildRun": 42805693619,
-            "ownedPhoneDisplay": 19
+            "ownedPhoneDisplay": 19,
+            "android129Source": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+            "android129NativePassed": [
+              "docx",
+              "xlsx",
+              "pptx",
+              "Chinese PDF",
+              "password required/wrong/success",
+              "no-text original retention",
+              "explicit GB18030 retry",
+              "cancel",
+              "reopen literal search",
+              "explicit AI source opt-in/configuration gate"
+            ],
+            "android129OnlineGenerationQualified": false,
+            "windows088BuildFailure": {
+              "at": "2026-11-10T20:01:58+08:00",
+              "state": "WINDOWS088_NATIVE_BUILD_PASSED_REPEATED_TEST_COMPILATION_EXHAUSTED_CI_TIMEOUT",
+              "failedRun": 42805669767,
+              "failedSource": "187141890f4642f002126153e0833bbfeac8b8a9",
+              "releaseCompilePassed": true,
+              "passedRelatedChecks": {
+                "meeting_note": 5,
+                "document_context": 1,
+                "privacy": 31,
+                "session_store": 11
+              },
+              "explicitlyIgnoredExistingPrivacyTests": 2,
+              "audio_artifacts": "interrupted during repeated compilation; not passed",
+              "installerBuilt": false,
+              "cause": "Five separate Cargo test invocations recompiled the optimized Tauri lib test for about seven minutes each; CI cancelled at 45 minutes.",
+              "fix": "Build exactly one normal optimized library test executable through Cargo JSON artifacts, verify path/hash, then run each unchanged affected filter directly before MSI packaging.",
+              "localHeavyBuild": false
+            },
+            "customerPresale129": {
+              "at": "2026-11-10T20:12:24+08:00",
+              "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-presale.md",
+              "sha256": "59204918b943bca09f0a4f3fd370b65ed9e142b671e51928ea8fce3e34119642",
+              "allFeedbackRead": true,
+              "type": "AI simulated FIRST_USE, visible prior public human reading notes as auxiliary condition",
+              "actualPurpose": "辨清会议原话与预算补充，保存会后准备便签，再按自己的备注用词找回",
+              "outcome": "完成公开样例的阅读、人工备注和搜索回找，对资料与会议放在一起有兴趣；未给购买决定，不代表真人/售卖验收",
+              "issues": [
+                {
+                  "kind": "nonblocking usability wish",
+                  "quote": "阅读表格是这次最不舒服的部分。它按A1、B1、A2、B2这样的坐标输出，列头和下一行要在脑中对齐。",
+                  "decision": "保留原件和坐标文本准确性；结构化表格阅读愿望并入原文档事项下一相关实质批次，不为单条细节重新构建129。"
+                },
+                {
+                  "kind": "nonblocking information hierarchy wish",
+                  "quote": "备注页的东西越来越多：旧便签、图片、材料列表、下方AI区都在一页里。",
+                  "decision": "并入原详情阅读呈现事项，随下一相关批次集中处理；本轮普通备注搜索已完成完整目的。"
+                },
+                {
+                  "kind": "tool observation, unproven product failure",
+                  "quote": "另有一次我想展开纪要中的“查看其余2项”，使用当前文字定位的点击没有完成，工具等待后超时。",
+                  "decision": "129实际折叠按钮文案已含下一项文字；保留定位超时，不据此把未证实按钮故障当作产品回归。"
+                }
+              ],
+              "remaining": "价格/套餐/售后未确定；实物、声音、新转写、在线AI和长期资料规模未体验"
+            },
+            "customerAfteruse129": {
+              "at": "2026-11-10T20:17:44+08:00",
+              "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android129\\customer-afteruse.md",
+              "sha256": "985a119f821d6b24a366df039fd3dc50bcfd79a1ae4c92c3cc50155fd5a40059",
+              "allFeedbackRead": true,
+              "type": "AI hypothetical after-purchase FIRST_USE; not real order, ordinary public app UI",
+              "auxiliaryConditions": [
+                "Initial read included the entire Denzic role entry with general engineering references/principles, without opening linked engineering files",
+                "Visible public existing human reading notes and prior search term provided guidance"
+              ],
+              "actualPurpose": "将会议与Word/Excel/PPT补充对照，保存下次开会先问人工便签，离开后按自己的词找到并接续",
+              "outcome": "目的完成；认为材料集中、原话/人工来源和备注搜索回找有用；没有工程或售卖验收，也无真实购买",
+              "nonblockingWishes": [
+                "结构化表格对应列头和值，同时保留原始单元格信息",
+                "当前准备便签更易找到/置顶，手工便签可选择跳到引用材料",
+                "正式AI服务、费用和售后条件需真实交付说明"
+              ],
+              "decision": "与同批售前反馈合并到原文档/详情阅读事项；保留准确坐标文本和原件。未有日常阻断，不为细节另做129原生包。正式服务/价格继续保留未定，不能假称只剩模型。",
+              "toolObservations": "初始用button定位tab与纪要文字歧义属于已说明的输入定位问题；实际改用tab后可用，不列为产品故障。",
+              "remaining": "实物/声音/新转写/在线AI/图文新增/导出恢复/长期使用未体验"
+            },
+            "androidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\documents-android129-result.json",
+            "androidSource": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+            "androidDelivered": true,
+            "phoneSessionClosed": true,
+            "windowsSource": "1a71b66754771f6a82428482daed171363975b6f",
+            "windowsDelivered": false
           }
         }
       },

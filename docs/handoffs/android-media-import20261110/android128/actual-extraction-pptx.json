@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-10T11:54:03.294Z",
+  "actualVersion": "0.1.129",
+  "state": "ORDINARY_PHONE_DOCUMENT_IMPORT_AND_LOCAL_EXTRACTION_SAVED",
+  "document": {
+    "id": "351e1aa4-f70f-4b85-bbcb-24ba23728a37",
+    "name": "Companion-public-公开方案128.pptx",
+    "format": "pptx",
+    "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.pptx",
+    "sourceSha256": "87deffe929a19146617c61f6a953aeca0cf9851cfcbb4ce991976657a4f00cda",
+    "bytes": 2308,
+    "createdAt": 1794311638686,
+    "extraction": {
+      "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-351e1aa4-f70f-4b85-bbcb-24ba23728a37.read-6e14af3ec8baa6c8.json",
+      "sha256": "6e14af3ec8baa6c88abfca914c29d33d555f18574ea5be5b3d27b1649e831fd1",
+      "bytes": 520,
+      "characters": 24,
+      "readerVersion": "2026-11-10.1"
+    }
+  },
+  "characters": 24,
+  "sections": [
+    {
+      "id": "part-1",
+      "label": "幻灯片 1",
+      "text": "第一张：人工材料的来源\n"
+    },
+    {
+      "id": "part-2",
+      "label": "幻灯片 2",
+      "text": "第二张：工程需求待收集\n"
+    }
+  ],
+  "warnings": [
+    "隐藏幻灯片没有纳入提取文字。",
+    "演讲者备注没有纳入本次幻灯片正文。",
+    "文字按幻灯片对象顺序提取，复杂排版请对照原件。"
+  ],
+  "phoneNative": true,
+  "onlineAiCalled": false
+}
