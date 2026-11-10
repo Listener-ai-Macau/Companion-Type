@@ -22,5 +22,7 @@
     "First local UI probe expected an absent optional Playwright cached browser; reused installed isolated headless Edge, no browser download or daily profile.",
     "Strict getByLabel exact select locator did not match the native accessible label; changed to its ordinary combobox role, same component behavior then passed. Native UI not implicated.",
     "Initial source compile caught a shadowed local and missing qualification; corrected before any native package, logs under the same E audio-derivation20261110 cache."
-  ]
+  ],
+  "sourceCommit": "33ccbd683535e9c293106ace3409b139b25dfae9",
+  "remoteVerified": true
 }
