@@ -29,7 +29,7 @@ def main():
  save()
  try:
   readback=call('source-preview','--meeting-note-image-preview',{'sessionId':row['id'],'noteId':note['id']});picture=base64.b64decode(readback['dataUri'].split(',',1)[1],validate=True);assert picture[:2]==b'\xff\xd8' and __import__('hashlib').sha256(picture).hexdigest()==image['previewSha256']
-  parent=root/'backups';parent.mkdir();backup=call('library-backup','--library-backup-request',{'directory':str(parent)});archive=Path(backup['path']).resolve();assert archive.parent==parent.resolve()
+  parent=root/'backups';parent.mkdir();backup=call('library-backup','--library-backup-request',{'directory':str(parent)});archive=Path(backup['path']).resolve();assert archive.parent.samefile(parent),'Backup must remain under its exact owned parent (including Windows extended-path aliases)'
   restored=root/'restored-context';restored.mkdir();new_recordings=restored/'recordings';new_recordings.mkdir();new_state=restored/'sessions.json';new_state.write_text('[]',encoding='utf-8');target_env={**env,'APPDATA':str(restored/'roaming'),'LOCALAPPDATA':str(restored/'local'),'TEMP':str(restored/'temp'),'TMP':str(restored/'temp'),'COMPANION_TYPE_STATE_PATH':str(new_state),'COMPANION_TYPE_RECORDING_DIR':str(new_recordings),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(restored/'settings.json')}
   for key in ['APPDATA','LOCALAPPDATA','TEMP']:
    Path(target_env[key]).mkdir(exist_ok=True)
