@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-11T07:08:49+08:00",
+  "state": "NATIVE_DENSITY_ROUNDING_TEST_ASSERTION_CORRECTED_SAME_APK",
+  "actualMeasuredCssWidth": 17.996604919433594,
+  "expectedCssWidth": 18,
+  "delta": 0.00339508056640625,
+  "repair": "Use0.1CSSpixel bound for actual WebView density rounding, not exact floating-point equality. This still rejects old giant-checkbox layout. Same136 APK and data.",
+  "productChanged": false
+}
