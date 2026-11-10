@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "e8ffdd520e2aa6ac7484157a0a0c01b1abdbbc9b",
+  "runId": "42901113910",
+  "versionCode": 134,
+  "versionName": "0.1.134",
+  "sha256": "81099d28efc25aacdf43e3fe5bb159ea65f05ffc7b938e19e03885ba0b288dee",
+  "pinnedModelResources": {
+    "backendSourceCommit": "608790132701ede93fa24a00b687874cb7e70c6b",
+    "reason": "Frozen AAR omitted Java classpath resources required by LocalModelPreparation.resource(); host supplies unchanged pinned metadata and vocabulary. Native libraries and model weights are unchanged.",
+    "resources": [
+      {
+        "name": "metadata.bin",
+        "sha256": "161262d9dc2daa169d099b6604ef7ff65c85db71fd855a14b18286a571e4d27c",
+        "bytes": 11352,
+        "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/metadata.bin"
+      },
+      {
+        "name": "tokens.txt",
+        "sha256": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6",
+        "bytes": 75756,
+        "source": "apps/android-backend/src/main/resources/com/denzic/companion/mobile/tokens.txt"
+      }
+    ]
+  },
+  "nativeLibrariesUnchanged": true,
+  "webAssetsMatchSourceBuild": true,
+  "localTrustedResigningRequired": false,
+  "phoneTested": false,
+  "at": "2026-11-11T05:07:36+08:00",
+  "state": "ANDROID134_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android134\\Companion-Android-0.1.134-core-candidate.apk",
+  "apkSha256": "9d19464319453893fbbeb24c2954a4bfd14e44fe3982efb48f0891103f3f8221",
+  "apkBytes": 51159837,
+  "signerSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+  "signerMatchesPreviouslyTrustedApp": true,
+  "zip16KiBAligned": true,
+  "installed": false
+}
