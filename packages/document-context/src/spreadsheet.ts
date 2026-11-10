@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import {DocumentArchive} from './archive';
 import {checkedOfficeInput,mainPart} from './officePackage';
-import {SectionCollector,DOCUMENT_LIMITS,capacity,checkpoint,type DocumentReadOptions} from './types';
+import {SectionCollector,DOCUMENT_LIMITS,capacity,checkpoint,type DocumentReadOptions,type DocumentTableRow} from './types';
 
 export function readSpreadsheet(archive:DocumentArchive,collector:SectionCollector,options:DocumentReadOptions){
  mainPart(archive,'xlsx');const input=checkedOfficeInput(archive);checkpoint(options);
@@ -16,17 +16,18 @@ export function readSpreadsheet(archive:DocumentArchive,collector:SectionCollect
    if(++cells>DOCUMENT_LIMITS.spreadsheetCells)capacity();const location=XLSX.utils.decode_cell(address);if(location.r>1048575||location.c>16383)capacity();
    const values=rows.get(location.r)??[];values.push({column:location.c,address,cell});rows.set(location.r,values);if(rows.size>DOCUMENT_LIMITS.spreadsheetRows)capacity();
   }
-  const lines:string[]=[];let characters=0;
+  const lines:string[]=[],tableRows:DocumentTableRow[]=[];let characters=0;
   for(const row of [...rows.keys()].sort((a,b)=>a-b)){
-   checkpoint(options);const values:string[]=[];
+   checkpoint(options);const values:string[]=[],tableCells:DocumentTableRow['cells']=[];
    for(const {address,cell} of rows.get(row)!.sort((a,b)=>a.column-b.column)){
     let value:string;
-    if(cell.f&&(cell.t==='z'||cell.v===undefined||cell.v===null)){uncalculated++;value='[公式没有已保存结果]';}else value=String(cell.w??XLSX.utils.format_cell(cell)??'');
-    if(value){const text=address+': '+value;characters+=text.length;if(collector.characters+characters>DOCUMENT_LIMITS.textCharacters)capacity();values.push(text);}
+    if(cell.f&&(cell.t==='z'||cell.v===undefined||cell.v===null)){uncalculated++;value='[公式没有已保存结果]';}else value=String(cell.w??XLSX.utils.format_cell(cell)??'').replace(/\r\n?/g,'\n');
+    if(value){const text=address+': '+value;characters+=text.length;if(collector.characters+characters>DOCUMENT_LIMITS.textCharacters)capacity();values.push(text);tableCells.push({column:address.replace(/[0-9]+$/,''),text:value});}
    }
-   if(values.length)lines.push(values.join('\t'));
+   if(values.length){lines.push(values.join('\t'));tableRows.push({row:row+1,cells:tableCells});}
   }
   collector.add('工作表：'+name,lines.join('\n'));
+  if(tableRows.length)collector.sections[collector.sections.length-1].tableRows=tableRows;
  }
  if(uncalculated)collector.warnings.add('有 '+uncalculated+' 处公式没有已保存结果；本次没有运行或重算公式。');
  if(archive.names().some(name=>/\/(?:drawings|charts|media)\//.test(name)))collector.warnings.add('图片和图表仍在原件中，文字提取不包含其视觉内容。');

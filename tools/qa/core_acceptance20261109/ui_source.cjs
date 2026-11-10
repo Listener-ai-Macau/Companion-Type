@@ -11,7 +11,7 @@ function run(name,args){
 (async()=>{try{
  run('windows-typecheck',[path.join(root,'node_modules/typescript/bin/tsc'),'--project',path.join(root,'apps/windows/tsconfig.json'),'--noEmit']);
  const cache=path.join(root,'.cache/core-meeting-ui');fs.mkdirSync(cache,{recursive:true});
- for(const name of ['test_meeting_track_dashboard','test_long_minutes_reading','test_action_review_tools','test_playback_tools','test_transcript_replace','test_common_settings','test_mobile_audio_import','test_recording_notes','test_recording_library_manager','test_document_context_panel']){
+ for(const name of ['test_meeting_track_dashboard','test_long_minutes_reading','test_action_review_tools','test_playback_tools','test_transcript_replace','test_common_settings','test_mobile_audio_import','test_recording_notes','test_recording_library_manager','test_document_context_panel','test_document_table']){
   const output=path.join(cache,name+'.mjs');await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:output,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'}});
   run(name,['--import',require('node:url').pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,output]);
  }
