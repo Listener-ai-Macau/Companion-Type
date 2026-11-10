@@ -1,0 +1,58 @@
+{
+  "state": "CHANGED_RUST_FILES_PARSE",
+  "checks": [
+    {
+      "path": "apps/windows/src-tauri/src/backend/audio_artifacts.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/content_export.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/export.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_notes.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_workspace.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes/long_meeting/tests.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/mod.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/privacy/probe.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/coordinator.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/lib.rs",
+      "exit": 0
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_note_images.rs",
+      "exit": 0
+    }
+  ],
+  "typeOrRuntimeQualified": false
+}
