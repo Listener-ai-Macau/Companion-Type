@@ -1,0 +1,9 @@
+.meeting-reference-workspace{min-width:0;margin-top:22px;color:inherit;scroll-margin-top:136px}
+.reference-workspace-heading>span{font-size:11px;letter-spacing:1.2px;opacity:.62}.reference-workspace-heading>p{font-size:13px;line-height:1.7;margin:7px 0 15px;opacity:.72}
+.reference-workspace-tabs{display:flex;gap:5px;padding:5px;border:1px solid var(--border-color,var(--line,rgba(133,139,156,.22)));border-radius:13px;background:color-mix(in srgb,currentColor 3%,transparent)}
+.reference-workspace-tabs>button{appearance:none;display:flex;align-items:center;justify-content:center;gap:7px;flex:1;min-width:0;min-height:42px;margin:0;padding:9px 8px;border:1px solid transparent;border-radius:9px;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:500;line-height:1.4;cursor:pointer;opacity:.65}
+.reference-workspace-tabs>button[aria-selected=true]{background:color-mix(in srgb,var(--accent-color,var(--accent,#8872bd)) 14%,transparent);border-color:color-mix(in srgb,var(--accent-color,var(--accent,#8872bd)) 24%,transparent);opacity:1}
+.reference-workspace-tabs>button:focus-visible{outline:2px solid currentColor;outline-offset:2px}.reference-workspace-tabs>button>svg{flex-shrink:0}.reference-workspace-tabs>button>span{overflow-wrap:anywhere}
+.reference-workspace-panel{min-width:0;padding-top:8px}.reference-workspace-panel[hidden]{display:none!important}
+.meeting-reference-workspace .document-context{border-top:0;margin-top:0}.meeting-reference-workspace .meeting-ai-workbench{margin-top:0}
+@media(max-width:380px){.reference-workspace-tabs>button{gap:5px;font-size:12px;padding-inline:5px}.reference-workspace-tabs>button>svg{width:14px;height:14px}}

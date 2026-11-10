@@ -7,7 +7,7 @@ module.exports=async function documentJourney(page,plan,out){
  async function dialog(id,action,file,hash,trigger){fs.writeFileSync(path.join(out,'dialog-request-'+id+'.json'),JSON.stringify({action,path:file,sha256:hash}));await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),until=Date.now()+90000;while(!fs.existsSync(reply)&&Date.now()<until)await wait(100);assert(fs.existsSync(reply),'Native picker result required: '+id);const result=JSON.parse(fs.readFileSync(reply));assert.equal(result.state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');steps.push({step:id,actualNativePicker:result.action});save();}
  function row(){return JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);}
  async function openMeeting(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await page.locator('#ct-saved-recording-workspace').waitFor();}
- await page.bringToFront();await openMeeting();const panel=page.getByRole('region',{name:'补充文档材料'});await panel.getByRole('button',{name:'添加文档',exact:true}).waitFor();let before=row();
+ await page.bringToFront();await openMeeting();const panel=page.getByRole('region',{name:'补充文档材料'});let before=row();const referencePane=page.getByRole('region',{name:'会议补充资料',exact:true});if(Number(plan.appVersion.split('.').at(-1))>=98)await referencePane.getByRole('tab',{name:'便签与图片',exact:true}).click();
  if(Number(plan.appVersion.split('.').at(-1))>=97){
   const notes=page.locator('#ct-recording-notes'),sourceBefore=row();
   const oldBody='公开阅读便签甲｜'+('这是一份公开软件检查中的人工说明，不是录音结论。'.repeat(20))+'原样保留的旧便签末尾';
@@ -36,6 +36,14 @@ module.exports=async function documentJourney(page,plan,out){
   fs.writeFileSync(path.join(out,'notes-reading-ui.json'),JSON.stringify({state:'ORDINARY_NATIVE_RECENT_CREATED_COMPLETE_EDIT_AND_SEARCH_READING_PASSED',oldNoteId:oldNote.id,newNoteId:newNote.id,oldBodyPreserved:true,newBodyPreserved:true,sourceTranscriptMinutesAndPreviousNotesUnchanged:true},null,2));
   steps.push({step:'native-recent-notes-presentation',latestUpdatedFirst:true,createdOrderSelectable:true,oldLongNoteFoldedAndReversible:true,editLoadsCompleteSource:true,searchDisplaysCompleteMatchingNote:true});save();
  }
+ if(Number(plan.appVersion.split('.').at(-1))>=98){
+  const notes=page.locator('#ct-recording-notes'),composer=notes.locator('.ct-note-composer');if(!await composer.evaluate(n=>n.open))await composer.locator(':scope > summary').click();
+  const draft=notes.getByRole('textbox',{name:'新录音备注',exact:true}),originalDraft=await draft.inputValue(),unsaved='尚未保存的来源核对便签，切换材料后全文保留。';
+  await draft.fill(unsaved);await referencePane.getByRole('tab',{name:'补充文档',exact:true}).click();assert(await panel.isVisible());assert(!await notes.isVisible());
+  await referencePane.getByRole('tab',{name:'便签与图片',exact:true}).click();assert.equal(await draft.inputValue(),unsaved);await draft.fill(originalDraft);
+  await referencePane.getByRole('tab',{name:'补充文档',exact:true}).click();steps.push({step:'ordinary-reference-pane-routing',manualDraftRetainedAcrossDocumentReading:true,onlySelectedPaneVisible:true});save();
+ }
+ await panel.getByRole('button',{name:'添加文档',exact:true}).waitFor();
  await dialog('document-cancel','cancel',null,null,()=>panel.getByRole('button',{name:'添加文档',exact:true}).click());await panel.getByText('已取消选择，已有材料保留。',{exact:true}).waitFor();assert.equal(row().documentContext?.rows?.length??0,0);
  const docs=[];
  for(const input of plan.documentInputs){
