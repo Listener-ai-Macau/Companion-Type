@@ -158,6 +158,17 @@ jobs:
           node-version: 24.15.0
       - name: Install matching Rust toolchain
         run: rustup toolchain install 1.95.0 --profile minimal --no-self-update
+      - name: Reuse locked Rust dependencies and compiler outputs
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ${{ runner.temp }}/companion-windows-target
+          key: windows2022-rust195-msvc-v1-${{ hashFiles('**/Cargo.lock') }}-${{ github.sha }}
+          restore-keys: |
+            windows2022-rust195-msvc-v1-${{ hashFiles('**/Cargo.lock') }}-
+            windows2022-rust195-msvc-v1-
       - name: Build frozen candidate and installer
         env:
           CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
