@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-11T00:42:14+08:00",
+  "state": "WINDOWS093_UNIFIED_EDIT_SOURCE_REMOTE_VERIFIED_NATIVE_BUILD_REQUESTED",
+  "version": "0.1.93",
+  "mustRetain": [
+    "b170264a7f0693847ea17ef85901f5411280f266",
+    "7046f32d587e1be88e6feb3aa539580a2f72333e"
+  ],
+  "mergeCommit": "a48c0aa81ec5f37b54d13e1b2fe3670ec1da31f3",
+  "userOutcome": "本机原音裁剪、切分和重排合并，另存独立录音；保存来源位置、全库备份恢复和分范围清理；后台取消、中断后沿原ID只重试未完成部分。",
+  "localChecks": {
+    "windowsTypes": true,
+    "normalWindowsWebBuild": true,
+    "newRustModulesParsedByRustfmt": true,
+    "lockedNotices": true
+  },
+  "nativeCompiled": false,
+  "installed": false,
+  "modelsRun": false,
+  "boardOrPhoneAccessed": false,
+  "wholeSaleQualified": false,
+  "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source.",
+  "sourceCommit": "4ffcd1d227c20e64336df9c2ef72cfe94c161cb1",
+  "remoteVerified": true
+}

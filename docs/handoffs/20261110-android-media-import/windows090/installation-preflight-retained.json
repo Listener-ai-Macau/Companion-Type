@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-10T21:23:24+08:00",
+  "state": "SAME_VERSION_DIFFERENT_SOURCE090_INSTALLATION_REFUSED_MERGE_LATEST_HOST_FIXES",
+  "qualifiedDocumentSource": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+  "qualifiedRuntime": 42822638071,
+  "installedVersion": "0.1.90",
+  "installedSource": "753800da8f500440e9f753dece3d1f6b02578252",
+  "installedReceipt": "E:\\CodexData\\Companion\\.build-cache\\desktop-input090\\installation.json",
+  "installedReceiptSha256": "2fc786f4c8a3521793028dcb6e125beb76d48b48c262bcfd0f159ea2b6e08b64",
+  "installedExeSha256": "4014e618ea492bc298ff7fb4ad59a8cb779305ce8225db579c40966e9973ad6a",
+  "installedDllSha256": "798987c6bcb5416d1b4178dadb8cbc97ef5c54d22b0fba184d813db1c3176bf7",
+  "document090MsiexecInvoked": false,
+  "decision": "Preserve the newly installed host pairing/input fixes; merge753800da into the qualified document lineage and freeze one091 source. Publish the coordination at shared project scope to prevent independent version-only replacement.",
+  "ownerDataChanged": false,
+  "modelsOrBoardCalls": false
+}

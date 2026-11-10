@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-10T15:03:58.735Z",
+  "installedVersion": "0.1.130",
+  "state": "ORDINARY_ACTUAL_PHONE_DERIVED_MAP_TO_VERIFIED_ORIGINAL_RECORD_AND_POSITION_PLAYBACK_PASSED",
+  "derivedKey": "30fb3b0ce8753b4689811bdaebb64496a6f2a553f035e133b830191935a9a368:1:1",
+  "originalKey": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+  "expectedOriginalStartMs": 1000,
+  "actualPlayback": {
+    "playing": true,
+    "paused": false,
+    "positionMs": 1224,
+    "speed": 1,
+    "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+    "saveWarning": null
+  },
+  "pausedAfterCheck": true,
+  "modelsRun": false
+}

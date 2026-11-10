@@ -1,7 +1,7 @@
 //! Stream two time-aligned meeting tracks into PCM for ordinary playback.
 //! Original files remain separate for transcription and are never modified.
 use std::fs::File;
-use std::io::{BufReader, Read};
+use std::io::{BufReader, Read, Seek, SeekFrom};
 use crate::companion_v1::CompanionV1MeetingTrackPart;
 
 const BLOCK: usize = 4096;
@@ -20,6 +20,21 @@ impl<'a> Reader<'a> {
             expected = expected.checked_add(part.samples).ok_or("会议回听长度无效")?;
         }
         Ok(Self { parts, index: 0, remaining: 0, file: None })
+    }
+    fn seek(&mut self, frame:u64)->Result<(),String>{
+        self.index=0;self.remaining=0;self.file=None;
+        for (i,part) in self.parts.iter().enumerate(){
+            if frame < part.first_sample+part.samples{
+                let mut file=BufReader::new(File::open(&part.path).map_err(|_|"会议音轨无法读取。")?);
+                let mut header=[0u8;44];file.read_exact(&mut header).map_err(|_|"会议音轨不完整。")?;
+                let bytes=u32::try_from(part.samples.checked_mul(2).ok_or("会议音轨过大。")?).map_err(|_|"会议音轨过大。")?;
+                if header!=denzic_host_audio_v1_core::wav::wav_header(bytes){return Err("会议音轨文件头已变化。".into());}
+                let offset=frame-part.first_sample;
+                file.seek(SeekFrom::Start(44+offset*2)).map_err(|e|e.to_string())?;
+                self.index=i+1;self.remaining=part.samples-offset;self.file=Some(file);return Ok(());
+            }
+        }
+        self.index=self.parts.len();Ok(())
     }
     fn sample(&mut self) -> Result<Option<i16>, String> {
         if self.remaining == 0 {
@@ -60,6 +75,23 @@ pub(super) fn mix(microphone: &[CompanionV1MeetingTrackPart], system: &[Companio
     Ok(total)
 }
 
+/// Exact half-open range. Seeking skips earlier PCM without rendering it.
+pub(super) fn mix_range(microphone:&[CompanionV1MeetingTrackPart],system:&[CompanionV1MeetingTrackPart],
+    start:u64,end:u64,mut emit:impl FnMut(&[i16])->Result<(),String>)->Result<(),String>{
+    let total=microphone.last().map(|p|p.first_sample+p.samples).unwrap_or(0)
+        .max(system.last().map(|p|p.first_sample+p.samples).unwrap_or(0));
+    if end<=start||end>total{return Err("会议音轨编辑区间无效。".into());}
+    let mut a=Reader::new(microphone)?;let mut b=Reader::new(system)?;a.seek(start)?;b.seek(start)?;
+    let mut block=Vec::with_capacity(BLOCK);
+    for _ in start..end{
+        block.push(match(a.sample()?,b.sample()?){
+            (Some(a),Some(b))=>((i32::from(a)+i32::from(b))/2) as i16,
+            (Some(v),None)|(None,Some(v))=>v,(None,None)=>return Err("会议音轨被截断。".into())
+        });
+        if block.len()==BLOCK{emit(&block)?;block.clear();}
+    }
+    if !block.is_empty(){emit(&block)?;}Ok(())
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -79,6 +111,7 @@ mod tests {
         let (a,b)=(parts(mic),parts(system));let mut mixed=Vec::new();
         assert_eq!(mix(&a,&b,|s|{mixed.extend_from_slice(s);Ok(())}).unwrap(),5);
         assert_eq!(mixed,[500,1500,1000,4000,5000]);
+        let mut range=Vec::new();mix_range(&a,&b,2,5,|s|{range.extend_from_slice(s);Ok(())}).unwrap();assert_eq!(range,[1000,4000,5000]);
         assert_eq!(mix(&a,&[],|_|Ok(())).unwrap(),5);
         std::fs::remove_dir_all(root).unwrap();
     }

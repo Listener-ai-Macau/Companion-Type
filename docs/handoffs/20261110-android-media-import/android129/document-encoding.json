@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-10T11:55:49.553Z",
+  "actualVersion": "0.1.129",
+  "phoneNative": true,
+  "onlineAiCalled": false,
+  "state": "PHONE_EXPLICIT_GB18030_RETRY_PASSED",
+  "initialError": "文字编码无法读取，请选择正确编码或另存为UTF-8后导入。",
+  "document": {
+    "id": "77452b48-ab60-4e58-bf9a-075d1b9de052",
+    "name": "Companion-public-中文编码128.txt",
+    "format": "txt",
+    "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.txt",
+    "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+    "bytes": 38,
+    "createdAt": 1794311744504,
+    "extraction": {
+      "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.document-77452b48-ab60-4e58-bf9a-075d1b9de052.read-11c9a4f2058e3a9a.json",
+      "sha256": "11c9a4f2058e3a9a030300515ff264ac31ed269d8f810e0451c5d3ed96dd8163",
+      "bytes": 292,
+      "characters": 21,
+      "readerVersion": "2026-11-10.1"
+    }
+  },
+  "extracted": {
+    "schema": 1,
+    "readerVersion": "2026-11-10.1",
+    "format": "txt",
+    "sourceSha256": "0dc004541235573dea5008f634331bfdc7537bc3a0c5e72c30d0fc869475239d",
+    "sections": [
+      {
+        "id": "part-1",
+        "label": "原文件文字",
+        "text": "  人工材料，保留空白。\n不是会议转写。\n"
+      }
+    ],
+    "warnings": [],
+    "characters": 21
+  }
+}

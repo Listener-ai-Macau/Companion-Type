@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-10T20:28:29+08:00",
+  "state": "WINDOWS088_FIRST_RUNTIME_PREPARATION_FAILED_BEFORE_APP_LAUNCH_INPUT_NOT_COMMITTED",
+  "run": 42815596116,
+  "testSource": "b4574c5719df91632174fcd49f1d755a671630db",
+  "appSourceUnchanged": "1a71b66754771f6a82428482daed171363975b6f",
+  "actualPrimaryFailure": "material-gb.txt was referenced in the manifest but absent from the committed runtime fixture directory. The aggregate runner subsequently masked this with missing result.json.",
+  "appLaunched": false,
+  "fixedMissingFiles": [
+    "material-gb.txt",
+    "material-utf16.txt",
+    "material.pdf",
+    "material.txt"
+  ],
+  "allManifestFilesReconciled": 11,
+  "fix": "Restore all exact already-generated public source files, force-add text fixtures ignored by broad cleanup patterns, preflight all declared identities together before native launch, and preserve primary preparation failure without expecting an app result.",
+  "nativeRebuildRequired": false,
+  "failedEvidence": "E:/CodexData/Companion/.build-cache/windows-note-context20261110/runtime088-failed1",
+  "repairTestSource": "5e2a796bad0b4055382a9a1bc3810a79f12fd2d6"
+}

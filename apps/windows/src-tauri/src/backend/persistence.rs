@@ -36,7 +36,7 @@ fn recovery_audio_is_owned(session: &CompanionV1HostSession) -> bool {
     }
     let known_product_source = matches!(
         session.source.as_str(),
-        "deviceFlash" | "boardDevice" | "hostMicrophone" | "importedAudio"
+        "deviceFlash" | "boardDevice" | "hostMicrophone" | "importedAudio" | "derivedAudio"
     );
     let chunk_owns_path = session.chunks.iter().any(|chunk| {
         chunk.path.as_deref() == session.audio_path.as_deref()
@@ -242,7 +242,7 @@ pub(super) fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSess
             // `minutes` value; retain it and also expose it through the mode
             // it was generated under. A later second route can coexist.
             for session in &mut sessions {
-                if matches!(session.source.as_str(), "deviceFlash" | "boardDevice" | "hostMicrophone" | "importedAudio") {
+                if matches!(session.source.as_str(), "deviceFlash" | "boardDevice" | "hostMicrophone" | "importedAudio" | "derivedAudio") {
                     // Old phase labels are not capture dates. Loading must
                     // not replace an unknown original date with today's time.
                     super::board_meeting::retain_capture_dates(session);

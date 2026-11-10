@@ -1,0 +1,13 @@
+{
+  "state": "TEST_DRIVER_USED_OLD_1080X1920_BOUNDS_REJECTED_VALID_OWNED_DISPLAY_TOUCH",
+  "actualOwnedDisplay": {
+    "id": 20,
+    "wmPhysicalSize": "1440x3200"
+  },
+  "productFailureProven": false,
+  "action": "Original ordinary restore picker remains open; no file selected before rejection. Test driver now checks live wm geometry and resumes the same picker and same exact archive without another restore request.",
+  "initialAttributionWithdrawn": true,
+  "actualCause": "The known file's accessibility node was offscreen, with inverted clipped bounds [272,3678][661,3200]. No touch was sent. Old fixed geometry was also wrong, but was not the cause of this specific rejection.",
+  "liveGeometryFixRetained": true,
+  "next": "Scroll only the observed owned picker content, then reacquire actual visible file bounds. Do not keep retrying an offscreen tap."
+}

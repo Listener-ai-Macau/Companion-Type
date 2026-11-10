@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-10T12:11:05+08:00",
+  "realProductIssue": {
+    "version": 122,
+    "finding": "Long-lived backup BUSY flag prevented ordinary import-progress polling; the first WAV itself imported and played successfully.",
+    "sourceFix": "Version123 holds the existing library transaction only during final publication and permits read-only import status while it is held. Existing backup exclusion retained.",
+    "verified": "Ordinary progress/cancel and completed background import with own activity exited."
+  },
+  "retainedPreparationFindings": [
+    "Initial Java compilation caught an unchecked JSON exception in the progress callback; corrected before the first native package.",
+    "Picker search field and file title can share identical text. The first helper targeted the search field; later accessibility acknowledgement did not guarantee file activation. Use unique file-title resource ID, wait for observed filtered result, then input at its actual owned-display bounds. No package rebuild for selector fixes.",
+    "Short meetings have processing=null with source=llm_deepseek and quality=final. Corrected an overly strict verification condition; the successfully saved AI result was reused without another request.",
+    "Initial background checker required a filename before the service had populated it. Corrected to observe an actual running job and its new persisted identity; first ordinary long import retained as completed foreground evidence.",
+    "Restore success notice was transient; final verification uses active library identity and restored content, rather than re-waiting for a dismissed toast."
+  ],
+  "queuedWithNextRelatedSoftwareBatch": [
+    "Translate raw system extractor errors into a useful Chinese message; corrupt input already rejected without publishing.",
+    "Show imported-source/date context more clearly and distinguish same-name copies; preserve original filename metadata."
+  ],
+  "actualBuilds": {
+    "backendJavaPackage": 1,
+    "appNativeBuilds": [
+      {
+        "version": 122,
+        "run": 42748629840,
+        "source": "f96f7b4dd222482a698eb7dab4f49498e48648d1"
+      },
+      {
+        "version": 123,
+        "run": 42750362910,
+        "source": "663a0b83c9fd3a7666e3631996c4cc46f87f1dcd"
+      }
+    ],
+    "reworkReason": "One actual native progress/exclusion integration defect. Other preparation corrections reused the same app packages."
+  }
+}

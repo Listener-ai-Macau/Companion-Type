@@ -1,0 +1,89 @@
+{
+  "at": "2026-11-10T10:41:48.510Z",
+  "state": "SHARED_DOCUMENT_READER_PRODUCTION_WORKER_OFFLINE_FIXTURES_PASS",
+  "appDelivered": false,
+  "externalRequestsAllowed": false,
+  "workerResources": [
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/document-engine/pdf.min.mjs",
+    "/document-engine/pdf.worker.min.mjs",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/document-engine/pdf.min.mjs",
+    "/document-engine/pdf.worker.min.mjs",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/document-engine/pdf.min.mjs",
+    "/document-engine/pdf.worker.min.mjs",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/document-engine/pdf.min.mjs",
+    "/document-engine/pdf.worker.min.mjs",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/assets/reader.worker-DwOZTBWX.js",
+    "/document-engine/pdf.min.mjs",
+    "/document-engine/pdf.worker.min.mjs"
+  ],
+  "results": {
+    "material.docx": {
+      "characters": 96,
+      "sections": 2,
+      "warnings": [
+        "部分文档对象未能按原版呈现，请对照原件核对提取文字。",
+        "文字按文档结构提取，不对应Word页码；排版、修订和隐藏样式请以原件为准。"
+      ]
+    },
+    "material.xlsx": {
+      "characters": 131,
+      "sections": 1,
+      "warnings": [
+        "隐藏工作表没有纳入提取文字。",
+        "有 1 处公式没有已保存结果；本次没有运行或重算公式。",
+        "单元格使用原件保存的值和显示格式；公式、外部链接与宏不会运行。"
+      ]
+    },
+    "material.pptx": {
+      "characters": 24,
+      "sections": 2,
+      "warnings": [
+        "隐藏幻灯片没有纳入提取文字。",
+        "演讲者备注没有纳入本次幻灯片正文。",
+        "文字按幻灯片对象顺序提取，复杂排版请对照原件。"
+      ]
+    },
+    "material.txt": {
+      "characters": 21,
+      "sections": 1,
+      "warnings": []
+    },
+    "material.pdf": {
+      "characters": 117,
+      "sections": 2,
+      "warnings": [
+        "分栏、竖排和复杂排版请对照原件；本次没有识别图中文字。"
+      ]
+    },
+    "passwordRequired": {
+      "ok": false,
+      "code": "password-required",
+      "message": "这份PDF需要密码才能读取，密码仅用于本机本次提取。"
+    },
+    "wrongPassword": {
+      "ok": false,
+      "code": "wrong-password",
+      "message": "PDF密码不正确，请重新输入；密码不会保存。"
+    },
+    "passwordOpened": {
+      "sections": 2
+    },
+    "cancelled": {
+      "ok": false,
+      "code": "cancelled",
+      "message": "已停止提取文字，已保存的原件仍保留。"
+    },
+    "afterCancel": {
+      "sections": 2
+    }
+  }
+}

@@ -32,9 +32,9 @@ pub(super) fn session_chunks(session_id: &str, parts: &[HostAudioPart]) -> Resul
 /// Legacy single-file host and device sessions use their existing paths.
 pub(crate) fn saved_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Option<Vec<(PathBuf,u64)>>,String> {
     let prefix=format!("{}-host-part-",row.id);
-    let chunks=row.chunks.iter().filter(|chunk|row.source!="importedAudio" || chunk.status!="importedOriginal").collect::<Vec<_>>();
+    let chunks=row.chunks.iter().filter(|chunk|!matches!(row.source.as_str(),"importedAudio"|"derivedAudio") || chunk.status!="importedOriginal").collect::<Vec<_>>();
     if !chunks.iter().any(|c|c.id.starts_with(&prefix)) {return Ok(None);}
-    if !matches!(row.source.as_str(),"hostMicrophone" | "importedAudio") || row.device_recording_key.is_some() || !row.audio_stored || chunks.len()<2 {
+    if !matches!(row.source.as_str(),"hostMicrophone" | "importedAudio" | "derivedAudio") || row.device_recording_key.is_some() || !row.audio_stored || chunks.len()<2 {
         return Err("录音分段尚未完整保存。".into());
     }
     let primary=Path::new(row.audio_path.as_deref().ok_or("录音路径缺失。")?).canonicalize().map_err(|_|"录音文件缺失。")?;

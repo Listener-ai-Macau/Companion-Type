@@ -225,6 +225,8 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  renderAudioEditor?:(props:import('./AudioDerivationEditor').AudioEditHostProps)=>ReactNode;
+  audioEditNotice?:ReactNode;
   documentAdapter?:(sessionId:string)=>import('../../document-context/src/storageTypes').DocumentContextAdapter;
   readingPreview?:boolean;
   onAskMeetings?: (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) => Promise<import('@companion-type/core').MeetingQaResult>;
@@ -457,7 +459,7 @@ export function CompanionDashboard({
   onSaveNote,
   onAddImageNote,
   onPreviewNoteImage,
-  documentAdapter,
+  documentAdapter,renderAudioEditor,audioEditNotice,
   onSaveLibraryOrganization,
   onExportLibrary,
   onBackupLibrary,
@@ -613,6 +615,8 @@ export function CompanionDashboard({
   const [bookmarkUnsaved,setBookmarkUnsaved]=useState(false);
   const [noteBusy,setNoteBusy]=useState(false);
   const [noteUnsaved,setNoteUnsaved]=useState(false);
+  const [audioEditUnsaved,setAudioEditUnsaved]=useState(false);
+  const [editSourceSeek,setEditSourceSeek]=useState<{id:string;positionMs:number}|null>(null);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
   const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>>({});
@@ -1069,8 +1073,8 @@ export function CompanionDashboard({
   const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
     ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
-  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||audioEditUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,audioEditUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
@@ -1706,6 +1710,22 @@ export function CompanionDashboard({
       stillCurrent, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===sessionId?segmentedAudio.current:null);
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
   };
+  const openEditSource=async(id:string,positionMs:number)=>{
+    if(audioEditUnsaved)throw Error('请先保存或放弃当前录音编辑。');
+    setEditSourceSeek({id,positionMs});setOpenSavedRecordingId(id);setDetailSessionId(id);setPlaybackOpen(true);
+    if(selectedSession?.id!==id)onControl({action:'meetingSelectSession',sessionId:id});
+  };
+  useEffect(()=>{
+    if(!editSourceSeek||selectedSession?.id!==editSourceSeek.id||controlsBusy)return;
+    const target=editSourceSeek;setEditSourceSeek(null);setPlaybackOpen(true);
+    const identity=audioIdentity;
+    const current=()=>audioContext.current.sessionId===target.id&&audioContext.current.identity===identity&&!audioContext.current.blocked;
+    void (selectedSession.source==='hostMeeting'?seekMeetingAudio(target.positionMs,current):
+      seekBookmarkAudio(target.positionMs,async()=>{if(!preparedAudio)await prepareAudio();},()=>audioElement.current,current,
+        ()=>externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===target.id?segmentedAudio.current:null))
+      .then(()=>setAudioResult({sessionId:target.id,message:'已定位到这份成品使用的原音位置，可点击播放回听。'}))
+      .catch(e=>setAudioResult({sessionId:target.id,message:operationErrorText(e)}));
+  },[editSourceSeek,selectedSession?.id,controlsBusy]);
   const resumeTranscriptDraft = (sessionId: string) => {
     if (controlsBusy || !readableLibrary.some(session=>session.id===sessionId)) return;
     setSourceSelection(null);
@@ -1876,7 +1896,12 @@ export function CompanionDashboard({
     :segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000)
     :audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)?Math.round(audioElement.current.currentTime*1000):null;
   return (
-    <main className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
+    <main onClickCapture={event=>{
+      if(audioEditUnsaved && event.target instanceof Element && event.target.closest('button,a')&&!event.target.closest('.ct-audio-edit-panel')){
+        event.preventDefault();event.stopPropagation();document.querySelector('.ct-audio-edit-draft')?.scrollIntoView({block:'nearest'});
+      }
+    }} className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
+      {audioEditNotice}
       {previewWaiting?<div className="ct-status-banner" role="status">
         <p>正在核对已保存的内容，尚未开始保存或复制。</p>
         <button type="button" className="ct-action" onClick={()=>previewTask.current?.cancel()}>取消等待</button>
@@ -2659,6 +2684,10 @@ export function CompanionDashboard({
               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>
+          {renderAudioEditor&&!readingPreview&&hasOriginalAudio&&!selectedSession.captureIncomplete&&!selectedSession.recorderControlUncertain?
+            renderAudioEditor({contextId:selectedSession.id,title:selectedSession.title,rows:readableLibrary.map(row=>({key:row.id,title:row.title,state:row.audioStored&&row.retention.audioCached&&!row.captureIncomplete&&row.status!=='recording'?'COMPLETE':'INCOMPLETE'})),
+              busy:controlsBusy||storageBlocked||oobeBlockedByRecording||noteUnsaved||minutesDirty||titleDirty||transcriptReviewUnsaved,
+              onChanged:onRefresh,onLibrary:()=>{setDetailSessionId(null);navigatePage('library');},onDirty:setAudioEditUnsaved,onSource:openEditSource}):null}
           {documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} openSource={documentSource} onChanged={onRefresh}/></div>:null}
           {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
             {snapshot?.minutesContextSupported?'补充单独保存；整理时可选择仅用原话，或一起参考已保存补充。':'补充已单独保存；当前整理程序仅使用原话。'}
@@ -3669,6 +3698,7 @@ function meetingTitle(session: CompanionV1HostSession): string {
 function meetingSource(session: CompanionV1HostSession): string {
   if (session.source === 'deviceFlash' || session.source === 'boardDevice') return 'Companion 录音';
   if (session.source === 'hostMicrophone') return '本机麦克风';
+  if (session.source === 'derivedAudio') return '编辑成品';
   if (session.source === 'importedAudio') return '导入音频';
   if (session.source === 'hostMeeting') return '电脑会议与麦克风';
   if (session.source === 'importedTranscript') return '导入文字';

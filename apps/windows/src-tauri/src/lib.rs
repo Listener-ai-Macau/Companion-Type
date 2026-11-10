@@ -7,6 +7,7 @@ mod backend;
 mod cli_fallback;
 mod commands;
 mod document_commands;
+mod audio_edit_commands;
 mod content_handoff;
 mod file_clipboard;
 mod calendar_handoff;
@@ -333,6 +334,7 @@ pub fn run() {
             commands::save_companion_meeting_note,
             commands::add_companion_image_note,
             commands::preview_companion_note_image,
+            audio_edit_commands::control_companion_audio_edit,
             document_commands::read_companion_document_context,
             document_commands::import_companion_document,
             document_commands::save_companion_document_original,
@@ -562,6 +564,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-image-note-request" => Some((i,17)),
         "--meeting-note-image-preview" => Some((i,18)),
         "--meeting-document-request" => Some((i,19)),
+        "--audio-edit-request" => Some((i,20)),
         "--meeting-speakers-request" => Some((i,5)),
         "--device-connect-request" => Some((i,6)),
         "--library-organize-request" => Some((i,7)),
@@ -699,6 +702,28 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
             let data=backend::content_export::materialize(&session.title,export)?;
             backend::export::write_atomic(Path::new(destination), &data)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
+        } else if operation==20 {
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
+            struct AudioEditCli{action:String,#[serde(default)]request:serde_json::Value,cancel_after_outputs:Option<u64>,cancel_after_ms:Option<u64>}
+            let input:AudioEditCli=serde_json::from_reader(file).map_err(|_|"录音编辑请求格式无效。")?;
+            let coordinator=Arc::new(coordinator);
+            let result=audio_edit_commands::dispatch(coordinator.clone(),&input.action,input.request)?;
+            if matches!(input.action.as_str(),"start"|"retry"){
+                let id=result["id"].as_str().ok_or("编辑启动结果缺失。")?.to_owned();let started=std::time::Instant::now();let mut cancelled=false;
+                loop{
+                    let status=backend::audio_edit_job::status()?;
+                    backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&status).map_err(|e|e.to_string())?)?;
+                    if !status["running"].as_bool().unwrap_or(false){break;}
+                    if !cancelled&&(input.cancel_after_ms.is_some_and(|ms|started.elapsed().as_millis()>=u128::from(ms))
+                        ||input.cancel_after_outputs.is_some_and(|n|status["completed"].as_u64().unwrap_or(0)>=n)){
+                        backend::audio_edit_job::cancel(&id)?;cancelled=true;
+                    }
+                    std::thread::sleep(std::time::Duration::from_millis(20));
+                }
+                let result=serde_json::json!({"status":backend::audio_edit_job::status()?,"snapshot":coordinator.snapshot()?});
+                backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
+            }else{backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;}
+            println!("meeting_workspace_result=LOCAL_AUDIO_EDIT_OPERATION_COMPLETED");
         } else if operation==19 {
             #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
             struct DocumentRequest{action:String,session_id:String,#[serde(default)]revision:u64,document_id:Option<String>,source_path:Option<PathBuf>,offset:Option<u64>,extraction:Option<backend::document_context::Extraction>}

@@ -178,7 +178,7 @@ pub(super) fn import(input:&Path)->Result<ImportedAudio,String> {
 }
 
 pub(super) fn original_chunk(row:&crate::companion_v1::CompanionV1HostSession)->Result<&crate::companion_v1::CompanionV1AudioChunk,String> {
-    if row.source!="importedAudio" {return Err("不是导入的音频。".into());}
+    if !matches!(row.source.as_str(),"importedAudio"|"derivedAudio") {return Err("不是导入的音频。".into());}
     let mut matches=row.chunks.iter().filter(|chunk|chunk.status=="importedOriginal");
     let original=matches.next().ok_or("导入原文件记录缺失。")?;
     if matches.next().is_some(){return Err("导入原文件记录无效。".into());}

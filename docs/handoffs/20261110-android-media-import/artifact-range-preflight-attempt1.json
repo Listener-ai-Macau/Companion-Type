@@ -1,0 +1,5 @@
+{
+  "state": "PREPARER_ARTIFACT_ACCEPT_HEADER_REJECTED415",
+  "finding": "Artifacts archive endpoint requires GitHub JSON media type to request redirect; release assets use octet-stream. Corrected per-kind Accept without product rebuild or artifact reread.",
+  "productRetested": false
+}

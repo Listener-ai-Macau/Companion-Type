@@ -1,0 +1,14 @@
+{
+  "checks": [
+    {
+      "name": "backend",
+      "exit": 0
+    },
+    {
+      "name": "app",
+      "exit": 1
+    }
+  ],
+  "nativeLibrariesRebuilt": false,
+  "modelsRun": false
+}

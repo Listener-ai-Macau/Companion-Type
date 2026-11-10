@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-10T14:58:43.088Z",
+  "installedVersion": "0.1.130",
+  "state": "ORDINARY_INSTALLED_ANDROID130_THREE_INDEPENDENT_SPLIT_OUTPUTS_COMPLETED",
+  "sourceKey": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+  "status": {
+    "id": "6fb5e831-8967-48ea-9d72-5ad1c6709f87",
+    "operation": "derive",
+    "running": false,
+    "state": "complete",
+    "message": "编辑片段已保存在本机。原录音和原纪要保留，新片段可独立回听、转写。",
+    "key": "a1344d0fa2c08c481c945e8633a5c43507b24eea3ff95cf4801ae5762a185be6:1:1",
+    "processed": 0,
+    "total": 0,
+    "outputs": [
+      {
+        "key": "a1344d0fa2c08c481c945e8633a5c43507b24eea3ff95cf4801ae5762a185be6:1:1",
+        "name": "公开编辑130 · 三段 · 第1段",
+        "saved": true
+      },
+      {
+        "key": "acc7ac559ed49ac27f2bfb2923c13faba60ef7ed99293ddedaab32d8586a0890:1:1",
+        "name": "公开编辑130 · 三段 · 第2段",
+        "saved": true
+      },
+      {
+        "key": "c6f519d2bd05d34a7cff78aca9edf489c28db6498f42df92a93b19993245aecf:1:1",
+        "name": "公开编辑130 · 三段 · 第3段",
+        "saved": true
+      }
+    ],
+    "completed": 3,
+    "totalOutputs": 3,
+    "retryAvailable": false
+  }
+}

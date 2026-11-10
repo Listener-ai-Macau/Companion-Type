@@ -1969,7 +1969,7 @@ fn refresh_privacy_state(
         .sessions
         .iter()
         .map(|session| session.audio_bytes.saturating_add(session.chunks.iter()
-            .filter(|chunk|session.source=="importedAudio" && chunk.status=="importedOriginal")
+            .filter(|chunk|matches!(session.source.as_str(),"importedAudio"|"derivedAudio") && chunk.status=="importedOriginal")
             .fold(0u64,|total,chunk|total.saturating_add(chunk.bytes))))
         .sum();
     let transcript_bytes = snapshot

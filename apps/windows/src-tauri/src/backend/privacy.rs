@@ -19,8 +19,9 @@ fn cleanup_audio_paths<'a>(sessions: impl Iterator<Item = &'a CompanionV1HostSes
     checkpoint: bool,documents:bool) -> Result<Vec<String>, String> {
     let mut paths = Vec::new();
     for session in sessions {
+        if documents&&session.source=="derivedAudio"{paths.push(super::audio_editing::owner_path(session,&super::audio_storage::recording_root()?).to_string_lossy().into_owned());}
         if documents&&!session.document_context.is_empty(){paths.push(super::document_context::owner_path(session,&super::audio_storage::recording_root()?).to_string_lossy().into_owned());}
-        if checkpoint && session.source=="importedAudio" && session.audio_stored {
+        if checkpoint && matches!(session.source.as_str(),"importedAudio"|"derivedAudio") && session.audio_stored {
             let original=super::import_audio::original_chunk(session)?;
             if let Some(_path)=original.path.as_deref().filter(|path|std::path::Path::new(path).exists()) {
                 super::import_audio::verify_original(session,&super::audio_storage::recording_root()?)?;

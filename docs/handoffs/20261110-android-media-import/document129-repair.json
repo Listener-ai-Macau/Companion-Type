@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-10T19:35:41+08:00",
+  "state": "ANDROID128_REAL_PHONE_ORIGINAL_PUBLISH_FAILED_129_ATOMIC_RENAME_REPAIR_SOURCE_READY",
+  "failedSource": "92283dd2c1d9b229b0236f1696af3b2cb0ac073a",
+  "failedApkSha256": "4c9c1e435d97252050497455b879cc5dc8b4a5e57d9a5ebb84ecba2656c5b924",
+  "failedInstallerDraftAsset": 731173518,
+  "actualPhone": "d6bd213d owned display19",
+  "failure": "The selected public Word file reached the app, then Files.createLink(target,temp) failed in Android private data. No original or context row was committed. Initial accessibility click did not close the picker; an observed ordinary touch did. CDP timeout while picker remained foreground was not an app crash.",
+  "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android128\\post-picker-diagnostic.json",
+  "fix": "Use the already verified Android atomic-rename publication pattern, with existing-target precheck under the single-process document writer lock. Keep original/source identity and retry guards; show a clear save failure without an internal path.",
+  "checks": [
+    "Full Java app compile passed",
+    "Document original/extraction storage, exact backup restore and scoped purge JVM test passed after the fix"
+  ],
+  "nativeRevalidationPending": true,
+  "modelsChangedOrRun": false,
+  "ownerPrivateDataUsed": false,
+  "sourceCommit": "672d1c223d656bcc37eb6d72f2365ec31f9a0cad",
+  "remoteVerified": true
+}

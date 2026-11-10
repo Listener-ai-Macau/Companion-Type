@@ -6,6 +6,11 @@ use std::{
     io::Write,
     path::Path,
 };
+fn seal_retry(source:&Path,path:&Path,purpose:Purpose,bytes:u64,sha:&str)->Result<(),String>{
+    if matches!(purpose,Purpose::Recording|Purpose::ImportedOriginal|Purpose::SessionReceipt){
+        audio_artifacts::seal_audio_edit_retry(source,path,purpose,bytes,sha)
+    }else{audio_artifacts::seal_note_retry(source,path,purpose,bytes,sha)}
+}
 fn hash(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
@@ -28,7 +33,7 @@ pub(crate) fn write_new(
 ) -> Result<(), String> {
     if target.exists() {
         verify(target, bytes.len() as u64, &hash(bytes))?;
-        return audio_artifacts::seal_note_retry(
+        return seal_retry(
             source,
             target,
             purpose,
@@ -86,4 +91,35 @@ pub(crate) fn write_new(
         }
     }
     result
+}
+
+
+/// Bounded immutable publication; large audio never becomes one in-memory Vec.
+pub(crate) fn copy_new(source:&Path,target:&Path,purpose:Purpose,input:&Path,
+    bytes:u64,sha:&str,mut check:impl FnMut()->Result<(),String>)->Result<(),String>{
+    use std::io::Read;
+    verify(input,bytes,sha)?;check()?;
+    if target.exists(){verify(target,bytes,sha)?;return seal_retry(source,target,purpose,bytes,sha);}
+    let lease=match audio_artifacts::WriteLease::begin(source,target,purpose){
+        Ok(v)=>v,Err(first)=>{
+            let item=audio_artifacts::BackupFile{file:target.file_name().and_then(|x|x.to_str()).ok_or("音频名称无效。")?.into(),
+                sources:vec![source.file_name().and_then(|x|x.to_str()).ok_or("音频归属无效。")?.into()],
+                purpose,bytes,sha256:sha.into()};
+            audio_artifacts::retry_absent_backup_file(target.parent().ok_or("音频目录无效。")?,&item).map_err(|_|first)?;
+            audio_artifacts::WriteLease::begin(source,target,purpose)?
+        }
+    };
+    let temp=input.with_file_name(format!(".audio-edit-{}.tmp",uuid::Uuid::new_v4()));
+    let result=(||{
+        let mut from=std::fs::File::open(input).map_err(|e|e.to_string())?;
+        let mut to=OpenOptions::new().write(true).create_new(true).open(&temp).map_err(|e|e.to_string())?;
+        let mut buffer=[0u8;65536];let mut digest=Sha256::new();let mut total=0u64;
+        loop{check()?;let n=from.read(&mut buffer).map_err(|e|e.to_string())?;if n==0{break;}
+            to.write_all(&buffer[..n]).map_err(|e|e.to_string())?;digest.update(&buffer[..n]);total+=n as u64;}
+        if total!=bytes||format!("{:x}",digest.finalize())!=sha{return Err("音频在保存期间变化。".into());}
+        to.sync_all().map_err(|e|e.to_string())?;drop(to);verify(input,bytes,sha)?;
+        fs::hard_link(&temp,target).map_err(|_|"新音频尚未提交，已有资料未覆盖。")?;Ok(())
+    })();
+    let _=fs::remove_file(temp);
+    if result.is_ok(){if let Some(lease)=lease{lease.finish()?;}}result
 }

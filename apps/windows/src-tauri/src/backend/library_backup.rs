@@ -57,8 +57,9 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
     }
     let mut rows=snapshot.host.sessions.clone();let mut anchors=Vec::new();let mut imported_names=HashSet::new();
     for row in &rows {
+        if row.source=="derivedAudio"{super::audio_editing::provenance(row)?;anchors.push(super::audio_editing::owner_path(row,root).to_string_lossy().into_owned());}
         if !row.document_context.is_empty(){anchors.push(super::document_context::owner_path(row,root).to_string_lossy().into_owned());}
-        if row.source=="importedAudio" && row.audio_stored {
+        if matches!(row.source.as_str(),"importedAudio"|"derivedAudio") && row.audio_stored {
             let original=super::import_audio::verify_original(row,root)?;
             imported_names.insert(leaf(&original.to_string_lossy(),root)?.to_lowercase());
         }
@@ -130,6 +131,7 @@ fn save_with_templates(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent
     let mut paths=snapshot.host.sessions.iter().flat_map(|s|s.audio_path.iter().chain(s.chunks.iter().filter_map(|c|c.path.as_ref()))
         .chain(s.meeting_tracks.iter().flat_map(|tracks|tracks.microphone.iter().chain(&tracks.system).map(|part|&part.path))))
         .filter(|p|!virtual_path(p)).cloned().collect::<Vec<_>>();
+    for row in &snapshot.host.sessions{if row.source=="derivedAudio"{paths.push(super::audio_editing::owner_path(row,recording_root).to_string_lossy().into_owned());}}
     paths.sort();paths.dedup();
     let _usage=paths.iter().map(|p|audio_artifacts::usage(Path::new(p))).collect::<Result<Vec<_>,_>>()?;
     let (sessions,files)=pack_rows(snapshot,&root)?;
@@ -210,7 +212,13 @@ fn read_manifest(path:&Path)->Result<Manifest,String>{
             .chain(row.meeting_tracks.iter().flat_map(|tracks|tracks.microphone.iter().chain(&tracks.system).map(|part|&part.path))) {
             if !virtual_path(p)&&(!valid_leaf(p)||!names.contains(&p.to_lowercase())) {return Err("备份缺少会议所需的录音文件。".into());}
         }
-        if row.source=="importedAudio" && row.audio_stored {
+        if row.source=="derivedAudio"{
+            let name=super::audio_editing::owner_path(row,Path::new("")).file_name().unwrap().to_string_lossy().into_owned();
+            if !manifest.files.iter().any(|f|f.file==name&&f.purpose==Purpose::SessionReceipt&&f.sources==vec![name.clone()]){
+                return Err("备份缺少这份成品的独立来源记录。".into());
+            }
+        }
+        if matches!(row.source.as_str(),"importedAudio"|"derivedAudio") && row.audio_stored {
             let original=super::import_audio::original_chunk(row)?;
             let path=original.path.as_deref().ok_or("备份缺少导入原文件。")?;
             let expected=original.id.rsplit('-').next().ok_or("备份原文件身份无效。")?;
