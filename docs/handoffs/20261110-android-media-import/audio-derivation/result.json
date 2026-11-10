@@ -1,0 +1,13 @@
+{
+  "state": "ISOLATED_COMPONENT_ORDINARY_INPUT_AND_NARROW_LIGHT_DARK_LAYOUT_PASSED",
+  "checks": [
+    "ordinary trim inputs preserve exact canonical sample boundaries",
+    "ordinary split emits three independent plans and retains the last partial millisecond",
+    "ordinary merge source selection/reorder preserves exact separate-source ranges",
+    "invalid original range remains editable and never starts native work"
+  ],
+  "viewport": 390,
+  "sourceScope": "Actual shared React component and native request plan contract; explicit generated-source metadata adapter. Not native app/audio/phone/Windows or customer qualification.",
+  "nativeQualification": false,
+  "modelsRun": false
+}

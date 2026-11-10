@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T22:40:18+08:00",
+  "state": "ANDROID130_GROUPED_TRIM_SPLIT_MERGE_AND_SOURCE_RETURN_SOURCE_READY_NATIVE_BUILD_PENDING",
+  "userOutcome": "完整本机录音裁剪、按时间切分、排序合并后另存独立成品；后台进度/取消、精确核对与剩余重试、原音出处回听；原件/旧转写/纪要保留。",
+  "localChecks": {
+    "mobileStrictTypecheck": true,
+    "fullAndroidJavaCompile": true,
+    "generatedPcmPublicationAndActualBackupRestorePurge": true,
+    "splitInterruptionRestartPendingOnlyRetry": true,
+    "ordinarySharedEditorInputsNarrowLightDark": true
+  },
+  "evidenceScope": "Real JVM generated PCM/library ownership and isolated actual React component with explicit generated metadata; phone/Windows native edit runtime not yet qualified.",
+  "modelsChangedOrRun": false,
+  "backendSourceRetained": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "previousInstalledVersions": {
+    "android": "0.1.129",
+    "windows": "0.1.91"
+  },
+  "appDelivered": false,
+  "windowsEditImplementationOpen": true,
+  "failedPreparationRetained": [
+    "First local UI probe expected an absent optional Playwright cached browser; reused installed isolated headless Edge, no browser download or daily profile.",
+    "Strict getByLabel exact select locator did not match the native accessible label; changed to its ordinary combobox role, same component behavior then passed. Native UI not implicated.",
+    "Initial source compile caught a shadowed local and missing qualification; corrected before any native package, logs under the same E audio-derivation20261110 cache."
+  ]
+}

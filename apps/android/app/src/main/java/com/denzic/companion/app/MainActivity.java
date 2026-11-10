@@ -954,6 +954,23 @@ public final class MainActivity extends Activity {
                 stopPlayback();JSONObject resume=savedPlaybackProgress(selected,key,parts.samples/16);try{beginPlayback(selected,key,parts,target,resume.getDouble("speed"));}catch(Exception e){stopPlayback();throw e;}return new JSONObject().put("durationMs",parts.samples/16).put("positionMs",target).put("speed",playingSpeed);
             }
             case "audioImportStatus":return AudioImportService.status(this);
+            case "audioDerivationSources":{
+                requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行，请稍后编辑。");
+                try{JSONArray requested=a.getJSONArray("keys");if(requested.length()<1||requested.length()>128)throw new java.io.IOException("请选择有效的本机录音。");List<String> keys=new ArrayList<>();for(int i=0;i<requested.length();i++)keys.add(requested.getString(i));String token=a.getString("libraryToken");AudioDerivationAccess access=AudioImportService.derivationAccess(this,libraries());return access.describe(token,access.resolve(token,keys,(done,total)->{}));}finally{LocalLibraryBackups.BUSY.set(false);}
+            }
+            case "startAudioDerivation":AudioImportService.startDerivation(this,a);return new JSONObject().put("started",true);
+            case "retryAudioDerivation":AudioImportService.retryDerivation(this,a.getString("id"));return new JSONObject().put("started",true);
+            case "audioDerivationProvenance":{
+                if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开录音。");RecordingLibrary.Session source=session(a.getString("key"));AudioDerivationPlan plan=source.imported==null?null:DerivedAudioPublication.read(source.imported);return new JSONObject().put("available",plan!=null).put("provenance",plan==null?JSONObject.NULL:plan.provenance());
+            }
+            case "audioDerivationSourceTarget":case "playDerivedSource":{
+                String token=a.getString("libraryToken");if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开录音。");RecordingLibrary.Session owner=session(a.getString("key"));AudioDerivationPlan plan=owner.imported==null?null:DerivedAudioPublication.read(owner.imported);
+                Object rawIndex=a.get("sliceIndex");if(plan==null||!(rawIndex instanceof Number))throw new java.io.IOException("找不到这段原音的对应资料。");double exactIndex=((Number)rawIndex).doubleValue();int index=((Number)rawIndex).intValue();if(exactIndex!=index||index<0||index>=plan.slices.size())throw new java.io.IOException("请选择有效的原音片段。");AudioDerivationPlan.Slice slice=plan.slices.get(index);
+                AudioDerivationAccess access=AudioImportService.derivationAccess(this,libraries());AudioDerivationAccess.Resolved resolved=access.resolve(token,java.util.Collections.singletonList(slice.source.key),(done,total)->{}).get(0);if(!resolved.source.identity.equals(slice.source.identity))throw new java.io.IOException("原录音内容已变化，不能按旧位置回听。派生录音仍保留。");
+                long position=slice.start/16;double speed=1;
+                if("playDerivedSource".equals(method)){RecordingLibrary.Session original=session(slice.source.key);NativeAudio.PartsResult parts=ManagedAudioParts.prepare(original,root().resolve("companion-decoded-audio"));JSONObject resume=savedPlaybackProgress(original,slice.source.key,parts.samples/16);speed=resume.getDouble("speed");stopPlayback();try{beginPlayback(original,slice.source.key,parts,position,speed);}catch(Exception error){stopPlayback();throw error;}}
+                return new JSONObject().put("key",slice.source.key).put("positionMs",position).put("durationMs",resolved.source.frames/16).put("complete",true).put("speed",speed);
+            }
             case "appPreferences":return appPreferences();
             case "saveAppPreferences":{
                 if(a.length()==0)throw new IllegalArgumentException("没有需要保存的设置。");
@@ -1200,7 +1217,8 @@ public final class MainActivity extends Activity {
                     String title;try { title=recordingTitle(key,s); } catch (java.io.IOException error) {title=d==null?"导入录音 · 名称暂不可用":defaultRecordingTitle(d.sessionId,true);titleProblems++;}
                     MeetingLibrarySearch.Result found=search==null?null:search.find(key,title,reader);
                     if(found!=null){searchProblems+=found.unreadable;if(found.match==null)continue;}
-                    JSONObject row=new JSONObject().put("key", key).put("title",title).put("session",d==null?"文件导入":Long.toUnsignedString(d.sessionId)).put("source",d==null?"importedAudio":"recorder")
+                    boolean derived=false;if(s.imported!=null)try{derived=DerivedAudioPublication.read(s.imported)!=null;}catch(java.io.IOException unreadable){titleProblems++;}
+                    JSONObject row=new JSONObject().put("key", key).put("title",title).put("session",d==null?(derived?"编辑录音":"文件导入"):Long.toUnsignedString(d.sessionId)).put("source",d==null?(derived?"derivedAudio":"importedAudio"):"recorder")
                             .put("state", s.state.name()).put("segments",s.imported==null?s.segments.size():s.imported.partCount()).put("lifecycle",life).put("libraryToken",libraries().token())
                             .put("recordedAtUnixSeconds",s.startedUnixSeconds>0?Long.valueOf(s.startedUnixSeconds):JSONObject.NULL);
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
