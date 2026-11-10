@@ -136,7 +136,7 @@ def main():
   # The unrelated control is an honest text-only fixture, with no missing board audio.
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
   session['retention']['audioCached']=False;(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
-  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(imageInput=str(image),imageSha256=sha(image),invalidImage=str(bad),invalidImageSha256=sha(bad),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],imageInput=str(image),imageSha256=sha(image),invalidImage=str(bad),invalidImageSha256=sha(bad),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  for name in ['roaming','local','recordings','webview','temp']:(root/name).mkdir(exist_ok=True)
  # A missing private settings file means valid fresh defaults. Writing '{}'
  # would be a corrupt product store, not an empty configured user profile.

@@ -24,7 +24,7 @@ save()
 try:
  artifact=private/'original-native-artifact';artifact.mkdir()
  if spec:
-  assert PHASE in {'audio','whole','delivery','actions','context'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83'}
+  assert PHASE in {'audio','whole','delivery','actions','context'} and spec['verification']['version'] in {'0.1.79','0.1.80','0.1.81','0.1.82','0.1.83','0.1.84'}
   assert spec['verification']['sameUpgradeIdentity'] and spec['verification']['ciWrapperOverallPassed']
   record.update(appVersion=spec['verification']['version'],appSourceCommit=spec['verification']['sourceCommit'])
   if spec.get('browserAttachmentReceipt'):
@@ -86,7 +86,7 @@ try:
   detail=json.loads((paths[0]/'context-backend/result.json').read_text(encoding='utf8'));record.update(contextBackendExitCode=backend,contextBackendState=detail['state']);save();assert backend==0
   assert detail['state']=='ACTUAL_PACKAGED_IMAGE_CONTEXT_BACKUP_RESTORE_PREVIEW_TRASH_RESTORE_AND_EXACT_PURGE_PASSED'
   assert sha(audio)==record['publicAudio']['sha256']
-  record.update(state='WINDOWS083_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED',modelsRun=False,sourceAudioUnchanged=sha(audio)==record['publicAudio']['sha256'],wholeCoreCandidateQualified=False)
+  record.update(state='WINDOWS'+spec['verification']['version'].split('.')[-1].zfill(3)+'_REAL_PUBLIC_AUDIO_IMAGE_CONTEXT_UI_AND_BACKUP_RESTORE_CLEANUP_PASSED',modelsRun=False,sourceAudioUnchanged=sha(audio)==record['publicAudio']['sha256'],wholeCoreCandidateQualified=False)
  elif PHASE=='actions':
   fixture=S/spec['actionsFixture'];assert sha(fixture)==spec['actionsFixtureSha256']
   source_row=json.loads(fixture.read_text(encoding='utf8'))
