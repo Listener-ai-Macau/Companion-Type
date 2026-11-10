@@ -1,0 +1,121 @@
+{
+  "at": "2026-11-10T13:48:32.684479+00:00",
+  "state": "ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+  "appSource": "b170264a7f0693847ea17ef85901f5411280f266",
+  "modelCalls": 0,
+  "aiServiceCalls": 0,
+  "deviceAccess": false,
+  "ownerDataUsed": false,
+  "steps": [
+    {
+      "name": "source-read-0",
+      "exitCode": 0,
+      "seconds": 0.103245099999981,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-1",
+      "exitCode": 0,
+      "seconds": 0.1036488000000304,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-2",
+      "exitCode": 0,
+      "seconds": 0.10296779999998762,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-3",
+      "exitCode": 0,
+      "seconds": 0.10331569999999601,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-4",
+      "exitCode": 0,
+      "seconds": 0.10429770000001781,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-6",
+      "exitCode": 0,
+      "seconds": 0.10280699999998433,
+      "expectedFailure": false
+    },
+    {
+      "name": "backup",
+      "exitCode": 0,
+      "seconds": 0.10284699999999702,
+      "expectedFailure": false
+    },
+    {
+      "name": "restore",
+      "exitCode": 0,
+      "seconds": 0.2030321000000299,
+      "expectedFailure": false
+    },
+    {
+      "name": "restored-read",
+      "exitCode": 0,
+      "seconds": 0.10266849999999295,
+      "expectedFailure": false
+    },
+    {
+      "name": "stale-remove-rejected",
+      "exitCode": 1,
+      "seconds": 0.10256259999999884,
+      "expectedFailure": true
+    },
+    {
+      "name": "remove-one-entrance",
+      "exitCode": 0,
+      "seconds": 0.1033841999999936,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash",
+      "exitCode": 0,
+      "seconds": 0.10260660000000144,
+      "expectedFailure": false
+    },
+    {
+      "name": "trashed-read-rejected",
+      "exitCode": 1,
+      "seconds": 0.10307779999999411,
+      "expectedFailure": true
+    },
+    {
+      "name": "restore-trash",
+      "exitCode": 0,
+      "seconds": 0.10295419999999922,
+      "expectedFailure": false
+    },
+    {
+      "name": "read-after-trash-restore",
+      "exitCode": 0,
+      "seconds": 0.10279370000000654,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash-for-purge",
+      "exitCode": 0,
+      "seconds": 0.10299099999997452,
+      "expectedFailure": false
+    },
+    {
+      "name": "purge",
+      "exitCode": 0,
+      "seconds": 0.10328400000003057,
+      "expectedFailure": false
+    }
+  ],
+  "sourceOriginalIndexAndAllAttachmentsUnchanged": true,
+  "restoredOriginalAndExtractionFilesByteIdentical": 14,
+  "unrelatedRestoredControlPreserved": true,
+  "removedEntranceOriginalRetainedUntilFullPurge": true,
+  "audioFreeDocumentBackupSupported": true,
+  "staleRevisionRejected": true,
+  "modelOrAiCalled": false,
+  "wholeSaleQualified": false
+}

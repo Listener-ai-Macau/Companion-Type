@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-10T16:34:54+08:00",
+  "phase": "baseline",
+  "state": "FAILED",
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\note-reliability-1794299694008282100",
+  "results": [
+    {
+      "name": "compile",
+      "exit": 0
+    },
+    {
+      "name": "LocalRecordingLifecycleConcurrencyTest",
+      "exit": 1
+    }
+  ],
+  "modelsRun": false,
+  "phoneTested": false
+}

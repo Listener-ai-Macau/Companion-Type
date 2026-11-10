@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-10T21:13:58+08:00",
+  "state": "WINDOWS090_DOCUMENT_UI_COMPLETED_INPUT_ENTRY_TOOL_ROUTE_WRONG_NATIVE_UNCHANGED",
+  "failedRun": 42821759848,
+  "failedTestSource": "cd67cd4f2e596ff8c92f2b3267ae363059b9ecc4",
+  "appSource": "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
+  "cause": "The ordinary desktop input widget belongs to Device and Sync. The test tried its hidden summary while remaining on meeting details. Normal native document imports/reads/retries/original-save/source-selection steps already completed, but the failed case did not reach backend continuation; aggregate pass is not claimed.",
+  "fix": "Use the existing visible Device and Sync navigation before opening the input widget, and require its native-returned status to appear. Do not force hidden controls or bypass the normal route.",
+  "nativeRebuildRequired": false,
+  "modelOrBoardCalls": false,
+  "evidence": "E:/CodexData/Companion/.build-cache/windows-note-context20261110/runtime090-failed1"
+}
