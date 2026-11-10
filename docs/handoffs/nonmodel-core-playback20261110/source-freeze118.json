@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-10T09:26:07+08:00",
+  "state": "ANDROID118_GROUPED_SOURCE_FROZEN_REMOTE_CHECKS_AND_BUILD_PENDING",
+  "version": "0.1.118",
+  "checkpointBehaviorPassed": true,
+  "localTypecheck": "Checker stopped at its explicit256MiB Node heap cap; retained log, no product diagnosis; full mobile typecheck runs on dedicated CI.",
+  "backendAarUnchanged": true,
+  "modelsRun": false,
+  "installed": false,
+  "actualNativePlaybackQualified": false,
+  "saleQualified": false,
+  "androidApiSource": "https://developer.android.com/reference/android/media/MediaPlayer",
+  "apiDecision": "Set rate in initialized state before prepare, preserving paused cross-part seeks. Defer paused rate application until resume. Serialize seek and wait for native onSeekComplete before persisting.",
+  "sourceCommit": "9697968da4aa9abc32cef5b85da3b95282990473",
+  "remoteReadbackVerified": true
+}

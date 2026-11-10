@@ -1,8 +1,8 @@
 {
   "at": "2026-11-10T09:18:50+08:00",
-  "state": "IMPLEMENTING_ANDROID_CONTINUOUS_PLAYBACK",
+  "state": "IMPLEMENTING_CONTINUED_PLAYBACK_AND_DRAFT_CORRECTION",
   "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
-  "userOutcome": "在手机随时暂停或离开会议，重开继续回听，可倍速和前后跳转；原文定位保持原音时间轴，进度不串会议或资料库。",
+  "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
   "existingTask": "CP27-01/playback",
   "baseline": {
     "windows": "0.1.82",
@@ -15,7 +15,8 @@
     "逐录音续听位置、异常退出前定期保存及资料库隔离",
     "前后10秒/从头重听/分段切换",
     "原文和设备重点回听仍用原始时间轴",
-    "一次合并后构建、原生验证、保护与安装"
+    "一次合并后构建、原生验证、保护与安装",
+    "手机转写草稿批量替换、精确匹配和安全撤销；不自动保存、不改首次识别原文"
   ],
   "notQualifiedByThisBatch": [
     "模型质量",
@@ -26,5 +27,14 @@
   "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
   "priorDeliveryPreserved": "docs/handoffs/20261110-actions-followup/batch.json",
   "saleQualified": false,
-  "modelsRun": false
+  "modelsRun": false,
+  "relatedExistingTasks": [
+    "CP27-01/playback",
+    "CP27-01/editing"
+  ],
+  "dependencyObservation": {
+    "authorizedAndroidOnline": false,
+    "checkedThrough": "adb devices -l",
+    "action": "No repeated phone prompt. Continue the independent draft-correction source and one complete candidate; native phone qualification remains open."
+  }
 }
