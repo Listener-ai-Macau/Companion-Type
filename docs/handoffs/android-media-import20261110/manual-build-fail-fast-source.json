@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-11T07:24:04+08:00",
+  "state": "NEXT_NATIVE_BUILD_FAIL_FAST_ORDER_SOURCE_CHANGED_NOT_YET_EXECUTED",
+  "sourceFile": "tools/build_windows_candidate_ci.py",
+  "evidence": "windows099/build-attempt1-failure.log and build-attempt1-context-test-build.log",
+  "observedWaste": {
+    "normalReleaseSecondsBeforeTestCompileFailed": 486.673,
+    "testCompileFailureSeconds": 44.483,
+    "failure": "E0063 optional fields omitted in old image test fixture."
+  },
+  "change": "Compile and run the same affected native test binary before the normal app release build; keep every affected test/filter, normal release optimization, MSI bundling and exact-payload/source/license validation.",
+  "checksRemoved": false,
+  "actualNextCiPerformanceMeasured": false,
+  "current099136ProductSourceChangedByToolOrder": false,
+  "modelsRun": false
+}
