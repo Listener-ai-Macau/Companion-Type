@@ -1,0 +1,128 @@
+{
+  "at": "2026-11-11T04:41:35.318Z",
+  "state": "SOURCE_RENDER_COMPACT_LITERAL_REFERENCES_CLEAR_AI_ENTRY_AND_BOTH_THEMES_PASSED",
+  "nativeQualified": false,
+  "modelsRun": false,
+  "checks": [
+    {
+      "platform": "mobile",
+      "width": 360,
+      "theme": "light",
+      "compactSourceHeight": 186.5,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "mobile",
+      "width": 360,
+      "theme": "dark",
+      "compactSourceHeight": 186.5,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "mobile",
+      "width": 393,
+      "theme": "light",
+      "compactSourceHeight": 186.5,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "mobile",
+      "width": 393,
+      "theme": "dark",
+      "compactSourceHeight": 186.5,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "windows",
+      "width": 1000,
+      "theme": "light",
+      "compactSourceHeight": 131,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "windows",
+      "width": 1000,
+      "theme": "dark",
+      "compactSourceHeight": 131,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "windows",
+      "width": 1280,
+      "theme": "light",
+      "compactSourceHeight": 131,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "platform": "windows",
+      "width": 1280,
+      "theme": "dark",
+      "compactSourceHeight": 131,
+      "sourceActionAvailableWhenCollapsed": true,
+      "completeLiteralQuoteRetained": true,
+      "sourcePaneReturned": true,
+      "checkboxSize": [
+        18,
+        18
+      ]
+    }
+  ],
+  "resourceLimits": {
+    "pid": 36512,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 693350400,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

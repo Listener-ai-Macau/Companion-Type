@@ -1,0 +1,36 @@
+{
+  "state": "PASSED",
+  "checks": [
+    {
+      "name": "windows-typecheck",
+      "exit": 0
+    },
+    {
+      "name": "windows-affected-ui",
+      "exit": 0
+    },
+    {
+      "name": "mobile-affected-ui",
+      "exit": 0
+    }
+  ],
+  "mobileTypecheckPreviouslyPassed": true,
+  "initialPreparationFailure": "A old runner ignored scope arguments and entered unrelated stale App stubs. Original log retained; both existing runners now validate/honor requested scopes. No product workaround.",
+  "nativeQualified": false,
+  "limits": {
+    "pid": 11296,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 500170752,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
