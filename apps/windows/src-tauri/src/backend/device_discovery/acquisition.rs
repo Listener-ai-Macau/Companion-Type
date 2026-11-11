@@ -3,7 +3,7 @@
 use std::sync::{Arc,atomic::{AtomicU64,Ordering}};
 use std::time::Instant;
 use windows::Devices::Bluetooth::Advertisement::{BluetoothLEAdvertisementWatcher,
-    BluetoothLEAdvertisementReceivedEventArgs,BluetoothLEScanningMode};
+    BluetoothLEAdvertisementReceivedEventArgs,BluetoothLEScanningMode,BluetoothLEAdvertisementWatcherStatus};
 use windows::Foundation::{EventRegistrationToken,TypedEventHandler};
 
 pub(crate) struct Acquisition {
@@ -13,6 +13,11 @@ pub(crate) struct Acquisition {
     first:Arc<AtomicU64>,
 }
 impl Acquisition {
+    // None means observation was unavailable, not that the device was absent.
+    pub(crate) fn target_observed(&self)->Option<bool> {
+        (self.watcher.Status().ok()==Some(BluetoothLEAdvertisementWatcherStatus::Started))
+            .then(||self.first.load(Ordering::Relaxed)!=0)
+    }
     pub(crate) fn begin(address:&str)->Option<Self> {
         let compact=address.replace([':', '-'],"");
         if compact.len()!=12 {return None;}

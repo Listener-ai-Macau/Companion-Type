@@ -75,6 +75,7 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
  * arbitrary OS/service details become bounded, actionable public guidance. */
 export function describeOperationFailure(error:unknown,scope:OperationScope='general'):OperationFailure{
   const text=messageOf(error).replace(/^Error:\s*/,''),kind=classify(text,scope);
+  if(/^DEVICE_UNREACHABLE(?::|$)/.test(text))return {kind:'device',message:'录音卡暂时没有回应，尚未连接。请确认设备有电、电脑蓝牙已开启，并让设备处于唤醒状态；如果它已连接另一台手机或电脑，先在那里断开，再重新连接。'};
   if(scope==='export'&&calendarExportNeedsTime(error))return{kind:'unknown',message:'请先确认未完成事项的日历日期或时刻；本次还没有打开文件保存窗口，原清单保持不变。'};
   if(scope==='export'&&/^CALENDAR_NO_PENDING_ACTIONS(?::|$)/.test(text))return{kind:'unknown',message:'清单中的事项均已完成，没有需要放入日历的未完成事项；原清单保持不变。'};
   if(known.has(text))return {kind,message:text};
