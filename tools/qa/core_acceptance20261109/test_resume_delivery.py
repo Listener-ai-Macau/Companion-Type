@@ -1,5 +1,5 @@
 """Delivery continuation regressions: no cloud, devices or product execution."""
-import hashlib,json,tempfile,unittest
+import hashlib,json,tempfile,unittest,subprocess,sys
 from pathlib import Path
 from resume_delivery import current,active_execution,CORE
 
@@ -58,4 +58,17 @@ class DeliveryContinuationTests(unittest.TestCase):
   self.assertEqual(self.state(query)["kind"],"FAILED")
   self.write("saved.json",{"source":"frozen","state":"PASSED","testSourceCommit":"frozen"})
   self.assertEqual(self.state(query)["kind"],"BATCH_DELIVERED")
+ def test_cli_failure_is_not_shell_success_and_matching_result_is_reusable(self):
+  root={};node=root
+  for key in CORE:node[key]={};node=node[key]
+  config={**self.config,"userResult":"complete public purpose","evidenceRoot":"."}
+  node.update(next=CORE[-1]+".work",work={"deliveryExecution":config})
+  (self.root/"docs").mkdir();(self.root/"docs/product_backlog.json").write_text(json.dumps(root),encoding="utf-8")
+  self.write("saved.json",{"source":"wrong","state":"PASSED"})
+  cmd=[sys.executable,str(Path(__file__).with_name("resume_delivery.py")),"--project-root",str(self.root)]
+  failed=subprocess.run(cmd,capture_output=True,text=True,timeout=10)
+  self.assertEqual(failed.returncode,2);self.assertEqual(json.loads(failed.stdout)["kind"],"FAILED")
+  self.write("saved.json",{"source":"frozen","state":"PASSED"})
+  passed=subprocess.run(cmd,capture_output=True,text=True,timeout=10)
+  self.assertEqual(passed.returncode,0);self.assertEqual(json.loads(passed.stdout)["kind"],"BATCH_DELIVERED")
 if __name__=="__main__":unittest.main()

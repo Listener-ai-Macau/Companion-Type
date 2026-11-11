@@ -97,7 +97,7 @@ def main():
  while True:
   state=current(root,config,query)
   print(json.dumps({"userResult":config["userResult"],**state},ensure_ascii=False),flush=True)
-  if not args.advance or state["kind"]!="READY":return
+  if not args.advance or state["kind"]!="READY":return 2 if state["kind"]=="FAILED" else 0
   if state["step"] in attempted:raise RuntimeError("Step did not create matching evidence; preserve logs before retrying")
   attempted.add(state["step"]);command=state["command"]
   script=inside(root,command[0]);assert script.suffix==".py" and script.is_file()
@@ -110,4 +110,4 @@ def main():
     else:arguments.append(item)
    result=subprocess.run([sys.executable,str(script),*arguments],cwd=root,stdout=stream,stderr=subprocess.STDOUT,timeout=900)
   if result.returncode:raise RuntimeError("Delivery step failed: "+state["step"]+"; retained log: "+str(log))
-if __name__=="__main__":main()
+if __name__=="__main__":raise SystemExit(main() or 0)

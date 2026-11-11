@@ -1,0 +1,191 @@
+{
+  "at": "2026-11-11T14:56:16+08:00",
+  "state": "REAL_NATIVE_OS_INCOMING_FILE_WORKFLOW_PASSED",
+  "stage": "incoming",
+  "frozenAppVersion": "0.1.108",
+  "frozenAppSource": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
+  "exeSha256": "0b87779bf87b4bcf8bd150688028787ccbb2d765bea362a3c2621313d727ee8b",
+  "dllSha256": "d3af0f5954ba1f8d5e7f3312c241a30fca77da0e85c878c676198a36ccec8a9d",
+  "inputKind": "Public generated PCM (2s import and2h cancellation) plus official engineering DOCX/PNG fixtures; not speech, ASR, meeting accuracy or hardware qualification",
+  "privateRoot": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "WinSta0",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Dedicated disposable GitHub Windows runner; no owner desktop",
+  "cpuHardCapPercent": 100,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "normalVisibleWindowOnDedicatedRunner": true,
+  "appPid": 2928,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 197118,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 196776,
+      "title": ""
+    },
+    {
+      "hwnd": 327704,
+      "title": "MSCTFIME UI"
+    },
+    {
+      "hwnd": 196844,
+      "title": "Default IME"
+    }
+  ],
+  "cdpListenerPids": [
+    6624
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 4256,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5612,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5996,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6004,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6624,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 7872,
+      "folder": "D:\\a\\_temp\\companion-core-acceptance\\cache\\5ad77db6c2d849d08b2dc462dc8a7e96\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 347303936,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 5938806784,
+    "systemPhysicalPercent": 30.8
+  },
+  "ui": {
+    "state": "REAL_TAURI_OS_INCOMING_COLD_WARM_CONFIRM_DOCUMENT_IMAGE_RETRY_CANCEL_AND_ORIGINALS_PASSED",
+    "steps": [
+      {
+        "step": "cold-normal-file-launch",
+        "pendingOnly": true,
+        "originalNotImportedBeforeConfirmation": true
+      },
+      {
+        "step": "explicit-media-confirmation",
+        "key": "import-b94bca92776b4743a6f3fec8d543df55",
+        "originalBytesIdentical": true,
+        "pendingDuplicateCreatedNoRecord": true
+      },
+      {
+        "step": "warm-document-expiry-and-original-target-retry",
+        "oneDocument": true,
+        "sourceAndStoredOriginalIdentical": true
+      },
+      {
+        "step": "warm-image-explicit-ownership",
+        "oneImage": true,
+        "originalBytesIdentical": true
+      },
+      {
+        "step": "ordinary-open-delivered-record",
+        "correctRecord": true
+      },
+      {
+        "step": "bad-file-rejected",
+        "noNewRecord": true,
+        "sourceUnchanged": true
+      },
+      {
+        "step": "actual-two-hour-public-pcm-import-cancel",
+        "noSavedCancelledRecording": true,
+        "exactPartialFilesRetired": true,
+        "sourceUnchanged": true,
+        "notAsrOrMeetingQualityTest": true
+      }
+    ],
+    "warm": [
+      {
+        "name": "公开接收100.wav",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.03
+      },
+      {
+        "name": "公开接收100.wav",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.024
+      },
+      {
+        "name": "material.docx",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.025
+      },
+      {
+        "name": "公开白板100.png",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.022
+      },
+      {
+        "name": "公开坏文件100.wav",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.028
+      },
+      {
+        "name": "公开长文件取消100.wav",
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 0.028
+      }
+    ],
+    "originalRowsRetained": 2,
+    "sourceAndSavedOriginalsByteIdentical": true,
+    "modelOrCloudCalls": 0,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": true,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": null,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": true,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-11T14:56:33+08:00"
+}

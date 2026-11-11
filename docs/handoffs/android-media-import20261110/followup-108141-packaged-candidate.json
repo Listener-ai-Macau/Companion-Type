@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-11T15:01:53+08:00",
+  "state": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+  "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows108-android141.zip",
+  "bytes": 47540723,
+  "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+  "files": [
+    {
+      "path": "firmware/companion-update.cup",
+      "bytes": 1360220,
+      "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+    },
+    {
+      "path": "firmware/ota_manifest.json",
+      "bytes": 1548,
+      "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+    },
+    {
+      "path": "macos/CompanionMac-candidate.zip",
+      "bytes": 736161,
+      "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+    },
+    {
+      "path": "windows/Companion-Windows-0.1.108.msi",
+      "bytes": 16839048,
+      "sha256": "c09ea165c2fe763246ffb888b52e4a1773e15ac30df6ad54d2dc8f8f57a4fc3c"
+    },
+    {
+      "path": "android/Companion-Android-0.1.141.apk",
+      "bytes": 51192605,
+      "sha256": "84663a57948873780eb16705041eda7c70ab5ab58aa7263c5b66d088a394dbe8"
+    }
+  ],
+  "draftOnly": true,
+  "saleQualified": false,
+  "ownerPrivateDataUploaded": false,
+  "sourceRecipe": "original active work item packageDefinition",
+  "assetId": 734506993,
+  "readback": {
+    "method": "four-bounded-official-CDN-range-readers",
+    "workers": 4,
+    "sections": 12,
+    "bufferBytesPerWorker": 131072,
+    "bytes": 47540723,
+    "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+    "seconds": 6.375,
+    "retainedTransientReads": [],
+    "authSentOnlyToGitHubApi": true,
+    "signedUrlOrTokenPersisted": false,
+    "routingModified": false
+  },
+  "readbackByteIdentical": true,
+  "finishedAt": "2026-11-11T15:02:22+08:00",
+  "resourceLimits": {
+    "pid": 29432,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 164184064,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
