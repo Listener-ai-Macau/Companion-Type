@@ -368,7 +368,7 @@ fn run_deepseek_request_with_evidence(
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
-    system.push_str("\n行动清单应覆盖原话已明确的主任务及执行时顺带要求的核实、准备和跟进，不因同属一个负责人而遗漏子任务。保留条件与暂定，不把备选方案升级为已决定的任务。每个actionItems尽量提供对应evidence连续原话，覆盖动作及其负责人、时间。due可保留原话中的相对或不完整时间，不因缺少年份、不能转成完整日历日期就留空，也不推算缺失日期。");
+    system.push_str("\n行动清单应覆盖原话已明确的主任务及执行时顺带要求的核实、准备和跟进，不因同属一个负责人而遗漏子任务。保留条件与暂定，不把备选方案升级为已决定的任务。尽量在顶层 evidence 数组中为每个 actionItems 条目提供连续原话，field 为 actionItems，index 对应条目下标，quote 覆盖动作及其负责人、时间。due可保留原话中的相对或不完整时间，不因缺少年份、不能转成完整日历日期就留空，也不推算缺失日期。");
     if let Some(template)=template {system.push_str(&template.prompt());}
     let overview_requested=template.is_none() && session.meeting_notes.is_empty()
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
@@ -861,13 +861,11 @@ fn enforce_source_backed_action_items_with_quotes(upgraded:&mut CompanionV1Meeti
     let mut changed = false;
     let transcript_segments = split_segments(&session.transcript_text);
     upgraded.action_items.retain_mut(|item| {
-        let mut sources = l0.action_items.iter().filter(|source| {
+        let mut sources = if session.meeting_notes.is_empty() {short_evidence::action_sources(source_quotes,item,&session.transcript_text)} else {Vec::new()};
+        if sources.is_empty() {sources = l0.action_items.iter().filter(|source| {
             source_fact_covered(&source.text, &item.text)
                 || source_fact_covered(&item.text, &source.text)
-        }).map(|source| source.text.as_str()).collect::<Vec<_>>();
-        if sources.is_empty() && session.meeting_notes.is_empty() {
-            sources=short_evidence::action_sources(source_quotes,item,&session.transcript_text);
-        }
+        }).map(|source| source.text.as_str()).collect::<Vec<_>>();}
         if sources.is_empty() {
             // Original-only excerpts cannot resolve a later user supplement
             // which may have cancelled or revised the plan.
@@ -1387,6 +1385,13 @@ mod tests {
         assert_eq!(kept.action_items.len(),1);assert_eq!(kept.action_items[0].owner.as_deref(),Some("周嘉"));
         assert_eq!(kept.action_items[0].due.as_deref(),Some("周三前"));
         assert!(kept.markdown.contains("确认线上接入方式"));assert!(kept.markdown.contains(transcript));
+        let inline=serde_json::json!({"actionItems":[{"text":"确认线上接入方式","evidence":transcript}]});
+        let evidence=short_evidence::capture(&inline,&generated,transcript);
+        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session);
+        assert_eq!(kept.action_items.len(),1);
+        assert_eq!(kept.action_items[0].text,generated.action_items[0].text);
+        assert_eq!(kept.action_items[0].owner,generated.action_items[0].owner);
+        assert_eq!(kept.action_items[0].due,generated.action_items[0].due);
         let invalid=serde_json::json!({"evidence":[{"field":"actionItems","index":0,"quote":"原文没有说过的依据"}]});
         let evidence=short_evidence::capture(&invalid,&generated,transcript);
         assert!(finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session).action_items.is_empty());

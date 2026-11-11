@@ -24,9 +24,8 @@ pub(super) fn action_sources<'a>(entries:&'a[Entry],item:&CompanionV1ActionItem,
 // A provider may omit or mangle this optional field. Only retain bounded,
 // verbatim single-line source excerpts and a valid source-item index.
 pub(super) fn capture(object:&Value, minutes:&CompanionV1MeetingMinutes, transcript:&str)->Vec<Entry> {
-    let Some(values)=object.get("evidence").and_then(Value::as_array) else{return Vec::new()};
     let mut out=Vec::new();
-    for value in values.iter().take(256) {
+    for value in object.get("evidence").and_then(Value::as_array).into_iter().flatten().take(256) {
         let (Some(field),Some(index),Some(quote))=(value.get("field").and_then(Value::as_str),
             value.get("index").and_then(Value::as_u64).and_then(|v|usize::try_from(v).ok()),
             value.get("quote").and_then(Value::as_str)) else{continue};
@@ -42,6 +41,16 @@ pub(super) fn capture(object:&Value, minutes:&CompanionV1MeetingMinutes, transcr
         let text=match &item{Item::Summary(t)|Item::Decision(t)|Item::Question(t)=>t,Item::Action(a)=>&a.text};
         if text.trim().is_empty() || text.len()>1024 || text.contains(['\r','\n']) {continue;}
         out.push(Entry{item,quote:quote.to_owned()});
+    }
+    // Providers also attach a quote to the action itself. It has the same
+    // source/item binding as the indexed form; ignoring it loses valid oral
+    // subtasks before the user can review them.
+    for (index,value) in object.get("actionItems").and_then(Value::as_array).into_iter().flatten().take(256).enumerate() {
+        let Some(quote)=value.get("evidence").and_then(Value::as_str) else{continue};
+        let Some(item)=minutes.action_items.get(index) else{continue};
+        if quote.trim()!=quote || quote.is_empty() || quote.len()>1024 || quote.contains(['\r','\n']) || !transcript.contains(quote)
+            || item.text.trim().is_empty() || item.text.len()>1024 || item.text.contains(['\r','\n']) {continue;}
+        out.push(Entry{item:Item::Action(item.clone()),quote:quote.to_owned()});
     }
     out
 }
@@ -100,5 +109,18 @@ mod tests {
             let entries=capture(&object,&result,"原文");append(&mut result,&entries);
         }
         assert_eq!(result.markdown,before);assert_eq!(result.quality,"final");
+    }
+    #[test]
+    fn action_local_quotes_survive_without_a_top_level_evidence_array() {
+        let source="小王负责整理报价，周五之前发给大家。";
+        let mut result=minutes();
+        let object=serde_json::json!({"actionItems":[{"text":"整理报价","evidence":source}]});
+        let entries=capture(&object,&result,source);
+        assert_eq!(action_sources(&entries,&result.action_items[0],source),vec![source]);
+        append(&mut result,&entries);assert!(result.markdown.contains(source));
+        for quote in ["原文不存在的内容","","小王负责整理报价\n周五"] {
+            let bad=serde_json::json!({"actionItems":[{"evidence":quote}]});
+            assert!(capture(&bad,&result,source).is_empty());
+        }
     }
 }
