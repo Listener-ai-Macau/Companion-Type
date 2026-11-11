@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-11T11:16:38+08:00",
+  "state": "PENDING102_RUNTIME_REPLACED_BEFORE_ANY_JOB_STARTED",
+  "run": 42949778736,
+  "source": "ca44718d0fc92d067f6be934a13b3e2f218e273b",
+  "jobCount": 0,
+  "productExecuted": false,
+  "cause": "A later source-only evidence push joined the same single-pending workflow concurrency group while103 was running; cancel-in-progress:false does not preserve multiple pending runs.",
+  "officialSource": "https://docs.github.com/en/actions/concepts/workflows-and-actions/concurrency",
+  "repair": "Separate existing native build and runtime groups; other untagged/source-only runs have run-specific groups. No cancellation of running jobs. Retry exact102 MSI; no native rebuild.",
+  "native103Retained": true
+}

@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: windows-candidate-${{ github.ref }}
+  group: windows-candidate-${{ github.ref }}-${{ (contains(github.event.head_commit.message, '[windows-build]') || contains(github.event.head_commit.message, '[windows-bundle]') || inputs.operation == 'candidate') && 'build' || (contains(github.event.head_commit.message, '[core-documents]') || contains(github.event.head_commit.message, '[core-context]') || contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'context' || inputs.operation == 'editing') && 'runtime' || github.run_id }}
   cancel-in-progress: false
 
 jobs:
