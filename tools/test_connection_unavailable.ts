@@ -7,6 +7,9 @@ assert.match(initial.message,/设备有电/);
 assert.match(initial.message,/蓝牙已开启/);
 assert.match(initial.message,/另一台手机或电脑/);
 assert.doesNotMatch(initial.message,/private|diagnostic|DEVICE_UNREACHABLE/);
+// The actual DeviceConnect product operation wraps a native acquisition error.
+const productConnect=describeOperationFailure('Native BLE connect failed: DEVICE_UNREACHABLE: OS diagnostic and C:/private/path','general');
+assert.equal(productConnect.message,initial.message);
 const ordinary=describeOperationFailure('device disconnected','recording');
 assert.match(ordinary.message,/读取当前状态/);
 assert.doesNotMatch(ordinary.message,/唤醒状态/);
