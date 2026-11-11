@@ -60,9 +60,15 @@ public final class AudioImportService extends Service {
   }
   try{context.startForegroundService(new Intent(context,AudioImportService.class).putExtra("derivationJob",record.toString()));}catch(Exception error){RUNNING.set(false);current=null;throw error;}
  }
- static void start(Context context,Uri uri,String token)throws Exception {
+ static void startIncoming(Context context,String incomingId,String token)throws Exception{
+  JSONObject row=new IncomingFileQueue(context.getFilesDir().toPath(),AudioImportService::syncDirectory).get(incomingId);
+  if(!"media".equals(row.getString("kind"))||!row.has("libraryId")||!row.has("key"))throw new IOException("请先确认文件的接收目标。");
+  start(context,Uri.parse(row.getString("uri")),token,incomingId);
+ }
+ static void start(Context context,Uri uri,String token)throws Exception {start(context,uri,token,null);}
+ private static void start(Context context,Uri uri,String token,String incomingId)throws Exception {
   synchronized(AudioImportService.class){if(RUNNING.get())throw new IOException("已有文件正在导入，请等完成或取消。");status(context);RUNNING.set(true);CANCELLED.set(false);COMMITTING.set(false);current=new JSONObject().put("running",true).put("state","starting").put("message","正在准备导入…");}
-  try{Intent intent=new Intent(context,AudioImportService.class).setData(uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).putExtra("libraryToken",token);context.startForegroundService(intent);}catch(Exception error){RUNNING.set(false);current=null;throw error;}
+  try{Intent intent=new Intent(context,AudioImportService.class).setData(uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).putExtra("libraryToken",token).putExtra("incomingId",incomingId);context.startForegroundService(intent);}catch(Exception error){RUNNING.set(false);current=null;throw error;}
  }
  @Override public void onCreate(){super.onCreate();instance=this;NotificationManager manager=getSystemService(NotificationManager.class);manager.createNotificationChannel(new NotificationChannel(CHANNEL,"文件导入",NotificationManager.IMPORTANCE_LOW));}
  @Override public int onStartCommand(Intent intent,int flags,int startId){
@@ -70,20 +76,33 @@ public final class AudioImportService extends Service {
   if(job!=null)return START_NOT_STICKY;
   try{startForeground(NOTIFICATION,notification("正在准备本机音频任务"));wake=((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"Companion:media-import");wake.acquire(60L*60*1000);}catch(Exception error){RUNNING.set(false);try{if(current!=null&&"derive".equals(current.optString("operation"))){String saved=preferences(this).getString("job",null);JSONObject record=saved==null?new JSONObject():new JSONObject(saved);record.put("running",false).put("state","interrupted").put("message","暂不能在后台整理，请保持应用打开后重试未完成片段。原录音和已保存片段保留。");preferences(this).edit().putString("job",record.toString()).commit();current=publicStatus(record);}else current=new JSONObject().put("running",false).put("state","failed").put("message","暂不能在后台导入，请保持应用打开后重试。");}catch(Exception ignored){}if(wake!=null&&wake.isHeld())wake.release();stopForeground(STOP_FOREGROUND_REMOVE);stopSelf();return START_NOT_STICKY;}
   String derivation=intent==null?null:intent.getStringExtra("derivationJob");if(intent==null||(intent.getData()==null&&derivation==null)){RUNNING.set(false);stopForeground(STOP_FOREGROUND_REMOVE);stopSelf();return START_NOT_STICKY;}
-  RUNNING.set(true);Uri uri=intent.getData();String token=intent.getStringExtra("libraryToken");job=new Thread(()->{if(derivation!=null)runDerivation(derivation);else runImport(uri,token);},"Companion-media-import");job.setPriority(Thread.MIN_PRIORITY+1);job.start();return START_NOT_STICKY;
+  RUNNING.set(true);Uri uri=intent.getData();String token=intent.getStringExtra("libraryToken");job=new Thread(()->{if(derivation!=null)runDerivation(derivation);else runImport(uri,token,intent.getStringExtra("incomingId"));},"Companion-media-import");job.setPriority(Thread.MIN_PRIORITY+1);job.start();return START_NOT_STICKY;
  }
  private Notification notification(String message){boolean derived=current!=null&&"derive".equals(current.optString("operation"));PendingIntent cancel=PendingIntent.getService(this,0,new Intent(this,AudioImportService.class).setAction(CANCEL),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);Intent open=getPackageManager().getLaunchIntentForPackage(getPackageName());PendingIntent content=PendingIntent.getActivity(this,0,open,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);return new Notification.Builder(this,CHANNEL).setSmallIcon(android.R.drawable.stat_sys_download).setContentTitle(derived?"正在整理录音":"正在导入录音").setContentText(message).setOngoing(true).setOnlyAlertOnce(true).setContentIntent(content).addAction(new Notification.Action.Builder(null,derived?"取消整理":"取消导入",cancel).build()).build();}
- private void runImport(Uri uri,String token){Path stage=null;boolean locked=false;JSONObject record=null;
+ private void runImport(Uri uri,String token,String incomingId){Path stage=null;boolean locked=false;JSONObject record=null;
   try{
    if(RecordingSyncService.isRunning()||DeviceUpdateService.isRunning())throw new IOException("正在接收或升级录音卡，请等完成后再导入。");
    if(LocalLibraryBackups.BUSY.get())throw new IOException("正在操作本机资料，请稍后导入。");
    Path root=getFilesDir().toPath();LocalLibraryBackups library=new LocalLibraryBackups(root);if(token==null||!token.equals(library.token()))throw new IOException("当前资料库已变化，请重新选择导入文件。");
-   String name="导入的录音",mime=getContentResolver().getType(uri);long expected=-1;
-   try(android.database.Cursor c=getContentResolver().query(uri,new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE},null,null,null)){if(c!=null&&c.moveToFirst()){int n=c.getColumnIndex(OpenableColumns.DISPLAY_NAME),s=c.getColumnIndex(OpenableColumns.SIZE);if(n>=0&&!c.isNull(n))name=c.getString(n);if(s>=0&&!c.isNull(s))expected=c.getLong(s);}}
+   IncomingFileQueue inbox=new IncomingFileQueue(root,AudioImportService::syncDirectory);JSONObject incoming=incomingId==null?null:inbox.get(incomingId);
+   if(incoming!=null&&(!library.status().getString("activeId").equals(incoming.getString("libraryId"))||!"media".equals(incoming.getString("kind"))))throw new IOException("接收目标已变化，请切回原资料库重试。");
+   String name="导入的录音",mime=incoming==null?getContentResolver().getType(uri):incoming.getString("mime");long expected=-1;
+   if(incoming==null)try(android.database.Cursor c=getContentResolver().query(uri,new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE},null,null,null)){if(c!=null&&c.moveToFirst()){int n=c.getColumnIndex(OpenableColumns.DISPLAY_NAME),s=c.getColumnIndex(OpenableColumns.SIZE);if(n>=0&&!c.isNull(n))name=c.getString(n);if(s>=0&&!c.isNull(s))expected=c.getLong(s);}}
+   if(incoming!=null){name=incoming.getString("name");mime=incoming.getString("mime");expected=incoming.optLong("bytes",-1);}
    name=name==null?"导入的录音":name.replaceAll("[\\p{Cntrl}]"," ").trim();if(name.isEmpty())name="导入的录音";if(name.length()>256)name=name.substring(0,256);if(mime==null||mime.length()>256)mime="application/octet-stream";
    if(expected>2L*1024*1024*1024)throw new IOException("单个原文件最多支持2GB，请先分成较短的文件。");
-   String id=UUID.randomUUID().toString(),key=ImportedAudio.hash(id.getBytes(java.nio.charset.StandardCharsets.UTF_8))+":1:1";stage=root.resolve(".companion-audio-import-"+id);Files.createDirectory(stage);Path target=library.recordings();
+   String id=incomingId==null?UUID.randomUUID().toString():incomingId,key=ImportedAudio.hash(id.getBytes(java.nio.charset.StandardCharsets.UTF_8))+":1:1";Path target=library.recordings();
+   if(incoming!=null){
+    if(!key.equals(incoming.getString("key")))throw new IOException("接收身份不符，原资料保留。");
+    Path savedPath=target.resolve(ImportedAudio.folder(key));if(Files.exists(savedPath,LinkOption.NOFOLLOW_LINKS)){
+     ImportedAudio existing=ImportedAudio.read(savedPath);existing.verifiedParts();if(!existing.key.equals(key))throw new IOException("已保存录音身份不符，原资料保留。");
+     record=new JSONObject().put("id",id).put("incomingId",id).put("key",key).put("name",name).put("running",false).put("state","complete").put("message","上次接收已完整保存，没有重复导入。");
+     current=publicStatus(record);preferences(this).edit().putString("job",record.toString()).commit();inbox.state(id,"complete","原文件已保存在指定资料库，没有重复导入。");return;
+    }
+   }
+   stage=root.resolve(".companion-audio-import-"+id);Files.createDirectory(stage);
    record=new JSONObject().put("id",id).put("key",key).put("name",name).put("running",true).put("state","copying").put("message","正在保留原文件").put("stage",stage.getFileName().toString()).put("target",target.getFileName().toString());
+   if(incomingId!=null)record.put("incomingId",incomingId);
    if(!preferences(this).edit().putString("job",record.toString()).commit())throw new IOException("导入任务尚未保存，请重试。");current=publicStatus(record);
    final JSONObject active=record;final Path work=stage;long total=0,lastNotice=0;
    try(InputStream in=getContentResolver().openInputStream(uri);FileOutputStream out=new FileOutputStream(stage.resolve("original.audio").toFile())){if(in==null)throw new IOException("无法读取所选文件，请重新选择。");byte[] bytes=new byte[65536];int n;while((n=in.read(bytes))!=-1){checkCancel();total+=n;if(total>2L*1024*1024*1024)throw new IOException("原文件超过2GB，请先分成较短的文件。");if(work.toFile().getUsableSpace()<n+16L*1024*1024)throw new IOException("手机存储空间不足，所选原文件未改变。");out.write(bytes,0,n);long now=SystemClock.elapsedRealtime();if(now-lastNotice>400){progress(active,"正在保留原文件",total,expected);lastNotice=now;}}out.getFD().sync();}

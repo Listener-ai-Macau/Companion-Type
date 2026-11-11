@@ -81,12 +81,23 @@ final class RecordingNotes {
         return addImageContext(key,revision,text,atMs,durationMs,originalName,extension,source,check,null,null,null);
     }
     JSONObject addImageContext(String key,long revision,String text,Long atMs,long durationMs,String originalName,String extension,InputStream source,ImageCheck check,String kind,JSONArray references,ManualNoteContext.Verifier verifier)throws Exception{
+        return addImageContextInternal(key,revision,null,text,atMs,durationMs,originalName,extension,source,check,kind,references,verifier);
+    }
+    boolean incomingImagePresent(String key,String id,String originalName)throws Exception{synchronized(RecordingNotes.class){
+        JSONArray entries=read(key).getJSONArray("entries");for(int i=0;i<entries.length();i++){JSONObject entry=entries.getJSONObject(i);if(id.equals(entry.getString("id"))){if(!entry.has("image")||!originalName.equals(entry.getJSONObject("image").getString("name")))throw new IOException("接收记录与已保存图片不符，原资料保留。");verifiedImage(key,entry.getJSONObject("image"));return true;}}return false;
+    }}
+    JSONObject addIncomingImage(String key,long revision,String incomingId,String originalName,String extension,InputStream source,ImageCheck check)throws Exception{
+        if(incomingId==null||!incomingId.matches("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))throw new IOException("接收图片标识无效。");
+        return addImageContextInternal(key,revision,incomingId,"",null,0,originalName,extension,source,check,null,null,null);
+    }
+    private JSONObject addImageContextInternal(String key,long revision,String incomingId,String text,Long atMs,long durationMs,String originalName,String extension,InputStream source,ImageCheck check,String kind,JSONArray references,ManualNoteContext.Verifier verifier)throws Exception{
         synchronized(RecordingNotes.class){
+            if(incomingId!=null&&incomingImagePresent(key,incomingId,originalName))return read(key);
             JSONObject value=expected(key,revision);JSONArray entries=value.getJSONArray("entries");if(entries.length()>=500)throw new IOException("每条录音最多保存500条备注。");
             JSONObject suppliedContext=new JSONObject();context(suppliedContext,kind,references,verifier);
             if(!Arrays.asList("jpg","png","webp").contains(extension))throw new IOException("请选择JPEG、PNG或WebP图片。");
             if(atMs!=null&&(durationMs<=0||atMs<0||atMs>=durationMs))throw new IOException("请选择已保存音频内的时间点。");
-            Files.createDirectories(directory);String id=UUID.randomUUID().toString(),name=digest(key)+".context-"+id+"."+extension;Path target=directory.resolve(name),temp=Files.createTempFile(directory,".context-image-",".tmp");boolean committed=false;
+            Files.createDirectories(directory);String id=incomingId==null?UUID.randomUUID().toString():incomingId,name=digest(key)+".context-"+id+"."+extension;Path target=directory.resolve(name),temp=Files.createTempFile(directory,".context-image-",".tmp");boolean committed=false;
             try{
                 long count=0;java.security.MessageDigest hash=java.security.MessageDigest.getInstance("SHA-256");try(FileOutputStream out=new FileOutputStream(temp.toFile())){byte[] buffer=new byte[65536];int n;while((n=source.read(buffer))!=-1){if(n==0)continue;count+=n;if(count>MAX_IMAGE)throw new IOException("图片超过20MB，请选择较小的图片。");out.write(buffer,0,n);hash.update(buffer,0,n);}out.getFD().sync();}
                 if(count==0)throw new IOException("所选图片为空。");check.validate(temp);StringBuilder sha=new StringBuilder();for(byte b:hash.digest())sha.append(String.format(Locale.ROOT,"%02x",b&255));

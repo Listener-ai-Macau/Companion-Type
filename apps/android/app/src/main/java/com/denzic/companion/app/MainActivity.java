@@ -195,6 +195,79 @@ public final class MainActivity extends Activity {
         web.addJavascriptInterface(new Bridge(), "CompanionNative");
         setContentView(content);
         web.loadUrl("https://appassets.androidplatform.net/www/index.html");
+        if(state==null)receiveIncoming(getIntent());
+    }
+    @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);receiveIncoming(intent);}
+    private IncomingFileQueue incomingFiles(){return new IncomingFileQueue(root(),MainActivity::syncLifecycleDirectory);}
+    private void receiveIncoming(Intent intent){
+        if(intent==null||!java.util.Arrays.asList(Intent.ACTION_SEND,Intent.ACTION_SEND_MULTIPLE,Intent.ACTION_VIEW).contains(intent.getAction()))return;
+        // Clear the Activity's launch intent; recreating its WebView must not deliver it again.
+        setIntent(new Intent(this,MainActivity.class).setAction(Intent.ACTION_MAIN));
+        worker.execute(()->{try{
+            java.util.List<android.net.Uri> uris=new java.util.ArrayList<>();
+            if(Intent.ACTION_VIEW.equals(intent.getAction())){if(intent.getData()!=null)uris.add(intent.getData());}
+            else if(Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction())){java.util.ArrayList<android.os.Parcelable> supplied=intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);if(supplied!=null)for(android.os.Parcelable item:supplied){if(!(item instanceof android.net.Uri))throw new java.io.IOException("分享内容不是可读取的文件，请另存后重试。");uris.add((android.net.Uri)item);}}
+            else {android.os.Parcelable supplied=intent.getParcelableExtra(Intent.EXTRA_STREAM);if(supplied instanceof android.net.Uri)uris.add((android.net.Uri)supplied);}
+            if(uris.isEmpty()&&intent.getClipData()!=null)for(int i=0;i<intent.getClipData().getItemCount();i++){android.net.Uri uri=intent.getClipData().getItemAt(i).getUri();if(uri!=null)uris.add(uri);}
+            if(uris.isEmpty()||uris.size()>16)throw new java.io.IOException("请分享1至16个实际文件；文字消息或网页链接请先另存为文件。");
+            JSONArray files=new JSONArray();
+            for(android.net.Uri uri:uris){
+                if(!"content".equals(uri.getScheme())||uri.toString().length()>8192)throw new java.io.IOException("只接收应用明确分享的文件，不自动读取网页或本机路径。");
+                String name=null,mime=getContentResolver().getType(uri);long bytes=-1;
+                try(android.database.Cursor cursor=getContentResolver().query(uri,new String[]{android.provider.OpenableColumns.DISPLAY_NAME,android.provider.OpenableColumns.SIZE},null,null,null)){
+                    if(cursor!=null&&cursor.moveToFirst()){int n=cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME),z=cursor.getColumnIndex(android.provider.OpenableColumns.SIZE);if(n>=0&&!cursor.isNull(n))name=cursor.getString(n);if(z>=0&&!cursor.isNull(z))bytes=cursor.getLong(z);}
+                }
+                if(name==null||name.trim().isEmpty())throw new java.io.IOException("无法确认分享文件名称，请先另存后再分享。");
+                name=name.replaceAll("[\\p{Cntrl}]"," ").trim();if(name.length()>200)throw new java.io.IOException("文件名称超过200字，请改名后重新分享。");
+                if(mime==null)mime=intent.getType();if(mime==null||mime.length()>256)mime="application/octet-stream";
+                files.put(new JSONObject().put("uri",uri.toString()).put("name",name).put("mime",mime).put("bytes",bytes));
+            }
+            incomingFiles().receive(files);
+            runOnUiThread(()->{if(!isFinishing()&&!isDestroyed()){android.widget.Toast.makeText(this,"文件已加入待接收清单，请确认资料库和所属会议后导入。",android.widget.Toast.LENGTH_LONG).show();web.evaluateJavascript("window.dispatchEvent(new Event('companion-incoming'))",null);}});
+        }catch(Exception error){String message=error.getMessage();runOnUiThread(()->android.widget.Toast.makeText(this,message!=null&&message.matches("(?s).*[\\u4e00-\\u9fff].*")?message:"无法读取分享文件，请在来源应用中另存后重新分享。已有资料未改变。",android.widget.Toast.LENGTH_LONG).show());}});
+    }
+    private JSONObject incomingDescription()throws Exception{
+        IncomingFileQueue queue=incomingFiles();JSONObject job=AudioImportService.status(this);JSONArray rows=queue.list();
+        for(int i=0;i<rows.length();i++){JSONObject row=rows.getJSONObject(i);if("attempting".equals(row.getString("state"))&&!AudioImportService.isRunning()){
+            boolean completed=row.getString("id").equals(job.optString("incomingId"))&&"complete".equals(job.optString("state"));
+            queue.state(row.getString("id"),completed?"complete":"failed",completed?"已保存在指定资料库。":"上次接收尚未确认完成，可在原资料库重试；若来源权限已失效，请重新分享。");
+        }}
+        JSONObject library=libraries().status();return new JSONObject().put("rows",queue.list()).put("libraryId",library.getString("activeId")).put("libraryToken",library.getString("token")).put("libraryLabel","original".equals(library.getString("activeId"))?"原始资料库":"恢复的资料库").put("running",AudioImportService.isRunning());
+    }
+    private JSONObject importIncoming(JSONObject args)throws Exception{
+        requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("正在保存其它资料，请稍后重试。");boolean locked=true;
+        try{
+            LocalLibraryBackups library=libraries();String token=args.getString("libraryToken");if(!token.equals(library.token()))throw new java.io.IOException("资料库已切换，请重新确认接收目标。");
+            IncomingFileQueue queue=incomingFiles();String id=args.getString("id");JSONObject row=queue.get(id);String kind=row.getString("kind"),key=args.optString("key",""),title;
+            if("unsupported".equals(kind))throw new java.io.IOException("暂不支持此文件格式，请使用音视频、PDF、Office文档或常见图片。");
+            RecordingLibrary.Session selected=null;
+            if("media".equals(kind)){key=com.denzic.companion.mobile.ImportedAudio.hash(id.getBytes(java.nio.charset.StandardCharsets.UTF_8))+":1:1";title="新录音 · "+row.getString("name");}
+            else {selected=session(key);title=recordingTitle(key,selected);}
+            row=queue.bind(id,library.status().getString("activeId"),key,title);
+            if("complete".equals(row.getString("state")))return incomingDescription();
+            queue.state(id,"attempting","正在保存原文件，离开页面后请查看接收结果。");
+            if("media".equals(kind)){
+                // The existing foreground importer owns decoding, cancellation and publication.
+                LocalLibraryBackups.BUSY.set(false);locked=false;
+                AudioImportService.startIncoming(this,id,token);
+            }else{
+                android.net.Uri uri=android.net.Uri.parse(row.getString("uri"));
+                if("document".equals(kind)){
+                    JSONObject docs=documentContexts().read(key);JSONArray entries=docs.getJSONArray("rows");boolean saved=false;
+                    for(int i=0;i<entries.length();i++)if(id.equals(entries.getJSONObject(i).getString("id"))){if(!row.getString("name").equals(entries.getJSONObject(i).getString("name")))throw new java.io.IOException("接收记录与已保存材料不符，原资料保留。");documentContexts().original(key,docs.getLong("revision"),id);saved=true;}
+                    if(!saved)try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("来源权限已失效，请重新分享原文件。");documentContexts().add(key,docs.getLong("revision"),id,row.getString("name"),input);}
+                }else if("image".equals(kind)){
+                    if(!recordingNotes().incomingImagePresent(key,id,row.getString("name"))){JSONObject notes=recordingNotes().read(key);final String extension=IncomingFileQueue.imageExtension(row);try(java.io.InputStream input=getContentResolver().openInputStream(uri)){if(input==null)throw new java.io.IOException("来源权限已失效，请重新分享原图片。");recordingNotes().addIncomingImage(key,notes.getLong("revision"),id,row.getString("name"),extension,input,path->RecordingNoteImages.validate(path,extension));}}
+                }
+                else throw new java.io.IOException("暂不支持此文件格式，请使用音视频、PDF、Office文档或常见图片。");
+                queue.state(id,"complete","原文件已保存到“"+title+"”，可在补充材料中查看。");
+            }
+            return incomingDescription();
+        }catch(Exception error){
+            try{JSONObject row=incomingFiles().get(args.getString("id"));if("attempting".equals(row.getString("state")))incomingFiles().state(row.getString("id"),"failed","保存尚未确认，可在原目标重试；来源文件未改变。");}catch(Exception ignored){}
+            if(error instanceof SecurityException||error instanceof java.io.FileNotFoundException)throw new java.io.IOException("来源文件已不可读取，请在来源应用重新分享。已有资料未改变。",error);
+            throw error;
+        }finally{if(locked)LocalLibraryBackups.BUSY.set(false);}
     }
     private static WebResourceResponse blockedAsset() {
         return new WebResourceResponse("text/plain", "UTF-8", 404, "Not Found", java.util.Collections.singletonMap("Cache-Control","no-store"), new ByteArrayInputStream(new byte[0]));
@@ -946,11 +1019,19 @@ public final class MainActivity extends Activity {
     }
     private Object execute(String method, JSONObject a) throws Exception {
         if(DeviceUpdateService.isRunning()&&java.util.Arrays.asList("devices","discoverDevices","pairDevice","connectDevice","catalog","deviceMaintenance","deleteDeviceRecording","sync","resume","resumeConfirmation","controlInventory","control","libraryActivate").contains(method))throw new java.io.IOException("录音卡正在升级，请等待完成后再操作设备。");
-        if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method)&&!"audioImportStatus".equals(method))throw new IllegalStateException(AudioImportService.isRunning()?"正在完成导入保存，请稍后重试。":"正在备份或恢复资料，请等待完成。");
+        if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method)&&!"audioImportStatus".equals(method)&&!"incomingFiles".equals(method)&&!"removeIncomingFile".equals(method))throw new IllegalStateException(AudioImportService.isRunning()?"正在完成导入保存，请稍后重试。":"正在备份或恢复资料，请等待完成。");
         if(("minutes".equals(method)||"translate".equals(method))&&a.optString("apiKey","").isEmpty()){
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "incomingFiles":return incomingDescription();
+            case "importIncomingFile":return importIncoming(a);
+            case "removeIncomingFile":{
+                String id=a.getString("id");JSONObject job=AudioImportService.status(this);
+                if(AudioImportService.isRunning()&&id.equals(job.optString("incomingId")))throw new java.io.IOException("此文件正在导入，请先取消并等待收尾。");
+                incomingFiles().remove(id);return incomingDescription();
+            }
+
             case "documentContexts":{String key=a.getString("key");session(key);return documentDescription(key);}
             case "documentContextChunk":{noteSession(a);return documentContexts().chunk(a.getString("key"),a.getLong("revision"),a.getString("id"),a.getInt("offset"));}
             case "documentContextRead":{noteSession(a);return documentContexts().extraction(a.getString("key"),a.getLong("revision"),a.getString("id"));}

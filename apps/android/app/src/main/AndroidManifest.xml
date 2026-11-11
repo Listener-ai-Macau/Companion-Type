@@ -8,8 +8,44 @@
         <service android:name=".AudioImportService" android:exported="false" android:foregroundServiceType="dataSync" />
         <service android:name=".DeviceUpdateService" android:exported="false" android:foregroundServiceType="connectedDevice" />
         <provider android:name=".ExportFileProvider" android:authorities="${applicationId}.exports" android:exported="false" android:grantUriPermissions="true" />
-        <activity android:name=".MainActivity" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize" android:configChanges="orientation|screenSize|keyboardHidden|uiMode">
+        <activity android:name=".MainActivity" android:launchMode="singleTask" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize" android:configChanges="orientation|screenSize|keyboardHidden|uiMode">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="audio/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="image/jpeg"/>
+                <data android:mimeType="image/png"/>
+                <data android:mimeType="image/webp"/>
+                <data android:mimeType="application/pdf"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="text/markdown"/>
+                <data android:mimeType="text/csv"/>
+                <data android:mimeType="application/octet-stream"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="audio/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="image/jpeg"/>
+                <data android:mimeType="image/png"/>
+                <data android:mimeType="image/webp"/>
+                <data android:mimeType="application/pdf"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="text/markdown"/>
+                <data android:mimeType="text/csv"/>
+                <data android:mimeType="application/octet-stream"/>
+            </intent-filter>
         </activity>
     </application>
 </manifest>
