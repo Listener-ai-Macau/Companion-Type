@@ -271127,8 +271127,8 @@
               }
             },
             "systemInbound20261111": {
-              "at": "2026-11-11T09:15:13+08:00",
-              "state": "MSI_RECIPE_FIXED_LOCAL_BUNDLE_PASSED_PINNED_CI_REPACKAGE_NEXT",
+              "at": "2026-11-11T09:31:30+08:00",
+              "state": "PACKAGE_RUNNER_ENCODING_REPAIRED_RETRY_SAME_NATIVE_PAIR_NEXT",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271205,7 +271205,19 @@
                 }
               },
               "nativeRuntimeQualified": false,
-              "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json"
+              "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json",
+              "packageBuild": {
+                "source": "5535562fbdbcb7c088c4cfce3257fd8b1ed83847",
+                "run": 42937594006,
+                "lastObserved": "preparer failure: cp1252 stdout encoding, not product/native failure",
+                "nativeAndWebReuseChecksPassed": true,
+                "repair": "UTF8 child I/O; retain target inspection and same native pair; package-only retry next"
+              },
+              "remainingBeforeDelivery": [
+                "Windows ordinary cold/warm file reception, source failure/retry, cancel, originals and complete backup/lifecycle runtime still pending.",
+                "Review bound inbox receipts with existing permanent recording deletion: current global receipt persistence is not yet connected to the recording purge hooks; do not close lifecycle/privacy on ordinary import alone.",
+                "Android137 real OS share/open flow not yet installed/verified; last actual ADB inventory empty."
+              ]
             }
           },
           "completeDocumentCandidateArchive20261110": {

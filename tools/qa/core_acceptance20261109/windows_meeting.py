@@ -168,7 +168,7 @@ def main():
   for destination,seconds in [(audio,2),(long_audio,7200)]:
    with wave.open(str(destination),'wb') as sound:
     sound.setnchannels(1);sound.setsampwidth(2);sound.setframerate(16000)
-    for _ in range(seconds):sound.writeframesraw(b'\\x01\\x00'*16000)
+    for _ in range(seconds):sound.writeframesraw(bytes([1,0])*16000)
   image=received/'公开白板100.png';public=Path(__file__).parent/'fixtures/public-whiteboard124.png';assert sha(public)=='96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855';shutil.copy2(public,image)
   broken=received/'公开坏文件100.wav';broken.write_bytes(b'PUBLIC_INVALID_AUDIO_NOT_A_MEETING')
   plan.update(incomingAudio=str(audio),incomingAudioSha256=sha(audio),incomingLong=str(long_audio),incomingLongSha256=sha(long_audio),incomingImage=str(image),incomingImageSha256=sha(image),incomingBad=str(broken),incomingBadSha256=sha(broken),appExecutable=str(app/'companion-type.exe'),privateRoot=str(root))

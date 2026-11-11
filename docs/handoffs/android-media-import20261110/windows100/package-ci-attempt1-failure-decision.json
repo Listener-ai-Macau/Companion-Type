@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-11T09:26:30+08:00",
+  "state": "PACKAGE_RUNNER_STDOUT_ENCODING_REPAIRED_SAME_NATIVE_PAIR",
+  "run": 42937594006,
+  "artifactSource": "5535562fbdbcb7c088c4cfce3257fd8b1ed83847",
+  "nativeSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "actualFailure": "The read-only target preflight tried to print Chinese backlog context to the hosted Windows cp1252 pipe and raised UnicodeEncodeError. Full source1355/web/native reuse checks had already passed.",
+  "repair": "Set child PYTHONIOENCODING=utf-8 and PYTHONUTF8=1 in this MSI-only runner, following the normal existing runner. No preflight check removed or relabeled.",
+  "nativeRecompiled": false,
+  "modelsRun": false
+}

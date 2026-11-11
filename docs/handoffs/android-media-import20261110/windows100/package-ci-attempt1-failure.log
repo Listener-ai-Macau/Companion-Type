@@ -1,0 +1,33 @@
+candidate	Build frozen candidate and installer	﻿2026-11-11T01:17:05.4125889Z ##[group]Run python -m pip install psutil==7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4126195Z ^[[36;1mpython -m pip install psutil==7.2.2^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4126387Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4126581Z ^[[36;1mpython tools/build_windows_candidate_ci.py^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4149454Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4149646Z env:
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4149766Z   CARGO_BUILD_JOBS: 2
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4149891Z   CARGO_INCREMENTAL: 0
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4150046Z   CARGO_TARGET_DIR: D:\a\_temp/companion-windows-target
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4151558Z   GH_TOKEN: ***
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4151808Z   COMPANION_REUSE_NATIVE_SPEC: docs/handoffs/android-media-import20261110/windows100/repackage-spec.json
+candidate	Build frozen candidate and installer	2026-11-11T01:17:05.4152079Z ##[endgroup]
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.1678017Z Collecting psutil==7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.3196750Z   Downloading psutil-7.2.2-cp37-abi3-win_amd64.whl.metadata (22 kB)
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.3712372Z Downloading psutil-7.2.2-cp37-abi3-win_amd64.whl (137 kB)
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.6454577Z Installing collected packages: psutil
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.7231828Z Successfully installed psutil-7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.7268025Z 
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.7269554Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+candidate	Build frozen candidate and installer	2026-11-11T01:17:10.7270108Z [notice] To update, run: python.exe -m pip install --upgrade pip
+candidate	Build frozen candidate and installer	2026-11-11T01:17:17.2645436Z Starting npm-ci
+candidate	Build frozen candidate and installer	2026-11-11T01:17:29.4879475Z Passed npm-ci
+candidate	Build frozen candidate and installer	2026-11-11T01:17:29.4896621Z Starting windows-web
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.5295911Z Passed windows-web
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.5486175Z Starting native-target-preflight
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8457809Z Traceback (most recent call last):
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8458816Z   File "D:\a\Companion-Type\Companion-Type\tools\bundle_windows_candidate_ci.py", line 63, in <module>
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8465527Z     run("native-target-preflight",[sys.executable,S/"tools/check_type_build_target.py","--target-dir",T,"--project",S,"--artifact-dir",pair])
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8466401Z   File "D:\a\Companion-Type\Companion-Type\tools\bundle_windows_candidate_ci.py", line 14, in run
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8467554Z     print("Starting "+name,flush=True);p=subprocess.run(list(map(str,args)),cwd=cwd,env=env,capture_output=True);(C/(name+".log")).write_bytes(p.stdout+p.stderr);assert p.returncode==0,name+" failed; retained log";print("Passed "+name,flush=True)
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8468658Z                                                                                                                                                                          ^^^^^^^^^^^^^^^
+candidate	Build frozen candidate and installer	2026-11-11T01:17:41.8469239Z AssertionError: native-target-preflight failed; retained log
+candidate	Build frozen candidate and installer	2026-11-11T01:17:42.1664995Z ##[error]Process completed with exit code 1.

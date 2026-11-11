@@ -55,7 +55,7 @@ try:
  pair=C/"windows-bin";pair.mkdir();T=Path(os.environ["RUNNER_TEMP"])/"companion-package-only100";(T/"release").mkdir(parents=True,exist_ok=False)
  for row in native["nativeFiles"]:
   source=upstream_dir/"windows-bin"/row["path"];assert sha(source)==row["sha256"];shutil.copyfile(source,pair/row["path"]);shutil.copyfile(source,T/"release"/row["path"])
- env={**os.environ,"CARGO_TARGET_DIR":str(T),"RUSTUP_TOOLCHAIN":"1.95.0"}
+ env={**os.environ,"CARGO_TARGET_DIR":str(T),"RUSTUP_TOOLCHAIN":"1.95.0","PYTHONIOENCODING":"utf-8","PYTHONUTF8":"1"}
  record["state"]="REBUILDING_IDENTICAL_WEB_ASSETS_FOR_BUNDLE_INPUT";save()
  run("npm-ci",["npm.cmd","ci","--no-audit","--no-fund"]);run("windows-web",["npm.cmd","run","build:windows"])
  dist=S/"apps/windows/dist";assert {p.relative_to(dist).as_posix() for p in dist.rglob("*") if p.is_file()}=={v["path"] for v in native["webAssets"]}
