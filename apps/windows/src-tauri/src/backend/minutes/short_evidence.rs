@@ -10,6 +10,17 @@ enum Item { Summary(String),Decision(String),Question(String),Action(CompanionV1
 #[derive(Clone,Debug)]
 pub(super) struct Entry {item:Item, quote:String}
 
+// Reuse the provider's already captured, verbatim source references when the
+// small L0 verb extractor cannot represent an oral subtask. This binds the
+// reading aid to the same item; it is not proof of semantic correctness.
+pub(super) fn action_sources<'a>(entries:&'a[Entry],item:&CompanionV1ActionItem,transcript:&str)->Vec<&'a str> {
+    entries.iter().filter_map(|entry|match &entry.item {
+        Item::Action(original) if original.text==item.text && original.owner==item.owner && original.due==item.due
+            && transcript.contains(&entry.quote)=>Some(entry.quote.as_str()),
+        _=>None,
+    }).collect()
+}
+
 // A provider may omit or mangle this optional field. Only retain bounded,
 // verbatim single-line source excerpts and a valid source-item index.
 pub(super) fn capture(object:&Value, minutes:&CompanionV1MeetingMinutes, transcript:&str)->Vec<Entry> {

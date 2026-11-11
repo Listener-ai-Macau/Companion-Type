@@ -1,0 +1,52 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {actionFollowupText,savedActionReview} from '../packages/ui/src/actionReview';
+import {libraryPreview} from '../packages/ui/src/libraryPreview';
+import {materialAnswerText} from '../packages/ui/src/aiMaterialNote';
+
+const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+snapshot.host.persistence={status:'ready'};
+const session=snapshot.host.sessions[0];
+const markdown='> 整理视角：会议\n\n# 公开讨论\n\nGenerated: 2026-11-11T00:00:00Z\nDuration: 54000 ms\nSource: importedAudio\nMinutes engine: llm_deepseek (final)\n\n## Summary\n- 聚会仍待确认。\n\n## Action Items\n- 周五前确认场地 (owner: 周嘉)\n\n## Decisions\n- 活动日期暂定，等场地回复。\n\n## 原话核对\n\n- 原话保持原样。\n';
+assert.ok(session.minutes&&session.minutesByMode?.offlineStore);
+session.minutes={...session.minutes,markdown,source:'llm_deepseek',quality:'final'};
+session.minutesByMode={...session.minutesByMode,offlineStore:{...session.minutesByMode.offlineStore,markdown,source:'llm_deepseek',quality:'final'}};
+const saves:any[]=[];
+let tree:any;
+const text=(node:any):string=>node==null?'':typeof node==='string'?node:(node.children??[]).map(text).join('');
+act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null}
+  onControl={()=>{}} onRefresh={()=>{}} onImportAudio={async()=>null}
+  onSaveMeeting={async request=>{saves.push(request);return snapshot;}} onExportMeeting={async()=>null}/>);});
+const button=(label:string)=>tree.root.findAllByType('button').find((node:any)=>text(node)===label);
+act(()=>button('导入已有音频').props.onClick());
+assert.equal(tree.root.findByProps({id:'ct-device-recording-page'}).props.hidden,false);
+assert.ok(tree.root.findByProps({id:'ct-audio-import'}));
+act(()=>button('我的记录').props.onClick());
+act(()=>button('打开整理结果').props.onClick());
+assert.ok(button('导出待办 TXT'));assert.ok(button('预览并导出完整内容'));
+act(()=>button('编辑清单').props.onClick());
+const item=tree.root.findByProps({'aria-label':'待办 1 内容'});
+assert.equal(item.props.value,'周五前确认场地');
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 负责人'}).props.value,'周嘉');
+assert.equal(tree.root.findByProps({id:'ct-active-minutes-editor'}).findAllByType('textarea').some((node:any)=>String(node.props.value).includes('Generated:')),false,
+  'native template marker must not throw the user into a raw diagnostic Markdown editor');
+act(()=>item.props.onChange({target:{value:'周五前确认场地，并询问远程设备'}}));
+await act(async()=>{await button('保存修改').props.onClick();});
+assert.equal(saves.length,1);
+const saved=JSON.stringify(saves[0]);
+assert.ok(saved.includes('整理视角：会议'));assert.ok(saved.includes('Generated:'));assert.ok(saved.includes('原话保持原样'));
+assert.ok(saved.includes('周五前确认场地，并询问远程设备 (owner: 周嘉)'));
+act(()=>tree.unmount());
+const followup=actionFollowupText([savedActionReview('1','周五前确认场地 (owner: 周嘉)',false)],'公开讨论');
+assert.ok(followup.includes('周五前确认场地'));assert.ok(followup.includes('未单独填写，请以事项原文为准'));
+assert.ok(!followup.includes('时间：未明确'));
+const note={id:'public-ai',text:'AI 材料（请核对）｜设备确认\nAI生成草稿\n问题：谁确认远程设备？\n\n• 远程设备由周嘉确认。\n\n原文依据：\n1. 《公开讨论》\n周嘉一起确认远程设备。'};
+assert.equal(materialAnswerText(note),'• 远程设备由周嘉确认。');
+session.meetingNotes=[note];
+const preview=libraryPreview(session,'远程设备');assert.ok(preview.text.includes('由周嘉确认'));assert.ok(!preview.text.includes('谁确认'));
+assert.equal(preview.label,'AI材料');assert.equal(preview.target,'source');
+assert.equal(materialAnswerText({...note,text:'普通便签\n问题：远程设备'}),null,'ordinary notes stay literal');
+console.log('PASS_CUSTOMER_FOLLOWTHROUGH: import discoverability, structured native-template actions, saved provenance, honest time wording, full-content export entry, saved-answer search');

@@ -82,7 +82,7 @@ try:
  # All affected checks remain unchanged; the shipped pair is still built last
  # by the same locked normal-release command, then independently inspected.
  record['state']='BUILDING_NORMAL_RELEASE';save()
- run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness'])
+ run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
  run('connection-ui-build',['node',str(S/'node_modules/esbuild/bin/esbuild'),'tools/test_connection_unavailable.ts','--bundle','--platform=node','--format=cjs','--outfile='+str(C/'connection-ui.cjs')])
  run('connection-ui',['node',str(C/'connection-ui.cjs')])
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)

@@ -21,7 +21,7 @@ const text=(node:any):string=>node==null||typeof node==='boolean'?'':typeof node
 const open=renderer.root.findAllByType('button').find((button:any)=>text(button)==='打开整理结果');
 assert.ok(open,'saved result entry exists');act(()=>open.props.onClick());
 const visibleText=text(renderer.root.findByProps({id:'ct-recording-result'}));
-const action=visibleText.indexOf('完成界面'),exportAction=visibleText.indexOf('导出清单');
+const action=visibleText.indexOf('完成界面'),exportAction=visibleText.indexOf('导出待办 TXT');
 assert.ok(action>=0&&exportAction>action,'saved result appears before export controls');
 assert.match(visibleText,/负责人/);assert.match(visibleText,/小林/);
 act(()=>renderer.unmount());

@@ -179,8 +179,14 @@ pub fn rules_l0_minutes(
 /// weren't produced (previously the error was silently dropped).
 pub(super) fn finalize_minutes(
     result: Result<CompanionV1MeetingMinutes, String>,
-    mut l0: CompanionV1MeetingMinutes,
+    l0: CompanionV1MeetingMinutes,
     session: &CompanionV1HostSession,
+) -> CompanionV1MeetingMinutes {
+    finalize_minutes_with_evidence(result,l0,session,&[])
+}
+
+fn finalize_minutes_with_evidence(result:Result<CompanionV1MeetingMinutes,String>,
+    mut l0:CompanionV1MeetingMinutes,session:&CompanionV1HostSession,source_quotes:&[short_evidence::Entry]
 ) -> CompanionV1MeetingMinutes {
     match result {
         Ok(mut upgraded) => {
@@ -211,7 +217,7 @@ pub(super) fn finalize_minutes(
                 .then(||short_memo::context_actions(session));
             let mut evidence=l0.clone();
             if let Some(actions)=&context_actions { evidence.action_items=actions.clone().unwrap_or_default(); }
-            let actions_changed = !validated_context && enforce_source_backed_action_items(&mut upgraded, &evidence, session);
+            let actions_changed = !validated_context && enforce_source_backed_action_items_with_quotes(&mut upgraded, &evidence, session, source_quotes);
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
             let independent_actions_restored = short_memo::merge_independent_actions(&mut upgraded.action_items, session);
@@ -298,7 +304,7 @@ struct NativeMinutesResult {
 
 fn finalize_native_result(native:NativeMinutesResult, draft:CompanionV1MeetingMinutes,
     session:&CompanionV1HostSession)->CompanionV1MeetingMinutes {
-    let mut minutes=finalize_minutes(Ok(native.minutes),draft,session);
+    let mut minutes=finalize_minutes_with_evidence(Ok(native.minutes),draft,session,&native.evidence);
     short_evidence::append(&mut minutes,&native.evidence);
     if let Some(overview)=native.overview {
         long_meeting::prepend_concise_overview(&mut minutes,&overview);
@@ -362,6 +368,7 @@ fn run_deepseek_request_with_evidence(
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
+    system.push_str("\n行动清单应覆盖原话已明确的主任务及执行时顺带要求的核实、准备和跟进，不因同属一个负责人而遗漏子任务。保留条件与暂定，不把备选方案升级为已决定的任务。每个actionItems尽量提供对应evidence连续原话，覆盖动作及其负责人、时间。due可保留原话中的相对或不完整时间，不因缺少年份、不能转成完整日历日期就留空，也不推算缺失日期。");
     if let Some(template)=template {system.push_str(&template.prompt());}
     let overview_requested=template.is_none() && session.meeting_notes.is_empty()
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
@@ -845,6 +852,12 @@ fn enforce_source_backed_action_items(
     l0: &CompanionV1MeetingMinutes,
     session: &CompanionV1HostSession,
 ) -> bool {
+    enforce_source_backed_action_items_with_quotes(upgraded,l0,session,&[])
+}
+
+fn enforce_source_backed_action_items_with_quotes(upgraded:&mut CompanionV1MeetingMinutes,
+    l0:&CompanionV1MeetingMinutes,session:&CompanionV1HostSession,source_quotes:&[short_evidence::Entry]
+) -> bool {
     let mut changed = false;
     let transcript_segments = split_segments(&session.transcript_text);
     upgraded.action_items.retain_mut(|item| {
@@ -852,6 +865,9 @@ fn enforce_source_backed_action_items(
             source_fact_covered(&source.text, &item.text)
                 || source_fact_covered(&item.text, &source.text)
         }).map(|source| source.text.as_str()).collect::<Vec<_>>();
+        if sources.is_empty() && session.meeting_notes.is_empty() {
+            sources=short_evidence::action_sources(source_quotes,item,&session.transcript_text);
+        }
         if sources.is_empty() {
             // Original-only excerpts cannot resolve a later user supplement
             // which may have cancelled or revised the plan.
@@ -1354,6 +1370,30 @@ mod tests {
                 expires_at: None,
             },
         }
+    }
+
+    #[test]
+    fn customer_followthrough_keeps_source_quoted_oral_subtasks_and_binds_metadata() {
+        let transcript="周嘉周三前约好讲师，也把线上接入方式一并问明白。";
+        let session=session_with_text(transcript);
+        let mut draft=rules_l0_minutes(&session,"now");draft.action_items.clear();
+        let mut generated=draft.clone();generated.source="llm_deepseek".into();generated.quality="final".into();generated.markdown.clear();
+        generated.action_items=vec![CompanionV1ActionItem{text:"确认线上接入方式".into(),owner:Some("周嘉".into()),due:Some("周三前".into())}];
+        let object=serde_json::json!({"evidence":[{"field":"actionItems","index":0,"quote":transcript}]});
+        let evidence=short_evidence::capture(&object,&generated,transcript);
+        assert!(finalize_minutes(Ok(generated.clone()),draft.clone(),&session).action_items.is_empty(),
+            "the old L0-only path discarded the oral paraphrase");
+        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session);
+        assert_eq!(kept.action_items.len(),1);assert_eq!(kept.action_items[0].owner.as_deref(),Some("周嘉"));
+        assert_eq!(kept.action_items[0].due.as_deref(),Some("周三前"));
+        assert!(kept.markdown.contains("确认线上接入方式"));assert!(kept.markdown.contains(transcript));
+        let invalid=serde_json::json!({"evidence":[{"field":"actionItems","index":0,"quote":"原文没有说过的依据"}]});
+        let evidence=short_evidence::capture(&invalid,&generated,transcript);
+        assert!(finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session).action_items.is_empty());
+        generated.action_items[0].owner=Some("陈同事".into());generated.action_items[0].due=Some("周五".into());
+        let evidence=short_evidence::capture(&object,&generated,transcript);
+        let corrected=finalize_native_result(NativeMinutesResult{minutes:generated,evidence,overview:None},draft,&session);
+        assert_eq!(corrected.action_items.len(),1);assert!(corrected.action_items[0].owner.is_none());assert!(corrected.action_items[0].due.is_none());
     }
 
     #[test]

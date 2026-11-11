@@ -131,7 +131,7 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   const preferActions=!noActions||actionsFirst||duplicateOriginal||attributedSource;
   const reading=preferActions&&!noActions?[actionSection]:[];
   if(!duplicateOriginal && sections.get('summary')?.trim())reading.push(`## 重点\n\n${sections.get('summary')}`);
-  if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
+  if(!emptySection(sections.get('decisions')??''))reading.push(`## 讨论结论与安排\n\n${sections.get('decisions')}`);
   if(!preferActions||noActions)reading.push(actionSection);
   if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
   if(sections.get('unattributed')?.trim())reading.push('## 归属未确认\n\n部分原话的发言者未确认；可展开完整整理逐句核对。');
