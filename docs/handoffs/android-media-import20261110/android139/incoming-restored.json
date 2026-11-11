@@ -1,0 +1,171 @@
+{
+  "actualVersion": "0.1.139",
+  "modelsCloudMicBleUsed": false,
+  "state": "ORDINARY_RESTORED_RECORD_AND_CONTEXT_METADATA_EXACT_RECEIPTS_STAY_ORIGINAL_LIBRARY",
+  "restoredLibrary": "e7549e09-51c5-4479-b494-af5a6305f4ff",
+  "sourceLibrary": "7ebdda83-7869-49a7-83fd-86dc68048493",
+  "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+  "rows": [
+    {
+      "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+      "title": "Companion-public-meeting-video-30s.mp4",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 30016,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    },
+    {
+      "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+      "title": "Companion-public-meeting-90s.m4a",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90005,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    },
+    {
+      "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+      "title": "public-incoming138.wav",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 2000,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    },
+    {
+      "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "title": "超市交流｜工程需求待收集（公开样例）",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+        "revision": 4,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false,
+        "title": "Companion-public-meeting-90s.wav"
+      },
+      "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90000,
+      "organization": {
+        "folder": "公开验收/客户会议",
+        "tags": [
+          "公开项目",
+          "待复核"
+        ]
+      }
+    },
+    {
+      "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+      "title": "Companion-public-meeting-90s.mp3",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+        "revision": 4,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false,
+        "title": "Companion-public-meeting-90s.mp3"
+      },
+      "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90000,
+      "organization": {
+        "folder": "公开验收/客户会议",
+        "tags": [
+          "公开项目",
+          "待复核"
+        ]
+      }
+    }
+  ],
+  "docs": {
+    "contextId": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+    "revision": 1,
+    "rows": [
+      {
+        "id": "ec2f2d04-c6d7-42eb-9a94-f61dc130a847",
+        "name": "material.docx",
+        "format": "docx",
+        "file": "7ccc8f7a319636f189eb002d3481a2bb6e5d9137865f09a732c2445df46175f5.document-ec2f2d04-c6d7-42eb-9a94-f61dc130a847.docx",
+        "sourceSha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+        "bytes": 37839,
+        "createdAt": 1794367380673
+      }
+    ],
+    "schema": 1,
+    "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c"
+  },
+  "notes": {
+    "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+    "revision": 1,
+    "entries": [
+      {
+        "id": "4d7be13f-f3c1-4214-82db-a8853deb5c7e",
+        "text": "",
+        "atMs": null,
+        "image": {
+          "file": "7ccc8f7a319636f189eb002d3481a2bb6e5d9137865f09a732c2445df46175f5.context-4d7be13f-f3c1-4214-82db-a8853deb5c7e.png",
+          "name": "public-whiteboard138.png",
+          "bytes": 35518,
+          "sha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855"
+        },
+        "createdAt": 1794364963217,
+        "updatedAt": 1794364963217
+      }
+    ],
+    "schema": 1,
+    "libraryToken": "3f8a7b5cd74f2b240c59b23b7a73979e248f0157627f8bcc7966945c9becfb6c"
+  }
+}

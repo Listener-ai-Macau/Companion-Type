@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-11T11:00:06+08:00",
+  "state": "WINDOWS102_PDF_EXTRACTION_ACTION_NOT_OBSERVED_SAME_ARTIFACT_RETRY",
+  "failedRun": 42948757481,
+  "nativeSource": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
+  "msiSha256": "87f5868bf8674867031c82296580f0dbc44689cb95a8126dd4366447a6ce6739",
+  "actualPassed": "Existing notes/reopen/search/reference draft plus real DOCX/XLSX/PPTX original+local extraction passed.",
+  "actualFailure": "chinese.pdf selected, stored pending, no extract progress/error/result after55s. Retained screenshot/body shows idle correct document reader. A parser failure or changed product cause is not established.",
+  "hypothesis": "Verifier clicked extraction before selected reader/open operation fully settled.",
+  "distinctRepair": "Wait for actual selected reader heading identity and completed opening before ordinary extraction click. Same102 exact binary, unchanged55s budget. No native build for this verifier repair.",
+  "qualification": false
+}

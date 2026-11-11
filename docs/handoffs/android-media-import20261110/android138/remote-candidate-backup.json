@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-11T10:21:22+08:00",
+  "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+  "sourceCommit": "0d33c2c4932170d0248cb51d4f4214773f66c465",
+  "repo": "Listener-ai-Macau/Companion-Type",
+  "tag": "windows-0.1.78-bb1550c4-candidate",
+  "draft": true,
+  "assetId": 733800129,
+  "fileName": "Companion-Android-0.1.138-core-candidate.apk",
+  "apkSha256": "d0c73226037e39d5e8b299fdd62361d9f05bfcb3823106b70c6018b775accc83",
+  "bytes": 51188509,
+  "readbackByteIdentical": true,
+  "published": false,
+  "ownerPrivateDataUploaded": false,
+  "readback": {
+    "method": "four-bounded-official-CDN-range-readers",
+    "workers": 4,
+    "sections": 13,
+    "bufferBytesPerWorker": 131072,
+    "bytes": 51188509,
+    "sha256": "d0c73226037e39d5e8b299fdd62361d9f05bfcb3823106b70c6018b775accc83",
+    "seconds": 2.75,
+    "retainedTransientReads": [],
+    "authSentOnlyToGitHubApi": true,
+    "signedUrlOrTokenPersisted": false,
+    "routingModified": false
+  }
+}

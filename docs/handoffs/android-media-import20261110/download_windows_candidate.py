@@ -5,7 +5,7 @@ from release_readback import download
 C=Path(__file__).parent;W=Path('E:/CodexData/Companion/.build-cache/windows-note-context20261110');code=sys.argv[1];run_id=int(sys.argv[2]);assert re.fullmatch(r'\d{3}',code) and run_id>0;O=C/('windows'+code);freeze=json.loads((O/'source-freeze.json').read_text(encoding='utf8'));source=freeze['sourceCommit'];artifact_source=freeze.get('artifactSourceCommit',source);assert re.fullmatch('[0-9a-f]{40}',source)
 def gh(args):
  p=subprocess.run(['gh',*args],capture_output=True,timeout=40,creationflags=subprocess.CREATE_NO_WINDOW);assert p.returncode==0,p.stderr.decode(errors='replace')[-1200:];return p.stdout
-run=json.loads(gh(['run','view',str(run_id),'--repo','Listener-ai-Macau/Companion-Type','--json','status,conclusion,headSha']));assert run=={'conclusion':'success','headSha':artifact_source,'status':'completed'},run
+fresh=json.loads(gh(['api','-H','Cache-Control: no-cache','repos/Listener-ai-Macau/Companion-Type/actions/runs/'+str(run_id)]));run={'status':fresh['status'],'conclusion':fresh['conclusion'],'headSha':fresh['head_sha']};assert run=={'conclusion':'success','headSha':artifact_source,'status':'completed'},run
 info=json.loads(gh(['api','repos/Listener-ai-Macau/Companion-Type/actions/runs/'+str(run_id)+'/artifacts']));artifact=next(a for a in info['artifacts'] if a['name']=='companion-windows-candidate-'+artifact_source);archive=W/('ci-artifact'+code+'.zip');proof=download('Listener-ai-Macau/Companion-Type',artifact['id'],archive,artifact['size_in_bytes'],artifact['digest'].removeprefix('sha256:'),kind='artifact');dest=W/('ci-artifact'+code)/artifact_source
 if not dest.exists():
  dest.mkdir(parents=True)

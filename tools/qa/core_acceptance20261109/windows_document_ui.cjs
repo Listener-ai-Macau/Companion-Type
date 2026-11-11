@@ -48,7 +48,7 @@ module.exports=async function documentJourney(page,plan,out){
  const docs=[];
  for(const input of plan.documentInputs){
   await dialog('document-import-'+input.name.replace(/\W/g,'_'),'open',input.path,input.sha256,()=>panel.getByRole('button',{name:'添加文档',exact:true}).click());await panel.getByText('文档原件已保存在本机。打开材料后可提取文字，不会自动发送给AI。',{exact:true}).waitFor();
-  const item=panel.locator('.document-list article').filter({hasText:input.name});await item.getByRole('button').first().click();await panel.getByRole('button',{name:'在本机提取文字',exact:true}).click();
+  const item=panel.locator('.document-list article').filter({hasText:input.name});await item.getByRole('button').first().click();await panel.locator('.document-reader').getByRole('heading',{name:input.name,exact:true}).waitFor();await panel.locator('.document-progress').waitFor({state:'hidden'});await panel.getByRole('button',{name:'在本机提取文字',exact:true}).click();
   if(input.name==='no-text.pdf'){await panel.getByRole('alert').filter({hasText:'未提取到可读取文字'}).waitFor();const doc=row().documentContext.rows.find(d=>d.name===input.name);assert(!doc.extraction);docs.push(doc);continue;}
   if(input.name==='protected.pdf'){
    await panel.getByRole('alert').filter({hasText:'需要密码'}).waitFor();await panel.getByLabel('PDF密码',{exact:true}).fill('public-wrong-password');await panel.getByRole('button',{name:'在本机提取文字',exact:true}).click();await panel.getByRole('alert').filter({hasText:'PDF密码不正确'}).waitFor();assert.equal(await panel.getByLabel('PDF密码',{exact:true}).inputValue(),'');await panel.getByLabel('PDF密码',{exact:true}).fill('local-password');await panel.getByRole('button',{name:'在本机提取文字',exact:true}).click();

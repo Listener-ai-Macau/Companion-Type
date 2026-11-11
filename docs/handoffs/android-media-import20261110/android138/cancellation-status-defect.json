@@ -1,0 +1,10 @@
+{
+  "state": "REAL_NATIVE_CANCEL_REASON_LOST_IN_INCOMING_RECEIPT",
+  "version": "0.1.138",
+  "source": "0d33c2c4932170d0248cb51d4f4214773f66c465",
+  "actual": "Ordinary native2h generatedPCM import processed163840 units then cancelled. Native job correctly persisted cancelled, but pending receipt recovery replaced the exact reason with generic interrupted/unconfirmed text. Bad-file reason was similarly lost.",
+  "dataLossObserved": false,
+  "newSourceFix": "Service writes each receipt final state before retiring worker; early failures retain incomingId; recovery maps exact matching terminal job state/message; permission errors use explicit safe guidance.",
+  "productRebuildRequired": "Android139 only; Windows102 source and all source-owner/decoder/model behavior unaffected.",
+  "qualified": false
+}

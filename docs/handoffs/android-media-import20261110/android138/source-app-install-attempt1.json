@@ -1,0 +1,7 @@
+{
+  "state": "QA_SOURCE_APP_INSTALL_REJECTED_BY_PHONE",
+  "productApkInstalledAndAllOriginalFilesIdentical": true,
+  "qaAppInstalled": false,
+  "error": "INSTALL_FAILED_USER_RESTRICTED: Install canceled by user",
+  "decision": "Do not disable system installation protections or repeat the same install; use actual system DocumentsProvider and OS intent path with only this case public files. No source-app, expired-grant or customer qualification claimed."
+}

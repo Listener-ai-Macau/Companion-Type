@@ -1,0 +1,28 @@
+{
+  "state": "ACTUAL_INCOMING_AUDIO_DOCX_PNG_ORIGINAL_BYTES_AND_COMPLETE_BACKUP_EXACT",
+  "sourceLibrary": "7ebdda83-7869-49a7-83fd-86dc68048493",
+  "backupRemote": "/sdcard/Download/Companion-public-incoming139-backup.zip",
+  "backupSha256": "122d60969ab8821fd17ba4285fadfe97922e2e7c225a89ce72cf40c48580ae75",
+  "backupBytes": 14618717,
+  "contentFiles": 63,
+  "threeIncomingOriginalHashesMatchedTheirOwners": true,
+  "unconfirmedReceiptsNotMisrepresentedAsBackedUpOriginals": true,
+  "fiveSourceAppOriginalsUnchanged": true,
+  "modelsRun": false,
+  "limits": {
+    "pid": 28288,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 66752512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
