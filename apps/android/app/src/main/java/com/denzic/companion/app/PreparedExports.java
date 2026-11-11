@@ -9,6 +9,7 @@ import org.json.*;
 /** Immutable app-owned export copies. The provider never resolves arbitrary app files. */
 final class PreparedExports {
     static final long LIFETIME=24L*60*60*1000;static final int COPY_LIMIT=256*1024;
+    private static String previewPrefix(String text,int limit){if(text==null)return "";int end=Math.min(text.length(),limit);if(end<text.length()&&end>0&&Character.isHighSurrogate(text.charAt(end-1))&&Character.isLowSurrogate(text.charAt(end)))end--;return text.substring(0,end);}
     interface Writer{void write(OutputStream out)throws Exception;}
     final Path root;
     PreparedExports(Path cache){root=cache.resolve("companion-shared").toAbsolutePath().normalize();}
@@ -18,7 +19,11 @@ final class PreparedExports {
     static final class Entry{
         final JSONObject meta;final Path file,copy;Entry(JSONObject m,Path f,Path c){meta=m;file=f;copy=c;}
         String id()throws JSONException{return meta.getString("id");}
-        JSONObject dto()throws Exception{return new JSONObject().put("id",id()).put("filename",meta.getString("filename")).put("mime",meta.getString("mime")).put("bytes",meta.getLong("bytes")).put("copyAllowed",meta.getLong("copyBytes")>0&&meta.getLong("copyBytes")<=COPY_LIMIT).put("preview",meta.optString("preview","")).put("warnings",meta.optJSONArray("warnings"));}
+        JSONObject dto()throws Exception{
+            long copyBytes=meta.getLong("copyBytes");String preview=meta.optString("preview","");boolean complete=copyBytes==0&&preview.isEmpty();
+            if(copyBytes>0&&copyBytes<=COPY_LIMIT){if(Files.size(copy)!=copyBytes||!hash(copy).equals(meta.getString("copySha256")))throw new IOException("预览副本已变化，请重新准备。");String full=new String(Files.readAllBytes(copy),StandardCharsets.UTF_8);preview=previewPrefix(full,64000);complete=preview.length()==full.length();}
+            return new JSONObject().put("id",id()).put("filename",meta.getString("filename")).put("mime",meta.getString("mime")).put("bytes",meta.getLong("bytes")).put("copyAllowed",copyBytes>0&&copyBytes<=COPY_LIMIT).put("preview",preview).put("previewComplete",complete).put("previewCharacters",preview.codePointCount(0,preview.length())).put("warnings",meta.optJSONArray("warnings"));
+        }
     }
     Entry create(JSONObject source,String filename,String mime,String text,Writer writer)throws Exception{
         Files.createDirectories(root);cleanup();String id=UUID.randomUUID().toString();Path stage=Files.createTempDirectory(root,".prepare-");boolean published=false;
@@ -27,7 +32,7 @@ final class PreparedExports {
             Path content=stage.resolve(filename);try(OutputStream out=Files.newOutputStream(content,StandardOpenOption.CREATE_NEW)){writer.write(out);}
             if(Files.size(content)<=0)throw new IOException("没有可保存的内容。");
             byte[] copy=text==null?new byte[0]:text.getBytes(StandardCharsets.UTF_8);Files.write(stage.resolve("copy.txt"),copy,StandardOpenOption.CREATE_NEW);
-            JSONObject meta=new JSONObject(source.toString()).put("version",1).put("id",id).put("filename",filename).put("mime",mime).put("bytes",Files.size(content)).put("sha256",hash(content)).put("copyBytes",copy.length).put("copySha256",hash(stage.resolve("copy.txt"))).put("createdAt",System.currentTimeMillis()).put("preview",text==null?"":text.substring(0,Math.min(text.length(),350)));
+            JSONObject meta=new JSONObject(source.toString()).put("version",1).put("id",id).put("filename",filename).put("mime",mime).put("bytes",Files.size(content)).put("sha256",hash(content)).put("copyBytes",copy.length).put("copySha256",hash(stage.resolve("copy.txt"))).put("createdAt",System.currentTimeMillis()).put("preview",previewPrefix(text,350));
             Files.write(stage.resolve("manifest.json"),meta.toString().getBytes(StandardCharsets.UTF_8),StandardOpenOption.CREATE_NEW);
             Files.move(stage,root.resolve(id),StandardCopyOption.ATOMIC_MOVE);published=true;return load(id,true);
         }finally{if(!published)remove(stage);}

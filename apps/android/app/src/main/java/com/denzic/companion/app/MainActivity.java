@@ -997,7 +997,7 @@ public final class MainActivity extends Activity {
         final String srt=subtitle;String suffix=selected.length()==1?sections.get(0).title:"会议资料";if("srt".equals(format))suffix+="-分段时间";
         JSONObject meta=new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("binding",info.getString("binding")).put("warnings",warnings).put("sections",selected);
         return preparedExports().create(meta,PreparedExports.filename(source.title,suffix,extension),mime,plain,out->{
-            if("bundle".equals(format))recordingNotes().bundle(source.key,!selected.toString().contains("\"notes\"")||source.notes==null?new JSONObject().put("entries",new JSONArray()):source.notes,source.title,MeetingDocumentSections.markdown(sections),out);
+            if("bundle".equals(format))recordingNotes().bundle(source.key,source.notesForBundle(selected),source.title,MeetingDocumentSections.markdown(sections),out);
             else if("pdf".equals(format))MeetingPdf.writeSelected(source.title,sections,out,android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
             else if("word".equals(format))out.write(MeetingDocumentSections.word(source.title,MaterialLayout.wordSections(sections)));
             else if("pptx".equals(format))PresentationDocuments.write(source.title,sections,out);

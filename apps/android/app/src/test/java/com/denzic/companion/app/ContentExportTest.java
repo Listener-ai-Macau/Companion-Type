@@ -29,6 +29,31 @@ public final class ContentExportTest {
         rejects(()->exports.load("../meetings",true));rejects(()->exports.load(UUID.randomUUID().toString(),true));byte[] content=Files.readAllBytes(fixed.file);Files.write(fixed.file,new byte[content.length]);rejects(()->exports.load(id,true));Files.write(fixed.file,content);check(exports.load(id,true).dto().getBoolean("copyAllowed"),"tamper rejected; exact known version reusable");
         char[] largeChars=new char[PreparedExports.COPY_LIMIT+1];Arrays.fill(largeChars,'A');String large=new String(largeChars);PreparedExports.Entry largeFile=exports.create(meta,"large.txt","text/plain",large,out->out.write(large.getBytes(StandardCharsets.UTF_8)));check(!largeFile.dto().getBoolean("copyAllowed"),"large clipboard disabled but file available");rejects(()->exports.copyText(largeFile));
         check(DocumentRecovery.isPickerFormat("prepared")&&DocumentRecovery.isPickerFormat("audioZip"),"new/old picker recovery formats retained");
+        String one="11111111-1111-4111-8111-111111111111",two="22222222-2222-4222-8222-222222222222";
+        JSONObject reference=new JSONObject().put("id","33333333-3333-4333-8333-333333333333").put("kind","transcript").put("name","会议转写").put("quote",original).put("sourceSha256",MinutesTemplateLibrary.hash(original.getBytes(StandardCharsets.UTF_8)));
+        JSONObject first=new JSONObject().put("id",one).put("text","- [x] 阅读资料\n- [ ] 预算 FALSE 0 待核对").put("kind","followup").put("atMs",JSONObject.NULL).put("createdAt",1).put("updatedAt",2).put("references",new JSONArray().put(reference));
+        JSONObject second=new JSONObject().put("id",two).put("text","其它个人备注不得随本张清单导出").put("atMs",JSONObject.NULL).put("createdAt",1).put("updatedAt",1).put("image",new JSONObject().put("name","其它备注的原图.png"));
+        JSONObject notes=new JSONObject().put("schema",1).put("key","public").put("revision",4).put("entries",new JSONArray().put(first).put(second));
+        String untouched=notes.toString();ExportContents.Source selectedNote=new ExportContents.Source("public","公开录音","library-original",meeting,minutes,translation,new JSONArray(),new JSONArray(),notes);
+        JSONObject noteInfo=selectedNote.info();check(noteInfo.getJSONArray("manualNotes").length()==2,"all individually selectable notes described");
+        JSONArray justOne=new JSONArray().put("note:"+one);String chosen=MeetingDocumentSections.plain(selectedNote.select(justOne));
+        check(chosen.contains(first.getString("text"))&&chosen.contains(original)&&chosen.contains("人工跟进")&&chosen.contains("不是"),"selected text, checked marker, literal evidence and human authorship retained");
+        check(!chosen.contains(second.getString("text"))&&!chosen.contains("其它备注的原图.png")&&!chosen.contains("独立补充")&&!chosen.contains("下周一"),"neither other note/image nor legacy whole-meeting supplement leaks");
+        JSONObject filtered=selectedNote.notesForBundle(justOne);check(filtered.getJSONArray("entries").length()==1&&filtered.getJSONArray("entries").getJSONObject(0).getString("id").equals(one),"bundle consumes exactly selected note entries");
+        check(notes.toString().equals(untouched),"selection does not mutate original snapshot");
+        rejects(()->selectedNote.select(new JSONArray().put("note:"+one).put("note:"+one)));rejects(()->selectedNote.select(new JSONArray().put("note:foreign")));
+        rejects(()->selectedNote.select(new JSONArray().put("notes").put("note:"+one)));
+        check(MeetingDocumentSections.plain(selectedNote.select(new JSONArray().put("notes"))).contains(second.getString("text")),"explicit all-notes legacy selection still works");
+        JSONObject changed=new JSONObject(notes.toString());changed.getJSONArray("entries").getJSONObject(0).put("text","修订后的个人清单");
+        ExportContents.Source changedNote=new ExportContents.Source("public","公开录音","library-original",meeting,minutes,translation,new JSONArray(),new JSONArray(),changed);
+        check(!changedNote.info().getString("binding").equals(noteInfo.getString("binding")),"a note revision invalidates prepared selection");
+        char[] previewChars=new char[3000];Arrays.fill(previewChars,'人');String longPreview=new String(previewChars)+"😀 完整依据尾句";
+        PreparedExports.Entry visible=exports.create(meta,"preview.txt","text/plain",longPreview,out->out.write(longPreview.getBytes(StandardCharsets.UTF_8)));
+        check(visible.dto().getString("preview").equals(longPreview)&&visible.dto().getBoolean("previewComplete"),"single note has complete preview past former350-character snippet");
+        char[] boundary=new char[63999];Arrays.fill(boundary,'A');String withEmoji=new String(boundary)+"😀尾句";
+        PreparedExports.Entry bounded=exports.create(meta,"bounded.txt","text/plain",withEmoji,out->out.write(withEmoji.getBytes(StandardCharsets.UTF_8)));JSONObject boundedDto=bounded.dto();String snippet=boundedDto.getString("preview");
+        check(!boundedDto.getBoolean("previewComplete")&&snippet.length()==63999&&!Character.isHighSurrogate(snippet.charAt(snippet.length()-1)),"large preview is labelled partial and never splits emoji");
+        check(exports.copyText(bounded).equals(withEmoji),"preview budget does not truncate exported/copied full text");
         System.out.println("PASS content exports: actual store/revisions; exact literal sections; unselected exclusion; stale/draft/manual flags; fence collision; SRT persisted time and corrected-source rejection; immutable files; clipboard budget; cross-library/tamper/path guard; recovery. No model calls.");
     }
 }
