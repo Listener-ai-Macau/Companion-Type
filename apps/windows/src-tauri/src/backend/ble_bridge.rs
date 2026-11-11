@@ -452,7 +452,7 @@ impl CompanionBleBridge {
             return operation;
         }
         if native_ble_available() {
-            return match run_native_blocking(connect_native_probe(requested_device_id, owned_recording, None)) {
+            return match run_native_blocking(connect_native_probe(requested_device_id, owned_recording, None, true)) {
                 Ok(probe) => {
                     let actual_device_id = probe.device_id.clone();
                     let device_recording = probe.identity.recording;
@@ -536,7 +536,7 @@ impl CompanionBleBridge {
                 "Windows native BLE is unavailable; remembered-device probe was not run.",
             );
         }
-        match super::diagnostics::Span::start(super::diagnostics::Operation::Reconnect).result(run_native_blocking(connect_native_probe(Some(device_id), None, known_segmented_peer(device_id)))) {
+        match super::diagnostics::Span::start(super::diagnostics::Operation::Reconnect).result(run_native_blocking(connect_native_probe(Some(device_id), None, known_segmented_peer(device_id), false))) {
             Ok(probe)
                 if normalize_device_id(&probe.device_id) == normalize_device_id(device_id) =>
             {
@@ -2667,8 +2667,8 @@ struct InitialConnectFailure {
     target_observed: Option<bool>,
 }
 
-fn initial_target_unreachable(intent:ConnectionIntent,observed:Option<bool>,released_owner:bool,error:&str)->bool {
-    intent==ConnectionIntent::Normal && observed==Some(false) && !released_owner &&
+fn initial_target_unreachable(user_connect:bool,observed:Option<bool>,released_owner:bool,error:&str)->bool {
+    user_connect && observed==Some(false) && !released_owner &&
         (error=="Not connected" || error.ends_with(": Not connected"))
 }
 
@@ -2713,6 +2713,12 @@ async fn connect_native_device_setup(requested_device_id: Option<&str>,sync_cloc
 }
 
 async fn connect_native_device_setup_with_intent(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent) -> Result<NativeConnectionSetup,String> {
+    connect_native_device_setup_with_guidance(requested_device_id,sync_clock,intent,false).await
+}
+
+// DeviceConnect uses RecorderCore service discovery too. User-facing first
+// acquisition is explicit; protocol scope must not decide recovery policy.
+async fn connect_native_device_setup_with_guidance(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent,user_connect:bool) -> Result<NativeConnectionSetup,String> {
     let acquisition_started=StdInstant::now();
     eprintln!("BLE initial_acquisition stage=start host_unix_us={}",chrono::Utc::now().timestamp_micros());
     let result=async {
@@ -2761,7 +2767,7 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
                 let error=failure.error;
                 #[cfg(windows)]
                 if super::ble_pairing::is_pairing_error(&error) { return Err(error); }
-                if initial_target_unreachable(intent,failure.target_observed,failure.released_lost_owner,&error) {
+                if initial_target_unreachable(user_connect,failure.target_observed,failure.released_lost_owner,&error) {
                     eprintln!("BLE initial connect unavailable attempt={attempt}/{attempts} target_observed=false cause={error} automatic_retries_stopped=true microphone_commands=0");
                     return Err("DEVICE_UNREACHABLE: The recorder did not respond during connection setup.".into());
                 }
@@ -2789,16 +2795,15 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
 mod initial_unreachable_tests {
     use super::*;
     #[test]
-    fn no_reply_without_target_stops_only_normal_initial_link_retries() {
+    fn no_reply_without_target_stops_only_explicit_user_initial_link_retries() {
         let actual="connect BLE device C8:ED:45:EB:95:B4: Not connected";
-        assert!(initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(true),false,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::Normal,None,false,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),true,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::RecorderCore,Some(false),false,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::SealedSync,Some(false),false,actual));
-        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,"GATT read timed out"));
-        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,"设备正在录音"));
+        assert!(initial_target_unreachable(true,Some(false),false,actual));
+        assert!(!initial_target_unreachable(true,Some(true),false,actual));
+        assert!(!initial_target_unreachable(true,None,false,actual));
+        assert!(!initial_target_unreachable(true,Some(false),true,actual));
+        assert!(!initial_target_unreachable(false,Some(false),false,actual));
+        assert!(!initial_target_unreachable(true,Some(false),false,"GATT read timed out"));
+        assert!(!initial_target_unreachable(true,Some(false),false,"设备正在录音"));
     }
 }
 
@@ -3105,6 +3110,7 @@ async fn connect_native_probe(
     requested_device_id: Option<&str>,
     owner: Option<&OwnedRecorder>,
     expected_peer: Option<super::recording_wire::transport::Peer>,
+    user_connect: bool,
 ) -> Result<NativeConnectProbe, String> {
     let begun = StdInstant::now();
     let retained = match owner {
@@ -3127,7 +3133,7 @@ async fn connect_native_probe(
     let mut device = match retained {
         Some(lease) => lease.device,
         None => {
-            let setup=connect_native_device_setup_with_intent(requested_device_id,false,ConnectionIntent::RecorderCore).await?;
+            let setup=connect_native_device_setup_with_guidance(requested_device_id,false,ConnectionIntent::RecorderCore,user_connect && owner.is_none()).await?;
             #[cfg(windows)]
             {setup_preference=setup.preference;}
             setup.device
