@@ -1,0 +1,8 @@
+{
+  "state": "PREPARER_SINGLE_LINE_QUERY_WAS_NOT_LITERAL_SOURCE",
+  "actualVersion": "0.1.141",
+  "stoppedAt": "literal picker; first ordinary checklist was already saved/checked, document return and dual draft cancellation sequentially passed",
+  "finding": "The selected first30 contained a newline. Input type=search converted it to a space, and exact literal source search returned no match.",
+  "productBuildOrInstallRepeated": false,
+  "retry": "Same owned public library, continuous original keyword, recover/reverify saved checkpoint before continuing."
+}

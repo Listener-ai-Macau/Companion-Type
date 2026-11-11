@@ -56244,12 +56244,12 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion140 public software acceptance customer-edit140-20261111",
+          "reservedFor": "Companion141 public software acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-11T13:27:21+08:00",
+          "requestedAt": "2026-11-11T14:32:40+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-11T13:57:41+08:00",
+          "releasedAt": "2026-11-11T14:42:22+08:00",
           "releaseReason": "Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
@@ -269671,7 +269671,7 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-10T09:18:50+08:00",
-            "state": "COHERENT_108141_FROZEN_SOURCE_CHECKED_SINGLE_DUAL_NATIVE_BUILD_RUNNING",
+            "state": "ANDROID141_ORDINARY_FULL_PURPOSE_REOPEN_AND_EXACT_CLOSE_PASSED_WINDOWS108_RUNTIME_NEXT",
             "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
             "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
             "existingTask": "CP27-01/playback",
@@ -269712,7 +269712,7 @@
               "checkedThrough": "ADB device + FF48 MI01 ADB interface",
               "action": "Only owned non-main virtual display for local public QA. No BLE, recording-card access or owner main-display operation."
             },
-            "updatedAt": "2026-11-11T14:30:12+08:00",
+            "updatedAt": "2026-11-11T14:46:06+08:00",
             "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
             "candidateVersion": "0.1.121",
             "candidateApkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
@@ -269746,7 +269746,7 @@
             "remotePackageReadbackByteIdentical": true,
             "nativePhoneRuntimeQualified": true,
             "installed": true,
-            "currentInstalledAndroid": "0.1.140",
+            "currentInstalledAndroid": "0.1.141",
             "currentInstalledWindows": "0.1.107",
             "authorizedPhoneOnlineAtPackageCompletion": true,
             "sourceImplemented": [
@@ -269788,7 +269788,7 @@
               "Model quality and complex overlapping speakers were not improved or retested.",
               "No new customer or real buyer trial; owner acceptance remains pending."
             ],
-            "next": "Observe exact Android141 run and prepare/verify/preserve its same-source APK; use that interval for actual ordinary quick-list/number conversion/literal picker/hint/draft/reopen on own phone display. Windows108 normal build remains same run in parallel. Never rebuild for verifier-only fixes.",
+            "next": "Run exact108 packaged ordinary UI/runtime on frozen MSI while one new affected hypothetical after-use role explores141 independent public library; read all feedback, return/source-close, quiet108 upgrade and whole package. Do not rebuild for verifier fixes.",
             "allNonmodelComplete": false,
             "nativePhoneResults": {
               "playbackCorrection": {
@@ -270645,17 +270645,29 @@
               "controlledChange": "Existing plaintext followup editor becomes ordinary row UI and deliberate line conversion; literal selected source is retained with exact hashes.",
               "retainIf": "Actual ordinary save/edit/reopen/status/source return and drafts preserved on matching clients; rollback if exact old notes or quotations changed."
             },
-            "androidActualDetailPassed": false,
-            "androidActualReopenPassed": false,
-            "androidSessionClosed": false,
-            "windowsPayloadVerified": false,
-            "actualQualifyingAndroidVersion": null,
+            "androidActualDetailPassed": true,
+            "androidActualReopenPassed": true,
+            "androidSessionClosed": true,
+            "windowsPayloadVerified": true,
+            "actualQualifyingAndroidVersion": "0.1.141",
             "actualQualifyingWindowsVersion": null,
             "sourceCheckpoint": {
               "windows": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
               "android": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
               "remoteHeadsIndependentlyVerified": true,
               "newCurrentQualificationDoesNotReuse140Flags": true
+            },
+            "android141Actual": {
+              "workflow": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\detail-workflow.json",
+              "reopen": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\detail-reopened.json",
+              "closed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\end-session.json",
+              "viewedBothActualThemes": true,
+              "originalNotesTranscriptMinutesUnchanged": true,
+              "knownPreparerFailuresRetained": [
+                "First single-line source search contained newline, HTML converted it and it was not literal. Resumed same saved first note with continuous keyword.",
+                "Source-return assertion ran before async lookup completed. Wait for actual pane; reuse exact saved second note.",
+                "Launch wrapper lacked __file__; unchanged direct preparer invocation used. No display or APK changed in failed wrapper."
+              ]
             }
           },
           "latestSharedFirmwareWorkpoint20261110": {

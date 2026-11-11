@@ -1,0 +1,10 @@
+locator.textContent: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('.manual-quote-options blockquote').first()[22m
+
+    at C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261110-android-media-import\meeting_detail_phone.cjs:35:81 {
+  log: [
+    "  - waiting for locator('.manual-quote-options blockquote').first()"
+  ],
+  name: 'TimeoutError'
+}

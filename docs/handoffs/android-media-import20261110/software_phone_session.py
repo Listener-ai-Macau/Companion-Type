@@ -66,6 +66,22 @@ elif action=="display":
  # This worker owns the bounded job. Keep it alive until its exact scrcpy child
  # closes; ending the preparation worker must not remove a live test display.
  while child.poll() is None:time.sleep(.25)
+elif action=="restart":
+ assert version()==code
+ state=json.loads((P/"virtual.json").read_text());old=json.loads((P/"cdp.json").read_text());assert state["displayId"]==old["displayId"] and state["displayId"]>0
+ assert adb(["shell","pidof",PKG]).strip()==str(old["pid"])
+ main=next(s for s in adb(["shell","dumpsys","activity","activities"]).split("Display #") if s.startswith("0 (activities from top to bottom):"));assert not any(PKG in row for row in main.splitlines() if "Hist  #" in row)
+ assert "AudioImportService" not in adb(["shell","dumpsys","activity","services",PKG])
+ before=primary();adb(["shell","am","force-stop",PKG]);adb(["forward","--remove","tcp:"+str(old["cdpPort"])]);adb(["shell","am","start","--display",state["displayId"],"-n",PKG+"/.MainActivity"])
+ pid=""
+ for _ in range(40):
+  pid=adb(["shell","pidof",PKG],required=False).strip()
+  if pid.isdigit() and pid!=str(old["pid"]):break
+  time.sleep(.2)
+ assert pid.isdigit() and pid!=str(old["pid"]) and primary()==before
+ port=adb(["forward","tcp:0","localabstract:webview_devtools_remote_"+pid]).strip();save(P/"cdp.json",{"at":now(),"displayId":state["displayId"],"pid":int(pid),"cdpPort":int(port),"mainBefore":before,"mainUnchangedDuringOperation":True})
+ save(C/"process-restart.json",{"at":now(),"state":"OWNED_NONMAIN_APP_PROCESS_RESTARTED","actualVersion":"0.1."+str(code),"oldPid":old["pid"],"newPid":int(pid),"ownedDisplay":state["displayId"],"ownerMainDisplayUnchanged":True,"audioImportServiceNotRunning":True})
+ print("Exact owned app process restarted on the same non-main display; no installation repeated.")
 elif action=="close":
  for attempt in range(30):
   index=json.loads(adb(["shell","run-as",PKG,"cat","files/companion-library-index.json"]))
