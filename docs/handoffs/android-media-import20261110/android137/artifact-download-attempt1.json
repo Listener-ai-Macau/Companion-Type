@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-11T08:37:32+08:00",
+  "state": "ARTIFACT_PREPARATION_TIMEOUT_NOT_PRODUCT_BUILD_FAILURE",
+  "run": 42931037723,
+  "source": "aac73ae44d9aff77680699be8b760d4199907b79",
+  "transport": "gh api sequential download limited to120s",
+  "receivedBytes": 10764288,
+  "partialSha256": "51ea63ab359ced0210bb72dee970054ff7ca65ee87c384a5f69adf6fcf29d700",
+  "decision": "Retain partial; reuse exact successful CI artifact with the existing four bounded official-CDN range reader. No source, version, build or routing change."
+}

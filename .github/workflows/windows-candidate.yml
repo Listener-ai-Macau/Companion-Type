@@ -152,9 +152,12 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   candidate:
-    if: (github.event_name == 'workflow_dispatch' && inputs.operation == 'candidate') || contains(github.event.head_commit.message, '[windows-build]')
+    if: (github.event_name == 'workflow_dispatch' && inputs.operation == 'candidate') || contains(github.event.head_commit.message, '[windows-build]') || contains(github.event.head_commit.message, '[windows-bundle]')
     runs-on: windows-2022
     timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
     env:
       CARGO_BUILD_JOBS: '2'
       CARGO_INCREMENTAL: '0'
@@ -182,6 +185,8 @@ jobs:
       - name: Build frozen candidate and installer
         env:
           CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
+          GH_TOKEN: ${{ github.token }}
+          COMPANION_REUSE_NATIVE_SPEC: ${{ contains(github.event.head_commit.message, '[windows-bundle]') && 'docs/handoffs/android-media-import20261110/windows100/repackage-spec.json' || '' }}
         run: |
           python -m pip install psutil==7.2.2
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

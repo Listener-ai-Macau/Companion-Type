@@ -271127,8 +271127,8 @@
               }
             },
             "systemInbound20261111": {
-              "at": "2026-11-11T08:23:41+08:00",
-              "state": "WINDOWS100_NATIVE_API_REPAIR_ANDROID137_BUILD_RUNNING",
+              "at": "2026-11-11T09:15:13+08:00",
+              "state": "MSI_RECIPE_FIXED_LOCAL_BUNDLE_PASSED_PINNED_CI_REPACKAGE_NEXT",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271145,11 +271145,11 @@
                 "One coherent implementation/source check/native batch before ordinary OS source-app/OpenWith validation; no daily desktop takeover or cloud/model.",
                 "Batch any related incoming/read-source clarity work only after both complete136 feedback reports, preserve existing APIs and original literal records."
               ],
-              "next": "Use the exact grouped100/137 sources for native candidate builds, then ordinary OS cold/warm receive, explicit attachment target, cancellation/bad/expired/retry, original integrity and backup/lifecycle. Keep099/136 as qualified installed baseline until exact new artifacts pass.",
+              "next": "Run pinned MSI-only CI repackage using exact132bd93f native pair, inspect the shipped MSI and private readback, then ordinary documents/backup/lifecycle and cold/warm external reception/cancel. Android137 protected but phone actual inventory absent; do not repeat prompts or call it qualified.",
               "implemented": "WINDOWS_AND_ANDROID_SOURCE_ONLY",
               "modelsRun": false,
               "saleQualified": false,
-              "nativeCandidateBuilt": false,
+              "nativeCandidateBuilt": "ANDROID137_ONLY",
               "implementationDecision": "Pending OS deliveries retain opaque local URI receipts, not a second original-file store. User explicitly confirms current library and attachment meeting before existing original-preservation/copy/decode pipeline starts. Pending is visibly not yet imported; expired grants require resharing. Fixed receipt UUID binds retries to the original library and meeting; native byte/hash/source checks remain authoritative. No model/cloud/recording or Owner desktop.",
               "sourceProgress": [
                 "Android SEND/SEND_MULTIPLE/content VIEW cold/warm adapter and Windows OpenWith/file-drop/same-library warm handoff reuse existing recording/document/image stores.",
@@ -271174,20 +271174,38 @@
               "windowsNativeQualified": false,
               "builds": {
                 "windows": {
-                  "source": "121a8cf1055c2fe0435b81e2a70539d2c7821d64",
-                  "run": 42931011101,
-                  "lastObserved": "failure",
+                  "source": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+                  "run": 42932133336,
+                  "lastObserved": "failure at msi-bundle only",
+                  "nativeTestCompilePassed": true,
+                  "allAffectedNativeTestsPassed": true,
+                  "normalReleaseBuildPassed": true,
+                  "normalReleaseSeconds": 441.129,
+                  "nativePairRetained": true,
+                  "msiBuilt": false,
                   "qualified": false,
-                  "failure": "E0599 builder listener API; corrected built WebviewWindow event listener, same100 source retry next",
-                  "evidence": "docs/handoffs/20261110-android-media-import/windows100/build-attempt1-failure-decision.json"
+                  "next": "Reuse exact normal release pair for verbose MSI packaging diagnosis; do not rebuild unchanged native/model code.",
+                  "packagingRootCause": "WiX ICE69 cross-feature file reference in OpenWith registration; fixed only WXS to resolved INSTALLDIR path, no ICE suppression.",
+                  "localPackageOnlyPassed": true,
+                  "nativeSourceInputsMatched": 1355,
+                  "onlyChangedPackagingInput": "apps/windows/src-tauri/windows-open-with.wxs",
+                  "nativeRecompiledAfterRecipeFix": false
                 },
                 "android": {
                   "source": "aac73ae44d9aff77680699be8b760d4199907b79",
                   "run": 42931037723,
-                  "lastObserved": "in_progress",
-                  "qualified": false
+                  "lastObserved": "success",
+                  "apkSha256": "c4e75ed68b6b9e381ad3640152787d68064d22922863f9f785ba81184d368a57",
+                  "apkBytes": 51188509,
+                  "privateDraftAsset": 733537093,
+                  "fullPrivateReadbackIdentical": true,
+                  "installed": false,
+                  "phoneQualified": false,
+                  "dependency": "Named phone absent and adb devices inventory empty on actual check; continue Windows/offline work without repeated Owner prompts."
                 }
-              }
+              },
+              "nativeRuntimeQualified": false,
+              "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json"
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -276983,8 +277001,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "121a8cf1055c2fe0435b81e2a70539d2c7821d64",
-      "pendingUnifiedBuildRun": 42931011101,
+      "pendingUnifiedSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+      "pendingUnifiedBuildRun": 42932133336,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00"
     }
   }

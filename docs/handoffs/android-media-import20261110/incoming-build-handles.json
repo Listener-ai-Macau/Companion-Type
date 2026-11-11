@@ -1,0 +1,27 @@
+{
+  "windows": {
+    "source": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+    "run": 42932133336,
+    "lastObserved": "failure at msi-bundle only",
+    "nativeTestCompilePassed": true,
+    "allAffectedNativeTestsPassed": true,
+    "normalReleaseBuildPassed": true,
+    "normalReleaseSeconds": 441.129,
+    "nativePairRetained": true,
+    "msiBuilt": false,
+    "qualified": false,
+    "next": "Reuse exact normal release pair for verbose MSI packaging diagnosis; do not rebuild unchanged native/model code."
+  },
+  "android": {
+    "source": "aac73ae44d9aff77680699be8b760d4199907b79",
+    "run": 42931037723,
+    "lastObserved": "success",
+    "apkSha256": "c4e75ed68b6b9e381ad3640152787d68064d22922863f9f785ba81184d368a57",
+    "apkBytes": 51188509,
+    "privateDraftAsset": 733537093,
+    "fullPrivateReadbackIdentical": true,
+    "installed": false,
+    "phoneQualified": false,
+    "dependency": "Named phone absent and adb devices inventory empty on actual check; continue Windows/offline work without repeated Owner prompts."
+  }
+}

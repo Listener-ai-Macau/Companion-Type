@@ -1,0 +1,28 @@
+{
+  "state": "EXACT_NATIVE_INPUTS_RETAINED_ONLY_PINNED_WXS_CHANGED",
+  "nativeSourceCommit": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "matched": 1355,
+  "mismatches": [],
+  "permittedRecipeChange": {
+    "path": "apps/windows/src-tauri/windows-open-with.wxs",
+    "oldSha256": "a329fb07fb53d6cdb8fdd05d544e614bb58ed574a6f362140cd473c4cd2819c2",
+    "newSha256": "9a057e80f365cb6f319d03937616e710025fa065b7feeeb7a48addffd703d85a"
+  },
+  "nativeRecompiled": false,
+  "limits": {
+    "pid": 35280,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17129472,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

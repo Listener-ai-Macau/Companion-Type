@@ -1,4 +1,7 @@
 """Clean Windows candidate build on CI; no publishing, user data or inference."""
+import os as _bundle_os, subprocess as _bundle_subprocess, sys as _bundle_sys
+if _bundle_os.environ.get("COMPANION_REUSE_NATIVE_SPEC"):
+ raise SystemExit(_bundle_subprocess.call([_bundle_sys.executable,str(__import__("pathlib").Path(__file__).with_name("bundle_windows_candidate_ci.py"))]))
 from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,traceback,tomllib,time

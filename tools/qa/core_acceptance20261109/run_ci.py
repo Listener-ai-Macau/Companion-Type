@@ -31,7 +31,8 @@ try:
   if spec.get('browserAttachmentReceipt'):
    env['COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS']='1'
    record['browserAttachmentReceiptRequired']=True
- run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+record['appSourceCommit'],'--dir',artifact])
+ v_artifact_source=(spec['verification'].get('artifactSourceCommit',record['appSourceCommit']) if spec else record['appSourceCommit'])
+ run('download-frozen-native',['gh','run','download',str(spec['buildRun'] if spec else 42563058131),'--repo','Listener-ai-Macau/Companion-Type','--name','companion-windows-candidate-'+v_artifact_source,'--dir',artifact])
  receipt=json.loads((artifact/'result.json').read_text(encoding='utf8'));assert receipt['sourceCommit']==record['appSourceCommit']
  v=spec['verification'] if spec else json.loads((S/'docs/handoffs/windows-file-copy078-20261109/windows-verification.json').read_text(encoding='utf8'))
  assert v['sourceCommit']==record['appSourceCommit'] and v['version']==record['appVersion']
@@ -100,6 +101,12 @@ try:
   backend=run('native-document-context-backup-restore-cleanup',[sys.executable,tool/'windows_document_backend.py','--case',paths[0]],required=False)
   detail=json.loads((paths[0]/'document-backend/result.json').read_text(encoding='utf8'));record.update(documentBackendExitCode=backend,documentBackendState=detail['state']);save();assert backend==0
   assert detail['state']=='ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED'
+  if tuple(map(int,spec['verification']['version'].split('.')))>=(0,1,100):
+   previous_cases={p.name for p in cases.iterdir()}
+   incoming_code=run('native-os-incoming-file-ui',[sys.executable,tool/'windows_meeting.py','--stage','incoming'],required=False)
+   incoming_cases=[p for p in cases.iterdir() if p.name not in previous_cases];assert len(incoming_cases)==1 and (incoming_cases[0]/'result.json').is_file(),'Incoming preparation/UI failed; retained native-os-incoming-file-ui.log is the primary failure'
+   incoming=json.loads((incoming_cases[0]/'result.json').read_text(encoding='utf8'));record.update(incomingNativeExitCode=incoming_code,incomingNativeState=incoming['state'],incomingCase=incoming_cases[0].name);save()
+   assert incoming_code==0 and incoming['ui']['state']=='REAL_TAURI_OS_INCOMING_COLD_WARM_CONFIRM_DOCUMENT_IMAGE_RETRY_CANCEL_AND_ORIGINALS_PASSED'
   record.update(state='WINDOWS'+spec['verification']['version'].split('.')[-1].zfill(3)+'_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED',modelsRun=False,newCloudOrAsrCalls=0,wholeCoreCandidateQualified=False)
  elif PHASE=='context':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
