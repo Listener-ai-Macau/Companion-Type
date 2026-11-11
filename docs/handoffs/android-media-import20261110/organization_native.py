@@ -1,6 +1,6 @@
 from pathlib import Path
 import subprocess,zipfile,os,shlex,json,base64,sys,time
-R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;CODE=int(os.environ.get('COMPANION_PHONE_QA_CODE','125'));assert CODE in [125,126,127];P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('phone'+str(CODE));O=P/'ui-standard';O.mkdir(exist_ok=True)
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;CODE=int(os.environ.get('COMPANION_PHONE_QA_CODE','125'));assert CODE in [125,126,127,128,130,131,132,133,134,135,136];SESSION=os.environ.get('COMPANION_PHONE_QA_SESSION');assert not SESSION or __import__('re').fullmatch(r'customer-edit(?:131|132|133|134|135|136)-[0-9]{8}',SESSION);P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/(SESSION or 'phone'+str(CODE));O=P/'ui-standard';O.mkdir(exist_ok=True)
 A=R/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe'
 def adb(args,timeout=30):
  q=subprocess.run([str(A),'-s','d6bd213d',*map(str,args)],capture_output=True,text=True,encoding='utf8',errors='replace',timeout=timeout);assert q.returncode==0,(q.stdout+q.stderr)[-1600:];return q.stdout
@@ -33,7 +33,7 @@ else:
   import re
   matches=[node for node in result['nodes'] if (request.get('id') and node.get('id')==request['id']) or (request.get('label') and request['label'] in [node.get('text'),node.get('desc')])]
   index=int(sys.argv[3]) if len(sys.argv)>3 else 0;assert index<len(matches);node=matches[index];bounds=list(map(int,re.findall(r'-?\d+',node['bounds'])));assert len(bounds)==4 and node['enabled']
-  left,top,right,bottom=bounds;x=(left+right)//2;y=(top+bottom)//2;assert right>left and bottom>top and 0<=x<1080 and 0<=y<state.get('height',1920)
+  left,top,right,bottom=bounds;x=(left+right)//2;y=(top+bottom)//2;geometry=re.findall(r'(?:Physical|Override) size: (\d+)x(\d+)',adb(['shell','wm','size','-d',state['displayId']]));assert geometry,'Owned display geometry unavailable';width,height=map(int,geometry[-1]);assert right>left and bottom>top and 0<=x<width and 0<=y<height
   adb(['shell','input','-d',state['displayId'],'tap',x,y]);print(json.dumps({'display':state['displayId'],'action':'tap','ordinaryInputAtObservedBounds':True}));sys.exit(0)
  # Until the public library is active, keep record/document names out of model
  # output. The raw tool result is private and never published.

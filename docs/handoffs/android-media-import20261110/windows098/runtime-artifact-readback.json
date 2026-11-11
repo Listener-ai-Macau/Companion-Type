@@ -1,0 +1,13 @@
+{
+  "method": "four-bounded-official-CDN-range-readers",
+  "workers": 4,
+  "sections": 1,
+  "bufferBytesPerWorker": 131072,
+  "bytes": 625528,
+  "sha256": "1c7fdfad8631297df2c5f12eaa4ffca28fa95bd1c9b8fc31889eb7c71c12a814",
+  "seconds": 4.407000000006519,
+  "retainedTransientReads": [],
+  "authSentOnlyToGitHubApi": true,
+  "signedUrlOrTokenPersisted": false,
+  "routingModified": false
+}

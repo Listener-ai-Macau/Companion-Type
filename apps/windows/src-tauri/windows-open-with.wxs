@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="CompanionOpenWith" Guid="A7AFE2F2-8028-5111-815D-30503D7F339C" Win64="yes">
+        <!-- Advertise OpenWith only. Never write an extension default or UserChoice. -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe" Name="FriendlyAppName" Type="string" Value="Companion Type" KeyPath="yes"/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\shell\open\command" Type="string" Value="&quot;[INSTALLDIR]companion-type.exe&quot; &quot;%1&quot;"/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".wav" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".mp3" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".m4a" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".mp4" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".aac" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".flac" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".ogg" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".pdf" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".docx" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".xlsx" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".pptx" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".txt" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".md" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".csv" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".jpg" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".jpeg" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".png" Type="string" Value=""/>
+        <RegistryValue Root="HKCU" Key="Software\Classes\Applications\companion-type.exe\SupportedTypes" Name=".webp" Type="string" Value=""/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

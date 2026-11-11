@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-11T01:26:25+08:00",
+  "state": "UNIFIED094_AUDIO_ONLY_MERGE_AND_SOURCE_MAP_REPAIR_REMOTE_VERIFIED_BUILD_REQUESTED",
+  "version": "0.1.94",
+  "sourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
+  "remoteVerified": true,
+  "mustRetain": [
+    "b170264a7f0693847ea17ef85901f5411280f266",
+    "7046f32d587e1be88e6feb3aa539580a2f72333e",
+    "62d2dc175964010769ae6f813514225d44cfbd8b"
+  ],
+  "qualifiedPriorNativeFoundationBuild": 42858186629,
+  "actualUiFailure": {
+    "at": "2026-11-11T01:26:25+08:00",
+    "state": "WINDOWS093_REAL_AUDIO_ONLY_MERGE_SOURCE_ENTRY_FAILURE_IDENTIFIED",
+    "runId": 42862353965,
+    "toolSource": "e945379d889f801eee80a189c5f753a56d441872",
+    "appSource": "62d2dc175964010769ae6f813514225d44cfbd8b",
+    "actualBeforeStop": "Actual packaged app imported real public full meeting, saved15s trim and30s/rest-of-meeting split, showed durable completed outputs. Merge combobox existed but lacked all untranscribed source options.",
+    "cause": "Host passed readableLibrary (text/minutes/notes-focused records) to the audio editor. Complete audio-only original and derived records were omitted, leaving source labels generic and merge options empty.",
+    "repair": "Use recordingLibrary with explicit complete-audio eligibility; keep original title lookup. Keep independent source-map entrance after audio-only cleanup while hiding new-edit form, and distinguish cancellation before commit versus after-current-commit.",
+    "localEvidence": "E:/CodexData/Companion/.build-cache/audio-derivation20261110/windows093-runtime2",
+    "productBug": true,
+    "wholeWorkflowQualified": false,
+    "noOwnerInstall": true
+  },
+  "androidRetained": "0.1.131",
+  "modelsRun": false,
+  "installed": false,
+  "saleQualified": false
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-11T06:28:54+08:00",
+  "state": "WINDOWS_AND_ANDROID_TYPES_AND_ALL_APP_ANDROID35_API_COMPILED",
+  "results": [
+    {
+      "check": "windows-types",
+      "exitCode": 0,
+      "log": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-complete-source-1794349677193687200\\windows-types.log"
+    },
+    {
+      "check": "mobile-types",
+      "exitCode": 0,
+      "log": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-complete-source-1794349677193687200\\mobile-types.log"
+    },
+    {
+      "check": "actual-android35-all-app-api",
+      "exitCode": 0,
+      "log": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\manual-complete-source-1794349677193687200\\actual-android35-all-app-api.log"
+    }
+  ],
+  "rawOutputObserved": "All three child exit codes0 observed; wrapper failed only when serializing limits via nonexistent snapshot(); receipt recovered from retained actual output without repeating passing checks.",
+  "sourceCheckPreparationFailures": [
+    "WorkerLimits memory argument768 incorrectly used bytes before any child started; fixed768MiB.",
+    "Earlier partial MainActivity API check used pre-audio-edit retained app classes and missed AudioDerivation*; all current app Java sources now compile together.",
+    "limits.snapshot() receipt helper absent; actual child checks all passed; corrected to existing query()."
+  ],
+  "resourceLimits": {
+    "configuredCpuPercent": 10,
+    "configuredJobPrivateCommitBytes": 805306368,
+    "runtimeSnapshotNotSaved": true
+  },
+  "nativeWindowsCompiled": false,
+  "apkBuilt": false,
+  "phoneTested": false,
+  "modelsRun": false
+}

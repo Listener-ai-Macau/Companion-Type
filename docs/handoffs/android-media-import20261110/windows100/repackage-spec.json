@@ -1,0 +1,14 @@
+{
+  "version": "0.1.100",
+  "nativeSourceCommit": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "nativeBuildRun": 42932133336,
+  "nativeArtifactId": 13818006138,
+  "nativeArtifactSha256": "758720d8e6d7cdb8515eb7f4daece382e49e9b4f966696d4096af8a83c1dd74b",
+  "nativeArtifactBytes": 16088826,
+  "packagingChange": {
+    "path": "apps/windows/src-tauri/windows-open-with.wxs",
+    "oldSha256": "a329fb07fb53d6cdb8fdd05d544e614bb58ed574a6f362140cd473c4cd2819c2",
+    "newSha256": "9a057e80f365cb6f319d03937616e710025fa065b7feeeb7a48addffd703d85a"
+  },
+  "reason": "ICE69 packaging-only repair. Retain passed native tests and identical normal-release pair; no native/model rebuild or qualification restamp."
+}

@@ -1,0 +1,81 @@
+{
+  "at": "2026-11-11T03:05:50+08:00",
+  "state": "GROUPED_TABLE_READING_AND_MATERIAL_NAVIGATION_SOURCE_TYPES_PASSED_REMOTE_WEB_NATIVE_BUILD_PENDING",
+  "results": [
+    {
+      "platform": "windows",
+      "check": "bundle-source",
+      "exit": 0,
+      "seconds": 0.154
+    },
+    {
+      "platform": "windows",
+      "check": "test_document_table",
+      "exit": 0,
+      "seconds": 0.189
+    },
+    {
+      "platform": "windows",
+      "check": "test_document_context_panel",
+      "exit": 0,
+      "seconds": 0.18
+    },
+    {
+      "platform": "windows",
+      "check": "strict-types",
+      "exit": 0,
+      "seconds": 8.396
+    },
+    {
+      "platform": "android",
+      "check": "bundle-source",
+      "exit": 0,
+      "seconds": 0.163
+    },
+    {
+      "platform": "android",
+      "check": "test_document_table",
+      "exit": 0,
+      "seconds": 0.201
+    },
+    {
+      "platform": "android",
+      "check": "test_document_context_panel",
+      "exit": 0,
+      "seconds": 0.184
+    },
+    {
+      "platform": "android",
+      "check": "strict-types",
+      "exit": 0,
+      "seconds": 10.466
+    }
+  ],
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\reading-affected-1794337530427009900",
+  "nativeWindowsCompilePassed": false,
+  "nativeAndroidCurrentStoreJvmPassed": true,
+  "localFullWebBuildPassed": false,
+  "localFullWebBuildAttempt": {
+    "exit": 134,
+    "log": "E:/CodexData/Companion/.build-cache/document-context20261110/reading-source-1794337417660055000/windows-normal-web-build.log",
+    "classification": "Vite hit this worker tree 768MiB private-commit budget (Node zone allocation failed at ~411MiB JS heap), not a confirmed product regression; locked-notices and TypeScript completed before Vite. Do normal frontend/native builds on dedicated CI, no local repeat."
+  },
+  "installed": false,
+  "modelsRun": false,
+  "limits": {
+    "pid": 1096,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 543621120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

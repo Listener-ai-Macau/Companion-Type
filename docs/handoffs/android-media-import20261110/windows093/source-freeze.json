@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-11T00:47:47+08:00",
+  "state": "WINDOWS093_UNIFIED_EDIT_RECOVERY_SOURCE_REMOTE_VERIFIED_NATIVE_BUILD_REQUESTED",
+  "version": "0.1.93",
+  "mustRetain": [
+    "b170264a7f0693847ea17ef85901f5411280f266",
+    "7046f32d587e1be88e6feb3aa539580a2f72333e"
+  ],
+  "mergeCommit": "a48c0aa81ec5f37b54d13e1b2fe3670ec1da31f3",
+  "userOutcome": "本机原音裁剪、切分和重排合并，另存独立录音；保存来源位置、全库备份恢复和分范围清理；后台取消、中断后沿原ID只重试未完成部分。",
+  "localChecks": {
+    "windowsTypes": true,
+    "normalWindowsWebBuild": true,
+    "newRustModulesParsedByRustfmt": true,
+    "lockedNotices": true
+  },
+  "nativeCompiled": false,
+  "installed": false,
+  "modelsRun": false,
+  "boardOrPhoneAccessed": false,
+  "wholeSaleQualified": false,
+  "failureRetained": "Merge completed with both parents; subsequent Git automatic geometric repack failed on missing historical object99a8373877d0727e03cb949010794695f83d8cc1. No pruning or history rewrite attempted. Selective checkpoint and remote readback will independently protect the actual new source.",
+  "sourceCommit": "62d2dc175964010769ae6f813514225d44cfbd8b",
+  "remoteVerified": true,
+  "priorAttempt": {
+    "at": "2026-11-11T00:47:38+08:00",
+    "state": "UNINSTALLED_ATTEMPT_CANCELLED_FOR_IDENTIFIED_RESUME_SOURCE_CORRECTION",
+    "runId": 42857248736,
+    "sourceCommit": "4ffcd1d227c20e64336df9c2ef72cfe94c161cb1",
+    "reason": "Source review identified durable index success followed by job receipt/backup failure could be treated as an ID conflict. Corrected exact existing-row adoption without replacing later user edits; reconcile saved outputs before resolving remaining parent sources.",
+    "nativeBuildDidNotFinish": true,
+    "installed": false,
+    "failureArtifact": 13783526901,
+    "retainedLocal": "E:/CodexData/Companion/.build-cache/audio-derivation20261110/windows093-attempt1",
+    "modelsRun": false,
+    "previousInstalled091Unchanged": true
+  }
+}

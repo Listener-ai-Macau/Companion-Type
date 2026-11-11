@@ -1,0 +1,2 @@
+const {connect}=require('C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261110-android-media-import/organization_ui.cjs');
+(async()=>{const {page,browser}=await connect();try{await page.getByPlaceholder('搜索标题、转写、纪要和备注').fill('需求收集提纲');console.log(await page.locator('body').innerText());await page.screenshot({path:'C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261110-android-media-import/customer-edit136/customer-presale-search.png'});}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

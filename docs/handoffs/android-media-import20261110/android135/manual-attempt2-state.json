@@ -1,0 +1,77 @@
+{
+  "notes": {
+    "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+    "revision": 18,
+    "entries": [
+      {
+        "id": "2ceb4b61-ee2d-4cb6-9057-329fb9abc2d5",
+        "createdAt": 1794285900681,
+        "text": "公开验收已核对：周二复核12000元预算，负责人 Alex。",
+        "atMs": 12000,
+        "updatedAt": 1794286002203
+      },
+      {
+        "id": "ac4ff1f0-7a1f-479c-a5d4-e95a9c73f804",
+        "text": "公开白板资料：这是人工补充，不是转写事实。",
+        "atMs": 25000,
+        "image": {
+          "file": "b062f8da140d32c12e7d24cb3e200ecaf247ee226b9a19ffc5c7cec389be9337.context-ac4ff1f0-7a1f-479c-a5d4-e95a9c73f804.png",
+          "name": "Companion-Public-Whiteboard124.png",
+          "bytes": 35518,
+          "sha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855"
+        },
+        "createdAt": 1794286001595,
+        "updatedAt": 1794286001595
+      },
+      {
+        "id": "d6517e47-94d9-403c-82a3-073aa13093da",
+        "createdAt": 1794299219813,
+        "text": "首次阅读备忘：这段公开样例主要谈销售改善，以及收集工程需求；保存的转写未见具体负责人或截止时间。已有预算备注属于人工补充，未在这段转写中看到依据，后续需核对来源。",
+        "atMs": null,
+        "updatedAt": 1794299219813
+      },
+      {
+        "id": "7edf6d5f-d2df-4578-aa2a-70fed471ef9a",
+        "createdAt": 1794301223671,
+        "text": "公开回找检验：本次复核图片和文字，只是人工阅读备注。",
+        "atMs": null,
+        "updatedAt": 1794301223671
+      },
+      {
+        "id": "c7b5c975-9290-4c3b-82c4-cc226baa928b",
+        "createdAt": 1794301382920,
+        "text": "需求接续便签：这段样例在征集工程需求，具体需求、负责人、期限仍待补齐；特大需求会上报评估。12000元、Alex、周二来自人工备注及公开生成白板，不是我在转写里核到的结论。下次先核对补充资料来源，再列需求清单。",
+        "atMs": null,
+        "updatedAt": 1794301382920
+      },
+      {
+        "id": "fce298a9-c439-4dbb-a823-f0f4b6b2d245",
+        "createdAt": 1794350704171,
+        "kind": "followup",
+        "references": [
+          {
+            "id": "746cf9a7-6543-4232-9d65-8d9fe94b3807",
+            "kind": "document",
+            "documentId": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+            "name": "Companion-public-公开预算草案128.xlsx",
+            "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+            "extractionSha256": "5d3bedc699c3f90d45a9b92026797cd4967c1a8020dc0222ea20ecfdf9de9220",
+            "sectionId": "part-1",
+            "sectionLabel": "工作表：预算草案",
+            "row": 2,
+            "quote": "A2\t人工补充\nB2\t12,000.00\nC2\tFALSE\nD2\t0\nE2\t2026-11-10\nF2\t[公式没有已保存结果]"
+          }
+        ],
+        "text": "公开人工跟进卡｜下次沟通准备\n- [x] 核对预算原件\n- [ ] 确认待定负责人",
+        "atMs": null,
+        "updatedAt": 1794350704548
+      }
+    ],
+    "schema": 1,
+    "libraryToken": "9fce60659c8507f6be12c09dac510e8542fb89ad6b409b80c0b91a49acc57e44"
+  },
+  "alerts": [],
+  "statuses": [
+    "跟进状态已保存在本机。"
+  ]
+}

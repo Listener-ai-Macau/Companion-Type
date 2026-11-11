@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-11T07:42:58+08:00",
+  "state": "WINDOWS099_ANDROID136_HUMAN_FOLLOWUP_LITERAL_EVIDENCE_COMPLETE_BATCH_DELIVERED",
+  "userBenefit": "把人工跟进清单与转写/文档/表格原行依据一起保存，勾选后回来接续、搜索回找并核对当前出处；来源变动或移除仍保留保存时的摘录。",
+  "windows": {
+    "version": "0.1.99",
+    "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+    "normalBuildRun": 42919920321,
+    "runtimeRun": 42924060870,
+    "runtimeToolSource": "dd50f0eb7ede2814ee79764a6b7e0ec1bc7def44",
+    "msiSha256": "2bfb3a94bdb5aad5f1e37cf52ac3022be8eada898d6c79b0cb6205340464a3ed",
+    "installed": {
+      "state": "WINDOWS099_INSTALLED_EXISTING_DATA_IDENTICAL",
+      "startedAt": "2026-11-11T07:37:20+08:00",
+      "candidateVersion": "0.1.99",
+      "previousInstalledVersion": "0.1.98",
+      "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
+      "msiSha256": "2bfb3a94bdb5aad5f1e37cf52ac3022be8eada898d6c79b0cb6205340464a3ed",
+      "existingDataFiles": 245,
+      "dataContentsPrinted": false,
+      "installerExitCode": 0,
+      "finishedAt": "2026-11-11T07:37:24+08:00",
+      "dataManifestIdentical": true,
+      "installedVersion": "0.1.99",
+      "installedExeSha256": "776a2307f60e416226902e76bc3b43c8305259a7b9714906ed1f5c46141d96dc",
+      "installedDllSha256": "eece9209034606bc51c90768bc8073c09fbebd35a2be9ea5e2094abd82655509",
+      "installedHelpStartupPassed": true,
+      "ordinaryThirdPartyPasteQualified": false,
+      "oldWinRTSharePickerFixed": false,
+      "modelsRun": false,
+      "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+    },
+    "ordinaryManualFollowupSourceFlow": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows099\\manual-followup-ui.json",
+    "nativeBackendExportBackupRestoreAndPurge": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows099\\runtime-backend-result.json"
+  },
+  "android": {
+    "version": "0.1.136",
+    "sourceCommit": "298bef1b49c949237f90677b68161e0617c7891c",
+    "buildRun": 42919946525,
+    "apkSha256": "2f0dfea9cbd5eca3ab6c13c6395330dc7064181a55ae87c2b214ef487329d61a",
+    "actual136": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-android136-result.json",
+    "functional135ScopeRetained": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-restore-integrity.json",
+    "actual136EngineeringClosed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android136\\end-session.json"
+  },
+  "customer": [
+    {
+      "role": "presale",
+      "task": "/root/customer136_presale",
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit136\\customer-presale.md",
+      "sha256": "2a7be2392790d0b5174e0cc6fcc7e7e6ce3acce117b163db5549f7201514eead",
+      "fullRawRead": true,
+      "version": "0.1.136",
+      "scope": "Fresh independent public four-record library, old human engineering notes disclosed as auxiliary. No real buyer/order, audio/model/cloud/hardware qualification."
+    },
+    {
+      "role": "afteruse",
+      "task": "/root/customer136_afteruse",
+      "raw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit136\\customer-afteruse.md",
+      "sha256": "fabdd17cea71cce4c1f37b42f7e581e16eb91cf312a21b6a695f42f155905251",
+      "fullRawRead": true,
+      "version": "0.1.136",
+      "scope": "Fresh independent public four-record library, old human engineering notes disclosed as auxiliary. No real buyer/order, audio/model/cloud/hardware qualification."
+    }
+  ],
+  "customerWorkspaceClosed": {
+    "at": "2026-11-11T07:29:31+08:00",
+    "state": "ANDROID136_FRESH_PUBLIC_CUSTOMER_WORKSPACES_CLOSED_OLD_CONTENT_PRESERVED",
+    "actualVersion": "0.1.136",
+    "preexistingFiles": 4694,
+    "preexistingFilesByteIdentical": 4693,
+    "onlyOldChangeLibraryIndex": true,
+    "allPreviousLibrariesRetained": true,
+    "newPublicLibraries": [
+      "d05eb89a-e0e9-4ff3-998d-4876aaf0f569",
+      "465b12ad-5589-4fcc-b16f-b1616cec3ea8"
+    ],
+    "newFilesOnlyInDeclaredPublicLibraries": 110,
+    "ownerMainDisplayOperated": false,
+    "ownedAppDisplayForwardJarClosed": true,
+    "publicTemporaryZipRemovedByExactSha": true,
+    "modelsCloudMicBleUsed": false,
+    "usbKeepAwakeUnchanged": true
+  },
+  "customerOutcome": {
+    "presale": "Independently read minutes/transcript and DOCX, captured document text into one own follow-up, edited to four literal unchecked items, left/search/reopened and returned to evidence. Interest in resumption value, no actual purchase/price judgment.",
+    "afteruse": "Independently read minutes/raw+clean text and DOCX/XLSX, captured literal budget row, saved/edited three-item checklist, marked only completed reading, left/search/reopened1/3 and returned to source. No real aftersale or long-term claim.",
+    "remainingFeedback": [
+      "Long manual cards/full excerpts and long filenames; compact saved evidence and faster continuation entry desired.",
+      "Checklist format discovery needs improvement; neither role tried the existing add-item button, so absence is not claimed.",
+      "Saved row excerpt omits field-header context; native source return currently searches cited row. Keep literal values and preserve context without guessing header meaning.",
+      "Contradictory older human sample notes are user-written auxiliary content; do not rewrite sample facts or treat file identity verification as fact approval.",
+      "Raw speech readability/approval/date/assignee truth require actual input/model and people; unchanged price/services/hardware are not re-questioned by another identical buying trial."
+    ]
+  },
+  "package": {
+    "at": "2026-11-11T07:37:41+08:00",
+    "state": "MANUAL_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+    "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows099-android136.zip",
+    "bytes": 45059447,
+    "sha256": "53912fcc1d5489ffa5a27dfaf82543d76b9e4fba57bbb1153a110196821f8a1f",
+    "files": [
+      {
+        "path": "firmware/companion-update.cup",
+        "bytes": 1360220,
+        "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+      },
+      {
+        "path": "firmware/ota_manifest.json",
+        "bytes": 1548,
+        "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+      },
+      {
+        "path": "macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      },
+      {
+        "path": "windows/Companion-Windows-0.1.99.msi",
+        "bytes": 16744660,
+        "sha256": "2bfb3a94bdb5aad5f1e37cf52ac3022be8eada898d6c79b0cb6205340464a3ed"
+      },
+      {
+        "path": "android/Companion-Android-0.1.136.apk",
+        "bytes": 51168029,
+        "sha256": "2f0dfea9cbd5eca3ab6c13c6395330dc7064181a55ae87c2b214ef487329d61a"
+      }
+    ],
+    "draftOnly": true,
+    "saleQualified": false,
+    "ownerPrivateDataUploaded": false,
+    "assetId": 733384280,
+    "readback": {
+      "method": "four-bounded-official-CDN-range-readers",
+      "workers": 4,
+      "sections": 11,
+      "bufferBytesPerWorker": 131072,
+      "bytes": 45059447,
+      "sha256": "53912fcc1d5489ffa5a27dfaf82543d76b9e4fba57bbb1153a110196821f8a1f",
+      "seconds": 7.469000000011874,
+      "retainedTransientReads": [],
+      "authSentOnlyToGitHubApi": true,
+      "signedUrlOrTokenPersisted": false,
+      "routingModified": false
+    },
+    "finishedAt": "2026-11-11T07:38:03+08:00",
+    "readbackByteIdentical": true
+  },
+  "retainedFirmwareAndMac": "Exact prior66791/Mac candidate bytes only; no new physical/Mac qualification.",
+  "modelsRun": false,
+  "allNonmodelComplete": false,
+  "saleQualified": false,
+  "next": "Finish original CP27-03 import acceptance: receive user-shared files from other apps/Open With through the existing owned import/document/image pipeline; preserve original input, explicit record destination, cancellation/failure/lifecycle and no automatic model/cloud. Current source has no Android SEND/VIEW intent filters or onNewIntent handling and no Windows fileAssociations/open-file handler."
+}

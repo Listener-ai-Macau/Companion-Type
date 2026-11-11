@@ -2,6 +2,13 @@ use super::*;
 use crate::companion_v1::{apply_fixture_control, fixture_snapshot, CompanionV1AudioChunk};
 #[test]
 fn owned_document_storage_backup_restore_and_precise_lifecycle() {
+    document_storage_scenario(false);
+}
+#[test]
+fn reader_generated_worksheet_layout_storage_backup_and_precise_lifecycle() {
+    document_storage_scenario(true);
+}
+fn document_storage_scenario(table: bool) {
     let base = std::env::temp_dir().join(format!("companion-documents-{}", uuid::Uuid::new_v4()));
     let library = base.join("library");
     let restored = base.join("restored");
@@ -63,9 +70,19 @@ fn owned_document_storage_backup_restore_and_precise_lifecycle() {
     other.audio_path = Some(other_audio.to_string_lossy().into());
     other.chunks[0].path = other.audio_path.clone();
     super::super::session_store::save(&state, &[row.clone(), other.clone()]).unwrap();
-    let input = base.join("public-material.txt");
-    let text = "公开人工材料：预算12000元，Alex在周二核对。这不是会议结论。";
-    fs::write(&input, text.as_bytes()).unwrap();
+    let input = base.join(if table {
+        "public-table.xlsx"
+    } else {
+        "public-material.txt"
+    });
+    let original_bytes = if table {
+        include_bytes!("fixtures/table.xlsx").to_vec()
+    } else {
+        "公开人工材料：预算12000元，Alex在周二核对。这不是会议结论。"
+            .as_bytes()
+            .to_vec()
+    };
+    fs::write(&input, &original_bytes).unwrap();
     let id = uuid::Uuid::new_v4().to_string();
     let import = || Request {
         session_id: row.id.clone(),
@@ -77,26 +94,32 @@ fn owned_document_storage_backup_restore_and_precise_lifecycle() {
     commit(&mut row, &request).unwrap();
     assert_eq!(row.document_context.revision, 1);
     let original_path = original(&row, &id, 1).unwrap();
-    assert_eq!(fs::read(&original_path).unwrap(), text.as_bytes());
+    assert_eq!(fs::read(&original_path).unwrap(), original_bytes);
     commit(&mut row, &request).unwrap();
     assert_eq!(
         row.document_context.revision, 1,
         "lost-reply original retry duplicates the entry"
     );
-    let sha = hash(text.as_bytes());
-    let extracted = Extraction {
-        schema: 1,
-        reader_version: "2026-11-10.1".into(),
-        format: "txt".into(),
-        source_sha256: sha.clone(),
-        sections: vec![Section {
-            id: "part-1".into(),
-            label: "原文件文字".into(),
-            text: text.into(),
-        }],
-        warnings: vec![],
-        characters: text.encode_utf16().count(),
+    let extracted: Extraction = if table {
+        serde_json::from_slice(include_bytes!("fixtures/table.extraction.json")).unwrap()
+    } else {
+        let text = String::from_utf8(original_bytes.clone()).unwrap();
+        Extraction {
+            schema: 1,
+            reader_version: "2026-11-10.1".into(),
+            format: "txt".into(),
+            source_sha256: hash(&original_bytes),
+            sections: vec![Section {
+                id: "part-1".into(),
+                label: "原文件文字".into(),
+                text: text.clone(),
+                table_rows: None,
+            }],
+            warnings: vec![],
+            characters: text.encode_utf16().count(),
+        }
     };
+    let text = extracted.sections[0].text.clone();
     let index_before = fs::read(&state).unwrap();
     let mut wrong = extracted.clone();
     wrong.source_sha256 = "0".repeat(64);
@@ -123,6 +146,30 @@ fn owned_document_storage_backup_restore_and_precise_lifecycle() {
     .unwrap();
     assert_eq!(row.document_context.revision, 2);
     assert_eq!(extraction(&row, &id, 2).unwrap().sections[0].text, text);
+    if table {
+        assert_eq!(
+            serde_json::to_value(extraction(&row, &id, 2).unwrap()).unwrap(),
+            serde_json::to_value(&extracted).unwrap()
+        );
+        let mut wrong_layout = extracted.clone();
+        wrong_layout.sections[0].table_rows.as_mut().unwrap()[1].cells[0].text = "invented".into();
+        let before = fs::read(&state).unwrap();
+        let selected = row.id.clone();
+        assert!(commit(
+            &mut row,
+            &Request {
+                session_id: selected,
+                document_id: id.clone(),
+                expected_revision: 2,
+                change: Change::Commit(wrong_layout)
+            }
+        )
+        .is_err());
+        assert_eq!(fs::read(&state).unwrap(), before);
+        let mut fractional = serde_json::to_value(&extracted).unwrap();
+        fractional["sections"][0]["tableRows"][0]["row"] = serde_json::json!(1.5);
+        assert!(serde_json::from_value::<Extraction>(fractional).is_err());
+    }
     let ai = ai_document(&row, &id).unwrap();
     assert!(ai.id.starts_with("document:"));
     assert!(ai.title.starts_with("补充材料 · "));
@@ -134,7 +181,7 @@ fn owned_document_storage_backup_restore_and_precise_lifecycle() {
         base64::engine::general_purpose::STANDARD
             .decode(chunk["base64"].as_str().unwrap())
             .unwrap(),
-        text.as_bytes()
+        original_bytes
     );
     let other_input = base.join("other.txt");
     fs::write(&other_input, b"other recording material").unwrap();
@@ -164,12 +211,18 @@ fn owned_document_storage_backup_restore_and_precise_lifecycle() {
     assert_eq!(restored_row.document_context, row.document_context);
     assert_eq!(
         fs::read(original(restored_row, &id, 2).unwrap()).unwrap(),
-        text.as_bytes()
+        original_bytes
     );
     assert_eq!(
         extraction(restored_row, &id, 2).unwrap().sections[0].text,
         text
     );
+    if table {
+        assert_eq!(
+            serde_json::to_value(extraction(restored_row, &id, 2).unwrap()).unwrap(),
+            serde_json::to_value(&extracted).unwrap()
+        );
+    }
     std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &library);
     let mut stale = row.clone();
     stale.document_context = Default::default();

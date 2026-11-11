@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-11T03:44:31+08:00",
+  "state": "IMMEDIATE_RETURN_INDEX_NOT_YET_ORIGINAL_CLOSE_STOPPED_BEFORE_ANY_HANDLE_MUTATION",
+  "subsequentRead": "Original active without another switch or tap",
+  "cause": "Closure adapter assumed ordinary asynchronous library switch had already durably completed",
+  "repair": "Observe the actual original-library index with a bounded wait before closing the owned App/display; no product change or data repair."
+}

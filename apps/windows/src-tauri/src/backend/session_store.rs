@@ -89,7 +89,7 @@ fn removes_private_data(old: &[CompanionV1HostSession], new: &[CompanionV1HostSe
     old.iter().any(|before| {
         let Some(after) = new.iter().find(|after| after.id == before.id) else { return true; };
         (!before.transcript_text.is_empty() && after.transcript_text.is_empty())
-            || before.meeting_notes.iter().any(|note| !after.meeting_notes.iter().any(|n| n.id == note.id && n.text == note.text))
+            || before.meeting_notes.iter().any(|note| !after.meeting_notes.iter().any(|n| n.id == note.id && n.text == note.text && n.kind == note.kind && n.references == note.references))
             || before.document_context.rows.iter().any(|document|!after.document_context.rows.iter().any(|next|next.id==document.id&&next.source_sha256==document.source_sha256))
             || (!before.live_transcript_text.is_empty() && after.live_transcript_text.is_empty())
             || (before.minutes.is_some() && after.minutes.is_none())

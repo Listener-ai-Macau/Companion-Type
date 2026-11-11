@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 13804446364,
+      "node_id": "MDg6QXJ0aWZhY3QxMzgwNDQ0NjM2NA==",
+      "name": "companion-windows-candidate-1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+      "size_in_bytes": 32397066,
+      "url": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/actions/artifacts/13804446364",
+      "archive_download_url": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/actions/artifacts/13804446364/zip",
+      "expired": false,
+      "digest": "sha256:201441c220a4078982afaf16e702c8cc8f5d5d9de0bcb2f39ee7d7e1bf451d7e",
+      "created_at": "2026-11-10T21:21:23Z",
+      "updated_at": "2026-11-10T21:21:23Z",
+      "expires_at": "2026-11-17T21:21:20Z",
+      "workflow_run": {
+        "id": 42901088770,
+        "repository_id": 1284011744,
+        "head_repository_id": 1284011744,
+        "head_branch": "work/device-phone-closure055-20261106",
+        "head_sha": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5"
+      }
+    }
+  ]
+}

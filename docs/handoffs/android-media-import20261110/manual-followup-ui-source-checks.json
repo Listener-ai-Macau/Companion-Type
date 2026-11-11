@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-10T22:57:03.181Z",
+  "state": "MANUAL_FOLLOWUP_COMPONENTS_AND_AFFECTED_NOTES_PASSED",
+  "results": [
+    {
+      "platform": "windows",
+      "check": "test_manual_note_context",
+      "exitCode": 0
+    },
+    {
+      "platform": "windows",
+      "check": "test_manual_followup_notes",
+      "exitCode": 0
+    },
+    {
+      "platform": "windows",
+      "check": "test_manual_followup_documents",
+      "exitCode": 0
+    },
+    {
+      "platform": "windows",
+      "check": "test_windows_note_images",
+      "exitCode": 0
+    },
+    {
+      "platform": "windows",
+      "check": "test_document_context_panel",
+      "exitCode": 0
+    },
+    {
+      "platform": "android",
+      "check": "test_manual_followup_notes",
+      "exitCode": 0
+    },
+    {
+      "platform": "android",
+      "check": "test_manual_followup_documents",
+      "exitCode": 0
+    },
+    {
+      "platform": "android",
+      "check": "test_recording_notes",
+      "exitCode": 0
+    }
+  ],
+  "logs": "E:/CodexData/Companion/.build-cache/document-context20261110/node-dependencies/.cache/manual-followup-1794351423181",
+  "nativeQualified": false,
+  "modelsRun": false,
+  "limits": {
+    "pid": 2152,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 157892608,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-11T09:00:23+08:00",
+  "state": "MSI_ONLY_ICE69_ROOT_CAUSE_REPAIRED_PACKAGE_VALIDATION_NEXT",
+  "nativeSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "nativeRun": 42932133336,
+  "actualRootCause": "WiX ICE69: CompanionOpenWith and Path are in different MSI features; the formatted file reference crossed feature ownership. Full native compile, affected tests and normal release passed.",
+  "repair": "Register the same quoted installed executable through the resolved INSTALLDIR directory property; retain optional OpenWith registration, finite SupportedTypes and original defaults. No ICE suppression.",
+  "onlyProductInputChanged": "apps/windows/src-tauri/windows-open-with.wxs",
+  "oldInputSha256": "a329fb07fb53d6cdb8fdd05d544e614bb58ed574a6f362140cd473c4cd2819c2",
+  "newInputSha256": "9a057e80f365cb6f319d03937616e710025fa065b7feeeb7a48addffd703d85a",
+  "nativeRecompiled": false,
+  "nativePairReused": true
+}

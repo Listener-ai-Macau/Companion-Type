@@ -1,12 +1,26 @@
 //! Local user context, separate from ASR and generated meeting facts.
 use serde::{Deserialize, Serialize};
 use crate::companion_v1::CompanionV1HostSession;
+mod context;
+pub use context::{Evidence,EvidenceKind,NoteKind};
+
+/// Recheck a stored reference before exposing a current source; never trust a UI quote.
+pub fn evidence_status(session:&CompanionV1HostSession,note_id:&str,reference_id:&str,revision:u64)->Result<(),String>{
+ super::library_lifecycle::require_available(session)?;
+ if session.note_revision!=revision{return Err("备注已变化，请重新读取后打开依据；保存的引文仍保留。".into());}
+ let reference=session.meeting_notes.iter().find(|n|n.id==note_id).and_then(|n|n.references.iter().find(|r|r.id==reference_id)).ok_or("这条引用已不存在，请重新读取备注。")?;
+ context::verify(reference,session)
+}
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Note {
     pub id: String,
     pub text: String,
+    #[serde(default,skip_serializing_if="NoteKind::is_note")]
+    pub kind: NoteKind,
+    #[serde(default,skip_serializing_if="Vec::is_empty")]
+    pub references: Vec<Evidence>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bookmark_id: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -28,6 +42,8 @@ pub struct Request {
     pub action: Action,
     pub text: Option<String>,
     pub bookmark_id: Option<String>,
+    pub kind: Option<NoteKind>,
+    pub references: Option<Vec<Evidence>>,
 }
 
 pub(crate) fn normalize_text(text: &str) -> Result<String, String> {
@@ -47,14 +63,18 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request, now
     }
     let old = session.meeting_notes.iter().find(|n| n.id == request.note_id);
     if request.action == Action::Delete {
-        if request.text.is_some() || request.bookmark_id.is_some() { return Err("删除备注请求包含多余内容。".into()); }
+        if request.text.is_some() || request.bookmark_id.is_some() || request.kind.is_some() || request.references.is_some() { return Err("删除备注请求包含多余内容。".into()); }
         if old.is_none() { return Ok(false); }
     }
+    let kind=request.kind.unwrap_or_else(||old.map(|n|n.kind).unwrap_or_default());
+    let references=request.references.clone().unwrap_or_else(||old.map(|n|n.references.clone()).unwrap_or_default());
+    if request.action!=Action::Delete {context::validate(&references)?;}
     let text = if request.action == Action::Delete { None } else {
-        Some(normalize_text(request.text.as_deref().ok_or("请填写备注。")?)?)
+        let raw=request.text.as_deref().ok_or("请填写备注。")?;
+        Some(if raw.trim().is_empty()&&(!references.is_empty()||old.is_some_and(|n|n.image.is_some())){String::new()}else{normalize_text(raw)?})
     };
     if let Some(old) = old {
-        if request.action != Action::Delete && Some(&old.text) == text.as_ref() && old.bookmark_id == request.bookmark_id {
+        if request.action != Action::Delete && Some(&old.text) == text.as_ref() && old.bookmark_id == request.bookmark_id && old.kind==kind && old.references==references {
             return Ok(false); // A lost reply can retry the exact UUID, even after a revision advances.
         }
         if request.action == Action::Add { return Err("这个备注请求已用于其他内容，请刷新后核对。".into()); }
@@ -62,6 +82,7 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request, now
     if request.expected_revision != session.note_revision {
         return Err("会议备注已变化；你的输入仍保留，请刷新后核对。".into());
     }
+    if request.action!=Action::Delete {context::verify_changed(session,old.map(|n|n.references.as_slice()).unwrap_or_default(),&references)?;}
     if request.action != Action::Delete && request.bookmark_id.as_ref().is_some_and(|id| !session.bookmarks.iter().any(|b| &b.id == id)) {
         return Err("所选重点已不存在，请重新选择；不会估算或移动录音时间。".into());
     }
@@ -70,16 +91,16 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request, now
     match request.action {
         Action::Add => {
             if next.len() >= 128 { return Err("这场会议已有128条备注，请整理后再添加。".into()); }
-            next.push(Note { id: request.note_id.clone(), text: text.unwrap(), bookmark_id: request.bookmark_id.clone(),
+            next.push(Note { id: request.note_id.clone(), text: text.unwrap(), kind,references, bookmark_id: request.bookmark_id.clone(),
                 image: None, created_at: now.into(), updated_at: now.into() });
         }
         Action::Edit => {
             let note = next.iter_mut().find(|n| n.id == request.note_id).unwrap();
-            note.text = text.unwrap(); note.bookmark_id = request.bookmark_id.clone(); note.updated_at = now.into();
+            note.text = text.unwrap(); note.kind=kind;note.references=references; note.bookmark_id = request.bookmark_id.clone(); note.updated_at = now.into();
         }
         Action::Delete => next.retain(|n| n.id != request.note_id),
     }
-    if next.iter().map(|n| n.text.len()).sum::<usize>() > 200_000 { return Err("这场会议的备注已达到200KB，请整理后再添加。".into()); }
+    if next.iter().map(|n| n.text.len()+n.references.iter().map(|r|r.quote.len()+r.name.len()+r.section_label.as_ref().map_or(0,String::len)).sum::<usize>()).sum::<usize>() > 200_000 { return Err("这场会议的备注与引用已达到200KB，请整理后再添加。".into()); }
     session.meeting_notes = next; session.note_revision = revision; session.exported_at = None;
     Ok(true)
 }
@@ -126,6 +147,10 @@ pub(crate) fn render(session: &CompanionV1HostSession) -> String {
         // Quote all lines, including Markdown-looking user text; never create
         // an Action Items heading or task in the generated document.
         for line in note.text.lines() { text.push_str("> "); text.push_str(line); text.push('\n'); }
+        for reference in &note.references {
+            text.push_str(&format!("> 人工引用：{}{}（保存时的文字；当前依据请回应用核对）\n",reference.name,reference.section_label.as_ref().map(|s|format!(" · {s}")).unwrap_or_default()));
+            for line in reference.quote.lines(){text.push_str("> ");text.push_str(line);text.push('\n');}
+        }
         if let Some(image)=&note.image {text.push_str(&format!("> 图片：{}（原图见图文ZIP；文字格式不嵌入原图）\n",image.name.replace(['\r','\n']," ")));}
     }
     text

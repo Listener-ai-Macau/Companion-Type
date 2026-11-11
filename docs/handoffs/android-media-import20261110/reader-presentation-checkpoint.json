@@ -1,0 +1,86 @@
+{
+  "at": "2026-11-11T04:41:29+08:00",
+  "state": "GROUPED_READER_PRESENTATION_ACTUAL_SCOPE_CHECKPOINT",
+  "windows": {
+    "sourceCommit": "0e4cd2f7cbbca4ad3459d78362c54f0ace835b74",
+    "normalBuild": 42892927498,
+    "msiSha256": "4d18874d12e49c92d5640b24cefebacdc0d580f3e89c8aaa4af727e2fca98d1c",
+    "runtimeRun": 42897474095,
+    "runtimePending": true,
+    "installed": "0.1.96"
+  },
+  "android": {
+    "sourceCommit": "a227cba8056edd8f2d0828a43bf5b2eaebd50034",
+    "installed": "0.1.133",
+    "build": 42892949986,
+    "engineeringEndSession": {
+      "at": "2026-11-11T04:31:40+08:00",
+      "state": "ANDROID133_ORIGINAL_LIBRARY_RESTORED_OWNED_SESSION_CLOSED_OWNER_CONTENT_IDENTICAL",
+      "version": "0.1.133",
+      "toolSessionCode": 133,
+      "retainedNewPublicRestoreLibrary": "3de79ec4-6ab9-49a6-9664-93606263deee",
+      "preexistingFilesChecked": 4225,
+      "preexistingFilesByteIdentical": 4224,
+      "expectedIndexChange": true,
+      "authorizedPublicQaMetadataChanges": 0,
+      "ownerOriginalContentByteIdentical": true,
+      "allPreviousLibrariesRetained": true,
+      "newFilesOnlyInAuthorizedPublicSourceAndDeclaredRestoreLibraries": 55,
+      "newEmptyExistingStoreReadLocks": 0,
+      "publicOriginalMediaUnchanged": true,
+      "ownAppDisplayForwardAndExactTemporaryFilesClosed": true,
+      "removedTemporaryFiles": [
+        "companion-organization133-ui.jar"
+      ],
+      "manifestVerificationSeconds": 2.937000000005355,
+      "ownerMainUnchangedDuringClose": true,
+      "ownerMainDisplayOperated": false,
+      "resumedVerifierAfterHandlesClosed": false,
+      "usbKeepAwakeUnchanged": true,
+      "boardAccessed": false,
+      "modelsOrAiCalled": false
+    },
+    "nativeReading": {
+      "at": "2026-11-10T20:30:16.401Z",
+      "actualVersion": "0.1.133",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID133_ACTUAL_ORDINARY_RECENT_ORDER_FOLD_EXPAND_FULL_ORIGINAL_EDIT_CANCEL_AND_LITERAL_SEARCH_PASSED",
+      "newTestNoteIds": [
+        "1bcb9e4c-4711-4ea9-b157-ad711629b68f",
+        "ace8adb3-53be-4a3d-9d81-41b5d860ded6"
+      ],
+      "storedBodiesUnchanged": true,
+      "searchHitFullAndHighlighted": true
+    },
+    "documentReading": {
+      "at": "2026-11-10T20:30:27.529Z",
+      "actualVersion": "0.1.133",
+      "modelsOrCloudCalled": false,
+      "state": "ANDROID133_ACTUAL_DOCUMENT_FOCUS_LIST_RETURN_MAX_ROW_SINGLE_LINE_AND_BOTH_THEMES_PASSED",
+      "rowShape": {
+        "rects": 1,
+        "textWidth": 52.76740646362305,
+        "cellWidth": 76.76570129394531,
+        "whiteSpace": "nowrap"
+      },
+      "viewport": {
+        "width": 391,
+        "document": 391,
+        "main": 391,
+        "client": 391
+      },
+      "reextraction": "Old public129 fixture cache refreshed ordinarily; no extraction implementation change."
+    },
+    "fullInputContentPreserved": {
+      "at": "2026-11-10T20:30:50.641Z",
+      "actualVersion": "0.1.133",
+      "modelsOrCloudCalled": false,
+      "oldHumanNotesTranscriptAndMinutesUnchanged": true,
+      "onlyTwoDeclaredNewFictionalTestNotesRemoved": true
+    }
+  },
+  "sameNativeFunctionalSourceScope": "Windows relative f1d5fb5048e758e11a66266109aa881e66eb1bd8 and Android relative b146ce08dc04680868323e9feb1046e8bd4dbf6d: native implementation unchanged. Previous actual storage/backup/lifecycle scope retained explicitly.",
+  "customer": "133 presale full raw read, afteruse currently independent public workspace; no customer session closure claimed yet.",
+  "modelCalls": 0,
+  "saleQualified": false
+}

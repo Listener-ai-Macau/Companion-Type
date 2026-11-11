@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-11T07:02:18+08:00",
+  "state": "SOURCE_REPAIRED_ACTUAL_MOBILE_LAYOUT_BLOCK_NATIVE_BUILD_NEXT",
+  "android135": {
+    "source": "71b33214443bb7e66e675ea77151bbd8b721f46e",
+    "apkSha256": "fca17fc5d38c5427f42517f0c88cd23a2f339df8ef8676ad79833972381b042f",
+    "run": 42915729180,
+    "nativeStoreAndOrdinaryPathsPassed": true,
+    "visualFailure": "manual-followup-evidence.png",
+    "deliveryBlocked": true,
+    "rawVisualDecision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\manual-visual-block.json",
+    "closed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android135\\end-session.json"
+  },
+  "repair": "Explicit18px native checkbox sizing under actual app global styles; one ordered presentation of authored lines and checklist items, preserving exact stored Markdown and all sources.",
+  "sourceChecks": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-layout\\result.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-layout\\typecheck.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-ui-source-checks.json"
+  ],
+  "sourceCoverage": "20 real Edge computed-layout combinations: mobile360/393/768 and Windows1000/1280, light/dark, both global/component stylesheet orders; item text once and explanations in authored order.",
+  "functionalNativeSourcesUnchanged": true,
+  "modelsRun": false,
+  "saleQualified": false
+}

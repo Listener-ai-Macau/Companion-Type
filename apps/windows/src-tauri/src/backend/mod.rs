@@ -128,6 +128,7 @@ pub(crate) mod import_audio;
 pub(crate) mod audio_derivation;
 pub(crate) mod audio_editing;
 pub(crate) mod audio_edit_job;
+pub(crate) mod incoming_files;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
 mod meeting_audio_recovery;
@@ -769,6 +770,8 @@ pub trait CompanionBackend: Send + Sync {
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
     fn commit_audio_edit(&self,_row:CompanionV1HostSession,_sources:&[audio_derivation::SourceIdentity],_token:&str)->Result<(),String>{Err("当前环境不支持另存编辑录音。".into())}
     fn import_audio_file(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持导入音频。".into())}
+    fn import_incoming_audio_file(&self,_path:&std::path::Path,_incoming_id:&str)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持接收音频。".into())}
+    fn import_audio_file_identity(&self,_path:&std::path::Path,_incoming_id:Option<&str>)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持导入音频。".into())}
     fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
@@ -1640,12 +1643,14 @@ impl CompanionBackend for FixtureCompanionBackend {
         snapshot.host.sessions=persistence::load_sessions_from(&persistence::state_file_path()).ok_or("录音已写入，请重新载入资料库。")?;
         snapshot.updated_at=observation_timestamp();refresh_privacy_counts(&mut snapshot);Ok(())
     }
-    fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String> {
+    fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{self.import_audio_file_identity(path,None)}
+    fn import_incoming_audio_file(&self,path:&std::path::Path,incoming_id:&str)->Result<CompanionV1Snapshot,String>{self.import_audio_file_identity(path,Some(incoming_id))}
+    fn import_audio_file_identity(&self,path:&std::path::Path,incoming_id:Option<&str>)->Result<CompanionV1Snapshot,String> {
         {
             let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
             if snapshot.host.persistence.status!="ready" {return Err("请先恢复或保存会议库，再导入音频。".into());}
         }
-        let imported=import_audio::import(path)?;
+        let imported=import_audio::import_with_id(path,incoming_id)?;
         let mut snapshot=self.snapshot.lock().map_err(|_|"音频已保存，但会议库暂时不可用。")?;
         let now=connection_timestamp();
         let mut request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some(imported.id.clone()));

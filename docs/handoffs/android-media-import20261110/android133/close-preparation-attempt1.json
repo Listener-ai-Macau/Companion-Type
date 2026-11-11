@@ -1,0 +1,6 @@
+{
+  "state": "TOOL_CONFIRM_ALLOWLIST_OMITTED_EXISTING_RETAINED_LIBRARY_CONFIRM",
+  "productFailure": false,
+  "ownedHandlesNotClosed": "Return not yet complete; close precondition stopped before mutation.",
+  "repair": "Include actual existing confirm in input adapter; verify actual original index before closing."
+}

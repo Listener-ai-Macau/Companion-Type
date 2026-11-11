@@ -1,0 +1,56 @@
+{
+  "state": "REAL_TAURI_PUBLIC_AUDIO_TRIM_FULL_SPLIT_REORDER_MERGE_SOURCE_RETURN_AND_REOPEN_PASSED",
+  "parentId": "import-445230815b2142cfa90499cb5ff12c3d",
+  "trimId": "edit-e2ff7ba73f9a42dab0506ebdbb59773e",
+  "mergedId": "edit-920397db9459486591e3b3bab8a70a34",
+  "outputIds": [
+    "edit-e2ff7ba73f9a42dab0506ebdbb59773e",
+    "edit-54a0641187ba4d319970e382a0d4de95",
+    "edit-42f410955c774a79b44e04ced57675d7",
+    "edit-920397db9459486591e3b3bab8a70a34"
+  ],
+  "checkpoints": [
+    {
+      "step": "unsaved-edit-navigation-retains-input"
+    },
+    {
+      "step": "ordinary-save",
+      "names": [
+        "公开验收093 · 裁剪15秒"
+      ],
+      "ids": [
+        "edit-e2ff7ba73f9a42dab0506ebdbb59773e"
+      ]
+    },
+    {
+      "step": "ordinary-save",
+      "names": [
+        "公开验收093 · 全场切分 · 第1段",
+        "公开验收093 · 全场切分 · 第2段"
+      ],
+      "ids": [
+        "edit-54a0641187ba4d319970e382a0d4de95",
+        "edit-42f410955c774a79b44e04ced57675d7"
+      ]
+    },
+    {
+      "step": "ordinary-save",
+      "names": [
+        "公开验收093 · 重排合并8秒"
+      ],
+      "ids": [
+        "edit-920397db9459486591e3b3bab8a70a34"
+      ]
+    },
+    {
+      "step": "reopen-and-native-validated-original-position",
+      "sourceSessionId": "edit-e2ff7ba73f9a42dab0506ebdbb59773e",
+      "positionMs": 5000,
+      "physicalListeningQualified": false
+    }
+  ],
+  "generatedTranscriptOrMinutes": false,
+  "modelsRun": false,
+  "cloudCalls": 0,
+  "wholeSaleQualified": false
+}

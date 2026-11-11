@@ -557,7 +557,7 @@ mod tests {
     #[test]
     fn manual_first_checklist_roundtrip_and_exports_keep_authored_origin_and_originals() {
         let mut s=without_minutes();
-        s.meeting_notes.push(super::super::meeting_notes::Note {id:uuid::Uuid::new_v4().to_string(),text:"回程还未确认".into(),bookmark_id:None,image:None,created_at:"1".into(),updated_at:"1".into()});
+        s.meeting_notes.push(super::super::meeting_notes::Note {kind:Default::default(),references:vec![],id:uuid::Uuid::new_v4().to_string(),text:"回程还未确认".into(),bookmark_id:None,image:None,created_at:"1".into(),updated_at:"1".into()});
         s.note_revision=1;
         let before=s.clone();let request=create(&s);
         edit_session(&mut s,&request,"1234").unwrap();

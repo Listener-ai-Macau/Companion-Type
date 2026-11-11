@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\build_windows_candidate_ci.py", line 63, in <module>
+    run('context-test-build',['cargo','+1.95.0','test','--release','--locked','--lib','--no-run','--message-format=json'],N)
+  File "D:\a\Companion-Type\Companion-Type\tools\build_windows_candidate_ci.py", line 18, in run
+    if p.returncode:raise RuntimeError(f'{name} failed: {p.returncode}; see retained log')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: context-test-build failed: 101; see retained log

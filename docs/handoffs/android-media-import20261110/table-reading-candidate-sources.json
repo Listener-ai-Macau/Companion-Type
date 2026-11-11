@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-11T03:07:46+08:00",
+  "state": "GROUPED_TABLE_READING_CANDIDATE_SOURCES_REMOTE_VERIFIED_BUILD_REQUESTED",
+  "versions": {
+    "windows": "0.1.96",
+    "android": "0.1.132"
+  },
+  "sources": {
+    "windows": "f1d5fb5048e758e11a66266109aa881e66eb1bd8",
+    "android": "b146ce08dc04680868323e9feb1046e8bd4dbf6d"
+  },
+  "installed": false,
+  "saleQualified": false,
+  "modelsRun": false,
+  "prior095131Package": "f98b3736bdb398363313a99ed7ae3c2db77fa7afc686323f74ab009c73dcf7c2",
+  "buildRuns": {
+    "windows": 42882159475,
+    "android": 42882181873
+  }
+}

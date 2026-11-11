@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-11T08:32:12+08:00",
+  "state": "NATIVE_API_FAILURE_REPAIRED_SAME_VERSION100_BUILD_NEXT",
+  "run": 42931011101,
+  "source": "121a8cf1055c2fe0435b81e2a70539d2c7821d64",
+  "actualFailure": "E0599 WebviewWindowBuilder has no on_window_event. Exact native compiler log retained; no MSI or normal release build completed.",
+  "repair": "Build the WebviewWindow first, then register on_webview_event and match WebviewEvent::DragDrop. Confirmed against exact locally cached Tauri2.11.6 API.",
+  "unchanged": "Incoming receipt/store/import logic, shared frontend, Android137 source and model/provider all unchanged.",
+  "efficiency": "The reordered native test compilation failed before spending a normal optimized product build; relevant original proof retained rather than restamping a pass."
+}

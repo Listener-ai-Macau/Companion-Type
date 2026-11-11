@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "sourceNativeRun": 42932133336,
+  "state": "DIAGNOSTIC_PACKAGE_SUCCEEDED_NOT_INSTALLED",
+  "exitCode": 0,
+  "nativeRecompiled": false,
+  "nativeTestsReusedOnlyAsPassedInOriginalCI": true,
+  "target": "E:\\CodexData\\Companion\\.build-cache\\windows-note-context20261110\\package100-132bd93f\\target",
+  "limits": {
+    "pid": 21692,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 191127552,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

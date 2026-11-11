@@ -410,3 +410,8 @@ export async function saveProductSettings(
 export function isTauriRuntime(): boolean {
   return typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 }
+
+export async function checkCompanionNoteEvidence(sessionId:string,noteId:string,referenceId:string,revision:number):Promise<void>{
+ if(!isTauriRuntime())throw Error('请在桌面版核对本机依据。');
+ await invoke('check_companion_note_evidence',{sessionId,noteId,referenceId,revision});
+}

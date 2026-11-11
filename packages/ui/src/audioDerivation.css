@@ -12,3 +12,5 @@
 .audio-derivation-notice{font-size:13px;color:var(--muted,#59657e)}.audio-derivation-error{border:1px solid #b65b5b55;background:#b65b5b0c;border-radius:12px;padding:13px;font-size:13px}
 [data-theme=dark] .audio-derivation,.dark .audio-derivation,.ct-theme-dark .audio-derivation,.ct-dark .audio-derivation{--surface:#1d2230;--surface-soft:#242b3b;--border:#373f51;--text:#e9edf7;--muted:#a7b1c7}
 @media(max-width:440px){.audio-derivation>summary{padding:16px}.audio-derivation-body{padding:0 14px 16px}.audio-derivation-range{gap:8px}.audio-derivation-clips>li{padding:12px}.audio-derivation-modes button{font-size:12px;padding:8px 7px}.audio-derivation-clip-heading{align-items:start}}
+
+.audio-derivation-form{display:grid;gap:16px}

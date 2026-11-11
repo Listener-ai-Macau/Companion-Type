@@ -1,0 +1,8 @@
+
+running 3 tests
+test backend::incoming_files::tests::corrupted_pending_receipt_is_not_replaced ... ok
+test backend::incoming_files::tests::incoming_media_document_image_retries_preserve_originals_and_existing_content ... ok
+test backend::incoming_files::tests::pending_delivery_is_atomic_bounded_private_and_scoped ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 1229 filtered out; finished in 0.81s
+

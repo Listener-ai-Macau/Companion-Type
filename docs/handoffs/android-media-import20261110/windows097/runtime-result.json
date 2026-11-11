@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-10T20:40:18.740410+00:00",
+  "state": "WINDOWS097_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
+  "testSourceCommit": "ccf5b85fa61a74640a7387d6987033a99eb5f9f0",
+  "appSourceCommit": "0e4cd2f7cbbca4ad3459d78362c54f0ace835b74",
+  "appVersion": "0.1.97",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "f124385dd1a0e298d3bc15c25f657b41f63d406c543640426a5f78bf4f0b87d6",
+  "exactMsiDllSha256": "e1cc054877a2f1be29cfade5cae18caf21ade300de437197c4c6424d27c3de10",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED",
+  "documentBackendExitCode": 0,
+  "documentBackendState": "ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+  "newCloudOrAsrCalls": 0,
+  "finishedAt": "2026-11-10T20:41:18.546251+00:00",
+  "runtimeRun": 42897474095
+}

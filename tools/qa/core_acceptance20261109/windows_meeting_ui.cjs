@@ -17,6 +17,12 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
   if(stage==='audio'||stage==='transcribe'){
    const result=await require('./windows_audio_ui.cjs')(page,plan,out);
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
+  }else if(stage==='editing'){
+   const result=await require('./windows_audio_edit_ui.cjs')(page,plan,out);
+   fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
+  }else if(stage==='incoming'){
+   const result=await require('./windows_incoming_ui.cjs')(page,plan,out);
+   fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(stage==='documents'){
    const result=await require('./windows_document_ui.cjs')(page,plan,out);
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));

@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-10T17:54:15.520028+00:00",
+  "state": "WINDOWS094_NATIVE_AUDIO_EDIT_COMPLETE_WORKFLOW_PASSED",
+  "testSourceCommit": "7fd284b79656d8a31eeb02f3f92d35ec8bf12812",
+  "appSourceCommit": "1af27a43f865818f5944668c0b0d6370f461a7b4",
+  "appVersion": "0.1.94",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "15b2dd2c4e06254a1163acc761dcc277bfd62625d4dd240dd060eaa82bf6f83c",
+  "exactMsiDllSha256": "28fcfc0667fb407fc4c9b37b7be8e4124ad6781a49c78af637712042ca08bab3",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "publicAudio": {
+    "meeting": "S_R004S03C01",
+    "seconds": 2327.119,
+    "sha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "bytes": 74467886,
+    "privateDraftAsset": 726625128
+  },
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_AUDIO_EDITING_UI_PASSED",
+  "audioEditBackendExitCode": 0,
+  "audioEditBackendState": "ACTUAL_PACKAGED_AUDIO_EDIT_PCM_CANCEL_RESTART_PENDING_ONLY_RETRY_BACKUP_RESTORE_AND_SCOPED_PURGE_PASSED",
+  "newCloudOrAsrCalls": 0,
+  "finishedAt": "2026-11-10T17:55:17.020532+00:00",
+  "runtimeRun": 42869571875
+}

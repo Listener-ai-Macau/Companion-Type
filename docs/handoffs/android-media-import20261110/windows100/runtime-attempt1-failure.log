@@ -1,0 +1,28 @@
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	﻿2026-11-11T01:46:58.6500408Z ##[group]Run python tools/qa/core_acceptance20261109/run_ci.py
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6501048Z ^[[36;1mpython tools/qa/core_acceptance20261109/run_ci.py^[[0m
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6787090Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6787503Z env:
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6790234Z   GH_TOKEN: ***
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6790453Z   COMPANION_CORE_PHASE: documents
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6790968Z   COMPANION_ACCEPTANCE_CANDIDATE_SPEC: docs/handoffs/android-media-import20261110/windows100/runtime-spec.json
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:46:58.6791498Z ##[endgroup]
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:02.0847837Z Starting download-frozen-native
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:08.2480942Z download-frozen-native exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:09.0413401Z Starting install-test-dependencies
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:15.4037828Z install-test-dependencies exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:15.4038504Z Starting install-locked-node-tools
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:28.1484187Z install-locked-node-tools exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:28.1484908Z Starting install-native-picker-dependency
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:30.9926298Z install-native-picker-dependency exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:47:30.9927282Z Starting native-document-context-ui
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:06.4755047Z native-document-context-ui exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:06.4764934Z Starting native-document-context-backup-restore-cleanup
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:08.7073823Z native-document-context-backup-restore-cleanup exit=0
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:08.7082077Z Starting native-os-incoming-file-ui
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7198105Z native-os-incoming-file-ui exit=1
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7873798Z Traceback (most recent call last):
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7876762Z   File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\run_ci.py", line 109, in <module>
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7895077Z     assert incoming_code==0 and incoming['ui']['state']=='REAL_TAURI_OS_INCOMING_COLD_WARM_CONFIRM_DOCUMENT_IMAGE_RETRY_CANCEL_AND_ORIGINALS_PASSED'
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7896752Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.7897671Z AssertionError
+context-acceptance	Verify the matched packaged image-note workflow on an isolated runner	2026-11-11T01:48:22.9151433Z ##[error]Process completed with exit code 1.

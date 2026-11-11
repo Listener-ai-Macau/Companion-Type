@@ -31,7 +31,7 @@ export function WindowsAudioEditNotice({onChanged}:{onChanged:()=>void}){
  },[]);
  if(!status?.id||!status.running&&!status.retryAvailable)return error?<p className="ct-step-meta" role="alert">{error}</p>:null;
  return <aside className="ct-audio-edit-notice" aria-label="录音整理任务"><div><strong>{status.running?'正在本机整理录音':'录音整理可以继续'}</strong><p>{status.message}</p><small>已保存 {status.completed||0} / {status.totalOutputs||0} 份；原录音保留。</small>{error?<p role="alert">{error}</p>:null}</div>
-  <button type="button" className="ct-action" onClick={()=>void command(status.running?'cancel':'retry',{id:status.id}).then(changed).catch(e=>setError(String(e)))}>{status.running?'本份保存后停止':'核对并继续剩余片段'}</button>
+  <button type="button" className="ct-action" onClick={()=>void command(status.running?'cancel':'retry',{id:status.id}).then(changed).catch(e=>setError(String(e)))}>{status.running?(status.state==='committing'?'本份保存后停止':'取消剩余处理'):'核对并继续剩余片段'}</button>
   {!status.running?<button type="button" className="ct-action" onClick={()=>void command('dismiss',{id:status.id}).then(()=>{setStatus(null);changed();}).catch(e=>setError(String(e)))}>结束这项整理</button>:null}
  </aside>;
 }

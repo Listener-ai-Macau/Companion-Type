@@ -1,4 +1,7 @@
 """Clean Windows candidate build on CI; no publishing, user data or inference."""
+import os as _bundle_os, subprocess as _bundle_subprocess, sys as _bundle_sys
+if _bundle_os.environ.get("COMPANION_REUSE_NATIVE_SPEC"):
+ raise SystemExit(_bundle_subprocess.call([_bundle_sys.executable,str(__import__("pathlib").Path(__file__).with_name("bundle_windows_candidate_ci.py"))]))
 from pathlib import Path
 from datetime import datetime,timezone
 import hashlib,json,os,shutil,subprocess,traceback,tomllib,time
@@ -55,8 +58,7 @@ try:
  preflight=inspect(T,S,source_dir=S)
  (C/'native-target-preflight.json').write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
  assert preflight['result']=='TARGET_IDLE_AT_OBSERVATION',preflight['result']
- record['state']='BUILDING_NORMAL_RELEASE';save()
- run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
+ record['state']='CHECKING_AFFECTED_NATIVE_SOURCE';save()
  # Tauri's build script changes generated inputs between Cargo invocations.
  # Repeating cargo test per filter rebuilt the optimized lib test five times
  # and exhausted the 45-minute job. Build the real test binary once, then run
@@ -70,11 +72,16 @@ try:
    artifacts.append(Path(item['executable']))
  assert len(artifacts)==1,artifacts
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
- record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio']};save()
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
  for scope in record['affectedTestBinary']['filters']:
   run(scope.replace('::','-')+'-context-regression',[str(test),scope,'--test-threads=1'],N)
  run('audio-edit-native-library-isolated',[str(test),'backend::audio_editing::tests::derived_recording_exact_pcm_backup_restore_and_scoped_purge','--ignored','--exact','--test-threads=1'],N)
  assert sha(test)==record['affectedTestBinary']['sha256']
+ # Fail native test-source/API checks before spending a normal app build.
+ # All affected checks remain unchanged; the shipped pair is still built last
+ # by the same locked normal-release command, then independently inspected.
+ record['state']='BUILDING_NORMAL_RELEASE';save()
+ run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)
  record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]
