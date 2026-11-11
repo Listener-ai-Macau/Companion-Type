@@ -1,8 +1,8 @@
 """Protect the exact candidate in the existing private draft and read bytes back."""
 from pathlib import Path
 from datetime import datetime
-import hashlib,json,subprocess,sys
-C=Path(__file__).parent;kind=sys.argv[1];assert kind in ['android122','android123','android124','windows083','windows084','windows087','android125','android126','android127','android128','android129','android130','android131','windows088','windows090','windows091','windows094','windows095','windows096','android132','windows097','android133','windows098','android134','windows099','android135','android136','windows100','android137','windows102','android138','android139','windows103']
+import hashlib,json,re,subprocess,sys
+C=Path(__file__).parent;kind=sys.argv[1];assert re.fullmatch(r"(?:android|windows)[0-9]{3}",kind)
 O=C/kind;P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110/remote-readback');P.mkdir(exist_ok=True)
 repo='Listener-ai-Macau/Companion-Type';tag='windows-0.1.78-bb1550c4-candidate'
 def run(args):
