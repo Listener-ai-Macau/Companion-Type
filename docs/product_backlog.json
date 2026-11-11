@@ -56243,12 +56243,12 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": false,
-          "reservedFor": "Companion136 fresh public customer workspace",
+          "active": true,
+          "reservedFor": "Companion138 external-file public acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-11T07:10:42+08:00",
+          "requestedAt": "2026-11-11T10:24:02+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Only new libraries restored through ordinary UI from the known public136 backup; ordinary AI simulated customer use on owned non-main display. No actual listening, microphone/recording, BLE/device, models/ASR/cloud AI, global clipboard/share or Owner/private libraries.",
+          "scope": "Only new libraries restored through ordinary UI from the known public136 backup; incoming public generated PCM/document/image OS delivery and lifecycle on owned non-main display. Explicit isolated QA source app may grant only these public files. No listening, microphone, BLE/device, model/cloud, contacts or Owner/private libraries.",
           "releasedAt": "2026-11-11T07:29:31+08:00",
           "releaseReason": "Fresh public AI simulated customer workspace ended; original library restored and own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
@@ -133753,7 +133753,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-10T23:55:36+08:00",
+      "updatedAt": "2026-11-11T10:17:21+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -134495,7 +134495,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Finish one unified101 delivery for the actual unreachable-recorder/unclear-first-step customer obstacle; preserve all current100 sources, no firmware change or repeated Owner trial while they selected later. Physical wake/power/other-central cause and original core gates remain unproven.",
+      "next": "Finish single normal101 build/inspect exact MSI; no repeated Owner trial after later09:51. When Owner is ready, continue the same guided real-app experience, establish actual device reachability, then original four core groups. Explicitly blocked and deferred speed/acoustics remain unchanged.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -137463,8 +137463,8 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-11T07:48:55+08:00",
-        "state": "WAIT_OWNER_ONE_HELD_UTTERANCE",
+        "at": "2026-11-11T10:17:21+08:00",
+        "state": "UNIFIED101_CANDIDATE_BUILD_NO_LIVE_OWNER_TRIAL",
         "phoneInstalled": "0.1.132",
         "firmwareInstalled": 66791,
         "phoneSourceCommit": "b146ce08dc04680868323e9feb1046e8bd4dbf6d",
@@ -137520,7 +137520,7 @@
           "sessionId": "000000000000018f"
         },
         "operatorReady": false,
-        "operatorPromptPending": true,
+        "operatorPromptPending": false,
         "offlineRecoveryCandidate": 66776,
         "offlineRecoverySourceCommit": "b5482668344962832142e097c4f5e8554b6367e3",
         "offlineRecoveryBuildRunning": false,
@@ -137535,10 +137535,10 @@
         "activeSession": null,
         "windowsUsabilitySourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/companion-recorder-usability",
         "windowsUsabilityBase": "28a79cdcaef6cfc1a9326f5fb70c6b6e6955bd5a",
-        "windowsUsabilitySource": "24304ea96c43f1f43701e4ae39d05cbd18ef9ff3",
+        "windowsUsabilitySource": "51acd7d98bd2911179690abea7e5516eb2e71cb0",
         "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
         "windowsUsabilityCandidate": "0.1.86",
-        "candidateWindows": "0.1.94",
+        "candidateWindows": "0.1.101",
         "installedWindows": "0.1.96",
         "installedWindowsSource": "f1d5fb5048e758e11a66266109aa881e66eb1bd8",
         "candidateArchive": "E:\\CodexData\\Companion\\deliveries\\20261110-companion-fw791-win092-android130-candidate.zip",
@@ -137562,7 +137562,7 @@
         "installedPhone": "0.1.132",
         "functionalLongControllerPid": null,
         "functionalLongFinishPid": null,
-        "actualPhysicalRecordingState": "ORIGINAL399_FINALIZED_RECEIVED_RECLAIMED",
+        "actualPhysicalRecordingState": "NO_NEW_RECORDING_THIS_CUSTOMER_CASE",
         "lastObservedSession": 399,
         "input089Source": "1025b4bdf81d9fe814baa872ee537415509e0f01",
         "input089BuildRun": 42802045850,
@@ -137589,13 +137589,14 @@
         "fileCommitSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
         "fileCommitNextCandidate": "0.1.94",
         "fileCommitBuildRun": 42864056041,
-        "physicalInputControllerPid": 27284,
-        "physicalInputAppPid": 34316,
+        "physicalInputControllerPid": null,
+        "physicalInputAppPid": null,
         "input094CandidateReady": true,
         "input094CandidateSource": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
         "input094BuildRun": 42864056041,
         "windowsInstalledDllSha256": "6d59b4ca3e0a60d693dd6227c4f11bde977d6f242c9024cc68a9fe97f5fdae02",
-        "phoneOrdinaryReadingReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android132\\end-session.json"
+        "phoneOrdinaryReadingReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android132\\end-session.json",
+        "customerConnectionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\customer-feedback-and-repair.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -144215,9 +144216,9 @@
         "physicalControllerPid": 27284,
         "previousPhysicalCase": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\physical-held-final094\\closure-reconciliation.json"
       },
-      "state": "DELIVERY_FIRST_FIX_REPRODUCED_LOCAL_FILE_COMMIT_THEN_CORE_ACCEPTANCE",
+      "state": "CUSTOMER_ENTRY_REPAIR101_BUILDING_OWNER_DEFERRED",
       "activeDeliveryGoal20261110": {
-        "status": "blocked",
+        "status": "cleared_by_owner",
         "createdAt": "2026-11-10T20:49:40+08:00",
         "scope": "Original four nonblocked core acceptance groups; prior cleared continuousGoal retained as history.",
         "lastMeaningfulRepair": "027657fd — reproduced local-file publication conflict and removed active mutable-index polling",
@@ -144232,21 +144233,36 @@
           "request": "现在应该怎么做，嵌软是否全部完成",
           "action": "Old popup selected later07:42, controller no longer present; original process end reason not captured. Same verified094 candidate new explicitly separate morning case visible, no firmware/rebuild. Await Owner click then one physical held phrase.",
           "physicalProgress": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\physical-held-20261111-morning\\progress.json"
-        }
+        },
+        "reconciledAt": "2026-11-11T10:17:21+08:00",
+        "explanation": "User explicitly cleared the persistent Goal; retained only as history. Current guided-use request is an ordinary task; no new Goal created. Old waiting-window claim superseded by real closure receipts."
       },
       "customerConnection20261111": {
-        "at": "2026-11-11T10:07:39+08:00",
-        "state": "SOURCE_FIXED_ON_UNIFIED100_COMPILING_101",
+        "at": "2026-11-11T10:26:38+08:00",
+        "state": "ACTUAL_DEVICECONNECT_ROUTE_FIXED_SOURCE_PUSHED_FINAL101_BUILD",
         "candidateVersion": "0.1.101",
         "sourceRepair": "de7b76150c3b06a23a2bd1cbe8ee9aaba75ff95f",
         "mergeSource": "c09d6884ff0d0ca6e875a09f527c6a84251a1532",
         "retainsLatest100": "6bbe8691",
         "currentProblem": "Owner cannot enter use: initial adapter did not show product before BLE; actual normal094 UI also observed no target advertisements and failed initial connection. No MIC or audio produced.",
-        "productChange": "Normal initial acquisition with healthy scan reporting no target and NotConnected returns an actionable device-unreachable code after first failed attempt. Core recorder/transfer recovery, known pairing errors, observed target and unknown scan states retain prior recovery behavior.",
+        "productChange": "Only explicit product DeviceConnect without an owned active recorder session opts into unavailable guidance, while retaining RecorderCore discovery. Background and recorder/transfer recovery stay unchanged. Exact native operation wrapper recognized by public UI. Existing watcher health/target evidence required.",
         "firmwareChanged": false,
         "ownerDeferredAt": "2026-11-11T09:51:54+08:00",
         "newOwnerPromptPending": false,
-        "saleQualified": false
+        "saleQualified": false,
+        "sourceCommit": "51acd7d98bd2911179690abea7e5516eb2e71cb0",
+        "buildRun": 42945986872,
+        "sourcePushed": true,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\customer-feedback-and-repair.json",
+        "knownUnderlyingReachabilityCause": false,
+        "nativeClassifierPassed": true,
+        "uiRegressionPassed": true,
+        "webBuildPassed": true,
+        "boardLease": false,
+        "supersededSource": "22df5455e3288b39632348e829fd5041cea895fb",
+        "supersededBuild": 42944691822,
+        "supersessionReason": "Pre-delivery trace found ordinary DeviceConnect uses RecorderCore and wraps acquisition errors. Final source explicitly marks the user entry and recognizes its exact wrapper; original source was not installed or used for another Owner trial.",
+        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -267777,7 +267793,7 @@
         "evidence": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\core-delivery-priority-review-r1",
         "boundaries": "没有操作手机/卡、消费录音、安装驱动、占用独显、修改网络、发送客户邀请或启动新训练。",
         "ownerCoreAcceptanceCandidate20261109": {
-          "at": "2026-11-11T07:42:58+08:00",
+          "at": "2026-11-11T10:49:26+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
           "state": "WHOLE_CORE_CANDIDATE_WINDOWS_COMPLETE_BLOCK_PROVEN_ANDROID_CARD_AND_QUALITY_OPEN",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
@@ -267803,7 +267819,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "完整099/136人工跟进与持久来源引用已实装、普通整链与独立两类使用已按范围完成，完整私有包53912fcc回读一致；继续原CP27-03其它App分享接收缺口。",
+          "currentCheckpoint": "Windows102/cf0a496d正常原生构建42944779484已过、匹配MSI读回检查中。Android138已实装原文件同，真实自带Files→分享→Companion冷批量5文件、明确保存音频/图片和坏音频拒绝通过；2h生成PCM实际取消正确但清单丢失原因，139已修源码待编译。继续同一副屏32/公开库，不操作主屏或Owner原库。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "ownerCoreAcceptanceCandidate20261109.documentContext20261110.systemInbound20261111",
@@ -268023,10 +268039,9 @@
           ],
           "lastWindowsGroupedOutcome": "UNIFIED091_DOCUMENT_CONTEXT_AND_LATEST090_DESKTOP_INPUT_PRESERVED",
           "latestOwnerContinuation": {
-            "at": "2026-11-10T11:21:56+08:00",
-            "quote": "除了模型以外的东西，都要达到售卖标准；加快开发效率，现在太慢了。",
-            "decision": "保持所有原非模型售卖/竞品范围。当前完整批次交付安卓文件导入到既有会议处理、保存和恢复链；同链路收敛后一次打包/真机验收，保留已有121交付。",
-            "workpoint": "ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110"
+            "at": "2026-11-11T10:18:44+08:00",
+            "raw": "那你看一下，需要继续修复啊。然后你把这些东西完整打包了，提交了，等着到售卖标准以后再找我。然后需要快速快速的修。",
+            "decision": "原核心目标持续执行，集中完成同一完整结果；源码/候选先远端保护，实际原生/升级/隐私/完整数据链通过后才交付，不等Owner反复继续，不提前报整机售卖通过。"
           },
           "wholeMeetingContinuation": {
             "at": "2026-11-09T17:16:18+08:00",
@@ -271141,8 +271156,8 @@
               }
             },
             "systemInbound20261111": {
-              "at": "2026-11-11T10:15:33+08:00",
-              "state": "GROUPED_INCOMING_LIFECYCLE102_ANDROID138_NATIVE_BUILDS_NEXT",
+              "at": "2026-11-11T10:49:26+08:00",
+              "state": "WINDOWS102_NATIVE_BUILD_PASSED_PHONE138_REAL_COLD_MULTIPLE_FILES_CANCEL_REASON_DEFECT_ANDROID139_SOURCE_FIXED",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271159,11 +271174,11 @@
                 "One coherent implementation/source check/native batch before ordinary OS source-app/OpenWith validation; no daily desktop takeover or cloud/model.",
                 "Batch any related incoming/read-source clarity work only after both complete136 feedback reports, preserve existing APIs and original literal records."
               ],
-              "next": "Compile exact102/138 native batch, verify actual scoped receipt purge and ordinary102 incoming/UI/backups; preserve100/137 artifacts. If the named phone returns, use new138 for real OS share/open/expiry/lifecycle; otherwise continue Windows and next executable core work.",
+              "next": "Protect139 narrowly repaired terminal-result source and build on CI while independently qualifying102 MSI/runtime. Resume same owned phone display32/public library; retain all138 evidence and source preparation failures.",
               "implemented": "WINDOWS_AND_ANDROID_SOURCE_ONLY",
               "modelsRun": false,
               "saleQualified": false,
-              "nativeCandidateBuilt": "100_137_BASELINES_ONLY",
+              "nativeCandidateBuilt": "WINDOWS102_AND_ANDROID138",
               "implementationDecision": "Pending OS deliveries retain opaque local URI receipts, not a second original-file store. User explicitly confirms current library and attachment meeting before existing original-preservation/copy/decode pipeline starts. Pending is visibly not yet imported; expired grants require resharing. Fixed receipt UUID binds retries to the original library and meeting; native byte/hash/source checks remain authoritative. No model/cloud/recording or Owner desktop.",
               "sourceProgress": [
                 "Android SEND/SEND_MULTIPLE/content VIEW cold/warm adapter and Windows OpenWith/file-drop/same-library warm handoff reuse existing recording/document/image stores.",
@@ -271182,7 +271197,7 @@
                 "Native Windows source and OS launch/MSI registration still await the exact candidate; no engineering failure is hidden as a passed path."
               ],
               "windowsVersion": "0.1.102",
-              "androidVersion": "0.1.138",
+              "androidVersion": "0.1.139",
               "appDelivered": false,
               "phoneQualified": false,
               "windowsNativeQualified": false,
@@ -271218,7 +271233,7 @@
                   "dependency": "Named phone absent and adb devices inventory empty on actual check; continue Windows/offline work without repeated Owner prompts."
                 }
               },
-              "nativeRuntimeQualified": "WINDOWS100_BASELINE_ONLY",
+              "nativeRuntimeQualified": "WINDOWS100_BASELINE_AND_PARTIAL_PHONE138",
               "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json",
               "packageBuild": {
                 "source": "2c9fc4419f3e28177cca0bfc73217897d09b5caa",
@@ -271235,9 +271250,9 @@
                 "ordinaryRuntimeQualified": true
               },
               "remainingBeforeDelivery": [
-                "Finish and qualify current-library bound-receipt purge with actual permanent deletion, stale-target retry and original preservation.",
-                "Compact completed receipt UI with pending/saved counts and clarify restored-library destination in the same source batch.",
-                "Android current phone absent on last actual inventory: real OS source-app cold/warm share/open not yet installed/verified; continue independent software work."
+                "Qualify139 service per-receipt terminal result durability and actual source expiry/retry; finish exact original hashes, phone scoped purge/backup/restart and close own public session.",
+                "Windows102 exact MSI download/license/upgrade/source inspection and ordinary same-binary runtime next; never replace native source with packaging or verifier source.",
+                "After complete matching clients, update full candidate archive and ordinary new customer experience; all original model/hardware/service/Owner gates remain separate."
               ],
               "runtime": {
                 "run": 42942987331,
@@ -271259,6 +271274,43 @@
                 "nativePrivacy": "parse/format passed; added actual native purge/lock/corruption/stale-target/original-preservation test pending full CI",
                 "restoredDestinationLabel": "actual restore timestamp instead of identical restored-library labels",
                 "compactCompletion": "pending/saved counts and compact actions in both clients; actual102/138 native screenshot pending"
+              },
+              "buildsNext": {
+                "windows102": {
+                  "source": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
+                  "run": 42944779484,
+                  "lastObserved": "success",
+                  "installed": false,
+                  "qualified": false,
+                  "nativeTestsPassed": true
+                },
+                "android138": {
+                  "source": "0d33c2c4932170d0248cb51d4f4214773f66c465",
+                  "run": 42944799576,
+                  "lastObserved": "success",
+                  "installed": true,
+                  "phoneQualified": false,
+                  "originalFilesIdentical": 4804,
+                  "apkSha256": "d0c73226037e39d5e8b299fdd62361d9f05bfcb3823106b70c6018b775accc83",
+                  "privateDraftAsset": 733800129,
+                  "fullPrivateReadbackIdentical": true
+                }
+              },
+              "actualPhone138": {
+                "at": "2026-11-11T10:49:26+08:00",
+                "ownedDisplay": 32,
+                "publicLibrary": "7ebdda83-7869-49a7-83fd-86dc68048493",
+                "onlyNewPublicLibrary": true,
+                "ordinarySystemFilesShareChooser": true,
+                "actualColdSendMultipleFiveFiles": true,
+                "explicitAudioAndImageSaved": true,
+                "badFileRejected": true,
+                "longGeneratedPcmImportEnteredAndCancelled": true,
+                "cancelStatusMessageDefect": "Native cancelled correctly but receipt discarded terminal reason; source fixed for139, not qualified.",
+                "ownerMainOperated": false,
+                "modelsRun": false,
+                "customSourceAppNotInstalled": true,
+                "shellSourceDelegationNotUsed": true
               }
             }
           },
@@ -277055,22 +277107,35 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
-      "pendingUnifiedBuildRun": 42932133336,
+      "pendingUnifiedSource": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
+      "pendingUnifiedBuildRun": 42944779484,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00",
       "recorderConnection101Pending": {
-        "at": "2026-11-11T10:07:39+08:00",
-        "state": "SOURCE_FIXED_ON_UNIFIED100_COMPILING_101",
+        "at": "2026-11-11T10:26:38+08:00",
+        "state": "ACTUAL_DEVICECONNECT_ROUTE_FIXED_SOURCE_PUSHED_FINAL101_BUILD",
         "candidateVersion": "0.1.101",
         "sourceRepair": "de7b76150c3b06a23a2bd1cbe8ee9aaba75ff95f",
         "mergeSource": "c09d6884ff0d0ca6e875a09f527c6a84251a1532",
         "retainsLatest100": "6bbe8691",
         "currentProblem": "Owner cannot enter use: initial adapter did not show product before BLE; actual normal094 UI also observed no target advertisements and failed initial connection. No MIC or audio produced.",
-        "productChange": "Normal initial acquisition with healthy scan reporting no target and NotConnected returns an actionable device-unreachable code after first failed attempt. Core recorder/transfer recovery, known pairing errors, observed target and unknown scan states retain prior recovery behavior.",
+        "productChange": "Only explicit product DeviceConnect without an owned active recorder session opts into unavailable guidance, while retaining RecorderCore discovery. Background and recorder/transfer recovery stay unchanged. Exact native operation wrapper recognized by public UI. Existing watcher health/target evidence required.",
         "firmwareChanged": false,
         "ownerDeferredAt": "2026-11-11T09:51:54+08:00",
         "newOwnerPromptPending": false,
-        "saleQualified": false
+        "saleQualified": false,
+        "sourceCommit": "51acd7d98bd2911179690abea7e5516eb2e71cb0",
+        "buildRun": 42945986872,
+        "sourcePushed": true,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\customer-feedback-and-repair.json",
+        "knownUnderlyingReachabilityCause": false,
+        "nativeClassifierPassed": true,
+        "uiRegressionPassed": true,
+        "webBuildPassed": true,
+        "boardLease": false,
+        "supersededSource": "22df5455e3288b39632348e829fd5041cea895fb",
+        "supersededBuild": 42944691822,
+        "supersessionReason": "Pre-delivery trace found ordinary DeviceConnect uses RecorderCore and wraps acquisition errors. Final source explicitly marks the user entry and recognizes its exact wrapper; original source was not installed or used for another Owner trial.",
+        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt."
       }
     }
   }

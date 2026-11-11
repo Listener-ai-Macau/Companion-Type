@@ -229,8 +229,9 @@ public final class MainActivity extends Activity {
     private JSONObject incomingDescription()throws Exception{
         IncomingFileQueue queue=incomingFiles();JSONObject job=AudioImportService.status(this);JSONArray rows=queue.list();
         for(int i=0;i<rows.length();i++){JSONObject row=rows.getJSONObject(i);if("attempting".equals(row.getString("state"))&&!AudioImportService.isRunning()){
-            boolean completed=row.getString("id").equals(job.optString("incomingId"))&&"complete".equals(job.optString("state"));
-            queue.state(row.getString("id"),completed?"complete":"failed",completed?"已保存在指定资料库。":"上次接收尚未确认完成，可在原资料库重试；若来源权限已失效，请重新分享。");
+            boolean matching=row.getString("id").equals(job.optString("incomingId")),completed=matching&&"complete".equals(job.optString("state"));
+            String message=completed?"已保存在指定资料库。":matching&&("cancelled".equals(job.optString("state"))||"failed".equals(job.optString("state")))&&!job.optString("message").isEmpty()?job.getString("message"):"上次接收尚未确认完成，可在原资料库重试；若来源权限已失效，请重新分享。";
+            queue.state(row.getString("id"),completed?"complete":"failed",message);
         }}
         JSONObject library=libraries().status();String active=library.getString("activeId"),label="原始资料库";
         if(!"original".equals(active)){

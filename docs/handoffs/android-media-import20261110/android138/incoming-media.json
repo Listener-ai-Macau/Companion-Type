@@ -1,0 +1,142 @@
+{
+  "actualVersion": "0.1.138",
+  "modelsCloudMicBleUsed": false,
+  "receipt": {
+    "name": "public-incoming138.wav",
+    "mime": "audio/x-wav",
+    "bytes": 64044,
+    "id": "4330c8c9-006f-40ff-a25d-b43285303feb",
+    "kind": "media",
+    "state": "complete",
+    "receivedAt": 1794364816951,
+    "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+    "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+    "targetTitle": "新录音 · public-incoming138.wav",
+    "message": "已保存在指定资料库。"
+  },
+  "rows": [
+    {
+      "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+      "title": "Companion-public-meeting-video-30s.mp4",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "a57f32229973afa244199847ba9623dddaaf3d8aa398f23ce78f148c408afaa4:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "c66a4fe4271cfa82141bbc8381e3ed1c6ba0f99c66dd0815d7b906c843c9db51",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 30016,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    },
+    {
+      "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+      "title": "Companion-public-meeting-90s.m4a",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "5a5282d128a5d957d8ff13ae4931a4dad32783068ecafaa41c922fbcee76fe3e:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "c66a4fe4271cfa82141bbc8381e3ed1c6ba0f99c66dd0815d7b906c843c9db51",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90005,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    },
+    {
+      "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "title": "超市交流｜工程需求待收集（公开样例）",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+        "revision": 4,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false,
+        "title": "Companion-public-meeting-90s.wav"
+      },
+      "libraryToken": "c66a4fe4271cfa82141bbc8381e3ed1c6ba0f99c66dd0815d7b906c843c9db51",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90000,
+      "organization": {
+        "folder": "公开验收/客户会议",
+        "tags": [
+          "公开项目",
+          "待复核"
+        ]
+      }
+    },
+    {
+      "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+      "title": "Companion-public-meeting-90s.mp3",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "57545937a16899e1cbfc3caf645bddc10c38a4b8570dc5de30ad522a42675d53:1:1",
+        "revision": 4,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false,
+        "title": "Companion-public-meeting-90s.mp3"
+      },
+      "libraryToken": "c66a4fe4271cfa82141bbc8381e3ed1c6ba0f99c66dd0815d7b906c843c9db51",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 90000,
+      "organization": {
+        "folder": "公开验收/客户会议",
+        "tags": [
+          "公开项目",
+          "待复核"
+        ]
+      }
+    },
+    {
+      "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+      "title": "public-incoming138.wav",
+      "session": "文件导入",
+      "source": "importedAudio",
+      "state": "COMPLETE",
+      "segments": 1,
+      "lifecycle": {
+        "version": 1,
+        "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+        "revision": 0,
+        "protected": false,
+        "trashedAt": 0,
+        "purging": false
+      },
+      "libraryToken": "c66a4fe4271cfa82141bbc8381e3ed1c6ba0f99c66dd0815d7b906c843c9db51",
+      "recordedAtUnixSeconds": null,
+      "durationMs": 2000,
+      "organization": {
+        "folder": "",
+        "tags": []
+      }
+    }
+  ]
+}

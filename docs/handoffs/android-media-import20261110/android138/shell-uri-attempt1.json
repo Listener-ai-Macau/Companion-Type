@@ -1,0 +1,6 @@
+{
+  "state": "SHELL_HAS_NO_SYSTEM_DOCUMENT_URI_GRANT",
+  "productFlowReached": false,
+  "error": "UriGrantsManager rejected shell delegation of the DocumentsProvider URI; requires ACTION_OPEN_DOCUMENT or related API.",
+  "decision": "Stop shell URI delegation. Use actual built-in file application on owned display so the system supplies an authentic read grant. No product rebuild or permission changes."
+}

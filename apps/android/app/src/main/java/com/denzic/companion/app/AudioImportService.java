@@ -114,7 +114,15 @@ public final class AudioImportService extends Service {
    COMMITTING.set(true);checkCancel();record.put("state","committing").put("message","正在校验并完成保存");current=publicStatus(record);
    ImportedAudio saved=ImportedAudio.publish(stage,target,key,name,mime,total,sourceHash,parts,AudioImportService::syncDirectory);stage=null;
    record.put("running",false).put("state","complete").put("message","录音已保存在本机，可回听或开始转写。").put("durationMs",saved.samples/16).put("originalBytes",saved.originalBytes).put("parts",saved.partCount());current=publicStatus(record);preferences(this).edit().putString("job",record.toString()).commit();
-  }catch(Exception error){try{if(record==null)record=new JSONObject().put("id",UUID.randomUUID().toString());record.put("running",false).put("state",CANCELLED.get()?"cancelled":"failed").put("message",CANCELLED.get()?"已取消导入，所选原文件未改变。":importError(error));current=publicStatus(record);preferences(this).edit().putString("job",record.toString()).commit();}catch(Exception ignored){}
+   if(incomingId!=null)inbox.state(incomingId,"complete",record.getString("message"));
+  }catch(Exception error){try{
+   if(record==null)record=new JSONObject().put("id",incomingId==null?UUID.randomUUID().toString():incomingId);
+   if(incomingId!=null)record.put("incomingId",incomingId);
+   String message=CANCELLED.get()?"已取消导入，所选原文件未改变。":importError(error);
+   record.put("running",false).put("state",CANCELLED.get()?"cancelled":"failed").put("message",message);
+   current=publicStatus(record);preferences(this).edit().putString("job",record.toString()).commit();
+   if(incomingId!=null)new IncomingFileQueue(getFilesDir().toPath(),AudioImportService::syncDirectory).state(incomingId,"failed",message);
+  }catch(Exception ignored){}
   }finally{finishJob(stage,locked);}
  }
  private void persistDerivation(JSONObject record,boolean committing)throws Exception {
@@ -151,7 +159,7 @@ public final class AudioImportService extends Service {
   // Otherwise a new accepted edit can reach the still-present old job thread.
   synchronized(AudioImportService.class){if(wake!=null&&wake.isHeld())wake.release();stopForeground(STOP_FOREGROUND_REMOVE);job=null;COMMITTING.set(false);RUNNING.set(false);stopSelf();}
  }
- private static String importError(Exception error){String text=error.getMessage();if(text!=null&&text.matches("(?s).*[\\u4e00-\\u9fff].*"))return text;if(text!=null&&text.toLowerCase(java.util.Locale.ROOT).contains("codec"))return "此设备暂不支持这个音频编码，请转换为MP3、M4A或WAV后重试。所选原文件未改变。";return "无法读取这个音频或视频文件，请确认文件完整且包含可用音轨，或转换为MP3、M4A、WAV后重试。所选原文件未改变。";}
+ private static String importError(Exception error){if(error instanceof SecurityException||error instanceof java.io.FileNotFoundException)return "来源文件已不可读取，请在来源应用重新分享。已有资料未改变。";String text=error.getMessage();if(text!=null&&text.matches("(?s).*[\\u4e00-\\u9fff].*"))return text;if(text!=null&&text.toLowerCase(java.util.Locale.ROOT).contains("codec"))return "此设备暂不支持这个音频编码，请转换为MP3、M4A或WAV后重试。所选原文件未改变。";return "无法读取这个音频或视频文件，请确认文件完整且包含可用音轨，或转换为MP3、M4A、WAV后重试。所选原文件未改变。";}
  private void progress(JSONObject record,String message,long done,long total)throws IOException {try{record.put("state","processing").put("message",message).put("processed",done).put("total",total);current=publicStatus(record);getSystemService(NotificationManager.class).notify(NOTIFICATION,notification(message));}catch(Exception e){throw new IOException("导入进度暂不能保存，请重试。",e);}}
  private static void checkCancel()throws IOException {if(CANCELLED.get())throw new IOException("已取消导入，所选原文件未改变。");}
  static void syncDirectory(Path directory)throws IOException {java.io.FileDescriptor fd=null;try{fd=android.system.Os.open(directory.toString(),android.system.OsConstants.O_RDONLY|android.system.OsConstants.O_CLOEXEC|android.system.OsConstants.O_NOFOLLOW,0);android.system.Os.fsync(fd);}catch(android.system.ErrnoException e){throw new IOException("导入文件尚未安全保存。",e);}finally{if(fd!=null)try{android.system.Os.close(fd);}catch(android.system.ErrnoException ignored){}}}
