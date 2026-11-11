@@ -9,6 +9,7 @@ import {CalendarCopyComparison} from './CalendarCopyComparison';
 import {lastSavedCalendarReminders,retainCalendarReminders,carryRelativeReminderAfterSingleDeadlineEdit} from './calendarReminderCarryover';
 import {retainCalendarSlots} from './calendarSlotCarryover';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
+import {cardRecordingStatus} from './cardRecordingStatus';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
@@ -123,6 +124,7 @@ import {
 } from '@companion-type/core';
 
 export type CompanionProductSettingsPublic = {
+  autoLocalCardTranscription?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   localAsrAvailable?: boolean;
@@ -160,6 +162,7 @@ function trashTimeLabel(value: string) {
 }
 
 export type CompanionProductSettingsPatch = {
+  autoLocalCardTranscription?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   volcAppKey: string;
@@ -635,6 +638,7 @@ export function CompanionDashboard({
   const audioRequestId = useRef(0);
   const [listeningEpoch,setListeningEpoch]=useState(0);
   const [formAsrProvider, setFormAsrProvider] = useState('local-paraformer');
+  const [formAutoLocalCard,setFormAutoLocalCard]=useState(true);
   const [formVolcApp, setFormVolcApp] = useState('');
   const [formVolcAccess, setFormVolcAccess] = useState('');
   const [formVolcResource, setFormVolcResource] = useState('volc.bigasr.sauc.duration');
@@ -651,6 +655,7 @@ export function CompanionDashboard({
   useEffect(() => {
     if (!productSettings || productSettings.storageSaveBlocked) return;
     setFormAsrProvider(productSettings.asrProvider || 'local-paraformer');
+    setFormAutoLocalCard(productSettings.autoLocalCardTranscription ?? true);
     setFormVolcResource(productSettings.volcResourceId || 'volc.bigasr.sauc.duration');
     setFormOpenAiEndpoint(productSettings.openaiAsrEndpoint);
     setFormOpenAiModel(productSettings.openaiAsrModel);
@@ -661,7 +666,7 @@ export function CompanionDashboard({
     const mode = productSettings.defaultMeetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
     setFormDefaultMode(mode);
     setMeetingMode(mode);
-  }, [productSettings?.asrProvider, productSettings?.volcResourceId,
+  }, [productSettings?.asrProvider, productSettings?.autoLocalCardTranscription, productSettings?.volcResourceId,
     productSettings?.openaiAsrEndpoint, productSettings?.openaiAsrModel,
     productSettings?.deepseekBaseUrl, productSettings?.deepseekModel,
     productSettings?.deepseekMinutesEnabled, productSettings?.bleCompress,
@@ -1059,7 +1064,8 @@ export function CompanionDashboard({
     || formAsrProvider !== productSettings.asrProvider || formVolcResource !== productSettings.volcResourceId
     || formOpenAiEndpoint !== productSettings.openaiAsrEndpoint || formOpenAiModel !== productSettings.openaiAsrModel
     || formDeepseekBase !== productSettings.deepseekBaseUrl || formDeepseekModel !== productSettings.deepseekModel
-    || formDeepseekEnabled !== productSettings.deepseekMinutesEnabled;
+    || formDeepseekEnabled !== productSettings.deepseekMinutesEnabled
+    || formAutoLocalCard !== (productSettings.autoLocalCardTranscription ?? true);
   const checkService = async (service: 'asr' | 'minutes') => {
     if (!onCheckService || controlsBusy || settingsBusy || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || serviceActive.current) return;
     serviceActive.current = true; setServiceBusy(service);
@@ -1153,6 +1159,7 @@ export function CompanionDashboard({
   };
   const journey = selectedSession ? meetingJourney(selectedSession, {
     connected, deviceId: device?.deviceId, asrReady: asrConfigured,
+    localAsrReady: Boolean(productSettings?.localAsrAvailable),autoLocalCard: productSettings?.autoLocalCardTranscription===true,
     minutesReady: Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet),
   }) : null;
   const journeyRepeatsPrimaryTranscription = Boolean(selectedSession && !finalTranscript && !journey?.handlesFailure
@@ -1943,7 +1950,7 @@ export function CompanionDashboard({
         </button>
         </div>
       </header>
-      {helpOpen ? <CompanionHelp device={device} onReadLicenses={onReadLicenses} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
+      {helpOpen ? <CompanionHelp device={device} onReadLicenses={onReadLicenses} onSettings={()=>{setHelpOpen(false);openSettings();}} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
         onDiagnostics={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}
@@ -1979,9 +1986,9 @@ export function CompanionDashboard({
         <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy} onClick={openRecentSavedResult}>
           {recentSavedResult.manual?'打开清单':'打开整理结果'}</button>
       </section>:null}
-      {recentSavedRecording && !recentSavedResult && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label={localSaveConfirmed ? '最近保存的录音' : '最近录音，保存状态待确认'}>
+      {recentSavedRecording && (!recentSavedResult || (recentSavedRecording.processingPolicy==='localTranscription' && recentSavedResult.session.id!==recentSavedRecording.id)) && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label={localSaveConfirmed ? '最近保存的录音' : '最近录音，保存状态待确认'}>
         <div>
-          <span className="ct-section-eyebrow">{localSaveConfirmed ? '最近保存的录音' : '最近录音 · 保存待确认'}</span>
+          <span className="ct-section-eyebrow">{cardRecordingStatus(recentSavedRecording,{saved:localSaveConfirmed,modelReady:Boolean(productSettings?.localAsrAvailable),automatic:productSettings?.autoLocalCardTranscription===true}) ?? (localSaveConfirmed ? '最近保存的录音' : '最近录音 · 保存待确认')}</span>
           <strong>{meetingTitle(recentSavedRecording)}</strong>
           {companionReviewedTranscript(recentSavedRecording).trim() ? <p className="ct-recent-preview">
             {!companionSessionHasFinalTranscript(recentSavedRecording)?<span className="ct-library-text-partial">片段 · </span>:null}
@@ -1994,7 +2001,7 @@ export function CompanionDashboard({
           {companionTranscriptUnmappedEdges(recentSavedRecording).length > 0 ? <p className="ct-step-warn">部分原音尚无对应文字，可打开核对。</p> : null}
         </div>
         <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy}
-          onClick={openRecentSavedRecording}><Headphones size={16} />打开这条录音</button>
+          onClick={openRecentSavedRecording}><FileText size={16} />{companionSessionHasFinalTranscript(recentSavedRecording)?'查看文字结果':'查看录音进度'}</button>
       </section> : null}
 
       </div>
@@ -2065,7 +2072,7 @@ export function CompanionDashboard({
           </div>
           <div className="ct-button-row">
           <button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
-            <Mic size={15} />用 Companion 录音</button>
+            <Mic size={15} />连接录音卡</button>
           <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
             onClick={() => setOnlyPendingSessions((value) => !value)}>{onlyPendingSessions ? '显示全部录音' : '只看待整理'}</button>
           </div>
@@ -2089,8 +2096,8 @@ export function CompanionDashboard({
           <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false,trash:libraryFilters.trash});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关录音或补充' : libraryFilters.trash?'回收站为空':onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的录音' : '暂无录音'}</strong>
-            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : surface === 'windows' ? '设备同步、电脑录制或导入音频后，记录会显示在这里。' : '录音卡同步后，录音会显示在这里。'}</p>
-            <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : surface === 'windows' ? openDeviceRecording : openQuickGuide}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到记录库':onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : surface === 'windows' ? '开始录音或导入' : '查看同步方法'}</button></div>
+            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : surface === 'windows' ? '按卡片按键开始录音，再按一次结束。连接电脑后，录音和文字结果会出现在这里；首次使用先准备本机转写模型。' : '在卡片上录音，结束后连接并同步，录音会显示在这里。'}</p>
+            <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openQuickGuide}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到记录库':onlyPendingSessions && recordingLibrary.length ? '查看全部记录' : '三步开始使用'}</button></div>
         ) : (
           <div className="ct-library-list">
             {renderedLibrary.map((session) => {
@@ -2103,7 +2110,7 @@ export function CompanionDashboard({
                 : session.pendingReason === 'needs_device_sync' ? '待同步'
                 : session.pendingReason === 'needs_segments' ? '同步未完成'
                 : !localSaveConfirmed ? '保存待确认'
-                : describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
+                : cardRecordingStatus(session,{saved:localSaveConfirmed,modelReady:Boolean(productSettings?.localAsrAvailable),automatic:productSettings?.autoLocalCardTranscription===true}) ?? describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
                 ? ((session.minutesByMode?.[session.meetingMode ?? 'offlineStore'] ?? session.minutes)?.source === 'userAuthored' ? '手写清单已保存' : '纪要完成')
                 : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
                 : session.status === 'transcribed'
@@ -2809,7 +2816,7 @@ export function CompanionDashboard({
 
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
-        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
+        onSettings={openSettings} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
       {deviceExtra}
       {onFindPet && connected && device?.deviceId ? <CompanionPetFind
         deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
@@ -3148,6 +3155,11 @@ export function CompanionDashboard({
             </> : <><p className="ct-secret-hint">
               正式桌面版使用系统凭据管理器保存密钥。本地转写不会上传录音；选择云端转写时录音会发送到所选服务，智能纪要会把转写文字发送到 DeepSeek。空密钥保存不会覆盖已有值。
             </p><p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p></>}
+            <label className="ct-field-check">
+              <input type="checkbox" checked={formAutoLocalCard} onChange={e=>setFormAutoLocalCard(e.target.checked)} />
+              接收卡片录音后，自动在这台电脑转写
+            </label>
+            <p className="ct-step-meta">仅使用本机中文模型，不上传录音，也不自动生成云端纪要。首次准备模型后，新接收的卡片录音会自动生成文字；已选择手动处理的记录保持原选择。</p>
             <div className="ct-mode-row">
               <button
                 type="button"
@@ -3173,7 +3185,7 @@ export function CompanionDashboard({
                   <option value="local-paraformer">电脑本地转写（中文）</option>
                 </select>
               </label>
-              {formAsrProvider === 'local-paraformer' ? <div className="ct-field">
+              {formAsrProvider === 'local-paraformer' || formAutoLocalCard ? <div className="ct-field">
                 <span>{productSettings?.localAsrAvailable ? '本地模型已准备' : '需要准备本地模型'}</span>
                 <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !onPrepareLocalAsr}
                   onClick={() => { if (!onPrepareLocalAsr) return; setSettingsBusy(true); setSettingsMsg(null);
@@ -3182,7 +3194,8 @@ export function CompanionDashboard({
                   {settingsBusy ? '正在准备，请稍候…' : '准备本地转写模型'}
                 </button>
                 <p className="ct-step-meta">准备时下载约 240 MB 的 FunASR 中文模型；官方站点不可用时会尝试镜像，下载文件均会校验。录音不会上传；如果下载失败，已有可用的本地模型仍可继续使用。<a href="https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00" target="_blank" rel="noreferrer">模型来源与许可</a></p>
-              </div> : formAsrProvider === 'volcengine' ? <>
+              </div> : null}
+              {formAsrProvider === 'local-paraformer' ? null : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
                 {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
@@ -3220,6 +3233,7 @@ export function CompanionDashboard({
                   setSettingsBusy(true);
                   void Promise.resolve().then(() => onSaveProductSettings?.({
                     defaultMeetingMode: formDefaultMode,
+                    autoLocalCardTranscription: formAutoLocalCard,
                     asrProvider: formAsrProvider,
                     volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
                     volcAccessKey: clearCredentials.includes('volcAccessKey') ? '' : formVolcAccess,

@@ -304,13 +304,23 @@ fn schedule_recovery_failure(session: &mut CompanionV1HostSession, error: &str) 
 
 fn mark_recovery_transcribed(session: &mut CompanionV1HostSession) {
     if session.recovery.intent == "processMeeting" {
-        session.recovery.stage = "pendingMinutes".to_string();
-        session.recovery.retry_stage = "minutes".to_string();
+        let local_card=session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::LocalTranscription;
+        session.recovery.stage = if local_card { "complete" } else { "pendingMinutes" }.to_string();
+        session.recovery.retry_stage = if local_card { "" } else { "minutes" }.to_string();
         session.recovery.attempt_count = 0;
         session.recovery.next_retry_at_unix_ms = None;
         session.recovery.last_error = None;
         session.pending_reason = None;
+        if local_card && matches!(session.title.as_str(),"设备分段录音"|"Companion 录音"|"设备录音") {
+            if let Some(title)=card_transcript_title(&session.transcript_text) {session.title=title;}
+        }
     }
+}
+
+fn card_transcript_title(text:&str)->Option<String> {
+    let first=text.trim().split(['\n','。','！','？','!','?']).find(|line|!line.trim().is_empty())?.trim();
+    let title=first.chars().take(28).collect::<String>();
+    (!title.is_empty()).then_some(title)
 }
 
 fn mark_recovery_complete(session: &mut CompanionV1HostSession) {
@@ -2037,6 +2047,16 @@ impl CompanionBackend for FixtureCompanionBackend {
             .snapshot
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
+        if automatic_recovery {
+            let policy=request.session_id.as_deref().and_then(|id|
+                snapshot.host.sessions.iter().find(|row|row.id==id)).map(|row|row.processing_policy);
+            if policy==Some(crate::companion_v1::CompanionV1ProcessingPolicy::Manual)
+                || (policy==Some(crate::companion_v1::CompanionV1ProcessingPolicy::LocalTranscription)
+                    && (action==CompanionV1ControlAction::MeetingGenerateMinutes
+                        || !product_settings::auto_local_card_transcription_enabled())) {
+                return Ok(snapshot.clone());
+            }
+        }
         // Capture the exact contents seen before a destructive operation; an
         // ID alone cannot authorize clearing newer audio added concurrently.
         let privacy_authorizations = if matches!(action,CompanionV1ControlAction::PrivacyEraseAudio
@@ -3116,6 +3136,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                 .audio_path
                 .clone()
                 .or_else(|| session.and_then(|session| session.audio_path.clone()));
+            let local_card = session.is_some_and(|row|
+                row.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::LocalTranscription);
+            let local_transcriber = transcription::CompanionTranscriptionManager::local_card();
+            let transcriber = if local_card { &local_transcriber } else { &self.transcription };
             let chunk_paths = session.map(transcription_chunk_paths).transpose()?.unwrap_or_default();
             let meeting_tracks = session.and_then(|session| session.meeting_tracks.clone());
             let track_review_confirmed = session.is_some_and(|session| session.recovery.capture_review_confirmed);
@@ -3141,10 +3165,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                         meeting_audio_recovery::verify_tracks(&tracks, bytes, duration)?;
                         let mic = tracks.microphone.into_iter().map(|part| part.path).collect::<Vec<_>>();
                         let system = tracks.system.into_iter().map(|part| part.path).collect::<Vec<_>>();
-                        meeting_audio_transcription::transcribe_tracks(&self.transcription, &owner, &mic, &system)
+                        meeting_audio_transcription::transcribe_tracks(transcriber, &owner, &mic, &system)
                             .map(|result| (result.transcript, result.warnings))
                     } else {
-                        self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths)
+                        transcriber.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths)
                             .map(|transcript| (transcript, vec![]))
                     }
 
@@ -5699,6 +5723,7 @@ mod tests {
         let mut state=apply_fixture_control(fixture_snapshot(),start).unwrap();
         state.host.active_session_id=None;state.meeting.active=false;state.device.recording=false;
         let row=&mut state.host.sessions[0];row.status="captured".into();row.audio_stored=true;
+        row.retention.audio_cached=true;row.audio_bytes=16044;
         row.audio_path=Some("manual-policy-unit-does-not-exist.wav".into());
         assert_eq!(row.processing_policy,CompanionV1ProcessingPolicy::Manual);
         arm_meeting_recovery(row);assert_eq!(row.recovery.intent,"none");
@@ -5714,6 +5739,25 @@ mod tests {
         assert_eq!(row.processing_policy,CompanionV1ProcessingPolicy::Manual);
         assert_eq!(row.recovery.stage,"paused");assert!(row.recovery.last_error.is_some());
         assert!(row.recovery.next_retry_at_unix_ms.is_none());
+    }
+
+    #[test]
+    fn local_card_processing_finishes_after_text_and_preserves_custom_title() {
+        use super::*;
+        let request=crate::control_request(CompanionV1ControlAction::DeviceSyncRecordings,Some("card-result".into()));
+        let mut row=crate::companion_v1::synced_device_session(&fixture_snapshot(),&request,"test");
+        row.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::LocalTranscription;
+        row.title="设备分段录音".into();row.transcript_text="周五确认接口方案。然后补齐测试。".into();row.transcript_final=true;
+        row.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+        mark_recovery_transcribed(&mut row);
+        assert_eq!(row.recovery.stage,"complete");assert!(row.recovery.retry_stage.is_empty());
+        assert_eq!(row.title,"周五确认接口方案");assert!(row.pending_reason.is_none());
+        row.title="我的项目记录".into();row.recovery.stage="transcribing".into();
+        persistence::reconcile_session_recovery(&mut row);
+        assert_eq!(row.title,"我的项目记录");assert_eq!(row.recovery.stage,"complete");
+        row.capture_incomplete=true;row.recovery.capture_review_confirmed=false;row.recovery.stage="transcribing".into();
+        persistence::reconcile_session_recovery(&mut row);
+        assert_ne!(row.recovery.stage,"complete","interrupted originals retain their warning");
     }
 
     #[test]

@@ -514,21 +514,31 @@ mod tests {
         fs::remove_dir_all(root).unwrap();
     }
     #[test]
-    fn r52_new_local_original_defaults_manual_but_keeps_later_explicit_choice() {
+    fn local_card_processing_new_original_defaults_local_but_keeps_explicit_choices() {
         use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
         let(root,index,d,payload,_)=case();
+        let mut environment=Environment::local(&root,&index);
+        let key="COMPANION_TYPE_PRODUCT_SETTINGS_PATH";
+        environment.0.push((key,std::env::var_os(key)));
+        let settings=root.join("settings.json");
+        fs::write(&settings,serde_json::to_vec(&crate::backend::product_settings::CompanionProductSettings::default()).unwrap()).unwrap();
+        std::env::set_var(key,&settings);
         session_store::update_checked(&index,|rows|{rows.clear();Ok(())}).unwrap();
         let mut receiver=Receiver::open(&root,&d.encode().unwrap()).unwrap();
         let id=receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
         let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
-        assert_eq!(rows.len(),1);assert_eq!(rows[0].processing_policy,Policy::Manual);
+        assert_eq!(rows.len(),1);assert_eq!(rows[0].processing_policy,Policy::LocalTranscription);
         assert_eq!(rows[0].recovery.intent,"none");assert!(!rows[0].audio_stored);
         receiver.accept_segment(&d.encode().unwrap(),&payload).unwrap();receiver.assemble().unwrap();
         receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
         let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
-        assert_eq!(rows[0].id,id);assert_eq!(rows[0].processing_policy,Policy::Manual);
-        assert_eq!(rows[0].recovery.intent,"none");assert!(rows[0].audio_stored);
+        assert_eq!(rows[0].id,id);assert_eq!(rows[0].processing_policy,Policy::LocalTranscription);
+        assert_eq!(rows[0].recovery.intent,"processMeeting");assert!(rows[0].audio_stored);
         assert_eq!(receiver.ack_candidates(&index).unwrap().len(),1,"local saving still authorizes exact consumption without ASR");
+        session_store::update_checked(&index,|rows|{rows[0].processing_policy=Policy::Manual;rows[0].recovery=Default::default();Ok(())}).unwrap();
+        receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows[0].processing_policy,Policy::Manual);assert_eq!(rows[0].recovery.intent,"none");
         session_store::update_checked(&index,|rows|{rows[0].processing_policy=Policy::Automatic;Ok(())}).unwrap();
         receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
         let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();

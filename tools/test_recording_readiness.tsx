@@ -63,7 +63,7 @@ act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" b
  onRefresh={()=>calls.push('dashboard-refresh')} onControl={r=>controls.push(r)}/>);});
 const find=(label:string)=>tree.root.findAllByType('button').find((b:any)=>text(b)===label);
 act(()=>find('设备与同步').props.onClick());
-const start=()=>find('开始录音');assert.equal(start().props.disabled,false,'missing ASR is not a record-only gate');
+const start=()=>find('远程开始录音');assert.equal(start().props.disabled,false,'missing ASR is not a record-only gate');
 act(()=>tree.update(<CompanionDashboard snapshot={fragmented} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={r=>controls.push(r)}/>));
 assert.match(text(tree.toJSON()),/一块连续空间/);assert.match(text(tree.toJSON()),/分散空间能否合用由开始时核对/);
 assert.equal(start().props.disabled,false,'fragmented advice does not gate the authoritative start check');

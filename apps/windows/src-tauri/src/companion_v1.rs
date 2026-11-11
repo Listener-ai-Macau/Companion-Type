@@ -472,6 +472,9 @@ pub enum CompanionV1ProcessingPolicy {
     #[default]
     Automatic,
     Manual,
+    /// New card originals automatically transcribe on this computer only.
+    /// They never enqueue a cloud summary without a separate user action.
+    LocalTranscription,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]

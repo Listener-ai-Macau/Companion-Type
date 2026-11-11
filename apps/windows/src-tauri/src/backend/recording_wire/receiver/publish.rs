@@ -246,10 +246,9 @@ impl Receiver {
                     duration_ms: Some(duration),
                 };
                 let mut row=crate::companion_v1::synced_device_session(&snapshot,&request,"verified-v2-session");
-                // An unknown device-local original has no host instruction to
-                // run paid meeting processing. Saving/consuming is independent
-                // of ASR. Existing rows keep their explicit processing choice.
-                row.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+                // Apply the card default once, for a new logical original.
+                // Existing Manual/Automatic choices are never reinterpreted.
+                row.processing_policy=crate::backend::product_settings::new_card_processing_policy();
                 // Receiving an old date-unknown original does not date it now.
                 row.started_at=None;
                 row.recovery=Default::default();

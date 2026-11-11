@@ -458,7 +458,7 @@ export interface CompanionV1HostSession {
   /** offlineStore = store-first; onlineLive = live partials during capture. */
   meetingMode: CompanionV1MeetingMode;
   /** Persisted choice; older rows keep automatic meeting processing. */
-  processingPolicy?: 'automatic' | 'manual';
+  processingPolicy?: 'automatic' | 'manual' | 'localTranscription';
   /** Blocker after capture (needs ASR, network, or device pull). */
   pendingReason: CompanionV1SessionPendingReason;
   startedAt: string | null;
