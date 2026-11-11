@@ -2530,6 +2530,9 @@ impl CompanionBackend for FixtureCompanionBackend {
         let mut track_transcription_warning: Option<String> = None;
         let mut device_note: Option<String> = None;
         let mut privacy_report: Option<PrivacyEraseReport> = None;
+        // Receipt metadata is part of the same explicit permanent deletion.
+        // Keep owner locks until the index and owned-file commit both finish.
+        let mut _incoming_owner_guards: Vec<std::fs::File> = Vec::new();
         let mut synced_batch = Vec::new();
         let mut segmented_library_updated = false;
         let mut meeting_device_report: Option<CompanionMeetingControlReport> = None;
@@ -2994,8 +2997,13 @@ impl CompanionBackend for FixtureCompanionBackend {
                     session.source_device_id.clone(),
                     session.device_reclaimed,
                 );
-                if request.prompt_id.as_deref()==Some(library_lifecycle::LOCAL_TRASH_PERMANENT){
-                    if session.organization.trashed_at.is_none(){return Err("仅可永久清除已在本机回收站的录音。".into());}
+                let local_only=request.prompt_id.as_deref()==Some(library_lifecycle::LOCAL_TRASH_PERMANENT);
+                if local_only&&session.organization.trashed_at.is_none(){return Err("仅可永久清除已在本机回收站的录音。".into());}
+                if session.organization.protected{return Err("这条录音已保护，请先解除保护后永久清除。".into());}
+                if !(cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none()){
+                    _incoming_owner_guards.extend(incoming_files::purge_owners(&[requested_session_id.to_owned()])?);
+                }
+                if local_only{
                     device_note=Some("Only the explicitly selected local recycled recording was erased; device data was not accessed".into());
                 }else{match board_extent {
                     (Some(recording_id), Some(total_length), Some(sha256), Some(source_device_id), false) => {
@@ -3054,6 +3062,11 @@ impl CompanionBackend for FixtureCompanionBackend {
                 privacy_report = Some(self.privacy.erase_selected_recording(&snapshot));
             }
             CompanionV1ControlAction::PrivacyEraseAll => {
+                if snapshot.host.sessions.iter().any(|row|row.organization.protected){return Err("存在已保护的录音，请先解除保护后清除全部会议。".into());}
+                if !(cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none()){
+                    let keys=snapshot.host.sessions.iter().map(|row|row.id.clone()).collect::<Vec<_>>();
+                    _incoming_owner_guards.extend(incoming_files::purge_owners(&keys)?);
+                }
                 privacy_report = Some(self.privacy.erase_all_audio(&snapshot));
                 device_note = Some(
                     "Only Type local data was cleared; use the device's local menu to clear recordings stored on the device"

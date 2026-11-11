@@ -4,6 +4,7 @@ import sys,os,json,time,subprocess
 R=Path("C:/Users/Billy/Desktop/Denzic/Companion");S=R/"companion-device-closure055";A=R/"companion-core-android20261109";C=Path(__file__).parent;P=Path("E:/CodexData/Companion/.build-cache/android-media-import20261110");D=Path("E:/CodexData/Companion/.build-cache/document-context20261110")
 sys.path.insert(0,str(R/"model-research/src"))
 from moss_windows_resource_limits_20261104 import WorkerLimits
+variant=sys.argv[1] if len(sys.argv)>1 else "original";assert variant in ["original","lifecycle"]
 limits=WorkerLimits(10,768*1024*1024)
 out=D/("incoming-complete-source-"+str(time.time_ns()));out.mkdir()
 results=[]
@@ -22,5 +23,5 @@ try:
  record["state"]="SOURCE_CHECKS_PASSED" if all(v["exitCode"]==0 for v in results) else "SOURCE_CHECKS_FAILED"
 finally:
  record["limits"]=limits.query()
- (C/"incoming-complete-source-checks.json").write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ (C/("incoming-lifecycle-source-checks.json" if variant=="lifecycle" else "incoming-complete-source-checks.json")).write_text(json.dumps(record,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 assert record["state"]=="SOURCE_CHECKS_PASSED"
