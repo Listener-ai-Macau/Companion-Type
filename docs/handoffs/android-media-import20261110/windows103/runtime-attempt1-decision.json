@@ -1,0 +1,12 @@
+{
+  "state": "REAL103_INCOMING_RECEIPT_WRITE_USED_USER_EXPORT_ONE_ATTEMPT_INSTEAD_OF_ESTABLISHED_MUTABLE_SNAPSHOT_COMMIT",
+  "failedRun": 42954598962,
+  "nativeSource": "e331a366593cab022807779d1343e6b7a85b6c67",
+  "actual": "Normal document UI and native backup/lifecycle passed. Cold/warm media original passed. Explicit pending-duplicate dismissal returned Access is denied during mutable receipt file replacement; same source passed102 but short concurrent reader can trigger the latent race.",
+  "dataLossObserved": false,
+  "oldEvidence": "103 artifact and complete102 runtime42951670237 retained",
+  "fix": "Use already established write_snapshot_atomic under existing receipt lock. It retries only transient Windows replace conflicts up to200ms; sustained failures remain errors with old data intact. User exports retain their original single-attempt policy.",
+  "newChecks": "Actual Windows file reader held50ms then closed; persistent reader stays beyond budget and explicit retry preserves all sources and other receipts.",
+  "nativeRebuildRequired": "104 only; Android139 already proven and unchanged",
+  "qualified": false
+}

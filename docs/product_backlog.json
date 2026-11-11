@@ -56243,14 +56243,14 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": true,
+          "active": false,
           "reservedFor": "Companion138 external-file public acceptance",
           "serial": "d6bd213d",
           "requestedAt": "2026-11-11T10:24:02+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; incoming public generated PCM/document/image OS delivery and lifecycle on owned non-main display. Explicit isolated QA source app may grant only these public files. No listening, microphone, BLE/device, model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-11T07:29:31+08:00",
-          "releaseReason": "Fresh public AI simulated customer workspace ended; original library restored and own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
+          "releasedAt": "2026-11-11T12:07:28+08:00",
+          "releaseReason": "Actual139 public incoming lifecycle finished; original library restored and exact own display/app/forward/jar closed. Original data preserved; real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
           ],
@@ -271207,7 +271207,7 @@
             },
             "systemInbound20261111": {
               "at": "2026-11-11T10:49:26+08:00",
-              "state": "ANDROID139_ACTUAL_INCOMING_CORE_PASSED_SESSION_CLOSE_PENDING_WINDOWS105_COMBINED_SOURCE_FROZEN",
+              "state": "ANDROID139_ACTUAL_INCOMING_COMPLETE_ORIGINAL_RETURNED_WINDOWS105_UNIFIED_NATIVE_BUILD_RUNNING",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271383,8 +271383,13 @@
                 "includes103": "e331a366593cab022807779d1343e6b7a85b6c67",
                 "scope": "Incoming lifecycle repair plus latest card-first UI and strictly-local auto-processing only for new card originals. Prior manual recordings and models preserved.",
                 "modelsRun": false,
-                "installed": false
-              }
+                "installed": false,
+                "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                "buildRun": 42956984021
+              },
+              "androidActualCorePassed": true,
+              "androidSessionClosed": true,
+              "androidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android139\\end-session.json"
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -277262,8 +277267,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
-      "pendingUnifiedBuildRun": 42944779484,
+      "pendingUnifiedSource": "91d246be5871c62410daa62ede57139652b259c6",
+      "pendingUnifiedBuildRun": 42956984021,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00",
       "recorderConnection101Pending": {
         "at": "2026-11-11T11:00:11+08:00",

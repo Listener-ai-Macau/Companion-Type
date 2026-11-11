@@ -1,0 +1,33 @@
+{
+  "state": "RUNNING",
+  "steps": [
+    {
+      "step": "cold-normal-file-launch",
+      "pendingOnly": true,
+      "originalNotImportedBeforeConfirmation": true
+    },
+    {
+      "step": "explicit-media-confirmation",
+      "key": "import-0436a1d7eb194dcb9ac38e002d76d715",
+      "originalBytesIdentical": true,
+      "pendingDuplicateCreatedNoRecord": true
+    }
+  ],
+  "warm": [
+    {
+      "name": "公开接收100.wav",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": 0.031
+    },
+    {
+      "name": "公开接收100.wav",
+      "exitCode": 0,
+      "signal": null,
+      "seconds": 0.029
+    }
+  ],
+  "modelsRun": false,
+  "cloudCalled": false,
+  "ownerDesktopUsed": false
+}

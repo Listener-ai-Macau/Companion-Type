@@ -6,9 +6,11 @@
   "remoteVerified": true,
   "scope": "Native receipt completion/cancel/failure durability only; retain138 actual source-app/frame/original ownership evidence; decoder/backend/models unchanged",
   "modelsRun": false,
-  "nativeRuntimeQualified": false,
+  "nativeRuntimeQualified": true,
   "saleQualified": false,
   "buildRun": 42948623866,
   "lastObservedStatus": "completed",
-  "lastObservedConclusion": "success"
+  "lastObservedConclusion": "success",
+  "nativeRuntimeScope": "Actual normal incoming OS sharing, source expiry/regrant retry, native cancel/bad reasons, exact original hashes,63-file ordinary backup/restore, bound receipt/record purge, dismissal and process reopen; original library returned;4803/4804 old files exact and sole old delta library index. No models/cloud/microphone/BLE or whole-sale qualification.",
+  "sessionClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android139\\end-session.json"
 }
