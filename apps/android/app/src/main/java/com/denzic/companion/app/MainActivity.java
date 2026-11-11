@@ -232,7 +232,12 @@ public final class MainActivity extends Activity {
             boolean completed=row.getString("id").equals(job.optString("incomingId"))&&"complete".equals(job.optString("state"));
             queue.state(row.getString("id"),completed?"complete":"failed",completed?"已保存在指定资料库。":"上次接收尚未确认完成，可在原资料库重试；若来源权限已失效，请重新分享。");
         }}
-        JSONObject library=libraries().status();return new JSONObject().put("rows",queue.list()).put("libraryId",library.getString("activeId")).put("libraryToken",library.getString("token")).put("libraryLabel","original".equals(library.getString("activeId"))?"原始资料库":"恢复的资料库").put("running",AudioImportService.isRunning());
+        JSONObject library=libraries().status();String active=library.getString("activeId"),label="原始资料库";
+        if(!"original".equals(active)){
+            label="恢复的资料库";JSONArray known=library.getJSONArray("libraries");
+            for(int i=0;i<known.length();i++){JSONObject item=known.getJSONObject(i);if(active.equals(item.getString("id"))){long restoredAt=item.getLong("restoredAt");if(restoredAt>0)label+=" · "+new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm",java.util.Locale.CHINA).format(new java.util.Date(restoredAt));break;}}
+        }
+        return new JSONObject().put("rows",queue.list()).put("libraryId",active).put("libraryToken",library.getString("token")).put("libraryLabel",label).put("running",AudioImportService.isRunning());
     }
     private JSONObject importIncoming(JSONObject args)throws Exception{
         requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("正在保存其它资料，请稍后重试。");boolean locked=true;
@@ -692,7 +697,7 @@ public final class MainActivity extends Activity {
             if(answer.isDone())return;if(isFinishing()||isDestroyed()){answer.complete(false);return;}
             String extra=offer.optInt("retainedUnassigned")>0?"\n另有"+offer.optInt("retainedUnassigned")+"份损坏副本无法确认归属，本次保留。":"";
             android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("永久清除这条本机录音？")
-                .setMessage(offer.optString("title")+"\n将清除当前资料库中可确认归属的原音、转写、纪要、译文与AI材料，共"+offer.optInt("files")+"个文件（约"+offer.optLong("bytes")/1024+" KiB），无法恢复。\n录音卡、其他资料库、已导出副本和应用临时缓存不在本次范围。"+extra)
+                .setMessage(offer.optString("title")+"\n将清除当前资料库中可确认归属的原音、转写、纪要、译文与AI材料，共"+offer.optInt("files")+"个文件（约"+offer.optLong("bytes")/1024+" KiB），并清理此条录音的接收信息，无法恢复。\n录音卡、其他资料库、已导出副本和应用临时缓存不在本次范围。"+extra)
                 .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton("永久清除",(d,w)->answer.complete(true))
                 .setOnCancelListener(d->answer.complete(false)).create();
             shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();
@@ -713,7 +718,7 @@ public final class MainActivity extends Activity {
                 synchronized(RecordingSyncService.class){requireLifecycleIdle();offer=lifecycle.preparePurge(key,revision);}
                 // No service monitor is held while waiting for the user's dialog.
                 if(!confirmLocalPurge(offer))return new JSONObject().put("cancelled",true);
-                synchronized(RecordingSyncService.class){requireLifecycleIdle();if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，本次未清除。");requirePurgeReceiptsResolved(key);return lifecycle.purge(key,revision,offer.getString("token"));}
+                synchronized(RecordingSyncService.class){requireLifecycleIdle();if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，本次未清除。");requirePurgeReceiptsResolved(key);incomingFiles().removeBound(libraries().status().getString("activeId"),key);return lifecycle.purge(key,revision,offer.getString("token"));}
             }
             RecordingLibrary.Session original=storedSession(key);
             String title="";if(action.equals("trash"))title=recordingTitle(key,original);

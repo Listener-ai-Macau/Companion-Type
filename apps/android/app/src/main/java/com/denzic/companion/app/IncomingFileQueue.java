@@ -67,5 +67,9 @@ final class IncomingFileQueue {
     }}
     void state(String entryId,String state,String message)throws Exception{synchronized(IncomingFileQueue.class){JSONObject row=get(entryId);row.put("state",state).put("message",message);replace(row);}}
     JSONArray list()throws Exception{synchronized(IncomingFileQueue.class){JSONArray rows=read(),out=new JSONArray();for(int i=0;i<rows.length();i++){JSONObject row=new JSONObject(rows.getJSONObject(i).toString());row.remove("uri");out.put(row);}return out;}}
+    void removeBound(String libraryId,String key)throws Exception{synchronized(IncomingFileQueue.class){
+        JSONArray rows=read(),next=new JSONArray();for(int i=0;i<rows.length();i++){JSONObject row=rows.getJSONObject(i);if(!libraryId.equals(row.optString("libraryId",""))||!key.equals(row.optString("key","")))next.put(row);}
+        if(next.length()!=rows.length())write(next);
+    }}
     void remove(String entryId)throws Exception{synchronized(IncomingFileQueue.class){id(entryId);JSONArray rows=read(),next=new JSONArray();for(int i=0;i<rows.length();i++)if(!entryId.equals(rows.getJSONObject(i).getString("id")))next.put(rows.getJSONObject(i));write(next);}}
 }
