@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-11T08:04:39+08:00",
+  "state": "SOURCE_CHECKPOINT_REMOTE_VERIFIED_NOT_NATIVE_DELIVERY",
+  "heads": [
+    {
+      "workspace": "android",
+      "commit": "509f02bd4678b5b67c2970701a8939ce2863334c",
+      "branch": "work/core-acceptance-android-20261109",
+      "remoteVerified": true
+    },
+    {
+      "workspace": "shared",
+      "commit": "8a89751d50c4208127a071bef3052a35489c4f6e",
+      "branch": "work/device-phone-closure055-20261106",
+      "remoteVerified": true
+    }
+  ],
+  "androidChecks": [
+    "mobile-types",
+    "actual-android35-all-app-api",
+    "pending-receipt-recovery",
+    "current-native-attachment-stores"
+  ],
+  "installedBaseline": "Windows099 / Android136 unchanged",
+  "modelsRun": false,
+  "nativeCandidateBuilt": false
+}
