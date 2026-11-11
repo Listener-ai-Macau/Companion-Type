@@ -1,0 +1,18 @@
+PASS ordinary follow-up conversion/edit/checked state, CRLF/emoji/mixed literal paragraphs, bounded rejected edit, exact original format access; literal source selection/search/full hash and pointer-focus preservation.
+PASS mobile manual follow-up: preserve draft while adding literal evidence, failed save retains it, saved checklist and source actions bind note revision, explicit edit removes only the reference.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 分享文件
+    at button (file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-core-android20261109/.cache/ui-acceptance/run-BTkhuE/test_selected_note_handoff.mjs:350:3)
+    at file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-core-android20261109/.cache/ui-acceptance/run-BTkhuE/test_selected_note_handoff.mjs:382:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

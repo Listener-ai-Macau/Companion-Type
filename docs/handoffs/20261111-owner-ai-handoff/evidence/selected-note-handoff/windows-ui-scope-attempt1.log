@@ -1,0 +1,3 @@
+PASS Windows per-note exact scope, visible preview, same content-hash save/copy/file handoff, stale intent suppression, missing-note no broadening and unsaved guard.
+PASS ordinary follow-up conversion/edit/checked state, CRLF/emoji/mixed literal paragraphs, bounded rejected edit, exact original format access; literal source selection/search/full hash and pointer-focus preservation.
+PASS Windows manual follow-up: existing draft survives evidence, failed save retains full context, one-marker checklist commit, source revision check and explicit citation removal.

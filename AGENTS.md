@@ -1,37 +1,37 @@
-<!-- recovered-app-source050 -->
-> 2026-11-05 主程序050源码恢复并远端核验：当前可编辑源码 `C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050`；完整Android后端 `C:/Users/Billy/Desktop/Denzic/Companion/recovered-android-backend`（主程序内历史apps/android-backend不是当前完整入口）。050r2 APK重建与删前逐字节一致；详情 `docs/handoffs/20261105-ai-workspace050-preserved/recovery-result.json`。源码/私有密钥保留在C及原仓库远端恢复分支；E下`.build-cache`仅可重建缓存。下文旧E前端/后端路径仅历史追溯。
-
-> 2026-11-05 清理后续作：Companion V1.1屏幕拔除，FW66699/UI85源ab386cd、手机075源cc4d3045/Javafffc360已装。273五分钟原生完整确认51.227508KiB/s、STOP至完整WAV27.767975s、CRC/SHA/样本/WAV10ms过；实际编码P95/峰5000/5549us、PDM峰2801us，栈4352/guard0/low0/异常0，采音间隔tick6ms保守7ms。普通手机OTA55.625252/115.906s及本批指标过。原CP23-10接着两小时录中同步/CPU峰值与普通连接，Windows日用50门未交付、显式block保留，整机未全可售。原698上界失败/272吞吐未知/074初连133留存。唯一待办docs/product_backlog.json#/owner_module_execution/embedded，完整时间线docs/development_log.md。板卡原34不变/4608000B/17段，无录音升级，已释放。
-
 # Companion 项目当前规则
 
-> Owner 2026-11-06最新澄清：当前开发和交付对象仍是 **Companion**。现板屏幕拔掉、临时运行已有无屏配置，只是在验证 Companion 的共用核心；此前将本批统称 Capture 交付的口径撤回。Capture 新板未到，在 `C:/Users/Billy/Desktop/Denzic/Capture` 维护独立产品目录与 Git 仓库，硬件开发/验收尚未开始。两产品尽量共用录音、存储、按键、蓝牙、同步、OTA及电源核心，Companion 增加屏幕。当前 Companion 的设备删除、空间回收、按场同步和手机维护/升级沿原待办继续；屏幕仍按原指示暂停。下面较早“先完成Capture”属于旧阶段背景，不覆盖本条。已有工作树、构建配置及证据路径中的 Capture 名称保留追溯，不代表新 Capture 板已交付。
+> 2026-11-11 交接修订：当前产品是 Companion。现有 Companion V1.1 板暂时拔下屏幕验证共用核心；Capture 是独立仓库且新板未到，不把现板称为新 Capture 硬件交付。
 
-## 共用规则与任务入口
+## 唯一入口与当前工作点
 
-Denzic工程先读 `C:/Users/Billy/Desktop/Denzic/AGENTS.md`，执行其中唯一共用规则及 `customer_engineering_workflow.md` 第8、9节；这里仅保留Companion边界。用户最新指示优先，项目阶段、分工和暂停范围沿原待办判断。
+- Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
+- 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
+- 当前实际交付 Windows0.1.108 / Android0.1.141；Windows0.1.109 / Android0.1.142 只有源码检查点，未原生构建/安装。具体来源以原交付收据为准，不从本文推断实时安装状态。
+- Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
+- 本轮 Owner 要求整理后交给另一 AI；不自动恢复已清除 Goal，不因交接构建、安装、接板、启动训练或重新派顾客。后续开发沿原 core.activeNonmodelCompletion20261110，不重建任务树。
+- 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。
+- 已过时的062/66687下一步、044/069候选与旧运行句柄已退出当前入口；原记录、整理前全文及SHA在本次交接目录。保存过的PID/设备在线/安装收据不是实时探测。
 
-Owner 2026-11-04最新：下一款Capture只有录音卡、没有屏幕。屏幕/触摸/宠物交互及显示菜单开发、调试和验收先暂停，完成其他录音卡工作后再回来；原代码、资源、故障证据与工作点保留，不标成已修或已验。当前优先录音、保存、同步/断链恢复、存储异常处理和升级；电脑/手机录音管理、模型与纪要沿原分工继续。暂停不触发删除现有Companion屏幕功能、重建或刷写。
+## 当前范围与交付边界
 
-Owner随后明确恢复“电源与续航”优先：电池、充电、低电收尾、深睡和真实耗电沿CP24-08/CP21-03/CP21-04/CP27-19继续，覆盖此前后置决定；旧失败和已验录音基线保留。当前实物条件为电池供电、ST-Link连接、无USB充电线，Owner有万用表。软件统计不能替代真实电流，实际动作准备好后集中弹窗；屏幕仍暂停。
+- 优先录音可靠保存、普通接收及恢复、双端结果可读和交付；最新源头修复不自动等于当前长录/手机实卡/自然误触已通过。
+- 模型专项独立：跨真实会议准确率、人物/重叠、事实与资源按原合同；不靠人工补样本、后处理删词或单份3.61%成绩宣称通用合格。
+- 屏幕/触摸/宠物保持 Owner 暂停。电源、速度内部指标、生产和最终硬件按 embedded 原最新决策；本条不因旧阶段“恢复优先”或后置记录自动改当前优先级。
+- 当前构建保持无屏配置，保留源码和资源；不删除显示能力。固件参数与真实安装身份分开，从当前配方和原收据核对，不凭文档手势说明更改固件。
+- 完善阶段围绕完整用户结果集中交付。复用未受影响的证据；非阻断文字/样式随下一相关批次，不逐句构建/安装/抽顾客。真实故障按原任务修源头。
+- AI顾客原话、Owner实体体验、真人购买/长期售后分别保存；已承接141原话保留，未有实质变化不再次抽购买回答。
 
-Owner本轮进一步明确屏幕已物理拔掉，先停用屏幕模块。当前构建入口默认停用屏幕/触摸初始化、轮询及渲染，保留实体按键和录音/同步/升级；原屏幕源码与资源边界保留，恢复屏幕时再显式构建，不因无屏报屏幕/触摸故障。电量读数经一次历史程序对照仍异常，按Owner要求保留未解决并先推进深睡/唤醒，不持续耗在电量定位。
+## 工具与授权
 
-产品线命名与当前构建：Companion为有屏产品，Capture为另立仓库、硬件未到的无屏录音卡。两者共用当前固件核心，不复制实现。`python tools/build_current_firmware.py` 默认产品为Companion，当前配置保持屏幕关闭；`--product companion --screen-enabled` 显式恢复有屏构建，`--product capture` 保留未来无屏配置。`--show` 只预览，不构建或安装。当前板是Companion V1.1，暂用无屏配置验证共享核心，不再把它称作Capture硬件开发或验收。
-
-Owner随后明确先完成Capture嵌软，Capture加屏幕即Companion：两种构建共用录音、存储、连接、升级及自动睡眠核心，产品配置仅屏幕启用不同。Capture按键依Owner 2026-11-05要求参考主流录音卡简化：长按约1秒开/停录，录音中短按写入现有持久化重点标记，空闲短按唤醒并在未连接时打开本地120秒配对窗口；已有连接保持，取消Capture双击手势和实体短按暂停；无屏不分配完整画面缓存，周期UART默认关闭，查询诊断保留。Owner睡前要求工程自主修复并明天前有实际进展，不再夜间弹窗要求操作；实体按键和物理电源缺口沿原待办保留，不能拿后台串口/软件模型冒充实物通过。
-
-- 唯一任务源为 `docs/product_backlog.json`，唯一完整开发时间线为 `docs/development_log.md`。本侧当前执行从 `owner_module_execution.embedded` 读取，[嵌入式当前待办](docs/RECORDER_CORE_BACKLOG.md)为生成视图。
-- Windows／Android软件集中交付续作入口：`python companion-device-closure055/tools/qa/core_acceptance20261109/resume_delivery.py --project-root C:/Users/Billy/Desktop/Denzic/Companion`。入口只读取原待办当前 `next` 所指批次和匹配收据、实际CI句柄；执行已记录的本批后续步骤用 `--advance`。当前批次配方仍在原事项的 `deliveryExecution`，不是另一份待办；方法继续引用共用工作流第9节。原任务切换后不续跑退役批次。
-- 原六个交付模块及其他聊天分工继续保留；原272个CP编号、旧标签、旧目标和旧下一步是追溯资料，不是272个当前未完成任务。当前产品模块与同事批次见 `docs/PRODUCT_BACKLOG.md`；原编号见 `docs/PRODUCT_BACKLOG_HISTORY.md`。
-- `python tools/render_product_backlog.py` 默认只读当前嵌软点；`--docs-only` 仅生成文档，不写产品参数；`--focus screen` 显式进入原屏幕/客户回传读取入口。历史测速/时钟/旧Goal不再自动选择下一步。已保存收据不代表实时设备状态。
-- 完善阶段按实际使用影响集中修复、交付和必要验收。新现象并入原事项，插队保留当前工作点；不另建任务树、不用测试/文档/版本数量代替功能进展，已验证且未受影响的路径直接复用。模块用户验收状态沿原六模块记录，不能自行虚关。
-- 默认后台，不开Computer Use、不抢键鼠/前台。机器可核验事项工程自主完成；确需实体按键/实屏/听音时，先准备好最小具体动作再弹窗。无实际收益的阻断、重复审批、固定空闲内存门槛与每次都重测的旧要求取消。纯规则/任务整理不触发产品构建、安装或接板。
-- Owner 2026-11-05明确：安装本项目自己的手机应用或验收程序时，如手机系统出现“继续／确认安装”，工程可自行查看手机画面并点击完成，不再要求Owner代点；仅处理本次已授权、包名/产物明确的安装，不关闭其它系统保护、不批准无关应用。电脑仍优先后台，不接管日用桌面；该约定不取代真正需要实体按键/接线的集中协助。
+- 读取当前嵌软点：python tools/render_product_backlog.py；生成视图：python tools/render_product_backlog.py --docs-only。不写产品参数、不接设备。
+- 软件续作读取：python companion-device-closure055/tools/qa/core_acceptance20261109/resume_delivery.py --project-root C:/Users/Billy/Desktop/Denzic/Companion。--advance 是执行，不在纯交接/状态核对中调用，不续跑已退役批次。
+- 默认后台，不用 Computer Use 占日用桌面、不抢键鼠/焦点。真正需要 Owner 临场动作时先备好最小步骤，调用共用原 operator_prompt.ps1/operator_prompt_ui.ps1 和低高低三声，不另造窗口。就绪不等于实际动作已完成。
+- Owner已授权安装本项目明确包身份的手机应用时处理系统“继续/确认安装”；不关闭其它保护或批准无关应用。后台可完成的工程动作不反复请求批准。
+- 规则/文档/交接整理不触发产品构建、安装、硬件操作或客户体验。
 
 ## 当前源码、构建与资源
 
-- 固件可编辑源码：`E:/CodexData/Companion/firmware-current`。查看配方用 `python tools/build_current_firmware.py --show`；新候选明确版本。配方参考FW66663，从已验证 `e3715904c799788037c70400cf295b899c4aefe7` 续作；已保存安装身份由原安装收据读取，不把配方版冒充最近安装版。
+- 固件可编辑源码按 config/current-firmware-recipe.json 的 sourceRoot（当前指向 C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle）读取。查看配方用 `python tools/build_current_firmware.py --show`；新候选明确版本。配方参考FW66663，从已验证 `e3715904c799788037c70400cf295b899c4aefe7` 续作；已保存安装身份由原安装收据读取，不把配方版冒充最近安装版。
 - 保留compact24-nor、UI85外置图集、已验CELT/内存优化及当前配对/时钟/Boot布局。镜像膨胀先对照已验提交与映射定位，不加入无实际用途的救援固件、重复平台层或救护入口，不擅自删现有能力来凑空间。
 - 临时复位/故障日志使用外部NOR的dynamic+F000独立4KiB和RTC BKP20..31，可在调试结束关闭。旧dynamic+C000..FFFF与配对区重叠、BKP17/18与Boot收据重叠，方案已作废。
 - 桌面旧源码/日期快照仅作历史或SDK来源。旧WB55直刷、旧分开打包、合成录音灌入、原始WBA默认CLI已退役；当前入口复用成功配方，不从早期默认值重建。不按旧文件名盲删当前仍需要的蓝牙协议、旧录音解析及Boot兼容。

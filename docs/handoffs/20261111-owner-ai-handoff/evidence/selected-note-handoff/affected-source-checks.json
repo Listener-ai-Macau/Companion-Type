@@ -1,0 +1,94 @@
+{
+  "state": "SOURCE_CHECKS_PASSED",
+  "results": [
+    {
+      "name": "windows-ui-scope",
+      "exitCode": 0
+    },
+    {
+      "name": "android-ui-scope",
+      "exitCode": 0,
+      "actualNativeDetailsRefModelled": true
+    },
+    {
+      "name": "android-types",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-compile",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-selection",
+      "exitCode": 0
+    }
+  ],
+  "nativeApiClasses": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\selected-note-source-1794382654252633500\\android35",
+  "nativeProductBinariesBuilt": false,
+  "modelsRun": false,
+  "limits": {
+    "pid": 26276,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 549666816,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "retainedFirstFailure": [
+    {
+      "name": "windows-ui-scope",
+      "exitCode": 0
+    },
+    {
+      "name": "android-ui-scope",
+      "exitCode": 1
+    },
+    {
+      "name": "android-types",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-compile",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-selection",
+      "exitCode": 1
+    }
+  ],
+  "failureDecisions": [
+    "A pending operation prevented the newer target info load; latest intent is now deferred until idle and stale output stays suppressed.",
+    "The hand-built native test reference used an invalid transcript display name. Required name fixed in the fixture; product source validation was retained.",
+    "The renderer initially supplied a null native details ref, so intent auto-opening could not run; the fixture now represents the real details node. Late-target behavior was tested without repeated product builds."
+  ],
+  "retainedSecondFailure": [
+    {
+      "name": "windows-ui-scope",
+      "exitCode": 0
+    },
+    {
+      "name": "android-ui-scope",
+      "exitCode": 1
+    },
+    {
+      "name": "android-types",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-compile",
+      "exitCode": 0
+    },
+    {
+      "name": "native-export-selection",
+      "exitCode": 0
+    }
+  ]
+}

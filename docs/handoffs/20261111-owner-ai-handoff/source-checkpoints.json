@@ -1,0 +1,121 @@
+{
+  "at": "2026-11-11T16:19:20+08:00",
+  "phase": "SOURCE_ONLY_NOT_NATIVE_RELEASED",
+  "installedBaseline": {
+    "windows": "0.1.108",
+    "android": "0.1.141"
+  },
+  "plannedNotBuilt": {
+    "windows": "0.1.109",
+    "android": "0.1.142"
+  },
+  "checkNote": "Default diff whitespace check interpreted existing CRLF as whitespace; cr-at-eol explicitly recognizes CRLF without rewriting product source.",
+  "windows": {
+    "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "branch": "work/device-phone-closure055-20261106",
+    "commit": "673fcb7a9cae9331d62ed2241a626afd30094721",
+    "files": [
+      {
+        "path": "packages/ui/src/CompanionDashboard.tsx",
+        "sha256": "49d0d58ea801d7b8dc74c2a64b8dd0af0202cc069fcaf15dbabc93cee7edb744"
+      },
+      {
+        "path": "packages/ui/src/CompanionMeetingNotes.tsx",
+        "sha256": "308b0b0b46329adc891ce2ad22654f5442d54b89cf2aa9eddc30e7d66e9ca548"
+      },
+      {
+        "path": "packages/ui/src/ContentExportPanel.tsx",
+        "sha256": "06564b3cd8d5df66eec0cde3c348e4932d5cf77edc28ceb1c515af6f0888c2fa"
+      },
+      {
+        "path": "packages/ui/src/ManualNoteEditor.tsx",
+        "sha256": "f0488db5e04538caf2713b3d6a56a07188a4b3fad24475209f655fbd29af162f"
+      },
+      {
+        "path": "packages/ui/src/manualNoteContext.css",
+        "sha256": "70913d3032bd01351770018447bd3698dc638bdb3ee6868800a606abf24b1443"
+      },
+      {
+        "path": "packages/ui/src/selectedNoteHandoff.css",
+        "sha256": "dbbdba145955aa78c83fd47efb838d39e051e20fd76bb0f85beb3d490b6ee420"
+      },
+      {
+        "path": "tools/build_windows_candidate_ci.py",
+        "sha256": "cb97c0148ed53c61d214f693024fa62f193bfc5702209ac5bb2361468c582157"
+      },
+      {
+        "path": "tools/qa/core_acceptance20261109/ui_source.cjs",
+        "sha256": "4ed4e91927dc3e06d10e6adc8acabdf6c047df9f135a608ef6ab514af8a12d20"
+      },
+      {
+        "path": "tools/test_companion_setup_render.mjs",
+        "sha256": "5cccfab7b08f8af316d17cc0aec8499cbfbfceeb8a240bf745dae644a3189a68"
+      },
+      {
+        "path": "tools/test_selected_note_handoff.tsx",
+        "sha256": "8f294482ee3a25d749970f3a71cd3af8856f3dd3788a6e6bb939cb91757ccfd2"
+      }
+    ],
+    "nativeBuildOrInstallQualified": false
+  },
+  "android": {
+    "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+    "branch": "work/core-acceptance-android-20261109",
+    "commit": "cbe1d0e2fa801d6b221103c39294ab411884003f",
+    "files": [
+      {
+        "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportContents.java",
+        "sha256": "f260d2575d9a4b902ffd2e87da9c1f53763456a4fd591b58ec700e4b2b120b4b"
+      },
+      {
+        "path": "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+        "sha256": "9c9e3c22b1d4379da0713e924bf25b4dd459bde4a0c4e8f981f85cb4bcc52b71"
+      },
+      {
+        "path": "apps/android/app/src/main/java/com/denzic/companion/app/PreparedExports.java",
+        "sha256": "7051530eb7c8f253271db4b7f0581512222a4188877cf5f4f8b0a43d69723e3a"
+      },
+      {
+        "path": "apps/android/app/src/test/java/com/denzic/companion/app/ContentExportTest.java",
+        "sha256": "93dee501f3b88a08eb89a0c677f96508dfde569d5e5a446e60210fec5260c360"
+      },
+      {
+        "path": "apps/mobile/src/App.tsx",
+        "sha256": "3d8f521cef804215ce7c07e7424adc99fdd04493a28efa4c11fb82167e097376"
+      },
+      {
+        "path": "apps/mobile/src/ContentExport.tsx",
+        "sha256": "e9ca84d55cf4837bc4cf7bf892bae52a5d07520467aa901f47c59bfada562782"
+      },
+      {
+        "path": "apps/mobile/src/RecordingNotes.tsx",
+        "sha256": "be3cddc2af155b21491fa384816862a748ebd7ccac784fc3d011d93d2f6204b1"
+      },
+      {
+        "path": "packages/ui/src/ManualNoteEditor.tsx",
+        "sha256": "f0488db5e04538caf2713b3d6a56a07188a4b3fad24475209f655fbd29af162f"
+      },
+      {
+        "path": "packages/ui/src/manualNoteContext.css",
+        "sha256": "70913d3032bd01351770018447bd3698dc638bdb3ee6868800a606abf24b1443"
+      },
+      {
+        "path": "packages/ui/src/selectedNoteHandoff.css",
+        "sha256": "dbbdba145955aa78c83fd47efb838d39e051e20fd76bb0f85beb3d490b6ee420"
+      },
+      {
+        "path": "tools/qa/core_acceptance20261109/ui_source.cjs",
+        "sha256": "b577965c6309ab8e3b2bf8c68b56c7862fea9a36cfa7478c4f6c6f2c0c08b3a1"
+      },
+      {
+        "path": "tools/test_companion_setup_render.mjs",
+        "sha256": "8a4c4db6f6c62381755a902f6f731c9e1ce0e933a0f10947090b423d8f2b8282"
+      },
+      {
+        "path": "tools/test_selected_note_handoff.tsx",
+        "sha256": "8b21eacd4a13228ab40230022a848aa4c7786637ba7aaf5e745e5d9577acd6cc"
+      }
+    ],
+    "nativeBuildOrInstallQualified": false
+  }
+}

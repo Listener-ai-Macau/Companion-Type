@@ -1,0 +1,17 @@
+{
+  "windows": {
+    "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "head": "37b72bfc1786befbf3f6fdc0d148a9f8ae91f6f9",
+    "status": "M packages/ui/src/CompanionDashboard.tsx\n M packages/ui/src/CompanionMeetingNotes.tsx\n M packages/ui/src/ContentExportPanel.tsx\n M packages/ui/src/ManualNoteEditor.tsx\n M packages/ui/src/manualNoteContext.css\n M tools/build_windows_candidate_ci.py\n M tools/qa/core_acceptance20261109/ui_source.cjs\n M tools/test_companion_setup_render.mjs\n?? core-ui-output/\n?? docs/handoffs/android-media-import20261110/windows105/inspect_windows_candidate.py\n?? docs/handoffs/android-media-import20261110/windows106/inspect_windows_candidate.py\n?? docs/handoffs/android-media-import20261110/windows108/inspect_windows_candidate.py\n?? packages/ui/src/selectedNoteHandoff.css\n?? tools/qa/core_acceptance20261109/__pycache__/\n?? tools/test_selected_note_handoff.tsx"
+  },
+  "android": {
+    "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+    "head": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
+    "status": "M apps/android/app/src/main/java/com/denzic/companion/app/ExportContents.java\n M apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java\n M apps/android/app/src/main/java/com/denzic/companion/app/PreparedExports.java\n M apps/android/app/src/test/java/com/denzic/companion/app/ContentExportTest.java\n M apps/mobile/src/App.tsx\n M apps/mobile/src/ContentExport.tsx\n M apps/mobile/src/RecordingNotes.tsx\n M packages/ui/src/ManualNoteEditor.tsx\n M packages/ui/src/manualNoteContext.css\n M tools/qa/core_acceptance20261109/ui_source.cjs\n M tools/test_companion_setup_render.mjs\n?? packages/ui/src/selectedNoteHandoff.css\n?? tools/test_selected_note_handoff.tsx"
+  },
+  "project": {
+    "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion",
+    "head": "3f3dae098a25b839071319bb19ff2448fc772e74",
+    "status": "M AGENTS.md\n M config/current-firmware-recipe.json\n M docs/PRODUCT_BACKLOG.md\n M docs/PRODUCT_BACKLOG_HISTORY.md\n M docs/board_operations.md\n M docs/development_log.md\n M docs/product_backlog.json\n M tools/embedded_backlog.py\n?? CLAUDE.md"
+  }
+}

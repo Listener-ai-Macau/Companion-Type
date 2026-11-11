@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-11T16:32:04+08:00",
+  "sourceOfTruth": "C:/Users/Billy/Desktop/Denzic/Companion only; snapshots are immutable handoff protection copies",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 11679,
+      "sha256": "9fc3da66e1405e3d85a64374914d5af3feafd68e22de4b29328497ed088fa8be",
+      "snapshot": "root-snapshot/AGENTS.md"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1712,
+      "sha256": "e8b392ffd9f162568ee961742a77027ab2c55d4e907671e17de6ab753d2dbf23",
+      "snapshot": "root-snapshot/README.md"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 342,
+      "sha256": "94cc4c76dc0931f253a6313cee116f98a03d1f308f2e25fdd5ce24b0679a1c43",
+      "snapshot": "root-snapshot/CLAUDE.md"
+    },
+    {
+      "path": "config/current-firmware-recipe.json",
+      "bytes": 4455,
+      "sha256": "2ce44307e0d7108eab2b02680e0cfecb9c60928c87927d668c42ffdf2abd75f7",
+      "snapshot": "root-snapshot/config/current-firmware-recipe.json"
+    },
+    {
+      "path": "docs/product_backlog.json",
+      "bytes": 19099770,
+      "sha256": "08054ca14e3211e7f2c25cb4b427835d588542aed4fca73a63f62048b95625a2",
+      "snapshot": "root-snapshot/docs/product_backlog.json"
+    },
+    {
+      "path": "docs/development_log.md",
+      "bytes": 7059872,
+      "sha256": "3d9d50dfe514403f33101a8b62e27c7dd782f3789e64a6eab827ac090a23390f",
+      "snapshot": "root-snapshot/docs/development_log.md"
+    },
+    {
+      "path": "docs/PRODUCT_BACKLOG.md",
+      "bytes": 84690,
+      "sha256": "918a55e3776c6bee0c72d74520f6a4c280c9e88ce64b8f14b188db56841995d5",
+      "snapshot": "root-snapshot/docs/PRODUCT_BACKLOG.md"
+    },
+    {
+      "path": "docs/PRODUCT_BACKLOG_HISTORY.md",
+      "bytes": 279744,
+      "sha256": "ffe851806d6cd649bd68e0be08ac50240aee92744b592e1727938e58ba5a30e3",
+      "snapshot": "root-snapshot/docs/PRODUCT_BACKLOG_HISTORY.md"
+    },
+    {
+      "path": "docs/RECORDER_CORE_BACKLOG.md",
+      "bytes": 31007,
+      "sha256": "b22635e82ec73107bfe0857f69722d2e595ae2ae729ebe3bcded2e27c1a78260",
+      "snapshot": "root-snapshot/docs/RECORDER_CORE_BACKLOG.md"
+    },
+    {
+      "path": "docs/SCREEN_INTERACTION_BACKLOG.md",
+      "bytes": 615,
+      "sha256": "bcf52c7c68007d86ad44f4925c130014c53d49c078f4a7b227e43a9783fcffa4",
+      "snapshot": "root-snapshot/docs/SCREEN_INTERACTION_BACKLOG.md"
+    },
+    {
+      "path": "docs/ITERATION_HISTORY.md",
+      "bytes": 1392347,
+      "sha256": "8bb3dd982d4139b7c4a75d2fd117c5ab819b29978633e62ddb0dd260fe91dc0a",
+      "snapshot": "root-snapshot/docs/ITERATION_HISTORY.md"
+    },
+    {
+      "path": "docs/board_operations.md",
+      "bytes": 2777402,
+      "sha256": "a6d03b66fb7b585f2e249b27622a97d19412c867c7b1c1c85e01e86ed73bb782",
+      "snapshot": "root-snapshot/docs/board_operations.md"
+    },
+    {
+      "path": "docs/board_turn.json",
+      "bytes": 1164,
+      "sha256": "db91c69936211ff2758ff5d7811d71503035e7e39c903087f99b298e0cfab9c1",
+      "snapshot": "root-snapshot/docs/board_turn.json"
+    },
+    {
+      "path": "tools/embedded_backlog.py",
+      "bytes": 20493,
+      "sha256": "f217cc07844e2aeec0a08cfa1a68a035fe421ec0945b13f9945098012ad44183",
+      "snapshot": "root-snapshot/tools/embedded_backlog.py"
+    },
+    {
+      "path": "tools/render_product_backlog.py",
+      "bytes": 44572,
+      "sha256": "fa9feb7dfa042f82db463987bda57c9e5f7fdaadea085a56e16b658b8d3cf274",
+      "snapshot": "root-snapshot/tools/render_product_backlog.py"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-11T16:31:16+08:00",
+  "state": "CURRENT_HANDOFF_AND_ORIGINAL_SCOPE_CHECKS_PASSED",
+  "original272TaskRecordsUnchanged": true,
+  "qualityTargetsUnchanged": true,
+  "moduleOwnerAcceptancesUnchanged": true,
+  "coverage36OwnerAcceptancesUnchanged": true,
+  "generatedViewsByteTextIdentical": 5,
+  "defaultReaderReadOnly": true,
+  "currentReaderBytes": 22520,
+  "focusedExistingEntryTestsPassed": [
+    "test_obsolete_speed_or_clock_notes_cannot_reschedule_work",
+    "test_missing_current_plan_never_falls_back_to_historical_work",
+    "test_verified_scope_needs_evidence_and_qualification_limits",
+    "test_current_product_view_does_not_promote_old_module_versions"
+  ],
+  "legacyWholeHistoryCheck": {
+    "passed": false,
+    "cause": "Missing historical cache FH_AUDIT .cache/product-research-20261005/firmware-hardware-audit.json; original full --check failure retained, no fabricated restoration."
+  },
+  "productBuildOrInstall": false,
+  "newModelOrDeviceOperation": false
+}

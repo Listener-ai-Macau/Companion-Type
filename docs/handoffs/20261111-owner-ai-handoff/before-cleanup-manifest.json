@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-11T16:18:47+08:00",
+  "purpose": "Exact pre-handoff evidence; historical only, not executable next actions",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 15013,
+      "sha256": "f02065cfa734c678543714230bb355d44b4ae1a6d559d84074eca3e4c0a1edc2",
+      "archive": "before-cleanup/AGENTS.md.gz"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2032,
+      "sha256": "b1b0371f60c04adc17b9e13fbefe1703d44f265b4868100f94cc6dd932e9aa3f",
+      "archive": "before-cleanup/README.md.gz"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 342,
+      "sha256": "94cc4c76dc0931f253a6313cee116f98a03d1f308f2e25fdd5ce24b0679a1c43",
+      "archive": "before-cleanup/CLAUDE.md.gz"
+    },
+    {
+      "path": "docs/product_backlog.json",
+      "bytes": 19153875,
+      "sha256": "076c9d7de0fe0cb7900333ab9e18d2fb9241befcf08e6eaef7c7622197514985",
+      "archive": "before-cleanup/docs/product_backlog.json.gz"
+    },
+    {
+      "path": "docs/development_log.md",
+      "bytes": 7032154,
+      "sha256": "16be588be45c1eaa65e5f8abdbb13441d31fd3ed2d306a1517e43a4e73e36ee8",
+      "archive": "before-cleanup/docs/development_log.md.gz"
+    },
+    {
+      "path": "docs/PRODUCT_BACKLOG.md",
+      "bytes": 80281,
+      "sha256": "38c6d54a55e7dd4142857ffd283b88b4b4ab9ed5f3d8ef757fc01ce43f28f070",
+      "archive": "before-cleanup/docs/PRODUCT_BACKLOG.md.gz"
+    },
+    {
+      "path": "docs/PRODUCT_BACKLOG_HISTORY.md",
+      "bytes": 279744,
+      "sha256": "ffe851806d6cd649bd68e0be08ac50240aee92744b592e1727938e58ba5a30e3",
+      "archive": "before-cleanup/docs/PRODUCT_BACKLOG_HISTORY.md.gz"
+    },
+    {
+      "path": "docs/board_operations.md",
+      "bytes": 19520980,
+      "sha256": "1848c668d3499a0a582559cfb0cc874c58e9c751d65a8d857fe184b10507ec22",
+      "archive": "before-cleanup/docs/board_operations.md.gz"
+    },
+    {
+      "path": "docs/board_turn.json",
+      "bytes": 1164,
+      "sha256": "db91c69936211ff2758ff5d7811d71503035e7e39c903087f99b298e0cfab9c1",
+      "archive": "before-cleanup/docs/board_turn.json.gz"
+    },
+    {
+      "path": "tools/embedded_backlog.py",
+      "bytes": 18817,
+      "sha256": "5b8754ce205b09561a09a0b57b69d536b0f684af0791015115e5b72aaffddc5f",
+      "archive": "before-cleanup/tools/embedded_backlog.py.gz"
+    },
+    {
+      "path": "tools/render_product_backlog.py",
+      "bytes": 44572,
+      "sha256": "fa9feb7dfa042f82db463987bda57c9e5f7fdaadea085a56e16b658b8d3cf274",
+      "archive": "before-cleanup/tools/render_product_backlog.py.gz"
+    },
+    {
+      "path": "config/current-firmware-recipe.json",
+      "bytes": 4455,
+      "sha256": "2ce44307e0d7108eab2b02680e0cfecb9c60928c87927d668c42ffdf2abd75f7",
+      "archive": "before-cleanup/config/current-firmware-recipe.json.gz"
+    }
+  ]
+}

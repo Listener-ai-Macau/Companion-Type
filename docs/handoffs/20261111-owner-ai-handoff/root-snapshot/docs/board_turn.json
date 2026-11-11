@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "sides": [
+    "codex",
+    "grok"
+  ],
+  "next": null,
+  "holder": null,
+  "leaseLine": null,
+  "heldSince": null,
+  "turnMinutes": 0,
+  "turnWindow": "retired-2026-11-03",
+  "openedAt": "2026-11-11T13:56:21+08:00",
+  "lastRelease": {
+    "side": "codex",
+    "at": "2026-11-11T13:56:21+08:00",
+    "item": "Companion107 Owner亲自体验实体录音到本机文字",
+    "result": "Owner实体录音已停止并精确接收，本轮BLE/接收进程已退出；继续本机文字体验，无主机START。"
+  },
+  "queue": {
+    "grok": [
+      "Owner 2026-11-02 新分工：Grok负责录音卡屏幕底层（驱动、刷新与设备侧交互）；继续原有屏幕任务，遵守共享板轮次。Codex负责Windows和手机统一前端。已装FW860/UI85；具体改动前核对当前源码和设备状态。",
+      "CP24-06双麦降噪已归档，不再领取采集",
+      "真实断电后的NOR恢复，需要Owner在场",
+      "一次I2C故障注入，需要Owner在场"
+    ],
+    "codex": []
+  },
+  "updatedAt": "2026-11-11T13:56:21+08:00",
+  "item": "Companion107 Owner亲自体验实体录音到本机文字",
+  "urgent": false
+}

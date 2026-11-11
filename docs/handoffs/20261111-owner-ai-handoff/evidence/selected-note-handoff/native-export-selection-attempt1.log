@@ -1,0 +1,8 @@
+Exception in thread "main" java.io.IOException: 人工引用的内容或身份无效；原备注和资料保留。
+	at com.denzic.companion.app.ManualNoteContext.invalid(ManualNoteContext.java:14)
+	at com.denzic.companion.app.ManualNoteContext.validate(ManualNoteContext.java:44)
+	at com.denzic.companion.app.ManualNoteContext.references(ManualNoteContext.java:26)
+	at com.denzic.companion.app.RecordingNotes.evidenceText(RecordingNotes.java:140)
+	at com.denzic.companion.app.RecordingNotes.text(RecordingNotes.java:135)
+	at com.denzic.companion.app.ExportContents$Source.select(ExportContents.java:93)
+	at com.denzic.companion.app.ContentExportTest.main(ContentExportTest.java:39)

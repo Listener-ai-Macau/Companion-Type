@@ -1,0 +1,416 @@
+diff --git a/packages/ui/src/CompanionDashboard.tsx b/packages/ui/src/CompanionDashboard.tsx
+index 42195296..5cd11ef0 100644
+--- a/packages/ui/src/CompanionDashboard.tsx
++++ b/packages/ui/src/CompanionDashboard.tsx
+@@ -1,4 +1,4 @@
+-import {ContentExportPanel} from './ContentExportPanel';
++import {ContentExportPanel,type ContentExportTarget} from './ContentExportPanel';
+ import {ActionReviewTools,useActionReview} from './ActionReviewTools';
+ import {savedActionReview} from './actionReview';
+ import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
+@@ -569,6 +569,7 @@ export function CompanionDashboard({
+   const [previewWaiting,setPreviewWaiting]=useState(false);
+   useEffect(()=>()=>previewTask.current?.cancel(),[]);
+   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
++  const [noteExportTarget,setNoteExportTarget]=useState<ContentExportTarget|null>(null);
+   const [manualEvidence,setManualEvidence]=useState<ManualEvidenceDraft|undefined>();
+   const [documentSource,setDocumentSource]=useState<DocumentSourceRequest|undefined>();
+   const [qaQuestion,setQaQuestion]=useState('');
+@@ -1154,6 +1155,7 @@ export function CompanionDashboard({
+     navigatePage('device', 'ct-workflow');
+   };
+   const revealMeetingTool = (id:string) => {
++    if(id==='ct-meeting-export')setNoteExportTarget(null);
+     if(id==='ct-meeting-qa')setReferenceView('assistant');else if(id==='ct-document-context')setReferenceView('documents');else if(id==='ct-recording-notes'||id==='ct-recording-references')setReferenceView('notes');
+     window.requestAnimationFrame(()=>{
+       const target=document.getElementById(id);
+@@ -2498,6 +2500,7 @@ export function CompanionDashboard({
+           </details> : null}
+           {hasMinutes||finalTranscript||hasPdfHighlights||selectedSession.meetingNotes?.length?<ContentExportPanel
+             key={`${selectedSession.id}:${minutesViewMode}`}
++            target={noteExportTarget?.sessionId===selectedSession.id?noteExportTarget:null} onClearTarget={()=>setNoteExportTarget(null)}
+             sessionId={selectedSession.id} meetingMode={minutesViewMode}
+             sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
+             minutes={hasMinutes} transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
+@@ -2700,6 +2703,7 @@ export function CompanionDashboard({
+                 contextNoteRevision:selectedSession.noteRevision??0}) : undefined}
+             organizeSavedBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||titleDirty
+               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
++            onExportNote={onPreviewMeetingExport?noteId=>setNoteExportTarget({requestId:crypto.randomUUID(),sessionId:selectedSession.id,noteId}):undefined}
+             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
+             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>} documents={documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}} openSource={documentSource} onChanged={onRefresh}/></div>:null} assistant={onAskMeetings&&selectedSession&&(finalTranscript||documentScopes.length>0) ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
+               contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}
+diff --git a/packages/ui/src/CompanionMeetingNotes.tsx b/packages/ui/src/CompanionMeetingNotes.tsx
+index 7f0c686a..f966a9aa 100644
+--- a/packages/ui/src/CompanionMeetingNotes.tsx
++++ b/packages/ui/src/CompanionMeetingNotes.tsx
+@@ -8,7 +8,7 @@ import {NoteImagePreview} from './NoteImagePreview';
+ import type {CompanionBookmarkRequest,CompanionMeetingImageNoteRequest} from '@companion-type/core';
+ import {operationErrorText} from './operationFailure';
+ import { useEffect, useRef, useState } from 'react';
+-import { Pencil, StickyNote, Trash2 } from 'lucide-react';
++import { Pencil, StickyNote, Trash2, Share2 } from 'lucide-react';
+ import { CompanionExportFeedback, type CompanionExportFeedbackValue } from './CompanionExportFeedback';
+ import { type CompanionMeetingNoteRequest, type CompanionV1HostSession, type CompanionV1Snapshot,
+   companionBookmarkAudioPosition, normalizeCompanionNoteText } from '@companion-type/core';
+@@ -17,7 +17,7 @@ type Edit = { kind:ManualNoteKind;references:ManualNoteEvidence[];originalKind:M
+ type Draft = { kind?:ManualNoteKind;references?:ManualNoteEvidence[];text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
+ const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
+ 
+-export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
++export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
+   incoming?:ManualEvidenceDraft;
+   onIncomingConsumed?:()=>void;
+   onOpenEvidence?:(noteId:string,reference:ManualNoteEvidence,revision:number)=>Promise<void>;
+@@ -36,6 +36,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
+   onSave?:(request:CompanionMeetingNoteRequest)=>Promise<CompanionV1Snapshot>;
+   onSeek:(sessionId:string,bookmarkId:string,positionMs:number)=>Promise<void>;
+   onExport?:(format:'txt'|'json')=>Promise<void>;
++  onExportNote?:(noteId:string)=>void;
+   onOrganizeSaved?:()=>void;
+   organizeSavedBlocked?:boolean;
+   exportFeedback?:CompanionExportFeedbackValue | null;
+@@ -180,6 +181,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
+           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{
+             kind:note.kind??'note',references:note.references??[],originalKind:note.kind??'note',originalReferences:note.references??[],text:note.text,anchor:note.bookmarkId??'',originalText:note.text,originalAnchor:note.bookmarkId??'',revision:session.noteRevision??0,
+           }}}))}><Pencil size={13}/>编辑</button>:null}
++          {!edit&&onExportNote?<button type="button" className="ct-action manual-note-handoff" disabled={disabled||dirty} onClick={()=>onExportNote(note.id)}><Share2 size={13}/>{note.kind==='followup'?'导出这张清单':'导出这条补充'}</button>:null}
+           <button type="button" className="ct-action" aria-label={`删除备注 ${note.id}`} disabled={disabled} onClick={()=>{if(note.image&&!window.confirm('删除这条人工图片备注？原图会随录音保留至整条录音永久清除。'))return;void save({
+             sessionId:session.id,noteId:note.id,expectedRevision:session.noteRevision??0,action:'delete',
+           });}}><Trash2 size={13}/>删除</button>
+diff --git a/packages/ui/src/ContentExportPanel.tsx b/packages/ui/src/ContentExportPanel.tsx
+index 54780225..f897cfda 100644
+--- a/packages/ui/src/ContentExportPanel.tsx
++++ b/packages/ui/src/ContentExportPanel.tsx
+@@ -1,113 +1,128 @@
+-import {useEffect,useRef,useState} from 'react';
+-import {Download,Copy,Share2} from 'lucide-react';
+-import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
+-import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
+-import type {CompanionMeetingExportRequest} from './CompanionDashboard';
+-export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
+-type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
+-const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
+-type Preview={contentHash:string;textContent?:string|null};
+-type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
+- onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
+- onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
+- onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
+- onShare?:(request:CompanionMeetingExportRequest,destination?:ShareDestination)=>Promise<ShareHandoffResult>;
+-};
+-export function ContentExportPanel(props:Props){
+- const [selection,setSelection]=useState<ContentSelection>({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});
+- const [format,setFormat]=useState<Format>('pdf');
+- const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|'fileCopy'|null>(null);
+- const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
+- const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
+- const task=useRef<ReturnType<typeof savedExportPreview<Preview>>|null>(null),active=useRef(false),mounted=useRef(true);
+- const choice:ContentSelection={minutes:selection.minutes&&props.minutes,transcript:selection.transcript&&props.transcript,highlights:selection.highlights&&props.highlights,
+-   timeline:selection.timeline&&selection.transcript&&props.transcript&&props.timing,noteIds:selection.noteIds.filter(id=>props.notes.some(note=>note.id===id))};
+- const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format]);
+- const currentKey=useRef(key);currentKey.current=key;
+- useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;task.current?.cancel();};},[]);
+- useEffect(()=>()=>{task.current?.cancel();},[key]);
+- const any=choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0;
+- const dirty=props.unsaved.title||(choice.minutes&&props.unsaved.minutes)||(choice.transcript&&props.unsaved.transcript)||(choice.highlights&&props.unsaved.highlights)||(choice.noteIds.length>0&&props.unsaved.notes);
+- const request=():CompanionMeetingExportRequest=>({sessionId:props.sessionId,meetingMode:props.meetingMode,format,contentSections:choice});
+- const run=async(action:'preview'|'save'|'copy'|'share'|'folder'|'fileCopy')=>{
+-   if(active.current||props.blocked||!props.onPreview||!any)return;
+-   const operationKey=key,current=()=>mounted.current&&currentKey.current===operationKey;
+-   if(dirty){setFeedback({key,kind:'error',text:'所选内容有未保存的修改，请先保存或取消。'});return;}
+-   active.current=true;setPhase('preview');setFeedback(null);
+-   try{
+-     const pending=savedExportPreview(()=>props.onPreview!(request()));task.current=pending;
+-     const source=await pending.result;
+-     if(task.current===pending)task.current=null;
+-     if(!current())return;
+-     if(!/^[a-f0-9]{64}$/.test(source.contentHash)||typeof source.textContent!=='string'||!source.textContent.trim())throw Error('没有可用的已保存内容，请重新选择。');
+-     setPreview({key:operationKey,text:source.textContent});
+-     if(action==='preview')return;
+-     setPhase(action);const checked={...request(),expectedContentHash:source.contentHash};
+-     if(action==='save'){
+-       if(!props.onSave)throw Error('当前环境不能保存文件，请在Windows应用中打开。');
+-       const result=await props.onSave(checked);if(!current())return;
+-       setFeedback({key:operationKey,kind:result?'saved':'cancelled',text:result?`已保存：${result.path.split(/[\\/]/).pop()}${result.warning?`。${result.warning}`:''}`:'已取消保存，原内容保持不变。'});
+-     }else if(action==='copy'){
+-       try{
+-         if(props.onCopy){const result=await props.onCopy(checked);if(result.status!=='copied')throw Error('复制未完成。');}
+-         else {if(!navigator.clipboard?.writeText)throw Error('剪贴板不可用。');await navigator.clipboard.writeText(source.textContent);}
+-         if(current())setFeedback({key:operationKey,kind:'copied',text:'已复制所选内容，可粘贴到常用应用。'});
+-       }catch(error){
+-         if(!current())return;
+-         if(props.onCopy&&!/剪贴板|复制未完成|内存/.test(String(error)))throw error;
+-         setFeedback({key:operationKey,kind:'error',text:'自动复制未完成。可选择下方文字后复制。',manual:source.textContent});
+-       }
+-     }else{
+-       if(!props.onShare)throw Error('当前环境不能打开系统分享，请先保存文件。');
+-       const destination=action==='folder'?'folder':action==='fileCopy'?'clipboard':'system';
+-       const result=await props.onShare(checked,destination);if(!current())return;
+-       setFeedback({key:operationKey,kind:'opened',text:shareHandoffMessage(result,destination)});
+-     }
+-   }catch(error){if(current())setFeedback({key:operationKey,kind:'error',text:error instanceof SavedPreviewInterrupted?error.message:error instanceof Error?error.message:String(error)});}
+-   finally{active.current=false;if(mounted.current)setPhase(null);}
+- };
+- const disabled=props.blocked||phase!==null;
+- const setChecked=(name:'minutes'|'transcript'|'highlights'|'timeline',checked:boolean)=>setSelection(old=>({...old,[name]:checked,...(name==='transcript'&&!checked?{timeline:false}:{})}));
+- const subtitles=format==='srt';
+- return <details id="ct-meeting-export" className="ct-result-tools ct-content-export">
+-   <summary>导出、复制与分享</summary>
+-   <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
+-   <fieldset disabled={disabled} style={{border:0,padding:0,margin:0}}>
+-     <div className="ct-button-row" aria-label="导出内容选择">
+-       <label><input type="checkbox" checked={choice.minutes} disabled={!props.minutes||subtitles} onChange={e=>setChecked('minutes',e.currentTarget.checked)}/>整理结果</label>
+-       <label><input type="checkbox" checked={choice.transcript} disabled={!props.transcript||subtitles} onChange={e=>setChecked('transcript',e.currentTarget.checked)}/>录音文字</label>
+-       <label><input type="checkbox" checked={choice.highlights} disabled={!props.highlights||subtitles} onChange={e=>setChecked('highlights',e.currentTarget.checked)}/>录音重点</label>
+-       <label><input type="checkbox" checked={choice.timeline} disabled={!choice.transcript||!props.timing||subtitles} onChange={e=>setChecked('timeline',e.currentTarget.checked)}/>分段时间与说话人</label>
+-     </div>
+-     {props.notes.length>0?<details className="ct-content-materials"><summary>材料与补充（已选 {choice.noteIds.length} / {props.notes.length}）</summary>
+-       <div style={{display:'grid',gap:8,margin:'10px 0'}}>{props.notes.map(note=>{const title=note.text.split('\n')[0].slice(0,90)||'未命名补充';return <label key={note.id} style={{display:'flex',alignItems:'flex-start',gap:8}}><input type="checkbox" checked={choice.noteIds.includes(note.id)} disabled={subtitles} aria-label={`选择材料：${title}`} onChange={e=>{const checked=e.currentTarget.checked;setSelection(old=>({...old,noteIds:checked?[...old.noteIds,note.id]:old.noteIds.filter(id=>id!==note.id)}));}}/><span>{title}</span></label>;})}</div>
+-     </details>:null}
+-     <label>文件格式 <select aria-label="所选内容文件格式" value={format} onChange={e=>{const value=e.currentTarget.value as Format;setFormat(value);if(value==='srt')setSelection({minutes:false,transcript:true,highlights:false,timeline:true,noteIds:[]});}}>
+-       {formats.map(([value,label])=><option key={value} value={value} disabled={value==='srt'&&!props.exactTiming}>{label}</option>)}
+-     </select></label>
+-   </fieldset>
+-   {format==='bundle'&&<p className="ct-step-meta">图文 ZIP 解压后打开“打开阅读.html”即可离线阅读。仅包含勾选内容及其中原图，每次图片合计不超过64MB。其它格式保留文字、时间与图片名称，不嵌入原图。</p>}
+-   {subtitles?<p className="ct-step-meta">字幕只包含有真实时间轴的原文；近似分段不能作为精确字幕。</p>:format==='xlsx'?<p className="ct-step-meta">Excel按章节保留所选正文，适合筛选和后续编辑。</p>:format==='pptx'?<p className="ct-step-meta">按已保存内容分页，文字可在PowerPoint中继续编辑；材料和原文依据一起保留。</p>:format==='png'?<p className="ct-step-meta">将所选内容绘成完整导图图片。长会议建议只选需要的材料；可编辑版本请选“思维导图（可编辑）”。</p>:null}
+-   <div className="ct-button-row" style={{marginTop:12}}>
+-     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>
+-     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('copy')}><Copy size={14}/>复制所选内容</button>
+-     <button type="button" className="ct-action ct-action-primary" disabled={disabled||!props.onSave||!any} onClick={()=>void run('save')}><Download size={14}/>保存 {formats.find(([value])=>value===format)?.[1]}…</button>
+-     {props.desktopFileSharing?<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
+-       :<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>}
+-   </div>
+-   {props.desktopFileSharing&&props.onShare?<p className="ct-step-meta">复制的是上方所选格式的完整文件，可到支持文件粘贴的应用中按 Ctrl+V 添加附件，再自行发送。</p>:null}
+-   {props.onShare?<details className="ct-content-share-alternative"><summary>{props.desktopFileSharing?'其他分享方式':'复制文件或在文件夹中分享'}</summary>
+-     {props.desktopFileSharing?<><p className="ct-step-meta">使用 Windows 分享面板选择接收应用。</p><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('share')}><Share2 size={14}/>系统分享所选文件…</button></>:<>
+-     <p className="ct-step-meta">复制完整文件后，可到支持文件粘贴的应用中按 Ctrl+V。接收位置与是否发送由你确认。</p>
+-     <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
+-     </>}
+-     <p className="ct-step-meta">在文件夹中准备相同选择的临时副本，再通过资源管理器分享。接收应用由你选择。</p>
+-     <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('folder')}>在文件夹中分享所选文件…</button>
+-   </details>:null}
+-   {phase?<p role="status">{phase==='preview'?'正在核对所选内容…':phase==='save'?'正在保存所选文件…':phase==='copy'?'正在复制所选内容…':phase==='fileCopy'?'正在复制所选文件…':phase==='folder'?'正在准备文件夹分享…':'正在准备系统分享…'} {phase==='preview'?<button type="button" className="ct-text-button" onClick={()=>task.current?.cancel()}>取消等待</button>:null}</p>:null}
+-   {feedback?.key===key?<div aria-label="所选内容操作结果"><p role={feedback.kind==='error'?'alert':'status'} className={feedback.kind==='error'?'ct-step-warn':'ct-step-meta'}>{feedback.text}</p>
+-     {feedback.manual?<textarea readOnly aria-label="手动复制所选内容" value={feedback.manual} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
+-   </div>:null}
+-   {preview?.key===key?<details className="ct-content-preview"><summary>查看所选正文</summary><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:280,overflow:'auto'}}>{preview.text}</pre></details>:null}
+- </details>;
+-}
++import './selectedNoteHandoff.css';
++import {useEffect,useRef,useState} from 'react';
++import {Download,Copy,Share2} from 'lucide-react';
++import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
++import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
++import type {CompanionMeetingExportRequest} from './CompanionDashboard';
++export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
++export type ContentExportTarget={requestId:string;sessionId:string;noteId:string};
++type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
++const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
++type Preview={contentHash:string;textContent?:string|null};
++type Props={target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
++ onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
++ onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
++ onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
++ onShare?:(request:CompanionMeetingExportRequest,destination?:ShareDestination)=>Promise<ShareHandoffResult>;
++};
++export function ContentExportPanel(props:Props){
++ const [selection,setSelection]=useState<ContentSelection>({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});
++ const panel=useRef<HTMLDetailsElement>(null),appliedTarget=useRef<string|null>(null);
++ const [scopeExpanded,setScopeExpanded]=useState(false);
++ const [format,setFormat]=useState<Format>('pdf');
++ const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|'fileCopy'|null>(null);
++ const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
++ const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
++ const task=useRef<ReturnType<typeof savedExportPreview<Preview>>|null>(null),active=useRef(false),mounted=useRef(true);
++ const target=props.target,targetNote=target?.sessionId===props.sessionId?props.notes.find(note=>note.id===target.noteId):undefined;
++ const targetPending=!!target&&appliedTarget.current!==target.requestId;
++ const effective=targetPending?{minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]}:selection;
++ useEffect(()=>{
++   if(!target){if(appliedTarget.current){setSelection({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});setScopeExpanded(false);appliedTarget.current=null;}return;}
++   appliedTarget.current=target.requestId;setSelection({minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]});setFormat('pdf');setScopeExpanded(false);setFeedback(null);setPreview(null);
++   if(panel.current){panel.current.open=true;panel.current.scrollIntoView({block:'start'});}
++ },[target?.requestId,props.sessionId]);
++ const choice:ContentSelection={minutes:effective.minutes&&props.minutes,transcript:effective.transcript&&props.transcript,highlights:effective.highlights&&props.highlights,
++   timeline:effective.timeline&&effective.transcript&&props.transcript&&props.timing,noteIds:effective.noteIds.filter(id=>props.notes.some(note=>note.id===id))};
++ const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format,target?.requestId]);
++ const currentKey=useRef(key);currentKey.current=key;
++ useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;task.current?.cancel();};},[]);
++ useEffect(()=>()=>{task.current?.cancel();},[key]);
++ const any=(!target||!!targetNote)&&(choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0);
++ const dirty=props.unsaved.title||(choice.minutes&&props.unsaved.minutes)||(choice.transcript&&props.unsaved.transcript)||(choice.highlights&&props.unsaved.highlights)||(choice.noteIds.length>0&&props.unsaved.notes);
++ const request=():CompanionMeetingExportRequest=>({sessionId:props.sessionId,meetingMode:props.meetingMode,format,contentSections:choice});
++ const run=async(action:'preview'|'save'|'copy'|'share'|'folder'|'fileCopy')=>{
++   if(active.current||props.blocked||!props.onPreview||!any)return;
++   const operationKey=key,current=()=>mounted.current&&currentKey.current===operationKey;
++   if(dirty){setFeedback({key,kind:'error',text:'所选内容有未保存的修改，请先保存或取消。'});return;}
++   active.current=true;setPhase('preview');setFeedback(null);
++   try{
++     const pending=savedExportPreview(()=>props.onPreview!(request()));task.current=pending;
++     const source=await pending.result;
++     if(task.current===pending)task.current=null;
++     if(!current())return;
++     if(!/^[a-f0-9]{64}$/.test(source.contentHash)||typeof source.textContent!=='string'||!source.textContent.trim())throw Error('没有可用的已保存内容，请重新选择。');
++     setPreview({key:operationKey,text:source.textContent});
++     if(action==='preview')return;
++     setPhase(action);const checked={...request(),expectedContentHash:source.contentHash};
++     if(action==='save'){
++       if(!props.onSave)throw Error('当前环境不能保存文件，请在Windows应用中打开。');
++       const result=await props.onSave(checked);if(!current())return;
++       setFeedback({key:operationKey,kind:result?'saved':'cancelled',text:result?`已保存：${result.path.split(/[\\/]/).pop()}${result.warning?`。${result.warning}`:''}`:'已取消保存，原内容保持不变。'});
++     }else if(action==='copy'){
++       try{
++         if(props.onCopy){const result=await props.onCopy(checked);if(result.status!=='copied')throw Error('复制未完成。');}
++         else {if(!navigator.clipboard?.writeText)throw Error('剪贴板不可用。');await navigator.clipboard.writeText(source.textContent);}
++         if(current())setFeedback({key:operationKey,kind:'copied',text:'已复制所选内容，可粘贴到常用应用。'});
++       }catch(error){
++         if(!current())return;
++         if(props.onCopy&&!/剪贴板|复制未完成|内存/.test(String(error)))throw error;
++         setFeedback({key:operationKey,kind:'error',text:'自动复制未完成。可选择下方文字后复制。',manual:source.textContent});
++       }
++     }else{
++       if(!props.onShare)throw Error('当前环境不能打开系统分享，请先保存文件。');
++       const destination=action==='folder'?'folder':action==='fileCopy'?'clipboard':'system';
++       const result=await props.onShare(checked,destination);if(!current())return;
++       setFeedback({key:operationKey,kind:'opened',text:shareHandoffMessage(result,destination)});
++     }
++   }catch(error){if(current())setFeedback({key:operationKey,kind:'error',text:error instanceof SavedPreviewInterrupted?error.message:error instanceof Error?error.message:String(error)});}
++   finally{active.current=false;if(mounted.current)setPhase(null);}
++ };
++ const disabled=props.blocked||phase!==null;
++ const setChecked=(name:'minutes'|'transcript'|'highlights'|'timeline',checked:boolean)=>setSelection(old=>({...old,[name]:checked,...(name==='transcript'&&!checked?{timeline:false}:{})}));
++ const subtitles=format==='srt';
++ return <details ref={panel} id="ct-meeting-export" className="ct-result-tools ct-content-export">
++   <summary>导出、复制与分享</summary>
++   <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
++   {target&&<div className="ct-note-handoff-scope" role={targetNote?'status':'alert'}>{targetNote?<><strong>{!choice.minutes&&!choice.transcript&&!choice.highlights&&choice.noteIds.length===1&&choice.noteIds[0]===target.noteId?'仅导出这条人工补充':'已调整导出范围'}</strong><p>{targetNote.text.split('\n')[0].replace(/^\s*[-*]\s+\[[ xX]\]\s*/,'')||'图片备注'}</p><small>包含保存的文字、勾选状态和字面依据；原图片可选择图文 ZIP。</small><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setScopeExpanded(value=>!value)}>{scopeExpanded?'收起范围选择':'更改导出范围'}</button></>:<><p>这条补充已变化或移除，请重新选择；尚未导出其它内容。</p><button type="button" className="ct-action" disabled={disabled} onClick={props.onClearTarget}>重新选择内容</button></>}</div>}
++   <fieldset disabled={disabled} style={{border:0,padding:0,margin:0}}>
++     <div hidden={!!target&&!scopeExpanded}>
++     <div className="ct-button-row" aria-label="导出内容选择">
++       <label><input type="checkbox" checked={choice.minutes} disabled={!props.minutes||subtitles} onChange={e=>setChecked('minutes',e.currentTarget.checked)}/>整理结果</label>
++       <label><input type="checkbox" checked={choice.transcript} disabled={!props.transcript||subtitles} onChange={e=>setChecked('transcript',e.currentTarget.checked)}/>录音文字</label>
++       <label><input type="checkbox" checked={choice.highlights} disabled={!props.highlights||subtitles} onChange={e=>setChecked('highlights',e.currentTarget.checked)}/>录音重点</label>
++       <label><input type="checkbox" checked={choice.timeline} disabled={!choice.transcript||!props.timing||subtitles} onChange={e=>setChecked('timeline',e.currentTarget.checked)}/>分段时间与说话人</label>
++     </div>
++     {props.notes.length>0?<details className="ct-content-materials"><summary>材料与补充（已选 {choice.noteIds.length} / {props.notes.length}）</summary>
++       <div style={{display:'grid',gap:8,margin:'10px 0'}}>{props.notes.map(note=>{const title=note.text.split('\n')[0].slice(0,90)||'未命名补充';return <label key={note.id} style={{display:'flex',alignItems:'flex-start',gap:8}}><input type="checkbox" checked={choice.noteIds.includes(note.id)} disabled={subtitles} aria-label={`选择材料：${title}`} onChange={e=>{const checked=e.currentTarget.checked;setSelection(old=>({...old,noteIds:checked?[...old.noteIds,note.id]:old.noteIds.filter(id=>id!==note.id)}));}}/><span>{title}</span></label>;})}</div>
++     </details>:null}
++     </div>
++     <label>文件格式 <select aria-label="所选内容文件格式" value={format} onChange={e=>{const value=e.currentTarget.value as Format;setFormat(value);if(value==='srt')setSelection({minutes:false,transcript:true,highlights:false,timeline:true,noteIds:[]});}}>
++       {formats.map(([value,label])=><option key={value} value={value} disabled={value==='srt'&&!props.exactTiming}>{label}</option>)}
++     </select></label>
++   </fieldset>
++   {format==='bundle'&&<p className="ct-step-meta">图文 ZIP 解压后打开“打开阅读.html”即可离线阅读。仅包含勾选内容及其中原图，每次图片合计不超过64MB。其它格式保留文字、时间与图片名称，不嵌入原图。</p>}
++   {subtitles?<p className="ct-step-meta">字幕只包含有真实时间轴的原文；近似分段不能作为精确字幕。</p>:format==='xlsx'?<p className="ct-step-meta">Excel按章节保留所选正文，适合筛选和后续编辑。</p>:format==='pptx'?<p className="ct-step-meta">按已保存内容分页，文字可在PowerPoint中继续编辑；材料和原文依据一起保留。</p>:format==='png'?<p className="ct-step-meta">将所选内容绘成完整导图图片。长会议建议只选需要的材料；可编辑版本请选“思维导图（可编辑）”。</p>:null}
++   <div className="ct-button-row" style={{marginTop:12}}>
++     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>
++     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('copy')}><Copy size={14}/>复制所选内容</button>
++     <button type="button" className="ct-action ct-action-primary" disabled={disabled||!props.onSave||!any} onClick={()=>void run('save')}><Download size={14}/>保存 {formats.find(([value])=>value===format)?.[1]}…</button>
++     {props.desktopFileSharing?<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
++       :<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>}
++   </div>
++   {props.desktopFileSharing&&props.onShare?<p className="ct-step-meta">复制的是上方所选格式的完整文件，可到支持文件粘贴的应用中按 Ctrl+V 添加附件，再自行发送。</p>:null}
++   {props.onShare?<details className="ct-content-share-alternative"><summary>{props.desktopFileSharing?'其他分享方式':'复制文件或在文件夹中分享'}</summary>
++     {props.desktopFileSharing?<><p className="ct-step-meta">使用 Windows 分享面板选择接收应用。</p><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('share')}><Share2 size={14}/>系统分享所选文件…</button></>:<>
++     <p className="ct-step-meta">复制完整文件后，可到支持文件粘贴的应用中按 Ctrl+V。接收位置与是否发送由你确认。</p>
++     <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
++     </>}
++     <p className="ct-step-meta">在文件夹中准备相同选择的临时副本，再通过资源管理器分享。接收应用由你选择。</p>
++     <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('folder')}>在文件夹中分享所选文件…</button>
++   </details>:null}
++   {phase?<p role="status">{phase==='preview'?'正在核对所选内容…':phase==='save'?'正在保存所选文件…':phase==='copy'?'正在复制所选内容…':phase==='fileCopy'?'正在复制所选文件…':phase==='folder'?'正在准备文件夹分享…':'正在准备系统分享…'} {phase==='preview'?<button type="button" className="ct-text-button" onClick={()=>task.current?.cancel()}>取消等待</button>:null}</p>:null}
++   {feedback?.key===key?<div aria-label="所选内容操作结果"><p role={feedback.kind==='error'?'alert':'status'} className={feedback.kind==='error'?'ct-step-warn':'ct-step-meta'}>{feedback.text}</p>
++     {feedback.manual?<textarea readOnly aria-label="手动复制所选内容" value={feedback.manual} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
++   </div>:null}
++   {preview?.key===key?<section className="ct-content-preview" aria-label="所选正文预览"><h4>正文预览</h4><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:320,overflow:'auto'}}>{preview.text}</pre></section>:null}
++ </details>;
++}
+diff --git a/packages/ui/src/ManualNoteEditor.tsx b/packages/ui/src/ManualNoteEditor.tsx
+index d4f89898..ae47bd0e 100644
+--- a/packages/ui/src/ManualNoteEditor.tsx
++++ b/packages/ui/src/ManualNoteEditor.tsx
+@@ -9,7 +9,7 @@ type Props={kind:ManualNoteKind;text:string;onChange:(text:string)=>void;disable
+ /** Editing is a projection of the existing note text; no second task store. */
+ export function ManualNoteEditor({kind,text,onChange,disabled=false,label,placeholder}:Props){
+  const [raw,setRaw]=useState(false),[error,setError]=useState('');
+- const nextItem=useRef<HTMLInputElement>(null);
++ const nextItem=useRef<HTMLTextAreaElement>(null);
+  useEffect(()=>{setRaw(false);setError('');},[kind]);
+  const lines=text?text.split('\n'):[];
+  const body=(line:string)=>line.endsWith('\r')?line.slice(0,-1):line;
+@@ -35,13 +35,13 @@ export function ManualNoteEditor({kind,text,onChange,disabled=false,label,placeh
+     if(!match)return body(line)?<label className="manual-editor-text manual-editor-description-line" key={'row-'+index}><span className="visually-hidden">跟进说明 {index+1}</span><textarea aria-label={'跟进说明 '+(index+1)} rows={2} value={body(line)} disabled={disabled} onChange={event=>replace(index,event.target.value)}/></label>:<div className="manual-editor-gap" key={'row-'+index} aria-hidden="true"/>;
+     return <div className="manual-edit-row" key={'row-'+index}>
+      <input type="checkbox" aria-label={'完成跟进事项 '+(index+1)} checked={match[2].toLowerCase()==='x'} disabled={disabled} onChange={event=>replace(index,match[1]+(event.target.checked?'x':' ')+match[3]+match[4])}/>
+-     <input type="text" aria-label={'跟进事项 '+(index+1)} value={match[4]} disabled={disabled} placeholder="需要做什么…" onChange={event=>replace(index,match[1]+match[2]+match[3]+event.target.value)} onKeyDown={event=>{if(event.key==='Enter'&&!event.nativeEvent.isComposing){event.preventDefault();nextItem.current?.focus();}}}/>
++     <textarea rows={1} aria-label={'跟进事项 '+(index+1)} value={match[4]} disabled={disabled} placeholder="需要做什么…" onChange={event=>replace(index,match[1]+match[2]+match[3]+event.target.value)} onKeyDown={event=>{if(event.key==='Enter'&&!event.nativeEvent.isComposing){event.preventDefault();nextItem.current?.focus();}}}/>
+      <button type="button" aria-label={'移除跟进事项 '+(index+1)} disabled={disabled} onClick={()=>commit(lines.filter((_,i)=>i!==index).join('\n'))}><Trash2 size={15}/></button>
+     </div>;
+    })}
+    <div className="manual-edit-row manual-edit-new" key={'row-'+lines.length}>
+     <Plus size={18} aria-hidden="true"/>
+-    <input type="text" ref={nextItem} aria-label="新增跟进事项" value="" disabled={disabled} placeholder="添加一项需要跟进的事…" onChange={event=>{if(event.target.value)commit(text+(text?'\n':'')+'- [ ] '+event.target.value);}}/>
++    <textarea rows={1} ref={nextItem} aria-label="新增跟进事项" value="" disabled={disabled} placeholder="添加一项需要跟进的事…" onChange={event=>{if(event.target.value)commit(text+(text?'\n':'')+'- [ ] '+event.target.value);}}/>
+    </div>
+    {convertible&&<button type="button" className="manual-convert-lines" disabled={disabled} onClick={convert}>{numbered?'将编号列表转为待办':'将非空文字行转为待办'}</button>}
+   </div>}
+diff --git a/packages/ui/src/manualNoteContext.css b/packages/ui/src/manualNoteContext.css
+index 41e791d1..e028a0da 100644
+--- a/packages/ui/src/manualNoteContext.css
++++ b/packages/ui/src/manualNoteContext.css
+@@ -48,7 +48,7 @@
+ .manual-editor-description-line{margin:10px 0}
+ .manual-editor-description-line>textarea{min-height:55px}
+ .manual-edit-row,.mobile-app .manual-edit-row{display:flex;align-items:center;gap:10px;min-width:0;border-bottom:1px solid color-mix(in srgb,currentColor 10%,transparent);padding:7px 0}
+-.manual-edit-row>input[type=text],.mobile-app .manual-edit-row>input[type=text]{box-sizing:border-box;min-width:0;flex:1;width:0;font:inherit;font-size:14px;line-height:1.6;padding:10px 0;margin:0;border:0;border-radius:0;box-shadow:none;background:transparent;color:inherit}
++.manual-edit-row>textarea,.mobile-app .manual-edit-row>textarea{box-sizing:border-box;min-width:0;flex:1;width:0;min-height:44px;max-height:240px;field-sizing:content;resize:vertical;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;line-height:1.6;padding:10px 0;margin:0;border:0;border-radius:0;box-shadow:none;background:transparent;color:inherit}
+ .manual-edit-row>input[type=checkbox],.mobile-app .manual-edit-row>input[type=checkbox]{box-sizing:border-box;flex:none;appearance:auto;width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;padding:0;margin:0;accent-color:var(--accent-color,var(--accent,#7367c8))}
+ .manual-edit-row>button{display:flex;flex:none;align-items:center;justify-content:center;min-height:36px;min-width:36px;padding:7px;background:transparent;color:inherit;border:0;border-radius:8px;cursor:pointer;opacity:.55}
+ .manual-edit-new>svg{flex:none;opacity:.5}
+@@ -72,4 +72,7 @@
+ .manual-note-editor button:disabled,.manual-followup-entry:disabled,.manual-quote-picker button:disabled{opacity:.45;cursor:default}
+ 
+ .manual-editor-description-line>span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+-.manual-editor-text>textarea,.manual-edit-row>input[type=text],.mobile-app .manual-edit-row>input[type=text],.manual-quote-options blockquote{font-weight:400}
++.manual-editor-text>textarea,.manual-edit-row>textarea,.mobile-app .manual-edit-row>textarea,.manual-quote-options blockquote{font-weight:400}
++
++.manual-note-handoff{display:inline-flex;align-items:center;gap:6px}
++.recording-note .note-footer,.recording-note .note-footer>div{flex-wrap:wrap;row-gap:10px}
+diff --git a/tools/build_windows_candidate_ci.py b/tools/build_windows_candidate_ci.py
+index 336ab563..8497afaa 100644
+--- a/tools/build_windows_candidate_ci.py
++++ b/tools/build_windows_candidate_ci.py
+@@ -54,7 +54,7 @@ try:
+  record['webAssets']=[{'path':p.relative_to(dist).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(dist.rglob('*')) if p.is_file()]
+  names=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party','package.json','package-lock.json','tsconfig.base.json']).splitlines()
+  record['sourceFiles']=[{'path':name,'sha256':sha(S/name)} for name in names if (S/name).is_file()]
+- run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
++ run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
+  before_manifest=(N/'Cargo.toml').read_bytes()
+  preflight=inspect(T,S,source_dir=S)
+  (C/'native-target-preflight.json').write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+diff --git a/tools/qa/core_acceptance20261109/ui_source.cjs b/tools/qa/core_acceptance20261109/ui_source.cjs
+index a649e5eb..a3936848 100644
+--- a/tools/qa/core_acceptance20261109/ui_source.cjs
++++ b/tools/qa/core_acceptance20261109/ui_source.cjs
+@@ -11,7 +11,7 @@ function run(name,args){
+ (async()=>{try{
+  run('windows-typecheck',[path.join(root,'node_modules/typescript/bin/tsc'),'--project',path.join(root,'apps/windows/tsconfig.json'),'--noEmit']);
+  const cache=path.join(root,'.cache/core-meeting-ui');fs.mkdirSync(cache,{recursive:true});
+- for(const name of ['test_content_export_panel051','test_selected_content_copy','test_action_review_tools','test_windows_note_images','test_document_context_panel','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_document_table','test_note_reading','test_meeting_reference_workspace','test_audio_edit_recording_entry']){
++ for(const name of ['test_content_export_panel051','test_selected_content_copy','test_action_review_tools','test_windows_note_images','test_document_context_panel','test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_document_table','test_note_reading','test_meeting_reference_workspace','test_audio_edit_recording_entry']){
+   const output=path.join(cache,name+'.mjs');await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:output,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'}});
+   run(name,['--import',require('node:url').pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,output]);
+  }
+diff --git a/tools/test_companion_setup_render.mjs b/tools/test_companion_setup_render.mjs
+index 9469077f..8a56644e 100644
+--- a/tools/test_companion_setup_render.mjs
++++ b/tools/test_companion_setup_render.mjs
+@@ -11,7 +11,7 @@ const names=['test_customer_followthrough','test_action_review_tools','test_card
+   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
+   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
+   'test_companion_app_state','test_transcript_bulk_replace','test_companion_pet_navigation','test_companion_result_order','test_windows_device_actions','test_windows_settings_navigation',
+-  'test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace'];
++  'test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace'];
+ const requested=process.argv.slice(2);
+ for(const name of requested)if(!names.includes(name))throw new Error(`Unknown UI contract: ${name}`);
+ const cache=path.join(root,'.cache','ui-acceptance');

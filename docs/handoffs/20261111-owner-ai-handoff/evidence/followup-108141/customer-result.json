@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-11T14:59:02+08:00",
+  "state": "AFFECTED_ORDINARY_FOLLOWUP_NEW_AFTERUSE_FULL_FEEDBACK_RECEIVED",
+  "actualVersion": "0.1.141",
+  "sourceCommit": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
+  "role": "new neutral hypothetical after-purchase FIRST_USE",
+  "affectedAfterUseCovered": true,
+  "allRawFeedbackRead": true,
+  "rawFeedback": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
+  "rawSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
+  "actualPurpose": "读懂会议与人工资料，直接写个人跟进，保存后离开搜索找回，再编辑并勾选实际阅读项。",
+  "outcome": "自主使用新清单入口与逐行编辑，三项1/3保存找回成功，愿继续本机阅读和个人跟进。未索取购买承诺。",
+  "auxiliaryConditions": "公开既有纪要/转写及工程人工便签、补充文档辅助；本轮正式售价/服务权益未知。",
+  "decisions": [
+    {
+      "input": "新建跟进入口符合目的；实际直接写两项、搜索找回、编辑加第三项并勾选1/3",
+      "decision": "新普通清单收益实际被自主使用；原140的语法学习障碍获得本轮改善证据。保持现有文本/勾选/搜索机制，不另造任务存储。",
+      "status": "ACTUALLY_USED_NEW_BENEFIT"
+    },
+    {
+      "input": "没有弄清能否只交接自己这张清单，不想带走所有旧人工备注",
+      "decision": "保留在原导出/复制分享事项；本批完成后优先核现有按条选择能力与公开入口，集中补齐本张清单及依据的导出预览/复制/分享，不在当前冻结候选内再加一轮小修。",
+      "status": "NEXT_RELATED_NONMODEL_PURPOSE"
+    },
+    {
+      "input": "想把段落/表格行更清楚附到具体跟进；自己重写了来源",
+      "decision": "现有文档/表格引用可附整条人工备注，工程实际已验证；本角色未用引用，不能记顾客通过。后续同一交接批次改善可发现性/当页示例。逐事项来源是愿望，未新建数据结构或假装已支持。",
+      "status": "DISCOVERABILITY_AND_ITEM_LEVEL_WISH_OPEN"
+    },
+    {
+      "input": "负责人、希望日期、只看未完成更清楚",
+      "decision": "作为人工跟进便利愿望沿原清单事项保留；不把AI/正式行动项已有字段移植成另一套猜测时间，不替用户补负责人或日期。",
+      "status": "OPEN_WISH_NOT_THIS_BATCH_BLOCKER"
+    },
+    {
+      "input": "怪数字/说话身份不清、预算草案真假仍须问提供者，公开旧工程便签辅助理解",
+      "decision": "不改原始公开样本或把材料变会议结论；模型/多人/原音/实体/正式条件继续单独未完成，辅助条件保留。",
+      "status": "MODEL_FACT_AND_REAL_WORLD_GATES_UNCHANGED"
+    }
+  ],
+  "notTested": [
+    "无新收音/声音/转写/在线AI/设备硬件/真实多人",
+    "未实际复制、导出成品、分享或发送",
+    "无真实订单、客服、长期日用或售卖资格"
+  ],
+  "saleQualified": false,
+  "modelsRun": false
+}

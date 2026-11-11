@@ -147731,7 +147731,7 @@
                 "plaud",
                 "soundcore"
               ],
-              "current": "设备/Windows已有实板记录；044手机文件链已验。新共享FW66675收据另证Android系统/GATT六次加密连接、重连及手机忘记后重配通过；生产App同步、锁屏后台/进程终止接收整链仍开。",
+              "current": "FW66791有实卡物理开停录、原音收取和本机转写结果；原长录399文件提交失败后完整恢复，提交冲突已修。当前版本连续>=2h录音/同步、普通自动结果和手机实卡整链尚未完整通过。",
               "acceptance": "真实同场长会从开录到双端耐久保存；断连/暂停同步不误停录，失败不丢原音，封口/校验与消费一致。",
               "order": "P0",
               "dependency": "real_device",
@@ -147741,10 +147741,13 @@
               "acceptanceKey": "CP27-01/capture",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；含实物验收",
+                "label": "实卡短链已有结果；当前长录及双端完整链待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -147767,7 +147770,8 @@
                 "receipt": "E:\\CodexData\\Companion\\capture-closeout-20261105\\android-metadata\\acceptance.json",
                 "sha256": "ada02fbe5ab9e1d51d7e438f22635e9a8c8eb26d2468a85d12971ed44c21b948",
                 "scope": "Android metadata/GATT connection only; no catalogue/audio/consume; production App full chain remains open"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "phone048RepeatedRegionObservation": {
@@ -147788,7 +147792,7 @@
                 "plaud",
                 "soundcore"
               ],
-              "current": "044手机真实FW66674保存样本两处重点读取/回听/TXT已验；实体键→手机接收及重点参与AI整理仍未完整资格。",
+              "current": "已有实板单击开停录、一次有意双敲形成持久重点的证据；自然拿起/放下/携带误触、重点进入可读结果和双端实卡完整使用未关闭。",
               "acceptance": "实体重点有持久时间/原音出处，双端可找回/回听；进入整理的重点可追溯，不能只显示列表。",
               "order": "P0",
               "dependency": "real_device_and_model_pause",
@@ -147798,10 +147802,13 @@
               "acceptanceKey": "CP27-01/marks",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；模型验证暂停",
+                "label": "有实板样本；自然使用及结果联动待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -147819,7 +147826,8 @@
                 ],
                 "expected": "实体重点有持久时间/原音出处，双端可找回/回听；进入整理的重点可追溯，不能只显示列表。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "call",
@@ -147862,7 +147870,8 @@
                 ],
                 "expected": "按实际支持的手机/通话路径听见双方、标明模式与限制，普通会议不回退；需要的传感器/硬件单列落实。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "desktop_capture",
@@ -147906,7 +147915,8 @@
                 ],
                 "expected": "选择会议音频与本地发言、停止/取消/重开可恢复；不把录音卡环境收音冒充系统音频直采。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "import",
@@ -148021,7 +148031,8 @@
                 "qualifiedScope": "Document original/local extraction/reading/search/explicit AI source opt-in/native original save/backup/restore/scoped purge. Existing ordinary human-note reading/search customer scopes retained.",
                 "entireParityRowQualified": false,
                 "onlineAiGenerationQualified": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "notes_images",
@@ -148037,7 +148048,7 @@
                 "granola_enhanced",
                 "notta_brain"
               ],
-              "current": "099/136新增持久字面依据、人工跟进清单、来源变化明确保留、完整编辑/搜索/原件与JSON/图文携带；既有文字图片时间点保留。真实两类模拟完成自身便签接续，实卡/AI事实资格仍独立。",
+              "current": "Windows108/Android141保留图文和时间点备注、清单、全文搜索、字面来源绑定及返回；新增直接逐项编辑、编号转清单、转写选段。最新普通保存/编辑/重开和数据保留实际通过。单张交接新入口仅源码，AI事实与实卡范围另验。",
               "acceptance": "备注/图片可查看编辑并随会议持久保存/备份/导出；与识别原话分开，AI采用时可追溯。",
               "order": "P1",
               "dependency": "software",
@@ -148047,9 +148058,9 @@
               "acceptanceKey": "CP27-01/notes_images",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成（已有部分成果）",
+                "label": "双端已交付常用图文/清单；单张交接源码待实装",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": null,
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [
                   "docs/handoffs/20261110-android-media-import/notes-delivered-result.json",
                   "docs/handoffs/20261110-android-media-import/windows-context-delivered-result.json",
@@ -148096,7 +148107,10 @@
                   "declaredIncomingScopePassed": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -148171,7 +148185,8 @@
                 "qualifiedScope": "Document original/local extraction/reading/search/explicit AI source opt-in/native original save/backup/restore/scoped purge. Existing ordinary human-note reading/search customer scopes retained.",
                 "entireParityRowQualified": false,
                 "onlineAiGenerationQualified": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "live",
@@ -148215,7 +148230,8 @@
                 ],
                 "expected": "分别记录会中延迟、录后补传、转写与纪要等待；有中断恢复，不用摘要耗时代替总耗时。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "asr",
@@ -148230,7 +148246,7 @@
                 "soundcore",
                 "notta"
               ],
-              "current": "已保留产品本地转写与云可选路径；单份61分钟公开开发样本曾为严格字错率3.61%，不能代表跨会/手机/实卡普遍<5%。新联合预训练方案整会准确率、多人/重叠及实际耗时资源门仍未完成；Owner明确早上无外置GPU，当前延后该GPU验证，不把所有AI软件功能都视作不可推进。",
+              "current": "原单份61分钟公开开发样本曾严格CER3.61%，不代表通用<5%。最近产品固定提供器配对整会Windows6.4024%、手机约6.63%的原记录保留；复杂多人/重叠、第三会与事实质量仍未合格。模型专项独立，不由软件交付关闭。",
               "acceptance": "沿原冻结跨语料整会质量门，中文CER<5%阶段目标及原更高目标保留；计入装载/运行/取消/峰值RAM与CPU，不能把机器卡住。",
               "order": "P0",
               "dependency": "model_paused",
@@ -148240,10 +148256,13 @@
               "acceptanceKey": "CP27-01/asr",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；模型验证暂停",
+                "label": "模型质量专项未合格；保留原指标",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -148261,7 +148280,8 @@
                 ],
                 "expected": "沿原冻结跨语料整会质量门，中文CER<5%阶段目标及原更高目标保留；计入装载/运行/取消/峰值RAM与CPU，不能把机器卡住。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "speakers",
@@ -148305,7 +148325,8 @@
                 ],
                 "expected": "全场身份稳定、逐人文字/时间可核；姓名/角色可人工确认，未知不猜；按原分人/归属指标验收。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "overlap_noise",
@@ -148351,7 +148372,8 @@
                 ],
                 "expected": "遵Owner先分离再逐路转写方向及真实整会/单人不退化对照；难段清楚标示/可选线上，不把降噪更安静当识别合格。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "vocab",
@@ -148395,7 +148417,8 @@
                 ],
                 "expected": "正确写法/常见误识/语言可管理和备份；新转写应用可验证，不静默重写旧原文。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "editing",
@@ -148456,7 +148479,8 @@
                 "nativePhoneRuntimeQualified": false,
                 "modelsRun": false
               },
-              "currentNonmodelBatch": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
+              "currentNonmodelBatch": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -148528,7 +148552,8 @@
                 "requirement": "默认纪要把重点、决定、建议、行动、待确认项清楚呈现；正常生成主动作与结果来源/人工修改、处理中/取消恢复状态一致。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -148561,7 +148586,7 @@
                 "granola_templates_current",
                 "notta_ai_notes"
               ],
-              "current": "Windows原预置/自定义/备份路径保留。Android0.1.47 r2已安装：会议/访谈/课堂、自定义保存再用与同名副本、当前资料绑定/历史保持；真实Android生产存储/整库备份恢复通过。正常App前台回访及真实生成质量按Owner暂停未验。 r2另修正重开旧会议时首选模板被旧纪要视角覆盖的问题。",
+              "current": "既有预置/自定义模板、保存与备份成果保留，108/141会议与AI工作区沿其来源继续；本轮未重新评价所有模板或真实生成质量，不以旧047版本说明作为当前安装身份。",
               "acceptance": "手机/Windows可选会议、访谈、课堂等及自定义模板；保存/再用/恢复/生成历史保持来源，不重写已验Windows实现。 11-05 AI增强对标补充：同场不同模板的命名成果可独立并存，不以当前版本替换或旧版历史冒充多视角成果；默认/自定义整理要求可复用。",
               "order": "P1",
               "dependency": "model_paused_for_generation",
@@ -148571,7 +148596,7 @@
               "acceptanceKey": "CP27-01/templates",
               "engineering": {
                 "status": "PARTIAL_DELIVERED",
-                "label": "软件已交付；手机前台/AI效果待验",
+                "label": "既有模板功能保留；完整生成质量/用途待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": "Android0.1.47/code48 r2（模板软件范围）",
                 "evidence": [
@@ -148583,7 +148608,10 @@
                   "evidence": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel047\\delivery-result.json",
                   "ownerAccepted": false,
                   "reopenPreferenceRegressionPassed": true
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -148608,7 +148636,8 @@
                 "requirement": "同场不同模板的命名成果可独立并存，不以当前版本替换或旧版历史冒充多视角成果；默认/自定义整理要求可复用。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -148633,7 +148662,7 @@
                 "soundcore_ai_plan",
                 "notta_brain"
               ],
-              "current": "Windows/Android050已接统一会议问答、选定多会范围、原话依据与独立材料保存；053保留相关前端/后端，054补材料选择导出候选。当前缺口为普通手机完整目的使用、真实AI输出质量与取消恢复等全链资格；旧“Android App未接完整问答入口”已过时，不能当尚无入口。",
+              "current": "108/141会议/资料/AI工作区保留选定上下文、问答材料、来源返回、保存与双草稿；106匹配Windows原生入口实际问当前会议有收据。最新清单批次未调用云AI，不外推所有问答、跨会或事实正确性。",
               "acceptance": "选择单会/多会/文件夹范围，答案带可核引用，证据不足明确；删除源后不继续检索，取消/续做/保存笔记可用。 11-05 AI增强对标补充：补手机单会/选定多会/文件夹入口、回答保存为材料、可复用提问任务；选词百科/联网检索与会议原话来源区分，联网为明确按需选择。",
               "order": "P1",
               "dependency": "model_paused_for_generation",
@@ -148643,10 +148672,13 @@
               "acceptanceKey": "CP27-01/qa",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；模型验证暂停",
+                "label": "统一入口及保存已有交付；完整AI质量另验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -148681,7 +148713,8 @@
                 "qualifiedScope": "Document original/local extraction/reading/search/explicit AI source opt-in/native original save/backup/restore/scoped purge. Existing ordinary human-note reading/search customer scopes retained.",
                 "entireParityRowQualified": false,
                 "onlineAiGenerationQualified": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "translation",
@@ -148725,7 +148758,8 @@
                 ],
                 "expected": "按实际语言/入口逐项验收；原文与译文关联/失效/版本/导出清楚，保留未识别/未译范围。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "mindmap",
@@ -148737,7 +148771,7 @@
                 "plaud_export",
                 "notta_map"
               ],
-              "current": "Windows052完整PNG/mm已交付；Android059在实际系统保存、普通分享接收端验证PNG/mm完整文件，文字源/图像已检查；当前061，062源头Word修复不改导图实现。长图交互及完整真实会后用途仍待。",
+              "current": "既有Windows PNG/可编辑mm及Android系统保存、分享接收的范围证据保留；本轮未改导图。长图交互和完整真实会后用途未全验，不把052/059/062历史版本当当前安装。",
               "acceptance": "同一已保存纪要生成可阅读结构，长图缩放/定位/文字不遮挡，格式可在外部正常打开，不把导图当新事实。",
               "order": "P1",
               "dependency": "software",
@@ -148768,13 +148802,16 @@
                   "customerResult": null
                 },
                 "status": "PARTIAL_DELIVERED",
-                "label": "Windows052完整PNG与可编辑mm已交付；长图交互及安卓完整范围待完成",
+                "label": "既有导图输出保留；完整交互与用途待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": "Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed",
                 "evidence": [
                   "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\state.json",
                   "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json"
-                ]
+                ],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -148799,7 +148836,8 @@
                 "requirement": "导图以已保存纪要结构为事实源；展开/缩放/导出是展示能力，不能要求再开启一套AI或生成另一套未经核对事实。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "customer047": {
@@ -148826,7 +148864,7 @@
                 "otter_conversation_reference",
                 "notta_brain"
               ],
-              "current": "原负责人/时间/状态筛选与跟进文字保留；099/136增加独立人工跟进清单和出处，状态持久、编辑/回找过。完整跨会任务总览/提醒及原AI增强条款未据本批关闭。",
+              "current": "Windows108/Android141直接逐项新建/编辑/勾选清单、编号转换、选取原话及出处返回实际通过；模型负责人/日期和原事实门不由人工清单关闭。109/142拟提供单张带依据交接，仅源码检查点未出包。",
               "acceptance": "任务可核原话、人工安排明确、状态持久；可按负责人/时间/完成筛选并生成可复核跟进草稿，未授权不自动发送。 11-05 AI增强对标补充：补负责人/时间/状态/缺失字段筛选与会后跟进邮件、周报、客户简报/演示提纲等可编辑草稿；普通外发前可核对内容与目标，不编造承诺/负责人。",
               "order": "P1",
               "dependency": "software",
@@ -148836,9 +148874,9 @@
               "acceptanceKey": "CP27-01/actions",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "已交付筛选与本地跟进文字；完整竞品条款待完成",
+                "label": "普通跟进清单已交付；单张交接待实装",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": "Windows0.1.82 / Android0.1.117",
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [
                   "docs/handoffs/20261110-actions-followup/batch.json",
                   "docs/handoffs/20261110-android-media-import/manual-followup-delivered-result.json"
@@ -148853,7 +148891,10 @@
                   "newActualCustomerRawRead": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -149005,7 +149046,8 @@
                   "modelsStarted": 0,
                   "userApplicationsClosed": false
                 }
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "calendar",
@@ -149018,7 +149060,7 @@
                 "granola",
                 "notta"
               ],
-              "current": "Windows有TODO/ICS等既有实现；跨端日历账户、提醒与会议准备完整链未齐。",
+              "current": "既有ICS/待办导出及时间确认保留；107独立AI模拟实际保存过仅日期与指定提醒文件，未在真实日历导入或等待提醒。日期-only确认仍有可简化问题；账号/跨端日历整链未齐。",
               "acceptance": "关联真实事件/时区/提醒与用户明确动作，冲突取消不重复建；仅生成草稿不冒充已写外部日历。",
               "order": "P1",
               "dependency": "external_account",
@@ -149028,10 +149070,13 @@
               "acceptanceKey": "CP27-01/calendar",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；有外部依赖",
+                "label": "可生成日历文件；确认体验及实际接收提醒待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -149049,7 +149094,8 @@
                 ],
                 "expected": "关联真实事件/时区/提醒与用户明确动作，冲突取消不重复建；仅生成草稿不冒充已写外部日历。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "failureCountDisplay048": {
@@ -149160,7 +149206,8 @@
                 "customerFeedback": "docs/handoffs/20261110-android-media-import/android127/customer-afteruse.md",
                 "customerType": "AI_SIMULATED_ASSUMED_AFTER_PURCHASE_FIRST_USE",
                 "ownerAccepted": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "organization",
@@ -149213,7 +149260,8 @@
                 "receipt": "docs/handoffs/20261110-android-media-import/organization-delivered-result.json",
                 "nativePhoneManagementBackupLifecyclePassed": true,
                 "ownerAccepted": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "playback",
@@ -149302,7 +149350,8 @@
                 "nativePhoneRuntimeQualified": false,
                 "modelsRun": false
               },
-              "currentNonmodelBatch": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
+              "currentNonmodelBatch": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "trim_merge",
@@ -149349,7 +149398,8 @@
                 ],
                 "expected": "原音保留，派生时间映射正确；取消/失败不改源；多源合并仍标原身份与来源。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "trash",
@@ -149415,7 +149465,8 @@
                 ],
                 "expected": "普通删除可恢复原内容，永久清除范围/确认清楚；共享原件、活动录音和保护项不误删。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -149438,7 +149489,7 @@
                 "notta_fill",
                 "notta_brain"
               ],
-              "current": "Windows082当前安装，文件交付沿081实际证据：Word/TXT/PDF/原WAV/MP3主入口复制为完整文件、标准浏览器附件粘贴和Shell落盘、原音备份恢复已过。Android117沿111/112系统Word/TXT/WAV、实际复制粘贴、PDF本机接收及导图XML保存证据。旧WinRT面板与具体聊天客户端仍未资格，不重跑未受影响已过路径。",
+              "current": "最新108/141保留已有多格式导出/保存/复制/部分分享与来源校验。Windows108同MSI普通界面及文件链通过；旧WinRT分享、具体第三方粘贴/接收未全部合格。109/142选中单张清单/依据入口和可见正文预览仅源码，不能算新交付。",
               "acceptance": "原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
               "order": "P0",
               "dependency": "software",
@@ -149516,9 +149567,9 @@
                   "customerResult": null
                 },
                 "status": "PARTIAL_DELIVERED",
-                "label": "Windows068文件夹分享与状态修复已安装、后台核对；真实收件及安卓Word/录控等余项未齐",
+                "label": "多格式及部分实际交付已过；单张新入口/第三方接收待验",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": "Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed",
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [
                   "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel046\\delivery-result.json",
                   "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\delivery-result.json",
@@ -149610,7 +149661,10 @@
                   "newActualCustomerRawRead": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -149635,7 +149689,8 @@
                 "requirement": "另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "backup",
@@ -149648,7 +149703,7 @@
                 "soundcore",
                 "plaud_export"
               ],
-              "current": "099/136人工依据、清单及图片备份/恢复已按Windows14内容文件、相同Android135原生56内容文件字节一致保留；136新界面与重启实际验证。实体第二手机和全量跨端互通仍开放。",
+              "current": "108匹配原生14内容文件备份恢复与精确清理通过；Android既有原生备份资格按未变范围保留，141真进程退出后新清单/依据精确重开。双端升级分别保留245/5084原应用文件；实体第二手机/全量跨平台互通仍未验。",
               "acceptance": "录音/文字/人工事项/译文/历史/模板/组织信息整体保留，校验后非覆盖恢复；实际换设备验证，不仅同机。",
               "order": "P0",
               "dependency": "second_device",
@@ -149658,9 +149713,9 @@
               "acceptanceKey": "CP27-01/backup",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；有外部依赖",
+                "label": "已验范围保留；实体换机及全部互通待验",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": null,
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [
                   "docs/handoffs/20261110-android-media-import/manual-followup-delivered-result.json"
                 ],
@@ -149674,7 +149729,10 @@
                   "newActualCustomerRawRead": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -149702,7 +149760,8 @@
                 "qualifiedScope": "Document original/local extraction/reading/search/explicit AI source opt-in/native original save/backup/restore/scoped purge. Existing ordinary human-note reading/search customer scopes retained.",
                 "entireParityRowQualified": false,
                 "onlineAiGenerationQualified": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "cross_platform",
@@ -149748,7 +149807,8 @@
                 ],
                 "expected": "同一资料在支持平台一致，冲突与离线编辑可恢复，账号注销/数据去向明确；本地路径继续可用，私密原音不擅自上传。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "automation",
@@ -149765,7 +149825,7 @@
                 "notta_automations",
                 "granola_recipes"
               ],
-              "current": "已有部分自动接收/整理基础；完整用户可配工作流与跨工具完成结果待补。",
+              "current": "104/107自动本地处理、服务就绪、重启恢复的软件资格保留并已并入108；物理卡普通自动收取到结果的完整自然使用仍未关闭，不等于全套用户自定义自动化/跨工具完成。",
               "acceptance": "明确选择触发/服务/范围，失败可继续且不重复处理；生成/外发分别可见，不把自动化按钮当执行成功。",
               "order": "P1",
               "dependency": "account_service",
@@ -149775,10 +149835,13 @@
               "acceptanceKey": "CP27-01/automation",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；有外部依赖",
+                "label": "自动处理软件已实现；实卡自然链与完整工作流待验",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [],
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -149803,7 +149866,8 @@
                 "requirement": "可复用任务和模板、触发条件、资料范围、费用/输出目标、启停/撤销需集中设置，失败与重复触发有明确结果；不会给每个AI动作单设全局开关。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "integrations",
@@ -149857,7 +149921,8 @@
                 "requirement": "会后草稿与真正写入/发送区分；对接笔记/日历/CRM逐服务真实授权、目标与结果，自动规则按显式激活的授权范围执行。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "team",
@@ -149902,7 +149967,8 @@
                 ],
                 "expected": "共享范围/角色/撤销/历史/成员离开与资源管理真实工作；企业要求保留在总对标范围，不以个人版通过代替。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -149964,7 +150030,8 @@
                 "requirement": "Android048当前密钥仅内存保存、重开重填。后续补平台保护的可选择安全保存/清除与连通状态，保持密钥不入备份、原音不擅自上传；不靠隐藏开关默认开启云端。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "find_device",
@@ -150007,7 +150074,8 @@
                 ],
                 "expected": "本地范围提示实际可用；若覆盖Find My需完成相应平台/硬件/认证，不能用应用图标冒充系统找回。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "hardware",
@@ -150052,7 +150120,8 @@
                 ],
                 "expected": "真实姿态/噪声/距离、连续录音与存储、充电/低电/唤醒逐项有证据；功能/结果等价需真实满足，不能照搬宣传数值。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "id": "updates",
@@ -150066,7 +150135,7 @@
                 "notta",
                 "granola"
               ],
-              "current": "Windows082、Android123已实际更新并验证原文件，123源码/安装包/公开备份在私有远端回读一致。固件OTA按embedded原收据；正式签名/分发和完整恢复资格仍开。",
+              "current": "Windows107->108及Android140->141实际升级，原应用文件逐字节保护通过，最新整包私有远端全量回读一致；FW66791仅保留既有固件字节与原OTA证据。正式零售签名、渠道与完整故障恢复尚未齐。",
               "acceptance": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
               "order": "P0",
               "dependency": "signing_service",
@@ -150076,9 +150145,9 @@
               "acceptanceKey": "CP27-01/updates",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成；有外部依赖",
+                "label": "双端应用升级已验；正式发布/固件完整范围待验",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": null,
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [],
                 "windows060Candidate": {
                   "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\windows-verification.json",
@@ -150091,7 +150160,10 @@
                   "sameUpgradeIdentityAndDowngradeGuard": true,
                   "installed": true,
                   "original245FilesIdentical": true
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -150109,7 +150181,8 @@
                 ],
                 "expected": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
                 "resultRule": "按本项实际结果记录通过/需修改/未覆盖；未覆盖条件不自动算通过。"
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "aiWorkspace050": {
@@ -150145,7 +150218,7 @@
                 "notta_automations",
                 "notta_brain"
               ],
-              "current": "099/136人工跟进与出处整批实际可用；修136真实清单尺寸和正文重复，双端普通界面、来源/重启与数据保留过。两位模拟实际形成自身清单回找收益；卡片/文件名/跟进直达与表头上下文愿望已承接，不代签Owner或市场成交。",
+              "current": "106/140重整会议详情身份/分区/紧凑引用；108/141交付普通逐项清单、字面选段和真实展开提示，深浅色/草稿/重开实际过。141新AI假设售后完成个人跟进回找；单张交接和长行编辑仅新源码，整体高级感未获Owner完整验收。",
               "acceptance": "深浅色、详情/来源/任务/导图/翻译/设置均有可用状态；正常/空/忙/失败/恢复、键盘/长文/可访问性和性能一致；普通客户自选完整目的体验。 11-05 AI增强对标补充：本轮定位的Windows模型启用开关与Android密钥/服务设置负担需收敛。普通入口按纪要、问答和材料组织，当前模板轻量选择，专业模型配置下沉；联网/云端/自动行为保留明确控制。这里只完成官方研究，未改界面或安装。",
               "order": "P0",
               "dependency": "real_user_trial",
@@ -150155,9 +150228,9 @@
               "acceptanceKey": "CP27-01/premium_ui",
               "engineering": {
                 "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成（已有部分成果）",
+                "label": "多批可用性已交付；整体视觉/交接仍待验",
                 "readyForOwnerAcceptance": false,
-                "deliveredVersion": null,
+                "deliveredVersion": "Windows108/Android141（已验子范围；整项仍未签收）",
                 "evidence": [
                   "docs/handoffs/20261110-android-media-import/reading127-delivered-result.json",
                   "docs/handoffs/20261110-android-media-import/reader-presentation-delivered-result.json",
@@ -150209,7 +150282,10 @@
                   "declaredIncomingScopePassed": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
-                }
+                },
+                "reviewedAt": "2026-11-11T16:24:51+08:00",
+                "currentSoftwareBaselineReceipt": "docs/handoffs/20261110-android-media-import/followup-108141-delivered-result.json",
+                "receiptScope": "仅当前软件基线；不证明本行全部功能、模型或实物合格。"
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -150301,7 +150377,8 @@
                 "qualifiedScope": "Document original/local extraction/reading/search/explicit AI source opt-in/native original save/backup/restore/scoped purge. Existing ordinary human-note reading/search customer scopes retained.",
                 "entireParityRowQualified": false,
                 "onlineAiGenerationQualified": false
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             },
             {
               "customer047": {
@@ -150366,7 +150443,8 @@
                 "requirement": "自备密钥模式与正式托管AI服务/套餐需明确区分；当前尚无默认托管服务交付证据，不能改个按钮就当普通消费者可直接使用。竞品付费/额度/平台限制保留核对。",
                 "status": "RESEARCHED_IMPLEMENTATION_AND_REAL_USE_PENDING",
                 "ownerAcceptanceUnchanged": true
-              }
+              },
+              "asOfHandoff": "2026-11-11T16:24:51+08:00"
             }
           ],
           "coverageCompleteClaim": false,
@@ -150386,7 +150464,8 @@
             "复用Windows已交付模板/问答/组织/播放，补齐Android入口/持久化/用户链；再按暂停范围验证AI",
             "逐项完成输入/分享/跨端/自动化/协作及服务/硬件依赖；未完成不宣布全功能可售"
           ],
-          "next": "原owner_module_execution.nextBatch是唯一下一动作入口。"
+          "next": "原owner_module_execution.nextBatch是唯一下一动作入口。",
+          "currentStatusAuthority": "owner_module_execution.handoff20261111 and original current core workpoint; earlier dated reviews are history."
         },
         "ownerDayNonmodel20261105": {
           "delivery048": {
@@ -268078,12 +268157,12 @@
           "delivery": "两端0.1.36候选包实际生成并核对，未安装日用版/手机，未做新客户体验或新模型准确率测试；不关闭任何原大模块。"
         },
         "at": "2026-11-04T16:48:44+08:00",
-        "status": "SOFTWARE_FRONTEND_DELIVERED_NATIVE_DEVICE_AND_MODEL_QUALIFICATION_OPEN",
+        "status": "OWNER_REQUESTED_AI_HANDOFF",
         "ownerQuote": "我想知道我们现在大概的方向是什么。感觉这个今天完全是这个零进展。你觉得我们现在要做这个事情，大概要怎么做呢？有思路吗？还能做吗？你觉得这个事情不能做的话就先算了。就简单一点，但是我觉得这个录音卡的功能还是要搞完善一点。基本上就是靠软件这边发力了。",
         "interpretation": "本轮要求解释可行性并简化执行，优先录音卡核心软件；不是取消原准确率/多人/重叠目标，也不是允许宣称销售合格。",
-        "todayDelivery": "050四点工作台已安装；清理后最终源码/完整后端恢复，APK重建逐字节一致，已远端备份；原25Windows内容输出继续。",
+        "todayDelivery": "当前真实交付108/141，来源见同一core.lastOutcome；050恢复与旧工作点为历史。",
         "existingProduct": "现有候选已包含转写修正/匿名说话人改名、纪要原文定位/音频回听、修订失效提示及事实约束等代码和部分旧验证；未重新实现，双端最新候选升级/持久化和完整实会可用闭环仍未确认。",
-        "sourceWorkspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
+        "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "strategy": "先完成可靠录音归档和可核实会议结果：保留原音、明确处理状态、文字和人物可修正、纪要/任务可回原话。复杂重叠暂作未合格专项，不能静默写成确定事实/负责人。优先现有成熟预训组件，只有可重复定位的残差值得适配/微调；暂不扩训从零新架构。",
         "research": {
           "newCpuBaselines": [
@@ -268111,13 +268190,13 @@
           "secondaryGpu": "RX6800XT外置显卡已实际连接：DXGI独立显存约16GiB、D3D12通过，独立ORT DirectML算术内核已执行且禁CPU回退；尚未做语音模型GPU/训练验证，原新模型启动门槛保留。"
         },
         "openTargetsUnchanged": "跨真实整会字错率<5%、多人/短新人覆盖、重叠逐人文字、原句事实核对、手机与实卡整链、时间/资源均保留，qualifiedArchitectureChosen仍false。核心内测可用不能代替销售资格。",
-        "next": "核心可用交付优先，模型专项保留。先在现有双端工作树核对并修复同一场真实会议从保存/回听、转写修订和说话人改名、重新生成纪要、定位依据到导出/重新打开的实际阻断，集中收敛一个能使用的候选；已有可用项不重写，不把测试或记录数量当进展。真实手机/录音卡和升级保留按实际条件验证，未验证不称交付。原已关闭吞吐专项不重开，不占设备改固件。复杂重叠分离/归属与跨会<5%继续独立验收，暂不扩训新结构、不因等待独显停止软件；成熟完整预训模型仅在兼容和资源条件具备后作有完整实会对照的替换候选，普通语音不得退化。",
+        "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
         "evidence": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\core-delivery-priority-review-r1",
         "boundaries": "没有操作手机/卡、消费录音、安装驱动、占用独显、修改网络、发送客户邀请或启动新训练。",
         "ownerCoreAcceptanceCandidate20261109": {
           "at": "2026-11-11T10:49:26+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "INCOMING_CORE_COMPLETE_NEXT_COHERENT_MEETING_DETAIL_VISUAL_FINISH",
+          "state": "OWNER_HANDOFF_INSTALLED108141_SOURCE109142_NOT_BUILT",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -268141,7 +268220,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "105/139完整外部文件链已交付；下一完整会议详情批次已冻结106/140，140实际身份/AI入口/紧凑原文依据/勾选/双草稿/深浅色/重开及原库外观返回通过。4919旧文件除索引外一致、副屏34已精确关闭。106正常构建成功，沿续作入口核包/同包界面/升级，之后新中性完整用途体验及整包；未宣称高级感或全部售卖门已过。",
+          "currentCheckpoint": "108/141同源普通清单/引用整批已安装和私有全量回读。选中单张清单及依据交接、长行编辑已有源码和受影响检查；尚未原生构建/实装，转交下一AI。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
@@ -268149,7 +268228,7 @@
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
-          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
             "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
@@ -269066,38 +269145,44 @@
             {
               "block": "双端与实卡同一候选",
               "state": "OPEN",
-              "facts": "统一Windows099/Android136已实装及完整私有打包，既有固件66791/Mac候选保留原字节；本批不接板，不继承关闭原实卡同场/长录/异常恢复与具体客户端门。",
-              "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。"
+              "facts": "最新Windows108/Android141已安装打包；FW66791/Mac仅保留原字节，不替代最新同一实卡完整链与长录资格。",
+              "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             },
             {
               "block": "长录/连接/异常恢复可靠性",
               "state": "OPEN",
               "facts": "实卡现场沿embedded最新原收据，不再把较早786候选当当前版本。本包仅保留既有791候选原字节，应用图文/原生检查不代替长录、电源和物理恢复资格。",
-              "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。"
+              "exit": "当前匹配接收核心与固件完成原长录及正常中断恢复，原音完整。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             },
             {
               "block": "转写/多人/纪要质量",
               "state": "OPEN",
               "facts": "当前产品固定提供器同场严格混合字错率6.4024%，未<5%；复杂多人/重叠与完整事实质量仍未合格，未因本轮功能链通过而改门槛。",
-              "exit": "按原多会议、逐人/重叠与事实指标达标。"
+              "exit": "按原多会议、逐人/重叠与事实指标达标。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             },
             {
               "block": "非模型软件完整性",
               "state": "OPEN",
-              "facts": "105/139系统文件与其它App分享接收、原件/权限重试/取消/清除/重开已实装完整打包；前批编辑、文档/图文/分类/导出/设置保留。整体高级感和AI工作区用途仍待整批视觉完善；账号跨端/团队/第三方正式服务沿原范围开放。",
-              "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。"
+              "facts": "108/141实际交付，导入/编辑/资料/清单/引用/恢复已验范围保留；109/142交接新入口仅源码，正式第三方接收及完整平台范围开放。",
+              "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             },
             {
               "block": "正式发布与服务边界",
               "state": "OPEN",
               "facts": "正式签名/分发、许可/隐私、支持/费用、账号跨端/团队及第三方服务等完整原对标仍开放；工程候选和AI模拟不代替售卖资格。",
-              "exit": "按真实发布身份、服务条件与原对标逐项完成，不虚构权益或资质。"
+              "exit": "按真实发布身份、服务条件与原对标逐项完成，不虚构权益或资质。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             },
             {
               "block": "完整用户验收",
               "state": "OPEN",
-              "facts": "136独立售前与假设售后完成自选完整人工整理、保存、搜索回找与来源核对；原话和辅助条件已承接。工程、AI模拟、Owner与真人/长期验收保持区分。",
-              "exit": "完成可用整批后沿原客户流程承接实际收益、困惑与错误，工程解决真实阻断。"
+              "facts": "140售前/假设售后和141新假设售后AI模拟已承接原话；无真人付款/长期资格，也未整体Owner签收。",
+              "exit": "完成可用整批后沿原客户流程承接实际收益、困惑与错误，工程解决真实阻断。",
+              "reviewedAt": "2026-11-11T16:24:51+08:00"
             }
           ],
           "androidWholeSourceIntegration": {
@@ -269670,354 +269755,35 @@
             }
           },
           "activeNonmodelCompletion20261110": {
-            "at": "2026-11-10T09:18:50+08:00",
-            "state": "WHOLE_108141_DELIVERED_SINGLE_SELECTED_NOTE_HANDOFF_SOURCE_NEXT",
-            "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
-            "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
-            "existingTask": "CP27-01/playback",
-            "baseline": {
-              "windows": "0.1.82",
-              "android": "0.1.117",
-              "androidSource": "9b6b8858d36feb170a9347a56f57b0e0ee5980d2",
-              "backendAarUnchanged": true
-            },
-            "scope": [
-              "原生倍速和暂停状态保持",
-              "逐录音续听位置、异常退出前定期保存及资料库隔离",
-              "前后10秒/从头重听/分段切换",
-              "原文和设备重点回听仍用原始时间轴",
-              "一次合并后构建、原生验证、保护与安装",
-              "手机转写草稿批量替换、精确匹配和安全撤销；不自动保存、不改首次识别原文",
-              "常用设置、原生持久化和外观跟随实际系统",
-              "未保存AI服务草稿离开保护",
-              "Owner明确要求的USB接线保持唤醒"
-            ],
-            "notQualifiedByThisBatch": [
-              "模型质量",
-              "复杂多人",
-              "硬件长录/电池/实体体验",
-              "账号/团队/平台资质等原外部依赖"
-            ],
-            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
-            "priorDeliveryPreserved": "docs/handoffs/20261110-actions-followup/batch.json",
-            "saleQualified": false,
-            "modelsRun": false,
-            "relatedExistingTasks": [
-              "CP27-01/playback",
-              "CP27-01/editing"
-            ],
-            "dependencyObservation": {
-              "authorizedAndroidOnline": true,
-              "model": "Xiaomi13Ultra 2304FPN6DC",
-              "checkedThrough": "ADB device + FF48 MI01 ADB interface",
-              "action": "Only owned non-main virtual display for local public QA. No BLE, recording-card access or owner main-display operation."
-            },
-            "updatedAt": "2026-11-11T15:08:32+08:00",
-            "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
-            "candidateVersion": "0.1.121",
-            "candidateApkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
-            "buildRun": 42743230795,
-            "sourceAndNativePackagePassed": true,
-            "checkpointPersistenceBackupAndLifecycle": {
-              "state": "OWNED_PLAYBACK_REOPEN_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
-              "results": [
-                {
-                  "name": "compile",
-                  "exitCode": 0
-                },
-                {
-                  "name": "PlaybackProgressTest",
-                  "exitCode": 0
-                },
-                {
-                  "name": "PlaybackBackupCompatibilityTest",
-                  "exitCode": 0
-                },
-                {
-                  "name": "PlaybackLifecycleTest",
-                  "exitCode": 0
-                }
-              ],
-              "playbackSourceSha256": "004b4c202a20706283f4e77186560876834f80472be6389529fb808568958a9d",
-              "nativeMediaPlayerTested": false,
-              "phoneTested": false,
-              "modelsRun": false
-            },
-            "remotePackageReadbackByteIdentical": true,
-            "nativePhoneRuntimeQualified": true,
-            "installed": true,
-            "currentInstalledAndroid": "0.1.141",
-            "currentInstalledWindows": "0.1.108",
-            "authorizedPhoneOnlineAtPackageCompletion": true,
-            "sourceImplemented": [
-              "Native .75/1/1.25/1.5/1.75/2x rate and original-time10s jumps.",
-              "Per-record/per-library descriptor-bound durable resume, periodic checkpoint, explicit restart and completed-recording restart.",
-              "Paused speed changes deferred until resume; serialized seek waits for native completion before saving.",
-              "Checkpoint included in existing backup and exact-record purge ownership, including interrupted-write temporaries.",
-              "Draft-only literal transcript replacement, match count, safe undo and bounded expansion, using existing revision/first-original save path."
-            ],
-            "retainedSourceCheckpoints": [
-              {
-                "source": "9697968da4aa9abc32cef5b85da3b95282990473",
-                "run": 42735769810,
-                "scope": "Initial playback native bridge and source checks/package passed; never installed."
-              },
-              {
-                "source": "a6876984d4d7ec9411d9dfa4d233b726a0391ba6",
-                "run": 42736712959,
-                "scope": "Playback plus draft correction source and package passed; replaced before install to cover exact-record purge ownership."
-              }
-            ],
-            "actualFailuresAndCorrections": [
-              {
-                "finding": "Initial progress subdirectory would not be included in the existing per-record purge planner.",
-                "resolution": "Use existing digest-prefixed owned metadata naming instead of changing/broadening deletion rules. Actual unchanged LocalRecordingLifecycle trash/restore/purge and another-record preservation passed."
-              },
-              {
-                "finding": "Interrupted atomic writes need record ownership too.",
-                "resolution": "Record-prefixed pending filenames; explicit interrupted-write fixture is removed by exact-record purge."
-              },
-              {
-                "finding": "Local TypeScript checker hit explicit256MiB heap cap.",
-                "resolution": "Original failure retained; complete mobile typecheck and affected component tests passed on dedicated CI. No owner application closed or new model loaded."
-              }
-            ],
-            "nativeAcceptanceRemaining": [
-              "Native transition between multiple decoded WAV parts was not separately triggered by this public sample.",
-              "Physical listening quality, microphone/recording-card capture, BLE, OTA and power/battery qualification were outside this local UI batch.",
-              "Model quality and complex overlapping speakers were not improved or retested.",
-              "No new customer or real buyer trial; owner acceptance remains pending."
-            ],
-            "next": "Reuse existing ContentExportPanel noteIds and Windows native note_ids; inspect Android adapter next. Complete one coherent per-note handoff entry/preview/save/copy/share with original revision/privacy guards, plus readable long-item editing; no new export backend or per-label package. Preserve141 complete feedback and108/141 delivered baseline.",
-            "allNonmodelComplete": false,
-            "nativePhoneResults": {
-              "playbackCorrection": {
-                "at": "2026-11-10T02:27:02.073Z",
-                "versionCode": 120,
-                "ownedDisplay": 10,
-                "ordinaryUiActions": true,
-                "readback": "Only libraryStatus/detail/playbackStatus; no backend mutation",
-                "ownerRecordingOpened": false,
-                "cloudOrAsrCalls": 0,
-                "pausedRateChangeDidNotStart": true,
-                "pausedSourceTimeJumps": true,
-                "realMediaPlayerClock": {
-                  "wallMs": 1427,
-                  "sourceMs": 2023,
-                  "rate": 1.5
-                },
-                "savedAndReopened": {
-                  "positionMs": 12207,
-                  "speed": 1.5
-                },
-                "literalCorrection": {
-                  "replacements": 29,
-                  "draftNotAutoSaved": true,
-                  "undo": true,
-                  "originalAsrRetained": true,
-                  "staleMinutesMarked": true
-                },
-                "correctionReopened": true,
-                "state": "PASSED"
-              },
-              "interruption": {
-                "at": "2026-11-10T02:33:00.399Z",
-                "state": "OWNED_PROCESS_INTERRUPTION_AND_NATIVE_RESUME_PASSED",
-                "beforeExitPosition": 88506,
-                "checkpointPosition": 86189,
-                "resumedPosition": 86189,
-                "speed": 1.5,
-                "ordinaryUiPlay": true,
-                "ownedProcessForceStopped": true,
-                "ownerMainDisplayOperated": false
-              },
-              "settings": {
-                "at": "2026-11-10T02:38:23.694Z",
-                "versionCode": 121,
-                "ownedDisplay": 10,
-                "ownerRecordingOpened": false,
-                "cloudOrAsrCalls": 0,
-                "generalSettingsBeforeCollapsedAi": true,
-                "appearance": {
-                  "dark": true,
-                  "light": true,
-                  "followActualNativeSystem": true,
-                  "systemModeChangedByTest": false
-                },
-                "webReloadRetainedSettings": true,
-                "nativePermissions": {
-                  "bluetoothAllowed": true,
-                  "notificationsAllowed": true
-                },
-                "resumeOffStartsAtBeginningAndRetainsRecordingRate": true,
-                "unsavedAiConfig": {
-                  "cancelKeptDraft": true,
-                  "confirmedReturnUsedSameGuard": true,
-                  "keySaved": false,
-                  "requestsSent": 0
-                },
-                "state": "PASSED"
-              },
-              "backupRestorePurge": {
-                "at": "2026-11-10T02:45:09.920Z",
-                "versionCode": 121,
-                "ordinarySafBackupAndRestore": true,
-                "ownerRecordingOpened": false,
-                "ownerRecordDeleted": false,
-                "boardAccessed": false,
-                "settingsRetainedAfterFullProcessRestart": true,
-                "restoredCheckpointAndCorrection": {
-                  "positionMs": 86412,
-                  "speed": 1.5,
-                  "originalAsrRetained": true
-                },
-                "nativeCheckpointFileExistsBeforePurge": true,
-                "trashRestoreKeptCheckpointAndCorrection": true,
-                "exactPurge": {
-                  "onlyNewRestoredLibrary": true,
-                  "checkpointRemoved": true,
-                  "allPriorLibrariesRetained": true
-                },
-                "state": "PASSED"
-              },
-              "finalUi": {
-                "at": "2026-11-10T02:46:47.349Z",
-                "versionCode": 121,
-                "ownerRecordOpened": false,
-                "ownerRecordChanged": false,
-                "modelsRun": false,
-                "defaultRateAppliedToNewRecording": true,
-                "sameRecordingKeyAcrossLibrariesKeptSeparateProgressAndCorrection": true,
-                "testPreferencesRestored": true,
-                "originalLibraryRestored": true,
-                "state": "PASSED"
-              },
-              "installation": {
-                "at": "2026-11-10T10:37:27+08:00",
-                "state": "ANDROID121_EXACT_APK_INSTALLED_EXISTING_FILES_IDENTICAL",
-                "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
-                "apkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
-                "existingFilesByteIdentical": 1928,
-                "ownerMainUnchangedDuringInstall": true,
-                "nativeBackendAndModelsUnchanged": true
-              },
-              "packageBackup": {
-                "at": "2026-11-10T10:36:36+08:00",
-                "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
-                "sourceCommit": "76da5cf6ec359f49aa36b618d4710159c9431569",
-                "repo": "Listener-ai-Macau/Companion-Type",
-                "tag": "windows-0.1.78-bb1550c4-candidate",
-                "draft": true,
-                "assetId": 729828276,
-                "fileName": "Companion-Android-0.1.121-core-candidate.apk",
-                "apkSha256": "771e66e157f12eb8ed46b67d8e144517c1066d2cfa1d2d42a360badc4fddb546",
-                "bytes": 48852348,
-                "readbackByteIdentical": true,
-                "published": false,
-                "ownerPrivateDataUploaded": false
-              },
-              "usbAwake": {
-                "at": "2026-11-10T10:43:39.775290+08:00",
-                "ownerRequested": true,
-                "setting": "stay_on_while_plugged_in",
-                "before": "0",
-                "after": 2,
-                "usbKeepAwakeBitEnabled": true,
-                "existingOtherPowerBitsPreserved": true,
-                "readback": [
-                  "mWakefulness=Awake",
-                  "mStayOn=true",
-                  "mStayOnWhilePluggedInSetting=2",
-                  "AC powered: false",
-                  "USB powered: true",
-                  "Wireless powered: false"
-                ]
-              }
-            },
-            "settingsAddition": {
-              "ownerQuote": "快点把东西全部做完，要开售了；然后要考虑那设置的东西。已经开了usb调试了",
-              "source": "76da5cf6ec359f49aa36b618d4710159c9431569",
-              "buildRun": 42743230795,
-              "implemented": [
-                "外观跟随系统/浅色/深色，兼容原外观选择",
-                "默认回听倍速，已有录音保留上次倍速",
-                "续播开关，不自动开播",
-                "真实附近设备/通知权限与应用版本",
-                "常用设置优先，AI服务折叠，未保存配置离开确认"
-              ],
-              "runtimeQualified": true,
-              "version": "0.1.121",
-              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-nonmodel-core-playback\\android121\\settings-ui-result.json"
-            },
-            "nativePhoneQualifiedScope": "Local public QA: original-time10s jumps, native rate/paused-state preservation, resume including owned process interruption, per-library isolation, draft correction/undo/original preservation, native preferences/settings, ordinary SAF backup/restore and exact-record lifecycle.",
-            "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-nonmodel-core-playback\\delivered-result.json",
-            "phoneSessionClosed": true,
-            "originalLibraryRestored": true,
-            "usbKeepAwakeOwnerRequested": {
-              "at": "2026-11-10T10:43:39.775290+08:00",
-              "ownerRequested": true,
-              "setting": "stay_on_while_plugged_in",
-              "before": "0",
-              "after": 2,
-              "usbKeepAwakeBitEnabled": true,
-              "existingOtherPowerBitsPreserved": true,
-              "readback": [
-                "mWakefulness=Awake",
-                "mStayOn=true",
-                "mStayOnWhilePluggedInSetting=2",
-                "AC powered: false",
-                "USB powered: true",
-                "Wireless powered: false"
-              ]
-            },
-            "previousBatchBeforeVisualFinish": {
-              "state": "ANDROID121_PLAYBACK_CORRECTION_SETTINGS_AND_PUBLIC_BACKUP_LIFECYCLE_DELIVERED",
-              "next": "121已交付范围保留；后续沿ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110接续。"
-            },
-            "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
+            "at": "2026-11-11T16:24:51+08:00",
+            "updatedAt": "2026-11-11T16:24:51+08:00",
+            "state": "OWNER_HANDOFF_SOURCE_ONLY_NO_NATIVE109142",
+            "ownerRequestedHandoff": true,
             "originalItems": [
-              "CP27-01/premium_ui",
               "CP27-01/notes_images",
-              "CP27-03/import"
+              "CP27-01/premium_ui",
+              "CP27-03/export"
             ],
-            "baselineReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
-            "wholeVisualQualified": false,
-            "currentVisualBatch": {
-              "at": "2026-11-11T12:29:42+08:00",
-              "sourceWorkspaces": {
-                "windows": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-                "android": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109"
-              },
-              "wholePageCriteria": [
-                "Content identity and status stay visible with primary reading actions.",
-                "Single hierarchy for notes and follow-up; compact reference cards keep full literal source accessible.",
-                "Notes/documents/AI visible entry has clear purpose; pane changes retain drafts.",
-                "Actual light/dark screenshots at desktop and phone sizes, long content and keyboard/readable controls; source/backend unchanged.",
-                "Complete actual user purpose, save/reopen/source return and new neutral experience after the coherent batch; no synthetic model-quality claim."
-              ],
-              "retainedFeedback": [
-                "customer-edit136 complete raw",
-                "executionReview20261111 actual136 screenshots/repeated headings and giant sole reference",
-                "reader133/134 complete density and source-navigation feedback"
-              ],
-              "productSourceModifiedYet": true,
-              "renderedCases": 8,
-              "renderedScope": "Actual saved-note/reference/workspace/AI components in browser; not whole native App qualification",
-              "newModelCapabilityClaimed": false,
-              "actualAndroid140": {
-                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-workflow.json",
-                "overview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-overview.json",
-                "restart": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-reopened.json",
-                "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\end-session.json",
-                "oldFiles": 4919,
-                "unchangedOldFiles": 4918,
-                "onlyIndexChanged": true,
-                "ownerMainOperated": false
-              }
+            "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
+            "next": "接手后先核对源码和已有检查/截图，完成同一选中清单交接的匹配原生保存/复制/分享，再集中出包和实装；不重做108/141，不调用advance冒充源码已完整验收。",
+            "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+            "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+            "currentInstalledWindows": "0.1.108",
+            "currentInstalledAndroid": "0.1.141",
+            "plannedWindowsVersion": "0.1.109",
+            "plannedAndroidVersion": "0.1.142",
+            "plannedVersionsBuilt": false,
+            "sourceCheckpoint": {
+              "windows": "673fcb7a9cae9331d62ed2241a626afd30094721",
+              "android": "cbe1d0e2fa801d6b221103c39294ab411884003f"
             },
-            "windowsVersion": "0.1.108",
-            "androidVersion": "0.1.141",
-            "productSourceModifiedYet": true,
+            "sourceState": "COMMITTED_SOURCE_ONLY_NATIVE_DELIVERY_NOT_QUALIFIED",
+            "sourceChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\selected-note-handoff\\ci-preflight.json",
+            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
+            "lastCompletePackageSha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+            "lastCustomerRaw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
+            "lastCustomerReadSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
+            "lastCustomerReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
             "deliveryExecution": {
               "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
               "evidenceRoot": "docs/handoffs/20261110-android-media-import",
@@ -270034,829 +269800,30 @@
               ],
               "afterDelivery": "Build/verify matched candidates as one whole result, preserve user data, whole package and private remote readback; original broad scope and sale gates remain."
             },
-            "windowsSource": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-            "androidSource": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-            "windowsBuildRun": 42972272579,
-            "androidBuildRun": 42972256195,
-            "phoneHoldActive": false,
-            "nativeModelsRun": false,
-            "originalFixed127PackagerPreserved": {
-              "gitBeforeRefactor": "7aa2988aecf1517c76ebd5cb02f81ebe02d90d4f",
-              "path": "docs/handoffs/android-media-import20261110/package_core_candidate.py",
-              "sha256": "d7a31f242b54a9ac3065e79bedabc932a3d6c2940dd198b1f7b2dfd8ded2b9cf"
-            },
-            "customerCompletePurposeReview20261111": {
-              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-customer-result.json",
-              "lastProcessedRaw": [
-                {
-                  "role": "neutral-presale",
-                  "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit140\\customer-presale.md",
-                  "sha256": "7e3a0fc78cab5c96b6dcfe0344a3d1cd6aa39082fa427e5532e7ed15f2977c98",
-                  "fullRawRead": true,
-                  "unchanged": true,
-                  "ordinarySavedNoteAndSearchSourceReturnUsed": true
-                },
-                {
-                  "role": "hypothetical-after-purchase",
-                  "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit140\\customer-afteruse.md",
-                  "sha256": "731466c9af37cb0e87fbe4af67840691c0aa916de9f4f4fd7bed70387f74e8b5",
-                  "fullRawRead": true,
-                  "unchanged": true,
-                  "ordinarySavedNoteAndSearchSourceReturnUsed": true
-                }
-              ],
-              "allRawRead": true,
-              "decisions": [
-                {
-                  "issue": "引用展开提示看似可点但没有变化",
-                  "evidence": "售前实际点展开查看摘录后没有变化；工程源码确认提示位于summary外且无动作，已有summary与来源返回有效。",
-                  "decision": "同批修真实点击区域与展开状态，不以工程只点summary的通过抵消顾客失败。"
-                },
-                {
-                  "issue": "跟进事项须学习特殊符号，普通编号不能直接勾选",
-                  "evidence": "售前先保存后再改格式；假设售后保留普通编号，未体验勾选。两者均要求普通输入或已有行转换。",
-                  "decision": "沿现有followup存储与版本/来源校验，补普通清单编辑和已有文本转换；保护旧备注、原文和任务状态，不另建任务存储。"
-                },
-                {
-                  "issue": "原文依据需重新输入，资料与AI入口关系不够清楚",
-                  "evidence": "售前重输入字面转写，假设售后文档一键引用与返回已成功；多入口首次辨认有负担。",
-                  "decision": "复用原文选择/引用能力改善取段，合并同目的入口与明确页面位置；同一批验证，不逐别名重编。"
-                },
-                {
-                  "issue": "模型残留怪数字/截断，预算草案与人工已核对可能混淆",
-                  "evidence": "两角色均保留原文质量疑问；售后核清人工材料来源，未把预算草案当会议定案。",
-                  "decision": "不改测试文本伪造识别改善，不从材料推断负责人/日期；继续保留来源与人工身份，模型和真实会议事实原门保持未完成。"
-                },
-                {
-                  "issue": "备份/跨设备/正式售价与服务条件未知",
-                  "evidence": "两角色未试相关能力，正式条件未给定。",
-                  "decision": "不记为功能失败或已通过，不编造价格/额度/支持承诺，不以反复换顾客抽肯定关闭。"
-                }
-              ],
-              "customerSessionClosed": true
-            },
-            "windows106Delivered": {
-              "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows106\\installation.json",
-              "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
-              "runtimeRun": 42965776028,
-              "testSourceCommit": "7aa2988aecf1517c76ebd5cb02f81ebe02d90d4f",
-              "actualCompactReferenceAndDirectAiEntry": true,
-              "installed": "0.1.106"
-            },
-            "newerSharedWindowsDeliveryObserved": {
-              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\customer-followthrough107-delivery.json",
-              "sha256": "f663a78f52379673b5c3779ef5249246d9b70d53fb0c150d399ced6b48358bc3",
-              "sourceCommit": "a4fcfb21ef265c0374b644ea3cb7b11b3b0ad103",
-              "version": "0.1.107",
-              "decision": "Never downgrade107 to106; preserve107 before next shared108 source integration.106 archive remains immutable reviewed source/runtime baseline."
-            },
-            "reviewedVisualBatchPackage": {
-              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-packaged-candidate.json",
-              "sha256": "34dc00c76a14e5be11309adf7909d6f348d2f446ac41db604c22f26a38a2ac97",
-              "assetId": 734340887,
-              "readbackByteIdentical": true,
-              "knownCustomerUsabilityIssuesRemainOpen": true
-            },
-            "reviewedDetail106140": {
-              "package": {
-                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-packaged-candidate.json",
-                "sha256": "34dc00c76a14e5be11309adf7909d6f348d2f446ac41db604c22f26a38a2ac97",
-                "assetId": 734340887,
-                "readbackByteIdentical": true,
-                "knownCustomerUsabilityIssuesRemainOpen": true
-              },
-              "deliveryExecution": {
-                "userResult": "打开会议后先看清内容和状态，纪要、转写、材料、人工补充与AI入口层级清楚，深浅色和长文阅读一致；保留原始内容、来源与未保存草稿。",
-                "evidenceRoot": "docs/handoffs/20261110-android-media-import",
-                "logDirectory": "meeting-detail-finish",
-                "steps": [
-                  {
-                    "id": "windows-native-build",
-                    "job": {
-                      "freeze": "windows106/source-freeze.json",
-                      "runField": "buildRun",
-                      "prepare": "Keep frozen106 run42961513864; observe it, never dispatch a duplicate on observation timeout."
-                    }
-                  },
-                  {
-                    "id": "windows-payload-inspection",
-                    "receipt": "windows106/windows-verification.json",
-                    "equals": {
-                      "state": "WINDOWS106_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-                      "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
-                      "version": "0.1.106"
-                    },
-                    "binary": {
-                      "pathField": "msi",
-                      "shaField": "msiSha256"
-                    },
-                    "command": [
-                      "inspect_windows_candidate.py",
-                      "106"
-                    ]
-                  },
-                  {
-                    "id": "windows-private-preservation",
-                    "receipt": "windows106/remote-candidate-backup.json",
-                    "equals": {
-                      "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
-                      "readbackByteIdentical": true
-                    },
-                    "command": [
-                      "run_preserve_incoming.py",
-                      "windows106"
-                    ]
-                  },
-                  {
-                    "id": "android-native-build",
-                    "job": {
-                      "freeze": "android140/source-freeze.json",
-                      "runField": "buildRun",
-                      "prepare": "Keep frozen140 run42961499090; no model/native source changed."
-                    }
-                  },
-                  {
-                    "id": "android-payload-verification",
-                    "receipt": "android140/build-result.json",
-                    "equals": {
-                      "state": "ANDROID140_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
-                      "sourceCommit": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
-                      "versionCode": 140
-                    },
-                    "binary": {
-                      "pathField": "apk",
-                      "shaField": "apkSha256"
-                    },
-                    "command": [
-                      "prepare_android_candidate.py",
-                      "140"
-                    ]
-                  },
-                  {
-                    "id": "android-private-preservation",
-                    "receipt": "android140/remote-candidate-backup.json",
-                    "equals": {
-                      "sourceCommit": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
-                      "readbackByteIdentical": true
-                    },
-                    "command": [
-                      "run_preserve_incoming.py",
-                      "android140"
-                    ]
-                  },
-                  {
-                    "id": "android-actual-detail-workflow",
-                    "receipt": "android140/detail-workflow.json",
-                    "equals": {
-                      "state": "ACTUAL_MATCHED_APP_DETAIL_IDENTITY_COMPACT_LITERAL_SOURCE_CHECKLIST_AI_ENTRY_AND_DUAL_DRAFT_PRESERVATION_PASSED",
-                      "actualVersion": "0.1.140",
-                      "oldNotesTranscriptMinutesUnchanged": true
-                    },
-                    "prepare": "Continue only the declared public140 ordinary detail workflow on the owned display; keep old data and unchanged models."
-                  },
-                  {
-                    "id": "android-session-close",
-                    "receipt": "android140/end-session.json",
-                    "equals": {
-                      "state": "ANDROID140_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
-                      "actualVersion": "0.1.140",
-                      "onlyOldChangeLibraryIndex": true,
-                      "ownedAppDisplayForwardJarClosed": true
-                    },
-                    "prepare": "Finish public140 actual reopen/original appearance and library return, then close the exact owned session with software_phone_session.py140 close; do not repeat a successful install."
-                  },
-                  {
-                    "id": "windows-actual-runtime",
-                    "job": {
-                      "freeze": "windows106/runtime-source-freeze.json",
-                      "runField": "runtimeRun",
-                      "prepare": "Commit inspected106 runtime spec and affected verifier once with [core-documents], save the exact source/run, then resume the current whole detail batch."
-                    },
-                    "receipt": "windows106/runtime-result.json",
-                    "equals": {
-                      "state": "WINDOWS106_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
-                      "appSourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
-                      "frozenNativeBytesMatchedApprovedMsi": true
-                    },
-                    "command": [
-                      "download_windows_runtime.py",
-                      "106",
-                      {
-                        "receipt": "windows106/runtime-source-freeze.json",
-                        "field": "runtimeRun"
-                      },
-                      "documents"
-                    ],
-                    "boundToFreezeSource": "testSourceCommit"
-                  },
-                  {
-                    "id": "windows-actual-detail-presentation",
-                    "receipt": "windows106/manual-followup-ui.json",
-                    "equals": {
-                      "state": "ORDINARY_PACKAGED_MANUAL_FOLLOWUP_LITERAL_EVIDENCE_REOPEN_SOURCE_REMOVAL_PASSED",
-                      "compactReference": true,
-                      "directAiEntryUsed": true
-                    },
-                    "prepare": "Read the actual matching106 result and resolve a missing compact-reference or direct-AI user entry before installing. Do not infer presentation from broad runtime success."
-                  },
-                  {
-                    "id": "windows-quiet-upgrade",
-                    "receipt": "windows106/installation.json",
-                    "equals": {
-                      "state": "WINDOWS106_INSTALLED_EXISTING_DATA_IDENTICAL",
-                      "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
-                      "dataManifestIdentical": true
-                    },
-                    "command": [
-                      "install_windows_candidate.py",
-                      "106"
-                    ]
-                  },
-                  {
-                    "id": "new-neutral-complete-purpose-experience",
-                    "receipt": "meeting-detail-customer-result.json",
-                    "equals": {
-                      "state": "NEW_NEUTRAL_COMPLETE_PURPOSE_FEEDBACK_FULLY_RECEIVED",
-                      "presaleAndHypotheticalAfterUseCovered": true,
-                      "allRawFeedbackRead": true
-                    },
-                    "prepare": "After this coherent source is actually available, provide a new neutral FIRST_USE presale and hypothetical after-purchase role one at a time, with real scope/price/entry only, fresh public library and no old feedback/engineering checklist. Read all feedback and decide the whole batch once. AI simulation is not a real customer/order."
-                  },
-                  {
-                    "id": "customer-public-session-close",
-                    "receipt": "customer-edit140/end-session.json",
-                    "equals": {
-                      "state": "ANDROID140_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
-                      "actualVersion": "0.1.140",
-                      "onlyOldChangeLibraryIndex": true,
-                      "ownedAppDisplayForwardJarClosed": true
-                    },
-                    "prepare": "Return original library/appearance and close only exact owned140 customer display; retain all old user content and public customer notes."
-                  },
-                  {
-                    "id": "complete-private-package",
-                    "receipt": "meeting-detail-packaged-candidate.json",
-                    "equals": {
-                      "state": "MEETING_DETAIL_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
-                      "readbackByteIdentical": true,
-                      "saleQualified": false
-                    },
-                    "command": [
-                      "package_core_candidate.py",
-                      "--current"
-                    ]
-                  }
-                ],
-                "afterDelivery": "Continue original nonmodel/core/premium UI requirements and full scope. No sale/model/hardware/service/Owner/real-customer completion inferred from a finished software batch."
-              },
-              "packageDefinition": {
-                "outputName": "20261111-companion-core-windows106-android140.zip",
-                "receipt": "meeting-detail-packaged-candidate.json",
-                "statePrefix": "MEETING_DETAIL_COMPLETE_CANDIDATE",
-                "manifestState": "COMPANION_COHERENT_MEETING_DETAIL_CORE_CANDIDATE",
-                "baseArchive": "E:/CodexData/Companion/deliveries/20261111-companion-core-windows105-android139.zip",
-                "baseSha256": "0e39b1ea62f6f9559f66a604f58036234caf237cf46c8ac11a2f8d1362296748",
-                "windows": {
-                  "verification": "windows106/windows-verification.json",
-                  "installation": "windows106/installation.json",
-                  "runtime": "windows106/runtime-result.json",
-                  "archivePath": "windows/Companion-Windows-0.1.106.msi"
-                },
-                "android": {
-                  "build": "android140/build-result.json",
-                  "installation": "android140/installation.json",
-                  "closed": "android140/end-session.json",
-                  "archivePath": "android/Companion-Android-0.1.140.apk"
-                },
-                "evidence": [
-                  "windows106/windows-verification.json",
-                  "windows106/runtime-result.json",
-                  "windows106/runtime-backend-result.json",
-                  "windows106/manual-followup-ui.json",
-                  "windows106/manual-followup-evidence.png",
-                  "windows106/installation.json",
-                  "windows106/source-freeze.json",
-                  "windows106/runtime-source-freeze.json",
-                  "windows106/remote-candidate-backup.json",
-                  "windows106/runtime-attempt1-decision.json",
-                  "android140/build-result.json",
-                  "android140/installation.json",
-                  "android140/detail-workflow.json",
-                  "android140/detail-overview.json",
-                  "android140/detail-reopened.json",
-                  "android140/detail-original-returned.json",
-                  "android140/detail-notes-clear-light.png",
-                  "android140/detail-notes-clear-dark.png",
-                  "android140/detail-overview-light.png",
-                  "android140/detail-overview-dark.png",
-                  "android140/detail-assistant-light.png",
-                  "android140/detail-assistant-dark.png",
-                  "android140/end-session.json",
-                  "android140/source-freeze.json",
-                  "android140/remote-candidate-backup.json",
-                  "android140/preparation-failures-retained.json",
-                  "meeting-detail-finish/affected-checks.json",
-                  "meeting-detail-finish/render-result.json",
-                  "meeting-detail-finish/native-source-reuse.json",
-                  "meeting-detail-customer-result.json",
-                  "incoming-lifecycle-delivered-result.json",
-                  "customer-edit140/end-session.json"
-                ],
-                "evidenceGlobs": [
-                  {
-                    "directory": "customer-edit140",
-                    "patterns": [
-                      "customer-presale.md",
-                      "customer-afteruse.md",
-                      "customer-presale-dispatch.txt",
-                      "customer-afteruse-dispatch.txt",
-                      "customer-presale-*.png",
-                      "customer-afteruse-*.png",
-                      "entry-*.json",
-                      "dispatch-provenance.json",
-                      "end-session.json"
-                    ]
-                  }
-                ],
-                "scope": "Coherent meeting-detail hierarchy, persistent selected-meeting identity on phone, clear existing AI workspace entry, compact literal source cards with full expandable excerpt and one-click current source return, single manual-follow-up heading, saved checklist, independent unsent manual and AI drafts across panes, light/dark actual screenshots and actual process reopen. Matching106/140 binaries verified and installed; original data preserved. Full customer raw feedback and its true scope retained. Known customer usability findings remain explicitly open in meeting-detail-customer-result.json; this archive protects the reviewed baseline, not a claim that those findings are repaired.",
-                "boundaries": "Private software candidate, not public sale qualification. Previous fixed packager recipe is retained in Git. No new model/ASR/online AI/microphone/board run in this batch. Existing saved model output and old human engineering notes are auxiliary public input. Formal price, hosted service/credits, support/channel/signing, model/complex-meeting facts, physical/long-recording/power, Mac and Owner/real-customer gates remain separate. AI roles do not prove real demand/payment or long-term after-sales.",
-                "readme": "Companion 会议详情整批候选\nWindows 0.1.106 / Android 0.1.140\n\n手机滚动时保留当前会议名称；资料、便签与AI工作区分开查看。引用卡默认紧凑，完整字面摘录仍可展开，当前依据可直接返回。人工跟进只呈现一套标题与清单，勾选保存；切换资料页时人工备注和未发送AI问题分别保留。深浅色与实际进程重开、来源返回已有匹配App结果。电脑继续使用现有“问这场会议”直接动作进入AI工作区，没有为了按钮别名重编安装包。\n\n原105/139外部文件接收、原件/权限重试/取消/备份恢复/精确清除，及前批编辑/文档/图文/分类/导出沿未受影响原收据保留。Windows原生源码和Android产品Java、冻结后端/核心类型未变；新Web资源及版本正常重建并独立核字节，不把旧程序换标签。\n\n本轮AI模拟售前与假设售后只用独立公开资料副本；已有工程人工便签是辅助条件。完整原话附包，不代表真人买家、付款、实物或长期售后。正式售价、托管服务/费用、签名渠道与正式售后尚未确定，不补造权益；模型准确率、复杂会议事实、录音卡长录/供电、Owner等原门保留。FW66791与Mac候选只沿原包保留字节，不新增资格。仅私有工程候选，不含Owner原资料索引、私人录音、令牌或密钥。\n\n本轮仍发现：引用卡的展开提示看似可点却没有动作；清单需学习特殊符号，普通编号无法直接勾选；原文取段与AI入口仍可简化。两位模拟顾客均完成自己的整理/找回用途，未证明购买或全面省心。原话和合并工程决定附包，后续集中返修，不把这些问题写成已修。\n\nWindows106曾在13:30实际升级，另一原模块随后于13:42升级为Windows107；本包保留本轮106源码/运行绑定，不代表当前日用版仍是106，也不得用它降级107。后续返修必须合入107已交付源。\n"
-              },
-              "customerReviewReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-customer-result.json",
-              "qualificationReceipts": {
-                "androidActualDetailPassed": true,
-                "androidActualReopenPassed": true,
-                "androidSessionClosed": true,
-                "androidPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\end-session.json",
-                "windowsPayloadVerified": true,
-                "windowsPrivateInstallerAsset": 734232883,
-                "androidPrivateInstallerAsset": 734233262,
-                "windows106RuntimeAttempt1": {
-                  "run": 42964751088,
-                  "state": "BROAD_RUNTIME_PASS_DIRECT_AI_CHECK_NOT_QUALIFIED",
-                  "scope": "Existing actual question-entry label needs the correct verifier; exact106 MSI retained and not installed.",
-                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows106\\runtime-attempt1-decision.json"
-                },
-                "sourceBehaviorChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-finish\\affected-checks.json",
-                "sourceRender": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-finish\\render-result.json"
-              }
-            },
-            "sourceImplementedYet": true,
-            "batchDecisionBasis": {
-              "previousResult": "106/140 same source fully reviewed by two isolated roles; both completed purposes, but list syntax prevents normal use and visible excerpt hint did not toggle.",
-              "excluded": "Do not retest unchanged ASR/hardware, change saved public transcript, or ask another unchanged-role buyer for confirmation.",
-              "controlledChange": "Existing plaintext followup editor becomes ordinary row UI and deliberate line conversion; literal selected source is retained with exact hashes.",
-              "retainIf": "Actual ordinary save/edit/reopen/status/source return and drafts preserved on matching clients; rollback if exact old notes or quotations changed."
-            },
-            "androidActualDetailPassed": true,
-            "androidActualReopenPassed": true,
-            "androidSessionClosed": true,
-            "windowsPayloadVerified": true,
-            "actualQualifyingAndroidVersion": "0.1.141",
-            "actualQualifyingWindowsVersion": null,
-            "sourceCheckpoint": {
-              "windows": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-              "android": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-              "remoteHeadsIndependentlyVerified": true,
-              "newCurrentQualificationDoesNotReuse140Flags": true
-            },
-            "android141Actual": {
-              "workflow": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\detail-workflow.json",
-              "reopen": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\detail-reopened.json",
-              "closed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android141\\end-session.json",
-              "viewedBothActualThemes": true,
-              "originalNotesTranscriptMinutesUnchanged": true,
-              "knownPreparerFailuresRetained": [
-                "First single-line source search contained newline, HTML converted it and it was not literal. Resumed same saved first note with continuous keyword.",
-                "Source-return assertion ran before async lookup completed. Wait for actual pane; reuse exact saved second note.",
-                "Launch wrapper lacked __file__; unchanged direct preparer invocation used. No display or APK changed in failed wrapper."
-              ]
-            },
-            "customer141": {
-              "state": "COMPLETE_RAW_FULLY_READ_DECISIONS_RECORDED_OWN_SESSION_CLOSED",
-              "agent": "/root/followup141_customer_afteruse",
-              "display": 37,
-              "session": "customer-edit141-20261111",
-              "dispatch": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse-dispatch.txt",
-              "entry": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\entry-afteruse.json",
-              "source": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-              "expectedFeedback": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
-              "engineeringPhoneClosed": true,
-              "physicalAudioModelsNotTested": true,
-              "rawFeedback": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
-              "rawSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
-              "fullRawRead": true,
-              "resultReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
-              "decisions": [
-                {
-                  "input": "新建跟进入口符合目的；实际直接写两项、搜索找回、编辑加第三项并勾选1/3",
-                  "decision": "新普通清单收益实际被自主使用；原140的语法学习障碍获得本轮改善证据。保持现有文本/勾选/搜索机制，不另造任务存储。",
-                  "status": "ACTUALLY_USED_NEW_BENEFIT"
-                },
-                {
-                  "input": "没有弄清能否只交接自己这张清单，不想带走所有旧人工备注",
-                  "decision": "保留在原导出/复制分享事项；本批完成后优先核现有按条选择能力与公开入口，集中补齐本张清单及依据的导出预览/复制/分享，不在当前冻结候选内再加一轮小修。",
-                  "status": "NEXT_RELATED_NONMODEL_PURPOSE"
-                },
-                {
-                  "input": "想把段落/表格行更清楚附到具体跟进；自己重写了来源",
-                  "decision": "现有文档/表格引用可附整条人工备注，工程实际已验证；本角色未用引用，不能记顾客通过。后续同一交接批次改善可发现性/当页示例。逐事项来源是愿望，未新建数据结构或假装已支持。",
-                  "status": "DISCOVERABILITY_AND_ITEM_LEVEL_WISH_OPEN"
-                },
-                {
-                  "input": "负责人、希望日期、只看未完成更清楚",
-                  "decision": "作为人工跟进便利愿望沿原清单事项保留；不把AI/正式行动项已有字段移植成另一套猜测时间，不替用户补负责人或日期。",
-                  "status": "OPEN_WISH_NOT_THIS_BATCH_BLOCKER"
-                },
-                {
-                  "input": "怪数字/说话身份不清、预算草案真假仍须问提供者，公开旧工程便签辅助理解",
-                  "decision": "不改原始公开样本或把材料变会议结论；模型/多人/原音/实体/正式条件继续单独未完成，辅助条件保留。",
-                  "status": "MODEL_FACT_AND_REAL_WORLD_GATES_UNCHANGED"
-                }
-              ],
-              "sessionClosedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\end-session.json",
-              "actualEditorAndFinalScreenshotsViewed": true
-            },
-            "windows108Runtime": {
-              "run": 42975735217,
-              "testSource": "41905172c79a0b842d78b30f2a64fc38315b0906",
-              "appSource": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-              "state": "in_progress",
-              "failedFirstRunPreserved": 42974752751,
-              "explicitlyCancelledKnownBadQuery": 42975526153,
-              "normalNativeBuildsThisClient": 1,
-              "normalProductMsiUnchanged": true,
-              "reasons": "Failure was verifier anchor disappearing correctly during edit. Related newline search input corrected after actual Android evidence. Same normal MSI retained; runtime retried without native compilation."
-            },
-            "nextRelatedUsability": {
-              "originalTasks": [
+            "singleNoteHandoffScope": {
+              "existingItems": [
                 "CP27-01/notes_images",
                 "CP27-01/premium_ui",
                 "CP27-03/export"
               ],
-              "userOutcome": "只交接自己选中的一张人工跟进及其依据，先清楚预览，再保存/复制/分享；在相关编辑里完整读长事项。",
-              "input": "141完整反馈以及实际编辑截图",
-              "openDetails": [
-                "核现有按条选择接口/入口，缺口集中补齐",
-                "引用附到整条清单的发现性/当页示例；逐事项引用仍是愿望",
-                "长行在编辑时横向截断，可在同批改善换行；保存后的全文已可读"
+              "baseline": "whole108141 9cf86b4b package",
+              "userOutcome": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
+              "decisions": [
+                "Windows reuses existing note_ids and exact content hash; no new export backend.",
+                "Android extends existing sections selection with exact note: IDs; selects from current RecordingNotes snapshot, preserving native binding, original text/evidence, image ownership and quotas.",
+                "Per-note action opens an explicitly narrow selection with preview before save/copy/share. Missing or stale IDs must not broaden to all notes.",
+                "Plaintext checklist remains single source; wrapped editor must preserve literal mixed lines, checked state and IME.",
+                "One grouped109/142 build after affected source checks; no model/cloud/board or unchanged buyer-condition test."
               ],
-              "decision": "Finish current108141 reviewed batch first; no new native package or customer for each small wish.",
-              "initialSourceFinding": {
-                "windowsBackend": "apps/windows/src-tauri/src/backend/content_export.rs already accepts exact note_ids; existing tests cover selected material, duplicate/missing selection rejection and no unrelated inclusion.",
-                "sharedUi": "packages/ui/src/ContentExportPanel.tsx already exposes noteIds under collapsed 材料与补充.",
-                "decision": "Reuse existing exact selection and original export/clipboard/share adapters; improve entry and clear per-note intent, not create a second export backend or infer missing capability from one customer's discovery failure.",
-                "android": "Native adapter selection still to inspect; do not assume absence from file-name-filtered search."
-              }
+              "nativeBoundary": "Android application Java export code changes; frozen AAR/JNI/model resources unchanged. Windows native export APIs unchanged."
             },
-            "completedOrdinaryFollowup108141": {
-              "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
-              "deliveryExecution": {
-                "userResult": "不用学习特殊符号也能记录和修改跟进清单，从原文直接选一段作为依据，展开与返回来源清楚可靠，已有备注/勾选/来源和未保存草稿不丢。",
-                "evidenceRoot": "docs/handoffs/20261110-android-media-import",
-                "logDirectory": "followup-108141",
-                "steps": [
-                  {
-                    "id": "android-native-build",
-                    "job": {
-                      "freeze": "android141/source-freeze.json",
-                      "runField": "buildRun",
-                      "prepare": "Observe frozen run42972256195; no duplicate dispatch."
-                    }
-                  },
-                  {
-                    "id": "android-payload-verification",
-                    "receipt": "android141/build-result.json",
-                    "equals": {
-                      "state": "ANDROID141_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
-                      "sourceCommit": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-                      "versionCode": 141
-                    },
-                    "binary": {
-                      "pathField": "apk",
-                      "shaField": "apkSha256"
-                    },
-                    "command": [
-                      "prepare_android_candidate.py",
-                      "141"
-                    ]
-                  },
-                  {
-                    "id": "android-private-preservation",
-                    "receipt": "android141/remote-candidate-backup.json",
-                    "equals": {
-                      "sourceCommit": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-                      "readbackByteIdentical": true
-                    },
-                    "command": [
-                      "run_preserve_incoming.py",
-                      "android141"
-                    ]
-                  },
-                  {
-                    "id": "android-actual-ordinary-followup",
-                    "receipt": "android141/detail-workflow.json",
-                    "equals": {
-                      "state": "ACTUAL_MATCHED_APP_DETAIL_IDENTITY_COMPACT_LITERAL_SOURCE_CHECKLIST_AI_ENTRY_AND_DUAL_DRAFT_PRESERVATION_PASSED",
-                      "actualVersion": "0.1.141",
-                      "ordinaryFollowupEditor": true,
-                      "numberedLinesConverted": true,
-                      "literalPickerUsed": true,
-                      "visibleHintClick": true,
-                      "oldNotesTranscriptMinutesUnchanged": true
-                    },
-                    "prepare": "Use exact141 existing software phone preparers and ordinary meeting_detail_phone workflow/overview/reopen on one new owned public library; source models unchanged."
-                  },
-                  {
-                    "id": "android-session-close",
-                    "receipt": "android141/end-session.json",
-                    "equals": {
-                      "state": "ANDROID141_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
-                      "actualVersion": "0.1.141",
-                      "onlyOldChangeLibraryIndex": true,
-                      "ownedAppDisplayForwardJarClosed": true
-                    },
-                    "prepare": "After actual reopen, return original appearance/library and exact close of own session."
-                  },
-                  {
-                    "id": "windows-native-build",
-                    "job": {
-                      "freeze": "windows108/source-freeze.json",
-                      "runField": "buildRun",
-                      "prepare": "Observe frozen run42972272579; Windows107 was merged before108. Do not dispatch a duplicate."
-                    }
-                  },
-                  {
-                    "id": "windows-payload-inspection",
-                    "receipt": "windows108/windows-verification.json",
-                    "equals": {
-                      "state": "WINDOWS108_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
-                      "sourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-                      "version": "0.1.108"
-                    },
-                    "binary": {
-                      "pathField": "msi",
-                      "shaField": "msiSha256"
-                    },
-                    "command": [
-                      "inspect_windows_candidate.py",
-                      "108"
-                    ]
-                  },
-                  {
-                    "id": "windows-private-preservation",
-                    "receipt": "windows108/remote-candidate-backup.json",
-                    "equals": {
-                      "sourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-                      "readbackByteIdentical": true
-                    },
-                    "command": [
-                      "run_preserve_incoming.py",
-                      "windows108"
-                    ]
-                  },
-                  {
-                    "id": "windows-actual-runtime",
-                    "job": {
-                      "freeze": "windows108/runtime-source-freeze.json",
-                      "runField": "runtimeRun",
-                      "prepare": "Once108 exact MSI verified, prepare source-bound runtime spec, commit verifier with [core-documents], save exact run and source. Never rebuild product to repair a preparer."
-                    },
-                    "receipt": "windows108/runtime-result.json",
-                    "equals": {
-                      "state": "WINDOWS108_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
-                      "appSourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-                      "frozenNativeBytesMatchedApprovedMsi": true
-                    },
-                    "command": [
-                      "download_windows_runtime.py",
-                      "108",
-                      {
-                        "receipt": "windows108/runtime-source-freeze.json",
-                        "field": "runtimeRun"
-                      },
-                      "documents"
-                    ],
-                    "boundToFreezeSource": "testSourceCommit"
-                  },
-                  {
-                    "id": "windows-actual-ordinary-followup",
-                    "receipt": "windows108/manual-followup-ui.json",
-                    "equals": {
-                      "state": "ORDINARY_PACKAGED_MANUAL_FOLLOWUP_LITERAL_EVIDENCE_REOPEN_SOURCE_REMOVAL_PASSED",
-                      "ordinaryFollowupEditor": true,
-                      "literalPickerUsed": true,
-                      "visibleHintClick": true,
-                      "compactReference": true,
-                      "directAiEntryUsed": true
-                    },
-                    "prepare": "Actual matching108 ordinary controls; old raw-editor-only evidence cannot substitute for this new flow."
-                  },
-                  {
-                    "id": "windows-quiet-upgrade",
-                    "receipt": "windows108/installation.json",
-                    "equals": {
-                      "state": "WINDOWS108_INSTALLED_EXISTING_DATA_IDENTICAL",
-                      "sourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-                      "dataManifestIdentical": true
-                    },
-                    "command": [
-                      "install_windows_candidate.py",
-                      "108"
-                    ]
-                  },
-                  {
-                    "id": "affected-neutral-afteruse",
-                    "receipt": "followup-108141/customer-result.json",
-                    "equals": {
-                      "state": "AFFECTED_ORDINARY_FOLLOWUP_NEW_AFTERUSE_FULL_FEEDBACK_RECEIVED",
-                      "affectedAfterUseCovered": true,
-                      "allRawFeedbackRead": true
-                    },
-                    "prepare": "After actual new benefit is available, one neutral new hypothetical after-use role with independent public library. Preserve140 presale/after-use as previous input; no repeat unchanged purchase conditions or fictional price."
-                  },
-                  {
-                    "id": "customer-public-session-close",
-                    "receipt": "customer-edit141/end-session.json",
-                    "equals": {
-                      "state": "ANDROID141_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
-                      "actualVersion": "0.1.141",
-                      "onlyOldChangeLibraryIndex": true,
-                      "ownedAppDisplayForwardJarClosed": true
-                    },
-                    "prepare": "Return original and close exact own customer141 session."
-                  },
-                  {
-                    "id": "complete-private-package",
-                    "receipt": "followup-108141-packaged-candidate.json",
-                    "equals": {
-                      "state": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
-                      "readbackByteIdentical": true,
-                      "saleQualified": false
-                    },
-                    "command": [
-                      "package_core_candidate.py",
-                      "--current"
-                    ]
-                  }
-                ],
-                "afterDelivery": "Continue original whole nonmodel scope, Owner/formal/physical/model/real-customer gates remain. A completed batch is not wholeGoalComplete."
-              },
-              "packageDefinition": {
-                "outputName": "20261111-companion-core-windows108-android141.zip",
-                "receipt": "followup-108141-packaged-candidate.json",
-                "statePrefix": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE",
-                "manifestState": "COMPANION_ORDINARY_FOLLOWUP_AND_LITERAL_SOURCE_CANDIDATE",
-                "baseArchive": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows106-android140.zip",
-                "baseSha256": "34dc00c76a14e5be11309adf7909d6f348d2f446ac41db604c22f26a38a2ac97",
-                "windows": {
-                  "verification": "windows108/windows-verification.json",
-                  "installation": "windows108/installation.json",
-                  "runtime": "windows108/runtime-result.json",
-                  "archivePath": "windows/Companion-Windows-0.1.108.msi"
-                },
-                "android": {
-                  "build": "android141/build-result.json",
-                  "installation": "android141/installation.json",
-                  "closed": "android141/end-session.json",
-                  "archivePath": "android/Companion-Android-0.1.141.apk"
-                },
-                "evidence": [
-                  "windows108/windows-verification.json",
-                  "windows108/runtime-result.json",
-                  "windows108/manual-followup-ui.json",
-                  "windows108/installation.json",
-                  "windows108/source-freeze.json",
-                  "windows108/runtime-source-freeze.json",
-                  "android141/build-result.json",
-                  "android141/installation.json",
-                  "android141/detail-workflow.json",
-                  "android141/detail-reopened.json",
-                  "android141/end-session.json",
-                  "android141/source-freeze.json",
-                  "followup-108141/source-result.json",
-                  "followup-108141/affected-checks.json",
-                  "followup-108141/ci-preflight.json",
-                  "followup-108141/render-result.json",
-                  "followup-108141/customer-result.json",
-                  "customer-edit141/end-session.json",
-                  "meeting-detail-customer-result.json"
-                ],
-                "evidenceGlobs": [
-                  {
-                    "directory": "customer-edit141",
-                    "patterns": [
-                      "*.md",
-                      "*dispatch.txt",
-                      "*provenance.json",
-                      "entry-*.json",
-                      "*.png"
-                    ]
-                  },
-                  {
-                    "directory": "android141",
-                    "patterns": [
-                      "detail-*.png"
-                    ]
-                  }
-                ],
-                "scope": "Ordinary human follow-up row entry/editing/numbered conversion using existing note storage, literal source selection and exact hash-bound evidence, real expandable hint, unchanged user content and sources. Retains107 provider/card-first fixes. Exact matching UI and normal native packaging required.",
-                "boundaries": "Private software candidate only; no new model/ASR/cloud/mic/board or real buyer/long-term claim in this batch. Formal price/service/support, physical, full meeting model/facts and Owner gates remain separate.",
-                "readme": "Companion 普通跟进清单与原文依据整批候选\nWindows108 / Android141\n直接写跟进事项、保留原有编号和说明、显式转为待办；字面原文取段与展开/返回来源。原文、原音、资料及旧清单不自动改写。含真实交付收据和完整模拟反馈；不代表真人成交、模型质量或整机可售。\n"
-              },
-              "actualWindows": {
-                "state": "WINDOWS108_INSTALLED_EXISTING_DATA_IDENTICAL",
-                "startedAt": "2026-11-11T15:01:40+08:00",
-                "candidateVersion": "0.1.108",
-                "previousInstalledVersion": "0.1.107",
-                "sourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
-                "msiSha256": "c09ea165c2fe763246ffb888b52e4a1773e15ac30df6ad54d2dc8f8f57a4fc3c",
-                "existingDataFiles": 245,
-                "dataContentsPrinted": false,
-                "installerExitCode": 0,
-                "finishedAt": "2026-11-11T15:01:46+08:00",
-                "dataManifestIdentical": true,
-                "installedVersion": "0.1.108",
-                "installedExeSha256": "0b87779bf87b4bcf8bd150688028787ccbb2d765bea362a3c2621313d727ee8b",
-                "installedDllSha256": "d3af0f5954ba1f8d5e7f3312c241a30fca77da0e85c878c676198a36ccec8a9d",
-                "installedHelpStartupPassed": true,
-                "ordinaryThirdPartyPasteQualified": false,
-                "oldWinRTSharePickerFixed": false,
-                "modelsRun": false,
-                "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
-              },
-              "actualAndroid": {
-                "at": "2026-11-11T14:32:49+08:00",
-                "state": "ANDROID141_EXACT_APK_INSTALLED_EXISTING_FILES_IDENTICAL",
-                "sourceCommit": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-                "apkSha256": "84663a57948873780eb16705041eda7c70ab5ab58aa7263c5b66d088a394dbe8",
-                "previousVersion": 140,
-                "existingFilesByteIdentical": 5084,
-                "ownerMainUnchangedDuringInstall": true,
-                "modelsRun": false
-              },
-              "actualCustomer": {
-                "state": "COMPLETE_RAW_FULLY_READ_DECISIONS_RECORDED_OWN_SESSION_CLOSED",
-                "agent": "/root/followup141_customer_afteruse",
-                "display": 37,
-                "session": "customer-edit141-20261111",
-                "dispatch": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse-dispatch.txt",
-                "entry": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\entry-afteruse.json",
-                "source": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
-                "expectedFeedback": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
-                "engineeringPhoneClosed": true,
-                "physicalAudioModelsNotTested": true,
-                "rawFeedback": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
-                "rawSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
-                "fullRawRead": true,
-                "resultReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
-                "decisions": [
-                  {
-                    "input": "新建跟进入口符合目的；实际直接写两项、搜索找回、编辑加第三项并勾选1/3",
-                    "decision": "新普通清单收益实际被自主使用；原140的语法学习障碍获得本轮改善证据。保持现有文本/勾选/搜索机制，不另造任务存储。",
-                    "status": "ACTUALLY_USED_NEW_BENEFIT"
-                  },
-                  {
-                    "input": "没有弄清能否只交接自己这张清单，不想带走所有旧人工备注",
-                    "decision": "保留在原导出/复制分享事项；本批完成后优先核现有按条选择能力与公开入口，集中补齐本张清单及依据的导出预览/复制/分享，不在当前冻结候选内再加一轮小修。",
-                    "status": "NEXT_RELATED_NONMODEL_PURPOSE"
-                  },
-                  {
-                    "input": "想把段落/表格行更清楚附到具体跟进；自己重写了来源",
-                    "decision": "现有文档/表格引用可附整条人工备注，工程实际已验证；本角色未用引用，不能记顾客通过。后续同一交接批次改善可发现性/当页示例。逐事项来源是愿望，未新建数据结构或假装已支持。",
-                    "status": "DISCOVERABILITY_AND_ITEM_LEVEL_WISH_OPEN"
-                  },
-                  {
-                    "input": "负责人、希望日期、只看未完成更清楚",
-                    "decision": "作为人工跟进便利愿望沿原清单事项保留；不把AI/正式行动项已有字段移植成另一套猜测时间，不替用户补负责人或日期。",
-                    "status": "OPEN_WISH_NOT_THIS_BATCH_BLOCKER"
-                  },
-                  {
-                    "input": "怪数字/说话身份不清、预算草案真假仍须问提供者，公开旧工程便签辅助理解",
-                    "decision": "不改原始公开样本或把材料变会议结论；模型/多人/原音/实体/正式条件继续单独未完成，辅助条件保留。",
-                    "status": "MODEL_FACT_AND_REAL_WORLD_GATES_UNCHANGED"
-                  }
-                ],
-                "sessionClosedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\end-session.json",
-                "actualEditorAndFinalScreenshotsViewed": true
-              },
-              "openFindings": {
-                "originalTasks": [
-                  "CP27-01/notes_images",
-                  "CP27-01/premium_ui",
-                  "CP27-03/export"
-                ],
-                "userOutcome": "只交接自己选中的一张人工跟进及其依据，先清楚预览，再保存/复制/分享；在相关编辑里完整读长事项。",
-                "input": "141完整反馈以及实际编辑截图",
-                "openDetails": [
-                  "核现有按条选择接口/入口，缺口集中补齐",
-                  "引用附到整条清单的发现性/当页示例；逐事项引用仍是愿望",
-                  "长行在编辑时横向截断，可在同批改善换行；保存后的全文已可读"
-                ],
-                "decision": "Finish current108141 reviewed batch first; no new native package or customer for each small wish."
-              }
-            },
-            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json"
+            "previousMixedStageObject": "docs/handoffs/20261111-owner-ai-handoff/before-cleanup/docs/product_backlog.json.gz",
+            "modelsRun": false,
+            "phoneHoldActive": false,
+            "nativeModelsRun": false,
+            "saleQualified": false,
+            "allNonmodelComplete": false,
+            "knownJobState": "Previous108/141 owned phone/display workers closed by original receipts; new product builds not started. Historical PIDs are not live claims."
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -270911,8 +269878,8 @@
             "functionalFlow": "普通选择→原文件完整保留→后台可取消转换→本地转写/原文时间→现有AI纪要→Word/SRT系统保存→整库备份恢复→原音/结果校验→回收站/精确清除"
           },
           "nonmodelSaleStatus20261110": {
-            "at": "2026-11-11T07:42:58+08:00",
-            "phase": "Windows099/Android136人工跟进与原文依据整批已交付；其它App分享接收及原外部/模型/实物门仍开放",
+            "at": "2026-11-11T16:24:51+08:00",
+            "phase": "108/141已实际交付；新单张交接仅源码，已转交接",
             "percentage": null,
             "percentageReason": "原对标项同时包含已验子范围、未实现能力、物理/外部依赖与用户待验，不能按提交、包或全为pending的行数编造整体百分比。",
             "delivered": {
@@ -270925,13 +269892,13 @@
               "manualFollowupSources": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-delivered-result.json"
             },
             "openSoftware": [
-              "系统选择文件导入已交付，但从其它App分享/打开到Companion的入口未实现，沿原CP27-03集中补齐。",
-              "136两类完整反馈中的紧凑引用/标题/跟进接续与列标题上下文归下一相关阅读批次；现有清单添加按钮未被体验，不据此称缺功能。",
-              "既有AI样表填字段/真正第三方客户端和跨端差异等完整原条款继续按实际证据；不把普通表格导出当智能填表。"
+              "单张清单及依据交接/可见预览/长行编辑109/142源码待原生出包与实际验证。",
+              "完整结果导出默认范围/中文呈现、仅日期确认仍有已承接可用性问题。",
+              "旧WinRT与具体第三方接收端、完整账号跨端/团队/集成及原竞品剩余范围未关闭。"
             ],
             "openHardware": "沿embedded当前匹配长录、连接/异常恢复、电源与实物门，不由应用通过继承关闭。",
             "openReleaseAndService": "正式签名/渠道、许可隐私/支持费用及原账号跨端、团队、集成等范围待完成。",
-            "customerAcceptance": "136两位新无工程历史AI模拟各自完成阅读/人工清单/引用/离开搜索/出处回找；旧工程人工备注为明示辅助，原话全读并承接；无真人购买、模型/实物或长期售后资格。",
+            "customerAcceptance": "141新独立AI假设售后已完整承接；不是实际付费客户、实卡/长期或模型质量验收。",
             "efficiencyEvidence": {
               "unit": "一次可独立使用的完整流程",
               "groupedBuilds": {
@@ -270985,8 +269952,8 @@
               }
             },
             "currentClientVersions": {
-              "windows": "0.1.99",
-              "android": "0.1.136"
+              "windows": "0.1.108",
+              "android": "0.1.141"
             }
           },
           "latestOwnerContinuation20261110": {
@@ -273141,6 +272108,11 @@
               "workflowEfficiencyProvenForWholeBatch": false
             }
           }
+        },
+        "retiredCurrentAliases20261111": {
+          "todayDelivery": "050四点工作台已安装；清理后最终源码/完整后端恢复，APK重建逐字节一致，已远端备份；原25Windows内容输出继续。",
+          "sourceWorkspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
+          "status": "SOFTWARE_FRONTEND_DELIVERED_NATIVE_DEVICE_AND_MODEL_QUALIFICATION_OPEN"
         }
       },
       "latestCandidate20261102": {
@@ -273158,13 +272130,13 @@
         "reference": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261105-ai-workspace050-preserved/recovery-result.json",
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
-      "at": "2026-11-10T00:37:21+08:00",
-      "state": "WINDOWS081_ANDROID115_CORE_MEETING_SOFTWARE_DELIVERED_MODEL_QUALITY_CONTINUES",
+      "at": "2026-11-11T16:24:51+08:00",
+      "state": "OWNER_AI_HANDOFF_NONMODEL108141_NEW_SOURCE_NOT_RELEASED",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
-      "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
+      "workspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
-      "result": "Windows081与Android115本批完整会议处理及文件交付按已验范围保留；当前产品相同公开整会严格CER为Windows6.40%、手机6.63%，复杂多人继续按原配对实会定位。整体售卖和原实卡/模型质量门未完成。",
-      "next": "保留原严格<5%和081/115普通软件交付；当前Paraformer不能因速度快或有分人时间轴进入复杂多人合格。下一项仍用已固定Qwen1.7B，同一完整近讲/远场对照；本机资源实质恢复后刷新6800XT身份与ordinal并从原任务续作，不换新模型、不降低低RAM保护。以同人、同音、同参考的错漏/串音区分识别器损失和目标声音保留问题，然后只修对应模块。自动目标存在判断、真实重叠目标提取及逐人转写必须一起保护词语，不能把已知活动诊断当自动分人或靠删低置信词过门；近讲不作完全干净波形监督。不能在这份Eval调阈值/训练，随后按原第三整会/未见会议、事实与双端实卡验收。",
+      "result": "Windows108/Android141已安装并完整私有归档；109/142仅新源码检查点，非模型总体及整机均未售卖合格。",
+      "next": "先读owner_module_execution.handoff20261111；当前软件仍沿原ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110，模型原专项独立保留。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",
@@ -276257,7 +275229,15 @@
           "receipt": "E:/CodexData/Companion/unified-frontends-r2-20261102/android-011r2-candidate.json",
           "scope": "debug签名工程候选，未安装，真实手机及设备未验"
         }
-      }
+      },
+      "retiredPhaseAliases20261111": {
+        "at": "2026-11-10T00:37:21+08:00",
+        "state": "WINDOWS081_ANDROID115_CORE_MEETING_SOFTWARE_DELIVERED_MODEL_QUALITY_CONTINUES",
+        "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
+        "result": "Windows081与Android115本批完整会议处理及文件交付按已验范围保留；当前产品相同公开整会严格CER为Windows6.40%、手机6.63%，复杂多人继续按原配对实会定位。整体售卖和原实卡/模型质量门未完成。",
+        "next": "保留原严格<5%和081/115普通软件交付；当前Paraformer不能因速度快或有分人时间轴进入复杂多人合格。下一项仍用已固定Qwen1.7B，同一完整近讲/远场对照；本机资源实质恢复后刷新6800XT身份与ordinal并从原任务续作，不换新模型、不降低低RAM保护。以同人、同音、同参考的错漏/串音区分识别器损失和目标声音保留问题，然后只修对应模块。自动目标存在判断、真实重叠目标提取及逐人转写必须一起保护词语，不能把已知活动诊断当自动分人或靠删低置信词过门；近讲不作完全干净波形监督。不能在这份Eval调阈值/训练，随后按原第三整会/未见会议、事实与双端实卡验收。"
+      },
+      "androidWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109"
     },
     "ownerResourceOptimization20261101": {
       "at": "2026-11-01T13:10:03+08:00",
@@ -278002,329 +276982,17 @@
       }
     },
     "nextBatch": {
-      "aiEnhancementResearch20261105": {
-        "at": "2026-11-05T14:23:04+08:00",
-        "state": "OFFICIAL_AI_ENHANCEMENT_UX_AND_FULL_PARITY_RESEARCH_COMPLETE_IMPLEMENTATION_PENDING",
-        "receipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\ai-enhancement-research-20261105.json",
-        "ownerQuote": "你看下竞品这些通常 AI 增强功能是怎么弄，感觉现在好像是不是有点太多了，还是怎么？他说开什么开关之类的，研究一下人家都是怎么弄的。然后再研究一下，弄完这个还有什么东西要弄，反正竞品要有的功能我们都要有。",
-        "productChanges": 0,
-        "allExisting36RowsPreserved": true,
-        "implementationPending": true
-      },
-      "ownerFullParity20261105": "owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCompetitiveParity20261105",
-      "previousOwnerLatestBeforeDayPause": "显存最多也就16g；主要是系统内存不够，模型运行别让电脑卡。",
-      "modelDirection": {
-        "resume20261105": {
-          "at": "2026-11-05T20:43:34+08:00",
-          "ownerQuote": "目前是有显卡, 可以继续搞模型相关的内容",
-          "inventory": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\gpu-inventory.json",
-          "currentStage": "Owner最新要求跳过重启原因调查，继续整场会议。沿已逐标记复现的duty.1/固定权重/2GiB私有内存/CPU5%/完整上下文跑唯一L39m23s，退出后独立评分；保留旧中断，其他质量门不改。"
-        },
-        "previousPause20261105": {
-          "executionState": "PAUSED_BY_OWNER_NONMODEL_ONLY",
-          "directive": "现在不可以再做模型了，继续把非模型的事情推进，看什么时候达到售卖标准。",
-          "preserved": true
-        },
-        "phase": "方向寻找与架构验证阶段",
-        "qualifiedArchitectureChosen": false,
-        "decisionMemory": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerAsrAccuracyLatencyAndMeetingUse20261103/ownerComplexPublicMeeting20261103/directionExploration20261104",
-        "confirmed": "完整声音→全场一致人物/时间/文字与重叠多路→可核事实纪要；真实会议证据先于选模/调参/训练。",
-        "doNotRepeat": "旧切片排名/读版口径当准确率；同会阈值及短窗盲调；全会强制分离或目标提取；人数/DER/final等单指标代替整会资格。",
-        "candidateStatus": "四真实片段证明任务接口可行但尚未合格，先完成唯一39分钟复杂整会；参考读取已修，禁止据旧错误分数调模型。",
-        "executionState": "GPU_DEFERRED_OWNER_CONFIRMED_NOT_CONNECTED_MORNING",
-        "executionDirective": "Owner明确早上无外置卡，本轮不运行GPU模型也不驻留等待；日间推进软件。接回后既有模型授权有效，沿已保护身份选卡和整会→评分入口继续。",
-        "resumeCondition": "实际接回外置RX6800XT且身份/资源适合后继续；不需重问授权，不以重启调查为先决，不回退内置780M推理。"
-      },
-      "deferredFrontendBeforeBackend20261103": {
-        "goal": "Windows和手机统一前端：使用许可合适的公开模板，设计美观、轻量并接入既有后端。",
-        "scope": "先盘点Windows现有React/Tauri界面与Android原生后端，选公开模板并保留许可证；实现统一设计、真实设备/录音/转写/纪要/待办等后端路径，按实际运行验证，不冒称手机实机完成。",
-        "next": "依据竞品实际产品界面收敛设计，基于现有工作树完成Windows及Android统一前端和真实后端连接，再集中验证、交付；保留此前测速未完成工作。",
-        "reference": "E:/CodexData/Companion/current-device-meeting-20261102/offline-long-retry/run/offline-transfer-recount-20261102.json",
-        "baseline": "单场32段新接收8191682字节，首到末507.455秒、15.764 KiB/s；逐段收包耗时加权17.490 KiB/s，前四段3.701、后28段34.075 KiB/s；旧Type dc0016d8/FW858，非新0.1.24实测。"
-      },
-      "at": "2026-11-10T00:37:21+08:00",
-      "status": "COMPLETE_DEPLOYED_MODEL_PAIRED_SOURCE_AND_KNOWN_ACTIVITY_DIAGNOSTICS_NOT_QUALIFIED",
-      "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
-      "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
-      "next": "保留原严格<5%和081/115普通软件交付；当前Paraformer不能因速度快或有分人时间轴进入复杂多人合格。下一项仍用已固定Qwen1.7B，同一完整近讲/远场对照；本机资源实质恢复后刷新6800XT身份与ordinal并从原任务续作，不换新模型、不降低低RAM保护。以同人、同音、同参考的错漏/串音区分识别器损失和目标声音保留问题，然后只修对应模块。自动目标存在判断、真实重叠目标提取及逐人转写必须一起保护词语，不能把已知活动诊断当自动分人或靠删低置信词过门；近讲不作完全干净波形监督。不能在这份Eval调阈值/训练，随后按原第三整会/未见会议、事实与双端实卡验收。 固件和实卡未验项沿owner_module_execution.embedded.next当前工作点，不用旧固件版本或旧手机安装步骤替代。",
-      "baseline": "新MOSS只有四场120秒筛查；DER7.69%/5.38%/12.02%/4.37%，人数6/7、5/5、7/7、4/4；非整会/最终准确率。旧R002整会cpCER33.89%纠正24.77%，为读取修正非模型增益。",
-      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json",
-      "interruptedWork": "手机修订原文对应录音位置接口已包含在当前手机后端候选交付中；真实手机和同事前端联调仍待完成。",
-      "deliveryDecision": "基于实际瓶颈集中修复和验证；保持原录音及断链恢复，不重复无差异实验。",
-      "observedCauseCandidate": "前四段录音仍在进行，设备拒绝批量传输连接模式，实际连接间隔48单位（60ms）、设备TX时间340us；停止后下一段开始启用批量模式并出现间隔6单位（7.5ms）、TX时间965us，后段较快。录音状态、间隔和链路预算同时变化，不能断言单一根因；现象来自旧实测。",
-      "ownerLatest": "需要继续推进",
-      "runningSpeedTest": {
-        "status": "COMPLETE",
-        "pid": 21396,
-        "startedAt": "2026-11-02T15:01:13+08:00",
-        "state": "E:/CodexData/Companion/offline-speed-20261102/run/result.json",
-        "action": "用户同意约5分钟实卡新录，断连后使用现有throughput_hold诊断参数继续当前录音和补传；仅本机，保留板内旧音；不是已交付修复。",
-        "limit": "旧停止后测试曾未达到100；本次是新录音中恢复场景，需实测，不能视为已提速。",
-        "result": "DEVICE_SPEED_TEST_CAPTURE_SAVED",
-        "queue": {
-          "token": 6,
-          "peak": 2,
-          "slots": 8,
-          "pcmOverflows": 0,
-          "budgetFailures": 0
-        },
-        "analysis": "E:\\CodexData\\Companion\\offline-speed-20261102\\run\\speed-by-phase.json",
-        "stopToSavedMs": 8267
-      },
-      "liveDuringRecordingFinding": {
-        "source": "E:\\CodexData\\Companion\\current-device-meeting-20261102\\run\\capture.log",
-        "firmware": "0001045a",
-        "typeSource": "dc0016d8784d12b2cf80739a88807b75df9c2025",
-        "livePrefixes": {
-          "samples": 320,
-          "newBytes": 14639366,
-          "sumPacketSpanSeconds": 4038.136,
-          "weightedKiBps": 3.54,
-          "medianPerPullKiBps": 4.59
-        },
-        "sealedSegments": {
-          "samples": 64,
-          "newBytes": 1964174,
-          "sumPacketSpanSeconds": 609.288,
-          "weightedKiBps": 3.148,
-          "medianPerPullKiBps": 4.465
-        },
-        "scope": "sum of recorded first-to-last-packet windows; not continuous wall-clock or final-file checksum; packet-level rates represent one meeting, not universal throughput",
-        "privacy": "metadata only; no audio examined or transmitted"
-      },
-      "currentCandidate": {
-        "status": "REAL_CARD_SMOKE_PASSED_NOT_INSTALLED",
-        "path": "E:/CodexData/Companion/ui-acceptance-fresh-20261102",
-        "intent": "仅原会话验证确实录音中时，针对每次录中同步持有系统吞吐偏好，覆盖封口回补和实时片段；结束自动释放，录音后仍原策略。",
-        "limit": "源码候选非已安装；一次通过诊断配置的实测仅约11 KiB/s，远低既有60+目标，不宣称完成。",
-        "testSessionId": 24768,
-        "cargoPid": 13788,
-        "rustcPid": 22748,
-        "commit": "6655d87d147b373708c9a098a89fd319223286ac",
-        "testResult": "编译通过；录音状态选择、同会话跟随和断连保留检查通过",
-        "candidateBuildSessionId": 37266,
-        "candidateBuildLog": "E:/CodexData/Companion/offline-speed-20261102/candidate-build.log",
-        "artifact": "E:/CodexData/Companion/offline-speed-20261102/candidate-artifact.json",
-        "candidateBuildResult": "PASS",
-        "candidateBuildSeconds": 54.18,
-        "result": "真实单次5分1.56秒录音保存、断连重连通过，PCM溢出0；重连后封口21.054、实时15.868 KiB/s，按收包时段加权；停止后仅3550字节样本不代表完整上传。",
-        "actualReceipt": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\result.json",
-        "actualRates": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\speed-by-phase.json"
-      },
-      "runningCandidateTest": {
-        "status": "COMPLETE",
-        "pid": 29100,
-        "startedAt": "2026-11-02T15:14:39+08:00",
-        "state": "E:/CodexData/Companion/offline-speed-20261102/candidate-follow/run/result.json",
-        "source": "6655d87d147b373708c9a098a89fd319223286ac",
-        "scope": "用户同意再次约5分钟新录，候选默认策略，同一录音断连重连，原用户录音保留、本地处理。",
-        "priorFailure": "第一次端点选择器不认识上次新测试成功标识而未接板；已添加准确终态识别并验证失败/未空闲仍拒绝，原失败保留。",
-        "result": "DEVICE_SPEED_TEST_CAPTURE_SAVED",
-        "evidence": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\result.json",
-        "speed": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\speed-by-phase.json"
-      },
-      "ownerPrior100Finding": {
-        "request": "之前的速度, 没有其它蓝牙设备连接能去到100k",
-        "oldResult": "FW534/UI84/Boot463与Type P344/R102，停止录音后2MiB测试文件新增2097152B/18.2952295s=111.94175 KiB/s；设备和HCI均完整SHA，未消费。旧单次测试文件不等于当前版本或录音中速度。",
-        "coexistence": "该场日志记录5次其他peer发起活动，不足以证明没有其他蓝牙设备；不能操作或擅自断开用户其它设备。",
-        "evidence": "docs/releases/20261022-rate-ck-current534-upload111-and-connection-enumeration.json",
-        "decision": "2026-11-02 Owner关闭速度专项，覆盖此前继续追100的安排。其它蓝牙负载关掉时可以到100以上；边录边传或录完再传大约70到60，接受。保持现配置，不再改传输。",
-        "ownerFollowup": "就算有蓝牙别的也能去到60多",
-        "secondPriorEvidence": "FW667/Type P605r2两场合成2MiB旧测71.04和68.40 KiB/s，未操作其他设备；同时FW534单场111.94有其他peer活动。既有结果支持共存时可达60+，不证明每种共存稳定；禁止把关闭其他设备作为修复。来源 docs/releases/20261026-rate-is-controller-progress-wake667-actual-and-no-rate-gain.json"
-      },
-      "runningStoppedBenchmark": {
-        "status": "COMPLETE",
-        "pid": 4932,
-        "nativePid": 6288,
-        "startedAt": "2026-11-02T15:23:04+08:00",
-        "state": "E:/CodexData/Companion/offline-speed-20261102/stopped-upload/run/result.json",
-        "scope": "设备停录，当前已装Type 0.1.24/FW858，身份/2MiB长度/原SHA/source=synthetic全匹配后只读，禁止消费/录音/云/其他蓝牙设备操作。",
-        "result": "DEVICE_SYNTHETIC_UPLOAD_TEST_COMPLETE",
-        "KiBps": 53.69239408777423,
-        "seconds": 38.1432051,
-        "evidence": "E:\\CodexData\\Companion\\offline-speed-20261102\\stopped-upload\\run\\result.json"
-      },
-      "stoppedCurrentResult": "FW858/已安装Type0.1.24，同2MiB原SHA、0缓存/消费，38.1432051s=53.692394 KiB/s，实际2M/CI6、TX时间965us；旧FW534 111.94175在TX时间2120us，环境及版本同时不同，不单独归因，未关其他蓝牙。",
-      "deliveryBuild": {
-        "status": "INSTALLED_AND_PUBLISHED",
-        "pid": 19068,
-        "source": "e1d9fbd0a6b9c6251569e14f158e4fc19b53713e",
-        "state": "E:/CodexData/Companion/offline-speed-20261102/delivery/windows-build-state.json",
-        "goal": "电脑0.1.25已安装。Owner于2026-11-02关闭速度专项，停止后53.69 KiB/s和100目标都不再追，保持现配置。",
-        "sha256": "044f545e7da992264c9e51b857ebcf9f3842e4cc6ad69c9246e99d8598244174",
-        "installer": "E:/CodexData/Companion/offline-speed-20261102/delivery/Companion-Type-0.1.25-工程候选-录音同步加速.msi",
-        "extraction": "E:/CodexData/Companion/offline-speed-20261102/delivery/windows-extract.json",
-        "installReceipt": "E:\\CodexData\\Companion\\offline-speed-20261102\\delivery\\windows-0125-installation\\result.json",
-        "installedSmoke": "E:\\CodexData\\Companion\\offline-speed-20261102\\delivery\\windows-0125-installed-review-smoke\\status.json"
-      },
-      "boardCoordination": {
-        "status": "GROK_HOLDS_BOARD",
-        "mechanism": "共享占用记录及轮次，Grok领用期间Codex不接串口/蓝牙/调试口；释放后交给Codex，15分钟无人领取可轮另一方。",
-        "fix": "共享轮次脚本增加跨进程互斥；隔离环境20次同时领取均只产生一个占用；记录不可读时不显示可领取；轮次文件缺失时不伪造历史。",
-        "scope": "仅配合轮次工具的协作者受互斥约束；不能强制阻止绕过记录直接接板。安装脚本不能插入独立占用行干扰Grok。",
-        "previous": "轮次规则新增于2026-11-02 15:24，上一实卡测试15:23:55已结束。",
-        "lastObserved": "Grok测试12588终态 SCREEN_OR_STACK_NOT_OBSERVED，报告句柄关闭；截至本次检查仍有Grok占用行，不能由Codex替其释放。"
-      },
-      "parallelMobileOriginalPosition": {
-        "source": "172f26853a5534a7a47d8b141c45ddec1c6918c0",
-        "status": "DELIVERED_CANDIDATE_NOT_PHONE",
-        "purpose": "修订后读取保留原文对应录音的近似时间窗口；原文和音频与已有定位都匹配时才返回，不将旧定位贴到修订文字。",
-        "limits": "时间为近似识别窗口；若已有定位被覆盖、原音变化或文件缺失返回空；Android实机及前端未验。",
-        "evidence": "E:/CodexData/Companion/mobile-original-timing-20261102/host-jvm-original-timing-r3/state.json",
-        "delivery": "E:\\CodexData\\Companion\\delivery-batch-20261102\\Companion-Android-后端接入候选-原文回听合批.zip",
-        "package": "E:/CodexData/Companion/mobile-original-timing-20261102/Companion-Android-后端接入候选-原文回听合批.zip",
-        "packageSha256": "eb95d4aaf6d2d76d1b78ca8a886ef330e1ddb24039444b6fc8297e7e63a54725",
-        "aarVerification": "E:/CodexData/Companion/mobile-original-timing-20261102/aar-exact-jvm/state.json",
-        "consumer": "E:/CodexData/Companion/mobile-original-timing-20261102/android-consumer-state.json"
-      },
-      "followChurnFinding": {
-        "source": "E:/CodexData/Companion/offline-speed-20261102/candidate-follow/run/capture.log",
-        "observation": "已实测候选五分钟场18次录中跟随，18次请求起始连接间隔均48单位，结束17次12单位、1次48单位；当前策略随每次跟随结束释放，下一次再申请。",
-        "interpretation": "反复变更是可见现象，采样点不证明它是速率主因，也不证明延长持有必定更快；旧停录全程持有偏好曾失败，不能把两种场景混同。",
-        "next": "审查原会话持久连接与暂停/停止/断连生命周期，评估是否可仅在已验证录音跟随期间跨轮复用请求，并在停止前可靠释放；先做定向软件验证，待新轮次再按必要实测，不重复停录旧hold实验。"
-      },
-      "earlyFollowCandidate": {
-        "source": "E:/CodexData/Companion/follow-negotiation-20261102/source",
-        "parent": "e1d9fbd0a6b9c6251569e14f158e4fc19b53713e",
-        "status": "REAL_TEST_START_FAILED_NO_NEW_CAPTURE",
-        "cargoPid": 26984,
-        "test": "faster_follow_requires_verified_active_original",
-        "intent": "原设备、原会话和录音状态已确认且设备有增长尾段时，在读取录音目录前申请同一短期吞吐偏好，协商与目录读取重叠；其余、停录与失败仍沿原策略。",
-        "risk": "候选尚未测或安装；提前申请仅可能减少等待，不证明速度改善；现策略仍按次释放。",
-        "testSessionId": null,
-        "sourceCommit": "d07ecae6d4064c08e4b6ee98c675d6afca9c4079",
-        "tests": "录音跟随24项、连接丢失6项通过；无实卡。首单测release编译耗时5分14秒，再次cargo试图重复编译，已停止并直接运行已构建的同源测试程序。",
-        "nativeBuildState": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-build-state.json",
-        "nativeBuildPid": 22056,
-        "nativeBuildSessionId": null,
-        "nativeExecutable": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-native/companion-type.exe",
-        "nativeProof": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-artifact.json",
-        "testScript": "E:/CodexData/Companion/follow-negotiation-20261102/prepared-candidate-test.py",
-        "preflight": "候选非法断连时间表在BLE禁用的隔离环境接板前拒绝；端点选择Windows，当前共享板无占用且轮次允许；只读检查不代表后续仍可用。",
-        "request": "已弹窗申请本次新录约5分钟自然环境声，断连重连，同场原音本机，保留旧录音，不上传。等待回复，不重复申请。",
-        "consentAt": "2026-11-02T16:07:22+08:00",
-        "consent": "用户选择可以开始；约5分钟自然环境新录、断连重连，仅本机，旧录音保留。",
-        "reason": "Grok于16:06:05领取板进行双麦采样，复查时仍占用；本次新录尚未开始。",
-        "sharedBoardOwnerProcess": 22500,
-        "sharedBoardOwnerAction": "Grok采样脚本PID22500已退出；共享记录仍为Grok占用，等待其关闭句柄并正式释放，不能仅凭进程退出代为释放。",
-        "inclusiveRateAnalysis": "E:/CodexData/Companion/follow-negotiation-20261102/previous-candidate-inclusive-speed.json",
-        "inclusiveRateFinding": "此前五分钟候选实测：重连后16次拉取601174字节，单次收包时间总计33.316秒、加权17.622 KiB/s；从首个关联跟随请求至末个释放141.190秒，包含拉取间等待和继续录音，平均4.158 KiB/s；不含之前连接及末尾保存，不能当纯上传或整个最终同步速度。",
-        "sharedBoardOwnerProcessState": "terminal_or_missing",
-        "testResult": "E:/CodexData/Companion/follow-negotiation-20261102/run/result.json",
-        "failure": "电脑报告原开始尚未确认；后续同UID只读查询麦克风不运行、mic_starts和帧计数与测试前一致、BLE断开、存储就绪；已释放共享板，未取得速度。",
-        "result": "REAL_CAPTURE_SAVED_SPEED_TARGET_NOT_MET",
-        "comparison": "E:/CodexData/Companion/start-after-local-batch/speed-comparison.json",
-        "observed": "重连后收包窗口加权14.175 KiB/s；上一候选相同练习17.622 KiB/s，环境有差异不能归因，但不支持已提速或达到60。工具每次跟随前等待约5秒，练习整体平均不能等同正式实时流程。"
-      },
-      "startAfterLocalFailure": {
-        "status": "REAL_DEVICE_RECORDING_SAVED_NOT_INSTALLED",
-        "evidence": "E:/CodexData/Companion/follow-negotiation-20261102/run/capture.log",
-        "causeBoundary": "新主机START尚未确认时，收到含local_start的设备状态会进入必须已有本次确认的本地操作分支并拒绝；本场日志证明触发此分支，原始80字节状态未单独保存，具体旧状态字段以受控固件实测和协议测试确认。",
-        "scope": "不同的已结束本地录音不应阻断用户明确的新录音；当前录音、错误、相同开始请求及自动恢复仍需保持原语义。",
-        "testPid": null,
-        "testSessionId": 95518,
-        "testState": "E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-baseline-state.json",
-        "failedOriginalPreserved": "E:/CodexData/Companion/follow-negotiation-20261102/run/library/recorder-controls",
-        "baseline": "真实设备协议C夹具中，不同本地录音已结束后申请新的主机录音，基线稳定重现相同错误；见 E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-baseline.log。",
-        "fix": "仅新主机未确认START且同设备同代次、旧本地录音确已结束并非同一开始请求时，把旧状态作为前一状态；不确认新录，不重发，自动恢复仍不代用户开始。",
-        "fixedTestState": "E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-fixed-state.json",
-        "fixedTestPid": 11888,
-        "fixedTestSessionId": 26704,
-        "source": "8f0d106476f985322c3ffd3b5ded58faa89ea829",
-        "fixedTests": "真实协议先失败再通过；同一已编译测试程序确认录音控制39、跟随25、断连6均通过。",
-        "testEvidence": "E:/CodexData/Companion/follow-negotiation-20261102/fixed-related-tests.json",
-        "nativeBuild": "E:/CodexData/Companion/start-after-local-batch/candidate-build-state.json",
-        "nativeBuildPid": null,
-        "nativeBuildSessionId": 26463,
-        "artifactProof": "E:/CodexData/Companion/start-after-local-batch/candidate-artifact.json",
-        "realTestPid": null,
-        "realTestSessionId": 42021,
-        "realTestState": "E:/CodexData/Companion/start-after-local-batch/run/result.json",
-        "realTest": "FW858上确认新录、同一场重连及301.85秒音频保存，控制及接收检查通过；电脑候选尚未安装。",
-        "realTestResult": "E:/CodexData/Companion/start-after-local-batch/run/result.json"
-      },
-      "firmwareCaptureSliceCandidate": {
-        "status": "DEV_FW860_INSTALLED_STOPPED_SAMPLE_TESTED_LIVE_UNTESTED",
-        "source": "be7964c08c95fe5be494b3fa32eda7228d535976",
-        "path": "E:/CodexData/Companion/capture-packet-slice-20261102/source",
-        "intent": "有真实计时且录音与存储允许时，单包读取和通知可在同一毫秒预算内连续进行；每步重新核对录音占用，无计时仍保留原单步。",
-        "evidence": "E:/CodexData/Companion/capture-packet-slice-20261102/source/.cache/recording-core-20261011/capture-pair-20261102-r6/affected-fixtures.json",
-        "limits": "开发签名/电源覆盖仅供工程验证；停录单次样本62.486 KiB/s，不证明稳定或100；录音中调度改动尚未实卡测速。",
-        "integratedSource": "cd200644f8e9b6babd101bc26a31cc569b2a523a",
-        "integratedPath": "E:/CodexData/Companion/recording-speed-batch-20261102/source",
-        "integratedWith": "此前未安装的设备录音输入指示候选6cd32a69，仍基于实装FW858；保留用户要求关闭的双麦增强。",
-        "integratedTests": "传输预算、真实Opus产品录音及封口/尾段/断连/双通道软件检查通过，非实卡速度。",
-        "buildState": "E:/CodexData/Companion/recording-speed-batch-20261102/firmware-build-r6-state.json",
-        "buildPid": null,
-        "buildSessionId": 82375,
-        "setupFailures": "新工作树缺少已有Opus测试库、UI头文件和外部图片素材，已复用上一个候选的对应输入，前5次均在编译前失败，原失败保留。",
-        "package": "E:/CodexData/Companion/recording-speed-batch-20261102/firmware-package/ota_manifest.json",
-        "packageSha256": "c163aa840de9599b78783f91a22bc7514bda72daf4975067c80b0b1b708b0273",
-        "validation": "ARM完整构建COMPILED_BUILD_ONLY，电脑端离线包内容核对PASS；开发签名和开发电源覆盖，非销售包；实机时序、录音质量和提速未验。",
-        "preservationCheck": "E:/CodexData/Companion/recording-speed-batch-20261102/preserve-inspection/result.json",
-        "preservationResult": "用户确认USB供电；只读目录检查发现1段已有麦克风录音；工程升级未读取、消费或写入。设备已确认断连空闲并按轮次释放。",
-        "actualFirmwarePolicy": "FW858当前启动新的OTA临时空间前要求现有麦克风录音已被耐久接收并消费；本场用户此前要求板内原录音保留，不能擅自消费。",
-        "preparedLocalBackup": "E:/CodexData/Companion/recording-speed-batch-20261102/backup-existing-recording.py",
-        "backupScope": "仅本机接收原始录音，不上传、不播放，COMPANION_TYPE_DELETE_AFTER_SYNC=0；启动前重查轮次和设备身份，当前尚未执行。",
-        "backupResult": "E:/CodexData/Companion/recording-speed-batch-20261102/existing-recording-local-copy/result.json",
-        "backupRawIntegrity": "E:/CodexData/Companion/recording-speed-batch-20261102/existing-recording-local-copy/raw-integrity.json",
-        "backupSummary": "录音131655，约41.32秒，原始压缩87338字节；本机长度、CRC、SHA均与设备描述一致，WAV在本机；设备原件未消费。",
-        "ownerAuthorization": "用户同意保留电脑备份，且仅释放板上这段原件并继续安装测试固件。不得消费任何其他录音。",
-        "releaseCandidate": {
-          "source": "5340f35ec04033915d5e08dbde7209a33cac7b6a",
-          "test": "E:/CodexData/Companion/exact-original-release-20261102/test-r3-state.json",
-          "build": "E:/CodexData/Companion/exact-original-release-20261102/candidate-build-state.json",
-          "buildPid": 28048,
-          "buildSessionId": 3607,
-          "scope": "只允许单个已备份原件；精确匹配设备UID、格式代次、逻辑会话、原始描述及SHA；其他会话不传入消费。"
-        },
-        "exactRelease": "E:/CodexData/Companion/exact-original-release-20261102/release-run/result.json",
-        "releaseSource": "5340f35ec04033915d5e08dbde7209a33cac7b6a",
-        "offlineValidation": "E:/CodexData/Companion/exact-original-release-20261102/offline-cli-check-r2/result.json",
-        "otaState": "E:/CodexData/Companion/recording-speed-batch-20261102/install-and-stopped-speed/result.json",
-        "otaPid": null,
-        "otaSessionId": 71433,
-        "otaResult": "E:\\CodexData\\Companion\\recording-speed-batch-20261102\\install-and-stopped-speed\\result.json",
-        "stoppedKiBps": 62.48614332396046,
-        "stoppedSeconds": 32.7752665
-      },
-      "nextBatchTimingNote": "用户批准的同场开录、断开动作、重连与保存通过；物理断链未有HCI确认，时长301.85秒。新场传输后只消费本次产生的片段，原有录音保留。",
-      "stoppedPacketComparison": {
-        "finding": "同一SHA的2MiB合成样本，历史FW534 111.94 KiB/s场由4416次通知收完整文件、平均约475字节；当前FW858 53.69 KiB/s场由10520次收完整文件、平均约199字节。历史实际2M/2120us，当前2M/965us；版本与无线环境不同，不能把单包差异当唯一原因。",
-        "history": "docs/releases/20261022-rate-ck-current534-upload111-and-connection-enumeration.json",
-        "current": "E:/CodexData/Companion/offline-speed-20261102/stopped-upload/run/benchmark.log",
-        "controllerEvidence": "docs/releases/20261029-rate758-windows-fixed37-qualified-965-origin.json；另一场经MIC认证的链路记录中央提出965、设备提出2120、中央仍回应965，不能推断Type能强制改变或泛化到所有电脑。",
-        "next": "核对是否存在不要求中央改变、也不重跑已失败参数组合的固件发送调度改善；不得关闭用户其他蓝牙设备。"
-      },
-      "interruptedSpeed": "仅停录样本通过一次62.486 KiB/s；录音中及稳定性未完成，保留在本批firmwareCaptureSliceCandidate，前端优先后接续。",
-      "devicePhoneClosure055": "owner_module_execution/frontendWindowsMobile20261102/ownerDevicePhoneClosure055",
-      "continuationBefore20261110": {
-        "at": "2026-11-06T15:32:51+08:00",
-        "status": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
-        "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
-        "ownerLatest": "现在未连接，稍后再接；早上没有显卡的"
-      }
+      "at": "2026-11-11T16:24:51+08:00",
+      "status": "OWNER_REQUESTED_AI_HANDOFF",
+      "next": "从docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md接手；沿原core.activeNonmodelCompletion20261110完成同一交接批次。",
+      "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-06T10:45:02+08:00",
-      "state": "IMPLEMENTING_OWNER_PRIORITY1_ORDINARY_DEVICE_AND_PHONE_CLOSURE",
-      "ownerRaw": "1 做一下",
-      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-      "branch": "work/device-phone-closure055-20261106",
-      "backendSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
-      "backendBase": "0272e98",
-      "importedDeviceFixes": "2ba08c56 includes e46f4769 discovery and inventory/offer binding",
-      "preservedFormats": "Android054 sourcec9f624bb; Windows052 e684fa73",
-      "scope": [
-        "普通设备发现/配对/按场同步删除与恢复联动",
-        "手机恢复设置/清配对与单文件正常OTA用户入口",
-        "新版原资料保留、系统保存/分享与重开恢复验收"
-      ],
-      "priorWorkpoint": "Android054 candidate verified, main app install pending other053 phone lease; AI表样字段填充依Owner1优先后置保留",
-      "boardLeaseAtStart": "Other existing Codex053 phone session inventory/delete/receive lease; no takeover",
-      "gpuModelsRun": false,
-      "installed": false,
-      "ownerAccepted": false
+      "at": "2026-11-11T16:24:51+08:00",
+      "state": "108141_INSTALLED_PRIVATE_PACKAGE_VERIFIED",
+      "done": "Windows108/Android141普通跟进与字面依据整批已安装；导入/编辑/文档/备份原已验范围保留。",
+      "remaining": "109/142单张交接仅源码；原非模型实卡可靠性/正式发布/完整对标与模型质量仍开放。",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json"
     },
     "previousBatch": {
       "at": "2026-11-02T15:48:16+08:00",
@@ -278481,9 +277149,9 @@
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
     },
     "sharedWindowsIntegration20261110": {
-      "at": "2026-11-11T15:01:46+08:00",
-      "state": "WINDOWS108_ORDINARY_FOLLOWUP_INSTALLED_MATCHED_NATIVE_UI_PASSED",
-      "reservedVersion": "0.1.108",
+      "at": "2026-11-11T15:20:58+08:00",
+      "state": "WINDOWS109_SELECTED_NOTE_HANDOFF_RESERVED_KEEP_INSTALLED108",
+      "reservedVersion": "0.1.109",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "mustIncludeSources": [
@@ -278827,6 +277495,502 @@
         }
       },
       "pendingUnifiedDeliveryState": "INSTALLED107_RETAINS105_AND106_PRESENTATION"
+    },
+    "retiredBatchAliases20261111": {
+      "historicalOnly": true,
+      "reason": "Old currentBatch/nextBatch referred to062/66687 and must not drive current work.",
+      "currentBatch": {
+        "at": "2026-11-06T10:45:02+08:00",
+        "state": "IMPLEMENTING_OWNER_PRIORITY1_ORDINARY_DEVICE_AND_PHONE_CLOSURE",
+        "ownerRaw": "1 做一下",
+        "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+        "branch": "work/device-phone-closure055-20261106",
+        "backendSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
+        "backendBase": "0272e98",
+        "importedDeviceFixes": "2ba08c56 includes e46f4769 discovery and inventory/offer binding",
+        "preservedFormats": "Android054 sourcec9f624bb; Windows052 e684fa73",
+        "scope": [
+          "普通设备发现/配对/按场同步删除与恢复联动",
+          "手机恢复设置/清配对与单文件正常OTA用户入口",
+          "新版原资料保留、系统保存/分享与重开恢复验收"
+        ],
+        "priorWorkpoint": "Android054 candidate verified, main app install pending other053 phone lease; AI表样字段填充依Owner1优先后置保留",
+        "boardLeaseAtStart": "Other existing Codex053 phone session inventory/delete/receive lease; no takeover",
+        "gpuModelsRun": false,
+        "installed": false,
+        "ownerAccepted": false
+      },
+      "nextBatch": {
+        "aiEnhancementResearch20261105": {
+          "at": "2026-11-05T14:23:04+08:00",
+          "state": "OFFICIAL_AI_ENHANCEMENT_UX_AND_FULL_PARITY_RESEARCH_COMPLETE_IMPLEMENTATION_PENDING",
+          "receipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\ai-enhancement-research-20261105.json",
+          "ownerQuote": "你看下竞品这些通常 AI 增强功能是怎么弄，感觉现在好像是不是有点太多了，还是怎么？他说开什么开关之类的，研究一下人家都是怎么弄的。然后再研究一下，弄完这个还有什么东西要弄，反正竞品要有的功能我们都要有。",
+          "productChanges": 0,
+          "allExisting36RowsPreserved": true,
+          "implementationPending": true
+        },
+        "ownerFullParity20261105": "owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCompetitiveParity20261105",
+        "previousOwnerLatestBeforeDayPause": "显存最多也就16g；主要是系统内存不够，模型运行别让电脑卡。",
+        "modelDirection": {
+          "resume20261105": {
+            "at": "2026-11-05T20:43:34+08:00",
+            "ownerQuote": "目前是有显卡, 可以继续搞模型相关的内容",
+            "inventory": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\gpu-inventory.json",
+            "currentStage": "Owner最新要求跳过重启原因调查，继续整场会议。沿已逐标记复现的duty.1/固定权重/2GiB私有内存/CPU5%/完整上下文跑唯一L39m23s，退出后独立评分；保留旧中断，其他质量门不改。"
+          },
+          "previousPause20261105": {
+            "executionState": "PAUSED_BY_OWNER_NONMODEL_ONLY",
+            "directive": "现在不可以再做模型了，继续把非模型的事情推进，看什么时候达到售卖标准。",
+            "preserved": true
+          },
+          "phase": "方向寻找与架构验证阶段",
+          "qualifiedArchitectureChosen": false,
+          "decisionMemory": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerAsrAccuracyLatencyAndMeetingUse20261103/ownerComplexPublicMeeting20261103/directionExploration20261104",
+          "confirmed": "完整声音→全场一致人物/时间/文字与重叠多路→可核事实纪要；真实会议证据先于选模/调参/训练。",
+          "doNotRepeat": "旧切片排名/读版口径当准确率；同会阈值及短窗盲调；全会强制分离或目标提取；人数/DER/final等单指标代替整会资格。",
+          "candidateStatus": "四真实片段证明任务接口可行但尚未合格，先完成唯一39分钟复杂整会；参考读取已修，禁止据旧错误分数调模型。",
+          "executionState": "GPU_DEFERRED_OWNER_CONFIRMED_NOT_CONNECTED_MORNING",
+          "executionDirective": "Owner明确早上无外置卡，本轮不运行GPU模型也不驻留等待；日间推进软件。接回后既有模型授权有效，沿已保护身份选卡和整会→评分入口继续。",
+          "resumeCondition": "实际接回外置RX6800XT且身份/资源适合后继续；不需重问授权，不以重启调查为先决，不回退内置780M推理。"
+        },
+        "deferredFrontendBeforeBackend20261103": {
+          "goal": "Windows和手机统一前端：使用许可合适的公开模板，设计美观、轻量并接入既有后端。",
+          "scope": "先盘点Windows现有React/Tauri界面与Android原生后端，选公开模板并保留许可证；实现统一设计、真实设备/录音/转写/纪要/待办等后端路径，按实际运行验证，不冒称手机实机完成。",
+          "next": "依据竞品实际产品界面收敛设计，基于现有工作树完成Windows及Android统一前端和真实后端连接，再集中验证、交付；保留此前测速未完成工作。",
+          "reference": "E:/CodexData/Companion/current-device-meeting-20261102/offline-long-retry/run/offline-transfer-recount-20261102.json",
+          "baseline": "单场32段新接收8191682字节，首到末507.455秒、15.764 KiB/s；逐段收包耗时加权17.490 KiB/s，前四段3.701、后28段34.075 KiB/s；旧Type dc0016d8/FW858，非新0.1.24实测。"
+        },
+        "at": "2026-11-10T00:37:21+08:00",
+        "status": "COMPLETE_DEPLOYED_MODEL_PAIRED_SOURCE_AND_KNOWN_ACTIVITY_DIAGNOSTICS_NOT_QUALIFIED",
+        "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
+        "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
+        "next": "保留原严格<5%和081/115普通软件交付；当前Paraformer不能因速度快或有分人时间轴进入复杂多人合格。下一项仍用已固定Qwen1.7B，同一完整近讲/远场对照；本机资源实质恢复后刷新6800XT身份与ordinal并从原任务续作，不换新模型、不降低低RAM保护。以同人、同音、同参考的错漏/串音区分识别器损失和目标声音保留问题，然后只修对应模块。自动目标存在判断、真实重叠目标提取及逐人转写必须一起保护词语，不能把已知活动诊断当自动分人或靠删低置信词过门；近讲不作完全干净波形监督。不能在这份Eval调阈值/训练，随后按原第三整会/未见会议、事实与双端实卡验收。 固件和实卡未验项沿owner_module_execution.embedded.next当前工作点，不用旧固件版本或旧手机安装步骤替代。",
+        "baseline": "新MOSS只有四场120秒筛查；DER7.69%/5.38%/12.02%/4.37%，人数6/7、5/5、7/7、4/4；非整会/最终准确率。旧R002整会cpCER33.89%纠正24.77%，为读取修正非模型增益。",
+        "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json",
+        "interruptedWork": "手机修订原文对应录音位置接口已包含在当前手机后端候选交付中；真实手机和同事前端联调仍待完成。",
+        "deliveryDecision": "基于实际瓶颈集中修复和验证；保持原录音及断链恢复，不重复无差异实验。",
+        "observedCauseCandidate": "前四段录音仍在进行，设备拒绝批量传输连接模式，实际连接间隔48单位（60ms）、设备TX时间340us；停止后下一段开始启用批量模式并出现间隔6单位（7.5ms）、TX时间965us，后段较快。录音状态、间隔和链路预算同时变化，不能断言单一根因；现象来自旧实测。",
+        "ownerLatest": "需要继续推进",
+        "runningSpeedTest": {
+          "status": "COMPLETE",
+          "pid": 21396,
+          "startedAt": "2026-11-02T15:01:13+08:00",
+          "state": "E:/CodexData/Companion/offline-speed-20261102/run/result.json",
+          "action": "用户同意约5分钟实卡新录，断连后使用现有throughput_hold诊断参数继续当前录音和补传；仅本机，保留板内旧音；不是已交付修复。",
+          "limit": "旧停止后测试曾未达到100；本次是新录音中恢复场景，需实测，不能视为已提速。",
+          "result": "DEVICE_SPEED_TEST_CAPTURE_SAVED",
+          "queue": {
+            "token": 6,
+            "peak": 2,
+            "slots": 8,
+            "pcmOverflows": 0,
+            "budgetFailures": 0
+          },
+          "analysis": "E:\\CodexData\\Companion\\offline-speed-20261102\\run\\speed-by-phase.json",
+          "stopToSavedMs": 8267
+        },
+        "liveDuringRecordingFinding": {
+          "source": "E:\\CodexData\\Companion\\current-device-meeting-20261102\\run\\capture.log",
+          "firmware": "0001045a",
+          "typeSource": "dc0016d8784d12b2cf80739a88807b75df9c2025",
+          "livePrefixes": {
+            "samples": 320,
+            "newBytes": 14639366,
+            "sumPacketSpanSeconds": 4038.136,
+            "weightedKiBps": 3.54,
+            "medianPerPullKiBps": 4.59
+          },
+          "sealedSegments": {
+            "samples": 64,
+            "newBytes": 1964174,
+            "sumPacketSpanSeconds": 609.288,
+            "weightedKiBps": 3.148,
+            "medianPerPullKiBps": 4.465
+          },
+          "scope": "sum of recorded first-to-last-packet windows; not continuous wall-clock or final-file checksum; packet-level rates represent one meeting, not universal throughput",
+          "privacy": "metadata only; no audio examined or transmitted"
+        },
+        "currentCandidate": {
+          "status": "REAL_CARD_SMOKE_PASSED_NOT_INSTALLED",
+          "path": "E:/CodexData/Companion/ui-acceptance-fresh-20261102",
+          "intent": "仅原会话验证确实录音中时，针对每次录中同步持有系统吞吐偏好，覆盖封口回补和实时片段；结束自动释放，录音后仍原策略。",
+          "limit": "源码候选非已安装；一次通过诊断配置的实测仅约11 KiB/s，远低既有60+目标，不宣称完成。",
+          "testSessionId": 24768,
+          "cargoPid": 13788,
+          "rustcPid": 22748,
+          "commit": "6655d87d147b373708c9a098a89fd319223286ac",
+          "testResult": "编译通过；录音状态选择、同会话跟随和断连保留检查通过",
+          "candidateBuildSessionId": 37266,
+          "candidateBuildLog": "E:/CodexData/Companion/offline-speed-20261102/candidate-build.log",
+          "artifact": "E:/CodexData/Companion/offline-speed-20261102/candidate-artifact.json",
+          "candidateBuildResult": "PASS",
+          "candidateBuildSeconds": 54.18,
+          "result": "真实单次5分1.56秒录音保存、断连重连通过，PCM溢出0；重连后封口21.054、实时15.868 KiB/s，按收包时段加权；停止后仅3550字节样本不代表完整上传。",
+          "actualReceipt": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\result.json",
+          "actualRates": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\speed-by-phase.json"
+        },
+        "runningCandidateTest": {
+          "status": "COMPLETE",
+          "pid": 29100,
+          "startedAt": "2026-11-02T15:14:39+08:00",
+          "state": "E:/CodexData/Companion/offline-speed-20261102/candidate-follow/run/result.json",
+          "source": "6655d87d147b373708c9a098a89fd319223286ac",
+          "scope": "用户同意再次约5分钟新录，候选默认策略，同一录音断连重连，原用户录音保留、本地处理。",
+          "priorFailure": "第一次端点选择器不认识上次新测试成功标识而未接板；已添加准确终态识别并验证失败/未空闲仍拒绝，原失败保留。",
+          "result": "DEVICE_SPEED_TEST_CAPTURE_SAVED",
+          "evidence": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\result.json",
+          "speed": "E:\\CodexData\\Companion\\offline-speed-20261102\\candidate-follow\\run\\speed-by-phase.json"
+        },
+        "ownerPrior100Finding": {
+          "request": "之前的速度, 没有其它蓝牙设备连接能去到100k",
+          "oldResult": "FW534/UI84/Boot463与Type P344/R102，停止录音后2MiB测试文件新增2097152B/18.2952295s=111.94175 KiB/s；设备和HCI均完整SHA，未消费。旧单次测试文件不等于当前版本或录音中速度。",
+          "coexistence": "该场日志记录5次其他peer发起活动，不足以证明没有其他蓝牙设备；不能操作或擅自断开用户其它设备。",
+          "evidence": "docs/releases/20261022-rate-ck-current534-upload111-and-connection-enumeration.json",
+          "decision": "2026-11-02 Owner关闭速度专项，覆盖此前继续追100的安排。其它蓝牙负载关掉时可以到100以上；边录边传或录完再传大约70到60，接受。保持现配置，不再改传输。",
+          "ownerFollowup": "就算有蓝牙别的也能去到60多",
+          "secondPriorEvidence": "FW667/Type P605r2两场合成2MiB旧测71.04和68.40 KiB/s，未操作其他设备；同时FW534单场111.94有其他peer活动。既有结果支持共存时可达60+，不证明每种共存稳定；禁止把关闭其他设备作为修复。来源 docs/releases/20261026-rate-is-controller-progress-wake667-actual-and-no-rate-gain.json"
+        },
+        "runningStoppedBenchmark": {
+          "status": "COMPLETE",
+          "pid": 4932,
+          "nativePid": 6288,
+          "startedAt": "2026-11-02T15:23:04+08:00",
+          "state": "E:/CodexData/Companion/offline-speed-20261102/stopped-upload/run/result.json",
+          "scope": "设备停录，当前已装Type 0.1.24/FW858，身份/2MiB长度/原SHA/source=synthetic全匹配后只读，禁止消费/录音/云/其他蓝牙设备操作。",
+          "result": "DEVICE_SYNTHETIC_UPLOAD_TEST_COMPLETE",
+          "KiBps": 53.69239408777423,
+          "seconds": 38.1432051,
+          "evidence": "E:\\CodexData\\Companion\\offline-speed-20261102\\stopped-upload\\run\\result.json"
+        },
+        "stoppedCurrentResult": "FW858/已安装Type0.1.24，同2MiB原SHA、0缓存/消费，38.1432051s=53.692394 KiB/s，实际2M/CI6、TX时间965us；旧FW534 111.94175在TX时间2120us，环境及版本同时不同，不单独归因，未关其他蓝牙。",
+        "deliveryBuild": {
+          "status": "INSTALLED_AND_PUBLISHED",
+          "pid": 19068,
+          "source": "e1d9fbd0a6b9c6251569e14f158e4fc19b53713e",
+          "state": "E:/CodexData/Companion/offline-speed-20261102/delivery/windows-build-state.json",
+          "goal": "电脑0.1.25已安装。Owner于2026-11-02关闭速度专项，停止后53.69 KiB/s和100目标都不再追，保持现配置。",
+          "sha256": "044f545e7da992264c9e51b857ebcf9f3842e4cc6ad69c9246e99d8598244174",
+          "installer": "E:/CodexData/Companion/offline-speed-20261102/delivery/Companion-Type-0.1.25-工程候选-录音同步加速.msi",
+          "extraction": "E:/CodexData/Companion/offline-speed-20261102/delivery/windows-extract.json",
+          "installReceipt": "E:\\CodexData\\Companion\\offline-speed-20261102\\delivery\\windows-0125-installation\\result.json",
+          "installedSmoke": "E:\\CodexData\\Companion\\offline-speed-20261102\\delivery\\windows-0125-installed-review-smoke\\status.json"
+        },
+        "boardCoordination": {
+          "status": "GROK_HOLDS_BOARD",
+          "mechanism": "共享占用记录及轮次，Grok领用期间Codex不接串口/蓝牙/调试口；释放后交给Codex，15分钟无人领取可轮另一方。",
+          "fix": "共享轮次脚本增加跨进程互斥；隔离环境20次同时领取均只产生一个占用；记录不可读时不显示可领取；轮次文件缺失时不伪造历史。",
+          "scope": "仅配合轮次工具的协作者受互斥约束；不能强制阻止绕过记录直接接板。安装脚本不能插入独立占用行干扰Grok。",
+          "previous": "轮次规则新增于2026-11-02 15:24，上一实卡测试15:23:55已结束。",
+          "lastObserved": "Grok测试12588终态 SCREEN_OR_STACK_NOT_OBSERVED，报告句柄关闭；截至本次检查仍有Grok占用行，不能由Codex替其释放。"
+        },
+        "parallelMobileOriginalPosition": {
+          "source": "172f26853a5534a7a47d8b141c45ddec1c6918c0",
+          "status": "DELIVERED_CANDIDATE_NOT_PHONE",
+          "purpose": "修订后读取保留原文对应录音的近似时间窗口；原文和音频与已有定位都匹配时才返回，不将旧定位贴到修订文字。",
+          "limits": "时间为近似识别窗口；若已有定位被覆盖、原音变化或文件缺失返回空；Android实机及前端未验。",
+          "evidence": "E:/CodexData/Companion/mobile-original-timing-20261102/host-jvm-original-timing-r3/state.json",
+          "delivery": "E:\\CodexData\\Companion\\delivery-batch-20261102\\Companion-Android-后端接入候选-原文回听合批.zip",
+          "package": "E:/CodexData/Companion/mobile-original-timing-20261102/Companion-Android-后端接入候选-原文回听合批.zip",
+          "packageSha256": "eb95d4aaf6d2d76d1b78ca8a886ef330e1ddb24039444b6fc8297e7e63a54725",
+          "aarVerification": "E:/CodexData/Companion/mobile-original-timing-20261102/aar-exact-jvm/state.json",
+          "consumer": "E:/CodexData/Companion/mobile-original-timing-20261102/android-consumer-state.json"
+        },
+        "followChurnFinding": {
+          "source": "E:/CodexData/Companion/offline-speed-20261102/candidate-follow/run/capture.log",
+          "observation": "已实测候选五分钟场18次录中跟随，18次请求起始连接间隔均48单位，结束17次12单位、1次48单位；当前策略随每次跟随结束释放，下一次再申请。",
+          "interpretation": "反复变更是可见现象，采样点不证明它是速率主因，也不证明延长持有必定更快；旧停录全程持有偏好曾失败，不能把两种场景混同。",
+          "next": "审查原会话持久连接与暂停/停止/断连生命周期，评估是否可仅在已验证录音跟随期间跨轮复用请求，并在停止前可靠释放；先做定向软件验证，待新轮次再按必要实测，不重复停录旧hold实验。"
+        },
+        "earlyFollowCandidate": {
+          "source": "E:/CodexData/Companion/follow-negotiation-20261102/source",
+          "parent": "e1d9fbd0a6b9c6251569e14f158e4fc19b53713e",
+          "status": "REAL_TEST_START_FAILED_NO_NEW_CAPTURE",
+          "cargoPid": 26984,
+          "test": "faster_follow_requires_verified_active_original",
+          "intent": "原设备、原会话和录音状态已确认且设备有增长尾段时，在读取录音目录前申请同一短期吞吐偏好，协商与目录读取重叠；其余、停录与失败仍沿原策略。",
+          "risk": "候选尚未测或安装；提前申请仅可能减少等待，不证明速度改善；现策略仍按次释放。",
+          "testSessionId": null,
+          "sourceCommit": "d07ecae6d4064c08e4b6ee98c675d6afca9c4079",
+          "tests": "录音跟随24项、连接丢失6项通过；无实卡。首单测release编译耗时5分14秒，再次cargo试图重复编译，已停止并直接运行已构建的同源测试程序。",
+          "nativeBuildState": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-build-state.json",
+          "nativeBuildPid": 22056,
+          "nativeBuildSessionId": null,
+          "nativeExecutable": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-native/companion-type.exe",
+          "nativeProof": "E:/CodexData/Companion/follow-negotiation-20261102/candidate-artifact.json",
+          "testScript": "E:/CodexData/Companion/follow-negotiation-20261102/prepared-candidate-test.py",
+          "preflight": "候选非法断连时间表在BLE禁用的隔离环境接板前拒绝；端点选择Windows，当前共享板无占用且轮次允许；只读检查不代表后续仍可用。",
+          "request": "已弹窗申请本次新录约5分钟自然环境声，断连重连，同场原音本机，保留旧录音，不上传。等待回复，不重复申请。",
+          "consentAt": "2026-11-02T16:07:22+08:00",
+          "consent": "用户选择可以开始；约5分钟自然环境新录、断连重连，仅本机，旧录音保留。",
+          "reason": "Grok于16:06:05领取板进行双麦采样，复查时仍占用；本次新录尚未开始。",
+          "sharedBoardOwnerProcess": 22500,
+          "sharedBoardOwnerAction": "Grok采样脚本PID22500已退出；共享记录仍为Grok占用，等待其关闭句柄并正式释放，不能仅凭进程退出代为释放。",
+          "inclusiveRateAnalysis": "E:/CodexData/Companion/follow-negotiation-20261102/previous-candidate-inclusive-speed.json",
+          "inclusiveRateFinding": "此前五分钟候选实测：重连后16次拉取601174字节，单次收包时间总计33.316秒、加权17.622 KiB/s；从首个关联跟随请求至末个释放141.190秒，包含拉取间等待和继续录音，平均4.158 KiB/s；不含之前连接及末尾保存，不能当纯上传或整个最终同步速度。",
+          "sharedBoardOwnerProcessState": "terminal_or_missing",
+          "testResult": "E:/CodexData/Companion/follow-negotiation-20261102/run/result.json",
+          "failure": "电脑报告原开始尚未确认；后续同UID只读查询麦克风不运行、mic_starts和帧计数与测试前一致、BLE断开、存储就绪；已释放共享板，未取得速度。",
+          "result": "REAL_CAPTURE_SAVED_SPEED_TARGET_NOT_MET",
+          "comparison": "E:/CodexData/Companion/start-after-local-batch/speed-comparison.json",
+          "observed": "重连后收包窗口加权14.175 KiB/s；上一候选相同练习17.622 KiB/s，环境有差异不能归因，但不支持已提速或达到60。工具每次跟随前等待约5秒，练习整体平均不能等同正式实时流程。"
+        },
+        "startAfterLocalFailure": {
+          "status": "REAL_DEVICE_RECORDING_SAVED_NOT_INSTALLED",
+          "evidence": "E:/CodexData/Companion/follow-negotiation-20261102/run/capture.log",
+          "causeBoundary": "新主机START尚未确认时，收到含local_start的设备状态会进入必须已有本次确认的本地操作分支并拒绝；本场日志证明触发此分支，原始80字节状态未单独保存，具体旧状态字段以受控固件实测和协议测试确认。",
+          "scope": "不同的已结束本地录音不应阻断用户明确的新录音；当前录音、错误、相同开始请求及自动恢复仍需保持原语义。",
+          "testPid": null,
+          "testSessionId": 95518,
+          "testState": "E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-baseline-state.json",
+          "failedOriginalPreserved": "E:/CodexData/Companion/follow-negotiation-20261102/run/library/recorder-controls",
+          "baseline": "真实设备协议C夹具中，不同本地录音已结束后申请新的主机录音，基线稳定重现相同错误；见 E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-baseline.log。",
+          "fix": "仅新主机未确认START且同设备同代次、旧本地录音确已结束并非同一开始请求时，把旧状态作为前一状态；不确认新录，不重发，自动恢复仍不代用户开始。",
+          "fixedTestState": "E:/CodexData/Companion/follow-negotiation-20261102/start-after-local-fixed-state.json",
+          "fixedTestPid": 11888,
+          "fixedTestSessionId": 26704,
+          "source": "8f0d106476f985322c3ffd3b5ded58faa89ea829",
+          "fixedTests": "真实协议先失败再通过；同一已编译测试程序确认录音控制39、跟随25、断连6均通过。",
+          "testEvidence": "E:/CodexData/Companion/follow-negotiation-20261102/fixed-related-tests.json",
+          "nativeBuild": "E:/CodexData/Companion/start-after-local-batch/candidate-build-state.json",
+          "nativeBuildPid": null,
+          "nativeBuildSessionId": 26463,
+          "artifactProof": "E:/CodexData/Companion/start-after-local-batch/candidate-artifact.json",
+          "realTestPid": null,
+          "realTestSessionId": 42021,
+          "realTestState": "E:/CodexData/Companion/start-after-local-batch/run/result.json",
+          "realTest": "FW858上确认新录、同一场重连及301.85秒音频保存，控制及接收检查通过；电脑候选尚未安装。",
+          "realTestResult": "E:/CodexData/Companion/start-after-local-batch/run/result.json"
+        },
+        "firmwareCaptureSliceCandidate": {
+          "status": "DEV_FW860_INSTALLED_STOPPED_SAMPLE_TESTED_LIVE_UNTESTED",
+          "source": "be7964c08c95fe5be494b3fa32eda7228d535976",
+          "path": "E:/CodexData/Companion/capture-packet-slice-20261102/source",
+          "intent": "有真实计时且录音与存储允许时，单包读取和通知可在同一毫秒预算内连续进行；每步重新核对录音占用，无计时仍保留原单步。",
+          "evidence": "E:/CodexData/Companion/capture-packet-slice-20261102/source/.cache/recording-core-20261011/capture-pair-20261102-r6/affected-fixtures.json",
+          "limits": "开发签名/电源覆盖仅供工程验证；停录单次样本62.486 KiB/s，不证明稳定或100；录音中调度改动尚未实卡测速。",
+          "integratedSource": "cd200644f8e9b6babd101bc26a31cc569b2a523a",
+          "integratedPath": "E:/CodexData/Companion/recording-speed-batch-20261102/source",
+          "integratedWith": "此前未安装的设备录音输入指示候选6cd32a69，仍基于实装FW858；保留用户要求关闭的双麦增强。",
+          "integratedTests": "传输预算、真实Opus产品录音及封口/尾段/断连/双通道软件检查通过，非实卡速度。",
+          "buildState": "E:/CodexData/Companion/recording-speed-batch-20261102/firmware-build-r6-state.json",
+          "buildPid": null,
+          "buildSessionId": 82375,
+          "setupFailures": "新工作树缺少已有Opus测试库、UI头文件和外部图片素材，已复用上一个候选的对应输入，前5次均在编译前失败，原失败保留。",
+          "package": "E:/CodexData/Companion/recording-speed-batch-20261102/firmware-package/ota_manifest.json",
+          "packageSha256": "c163aa840de9599b78783f91a22bc7514bda72daf4975067c80b0b1b708b0273",
+          "validation": "ARM完整构建COMPILED_BUILD_ONLY，电脑端离线包内容核对PASS；开发签名和开发电源覆盖，非销售包；实机时序、录音质量和提速未验。",
+          "preservationCheck": "E:/CodexData/Companion/recording-speed-batch-20261102/preserve-inspection/result.json",
+          "preservationResult": "用户确认USB供电；只读目录检查发现1段已有麦克风录音；工程升级未读取、消费或写入。设备已确认断连空闲并按轮次释放。",
+          "actualFirmwarePolicy": "FW858当前启动新的OTA临时空间前要求现有麦克风录音已被耐久接收并消费；本场用户此前要求板内原录音保留，不能擅自消费。",
+          "preparedLocalBackup": "E:/CodexData/Companion/recording-speed-batch-20261102/backup-existing-recording.py",
+          "backupScope": "仅本机接收原始录音，不上传、不播放，COMPANION_TYPE_DELETE_AFTER_SYNC=0；启动前重查轮次和设备身份，当前尚未执行。",
+          "backupResult": "E:/CodexData/Companion/recording-speed-batch-20261102/existing-recording-local-copy/result.json",
+          "backupRawIntegrity": "E:/CodexData/Companion/recording-speed-batch-20261102/existing-recording-local-copy/raw-integrity.json",
+          "backupSummary": "录音131655，约41.32秒，原始压缩87338字节；本机长度、CRC、SHA均与设备描述一致，WAV在本机；设备原件未消费。",
+          "ownerAuthorization": "用户同意保留电脑备份，且仅释放板上这段原件并继续安装测试固件。不得消费任何其他录音。",
+          "releaseCandidate": {
+            "source": "5340f35ec04033915d5e08dbde7209a33cac7b6a",
+            "test": "E:/CodexData/Companion/exact-original-release-20261102/test-r3-state.json",
+            "build": "E:/CodexData/Companion/exact-original-release-20261102/candidate-build-state.json",
+            "buildPid": 28048,
+            "buildSessionId": 3607,
+            "scope": "只允许单个已备份原件；精确匹配设备UID、格式代次、逻辑会话、原始描述及SHA；其他会话不传入消费。"
+          },
+          "exactRelease": "E:/CodexData/Companion/exact-original-release-20261102/release-run/result.json",
+          "releaseSource": "5340f35ec04033915d5e08dbde7209a33cac7b6a",
+          "offlineValidation": "E:/CodexData/Companion/exact-original-release-20261102/offline-cli-check-r2/result.json",
+          "otaState": "E:/CodexData/Companion/recording-speed-batch-20261102/install-and-stopped-speed/result.json",
+          "otaPid": null,
+          "otaSessionId": 71433,
+          "otaResult": "E:\\CodexData\\Companion\\recording-speed-batch-20261102\\install-and-stopped-speed\\result.json",
+          "stoppedKiBps": 62.48614332396046,
+          "stoppedSeconds": 32.7752665
+        },
+        "nextBatchTimingNote": "用户批准的同场开录、断开动作、重连与保存通过；物理断链未有HCI确认，时长301.85秒。新场传输后只消费本次产生的片段，原有录音保留。",
+        "stoppedPacketComparison": {
+          "finding": "同一SHA的2MiB合成样本，历史FW534 111.94 KiB/s场由4416次通知收完整文件、平均约475字节；当前FW858 53.69 KiB/s场由10520次收完整文件、平均约199字节。历史实际2M/2120us，当前2M/965us；版本与无线环境不同，不能把单包差异当唯一原因。",
+          "history": "docs/releases/20261022-rate-ck-current534-upload111-and-connection-enumeration.json",
+          "current": "E:/CodexData/Companion/offline-speed-20261102/stopped-upload/run/benchmark.log",
+          "controllerEvidence": "docs/releases/20261029-rate758-windows-fixed37-qualified-965-origin.json；另一场经MIC认证的链路记录中央提出965、设备提出2120、中央仍回应965，不能推断Type能强制改变或泛化到所有电脑。",
+          "next": "核对是否存在不要求中央改变、也不重跑已失败参数组合的固件发送调度改善；不得关闭用户其他蓝牙设备。"
+        },
+        "interruptedSpeed": "仅停录样本通过一次62.486 KiB/s；录音中及稳定性未完成，保留在本批firmwareCaptureSliceCandidate，前端优先后接续。",
+        "devicePhoneClosure055": "owner_module_execution/frontendWindowsMobile20261102/ownerDevicePhoneClosure055",
+        "continuationBefore20261110": {
+          "at": "2026-11-06T15:32:51+08:00",
+          "status": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+          "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
+          "ownerLatest": "现在未连接，稍后再接；早上没有显卡的"
+        }
+      }
+    },
+    "handoff20261111": {
+      "at": "2026-11-11T16:24:51+08:00",
+      "state": "READY_FOR_NEW_AI_SOURCE_REMOTE_VERIFIED",
+      "ownerQuote": "先记录一下，然后我请别的AI来接手；重新梳理待办，清理过时误导，该提交的提交，整理工作现场。",
+      "scope": "交接和现场保护；本轮不新增功能、不构建、不安装、不接板、不派顾客、不恢复已清除Goal。",
+      "entry": "docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md",
+      "canonicalBacklog": "docs/product_backlog.json",
+      "canonicalLog": "docs/development_log.md",
+      "installed": {
+        "windows": "0.1.108",
+        "android": "0.1.141",
+        "firmware": "66791 (retained existing artifact, not newly qualified)"
+      },
+      "sourceOnly": {
+        "windows": {
+          "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+          "branch": "work/device-phone-closure055-20261106",
+          "commit": "673fcb7a9cae9331d62ed2241a626afd30094721",
+          "files": [
+            {
+              "path": "packages/ui/src/CompanionDashboard.tsx",
+              "sha256": "49d0d58ea801d7b8dc74c2a64b8dd0af0202cc069fcaf15dbabc93cee7edb744"
+            },
+            {
+              "path": "packages/ui/src/CompanionMeetingNotes.tsx",
+              "sha256": "308b0b0b46329adc891ce2ad22654f5442d54b89cf2aa9eddc30e7d66e9ca548"
+            },
+            {
+              "path": "packages/ui/src/ContentExportPanel.tsx",
+              "sha256": "06564b3cd8d5df66eec0cde3c348e4932d5cf77edc28ceb1c515af6f0888c2fa"
+            },
+            {
+              "path": "packages/ui/src/ManualNoteEditor.tsx",
+              "sha256": "f0488db5e04538caf2713b3d6a56a07188a4b3fad24475209f655fbd29af162f"
+            },
+            {
+              "path": "packages/ui/src/manualNoteContext.css",
+              "sha256": "70913d3032bd01351770018447bd3698dc638bdb3ee6868800a606abf24b1443"
+            },
+            {
+              "path": "packages/ui/src/selectedNoteHandoff.css",
+              "sha256": "dbbdba145955aa78c83fd47efb838d39e051e20fd76bb0f85beb3d490b6ee420"
+            },
+            {
+              "path": "tools/build_windows_candidate_ci.py",
+              "sha256": "cb97c0148ed53c61d214f693024fa62f193bfc5702209ac5bb2361468c582157"
+            },
+            {
+              "path": "tools/qa/core_acceptance20261109/ui_source.cjs",
+              "sha256": "4ed4e91927dc3e06d10e6adc8acabdf6c047df9f135a608ef6ab514af8a12d20"
+            },
+            {
+              "path": "tools/test_companion_setup_render.mjs",
+              "sha256": "5cccfab7b08f8af316d17cc0aec8499cbfbfceeb8a240bf745dae644a3189a68"
+            },
+            {
+              "path": "tools/test_selected_note_handoff.tsx",
+              "sha256": "8f294482ee3a25d749970f3a71cd3af8856f3dd3788a6e6bb939cb91757ccfd2"
+            }
+          ],
+          "nativeBuildOrInstallQualified": false
+        },
+        "android": {
+          "root": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+          "branch": "work/core-acceptance-android-20261109",
+          "commit": "cbe1d0e2fa801d6b221103c39294ab411884003f",
+          "files": [
+            {
+              "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportContents.java",
+              "sha256": "f260d2575d9a4b902ffd2e87da9c1f53763456a4fd591b58ec700e4b2b120b4b"
+            },
+            {
+              "path": "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+              "sha256": "9c9e3c22b1d4379da0713e924bf25b4dd459bde4a0c4e8f981f85cb4bcc52b71"
+            },
+            {
+              "path": "apps/android/app/src/main/java/com/denzic/companion/app/PreparedExports.java",
+              "sha256": "7051530eb7c8f253271db4b7f0581512222a4188877cf5f4f8b0a43d69723e3a"
+            },
+            {
+              "path": "apps/android/app/src/test/java/com/denzic/companion/app/ContentExportTest.java",
+              "sha256": "93dee501f3b88a08eb89a0c677f96508dfde569d5e5a446e60210fec5260c360"
+            },
+            {
+              "path": "apps/mobile/src/App.tsx",
+              "sha256": "3d8f521cef804215ce7c07e7424adc99fdd04493a28efa4c11fb82167e097376"
+            },
+            {
+              "path": "apps/mobile/src/ContentExport.tsx",
+              "sha256": "e9ca84d55cf4837bc4cf7bf892bae52a5d07520467aa901f47c59bfada562782"
+            },
+            {
+              "path": "apps/mobile/src/RecordingNotes.tsx",
+              "sha256": "be3cddc2af155b21491fa384816862a748ebd7ccac784fc3d011d93d2f6204b1"
+            },
+            {
+              "path": "packages/ui/src/ManualNoteEditor.tsx",
+              "sha256": "f0488db5e04538caf2713b3d6a56a07188a4b3fad24475209f655fbd29af162f"
+            },
+            {
+              "path": "packages/ui/src/manualNoteContext.css",
+              "sha256": "70913d3032bd01351770018447bd3698dc638bdb3ee6868800a606abf24b1443"
+            },
+            {
+              "path": "packages/ui/src/selectedNoteHandoff.css",
+              "sha256": "dbbdba145955aa78c83fd47efb838d39e051e20fd76bb0f85beb3d490b6ee420"
+            },
+            {
+              "path": "tools/qa/core_acceptance20261109/ui_source.cjs",
+              "sha256": "b577965c6309ab8e3b2bf8c68b56c7862fea9a36cfa7478c4f6c6f2c0c08b3a1"
+            },
+            {
+              "path": "tools/test_companion_setup_render.mjs",
+              "sha256": "8a4c4db6f6c62381755a902f6f731c9e1ce0e933a0f10947090b423d8f2b8282"
+            },
+            {
+              "path": "tools/test_selected_note_handoff.tsx",
+              "sha256": "8b21eacd4a13228ab40230022a848aa4c7786637ba7aaf5e745e5d9577acd6cc"
+            }
+          ],
+          "nativeBuildOrInstallQualified": false
+        }
+      },
+      "plannedVersionsNotBuilt": {
+        "windows": "0.1.109",
+        "android": "0.1.142"
+      },
+      "nextOriginalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
+      "remainingGroups": [
+        {
+          "originalRefs": [
+            "CP27-09",
+            "CP12-04",
+            "CP14-08"
+          ],
+          "remaining": "选定单张跟进及依据的预览/保存/复制/分享、长行编辑，源码待原生交付；相关完整导出和日期确认体验。"
+        },
+        {
+          "originalRefs": [
+            "CP04-08",
+            "CP23-10",
+            "CP09-02"
+          ],
+          "remaining": "当前实卡自动结果、>=2h长录/同步/恢复、手机实卡完整链和自然误触。"
+        },
+        {
+          "originalRefs": [
+            "CP15-09",
+            "CP15-02"
+          ],
+          "remaining": "物理按住说话输入的完整Windows/Mac实际链。"
+        },
+        {
+          "originalRefs": [
+            "CP25-03",
+            "CP25-06",
+            "CP25-07"
+          ],
+          "remaining": "正式签名分发、真实服务/费用/隐私许可和原平台级对标。"
+        }
+      ],
+      "deferredScopesUnchanged": "屏幕/宠物与明确后置的硬件、电源/生产范围沿embedded原决策，不因交接恢复或写成完成。",
+      "qualityScope": "普通与复杂会议准确率、逐人/重叠、事实与资源沿原模型合同，单样本3.61%不是通用成绩。",
+      "customerScope": "临时AI模拟、Owner实体体验、真人购买分开。141原话已完整承接，不因换AI再次抽购买意见。",
+      "historicalPolicy": "原CP任务和质量门、模块Owner签收不改；移出当前入口的别名留存归档，不能按272旧编号或36行算总体百分比。",
+      "sourceRemoteVerification": "docs/handoffs/20261111-owner-ai-handoff/source-remote-verification.json"
     }
   }
 }
