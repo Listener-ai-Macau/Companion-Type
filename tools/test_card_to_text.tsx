@@ -7,6 +7,7 @@ import {cardRecordingStatus} from '../packages/ui/src/cardRecordingStatus';
 import {meetingJourney} from '../packages/ui/src/CompanionJourney';
 import {CompanionHelp} from '../packages/ui/src/CompanionHelp';
 import {CompanionSetup} from '../packages/ui/src/CompanionSetup';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 
 // Affected software state and real callback contracts only; no hardware claims.
 const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
@@ -53,4 +54,14 @@ const rendered=renderToStaticMarkup(<CompanionHelp device={snapshot.device} onCl
 for(const capability of ['重点列表','导出原音','MCP','按住说话','电脑会议','固件升级','备份恢复'])assert.ok(rendered.includes(capability),capability);
 assert.match(rendered,/有疑问再回听/);
 act(()=>tree.unmount());
+for(const surface of ['windows','mobile'] as const){
+  let dashboard:any;
+  act(()=>{dashboard=create(<CompanionDashboard snapshot={snapshot} surface={surface} busyAction={null} error={null}
+    productSettings={{asrProvider:'volcengine',autoLocalCardTranscription:true} as any} onControl={()=>{}} onRefresh={()=>{}} onSaveProductSettings={async()=>{}}/>);});
+  const settingsButton=dashboard.root.findAllByType('button').find((node:any)=>text(node)==='设置与工具');
+  act(()=>settingsButton.props.onClick());
+  assert.equal(text(dashboard.toJSON()).includes('接收卡片录音后，自动在这台电脑转写'),surface==='windows',
+    'desktop-only processing does not become a non-working mobile switch');
+  act(()=>dashboard.unmount());
+}
 console.log('PASS_CARD_TO_TEXT: local-only lifecycle, model readiness, opt-out, retry, physical guide and real help destinations');

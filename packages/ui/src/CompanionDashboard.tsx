@@ -3155,11 +3155,11 @@ export function CompanionDashboard({
             </> : <><p className="ct-secret-hint">
               正式桌面版使用系统凭据管理器保存密钥。本地转写不会上传录音；选择云端转写时录音会发送到所选服务，智能纪要会把转写文字发送到 DeepSeek。空密钥保存不会覆盖已有值。
             </p><p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p></>}
-            <label className="ct-field-check">
+            {surface==='windows'?<><label className="ct-field-check">
               <input type="checkbox" checked={formAutoLocalCard} onChange={e=>setFormAutoLocalCard(e.target.checked)} />
               接收卡片录音后，自动在这台电脑转写
             </label>
-            <p className="ct-step-meta">仅使用本机中文模型，不上传录音，也不自动生成云端纪要。首次准备模型后，新接收的卡片录音会自动生成文字；已选择手动处理的记录保持原选择。</p>
+            <p className="ct-step-meta">仅使用本机中文模型，不上传录音，也不自动生成云端纪要。首次准备模型后，新接收的卡片录音会自动生成文字；已选择手动处理的记录保持原选择。</p></>:null}
             <div className="ct-mode-row">
               <button
                 type="button"
@@ -3185,7 +3185,7 @@ export function CompanionDashboard({
                   <option value="local-paraformer">电脑本地转写（中文）</option>
                 </select>
               </label>
-              {formAsrProvider === 'local-paraformer' || formAutoLocalCard ? <div className="ct-field">
+              {formAsrProvider === 'local-paraformer' || (surface==='windows' && formAutoLocalCard) ? <div className="ct-field">
                 <span>{productSettings?.localAsrAvailable ? '本地模型已准备' : '需要准备本地模型'}</span>
                 <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !onPrepareLocalAsr}
                   onClick={() => { if (!onPrepareLocalAsr) return; setSettingsBusy(true); setSettingsMsg(null);
@@ -3233,7 +3233,7 @@ export function CompanionDashboard({
                   setSettingsBusy(true);
                   void Promise.resolve().then(() => onSaveProductSettings?.({
                     defaultMeetingMode: formDefaultMode,
-                    autoLocalCardTranscription: formAutoLocalCard,
+                    ...(surface==='windows'?{autoLocalCardTranscription:formAutoLocalCard}:{}),
                     asrProvider: formAsrProvider,
                     volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
                     volcAccessKey: clearCredentials.includes('volcAccessKey') ? '' : formVolcAccess,
