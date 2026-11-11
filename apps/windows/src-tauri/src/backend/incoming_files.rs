@@ -297,6 +297,52 @@ pub(crate) fn remove(id: &str) -> Result<serde_json::Value, String> {
     store.save()?;
     view(&store, ACTIVE.load(Ordering::Acquire))
 }
+fn owner_lock(key: &str) -> Result<File, String> {
+    if key.is_empty() || key.len() > 4096 {
+        return Err("会议标识无效，未改变接收资料。".into());
+    }
+    let token = super::audio_editing::context_token()?;
+    let identity = hash(format!("{}\0{}", token, key).as_bytes());
+    let root = root_path();
+    let parent = root.parent().ok_or("资料目录不可读取。")?;
+    file_lock(&parent.join(format!(".companion-incoming-owner-{identity}.lock")))
+}
+/// Hold these owner locks through the caller's actual index/files commit.
+/// Unbound files and receipts for a different library are outside this deletion.
+pub(crate) fn purge_owners(keys: &[String]) -> Result<Vec<File>, String> {
+    let mut keys = keys.to_vec();
+    keys.sort();
+    keys.dedup();
+    let guards = keys
+        .iter()
+        .map(|key| owner_lock(key))
+        .collect::<Result<Vec<_>, _>>()?;
+    let token = super::audio_editing::context_token()?;
+    let mut store = Store::open()?;
+    let previous = store.rows.len();
+    store.rows.retain(|row| {
+        row.library_id.as_deref() != Some(token.as_str())
+            || !row
+                .key
+                .as_ref()
+                .is_some_and(|key| keys.binary_search(key).is_ok())
+    });
+    if store.rows.len() != previous {
+        store.save()?;
+    }
+    Ok(guards)
+}
+fn current_saved_rows() -> Result<Vec<crate::companion_v1::CompanionV1HostSession>, String> {
+    let loaded = super::session_store::load(&super::persistence::state_file_path());
+    if loaded.state.status != "ready" {
+        return Err("资料库尚需恢复或重新保存，请先处理后再接收；原文件保留。".into());
+    }
+    match loaded.bytes {
+        Some(bytes) => super::persistence::migrate_sessions(bytes)
+            .ok_or("资料库尚不可读取，请稍后重试。".into()),
+        None => Ok(Vec::new()),
+    }
+}
 fn target_identity(row: &crate::companion_v1::CompanionV1HostSession) -> Result<String, String> {
     super::library_lifecycle::require_available(row)?;
     if !row.audio_stored || !row.retention.audio_cached || row.status == "recording" {
@@ -355,30 +401,39 @@ pub(crate) fn import(
             .map_err(|_| "接收标识无效。")?
             .simple()
     );
-    let snapshot = coordinator.snapshot()?;
-    let (destination, title, identity) = if entry.kind == "media" {
-        (
-            fixed_id,
-            format!("新录音 · {}", entry.name),
-            "new-recording".to_owned(),
-        )
+    let destination = if entry.kind == "media" {
+        fixed_id
     } else {
-        let destination = entry.key.as_deref().or(key).ok_or("请先选择所属会议。")?;
-        let row = snapshot
-            .host
-            .sessions
-            .iter()
-            .find(|r| r.id == destination)
-            .ok_or("所属会议已不存在，请核对资料库。")?;
-        (
-            destination.to_owned(),
-            row.title.clone(),
-            target_identity(row)?,
-        )
+        entry
+            .key
+            .as_deref()
+            .or(key)
+            .ok_or("请先选择所属会议。")?
+            .to_owned()
     };
     if key.is_some_and(|requested| requested != destination) {
         return Err("接收目标与已确认的会议不符，请重新读取清单。".into());
     }
+    let _owner_guard = owner_lock(&destination)?;
+    // A second desktop process may have purged the target since our cached
+    // snapshot. Check the actual saved index while the owner lock is held.
+    let mut snapshot = coordinator.snapshot()?;
+    snapshot.host.sessions = current_saved_rows()?;
+    super::audio_editing::available(&snapshot)?;
+    let (title, identity) = if entry.kind == "media" {
+        (
+            format!("新录音 · {}", entry.name),
+            "new-recording".to_owned(),
+        )
+    } else {
+        let row = snapshot
+            .host
+            .sessions
+            .iter()
+            .find(|row| row.id == destination)
+            .ok_or("所属会议已不存在，请重新选择；本次未写入接收归属。")?;
+        (row.title.clone(), target_identity(row)?)
+    };
     if let Some(prior) = &entry.library_id {
         if prior != token
             || entry.key.as_deref() != Some(destination.as_str())
@@ -749,5 +804,149 @@ mod tests {
             .unwrap(),
             original
         );
+    }
+    #[test]
+    fn permanent_purge_clears_only_bound_receipts_and_blocks_stale_reimport() {
+        let scope = Scope::new();
+        super::super::session_store::save(&super::super::persistence::state_file_path(), &[])
+            .unwrap();
+        let token = super::super::audio_editing::context_token().unwrap();
+        let coordinator = Arc::new(CompanionCoordinator::new_fixture());
+        let mut ids = Vec::new();
+        let mut keys = Vec::new();
+        let mut sources = Vec::new();
+        for name in ["public-a.wav", "public-b.wav"] {
+            let path = scope.root.join(name);
+            let mut wav = denzic_host_audio_v1_core::wav::WavWriter::create(&path).unwrap();
+            wav.append_samples(&vec![500; 16000]).unwrap();
+            wav.finalize().unwrap();
+            drop(wav);
+            sources.push((path.clone(), fs::read(&path).unwrap()));
+            receive(vec![path], &scope.root).unwrap();
+            let id = Store::open()
+                .unwrap()
+                .rows
+                .iter()
+                .find(|row| row.name == name)
+                .unwrap()
+                .id
+                .clone();
+            let result = import(Arc::clone(&coordinator), &id, None, &token).unwrap();
+            let key = result["rows"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|row| row["id"] == id)
+                .unwrap()["key"]
+                .as_str()
+                .unwrap()
+                .to_owned();
+            ids.push(id);
+            keys.push(key);
+        }
+        let document = scope.root.join("public-stale.txt");
+        fs::write(&document, b"Public attachment; not a recording fact.").unwrap();
+        receive(vec![document.clone()], &scope.root).unwrap();
+        let unbound_id = Store::open()
+            .unwrap()
+            .rows
+            .iter()
+            .find(|row| row.name == "public-stale.txt")
+            .unwrap()
+            .id
+            .clone();
+        {
+            let mut store = Store::open().unwrap();
+            let mut foreign = store.entry(&ids[0]).unwrap().clone();
+            foreign.id = uuid::Uuid::new_v4().to_string();
+            foreign.library_id = Some("a-different-restored-library".into());
+            store.rows.push(foreign);
+            // Even a failed/bound retry belongs to the explicitly erased recording.
+            let mut failed = store.entry(&ids[0]).unwrap().clone();
+            failed.id = uuid::Uuid::new_v4().to_string();
+            failed.state = "failed".into();
+            store.rows.push(failed);
+            store.save().unwrap();
+        }
+        let stale = Arc::new(CompanionCoordinator::new_fixture());
+        let row_a = coordinator
+            .snapshot()
+            .unwrap()
+            .host
+            .sessions
+            .into_iter()
+            .find(|row| row.id == keys[0])
+            .unwrap();
+        let owned_a = PathBuf::from(row_a.audio_path.unwrap());
+        coordinator
+            .apply_control(
+                serde_json::from_value(
+                    serde_json::json!({"action":"meetingSelectSession","sessionId":keys[0]}),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+        let erase = || {
+            serde_json::from_value(
+                serde_json::json!({"action":"privacyDeleteSession","sessionId":keys[0]}),
+            )
+            .unwrap()
+        };
+        let before_queue = fs::read(root_path()).unwrap();
+        let before_index = fs::read(super::super::persistence::state_file_path()).unwrap();
+        {
+            let _owner = owner_lock(&keys[0]).unwrap();
+            assert!(coordinator.apply_control(erase()).is_err());
+            assert_eq!(fs::read(root_path()).unwrap(), before_queue);
+            assert_eq!(
+                fs::read(super::super::persistence::state_file_path()).unwrap(),
+                before_index
+            );
+            assert!(owned_a.is_file());
+        }
+        // A damaged metadata envelope must fail before any original is erased.
+        fs::write(root_path(), b"damaged public queue").unwrap();
+        assert!(coordinator.apply_control(erase()).is_err());
+        assert!(owned_a.is_file());
+        assert_eq!(fs::read(root_path()).unwrap(), b"damaged public queue");
+        fs::write(root_path(), &before_queue).unwrap();
+        coordinator.apply_control(erase()).unwrap();
+        assert!(!owned_a.exists());
+        let rows = Store::open().unwrap().rows.clone();
+        assert_eq!(rows.len(), 3);
+        assert!(!rows
+            .iter()
+            .any(|row| row.library_id.as_deref() == Some(token.as_str())
+                && row.key.as_deref() == Some(keys[0].as_str())));
+        assert!(rows.iter().any(|row| row.library_id.as_deref()
+            == Some("a-different-restored-library")
+            && row.key.as_deref() == Some(keys[0].as_str())));
+        assert!(rows.iter().any(|row| row.id == ids[1]));
+        assert!(import(stale, &unbound_id, Some(&keys[0]), &token).is_err());
+        assert!(Store::open()
+            .unwrap()
+            .entry(&unbound_id)
+            .unwrap()
+            .library_id
+            .is_none());
+        assert_eq!(coordinator.snapshot().unwrap().host.sessions.len(), 1);
+        coordinator
+            .apply_control(
+                serde_json::from_value(serde_json::json!({"action":"privacyEraseAll"})).unwrap(),
+            )
+            .unwrap();
+        let remaining = Store::open().unwrap().rows.clone();
+        assert_eq!(remaining.len(), 2);
+        assert!(remaining
+            .iter()
+            .all(|row| row.library_id.as_deref() != Some(token.as_str())));
+        assert!(coordinator.snapshot().unwrap().host.sessions.is_empty());
+        assert_eq!(
+            fs::read(&document).unwrap(),
+            b"Public attachment; not a recording fact."
+        );
+        for (path, bytes) in sources {
+            assert_eq!(fs::read(path).unwrap(), bytes);
+        }
     }
 }
