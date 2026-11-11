@@ -1,0 +1,32 @@
+candidate	Build frozen candidate and installer	﻿2026-11-11T00:25:29.1154218Z ##[group]Run python -m pip install psutil==7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1154833Z ^[[36;1mpython -m pip install psutil==7.2.2^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1155205Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1155582Z ^[[36;1mpython tools/build_windows_candidate_ci.py^[[0m
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1192936Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1193334Z env:
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1193564Z   CARGO_BUILD_JOBS: 2
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1193815Z   CARGO_INCREMENTAL: 0
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1194131Z   CARGO_TARGET_DIR: D:\a\_temp/companion-windows-target
+candidate	Build frozen candidate and installer	2026-11-11T00:25:29.1194465Z ##[endgroup]
+candidate	Build frozen candidate and installer	2026-11-11T00:25:35.8245710Z Collecting psutil==7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.1386700Z   Downloading psutil-7.2.2-cp37-abi3-win_amd64.whl.metadata (22 kB)
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.2548097Z Downloading psutil-7.2.2-cp37-abi3-win_amd64.whl (137 kB)
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.7584533Z Installing collected packages: psutil
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.8737999Z Successfully installed psutil-7.2.2
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.8784896Z 
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.8786795Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+candidate	Build frozen candidate and installer	2026-11-11T00:25:36.8787947Z [notice] To update, run: python.exe -m pip install --upgrade pip
+candidate	Build frozen candidate and installer	2026-11-11T00:25:37.7627101Z Starting npm-ci
+candidate	Build frozen candidate and installer	2026-11-11T00:25:51.3024705Z Finished npm-ci: exit=0, seconds=13.540
+candidate	Build frozen candidate and installer	2026-11-11T00:25:51.3026459Z Starting windows-web
+candidate	Build frozen candidate and installer	2026-11-11T00:26:11.1541041Z Finished windows-web: exit=0, seconds=19.329
+candidate	Build frozen candidate and installer	2026-11-11T00:26:11.1541752Z Starting context-test-build
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5045050Z Finished context-test-build: exit=101, seconds=79.369
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5161137Z Traceback (most recent call last):
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5162651Z   File "D:\a\Companion-Type\Companion-Type\tools\build_windows_candidate_ci.py", line 63, in <module>
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5163857Z     run('context-test-build',['cargo','+1.95.0','test','--release','--locked','--lib','--no-run','--message-format=json'],N)
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5171529Z   File "D:\a\Companion-Type\Companion-Type\tools\build_windows_candidate_ci.py", line 18, in run
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5172995Z     if p.returncode:raise RuntimeError(f'{name} failed: {p.returncode}; see retained log')
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5177214Z                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.5178454Z RuntimeError: context-test-build failed: 101; see retained log
+candidate	Build frozen candidate and installer	2026-11-11T00:27:30.8193217Z ##[error]Process completed with exit code 1.

@@ -271128,7 +271128,7 @@
             },
             "systemInbound20261111": {
               "at": "2026-11-11T08:23:41+08:00",
-              "state": "GROUPED_INCOMING100_ANDROID137_NATIVE_BUILD_NEXT",
+              "state": "WINDOWS100_NATIVE_API_REPAIR_ANDROID137_BUILD_RUNNING",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271171,7 +271171,23 @@
               "androidVersion": "0.1.137",
               "appDelivered": false,
               "phoneQualified": false,
-              "windowsNativeQualified": false
+              "windowsNativeQualified": false,
+              "builds": {
+                "windows": {
+                  "source": "121a8cf1055c2fe0435b81e2a70539d2c7821d64",
+                  "run": 42931011101,
+                  "lastObserved": "failure",
+                  "qualified": false,
+                  "failure": "E0599 builder listener API; corrected built WebviewWindow event listener, same100 source retry next",
+                  "evidence": "docs/handoffs/20261110-android-media-import/windows100/build-attempt1-failure-decision.json"
+                },
+                "android": {
+                  "source": "aac73ae44d9aff77680699be8b760d4199907b79",
+                  "run": 42931037723,
+                  "lastObserved": "in_progress",
+                  "qualified": false
+                }
+              }
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -276967,8 +276983,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": null,
-      "pendingUnifiedBuildRun": null,
+      "pendingUnifiedSource": "121a8cf1055c2fe0435b81e2a70539d2c7821d64",
+      "pendingUnifiedBuildRun": 42931011101,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00"
     }
   }

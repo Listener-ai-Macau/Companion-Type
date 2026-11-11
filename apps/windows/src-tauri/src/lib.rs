@@ -435,11 +435,12 @@ pub fn run() {
                 }
             }
 
-            builder.on_window_event(|event|{
-                if let tauri::WindowEvent::DragDrop(tauri::DragDropEvent::Drop{paths,..})=event{
+            let window=builder.build()?;
+            window.on_webview_event(|event|{
+                if let tauri::WebviewEvent::DragDrop(tauri::DragDropEvent::Drop{paths,..})=event{
                     let paths=paths.clone();std::thread::spawn(move||{let cwd=std::env::current_dir().unwrap_or_else(|_|std::path::PathBuf::from("."));if let Err(error)=incoming_commands::receive(paths,&cwd){incoming_commands::error(&error);}});
                 }
-            }).build()?;
+            });
             Ok(())
         })
         .build(tauri::generate_context!())
