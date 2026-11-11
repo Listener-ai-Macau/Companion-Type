@@ -3904,7 +3904,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {source.approximateTiming?'约 ':''}{Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
-          id={`${lookupId}-source-${index}`} onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
+          id={`${lookupId}-source-${index}`} title="还没有匹配到可直接跳转的唯一原文片段，点击后可搜索对照。定位状态不等于内容已经核实。" onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
