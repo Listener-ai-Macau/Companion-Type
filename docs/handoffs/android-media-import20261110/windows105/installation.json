@@ -1,0 +1,21 @@
+{
+  "state": "WINDOWS105_INSTALLED_EXISTING_DATA_IDENTICAL",
+  "startedAt": "2026-11-11T12:26:58+08:00",
+  "candidateVersion": "0.1.105",
+  "previousInstalledVersion": "0.1.104",
+  "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+  "msiSha256": "593ceb363c9b360cfb2727d2137554eb29bf286837cce55d56d44f28208f01d0",
+  "existingDataFiles": 245,
+  "dataContentsPrinted": false,
+  "installerExitCode": 0,
+  "finishedAt": "2026-11-11T12:27:02+08:00",
+  "dataManifestIdentical": true,
+  "installedVersion": "0.1.105",
+  "installedExeSha256": "fa356a89df88f41ec5a0ad6d7d9489adf3148f55aeb5cc2cc4d009a4f34b0527",
+  "installedDllSha256": "bea0d5dfac98d95d507cb5b9755e8642cdba39a38db25d067cc490ce049599e3",
+  "installedHelpStartupPassed": true,
+  "ordinaryThirdPartyPasteQualified": false,
+  "oldWinRTSharePickerFixed": false,
+  "modelsRun": false,
+  "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
+}

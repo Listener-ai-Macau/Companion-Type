@@ -9,9 +9,10 @@
   "includes104": "16c2738d22d236c2223c979953e3cd0d33f06793",
   "incomingSnapshotRepair": "fd993882",
   "modelsRun": false,
-  "nativeRuntimeQualified": false,
+  "nativeRuntimeQualified": true,
   "saleQualified": false,
   "buildRun": 42956984021,
-  "lastObservedStatus": "in_progress",
-  "lastObservedConclusion": null
+  "lastObservedStatus": "completed",
+  "lastObservedConclusion": "success",
+  "nativeRuntimeScope": "Actual ordinary documents/manual references and OS incoming cold/warm/save/retry/cancel/dismiss/reopen with matching105 binaries; no physical automatic ASR/model scope."
 }

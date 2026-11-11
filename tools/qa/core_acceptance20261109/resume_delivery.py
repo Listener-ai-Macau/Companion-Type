@@ -62,17 +62,24 @@ def current(root,config,query):
   return {"kind":"READY","step":step["id"],"command":step["command"],"passed":passed}
  return {"kind":"BATCH_DELIVERED","passed":passed,"action":config["afterDelivery"],"wholeGoalComplete":False}
 
+def active_execution(data):
+ for key in CORE:data=data[key]
+ point=data["next"].split(".")
+ if point[0]==CORE[-1]:point=point[1:]
+ work=get(data,".".join(point))
+ if not isinstance(work,dict):raise ValueError("Original next does not identify a current software work item")
+ return work.get("deliveryExecution"),work
+
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
  parser.add_argument("--project-root",type=Path,required=True)
  parser.add_argument("--advance",action="store_true")
  args=parser.parse_args();project=args.project_root.resolve()
  data=load(project/"docs/product_backlog.json")
- for key in CORE:data=data[key]
- point=data["next"].split(".")
- if point[0]==CORE[-1]:point=point[1:]
- config=get(data,".".join(point)+".deliveryExecution")
- if not config:raise RuntimeError("The original next work item has no frozen delivery execution yet; continue that engineering item, do not resume a retired batch")
+ config,work=active_execution(data)
+ if not config:
+  print(json.dumps({"kind":"ENGINEERING_ACTION","state":work.get("state"),"userResult":work.get("userResult"),"action":work["next"],"retiredBatchResumed":False},ensure_ascii=False))
+  return
  root=inside(project,config["evidenceRoot"])
  def query(handle):
   response=subprocess.run(["gh","api","-H","Cache-Control: no-cache","repos/Listener-ai-Macau/Companion-Type/actions/runs/"+str(int(handle))],capture_output=True,timeout=40)

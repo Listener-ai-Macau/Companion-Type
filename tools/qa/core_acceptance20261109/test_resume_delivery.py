@@ -1,7 +1,7 @@
 """Delivery continuation regressions: no cloud, devices or product execution."""
 import hashlib,json,tempfile,unittest
 from pathlib import Path
-from resume_delivery import current
+from resume_delivery import current,active_execution,CORE
 
 class DeliveryContinuationTests(unittest.TestCase):
  def setUp(self):
@@ -42,4 +42,10 @@ class DeliveryContinuationTests(unittest.TestCase):
  def test_missing_runtime_handle_returns_engineering_action_without_dispatch(self):
   self.job();self.write("freeze.json",{"sourceCommit":"frozen"})
   self.assertEqual(self.state()["kind"],"ENGINEERING_ACTION")
+ def test_original_next_change_does_not_resume_the_previous_delivered_batch(self):
+  root={};node=root
+  for key in CORE:node[key]={};node=node[key]
+  node.update(next=CORE[-1]+".visual",old={"deliveryExecution":self.config},visual={"state":"SOURCE","next":"finish the whole page"})
+  config,work=active_execution(root)
+  self.assertIsNone(config);self.assertEqual(work["next"],"finish the whole page")
 if __name__=="__main__":unittest.main()
