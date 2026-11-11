@@ -104,11 +104,11 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
       <section className={`ct-first-run ${guideComplete ? 'complete' : ''}`} aria-label="第一次使用向导">
         <button type="button" className="ct-first-run-head" aria-expanded={guide.open}
           onClick={() => updateGuide({ open: !guide.open })}>
-          <span><strong>{guideComplete ? '第一次使用已完成' : '第一次使用 · 约 1 分钟'}</strong><small>连接、录 10 秒、找到并回听</small></span>
+          <span><strong>{guideComplete ? '第一次使用已完成' : '第一次使用'}</strong><small>在卡片上录音，接收并回听</small></span>
           {guide.open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
         {guide.open ? <ol className="ct-first-run-list">
-          <li className={guideConnectionDone ? 'done' : ''}><span>{guideConnectionDone ? <Check size={13} /> : '1'}</span><div><strong>连接真实 Companion</strong><p>{preview ? '浏览器演示不能完成这一步。' : known ? '已识别真实设备。' : guideComplete ? '设备暂不在线；这台设备的引导记录已保留。' : '点击上方“连接 Companion”。'}</p></div></li>
+          <li className={guideConnectionDone ? 'done' : ''}><span>{guideConnectionDone ? <Check size={13} /> : '1'}</span><div><strong>连接以接收卡片录音</strong><p>{preview ? '浏览器演示不能完成这一步。' : known ? '已识别真实设备。录音使用卡片实体键。' : guideComplete ? '设备暂不在线；这台设备的引导记录已保留。' : '可先在卡片上录好，再点击上方“连接 Companion”接收。'}</p></div></li>
           <li className={guide.recordedSample ? 'done' : ''}><span>{guide.recordedSample ? <Check size={13} /> : '2'}</span><div><strong>录一段约 10 秒的声音</strong><p>{keyGuide.trial}</p><p>{keyGuide.highlight}</p><div className="ct-button-row"><button type="button" className="ct-text-button" disabled={!known || preview || busy} onClick={onWorkflow}><Mic size={14} />查看同步步骤</button><button type="button" className="ct-text-button" disabled={!known || !guideDeviceId || preview || recording} onClick={() => updateGuide({ recordedSample: true })}>我已完成试录</button></div></div></li>
           <li className={guide.sawRecording ? 'done' : ''}><span>{guide.sawRecording ? <Check size={13} /> : '3'}</span><div><strong>在“我的记录”找到并回听</strong><p>{hasVisibleRecording ? '“我的记录”已有内容，请按录制时间或时长找到刚才这条，再点“回听”。' : '同步完成后，录音会出现在“我的记录”，打开后可回听。'}</p><div className="ct-button-row">{onLibrary ? <button type="button" className="ct-text-button" onClick={onLibrary}>打开我的记录</button> : null}<button type="button" className="ct-text-button" disabled={!hasVisibleRecording || !guide.recordedSample || preview} onClick={() => updateGuide({ sawRecording: true, open: false })}>我已找到并回听</button></div></div></li>
           <li className="ct-first-run-note">引导进度只保存在这台电脑；换一台 Companion 会单独记录。宠物声音可稍后在下方体验。</li>

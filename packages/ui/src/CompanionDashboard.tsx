@@ -2754,27 +2754,34 @@ export function CompanionDashboard({
       <section id="ct-device-recording-page" tabIndex={-1} className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
       {surface === 'windows' ? null : renderRecordingReadiness()}
       <div className={surface === 'windows' ? 'ct-device-actions' : undefined}>
-      {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
-        <div><strong>用 Companion 录音</strong>
-          <p>{devicePageConnected
-            ? unlimitedDeviceRecording ? '只保存原音，转写与纪要稍后手动启动。录音持续到手动停止或设备空间用完。'
-              : `只保存原音，转写与纪要稍后手动启动。当前设备最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整或升级设备。`
-            : `设备离线也能录。${recorderKeyGuide(device).start} ${recorderKeyGuide(device).stop}`}</p>
-          {!durationValid && !unlimitedDeviceRecording ? <p role="alert">请输入有效的录音时长。</p> : null}
+      {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="在卡片上录音">
+        <div><strong>在卡片上录音</strong>
+          <p>{recorderKeyGuide(device).start} {recorderKeyGuide(device).stop}</p>
+          <p>离线也能录。软件负责接收原音，在“我的记录”回听、转文字和整理。</p>
         </div>
         <div className="ct-button-row">
           {surface === 'windows' && !devicePageConnected ? <button type="button" className="ct-action ct-action-primary"
             disabled={controlsBusy || oobeBlockedByRecording}
             onClick={() => onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined})}>连接 Companion</button> : null}
-          <button type="button" className={`ct-action${surface !== 'windows' || devicePageConnected ? ' ct-action-primary' : ''}`}
+          {devicePageConnected ? <button type="button" className="ct-action ct-action-primary"
+            disabled={controlsBusy || storageBlocked || !device?.deviceId}
+            onClick={() => onControl({action:'deviceSyncRecordings',deviceId:device?.deviceId??undefined})}>
+            <Download size={16} /><span>接收设备录音</span>
+          </button> : null}
+          <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
+        </div>
+        <details className="ct-setup-details">
+          <summary>远程控制卡片录音</summary>
+          <p>需要从电脑或手机控制卡片时，可在这里远程开录。平时直接使用卡片按键。</p>
+          {!durationValid && !unlimitedDeviceRecording ? <p role="alert">请输入有效的远程录音时长。</p> : null}
+          <button type="button" className="ct-action"
             disabled={controlsBusy || storageBlocked || !devicePageConnected || !device?.deviceId || (!unlimitedDeviceRecording && !durationValid)}
             onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
               promptId: COMPANION_CAPTURE_ONLY_PROMPT,
               deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: unlimitedDeviceRecording ? 0 : requestedDurationMs })}>
-            <Mic size={16} /><span>开始录音</span>
+            <Mic size={16} /><span>远程开始录音</span>
           </button>
-          <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
-        </div>
+        </details>
       </section> : null}
 
       {surface === 'windows' && !oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="录制电脑会议">
