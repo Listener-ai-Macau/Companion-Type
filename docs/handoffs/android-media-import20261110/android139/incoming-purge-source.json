@@ -1,0 +1,141 @@
+{
+  "actualVersion": "0.1.139",
+  "modelsCloudMicBleUsed": false,
+  "state": "ORDINARY_EXACT_PUBLIC_RECORD_PURGE_RECEIPT_SCOPE_PASSED",
+  "purgedLibrary": "7ebdda83-7869-49a7-83fd-86dc68048493",
+  "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+  "remainingRows": 4,
+  "removedBoundReceipts": 3,
+  "unboundAndOtherOwnerReceiptsRetained": true,
+  "receiptsBefore": [
+    {
+      "name": "material.docx",
+      "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 37839,
+      "id": "ec2f2d04-c6d7-42eb-9a94-f61dc130a847",
+      "kind": "document",
+      "state": "complete",
+      "receivedAt": 1794364816950,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+      "targetTitle": "public-incoming138.wav",
+      "message": "原文件已保存到“public-incoming138.wav”，可在补充材料中查看。"
+    },
+    {
+      "name": "public-bad138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 42,
+      "id": "2f48b2cc-a7f1-44e3-97dc-28926bb8853b",
+      "kind": "media",
+      "state": "failed",
+      "receivedAt": 1794364816950,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "d82e7e287d35ccbc41984d5c520e351321ae084dc3f98e43433a025b9bf14b0b:1:1",
+      "targetTitle": "新录音 · public-bad138.wav",
+      "message": "无法读取这个音频或视频文件，请确认文件完整且包含可用音轨，或转换为MP3、M4A、WAV后重试。所选原文件未改变。"
+    },
+    {
+      "name": "public-incoming138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 64044,
+      "id": "4330c8c9-006f-40ff-a25d-b43285303feb",
+      "kind": "media",
+      "state": "complete",
+      "receivedAt": 1794364816951,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+      "targetTitle": "新录音 · public-incoming138.wav",
+      "message": "已保存在指定资料库。"
+    },
+    {
+      "name": "public-long138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 230400044,
+      "id": "ab641795-9df8-431f-b303-a6c3b8e27602",
+      "kind": "media",
+      "state": "failed",
+      "receivedAt": 1794364816951,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "485337d16f1de8405e411d3adda8f2618e9768f4da8f60708c7898fc8075fe52:1:1",
+      "targetTitle": "新录音 · public-long138.wav",
+      "message": "已取消导入，所选原文件未改变。"
+    },
+    {
+      "name": "public-whiteboard138.png",
+      "mime": "image/png",
+      "bytes": 35518,
+      "id": "4d7be13f-f3c1-4214-82db-a8853deb5c7e",
+      "kind": "image",
+      "state": "complete",
+      "receivedAt": 1794364816952,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "2c79535ead0f1a932b92a3cbf1dddba85f85a8a39211080bf5bd1d73e0654f04:1:1",
+      "targetTitle": "public-incoming138.wav",
+      "message": "原文件已保存到“public-incoming138.wav”，可在补充材料中查看。"
+    },
+    {
+      "name": "public-incoming138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 64044,
+      "id": "8f8a7550-5662-4d2e-804b-41cb0355e9b2",
+      "kind": "media",
+      "state": "ready",
+      "receivedAt": 1794367366088
+    },
+    {
+      "name": "public-whiteboard138.png",
+      "mime": "image/png",
+      "bytes": 35518,
+      "id": "fcd7666f-947d-438d-9459-50e857a16c81",
+      "kind": "image",
+      "state": "ready",
+      "receivedAt": 1794367366088
+    }
+  ],
+  "receiptsAfter": [
+    {
+      "name": "public-bad138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 42,
+      "id": "2f48b2cc-a7f1-44e3-97dc-28926bb8853b",
+      "kind": "media",
+      "state": "failed",
+      "receivedAt": 1794364816950,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "d82e7e287d35ccbc41984d5c520e351321ae084dc3f98e43433a025b9bf14b0b:1:1",
+      "targetTitle": "新录音 · public-bad138.wav",
+      "message": "无法读取这个音频或视频文件，请确认文件完整且包含可用音轨，或转换为MP3、M4A、WAV后重试。所选原文件未改变。"
+    },
+    {
+      "name": "public-long138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 230400044,
+      "id": "ab641795-9df8-431f-b303-a6c3b8e27602",
+      "kind": "media",
+      "state": "failed",
+      "receivedAt": 1794364816951,
+      "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+      "key": "485337d16f1de8405e411d3adda8f2618e9768f4da8f60708c7898fc8075fe52:1:1",
+      "targetTitle": "新录音 · public-long138.wav",
+      "message": "已取消导入，所选原文件未改变。"
+    },
+    {
+      "name": "public-incoming138.wav",
+      "mime": "audio/x-wav",
+      "bytes": 64044,
+      "id": "8f8a7550-5662-4d2e-804b-41cb0355e9b2",
+      "kind": "media",
+      "state": "ready",
+      "receivedAt": 1794367366088
+    },
+    {
+      "name": "public-whiteboard138.png",
+      "mime": "image/png",
+      "bytes": 35518,
+      "id": "fcd7666f-947d-438d-9459-50e857a16c81",
+      "kind": "image",
+      "state": "ready",
+      "receivedAt": 1794367366088
+    }
+  ]
+}

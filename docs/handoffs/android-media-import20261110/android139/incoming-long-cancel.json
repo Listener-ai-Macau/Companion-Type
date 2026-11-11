@@ -1,0 +1,20 @@
+{
+  "actualVersion": "0.1.139",
+  "modelsCloudMicBleUsed": false,
+  "state": "ACTUAL_TWO_HOUR_PUBLIC_PCM_SOURCE_NATIVE_COPY_DECODE_CANCEL_PASSED",
+  "receipt": {
+    "name": "public-long138.wav",
+    "mime": "audio/x-wav",
+    "bytes": 230400044,
+    "id": "ab641795-9df8-431f-b303-a6c3b8e27602",
+    "kind": "media",
+    "state": "failed",
+    "receivedAt": 1794364816951,
+    "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+    "key": "485337d16f1de8405e411d3adda8f2618e9768f4da8f60708c7898fc8075fe52:1:1",
+    "targetTitle": "新录音 · public-long138.wav",
+    "message": "已取消导入，所选原文件未改变。"
+  },
+  "notMeetingOrAsr": true,
+  "noCancelledSavedRow": true
+}

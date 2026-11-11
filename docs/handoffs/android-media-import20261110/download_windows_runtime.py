@@ -7,7 +7,7 @@ code=sys.argv[1];run_id=int(sys.argv[2]);mode=sys.argv[3] if len(sys.argv)>3 els
 O=C/("windows"+code);freeze=json.loads((O/"runtime-source-freeze.json").read_text(encoding="utf8"));v=json.loads((O/"windows-verification.json").read_text(encoding="utf8"))
 def gh(args):
  p=subprocess.run(["gh",*args],capture_output=True,timeout=45,creationflags=subprocess.CREATE_NO_WINDOW);assert p.returncode==0,p.stderr.decode(errors="replace")[-1000:];return p.stdout
-run=json.loads(gh(["run","view",str(run_id),"--repo","Listener-ai-Macau/Companion-Type","--json","status,conclusion,headSha"]))
+fresh=json.loads(gh(["api","-H","Cache-Control: no-cache","repos/Listener-ai-Macau/Companion-Type/actions/runs/"+str(run_id)]));run={"status":fresh["status"],"conclusion":fresh["conclusion"],"headSha":fresh["head_sha"]}
 assert run=={"conclusion":"success","headSha":freeze["sourceCommit"],"status":"completed"},run
 listing=json.loads(gh(["api","repos/Listener-ai-Macau/Companion-Type/actions/runs/"+str(run_id)+"/artifacts"]))
 asset=next(a for a in listing["artifacts"] if a["name"]=="companion-context-"+freeze["sourceCommit"])

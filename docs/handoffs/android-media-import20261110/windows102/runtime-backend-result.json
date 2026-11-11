@@ -1,0 +1,140 @@
+{
+  "at": "2026-11-11T03:18:04.487885+00:00",
+  "state": "ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+  "appSource": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
+  "modelCalls": 0,
+  "aiServiceCalls": 0,
+  "deviceAccess": false,
+  "ownerDataUsed": false,
+  "steps": [
+    {
+      "name": "source-read-0",
+      "exitCode": 0,
+      "seconds": 0.1027292999999645,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-1",
+      "exitCode": 0,
+      "seconds": 0.10268020000000888,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-2",
+      "exitCode": 0,
+      "seconds": 0.10223419999999805,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-3",
+      "exitCode": 0,
+      "seconds": 0.1027868999999555,
+      "expectedFailure": false
+    },
+    {
+      "name": "source-read-5",
+      "exitCode": 0,
+      "seconds": 0.1021799000000101,
+      "expectedFailure": false
+    },
+    {
+      "name": "backup",
+      "exitCode": 0,
+      "seconds": 0.102432599999986,
+      "expectedFailure": false
+    },
+    {
+      "name": "restore",
+      "exitCode": 0,
+      "seconds": 0.20297990000000254,
+      "expectedFailure": false
+    },
+    {
+      "name": "selected-human-evidence-text",
+      "exitCode": 0,
+      "seconds": 0.10245900000001029,
+      "expectedFailure": false
+    },
+    {
+      "name": "complete-human-evidence-json",
+      "exitCode": 0,
+      "seconds": 0.102240600000016,
+      "expectedFailure": false
+    },
+    {
+      "name": "unavailable-source-new-quote-rejected",
+      "exitCode": 1,
+      "seconds": 0.10272390000000087,
+      "expectedFailure": true
+    },
+    {
+      "name": "restored-read",
+      "exitCode": 0,
+      "seconds": 0.10215979999998126,
+      "expectedFailure": false
+    },
+    {
+      "name": "stale-remove-rejected",
+      "exitCode": 1,
+      "seconds": 0.10227470000000949,
+      "expectedFailure": true
+    },
+    {
+      "name": "remove-one-entrance",
+      "exitCode": 0,
+      "seconds": 0.10253920000002381,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash",
+      "exitCode": 0,
+      "seconds": 0.1026396000000318,
+      "expectedFailure": false
+    },
+    {
+      "name": "trashed-read-rejected",
+      "exitCode": 1,
+      "seconds": 0.10243090000000166,
+      "expectedFailure": true
+    },
+    {
+      "name": "restore-trash",
+      "exitCode": 0,
+      "seconds": 0.10263989999998557,
+      "expectedFailure": false
+    },
+    {
+      "name": "read-after-trash-restore",
+      "exitCode": 0,
+      "seconds": 0.10257899999999154,
+      "expectedFailure": false
+    },
+    {
+      "name": "trash-for-purge",
+      "exitCode": 0,
+      "seconds": 0.10310039999995979,
+      "expectedFailure": false
+    },
+    {
+      "name": "purge",
+      "exitCode": 0,
+      "seconds": 0.10262140000003228,
+      "expectedFailure": false
+    }
+  ],
+  "manualFollowup": {
+    "ordinaryUiPassed": "ORDINARY_PACKAGED_MANUAL_FOLLOWUP_LITERAL_EVIDENCE_REOPEN_SOURCE_REMOVAL_PASSED",
+    "noteKindChecklistAndLiteralReferencesRestoredExactly": true,
+    "removedSourceExcerptRetained": true,
+    "selectedTextAndFullJsonEvidencePreserved": true,
+    "forgedOrMissingSourceEditRejectedWithoutStateChange": true
+  },
+  "sourceOriginalIndexAndAllAttachmentsUnchanged": true,
+  "restoredOriginalAndExtractionFilesByteIdentical": 14,
+  "unrelatedRestoredControlPreserved": true,
+  "removedEntranceOriginalRetainedUntilFullPurge": true,
+  "audioFreeDocumentBackupSupported": true,
+  "staleRevisionRejected": true,
+  "modelOrAiCalled": false,
+  "wholeSaleQualified": false
+}

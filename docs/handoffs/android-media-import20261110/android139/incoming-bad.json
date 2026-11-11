@@ -1,0 +1,19 @@
+{
+  "actualVersion": "0.1.139",
+  "modelsCloudMicBleUsed": false,
+  "badFileRejected": true,
+  "rowsUnchanged": true,
+  "receipt": {
+    "name": "public-bad138.wav",
+    "mime": "audio/x-wav",
+    "bytes": 42,
+    "id": "2f48b2cc-a7f1-44e3-97dc-28926bb8853b",
+    "kind": "media",
+    "state": "failed",
+    "receivedAt": 1794364816950,
+    "libraryId": "7ebdda83-7869-49a7-83fd-86dc68048493",
+    "key": "d82e7e287d35ccbc41984d5c520e351321ae084dc3f98e43433a025b9bf14b0b:1:1",
+    "targetTitle": "新录音 · public-bad138.wav",
+    "message": "无法读取这个音频或视频文件，请确认文件完整且包含可用音轨，或转换为MP3、M4A、WAV后重试。所选原文件未改变。"
+  }
+}
