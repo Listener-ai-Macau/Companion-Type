@@ -72,7 +72,7 @@ try:
    artifacts.append(Path(item['executable']))
  assert len(artifacts)==1,artifacts
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
- record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['initial_unreachable_tests','backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
  for scope in record['affectedTestBinary']['filters']:
   run(scope.replace('::','-')+'-context-regression',[str(test),scope,'--test-threads=1'],N)
  run('audio-edit-native-library-isolated',[str(test),'backend::audio_editing::tests::derived_recording_exact_pcm_backup_restore_and_scoped_purge','--ignored','--exact','--test-threads=1'],N)
@@ -81,6 +81,8 @@ try:
  # All affected checks remain unchanged; the shipped pair is still built last
  # by the same locked normal-release command, then independently inspected.
  record['state']='BUILDING_NORMAL_RELEASE';save()
+ run('connection-ui-build',['node',str(S/'node_modules/esbuild/bin/esbuild'),'tools/test_connection_unavailable.ts','--bundle','--platform=node','--format=cjs','--outfile='+str(C/'connection-ui.cjs')])
+ run('connection-ui',['node',str(C/'connection-ui.cjs')])
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)
  pair=C/'windows-bin';pair.mkdir()
  for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copy2(T/'release'/name,pair/name)
