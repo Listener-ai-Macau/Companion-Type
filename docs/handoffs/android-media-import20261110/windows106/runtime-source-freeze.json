@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-11T13:26:34+08:00",
+  "sourceCommit": "7aa2988aecf1517c76ebd5cb02f81ebe02d90d4f",
+  "appSourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+  "appVersion": "0.1.106",
+  "runtimeSpec": "docs/handoffs/android-media-import20261110/windows106/runtime-spec.json",
+  "remoteVerified": true,
+  "nativeRecompiled": false,
+  "wholeGoalQualified": false,
+  "previousVerifier": "02106afae43c5a2d57b7f366032eac8f6c7f8fc7",
+  "previousRun": 42964751088,
+  "change": "Require the actual existing \u95ee\u8fd9\u573a\u4f1a\u8bae user action and the new AI\u52a9\u624b pane; no new native compilation.",
+  "runtimeRun": 42965776028,
+  "lastObservedStatus": "completed",
+  "lastObservedConclusion": "success"
+}

@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-11T13:39:05+08:00",
+  "state": "PRIOR_NATIVE_PRODUCT_SOURCES_FROZEN_BACKEND_AND_CORE_TYPES_UNCHANGED_FOR_PRESENTATION_BATCH",
+  "modelsRun": false,
+  "binaryByteIdentityOfWholeAppNotClaimed": true,
+  "changes": "New embedded web assets and application version metadata; whole EXE/DLL/APK identities are separately verified, not reused or relabelled.",
+  "windows": {
+    "baseline": "91d246be5871c62410daa62ede57139652b259c6",
+    "current": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+    "unchangedTrackedInputs": 261,
+    "scope": [
+      "apps/windows/src-tauri/src",
+      "apps/windows/src-tauri/build.rs",
+      "packages/core"
+    ]
+  },
+  "android": {
+    "baseline": "000d553715240860f675b7ae9f416510f5d7c558",
+    "current": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+    "unchangedTrackedInputs": 69,
+    "scope": [
+      "apps/android/app/src/main/java",
+      "apps/android/app/src/main/AndroidManifest.xml",
+      "apps/android/app/src/main/res",
+      "apps/android/app/src/main/resources",
+      "apps/android/app/libs",
+      "packages/core"
+    ]
+  }
+}

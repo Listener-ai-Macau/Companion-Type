@@ -1,54 +1,93 @@
-"""One reviewable candidate archive; preserve previous kits and exact binaries."""
+"""Package the current whole delivery recipe from the original task.
+Previous fixed127 recipe is preserved in Git (sha256 d7a31f242b54a9ac3065e79bedabc932a3d6c2940dd198b1f7b2dfd8ded2b9cf).
+No public release, source relabelling or Owner-data collection occurs here.
+"""
 from pathlib import Path
 from datetime import datetime
-import hashlib,json,subprocess,zipfile,time,sys
+import argparse,copy,hashlib,importlib.util,json,os,re,subprocess,sys,zipfile
 from release_readback import download
-R=Path('C:/Users/Billy/Desktop/Denzic/Companion');C=Path(__file__).parent;O=C/'android127';at=datetime.now().astimezone().isoformat(timespec='seconds')
-def sha(path):
- with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+R=Path("C:/Users/Billy/Desktop/Denzic/Companion");C=Path(__file__).parent
+REPO="Listener-ai-Macau/Companion-Type";TAG="windows-0.1.78-bb1550c4-candidate"
+def sha(p):
+ with Path(p).open("rb") as stream:return hashlib.file_digest(stream,"sha256").hexdigest()
+def load(p):return json.loads(Path(p).read_text(encoding="utf-8"))
+def now():return datetime.now().astimezone().isoformat(timespec="seconds")
 def gh(args):
- p=subprocess.run(['gh',*map(str,args)],capture_output=True,creationflags=subprocess.CREATE_NO_WINDOW);assert p.returncode==0,p.stderr.decode(errors='replace')[-1200:];return p.stdout
-if len(sys.argv)>1 and sys.argv[1]=='resume':
- record=json.loads((C/'packaged-candidate.json').read_text(encoding='utf-8'));output=Path(record['package']);assert sha(output)==record['sha256'];asset=json.loads(gh(['api','repos/Listener-ai-Macau/Companion-Type/releases/assets/'+str(record['assetId'])]));assert asset['digest']=='sha256:'+record['sha256'] and asset['size']==record['bytes']
- record['readback']=download('Listener-ai-Macau/Companion-Type',record['assetId'],output.parent/'readback'/output.name,record['bytes'],record['sha256']);record.update(state='CORE_CANDIDATE_ARCHIVE_PRIVATE_DRAFT_READBACK_IDENTICAL',finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'),readbackByteIdentical=True);(C/'packaged-candidate.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps({k:record[k] for k in ['state','package','sha256','assetId','readback']},ensure_ascii=False));sys.exit(0)
-phone=json.loads((C/'reading127-delivered-result.json').read_text(encoding='utf-8'));win=json.loads((C/'windows-context-delivered-result.json').read_text(encoding='utf-8'))
-assert phone['phoneSessionClosed'] and phone['ownerOriginalContentPreserved'] and phone['remoteInstallerReadbackIdentical']
-apk=json.loads((O/'build-result.json').read_text());msi=win['checks']['windows-verification'];assert sha(apk['apk'])==apk['apkSha256'] and sha(msi['msi'])==msi['msiSha256']
-base=Path('E:/CodexData/Companion/deliveries/20261110-unified087-android124.zip');baseSha='b429f45499915a5e6628c082b6dd2e9daf46fe6c97de5d87c1ef070513da5ff0';assert sha(base)==baseSha
-output=Path('E:/CodexData/Companion/deliveries/20261110-companion-core-windows087-android127.zip');assert not output.exists();temporary=output.with_suffix('.preparing.zip');assert not temporary.exists()
-files=[]
-with zipfile.ZipFile(base) as old,zipfile.ZipFile(temporary,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=3) as archive:
- prior=json.loads(old.read('manifest.json'));retain=['firmware/companion-update.cup','firmware/ota_manifest.json','macos/CompanionMac-candidate.zip'];claims={item['path']:item for item in prior['files']}
- for name in retain:
-  expected=claims[name];digest=hashlib.sha256();count=0
-  with old.open(name) as source,archive.open(name,'w') as target:
-   while data:=source.read(128*1024):target.write(data);digest.update(data);count+=len(data)
-  assert digest.hexdigest()==expected['sha256'] and count==expected['bytes'];files.append(expected)
- for name,path,digest in [('windows/Companion-Windows-0.1.87.msi',Path(msi['msi']),msi['msiSha256']),('android/Companion-Android-0.1.127.apk',Path(apk['apk']),apk['apkSha256'])]:
-  archive.write(path,name);files.append({'path':name,'sha256':digest,'bytes':path.stat().st_size})
- manifest={'at':at,'state':'COMPANION_CORE_CANDIDATE_FROZEN_NOT_SALE_QUALIFIED','saleQualified':False,'windows':{'version':'0.1.87','sourceCommit':win['sourceCommit'],'installedExactNativeVerified':True,'receipt':'evidence/windows-image-context.json'},'android':{'version':'0.1.127','sourceCommit':apk['sourceCommit'],'backendSourceCommit':'f55f8e83b77c10ca34db442971a045eca1acfdf4','installedExactApkVerified':True,'receipt':'evidence/android-reading-context.json'},'retainedFirmware':prior['firmware'],'retainedMac':prior['macos'],'retainedComponentsRebuiltOrRetestedHere':False,'retainedKit':{'file':base.name,'sha256':baseSha},'files':files,'sourceRepository':'https://github.com/Listener-ai-Macau/Companion-Type','sourceCommits':['c9554c282056fca3aaf2340ce7ef7d2171e98ed7','cff425076be3c3c4ba8bfb2e6d1c8ba0a703520f','f55f8e83b77c10ca34db442971a045eca1acfdf4'],'scope':'Exact application installers and retained firmware/Mac candidates, without user recordings, private library indexes, credentials or signing keys.','remaining':'Original model/real meeting, physical recording/endurance, cross-platform/features, release trust/channel and business/service/customer acceptance gates remain open. Draft backup is not public release.'}
- archive.writestr('manifest.json',json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
- archive.writestr('SHA256SUMS.txt',''.join(item['sha256']+'  '+item['path']+'\n' for item in files))
- archive.writestr('evidence/android-reading-context.json',json.dumps(phone,ensure_ascii=False,indent=2)+'\n');archive.writestr('evidence/windows-image-context.json',json.dumps(win,ensure_ascii=False,indent=2)+'\n')
- archive.writestr('README.txt',f'''Companion 核心软件验收候选 — {at}
-
-Windows 0.1.87 / Android 0.1.127；保留匹配来源的 FW66788 和 Mac11509eb2 候选。
-manifest.json 与 SHA256SUMS.txt 列出实际来源、文件哈希、已验范围及未覆盖条件。
-
-Windows：使用 windows/ 中的 MSI 更新当前用户应用，不卸载或清空资料。当前安装程序与本机已验证087原生程序一致。图文备注、直接时间关联、所选图文ZIP和整库恢复/精确清除已有匹配包证据。
-Android：使用 android/ 中 APK 覆盖安装，不清除应用数据。此次沿既有签名的工程候选，正式商店签名/分发尚未完成。已有录音首屏、文件夹/标签/选择、人工备注搜索与定位、图文阅读和取消导入的实际范围见 evidence/。本地内容、原音与模型保留；新模型没有在本批运行。
-
-首次使用从“录音”进入。可导入本机音频/视频，或从“设备”接收录音卡资料。转写保存在本机；AI纪要、问答及翻译使用自行配置的服务，只有主动发起时发送所选文字，可能收费。本包没有附送托管AI、额度或售后服务承诺。整库备份在“设置”；恢复生成独立资料库，可返回原有资料。图文ZIP保留所选原图，Word/PDF等文字格式保留说明与时间。
-
-firmware/ 和 macos/ 是之前统一候选中的原字节，不是本轮新刷机或新Mac实测；固件仍为无屏现板配置/dev_only签名，Mac仍为adhoc工程包。勿将此归档当成量产刷机指令或正式售卖批准。
-
-公开模拟体验与真人购买分开记录；真实多人与模型、当前实物长录/电源、原跨端/服务/正式分发及真实客户门仍按原任务书继续。本包没有用户录音、账号密钥、私有资料索引或签名私钥。
-''')
-with zipfile.ZipFile(temporary) as archive:
- assert archive.testzip() is None
- for item in files:
-  with archive.open(item['path']) as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==item['sha256']
-temporary.replace(output);digest=sha(output);repo='Listener-ai-Macau/Companion-Type';tag='windows-0.1.78-bb1550c4-candidate';release=json.loads(gh(['release','view',tag,'--repo',repo,'--json','isDraft,assets']));assert release['isDraft'] and not any(a['name']==output.name for a in release['assets'])
-record={'at':at,'state':'CORE_CANDIDATE_ARCHIVE_LOCAL_VERIFIED_UPLOAD_IN_PROGRESS','package':str(output),'bytes':output.stat().st_size,'sha256':digest,'files':files,'draftOnly':True,'saleQualified':False,'ownerPrivateDataUploaded':False};(C/'packaged-candidate.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-gh(['release','upload',tag,output,'--repo',repo]);release=json.loads(gh(['release','view',tag,'--repo',repo,'--json','isDraft,assets']));assert release['isDraft'];asset=next(a for a in release['assets'] if a['name']==output.name);assert asset['digest']=='sha256:'+digest;identity=int(asset['apiUrl'].rsplit('/',1)[1]);record.update(assetId=identity,state='CORE_CANDIDATE_ARCHIVE_UPLOADED_READBACK_IN_PROGRESS');(C/'packaged-candidate.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-record['readback']=download(repo,identity,output.parent/'readback'/output.name,output.stat().st_size,digest);record.update(state='CORE_CANDIDATE_ARCHIVE_PRIVATE_DRAFT_READBACK_IDENTICAL',finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'),readbackByteIdentical=True);(C/'packaged-candidate.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps({k:record[k] for k in ['state','package','sha256','assetId','readback']},ensure_ascii=False))
+ q=subprocess.run(["gh",*map(str,args)],capture_output=True,timeout=180,creationflags=subprocess.CREATE_NO_WINDOW)
+ if q.returncode:raise RuntimeError(q.stderr.decode(errors="replace")[-1200:])
+ return q.stdout
+def local(relative):
+ p=(C/relative).resolve()
+ if not p.is_relative_to(C.resolve()) or not p.is_file():raise ValueError("Missing evidence inside this declared delivery: "+relative)
+ return p
+def save(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+def main():
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument("--current",action="store_true",required=True);args=parser.parse_args()
+ sys.path.insert(0,str(R/"model-research/src"))
+ from moss_windows_resource_limits_20261104 import WorkerLimits
+ limits=WorkerLimits(10,512*1024**2)
+ module_path=R/"companion-device-closure055/tools/qa/core_acceptance20261109/resume_delivery.py"
+ spec=importlib.util.spec_from_file_location("current_delivery",module_path);workflow=importlib.util.module_from_spec(spec);spec.loader.exec_module(workflow)
+ config,work=workflow.active_execution(load(R/"docs/product_backlog.json"));assert config
+ recipe=work["packageDefinition"];receipt=C/recipe["receipt"];assert receipt.resolve().parent==C.resolve()
+ gates=copy.deepcopy(config);assert gates["steps"][-1]["id"]=="complete-private-package";gates["steps"]=gates["steps"][:-1]
+ def query(handle):return json.loads(gh(["api","-H","Cache-Control: no-cache","repos/"+REPO+"/actions/runs/"+str(int(handle))]))
+ status=workflow.current(C,gates,query)
+ if status["kind"]!="BATCH_DELIVERED":raise RuntimeError("Whole delivery is not ready for packaging: "+json.dumps(status,ensure_ascii=False))
+ assert re.fullmatch(r"[A-Za-z0-9._-]+\.zip",recipe["outputName"])
+ output=Path("E:/CodexData/Companion/deliveries")/recipe["outputName"]
+ if receipt.exists():
+  record=load(receipt);assert Path(record["package"])==output and sha(output)==record["sha256"]
+ else:
+  assert not output.exists(),"Never replace an immutable existing delivery"
+  temp=output.with_suffix(".preparing.zip");assert not temp.exists(),"Retain partial archive before deciding a retry"
+  win=load(local(recipe["windows"]["verification"]));installed=load(local(recipe["windows"]["installation"]));runtime=load(local(recipe["windows"]["runtime"]))
+  android=load(local(recipe["android"]["build"]));phone_install=load(local(recipe["android"]["installation"]));closed=load(local(recipe["android"]["closed"]))
+  assert win["sourceCommit"]==installed["sourceCommit"]==runtime["appSourceCommit"]
+  assert installed["installedExeSha256"]==win["embeddedExeSha256"] and installed["installedDllSha256"]==win["dllSha256"] and installed["dataManifestIdentical"]
+  assert android["sourceCommit"]==phone_install["sourceCommit"] and android["apkSha256"]==phone_install["apkSha256"] and closed["ownedAppDisplayForwardJarClosed"] and closed["onlyOldChangeLibraryIndex"]
+  clients=[(recipe["windows"]["archivePath"],Path(win["msi"]),win["msiSha256"]),(recipe["android"]["archivePath"],Path(android["apk"]),android["apkSha256"])]
+  for name,file,digest in clients:assert file.resolve().is_relative_to(C.resolve()) and sha(file)==digest
+  base=Path(recipe["baseArchive"]).resolve();assert base.is_relative_to(output.parent.resolve()) and sha(base)==recipe["baseSha256"]
+  evidence=list(recipe["evidence"])
+  for rule in recipe.get("evidenceGlobs",[]):
+   directory=(C/rule["directory"]).resolve();assert directory.is_relative_to(C.resolve())
+   for pattern in rule["patterns"]:evidence.extend(p.relative_to(C).as_posix() for p in directory.glob(pattern) if p.is_file())
+  evidence=sorted(set(evidence));paths=[local(name) for name in evidence]
+  files=[];at=now()
+  with zipfile.ZipFile(base) as previous,zipfile.ZipFile(temp,"w",compression=zipfile.ZIP_DEFLATED,compresslevel=3) as z:
+   old=load_manifest(previous);claims={row["path"]:row for row in old["files"]}
+   for name in ["firmware/companion-update.cup","firmware/ota_manifest.json","macos/CompanionMac-candidate.zip"]:
+    item=claims[name];digest=hashlib.sha256();size=0
+    with previous.open(name) as source,z.open(name,"w") as target:
+     while chunk:=source.read(131072):target.write(chunk);digest.update(chunk);size+=len(chunk)
+    assert size==item["bytes"] and digest.hexdigest()==item["sha256"];files.append(item)
+   for name,file,digest in clients:z.write(file,name);files.append({"path":name,"bytes":file.stat().st_size,"sha256":digest})
+   manifest={"at":at,"state":recipe["manifestState"],"userResult":config["userResult"],"saleQualified":False,"files":files,
+    "windows":{"version":win["version"],"sourceCommit":win["sourceCommit"],"actualMsiNativeAndUpgradeVerified":True},
+    "android":{"version":closed["actualVersion"],"sourceCommit":android["sourceCommit"],"actualApkAndDeclaredUiVerified":True},
+    "retainedFirmware":old.get("retainedFirmware",old.get("firmware")),"retainedMac":old.get("retainedMac",old.get("macos")),
+    "retainedComponentsRebuiltOrRetestedHere":False,"baseArchive":{"file":base.name,"sha256":recipe["baseSha256"]},
+    "scope":recipe["scope"],"boundaries":recipe["boundaries"],"modelsRun":False,"sourceRepository":"https://github.com/"+REPO}
+   z.writestr("manifest.json",json.dumps(manifest,ensure_ascii=False,indent=2)+"\n");z.writestr("SHA256SUMS.txt","".join(item["sha256"]+"  "+item["path"]+"\n" for item in files))
+   z.writestr("evidence/retained-core-manifest.json",json.dumps(old,ensure_ascii=False,indent=2)+"\n")
+   for name,p in zip(evidence,paths):z.write(p,"evidence/"+name)
+   z.writestr("README.txt",recipe["readme"])
+  with zipfile.ZipFile(temp) as z:
+   assert z.testzip() is None
+   for item in files:
+    with z.open(item["path"]) as stream:assert hashlib.file_digest(stream,"sha256").hexdigest()==item["sha256"]
+  temp.replace(output);record={"at":at,"state":recipe["statePrefix"]+"_LOCAL_VERIFIED","package":str(output),"bytes":output.stat().st_size,"sha256":sha(output),"files":files,"draftOnly":True,"saleQualified":False,"ownerPrivateDataUploaded":False,"sourceRecipe":"original active work item packageDefinition"};save(receipt,record)
+ release=json.loads(gh(["release","view",TAG,"--repo",REPO,"--json","isDraft,assets"]));assert release["isDraft"]
+ asset=next((item for item in release["assets"] if item["name"]==output.name),None)
+ if asset is None:
+  gh(["release","upload",TAG,output,"--repo",REPO]);release=json.loads(gh(["release","view",TAG,"--repo",REPO,"--json","isDraft,assets"]));assert release["isDraft"];asset=next(item for item in release["assets"] if item["name"]==output.name)
+ assert asset["digest"]=="sha256:"+record["sha256"]
+ record["assetId"]=int(asset["apiUrl"].rsplit("/",1)[1]);save(receipt,record)
+ record["readback"]=download(REPO,record["assetId"],output.parent/"readback"/output.name,record["bytes"],record["sha256"])
+ record.update(state=recipe["statePrefix"]+"_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",readbackByteIdentical=True,finishedAt=now(),resourceLimits=limits.query());save(receipt,record)
+ print(json.dumps({key:record[key] for key in ["state","package","bytes","sha256","assetId"]}))
+def load_manifest(archive):
+ name="manifest.json" if "manifest.json" in archive.namelist() else "delivery.json"
+ return json.loads(archive.read(name))
+if __name__=="__main__":main()

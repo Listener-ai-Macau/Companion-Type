@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-11T13:57:41+08:00",
+  "state": "ANDROID140_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
+  "actualVersion": "0.1.140",
+  "preexistingFiles": 4974,
+  "preexistingFilesByteIdentical": 4973,
+  "onlyOldChangeLibraryIndex": true,
+  "allPreviousLibrariesRetained": true,
+  "newPublicLibraries": [
+    "d4716ffd-9182-46fb-a103-b8cb31c6e905",
+    "53faba32-cc92-4439-b5d2-d24fa4041c39"
+  ],
+  "newFilesOnlyInDeclaredPublicLibraries": 110,
+  "ownerMainDisplayOperated": false,
+  "ownedAppDisplayForwardJarClosed": true,
+  "publicTemporaryZipRemovedByExactSha": true,
+  "modelsCloudMicBleUsed": false,
+  "usbKeepAwakeUnchanged": true
+}

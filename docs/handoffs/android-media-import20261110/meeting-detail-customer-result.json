@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-11T13:58:50+08:00",
+  "state": "NEW_NEUTRAL_COMPLETE_PURPOSE_FEEDBACK_FULLY_RECEIVED",
+  "actualVersion": "0.1.140",
+  "sourceCommit": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+  "presaleAndHypotheticalAfterUseCovered": true,
+  "allRawFeedbackRead": true,
+  "raw": [
+    {
+      "role": "neutral-presale",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit140\\customer-presale.md",
+      "sha256": "7e3a0fc78cab5c96b6dcfe0344a3d1cd6aa39082fa427e5532e7ed15f2977c98",
+      "fullRawRead": true,
+      "unchanged": true,
+      "ordinarySavedNoteAndSearchSourceReturnUsed": true
+    },
+    {
+      "role": "hypothetical-after-purchase",
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit140\\customer-afteruse.md",
+      "sha256": "731466c9af37cb0e87fbe4af67840691c0aa916de9f4f4fd7bed70387f74e8b5",
+      "fullRawRead": true,
+      "unchanged": true,
+      "ordinarySavedNoteAndSearchSourceReturnUsed": true
+    }
+  ],
+  "historyIsolation": "fork none; independent restored public libraries, same product/source; existing engineering notes and saved minutes explicitly auxiliary input",
+  "actualPurpose": "各自阅读公开交流，留下自己的下次跟进，保存后离开、搜索找回及返回当前依据。原五条备注未改；独立新增个人备注。",
+  "outcome": "用途完成且愿继续整理本机材料；售前购买保留，不能代表真实购买或软件全面省心。",
+  "decisions": [
+    {
+      "issue": "引用展开提示看似可点但没有变化",
+      "evidence": "售前实际点展开查看摘录后没有变化；工程源码确认提示位于summary外且无动作，已有summary与来源返回有效。",
+      "decision": "同批修真实点击区域与展开状态，不以工程只点summary的通过抵消顾客失败。"
+    },
+    {
+      "issue": "跟进事项须学习特殊符号，普通编号不能直接勾选",
+      "evidence": "售前先保存后再改格式；假设售后保留普通编号，未体验勾选。两者均要求普通输入或已有行转换。",
+      "decision": "沿现有followup存储与版本/来源校验，补普通清单编辑和已有文本转换；保护旧备注、原文和任务状态，不另建任务存储。"
+    },
+    {
+      "issue": "原文依据需重新输入，资料与AI入口关系不够清楚",
+      "evidence": "售前重输入字面转写，假设售后文档一键引用与返回已成功；多入口首次辨认有负担。",
+      "decision": "复用原文选择/引用能力改善取段，合并同目的入口与明确页面位置；同一批验证，不逐别名重编。"
+    },
+    {
+      "issue": "模型残留怪数字/截断，预算草案与人工已核对可能混淆",
+      "evidence": "两角色均保留原文质量疑问；售后核清人工材料来源，未把预算草案当会议定案。",
+      "decision": "不改测试文本伪造识别改善，不从材料推断负责人/日期；继续保留来源与人工身份，模型和真实会议事实原门保持未完成。"
+    },
+    {
+      "issue": "备份/跨设备/正式售价与服务条件未知",
+      "evidence": "两角色未试相关能力，正式条件未给定。",
+      "decision": "不记为功能失败或已通过，不编造价格/额度/支持承诺，不以反复换顾客抽肯定关闭。"
+    }
+  ],
+  "testedScopeLimits": [
+    "无声音/新收音/设备传输/新ASR/在线AI",
+    "未导出分享/跨设备恢复/真实客服或长期使用",
+    "无真实付款/真人买家或实物经历；正式价格服务支持未知"
+  ],
+  "customerSessionClosedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit140\\end-session.json",
+  "premiumUsabilityFullyQualified": false,
+  "saleQualified": false,
+  "modelsRun": false
+}
