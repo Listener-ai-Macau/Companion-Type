@@ -1,0 +1,84 @@
+{
+  "at": "2026-11-11T05:05:03.857Z",
+  "actualVersion": "0.1.140",
+  "modelsCloudMicBleUsed": false,
+  "state": "ACTUAL_MATCHED_APP_DETAIL_IDENTITY_COMPACT_LITERAL_SOURCE_CHECKLIST_AI_ENTRY_AND_DUAL_DRAFT_PRESERVATION_PASSED",
+  "publicLibrary": "2e942e96-0fae-489f-8d33-10600d19e810",
+  "ownedDisplay": 34,
+  "header": {
+    "viewport": 391,
+    "documentWidth": 391,
+    "children": [
+      {
+        "left": 23.998302459716797,
+        "right": 62.996604919433594,
+        "width": 38.9983024597168
+      },
+      {
+        "left": 73.99405670166016,
+        "right": 192.56790924072266,
+        "width": 118.5738525390625
+      },
+      {
+        "left": 203.56536865234375,
+        "right": 242.56367111206055,
+        "width": 38.9983024597168
+      },
+      {
+        "left": 253.5611114501953,
+        "right": 317.1774101257324,
+        "width": 63.61629867553711
+      },
+      {
+        "left": 328.17486572265625,
+        "right": 367.17316818237305,
+        "width": 38.9983024597168
+      }
+    ]
+  },
+  "referenceShape": {
+    "width": 301.553466796875,
+    "height": 151.78692626953125
+  },
+  "shapes": [
+    {
+      "theme": "light",
+      "width": 17.996604919433594,
+      "height": 17.996604919433594,
+      "documentWidth": 391,
+      "viewport": 391
+    },
+    {
+      "theme": "dark",
+      "width": 17.996604919433594,
+      "height": 17.996604919433594,
+      "documentWidth": 391,
+      "viewport": 391
+    }
+  ],
+  "note": {
+    "id": "88e382e3-4e39-4b90-aaa8-1a3a5019ce81",
+    "createdAt": 1794373495386,
+    "kind": "followup",
+    "references": [
+      {
+        "id": "c3517a43-c51b-405f-a52b-9bb5e2567ee0",
+        "kind": "document",
+        "documentId": "a012a77f-d260-4b95-a83e-e5ccf5f868d9",
+        "name": "Companion-public-公开预算草案128.xlsx",
+        "sourceSha256": "aaa25e00e633a6713c66648d725fd8bac7ed9d03c7c79d29a6bb9f7b826fc78e",
+        "extractionSha256": "5d3bedc699c3f90d45a9b92026797cd4967c1a8020dc0222ea20ecfdf9de9220",
+        "sectionId": "part-1",
+        "sectionLabel": "工作表：预算草案",
+        "row": 2,
+        "quote": "A2\t人工补充\nB2\t12,000.00\nC2\tFALSE\nD2\t0\nE2\t2026-11-10\nF2\t[公式没有已保存结果]"
+      }
+    ],
+    "text": "公开界面验收｜会后准备\n- [x] 核对预算原件\n保留这条人工说明。\n- [ ] 确认负责人",
+    "atMs": null,
+    "updatedAt": 1794373495858
+  },
+  "sourceReturnVerified": true,
+  "unsentAiAndNoteDraftsRetained": true,
+  "oldNotesTranscriptMinutesUnchanged": true
+}

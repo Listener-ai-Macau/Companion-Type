@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-11T13:14:55+08:00",
+  "state": "EXACT_PRIVATE_DRAFT_INSTALLER_READBACK_VERIFIED",
+  "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+  "repo": "Listener-ai-Macau/Companion-Type",
+  "tag": "windows-0.1.78-bb1550c4-candidate",
+  "draft": true,
+  "assetId": 734232883,
+  "fileName": "Companion-Windows-0.1.106-candidate.msi",
+  "msiSha256": "57ca6681f4c1903f10bf8ec705abaa37a465e59844719c4aed4e54bd0b9515eb",
+  "bytes": 16834952,
+  "readbackByteIdentical": true,
+  "published": false,
+  "ownerPrivateDataUploaded": false,
+  "readback": {
+    "method": "four-bounded-official-CDN-range-readers",
+    "workers": 4,
+    "sections": 5,
+    "bufferBytesPerWorker": 131072,
+    "bytes": 16834952,
+    "sha256": "57ca6681f4c1903f10bf8ec705abaa37a465e59844719c4aed4e54bd0b9515eb",
+    "seconds": 1.6560000000172295,
+    "retainedTransientReads": [],
+    "authSentOnlyToGitHubApi": true,
+    "signedUrlOrTokenPersisted": false,
+    "routingModified": false
+  }
+}

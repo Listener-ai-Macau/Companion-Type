@@ -59,6 +59,7 @@ def current(root,config,query):
   # A mismatched existing receipt is evidence to investigate, never overwrite
   # it by automatically rerunning an installation or packaging operation.
   if inside(root,step["receipt"]).exists():return {"kind":"FAILED","step":step["id"],"reason":reason,"passed":passed,"action":"Inspect the existing receipt and preserve it before deciding a retry"}
+  if "command" not in step:return {"kind":"ENGINEERING_ACTION","step":step["id"],"action":step["prepare"],"passed":passed}
   return {"kind":"READY","step":step["id"],"command":step["command"],"passed":passed}
  return {"kind":"BATCH_DELIVERED","passed":passed,"action":config["afterDelivery"],"wholeGoalComplete":False}
 

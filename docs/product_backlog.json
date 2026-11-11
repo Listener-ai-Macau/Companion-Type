@@ -56244,13 +56244,13 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion138 external-file public acceptance",
+          "reservedFor": "Companion140 public software acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-11T10:24:02+08:00",
+          "requestedAt": "2026-11-11T12:53:42+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
-          "scope": "Only new libraries restored through ordinary UI from the known public136 backup; incoming public generated PCM/document/image OS delivery and lifecycle on owned non-main display. Explicit isolated QA source app may grant only these public files. No listening, microphone, BLE/device, model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-11T12:07:28+08:00",
-          "releaseReason": "Actual139 public incoming lifecycle finished; original library restored and exact own display/app/forward/jar closed. Original data preserved; real sales/hardware/models not claimed.",
+          "scope": "Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.",
+          "releasedAt": "2026-11-11T13:11:14+08:00",
+          "releaseReason": "Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
           ],
@@ -134495,7 +134495,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Same CP04-08: one natural physical card record/stop on installed104 and automatic result; no mandatory raw playback or new firmware round. Then surface IMU highlights in text using existing bookmarks. Explicit blocks stay deferred.",
+      "next": "Same CP04-08: deliver one107 batch for collected104 customer follow-through issues, merge the already-reserved106 presentation source before packaging; no new Owner recording. Explicit blocks unchanged.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -144319,12 +144319,12 @@
         "automaticSoftwareRestartQualified": true,
         "softwareReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\card-to-text104-delivery.json",
         "customerExperience104": {
-          "at": "2026-11-11T12:28:26+08:00",
-          "state": "INDEPENDENT_AI_PRESALES_RUNNING_AFTERUSE_PREPARING",
+          "at": "2026-11-11T12:55:14+08:00",
+          "state": "BOTH_COMPLETE_FEEDBACK_READ_REPAIRING_ONE_BATCH",
           "version": "0.1.104",
           "sourceCommit": "16c2738d22d236c2223c979953e3cd0d33f06793",
           "sourceType": "AI simulation, not real buyers or real after-sales",
-          "currentAgent": "/root/customer104_presales",
+          "currentAgent": null,
           "forkTurns": "none",
           "presalesCase": "E:/CodexData/Companion/.build-cache/recorder-usability104/customer-experience/presales",
           "afteruseCase": "E:/CodexData/Companion/.build-cache/recorder-usability104/customer-experience/afteruse",
@@ -144338,9 +144338,58 @@
             "physicalCardAvailable": false,
             "ownerPrivateAudioProvided": false
           },
-          "completeFeedbackRead": false,
+          "completeFeedbackRead": true,
           "customerImprovementQualified": false,
-          "saleQualified": false
+          "saleQualified": false,
+          "feedbackReceipt": "E:\\CodexData\\Companion\\.build-cache\\customer-followthrough107\\feedback-and-decisions.json",
+          "issues": [
+            {
+              "id": "CX104-01",
+              "source": "both customers",
+              "issue": "Existing audio import is hard to discover from the empty library",
+              "decision": "Reuse existing native import section, expose a secondary library entry; physical card remains primary"
+            },
+            {
+              "id": "CX104-02",
+              "source": "presales",
+              "issue": "Editing a template-generated checklist falls back to whole Markdown including Generated/Source header",
+              "decision": "Recognize the native template envelope and reuse existing per-item ActionListEditor; preserve complete saved bytes outside changed fields"
+            },
+            {
+              "id": "CX104-03",
+              "source": "both customers",
+              "issue": "Explicit oral subsidiary confirmation omitted from generated task list",
+              "decision": "Reuse native verified verbatim action references when L0 cannot match an oral paraphrase, retaining source-bound owner/time checks; require general task coverage in provider prompt; actual post-fix generation still pending"
+            },
+            {
+              "id": "CX104-04",
+              "source": "both customers",
+              "issue": "Task prose contains a deadline but follow-up field says time is unspecified",
+              "decision": "Preserve literal partial time metadata in model output; distinguish an unfilled metadata field from absence of time in source; no guessed year or automatic reminder"
+            },
+            {
+              "id": "CX104-05",
+              "source": "afteruse",
+              "issue": "Tentative arrangements shown under already-confirmed-decisions label, unclear task-only export scope and search snippet shows the AI question before saved answer",
+              "decision": "Use neutral arrangement label; expose existing full-content preview/export and label task TXT scope; prefer saved answer snippet without changing notes or search matches"
+            },
+            {
+              "id": "CX104-06",
+              "source": "engineer actual normal104 screenshot",
+              "issue": "First-use help inherits light text over a light background in dark mode",
+              "decision": "Fix shared theme styling; check real light/dark render contrast"
+            },
+            {
+              "id": "CX104-07",
+              "source": "customers wishes and untested conditions",
+              "issue": "Punctuation/readability, AI reply organization and reviewed-answer-to-task convenience; real calendar import/update and physical card value still unknown",
+              "decision": "Preserve original feedback in same work item; do not invent ASR punctuation or calendar success, or add unrelated controls before this existing flow is reliable"
+            }
+          ],
+          "repairVersion": "0.1.107",
+          "allCustomerIssuesFixed": false,
+          "presalesPurposeCompleted": true,
+          "afterusePurposeCompleted": true
         }
       }
     },
@@ -267928,7 +267977,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "完整105/139系统接收—保存/失效重试/取消—备份恢复—清除—重开已实装、打包及私有回读一致；同批103真实清单短读占用故障已在105修复并实际界面复验。当前转原premium_ui整页阅读/AI入口/材料/备注视觉收敛，原数据和模型/实体/服务/Owner门保留。",
+          "currentCheckpoint": "105/139完整外部文件链已交付；下一完整会议详情批次已冻结106/140，140实际身份/AI入口/紧凑原文依据/勾选/双草稿/深浅色/重开及原库外观返回通过。4919旧文件除索引外一致、副屏34已精确关闭。106正常构建成功，沿续作入口核包/同包界面/升级，之后新中性完整用途体验及整包；未宣称高级感或全部售卖门已过。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
@@ -269458,7 +269507,7 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-10T09:18:50+08:00",
-            "state": "MEETING_DETAIL_VISUAL_BATCH_SOURCE_REVIEW",
+            "state": "ANDROID140_ACTUAL_DETAIL_REOPEN_ORIGINAL_RETURN_CLOSED_WINDOWS106_VERIFIED_RUNTIME_NEXT",
             "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
             "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
             "existingTask": "CP27-01/playback",
@@ -269787,8 +269836,198 @@
                 "executionReview20261111 actual136 screenshots/repeated headings and giant sole reference",
                 "reader133/134 complete density and source-navigation feedback"
               ],
-              "productSourceModifiedYet": false
-            }
+              "productSourceModifiedYet": true,
+              "renderedCases": 8,
+              "renderedScope": "Actual saved-note/reference/workspace/AI components in browser; not whole native App qualification",
+              "newModelCapabilityClaimed": false,
+              "actualAndroid140": {
+                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-workflow.json",
+                "overview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-overview.json",
+                "restart": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\detail-reopened.json",
+                "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\end-session.json",
+                "oldFiles": 4919,
+                "unchangedOldFiles": 4918,
+                "onlyIndexChanged": true,
+                "ownerMainOperated": false
+              }
+            },
+            "windowsVersion": "0.1.106",
+            "androidVersion": "0.1.140",
+            "productSourceModifiedYet": true,
+            "sourceBehaviorChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-finish\\affected-checks.json",
+            "sourceRender": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\meeting-detail-finish\\render-result.json",
+            "deliveryExecution": {
+              "userResult": "打开会议后先看清内容和状态，纪要、转写、材料、人工补充与AI入口层级清楚，深浅色和长文阅读一致；保留原始内容、来源与未保存草稿。",
+              "evidenceRoot": "docs/handoffs/20261110-android-media-import",
+              "logDirectory": "meeting-detail-finish",
+              "steps": [
+                {
+                  "id": "windows-native-build",
+                  "job": {
+                    "freeze": "windows106/source-freeze.json",
+                    "runField": "buildRun",
+                    "prepare": "Keep frozen106 run42961513864; observe it, never dispatch a duplicate on observation timeout."
+                  }
+                },
+                {
+                  "id": "windows-payload-inspection",
+                  "receipt": "windows106/windows-verification.json",
+                  "equals": {
+                    "state": "WINDOWS106_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+                    "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+                    "version": "0.1.106"
+                  },
+                  "binary": {
+                    "pathField": "msi",
+                    "shaField": "msiSha256"
+                  },
+                  "command": [
+                    "inspect_windows_candidate.py",
+                    "106"
+                  ]
+                },
+                {
+                  "id": "windows-private-preservation",
+                  "receipt": "windows106/remote-candidate-backup.json",
+                  "equals": {
+                    "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+                    "readbackByteIdentical": true
+                  },
+                  "command": [
+                    "run_preserve_incoming.py",
+                    "windows106"
+                  ]
+                },
+                {
+                  "id": "android-native-build",
+                  "job": {
+                    "freeze": "android140/source-freeze.json",
+                    "runField": "buildRun",
+                    "prepare": "Keep frozen140 run42961499090; no model/native source changed."
+                  }
+                },
+                {
+                  "id": "android-payload-verification",
+                  "receipt": "android140/build-result.json",
+                  "equals": {
+                    "state": "ANDROID140_CI_PAYLOAD_TRUSTED_SIGNER_AND_MODEL_RESOURCES_VERIFIED",
+                    "sourceCommit": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+                    "versionCode": 140
+                  },
+                  "binary": {
+                    "pathField": "apk",
+                    "shaField": "apkSha256"
+                  },
+                  "command": [
+                    "prepare_android_candidate.py",
+                    "140"
+                  ]
+                },
+                {
+                  "id": "android-private-preservation",
+                  "receipt": "android140/remote-candidate-backup.json",
+                  "equals": {
+                    "sourceCommit": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+                    "readbackByteIdentical": true
+                  },
+                  "command": [
+                    "run_preserve_incoming.py",
+                    "android140"
+                  ]
+                },
+                {
+                  "id": "android-actual-detail-workflow",
+                  "receipt": "android140/detail-workflow.json",
+                  "equals": {
+                    "state": "ACTUAL_MATCHED_APP_DETAIL_IDENTITY_COMPACT_LITERAL_SOURCE_CHECKLIST_AI_ENTRY_AND_DUAL_DRAFT_PRESERVATION_PASSED",
+                    "actualVersion": "0.1.140",
+                    "oldNotesTranscriptMinutesUnchanged": true
+                  },
+                  "prepare": "Continue only the declared public140 ordinary detail workflow on the owned display; keep old data and unchanged models."
+                },
+                {
+                  "id": "android-session-close",
+                  "receipt": "android140/end-session.json",
+                  "equals": {
+                    "state": "ANDROID140_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
+                    "actualVersion": "0.1.140",
+                    "onlyOldChangeLibraryIndex": true,
+                    "ownedAppDisplayForwardJarClosed": true
+                  },
+                  "prepare": "Finish public140 actual reopen/original appearance and library return, then close the exact owned session with software_phone_session.py140 close; do not repeat a successful install."
+                },
+                {
+                  "id": "windows-actual-runtime",
+                  "job": {
+                    "freeze": "windows106/runtime-source-freeze.json",
+                    "runField": "runtimeRun",
+                    "prepare": "Commit inspected106 runtime spec and affected verifier once with [core-documents], save the exact source/run, then resume the current whole detail batch."
+                  },
+                  "receipt": "windows106/runtime-result.json",
+                  "equals": {
+                    "state": "WINDOWS106_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
+                    "appSourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+                    "frozenNativeBytesMatchedApprovedMsi": true
+                  },
+                  "command": [
+                    "download_windows_runtime.py",
+                    "106",
+                    {
+                      "receipt": "windows106/runtime-source-freeze.json",
+                      "field": "runtimeRun"
+                    },
+                    "documents"
+                  ]
+                },
+                {
+                  "id": "windows-quiet-upgrade",
+                  "receipt": "windows106/installation.json",
+                  "equals": {
+                    "state": "WINDOWS106_INSTALLED_EXISTING_DATA_IDENTICAL",
+                    "sourceCommit": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+                    "dataManifestIdentical": true
+                  },
+                  "command": [
+                    "install_windows_candidate.py",
+                    "106"
+                  ]
+                },
+                {
+                  "id": "new-neutral-complete-purpose-experience",
+                  "receipt": "meeting-detail-customer-result.json",
+                  "equals": {
+                    "state": "NEW_NEUTRAL_COMPLETE_PURPOSE_FEEDBACK_FULLY_RECEIVED",
+                    "presaleAndHypotheticalAfterUseCovered": true,
+                    "allRawFeedbackRead": true
+                  },
+                  "prepare": "After this coherent source is actually available, provide a new neutral FIRST_USE presale and hypothetical after-purchase role one at a time, with real scope/price/entry only, fresh public library and no old feedback/engineering checklist. Read all feedback and decide the whole batch once. AI simulation is not a real customer/order."
+                },
+                {
+                  "id": "complete-private-package",
+                  "receipt": "meeting-detail-packaged-candidate.json",
+                  "equals": {
+                    "state": "MEETING_DETAIL_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+                    "readbackByteIdentical": true,
+                    "saleQualified": false
+                  },
+                  "prepare": "Package the exact matched106/140 delivery with current scoped evidence and unchanged retained firmware/Mac. Use the existing delivery recipe/data, no version-specific copy; private draft plus full readback. Record one full result/timeline and continue original highest actionable work."
+                }
+              ],
+              "afterDelivery": "Continue original nonmodel/core/premium UI requirements and full scope. No sale/model/hardware/service/Owner/real-customer completion inferred from a finished software batch."
+            },
+            "windowsSource": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+            "androidSource": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+            "windowsBuildRun": 42961513864,
+            "androidBuildRun": 42961499090,
+            "androidActualDetailPassed": true,
+            "androidActualReopenPassed": true,
+            "androidSessionClosed": true,
+            "androidPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android140\\end-session.json",
+            "phoneHoldActive": false,
+            "windowsPayloadVerified": true,
+            "windowsPrivateInstallerAsset": 734232883,
+            "androidPrivateInstallerAsset": 734233262,
+            "nativeModelsRun": false
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -277415,7 +277654,7 @@
     "sharedWindowsIntegration20261110": {
       "at": "2026-11-11T12:29:42+08:00",
       "state": "UNIFIED105_ANDROID139_INCOMING_CORE_INSTALLED_COMPLETE_PRIVATE_PACKAGE_PASSED",
-      "reservedVersion": "0.1.105",
+      "reservedVersion": "0.1.107",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "mustIncludeSources": [
@@ -277530,9 +277769,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": null,
-      "pendingUnifiedBranch": "work/recorder-core-integration-20261110",
-      "pendingUnifiedReason": "Actual installed104 retains cf0a496d latest102/103 source and final101/51acd7d9 product connection repair, adds local card-to-text and in-app guidance. Prior103 reference preserved inside recorderUsability104Pending; do not downgrade to it.",
+      "pendingUnifiedVersion": "0.1.106",
+      "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
+      "pendingUnifiedReason": "One coherent meeting-detail presentation batch on qualified105; preserve all card-first/local-only and incoming/native fixes. Shared reference/notes/AI hierarchy plus real native compact/source-return acceptance. Android140 has the same shared presentation, unchanged139 Java/backend/models.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
@@ -277662,6 +277901,21 @@
           "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows105\\installation.json",
           "all104SourcePreserved": true,
           "physicalAutomaticAsrScopeUnchanged": true
+        },
+        "customerFollowthrough107": {
+          "at": "2026-11-11T13:15:55+08:00",
+          "state": "ONE_NORMAL107_BUILD_IN_PROGRESS_WITH106_SOURCE",
+          "version": "0.1.107",
+          "branch": "work/recorder-core-integration-20261110",
+          "feedback": "E:\\CodexData\\Companion\\.build-cache\\customer-followthrough107\\feedback-and-decisions.json",
+          "retainsInstalled105Source": "91d246be5871c62410daa62ede57139652b259c6",
+          "mustMergeReserved106BeforePackaging": false,
+          "installed": false,
+          "sourceCommit": "63601388ed4157d752cbc1d2c6e7064624e26938",
+          "buildRun": 42963798934,
+          "retains106Source": "41f7909c",
+          "affectedLocalNativeChecksPassed": true,
+          "affectedLocalUiChecksPassed": true
         }
       },
       "pendingUnifiedDeliveryState": "INSTALLED104_INCORPORATES_PRIOR103_SOURCE"

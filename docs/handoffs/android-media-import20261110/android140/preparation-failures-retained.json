@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-11T13:17:01+08:00",
+  "state": "PREPARATION_REWORK_RETAINED_SAME140_APK_NO_PRODUCT_REBUILD",
+  "items": [
+    {
+      "source": "installation-preparer-version-variable.json",
+      "cause": "CLI code identifier was overwritten by installed APK path in the parameterised helper; exact installed version/hash were correct; old label preserved then corrected against actual package, without reinstall."
+    },
+    {
+      "source": "display-lifecycle-attempt1.json",
+      "cause": "Bounded preparation worker ended KILL_ON_JOB_CLOSE and removed its own display. Exact child exit verified; new bounded display worker stays live for the session. Same APK and public input."
+    },
+    {
+      "source": "detail-return-original.log",
+      "cause": "Known original-library confirmation absent from new helper allowlist. Existing prompt resumed using ordinary positive button, actual original library/appearance verified. No repeated return or product change."
+    }
+  ],
+  "ownerDataPreserved": true,
+  "noAdditionalNativeCandidateBuilt": true
+}

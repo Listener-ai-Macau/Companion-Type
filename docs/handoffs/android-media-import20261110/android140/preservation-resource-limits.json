@@ -1,0 +1,16 @@
+{
+  "pid": 3784,
+  "cpuRate": 1000,
+  "cpuControlFlags": 5,
+  "cpuPercentMaximum": 10.0,
+  "inLimitedJob": true,
+  "jobPrivateCommitLimitBytes": 536870912,
+  "jobMemoryLimitEnabled": true,
+  "jobPeakPrivateCommitBytes": 87543808,
+  "cpuPriorityClass": 64,
+  "memoryPagePriority": 1,
+  "memoryPagePriorityIsReclaimHintNotRamCap": true,
+  "gpuPriorityClass": 0,
+  "gpuUtilizationHardCapped": false,
+  "scope": "This worker and its descendants only; no global or other-app changes."
+}

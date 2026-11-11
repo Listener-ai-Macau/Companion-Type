@@ -1,0 +1,11 @@
+{
+  "state": "PREPARATION_WORKER_CLOSED_ITS_OWN_BOUNDED_JOB_AND_DISPLAY",
+  "productFault": false,
+  "apkReinstalled": false,
+  "publicLibraryRestored": false,
+  "source": "WorkerLimits KILL_ON_JOB_CLOSE; display worker must stay alive for the declared UI session",
+  "previousOwnedScrcpyConfirmedExited": true,
+  "ownerMainCompanionNotActive": true,
+  "ownIdleAppAndExactForwardClosed": true,
+  "repair": "The bounded display worker now lives until its exact scrcpy closes. Keep the same140 APK and public input; no business result or model run changed."
+}

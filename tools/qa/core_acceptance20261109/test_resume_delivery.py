@@ -48,4 +48,7 @@ class DeliveryContinuationTests(unittest.TestCase):
   node.update(next=CORE[-1]+".visual",old={"deliveryExecution":self.config},visual={"state":"SOURCE","next":"finish the whole page"})
   config,work=active_execution(root)
   self.assertIsNone(config);self.assertEqual(work["next"],"finish the whole page")
+ def test_actual_phone_or_customer_stage_without_a_command_requires_engineering(self):
+  self.config["steps"][0].pop("command");self.config["steps"][0]["prepare"]="Use the prepared ordinary public entry"
+  result=self.state();self.assertEqual(result["kind"],"ENGINEERING_ACTION");self.assertNotIn("command",result)
 if __name__=="__main__":unittest.main()
