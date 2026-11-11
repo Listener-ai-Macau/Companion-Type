@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import {FileText,Quote,ChevronDown,ArrowUpRight} from 'lucide-react';
 import type {ManualNoteEvidence,ManualNoteKind} from '../../core/src/manualNoteContext';
 import {manualChecklist,MANUAL_CONTEXT_LIMITS} from '../../core/src/manualNoteContext';
 import './manualNoteContext.css';
@@ -13,7 +14,17 @@ export function addManualReference(current:ManualNoteEvidence[],reference:Manual
  return [...current,reference];
 }
 export function ManualEvidenceList({references,onRemove,onOpen,disabled=false}:{references:ManualNoteEvidence[];onRemove?:(id:string)=>void;onOpen?:(reference:ManualNoteEvidence)=>Promise<void>;disabled?:boolean}){
- return <div className="manual-evidence-list">{references.map((reference,index)=><details key={reference.id} className="manual-evidence" open={references.length===1}><summary><span>依据 {index+1} · {reference.name}{reference.kind==='document'?' · '+reference.sectionLabel+(reference.row?' · 第'+reference.row+'行':''):''}</span></summary><blockquote>{reference.quote}</blockquote><small>人工选择的保存时摘录 · 不会随原文更新</small><div className="manual-evidence-actions">{onOpen&&<button type="button" disabled={disabled} onClick={()=>void onOpen(reference)}>查看当前依据</button>}{onRemove&&<button type="button" disabled={disabled} onClick={()=>onRemove(reference.id)}>移除此引用</button>}</div></details>)}</div>;
+ return <div className="manual-evidence-list">{references.map((reference,index)=>{
+  const location=reference.kind==='document'?reference.sectionLabel+(reference.row?' · 第'+reference.row+'行':''):'录音转写';
+  return <div key={reference.id} className="manual-evidence">
+   <details className="manual-evidence-excerpt"><summary>
+    <span className="manual-evidence-icon" aria-hidden="true">{reference.kind==='document'?<FileText size={16}/>:<Quote size={16}/>}</span>
+    <span className="manual-evidence-heading"><span className="manual-evidence-kind">依据 {index+1} · {reference.kind==='document'?'文档摘录':'转写摘录'}</span><strong title={reference.name}>{reference.name}</strong><span className="manual-evidence-location">{location}</span></span>
+    <ChevronDown size={15} className="manual-evidence-chevron" aria-hidden="true"/>
+   </summary><blockquote>{reference.quote}</blockquote><small>保存时的原文摘录 · 原文更新后需重新核对</small></details>
+   <div className="manual-evidence-actions"><span className="manual-evidence-hint">展开查看摘录</span>{onOpen&&<button type="button" disabled={disabled} onClick={()=>void onOpen(reference)}>查看当前依据<ArrowUpRight size={13} aria-hidden="true"/></button>}{onRemove&&<button type="button" disabled={disabled} onClick={()=>onRemove(reference.id)}>移除此引用</button>}</div>
+  </div>;
+ })}</div>;
 }
 export function ManualContextControls({kind,references,onKind,onReferences,onChecklist,disabled=false}:{kind:ManualNoteKind;references:ManualNoteEvidence[];onKind:(kind:ManualNoteKind)=>void;onReferences:(references:ManualNoteEvidence[])=>void;onChecklist:()=>void;disabled?:boolean}){
  return <div className="manual-context-controls"><label>补充类型<select aria-label="补充类型" value={kind} disabled={disabled} onChange={e=>onKind(e.target.value as ManualNoteKind)}><option value="note">普通备注</option><option value="followup">人工跟进</option></select></label>{kind==='followup'&&<><button type="button" disabled={disabled} onClick={onChecklist}>添加可勾选事项</button><small>自己写的跟进清单；每行用 - [ ] 开头，保存后可勾选。它不代表会议已作决定。</small></>}<ManualEvidenceList references={references} onRemove={id=>onReferences(references.filter(item=>item.id!==id))} disabled={disabled}/></div>;

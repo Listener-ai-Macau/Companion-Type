@@ -3214,7 +3214,7 @@ export function CompanionDashboard({
                 <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
               </>}
               <details className="ct-ai-service-fields"><summary>AI文字服务 · {formDeepseekEnabled&&productSettings?.deepseekApiKeySet?'已配置':formDeepseekKey?'待保存':'尚未配置'}</summary>
-                <p className="ct-step-meta">纪要、会议问答与材料整理共用此服务。密钥由系统凭据管理器保存，服务连接参数集中在这里。</p>
+                <p className="ct-step-meta">纪要、AI 助手与材料整理共用此服务。密钥由系统凭据管理器保存，服务连接参数集中在这里。</p>
                 {credentialField('deepseekApiKey', '服务密钥', formDeepseekKey, value=>{setFormDeepseekKey(value);if(value.trim())setFormDeepseekEnabled(true);}, productSettings?.deepseekApiKeySet)}
                 <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
                 <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>

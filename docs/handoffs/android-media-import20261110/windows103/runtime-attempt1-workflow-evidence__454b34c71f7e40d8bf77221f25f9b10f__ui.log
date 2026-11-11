@@ -1,0 +1,4 @@
+Error: Scoped dismissal did not finish
+    at poll (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_incoming_ui.cjs:11:150)
+    at async incomingJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_incoming_ui.cjs:35:76)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:24:17

@@ -56243,14 +56243,14 @@
         "ownerLatestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ku-bulk-cpu-observation-20261028\\new-phone-bcfb8bc1\\prepared17-owner2.json",
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
-          "active": true,
+          "active": false,
           "reservedFor": "Companion138 external-file public acceptance",
           "serial": "d6bd213d",
           "requestedAt": "2026-11-11T10:24:02+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; incoming public generated PCM/document/image OS delivery and lifecycle on owned non-main display. Explicit isolated QA source app may grant only these public files. No listening, microphone, BLE/device, model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-11T07:29:31+08:00",
-          "releaseReason": "Fresh public AI simulated customer workspace ended; original library restored and own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
+          "releasedAt": "2026-11-11T12:07:28+08:00",
+          "releaseReason": "Actual139 public incoming lifecycle finished; original library restored and exact own display/app/forward/jar closed. Original data preserved; real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
           ],
@@ -133753,7 +133753,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-11T11:00:11+08:00",
+      "updatedAt": "2026-11-11T12:15:45+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -134495,7 +134495,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "P0 same core: automatic transcription/result presentation for newly received card audio, reuse current persistence/recovery and actual ASR. Explicit manual choices and existing private local-only boundaries stay meaningful; do not just flip every recording to cloud processing.",
+      "next": "Same CP04-08: one natural physical card record/stop on installed104 and automatic result; no mandatory raw playback or new firmware round. Then surface IMU highlights in text using existing bookmarks. Explicit blocks stay deferred.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -137808,7 +137808,7 @@
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
       },
-      "lastOwnerRequest": "为啥呢, 继续很多东西做完才行啊",
+      "lastOwnerRequest": "软件内补使用说明，容易入门，不漏功能，有吸引力且买后好用",
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
         "result": "PASS_DYNAMIC_WAIT_COVERED_LENGTHS_AND_SCOPED_RESUME_NOT_FULL_SALE_QUALIFICATION",
@@ -144269,7 +144269,7 @@
         "physicalCardReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json"
       },
       "physicalCardUsability20261111": {
-        "at": "2026-11-11T11:00:11+08:00",
+        "at": "2026-11-11T12:15:45+08:00",
         "originalWorkItem": "CP04-08 / existing embedded core acceptance",
         "ownerFeedback": [
           "为什么在软件点击录音，谁会用软件点击录音，逻辑完全不对",
@@ -144279,15 +144279,15 @@
         "actualResultReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json",
         "physicalShortOriginalQualified": true,
         "ordinaryAutomaticResultWorkflowQualified": false,
-        "concreteGap": "New card-origin recordings are currently defaulted to Manual in recording_wire/receiver/publish.rs (r52). Actual402 stayed pending needs_transcription until the normal local transcription command was explicitly invoked. Existing transcription works; the default policy, automatic orchestration and result presentation are the usability obstacle.",
-        "uiSource": "8c35f17ac36a416e2a7923f6682621985a973e0c",
+        "concreteGap": "Default card-local automatic processing, model readiness, title/result presentation and in-app guide are implemented and software-qualified. A fresh physical ordinary automatic receive/result use on104 remains unqualified.",
+        "uiSource": "16c2738d22d236c2223c979953e3cd0d33f06793",
         "mergeLatest102": "a94c52f0a776bf58b42840efbb42d616634b39c4",
         "uiChange": "Primary card section describes physical controls and offers receive. Remote START remains in a secondary disclosure, first-use/unknown-device guidance no longer routes users to software START.",
         "uiWebBuildPassed": true,
         "uiSourcePushed": true,
-        "uiInstalled": false,
-        "requiresNextUnifiedDelivery": true,
-        "nextHighestPriority": "P0 same core: automatic transcription/result presentation for newly received card audio, reuse current persistence/recovery and actual ASR. Explicit manual choices and existing private local-only boundaries stay meaningful; do not just flip every recording to cloud processing.",
+        "uiInstalled": true,
+        "requiresNextUnifiedDelivery": false,
+        "nextHighestPriority": "Same CP04-08: one natural physical card record/stop on installed104 and automatic result; no mandatory raw playback or new firmware round. Then surface IMU highlights in text using existing bookmarks. Explicit blocks stay deferred.",
         "featureOrder": [
           "automatic readable result without compulsory playback",
           "IMU highlight produces emphasized text/context in the result",
@@ -144312,7 +144312,36 @@
           }
         ],
         "noNewOwnerPromptPending": true,
-        "saleQualified": false
+        "saleQualified": false,
+        "latestOwnerRequest": "软件内补使用说明，容易入门，不漏功能，有吸引力且买后好用",
+        "state": "WINDOWS104_INSTALLED_LOCAL_CARD_TEXT_GUIDE_SOFTWARE_RUNTIME_PASSED",
+        "automaticSoftwareWorkerQualified": true,
+        "automaticSoftwareRestartQualified": true,
+        "softwareReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\card-to-text104-delivery.json",
+        "customerExperience104": {
+          "at": "2026-11-11T12:28:26+08:00",
+          "state": "INDEPENDENT_AI_PRESALES_RUNNING_AFTERUSE_PREPARING",
+          "version": "0.1.104",
+          "sourceCommit": "16c2738d22d236c2223c979953e3cd0d33f06793",
+          "sourceType": "AI simulation, not real buyers or real after-sales",
+          "currentAgent": "/root/customer104_presales",
+          "forkTurns": "none",
+          "presalesCase": "E:/CodexData/Companion/.build-cache/recorder-usability104/customer-experience/presales",
+          "afteruseCase": "E:/CodexData/Companion/.build-cache/recorder-usability104/customer-experience/afteruse",
+          "conditions": {
+            "normalNativeMsi": true,
+            "emptyIsolatedLibrary": true,
+            "realLocalAsr": true,
+            "modelsPreinstalled": true,
+            "configuredCloudTextService": true,
+            "syntheticPublicAudioExplicitlyMarked": true,
+            "physicalCardAvailable": false,
+            "ownerPrivateAudioProvided": false
+          },
+          "completeFeedbackRead": false,
+          "customerImprovementQualified": false,
+          "saleQualified": false
+        }
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -147678,7 +147707,7 @@
                 "notta",
                 "notta_brain"
               ],
-              "current": "099/136保留既有普通文件选择、文档/图片与原件/引用/备份路径；此次核实其它App SEND/VIEW分享/打开入口尚无，下一原CP27-03集中实现，不把选择器通过当系统分享已完成。",
+              "current": "105/139已完成系统文件/其它App分享进入、明确保存目标、原件保留、权限失效重新分享沿原项重试、坏文件与长源取消、备份恢复、绑定清除和重开；完整包已私有回读。容量实际条件、模型/事实质量及Owner按原范围分别保留，不代签整项。",
               "acceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "order": "P1",
               "dependency": "software",
@@ -147731,6 +147760,16 @@
                   },
                   "nativeScopePassed": true,
                   "newActualCustomerRawRead": true,
+                  "ownerAccepted": false,
+                  "wholeFeatureQualified": false
+                },
+                "incoming105139": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+                  "versions": {
+                    "windows": "0.1.105",
+                    "android": "0.1.139"
+                  },
+                  "declaredIncomingScopePassed": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
                 }
@@ -147832,6 +147871,16 @@
                   },
                   "nativeScopePassed": true,
                   "newActualCustomerRawRead": true,
+                  "ownerAccepted": false,
+                  "wholeFeatureQualified": false
+                },
+                "incoming105139": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+                  "versions": {
+                    "windows": "0.1.105",
+                    "android": "0.1.139"
+                  },
+                  "declaredIncomingScopePassed": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
                 }
@@ -149935,6 +149984,16 @@
                   },
                   "nativeScopePassed": true,
                   "newActualCustomerRawRead": true,
+                  "ownerAccepted": false,
+                  "wholeFeatureQualified": false
+                },
+                "incoming105139": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+                  "versions": {
+                    "windows": "0.1.105",
+                    "android": "0.1.139"
+                  },
+                  "declaredIncomingScopePassed": true,
                   "ownerAccepted": false,
                   "wholeFeatureQualified": false
                 }
@@ -267845,7 +267904,7 @@
         "ownerCoreAcceptanceCandidate20261109": {
           "at": "2026-11-11T10:49:26+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "WHOLE_CORE_CANDIDATE_WINDOWS_COMPLETE_BLOCK_PROVEN_ANDROID_CARD_AND_QUALITY_OPEN",
+          "state": "INCOMING_CORE_COMPLETE_NEXT_COHERENT_MEETING_DETAIL_VISUAL_FINISH",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -267869,15 +267928,15 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "Owner优先要求审查过去24小时效率；实际交付与执行问题已按原收据核对。上一完整成套099/136保留；手机139已在同一副屏32升级、状态修复尚未复验，103最终连接归并与102同包运行重试在途。当前收敛整条用户路径，不再开启新功能或逐小视觉问题重包。",
+          "currentCheckpoint": "完整105/139系统接收—保存/失效重试/取消—备份恢复—清除—重开已实装、打包及私有回读一致；同批103真实清单短读占用故障已在105修复并实际界面复验。当前转原premium_ui整页阅读/AI入口/材料/备注视觉收敛，原数据和模型/实体/服务/Owner门保留。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "ownerCoreAcceptanceCandidate20261109.documentContext20261110.systemInbound20261111",
+          "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
-          "lastOutcome": "WINDOWS099_ANDROID136_HUMAN_FOLLOWUP_LITERAL_EVIDENCE_COMPLETE_BATCH_DELIVERED",
+          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
             "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
@@ -268812,7 +268871,7 @@
             {
               "block": "非模型软件完整性",
               "state": "OPEN",
-              "facts": "099/136已完整交付人工跟进/持久引用及此前录音编辑/文档/图文/分类/导出/设置；其它App分享接收入库明确未实现，原AI表样/跨端/第三方服务条款仍按实际范围开放。",
+              "facts": "105/139系统文件与其它App分享接收、原件/权限重试/取消/清除/重开已实装完整打包；前批编辑、文档/图文/分类/导出/设置保留。整体高级感和AI工作区用途仍待整批视觉完善；账号跨端/团队/第三方正式服务沿原范围开放。",
               "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。"
             },
             {
@@ -269399,7 +269458,7 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-10T09:18:50+08:00",
-            "state": "ANDROID121_PLAYBACK_CORRECTION_SETTINGS_AND_PUBLIC_BACKUP_LIFECYCLE_DELIVERED",
+            "state": "MEETING_DETAIL_VISUAL_BATCH_SOURCE_REVIEW",
             "ownerQuote": "快点把它搞完，然后搞得只剩下模型",
             "userOutcome": "手机可按原音位置续听、倍速回听和前后跳转，发现重复错词后批量修正当前草稿并沿原保存机制保留首次原文。",
             "existingTask": "CP27-01/playback",
@@ -269516,7 +269575,7 @@
               "Model quality and complex overlapping speakers were not improved or retested.",
               "No new customer or real buyer trial; owner acceptance remains pending."
             ],
-            "next": "121已交付范围保留；后续沿ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110接续。",
+            "next": "Inspect the complete actual detail/header/content/notes/materials/AI panes in the retained105/139 baseline, batch related presentation changes, then one matching dual-client build/actual screenshots and neutral complete-purpose experience. No new model capability or per-card delivery.",
             "allNonmodelComplete": false,
             "nativePhoneResults": {
               "playbackCorrection": {
@@ -269697,6 +269756,38 @@
                 "USB powered: true",
                 "Wireless powered: false"
               ]
+            },
+            "previousBatchBeforeVisualFinish": {
+              "state": "ANDROID121_PLAYBACK_CORRECTION_SETTINGS_AND_PUBLIC_BACKUP_LIFECYCLE_DELIVERED",
+              "next": "121已交付范围保留；后续沿ownerCoreAcceptanceCandidate20261109.activeAndroidMediaImport20261110接续。"
+            },
+            "userResult": "打开会议后先看清内容和状态，纪要、转写、材料、人工补充与AI入口层级清楚，深浅色和长文阅读一致；保留原始内容、来源与未保存草稿。",
+            "originalItems": [
+              "CP27-01/premium_ui",
+              "CP27-01/notes_images",
+              "CP27-03/import"
+            ],
+            "baselineReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+            "wholeVisualQualified": false,
+            "currentVisualBatch": {
+              "at": "2026-11-11T12:29:42+08:00",
+              "sourceWorkspaces": {
+                "windows": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+                "android": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109"
+              },
+              "wholePageCriteria": [
+                "Content identity and status stay visible with primary reading actions.",
+                "Single hierarchy for notes and follow-up; compact reference cards keep full literal source accessible.",
+                "Notes/documents/AI visible entry has clear purpose; pane changes retain drafts.",
+                "Actual light/dark screenshots at desktop and phone sizes, long content and keyboard/readable controls; source/backend unchanged.",
+                "Complete actual user purpose, save/reopen/source return and new neutral experience after the coherent batch; no synthetic model-quality claim."
+              ],
+              "retainedFeedback": [
+                "customer-edit136 complete raw",
+                "executionReview20261111 actual136 screenshots/repeated headings and giant sole reference",
+                "reader133/134 complete density and source-navigation feedback"
+              ],
+              "productSourceModifiedYet": false
             }
           },
           "latestSharedFirmwareWorkpoint20261110": {
@@ -269946,7 +270037,7 @@
               "原WIP Windows实现沿图片把文档挂音频；代码复查识别音频单独清理会牵连文档的设计风险，未在Owner资料上执行。改独立受管会议材料归属根并补音频独立清理、无音频材料备份及旧窗口元数据防覆盖测试。"
             ],
             "appDelivered": true,
-            "next": "systemInbound20261111",
+            "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
             "ownerPrivateDataUploaded": false,
             "modelsRun": false,
             "saleQualified": false,
@@ -270070,8 +270161,8 @@
             "windows088RuntimeQualified": true,
             "windows088NativeRuntimeRun": 42816055543,
             "windowsCandidateNotInstalled": true,
-            "actualInstalledWindows": "0.1.98",
-            "actualInstalledWindowsSource": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
+            "actualInstalledWindows": "0.1.105",
+            "actualInstalledWindowsSource": "91d246be5871c62410daa62ede57139652b259c6",
             "sharedInstalledReceiptConsumed": {
               "at": "2026-11-10T20:34:58+08:00",
               "state": "DOCUMENT_WINDOWS088_INSTALLATION_SAFELY_REFUSED_NEWER_DIFFERENT_LINEAGE089_ALREADY_INSTALLED",
@@ -270632,14 +270723,14 @@
               }
             },
             "currentDeliveredVersions": {
-              "windows": "0.1.98",
-              "android": "0.1.134"
+              "windows": "0.1.105",
+              "android": "0.1.139"
             },
             "currentDeliveredSource": {
               "windows": "1ccf527e4638cc759d30d48a13fbacf7732fc2c5",
               "android": "e8ffdd520e2aa6ac7484157a0a0c01b1abdbbc9b"
             },
-            "latestReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\reference-workspace-delivered-result.json",
+            "latestReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
             "readerPresentationNext20261111": {
               "at": "2026-11-11T04:48:13+08:00",
               "state": "WINDOWS097_ANDROID133_RECENT_NOTES_AND_DOCUMENT_READING_DELIVERED_PRIVATE_FULL_READBACK_IDENTICAL",
@@ -271207,7 +271298,7 @@
             },
             "systemInbound20261111": {
               "at": "2026-11-11T10:49:26+08:00",
-              "state": "ANDROID139_ACTUAL_INCOMING_CORE_PASSED_SESSION_CLOSE_PENDING_WINDOWS105_COMBINED_SOURCE_FROZEN",
+              "state": "WINDOWS105_ANDROID139_INCOMING_LIFECYCLE_COMPLETE_INSTALLED_PACKAGED_AND_PRIVATE_READBACK_PASSED",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271248,9 +271339,9 @@
               ],
               "windowsVersion": "0.1.105",
               "androidVersion": "0.1.139",
-              "appDelivered": false,
-              "phoneQualified": false,
-              "windowsNativeQualified": false,
+              "appDelivered": true,
+              "phoneQualified": true,
+              "windowsNativeQualified": true,
               "builds": {
                 "windows": {
                   "source": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
@@ -271283,7 +271374,7 @@
                   "dependency": "Named phone absent and adb devices inventory empty on actual check; continue Windows/offline work without repeated Owner prompts."
                 }
               },
-              "nativeRuntimeQualified": "WINDOWS100_BASELINE_AND_PARTIAL_PHONE138",
+              "nativeRuntimeQualified": "WINDOWS105_AND_ANDROID139_DECLARED_INCOMING_LIFECYCLE_PASSED",
               "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json",
               "packageBuild": {
                 "source": "2c9fc4419f3e28177cca0bfc73217897d09b5caa",
@@ -271299,11 +271390,7 @@
                 "installed": false,
                 "ordinaryRuntimeQualified": true
               },
-              "remainingBeforeDelivery": [
-                "Qualify139 service per-receipt terminal result durability and actual source expiry/retry; finish exact original hashes, phone scoped purge/backup/restart and close own public session.",
-                "Windows102 exact MSI download/license/upgrade/source inspection and ordinary same-binary runtime next; never replace native source with packaging or verifier source.",
-                "After complete matching clients, update full candidate archive and ordinary new customer experience; all original model/hardware/service/Owner gates remain separate."
-              ],
+              "remainingBeforeDelivery": [],
               "runtime": {
                 "run": 42942987331,
                 "source": "6bbe86914c0c1b5ac75f08af52eac50d5f96ab3e",
@@ -271383,8 +271470,190 @@
                 "includes103": "e331a366593cab022807779d1343e6b7a85b6c67",
                 "scope": "Incoming lifecycle repair plus latest card-first UI and strictly-local auto-processing only for new card originals. Prior manual recordings and models preserved.",
                 "modelsRun": false,
-                "installed": false
-              }
+                "installed": true,
+                "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                "buildRun": 42956984021,
+                "buildPassed": true,
+                "payloadVerified": true,
+                "msiSha256": "593ceb363c9b360cfb2727d2137554eb29bf286837cce55d56d44f28208f01d0",
+                "installerAsset": 734110559,
+                "privateReadbackIdentical": true,
+                "runtimeSource": "afefd2a91abac831d316ff57e278482b2947830b",
+                "runtimeRun": 42959012783,
+                "runtimeQualified": true,
+                "installedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows105\\installation.json"
+              },
+              "androidActualCorePassed": true,
+              "androidSessionClosed": true,
+              "androidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android139\\end-session.json",
+              "deliveryExecution": {
+                "userResult": "外部音频、文档和图片经系统入口进入会议库；保存、重试、取消、备份恢复、删除和重开完整可用，双端候选集中安装打包并远端保存。",
+                "evidenceRoot": "docs/handoffs/20261110-android-media-import",
+                "logDirectory": "windows105",
+                "steps": [
+                  {
+                    "id": "windows-native-build",
+                    "job": {
+                      "freeze": "windows105/source-freeze.json",
+                      "runField": "buildRun",
+                      "prepare": "Freeze one matched complete source and record its existing normal native build; never dispatch a duplicate from observation timeout."
+                    }
+                  },
+                  {
+                    "id": "windows-payload-inspection",
+                    "receipt": "windows105/windows-verification.json",
+                    "equals": {
+                      "state": "WINDOWS105_CI_SOURCE_MSI_PAYLOAD_LICENSES_AND_UPGRADE_VERIFIED",
+                      "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                      "version": "0.1.105"
+                    },
+                    "binary": {
+                      "pathField": "msi",
+                      "shaField": "msiSha256"
+                    },
+                    "command": [
+                      "inspect_windows_candidate.py",
+                      "105"
+                    ]
+                  },
+                  {
+                    "id": "windows-private-preservation",
+                    "receipt": "windows105/remote-candidate-backup.json",
+                    "equals": {
+                      "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                      "readbackByteIdentical": true
+                    },
+                    "command": [
+                      "run_preserve_incoming.py",
+                      "windows105"
+                    ]
+                  },
+                  {
+                    "id": "windows-actual-runtime",
+                    "job": {
+                      "freeze": "windows105/runtime-source-freeze.json",
+                      "runField": "runtimeRun",
+                      "prepare": "Commit the inspected105 runtime spec and verifier once with [core-documents]; save the exact verifier source/run in windows105/runtime-source-freeze.json, then resume this same batch."
+                    },
+                    "receipt": "windows105/runtime-result.json",
+                    "equals": {
+                      "state": "WINDOWS105_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED",
+                      "appSourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                      "frozenNativeBytesMatchedApprovedMsi": true
+                    },
+                    "command": [
+                      "download_windows_runtime.py",
+                      "105",
+                      {
+                        "receipt": "windows105/runtime-source-freeze.json",
+                        "field": "runtimeRun"
+                      },
+                      "documents"
+                    ]
+                  },
+                  {
+                    "id": "android-actual-runtime-and-close",
+                    "receipt": "android139/end-session.json",
+                    "equals": {
+                      "state": "ANDROID139_ACTUAL_INCOMING_LIFECYCLE_SESSION_CLOSED_OLD_CONTENT_PRESERVED",
+                      "actualVersion": "0.1.139",
+                      "onlyOldChangeLibraryIndex": true,
+                      "allPreviousLibrariesRetained": true,
+                      "ownedAppDisplayForwardJarClosed": true
+                    },
+                    "command": [
+                      "incoming139_close.py"
+                    ]
+                  },
+                  {
+                    "id": "windows-quiet-upgrade",
+                    "receipt": "windows105/installation.json",
+                    "equals": {
+                      "state": "WINDOWS105_INSTALLED_EXISTING_DATA_IDENTICAL",
+                      "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+                      "dataManifestIdentical": true
+                    },
+                    "command": [
+                      "install_windows_candidate.py",
+                      "105"
+                    ]
+                  },
+                  {
+                    "id": "complete-private-package",
+                    "receipt": "incoming-lifecycle-packaged-candidate.json",
+                    "equals": {
+                      "state": "INCOMING_LIFECYCLE_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+                      "readbackByteIdentical": true,
+                      "saleQualified": false
+                    },
+                    "binary": {
+                      "pathField": "package",
+                      "shaField": "sha256"
+                    },
+                    "command": [
+                      "run_incoming_package.py"
+                    ]
+                  }
+                ],
+                "afterDelivery": "Update the existing task and single timeline with the whole actual result, then start the original whole meeting-detail visual batch. No new feature/native build or repeated customer buying question to substitute for this closure.",
+                "sourceOfMethod": "C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow/docs/customer_engineering_workflow.md#9",
+                "scopeBoundary": "Engineering execution only; no new approval gate, task tree, automatic product rebuild, model/hardware/Owner operation or sale qualification."
+              },
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
+              "package": {
+                "at": "2026-11-11T12:27:04+08:00",
+                "state": "INCOMING_LIFECYCLE_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+                "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows105-android139.zip",
+                "bytes": 44567129,
+                "sha256": "0e39b1ea62f6f9559f66a604f58036234caf237cf46c8ac11a2f8d1362296748",
+                "files": [
+                  {
+                    "path": "firmware/companion-update.cup",
+                    "bytes": 1360220,
+                    "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+                  },
+                  {
+                    "path": "firmware/ota_manifest.json",
+                    "bytes": 1548,
+                    "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+                  },
+                  {
+                    "path": "macos/CompanionMac-candidate.zip",
+                    "bytes": 736161,
+                    "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+                  },
+                  {
+                    "path": "windows/Companion-Windows-0.1.105.msi",
+                    "bytes": 16839048,
+                    "sha256": "593ceb363c9b360cfb2727d2137554eb29bf286837cce55d56d44f28208f01d0"
+                  },
+                  {
+                    "path": "android/Companion-Android-0.1.139.apk",
+                    "bytes": 51188509,
+                    "sha256": "d06ad7ba0bf3aba345795203401aa03a7a78466b516d0126909dd8deb70b50aa"
+                  }
+                ],
+                "draftOnly": true,
+                "saleQualified": false,
+                "ownerPrivateDataUploaded": false,
+                "assetId": 734119753,
+                "readback": {
+                  "method": "four-bounded-official-CDN-range-readers",
+                  "workers": 4,
+                  "sections": 11,
+                  "bufferBytesPerWorker": 131072,
+                  "bytes": 44567129,
+                  "sha256": "0e39b1ea62f6f9559f66a604f58036234caf237cf46c8ac11a2f8d1362296748",
+                  "seconds": 3.2809999999881256,
+                  "retainedTransientReads": [],
+                  "authSentOnlyToGitHubApi": true,
+                  "signedUrlOrTokenPersisted": false,
+                  "routingModified": false
+                },
+                "finishedAt": "2026-11-11T12:27:27+08:00",
+                "readbackByteIdentical": true
+              },
+              "customerReview": "Previous136 raw feedback retained. No unchanged-purpose repeat customer round; current whole visual batch follows the same original premium_ui/notes/import feedback, then new neutral presale and hypothetical after-use experience."
             }
           },
           "completeDocumentCandidateArchive20261110": {
@@ -271785,6 +272054,23 @@
                 "incomingReceiptsStillPublicCase": true,
                 "next": "139 same-URI expiry/regrant/retry, durable cancel/bad reason, original hashes, scoped purge, ordinary dismissal and original-library/session return. Use built-in Files, not blocked QA source app or shell URI delegation."
               }
+            },
+            "ownerWorkflowCorrection": "那需要重新打磨一下你的工作流才行",
+            "appliedCorrection": "Keep existing CEW9 method; replace manual scattered stage selection with a resumable receipt-driven entry in the current original task. Reuse successful stages, fresh-observe exact CI handles, preserve mismatched/failed evidence and continue complete delivery before next product build. Workflow change itself is not product progress.",
+            "currentExecutionEntry": "companion-device-closure055/tools/qa/core_acceptance20261109/resume_delivery.py",
+            "workflowResult20261111": {
+              "at": "2026-11-11T12:25:28+08:00",
+              "source": "eeaed11af8c1d2ef47725d1c1c8841395ce18052",
+              "entry": "tools/qa/core_acceptance20261109/resume_delivery.py",
+              "regressionsPassed": 8,
+              "actuallyResumedStages": [
+                "windows-payload-inspection",
+                "windows-private-preservation"
+              ],
+              "sameNativeBuild": 42956984021,
+              "nextExactRuntime": 42959012783,
+              "newProductBuildForWorkflowChange": false,
+              "workflowEfficiencyProvenForWholeBatch": false
             }
           }
         }
@@ -277127,8 +277413,8 @@
       "separateChat": "用户要求专门新开会话继续前端设计；本条继承原待办，不创建平行任务。"
     },
     "sharedWindowsIntegration20261110": {
-      "at": "2026-11-11T10:55:16+08:00",
-      "state": "UNIFIED099_MANUAL_FOLLOWUP_SOURCE_CONTEXT_RUNTIME_UPGRADE_AND_PRIVATE_PACKAGE_PASSED",
+      "at": "2026-11-11T12:29:42+08:00",
+      "state": "UNIFIED105_ANDROID139_INCOMING_CORE_INSTALLED_COMPLETE_PRIVATE_PACKAGE_PASSED",
       "reservedVersion": "0.1.105",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
@@ -277137,41 +277423,41 @@
         "753800da8f500440e9f753dece3d1f6b02578252"
       ],
       "verifiedDocumentRuntime": 42924060870,
-      "installedSourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows099\\installation.json",
+      "installedSourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows105\\installation.json",
       "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
-      "canonicalWorkpoint": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.documentContext20261110",
+      "canonicalWorkpoint": "owner_module_execution.embedded.physicalCardUsability20261111",
       "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json",
-      "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
-      "normalBuildRun": 42919920321,
+      "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+      "normalBuildRun": 42956984021,
       "installedFalseUntilActualUpgrade": false,
       "installation": {
-        "state": "WINDOWS099_INSTALLED_EXISTING_DATA_IDENTICAL",
-        "startedAt": "2026-11-11T07:37:20+08:00",
-        "candidateVersion": "0.1.99",
-        "previousInstalledVersion": "0.1.98",
-        "sourceCommit": "a6af8b35f424d21f50165ae6b2859e6d5908b67c",
-        "msiSha256": "2bfb3a94bdb5aad5f1e37cf52ac3022be8eada898d6c79b0cb6205340464a3ed",
+        "state": "WINDOWS105_INSTALLED_EXISTING_DATA_IDENTICAL",
+        "startedAt": "2026-11-11T12:26:58+08:00",
+        "candidateVersion": "0.1.105",
+        "previousInstalledVersion": "0.1.104",
+        "sourceCommit": "91d246be5871c62410daa62ede57139652b259c6",
+        "msiSha256": "593ceb363c9b360cfb2727d2137554eb29bf286837cce55d56d44f28208f01d0",
         "existingDataFiles": 245,
         "dataContentsPrinted": false,
         "installerExitCode": 0,
-        "finishedAt": "2026-11-11T07:37:24+08:00",
+        "finishedAt": "2026-11-11T12:27:02+08:00",
         "dataManifestIdentical": true,
-        "installedVersion": "0.1.99",
-        "installedExeSha256": "776a2307f60e416226902e76bc3b43c8305259a7b9714906ed1f5c46141d96dc",
-        "installedDllSha256": "eece9209034606bc51c90768bc8073c09fbebd35a2be9ea5e2094abd82655509",
+        "installedVersion": "0.1.105",
+        "installedExeSha256": "fa356a89df88f41ec5a0ad6d7d9489adf3148f55aeb5cc2cc4d009a4f34b0527",
+        "installedDllSha256": "bea0d5dfac98d95d507cb5b9755e8642cdba39a38db25d067cc490ce049599e3",
         "installedHelpStartupPassed": true,
         "ordinaryThirdPartyPasteQualified": false,
         "oldWinRTSharePickerFixed": false,
         "modelsRun": false,
         "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
       },
-      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-delivered-result.json",
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\incoming-lifecycle-delivered-result.json",
       "package": {
-        "at": "2026-11-11T07:37:41+08:00",
-        "state": "MANUAL_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
-        "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows099-android136.zip",
-        "bytes": 45059447,
-        "sha256": "53912fcc1d5489ffa5a27dfaf82543d76b9e4fba57bbb1153a110196821f8a1f",
+        "at": "2026-11-11T12:27:04+08:00",
+        "state": "INCOMING_LIFECYCLE_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+        "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows105-android139.zip",
+        "bytes": 44567129,
+        "sha256": "0e39b1ea62f6f9559f66a604f58036234caf237cf46c8ac11a2f8d1362296748",
         "files": [
           {
             "path": "firmware/companion-update.cup",
@@ -277189,37 +277475,37 @@
             "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
           },
           {
-            "path": "windows/Companion-Windows-0.1.99.msi",
-            "bytes": 16744660,
-            "sha256": "2bfb3a94bdb5aad5f1e37cf52ac3022be8eada898d6c79b0cb6205340464a3ed"
+            "path": "windows/Companion-Windows-0.1.105.msi",
+            "bytes": 16839048,
+            "sha256": "593ceb363c9b360cfb2727d2137554eb29bf286837cce55d56d44f28208f01d0"
           },
           {
-            "path": "android/Companion-Android-0.1.136.apk",
-            "bytes": 51168029,
-            "sha256": "2f0dfea9cbd5eca3ab6c13c6395330dc7064181a55ae87c2b214ef487329d61a"
+            "path": "android/Companion-Android-0.1.139.apk",
+            "bytes": 51188509,
+            "sha256": "d06ad7ba0bf3aba345795203401aa03a7a78466b516d0126909dd8deb70b50aa"
           }
         ],
         "draftOnly": true,
         "saleQualified": false,
         "ownerPrivateDataUploaded": false,
-        "assetId": 733384280,
+        "assetId": 734119753,
         "readback": {
           "method": "four-bounded-official-CDN-range-readers",
           "workers": 4,
           "sections": 11,
           "bufferBytesPerWorker": 131072,
-          "bytes": 45059447,
-          "sha256": "53912fcc1d5489ffa5a27dfaf82543d76b9e4fba57bbb1153a110196821f8a1f",
-          "seconds": 7.469000000011874,
+          "bytes": 44567129,
+          "sha256": "0e39b1ea62f6f9559f66a604f58036234caf237cf46c8ac11a2f8d1362296748",
+          "seconds": 3.2809999999881256,
           "retainedTransientReads": [],
           "authSentOnlyToGitHubApi": true,
           "signedUrlOrTokenPersisted": false,
           "routingModified": false
         },
-        "finishedAt": "2026-11-11T07:38:03+08:00",
+        "finishedAt": "2026-11-11T12:27:27+08:00",
         "readbackByteIdentical": true
       },
-      "next": "documentContext20261110.systemInbound20261111",
+      "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
       "pendingAudioEditingWorkpoint": "groups/CP27-16/nonDestructiveSourceMapping20261110",
       "pendingAudioEditingVersionReservation": null,
       "pendingAudioEditingBranch": "work/device-phone-closure055-20261106",
@@ -277244,9 +277530,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": "0.1.105",
-      "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
-      "pendingUnifiedReason": "Combine frozen104 physical-card-first/local-only first-use source16c2738d with103 real incoming snapshot publication repairfd993882; retain verified102 and all final51 product connection repairs. One complete105 normal native build before final incoming acceptance.",
+      "pendingUnifiedVersion": null,
+      "pendingUnifiedBranch": "work/recorder-core-integration-20261110",
+      "pendingUnifiedReason": "Actual installed104 retains cf0a496d latest102/103 source and final101/51acd7d9 product connection repair, adds local card-to-text and in-app guidance. Prior103 reference preserved inside recorderUsability104Pending; do not downgrade to it.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
@@ -277262,8 +277548,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "cf0a496d47fd50f72ce3128d0b0e1ed6b7929860",
-      "pendingUnifiedBuildRun": 42944779484,
+      "pendingUnifiedSource": null,
+      "pendingUnifiedBuildRun": null,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00",
       "recorderConnection101Pending": {
         "at": "2026-11-11T11:00:11+08:00",
@@ -277343,20 +277629,42 @@
         "saleQualified": false
       },
       "recorderUsability104Pending": {
-        "state": "SOURCE_PUSHED_LOCAL_CHECKS_PASS_NORMAL_MSI_BUILD_RUNNING",
+        "state": "WINDOWS104_INSTALLED_LOCAL_CARD_TEXT_GUIDE_SOFTWARE_RUNTIME_PASSED",
         "version": "0.1.104",
         "branch": "work/recorder-core-integration-20261110",
         "base": "8c35f17a",
         "scope": "New card originals receive automatic local-only transcription and meaningful titles; existing manual choice remains; software on-boarding and functional guide cover real features. No new firmware or Owner recording during development.",
         "originalOwnerRequest": "按这个方向做，软件内补使用说明，容易入门，不漏功能，让买前有吸引力、买后愿意继续用",
         "previous103BuildPreserved": true,
-        "installed": false,
+        "installed": true,
         "sourceCommit": "16c2738d22d236c2223c979953e3cd0d33f06793",
         "buildRun": 42955392350,
-        "localNativePass": 74,
         "localUiScopesPassed": 6,
-        "supersededBeforeInstall": 42954667339
-      }
+        "supersededBeforeInstall": 42954667339,
+        "previousPending103": {
+          "pendingUnifiedVersion": "0.1.105",
+          "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
+          "pendingUnifiedSource": "91d246be5871c62410daa62ede57139652b259c6",
+          "pendingUnifiedBuildRun": 42956984021,
+          "pendingUnifiedReason": "Combine frozen104 physical-card-first/local-only first-use source16c2738d with103 real incoming snapshot publication repairfd993882; retain verified102 and all final51 product connection repairs. One complete105 normal native build before final incoming acceptance."
+        },
+        "at": "2026-11-11T12:15:45+08:00",
+        "normalMsiVerified": true,
+        "automaticLocalWorkerReplayPassed": true,
+        "resultEntryRendered": true,
+        "restartRetained": true,
+        "existingDataIdentical": true,
+        "fullPhysicalAutomaticWorkflowQualified": false,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\card-to-text104-delivery.json",
+        "consumedByUnified105": {
+          "source": "91d246be5871c62410daa62ede57139652b259c6",
+          "version": "0.1.105",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows105\\installation.json",
+          "all104SourcePreserved": true,
+          "physicalAutomaticAsrScopeUnchanged": true
+        }
+      },
+      "pendingUnifiedDeliveryState": "INSTALLED104_INCORPORATES_PRIOR103_SOURCE"
     }
   }
 }

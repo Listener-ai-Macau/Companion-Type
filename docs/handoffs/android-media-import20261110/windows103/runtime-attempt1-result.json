@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-11T03:43:54.467506+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "ec6999725b8a4025faf6f34777f088a24aef6699",
+  "appSourceCommit": "e331a366593cab022807779d1343e6b7a85b6c67",
+  "appVersion": "0.1.103",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "16ebdf24e1be29e9bce6fc6225b118bcd421d74b2ac6b3eb98998448f6e0fd5e",
+  "exactMsiDllSha256": "83871e1f08a4f6a4d5c07358e65eebe7f7fd3e24e37ca009cd8def15d337f834",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED",
+  "documentBackendExitCode": 0,
+  "documentBackendState": "ACTUAL_PACKAGED_DOCUMENT_CONTEXT_BACKUP_RESTORE_TRASH_AND_EXACT_PURGE_PASSED",
+  "incomingNativeExitCode": 1,
+  "incomingNativeState": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "incomingCase": "454b34c71f7e40d8bf77221f25f9b10f",
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-11T03:45:40.511850+00:00"
+}

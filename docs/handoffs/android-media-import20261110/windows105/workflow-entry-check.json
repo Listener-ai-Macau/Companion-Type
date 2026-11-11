@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-11T12:22:08+08:00",
+  "source": "tools/qa/core_acceptance20261109/resume_delivery.py",
+  "regressionsPassed": 8,
+  "actualReadOnlyEntry": {
+    "userResult": "外部音频、文档和图片经系统入口进入会议库；保存、重试、取消、备份恢复、删除和重开完整可用，双端候选集中安装打包并远端保存。",
+    "kind": "READY",
+    "step": "windows-payload-inspection",
+    "command": [
+      "inspect_windows_candidate.py",
+      "105"
+    ],
+    "passed": [
+      "windows-native-build"
+    ]
+  },
+  "newProductBuildsStartedByWorkflowChange": 0,
+  "productFeatureProgressClaimed": false
+}

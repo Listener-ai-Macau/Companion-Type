@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 349, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 317, in main
+    assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+                                                                                                                                                                 ^^^^^^^^^^^^^
+AssertionError: Error: Scoped dismissal did not finish
+    at poll (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_incoming_ui.cjs:11:150)
+    at async incomingJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_incoming_ui.cjs:35:76)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:24:17
+

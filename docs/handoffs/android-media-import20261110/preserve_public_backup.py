@@ -2,9 +2,11 @@ from pathlib import Path
 from datetime import datetime
 import subprocess,json,hashlib
 import sys
-code=int(sys.argv[1]) if len(sys.argv)>1 else 123;assert code in [123,124,125]
-C=Path(__file__).parent;P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('phone125' if code==125 else 'phone124' if code==124 else 'phone122');file=P/('Companion-public-organization125.zip' if code==125 else 'Companion-public-notes-backup124.zip' if code==124 else 'Companion-public-import-backup-123.zip');digest=hashlib.sha256(file.read_bytes()).hexdigest()
-if code==125:
+code=int(sys.argv[1]) if len(sys.argv)>1 else 123;assert code in [123,124,125,139]
+C=Path(__file__).parent;P=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110')/('phone138' if code==139 else 'phone125' if code==125 else 'phone124' if code==124 else 'phone122');file=P/('Companion-public-incoming139-backup.zip' if code==139 else 'Companion-public-organization125.zip' if code==125 else 'Companion-public-notes-backup124.zip' if code==124 else 'Companion-public-import-backup-123.zip');digest=hashlib.sha256(file.read_bytes()).hexdigest()
+if code==139:
+ proof=json.loads((C/'android139/incoming-backup-readback.json').read_text());assert digest==proof['backupSha256'] and proof['contentFiles']==63 and proof['threeIncomingOriginalHashesMatchedTheirOwners']
+elif code==125:
  proof=json.loads((C/'android125/backup-content.json').read_text());assert digest==proof['backupSha256'] and not proof['ownerPrivateDataIncluded']
 elif code==124:
  proof=json.loads((C/'android124/saved-artifacts.json').read_text());assert digest==next(x['sha256'] for x in proof['files'] if x['name']==file.name)
