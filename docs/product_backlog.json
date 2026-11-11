@@ -269788,7 +269788,7 @@
               "Model quality and complex overlapping speakers were not improved or retested.",
               "No new customer or real buyer trial; owner acceptance remains pending."
             ],
-            "next": "First inspect existing selected-note export/copy/share contracts and UI in the delivered108/141 baseline. Complete one coherent selected-manual-note handoff result, including literal evidence scope and readable long-item editor, without starting another model or per-label build. Preserve full141 feedback and all prior functionality.",
+            "next": "Reuse existing ContentExportPanel noteIds and Windows native note_ids; inspect Android adapter next. Complete one coherent per-note handoff entry/preview/save/copy/share with original revision/privacy guards, plus readable long-item editing; no new export backend or per-label package. Preserve141 complete feedback and108/141 delivered baseline.",
             "allNonmodelComplete": false,
             "nativePhoneResults": {
               "playbackCorrection": {
@@ -270029,7 +270029,7 @@
                   "equals": {
                     "state": "SELECTED_MANUAL_NOTE_HANDOFF_SOURCE_COMPLETE"
                   },
-                  "prepare": "First inspect existing selected-note export/copy/share contracts and UI in the delivered108/141 baseline. Complete one coherent selected-manual-note handoff result, including literal evidence scope and readable long-item editor, without starting another model or per-label build. Preserve full141 feedback and all prior functionality."
+                  "prepare": "Reuse existing ContentExportPanel noteIds and Windows native note_ids; inspect Android adapter next. Complete one coherent per-note handoff entry/preview/save/copy/share with original revision/privacy guards, plus readable long-item editing; no new export backend or per-label package. Preserve141 complete feedback and108/141 delivered baseline."
                 }
               ],
               "afterDelivery": "Build/verify matched candidates as one whole result, preserve user data, whole package and private remote readback; original broad scope and sale gates remain."
@@ -270501,7 +270501,13 @@
                 "引用附到整条清单的发现性/当页示例；逐事项引用仍是愿望",
                 "长行在编辑时横向截断，可在同批改善换行；保存后的全文已可读"
               ],
-              "decision": "Finish current108141 reviewed batch first; no new native package or customer for each small wish."
+              "decision": "Finish current108141 reviewed batch first; no new native package or customer for each small wish.",
+              "initialSourceFinding": {
+                "windowsBackend": "apps/windows/src-tauri/src/backend/content_export.rs already accepts exact note_ids; existing tests cover selected material, duplicate/missing selection rejection and no unrelated inclusion.",
+                "sharedUi": "packages/ui/src/ContentExportPanel.tsx already exposes noteIds under collapsed 材料与补充.",
+                "decision": "Reuse existing exact selection and original export/clipboard/share adapters; improve entry and clear per-note intent, not create a second export backend or infer missing capability from one customer's discovery failure.",
+                "android": "Native adapter selection still to inspect; do not assume absence from file-name-filtered search."
+              }
             },
             "completedOrdinaryFollowup108141": {
               "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
