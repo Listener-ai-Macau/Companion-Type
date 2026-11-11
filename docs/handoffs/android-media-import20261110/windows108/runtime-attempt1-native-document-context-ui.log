@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 349, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting.py", line 317, in main
+    assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+                                                                                                                                                                 ^^^^^^^^^^^^^
+AssertionError: locator.inputValue: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('#ct-recording-notes').locator('.ct-notes-list > li').filter({ has: getByRole('button', { name: '\u7f16\u8f91\u5907\u6ce8 07d34752-2eb9-4eb6-8c09-9f02c453a435', exact: true }) }).getByRole('textbox', { name: '\u8ddf\u8fdb\u4e8b\u9879 1', exact: true })[22m
+
+    at manualFollowupJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_manual_context_ui.cjs:23:228)
+    at async documentJourney (D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_document_ui.cjs:87:224)
+    at async D:\a\Companion-Type\Companion-Type\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:27:17 {
+  log: [
+    "  - waiting for locator('#ct-recording-notes').locator('.ct-notes-list > li').filter({ has: getByRole('button', { name: '\u7f16\u8f91\u5907\u6ce8 07d34752-2eb9-4eb6-8c09-9f02c453a435', exact: true }) }).getByRole('textbox', { name: '\u8ddf\u8fdb\u4e8b\u9879 1', exact: true })"
+  ],
+  name: 'TimeoutError'
+}
+

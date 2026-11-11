@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-11T06:46:54.673735+00:00",
+  "state": "WINDOWS_CORE_WORKFLOW_NOT_QUALIFIED_FAILURES_RETAINED",
+  "testSourceCommit": "ea69eb7deca6c02fd40828c24f1b66970d0975ec",
+  "appSourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
+  "appVersion": "0.1.108",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "0b87779bf87b4bcf8bd150688028787ccbb2d765bea362a3c2621313d727ee8b",
+  "exactMsiDllSha256": "d3af0f5954ba1f8d5e7f3312c241a30fca77da0e85c878c676198a36ccec8a9d",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "error": "AssertionError('Native document preparation/UI failed; retained native-document-context-ui.log is the primary failure')",
+  "finishedAt": "2026-11-11T06:48:25.477680+00:00"
+}
