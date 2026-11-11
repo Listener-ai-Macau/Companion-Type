@@ -1,4 +1,4 @@
-import {ContentExportPanel} from './ContentExportPanel';
+import {ContentExportPanel,type ContentExportTarget} from './ContentExportPanel';
 import {ActionReviewTools,useActionReview} from './ActionReviewTools';
 import {savedActionReview} from './actionReview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
@@ -569,6 +569,7 @@ export function CompanionDashboard({
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
+  const [noteExportTarget,setNoteExportTarget]=useState<ContentExportTarget|null>(null);
   const [manualEvidence,setManualEvidence]=useState<ManualEvidenceDraft|undefined>();
   const [documentSource,setDocumentSource]=useState<DocumentSourceRequest|undefined>();
   const [qaQuestion,setQaQuestion]=useState('');
@@ -1154,6 +1155,7 @@ export function CompanionDashboard({
     navigatePage('device', 'ct-workflow');
   };
   const revealMeetingTool = (id:string) => {
+    if(id==='ct-meeting-export')setNoteExportTarget(null);
     if(id==='ct-meeting-qa')setReferenceView('assistant');else if(id==='ct-document-context')setReferenceView('documents');else if(id==='ct-recording-notes'||id==='ct-recording-references')setReferenceView('notes');
     window.requestAnimationFrame(()=>{
       const target=document.getElementById(id);
@@ -2498,6 +2500,7 @@ export function CompanionDashboard({
           </details> : null}
           {hasMinutes||finalTranscript||hasPdfHighlights||selectedSession.meetingNotes?.length?<ContentExportPanel
             key={`${selectedSession.id}:${minutesViewMode}`}
+            target={noteExportTarget?.sessionId===selectedSession.id?noteExportTarget:null} onClearTarget={()=>setNoteExportTarget(null)}
             sessionId={selectedSession.id} meetingMode={minutesViewMode}
             sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
             minutes={hasMinutes} transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
@@ -2700,6 +2703,7 @@ export function CompanionDashboard({
                 contextNoteRevision:selectedSession.noteRevision??0}) : undefined}
             organizeSavedBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||titleDirty
               ||transcriptReviewUnsaved||unimportedTranscriptDraft}
+            onExportNote={onPreviewMeetingExport?noteId=>setNoteExportTarget({requestId:crypto.randomUUID(),sessionId:selectedSession.id,noteId}):undefined}
             onSeek={seekBookmark} onExport={onExportMeeting&&!hasMinutes?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>} documents={documentAdapter&&!readingPreview?<div id="ct-document-context"><DocumentContextPanel key={'documents:'+selectedSession.id} contextId={selectedSession.id} adapter={documentAdapter(selectedSession.id)} busy={controlsBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}} openSource={documentSource} onChanged={onRefresh}/></div>:null} assistant={onAskMeetings&&selectedSession&&(finalTranscript||documentScopes.length>0) ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
               contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}

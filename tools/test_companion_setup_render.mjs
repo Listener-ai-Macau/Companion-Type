@@ -11,7 +11,7 @@ const names=['test_customer_followthrough','test_action_review_tools','test_card
   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
   'test_companion_app_state','test_transcript_bulk_replace','test_companion_pet_navigation','test_companion_result_order','test_windows_device_actions','test_windows_settings_navigation',
-  'test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace'];
+  'test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace'];
 const requested=process.argv.slice(2);
 for(const name of requested)if(!names.includes(name))throw new Error(`Unknown UI contract: ${name}`);
 const cache=path.join(root,'.cache','ui-acceptance');

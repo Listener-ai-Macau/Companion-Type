@@ -1,13 +1,15 @@
+import './selectedNoteHandoff.css';
 import {useEffect,useRef,useState} from 'react';
 import {Download,Copy,Share2} from 'lucide-react';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import type {CompanionMeetingExportRequest} from './CompanionDashboard';
 export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
+export type ContentExportTarget={requestId:string;sessionId:string;noteId:string};
 type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
 const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
 type Preview={contentHash:string;textContent?:string|null};
-type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
+type Props={target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
  onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
  onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
@@ -15,18 +17,28 @@ type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersi
 };
 export function ContentExportPanel(props:Props){
  const [selection,setSelection]=useState<ContentSelection>({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});
+ const panel=useRef<HTMLDetailsElement>(null),appliedTarget=useRef<string|null>(null);
+ const [scopeExpanded,setScopeExpanded]=useState(false);
  const [format,setFormat]=useState<Format>('pdf');
  const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|'fileCopy'|null>(null);
  const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
  const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
  const task=useRef<ReturnType<typeof savedExportPreview<Preview>>|null>(null),active=useRef(false),mounted=useRef(true);
- const choice:ContentSelection={minutes:selection.minutes&&props.minutes,transcript:selection.transcript&&props.transcript,highlights:selection.highlights&&props.highlights,
-   timeline:selection.timeline&&selection.transcript&&props.transcript&&props.timing,noteIds:selection.noteIds.filter(id=>props.notes.some(note=>note.id===id))};
- const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format]);
+ const target=props.target,targetNote=target?.sessionId===props.sessionId?props.notes.find(note=>note.id===target.noteId):undefined;
+ const targetPending=!!target&&appliedTarget.current!==target.requestId;
+ const effective=targetPending?{minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]}:selection;
+ useEffect(()=>{
+   if(!target){if(appliedTarget.current){setSelection({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});setScopeExpanded(false);appliedTarget.current=null;}return;}
+   appliedTarget.current=target.requestId;setSelection({minutes:false,transcript:false,highlights:false,timeline:false,noteIds:targetNote?[targetNote.id]:[]});setFormat('pdf');setScopeExpanded(false);setFeedback(null);setPreview(null);
+   if(panel.current){panel.current.open=true;panel.current.scrollIntoView({block:'start'});}
+ },[target?.requestId,props.sessionId]);
+ const choice:ContentSelection={minutes:effective.minutes&&props.minutes,transcript:effective.transcript&&props.transcript,highlights:effective.highlights&&props.highlights,
+   timeline:effective.timeline&&effective.transcript&&props.transcript&&props.timing,noteIds:effective.noteIds.filter(id=>props.notes.some(note=>note.id===id))};
+ const key=JSON.stringify([props.sessionId,props.meetingMode,props.sourceVersion,choice,format,target?.requestId]);
  const currentKey=useRef(key);currentKey.current=key;
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;task.current?.cancel();};},[]);
  useEffect(()=>()=>{task.current?.cancel();},[key]);
- const any=choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0;
+ const any=(!target||!!targetNote)&&(choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0);
  const dirty=props.unsaved.title||(choice.minutes&&props.unsaved.minutes)||(choice.transcript&&props.unsaved.transcript)||(choice.highlights&&props.unsaved.highlights)||(choice.noteIds.length>0&&props.unsaved.notes);
  const request=():CompanionMeetingExportRequest=>({sessionId:props.sessionId,meetingMode:props.meetingMode,format,contentSections:choice});
  const run=async(action:'preview'|'save'|'copy'|'share'|'folder'|'fileCopy')=>{
@@ -69,10 +81,12 @@ export function ContentExportPanel(props:Props){
  const disabled=props.blocked||phase!==null;
  const setChecked=(name:'minutes'|'transcript'|'highlights'|'timeline',checked:boolean)=>setSelection(old=>({...old,[name]:checked,...(name==='transcript'&&!checked?{timeline:false}:{})}));
  const subtitles=format==='srt';
- return <details id="ct-meeting-export" className="ct-result-tools ct-content-export">
+ return <details ref={panel} id="ct-meeting-export" className="ct-result-tools ct-content-export">
    <summary>导出、复制与分享</summary>
    <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
+   {target&&<div className="ct-note-handoff-scope" role={targetNote?'status':'alert'}>{targetNote?<><strong>{!choice.minutes&&!choice.transcript&&!choice.highlights&&choice.noteIds.length===1&&choice.noteIds[0]===target.noteId?'仅导出这条人工补充':'已调整导出范围'}</strong><p>{targetNote.text.split('\n')[0].replace(/^\s*[-*]\s+\[[ xX]\]\s*/,'')||'图片备注'}</p><small>包含保存的文字、勾选状态和字面依据；原图片可选择图文 ZIP。</small><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setScopeExpanded(value=>!value)}>{scopeExpanded?'收起范围选择':'更改导出范围'}</button></>:<><p>这条补充已变化或移除，请重新选择；尚未导出其它内容。</p><button type="button" className="ct-action" disabled={disabled} onClick={props.onClearTarget}>重新选择内容</button></>}</div>}
    <fieldset disabled={disabled} style={{border:0,padding:0,margin:0}}>
+     <div hidden={!!target&&!scopeExpanded}>
      <div className="ct-button-row" aria-label="导出内容选择">
        <label><input type="checkbox" checked={choice.minutes} disabled={!props.minutes||subtitles} onChange={e=>setChecked('minutes',e.currentTarget.checked)}/>整理结果</label>
        <label><input type="checkbox" checked={choice.transcript} disabled={!props.transcript||subtitles} onChange={e=>setChecked('transcript',e.currentTarget.checked)}/>录音文字</label>
@@ -82,6 +96,7 @@ export function ContentExportPanel(props:Props){
      {props.notes.length>0?<details className="ct-content-materials"><summary>材料与补充（已选 {choice.noteIds.length} / {props.notes.length}）</summary>
        <div style={{display:'grid',gap:8,margin:'10px 0'}}>{props.notes.map(note=>{const title=note.text.split('\n')[0].slice(0,90)||'未命名补充';return <label key={note.id} style={{display:'flex',alignItems:'flex-start',gap:8}}><input type="checkbox" checked={choice.noteIds.includes(note.id)} disabled={subtitles} aria-label={`选择材料：${title}`} onChange={e=>{const checked=e.currentTarget.checked;setSelection(old=>({...old,noteIds:checked?[...old.noteIds,note.id]:old.noteIds.filter(id=>id!==note.id)}));}}/><span>{title}</span></label>;})}</div>
      </details>:null}
+     </div>
      <label>文件格式 <select aria-label="所选内容文件格式" value={format} onChange={e=>{const value=e.currentTarget.value as Format;setFormat(value);if(value==='srt')setSelection({minutes:false,transcript:true,highlights:false,timeline:true,noteIds:[]});}}>
        {formats.map(([value,label])=><option key={value} value={value} disabled={value==='srt'&&!props.exactTiming}>{label}</option>)}
      </select></label>
@@ -108,6 +123,6 @@ export function ContentExportPanel(props:Props){
    {feedback?.key===key?<div aria-label="所选内容操作结果"><p role={feedback.kind==='error'?'alert':'status'} className={feedback.kind==='error'?'ct-step-warn':'ct-step-meta'}>{feedback.text}</p>
      {feedback.manual?<textarea readOnly aria-label="手动复制所选内容" value={feedback.manual} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
    </div>:null}
-   {preview?.key===key?<details className="ct-content-preview"><summary>查看所选正文</summary><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:280,overflow:'auto'}}>{preview.text}</pre></details>:null}
+   {preview?.key===key?<section className="ct-content-preview" aria-label="所选正文预览"><h4>正文预览</h4><pre aria-label="所选内容预览" style={{whiteSpace:'pre-wrap',maxHeight:320,overflow:'auto'}}>{preview.text}</pre></section>:null}
  </details>;
 }

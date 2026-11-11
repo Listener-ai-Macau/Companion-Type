@@ -8,7 +8,7 @@ import {NoteImagePreview} from './NoteImagePreview';
 import type {CompanionBookmarkRequest,CompanionMeetingImageNoteRequest} from '@companion-type/core';
 import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
-import { Pencil, StickyNote, Trash2 } from 'lucide-react';
+import { Pencil, StickyNote, Trash2, Share2 } from 'lucide-react';
 import { CompanionExportFeedback, type CompanionExportFeedbackValue } from './CompanionExportFeedback';
 import { type CompanionMeetingNoteRequest, type CompanionV1HostSession, type CompanionV1Snapshot,
   companionBookmarkAudioPosition, normalizeCompanionNoteText } from '@companion-type/core';
@@ -17,7 +17,7 @@ type Edit = { kind:ManualNoteKind;references:ManualNoteEvidence[];originalKind:M
 type Draft = { kind?:ManualNoteKind;references?:ManualNoteEvidence[];text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
+export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
   incoming?:ManualEvidenceDraft;
   onIncomingConsumed?:()=>void;
   onOpenEvidence?:(noteId:string,reference:ManualNoteEvidence,revision:number)=>Promise<void>;
@@ -36,6 +36,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
   onSave?:(request:CompanionMeetingNoteRequest)=>Promise<CompanionV1Snapshot>;
   onSeek:(sessionId:string,bookmarkId:string,positionMs:number)=>Promise<void>;
   onExport?:(format:'txt'|'json')=>Promise<void>;
+  onExportNote?:(noteId:string)=>void;
   onOrganizeSaved?:()=>void;
   organizeSavedBlocked?:boolean;
   exportFeedback?:CompanionExportFeedbackValue | null;
@@ -180,6 +181,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{
             kind:note.kind??'note',references:note.references??[],originalKind:note.kind??'note',originalReferences:note.references??[],text:note.text,anchor:note.bookmarkId??'',originalText:note.text,originalAnchor:note.bookmarkId??'',revision:session.noteRevision??0,
           }}}))}><Pencil size={13}/>编辑</button>:null}
+          {!edit&&onExportNote?<button type="button" className="ct-action manual-note-handoff" disabled={disabled||dirty} onClick={()=>onExportNote(note.id)}><Share2 size={13}/>{note.kind==='followup'?'导出这张清单':'导出这条补充'}</button>:null}
           <button type="button" className="ct-action" aria-label={`删除备注 ${note.id}`} disabled={disabled} onClick={()=>{if(note.image&&!window.confirm('删除这条人工图片备注？原图会随录音保留至整条录音永久清除。'))return;void save({
             sessionId:session.id,noteId:note.id,expectedRevision:session.noteRevision??0,action:'delete',
           });}}><Trash2 size={13}/>删除</button>

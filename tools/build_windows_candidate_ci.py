@@ -54,7 +54,7 @@ try:
  record['webAssets']=[{'path':p.relative_to(dist).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(dist.rglob('*')) if p.is_file()]
  names=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party','package.json','package-lock.json','tsconfig.base.json']).splitlines()
  record['sourceFiles']=[{'path':name,'sha256':sha(S/name)} for name in names if (S/name).is_file()]
- run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
+ run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
  before_manifest=(N/'Cargo.toml').read_bytes()
  preflight=inspect(T,S,source_dir=S)
  (C/'native-target-preflight.json').write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
