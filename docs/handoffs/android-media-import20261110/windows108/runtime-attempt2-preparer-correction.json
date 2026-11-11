@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-11T14:54:50+08:00",
+  "state": "KNOWN_MULTILINE_QUERY_PREPARER_CORRECTION_BEFORE_REPEATING_SOURCE_PICKER",
+  "run": 42975526153,
+  "testSource": "1fb84e93ad5bf989d6bfad6dc1baf82c5ce43bf3",
+  "observedStatus": "in_progress",
+  "observedConclusion": null,
+  "reason": "The established Windows public fixture contains LF too. Android already showed that a single-line search normalizes LF and breaks literal matching; apply continuous-keyword selection to this verifier as well before an unchanged bad-input repeat.",
+  "productSourceChanged": false,
+  "msiRebuilt": false,
+  "sameMsiSha256": "c09ea165c2fe763246ffb888b52e4a1773e15ac30df6ad54d2dc8f8f57a4fc3c",
+  "explicitCancelReturnCode": 0
+}
