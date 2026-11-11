@@ -7,6 +7,7 @@ mod backend;
 mod cli_fallback;
 mod commands;
 mod document_commands;
+mod incoming_commands;
 mod audio_edit_commands;
 mod content_handoff;
 mod file_clipboard;
@@ -263,6 +264,7 @@ pub fn run() {
         }
         exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
+    let incoming_paths=if args.len()>1&&!args[1].starts_with('-'){args.iter().skip(1).map(std::path::PathBuf::from).collect::<Vec<_>>()}else{Vec::new()};
     let unhandled_option = cli_fallback::unhandled_option(&args);
     if let Some(result) = run_embedded_audio_cli(args) {
         exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
@@ -271,6 +273,17 @@ pub fn run() {
     if unhandled_option {
         eprintln!("Unsupported command-line option; no application or device operation was started.");
         process::exit(2);
+    }
+
+    // Register before any automatic device reconnect. OpenWith deliveries
+    // reach the matching existing library process through its atomic pending
+    // receipt, then this extra launch exits without opening a second device owner.
+    #[cfg(windows)]
+    let _incoming_registration=match incoming_commands::Registration::new(){Ok(value)=>value,Err(error)=>{incoming_commands::error(&error);process::exit(2)}};
+    if !incoming_paths.is_empty(){
+        let cwd=std::env::current_dir().unwrap_or_else(|_|std::path::PathBuf::from("."));
+        if let Err(error)=incoming_commands::receive(incoming_paths,&cwd){incoming_commands::error(&error);process::exit(2);}
+        #[cfg(windows)]if _incoming_registration.existing{process::exit(0);}
     }
 
     // Load ASR / DeepSeek / compress preferences into process env before IPC.
@@ -338,6 +351,7 @@ pub fn run() {
             audio_edit_commands::control_companion_audio_edit,
             document_commands::read_companion_document_context,
             document_commands::import_companion_document,
+            incoming_commands::companion_incoming_files,
             document_commands::save_companion_document_original,
             commands::save_companion_bookmark,
             commands::import_companion_audio,
@@ -421,7 +435,11 @@ pub fn run() {
                 }
             }
 
-            builder.build()?;
+            builder.on_window_event(|event|{
+                if let tauri::WindowEvent::DragDrop(tauri::DragDropEvent::Drop{paths,..})=event{
+                    let paths=paths.clone();std::thread::spawn(move||{let cwd=std::env::current_dir().unwrap_or_else(|_|std::path::PathBuf::from("."));if let Err(error)=incoming_commands::receive(paths,&cwd){incoming_commands::error(&error);}});
+                }
+            }).build()?;
             Ok(())
         })
         .build(tauri::generate_context!())

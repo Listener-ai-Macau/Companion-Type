@@ -137,7 +137,8 @@ pub(super) struct ImportedAudio {pub id:String,pub title:String,pub anchor:PathB
 
 /// Record the selected file as a separate chunk in the existing session schema.
 /// Unlike a new global artifact type, older versions can still read the library.
-pub(super) fn import(input:&Path)->Result<ImportedAudio,String> {
+pub(super) fn import(input:&Path)->Result<ImportedAudio,String> {import_with_id(input,None)}
+pub(super) fn import_with_id(input:&Path,incoming_id:Option<&str>)->Result<ImportedAudio,String> {
     let _guard=ImportGuard::begin()?;
     let ext=input.extension().and_then(|v|v.to_str()).unwrap_or("").to_ascii_lowercase();
     if !["wav","mp3","m4a","mp4","aac","flac","ogg"].contains(&ext.as_str()) {
@@ -147,16 +148,23 @@ pub(super) fn import(input:&Path)->Result<ImportedAudio,String> {
         .chars().filter(|c|!c.is_control()).take(120).collect::<String>();
     let title=if title.trim().is_empty(){"导入录音".into()}else{title};
     let root=super::audio_storage::recording_root()?;
-    let id=format!("import-{}",uuid::Uuid::new_v4().simple());
+    let id=format!("import-{}",match incoming_id {Some(value)=>uuid::Uuid::parse_str(value).map_err(|_|"接收标识无效。")?,None=>uuid::Uuid::new_v4()}.simple());
     let anchor=root.join(format!("{id}.wav"));let original=root.join(format!("{id}.original.{ext}"));
+    for path in [&anchor,&original]{match fs::symlink_metadata(path){
+        Err(e) if e.kind()==std::io::ErrorKind::NotFound=>(),
+        Err(_)=>return Err("无法核对上次接收文件，请保留原件后检查。".into()),
+        Ok(_)=>return Err("上次接收的文件仍保留，但会议保存尚未确认；请先在资料库核对，未找到时移除此待接收项并重新分享。原文件未改变。".into()),
+    }}
     let mut original_created=false;
     let result=(|| {
         let mut src=File::open(input).map_err(|e|format!("无法读取所选音频：{e}"))?;
         let before=src.metadata().map_err(|e|format!("无法读取音频信息：{e}"))?;
+        if before.len()>2*1024*1024*1024 {return Err("单个原文件最多2GB，请先分成较短文件。".into());}
         if !before.is_file() || before.len()==0 {return Err("所选音频为空或不是文件。".into());}
         let mut out=OpenOptions::new().write(true).create_new(true).open(&original).map_err(|e|format!("无法保存音频副本：{e}"))?;
         original_created=true;let mut copied=0u64;let mut block=[0u8;65536];let mut hash=Sha256::new();
         loop { check_cancel()?; let n=src.read(&mut block).map_err(|e|format!("读取音频未完成：{e}"))?;if n==0 {break;}
+            if copied.saturating_add(n as u64)>2*1024*1024*1024{return Err("原文件超过2GB，已停止导入；来源文件未改变。".into());}
             out.write_all(&block[..n]).map_err(|e|format!("复制音频未完成，原文件未改变：{e}"))?;hash.update(&block[..n]);
             copied=copied.checked_add(n as u64).ok_or("音频容量无效。")?; }
         out.flush().and_then(|_|out.sync_all()).map_err(|e|format!("保存音频副本未完成：{e}"))?;drop(out);

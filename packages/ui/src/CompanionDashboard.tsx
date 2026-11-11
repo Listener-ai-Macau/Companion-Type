@@ -231,6 +231,7 @@ export type CompanionMeetingSaveRequest = {
 export interface CompanionDashboardProps {
   renderAudioEditor?:(props:import('./AudioDerivationEditor').AudioEditHostProps)=>ReactNode;
   audioEditNotice?:ReactNode;
+  renderIncomingFiles?:(onOpen:(id:string)=>void)=>ReactNode;
   documentAdapter?:(sessionId:string)=>import('../../document-context/src/storageTypes').DocumentContextAdapter;
   readingPreview?:boolean;
   onAskMeetings?: (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) => Promise<import('@companion-type/core').MeetingQaResult>;
@@ -464,7 +465,7 @@ export function CompanionDashboard({
   onSaveNote,onCheckNoteEvidence,
   onAddImageNote,
   onPreviewNoteImage,
-  documentAdapter,renderAudioEditor,audioEditNotice,
+  documentAdapter,renderAudioEditor,audioEditNotice,renderIncomingFiles,
   onSaveLibraryOrganization,
   onExportLibrary,
   onBackupLibrary,
@@ -1911,6 +1912,7 @@ export function CompanionDashboard({
       }
     }} className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
       {audioEditNotice}
+      {renderIncomingFiles?.(id=>{rememberRecordingOpener();setReferenceView('notes');setOpenSavedRecordingTarget(null);setOpenSavedRecordingId(id);navigatePage('library');onControl({action:'meetingSelectSession',sessionId:id});})}
       {previewWaiting?<div className="ct-status-banner" role="status">
         <p>正在核对已保存的内容，尚未开始保存或复制。</p>
         <button type="button" className="ct-action" onClick={()=>previewTask.current?.cancel()}>取消等待</button>

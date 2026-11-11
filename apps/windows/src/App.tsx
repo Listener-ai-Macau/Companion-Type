@@ -1,3 +1,4 @@
+import {WindowsIncomingFiles} from './WindowsIncomingFiles';
 import {WindowsAudioEditor,WindowsAudioEditNotice} from './WindowsAudioEditing';
 import {operationErrorText} from '../../../packages/ui/src/operationFailure';
 import {transcriptionStoppedMessage,minutesStoppedMessage} from '../../../packages/ui/src/knownOperationErrors';
@@ -314,6 +315,7 @@ export function App() {
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}
       documentAdapter={isTauriRuntime()?companionDocumentAdapter:undefined}
       renderAudioEditor={isTauriRuntime()?props=><WindowsAudioEditor key={props.contextId} {...props}/>:undefined}
+      renderIncomingFiles={isTauriRuntime()?onOpen=><WindowsIncomingFiles busy={busyAction!==null||boardOnlineBusy||hasUnsavedEdits||Boolean(snapshot?.device.recording||snapshot?.meeting.active)} onChanged={()=>void refresh()} onOpen={onOpen}/>:undefined}
       audioEditNotice={isTauriRuntime()?<WindowsAudioEditNotice onChanged={()=>void refresh()}/>:null}
       onCancelMeetingQuestion={isTauriRuntime()?cancelCompanionMeetingQuestion:undefined}
       onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw'), import('../src-tauri/resources/licenses/ShadcnDashboardMIT.txt?raw')]).then(([components, models, template]) => `${components.default}\n\n${models.default}\n\nShadcn Dashboard — https://github.com/shadcndashboard/shadcndashboard\n${template.default}`)}

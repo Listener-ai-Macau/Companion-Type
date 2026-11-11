@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-11T08:03:49+08:00",
+  "results": [
+    {
+      "check": "compile",
+      "exitCode": 0
+    },
+    {
+      "check": "receipt-recovery",
+      "exitCode": 0
+    },
+    {
+      "check": "current-store-compile",
+      "exitCode": 0
+    },
+    {
+      "check": "current-attachment-stores",
+      "exitCode": 0
+    }
+  ],
+  "logs": "E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\incoming-receipts-1794355429994566100",
+  "nativeCandidateBuilt": false,
+  "state": "PASSED",
+  "limits": {
+    "pid": 3772,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 187908096,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

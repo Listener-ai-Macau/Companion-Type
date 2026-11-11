@@ -380,6 +380,9 @@ impl CompanionCoordinator {
         if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}
         self.backend.commit_audio_edit(row,sources,token)
     }
+    pub(crate) fn import_incoming_audio_file(&self,path:&std::path::Path,id:&str)->Result<CompanionV1Snapshot,String>{
+        if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}self.backend.import_incoming_audio_file(path,id)
+    }
     pub fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
         if self.is_shutting_down() {return Err(crate::backend::lifecycle::CLOSING.into());}
         self.backend.import_audio_file(path)
