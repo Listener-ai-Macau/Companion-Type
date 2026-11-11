@@ -1,0 +1,68 @@
+{
+  "scope": "actual affected component behavior, complete target typechecks and source browser only; no native qualification",
+  "results": [
+    {
+      "name": "windows-affected",
+      "exitCode": 0,
+      "seconds": 0.56,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\windows-affected.log"
+    },
+    {
+      "name": "android-affected",
+      "exitCode": 0,
+      "seconds": 0.61,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\android-affected.log"
+    },
+    {
+      "name": "windows-typecheck",
+      "exitCode": 0,
+      "seconds": 9.69,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\windows-typecheck.log"
+    },
+    {
+      "name": "android-typecheck",
+      "exitCode": 0,
+      "seconds": 8.06,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\android-typecheck.log",
+      "correctedAfterRetainedSourceFailure": true
+    },
+    {
+      "name": "actual-source-render",
+      "exitCode": 0,
+      "seconds": 8.36,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\actual-source-render.log"
+    },
+    {
+      "name": "literal-document-source-return",
+      "exitCode": 0,
+      "reusedUnaffectedFrom": "prior completed affected-checks, same document/workspace behavior, no later source change"
+    },
+    {
+      "name": "stable-manual-ai-workspace-drafts",
+      "exitCode": 0,
+      "reusedUnaffectedFrom": "prior completed affected-checks, same document/workspace behavior, no later source change"
+    }
+  ],
+  "limits": {
+    "pid": 24644,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 746287104,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "retainedFailures": [
+    "async quote test initially asserted before SHA callback; fixed to await actual onQuote, same product source",
+    "Copied unrelated desktop component into mobile source initially introduced missing import; restored exact prior desktop file before packaging",
+    "CSS insertion contained literal escape before collapse rule; actual browser caught it, corrected actual stylesheet",
+    "Act action parameter shadowed note kind in added validation; typecheck stopped it, validation now uses actual draft.kind"
+  ]
+}

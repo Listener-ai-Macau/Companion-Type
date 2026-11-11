@@ -1,0 +1,39 @@
+{
+  "state": "CI_UI_AND_FINAL_SOURCE_RENDER_PASSED",
+  "results": [
+    {
+      "name": "windows-ci-ui-preflight",
+      "exitCode": 0,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\windows-ci-ui-preflight.log",
+      "sourceOnly": true
+    },
+    {
+      "name": "android-ci-ui-preflight",
+      "exitCode": 0,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\android-ci-ui-preflight.log",
+      "sourceOnly": true
+    },
+    {
+      "name": "final-source-render",
+      "exitCode": 0,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\final-source-render.log",
+      "sourceOnly": true
+    }
+  ],
+  "limits": {
+    "pid": 21144,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 729927680,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

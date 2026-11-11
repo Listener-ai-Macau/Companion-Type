@@ -1,0 +1,76 @@
+{
+  "at": "2026-11-11T14:24:53+08:00",
+  "state": "COHERENT_ORDINARY_FOLLOWUP_AND_LITERAL_SOURCE_SOURCE_COMPLETE",
+  "userOutcome": "直接建清单和编辑/转换已有编号，不需输入格式语法；直接选取原文依据，展开提示可实际点击。",
+  "versions": {
+    "windows": "0.1.108",
+    "android": "0.1.141"
+  },
+  "nativeSource": [
+    {
+      "workspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+      "baseline": "a4fcfb21ef265c0374b644ea3cb7b11b3b0ad103",
+      "scopes": [
+        "apps/windows/src-tauri/src",
+        "apps/windows/src-tauri/build.rs",
+        "packages/core"
+      ],
+      "trackedSourceUnchanged": true,
+      "newNativeBinaryByteIdentityClaimed": false
+    },
+    {
+      "workspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+      "baseline": "349d63e1cebfb80e6e86d404fd256ff8dd121f6e",
+      "scopes": [
+        "apps/android/app/src/main/java",
+        "apps/android/app/src/main/AndroidManifest.xml",
+        "apps/android/app/libs",
+        "apps/android/app/src/main/resources",
+        "packages/core"
+      ],
+      "trackedSourceUnchanged": true,
+      "newNativeBinaryByteIdentityClaimed": false
+    }
+  ],
+  "sourceChecks": [
+    "affected-checks.json",
+    "ci-preflight.json",
+    "render-result.json"
+  ],
+  "actualInstalledQualified": false,
+  "sourceRenderViewed": true,
+  "modelsRun": false,
+  "saleQualified": false,
+  "sourceFiles": {
+    "companion-device-closure055": {
+      "packages/ui/src/ManualNoteEditor.tsx": "346192a2cf88643f7191278758e2e3592d607497dd0dfee312c0309d6c78ef58",
+      "packages/ui/src/ManualNoteContext.tsx": "bdb21099ac4ae5093276bf1bad655aa1b10e922a041ddb9a1ef4b4940852a9d5",
+      "packages/ui/src/TranscriptQuoteCapture.tsx": "b3fd92d06eb55ac750a1934fa03651b3f377846df1495e71ff928a5997240545",
+      "packages/ui/src/manualNoteContext.css": "6af787ecf3fdcc0d67e2d3f736c570d82d98d4a1866f025c48eca517e53ce3d3",
+      "tools/test_manual_note_editing.tsx": "ae9ac65d4bbee28caa188ba3109042d7af9148cbc15c5dc9cc32e2eeaf886385",
+      "tools/test_companion_setup_render.mjs": "dd0e36addb6d17d8ab0b8b0500e4a26ee6dd1293d85ed6ce506121ecedae5d16",
+      "tools/qa/core_acceptance20261109/ui_source.cjs": "a77470a195e3cb7779db226f6a41c41fc0f932f0dbe8a060196afc42438306eb",
+      "packages/ui/src/CompanionMeetingNotes.tsx": "2bdffc8db74eb08b7444b2cb8735363ed5dde25ec7bb95c88d6fe5d9b84da2c7",
+      "tools/test_manual_followup_notes.tsx": "7dde33cd1ac3deebf320184f93f0fffd1d694f93cdb4a0d517559f68a574c54a",
+      "tools/build_windows_candidate_ci.py": "0e1d7d160e03ffeb711ed7245feda765595497461c3886e3a91d3f36e013d11c",
+      "package.json": "e6ed8bd894d6e16d593c99ef7403fc34cc81e41e51c44e602400a7cad9256409",
+      "package-lock.json": "62f49b8decc61ef034d6ddac2cf1b286e8f95567727628f8ac5db82ca0b06905",
+      "apps/windows/src-tauri/Cargo.toml": "fd15960e03cc2995578e260eadea780313e4f3efe849f82df2c4670b3695dad1",
+      "apps/windows/src-tauri/Cargo.lock": "6b406dcd5d1c83faf6d9595f7079c34613957e73962684d3029aa009c0d10328",
+      "apps/windows/src-tauri/tauri.conf.json": "109fcae10244aa20273a4adacf2b48811f20c117f504712c07613720267027f7",
+      "apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json": "e18e8a4e8d3a7ef5e91dc8e6450edd8a349896b206c09253b96305f9d77a36a5"
+    },
+    "companion-core-android20261109": {
+      "packages/ui/src/ManualNoteEditor.tsx": "346192a2cf88643f7191278758e2e3592d607497dd0dfee312c0309d6c78ef58",
+      "packages/ui/src/ManualNoteContext.tsx": "bdb21099ac4ae5093276bf1bad655aa1b10e922a041ddb9a1ef4b4940852a9d5",
+      "packages/ui/src/TranscriptQuoteCapture.tsx": "b3fd92d06eb55ac750a1934fa03651b3f377846df1495e71ff928a5997240545",
+      "packages/ui/src/manualNoteContext.css": "6af787ecf3fdcc0d67e2d3f736c570d82d98d4a1866f025c48eca517e53ce3d3",
+      "tools/test_manual_note_editing.tsx": "ae9ac65d4bbee28caa188ba3109042d7af9148cbc15c5dc9cc32e2eeaf886385",
+      "tools/test_companion_setup_render.mjs": "8029659dc85ed17c1ea6c986ad1370a2383114af7f86809afd7b468622fa7ea1",
+      "tools/qa/core_acceptance20261109/ui_source.cjs": "86d3f0a0467db5e5e0883f462872b626bc7dfb0d6dc358adf9741ac665ac9a36",
+      "apps/mobile/src/App.tsx": "7d333ac3f05372daa1603e023f6f21429f63c5b5480ba7075ecd8fed03788c86",
+      "apps/mobile/src/RecordingNotes.tsx": "5dfd7be7a9b54d0bd42ab69362819792ee95f09e1f097ec399e8f71c87852f19",
+      "apps/android/app/build.gradle": "4733d1c36cbf83db9c793d31af3260bd16cc6a1dc7ef30d989adc3eb67e9ded5"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "scope": "actual affected component behavior and complete target typechecks, not native qualification",
+  "results": [
+    {
+      "name": "windows-affected",
+      "exitCode": 1,
+      "seconds": 1.44,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\windows-affected.log"
+    },
+    {
+      "name": "android-affected",
+      "exitCode": 1,
+      "seconds": 0.92,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\android-affected.log"
+    },
+    {
+      "name": "windows-typecheck",
+      "exitCode": 0,
+      "seconds": 10.73,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\windows-typecheck.log"
+    },
+    {
+      "name": "android-typecheck",
+      "exitCode": 2,
+      "seconds": 9.34,
+      "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\android-typecheck.log"
+    }
+  ],
+  "limits": {
+    "pid": 6028,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 805306368,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 551587840,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

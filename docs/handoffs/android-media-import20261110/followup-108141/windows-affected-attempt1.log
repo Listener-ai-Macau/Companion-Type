@@ -1,0 +1,23 @@
+PASS Windows manual follow-up: existing draft survives evidence, failed save retains full context, one-marker checklist commit, source revision check and explicit citation removal.
+PASS literal FALSE/zero/multiline row capture, native JSON order, exact source version return and stale/missing document preservation.
+PASS independent readable panes, stable mounted manual and AI drafts, keyboard/tab linkage and unavailable-content fallback.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- '预算 FALSE 0 尚未确认。'
+
+    at file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/ui-acceptance/run-x6RnOv/test_manual_note_editing.mjs:270:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: '预算 FALSE 0 尚未确认。',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

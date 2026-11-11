@@ -1,0 +1,2 @@
+apps/mobile/src/RecordingNotes.tsx(37,35): error TS2345: Argument of type '"image" | "save"' is not assignable to parameter of type 'ManualNoteKind'.
+  Type '"image"' is not assignable to type 'ManualNoteKind'.

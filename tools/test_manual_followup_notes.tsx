@@ -20,6 +20,6 @@ fail=false;await act(async()=>button('重试保存备注').props.onClick());asse
 const noteId=session.meetingNotes[0].id;
 const checks=tree.root.findAllByProps({type:'checkbox'});await act(async()=>checks[0].props.onChange({target:{checked:true}}));assert.equal(session.meetingNotes[0].text,'我的准备卡\n- [x] 核实预算\n- [ ] 确认负责人');assert.deepEqual(session.meetingNotes[0].references,[evidence]);await act(async()=>render());
 await act(async()=>button('查看当前依据').props.onClick());assert.equal(opened,noteId+':'+evidence.id);
-act(()=>tree.root.findByProps({'aria-label':'编辑备注 '+noteId}).props.onClick());assert.equal(tree.root.findByProps({'aria-label':'编辑备注 '+noteId,maxLength:4000}).props.value,session.meetingNotes[0].text);
+act(()=>tree.root.findByProps({'aria-label':'编辑备注 '+noteId}).props.onClick());assert.equal(tree.root.findByProps({'aria-label':'跟进事项 2'}).props.value,'核实预算');act(()=>button('按原格式编辑').props.onClick());assert.equal(tree.root.findByProps({'aria-label':'编辑备注 '+noteId,maxLength:4000}).props.value,session.meetingNotes[0].text);
 act(()=>button('移除此引用').props.onClick());await act(async()=>button('保存修改').props.onClick());assert.deepEqual(session.meetingNotes[0].references,[]);assert.equal(session.meetingNotes[0].kind,'followup');act(()=>tree.unmount());
 console.log('PASS Windows manual follow-up: existing draft survives evidence, failed save retains full context, one-marker checklist commit, source revision check and explicit citation removal.');
