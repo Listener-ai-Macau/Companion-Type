@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-11T10:00:34+08:00",
+  "state": "ORDINARY_INCOMING_PARTIAL_PASSED_TITLE_INPUT_VERIFIER_REPAIRED_SAME_MSI",
+  "run": 42941346111,
+  "testSource": "1a90289f9a46bedf655642c124869ad1fdfb8464",
+  "appSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+  "actualPassed": [
+    "Existing ordinary document/manual-evidence workflows and native backup/restore/scoped purge passed.",
+    "New ordinary cold file launch, warm same-instance forwarding, pending dedup, explicit media original storage, source-moved document failure and original-target retry, image original/target all passed."
+  ],
+  "failure": "Verifier looked for the selected title in workspace innerText, but the actual saved title is rendered in an input (source aria-label=记录标题).",
+  "repair": "Wait for actual title input.value, preserving the exact identity requirement. Same MSI reused; no native/product rebuild.",
+  "remaining": [
+    "ordinary open result/cancel/bad-file completion",
+    "bound receipt privacy lifecycle before final delivery",
+    "Android OS real-device flow"
+  ]
+}

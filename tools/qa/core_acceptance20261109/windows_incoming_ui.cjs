@@ -52,7 +52,7 @@ module.exports=async function incomingJourney(page,plan,out){
  const imageRow=rows().find(item=>item.id===key),image=imageRow.meetingNotes[0].image;assert.equal(imageRow.meetingNotes.length,1);assert.equal(image.sha256,plan.incomingImageSha256);assert.equal(await sha(path.join(plan.recordingDirectory,image.file)),plan.incomingImageSha256);protect();
  steps.push({step:'warm-image-explicit-ownership',oneImage:true,originalBytesIdentical:true});write();
  await page.screenshot({path:path.join(out,'incoming-files-native.png'),fullPage:true});
- await card(plan.incomingImage).getByRole('button',{name:'打开所属录音',exact:true}).click();await page.locator('#ct-saved-recording-workspace').waitFor();assert((await page.locator('#ct-saved-recording-workspace').innerText()).includes(savedAudio.title));
+ await card(plan.incomingImage).getByRole('button',{name:'打开所属录音',exact:true}).click();await page.locator('#ct-saved-recording-workspace').waitFor();await poll(async()=>await page.locator('#ct-saved-recording-workspace .ct-title-editor input').inputValue()===savedAudio.title,'Delivered record title/input did not match the saved target');
  steps.push({step:'ordinary-open-delivered-record',correctRecord:true});write();
  openFile(plan.incomingBad);await card(plan.incomingBad).waitFor();await card(plan.incomingBad).getByRole('button',{name:'存为新录音',exact:true}).click();await poll(()=>receipt().some(item=>item.name===path.basename(plan.incomingBad)&&item.state==='failed'),'Invalid audio was not rejected');
  assert.equal(rows().length,original.length+1);assert.equal(await sha(plan.incomingBad),plan.incomingBadSha256);protect();steps.push({step:'bad-file-rejected',noNewRecord:true,sourceUnchanged:true});write();

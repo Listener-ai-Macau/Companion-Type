@@ -271127,8 +271127,8 @@
               }
             },
             "systemInbound20261111": {
-              "at": "2026-11-11T09:46:17+08:00",
-              "state": "WINDOWS100_MSI_EXACT_PAYLOAD_AND_RECIPE_VERIFIED_ORDINARY_RUNTIME_NEXT",
+              "at": "2026-11-11T10:00:34+08:00",
+              "state": "WINDOWS_ORDINARY_RECEIVE_ORIGINALS_PASSED_THROUGH_IMAGE_TITLE_VERIFIER_RETRY_AND_LIFECYCLE_SOURCE_NEXT",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271224,7 +271224,18 @@
                 "Windows ordinary cold/warm file reception, source failure/retry, cancel, originals and complete backup/lifecycle runtime still pending.",
                 "Review bound inbox receipts with existing permanent recording deletion: current global receipt persistence is not yet connected to the recording purge hooks; do not close lifecycle/privacy on ordinary import alone.",
                 "Android137 real OS share/open flow not yet installed/verified; last actual ADB inventory empty."
-              ]
+              ],
+              "runtime": {
+                "run": 42941346111,
+                "source": "1a90289f9a46bedf655642c124869ad1fdfb8464",
+                "overall": "failed in verifier of title input, not yet fully qualified",
+                "existingDocumentsAndBackupPurge": "passed",
+                "incomingPassedThrough": "cold/warm/duplicate/media-original/document-source-expiry-retry/image-original",
+                "repair": "Read actual title input value; exact same MSI",
+                "msiPrivateDraftAsset": 733708915,
+                "msiReadbackIdentical": true
+              },
+              "relatedSourceNext": "Group record-purge/current-library inbox cleanup and compact completed-receipt UI with actual ordinary100 feedback before new101/138 native batch. Android scoped removeBound source added; not built/installed. Do not close all core or claim only models remain."
             }
           },
           "completeDocumentCandidateArchive20261110": {
