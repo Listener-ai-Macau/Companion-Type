@@ -2664,21 +2664,34 @@ async fn connect_native_device_once(
 struct InitialConnectFailure {
     error: String,
     released_lost_owner: bool,
+    target_observed: Option<bool>,
+}
+
+fn initial_target_unreachable(intent:ConnectionIntent,observed:Option<bool>,released_owner:bool,error:&str)->bool {
+    intent==ConnectionIntent::Normal && observed==Some(false) && !released_owner &&
+        (error=="Not connected" || error.ends_with(": Not connected"))
 }
 
 async fn initial_native_device_once(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent)
     -> Result<NativeConnectionSetup,InitialConnectFailure> {
     let released_lost_owner=AtomicBool::new(false);
+    let observation=std::sync::atomic::AtomicU8::new(0);
     super::lifecycle::PROCESS.run(async {
         let device=scan_native_device(requested_device_id).await?;
         // No advertisement wait before connecting. Scope our own watcher to
         // this setup attempt, so a failed/cancelled attempt also stops it and
         // bulk transfer never competes with a leftover scanner.
         #[cfg(windows)]
-        let _acquisition_scan=super::device_discovery::Acquisition::begin(&device.address);
-        connect_known_native_device_setup_observed(device,sync_clock,intent,false,Some(&released_lost_owner)).await
+        let acquisition_scan=super::device_discovery::Acquisition::begin(&device.address);
+        let result=connect_known_native_device_setup_observed(device,sync_clock,intent,false,Some(&released_lost_owner)).await;
+        #[cfg(windows)]
+        if let Some(seen)=acquisition_scan.as_ref().and_then(|scan|scan.target_observed()) {
+            observation.store(if seen {2}else{1},Ordering::SeqCst);
+        }
+        result
     }).await.map_err(|error|InitialConnectFailure {
         error,released_lost_owner:released_lost_owner.load(Ordering::SeqCst),
+        target_observed:match observation.load(Ordering::SeqCst){1=>Some(false),2=>Some(true),_=>None},
     })
 }
 
@@ -2748,6 +2761,10 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
                 let error=failure.error;
                 #[cfg(windows)]
                 if super::ble_pairing::is_pairing_error(&error) { return Err(error); }
+                if initial_target_unreachable(intent,failure.target_observed,failure.released_lost_owner,&error) {
+                    eprintln!("BLE initial connect unavailable attempt={attempt}/{attempts} target_observed=false cause={error} automatic_retries_stopped=true microphone_commands=0");
+                    return Err("DEVICE_UNREACHABLE: The recorder did not respond during connection setup.".into());
+                }
                 // The failed attempt has already awaited native retirement.
                 // Unknown/timeout/cleanup failures keep the old delay. Never
                 // replay a recorder command; this loop acquires only a link.
@@ -2766,6 +2783,23 @@ async fn connect_native_device_setup_with_intent(requested_device_id: Option<&st
     eprintln!("BLE initial_acquisition stage=end elapsed_us={} success={} host_unix_us={}",
         acquisition_started.elapsed().as_micros(),result.is_ok(),chrono::Utc::now().timestamp_micros());
     result
+}
+
+#[cfg(test)]
+mod initial_unreachable_tests {
+    use super::*;
+    #[test]
+    fn no_reply_without_target_stops_only_normal_initial_link_retries() {
+        let actual="connect BLE device C8:ED:45:EB:95:B4: Not connected";
+        assert!(initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(true),false,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::Normal,None,false,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),true,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::RecorderCore,Some(false),false,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::SealedSync,Some(false),false,actual));
+        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,"GATT read timed out"));
+        assert!(!initial_target_unreachable(ConnectionIntent::Normal,Some(false),false,"设备正在录音"));
+    }
 }
 
 async fn connect_known_native_device_with_clock(device: NativeDevice,sync_clock:bool) -> Result<NativeDevice,String> {
