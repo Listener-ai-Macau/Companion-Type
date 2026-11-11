@@ -1,0 +1,33 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {connect,native}=require('./organization_ui.cjs'),{read}=require('./organization_readback.cjs');
+const O=path.join(__dirname,'android138'),get=n=>JSON.parse(fs.readFileSync(path.join(O,n+'.json'))),save=(n,v)=>fs.writeFileSync(path.join(O,n+'.json'),JSON.stringify({actualVersion:'0.1.138',modelsCloudMicBleUsed:false,...v},null,2)+'\n');
+(async()=>{const{page,browser}=await connect();try{
+ assert.equal((await read(page,'appPreferences')).version,'0.1.138');assert.equal((await read(page,'libraryStatus')).activeId,get('public-libraries').working);
+ const action=process.argv[2],list=()=>read(page,'library'),incoming=()=>read(page,'incomingFiles');
+ async function poll(test,message){const start=Date.now();while(Date.now()-start<45000){if(await test())return;await new Promise(r=>setTimeout(r,100));}throw Error(message);}
+ async function library(){await page.getByRole('navigation',{name:'主导航'}).getByRole('button',{name:'录音',exact:true}).click();}
+ const card=name=>page.locator('.incoming-file').filter({hasText:name});
+ if(action==='baseline'){
+  await library();const base=await list();assert.equal(base.rows.length,4);save('incoming-baseline',{rows:base.rows,appearance:await page.evaluate(()=>localStorage.getItem('companion-appearance')||'system')});console.log('Fresh declared public library has four unchanged records; no original Owner library opened.');
+ }else if(action==='pending'){
+  await library();await card('public-incoming138.wav').waitFor();const rows=(await incoming()).rows;assert.equal(rows.length,5);assert(rows.every(r=>r.state==='ready'));assert(rows.every(r=>r.uri===undefined));assert.equal((await list()).rows.length,4);const status=await incoming();assert.match(status.libraryLabel,/恢复的资料库 · [0-9]{4}-[0-9]{2}-[0-9]{2}/);save('incoming-pending',{pendingOnly:true,actualSystemMultipleFiles:5,restoredLibraryLabel:status.libraryLabel,rows});console.log('Actual cold OS file intent queued once and saved no recording before confirmation.');
+ }else if(action==='media'){
+  await card('public-incoming138.wav').getByRole('button',{name:'存为新录音',exact:true}).click();await poll(async()=> (await incoming()).rows.some(r=>r.name==='public-incoming138.wav'&&r.state==='complete'),'Incoming audio did not complete');
+  const receipt=(await incoming()).rows.find(r=>r.name==='public-incoming138.wav');assert(receipt.key);const library=await list();assert.equal(library.rows.length,5);assert(library.rows.some(r=>r.key===receipt.key));save('incoming-media',{receipt,rows:library.rows});await page.screenshot({path:path.join(O,'incoming-media-native.png')});console.log('Ordinary explicit confirmation saved the shared public audio into the same library.');
+ }else if(action==='attachments-pending'){
+  await library();await card('material.docx').waitFor();await card('public-whiteboard138.png').waitFor();const status=await incoming();assert.equal(status.rows.length,5);const target=get('incoming-media').receipt;for(const name of ['material.docx','public-whiteboard138.png'])await card(name).getByRole('combobox').selectOption(target.key);save('incoming-attachment-pending',{rows:status.rows,selectedKey:target.key});console.log('Actual SEND_MULTIPLE delivered document and image; destination selected explicitly.');
+ }else if(action==='document-expired'){
+  await card('material.docx').getByRole('button',{name:'保存到所选会议',exact:true}).click();await poll(async()=>(await incoming()).rows.some(r=>r.name==='material.docx'&&r.state==='failed'),'Expired source was not reported');const row=(await incoming()).rows.find(r=>r.name==='material.docx');assert.equal(row.key,get('incoming-media').receipt.key);save('incoming-document-expired',{row,fixedTargetRetained:true});console.log('Actual revoked source grant failed visibly and retained its confirmed target.');
+ }else if(action==='document-retry'){
+  await card('material.docx').getByRole('button',{name:'在原目标核对并重试',exact:true}).click();await poll(async()=>(await incoming()).rows.some(r=>r.name==='material.docx'&&r.state==='complete'),'Restored grant retry did not save');save('incoming-document-retried',{receipt:(await incoming()).rows.find(r=>r.name==='material.docx')});console.log('The same original URI and fixed target retry completed.');
+ }else if(action==='image'){
+  const target=get('incoming-media').receipt;await card('public-whiteboard138.png').getByRole('combobox').selectOption(target.key);await card('public-whiteboard138.png').getByRole('button',{name:'保存到所选会议',exact:true}).click();await poll(async()=>(await incoming()).rows.some(r=>r.name==='public-whiteboard138.png'&&r.state==='complete'),'Shared image did not save');save('incoming-image',{receipt:(await incoming()).rows.find(r=>r.name==='public-whiteboard138.png')});await card('public-whiteboard138.png').getByRole('button',{name:'打开所属录音',exact:true}).waitFor();await page.screenshot({path:path.join(O,'incoming-complete-light.png')});console.log('Shared original image saved with an explicit meeting owner; compact completed rows captured.');
+ }else if(action==='bad'){
+  await library();await card('public-bad138.wav').waitFor();await card('public-bad138.wav').getByRole('button',{name:'存为新录音',exact:true}).click();await poll(async()=>(await incoming()).rows.some(r=>r.name==='public-bad138.wav'&&r.state==='failed'),'Bad shared audio did not fail');assert.equal((await list()).rows.length,5);save('incoming-bad',{badFileRejected:true,rowsUnchanged:true,receipt:(await incoming()).rows.find(r=>r.name==='public-bad138.wav')});console.log('Invalid shared audio rejected without an additional recording.');
+ }else if(action==='long-cancel'){
+  await library();const row=card('public-long138.wav');await row.getByRole('button',{name:'存为新录音',exact:true}).click();
+  await poll(async()=>{const job=await read(page,'audioImportStatus');return job.running&&job.processed>65536;},'Long source never entered native copy/decode');
+  await row.getByRole('button',{name:'取消此次导入',exact:true}).click();await poll(async()=>(await incoming()).rows.some(r=>r.name==='public-long138.wav'&&r.state==='failed'),'Long native import did not retire');
+  const receipt=(await incoming()).rows.find(r=>r.name==='public-long138.wav');assert(receipt.message.includes('取消'));assert.equal((await list()).rows.length,5);save('incoming-long-cancel',{state:'ACTUAL_TWO_HOUR_PUBLIC_PCM_SOURCE_NATIVE_COPY_DECODE_CANCEL_PASSED',receipt,notMeetingOrAsr:true,noCancelledSavedRow:true});console.log('Actual two-hour generated PCM source entered native work and cancelled without a saved recording.');
+ }else{throw Error(action);}
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

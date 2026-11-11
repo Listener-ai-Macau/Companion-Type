@@ -1,0 +1,59 @@
+{
+  "state": "SYSTEM_DOCUMENTS_PROVIDER_FIVE_PUBLIC_INPUTS_READY",
+  "files": [
+    {
+      "name": "material.docx",
+      "bytes": 37839,
+      "sha256": "e31c3694268ca1996ac59c762d6317656c8ade4953daa323a94fa406ceade497",
+      "remote": "/sdcard/Download/Companion-public-incoming138-src/material.docx",
+      "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2FCompanion-public-incoming138-src%2Fmaterial.docx"
+    },
+    {
+      "name": "public-bad138.wav",
+      "bytes": 42,
+      "sha256": "b5a80b16ea7f73be72104603e0c495f7919fa326ffba42001e2402c62fc690a7",
+      "remote": "/sdcard/Download/Companion-public-incoming138-src/public-bad138.wav",
+      "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2FCompanion-public-incoming138-src%2Fpublic-bad138.wav"
+    },
+    {
+      "name": "public-incoming138.wav",
+      "bytes": 64044,
+      "sha256": "7229e8c1a245b6a23fee8c5d57f7e81e46b117a4a2c61934abc60c808796b000",
+      "remote": "/sdcard/Download/Companion-public-incoming138-src/public-incoming138.wav",
+      "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2FCompanion-public-incoming138-src%2Fpublic-incoming138.wav"
+    },
+    {
+      "name": "public-long138.wav",
+      "bytes": 230400044,
+      "sha256": "c37209fa92f4ebd17b2491883c6d0f39b847fb31b02ce706b2d4eab77643004f",
+      "remote": "/sdcard/Download/Companion-public-incoming138-src/public-long138.wav",
+      "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2FCompanion-public-incoming138-src%2Fpublic-long138.wav"
+    },
+    {
+      "name": "public-whiteboard138.png",
+      "bytes": 35518,
+      "sha256": "96d134af463a7b50fa6377fd988fbaa20ec8a9a02fafbda31e9c15dd2b855855",
+      "remote": "/sdcard/Download/Companion-public-incoming138-src/public-whiteboard138.png",
+      "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2FCompanion-public-incoming138-src%2Fpublic-whiteboard138.png"
+    }
+  ],
+  "publicDirectory": "/sdcard/Download/Companion-public-incoming138-src",
+  "sourcePermissionsModified": false,
+  "notRealMeetingOrAsr": true,
+  "limits": {
+    "pid": 28828,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 10.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17858560,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
