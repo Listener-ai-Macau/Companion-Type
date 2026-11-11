@@ -25,6 +25,17 @@ pub fn verify_storage(output: &std::path::Path) -> Result<serde_json::Value, Str
 const LEGACY_PRODUCT_CREDENTIAL_TARGET: &str = "credentials.v1.chunk.0.com.listener.type";
 const PRODUCT_CREDENTIAL_TARGET: &str = "Companion.Type.product-settings.secrets.v2";
 
+fn default_auto_local_card_transcription() -> bool { true }
+
+pub(crate) fn auto_local_card_transcription_enabled() -> bool {
+    try_load_settings().map(|settings| settings.auto_local_card_transcription).unwrap_or(false)
+}
+
+pub(crate) fn new_card_processing_policy() -> crate::companion_v1::CompanionV1ProcessingPolicy {
+    use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
+    if auto_local_card_transcription_enabled() { Policy::LocalTranscription } else { Policy::Manual }
+}
+
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 struct CompanionProductSecrets {
@@ -69,6 +80,8 @@ fn clear_persisted_secrets(settings: &mut CompanionProductSettings) {
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionProductSettings {
+    #[serde(default = "default_auto_local_card_transcription")]
+    pub auto_local_card_transcription: bool,
     /// offlineStore | onlineLive
     pub default_meeting_mode: String,
     /// local-paraformer | volcengine | openai-compatible | auto
@@ -94,6 +107,7 @@ pub struct CompanionProductSettings {
 impl Default for CompanionProductSettings {
     fn default() -> Self {
         Self {
+            auto_local_card_transcription: true,
             default_meeting_mode: "offlineStore".to_string(),
             asr_provider: "local-paraformer".to_string(),
             volc_app_key: String::new(),
@@ -116,6 +130,7 @@ impl Default for CompanionProductSettings {
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionProductSettingsPublic {
+    pub auto_local_card_transcription: bool,
     pub default_meeting_mode: String,
     pub asr_provider: String,
     /// A lightweight presence hint; the model and runtime are verified when used.
@@ -183,6 +198,7 @@ impl CompanionProductSettings {
 
     pub fn to_public(&self, path: &str) -> CompanionProductSettingsPublic {
         CompanionProductSettingsPublic {
+            auto_local_card_transcription: self.auto_local_card_transcription,
             default_meeting_mode: self.default_meeting_mode.clone(),
             asr_provider: self.asr_provider.clone(),
             local_asr_available: super::transcription::local_asr_assets_present(),
@@ -264,6 +280,7 @@ pub fn save_settings(settings: &CompanionProductSettings) -> Result<PathBuf, Str
 
 /// Merge non-empty fields from `patch` into current on-disk settings.
 fn merge_settings(mut current: CompanionProductSettings, patch: CompanionProductSettings) -> CompanionProductSettings {
+    current.auto_local_card_transcription = patch.auto_local_card_transcription;
     if !patch.default_meeting_mode.trim().is_empty() {
         current.default_meeting_mode = patch.default_meeting_mode.trim().to_string();
     }
@@ -628,6 +645,17 @@ fn parse_legacy_volc_credentials(json: &str) -> Option<(String, String, String)>
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn local_card_processing_setting_is_on_for_new_profiles_and_keeps_opt_out() {
+        use super::*;
+        let mut settings=CompanionProductSettings::default();
+        assert!(settings.auto_local_card_transcription);
+        let mut old=serde_json::to_value(&settings).unwrap();old.as_object_mut().unwrap().remove("autoLocalCardTranscription");
+        assert!(serde_json::from_value::<CompanionProductSettings>(old).unwrap().auto_local_card_transcription);
+        settings.auto_local_card_transcription=false;
+        let restored:CompanionProductSettings=serde_json::from_slice(&serde_json::to_vec(&settings).unwrap()).unwrap();
+        assert!(!restored.to_public("isolated").auto_local_card_transcription);
+    }
     use super::*;
     use std::time::{SystemTime, UNIX_EPOCH};
 

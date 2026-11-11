@@ -268,11 +268,12 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     let library: Vec<crate::companion_v1::CompanionV1HostSession> =
         serde_json::from_slice(&fs::read(&index).map_err(|_| fail())?).map_err(|_| fail())?;
     check!(
-        "complete-library-keeps-manual-processing-policy",
+        "complete-library-keeps-local-only-card-processing-policy",
         library.len() == 1
             && library[0].audio_stored
-            && library[0].processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
-            && library[0].recovery.intent != "processMeeting"
+            && library[0].processing_policy == crate::backend::product_settings::new_card_processing_policy()
+            && (library[0].processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+                || library[0].recovery.intent == "processMeeting")
             && library[0].chunks.len() == 4
     );
     check!(

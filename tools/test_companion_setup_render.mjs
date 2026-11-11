@@ -7,15 +7,17 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 // Component and stubbed app tests only. This does not operate a device,
 // launch a browser/native window, capture speech, or call a remote service.
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const names=['test_companion_setup_render','test_companion_dashboard_state','test_companion_journey',
+const names=['test_card_to_text','test_companion_setup_render','test_companion_dashboard_state','test_companion_journey',
   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
   'test_companion_app_state','test_transcript_bulk_replace','test_companion_pet_navigation','test_companion_result_order','test_windows_device_actions','test_windows_settings_navigation'];
+const requested=process.argv.slice(2);
+for(const name of requested)if(!names.includes(name))throw new Error(`Unknown UI contract: ${name}`);
 const cache=path.join(root,'.cache','ui-acceptance');
 await mkdir(cache,{recursive:true});
 const out=await mkdtemp(path.join(cache,'run-'));
 const results=[];
-for(const name of names){
+for(const name of requested.length?requested:names){
   const file=path.join(out,name+'.mjs');
   try{
     await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:file,bundle:true,

@@ -26,6 +26,7 @@ export type MeetingJourney = {
   processing?: boolean;
   optional?: boolean;
   handlesFailure?: boolean;
+  textOnly?: boolean;
 };
 
 export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean {
@@ -40,6 +41,7 @@ export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean
 
 export function meetingJourney(session: CompanionV1HostSession, context: {
   connected: boolean; deviceId?: string | null; asrReady: boolean; minutesReady: boolean;
+  localAsrReady?: boolean; autoLocalCard?: boolean;
 }): MeetingJourney {
   const recovery = describeCompanionMeetingRecovery(session);
   if(recovery&&session.recovery?.lastError&&recovery.message.includes(session.recovery.lastError))
@@ -102,6 +104,14 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
       label:'重试整理',request:{action:'meetingGenerateMinutes',sessionId:session.id,meetingMode:failedMode,
         ...(current?{contextNoteRevision:noteContext.noteRevision}:{})}};
   }
+  if (localAudio && !finalText && session.processingPolicy==='localTranscription') {
+    if(session.recovery?.stage==='transcribing')return {stage:1,textOnly:true,title:'正在本机转成文字',detail:'本机正在处理已保存的原音。可以离开这条记录，稍后回来查看。',processing:true};
+    if (!context.localAsrReady) return {stage:1,textOnly:true,title:'原音已收到，准备一次本机转写',detail:'准备本机中文模型后即可处理这条录音，不上传原音。',label:'准备本机转写',destination:'settings'};
+    if (session.recovery?.lastError || session.recovery?.stage==='paused') return {stage:1,textOnly:true,title:'本机转写未完成',detail:recovery?.message??'原音已保存，无需重新录音；可以在本机重试。',handlesFailure:true,label:'在本机重试转写',request:{action:'meetingTranscribeAudio',sessionId:session.id}};
+    if (!context.autoLocalCard) return {stage:1,textOnly:true,title:'原音已收到，自动转写已关闭',detail:'可按需在本机转文字，或到设置重新开启自动处理。',label:'在本机转文字',request:{action:'meetingTranscribeAudio',sessionId:session.id}};
+    return {stage:1,textOnly:true,title:'等待自动转写',
+      detail:'收到的原音已保存，本机处理完成后即可阅读。可以离开这条记录，稍后回来查看。',processing:true};
+  }
   if (recovery && !recovery.retryAction) return { stage, title: recovery.label, detail: recovery.message, processing: recovery.isProcessing };
   if (session.pendingReason === 'no_speech_detected' && localAudio && recovery) {
     return { stage: 1, title: recovery.label, detail: recovery.message, handlesFailure: true,
@@ -113,7 +123,7 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   if (finalText) {
     if (draft && !context.minutesReady) return { stage: 2, optional: optionalOrganization, title: '原句摘录已生成', detail: '已从文字中摘录原句，供你核对、补充。原音和文字仍保留。' };
     // Once text is complete, organizing it is optional. Requested recovery stays visible.
-    return { stage: 2, optional: optionalOrganization, title: recovery ? '继续整理这条内容' : '文字已保存，可按需整理',
+    return { stage: 2, textOnly:session.processingPolicy==='localTranscription', optional: optionalOrganization, title: recovery ? '继续整理这条内容' : '文字已保存，可按需整理',
       detail: context.minutesReady ? '按已保存的文字提取重点与待办，原文保留。无需再次连接设备。' : '从文字中摘录原句作为草稿，供你核对、补充。原音和文字仍保留。',
       label: context.minutesReady ? recovery ? '继续整理' : '整理重点' : '生成基础草稿',
       request: { action: 'meetingGenerateMinutes', sessionId: session.id } };
@@ -140,7 +150,7 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
 }) {
   return <section className="ct-journey" aria-label="这条录音的下一步">
     {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="录音处理进度">
-      {['原音已保存', '转成文字', '整理重点'].map((label, index) => <li key={label}
+      {(journey.textOnly?['原音已保存', '转成文字']:['原音已保存', '转成文字', '整理重点']).map((label, index) => <li key={label}
         className={index < journey.stage ? 'done' : index === journey.stage ? 'current' : ''}
         aria-current={index === journey.stage ? 'step' : undefined}>
         <span>{index < journey.stage ? <Check size={12} /> : index + 1}</span>{label}

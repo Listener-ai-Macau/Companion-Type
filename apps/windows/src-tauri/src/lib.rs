@@ -942,6 +942,14 @@ fn next_automatic_recovery(
     snapshot: &companion_v1::CompanionV1Snapshot,
     now_ms: u64,
 ) -> (Option<(String, AutomaticRecoveryAction)>, Option<u64>) {
+    next_automatic_recovery_with_local(snapshot,now_ms,
+        backend::product_settings::auto_local_card_transcription_enabled()
+            && backend::transcription::local_asr_assets_present())
+}
+
+fn next_automatic_recovery_with_local(
+    snapshot: &companion_v1::CompanionV1Snapshot, now_ms:u64, local_ready:bool,
+) -> (Option<(String, AutomaticRecoveryAction)>, Option<u64>) {
     if snapshot.host.persistence.status != "ready"
         || snapshot.device.recording
         || snapshot.meeting.active
@@ -956,6 +964,8 @@ fn next_automatic_recovery(
     let mut next_wake = None;
     for session in &snapshot.host.sessions {
         let recovery = &session.recovery;
+        let local_card=session.processing_policy==companion_v1::CompanionV1ProcessingPolicy::LocalTranscription;
+        if local_card && (!local_ready || session.transcript_final) {continue;}
         if session.processing_policy == companion_v1::CompanionV1ProcessingPolicy::Manual
             || session.pending_reason.as_deref()==Some("needs_local_audio")
             || recovery.intent != "processMeeting"
@@ -964,7 +974,7 @@ fn next_automatic_recovery(
         {
             continue;
         }
-        if recovery.stage == "pendingMinutes"
+        if !local_card && recovery.stage == "pendingMinutes"
             && session.transcript_final
             && !session.transcript_text.trim().is_empty()
         {
@@ -986,7 +996,7 @@ fn next_automatic_recovery(
             let action = match recovery.retry_stage.as_str() {
                 "transcription" if !(session.transcript_final && !session.transcript_text.trim().is_empty())
                     => AutomaticRecoveryAction::Transcribe,
-                "minutes" if session.transcript_final && !session.transcript_text.trim().is_empty()
+                "minutes" if !local_card && session.transcript_final && !session.transcript_text.trim().is_empty()
                     => AutomaticRecoveryAction::GenerateMinutes,
                 _ => continue,
             };
@@ -2798,6 +2808,22 @@ mod tests {
         assert_eq!(serde_json::to_value(&snapshot.host.sessions[0].recovery).unwrap(),before);
         snapshot.host.sessions[0].pending_reason=Some("needs_transcription".into());snapshot.host.sessions[0].audio_stored=true;
         assert_eq!(next_automatic_recovery(&snapshot,10).0,Some(("local-only-wait".into(),AutomaticRecoveryAction::Transcribe)));
+    }
+    #[test]
+    fn local_card_processing_schedules_text_only_and_waits_for_local_readiness() {
+        use super::*;
+        let mut snapshot=companion_v1::apply_fixture_control(companion_v1::fixture_snapshot(),
+            control_request(companion_v1::CompanionV1ControlAction::MeetingStart,Some("local-card".into()))).unwrap();
+        snapshot.meeting.active=false;snapshot.device.recording=false;snapshot.host.active_session_id=None;
+        let row=&mut snapshot.host.sessions[0];row.status="captured".into();row.audio_stored=true;
+        row.processing_policy=companion_v1::CompanionV1ProcessingPolicy::LocalTranscription;
+        row.recovery=companion_v1::CompanionV1MeetingRecovery::armed("offlineStore");
+        assert!(next_automatic_recovery_with_local(&snapshot,10,false).0.is_none());
+        assert_eq!(next_automatic_recovery_with_local(&snapshot,10,true).0,
+            Some(("local-card".into(),AutomaticRecoveryAction::Transcribe)));
+        let row=&mut snapshot.host.sessions[0];row.transcript_final=true;row.transcript_text="真实文字".into();
+        row.recovery.stage="pendingMinutes".into();
+        assert!(next_automatic_recovery_with_local(&snapshot,10,true).0.is_none(),"local card never silently submits a cloud summary");
     }
     use super::*;
 

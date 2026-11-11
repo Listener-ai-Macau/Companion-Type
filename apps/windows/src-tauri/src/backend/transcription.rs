@@ -96,12 +96,15 @@ pub(super) fn push_unrecognized(
 }
 
 #[derive(Clone, Debug)]
-pub struct CompanionTranscriptionManager;
+pub struct CompanionTranscriptionManager { local_only: bool }
 
 impl CompanionTranscriptionManager {
     pub fn new() -> Self {
-        Self
+        Self { local_only: false }
     }
+
+    pub(crate) fn local_card() -> Self { Self { local_only: true } }
+    fn local_selected(&self) -> bool { self.local_only || local_provider_selected() }
 
     /// Explicit pet utterance, using the configured real provider only. Meeting
     /// correction rules, sidecars, env-text fixtures and speaker clustering do
@@ -181,7 +184,7 @@ impl CompanionTranscriptionManager {
             if !identities.insert(identity) { return Err(format!("录音分段重复：第 {} 段，未提交转写。", index + 1)); }
             declared_paths.push(p);
         }
-        if !local_provider_selected() {
+        if !self.local_selected() {
             if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
                 let text = normalize_transcript(&text);
                 if !text.is_empty() {
@@ -221,11 +224,11 @@ impl CompanionTranscriptionManager {
         // Long meeting (multiple chunks): when Volcengine is the provider,
         // diarize GLOBALLY across all chunks so speaker ids stay consistent —
         // per-chunk diarization would renumber the same person in each chunk.
-        if volcengine_provider_configured() {
+        if !self.local_only && volcengine_provider_configured() {
             return volcengine_multi_file_transcript_with(&real_paths, &transcribe_long_meeting_chunk);
         }
 
-        let local = local_provider_selected();
+        let local = self.local_selected();
         let mut parts = Vec::new();
         let mut timed_parts = Vec::new();
         let mut providers = Vec::new();
@@ -301,7 +304,7 @@ impl CompanionTranscriptionManager {
     /// session flow and the CLI `transcribe_audio` entry so the long-meeting
     /// speedup cannot be bypassed by entering through a different API.
     fn transcribe_single_path(&self, path: &Path) -> Result<CompanionTranscript, String> {
-        if volcengine_provider_configured() && is_long_wav(path) {
+        if !self.local_only && volcengine_provider_configured() && is_long_wav(path) {
             let chunk_seconds = asr_safe_chunk_seconds();
             {
                 let chunks = split_long_wav_into_chunks(path, chunk_seconds)
@@ -335,7 +338,7 @@ impl CompanionTranscriptionManager {
     }
 
     fn transcribe_existing_path(&self, audio: &Path) -> Result<CompanionTranscript, String> {
-        if local_provider_selected() {
+        if self.local_selected() {
             #[cfg(windows)]
             { return local_paraformer::transcribe(audio); }
             #[cfg(not(windows))]
@@ -1497,6 +1500,27 @@ fn split_command_args(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn local_card_processing_does_not_use_configured_cloud_or_fixture_text() {
+        struct Environment(Vec<(&'static str,Option<std::ffi::OsString>)>);
+        impl Drop for Environment {fn drop(&mut self){for(key,value)in &self.0{match value{
+            Some(value)=>std::env::set_var(key,value),None=>std::env::remove_var(key),
+        }}}}
+        let root=std::env::temp_dir().join(format!("companion-local-only-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();let audio=root.join("own.wav");fs::write(&audio,b"not a waveform").unwrap();
+        fs::write(root.join("own.transcript.txt"),"fixture must not substitute real local ASR").unwrap();
+        let values=[("COMPANION_TYPE_ASR_PROVIDER","openai-compatible".to_string()),
+            ("COMPANION_TYPE_TRANSCRIPT_TEXT","fixture must not be accepted".to_string()),
+            ("COMPANION_TYPE_LOCAL_ASR_DIR",root.to_string_lossy().into_owned())];
+        let _environment=Environment(values.into_iter().map(|(key,value)|{
+            let old=std::env::var_os(key);std::env::set_var(key,value);(key,old)
+        }).collect());
+        assert!(CompanionTranscriptionManager::new().transcribe_audio(&audio.to_string_lossy()).is_ok(),"baseline environment adapter is active");
+        assert!(CompanionTranscriptionManager::local_card().transcribe_audio(&audio.to_string_lossy()).is_err(),
+            "local-only path requires a real local model/audio even if another provider/fixture exists");
+        fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     #[ignore = "requires isolated state, public model-output adapter and configured minutes service"]

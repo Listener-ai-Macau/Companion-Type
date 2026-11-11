@@ -5,4 +5,7 @@ globalThis.document??={activeElement:null,querySelector:()=>null,getElementById:
 globalThis.window??={};
 globalThis.window.requestAnimationFrame??=(callback)=>{callback(0);return 0;};
 globalThis.window.cancelAnimationFrame??=()=>{};
+globalThis.window.setTimeout??=globalThis.setTimeout;
+globalThis.window.clearTimeout??=globalThis.clearTimeout;
 globalThis.HTMLButtonElement??=class HTMLButtonElement {};
+globalThis.HTMLElement??=class HTMLElement {};

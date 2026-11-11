@@ -271207,7 +271207,7 @@
             },
             "systemInbound20261111": {
               "at": "2026-11-11T10:49:26+08:00",
-              "state": "WINDOWS102_BASELINE_PASSED_FINAL_SHARED_CONNECT51_SOURCE_INTEGRATION103_ANDROID139_PENDING",
+              "state": "ANDROID139_ACTUAL_INCOMING_CORE_PASSED_SESSION_CLOSE_PENDING_WINDOWS105_COMBINED_SOURCE_FROZEN",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271246,7 +271246,7 @@
                 "First attachment test used a fake non-native meeting key; corrected fixture to the actual bounded hash:1:1 identity, product unchanged.",
                 "Native Windows source and OS launch/MSI registration still await the exact candidate; no engineering failure is hidden as a passed path."
               ],
-              "windowsVersion": "0.1.103",
+              "windowsVersion": "0.1.105",
               "androidVersion": "0.1.139",
               "appDelivered": false,
               "phoneQualified": false,
@@ -271370,6 +271370,20 @@
                 "windows102": "Normal native/tests/MSI verified and privateasset733874745; ongoing runtime preserved. Not installed or restamped as103.",
                 "nativeImportDeletionUiChangedAfter102": false,
                 "ownerPromptOrBoardIO": false
+              },
+              "windows103Failure": {
+                "run": 42954598962,
+                "cause": "Actual normal inbox dismissal hit AccessDenied(5) replacing mutable receipt snapshot while a short reader held it; original durable receipts and audio preserved.",
+                "repair": "Reuse bounded200ms snapshot writer already verified for other app metadata; two actual Windows reader regressions; generic user exports unchanged.",
+                "source": "fd993882",
+                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows103\\runtime-attempt1-decision.json"
+              },
+              "windows105Integration": {
+                "includes104": "16c2738d22d236c2223c979953e3cd0d33f06793",
+                "includes103": "e331a366593cab022807779d1343e6b7a85b6c67",
+                "scope": "Incoming lifecycle repair plus latest card-first UI and strictly-local auto-processing only for new card originals. Prior manual recordings and models preserved.",
+                "modelsRun": false,
+                "installed": false
               }
             }
           },
@@ -277115,7 +277129,7 @@
     "sharedWindowsIntegration20261110": {
       "at": "2026-11-11T10:55:16+08:00",
       "state": "UNIFIED099_MANUAL_FOLLOWUP_SOURCE_CONTEXT_RUNTIME_UPGRADE_AND_PRIVATE_PACKAGE_PASSED",
-      "reservedVersion": "0.1.103",
+      "reservedVersion": "0.1.105",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "mustIncludeSources": [
@@ -277230,9 +277244,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": "0.1.103",
+      "pendingUnifiedVersion": "0.1.105",
       "pendingUnifiedBranch": "work/device-phone-closure055-20261106",
-      "pendingUnifiedReason": "Preserve102 qualified inbound lifecycle and latest final101/51acd7d9 actual product DeviceConnect policy/wrapped guidance.102 remains immutable pre-final integration candidate; no replacement install until final matching evidence.",
+      "pendingUnifiedReason": "Combine frozen104 physical-card-first/local-only first-use source16c2738d with103 real incoming snapshot publication repairfd993882; retain verified102 and all final51 product connection repairs. One complete105 normal native build before final incoming acceptance.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
@@ -277327,6 +277341,21 @@
         ],
         "noNewOwnerPromptPending": true,
         "saleQualified": false
+      },
+      "recorderUsability104Pending": {
+        "state": "SOURCE_PUSHED_LOCAL_CHECKS_PASS_NORMAL_MSI_BUILD_RUNNING",
+        "version": "0.1.104",
+        "branch": "work/recorder-core-integration-20261110",
+        "base": "8c35f17a",
+        "scope": "New card originals receive automatic local-only transcription and meaningful titles; existing manual choice remains; software on-boarding and functional guide cover real features. No new firmware or Owner recording during development.",
+        "originalOwnerRequest": "按这个方向做，软件内补使用说明，容易入门，不漏功能，让买前有吸引力、买后愿意继续用",
+        "previous103BuildPreserved": true,
+        "installed": false,
+        "sourceCommit": "16c2738d22d236c2223c979953e3cd0d33f06793",
+        "buildRun": 42955392350,
+        "localNativePass": 74,
+        "localUiScopesPassed": 6,
+        "supersededBeforeInstall": 42954667339
       }
     }
   }

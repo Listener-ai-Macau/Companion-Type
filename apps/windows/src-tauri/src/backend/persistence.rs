@@ -95,6 +95,11 @@ pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
         return;
     }
     if super::interrupted_capture::hold(session) { return; }
+    if session.processing_policy==crate::companion_v1::CompanionV1ProcessingPolicy::LocalTranscription
+        && session.transcript_final && !session.transcript_text.trim().is_empty() {
+        super::mark_recovery_transcribed(session);
+        return;
+    }
     // A retry checkpoint is not proof that a host capture was finalized.
     // Keep any partial text and original file, without spending an ASR attempt.
     let pending_transcription = session.recovery.stage == "pendingTranscription"

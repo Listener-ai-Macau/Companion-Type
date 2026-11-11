@@ -69,6 +69,7 @@ pub(crate) fn adopt_local(path:&Path,peer:&PausePeer,device:&str,status:&PauseSt
                 "meetingMode":"offlineStore","promptId":crate::companion_v1::CAPTURE_ONLY_PROMPT
             })).map_err(|_|failure("设备录音行无法建立"))?;
             let mut row=crate::companion_v1::create_host_session(&crate::companion_v1::fixture_snapshot(),&request,"");
+            row.processing_policy=super::super::product_settings::new_card_processing_policy();
             row.source="boardDevice".into();row.source_device_id=Some(device.into());row.audio_path=None;
             row.audio_stored=false;row.audio_bytes=0;row.chunks.clear();row.started_at=None;row.stopped_at=None;
             row.retention.audio_cached=false;journal.checkpoint_row(&mut row)?;all.insert(0,row);
@@ -112,7 +113,7 @@ mod tests {
         let host=adopt_local(&t.0,&peer,DEVICE,&status,anchor,ms).unwrap();
         let saved=rows(&t.0).unwrap();assert_eq!(saved.len(),1);
         let row=&saved[0];assert_eq!(row.id,host);assert!(row.started_at.is_none()&&row.audio_path.is_none()&&!row.audio_stored);
-        assert_eq!(row.processing_policy,crate::companion_v1::CompanionV1ProcessingPolicy::Manual);
+        assert_eq!(row.processing_policy,super::super::super::product_settings::new_card_processing_policy());
         assert_eq!(row.device_recording_key,Some(status.key.as_ref().unwrap().public_key()));
         let mut store=Store::open(&t.0,&host).unwrap();let mut journal=store.journal.clone().unwrap();
         assert!(journal.local_origin&&journal.max_seconds==0&&journal.pending.is_none());

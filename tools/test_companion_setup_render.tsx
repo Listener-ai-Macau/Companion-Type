@@ -20,8 +20,8 @@ let html = renderToStaticMarkup(<CompanionSetup {...props} />);
 assert.match(html, /浏览器演示/);
 assert.match(html, /不代表真实设备/);
 assert.match(html, /第一次使用/);
-assert.match(html, /浏览器演示不能完成这一步/);
-assert.match(button(html, '我已找到并回听'), /disabled/);
+assert.match(html, /实际连接需要配套设备/);
+assert.doesNotMatch(html, /我已找到并回听|我已完成试录/);
 assert.match(button(html, '听一声回应'), /disabled/);
 assert.doesNotMatch(html, /已装配|未装配|全部通过/);
 assert.doesNotMatch(button(html, '连接 Companion'), /disabled/);
@@ -49,7 +49,7 @@ assert.match(html, /你已主动断开/);
 assert.match(html, /自动连接我的 Companion/);
 assert.doesNotMatch(html, /浏览器演示/);
 assert.match(html, /固件 1.1.15/);
-assert.match(html, /已识别真实设备/);
+assert.match(html, /设备已连接。录音使用卡片实体键/);
 assert.match(html, /不会开始录音/);
 assert.match(button(html, '设备已静音'), /disabled/);
 
@@ -63,7 +63,7 @@ const recorder = structuredClone(real);
 recorder.device.boardId = 0x57424155;
 recorder.device.firmwareVersion = 66788;
 html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
-assert.match(html, /短按实体键一次并松开开始/);
+assert.match(html, /短按卡片实体键一次并松开，开始录音/);
 assert.match(html, /敲两下机身标记重点/);
 assert.doesNotMatch(html, /长按实体键约 1 秒/);
 recorder.device.firmwareVersion = 66786;
@@ -71,7 +71,7 @@ html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
 assert.match(html, /长按实体键约 1 秒开始/);
 recorder.device.firmwareVersion = null;
 html = renderToStaticMarkup(<CompanionSetup {...props} snapshot={recorder} />);
-assert.match(html, /先连接设备，再按本页显示的实体键用法/);
+assert.match(html, /按键方式以设备的配套说明为准/);
 
 const settings = { asrProvider: 'volcengine', volcAppKeySet: true, volcAccessKeySet: false } as any;
 html = renderToStaticMarkup(<CompanionSetup {...props} settings={settings} />);
@@ -101,8 +101,12 @@ const storage = new Map<string, string>();
 (globalThis as any).window = {
   localStorage: { getItem: (key: string) => storage.get(key) ?? null, setItem: (key: string, value: string) => storage.set(key, value) },
 };
-const guided = applyCompanionV1ControlFixture(real, { action: 'meetingLoadDemo' });
+const guided = structuredClone(real);
+guided.host.sessions = applyCompanionV1ControlFixture(real, { action: 'meetingLoadDemo' }).host.sessions;
 guided.device.deviceId = 'AA:BB:CC:DD:EE:FF';
+guided.host.sessions[0].sourceDeviceId = guided.device.deviceId;
+guided.host.sessions[0].transcriptFinal = true;
+guided.host.sessions[0].transcriptText = '已经保存的真实文字结果';
 guided.speaker.supported = false;
 guided.speaker.online = false;
 let renderer: any;
@@ -112,18 +116,22 @@ const clickGuide = (label: string) => act(() => {
   const node = renderer.root.findAllByType('button').find((item: any) => nodeText(item).includes(label));
   assert.ok(node, `missing guide button ${label}`); node.props.onClick();
 });
-clickGuide('我已完成试录'); clickGuide('我已找到并回听');
+assert.match(JSON.stringify(renderer.toJSON()), /第一份文字已经准备好/,
+  'completion comes from a saved transcript for this device');
+clickGuide('第一份文字已经准备好');
 assert.equal(renderer.root.findAllByProps({ 'aria-label': '第一次使用向导' })[0].findAllByType('ol').length, 0,
-  'completed guide collapses for the current device');
-assert.match([...storage.values()][0], /"sawRecording":true/);
+  'the guide can be folded after the actual result is available');
+assert.equal(JSON.parse([...storage.values()][0]).open,false);
 assert.equal(JSON.parse([...storage.values()][0]).heardReply,false,
-  'recording onboarding completes without pretending an unavailable speaker was heard');
+  'showing text does not pretend an unavailable speaker was heard');
 act(() => renderer.unmount());
 act(() => { renderer = create(<CompanionSetup {...props} snapshot={guided} />); });
 assert.equal(renderer.root.findAllByProps({ 'aria-label': '第一次使用向导' })[0].findAllByType('ol').length, 0,
-  'the same device restores its collapsed user-confirmed progress');
+  'the same device restores the chosen folded view');
 const otherDevice = structuredClone(guided); otherDevice.device.deviceId = '11:22:33:44:55:66'; otherDevice.device.rememberedDeviceId = '112233445566';
 act(() => renderer.update(<CompanionSetup {...props} snapshot={otherDevice} />));
+assert.doesNotMatch(JSON.stringify(renderer.toJSON()), /第一份文字已经准备好/,
+  'another card does not inherit the first card transcription result');
 assert.equal(renderer.root.findAllByProps({ 'aria-label': '第一次使用向导' })[0].findAllByType('ol').length, 1,
   'a different device receives independent onboarding progress');
 act(() => renderer.unmount());

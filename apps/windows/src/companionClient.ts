@@ -51,6 +51,7 @@ export const previewCompanionMeetingGap = (sessionId:string,jobId:string,range:{
   invoke<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>('preview_companion_meeting_gap',{sessionId,jobId,range});
 
 export type CompanionProductSettingsPublic = {
+  autoLocalCardTranscription?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   localAsrAvailable?: boolean;
@@ -71,6 +72,7 @@ export type CompanionProductSettingsPublic = {
 };
 
 export type CompanionProductSettingsPatch = {
+  autoLocalCardTranscription?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   volcAppKey: string;
@@ -90,6 +92,7 @@ const FIXTURE_SETTINGS_KEY = 'companion-type.product-settings.v1';
 
 function defaultSettingsPublic(): CompanionProductSettingsPublic {
   return {
+    autoLocalCardTranscription: true,
     defaultMeetingMode: 'offlineStore',
     asrProvider: 'local-paraformer',
     volcAppKeySet: false,
@@ -388,6 +391,7 @@ export async function saveProductSettings(
   const prev = await getProductSettings();
   const next: CompanionProductSettingsPublic = {
     ...prev,
+    autoLocalCardTranscription: patch.autoLocalCardTranscription ?? prev.autoLocalCardTranscription ?? true,
     defaultMeetingMode: patch.defaultMeetingMode || prev.defaultMeetingMode,
     asrProvider: patch.asrProvider || prev.asrProvider,
     volcAppKeySet: Boolean(patch.volcAppKey) || prev.volcAppKeySet,

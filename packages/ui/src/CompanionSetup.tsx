@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle, Bluetooth, Check, ChevronDown, ChevronUp, CircleDashed, Link2, ListChecks, Mic, Search, Settings2, Unlink, Volume2, XCircle } from 'lucide-react';
+import { AlertTriangle, Bluetooth, Check, ChevronDown, ChevronUp, CircleDashed, Link2, ListChecks, Search, Settings2, Unlink, Volume2, XCircle } from 'lucide-react';
 import type { CompanionV1ControlRequest, CompanionV1Snapshot } from '@companion-type/core';
 import { companionCanChangeOfflineRecordingLink } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
@@ -28,7 +28,7 @@ function checkMessage(check:{status:string;message:string}):string{
   return operationErrorText(check.message,'device');
 }
 
-export function CompanionSetup({ snapshot, settings, busy, recording, checking, onControl, onSettings, onWorkflow, onLibrary }: {
+export function CompanionSetup({ snapshot, settings, busy, recording, checking, onControl, onSettings, onLibrary }: {
   snapshot: CompanionV1Snapshot | null;
   settings: CompanionProductSettingsPublic | null;
   busy: boolean;
@@ -36,7 +36,6 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
   checking: boolean;
   onControl: (request: CompanionV1ControlRequest) => void;
   onSettings: () => void;
-  onWorkflow: () => void;
   onLibrary?: () => void;
 }) {
   const device = snapshot?.device;
@@ -77,7 +76,10 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
     try { window.localStorage.setItem(guideStorageKey(guideDeviceId), JSON.stringify(next)); } catch { /* The guide still works for this session. */ }
   };
   const hasVisibleRecording = Boolean(snapshot?.host.sessions.length);
-  const guideComplete = Boolean(guideDeviceId) && !preview && guide.recordedSample && guide.sawRecording;
+  const autoLocalCard = settings?.autoLocalCardTranscription === true;
+  const processingReady = autoLocalCard ? Boolean(settings?.localAsrAvailable) : Boolean(asrReady);
+  const guideComplete = Boolean(guideDeviceId) && !preview && Boolean(snapshot?.host.sessions.some(row =>
+    normalizeGuideDeviceId(row.sourceDeviceId ?? '') === guideDeviceId && row.transcriptFinal && row.transcriptText.trim()));
   const guideConnectionDone = known && !preview || guideComplete;
 
   return (
@@ -104,14 +106,14 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
       <section className={`ct-first-run ${guideComplete ? 'complete' : ''}`} aria-label="第一次使用向导">
         <button type="button" className="ct-first-run-head" aria-expanded={guide.open}
           onClick={() => updateGuide({ open: !guide.open })}>
-          <span><strong>{guideComplete ? '第一次使用已完成' : '第一次使用 · 约 1 分钟'}</strong><small>连接、录 10 秒、找到并回听</small></span>
+          <span><strong>{guideComplete ? '第一份文字已经准备好' : '第一次使用'}</strong><small>在卡片上录音，打开软件看结果</small></span>
           {guide.open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
         {guide.open ? <ol className="ct-first-run-list">
-          <li className={guideConnectionDone ? 'done' : ''}><span>{guideConnectionDone ? <Check size={13} /> : '1'}</span><div><strong>连接真实 Companion</strong><p>{preview ? '浏览器演示不能完成这一步。' : known ? '已识别真实设备。' : guideComplete ? '设备暂不在线；这台设备的引导记录已保留。' : '点击上方“连接 Companion”。'}</p></div></li>
-          <li className={guide.recordedSample ? 'done' : ''}><span>{guide.recordedSample ? <Check size={13} /> : '2'}</span><div><strong>录一段约 10 秒的声音</strong><p>{keyGuide.trial}</p><p>{keyGuide.highlight}</p><div className="ct-button-row"><button type="button" className="ct-text-button" disabled={!known || preview || busy} onClick={onWorkflow}><Mic size={14} />查看同步步骤</button><button type="button" className="ct-text-button" disabled={!known || !guideDeviceId || preview || recording} onClick={() => updateGuide({ recordedSample: true })}>我已完成试录</button></div></div></li>
-          <li className={guide.sawRecording ? 'done' : ''}><span>{guide.sawRecording ? <Check size={13} /> : '3'}</span><div><strong>在“我的记录”找到并回听</strong><p>{hasVisibleRecording ? '“我的记录”已有内容，请按录制时间或时长找到刚才这条，再点“回听”。' : '同步完成后，录音会出现在“我的记录”，打开后可回听。'}</p><div className="ct-button-row">{onLibrary ? <button type="button" className="ct-text-button" onClick={onLibrary}>打开我的记录</button> : null}<button type="button" className="ct-text-button" disabled={!hasVisibleRecording || !guide.recordedSample || preview} onClick={() => updateGuide({ sawRecording: true, open: false })}>我已找到并回听</button></div></div></li>
-          <li className="ct-first-run-note">引导进度只保存在这台电脑；换一台 Companion 会单独记录。宠物声音可稍后在下方体验。</li>
+          <li className={guideConnectionDone ? 'done' : ''}><span>{guideConnectionDone ? <Check size={13} /> : '1'}</span><div><strong>连接一次，记住你的卡片</strong><p>{preview ? '这是界面演示，实际连接需要配套设备。' : known ? '设备已连接。录音使用卡片实体键。' : guideComplete ? '已有这台设备的文字记录；设备目前不在线。' : '点击上方“连接 Companion”，完成系统配对。离线时卡片仍可以录音。'}</p></div></li>
+          <li className={processingReady ? 'done' : ''}><span>{processingReady ? <Check size={13} /> : '2'}</span><div><strong>{autoLocalCard ? '准备一次，之后自动本机转写' : '选择适合你的转写方式'}</strong><p>{autoLocalCard ? settings?.localAsrAvailable ? '本机中文模型已准备。新卡片录音接收完整后会自动生成文字，不上传录音。' : '首次需要准备本机中文模型，之后接收新卡片录音会自动转成文字。录音无需密钥或订阅。' : asrReady ? '转写方式已配置。你可以在记录中手动转文字，也可到设置开启自动本机转写。' : '本机中文转写不上传录音；也可选择自己的云端服务。'}</p><button type="button" className="ct-text-button" onClick={onSettings}>{processingReady ? '查看转写设置' : '准备转写'}</button></div></li>
+          <li className={guideComplete ? 'done' : ''}><span>{guideComplete ? <Check size={13} /> : '3'}</span><div><strong>按卡片录停，打开看文字</strong><p>{keyGuide.start} {keyGuide.stop}</p><p>{autoLocalCard ? '打开软件接收后，可在“我的记录”看到转写进度和文字。无需每次点生成或先听原音。' : '接收后在“我的记录”打开这条内容，按所选方式转文字。原音可按需要回听。'}</p>{onLibrary ? <button type="button" className="ct-text-button" onClick={onLibrary}>{hasVisibleRecording ? '打开我的记录' : '查看记录库'}</button> : null}</div></li>
+          <li className="ct-first-run-note">有重点时：{keyGuide.highlight} 更多用途和操作都在“使用帮助”。</li>
         </ol> : null}
       </section>
       {device?.rememberedDeviceId ? <div className="ct-reconnect-setting">

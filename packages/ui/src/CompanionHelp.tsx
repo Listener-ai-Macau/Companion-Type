@@ -6,9 +6,10 @@ import type {CompanionV1DeviceTransportState} from '@companion-type/core';
 import {recorderKeyGuide} from './recorderKeyGuide';
 
 /** Reading help never starts capture, reconnects, clears data or exports logs. */
-export function CompanionHelp({ device, onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses, onPrivacy }: {
+export function CompanionHelp({ device, onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses, onPrivacy, onSettings }: {
   device?: CompanionV1DeviceTransportState | null;
   onPrivacy?: () => void;
+  onSettings?: () => void;
   onReadLicenses?: () => Promise<string>;
   onRecording?: () => void;
   onClose: () => void; onDevice: () => void; onLibrary: () => void; onDiagnostics: () => void;
@@ -34,18 +35,44 @@ export function CompanionHelp({ device, onClose, onDevice, onLibrary, onDiagnost
       if (event.key === 'Escape') { event.stopPropagation(); onClose(); }
     }}>
     <div className="ct-use-help-heading">
-      <div><h2 id="ct-use-help-title">使用帮助</h2><p>找回录音、带走清单，或了解宠物互动。</p></div>
+      <div><h2 id="ct-use-help-title">从按下卡片，到用上记录</h2><p>录音用卡片，软件帮你找回内容、转成文字并继续整理。</p></div>
       <button type="button" className="ct-action" onClick={onClose}>关闭帮助</button>
     </div>
     <nav className="ct-use-help-nav" aria-label="帮助目录">
-      {([['ct-help-recording','录音与找回'],['ct-help-checklist','清单、手机与提醒'],['ct-help-calendar-update','日历改期'],['ct-help-play','宠物怎么玩'],['ct-help-quiet','安静互动'],['ct-help-recovery','连接与保存问题']] as const).map(([id,label])=>
+      {([['ct-help-start','第一次使用'],['ct-help-recording','录音与结果'],['ct-help-features','还能做什么'],['ct-help-checklist','清单与提醒'],['ct-help-calendar-update','日历改期'],['ct-help-play','有屏宠物互动'],['ct-help-recovery','遇到问题']] as const).map(([id,label])=>
         <button key={id} type="button" className="ct-action" onClick={()=>reveal(id)}>{label}</button>)}
     </nav>
+    <section id="ct-help-start" className="ct-help-start" tabIndex={-1} aria-label="三步开始使用">
+      <h3>第一次准备一次，日常只操作卡片</h3>
+      <ol className="ct-use-help-steps">
+        <li><strong>第一次连接</strong><p>让卡片靠近手机或电脑，在“设备与同步”连接并完成系统配对。软件会同步设备时间，给录音保留正确日期。</p></li>
+        <li><strong>选好转写方式</strong><p>电脑可先准备免费的本机中文模型。开启“接收卡片录音后自动在这台电脑转写”后，收到新录音就会生成文字，原音不上传。需要其他语言或更换服务时，再到设置选择云转写或自己的服务。</p></li>
+        <li><strong>按卡片录，打开软件看结果</strong><p>{keyGuide.start} {keyGuide.stop} 打开软件接收后，在“我的记录”看最新内容。文字准备期间可以离开这条记录，原音会保留。</p></li>
+      </ol>
+      <p>日常先看文字；有疑问再回听对应片段。短想法也可以直接录，不必先建会议、填标题或挑选整理模板。</p>
+      <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary" onClick={onDevice}>连接我的卡片</button>
+        {onSettings?<button type="button" className="ct-action" onClick={onSettings}>准备转写</button>:null}
+        <button type="button" className="ct-action" onClick={onLibrary}>查看我的记录</button></div>
+    </section>
+    <details id="ct-help-features"><summary>还能用它完成什么？</summary>
+      <dl className="ct-help-features">
+        <dt>随手记想法、会议或访谈</dt><dd>用卡片实体键开停录；离线先保存，连接后接收。长录音的实际可录时间取决于设备剩余空间。</dd>
+        <dt>留住特别重要的一刻</dt><dd>{keyGuide.highlight} 在记录的重点列表查看标记，再定位相关内容。</dd>
+        <dt>把原话变成可读、可查的资料</dt><dd>本机转写、文字核对、按关键词查找、给不同发言者改名、补便签和图片／文档材料。原音与原始识别文字仍保留。</dd>
+        <dt>整理结论和后续行动</dt><dd>文字准备好后，可按会议、访谈或课堂用途整理，查看重点、待办并向所选记录提问。AI整理使用设置中的服务，需要明确选择；没有确认过的人名和时间仍需核对。</dd>
+        <dt>把内容带到自己的工作里</dt><dd>复制文字和清单，导出原音、字幕或完整记录；可查看手机接收与日历提醒的使用方法。开发者也可通过配套MCP／CLI入口读取自己的记录。</dd>
+        <dt>在电脑上按住说话</dt><dd>在电脑输入面板开启后，把光标放到要输入的位置，按住卡片讲话，松开后转成文字并尝试送到原输入位置。需要配套桌面应用与系统输入权限；目标不允许输入时可手动复制结果。</dd>
+        <dt>录电脑会议、处理已有音频</dt><dd>电脑版本还可录制电脑播放声与本机麦克风，或导入已有音频，再在同一个记录库整理。</dd>
+        <dt>管理设备和自己的资料</dt><dd>查看和删除设备录音、同步状态、固件升级、记录分类、备份恢复与本机隐私清理，各有独立入口。删除一条录音不等同于清除所有设备和备份。</dd>
+        <dt>有屏Companion的陪伴功能</dt><dd>配套有屏硬件还提供宠物互动、聊天、档案、安静时段等入口。功能是否可用以所连设备及配套固件报告为准。</dd>
+      </dl>
+      <p>先用“录音→文字”解决自己的事，再按需要展开这些功能。</p>
+    </details>
     <div id="ct-help-calendar-update"><CompanionCalendarUpdateHelp onReturn={onRecording}/></div>
     <details><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。语音按设置选择本地或云转写；云转写会发送录音，聊天文字会发送给配置的聊天服务。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <details id="ct-help-recording"><summary>录音与找回</summary>    <ol className="ct-use-help-steps">
       <li><strong>开始设备录音</strong><p>{keyGuide.start}</p></li>
       <li><strong>停止，等设备保存</strong><p>{keyGuide.stop} 保存中或异常时，先保留设备上的内容。</p></li>
-      <li><strong>回到 Type 找到它</strong><p>在“设备与同步”连接并同步，等本机原音保存完成，再到“我的记录”按标题、日期或内容查找。需要时回听或转文字。</p></li>
+      <li><strong>打开软件看文字结果</strong><p>在“设备与同步”连接并接收，再到“我的记录”查看最新内容。已开启自动本机转写时，模型准备好后会处理新卡片录音；手动模式可点“转文字”。需要核对时再回听。</p></li>
     </ol>
     <p>{keyGuide.highlight}</p><p className="ct-use-help-key">设备“已保存”与电脑“已收齐”是两步。文字还没生成，不等于原音没有保存。</p></details>
 
