@@ -1,18 +1,30 @@
 {
-  "at": "2026-11-11T16:32:04+08:00",
+  "at": "2026-11-11T16:38:26+08:00",
   "sourceOfTruth": "C:/Users/Billy/Desktop/Denzic/Companion only; snapshots are immutable handoff protection copies",
   "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 135,
+      "sha256": "36f742e5697a758f9f7b81093bbe4ece9e07b4fcf50219fd0c50d3ef5dc351b6",
+      "snapshot": "root-snapshot/.gitattributes"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 687,
+      "sha256": "b14f96d6bffb202606395b24b4d9a09751cb16f96a95e01554eee6fd9b359a0a",
+      "snapshot": "root-snapshot/.gitignore"
+    },
+    {
+      "path": "ACTIVE_GOAL.md",
+      "bytes": 1059,
+      "sha256": "008e7a609f8a4e78fde33cf56b69ef9eae3ff4535575df152d538e95f104e54d",
+      "snapshot": "root-snapshot/ACTIVE_GOAL.md"
+    },
     {
       "path": "AGENTS.md",
       "bytes": 11679,
       "sha256": "9fc3da66e1405e3d85a64374914d5af3feafd68e22de4b29328497ed088fa8be",
       "snapshot": "root-snapshot/AGENTS.md"
-    },
-    {
-      "path": "README.md",
-      "bytes": 1712,
-      "sha256": "e8b392ffd9f162568ee961742a77027ab2c55d4e907671e17de6ab753d2dbf23",
-      "snapshot": "root-snapshot/README.md"
     },
     {
       "path": "CLAUDE.md",
@@ -21,22 +33,22 @@
       "snapshot": "root-snapshot/CLAUDE.md"
     },
     {
+      "path": "README.md",
+      "bytes": 1712,
+      "sha256": "e8b392ffd9f162568ee961742a77027ab2c55d4e907671e17de6ab753d2dbf23",
+      "snapshot": "root-snapshot/README.md"
+    },
+    {
       "path": "config/current-firmware-recipe.json",
       "bytes": 4455,
       "sha256": "2ce44307e0d7108eab2b02680e0cfecb9c60928c87927d668c42ffdf2abd75f7",
       "snapshot": "root-snapshot/config/current-firmware-recipe.json"
     },
     {
-      "path": "docs/product_backlog.json",
-      "bytes": 19099770,
-      "sha256": "08054ca14e3211e7f2c25cb4b427835d588542aed4fca73a63f62048b95625a2",
-      "snapshot": "root-snapshot/docs/product_backlog.json"
-    },
-    {
-      "path": "docs/development_log.md",
-      "bytes": 7059872,
-      "sha256": "3d9d50dfe514403f33101a8b62e27c7dd782f3789e64a6eab827ac090a23390f",
-      "snapshot": "root-snapshot/docs/development_log.md"
+      "path": "docs/ITERATION_HISTORY.md",
+      "bytes": 1392347,
+      "sha256": "8bb3dd982d4139b7c4a75d2fd117c5ab819b29978633e62ddb0dd260fe91dc0a",
+      "snapshot": "root-snapshot/docs/ITERATION_HISTORY.md"
     },
     {
       "path": "docs/PRODUCT_BACKLOG.md",
@@ -63,12 +75,6 @@
       "snapshot": "root-snapshot/docs/SCREEN_INTERACTION_BACKLOG.md"
     },
     {
-      "path": "docs/ITERATION_HISTORY.md",
-      "bytes": 1392347,
-      "sha256": "8bb3dd982d4139b7c4a75d2fd117c5ab819b29978633e62ddb0dd260fe91dc0a",
-      "snapshot": "root-snapshot/docs/ITERATION_HISTORY.md"
-    },
-    {
       "path": "docs/board_operations.md",
       "bytes": 2777402,
       "sha256": "a6d03b66fb7b585f2e249b27622a97d19412c867c7b1c1c85e01e86ed73bb782",
@@ -81,6 +87,36 @@
       "snapshot": "root-snapshot/docs/board_turn.json"
     },
     {
+      "path": "docs/development_log.md",
+      "bytes": 7060241,
+      "sha256": "460fafc54c8ff3acf10d15e86620b6d0e493fc74d7437e3a51ed5e7ef4edda65",
+      "snapshot": "root-snapshot/docs/development_log.md"
+    },
+    {
+      "path": "docs/product_backlog.json",
+      "bytes": 19099770,
+      "sha256": "08054ca14e3211e7f2c25cb4b427835d588542aed4fca73a63f62048b95625a2",
+      "snapshot": "root-snapshot/docs/product_backlog.json"
+    },
+    {
+      "path": "tools/atomic_artifact_write.py",
+      "bytes": 683,
+      "sha256": "013faf8d60a950563f7d7ce2fed261ef9094c79e192acc590f444e661e348eb7",
+      "snapshot": "root-snapshot/tools/atomic_artifact_write.py"
+    },
+    {
+      "path": "tools/board_turn.py",
+      "bytes": 12603,
+      "sha256": "380d603b8704ce607768be79290313b6ad6557434dfac9438df2e7982f5f875a",
+      "snapshot": "root-snapshot/tools/board_turn.py"
+    },
+    {
+      "path": "tools/build_current_firmware.py",
+      "bytes": 8970,
+      "sha256": "525ae7e3b8fc2a44719d039afbccb99f676a1ac7809fb67002fd05ef9399252c",
+      "snapshot": "root-snapshot/tools/build_current_firmware.py"
+    },
+    {
       "path": "tools/embedded_backlog.py",
       "bytes": 20493,
       "sha256": "f217cc07844e2aeec0a08cfa1a68a035fe421ec0945b13f9945098012ad44183",
@@ -91,6 +127,24 @@
       "bytes": 44572,
       "sha256": "fa9feb7dfa042f82db463987bda57c9e5f7fdaadea085a56e16b658b8d3cf274",
       "snapshot": "root-snapshot/tools/render_product_backlog.py"
+    },
+    {
+      "path": "tools/test_embedded_backlog.py",
+      "bytes": 11810,
+      "sha256": "84989c25de05693c23244bc275896bf4701851158668d34feeeed733683e4594",
+      "snapshot": "root-snapshot/tools/test_embedded_backlog.py"
+    },
+    {
+      "path": "tools/test_recording_target_codegen.py",
+      "bytes": 1858,
+      "sha256": "e17f6daf99bd01cca33a58e6d50973de3ea722a1ac193c24504a1025720f160d",
+      "snapshot": "root-snapshot/tools/test_recording_target_codegen.py"
+    },
+    {
+      "path": "tools/test_workpoint_feedback.py",
+      "bytes": 8480,
+      "sha256": "63777e6c70750f7462d03bcfe7ef56d072e337652d18977bd2b191a5f4444104",
+      "snapshot": "root-snapshot/tools/test_workpoint_feedback.py"
     }
   ]
 }

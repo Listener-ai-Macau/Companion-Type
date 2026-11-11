@@ -1,0 +1,26 @@
+# This root repository versions shared product rules, plan and development log.
+# Firmware and Type retain their existing independent Git repositories.
+/*
+!/.gitignore
+!/.gitattributes
+!/AGENTS.md
+!/README.md
+!/CLAUDE.md
+!/ACTIVE_GOAL.md
+!/docs/
+!/tools/
+/docs/*
+!/docs/board_operations.md
+!/docs/development_log.md
+!/docs/product_backlog.json
+!/docs/PRODUCT_BACKLOG.md
+!/docs/PRODUCT_BACKLOG_HISTORY.md
+!/docs/RECORDER_CORE_BACKLOG.md
+!/docs/SCREEN_INTERACTION_BACKLOG.md
+/tools/*
+!/tools/render_product_backlog.py
+!/tools/embedded_backlog.py
+!/tools/build_current_firmware.py
+!/tools/test_embedded_backlog.py
+!/tools/test_recording_target_codegen.py
+!/tools/test_workpoint_feedback.py

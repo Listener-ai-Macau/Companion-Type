@@ -110,3 +110,11 @@ Owner实体卡片体验是另一来源，保留原实物收据；不能把“没
 - core-ui-output和__pycache__仅为生成物，加入忽略；未删除原音、构建基线或失败证据。
 
 文档检查说明：--docs-only已成功重建同一待办视图。旧--check会因被清理的20261005历史.cache/product-research.../firmware-hardware-audit.json（FH_AUDIT）缺失而失败；该完整历史审计未通过，不能伪造补齐。此次用当前数据、现行模块约束、所有生成视图逐字一致及原合同/Owner签收保持分别核对，结果见validation.json。入口另修复了可选evidence缺失导致只读workpoint抛KeyError，缺失仍显示为空，不伪造合格证据。
+
+## 9. 其它源码的只读盘点与Git维护
+
+- C:\Users\Billy\Desktop\Denzic\Companion\model-research，分支 research/moss-resume-20261105，提交 f7a3158d9a90496362b3d803bfe808ceaa755a8e；本轮盘点已跟踪文件无未提交差异，未审计或清理未跟踪数据。
+- C:\Users\Billy\Desktop\Denzic\Companion\firmware-input-lifecycle，分支 work/physical-input-lifecycle20261110，提交 f43f548db7b07b1dab0dafd268ca848de40c5aea；本轮盘点已跟踪文件无未提交差异，未审计或清理未跟踪数据。
+- C:\Users\Billy\Desktop\Denzic\Companion\recovered-android-backend，分支 recovery/android-backend049-20261105，提交 d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea；本轮盘点已跟踪文件无未提交差异，未审计或清理未跟踪数据。
+
+提交Android交接时Git自动维护短时启动旧仓库repack，观察到pack-objects约5.3GiB RAM；复核时已自然结束，未终止其它进程或模型。余下提交/推送使用仅本命令的gc.auto=0、maintenance.auto=false与单线程/64MiB窗口限制，不改全局Git配置；这不是新的模型运行。

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-11T16:36:33+08:00",
+  "scope": "Complete published handoff checkpoint; any final documentation-only follow-up is a descendant, not a new installed product",
+  "repositories": {
+    "windows": {
+      "branch": "work/device-phone-closure055-20261106",
+      "verifiedPublishedCheckpoint": "ae87a7c10e1eb226cbc474000d166e909c5d461c",
+      "remoteHeadIndependentlyVerified": true
+    },
+    "android": {
+      "branch": "work/core-acceptance-android-20261109",
+      "verifiedPublishedCheckpoint": "e020e9c7493cf33954c80503d414304ba9328d28",
+      "remoteHeadIndependentlyVerified": true
+    }
+  },
+  "rootGitHasNoRemote": true
+}
