@@ -149,7 +149,9 @@ impl Store {
         if bytes.len() > 512 * 1024 {
             return Err("接收清单已满，请先整理后重试。".into());
         }
-        super::export::write_atomic(&self.path, &bytes).map(|_| ())
+        // This is mutable app metadata, serialized by the receipt-store lock.
+        // Reuse the established bounded snapshot publication for short readers.
+        super::export::write_snapshot_atomic(&self.path, &bytes).map(|_| ())
     }
     fn entry(&self, id: &str) -> Result<&Entry, String> {
         self.rows
@@ -948,5 +950,66 @@ mod tests {
         for (path, bytes) in sources {
             assert_eq!(fs::read(path).unwrap(), bytes);
         }
+    }
+    #[cfg(windows)]
+    #[test]
+    fn receipt_dismissal_survives_short_snapshot_reader_and_preserves_other_entries() {
+        let scope = Scope::new();
+        let first = scope.root.join("public-first.txt");
+        let second = scope.root.join("public-second.txt");
+        fs::write(&first, b"first public source").unwrap();
+        fs::write(&second, b"second public source").unwrap();
+        receive(vec![first.clone(), second.clone()], &scope.root).unwrap();
+        let before = list().unwrap();
+        let id = before["rows"][0]["id"].as_str().unwrap().to_owned();
+        let reader = File::open(root_path()).unwrap();
+        let result = std::thread::scope(|threads| {
+            threads.spawn(move || {
+                std::thread::sleep(std::time::Duration::from_millis(50));
+                drop(reader);
+            });
+            remove(&id)
+        });
+        let after = result.expect("a short inbox reader must not fail explicit dismissal");
+        assert_eq!(after["rows"].as_array().unwrap().len(), 1);
+        assert_eq!(after["rows"][0], before["rows"][1]);
+        assert_eq!(fs::read(first).unwrap(), b"first public source");
+        assert_eq!(fs::read(second).unwrap(), b"second public source");
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn receipt_reader_beyond_budget_keeps_durable_receipt_and_allows_explicit_retry() {
+        let scope = Scope::new();
+        let source = scope.root.join("public-held.txt");
+        fs::write(&source, b"held public source").unwrap();
+        receive(vec![source.clone()], &scope.root).unwrap();
+        let row = list().unwrap()["rows"][0].clone();
+        let before = fs::read(root_path()).unwrap();
+        let reader = File::open(root_path()).unwrap();
+        let began = std::time::Instant::now();
+        let result = remove(row["id"].as_str().unwrap());
+        assert!(
+            result.is_err(),
+            "a persistent reader must not be called committed"
+        );
+        assert!(
+            began.elapsed() < std::time::Duration::from_secs(2),
+            "no indefinite lock retry"
+        );
+        assert_eq!(fs::read(root_path()).unwrap(), before);
+        assert!(!fs::read_dir(&scope.root).unwrap().any(|entry| {
+            let name = entry.unwrap().file_name().to_string_lossy().into_owned();
+            name.starts_with(".companion-") && name.ends_with(".tmp")
+        }));
+        drop(reader);
+        assert_eq!(
+            remove(row["id"].as_str().unwrap()).unwrap()["rows"]
+                .as_array()
+                .unwrap()
+                .len(),
+            0
+        );
+        assert_eq!(fs::read(source).unwrap(), b"held public source");
     }
 }
