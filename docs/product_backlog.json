@@ -271127,8 +271127,8 @@
               }
             },
             "systemInbound20261111": {
-              "at": "2026-11-11T09:31:30+08:00",
-              "state": "PACKAGE_RUNNER_ENCODING_REPAIRED_RETRY_SAME_NATIVE_PAIR_NEXT",
+              "at": "2026-11-11T09:46:17+08:00",
+              "state": "WINDOWS100_MSI_EXACT_PAYLOAD_AND_RECIPE_VERIFIED_ORDINARY_RUNTIME_NEXT",
               "originalItem": "CP27-03/import",
               "originalAcceptance": "系统选文件/其它App分享进入同一库；原件/来源保留，转码/取消/坏文件/长文件/容量失败明确。",
               "baseline": "InstalledWindows099/a6af8b35 andAndroid136/298bef1b complete archive53912fcc; all note/source and earlier audio editing/document/backup evidence retained.",
@@ -271145,7 +271145,7 @@
                 "One coherent implementation/source check/native batch before ordinary OS source-app/OpenWith validation; no daily desktop takeover or cloud/model.",
                 "Batch any related incoming/read-source clarity work only after both complete136 feedback reports, preserve existing APIs and original literal records."
               ],
-              "next": "Run pinned MSI-only CI repackage using exact132bd93f native pair, inspect the shipped MSI and private readback, then ordinary documents/backup/lifecycle and cold/warm external reception/cancel. Android137 protected but phone actual inventory absent; do not repeat prompts or call it qualified.",
+              "next": "Use exact100 MSI/native byte identities for the ordinary documents+new external-file cold/warm/retry/cancel cases. Then implement and qualify bound inbox receipt purge/privacy before final inbound delivery; Android phone still absent on actual inventory, so do other executable work.",
               "implemented": "WINDOWS_AND_ANDROID_SOURCE_ONLY",
               "modelsRun": false,
               "saleQualified": false,
@@ -271207,11 +271207,18 @@
               "nativeRuntimeQualified": false,
               "packageOnlyRecipe": "docs/handoffs/20261110-android-media-import/windows100/repackage-spec.json",
               "packageBuild": {
-                "source": "5535562fbdbcb7c088c4cfce3257fd8b1ed83847",
-                "run": 42937594006,
-                "lastObserved": "preparer failure: cp1252 stdout encoding, not product/native failure",
-                "nativeAndWebReuseChecksPassed": true,
-                "repair": "UTF8 child I/O; retain target inspection and same native pair; package-only retry next"
+                "source": "2c9fc4419f3e28177cca0bfc73217897d09b5caa",
+                "run": 42939587691,
+                "lastObserved": "success",
+                "nativeSource": "132bd93ff8fad2d3978522a0aef721ba37b64ba6",
+                "nativeBuildRun": 42932133336,
+                "nativeRecompiled": false,
+                "msiSha256": "7e01633bf46dcbdd54eb0e8cd504a9cbbef4adfab86a47c495c1670a1d9a68c4",
+                "independentPayloadAndLicenseInspectionPassed": true,
+                "openWithOnlyRegistrationVerified": true,
+                "defaultFileAssociationsWritten": false,
+                "installed": false,
+                "ordinaryRuntimeQualified": false
               },
               "remainingBeforeDelivery": [
                 "Windows ordinary cold/warm file reception, source failure/retry, cancel, originals and complete backup/lifecycle runtime still pending.",

@@ -115,7 +115,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           COMPANION_CORE_PHASE: ${{ (contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'editing') && 'editing' || contains(github.event.head_commit.message, '[core-documents]') && 'documents' || 'context' }}
-          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ github.event_name == 'workflow_dispatch' && inputs.candidate_spec || contains(github.event.head_commit.message, '[core-audio-edit]') && 'docs/handoffs/android-media-import20261110/windows095/runtime-spec.json' || contains(github.event.head_commit.message, '[core-documents]') && 'docs/handoffs/android-media-import20261110/windows099/runtime-spec.json' || 'docs/handoffs/android-media-import20261110/windows087/runtime-spec.json' }}
+          COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ github.event_name == 'workflow_dispatch' && inputs.candidate_spec || contains(github.event.head_commit.message, '[core-audio-edit]') && 'docs/handoffs/android-media-import20261110/windows095/runtime-spec.json' || contains(github.event.head_commit.message, '[core-documents]') && 'docs/handoffs/android-media-import20261110/windows100/runtime-spec.json' || 'docs/handoffs/android-media-import20261110/windows087/runtime-spec.json' }}
         run: python tools/qa/core_acceptance20261109/run_ci.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

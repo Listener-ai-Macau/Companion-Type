@@ -21,7 +21,16 @@ if not dest.exists():
   z.extractall(dest)
 result=json.loads((dest/"result.json").read_text(encoding="utf8"));assert result["state"]=="WINDOWS"+code+("_NATIVE_AUDIO_EDIT_COMPLETE_WORKFLOW_PASSED" if mode=="editing" else "_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED")
 assert result["appSourceCommit"]==v["sourceCommit"] and result["exactMsiExeSha256"]==v["embeddedExeSha256"] and result["exactMsiDllSha256"]==v["dllSha256"] and result["frozenNativeBytesMatchedApprovedMsi"]
-cases=list((dest/"workflow-evidence").iterdir());assert len(cases)==1;case=cases[0]
+cases=list((dest/"workflow-evidence").iterdir())
+if mode=="documents" and int(code)>=100:
+ assert len(cases)==2
+ case=next(folder for folder in cases if json.loads((folder/"result.json").read_text(encoding="utf8"))["stage"]=="documents")
+ incoming=next(folder for folder in cases if json.loads((folder/"result.json").read_text(encoding="utf8"))["stage"]=="incoming")
+ incoming_result=json.loads((incoming/"result.json").read_text(encoding="utf8"));assert incoming_result["state"]=="REAL_NATIVE_OS_INCOMING_FILE_WORKFLOW_PASSED" and incoming_result["ui"]["state"]=="REAL_TAURI_OS_INCOMING_COLD_WARM_CONFIRM_DOCUMENT_IMAGE_RETRY_CANCEL_AND_ORIGINALS_PASSED"
+ assert result["incomingNativeExitCode"]==0 and result["incomingCase"]==incoming.name
+ for name,target in [("result.json","incoming-case-result.json"),("incoming-ui.json","incoming-ui.json"),("incoming-files-native.png","incoming-files-native.png")]:shutil.copyfile(incoming/name,O/target)
+else:
+ assert len(cases)==1;case=cases[0]
 backend=json.loads((case/("audio-edit-backend/result.json" if mode=="editing" else "document-backend/result.json")).read_text(encoding="utf8"))
 if mode=="editing":
  assert backend["state"]=="ACTUAL_PACKAGED_AUDIO_EDIT_PCM_CANCEL_RESTART_PENDING_ONLY_RETRY_BACKUP_RESTORE_AND_SCOPED_PURGE_PASSED"

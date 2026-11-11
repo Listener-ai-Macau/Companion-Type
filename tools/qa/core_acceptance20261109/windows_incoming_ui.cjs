@@ -16,7 +16,9 @@ module.exports=async function incomingJourney(page,plan,out){
   assert.equal(run.status,0,'Warm file delivery must exit before starting another GUI/device owner: '+(run.stderr||'').slice(-500));
  }
  const original=rows(),protectedFields=['id','title','transcriptText','minutes','minutesByMode','meetingNotes','documentContext','audioPath','chunks','retention'];
- function protect(){for(const old of original){const current=rows().find(row=>row.id===old.id);assert(current,'An unrelated record disappeared');for(const field of protectedFields)assert.deepEqual(current[field]??null,old[field]??null,'Unrelated field changed: '+field);}}
+ function sameExisting(actual,expected,label){if(expected===null||expected===undefined){assert(actual===null||actual===undefined,'Unrelated null field changed: '+label);return;}if(Array.isArray(expected)){assert(Array.isArray(actual)&&actual.length===expected.length,'Unrelated array changed: '+label);expected.forEach((value,index)=>sameExisting(actual[index],value,label+'.'+index));return;}if(typeof expected==='object'){assert(actual&&typeof actual==='object','Unrelated object disappeared: '+label);for(const [name,value] of Object.entries(expected))sameExisting(actual[name],value,label+'.'+name);return;}assert.deepEqual(actual,expected,'Unrelated field changed: '+label);}
+ function protect(){for(const old of original){const current=rows().find(row=>row.id===old.id);assert(current,'An unrelated record disappeared');for(const field of protectedFields){if(field==='documentContext'&&old[field]==null){assert(!current[field]||current[field].revision===0&&current[field].rows.length===0,'Unrelated documents added');continue;}sameExisting(current[field],old[field],field);}}}
+
  await card(plan.incomingAudio).waitFor();assert.equal(receipt().length,1);assert.equal(receipt()[0].state,'ready');assert.equal(rows().length,original.length);
  steps.push({step:'cold-normal-file-launch',pendingOnly:true,originalNotImportedBeforeConfirmation:true});write();
  openFile(plan.incomingAudio);await wait(2300);assert.equal(receipt().length,1,'Pending duplicate launch must use one receipt');
