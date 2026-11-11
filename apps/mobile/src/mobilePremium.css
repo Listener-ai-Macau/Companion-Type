@@ -196,3 +196,18 @@ details.device-bookmarks,details.meeting-assistant.existing-minutes{padding:0}
 #detail-panel-minutes .minutes-preamble-generated .minutes-reading{padding:0;background:none;border:0;box-shadow:none}
 #detail-panel-minutes .minutes-preamble-generated .minutes-quote{margin:0 0 8px;padding:0;border:0;font-size:11px;line-height:1.6;color:var(--muted)}
 #detail-panel-minutes .minutes-preamble-generated .minutes-gap{display:none}
+
+/* Keep the selected meeting identifiable while long content scrolls. */
+.mobile-header .mobile-detail-heading{display:grid;gap:2px;min-width:0;flex:1}
+.mobile-header .mobile-detail-heading>span{font-size:9px;line-height:1.25;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.mobile-header .mobile-detail-heading>strong{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:1.5}
+.detail-status-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:9px}
+.detail-status-row .recording-state{margin:0}
+.mobile-app .detail-ai-entry{display:inline-flex;align-items:center;gap:7px;min-height:32px;margin:0;padding:5px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--accent);font:inherit;font-size:11px;font-weight:600}
+.mobile-app .detail-ai-entry:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mobile-app .detail-title{padding-top:22px;padding-bottom:18px}
+.mobile-app .detail-title h1{font-size:25px;line-height:1.4;letter-spacing:-.035em;overflow-wrap:anywhere}
+.mobile-app .detail-title .detail-meta{font-size:11px;line-height:1.7}
+.mobile-app .meeting-recording-tools{margin-top:10px;margin-bottom:18px}
+.mobile-app .reference-workspace-heading>h3{font-size:17px}
+.mobile-app .reference-workspace-heading>p{font-size:12px;margin:6px 0 14px}

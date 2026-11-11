@@ -2,3 +2,16 @@
 
 .note-time-choice label{margin:0;font-size:12px}.note-time-choice input[type=checkbox]{display:inline-block;width:16px;height:16px;padding:0;margin:0;flex:none}.note-text-label textarea{min-height:125px;margin:0}
 .recording-note-match{border-color:var(--accent)!important;scroll-margin-top:80px}.recording-note mark{background:var(--accent-soft);color:var(--ink);border-radius:3px;padding:1px 0}.notes-search-context{font-size:12px;line-height:1.7;color:var(--accent);margin:12px 0}.note-image-unavailable button{display:block;min-height:44px;margin-top:4px}
+
+/* One note card owns one heading and its compact, expandable source cards. */
+.meeting-reference-workspace .notes-eyebrow{display:none}
+.meeting-reference-workspace .notes-heading h2{font-size:16px;margin:0;letter-spacing:-.02em}
+.meeting-reference-workspace .notes-intro{font-size:12px;line-height:1.75;margin:10px 0 18px}
+.meeting-reference-workspace .recording-notes{padding-top:12px}
+.recording-note{padding:18px;border-radius:16px}
+.recording-note .manual-checklist{margin-top:16px}
+.recording-note .note-reading-recent{margin-top:8px;margin-bottom:0}
+.recording-note .note-footer{margin-top:16px;padding-top:10px}
+.mobile-app .manual-evidence summary{padding:13px 12px 10px}
+.mobile-app .manual-evidence-actions{padding:0 12px 11px}
+.mobile-app .manual-evidence button{min-height:36px;font-size:11px}
