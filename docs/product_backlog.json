@@ -133753,7 +133753,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-11T10:17:21+08:00",
+      "updatedAt": "2026-11-11T11:00:11+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -134495,7 +134495,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Finish single normal101 build/inspect exact MSI; no repeated Owner trial after later09:51. When Owner is ready, continue the same guided real-app experience, establish actual device reachability, then original four core groups. Explicitly blocked and deferred speed/acoustics remain unchanged.",
+      "next": "P0 same core: automatic transcription/result presentation for newly received card audio, reuse current persistence/recovery and actual ASR. Explicit manual choices and existing private local-only boundaries stay meaningful; do not just flip every recording to cloud processing.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -137463,8 +137463,8 @@
         }
       },
       "runningWork": {
-        "at": "2026-11-11T10:17:21+08:00",
-        "state": "UNIFIED101_CANDIDATE_BUILD_NO_LIVE_OWNER_TRIAL",
+        "at": "2026-11-11T11:00:11+08:00",
+        "state": "PHYSICAL402_ORIGINAL_CONFIRMED_LOCAL_TRANSCRIPTION_COMPLETED_NO_LIVE_RECORDING",
         "phoneInstalled": "0.1.132",
         "firmwareInstalled": 66791,
         "phoneSourceCommit": "b146ce08dc04680868323e9feb1046e8bd4dbf6d",
@@ -137477,7 +137477,7 @@
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": 399,
+        "ownLatestSession": 402,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\input788-physical-reconciled.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": null,
@@ -137535,7 +137535,7 @@
         "activeSession": null,
         "windowsUsabilitySourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/companion-recorder-usability",
         "windowsUsabilityBase": "28a79cdcaef6cfc1a9326f5fb70c6b6e6955bd5a",
-        "windowsUsabilitySource": "51acd7d98bd2911179690abea7e5516eb2e71cb0",
+        "windowsUsabilitySource": "8c35f17ac36a416e2a7923f6682621985a973e0c",
         "nativeDirectoryReceipt": "E:/CodexData/Companion/.build-cache/recorder-usability083/native-directory/result.json",
         "windowsUsabilityCandidate": "0.1.86",
         "candidateWindows": "0.1.101",
@@ -137562,7 +137562,7 @@
         "installedPhone": "0.1.132",
         "functionalLongControllerPid": null,
         "functionalLongFinishPid": null,
-        "actualPhysicalRecordingState": "NO_NEW_RECORDING_THIS_CUSTOMER_CASE",
+        "actualPhysicalRecordingState": "PHYSICAL402_SAVED_EXACT_RECEIVED_RECLAIMED_OWNER_PLAYBACK_CONFIRMED",
         "lastObservedSession": 399,
         "input089Source": "1025b4bdf81d9fe814baa872ee537415509e0f01",
         "input089BuildRun": 42802045850,
@@ -144216,7 +144216,7 @@
         "physicalControllerPid": 27284,
         "previousPhysicalCase": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\physical-held-final094\\closure-reconciliation.json"
       },
-      "state": "CUSTOMER_ENTRY_REPAIR101_BUILDING_OWNER_DEFERRED",
+      "state": "PHYSICAL_CARD_SHORT_CONFIRMED_P0_AUTOMATIC_TRANSCRIPTION_USABILITY",
       "activeDeliveryGoal20261110": {
         "status": "cleared_by_owner",
         "createdAt": "2026-11-10T20:49:40+08:00",
@@ -144238,8 +144238,8 @@
         "explanation": "User explicitly cleared the persistent Goal; retained only as history. Current guided-use request is an ordinary task; no new Goal created. Old waiting-window claim superseded by real closure receipts."
       },
       "customerConnection20261111": {
-        "at": "2026-11-11T10:26:38+08:00",
-        "state": "ACTUAL_DEVICECONNECT_ROUTE_FIXED_SOURCE_PUSHED_FINAL101_BUILD",
+        "at": "2026-11-11T11:00:11+08:00",
+        "state": "FINAL101_NORMAL_MSI_VERIFIED_FROZEN_NOT_INSTALLED",
         "candidateVersion": "0.1.101",
         "sourceRepair": "de7b76150c3b06a23a2bd1cbe8ee9aaba75ff95f",
         "mergeSource": "c09d6884ff0d0ca6e875a09f527c6a84251a1532",
@@ -144262,7 +144262,57 @@
         "supersededSource": "22df5455e3288b39632348e829fd5041cea895fb",
         "supersededBuild": 42944691822,
         "supersessionReason": "Pre-delivery trace found ordinary DeviceConnect uses RecorderCore and wraps acquisition errors. Final source explicitly marks the user entry and recognizes its exact wrapper; original source was not installed or used for another Owner trial.",
-        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt."
+        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt.",
+        "msiSha256": "dc7c8a7c23331174db7b57975da6aacd415d7ee284dcb24b118897de4e73ea12",
+        "candidateReady": true,
+        "candidateInstalled": false,
+        "physicalCardReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json"
+      },
+      "physicalCardUsability20261111": {
+        "at": "2026-11-11T11:00:11+08:00",
+        "originalWorkItem": "CP04-08 / existing embedded core acceptance",
+        "ownerFeedback": [
+          "为什么在软件点击录音，谁会用软件点击录音，逻辑完全不对",
+          "功能上还行，但使用一头雾水；日常通常只需要转写，不应该要求听原音；参考竞品并做有吸引力的功能"
+        ],
+        "decision": "Physical card START/STOP is primary. Daily path: receive automatically, transcribe using chosen processing mode, show readable text and useful result. Original audio playback stays optional; the one physical audio check is not a retail workflow.",
+        "actualResultReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json",
+        "physicalShortOriginalQualified": true,
+        "ordinaryAutomaticResultWorkflowQualified": false,
+        "concreteGap": "New card-origin recordings are currently defaulted to Manual in recording_wire/receiver/publish.rs (r52). Actual402 stayed pending needs_transcription until the normal local transcription command was explicitly invoked. Existing transcription works; the default policy, automatic orchestration and result presentation are the usability obstacle.",
+        "uiSource": "8c35f17ac36a416e2a7923f6682621985a973e0c",
+        "mergeLatest102": "a94c52f0a776bf58b42840efbb42d616634b39c4",
+        "uiChange": "Primary card section describes physical controls and offers receive. Remote START remains in a secondary disclosure, first-use/unknown-device guidance no longer routes users to software START.",
+        "uiWebBuildPassed": true,
+        "uiSourcePushed": true,
+        "uiInstalled": false,
+        "requiresNextUnifiedDelivery": true,
+        "nextHighestPriority": "P0 same core: automatic transcription/result presentation for newly received card audio, reuse current persistence/recovery and actual ASR. Explicit manual choices and existing private local-only boundaries stay meaningful; do not just flip every recording to cloud processing.",
+        "featureOrder": [
+          "automatic readable result without compulsory playback",
+          "IMU highlight produces emphasized text/context in the result",
+          "useful follow-up items and recording search integrated with existing notes/MCP/desktop input"
+        ],
+        "competitorEvidence": [
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/63429935495065-Automatic-transcription-and-summaries-for-v4-0-x-or-later",
+            "finding": "Current4.x default automatic title, transcript and summary, then ready notification; not the older AutoFlow>200-word policy."
+          },
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/63429919023385-Highlight-a-moment-while-recording-for-v4-0-x-or-later",
+            "finding": "Highlights are surfaced directly in transcript/summary with contextual notes/photos."
+          },
+          {
+            "url": "https://app.hidock.com/",
+            "finding": "Official Mac alpha describes local transcription and local summary; cloud optional. Local processing alone is not a unique market claim."
+          },
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/60726890231449-How-can-I-get-API-access-to-my-Plaud-data",
+            "finding": "Plaud already offers MCP/CLI, so MCP alone should not be presented as an exclusive selling point."
+          }
+        ],
+        "noNewOwnerPromptPending": true,
+        "saleQualified": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -267819,7 +267869,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "Windows102/cf0a496d正常原生构建42944779484已过、匹配MSI读回检查中。Android138已实装原文件同，真实自带Files→分享→Companion冷批量5文件、明确保存音频/图片和坏音频拒绝通过；2h生成PCM实际取消正确但清单丢失原因，139已修源码待编译。继续同一副屏32/公开库，不操作主屏或Owner原库。",
+          "currentCheckpoint": "Owner优先要求审查过去24小时效率；实际交付与执行问题已按原收据核对。上一完整成套099/136保留；手机139已在同一副屏32升级、状态修复尚未复验，103最终连接归并与102同包运行重试在途。当前收敛整条用户路径，不再开启新功能或逐小视觉问题重包。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "ownerCoreAcceptanceCandidate20261109.documentContext20261110.systemInbound20261111",
@@ -271640,6 +271690,88 @@
             },
             "finishedAt": "2026-11-11T07:38:03+08:00",
             "readbackByteIdentical": true
+          },
+          "executionReview20261111": {
+            "at": "2026-11-11T11:11:42+08:00",
+            "ownerQuote": "我想知道你现在前端做了什么了？昨天一天24个小时过去了，好像感觉一直都没有一些什么。你先审查一下你的工作效率先，不是工作效率很不合理。",
+            "window": "2026-11-10T11:03:57+08:00 through 2026-11-11T11:03:57+08:00",
+            "decision": "Actual functional delivery exists, but fragmentation, preparation rework and incomplete visual finish make delivery efficiency inadequate. Review takes priority now; no new feature started for this request.",
+            "verifiedFrontEndOutcomes": [
+              "Android media import ordinary system picker/recording library controls.",
+              "Recording text/image notes and source position, folders/tags/batch management.",
+              "Non-destructive audio trim/split/merge controls.",
+              "Local document material import/read/search and structured spreadsheet rows.",
+              "Recent/created note order, reversible long-text reading, full-note search/edit.",
+              "Meeting reference panes preserve manual and question drafts; recording tools collected.",
+              "Manual follow-up checklists and literal source citations; original source return."
+            ],
+            "lastCompleteInstalledAndPackagedBaseline": {
+              "windows": "0.1.99",
+              "android": "0.1.136",
+              "receipt": "docs/handoffs/20261110-android-media-import/manual-followup-delivered-result.json",
+              "privateArchiveSha256": "53912fcc1d5489ffa5a27dfaf82543d76b9e4fba57bbb1153a110196821f8a1f"
+            },
+            "notCompleted": [
+              "No complete visual redesign/unified premium screen review delivered this24h.",
+              "Latest cross-app incoming lifecycle batch still under acceptance;139 installed does not mean qualified.",
+              "Model/real-meeting quality, physical core and service/release/customer gates remain open."
+            ],
+            "concreteEfficiencyFindings": [
+              {
+                "finding": "Related UI work fragmented",
+                "evidence": "03:48 table,04:48 recent notes,05:37 reference panes,07:42 followup were four adjacent deliveries instead of one coherent detail-page batch."
+              },
+              {
+                "finding": "Avoidable source/test/packaging preparation rework",
+                "evidence": "Builder API and installer recipe failures; test Request fields; title input read via innerText; native picker readiness/regex/unsupported accessibility methods; custom source APK rejected then ungrantable shell URI before actual built-in Files sharing."
+              },
+              {
+                "finding": "Visual acceptance not decisive enough",
+                "evidence": "Actual136 screenshots still show repeated followup headings and tall literal evidence. ManualEvidenceList opens a sole citation by default; original same feedback about long cards/names remains."
+              },
+              {
+                "finding": "Integration boundary not stable before complete delivery",
+                "evidence": "Late final51 actual DeviceConnect repair superseded c09 while102 compiled;103 now integrates exact final route without replacing qualified102 evidence."
+              }
+            ],
+            "measuredBuildExample": {
+              "windowsVersion": "0.1.102",
+              "run": 42944779484,
+              "jobStarted": "2026-11-11T10:15:42+08:00",
+              "jobCompleted": "2026-11-11T10:37:17+08:00",
+              "jobWallSeconds": 1295,
+              "normalBuildStepSeconds": 1049,
+              "notHumanEngineeringTime": true
+            },
+            "timeAccountingBoundary": "No reliable continuous labor allocation; do not invent wasted-time percentage or count versions/tests/reports as features.",
+            "concreteCorrection": "Finish currently open whole receive-save-source-retry/delete/reopen result in a single matched candidate, retaining real failures. Before another product build, finish all known related executable repairs and source integration. Then judge the entire meeting detail UI against real screenshots and original customer observations in one visual batch. Reuse equivalent evidence; use existing ordinary OS entry before new test apps. Report installed/qualified/pending separately.",
+            "preservedWorkpoint": {
+              "windows102RuntimeRetry": {
+                "source": "ca44718d0fc92d067f6be934a13b3e2f218e273b",
+                "previousRun": 42948757481,
+                "causeUnknown": "PDF extraction action did not produce progress/error/result; selected-reader-ready verifier retry on same exact102 MSI, not a product fix claim."
+              },
+              "windows103": {
+                "source": "e331a366593cab022807779d1343e6b7a85b6c67",
+                "scope": "Final51 actual product DeviceConnect repair plus102 inbound lifecycle; native build already started."
+              },
+              "android139": {
+                "source": "000d553715240860f675b7ae9f416510f5d7c558",
+                "buildRun": 42948623866,
+                "installed": true,
+                "qualified": false,
+                "scope": "Per-receipt terminal cancel/failure/success durability; native backend/model/decoder unchanged."
+              },
+              "phone": {
+                "ownedDisplay": 32,
+                "profile": "E:/CodexData/Companion/.build-cache/android-media-import20261110/phone138",
+                "publicLibrary": "7ebdda83-7869-49a7-83fd-86dc68048493",
+                "mainDisplayOperated": false,
+                "holdActive": true,
+                "incomingReceiptsStillPublicCase": true,
+                "next": "139 same-URI expiry/regrant/retry, durable cancel/bad reason, original hashes, scoped purge, ordinary dismissal and original-library/session return. Use built-in Files, not blocked QA source app or shell URI delegation."
+              }
+            }
           }
         }
       },
@@ -277120,8 +277252,8 @@
       "pendingUnifiedBuildRun": 42944779484,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00",
       "recorderConnection101Pending": {
-        "at": "2026-11-11T10:26:38+08:00",
-        "state": "ACTUAL_DEVICECONNECT_ROUTE_FIXED_SOURCE_PUSHED_FINAL101_BUILD",
+        "at": "2026-11-11T11:00:11+08:00",
+        "state": "FINAL101_NORMAL_MSI_VERIFIED_FROZEN_NOT_INSTALLED",
         "candidateVersion": "0.1.101",
         "sourceRepair": "de7b76150c3b06a23a2bd1cbe8ee9aaba75ff95f",
         "mergeSource": "c09d6884ff0d0ca6e875a09f527c6a84251a1532",
@@ -277144,7 +277276,57 @@
         "supersededSource": "22df5455e3288b39632348e829fd5041cea895fb",
         "supersededBuild": 42944691822,
         "supersessionReason": "Pre-delivery trace found ordinary DeviceConnect uses RecorderCore and wraps acquisition errors. Final source explicitly marks the user entry and recognizes its exact wrapper; original source was not installed or used for another Owner trial.",
-        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt."
+        "preDeliveryRegression": "Actual product wrapper reproduced generic alert on old source; new source passes. No extra Owner or board attempt.",
+        "msiSha256": "dc7c8a7c23331174db7b57975da6aacd415d7ee284dcb24b118897de4e73ea12",
+        "candidateReady": true,
+        "candidateInstalled": false,
+        "physicalCardReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json"
+      },
+      "physicalCardPrimaryPending": {
+        "at": "2026-11-11T11:00:11+08:00",
+        "originalWorkItem": "CP04-08 / existing embedded core acceptance",
+        "ownerFeedback": [
+          "为什么在软件点击录音，谁会用软件点击录音，逻辑完全不对",
+          "功能上还行，但使用一头雾水；日常通常只需要转写，不应该要求听原音；参考竞品并做有吸引力的功能"
+        ],
+        "decision": "Physical card START/STOP is primary. Daily path: receive automatically, transcribe using chosen processing mode, show readable text and useful result. Original audio playback stays optional; the one physical audio check is not a retail workflow.",
+        "actualResultReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\customer-20261111\\physical-card-and-local-transcription.json",
+        "physicalShortOriginalQualified": true,
+        "ordinaryAutomaticResultWorkflowQualified": false,
+        "concreteGap": "New card-origin recordings are currently defaulted to Manual in recording_wire/receiver/publish.rs (r52). Actual402 stayed pending needs_transcription until the normal local transcription command was explicitly invoked. Existing transcription works; the default policy, automatic orchestration and result presentation are the usability obstacle.",
+        "uiSource": "8c35f17ac36a416e2a7923f6682621985a973e0c",
+        "mergeLatest102": "a94c52f0a776bf58b42840efbb42d616634b39c4",
+        "uiChange": "Primary card section describes physical controls and offers receive. Remote START remains in a secondary disclosure, first-use/unknown-device guidance no longer routes users to software START.",
+        "uiWebBuildPassed": true,
+        "uiSourcePushed": true,
+        "uiInstalled": false,
+        "requiresNextUnifiedDelivery": true,
+        "nextHighestPriority": "P0 same core: automatic transcription/result presentation for newly received card audio, reuse current persistence/recovery and actual ASR. Explicit manual choices and existing private local-only boundaries stay meaningful; do not just flip every recording to cloud processing.",
+        "featureOrder": [
+          "automatic readable result without compulsory playback",
+          "IMU highlight produces emphasized text/context in the result",
+          "useful follow-up items and recording search integrated with existing notes/MCP/desktop input"
+        ],
+        "competitorEvidence": [
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/63429935495065-Automatic-transcription-and-summaries-for-v4-0-x-or-later",
+            "finding": "Current4.x default automatic title, transcript and summary, then ready notification; not the older AutoFlow>200-word policy."
+          },
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/63429919023385-Highlight-a-moment-while-recording-for-v4-0-x-or-later",
+            "finding": "Highlights are surfaced directly in transcript/summary with contextual notes/photos."
+          },
+          {
+            "url": "https://app.hidock.com/",
+            "finding": "Official Mac alpha describes local transcription and local summary; cloud optional. Local processing alone is not a unique market claim."
+          },
+          {
+            "url": "https://support.plaud.ai/hc/en-us/articles/60726890231449-How-can-I-get-API-access-to-my-Plaud-data",
+            "finding": "Plaud already offers MCP/CLI, so MCP alone should not be presented as an exclusive selling point."
+          }
+        ],
+        "noNewOwnerPromptPending": true,
+        "saleQualified": false
       }
     }
   }
