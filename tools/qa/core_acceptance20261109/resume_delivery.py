@@ -28,6 +28,9 @@ def verify_step(root,step):
  value=load(path)
  for field,expected in step["equals"].items():
   if get(value,field)!=expected:return False,"receipt differs: "+field
+ if step.get("boundToFreezeSource"):
+  frozen=load(inside(root,step["job"]["freeze"]))
+  if get(value,step["boundToFreezeSource"])!=frozen["sourceCommit"]:return False,"receipt belongs to a different verifier source"
  if "binary" in step:
   binary=step["binary"];target=Path(get(value,binary["pathField"]));expected=get(value,binary["shaField"])
   if not target.is_file():return False,"matched binary missing"

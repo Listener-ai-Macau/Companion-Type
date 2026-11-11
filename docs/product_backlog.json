@@ -269977,7 +269977,18 @@
                       "field": "runtimeRun"
                     },
                     "documents"
-                  ]
+                  ],
+                  "boundToFreezeSource": "testSourceCommit"
+                },
+                {
+                  "id": "windows-actual-detail-presentation",
+                  "receipt": "windows106/manual-followup-ui.json",
+                  "equals": {
+                    "state": "ORDINARY_PACKAGED_MANUAL_FOLLOWUP_LITERAL_EVIDENCE_REOPEN_SOURCE_REMOVAL_PASSED",
+                    "compactReference": true,
+                    "directAiEntryUsed": true
+                  },
+                  "prepare": "Read the actual matching106 result and resolve a missing compact-reference or direct-AI user entry before installing. Do not infer presentation from broad runtime success."
                 },
                 {
                   "id": "windows-quiet-upgrade",
@@ -270027,7 +270038,13 @@
             "windowsPayloadVerified": true,
             "windowsPrivateInstallerAsset": 734232883,
             "androidPrivateInstallerAsset": 734233262,
-            "nativeModelsRun": false
+            "nativeModelsRun": false,
+            "windows106RuntimeAttempt1": {
+              "run": 42964751088,
+              "state": "BROAD_RUNTIME_PASS_DIRECT_AI_CHECK_NOT_QUALIFIED",
+              "scope": "Existing actual question-entry label needs the correct verifier; exact106 MSI retained and not installed.",
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows106\\runtime-attempt1-decision.json"
+            }
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -277903,19 +277920,22 @@
           "physicalAutomaticAsrScopeUnchanged": true
         },
         "customerFollowthrough107": {
-          "at": "2026-11-11T13:15:55+08:00",
-          "state": "ONE_NORMAL107_BUILD_IN_PROGRESS_WITH106_SOURCE",
+          "at": "2026-11-11T13:24:24+08:00",
+          "state": "FINAL_NORMAL107_BUILD_QUEUED_RECORDED_REAL_PROVIDER_REPLAY_PASSED",
           "version": "0.1.107",
           "branch": "work/recorder-core-integration-20261110",
           "feedback": "E:\\CodexData\\Companion\\.build-cache\\customer-followthrough107\\feedback-and-decisions.json",
           "retainsInstalled105Source": "91d246be5871c62410daa62ede57139652b259c6",
           "mustMergeReserved106BeforePackaging": false,
           "installed": false,
-          "sourceCommit": "63601388ed4157d752cbc1d2c6e7064624e26938",
-          "buildRun": 42963798934,
+          "sourceCommit": "a4fcfb21ef265c0374b644ea3cb7b11b3b0ad103",
+          "buildRun": 42965523671,
           "retains106Source": "41f7909c",
           "affectedLocalNativeChecksPassed": true,
-          "affectedLocalUiChecksPassed": true
+          "affectedLocalUiChecksPassed": true,
+          "supersededBuild": 42963798934,
+          "supersessionReason": "Real provider action-local source quotes were ignored and valid subtasks dropped. Earlier build canceled before install; exact real response retained for replay.",
+          "recordedRealProviderReplayPassed": true
         }
       },
       "pendingUnifiedDeliveryState": "INSTALLED104_INCORPORATES_PRIOR103_SOURCE"

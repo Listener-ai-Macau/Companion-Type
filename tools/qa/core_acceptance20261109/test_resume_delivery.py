@@ -51,4 +51,11 @@ class DeliveryContinuationTests(unittest.TestCase):
  def test_actual_phone_or_customer_stage_without_a_command_requires_engineering(self):
   self.config["steps"][0].pop("command");self.config["steps"][0]["prepare"]="Use the prepared ordinary public entry"
   result=self.state();self.assertEqual(result["kind"],"ENGINEERING_ACTION");self.assertNotIn("command",result)
+ def test_same_product_receipt_from_an_old_verifier_is_not_reused(self):
+  self.job();step=self.config["steps"][0];step["boundToFreezeSource"]="testSourceCommit"
+  self.write("saved.json",{"source":"frozen","state":"PASSED","testSourceCommit":"older-verifier"})
+  query=lambda handle:{"head_sha":"frozen","status":"completed","conclusion":"success"}
+  self.assertEqual(self.state(query)["kind"],"FAILED")
+  self.write("saved.json",{"source":"frozen","state":"PASSED","testSourceCommit":"frozen"})
+  self.assertEqual(self.state(query)["kind"],"BATCH_DELIVERED")
 if __name__=="__main__":unittest.main()

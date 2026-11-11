@@ -5,7 +5,8 @@ from pathlib import Path
 from datetime import datetime
 import ast,hashlib,json,os,re,shlex,subprocess,sys,time,psutil,shutil
 code=int(sys.argv[1]);assert 140<=code<=999
-R=Path("C:/Users/Billy/Desktop/Denzic/Companion");C=Path(__file__).parent/("android"+str(code));P=Path("E:/CodexData/Companion/.build-cache/android-media-import20261110")/("phone"+str(code))
+SESSION=os.environ.get("COMPANION_PHONE_QA_SESSION");assert not SESSION or re.fullmatch("customer-edit"+str(code)+r"-[0-9]{8}",SESSION)
+R=Path("C:/Users/Billy/Desktop/Denzic/Companion");C=Path(__file__).parent/(("customer-edit"+str(code)) if SESSION else ("android"+str(code)));P=Path("E:/CodexData/Companion/.build-cache/android-media-import20261110")/(SESSION or ("phone"+str(code)))
 A=R/".cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe";SERIAL="d6bd213d";PKG="com.denzic.companion.app"
 tree=ast.parse((R/"docs/handoffs/20261109-core-acceptance/android110/phone_session.py").read_text(encoding="utf8"))
 exec(compile(ast.Module(body=[n for n in tree.body if isinstance(n,ast.FunctionDef)],type_ignores=[]),"retained-owned-display-primitives","exec"))
@@ -15,13 +16,13 @@ def files():return adb(["shell","run-as",PKG,"sh","-c","find files -type f -prin
 def hold(active):
  p=R/"docs/product_backlog.json";raw=p.read_bytes();d=json.loads(raw);h=d["recorder_core"]["speed_investigation_handoff"]["endpointSelection"]["ownerPhoneHold"]
  if active:
-  assert not h["active"];h.update(active=True,serial=SERIAL,reservedFor=f"Companion{code} public software acceptance",requestedAt=now(),scope="Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.")
+  assert not h["active"];h.update(active=True,serial=SERIAL,reservedFor=f"Companion{code} public software acceptance"+(" "+SESSION if SESSION else ""),requestedAt=now(),scope="Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.")
  else:
-  assert h["active"] and h["reservedFor"]==f"Companion{code} public software acceptance";h.update(active=False,releasedAt=now(),releaseReason="Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.")
+  assert h["active"] and h["reservedFor"]==f"Companion{code} public software acceptance"+(" "+SESSION if SESSION else "");h.update(active=False,releasedAt=now(),releaseReason="Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.")
  tmp=p.with_suffix(".customer-phone.tmp");tmp.write_bytes((json.dumps(d,ensure_ascii=False,indent=2)+"\n").replace("\n","\r\n").encode());assert p.read_bytes()==raw;tmp.replace(p)
 action=sys.argv[2]
 if action=="prepare":
- assert version()<code and not adb(["shell","pidof",PKG],required=False).strip();P.mkdir(exist_ok=False);assert C.is_dir()
+ assert (version()==code if SESSION else version()<code) and not adb(["shell","pidof",PKG],required=False).strip();P.mkdir(exist_ok=False);assert C.is_dir()
  index=adb(["shell","run-as",PKG,"cat","files/companion-library-index.json"]);assert json.loads(index)["activeId"]=="original";(P/"original-index.private.json").write_bytes(index.encode());(P/"before-files.private.sha256").write_bytes(files().encode())
  assert not adb(["shell","pidof",PKG],required=False).strip();hold(True)
  save(P/"preparation.json",{"at":now(),"version":version(),"mainFingerprint":primary(),"oldFiles":len(hashes((P/"before-files.private.sha256").read_text()))})

@@ -2,7 +2,8 @@
 from pathlib import Path
 import subprocess,os,json,time,sys,re
 code=sys.argv[1];assert re.fullmatch(r"[1-9][0-9]{2}",code) and int(code)>=140
-C=Path(__file__).parent;P=Path("E:/CodexData/Companion/.build-cache/android-media-import20261110")/("phone"+code)
+SESSION=os.environ.get("COMPANION_PHONE_QA_SESSION");assert not SESSION or re.fullmatch("customer-edit"+code+r"-[0-9]{8}",SESSION)
+C=Path(__file__).parent;O=C/(("customer-edit"+code) if SESSION else ("android"+code));P=Path("E:/CodexData/Companion/.build-cache/android-media-import20261110")/(SESSION or ("phone"+code))
 A=Path("C:/Users/Billy/Desktop/Denzic/Companion/.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe")
 env={**os.environ,"COMPANION_PHONE_QA_CODE":code}
 def index():return json.loads(subprocess.check_output([str(A),"-s","d6bd213d","shell","run-as","com.denzic.companion.app","cat","files/companion-library-index.json"],text=True,encoding="utf8"))
@@ -30,5 +31,5 @@ for _ in range(40):
  if len(ids)==1 and current["activeId"]==ids[0]:break
  time.sleep(.25)
 assert len(ids)==1 and current["activeId"]==ids[0];assert [x for x in current["libraries"] if x["id"] in known]==before["libraries"]
-path=C/("android"+code)/"public-libraries.json";proof=json.loads(path.read_text()) if path.exists() else {"ids":[]};proof["ids"]+=ids;proof[role]=ids[0];path.write_bytes((json.dumps(proof,ensure_ascii=False,indent=2)+"\n").encode())
+path=O/"public-libraries.json";proof=json.loads(path.read_text()) if path.exists() else {"ids":[]};proof["ids"]+=ids;proof[role]=ids[0];path.write_bytes((json.dumps(proof,ensure_ascii=False,indent=2)+"\n").encode())
 print(json.dumps({"state":"FRESH_PUBLIC_SOFTWARE_LIBRARY_RESTORED_BY_ORDINARY_PICKER","activeId":ids[0],"allEarlierLibraryEntriesRetained":True,"display":display}))

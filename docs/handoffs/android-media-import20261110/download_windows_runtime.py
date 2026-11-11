@@ -11,8 +11,8 @@ fresh=json.loads(gh(["api","-H","Cache-Control: no-cache","repos/Listener-ai-Mac
 assert run=={"conclusion":"success","headSha":freeze["sourceCommit"],"status":"completed"},run
 listing=json.loads(gh(["api","repos/Listener-ai-Macau/Companion-Type/actions/runs/"+str(run_id)+"/artifacts"]))
 asset=next(a for a in listing["artifacts"] if a["name"]=="companion-context-"+freeze["sourceCommit"])
-archive=Q/("windows"+code+"-runtime.zip");proof=download("Listener-ai-Macau/Companion-Type",asset["id"],archive,asset["size_in_bytes"],asset["digest"].removeprefix("sha256:"),kind="artifact")
-dest=Q/("windows"+code+"-runtime")
+archive=Q/("windows"+code+"-runtime-"+freeze["sourceCommit"][:12]+".zip");proof=download("Listener-ai-Macau/Companion-Type",asset["id"],archive,asset["size_in_bytes"],asset["digest"].removeprefix("sha256:"),kind="artifact")
+dest=Q/("windows"+code+"-runtime-"+freeze["sourceCommit"][:12])
 if not dest.exists():
  dest.mkdir()
  with zipfile.ZipFile(archive) as z:
@@ -20,6 +20,7 @@ if not dest.exists():
    assert not f.filename.startswith(("/","\\")) and ":" not in f.filename and ".." not in Path(f.filename).parts and (dest/f.filename).resolve().is_relative_to(dest.resolve())
   z.extractall(dest)
 result=json.loads((dest/"result.json").read_text(encoding="utf8"));assert result["state"]=="WINDOWS"+code+("_NATIVE_AUDIO_EDIT_COMPLETE_WORKFLOW_PASSED" if mode=="editing" else "_NATIVE_DOCUMENT_CONTEXT_UI_BACKUP_RESTORE_AND_EXACT_PURGE_PASSED")
+assert result["testSourceCommit"]==freeze["sourceCommit"],"Runtime artifact belongs to another verifier source"
 assert result["appSourceCommit"]==v["sourceCommit"] and result["exactMsiExeSha256"]==v["embeddedExeSha256"] and result["exactMsiDllSha256"]==v["dllSha256"] and result["frozenNativeBytesMatchedApprovedMsi"]
 cases=list((dest/"workflow-evidence").iterdir())
 if mode=="documents" and int(code)>=100:

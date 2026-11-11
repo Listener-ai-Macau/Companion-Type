@@ -1,0 +1,10 @@
+{
+  "state": "BROAD106_RUNTIME_PASSED_DIRECT_AI_ENTRY_SELECTOR_NOT_QUALIFIED",
+  "run": 42964751088,
+  "verifierSource": "02106afae43c5a2d57b7f366032eac8f6c7f8fc7",
+  "actualAppSource": "41f7909ceb8cbfe3c843bf52467a65eba2b396d1",
+  "nativeRebuild": false,
+  "msiUnchanged": true,
+  "finding": "Verifier looked for an AI\u52a9\u624b button; frozen product existing direct action is \u95ee\u8fd9\u573a\u4f1a\u8bae. Only settings explanatory text was renamed. Actual route needs ordinary click before qualification; preserve false field.",
+  "decision": "Use exact existing meeting-tool action, require new AI\u52a9\u624b pane selected. Same106 MSI, no speculative new native build. Runtime cache now includes verifier source and checks testSourceCommit, preventing same-version retry from reading an old extraction."
+}
