@@ -53,7 +53,7 @@ body:has(.ct-windows.ct-theme-dark){background:#111116;color:#efedf2}.ct-windows
 .ct-windows.ct-theme-dark .ct-delete-confirm :is(p,strong){color:#f4e5e3!important}
 .ct-windows.ct-theme-dark .ct-delete-confirm .ct-action-danger{background:#67333b!important;border-color:#a9616a!important;color:#fff1ee!important}
 .ct-windows.ct-theme-dark :is(.ct-use-help,.ct-use-help-heading){background:#1b1b21!important;border-color:#393741!important;color:#e8e5ee!important}
-.ct-windows.ct-theme-dark .ct-use-help-key{background:#302c41!important;color:#e8e5ee!important}
+.ct-windows.ct-theme-dark :is(.ct-use-help-key,.ct-help-start){background:#302c41!important;color:#e8e5ee!important}
 .ct-windows.ct-theme-dark .ct-use-help details{border-color:#393741!important}
 .ct-windows.ct-theme-dark .ct-action-danger{background:#3a252a!important;border-color:#9b6168!important;color:#ffd5d0!important}
 .ct-windows.ct-theme-dark .ct-library-empty>svg{background:#302c41!important;border-color:#49415f!important;color:#c2b6ff!important}

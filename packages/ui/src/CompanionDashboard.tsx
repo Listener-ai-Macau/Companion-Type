@@ -355,11 +355,13 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '会中问题', Keywords: '关键词' };
   const envelope = noteContext ? minutesSourceEnvelope(noteContext) : '';
   if (!markdown.startsWith(envelope)) return null;
-  const headings = [...markdown.slice(envelope.length).matchAll(/^## ([^\r\n]+)\r?$/gm)].map(match=>({
-    key:match[1], index:envelope.length+match.index!, contentStart:envelope.length+match.index!+match[0].length,
+  const template = /^> 整理视角：[^\r\n]+\r?\n\r?\n/.exec(markdown.slice(envelope.length))?.[0] ?? '';
+  const offset = envelope.length + template.length;
+  const headings = [...markdown.slice(offset).matchAll(/^## ([^\r\n]+)\r?$/gm)].map(match=>({
+    key:match[1], index:offset+match.index!, contentStart:offset+match.index!+match[0].length,
   }));
   if (!headings.length) return null;
-  const prefix = markdown.slice(envelope.length, headings[0].index);
+  const prefix = markdown.slice(offset, headings[0].index);
   if (!(manual && prefix==='' && headings.some(heading=>heading.key==='Action Items')) && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
   return headings.map((match, index) => {
     const start = match.contentStart;
@@ -380,8 +382,8 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   if (!fields&&calendarOnly)return <p className="ct-step-warn">清单结构已变化，请取消后重新选择事项；旧输入仍保留。</p>;
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
     aria-label={label} spellCheck={false} disabled={disabled} />;
-  const primary = fields.some(item=>item.key==='Summary'||item.key==='Action Items')
-    ? fields.filter(item=>item.key==='Summary'||item.key==='Action Items') : fields.slice(0,1);
+  const primary = fields.some(item=>item.key==='Action Items') ? fields.filter(item=>item.key==='Action Items')
+    : fields.some(item=>item.key==='Summary') ? fields.filter(item=>item.key==='Summary') : fields.slice(0,1);
   const secondary = fields.filter(item=>!primary.includes(item));
   const requestedOffset=calendarLineIndex===undefined?undefined:markdown.split('\n').slice(0,calendarLineIndex).reduce((count,line)=>count+line.length+1,0);
   const calendarTarget=requestedOffset===undefined?fields.find(item=>item.key==='Action Items'&&item.value.split(/\r?\n/).some(line=>line.trim()&&!/^\s*\[[xX]\]\s/.test(line)))
@@ -1141,6 +1143,11 @@ export function CompanionDashboard({
   const openDeviceRecording = () => {
     setShowWorkflow(false);
     navigatePage('device', 'ct-device-recording-page');
+  };
+  const openAudioImport = () => {setShowWorkflow(false);navigatePage('device','ct-audio-import');};
+  const openContentExport = () => {
+    const panel=document.getElementById('ct-meeting-export') as HTMLDetailsElement|null;
+    if(panel){panel.open=true;panel.querySelector<HTMLElement>('summary')?.focus({preventScroll:true});panel.scrollIntoView({block:'start',behavior:'auto'});}
   };
   const openWorkflow = () => {
     setShowWorkflow(true);
@@ -2073,6 +2080,7 @@ export function CompanionDashboard({
           <div className="ct-button-row">
           <button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
             <Mic size={15} />连接录音卡</button>
+          {surface==='windows' && onImportAudio ? <button type="button" className="ct-action" onClick={openAudioImport}>导入已有音频</button> : null}
           <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
             onClick={() => setOnlyPendingSessions((value) => !value)}>{onlyPendingSessions ? '显示全部录音' : '只看待整理'}</button>
           </div>
@@ -2366,7 +2374,8 @@ export function CompanionDashboard({
                 {!editingMinutes && hasMinutes ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
                   onClick={()=>void exportMeeting(!minutesIncomplete && savedActions(minutesMarkdown).length>0?'todotxt':'markdown')}><Download size={15}/>
-                  {minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出清单':'导出整理'}</button> : null}
+                  {minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出待办 TXT':'导出整理'}</button> : null}
+                {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={openContentExport}>预览并导出完整内容</button> : null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale||minutesIncomplete}
                   title={minutesIncomplete ? '整理完成后才能导出整场待办' : '把未完成事项和已确认时间写成日程文件，导入常用日历后核对提醒'}
@@ -2376,7 +2385,7 @@ export function CompanionDashboard({
               </div>
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
-              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '清单不自动提醒；需要时导出到日历，再核对提醒设置。'}</p> : null}
+              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '待办 TXT 只包含清单事项。要带上摘要、讨论安排、待确认内容或 AI 材料，可选择“预览并导出完整内容”。清单不自动提醒；需要时导出到日历。'}</p> : null}
               {!editingMinutes ? <CompanionCalendarCopies key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`} session={selectedSession} mode={minutesViewMode} markdown={minutesMarkdown}/> : null}
               {calendarReviewVisible&&calendarExportReview?<div ref={calendarReviewElement} className="ct-calendar-export-review" role="region" aria-label="日历导出预览" tabIndex={-1}>
                 <h3>确认日历日程与提醒</h3>
@@ -2800,7 +2809,7 @@ export function CompanionDashboard({
           <Mic size={16}/><span>开始录电脑会议</span></button></div>
       </section> : null}
 
-      {surface === 'windows' && onImportAudio ? <section className="ct-recording-activity" aria-label="导入已有音频">
+      {surface === 'windows' && onImportAudio ? <section id="ct-audio-import" tabIndex={-1} className="ct-recording-activity" aria-label="导入已有音频">
         <div><strong>导入已有音频</strong><p>选择 WAV、MP3、M4A、AAC、FLAC 或 OGG（Vorbis），保存后可回听、转写并整理纪要。原文件保留，回听与转写使用本机生成的单声道副本；可单独保存原文件。</p>
           {importAudioMessage ? <p role="status">{importAudioMessage}</p> : null}</div>
         <button type="button" className="ct-action" disabled={importingAudio || storageBlocked}
@@ -3895,7 +3904,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {source.approximateTiming?'约 ':''}{Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
-          id={`${lookupId}-source-${index}`} onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
+          id={`${lookupId}-source-${index}`} title="还没有匹配到可直接跳转的唯一原文片段，点击后可搜索对照。定位状态不等于内容已经核实。" onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;

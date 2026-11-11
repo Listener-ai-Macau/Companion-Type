@@ -74,6 +74,7 @@ try:
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
  record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['initial_unreachable_tests','backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
  record['affectedTestBinary']['filters']+=['local_card_processing','manual_processing_policy','backend::recording_wire::receiver::local::tests','backend::recorder_control::local_adoption::tests','backend::persistence::tests','backend::product_settings::tests','backend::transcription::tests'];save()
+ record['affectedTestBinary']['filters']+=['customer_followthrough','backend::minutes::tests','backend::minutes::short_evidence::tests'];save()
  for scope in record['affectedTestBinary']['filters']:
   run(scope.replace('::','-')+'-context-regression',[str(test),scope,'--test-threads=1'],N)
  run('audio-edit-native-library-isolated',[str(test),'backend::audio_editing::tests::derived_recording_exact_pcm_backup_restore_and_scoped_purge','--ignored','--exact','--test-threads=1'],N)
@@ -82,7 +83,7 @@ try:
  # All affected checks remain unchanged; the shipped pair is still built last
  # by the same locked normal-release command, then independently inspected.
  record['state']='BUILDING_NORMAL_RELEASE';save()
- run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness'])
+ run('card-to-text-ui',['node','tools/test_companion_setup_render.mjs','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_journey','test_windows_device_actions','test_windows_settings_navigation','test_recording_readiness','test_companion_result_order'])
  run('connection-ui-build',['node',str(S/'node_modules/esbuild/bin/esbuild'),'tools/test_connection_unavailable.ts','--bundle','--platform=node','--format=cjs','--outfile='+str(C/'connection-ui.cjs')])
  run('connection-ui',['node',str(C/'connection-ui.cjs')])
  run('cargo-release',['cargo','+1.95.0','build','--release','--locked'],N)

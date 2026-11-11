@@ -24,6 +24,6 @@ export function actionFollowupText(items:readonly ReviewAction[],title:string):s
  const groups=[{title:'待跟进',test:(item:ReviewAction)=>!item.completed&&!item.needsReview},{title:'待核对事项',test:(item:ReviewAction)=>!item.completed&&item.needsReview},{title:'已标记完成',test:(item:ReviewAction)=>item.completed}];
  return ['会议跟进草稿'+(title.trim()?' · '+title.trim():''),'根据当前筛选的已保存事项整理，请核对后使用。',...groups.flatMap(group=>{
   const rows=items.filter(group.test);if(!rows.length)return [];
-  return [group.title,...rows.map((item,index)=>`${index+1}. ${item.text}\n   负责人：${item.owner?.trim()?item.owner:'待确认'}；时间：${item.due?.trim()?item.due:'未明确'}${item.needsReview&&item.completed?'\n   此项仍保留待核对标记。':''}`)];
+  return [group.title,...rows.map((item,index)=>`${index+1}. ${item.text}\n   负责人：${item.owner?.trim()?item.owner:'待确认'}；时间：${item.due?.trim()?item.due:'未单独填写，请以事项原文为准'}${item.needsReview&&item.completed?'\n   此项仍保留待核对标记。':''}`)];
  })].join('\n\n');
 }

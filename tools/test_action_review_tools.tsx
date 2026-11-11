@@ -37,7 +37,7 @@ assert.equal(tree.root.findAll(n=>n.type==='button'&&n.props['data-row']!==undef
 assert.ok(!text(tree.toJSON()).includes('当前筛选事项的跟进文字已复制'),'old clipboard success is bound to its source selection');
 act(()=>button('清除筛选').props.onClick());select('筛选待补信息','review');
 draft=tree.root.findByType('textarea').props.value;
-assert.match(draft,/待核对事项/);assert.match(draft,/准备样品/);assert.match(draft,/时间：未明确/);assert.ok(!draft.includes('保留条件：'));
+assert.match(draft,/待核对事项/);assert.match(draft,/准备样品/);assert.match(draft,/时间：未单独填写，请以事项原文为准/);assert.ok(!draft.includes('保留条件：'));
 const pending=savedActions(markdown)[1];act(()=>tree.root.findByProps({'data-row':pending.lineIndex}).props.onClick());update();
 assert.ok(markdown.includes('- [x] 待核对：准备样品 (owner: 小陈)'));
 assert.equal(savedActions(markdown)[1].lineIndex,pending.lineIndex,'saved identity survives filtering');

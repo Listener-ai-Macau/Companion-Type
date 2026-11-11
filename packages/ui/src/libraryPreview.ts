@@ -1,5 +1,6 @@
 import {nativeActionParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
+import {materialAnswerText,readMaterialNote} from './aiMaterialNote';
 import {companionReviewedTranscript,companionSessionHasFinalTranscript} from '@companion-type/core';
 import type {CompanionV1HostSession} from '../../core/src/companionV1';
 
@@ -49,7 +50,11 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
   const query=rawQuery.trim().toLocaleLowerCase();
   if(!query)return{text:excerpt(reviewed),label:originalLabel};
   const candidates:Candidate[]=[
-    ...(session.meetingNotes??[]).flatMap(note=>[{text:note.text,label:note.kind==='followup'?'人工跟进':'补充'},...(note.references??[]).map(reference=>({text:reference.name+'\n'+reference.quote,label:'人工引用'}))]),
+    ...(session.meetingNotes??[]).flatMap(note=>{
+      const answer=materialAnswerText(note),material=readMaterialNote(note);
+      return [...(answer?[{text:answer,label:'AI材料'}]:[]),{text:note.text,label:material?'AI材料':note.kind==='followup'?'人工跟进':'补充'},
+        ...(note.references??[]).map(reference=>({text:reference.name+'\n'+reference.quote,label:'人工引用'}))];
+    }),
     {text:reviewed,label:originalLabel},
     ...(session.transcriptText!==reviewed?[{text:session.transcriptText,label:'原始转写'}]:[]),
   ];
