@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-12T20:17:09.181+08:00",
+  "state": "OWNER_DEFERRED_WITHOUT_START",
+  "version": "0.1.113",
+  "firmwareVersion": 66827,
+  "uiVersion": 85,
+  "sourceCommit": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "controllerPid": 7388,
+  "boardLease": false,
+  "hostStartCommands": 0,
+  "privateContentPrinted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "softwareOwnerAccepted": false,
+  "twoHourRecordingObserved": false,
+  "guidedStepsTotal": 12,
+  "guidedStepsVisited": [],
+  "guidedRouteReachedEnd": false,
+  "promptPid": 8392,
+  "ownerResponse": {
+    "selected": "Cancel",
+    "text": "",
+    "spoken_text": null,
+    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows113-fw66827-20261112\\owner-feedback.txt"
+  },
+  "finishedAt": "2026-11-12T20:28:59.490+08:00"
+}
