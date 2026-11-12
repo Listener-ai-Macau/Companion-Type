@@ -144,7 +144,7 @@ class WholeUseTests(unittest.TestCase):
 
     def test_initially_busy_board_does_not_open_another_owner_window(self):
         ready=dict(ready=False,version='0.1.110',sourceCommit='frozen',blockers=[module.BOARD_BUSY])
-        with patch.object(module,'prepare',return_value=ready),patch.object(module.subprocess,'Popen')as popen,patch('sys.argv',['owner_total.py','--run']),contextlib.redirect_stdout(io.StringIO()):
+        with patch.object(module,'current_batch',return_value=Path('frozen-batch')),patch.object(module,'prepare',return_value=ready),patch.object(module.subprocess,'Popen')as popen,patch('sys.argv',['owner_total.py','--run']),contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(module.main(),2)
             popen.assert_not_called()
 

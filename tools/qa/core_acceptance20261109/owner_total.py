@@ -46,6 +46,15 @@ def app_pids():
             if (p.info['name'] or '').lower() == APP_NAME]
 
 
+def current_batch(project):
+    data = json.loads((project / 'docs/product_backlog.json').read_text(encoding='utf-8'))
+    active = data['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110']
+    receipt = Path(active['lastWindowsSoftwareDeliveryReceipt']).resolve()
+    if not receipt.is_relative_to((project / 'docs/handoffs').resolve()) or not receipt.is_file():
+        raise ValueError('Current Windows delivery receipt is missing or outside this project.')
+    return receipt.parent
+
+
 def start_requested(events, prompt_pid):
     """Only the actual auxiliary-button event grants readiness, never its text."""
     for line in events.splitlines():
@@ -182,7 +191,7 @@ def main():
     mode.add_argument('--run', action='store_true')
     args = parser.parse_args()
     project = args.project_root.resolve()
-    batch = (args.batch or project / 'docs/handoffs/20261112-product-closure').resolve()
+    batch = (args.batch or current_batch(project)).resolve()
     readiness = prepare(project, batch, args.installed_dir)
     if not args.run or not readiness['ready']:
         print(json.dumps(readiness, ensure_ascii=False, indent=2))
