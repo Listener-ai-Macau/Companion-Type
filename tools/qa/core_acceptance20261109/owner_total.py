@@ -97,7 +97,22 @@ def prepare(project, batch, installed_dir):
         blockers.append('Candidate version is not a known Windows product version.')
     if runtime.get('appVersion') != version or runtime.get('appSourceCommit') != verification['sourceCommit']:
         blockers.append('Native journey and inspected candidate do not match.')
-    if runtime.get('nativeUiExitCode') != 0 or runtime.get('nativeUiState') != 'REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED':
+    direct_journey = runtime.get('nativeUiState') == 'REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED'
+    scoped_journey = False
+    if runtime.get('nativeUiState') == 'REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED':
+        reused = runtime.get('unchangedOsHandoffEvidence', {})
+        prior_path = batch.parent / 'runtime-result.json'
+        prior = json.loads(prior_path.read_text(encoding='utf-8')) if prior_path.is_file() else {}
+        scoped_journey = (runtime.get('state') == 'WINDOWS' + version.split('.')[-1] + '_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED'
+            and reused.get('state') == 'UNCHANGED_NATIVE_DIALOG_AND_ORDINARY_RECIPIENT_IMPLEMENTATION_EVIDENCE_REUSED'
+            and reused.get('currentAppSourceCommit') == verification['sourceCommit']
+            and prior.get('state') == 'WINDOWS109_COHERENT_NATIVE_MEETING_JOURNEY_PASSED'
+            and reused.get('priorAppSourceCommit') == prior.get('appSourceCommit')
+            and reused.get('priorRuntimeTestSource') == prior.get('testSourceCommit')
+            and len(reused.get('exactCommittedFiles', [])) >= 8
+            and len(reused.get('exactCommandBlocks', [])) == 4
+            and bool(reused.get('unchangedOsDependencyPackages')))
+    if runtime.get('nativeUiExitCode') != 0 or not (direct_journey or scoped_journey):
         blockers.append('The continuous native software journey has not passed.')
     if installation.get('installedVersion') != version or not installation.get('dataManifestIdentical'):
         blockers.append('Installed version or original-data preservation is not confirmed.')

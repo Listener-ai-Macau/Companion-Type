@@ -1,0 +1,16 @@
+
+running 11 tests
+test backend::session_store::tests::another_process_lock_refuses_write_and_keeps_index ... ok
+test backend::session_store::tests::corrupt_primary_recovers_good_backup_and_preserves_original_bytes ... ok
+test backend::session_store::tests::failed_replacement_keeps_committed_index_and_valid_backup ... ok
+test backend::session_store::tests::interrupted_privacy_checkpoint_rejects_stale_memory_and_removes_corrupt_copies ... ok
+test backend::session_store::tests::old_sessions_deserialize_without_meeting_tracks ... ok
+test backend::session_store::tests::privacy_deletion_cannot_reappear_from_backup_at_any_write_boundary ... ok
+test backend::session_store::tests::selective_deletion_retains_other_meetings_and_future_saves ... ok
+test backend::session_store::tests::stale_snapshot_cannot_remove_or_substitute_meeting_tracks ... ok
+test backend::session_store::tests::stale_snapshot_preserves_same_recording_new_audio ... ok
+test backend::session_store::tests::ui_snapshot_guard_rejects_unseen_recording_and_allows_exact_delete ... ok
+test backend::session_store::tests::unreadable_and_invalid_indexes_never_become_an_empty_success ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 1233 filtered out; finished in 0.86s
+

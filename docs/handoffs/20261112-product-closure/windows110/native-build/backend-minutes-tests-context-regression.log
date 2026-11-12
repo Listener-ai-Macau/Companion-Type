@@ -1,0 +1,47 @@
+
+running 42 tests
+test backend::minutes::tests::cloud_minutes_keep_conditional_followup_as_a_separate_action ... ok
+test backend::minutes::tests::computer_capture_context_keeps_both_sources_and_independent_task ... ok
+test backend::minutes::tests::conditional_followup_is_not_dropped_after_eight_other_actions ... ok
+test backend::minutes::tests::customer_followthrough_keeps_source_quoted_oral_subtasks_and_binds_metadata ... ok
+test backend::minutes::tests::distinct_similar_computer_meeting_tasks_keep_their_own_owner_and_date ... ok
+test backend::minutes::tests::external_deepseek_command_produces_final_minutes ... ignored, requires DEEPSEEK_API_KEY + network + python; run with --ignored
+test backend::minutes::tests::finalize_minutes_promotes_success_and_fills_defaults ... ok
+test backend::minutes::tests::finalize_minutes_records_failure_reason_in_llm_note ... ok
+test backend::minutes::tests::independent_short_memo_actions_are_not_capped_at_eight ... ok
+test backend::minutes::tests::l1_action_items_require_an_explicit_source_action ... ok
+test backend::minutes::tests::l1_does_not_borrow_owner_or_deadline_from_another_task ... ok
+test backend::minutes::tests::l1_fact_floor_restores_omitted_source_facts_and_rerenders_markdown ... ok
+test backend::minutes::tests::l1_keeps_metadata_only_when_matching_task_sources_agree ... ok
+test backend::minutes::tests::l1_keeps_natural_spoken_assignment_as_reviewable_source ... ok
+test backend::minutes::tests::l1_keeps_supported_action_but_drops_unspoken_owner_and_due ... ok
+test backend::minutes::tests::l1_removed_action_is_also_removed_from_nonempty_markdown ... ok
+test backend::minutes::tests::meeting_retains_all_nine_explicit_actions_from_the_model ... ok
+test backend::minutes::tests::minutes_markdown_includes_speaker_section_when_tagged ... ok
+test backend::minutes::tests::missing_question_classification_keeps_other_minutes_and_marks_questions ... ok
+test backend::minutes::tests::mixed_transcript_keeps_explicit_assignment_separate_from_condition ... ok
+test backend::minutes::tests::native_deepseek_minutes_render_sample ... ignored, requires DEEPSEEK_API_KEY + network; renders a sample
+test backend::minutes::tests::native_deepseek_produces_final_minutes ... ignored, requires DEEPSEEK_API_KEY + network; run with --ignored
+test backend::minutes::tests::natural_assignment_does_not_revive_supplemented_or_ambiguous_source ... ok
+test backend::minutes::tests::p536_actual_board_memo_keeps_dated_and_literal_event_actions ... ok
+test backend::minutes::tests::p536_event_words_do_not_erase_negative_uncertain_or_reported_context ... ok
+test backend::minutes::tests::p536_explicit_clause_survives_background_without_borrowing_intent ... ok
+test backend::minutes::tests::parse_stdout_falls_back_when_empty_or_plain_markdown ... ok
+test backend::minutes::tests::parse_stdout_json_blob_extracts_fields ... ok
+test backend::minutes::tests::parse_stdout_tolerates_leading_noise_before_json ... ok
+test backend::minutes::tests::preserve_user_words_minutes ... ok
+test backend::minutes::tests::public_short_meeting_keeps_oral_excerpts_out_of_ai_summary ... ok
+test backend::minutes::tests::real_named_deadline_assignments_survive_model_omission_without_cross_attribution ... ok
+test backend::minutes::tests::reviewable_natural_assignment_keeps_condition_and_drops_invented_metadata ... ok
+test backend::minutes::tests::rules_l0_extracts_decision_and_action ... ok
+test backend::minutes::tests::rules_l0_keeps_salient_facts_from_the_whole_transcript ... ok
+test backend::minutes::tests::short_ai_result_attaches_verbatim_quotes_through_normal_finalizer ... ok
+test backend::minutes::tests::short_spoken_list_retains_nine_natural_tasks ... ok
+test backend::minutes::tests::speaker_section_none_when_no_tags ... ok
+test backend::minutes::tests::speaker_section_regroups_by_speaker ... ok
+test backend::minutes::tests::split_args_handles_quotes_and_spaces ... ok
+test backend::minutes::tests::strip_code_fences_removes_only_fence_lines ... ok
+test backend::minutes::tests::verbose_short_minutes_add_overview_in_the_same_request_and_keep_details ... ok
+
+test result: ok. 39 passed; 0 failed; 3 ignored; 0 measured; 1202 filtered out; finished in 0.02s
+

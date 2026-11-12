@@ -1,0 +1,38 @@
+
+running 33 tests
+test backend::audio_artifacts::probe::tests::privacy_legacy_copy_still_cleans_after_generated_primary_already_deleted ... ok
+test backend::audio_artifacts::probe::tests::privacy_retry_keeps_owned_root_after_scratch_compaction ... ok
+test backend::audio_artifacts::probe::tests::privacy_retry_preserves_same_path_replacement_after_owned_file_is_gone ... ok
+test backend::audio_storage::tests::privacy_never_deletes_same_name_legacy_file_after_content_changes ... ok
+test backend::ble_bridge::tests::delete_privacy_request_encodes_firmware_contract_layout ... ok
+test backend::calendar_copy::tests::execution_slots_commit_reopen_and_privacy_clear_refuses_stale_receipt ... ok
+test backend::calendar_copy::tests::privacy_clear_blocks_late_receipt_and_backup_never_resurrects_text ... ok
+test backend::host_recording::tests::interrupted_recovery_can_retry_and_privacy_cleanup_without_touching_unknown_files ... ok
+test backend::library_lifecycle::tests::every_privacy_entry_rejects_protected_and_new_workspace_keeps_library ... ok
+test backend::meeting_notes::tests::notes_export_without_asr_and_privacy_clear_removes_context ... ok
+test backend::minutes::long_meeting::tests::privacy_deletes_selected_generations_and_refuses_active_job_race ... ok
+test backend::minutes::long_meeting::tests::privacy_erases_older_profile_checkpoints_after_evidence_revision ... ok
+test backend::privacy::probe::tests::production_delete_guards_shared_files_and_occupied_ledger_retry ... ok
+test backend::privacy::summary_tests::structured_cleanup_preserves_retained_counts_and_requires_actual_privacy_action ... ok
+test backend::privacy::tests::deleting_interrupted_meeting_finds_registered_parts_and_preserves_shared ... ignored, changes recording-directory environment; run in isolation
+test backend::privacy::tests::deleting_selected_meeting_tracks_preserves_shared_and_outside_files ... ok
+test backend::privacy::tests::privacy_manager_deletes_only_owned_audio_cache ... ok
+test backend::recorder_control::tests::completed_control_privacy_retires_only_original_and_keeps_lock_until_index_checkpoint ... ok
+test backend::recorder_control::tests::control_privacy_closed_receipt_never_retires_pending_foreign_or_unverified_original ... ok
+test backend::recorder_control::tests::control_privacy_pending_corrupt_or_mismatched_identity_preflight_preserves_every_file ... ok
+test backend::recorder_control::tests::control_privacy_recovered_closed_original_retires_without_inventing_stop ... ok
+test backend::recording_wire::receiver::local::tests::managed_damaged_wav_repair_and_privacy_cleanup_keep_exact_ownership ... ok
+test backend::recording_wire::receiver::local::tests::r62_privacy_disabled_audio_and_foreign_index_path_are_never_recreated ... ok
+test backend::session_store::tests::interrupted_privacy_checkpoint_rejects_stale_memory_and_removes_corrupt_copies ... ok
+test backend::session_store::tests::privacy_deletion_cannot_reappear_from_backup_at_any_write_boundary ... ok
+test backend::tests::host_start_waits_for_privacy_action_before_live_or_capture ... ok
+test backend::tests::isolated_host_privacy_lock_child ... ignored
+test backend::tests::privacy_erase_all_is_local_only_and_refuses_to_interrupt_recording ... ok
+test backend::tests::recovery_stale_automatic_request_stops_after_privacy_revocation ... ok
+test backend::transcript_review::tests::privacy_erases_reviewed_and_original_text_and_releases_all_minutes_sources ... ok
+test backend::transcription::chunk_cache::ownership::tests::isolated_native_cache_privacy_contract ... ok
+test companion_v1::tests::recovery_privacy_erasure_revokes_intent_and_clears_transcript_proof ... ok
+test coordinator::tests::original_export_blocks_capture_and_privacy_deletion_until_released ... ok
+
+test result: ok. 31 passed; 0 failed; 2 ignored; 0 measured; 1211 filtered out; finished in 5.86s
+

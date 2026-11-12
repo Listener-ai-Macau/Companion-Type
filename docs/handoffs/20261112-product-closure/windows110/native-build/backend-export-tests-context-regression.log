@@ -1,0 +1,34 @@
+
+running 29 tests
+test backend::export::tests::action_exports_use_selected_saved_edits_never_stale_structured_items ... ok
+test backend::export::tests::action_items_ical_emits_vtodo_with_due ... ok
+test backend::export::tests::action_items_todo_handles_empty ... ok
+test backend::export::tests::action_items_todo_renders_checklist_with_meta ... ok
+test backend::export::tests::atomic_export_replaces_destination_with_exact_bytes ... ok
+test backend::export::tests::calendar_advance_reminder_hashes_bind_each_choice_without_moving_deadline ... ok
+test backend::export::tests::calendar_provenance_follows_record_and_selected_saved_source_without_changing_uid ... ok
+test backend::export::tests::calendar_reminder_format_binds_choice_source_and_stale_saved_content ... ok
+test backend::export::tests::copy_checklist_keeps_checks_unicode_and_literal_time_without_title_task ... ok
+test backend::export::tests::draft_markdown_is_exportable_but_visibly_labeled ... ok
+test backend::export::tests::failed_track_warning_remains_clear_in_minutes_and_transcript_pdf ... ok
+test backend::export::tests::formal_export_is_bound_to_the_requested_mode_and_saved_variant ... ok
+test backend::export::tests::formal_srt_export_rejects_missing_or_fabricated_timing ... ok
+test backend::export::tests::ical_escape_folds_long_lines_and_escapes_specials ... ok
+test backend::export::tests::legacy_completed_transcript_remains_exportable_but_partial_does_not ... ok
+test backend::export::tests::p612_calendar_handoff_follows_saved_mode_and_preserves_unparsed_time_as_text ... ok
+test backend::export::tests::p622_preview_binds_saved_content_not_export_clock ... ok
+test backend::export::tests::p636_calendar_export_follows_saved_mode_source_hash_and_unchanged_state ... ok
+test backend::export::tests::pdf_selection_keeps_only_chosen_saved_content_and_truthful_timing ... ok
+test backend::export::tests::plain_checklist_keeps_saved_conditions_and_original_data ... ok
+test backend::export::tests::r64_commit_preserves_win32_storage_class_without_truncating_other_hresult_facilities ... ok
+test backend::export::tests::r64_storage_full_and_permission_errors_offer_the_matching_recovery_action ... ok
+test backend::export::tests::render_json_includes_utterances_and_minutes ... ok
+test backend::export::tests::render_srt_emits_timed_subtitles_with_speaker ... ok
+test backend::export::tests::render_srt_empty_when_no_timing ... ok
+test backend::export::tests::render_txt_includes_title_and_speaker_tagged_transcript ... ok
+test backend::export::tests::srt_timestamp_format ... ok
+test backend::export::tests::windows_atomic_commit_waits_for_a_short_reader ... ok
+test backend::export::tests::windows_snapshot_commit_still_reports_a_persistent_reader_and_keeps_old_state ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 1215 filtered out; finished in 0.28s
+

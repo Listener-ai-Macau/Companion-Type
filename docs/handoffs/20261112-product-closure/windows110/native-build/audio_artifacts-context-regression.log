@@ -1,0 +1,10 @@
+
+running 5 tests
+test backend::audio_artifacts::meeting_recovery_tests::registered_meeting_parts_exclude_unknown_files_and_detect_changes ... ignored, changes recording-directory environment; run in isolation
+test backend::audio_artifacts::probe::tests::native_audio_artifacts_guard_generated_files_ownership_and_cleanup_retry ... ok
+test backend::audio_artifacts::probe::tests::privacy_legacy_copy_still_cleans_after_generated_primary_already_deleted ... ok
+test backend::audio_artifacts::probe::tests::privacy_retry_keeps_owned_root_after_scratch_compaction ... ok
+test backend::audio_artifacts::probe::tests::privacy_retry_preserves_same_path_replacement_after_owned_file_is_gone ... ok
+
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 1239 filtered out; finished in 2.21s
+

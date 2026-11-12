@@ -1,0 +1,10 @@
+
+running 5 tests
+test backend::product_settings::tests::local_card_processing_setting_is_on_for_new_profiles_and_keeps_opt_out ... ok
+test backend::recording_wire::receiver::local::tests::local_card_processing_new_original_defaults_local_but_keeps_explicit_choices ... ok
+test backend::tests::local_card_processing_finishes_after_text_and_preserves_custom_title ... ok
+test backend::transcription::tests::local_card_processing_does_not_use_configured_cloud_or_fixture_text ... ok
+test tests::local_card_processing_schedules_text_only_and_waits_for_local_readiness ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 1239 filtered out; finished in 0.65s
+

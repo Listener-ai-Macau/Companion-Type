@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-12T12:49:38+08:00",
+  "branch": "work/product-total-windows110-runtime-20261112",
+  "testSourceCommit": "0f8e811d680facd7d59a8b1e83fca67c342f76d6",
+  "appSourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+  "productRecompiled": false,
+  "onlyReceiptPathsChanged": [
+    "docs/handoffs/20261112-product-closure/windows110/frozen-source.json",
+    "docs/handoffs/20261112-product-closure/windows110/matched-firmware-preparation.json",
+    "docs/handoffs/20261112-product-closure/windows110/runtime-spec.json",
+    "docs/handoffs/20261112-product-closure/windows110/windows-verification.json"
+  ]
+}

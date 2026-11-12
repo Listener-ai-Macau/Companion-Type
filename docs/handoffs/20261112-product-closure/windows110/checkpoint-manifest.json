@@ -1,0 +1,406 @@
+{
+  "at": "2026-11-12T13:02:53+08:00",
+  "canonicalRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion",
+  "sourceOnlySnapshot": true,
+  "productSource": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+  "nativeBuildRun": 43154438761,
+  "hostedNativeRuntimeNotStarted": 43157321729,
+  "files": [
+    {
+      "path": "frozen-source.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\frozen-source.json",
+      "bytes": 1534,
+      "sha256": "500137ec2c667ed366246ab94faa9ca4686a8c2ec47901a572fa0964765d86bb"
+    },
+    {
+      "path": "hosted-runtime-not-started.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\hosted-runtime-not-started.json",
+      "bytes": 788,
+      "sha256": "b921d84e7319e257106c22f0746ab47eee7636b5273c831e19104815075c6974"
+    },
+    {
+      "path": "installation.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\installation.json",
+      "bytes": 793,
+      "sha256": "84e826b4d474000a6230c2bf358175b70092d7d5babe03ee2ab27eda5f3d6adb"
+    },
+    {
+      "path": "local-runtime-source.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\local-runtime-source.json",
+      "bytes": 722,
+      "sha256": "35186a3c22b42fbb54fd2f7b69c85f0825edc958e4f3813570216d41aff6ee72"
+    },
+    {
+      "path": "matched-firmware-preparation.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\matched-firmware-preparation.json",
+      "bytes": 1702,
+      "sha256": "67d2f28694544576b1c3b3af0ef01e1eda832bd10955fcf8719ffd09de7a4158"
+    },
+    {
+      "path": "runtime-result.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\runtime-result.json",
+      "bytes": 7963,
+      "sha256": "a56efbaaeb2b72afd4986cce3b581fd2e9da236973d0aec567c726255c98d9b7"
+    },
+    {
+      "path": "runtime-source.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\runtime-source.json",
+      "bytes": 636,
+      "sha256": "8e895d31c6f92a7ac5c955ac053666ea469e0a9ed77e46f1bf17721d54f3a244"
+    },
+    {
+      "path": "runtime-spec.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\runtime-spec.json",
+      "bytes": 11771,
+      "sha256": "dc93fc04dd3f5e488d24b6b0bf4a8cd5c98e49e2e7118195e3ac3017a332d29e"
+    },
+    {
+      "path": "total-use-readiness.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\total-use-readiness.json",
+      "bytes": 755,
+      "sha256": "3b7e0fffe9d1240a0de4bbe4d9d5d8aa53e78a5102535b466d505592ab37a4ab"
+    },
+    {
+      "path": "unchanged-os-handoff-evidence.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\unchanged-os-handoff-evidence.json",
+      "bytes": 5289,
+      "sha256": "897d832952951d52a4dafd1a1bf541dd483a4611082026caeeb0955eb175ef64"
+    },
+    {
+      "path": "windows-delivery.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
+      "bytes": 6931,
+      "sha256": "e6ed3d5c78e587e9ae08650e45c9b88ea5cbd45e3e31a1fe097f776fa4aeed44"
+    },
+    {
+      "path": "windows-verification.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-verification.json",
+      "bytes": 11343,
+      "sha256": "4ccb1716989df404ab62df21ebbe27c574bc6ae69dc4ed39be9c4ee7f1e1d4ea"
+    },
+    {
+      "path": "root-snapshot\\AGENTS.md",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\AGENTS.md",
+      "bytes": 12321,
+      "sha256": "216d7e8e643228e8b1337c525b78323d8a4aa029b24d367bb5db21faddc9653f"
+    },
+    {
+      "path": "root-snapshot\\docs\\product_backlog.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\product_backlog.json",
+      "bytes": 19155820,
+      "sha256": "5e65a515c15d534d21fb596343262519a52bde4804b98ef84956243d8411cdb3"
+    },
+    {
+      "path": "root-snapshot\\docs\\development_log.md",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\development_log.md",
+      "bytes": 7091280,
+      "sha256": "6a5afb5cc00e5e3f8f50b599fcb04500700cbf16674049c3962e86303915f747"
+    },
+    {
+      "path": "root-snapshot\\docs\\PRODUCT_BACKLOG.md",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\PRODUCT_BACKLOG.md",
+      "bytes": 89186,
+      "sha256": "ec306dc7be8f69b9764ec59f2aec8e92957667e68c7c7f020efea1eadf67b292"
+    },
+    {
+      "path": "root-snapshot\\tools\\embedded_backlog.py",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\tools\\embedded_backlog.py",
+      "bytes": 22669,
+      "sha256": "4e74475a95baae91d03941e50a9ec2b6f858f8365d213cb2f7cb7f43de8b63dc"
+    },
+    {
+      "path": "root-snapshot\\tools\\build_current_firmware.py",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\tools\\build_current_firmware.py",
+      "bytes": 9848,
+      "sha256": "d4c273d75f8d844427c7a85174c55f81d1caf5fb80cced66025104ed1d6c7b80"
+    },
+    {
+      "path": "local-native-evidence\\result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\result.json",
+      "bytes": 5825,
+      "sha256": "91bcfdc9365da41ee5c27661b391aeda7bd4b3c3d95e214df8099852dcc5a549"
+    },
+    {
+      "path": "local-native-evidence\\ui-result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\ui-result.json",
+      "bytes": 841,
+      "sha256": "253d13c58bff15bbc446ef52c72601fef0662e322dd7f844978732eacaa106f1"
+    },
+    {
+      "path": "local-native-evidence\\product-public-note-save.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\product-public-note-save.json",
+      "bytes": 1178,
+      "sha256": "955d46e46be484d0218a7efbabb58aa9d1dd1ddb25e4241c38a3b3f06a887b17"
+    },
+    {
+      "path": "local-native-evidence\\product-result-light.png",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\product-result-light.png",
+      "bytes": 150359,
+      "sha256": "c26cc8eee1b78f9536cdf00050f32f04c9e80d35ad8a5a94c3861fd2fbf99d1c"
+    },
+    {
+      "path": "local-native-evidence\\product-result-dark.png",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\product-result-dark.png",
+      "bytes": 295630,
+      "sha256": "627bd86569f312ea7bea3a99f1577734164383ddf58a2902b72c75dda8f0be08"
+    },
+    {
+      "path": "local-native-evidence\\product-handoff-light.png",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\72de49ad8d6740ca8014551d09ca2051\\product-handoff-light.png",
+      "bytes": 395382,
+      "sha256": "670aafd3b77dbf4f88545753a244b2bc6d46b17558360c05ca4d951604987e0f"
+    },
+    {
+      "path": "retained-failure-private-cache-guard\\result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background\\product\\docs\\handoffs\\20261109-core-acceptance\\8071da30c6704018a000e81347eb4606\\result.json",
+      "bytes": 4148,
+      "sha256": "a7a4c3f2f4df2bf007afcc383afc621dec9e90bd96db810e6c70f9068e7b2634"
+    },
+    {
+      "path": "retained-failure-private-cache-guard\\ui.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background\\product\\docs\\handoffs\\20261109-core-acceptance\\8071da30c6704018a000e81347eb4606\\ui.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "retained-failure-private-cache-guard\\runner.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background\\runner.log",
+      "bytes": 546,
+      "sha256": "2329fc8a507841ab8f9da9f27f47d57952cd52b9cf30a2a56fdae6bbb23f8ee9"
+    },
+    {
+      "path": "native-build\\result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\result.json",
+      "bytes": 365577,
+      "sha256": "1c5ba212131a10fa9d31c03f705ae0ce2a5ce08ed405232f11c152b808718e48"
+    },
+    {
+      "path": "native-build\\audio-edit-native-library-isolated.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\audio-edit-native-library-isolated.log",
+      "bytes": 218,
+      "sha256": "98285bc9863cb96fa963d661b3a07b3c710a689c05eaed358e7c4b39f79786d2"
+    },
+    {
+      "path": "native-build\\audio_artifacts-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\audio_artifacts-context-regression.log",
+      "bytes": 789,
+      "sha256": "c19dd9953758c11ad3acb188691183b96614f2fa7de6c303977fa7352b9ab6f9"
+    },
+    {
+      "path": "native-build\\audio_derivation-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\audio_derivation-context-regression.log",
+      "bytes": 214,
+      "sha256": "a938ab7f0f032f9dac13840d9a6a835fbc0fc90f11045ad6e3f2a530e8718e6d"
+    },
+    {
+      "path": "native-build\\audio_editing-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\audio_editing-context-regression.log",
+      "bytes": 307,
+      "sha256": "e9a50f0e0a060d8a31dc0e91e657e4341b15c2f9ad6ce640bdba661bf01966ff"
+    },
+    {
+      "path": "native-build\\audio_edit_job-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\audio_edit_job-context-regression.log",
+      "bytes": 116,
+      "sha256": "190ed8ca3f010972dc055695cca9765e8787a150b62f3083602edff76e3c9818"
+    },
+    {
+      "path": "native-build\\backend-content_export-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-content_export-tests-context-regression.log",
+      "bytes": 673,
+      "sha256": "ce5540e4e31ef17671ff5834a87bdb1e903d9f0b2c64dc72888d8324c3735495"
+    },
+    {
+      "path": "native-build\\backend-export-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-export-tests-context-regression.log",
+      "bytes": 2852,
+      "sha256": "1009900019b39d05faa64b99d194c034c493c1cd7f9dc1d98e2f84cb0e8a398f"
+    },
+    {
+      "path": "native-build\\backend-minutes-short_evidence-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-minutes-short_evidence-tests-context-regression.log",
+      "bytes": 454,
+      "sha256": "48aa935324d7e6e441e8003213fcccff0a18afb8965aeaba48bc04707b7b521a"
+    },
+    {
+      "path": "native-build\\backend-minutes-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-minutes-tests-context-regression.log",
+      "bytes": 4208,
+      "sha256": "7c641e9990f2730022e243e567a3a063653f32afa7850b55e86dcf13d279d0a2"
+    },
+    {
+      "path": "native-build\\backend-persistence-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-persistence-tests-context-regression.log",
+      "bytes": 2314,
+      "sha256": "9800de81fad62e5cc3b721ad384553aaae312eacb9910d52222c1a3bb7974f4a"
+    },
+    {
+      "path": "native-build\\backend-product_settings-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-product_settings-tests-context-regression.log",
+      "bytes": 1756,
+      "sha256": "75cbf72b7356526f9ab544da48686ab69efbecf2d73c6c3f90f7e24ffb339b6d"
+    },
+    {
+      "path": "native-build\\backend-recorder_control-local_adoption-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-recorder_control-local_adoption-tests-context-regression.log",
+      "bytes": 544,
+      "sha256": "11baf3dd81f2c85ff0eb5949b24e68c638ddbfb99a0d1f71fdab500e4b30830b"
+    },
+    {
+      "path": "native-build\\backend-recording_wire-receiver-local-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-recording_wire-receiver-local-tests-context-regression.log",
+      "bytes": 2405,
+      "sha256": "b407c2216ca185c99294ca764249e0a4591e91b188a5831c93f149392424824f"
+    },
+    {
+      "path": "native-build\\backend-system_ota-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-system_ota-tests-context-regression.log",
+      "bytes": 618,
+      "sha256": "86d23443e71f1938d97c75e77dbfe967700be2fb9f46f949129541b518042136"
+    },
+    {
+      "path": "native-build\\backend-transcription-tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\backend-transcription-tests-context-regression.log",
+      "bytes": 5208,
+      "sha256": "ae851aba989e47929ecf437d3837681b88398b1c99603556b97c9fb874edcde6"
+    },
+    {
+      "path": "native-build\\card-to-text-ui.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\card-to-text-ui.log",
+      "bytes": 2214,
+      "sha256": "c187923d44ac6cea1fc9ffa78dbf7ed1f4586b63c9cce15f31819c749024014e"
+    },
+    {
+      "path": "native-build\\cargo-release.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\cargo-release.log",
+      "bytes": 21696,
+      "sha256": "8f2258f5d57d03e304fd9e3916de4400c55f5a79edd945c2156dd223af43d6d1"
+    },
+    {
+      "path": "native-build\\connection-ui-build.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\connection-ui-build.log",
+      "bytes": 53,
+      "sha256": "312d4c9cc53030ab1a3c4f8196356768db1bb7ae63a0b4a3110d10597711c602"
+    },
+    {
+      "path": "native-build\\connection-ui.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\connection-ui.log",
+      "bytes": 108,
+      "sha256": "ed5d2458361719b048374455673e6c80f2140891b0fcdbc6fed61dc3a47a2238"
+    },
+    {
+      "path": "native-build\\context-test-build.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\context-test-build.log",
+      "bytes": 618347,
+      "sha256": "00c2b8dfe6add468725f2ba551e2a5af1354aef48716ba9e68c3c79dc18a8117"
+    },
+    {
+      "path": "native-build\\customer_followthrough-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\customer_followthrough-context-regression.log",
+      "bytes": 228,
+      "sha256": "8c980903b19d282f992195426b19f75db2c00b0fca32a355edc50b04ef485783"
+    },
+    {
+      "path": "native-build\\desktop_dictation-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\desktop_dictation-context-regression.log",
+      "bytes": 931,
+      "sha256": "f8a6db470f875cf4f4f0f8486e745a2addc156a9c6bb4c1a511796175c65c671"
+    },
+    {
+      "path": "native-build\\document_context-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\document_context-context-regression.log",
+      "bytes": 339,
+      "sha256": "f76ea6308532f9ee0a386231b08a482aec6866591ee513616adcc44a10c737bb"
+    },
+    {
+      "path": "native-build\\import_audio-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\import_audio-context-regression.log",
+      "bytes": 963,
+      "sha256": "9cb53161518f96a6e1ae8ea87652b2a725eb688ebdf44ac441718d53d573ece7"
+    },
+    {
+      "path": "native-build\\incoming_files-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\incoming_files-context-regression.log",
+      "bytes": 777,
+      "sha256": "1a4240af3ab09a53c90e788a929bf3105afeb4bf7ad659fb48fb5bf7db6aa2b8"
+    },
+    {
+      "path": "native-build\\initial_unreachable_tests-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\initial_unreachable_tests-context-regression.log",
+      "bytes": 245,
+      "sha256": "1492a46b634bd086803ff8429e3018fd3d713027aae32d5e455c1fa3d71e9343"
+    },
+    {
+      "path": "native-build\\local_card_processing-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\local_card_processing-context-regression.log",
+      "bytes": 670,
+      "sha256": "4a06f07ec26176b15d570bd110dace0295f75dd13aa5c288eae3b974148f1198"
+    },
+    {
+      "path": "native-build\\manual_processing_policy-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\manual_processing_policy-context-regression.log",
+      "bytes": 458,
+      "sha256": "f62f6c1160ed2bf98266990c8b924e23a232777e1838f54f255b475e9df965cf"
+    },
+    {
+      "path": "native-build\\meeting_audio_mix-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\meeting_audio_mix-context-regression.log",
+      "bytes": 333,
+      "sha256": "29c776ddae4e8b3bc889ea414bc84aeac2a890ad87b8f1ccbc461cf1d50467fc"
+    },
+    {
+      "path": "native-build\\meeting_note-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\meeting_note-context-regression.log",
+      "bytes": 1007,
+      "sha256": "e9621ec99a988833ae97c9bba9f9172e998accb69ab296c4ba03211e951cc0e3"
+    },
+    {
+      "path": "native-build\\msi-bundle.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\msi-bundle.log",
+      "bytes": 788,
+      "sha256": "073e25d6787f4d036a4aa5175162556b187d321d8e389ef4a18544f0432fe588"
+    },
+    {
+      "path": "native-build\\npm-ci.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\npm-ci.log",
+      "bytes": 26,
+      "sha256": "e6d4201cd9fc53267b40c5a7a0e042e1a3610886e4d65b077f5571622ca532bc"
+    },
+    {
+      "path": "native-build\\privacy-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\privacy-context-regression.log",
+      "bytes": 3848,
+      "sha256": "d313bd50a6f8ad26986360ca1a487b0d3671ecc8cf9aaa297ded11543099af62"
+    },
+    {
+      "path": "native-build\\recorder_input-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\recorder_input-context-regression.log",
+      "bytes": 116,
+      "sha256": "190ed8ca3f010972dc055695cca9765e8787a150b62f3083602edff76e3c9818"
+    },
+    {
+      "path": "native-build\\session_store-context-regression.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\session_store-context-regression.log",
+      "bytes": 1255,
+      "sha256": "a815112ece534a6375c3de70ab7ffd10cc211d092188e1712f324e9710b650f1"
+    },
+    {
+      "path": "native-build\\windows-web.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\native-build-43154438761\\windows-web.log",
+      "bytes": 23412,
+      "sha256": "7404b3e8fcb0c3dbdd9be99cb2c6fb1e716737fa162c5ef3c15b4630359d401e"
+    },
+    {
+      "path": "disk-prevention-continued-real-build.json",
+      "canonicalSource": "outputs\\Companion-disk-growth-fix-20261112.json",
+      "bytes": 5474,
+      "sha256": "6d7d655fb142727c5a4fb04a35246d6a15d69fc33038be37f95b1676025f62c6"
+    },
+    {
+      "path": "delivery-tool.snapshot.py",
+      "canonicalSource": "work\\windows_candidate_delivery.py",
+      "bytes": 14934,
+      "sha256": "97461532a944926d68a7c91e60c222e628acd8dca3fbe16f92c582bd11b15b97"
+    }
+  ]
+}

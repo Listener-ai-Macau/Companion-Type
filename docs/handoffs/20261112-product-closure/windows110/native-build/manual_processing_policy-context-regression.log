@@ -1,0 +1,8 @@
+
+running 3 tests
+test backend::recording_wire::receiver::local::tests::manual_processing_policy_survives_partial_and_complete_source_publication ... ok
+test backend::tests::manual_processing_policy_blocks_stale_automatic_work_but_accepts_manual_transcribe ... ok
+test tests::manual_processing_policy_survives_restart_and_does_not_enter_automatic_queue ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 1241 filtered out; finished in 0.23s
+

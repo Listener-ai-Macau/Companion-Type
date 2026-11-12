@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 386, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 290, in main
+    assert source.resolve().is_relative_to(root.resolve())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

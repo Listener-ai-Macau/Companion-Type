@@ -1,0 +1,22 @@
+
+running 17 tests
+test backend::recording_wire::receiver::local::tests::complete_raw_with_unpublished_capture_recovers_without_radio_and_without_ack ... ok
+test backend::recording_wire::receiver::local::tests::corrupt_existing_wav_explicit_recovery_must_not_report_unchanged ... ok
+test backend::recording_wire::receiver::local::tests::damaged_wav_is_rebuilt_from_verified_original_and_original_is_preserved ... ok
+test backend::recording_wire::receiver::local::tests::damaged_wav_repair_refuses_retired_ownership_without_modifying_files ... ok
+test backend::recording_wire::receiver::local::tests::diagnostic_link_follows_saved_restored_and_failed_processing_without_content_or_repeated_checkpoint ... ok
+test backend::recording_wire::receiver::local::tests::local_card_processing_new_original_defaults_local_but_keeps_explicit_choices ... ok
+test backend::recording_wire::receiver::local::tests::managed_damaged_wav_repair_and_privacy_cleanup_keep_exact_ownership ... ok
+test backend::recording_wire::receiver::local::tests::manual_processing_policy_survives_partial_and_complete_source_publication ... ok
+test backend::recording_wire::receiver::local::tests::missing_or_corrupt_original_does_not_publish_or_authorize_reclaim ... ok
+test backend::recording_wire::receiver::local::tests::r117_recovered_catalogue_requires_exact_verified_saved_originals ... ok
+test backend::recording_wire::receiver::local::tests::r62_missing_wav_rebuilds_exactly_after_reclaim_without_radio_or_repeat_decode ... ok
+test backend::recording_wire::receiver::local::tests::r62_missing_wav_with_bad_raw_or_saved_hash_cannot_replace_evidence ... ok
+test backend::recording_wire::receiver::local::tests::r62_privacy_disabled_audio_and_foreign_index_path_are_never_recreated ... ok
+test backend::recording_wire::receiver::local::tests::r62_real_locked_index_keeps_original_and_recovers_after_unlock ... ok
+test backend::recording_wire::receiver::local::tests::r65_raw_complete_failure_has_local_state_and_selected_control_recovers_without_radio ... ok
+test backend::recording_wire::receiver::local::tests::r65_raw_pending_preserves_cloud_pause_budget_across_restart_and_trash_is_not_rebuilt ... ok
+test backend::recording_wire::receiver::local::tests::repair_keeps_file_changed_at_commit_and_failed_commit_backup_managed ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 1227 filtered out; finished in 5.89s
+

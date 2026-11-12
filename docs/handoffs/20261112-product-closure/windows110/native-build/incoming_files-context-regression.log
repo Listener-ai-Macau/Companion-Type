@@ -1,0 +1,11 @@
+
+running 6 tests
+test backend::incoming_files::tests::corrupted_pending_receipt_is_not_replaced ... ok
+test backend::incoming_files::tests::incoming_media_document_image_retries_preserve_originals_and_existing_content ... ok
+test backend::incoming_files::tests::pending_delivery_is_atomic_bounded_private_and_scoped ... ok
+test backend::incoming_files::tests::permanent_purge_clears_only_bound_receipts_and_blocks_stale_reimport ... ok
+test backend::incoming_files::tests::receipt_dismissal_survives_short_snapshot_reader_and_preserves_other_entries ... ok
+test backend::incoming_files::tests::receipt_reader_beyond_budget_keeps_durable_receipt_and_allows_explicit_retry ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 1238 filtered out; finished in 1.65s
+

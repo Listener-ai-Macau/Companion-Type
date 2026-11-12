@@ -1,0 +1,136 @@
+{
+  "at": "2026-11-12T12:56:08+08:00",
+  "state": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.110",
+  "frozenAppSource": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+  "exeSha256": "e38c4a54b1a105b391a0c9423fca57179fdbafc5b9ea142f7b3e727f2abdfbfe",
+  "dllSha256": "7a98b4823c213be0aa54b9098155a5d6223459d3cc403d7f0f109a53e8916d8b",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-72de49ad8d6740ca8014551d09ca2051",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "appPid": 24672,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 1180882,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 1180622,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    23644
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 6324,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 23068,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 23644,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 24372,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 32120,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 38184,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows110\\local-native-background-r3\\private\\72de49ad8d6740ca8014551d09ca2051\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 473038848,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 3392618496,
+    "systemPhysicalPercent": 86.4
+  },
+  "publicFixtureExportCache": "C:\\Users\\Billy\\AppData\\Local\\ai.listener.companion-type\\content-share\\883dec3e-f7f9-4b4c-858e-601295b29f50\\明确虚构·核心会后流程验收-所选内容.txt",
+  "appCacheUsesWindowsKnownFolder": true,
+  "testOnlyFileCreatedOutsidePrivateRoot": true,
+  "privateExportFiles": [
+    {
+      "fileName": "明确虚构·核心会后流程验收-所选内容.txt",
+      "sha256": "a3da3f9d9be0e62969fdc1787cfa2c0fe718c47cfd2a18cc7f063f01289ea46f",
+      "bytes": 403,
+      "actualPackagedAppFileCreated": true,
+      "privateStationClipboardObserved": true,
+      "selectedContentsVerified": true,
+      "ordinaryRecipientTested": false
+    }
+  ],
+  "ui": {
+    "state": "REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_AND_PRIVATE_FILE_PASSED",
+    "nativeSaveCancelRetested": false,
+    "ordinaryRecipientRetested": false,
+    "notesPersisted": true,
+    "literalSourceRetained": true,
+    "exactSelectedNote": true,
+    "ordinaryRecipient": {
+      "fileName": "明确虚构·核心会后流程验收-所选内容.txt",
+      "sha256": "a3da3f9d9be0e62969fdc1787cfa2c0fe718c47cfd2a18cc7f063f01289ea46f",
+      "bytes": 403,
+      "actualPackagedAppFileCreated": true,
+      "privateStationClipboardObserved": true,
+      "selectedContentsVerified": true,
+      "ordinaryRecipientTested": false
+    },
+    "originalMeetingAndOtherRecordsUnchanged": true,
+    "modelsRun": false,
+    "hardwareQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": false,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-12T12:56:18+08:00"
+}

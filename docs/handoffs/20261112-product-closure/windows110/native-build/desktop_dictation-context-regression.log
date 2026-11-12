@@ -1,0 +1,12 @@
+
+running 7 tests
+test backend::desktop_dictation::tests::closed_notices_without_a_physical_start_never_receive_or_type_old_audio ... ok
+test backend::desktop_dictation::tests::durable_short_capture_is_delivered_when_the_live_mic_notice_was_coalesced ... ok
+test backend::desktop_dictation::tests::preparation_canceled_before_mic_does_not_receive_a_previous_original ... ok
+test backend::desktop_dictation::tests::preparation_old_session_cannot_replace_the_first_valid_pcm_identity ... ok
+test backend::desktop_dictation::tests::reconnect_after_release_finishes_only_the_previously_observed_capture_once ... ok
+test backend::desktop_dictation::tests::retained_start_bits_in_a_reconnect_query_never_capture_a_new_editor ... ok
+test backend::desktop_dictation::tests::saved_short_original_must_match_the_observed_physical_token ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 1237 filtered out; finished in 0.00s
+

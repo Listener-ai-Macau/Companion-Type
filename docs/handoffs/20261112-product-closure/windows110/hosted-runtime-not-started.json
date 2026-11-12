@@ -1,0 +1,21 @@
+{
+  "run": 43157321729,
+  "testSourceCommit": "0f8e811d680facd7d59a8b1e83fca67c342f76d6",
+  "state": "RUNNER_NOT_STARTED_ACCOUNT_BILLING_BLOCK",
+  "annotations": [
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/Listener-ai-Macau/Companion-Type/blob/0f8e811d680facd7d59a8b1e83fca67c342f76d6/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "raw_details": ""
+    }
+  ],
+  "productTestsStarted": false,
+  "billingModified": false
+}

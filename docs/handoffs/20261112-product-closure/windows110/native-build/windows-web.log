@@ -1,0 +1,210 @@
+
+> companion-type@0.1.110 build:windows
+> node tools/verify_third_party_notices.mjs && tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts
+
+{"result":"MATCHED_LOCKS_NOTICES_AND_CORRESPONDING_SOURCE","components":403,"sourceArchives":17}
+[36mvite v7.3.7 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 1969 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mdocument-engine/cmaps/CNS2-V.bcmap                       [39m[1m[2m    0.09 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Roman.bcmap                        [39m[1m[2m    0.10 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Katakana.bcmap                     [39m[1m[2m    0.10 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETenms-B5-H.bcmap                  [39m[1m[2m    0.10 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UCS2-HW-H.bcmap             [39m[1m[2m    0.12 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Hiragana.bcmap                     [39m[1m[2m    0.12 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Hankaku.bcmap                      [39m[1m[2m    0.13 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/B5-V.bcmap                         [39m[1m[2m    0.14 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/CNS1-V.bcmap                       [39m[1m[2m    0.14 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/B5pc-V.bcmap                       [39m[1m[2m    0.14 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKdla-B5-V.bcmap                   [39m[1m[2m    0.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKdlb-B5-V.bcmap                   [39m[1m[2m    0.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKgccs-B5-V.bcmap                  [39m[1m[2m    0.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKm314-B5-V.bcmap                  [39m[1m[2m    0.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKm471-B5-V.bcmap                  [39m[1m[2m    0.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UCS2-V.bcmap                [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF16-V.bcmap               [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF8-V.bcmap                [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETen-B5-V.bcmap                    [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETHK-B5-V.bcmap                    [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKscs-B5-V.bcmap                   [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-V.bcmap                        [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF32-V.bcmap               [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-EUC-V.bcmap                    [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF16-V.bcmap                [39m[1m[2m    0.16 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-Johab-V.bcmap                  [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCms-UHC-V.bcmap                  [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCpc-EUC-V.bcmap                  [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/V.bcmap                            [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF32-V.bcmap                [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-V.bcmap                         [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCms-UHC-HW-V.bcmap               [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF8-V.bcmap                 [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/EUC-V.bcmap                        [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/RKSJ-V.bcmap                       [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETenms-B5-V.bcmap                  [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-EUC-V.bcmap                     [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-RKSJ-V.bcmap                    [39m[1m[2m    0.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GB-V.bcmap                         [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBT-V.bcmap                        [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF16-V.bcmap                [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UCS2-V.bcmap                 [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GB-EUC-V.bcmap                     [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/WP-Symbol.bcmap                    [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBK-EUC-V.bcmap                    [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBT-EUC-V.bcmap                    [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBKp-EUC-V.bcmap                   [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBpc-EUC-V.bcmap                   [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF8-V.bcmap                 [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBTpc-EUC-V.bcmap                  [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF32-V.bcmap                [39m[1m[2m    0.18 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UCS2-V.bcmap                 [39m[1m[2m    0.19 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Ext-V.bcmap                        [39m[1m[2m    0.22 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-0.bcmap                  [39m[1m[2m    0.22 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Ext-RKSJ-V.bcmap                   [39m[1m[2m    0.22 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBK2K-V.bcmap                      [39m[1m[2m    0.22 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-0.bcmap               [39m[1m[2m    0.23 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-1.bcmap               [39m[1m[2m    0.23 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-2.bcmap               [39m[1m[2m    0.23 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Korea1-0.bcmap               [39m[1m[2m    0.24 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-3.bcmap               [39m[1m[2m    0.24 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-1.bcmap                  [39m[1m[2m    0.25 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/NWP-V.bcmap                        [39m[1m[2m    0.25 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90pv-RKSJ-V.bcmap                  [39m[1m[2m    0.26 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Add-V.bcmap                        [39m[1m[2m    0.28 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Add-RKSJ-V.bcmap                   [39m[1m[2m    0.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78ms-RKSJ-V.bcmap                  [39m[1m[2m    0.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90ms-RKSJ-V.bcmap                  [39m[1m[2m    0.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90msp-RKSJ-V.bcmap                 [39m[1m[2m    0.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-0.bcmap                 [39m[1m[2m    0.32 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-4.bcmap               [39m[1m[2m    0.34 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-1.bcmap                 [39m[1m[2m    0.37 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-2.bcmap                 [39m[1m[2m    0.38 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Korea1-1.bcmap               [39m[1m[2m    0.39 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Korea1-2.bcmap               [39m[1m[2m    0.39 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-3.bcmap                 [39m[1m[2m    0.40 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-4.bcmap                 [39m[1m[2m    0.41 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-5.bcmap                 [39m[1m[2m    0.41 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-6.bcmap                 [39m[1m[2m    0.41 kB[22m[1m[22m
+[2mdist/[22m[32mindex.html                                               [39m[1m[2m    0.41 kB[22m[1m[22m[2m │ gzip:   0.28 kB[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-5.bcmap               [39m[1m[2m    0.43 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-2.bcmap                  [39m[1m[2m    0.47 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-3.bcmap                  [39m[1m[2m    0.47 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-6.bcmap               [39m[1m[2m    0.49 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/CNS2-H.bcmap                       [39m[1m[2m    0.50 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GB-H.bcmap                         [39m[1m[2m    0.53 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/RKSJ-H.bcmap                       [39m[1m[2m    0.53 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GB-EUC-H.bcmap                     [39m[1m[2m    0.55 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/H.bcmap                            [39m[1m[2m    0.55 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBpc-EUC-H.bcmap                   [39m[1m[2m    0.56 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/EUC-H.bcmap                        [39m[1m[2m    0.58 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-4.bcmap                  [39m[1m[2m    0.60 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-5.bcmap                  [39m[1m[2m    0.63 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF16-V.bcmap               [39m[1m[2m    0.64 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF16-V.bcmap           [39m[1m[2m    0.65 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UCS2-V.bcmap                [39m[1m[2m    0.66 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF32-V.bcmap               [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF8-V.bcmap                [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UCS2-HW-V.bcmap             [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF32-V.bcmap           [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF8-V.bcmap            [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISX0213-UTF32-V.bcmap          [39m[1m[2m    0.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISX02132004-UTF32-V.bcmap      [39m[1m[2m    0.69 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISPro-UCS2-V.bcmap             [39m[1m[2m    0.69 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISPro-UCS2-HW-V.bcmap          [39m[1m[2m    0.71 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/CNS1-H.bcmap                       [39m[1m[2m    0.71 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90msp-RKSJ-H.bcmap                 [39m[1m[2m    0.72 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90ms-RKSJ-H.bcmap                  [39m[1m[2m    0.72 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISPro-UTF8-V.bcmap             [39m[1m[2m    0.73 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/83pv-RKSJ-H.bcmap                  [39m[1m[2m    0.91 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/90pv-RKSJ-H.bcmap                  [39m[1m[2m    0.98 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/B5-H.bcmap                         [39m[1m[2m    1.09 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/B5pc-H.bcmap                       [39m[1m[2m    1.10 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETen-B5-H.bcmap                    [39m[1m[2m    1.13 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/LICENSE_FOXIT             [39m[1m[2m    1.55 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKm314-B5-H.bcmap                  [39m[1m[2m    1.77 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/CNS-EUC-H.bcmap                    [39m[1m[2m    1.78 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-H.bcmap                        [39m[1m[2m    1.83 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-EUC-H.bcmap                    [39m[1m[2m    1.85 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/CNS-EUC-V.bcmap                    [39m[1m[2m    1.92 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCpc-EUC-H.bcmap                  [39m[1m[2m    2.02 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/LICENSE                            [39m[1m[2m    2.08 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKm471-B5-H.bcmap                  [39m[1m[2m    2.17 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKgccs-B5-H.bcmap                  [39m[1m[2m    2.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-H.bcmap                         [39m[1m[2m    2.38 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-RKSJ-H.bcmap                    [39m[1m[2m    2.40 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78-EUC-H.bcmap                     [39m[1m[2m    2.40 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Add-RKSJ-H.bcmap                   [39m[1m[2m    2.41 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKdlb-B5-H.bcmap                   [39m[1m[2m    2.41 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Add-H.bcmap                        [39m[1m[2m    2.42 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Ext-H.bcmap                        [39m[1m[2m    2.54 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Ext-RKSJ-H.bcmap                   [39m[1m[2m    2.54 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/78ms-RKSJ-H.bcmap                  [39m[1m[2m    2.65 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKdla-B5-H.bcmap                   [39m[1m[2m    2.65 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/NWP-H.bcmap                        [39m[1m[2m    2.77 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCms-UHC-H.bcmap                  [39m[1m[2m    2.79 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSCms-UHC-HW-H.bcmap               [39m[1m[2m    2.79 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/ETHK-B5-H.bcmap                    [39m[1m[2m    4.43 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/HKscs-B5-H.bcmap                   [39m[1m[2m    4.44 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBT-H.bcmap                        [39m[1m[2m    7.27 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBT-EUC-H.bcmap                    [39m[1m[2m    7.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBTpc-EUC-H.bcmap                  [39m[1m[2m    7.30 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBKp-EUC-H.bcmap                   [39m[1m[2m   14.69 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBK-EUC-H.bcmap                    [39m[1m[2m   14.69 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitSymbol.pfb           [39m[1m[2m   16.73 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/KSC-Johab-H.bcmap                  [39m[1m[2m   16.79 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitFixed.pfb            [39m[1m[2m   17.60 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitFixedBold.pfb        [39m[1m[2m   18.06 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitFixedItalic.pfb      [39m[1m[2m   18.75 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitFixedBoldItalic.pfb  [39m[1m[2m   19.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitSerifBold.pfb        [39m[1m[2m   19.40 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitSerif.pfb            [39m[1m[2m   19.47 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/GBK2K-H.bcmap                      [39m[1m[2m   19.66 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitSerifBoldItalic.pfb  [39m[1m[2m   20.73 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitSerifItalic.pfb      [39m[1m[2m   21.23 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/LICENSE_LIBERATION        [39m[1m[2m   22.15 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Korea1-UCS2.bcmap            [39m[1m[2m   23.29 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UCS2-H.bcmap                [39m[1m[2m   25.44 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UCS2-H.bcmap                 [39m[1m[2m   25.78 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF16-H.bcmap                [39m[1m[2m   26.33 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF32-H.bcmap                [39m[1m[2m   26.45 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniKS-UTF8-H.bcmap                 [39m[1m[2m   27.79 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/standard_fonts/FoxitDingbats.pfb         [39m[1m[2m   29.51 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-GB1-UCS2.bcmap               [39m[1m[2m   33.97 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF16-H.bcmap               [39m[1m[2m   39.44 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF16-H.bcmap           [39m[1m[2m   39.53 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISX0213-UTF32-H.bcmap          [39m[1m[2m   40.52 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF32-H.bcmap               [39m[1m[2m   40.54 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJISX02132004-UTF32-H.bcmap      [39m[1m[2m   40.61 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF32-H.bcmap           [39m[1m[2m   40.63 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-Japan1-UCS2.bcmap            [39m[1m[2m   40.95 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/Adobe-CNS1-UCS2.bcmap              [39m[1m[2m   41.19 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS-UTF8-H.bcmap                [39m[1m[2m   41.70 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniJIS2004-UTF8-H.bcmap            [39m[1m[2m   41.78 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UCS2-H.bcmap                 [39m[1m[2m   43.37 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF16-H.bcmap                [39m[1m[2m   44.09 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF32-H.bcmap                [39m[1m[2m   45.74 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniGB-UTF8-H.bcmap                 [39m[1m[2m   46.84 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UCS2-H.bcmap                [39m[1m[2m   48.28 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF16-H.bcmap               [39m[1m[2m   50.42 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF32-H.bcmap               [39m[1m[2m   52.68 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/cmaps/UniCNS-UTF8-H.bcmap                [39m[1m[2m   53.63 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/ThirdPartyNotices.txt                    [39m[1m[2m  127.15 kB[22m[1m[22m[2m │ gzip:  32.85 kB[22m
+[2mdist/[22m[32mdocument-engine/pdf.min.mjs                              [39m[1m[2m  537.77 kB[22m[1m[22m
+[2mdist/[22m[32massets/reader.worker-Ddoon-K3.js                         [39m[1m[2m  782.98 kB[22m[1m[22m
+[2mdist/[22m[32mdocument-engine/pdf.worker.min.mjs                       [39m[1m[2m1,327.59 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-D0fMQ8RO.css                                [39m[1m[2m  134.72 kB[22m[1m[22m[2m │ gzip:  24.82 kB[22m
+[2mdist/[22m[36massets/ShadcnDashboardMIT-BIeifDLG.js                    [39m[1m[2m    1.12 kB[22m[1m[22m[2m │ gzip:   0.68 kB[22m
+[2mdist/[22m[36massets/WatchPointerMIT-BCQPYNzI.js                       [39m[1m[2m    1.14 kB[22m[1m[22m[2m │ gzip:   0.70 kB[22m
+[2mdist/[22m[36massets/FusionMIT-Cmun2A_w.js                             [39m[1m[2m    1.16 kB[22m[1m[22m[2m │ gzip:   0.71 kB[22m
+[2mdist/[22m[36massets/AirCursorMIT-kvAItFIU.js                          [39m[1m[2m    1.17 kB[22m[1m[22m[2m │ gzip:   0.71 kB[22m
+[2mdist/[22m[36massets/OptionalSpeechModels-BqNq0d5M.js                  [39m[1m[2m    2.50 kB[22m[1m[22m[2m │ gzip:   1.43 kB[22m
+[2mdist/[22m[36massets/index-DO5hwiSc.js                                 [39m[1m[33m  813.71 kB[39m[22m[2m │ gzip: 261.89 kB[22m
+[2mdist/[22m[36massets/ThirdPartyNotices-C21RPD0V.js                     [39m[1m[33m1,271.17 kB[39m[22m[2m │ gzip: 177.00 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32m✓ built in 6.22s[39m

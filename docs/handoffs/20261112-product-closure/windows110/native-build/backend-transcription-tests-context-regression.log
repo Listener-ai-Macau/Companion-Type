@@ -1,0 +1,48 @@
+
+running 43 tests
+test backend::transcription::tests::cancelled_cloud_batch_does_not_start_later_chunks ... ok
+test backend::transcription::tests::chunk_timeline_preserves_fractional_milliseconds_and_rejects_mismatched_results ... ok
+test backend::transcription::tests::cluster_utterances_keeps_speakers_consistent_across_chunks ... ok
+test backend::transcription::tests::cluster_utterances_retains_request_scoped_labels_without_assuming_a_speaker_count ... ok
+test backend::transcription::tests::complete_provider_text_keeps_speakers_and_timing ... ok
+test backend::transcription::tests::completed_provider_text_survives_segment_disappearing_before_merge ... ignored, requires isolated public WAV and serial simulated provider
+test backend::transcription::tests::continuous_quiet_chunk_rule_keeps_unknown_errors_and_all_empty_failure ... ok
+test backend::transcription::tests::continuous_recording_quiet_chunks_preserve_real_text_and_original_offsets ... ok
+test backend::transcription::tests::declared_missing_and_duplicate_segments_are_rejected_before_provider ... ok
+test backend::transcription::tests::deferred_retry_explicit_no_speech_does_not_drop_other_words ... ignored, isolated delayed provider retry fixture
+test backend::transcription::tests::explicit_no_speech_is_not_retried_or_accepted_as_a_complete_meeting ... ok
+test backend::transcription::tests::failed_leading_middle_or_final_chunk_cannot_become_a_complete_transcript ... ok
+test backend::transcription::tests::full_provider_text_survives_incomplete_timed_utterances ... ok
+test backend::transcription::tests::independent_long_files_are_split_before_cloud_transcription ... ignored, isolated simulated provider for independent long files
+test backend::transcription::tests::independent_or_speechful_tail_never_uses_continuous_noise_exception ... ok
+test backend::transcription::tests::independent_silence_check_never_filters_nonzero_or_damaged_pcm ... ok
+test backend::transcription::tests::listener_type_command_is_rejected ... ok
+test backend::transcription::tests::local_card_processing_does_not_use_configured_cloud_or_fixture_text ... ok
+test backend::transcription::tests::local_multi_file_anchors_follow_all_audio_including_silence ... ok
+test backend::transcription::tests::local_pet_chat_recognizes_voice_without_meeting_cache ... ignored, requires isolated local model, public voice sample, and empty private cache
+test backend::transcription::tests::local_third_speaker_survives_provider_undercount ... ok
+test backend::transcription::tests::long_recording_does_not_retry_rejected_authentication ... ok
+test backend::transcription::tests::missing_transcribed_segment_never_returns_incorrect_timestamps ... ignored, requires isolated valid public WAV and an absent first segment
+test backend::transcription::tests::multipart_speaker_windows_keep_global_time_and_clean_temporary_audio ... ok
+test backend::transcription::tests::openai_compatible_provider_posts_audio_multipart ... ok
+test backend::transcription::tests::preserve_user_words_transcription ... ok
+test backend::transcription::tests::provider_speaker_labels_override_local_clusters_and_are_normalized ... ok
+test backend::transcription::tests::public_long_meeting_duration_uses_validated_wav_metadata ... ignored, requires public long-meeting WAV and expected data length
+test backend::transcription::tests::public_model_output_survives_saved_meeting_and_native_minutes ... ignored, requires isolated state, public model-output adapter and configured minutes service
+test backend::transcription::tests::public_multipart_speaker_embeddings_cover_both_parts ... ignored, requires explicitly supplied public audio and installed local speaker model
+test backend::transcription::tests::real_local_multi_file_transcription_keeps_complete_global_anchors ... ignored, requires public audio clips and an explicitly configured local ASR model
+test backend::transcription::tests::render_tagged_handles_empty_and_unknown_speaker ... ok
+test backend::transcription::tests::render_tagged_merges_consecutive_same_speaker ... ok
+test backend::transcription::tests::sidecar_transcript_is_loaded_without_listener_type ... ok
+test backend::transcription::tests::split_long_wav_into_aligned_readable_chunks ... ok
+test backend::transcription::tests::successful_asr_chunk_cache_roundtrips_by_pcm_identity ... ok
+test backend::transcription::tests::truncated_wav_is_not_silently_shortened_and_split_runs_are_isolated ... ok
+test backend::transcription::tests::two_hour_wav_split_preserves_every_pcm_byte ... ignored, two-hour disk fixture; run explicitly
+test backend::transcription::tests::unconfirmed_quiet_tail_never_becomes_a_complete_transcript ... ok
+test backend::transcription::tests::utterance_embedding_index_keeps_uncovered_audio_unknown ... ok
+test backend::transcription::tests::utterance_embedding_index_picks_max_overlap ... ok
+test backend::transcription::tests::volcengine_diarized_transcript_four_speaker ... ignored, requires volcengine creds + Listener speaker models + the 4-speaker probe WAV
+test backend::transcription::tests::wav_writer_reader_roundtrip ... ok
+
+test result: ok. 32 passed; 0 failed; 11 ignored; 0 measured; 1201 filtered out; finished in 0.91s
+

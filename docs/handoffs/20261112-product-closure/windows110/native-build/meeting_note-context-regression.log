@@ -1,0 +1,13 @@
+
+running 8 tests
+test backend::meeting_note_images::tests::image_notes_preserve_sources_roundtrip_selected_export_backup_and_exact_cleanup ... ok
+test backend::meeting_notes::context::tests::literal_transcript_binding_rejects_new_text_and_invented_words ... ok
+test backend::meeting_notes::tests::durable_notes_keep_newer_asr_and_deletion_sanitizes_both_index_copies ... ok
+test backend::meeting_notes::tests::human_evidence_is_literal_retryable_and_survives_later_source_change ... ok
+test backend::meeting_notes::tests::invalid_notes_and_foreign_anchors_never_partially_write ... ok
+test backend::meeting_notes::tests::notes_are_user_context_with_exact_retries_and_conflict_protection ... ok
+test backend::meeting_notes::tests::notes_export_without_asr_and_privacy_clear_removes_context ... ok
+test backend::meeting_notes::tests::old_note_json_remains_readable_without_implicit_evidence_or_followup ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 1236 filtered out; finished in 1.13s
+

@@ -1,0 +1,27 @@
+
+running 22 tests
+test backend::persistence::tests::audio_migration_conflict_commits_none_of_a_multirow_candidate ... ok
+test backend::persistence::tests::audio_migration_replays_only_paths_and_preserves_concurrent_rows ... ok
+test backend::persistence::tests::legacy_minutes_migrate_to_their_original_mode ... ok
+test backend::persistence::tests::load_returns_none_when_corrupt ... ok
+test backend::persistence::tests::load_returns_none_when_missing ... ok
+test backend::persistence::tests::recovery_completed_mode_specific_minutes_win_over_stale_checkpoint ... ok
+test backend::persistence::tests::recovery_failed_minutes_draft_restarts_at_minutes_without_repeating_asr ... ok
+test backend::persistence::tests::recovery_final_transcript_skips_stale_transcription_retry ... ok
+test backend::persistence::tests::recovery_in_flight_crash_keeps_consumed_attempt_and_exact_stage ... ok
+test backend::persistence::tests::recovery_inconsistent_minutes_retry_preserves_partial_and_budget ... ok
+test backend::persistence::tests::recovery_legacy_completed_transcript_migrates_final_but_captured_partial_does_not ... ok
+test backend::persistence::tests::recovery_never_arms_an_unrelated_legacy_wav ... ok
+test backend::persistence::tests::recovery_online_live_partial_is_not_promoted_to_final_minutes_input ... ok
+test backend::persistence::tests::recovery_queues_only_an_armed_owned_product_wav ... ok
+test backend::persistence::tests::recovery_restart_preserves_exhausted_minutes_failure_even_with_final_transcript ... ok
+test backend::persistence::tests::recovery_restart_preserves_minutes_backoff_instead_of_bypassing_it ... ok
+test backend::persistence::tests::recovery_revoked_intent_stays_revoked_after_restart ... ok
+test backend::persistence::tests::restart_keeps_received_audio_and_confirmed_stop_for_transcription ... ok
+test backend::persistence::tests::restart_recovers_phantom_board_recording_to_sync_pending ... ok
+test backend::persistence::tests::restart_recovers_unreceived_board_audio_with_host_target_path ... ok
+test backend::persistence::tests::save_then_load_round_trips_sessions ... ok
+test backend::persistence::tests::segmented_recording_reload_keeps_provenance_and_allows_transcript_save ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 1222 filtered out; finished in 0.38s
+

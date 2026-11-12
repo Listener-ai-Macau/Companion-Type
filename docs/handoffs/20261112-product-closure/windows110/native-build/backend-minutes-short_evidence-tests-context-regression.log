@@ -1,0 +1,8 @@
+
+running 3 tests
+test backend::minutes::short_evidence::tests::action_local_quotes_survive_without_a_top_level_evidence_array ... ok
+test backend::minutes::short_evidence::tests::missing_or_invalid_evidence_never_blocks_minutes ... ok
+test backend::minutes::short_evidence::tests::source_quotes_are_optional_verbatim_and_still_bound_to_final_items ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 1241 filtered out; finished in 0.00s
+

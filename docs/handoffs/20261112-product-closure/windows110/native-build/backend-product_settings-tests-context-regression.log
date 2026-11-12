@@ -1,0 +1,19 @@
+
+running 14 tests
+test backend::product_settings::tests::disabling_minutes_keeps_the_key_but_updates_the_active_provider_switch ... ok
+test backend::product_settings::tests::failed_save_cannot_apply_patch_to_the_active_process_configuration ... ok
+test backend::product_settings::tests::legacy_import_respects_explicit_provider_partial_keys_and_isolation ... ok
+test backend::product_settings::tests::legacy_vault_json_extracts_volc_without_echoing_other_fields ... ok
+test backend::product_settings::tests::local_card_processing_setting_is_on_for_new_profiles_and_keeps_opt_out ... ok
+test backend::product_settings::tests::merge_keeps_previous_secret_when_patch_empty ... ok
+test backend::product_settings::tests::new_settings_use_local_transcription_but_explicit_cloud_is_preserved ... ok
+test backend::product_settings::tests::persisted_settings_copy_contains_no_secret_values ... ok
+test backend::product_settings::tests::plaintext_detector_only_flags_non_empty_secret_fields ... ok
+test backend::product_settings::tests::public_report_distinguishes_backup_recovery_from_protected_unreadable_settings ... ok
+test backend::product_settings::tests::runtime_credentials_enable_ui_without_exposing_or_persisting_secrets ... ok
+test backend::product_settings::tests::save_load_round_trip_and_apply_env ... ok
+test backend::product_settings::tests::windows_credential_manager_round_trip_uses_utf16_json_bundle ... ignored, writes and removes one unique current-user Credential Manager entry
+test backend::product_settings::tests::windows_storage_probe_isolates_native_credentials ... ignored, writes and removes isolated native Credential Manager snapshots
+
+test result: ok. 12 passed; 0 failed; 2 ignored; 0 measured; 1230 filtered out; finished in 0.14s
+

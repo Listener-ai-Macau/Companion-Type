@@ -1,0 +1,7 @@
+
+running 2 tests
+test backend::meeting_audio_mix::tests::mixed_playback_crosses_file_boundaries_and_keeps_a_longer_tail ... ok
+test backend::meeting_audio_mix::tests::truncated_source_stops_instead_of_returning_shorter_meeting ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1242 filtered out; finished in 0.03s
+

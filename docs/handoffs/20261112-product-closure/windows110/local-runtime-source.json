@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-12T12:56:07+08:00",
+  "branch": "work/product-total-windows110-local-r2-20261112",
+  "testSourceCommit": "adb0405b59f5d571340fe1e6d7fe0a685de89dd2",
+  "appSourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+  "toolHashes": {
+    "tools/qa/core_acceptance20261109/windows_meeting.py": "253158fb803000f86e89098b4f52d3053bc0815eb9f3259b6e63df896444ee06",
+    "tools/qa/core_acceptance20261109/windows_meeting_ui.cjs": "2db6afa2c705d93537f985e8c587171eaae0260aad08db6ca3f0fd2dbf28f22d",
+    "tools/qa/core_acceptance20261109/windows_product_ui.cjs": "9dc156f2528e405adf0efabb28179213b5871556c2a848ddd2431bab4be53728"
+  },
+  "nativeRecompiled": false,
+  "hostedFailureRun": 43157321729
+}

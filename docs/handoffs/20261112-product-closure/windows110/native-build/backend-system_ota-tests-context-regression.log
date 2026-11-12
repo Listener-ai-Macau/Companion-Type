@@ -1,0 +1,11 @@
+
+running 6 tests
+test backend::system_ota::tests::changed_layout_requires_explicit_protected_identity_before_begin ... ok
+test backend::system_ota::tests::exact_real_producer_file_and_corruption ... ok
+test backend::system_ota::tests::exact_running_identity_and_released_workspace_are_required ... ok
+test backend::system_ota::tests::file_names_cannot_escape ... ok
+test backend::system_ota::tests::only_known_development_key_fingerprints_are_admitted ... ok
+test backend::system_ota::tests::rejects_ce_ram_hole ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 1238 filtered out; finished in 0.00s
+

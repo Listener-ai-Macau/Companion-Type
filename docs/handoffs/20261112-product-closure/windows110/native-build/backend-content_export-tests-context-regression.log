@@ -1,0 +1,10 @@
+
+running 5 tests
+test backend::content_export::tests::content051_can_export_a_saved_material_without_ai_minutes_or_audio ... ok
+test backend::content_export::tests::content051_generate_files_for_external_reader_checks ... ok
+test backend::content_export::tests::content051_selection_is_identical_across_text_and_document_routes_without_unselected_data ... ok
+test backend::content_export::tests::content067_literal_transcript_prefixes_are_not_document_structure ... ok
+test backend::content_export::tests::content109_readable_handoff_keeps_facts_and_raw_saved_source ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 1239 filtered out; finished in 0.00s
+

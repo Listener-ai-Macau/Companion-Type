@@ -1,0 +1,13 @@
+
+running 8 tests
+test backend::import_audio::tests::cancelling_stops_conversion_without_touching_source ... ok
+test backend::import_audio::tests::conversion_is_streaming_and_reduces_aliasing ... ok
+test backend::import_audio::tests::decode_synthetic_format_fixture ... ignored, uses caller supplied synthetic media file
+test backend::import_audio::tests::imported_recording_survives_reopen_and_backs_up_original ... ok
+test backend::import_audio::tests::opposite_phase_stereo_does_not_cancel_speech ... ok
+test backend::import_audio::tests::public_long_meeting_reopens_with_original_and_full_duration ... ignored, imports an explicitly supplied public long meeting to an isolated directory
+test backend::import_audio::tests::truncated_wav_is_not_presented_as_complete ... ok
+test backend::import_audio::tests::valid_wav_decodes_and_source_remains_unchanged ... ok
+
+test result: ok. 6 passed; 0 failed; 2 ignored; 0 measured; 1236 filtered out; finished in 0.32s
+
