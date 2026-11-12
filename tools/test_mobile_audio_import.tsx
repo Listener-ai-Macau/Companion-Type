@@ -25,6 +25,8 @@ status={running:false,id:'current-job',state:'complete',message:'新文件已保
 await act(async()=>{const next=timers.entries().next().value!;timers.delete(next[0]);next[1]();});
 assert.equal(changed,1);assert.ok(tree.root.findAllByProps({role:'status'}).some(node=>text(node).includes('新文件已保存')));
 act(()=>tree.unmount());assert.equal(timers.size,0);
+status={running:false,state:'cancelled',message:'以前已取消导入，原文件未改变'};
+await act(async()=>{tree=create(<AudioImport {...props} compact/>);});assert.equal(tree.root.findAllByProps({role:'status'}).length,0,'Historical cancellation is a completed user choice, not a persistent failure');act(()=>tree.unmount());
 status={running:false,state:'failed',message:'文件没有可用音轨'};
 await act(async()=>{tree=create(<AudioImport {...props} compact/>);});assert.ok(tree.root.findAllByProps({role:'status'}).some(node=>text(node).includes('文件没有可用音轨')),'Failures remain visible even when opening an existing library');act(()=>tree.unmount());
 console.log('PASS mobile import: picker cancellation, pending progress, actual cancellation, fast refresh, compact historical-success suppression, current completion/failure visibility and polling cleanup.');

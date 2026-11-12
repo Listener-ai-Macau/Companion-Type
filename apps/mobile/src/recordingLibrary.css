@@ -53,3 +53,4 @@
 .mobile-app .player-copy>strong{color:var(--ink);font-size:14px;font-weight:600}
 .mobile-app .player-copy>span{color:var(--muted);font-size:11px}
 .mobile-app .library-search-scope[hidden]{display:none!important}
+.mobile-app .audio-import-cancelled{color:var(--muted);font-size:12px;line-height:1.7}
