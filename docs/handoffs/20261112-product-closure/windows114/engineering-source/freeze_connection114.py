@@ -1,0 +1,37 @@
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,re,subprocess,shutil,os,copy
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';E=Path('E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source');B=R/'docs/handoffs/20261112-product-closure/windows114';B.mkdir(exist_ok=False);W=Path(__file__).parent;at=datetime.now().astimezone().isoformat(timespec='seconds')
+git=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','pack.threads=1','-c','pack.windowMemory=64m','-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol'];head=lambda p:subprocess.check_output(git+['rev-parse','HEAD'],cwd=p,text=True).strip()
+assert head(E)=='1c6cceb4514dd229ed3fcdd79e9a007d02943250'and not subprocess.check_output(git+['status','--porcelain'],cwd=E,text=True).strip()
+review=json.loads(Path('E:/CodexData/Companion/.build-cache/product-closure20261112/connection114-source-r2/result.json').read_bytes());assert review['state']=='EXPLICIT_CONNECTION_FIRST_SCREEN_AND_DEVICE_STATES_SOURCE_PASSED'and len(review['checks'])==8
+product=['packages/ui/src/CompanionDashboard.tsx','packages/ui/src/CompanionRecordingReadiness.tsx','packages/ui/src/deviceConnectionStatus.ts','packages/ui/src/companionUi.css'];version_paths=['package.json','package-lock.json','apps/windows/src-tauri/tauri.conf.json','apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock','apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json']
+def bump(root):
+ for name,count in [('package.json',1),('package-lock.json',2),('apps/windows/src-tauri/tauri.conf.json',1)]:
+  p=root/name;raw=p.read_bytes();old=b'"version": "0.1.113"';assert raw.count(old)==count;p.write_bytes(raw.replace(old,b'"version": "0.1.114"'))
+ p=root/'apps/windows/src-tauri/Cargo.toml';raw=p.read_bytes();assert raw.count(b'version = "0.1.113"')==1;p.write_bytes(raw.replace(b'version = "0.1.113"',b'version = "0.1.114"'))
+ p=root/'apps/windows/src-tauri/Cargo.lock';raw=p.read_bytes();raw,count=re.subn(rb'(name = "companion-type"\r?\nversion = ")0\.1\.113(")',rb'\g<1>0.1.114\2',raw);assert count==1;p.write_bytes(raw)
+ p=root/'apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json';raw=p.read_bytes();data=json.loads(raw)
+ for name,old in data['lockedInputs'].items():
+  new=hashlib.sha256((root/name).read_bytes()).hexdigest()
+  if new!=old:assert raw.count(old.encode())==1;raw=raw.replace(old.encode(),new.encode())
+ p.write_bytes(raw)
+bump(S)
+P=R/'docs/product_backlog.json';raw=P.read_bytes();text=raw.decode('utf8');d=json.loads(text);a=d['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110'];before=copy.deepcopy(a);u=a['ownerProductClosure20261112']['ownerUiUsabilityRework20261112'];u['connectionVisibilityFeedback'].update(updatedAt=at,state='SOURCE_CONNECTION_HIERARCHY_CHECKED_FREEZING114',sourceBrowserEvidence='E:/CodexData/Companion/.build-cache/product-closure20261112/connection114-source-r2/result.json',typeCheckPassed=True,affectedConnectionReadinessQuietSyncAndDeviceActionsPassed=True,retainedPreparationFailures=['Type initially omitted refresh busy-action; source type fixed before any native build.','Old test clicked newly explicit direct-connect CTA as a navigation-only action; actual navigation invariant retained through device navigation test, direct connect separately checked.','Browser r1 eight states passed; repeated theme setup assumed light instead of persisted theme, fixture setup corrected, r2 allstates and widths passed.']);a.update(updatedAt=at,state='CONNECTION114_SOURCE_REVIEWED_NORMAL_BUILD_PENDING',knownJobState='No Owner/app/board job active. Freezing114 from exact delivered113 baseline; no in-flight mouse implementation copied.',next='连接状态与主入口已同批源码修复/检查；冻结114正常release一次，核同源载荷/首屏原生连续流程/真实重开并保资料升级，交付后才原窗续验。已装113和手机142保持，实物/模型/售卖未验不变。')
+m=re.search(r'(?m)^([ \t]*)"activeNonmodelCompletion20261110":\s*',text);_,n=json.JSONDecoder().raw_decode(text[m.end():]);text=text[:m.end()]+json.dumps(a,ensure_ascii=False,indent=2).replace('\n','\r\n'+m.group(1))+text[m.end()+n:];json.loads(text);assert P.read_bytes()==raw;P.write_bytes(text.encode('utf8'))
+agent=R/'AGENTS.md';lines=agent.read_text(encoding='utf-8-sig').splitlines();idx=next(i for i,x in enumerate(lines)if x.startswith('- 当前实际已装Windows'));lines[idx]='- 当前实际已装Windows0.1.113 / Android0.1.142。Owner113真实轮20:33开始，在连接第1步反馈看不到连接状态，20:35应用退出并释放；此轮未通过。沿原UI待办connectionVisibilityFeedback集中修复114：第一屏常驻录音卡状态/连接入口、设备主区显式连接状态、已连接后通往记录，保留静默自动收取。源码状态/宽度/原有保护已检查，正常匹配114包与自验前不重复旧113窗口。普通827安装记录保留，联测前读最新身份/占用；长录、完整IMU、模型质量和售卖未验保持。';agent.write_text('\n'.join(lines)+'\n',encoding='utf8')
+def put(src,dst):dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst)
+tools=['tools/test_connection_entry.tsx','tools/test_companion_setup_render.mjs','tools/test_windows_device_actions.tsx','tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx','tools/qa/core_acceptance20261109/verify_connection_entry.cjs','tools/qa/core_acceptance20261109/windows_product_ui.cjs']
+for rel in ['AGENTS.md','docs/product_backlog.json','docs/development_log.md']:put(R/rel,S/rel)
+put(R/'docs/handoffs/20261112-product-closure/windows113/owner-guided113-connection-feedback20261112.json',S/'docs/handoffs/20261112-product-closure/windows113/owner-guided113-connection-feedback20261112.json')
+for name in ['record_owner113_connection_feedback.py','freeze_connection114.py']:put(W/name,S/'docs/handoffs/20261112-product-closure/windows114/engineering-source'/name)
+paths=product+version_paths+tools+['AGENTS.md','docs/product_backlog.json','docs/development_log.md','docs/handoffs/20261112-product-closure/windows113/owner-guided113-connection-feedback20261112.json','docs/handoffs/20261112-product-closure/windows114/engineering-source']
+for args in [['add','--',*paths],['diff','--cached','--check','--',*paths],['commit','--only','-m','fix(ui): make recording-card connection explicit throughout the main journey','--',*paths]]:subprocess.run(git+args,cwd=S,check=True)
+authoring=head(S);subprocess.run(git+['switch','-c','work/connection-entry114-frozen-20261112'],cwd=E,check=True)
+for rel in product:put(S/rel,E/rel)
+bump(E)
+for args in [['add','--',*product,*version_paths],['diff','--cached','--check','--',*product,*version_paths],['commit','-m','fix(ui): freeze explicit connection114 on delivered113 baseline']]:subprocess.run(git+args,cwd=E,check=True)
+frozen=head(E);record=dict(at=at,state='CONNECTION114_FROZEN_NORMAL_RELEASE_BUILD_PENDING',version='0.1.114',sourceCommit=frozen,sourceRoot=str(E),frozenSourceRoot=str(E),branch='work/connection-entry114-frozen-20261112',priorDeliveredSource='1c6cceb4514dd229ed3fcdd79e9a007d02943250',authoringSourceCommit=authoring,productFilesChanged=product,platformCommit=subprocess.check_output(git+['rev-parse','HEAD:third_party/denzic-platform'],cwd=E,text=True).strip(),androidUnchanged='0.1.142',ownerExperienceAccepted=False,physicalQualified=False,saleQualified=False)
+(B/'frozen-source.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');env={**os.environ,'SHELL':'C:/Program Files/Git/usr/bin/sh.exe'}
+for repo in [S,E]:subprocess.run(git+['push','-u','origin','HEAD'],cwd=repo,env=env,check=True)
+print(json.dumps(record,ensure_ascii=False))

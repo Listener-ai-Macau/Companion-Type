@@ -16,6 +16,13 @@ const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',statu
  minutes:{status:'minutesReady',quality:'final',source:'userEdited',generatedAt:'2026-11-12T01:00:00Z',markdown:'## Summary\n\n本周聚焦会议详情和完整交接，预算仍待确认。\n\n## Decisions\n\n- 先完成完整流程，再集中验收。\n\n## Action Items\n\n- [ ] 核对交接文件范围\n- [ ] 确认预算依据\n\n## Open Questions\n\n- 预算尚未确认。'},minutesByMode:{offlineStore:null,onlineLive:null},pendingReason:null};
 if(new URLSearchParams(location.search).has('without-minutes'))(row as any).minutes=null;
 const initial={...original,host:{...original.host,selectedSessionId:row.id,sessions:[row as any],persistence:{status:'ready'}}} as any;
+const connectionFixture=new URLSearchParams(location.search).get('connection');
+if(connectionFixture){
+ initial.source=connectionFixture==='stale'?'lastKnown':'firmware';initial.connected=initial.device.connected=['connected','stale','storage'].includes(connectionFixture);initial.device.mode='windowsNative';
+ initial.device.connectionPhase=({connecting:'checking',reconnecting:'reconnecting',pairing:'pairingRequired',connected:'ready',stale:'ready',storage:'ready',failed:'idle'}as any)[connectionFixture]??'idle';
+ if(connectionFixture==='failed')initial.lastControl={action:'deviceConnect',accepted:false,message:'public connection failed',payloadHex:'',characteristicUuid:''};
+ if(connectionFixture==='storage')initial.host.persistence={status:'blocked'};
+}
 function View(){
  const[snapshot,setSnapshot]=useState(initial);
  const[fail,setFail]=useState(false);

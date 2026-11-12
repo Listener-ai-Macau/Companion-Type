@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {deviceConnectionStatus} from '../packages/ui/src/deviceConnectionStatus';
+const base=createCompanionV1Fixture();base.source='firmware';base.connected=false;base.device.connected=false;base.device.mode='windowsNative';base.host.persistence={status:'ready'};
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const state=(connected=false,phase:any='idle',source:any='firmware')=>{const s=structuredClone(base);s.connected=s.device.connected=connected;s.source=source;s.device.connectionPhase=phase;return s;};
+const connected=state(true,'ready');assert.equal(deviceConnectionStatus(connected).label,'已连接');
+for(const source of ['lastKnown','unavailable'])assert.equal(deviceConnectionStatus(state(true,'ready',source)).connected,false);
+assert.equal(deviceConnectionStatus(state(false,'checking')).label,'正在连接');assert.equal(deviceConnectionStatus(state(false,'reconnecting')).label,'正在重连');
+assert.equal(deviceConnectionStatus(state(false,'pairingRequired')).label,'需要配对');assert.equal(deviceConnectionStatus(state(false,'manualDisconnected')).label,'已断开');
+const failed=state();failed.lastControl={action:'deviceConnect',accepted:false,message:'private native diagnostic',payloadHex:'',characteristicUuid:''};assert.equal(deviceConnectionStatus(failed).label,'连接未成功');assert(!deviceConnectionStatus(failed).hint.includes('private'));
+const preview=state(true,'ready','fixture');assert.equal(deviceConnectionStatus(preview).label,'界面演示');assert.equal(deviceConnectionStatus(preview).connected,false);
+let snapshot=state(),busy:any=null,view:any;const calls:any[]=[];
+const render=()=> <CompanionDashboard surface="windows" snapshot={snapshot} busyAction={busy} error={null} onRefresh={()=>{}} onControl={r=>calls.push(r)}/>;
+const button=(name:string)=>view.root.findAllByType('button').find((n:any)=>text(n)===name);
+act(()=>{view=create(render());});assert.deepEqual(calls,[]);assert.match(text(view.root.findByProps({'aria-label':'录音卡连接'})),/未连接/);
+act(()=>button('连接录音卡').props.onClick());assert.deepEqual(calls.map(r=>r.action),['deviceConnect']);assert.match(text(view.root.findByProps({'aria-label':'录前准备'})),/未连接/);
+for(const [s,label]of [[state(false,'checking'),'正在连接'],[state(false,'reconnecting'),'正在重连'],[state(false,'pairingRequired'),'需要配对'],[connected,'已连接'],[state(true,'ready','lastKnown'),'未连接'],[failed,'连接未成功']]as const){snapshot=s;act(()=>view.update(render()));assert.match(text(view.root.findByProps({'aria-label':'录前准备'})),new RegExp(label));}
+snapshot=connected;snapshot.host.persistence={status:'blocked'};act(()=>view.update(render()));assert.match(text(view.root.findByProps({'aria-label':'录前准备'})),/已连接/);assert.equal(calls.length,1,'render and status changes do not send controls');
+act(()=>button('我的记录').props.onClick());assert.match(text(view.root.findByProps({'aria-label':'录音卡连接'})),/已连接/);
+act(()=>button('查看设备').props.onClick());assert.equal(calls.length,1,'opening a connected card only navigates');
+assert.equal(view.root.findAllByType('progress').length,0,'connection visibility does not reopen sync progress');act(()=>view.unmount());
+console.log('Connection entry: explicit live/cached/connecting/pairing/failure states, direct connect and passive navigation passed.');

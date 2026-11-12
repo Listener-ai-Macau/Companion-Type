@@ -1,0 +1,23 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../../..'),{build}=require(root+'/node_modules/esbuild'),{chromium}=require(root+'/node_modules/@playwright/test');
+const out=process.argv[2];assert(out&&!fs.existsSync(out));fs.mkdirSync(out,{recursive:true});let server,browser;
+const result={at:new Date().toISOString(),state:'CHECKING_CONNECTION_ENTRY_SOURCE',nativeQualified:false,hardwareQualified:false,modelsRun:false,checks:[]};
+(async()=>{try{
+ await build({entryPoints:[__dirname+'/meeting_workspace_harness.tsx'],outfile:out+'/workspace.js',bundle:true,platform:'browser',format:'iife',jsx:'automatic',tsconfig:root+'/apps/windows/tsconfig.json'});
+ server=http.createServer((req,res)=>{const name=path.basename(new URL(req.url,'http://localhost').pathname);if(['workspace.js','workspace.css'].includes(name)){res.setHeader('Content-Type',name.endsWith('.js')?'text/javascript':'text/css');res.end(fs.readFileSync(out+'/'+name));return;}res.setHeader('Content-Type','text/html; charset=utf-8');res.end('<!doctype html><html lang="zh-CN"><head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/workspace.css"></head><body><div id="app"></div><script src="/workspace.js"></script></body></html>');});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
+ browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-gpu']});const context=await browser.newContext({viewport:{width:1200,height:850},serviceWorkers:'block'});await context.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ for(const [state,label]of [['offline','未连接'],['connecting','正在连接'],['reconnecting','正在重连'],['pairing','需要配对'],['connected','已连接'],['stale','未连接'],['failed','连接未成功'],['storage','已连接']]){
+  await page.goto(origin+'/?connection='+state+'&with-sync=1');const strip=page.getByRole('region',{name:'录音卡连接',exact:true});await strip.waitFor();assert((await strip.innerText()).includes('录音卡 · '+label));let box=await strip.boundingBox();assert(box&&box.y>=0&&box.y+box.height<=850,'Connection must be visible in the first screen');assert.equal(await page.getByRole('region',{name:'录音同步进度',exact:true}).count(),0);
+  const pending=['connecting','reconnecting'].includes(state);if(pending)assert(await strip.getByRole('button').isDisabled());
+  await page.screenshot({path:out+'/library-'+state+'.png',fullPage:true});
+  await page.getByRole('button',{name:'设备与同步',exact:true}).click();const card=page.getByRole('region',{name:'录前准备',exact:true});const status=card.locator('.ct-connection-state');await status.waitFor();assert.equal((await status.innerText()).trim(),label);assert(await status.isVisible());box=await status.boundingBox();assert(box&&box.y>=0&&box.y+box.height<=850);assert.equal(await status.evaluate(n=>n.closest('details')),null,'Explicit link state must not be in a disclosure');assert.equal(await page.getByRole('region',{name:'录音同步进度',exact:true}).count(),0);
+  await page.screenshot({path:out+'/device-'+state+'.png',fullPage:true});result.checks.push({state,label,libraryAndDeviceVisibleWithoutDisclosure:true});
+ }
+ for(const width of [1360,900,390]){
+  await page.setViewportSize({width,height:850});await page.goto(origin+'/?connection=offline');const strip=page.getByRole('region',{name:'录音卡连接',exact:true});await strip.waitFor();const box=await strip.boundingBox();assert(box&&box.x>=0&&box.x+box.width<=width+1&&box.y+box.height<=850);assert(await strip.getByRole('button',{name:'连接录音卡',exact:true}).isVisible());
+  const dark=page.getByRole('button',{name:'切换至深色模式',exact:true});if(await dark.count())await dark.click();await page.screenshot({path:out+'/library-offline-dark-'+width+'.png',fullPage:true});assert(await strip.isVisible());
+  await page.getByRole('button',{name:'设备与同步',exact:true}).click();assert(await page.getByRole('region',{name:'录前准备',exact:true}).locator('.ct-connection-state').isVisible());await page.screenshot({path:out+'/device-offline-dark-'+width+'.png',fullPage:true});
+ }
+ assert.deepEqual(errors,[]);result.state='EXPLICIT_CONNECTION_FIRST_SCREEN_AND_DEVICE_STATES_SOURCE_PASSED';
+}catch(error){result.error=String(error.stack||error);throw error;}finally{fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));await browser?.close();await new Promise(r=>server?server.close(r):r());}})().catch(error=>{console.error(error);process.exitCode=1;});

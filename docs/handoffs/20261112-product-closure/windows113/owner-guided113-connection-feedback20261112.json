@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-12T20:31:49.312+08:00",
+  "state": "OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW",
+  "version": "0.1.113",
+  "firmwareVersion": 66827,
+  "uiVersion": 85,
+  "sourceCommit": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "controllerPid": 21668,
+  "boardLease": false,
+  "hostStartCommands": 0,
+  "privateContentPrinted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "softwareOwnerAccepted": false,
+  "twoHourRecordingObserved": false,
+  "guidedStepsTotal": 8,
+  "guidedStepsVisited": [
+    0
+  ],
+  "guidedRouteReachedEnd": false,
+  "promptPid": 22380,
+  "boardLeaseHeldSince": "2026-11-12T20:33:40+08:00",
+  "ownerStartedAt": "2026-11-12T20:33:40.340+08:00",
+  "appPid": 21244,
+  "guidedStepIndex": 0,
+  "promptClosedBeforeAppExit": true,
+  "appClosedAt": "2026-11-12T20:35:01.600+08:00",
+  "closedAtGuidedStep": 0,
+  "newCardResults": [],
+  "newPhysicalToTextObserved": false,
+  "ownerResponse": {
+    "selected": "遇到问题",
+    "text": "都没有看到连接状态之类的, UI设计太烂了",
+    "spoken_text": null,
+    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows113-purpose-r2-20261112\\owner-feedback.txt"
+  },
+  "finishedAt": "2026-11-12T20:35:01.762+08:00",
+  "ownerQuote": "都没有看到连接状态之类的, UI设计太烂了",
+  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows113-purpose-r2-20261112",
+  "normalProductLogSha256": "7b638b9ece212aeaf6684e096f2f412a5855678717483426c7e3a5bef2453e19",
+  "deviceAudioOrTranscriptOpened": false,
+  "actualCardNewRecordingCountNotQueried": true
+}
