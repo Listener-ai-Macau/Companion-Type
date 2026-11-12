@@ -11,6 +11,22 @@ module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
 
 class WholeUseTests(unittest.TestCase):
+    def test_finished_software_is_independent_of_unbound_historical_firmware(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);batch=root/'batch';batch.mkdir();installed=root/'installed';installed.mkdir();(root/'docs').mkdir()
+            (installed/'companion-type.exe').write_bytes(b'exact exe');(installed/'companion_type_lib.dll').write_bytes(b'exact dll')
+            source='frozen-source';version='0.1.111'
+            values={'windows-verification.json':dict(version=version,sourceCommit=source,embeddedExeSha256=module.sha(installed/'companion-type.exe'),dllSha256=module.sha(installed/'companion_type_lib.dll')),
+                'installation.json':dict(installedVersion=version,dataManifestIdentical=True),
+                'runtime-result.json':dict(appVersion=version,appSourceCommit=source,nativeUiExitCode=0,nativeUiState='REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED')}
+            for name,value in values.items():(batch/name).write_text(json.dumps(value),encoding='utf-8')
+            dependency=dict(state='CURRENT_EMBEDDED_WORKPOINT_MUST_BIND_LATEST_NORMAL_FIRMWARE_BEFORE_PHYSICAL_TOTAL_ONLY',firmwareIdentityVerifiedByOriginalInstaller=True,ordinaryFirmwareInstallation=dict(firmware=66804,ui=85,bootAndNormalApplicationVerified=True))
+            data={'owner_module_execution':{'frontendWindowsMobile20261102':{'ownerCoreDeliveryPriority20261104':{'ownerCoreAcceptanceCandidate20261109':{'activeNonmodelCompletion20261110':{'ownerProductClosure20261112':{'physicalAcceptanceDependency':dependency}}}}}}}
+            (root/'docs/product_backlog.json').write_text(json.dumps(data),encoding='utf-8');(root/'docs/board_turn.json').write_text(json.dumps(dict(holder=None)),encoding='utf-8')
+            with patch.object(module,'app_pids',return_value=[]),patch.object(module.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='')):
+                result=module.prepare(root,batch,installed)
+            self.assertTrue(result['softwareReady']);self.assertFalse(result['ready']);self.assertFalse(result['firmwareIdentityBindingReady']);self.assertIsNone(result['firmwareVersion']);self.assertEqual(result['blockers'],[module.FIRMWARE_PENDING])
+
     def test_readiness_only_accepts_actual_button_event_from_own_prompt(self):
         self.assertFalse(module.start_requested(json.dumps(dict(event='review_submitted',processId=7,text='action_button|开始整体验收')),7))
         self.assertFalse(module.start_requested(json.dumps(dict(event='action_button|开始整体验收',processId=8)),7))

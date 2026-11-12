@@ -14,6 +14,7 @@ TZ = timezone(timedelta(hours=8))
 START = '开始整体验收'
 APP_NAME = 'companion-type.exe'
 BOARD_BUSY = 'Shared board is currently occupied; do not interrupt its actual operation.'
+FIRMWARE_PENDING = 'The known firmware/IMU repair and its matching physical receipt are unfinished.'
 ROOT = Path('C:/Users/Billy/Desktop/Denzic/Companion')
 PRODUCT_PATHS = ('apps/windows/src/', 'apps/windows/src-tauri/', 'packages/ui/src/',
                  'packages/core/src/', 'packages/desktop-input/', 'third_party/imu-pointer/')
@@ -144,16 +145,26 @@ def prepare(project, batch, installed_dir):
     backlog = json.loads((project / 'docs/product_backlog.json').read_text(encoding='utf-8'))
     active = backlog['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110']
     dependency = active['ownerProductClosure20261112'].get('physicalAcceptanceDependency', {})
-    if dependency.get('state') in {'WAITING_SHARED_BOARD_FIRMWARE_WORK',
-                                  'BOARD_RELEASED_MATCHED_FIRMWARE_RECEIPT_AND_IMU_REPAIR_PENDING'}:
-        blockers.append('The known firmware/IMU repair and its matching physical receipt are unfinished.')
+    firmware = dependency.get('ordinaryFirmwareInstallation', {})
+    firmware_ready = (dependency.get('state') not in {
+        'WAITING_SHARED_BOARD_FIRMWARE_WORK',
+        'BOARD_RELEASED_MATCHED_FIRMWARE_RECEIPT_AND_IMU_REPAIR_PENDING',
+        'CURRENT_EMBEDDED_WORKPOINT_MUST_BIND_LATEST_NORMAL_FIRMWARE_BEFORE_PHYSICAL_TOTAL_ONLY'}
+        and dependency.get('firmwareIdentityVerifiedByOriginalInstaller') is True
+        and firmware.get('bootAndNormalApplicationVerified') is True
+        and type(firmware.get('firmware')) is int and firmware['firmware'] > 0
+        and type(firmware.get('ui')) is int)
+    if not firmware_ready:
+        blockers.append(FIRMWARE_PENDING)
     board = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
     if board.get('holder') is not None:
         blockers.append(BOARD_BUSY)
     return dict(at=now(), state='READY_FOR_ONE_TOTAL_USE' if not blockers else 'FINISH_CURRENT_BATCH_BEFORE_OWNER_TOTAL_USE',
                 ready=not blockers, version=version, sourceCommit=verification['sourceCommit'],
-                firmwareVersion=dependency.get('ordinaryFirmwareInstallation', {}).get('firmware'),
-                uiVersion=dependency.get('ordinaryFirmwareInstallation', {}).get('ui'),
+                softwareReady=not any(item not in {FIRMWARE_PENDING, BOARD_BUSY} for item in blockers),
+                firmwareIdentityBindingReady=firmware_ready,
+                firmwareVersion=firmware.get('firmware') if firmware_ready else None,
+                uiVersion=firmware.get('ui') if firmware_ready else None,
                 installedExeSha256=verification['embeddedExeSha256'],
                 installedDllSha256=verification['dllSha256'], blockers=blockers,
                 currentProductDifferences=changed, readOnly=True, ownerPromptStarted=False,

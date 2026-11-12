@@ -171,7 +171,7 @@ def main():
     if fixture_row.get(key)==[]:fixture_row.pop(key,None)
   (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
   (root/'exports').mkdir() # The ordinary Shell receiver creates its own empty destination.
-  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],backgroundOnly=a.stage=='product-background',exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],backgroundOnly=a.stage=='product-background',verifyDateOnly=os.environ.get('COMPANION_ACCEPTANCE_VERIFY_DATE_ONLY')=='1',exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  if a.stage in {'documents','incoming'}:
   assert DEDICATED_CI,'Document native pickers only on the disposable CI machine'
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
