@@ -12,7 +12,11 @@ module.exports=async function productJourney(page,plan,out){
   await readiness.getByRole('button',{name:'连接设备',exact:true}).waitFor();
   const secondary=page.locator('details').filter({has:page.locator('summary').getByText('电脑录音与文件导入',{exact:true})});
   assert(!await secondary.evaluate(node=>node.open));
-  assert(!await page.locator('.ct-device-options').evaluate(node=>node.open));
+  assert(!await page.locator('.ct-device-options:not(.ct-sync-details)').evaluate(node=>node.open));
+  if(await page.locator('.ct-sync-details').count()){
+   assert(!await page.locator('.ct-sync-details').evaluate(node=>node.open));
+   assert.equal(await page.getByRole('region',{name:'录音同步进度',exact:true}).count(),0);
+  }
   assert((await readiness.boundingBox()).y<(await secondary.boundingBox()).y);
   await page.screenshot({path:path.join(out,'self-acceptance-device-entry.png'),fullPage:true});
  }

@@ -64,3 +64,13 @@ export const cancelCompanionMeetingQuestion = (...args:unknown[])=>required('can
 export const repairRecordingSyncSettings = (...args:unknown[])=>required('repairSyncSettings',...args);
 export const importCompanionAudio = (...args:unknown[])=>required('importAudio',...args);
 export const cancelCompanionAudioImport = (...args:unknown[])=>required('cancelAudioImport',...args);
+export const listDeviceRecordings = (...args:unknown[])=>required('listDeviceRecordings',...args);
+export const syncDeviceRecording = (...args:unknown[])=>required('syncDeviceRecording',...args);
+export const deleteDeviceRecording = (...args:unknown[])=>required('deleteDeviceRecording',...args);
+export const copyCompanionMeetingContent = (...args:unknown[])=>required('copyMeetingContent',...args);
+export const shareCompanionMeetingContent = (...args:unknown[])=>required('shareMeetingContent',...args);
+export const shareCompanionAudio = (...args:unknown[])=>required('shareAudio',...args);
+export const checkCompanionNoteEvidence = (...args:unknown[])=>required('checkNoteEvidence',...args);
+export const addCompanionImageNote = (...args:unknown[])=>required('addImageNote',...args);
+export const previewCompanionNoteImage = (...args:unknown[])=>required('previewNoteImage',...args);
+export const companionDocumentAdapter = new Proxy({}, {get:(_target,name)=>(...args:unknown[])=>required('document_'+String(name),...args)}) as any;

@@ -7,6 +7,7 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  server=http.createServer((req,res)=>{const name=path.basename(new URL(req.url,'http://localhost').pathname);if(['workspace.js','workspace.css'].includes(name)){res.setHeader('Content-Type',name.endsWith('.js')?'text/javascript':'text/css');res.end(fs.readFileSync(out+'/'+name));return;}res.setHeader('Content-Type','text/html; charset=utf-8');res.end('<!doctype html><html lang="zh-CN"><head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/workspace.css"></head><body><div id="app"></div><script src="/workspace.js"></script></body></html>');});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
  browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-gpu']});const context=await browser.newContext({viewport:{width:1360,height:950},serviceWorkers:'block'});await context.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ if(process.env.COMPANION_WORKSPACE_SYNC_ONLY!=='1'){
  await page.goto(origin);await page.locator('.ct-library-card').filter({hasText:'产品周会'}).waitFor();
  await page.screenshot({path:out+'/library-light.png',fullPage:true});
  await page.getByRole('button',{name:'设备与同步',exact:true}).click();
@@ -38,6 +39,29 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.locator('#ct-recording-text').waitFor({state:'visible'});
  assert(await page.locator('#ct-recording-text').isVisible(),'Without saved minutes, open the recording/transcript instead of an empty result pane');
  await page.screenshot({path:out+'/new-recording-source.png',fullPage:true});
- assert.deepEqual(errors,[]);result.state='COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED';result.covered=['connection before recording tools','saved minutes visible immediately','without minutes opens source','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows'];
+ result.fullWorkspaceJourneyCompleted=true;
+ }
+ await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?with-sync=1');
+ await page.locator('.ct-shell').waitFor();
+ const syncRegion=()=>page.getByRole('region',{name:'录音同步进度',exact:true});
+ assert.equal(await syncRegion().count(),0);assert.equal(await page.locator('.ct-shell progress').count(),0);
+ await page.getByRole('button',{name:'设备与同步',exact:true}).click();
+ const syncDetails=page.locator('.ct-sync-details');
+ for(const phase of ['receiving','saving','reclaiming','paused','idle']){
+  await page.locator('#fixture-sync-controls').getByRole('button',{name:phase,exact:true}).click();
+  assert.equal(await syncRegion().count(),0);assert.equal(await page.locator('.ct-shell progress').count(),0);
+ }
+ await page.locator('#fixture-sync-controls').getByRole('button',{name:'receiving',exact:true}).click();
+ await page.screenshot({path:out+'/quiet-sync-default.png',fullPage:true});
+ await syncDetails.locator('summary').click();await syncRegion().waitFor();
+ await page.locator('#fixture-sync-controls').getByRole('button',{name:'next-recording',exact:true}).click();
+ assert(await syncDetails.evaluate(node=>node.open));assert.equal(await syncRegion().count(),1);
+ await page.screenshot({path:out+'/quiet-sync-requested-details.png',fullPage:true});
+ await syncDetails.locator('summary').click();await syncRegion().waitFor({state:'detached'});
+ await page.locator('#fixture-sync-controls').getByRole('button',{name:'reclaiming',exact:true}).click();assert.equal(await syncRegion().count(),0);
+ await page.locator('#fixture-sync-controls').getByRole('button',{name:'blocked',exact:true}).click();
+ await page.getByRole('button',{name:'查看同步详情',exact:true}).click();await syncRegion().getByText('自动同步已暂停',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'我的记录',exact:true}).click();assert.equal(await syncRegion().count(),0);
+ assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
 }catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});

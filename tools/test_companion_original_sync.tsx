@@ -18,6 +18,9 @@ const props=()=>({snapshot,surface:'windows' as const,busyAction,error:null,onRe
 const text=(n:any):string=>typeof n==='string'?n:(n.children??[]).map(text).join('');
 const button=(label:string)=>renderer.root.findAllByType('button').find((n:any)=>text(n)===label);
 act(()=>{renderer=create(<CompanionDashboard {...props()} />);});
+assert.equal(button('继续同步'),undefined,'normal Windows UI does not materialize unsolicited sync controls');
+act(()=>button('设备与同步').props.onClick());
+act(()=>renderer.root.findByProps({className:'ct-device-options ct-sync-details'}).props.onToggle({currentTarget:{open:true}}));
 assert.equal(button('继续同步').props.disabled,false,'the paused original can resume while its board capture continues');
 act(()=>button('继续同步').props.onClick());
 assert.equal(calls.at(-1).action,'deviceSyncRecordings');assert.equal(calls.at(-1).sessionId,'original-long');

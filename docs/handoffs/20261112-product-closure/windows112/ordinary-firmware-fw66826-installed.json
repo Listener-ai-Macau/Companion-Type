@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-12T19:35:31+08:00",
+  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+  "firmware": 66826,
+  "ui": 85,
+  "packageSha256": "5aac29cade4ba288e36858d0fc44d02df58a8bb25142ceb422bba7869d653bac",
+  "firmwareSourceCommit": "9f93997b097332d1b52b43bbdb601c3dcac6bfd2",
+  "bootAndNormalApplicationVerified": true,
+  "microphoneRunningAtObservation": false,
+  "pairingAndRecordingMetadataPreserved": true,
+  "bootWrites": 0,
+  "originalAudioReads": 0,
+  "originalAudioWrites": 0,
+  "allInstallerHandlesClosed": true,
+  "sourceReceiptSha256": "9102d204026c0d4190d7330ad5f660eeaf2a953c7d6ad64d510adf0069be667b",
+  "sourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install826-normal-r2\\result.json",
+  "deviceUidAndRecordingCatalogExcluded": true,
+  "normalObserverEnabled": false,
+  "normalRawUartEnabled": false,
+  "actualNormalRestorationRelease": {
+    "side": "codex",
+    "at": "2026-11-12T19:30:30+08:00",
+    "item": "Install ordinary826 consolidated visual-resource fix; finish engineering restoration",
+    "result": "Normal826 boot/idle identity verified; UART engineering removed; all handles closed; original38 recording owners and pairing retained"
+  },
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

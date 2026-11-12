@@ -6,7 +6,12 @@ import { App } from '../apps/windows/src/App';
 
 const timers = new Map<number, () => void>();
 let nextTimer = 0;
+const windowEvents = new EventTarget();
 (globalThis as any).window = {
+  ...(globalThis as any).window,
+  addEventListener:windowEvents.addEventListener.bind(windowEvents),
+  removeEventListener:windowEvents.removeEventListener.bind(windowEvents),
+  dispatchEvent:windowEvents.dispatchEvent.bind(windowEvents),
   setTimeout: (fn: () => void) => { timers.set(++nextTimer, fn); return nextTimer; },
   clearTimeout: (id: number) => timers.delete(id),
 };
@@ -40,6 +45,9 @@ const active = { jobId: 'job-a', deviceId: 'AABBCCDDEEFF', phase: 'receiving', r
   receivedBytes: 65_632, totalBytes: 631_104, pauseRequested: false };
 await act(async () => { listener!(active); });
 await act(async () => { initialStatus!({ ...active, jobId: null, phase: 'idle' }); });
+assert.equal(button('暂停同步'),undefined,'background receive does not announce or display its progress without a request');
+await act(async () => { button('设备与同步').props.onClick(); });
+await act(async () => { renderer.root.findByProps({className:'ct-device-options ct-sync-details'}).props.onToggle({currentTarget:{open:true}}); });
 assert.ok(button('暂停同步'), 'a stale initial status cannot hide a newer receive job');
 assert.equal(button('暂停同步').props.disabled, false, 'pause bypasses the pending ordinary control gate');
 await act(async () => { button('暂停同步').props.onClick(); button('暂停同步').props.onClick(); });

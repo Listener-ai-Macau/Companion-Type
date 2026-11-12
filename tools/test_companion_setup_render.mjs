@@ -11,7 +11,8 @@ const names=['test_customer_followthrough','test_action_review_tools','test_card
   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
   'test_companion_app_state','test_transcript_bulk_replace','test_companion_pet_navigation','test_companion_result_order','test_windows_device_actions','test_windows_settings_navigation',
-  'test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace'];
+  'test_selected_note_handoff','test_manual_note_editing','test_manual_followup_notes','test_manual_followup_documents','test_meeting_reference_workspace',
+  'test_quiet_background_sync','test_companion_sync_pause','test_companion_original_sync','test_sync_manual_recovery','test_sync_repair'];
 const requested=process.argv.slice(2);
 for(const name of requested)if(!names.includes(name))throw new Error(`Unknown UI contract: ${name}`);
 const cache=path.join(root,'.cache','ui-acceptance');
@@ -24,7 +25,7 @@ for(const name of requested.length?requested:names){
     await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:file,bundle:true,
       platform:'node',format:'esm',jsx:'automatic',packages:'external',
       tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'},
-      plugins:name==='test_companion_app_state'?[{name:'test-client',setup(build){
+      plugins:['test_companion_app_state','test_companion_sync_pause'].includes(name)?[{name:'test-client',setup(build){
         build.onResolve({filter:/companionClient$/},()=>({path:path.join(root,'tools/app_client_test_stub.ts')}));
       }}]:[]});
     const result=spawnSync(process.execPath,['--import',pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,file],

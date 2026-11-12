@@ -1,0 +1,31 @@
+{
+  "state": "OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW",
+  "version": "0.1.112",
+  "firmwareVersion": 66826,
+  "uiVersion": 85,
+  "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "ownerStartedAt": "2026-11-12T19:36:28.517+08:00",
+  "appClosedAt": "2026-11-12T19:37:23.019+08:00",
+  "finishedAt": "2026-11-12T19:37:23.166+08:00",
+  "softwareOwnerAccepted": false,
+  "newPhysicalToTextObserved": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "boardLease": false,
+  "hostStartCommands": 0,
+  "guidedStepsTotal": 12,
+  "guidedStepsVisited": [
+    0
+  ],
+  "guidedRouteReachedEnd": false,
+  "promptClosedBeforeAppExit": true,
+  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows112-fw66826-20261112",
+  "feedbackId": "owner-sync-display20261112",
+  "ownerQuote": "这里自动就开始同步录音了? 很奇怪, 其实不用特意显示吧，主要是。好像已经显示了很多遍了，一直在同步。",
+  "ownerClarification": "这个就不用什么自动同步录音了吧？你不要搞一个什么进度条之类的。除非是用户主动去查，你就。自己让他，就是反正接上。他就开始同步，接上就开始同步这样子。。。然后就不是有那个环形缓冲区域之类的吗？",
+  "normalProductLogSha256": "b24f7a05b6afab1223165ee5b0b0ba62e287ead781feafb32184f60bfcdb5a41",
+  "newReceivedCardRows": 0,
+  "actualCardRecordingCountNotQueried": true,
+  "metadataObservation": "Three distinct existing segment IDs each had one commit; ten per-file progress windows each. No repeated same-ID commit in this55s round; this is not a long-term no-repeat qualification.",
+  "diagnosticScope": "Private log metadata only; old recording audio/transcript not opened or copied."
+}

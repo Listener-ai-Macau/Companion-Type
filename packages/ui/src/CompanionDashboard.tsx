@@ -535,6 +535,7 @@ export function CompanionDashboard({
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
   const [openSavedRecordingTarget, setOpenSavedRecordingTarget] = useState<'source'|'result'|null>(null);
+  const [syncDetailsOpen, setSyncDetailsOpen] = useState(false);
   const savedRecordingWorkspace = useRef<HTMLElement | null>(null);
   const recordingOpener = useRef<HTMLButtonElement | null>(null);
   const recordingLibraryRegion = useRef<HTMLElement | null>(null);
@@ -1930,6 +1931,11 @@ export function CompanionDashboard({
   const readBookmarkPosition=()=>!selectedSession?null:selectedSession.source==='hostMeeting'&&meetingAudioControl.current?Math.round(meetingAudioControl.current.position()*1000)
     :segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000)
     :audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)?Math.round(audioElement.current.currentTime*1000):null;
+  const renderRecordingSync = () => <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
+    recoveryDeviceId={pausedSyncRecorder?.sourceDeviceId ?? (connected ? device?.deviceId : null)}
+    resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync} onRepair={onRepairSync}
+    onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
+      ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />;
   return (
     <main onClickCapture={event=>{
       if(audioEditUnsaved && event.target instanceof Element && event.target.closest('button,a')&&!event.target.closest('.ct-audio-edit-panel')){
@@ -2043,11 +2049,10 @@ export function CompanionDashboard({
           <button type="button" className="ct-action" disabled={cancelProcessingPending}
             onClick={() => onCancelMeetingProcessing(processingSessionId)}>{cancelProcessingPending ? '停止中…' : minutesRunning ? '停止整理' : '停止转写'}</button>
         </section> : null}
-      <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
-        recoveryDeviceId={pausedSyncRecorder?.sourceDeviceId ?? (connected ? device?.deviceId : null)}
-        resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync} onRepair={onRepairSync}
-        onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
-          ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />
+      {surface !== 'windows' ? renderRecordingSync() : recordingSync?.phase === 'blocked' ?
+        <p className="ct-recording-notice" role="alert">录音收取需要处理。{' '}
+          <button type="button" className="ct-text-button" onClick={()=>{navigatePage('device');setSyncDetailsOpen(true);}}>查看同步详情</button>
+        </p> : null}
 
       {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={recordingControlBusy} onControl={onControl} /> : null}
 
@@ -2820,10 +2825,10 @@ export function CompanionDashboard({
       {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="在卡片上录音">
         <div><strong>在卡片上录音</strong>
           <p>{recorderKeyGuide(device).start} {recorderKeyGuide(device).stop}</p>
-          <p>离线也能录。软件负责接收原音，在“我的记录”回听、转文字和整理。</p>
+          <p>离线也能录。连接后录音会自动保存到本机，可在“我的记录”回听和整理。</p>
         </div>
         <div className="ct-button-row">
-          {devicePageConnected ? <button type="button" className="ct-action ct-action-primary"
+          {surface !== 'windows' && devicePageConnected ? <button type="button" className="ct-action ct-action-primary"
             disabled={controlsBusy || storageBlocked || !device?.deviceId}
             onClick={() => onControl({action:'deviceSyncRecordings',deviceId:device?.deviceId??undefined})}>
             <Download size={16} /><span>接收设备录音</span>
@@ -2868,6 +2873,18 @@ export function CompanionDashboard({
 
       </details> : null}
       </div>
+
+      {surface === 'windows' ? <details className="ct-device-options ct-sync-details" open={syncDetailsOpen}
+        onToggle={event=>setSyncDetailsOpen(event.currentTarget.open)}>
+        <summary>查看同步详情</summary>
+        {syncDetailsOpen && pageView === 'device' ? <>
+          {renderRecordingSync()}
+          {!recordingSync || recordingSync.phase === 'idle' ? <p>{recordingSync?.phase === 'idle' ? '当前没有正在收取的录音。' : '连接后会自动收取录音。'}</p> : null}
+          {devicePageConnected && device?.deviceId ? <button type="button" className="ct-text-button"
+            disabled={controlsBusy || storageBlocked || oobeBlockedByRecording}
+            onClick={()=>onControl({action:'deviceSyncRecordings',deviceId:device.deviceId??undefined})}>检查设备录音</button> : null}
+        </> : null}
+      </details> : null}
 
       <details className="ct-device-options" open={device?.connectionPhase==='pairingRequired'}><summary>配对与设备设置</summary>
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}

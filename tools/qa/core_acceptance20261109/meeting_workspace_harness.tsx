@@ -19,8 +19,17 @@ const initial={...original,host:{...original.host,selectedSessionId:row.id,sessi
 function View(){
  const[snapshot,setSnapshot]=useState(initial);
  const[fail,setFail]=useState(false);
+ const[syncPhase,setSyncPhase]=useState('receiving');
+ const[syncRecording,setSyncRecording]=useState(1);
+ const withSync=new URLSearchParams(location.search).has('with-sync');
  return <><p style={{padding:'8px 28px',margin:0,fontSize:11,background:'#eee5f5',color:'#49345e'}}>公开虚构会议 · 完整界面源码预演 · 不是原生/实卡或模型验收</p>
+ {withSync?<div id="fixture-sync-controls" aria-label="公开同步状态夹具" style={{position:'fixed',top:2,right:2,zIndex:10000,background:'#fff',color:'#111',fontSize:11}}>
+   {['receiving','saving','reclaiming','paused','idle','blocked'].map(phase=><button key={phase} onClick={()=>setSyncPhase(phase)}>{phase}</button>)}
+   <button onClick={()=>setSyncRecording(value=>value+1)}>next-recording</button>
+ </div>:null}
  <CompanionDashboard surface="windows" snapshot={snapshot} busyAction={null} error={null}
+ recordingSync={withSync?{jobId:['receiving','saving','reclaiming'].includes(syncPhase)?'public-sync':null,deviceId:'public-card',phase:syncPhase,recordingId:syncRecording,receivedBytes:25,totalBytes:100,pauseRequested:false,error:syncPhase==='blocked'?'公开同步故障':undefined} as any:null}
+ onPauseSync={()=>setSyncPhase('paused')}
  productSettings={{asrProvider:'local-paraformer',localAsrAvailable:true,deepseekMinutesEnabled:false,deepseekApiKeySet:false,autoLocalCardTranscription:true,openaiAsrEndpoint:'',openaiAsrModel:'',deepseekBaseUrl:'',deepseekModel:'',bleCompress:false} as any}
  onControl={request=>setSnapshot(s=>applyCompanionV1ControlFixture(s,request))} onRefresh={()=>{}}
  onSaveMeeting={async request=>{if(fail)throw Error('公开故障用例：保存失败，修改保留。');const next=structuredClone(snapshot);const current=next.host.sessions[0];if(request.title!==undefined)current.title=request.title;setSnapshot(next);return next;}}

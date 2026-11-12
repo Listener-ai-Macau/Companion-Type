@@ -280,7 +280,8 @@ def main():
     def release():
         if record['boardLease']:
             current = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
-            if current.get('holder') != 'codex' or current.get('item') != lease_item:
+            if (current.get('holder') != 'codex' or current.get('item') != lease_item
+                    or current.get('heldSince') != record.get('boardLeaseHeldSince')):
                 raise RuntimeError('Board lease no longer matches this attempt; do not release another operation.')
             board('release', result='本轮自有普通产品已实际退出，未发主机START；集中反馈及未验范围保留。')
             record['boardLease'] = False
@@ -400,6 +401,8 @@ def main():
                     if claim.get('result') != 'TURN_CLAIMED':
                         raise RuntimeError('Board claim not confirmed.')
                     record['boardLease'] = True
+                    claimed_state = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
+                    record['boardLeaseHeldSince'] = claimed_state.get('heldSince')
                     app = launch_product()
                     record.update(state='OWNER_USING_NORMAL_PRODUCT', ownerStartedAt=now(), appPid=app.pid)
                     consumed_navigation_chars = event_text.rfind('\n') + 1
@@ -408,7 +411,8 @@ def main():
                         and start_requested(event_text[consumed_start_chars:], prompt.pid)):
                     consumed_start_chars = len(event_text)
                     current = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
-                    if current.get('holder') != 'codex' or current.get('item') != lease_item:
+                    if (current.get('holder') != 'codex' or current.get('item') != lease_item
+                            or current.get('heldSince') != record.get('boardLeaseHeldSince')):
                         raise RuntimeError('Preserve the changed board lease; do not resume another operation.')
                     for name, expected in [(APP_NAME, readiness['installedExeSha256']),
                                            ('companion_type_lib.dll', readiness['installedDllSha256'])]:
