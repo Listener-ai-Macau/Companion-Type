@@ -26,6 +26,13 @@ class WholeUseTests(unittest.TestCase):
             with patch.object(module,'app_pids',return_value=[]),patch.object(module.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='')):
                 result=module.prepare(root,batch,installed)
             self.assertTrue(result['softwareReady']);self.assertFalse(result['ready']);self.assertFalse(result['firmwareIdentityBindingReady']);self.assertIsNone(result['firmwareVersion']);self.assertEqual(result['blockers'],[module.FIRMWARE_PENDING])
+            closure=data['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110']['ownerProductClosure20261112']
+            closure['ownerUiUsabilityRework20261112']=dict(installedAndEngineeringReviewed=False,candidateVersion=None)
+            dependency['state']='MATCHED_NORMAL_RESTORATION'
+            (root/'docs/product_backlog.json').write_text(json.dumps(data),encoding='utf-8')
+            with patch.object(module,'app_pids',return_value=[]),patch.object(module.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='')):
+                rejected=module.prepare(root,batch,installed)
+            self.assertFalse(rejected['softwareReady']);self.assertFalse(rejected['ready']);self.assertEqual(rejected['blockers'],[module.UI_REWORK_PENDING])
 
     def test_readiness_only_accepts_actual_button_event_from_own_prompt(self):
         self.assertFalse(module.start_requested(json.dumps(dict(event='review_submitted',processId=7,text='action_button|开始整体验收')),7))
@@ -45,13 +52,14 @@ class WholeUseTests(unittest.TestCase):
         self.assertFalse(facts[0]['beganDuringOwnerWindow']);self.assertTrue(facts[1]['beganDuringOwnerWindow'])
         self.assertNotIn('private words',json.dumps(facts))
 
-    def exercise(self,selected,prompt_closes_at,reopens=False,busy_until=0,claim_race=False,retry_start=True,expect_app=True):
+    def exercise(self,selected,prompt_closes_at,reopens=False,busy_until=0,claim_race=False,retry_start=True,expect_app=True,navigate=False):
         with tempfile.TemporaryDirectory(prefix='whole-use-check-',dir=Path(__file__).parent)as directory:
             root=Path(directory).resolve();self.assertEqual(root.parent,Path(__file__).parent.resolve())
             project=root/'project';batch=project/'batch';batch.mkdir(parents=True)
             (project/'docs').mkdir();board_path=project/'docs/board_turn.json';board_path.write_text(json.dumps(dict(holder='grok' if busy_until else None)))
             appdata=root/'roaming';state=appdata/'Companion Type/state/sessions.json';state.parent.mkdir(parents=True);state.write_text('[]')
             output=root/'private-run';clock=dict(tick=0,released=False,metadata_written=False,command=[],busyUntil=busy_until,startClicks=0,claimAttempts=0,promptCount=0)
+            installed=root/'installed';installed.mkdir();(installed/module.APP_NAME).write_bytes(b'exe');(installed/'companion_type_lib.dll').write_bytes(b'dll')
             origin=datetime(2026,11,12,8,0,tzinfo=timezone(timedelta(hours=8)))
             def stamp():return (origin+timedelta(seconds=clock['tick'])).isoformat()
             class FakePrompt:
@@ -63,17 +71,21 @@ class WholeUseTests(unittest.TestCase):
                 def poll(self):
                     enabled=module.START in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions']
                     if not enabled:self.clicked=False
-                    if enabled and not self.clicked and (retry_start or not clock['startClicks']):
+                    if enabled and not self.clicked and (retry_start or not clock['startClicks']) and (navigate or not clock.get('appLaunched')):
                         with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|开始整体验收',processId=self.pid))+'\n')
                         self.clicked=True;clock['startClicks']+=1
+                    if navigate and module.NEXT in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions'] and clock.get('navigationTick')!=clock['tick']:
+                        with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|'+module.NEXT,processId=self.pid,at=stamp()))+'\n')
+                        clock['navigationTick']=clock['tick']
                     if clock['tick']<prompt_closes_at:return None
                     if not self.written:
                         self.stream.write(json.dumps(dict(selected=selected,text='Private Owner feedback')).encode());self.stream.flush();self.written=True
                     return 0
             class FakeApp:
                 pid=7002
+                def __init__(self):self.close_at=(16 if clock['launches']==1 else 24) if navigate else 4
                 def poll(self):
-                    if clock['tick']<4:return None
+                    if clock['tick']<self.close_at:return None
                     if not clock['metadata_written']:
                         state.write_text(json.dumps([dict(id='new',source='deviceFlash',deviceRecordingKey=dict(deviceUid='unit',formatEpoch='epoch',sessionId='new'),
                             durationMs=12000,startedAt=(origin+timedelta(seconds=clock['appLaunchedAt'])).isoformat(),audioStored=True,transcriptFinal=True,
@@ -82,6 +94,7 @@ class WholeUseTests(unittest.TestCase):
                     return 0
             def popen(command,**kwargs):
                 if '-File'in command:return FakePrompt(command,**kwargs)
+                clock['launches']=clock.get('launches',0)+1
                 clock['appLaunched']=True;clock['appLaunchedAt']=clock['tick']
                 return FakeApp()
             def board_run(command,**kwargs):
@@ -97,12 +110,13 @@ class WholeUseTests(unittest.TestCase):
                 self.assertEqual(action,'release');self.assertTrue(clock['metadata_written'])
                 clock['released']=True;board_path.write_text(json.dumps(dict(holder=None)))
                 return SimpleNamespace(returncode=0,stdout='{}')
-            ready=dict(ready=True,version='0.1.110',sourceCommit='frozen-source',blockers=[])
+            ready=dict(ready=True,version='0.1.110',sourceCommit='frozen-source',blockers=[],installedExeSha256=module.sha(installed/module.APP_NAME),installedDllSha256=module.sha(installed/'companion_type_lib.dll'))
             def prepare(*args):
                 busy=json.loads(board_path.read_text())['holder']is not None
                 return {**ready,'ready':not busy,'blockers':[module.BOARD_BUSY]if busy else []}
             def sleep(_):
                 clock['tick']+=1
+                self.assertLess(clock['tick'],100,'Guided round failed to reach a terminal state')
                 if json.loads(board_path.read_text())['holder']=='grok'and clock['tick']>=clock['busyUntil']:
                     board_path.write_text(json.dumps(dict(holder=None)))
             argv=['owner_total.py','--run','--project-root',str(project),'--batch',str(batch),'--output',str(output),
@@ -115,6 +129,7 @@ class WholeUseTests(unittest.TestCase):
                 return original_read_text(path,*args,**kwargs)
             with patch.object(module,'prepare',side_effect=prepare),patch.object(module,'app_pids',side_effect=pids),\
                  patch.object(module,'now',side_effect=stamp),patch.object(module.time,'sleep',side_effect=sleep),\
+                 patch.object(module.time,'time',side_effect=lambda:origin.timestamp()+clock['tick']),\
                  patch.object(module.subprocess,'Popen',side_effect=popen),patch.object(module.subprocess,'run',side_effect=board_run),\
                  patch.dict(os.environ,{'APPDATA':str(appdata)}),patch.object(Path,'read_text',safe_read),\
                  patch('sys.argv',argv),contextlib.redirect_stdout(io.StringIO()):
@@ -139,8 +154,8 @@ class WholeUseTests(unittest.TestCase):
     def test_early_pass_is_not_accepted_even_after_app_later_exits(self):
         self.assertFalse(self.exercise('通过',2)['softwareOwnerAccepted'])
 
-    def test_final_owner_review_after_actual_exit_is_preserved_as_scoped_software_feedback(self):
-        self.assertTrue(self.exercise('通过',6)['softwareOwnerAccepted'])
+    def test_disabled_final_review_is_not_accepted_without_finishing_guidance(self):
+        self.assertFalse(self.exercise('通过',6)['softwareOwnerAccepted'])
 
     def test_initially_busy_board_does_not_open_another_owner_window(self):
         ready=dict(ready=False,version='0.1.110',sourceCommit='frozen',blockers=[module.BOARD_BUSY])
@@ -157,14 +172,32 @@ class WholeUseTests(unittest.TestCase):
 
     def test_claim_race_accepts_a_fresh_click_in_the_same_window_after_release(self):
         result=self.exercise('通过',6,claim_race=True)
-        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertFalse(result['softwareOwnerAccepted'])
         self.assertEqual(self.last_clock['startClicks'],2)
         self.assertEqual(self.last_clock['claimAttempts'],2)
 
     def test_owner_can_reopen_the_product_and_finish_the_same_round(self):
         result=self.exercise('通过',10,reopens=True)
-        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertFalse(result['softwareOwnerAccepted'])
         self.assertEqual(result['appClosedAt'],'2026-11-12T08:00:08+08:00')
+
+    def test_guided_whole_round_reopens_same_product_and_collects_one_final_review(self):
+        result=self.exercise('通过',30,navigate=True)
+        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertTrue(result['guidedRouteReachedEnd'])
+        self.assertTrue(result['guidedReopenObserved'])
+        self.assertEqual(result['guidedStepsVisited'],list(range(len(module.STEPS))))
+        self.assertEqual(self.last_clock['claimAttempts'],1)
+        self.assertEqual(self.last_clock['launches'],2)
+
+    def test_navigation_rejects_wrong_window_text_and_stale_double_click(self):
+        event=dict(event='action_button|'+module.NEXT,processId=7,at='2026-11-12T08:00:01+08:00')
+        cutoff=datetime(2026,11,12,8,0,0,tzinfo=timezone(timedelta(hours=8))).timestamp()
+        self.assertEqual(module.navigation_requested(json.dumps(event),7,cutoff),module.NEXT)
+        self.assertIsNone(module.navigation_requested(json.dumps(event),8,cutoff))
+        self.assertIsNone(module.navigation_requested(json.dumps(event),7,cutoff+2))
+        event.update(event='review_submitted',text='action_button|'+module.NEXT)
+        self.assertIsNone(module.navigation_requested(json.dumps(event),7,cutoff))
 
 
 if __name__=='__main__':unittest.main(verbosity=2)

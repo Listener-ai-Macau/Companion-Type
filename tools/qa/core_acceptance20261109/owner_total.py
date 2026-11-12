@@ -9,12 +9,14 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import argparse, hashlib, json, os, re, subprocess, time
 import psutil
+from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested
 
 TZ = timezone(timedelta(hours=8))
 START = '开始整体验收'
 APP_NAME = 'companion-type.exe'
 BOARD_BUSY = 'Shared board is currently occupied; do not interrupt its actual operation.'
 FIRMWARE_PENDING = 'The known firmware/IMU repair and its matching physical receipt are unfinished.'
+UI_REWORK_PENDING = 'Owner rejected the product and guidance UI; finish and install the coherent usability repair before another walkthrough.'
 ROOT = Path('C:/Users/Billy/Desktop/Denzic/Companion')
 PRODUCT_PATHS = ('apps/windows/src/', 'apps/windows/src-tauri/', 'packages/ui/src/',
                  'packages/core/src/', 'packages/desktop-input/', 'third_party/imu-pointer/')
@@ -153,7 +155,12 @@ def prepare(project, batch, installed_dir):
         blockers.append('Product repairs are still in flight or are not in the installed candidate.')
     backlog = json.loads((project / 'docs/product_backlog.json').read_text(encoding='utf-8'))
     active = backlog['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110']
-    dependency = active['ownerProductClosure20261112'].get('physicalAcceptanceDependency', {})
+    closure = active['ownerProductClosure20261112']
+    ui_rework = closure.get('ownerUiUsabilityRework20261112')
+    if ui_rework and not (ui_rework.get('installedAndEngineeringReviewed') is True
+                          and ui_rework.get('candidateVersion') == version):
+        blockers.append(UI_REWORK_PENDING)
+    dependency = closure.get('physicalAcceptanceDependency', {})
     firmware = dependency.get('ordinaryFirmwareInstallation', {})
     firmware_ready = (dependency.get('state') not in {
         'WAITING_SHARED_BOARD_FIRMWARE_WORK',
@@ -242,10 +249,26 @@ def main():
     version = readiness['version']
     waiting_for_board = only_board_blocked(readiness)
     consumed_start_chars = 0
-    message = (f'本轮使用已安装的 Companion {version}，只集中验收一次。\n\n'
-               '点“开始整体验收”后打开正常产品。选一场你本来就想保留的内容，按卡片开始录音，正常接收、看文字、核对来源、留下跟进并带走结果；按你的目的连续使用，不用遍历每个按钮。\n\n'
-               '要覆盖当前长录可靠性，请让同一场实卡录音持续至少2小时，期间可以继续做自己的事。录音只由你操作卡片开始，本窗口不会开录。\n\n'
-               '用完关闭 Companion，再在这里集中写下整体感受并选择结论。只有产品实际关闭后，“通过”才可用；遇到阻断可随时写明问题，不用重录。没空可以选“稍后”。')
+    consumed_navigation_chars = 0
+    guide_index = 0
+    navigation_not_before = 0
+    record.update(guidedStepsTotal=len(STEPS), guidedStepsVisited=[], guidedRouteReachedEnd=False)
+    message = (f'本次对已交付 Companion {version} 做一轮有带领的功能验收。\n\n'
+               '我会在同一个窗口按功能带你操作，每步说明怎么进入、怎么做、应该看到什么。做完点“下一步”，要回看点“上一步”；这些按钮只切换说明，不代表自动通过。\n\n'
+               '整轮从连接和实卡新录音开始，接着覆盖保存回听、文字纪要、来源、跟进、文档、AI、结果导出、日期和重开。中途问题先写在下方，最后一次提交整体结论；相关修改集中修复、整批交付。\n\n'
+               '点“开始整体验收”后打开正常产品。录音步骤会说明实体键操作，本窗口不会代你开录。刚才鼠标手感失败保留在原事项，不要求重验。没空可以选“稍后”。')
+
+    def show_guide():
+        nonlocal navigation_not_before
+        navigation_not_before = time.time() + .8
+        record['guidedStepIndex'] = guide_index
+        if guide_index not in record['guidedStepsVisited']:
+            record['guidedStepsVisited'].append(guide_index)
+        record['guidedRouteReachedEnd'] = guide_index == len(STEPS) - 1
+        save()
+        actions = ([BACK] if guide_index else []) + ([NEXT] if guide_index < len(STEPS) - 1 else [])
+        update(f'{guide_index + 1}/{len(STEPS)} · {STEPS[guide_index][0]}', STEPS[guide_index][1],
+               actions, review=bool(record.get('appClosedAt')) and record['guidedRouteReachedEnd'])
     def wait_for_board():
         nonlocal waiting_for_board
         waiting_for_board = True
@@ -265,13 +288,23 @@ def main():
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
                '-Title', 'Companion 集中总验收', '-Message', message,
                '-ScopeText', f'Windows {version}；普通固件 FW{readiness.get("firmwareVersion")} / UI{readiness.get("uiVersion")}；原音只保留本机。',
-               '-ActionButtons', START, '-Buttons', '通过,遇到问题,稍后',
+               '-ActionButtons', ','.join((START, BACK, NEXT)), '-Buttons', '通过,遇到问题,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),
                '-EventPath', str(events), '-TextInput', '-ObservationLabel', '整体感受、卡住之处和未用部分（集中写一次即可）',
                '-OutputPath', str(cache / 'owner-feedback.txt'), '-Json', '-NoActivate', '-NoTopMost',
-               '-Width', '760', '-Height', '690', '-MessageHeight', '310']
+               '-Width', '900', '-Height', '740', '-MessageHeight', '360']
     app = None
     app_log = None
+
+    def launch_product():
+        nonlocal app_log
+        app_env = dict(os.environ)
+        for key in APP_ENV:
+            app_env.pop(key, None)
+        app_log = (cache / 'normal-product.log').open('ab')
+        return subprocess.Popen([str(args.installed_dir / APP_NAME)], env=app_env,
+                                stdout=app_log, stderr=subprocess.STDOUT,
+                                creationflags=subprocess.CREATE_NO_WINDOW)
     save()
     with stdout.open('wb') as prompt_log:
         prompt = subprocess.Popen(command, env=environment, stdout=prompt_log,
@@ -286,9 +319,9 @@ def main():
                 if app is not None and record.get('appClosedAt') and running:
                     record.setdefault('previousAppClosures', []).append(record.pop('appClosedAt'))
                     record['state'] = 'OWNER_CONTINUING_SAME_TOTAL_USE'
-                    save()
-                    update('继续同一轮完整使用',
-                           'Companion 已重新打开，继续完成同一目的即可，不用重新开始验收。用完关闭产品，再在这里集中提交感受。')
+                    if record.get('closedAtGuidedStep') == RESTART_INDEX:
+                        record['guidedReopenObserved'] = True
+                    show_guide()
                 if prompt.poll() is not None and app is not None and running:
                     record['promptClosedBeforeAppExit'] = True
                 if app is None and waiting_for_board and prompt.poll() is None:
@@ -329,22 +362,46 @@ def main():
                     if claim.get('result') != 'TURN_CLAIMED':
                         raise RuntimeError('Board claim not confirmed.')
                     record['boardLease'] = True
-                    app_env = dict(os.environ)
-                    for key in APP_ENV:
-                        app_env.pop(key, None)
-                    app_log = (cache / 'normal-product.log').open('wb')
-                    app = subprocess.Popen([str(args.installed_dir / APP_NAME)], env=app_env,
-                                           stdout=app_log, stderr=subprocess.STDOUT,
-                                           creationflags=subprocess.CREATE_NO_WINDOW)
+                    app = launch_product()
                     record.update(state='OWNER_USING_NORMAL_PRODUCT', ownerStartedAt=now(), appPid=app.pid)
-                    save()
-                    update('在 Companion 中完成自己的完整目的',
-                           '正常产品已由你的点击启动。按自己的目的录音和使用；长录覆盖需要同一场实际录音至少2小时。\n\n'
-                           '这段时间不用盯此窗口，不用逐功能打勾。遇到问题保留当前结果、集中写在这里即可，不用为同一问题反复录。用完关闭 Companion 后提交整体结论。')
+                    consumed_navigation_chars = event_text.rfind('\n') + 1
+                    show_guide()
+                if (app is not None and record.get('appClosedAt') and not running and prompt.poll() is None
+                        and start_requested(event_text[consumed_start_chars:], prompt.pid)):
+                    consumed_start_chars = len(event_text)
+                    current = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
+                    if current.get('holder') != 'codex' or current.get('item') != lease_item:
+                        raise RuntimeError('Preserve the changed board lease; do not resume another operation.')
+                    for name, expected in [(APP_NAME, readiness['installedExeSha256']),
+                                           ('companion_type_lib.dll', readiness['installedDllSha256'])]:
+                        if sha(args.installed_dir / name) != expected:
+                            raise RuntimeError('Installed bytes changed during this guided round.')
+                    app = launch_product()
+                    record.setdefault('previousAppClosures', []).append(record.pop('appClosedAt'))
+                    record.update(state='OWNER_CONTINUING_SAME_TOTAL_USE', appPid=app.pid)
+                    if record.get('closedAtGuidedStep') == RESTART_INDEX:
+                        record['guidedReopenObserved'] = True
+                    consumed_navigation_chars = event_text.rfind('\n') + 1
+                    show_guide()
+                if app is not None and prompt.poll() is None and not record.get('appClosedAt'):
+                    complete_events = event_text.rfind('\n') + 1
+                    action = navigation_requested(event_text[consumed_navigation_chars:complete_events], prompt.pid, navigation_not_before)
+                    consumed_navigation_chars = complete_events
+                    if action == BACK:
+                        guide_index = max(0, guide_index - 1)
+                        show_guide()
+                    elif action == NEXT:
+                        if guide_index == RESTART_INDEX and not record.get('guidedReopenObserved'):
+                            update(f'{guide_index + 1}/{len(STEPS)} · 先退出再重开',
+                                   STEPS[guide_index][1] + '\n\n当前还没有观察到这一步的退出重开；先关闭产品，原窗口会提供继续入口。', (BACK, NEXT))
+                        else:
+                            guide_index = min(len(STEPS) - 1, guide_index + 1)
+                            show_guide()
                 running = (app is not None and app.poll() is None) or bool(app_pids())
                 if app is not None and not running and not record.get('appClosedAt'):
                     app_log.close()
                     record['appClosedAt'] = now()
+                    record['closedAtGuidedStep'] = guide_index
                     after = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else []
                     facts = physical_facts(before_ids, after, record['ownerStartedAt'], record['appClosedAt'])
                     record['newCardResults'] = facts
@@ -355,16 +412,20 @@ def main():
                                                               for row in complete)
                     record['state'] = 'PRODUCT_CLOSED_WAITING_CONCENTRATED_FEEDBACK'
                     save()
-                    update('本轮产品已关闭，集中反馈',
-                           '本轮产品已退出，实际保存结果已记录。请集中写下是否顺手、哪里卡住、还有哪些没用到，再选择整体结论。\n\n'
-                           '未实际覆盖的长录、准确率或其它条件会如实保留，不会仅凭点“通过”认定整机合格。', review=True)
+                    if guide_index == len(STEPS) - 1:
+                        update('本轮产品已关闭，提交一次整体结论', STEPS[-1][1], review=True)
+                    else:
+                        update(f'{guide_index + 1}/{len(STEPS)} · 产品已退出，本轮保留',
+                               '本轮产品已退出，已保存结果保留。点“开始整体验收”会重新打开同一版本并继续当前步骤，不会另开一轮或自动录音。\n\n'
+                               + STEPS[guide_index][1] + '\n\n如果不继续，可以在下方集中说明问题后选“遇到问题”或“稍后”。', (START,))
                 if prompt.poll() is not None and not running and (app is None or record.get('appClosedAt')):
                     break
                 time.sleep(.4)
             response = json.loads(stdout.read_text(encoding='utf-8-sig').strip())
             record['ownerResponse'] = response  # Private local output only.
             record['softwareOwnerAccepted'] = (response.get('selected') == '通过'
-                and bool(record.get('appClosedAt')) and not record.get('promptClosedBeforeAppExit'))
+                and bool(record.get('appClosedAt')) and not record.get('promptClosedBeforeAppExit')
+                and record['guidedRouteReachedEnd'])
             record['state'] = 'OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW' if app else 'OWNER_DEFERRED_WITHOUT_START'
         except BaseException as error:
             record.update(state='TOTAL_USE_NEEDS_ATTENTION', error=str(error))
@@ -382,7 +443,8 @@ def main():
     # Owner private text is deliberately not copied into the repository batch.
     public = {key: record.get(key) for key in ['state', 'version', 'firmwareVersion', 'uiVersion', 'sourceCommit', 'ownerStartedAt', 'appClosedAt',
                'finishedAt', 'softwareOwnerAccepted', 'twoHourRecordingObserved', 'newPhysicalToTextObserved',
-               'physicalTotalAcceptancePassed', 'saleQualified', 'boardLease', 'hostStartCommands']}
+               'physicalTotalAcceptancePassed', 'saleQualified', 'boardLease', 'hostStartCommands',
+               'guidedStepsTotal', 'guidedStepsVisited', 'guidedRouteReachedEnd', 'guidedReopenObserved']}
     public['privateEvidenceDirectory'] = str(cache)
     write_json(batch / 'owner-total-result.json', public)
     print(json.dumps(public, ensure_ascii=False, indent=2))

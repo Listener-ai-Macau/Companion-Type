@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-12T15:58:50+08:00",
+  "state": "INSTALLED111_OFFLINE_VALIDATOR_ACCEPTED_SELECTED_SIGNED_NORMAL_PACKAGE",
+  "windowsVersion": "0.1.111",
+  "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+  "firmware": 66820,
+  "manifestSha256": "726da7b10de8993deb57687705cd9aed43ab0d7bc80c5147e1d8f3f68cac5e3f",
+  "validation": {
+    "chunkBytes": 505,
+    "message": "单文件内容已核对；Boot 在覆盖前验证签名。新版本正常启动且临时空间释放后才显示升级成功。",
+    "packageType": "companion-system-ota",
+    "payloadBytes": 1363132,
+    "payloadSha256": "865feaae2f5f026ae50e056676fdbba4989bb56c9c7f0ba45d25ceca8e4b921e",
+    "status": "PASS",
+    "versionNote": "固件＋资源单文件，断开后重新下载"
+  },
+  "boardAccessed": false,
+  "transferCommands": 0,
+  "hostMicCommands": 0,
+  "modelsRun": false,
+  "ownerPrivateLibraryRead": false,
+  "residentBootStillAuthenticatesActualSignature": true,
+  "physicalTotalAcceptancePassed": false
+}

@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-12T16:23:14+08:00",
+  "state": "GUIDED_FUNCTIONAL_ACCEPTANCE_READY_ONE_COMPLETE_DELIVERY",
+  "windowsVersion": "0.1.111",
+  "androidVersion": "0.1.142",
+  "firmware": 66820,
+  "guideFunctions": [
+    "认识界面与连接",
+    "在卡片上新录一段",
+    "接收、保存与回听",
+    "转文字",
+    "纪要与原话核对",
+    "跟进清单与字面依据",
+    "补充文档",
+    "会议 AI 与来源",
+    "带走选中的结果",
+    "日期与日历交接",
+    "退出后重开",
+    "一次整体结论"
+  ],
+  "operatorUiReused": true,
+  "operatorPromptCountPerRound": 1,
+  "navigationIsAcceptanceProof": false,
+  "separateFeatureBuilds": 0,
+  "nativeProductChanged": false,
+  "nativeBuildsOrInstalls": 0,
+  "isolatedLifecycleChecks": 12,
+  "checksScope": "Fake process/board only: full guided route with one lease and actual close/reopen, wrong/stale action events, current readiness and old-audio exclusion; no GUI/hardware/models.",
+  "sourceFilesSha256": {
+    "owner_total.py": "3fb1275f27f1ae0f1d99e196102f1f2472e46fc9a60050dd087b6f469a79f734",
+    "owner_total_guide.py": "23b7af0d6bfbe91f20897fe00257a6e9e807cd2be7645f6779a5ff8f87762532",
+    "owner_total_test.py": "1da5fe261bd383744870b7c65c1f89ffec9b4976a077e55bba2f123d80576168"
+  },
+  "previousAttemptsCancelled": 2,
+  "previousAttemptsNewRecordings": 0,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

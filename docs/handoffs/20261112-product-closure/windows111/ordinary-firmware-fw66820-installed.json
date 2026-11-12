@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-12T16:05:02+08:00",
+  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+  "firmware": 66820,
+  "ui": 85,
+  "packageSha256": "865feaae2f5f026ae50e056676fdbba4989bb56c9c7f0ba45d25ceca8e4b921e",
+  "firmwareSourceCommit": "a3c2906d2b7f0e70e01dafafba7f2df13ca939da",
+  "bootAndNormalApplicationVerified": true,
+  "microphoneRunningAtObservation": false,
+  "pairingAndRecordingMetadataPreserved": true,
+  "bootWrites": 0,
+  "originalAudioReads": 0,
+  "originalAudioWrites": 0,
+  "allInstallerHandlesClosed": true,
+  "sourceReceiptSha256": "6a9bc8833a61189fa5caff413bc97f103406b53faf63db802894ad29fc6da0af",
+  "deviceUidAndRecordingCatalogExcluded": true,
+  "normalObserverEnabled": false,
+  "actualNormalRestorationReleaseLine": "- **已释放**：轮流 Codex，2026-11-12T15:20:39+08:00；一项：IMU/CPU服务账：拆剩余36%，无MIC空闲与指向采样，准备一次原弹窗录音；完成恢复普通版。做完立刻释放。状态 docs/board_turn.json。；2026-11-12T16:01:17+08:00 CPU服务账和鼠标调度修复完成；已装普通FW66820/UI85，观察器关闭，61.44MHz。QPC被动754帧无丢序，模式0恢复，MIC0、原37录音/配对元数据保持；句柄关闭。Owner鼠标原窗仅点击开始后重新领板。；句柄关闭后再交接。",
+  "subsequentPointerTrialRelease": {
+    "side": "codex",
+    "at": "2026-11-12T16:02:31+08:00",
+    "item": "Companion IMU鼠标FW66820原弹窗实体体验",
+    "result": "Original pointer trial stopped; native/BLE/UART handles closed;0 MIC/audio reads"
+  },
+  "pointerTrialQualified": false,
+  "pointerTrialReceiptSha256": "efe02265617100476fd420d4af0586cad97a27aaa88f8199e2cf1a521802bb65",
+  "pointerTrialFeedback": "体验很一般",
+  "pointerTrialDisconnected": true,
+  "pointerModeRestoreAcknowledged": false,
+  "actualNewLongRecordingQualified": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

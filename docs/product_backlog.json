@@ -133816,33 +133816,33 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-12T15:10:12+08:00",
+      "updatedAt": "2026-11-12T16:02:39+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
       "baseline": {
-        "firmwareVersion": 66815,
+        "firmwareVersion": 66820,
         "uiGeneration": 85,
         "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
-        "sourceCommit": "507ddb8",
-        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
-        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
-        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+        "sourceCommit": "a3c2906",
+        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66820-normal-mouse-services\\result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install820\\result.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live820-qpc\\result.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Retained firmware Git worktree507ddb8 pushed; normal815 maintenance installed, hardware SPI default, observer off.",
+        "sourceRootAvailability": "Retained Git sourcea3c2906 pushed; normal820 signed maintenance installed, hardware SPI/default observer off.",
         "evidenceAvailability": "Current package/source and normal passive IMU/BLE receipts retained; no full-core or ordinary OTA qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
-        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
-        "appBytes": 412556,
+        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live820-qpc\\result.json",
+        "appBytes": 412684,
         "staticRamBytes": 68160,
         "stackReservedBytes": 21504,
-        "physicalQualification": "Normal815753frames/no loss/IMU errors, mode0 restored and board released; Owner feel and matched recording CPU comparison OPEN.",
+        "physicalQualification": "Scoped normal820 passive QPC stream754frames0loss; physical mouse trial pending. Startup first-read3-frame gap retained, not full transport guarantee. Recording/full-sync CPU and ordinary OTA remain unqualified.",
         "ordinaryWirelessOtaQualified": false
       },
       "packages": [
@@ -134095,14 +134095,13 @@
           "title": "Companion录音卡IMU交互：敲击重点",
           "status": "open",
           "category": "Owner最新优先插入；原编号复用，屏幕/宠物仍暂停",
-          "current": "普通FW66815/UI85已装，硬件SPI默认、CPU测量关闭；CIM3板端Fusion/校准与当前Windows110同核。已定位CIN重复生成、GPIO模拟和OTA/主循环空轮询并修复：同类无MIC指向场景平均56.65→36.43%，约98.62Hz无丢序；普通版753帧约97.76Hz、无丢序/IMU错误、模式0恢复，板卡已交回。",
-          "next": "沿embedded.next：现有高级手势主机接入与同一原弹窗体验，不重跑旧387无动作或已排除的805低采样结果。",
+          "current": "普通FW66820/UI85已装，源a3c2906推送；空闲约19%停点按Owner保留，鼠标整板34.28→32.88%，算法约0.17%；1319帧约98.49Hz0丢序。普通版QPC754帧0丢序，首次启动校准段3帧缺口保留；旧15/16ms粗时钟不作精确延迟。原鼠标v4弹窗等待真实体验，未开始不接管光标，等待不占板。",
+          "next": "沿embedded.next，先承接原鼠标v4实体反馈，不再追空闲小数或重复弹录音窗口。",
           "remaining": [
-            "Finish current optional advanced-IMU host integration and one normal product delivery; use existing firmware gestures/upstream pointer, no speculative3D displacement tracker",
-            "Original Owner popup physical pointer/click/drag experience; previous floaty/no-body-click negative feedback remains OPEN",
-            "Matched recording+Opus+BLE CPU comparison remains deferred by Owner; current36.4256% is non-MIC diagnostic pointer load, not standby or normal-build final CPU",
-            "Original Flash budget gap340B remains optimization item; static RAM unchanged",
-            "Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed"
+            "Owner physical pointer movement/click/drag and old floaty/no-body-click feedback remain open",
+            "Current recording+Opus+BLE full-load CPU and actual WBA25/cache/platform adaptation not newly measured",
+            "Original Flash budget over468B remains unchanged contract; static RAM unchanged",
+            "Ordinary wireless OTA fragmented contiguous-staging limitation and Owner explicit hardware blocks remain open"
           ],
           "doneWhen": "录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。",
           "evidence": [
@@ -134565,7 +134564,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Continue existing CP04-08 advanced IMU host integration and one original-popup physical pointer/click/drag trial. CPU source hotspots fixed/pushed507ddb8; ordinary815 hardware-SPI/observer-off installed and read back, board released. Recording+Opus+BLE CPU remains Owner-deferred, Flash over original budget340B and ordinary OTA fragmented staging remain open; do not restore old795/791 workpoints.",
+      "next": "Owner v4 physical feel failed; stop idle CPU chase and repeated trial. Original WatchPointer integrates heading continuously on device and sends latest pose, reliable clicks separate. Current host integration of lossy rate packets and embedded motion-only controls differ. Adapt device heading + negotiated fixed32B CIM4, independent acknowledged CIN pointer events, latest-motion receiver; regression under dropped motion before next physical trial. Existing radio/reset cause unknown; no new MIC authorized.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -143424,7 +143423,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "CPU_REMAINDER_AND_SERVICE_CAPACITY_ATTRIBUTION",
+          "state": "OWNER_MOUSE_FAILED_UPSTREAM_TRANSPORT_ARCHITECTURE_REPAIR",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143432,10 +143431,10 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-12T15:18:43+08:00",
+          "updatedAt": "2026-11-12T16:20:58+08:00",
           "sourceCommit": {
             "windows": "35bf71ea",
-            "firmware": "507ddb8",
+            "firmware": "a3c2906",
             "upstreamAirCursor": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
             "upstreamWatchPointer": "504137a1a8748e3560f1c203d06fbd4e0832d582"
           },
@@ -143454,13 +143453,12 @@
             "actualBoardCpuMeasured": false
           },
           "remaining": [
-            "Finish current optional advanced-IMU host integration and one normal product delivery; use existing firmware gestures/upstream pointer, no speculative3D displacement tracker",
-            "Original Owner popup physical pointer/click/drag experience; previous floaty/no-body-click negative feedback remains OPEN",
-            "Matched recording+Opus+BLE CPU comparison remains deferred by Owner; current36.4256% is non-MIC diagnostic pointer load, not standby or normal-build final CPU",
-            "Original Flash budget gap340B remains optimization item; static RAM unchanged",
-            "Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed"
+            "Owner physical pointer movement/click/drag and old floaty/no-body-click feedback remain open",
+            "Current recording+Opus+BLE full-load CPU and actual WBA25/cache/platform adaptation not newly measured",
+            "Original Flash budget over468B remains unchanged contract; static RAM unchanged",
+            "Ordinary wireless OTA fragmented contiguous-staging limitation and Owner explicit hardware blocks remain open"
           ],
-          "firmwareInstalled": 66815,
+          "firmwareInstalled": 66820,
           "normal795BuiltNotInstalled": true,
           "ownerFeedback": "鼠标已能移动，但飘、不好用，期待机身敲击点击；原始反馈保留，未通过。",
           "clockConstraint": {
@@ -143470,7 +143468,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Resume from normal815; no new product behavior changes.813 has~13.52 percentage points outside product/main envelopes. Add source-bound diagnostic envelopes for loop prefix, low-power Run-only work and observer self-cost plus existing PDM/Opus/NOR hooks; exact test passed.816 diagnostic builds. After install, compare connected idle and pointer without MIC, then one original Start popup if actual concurrent audio measurement is necessary; no percentage sum across overlapping or mutually exclusive services. Restore815 or next normal candidate and release board after measurement.",
+          "executionPoint": "Owner v4 physical feel failed; stop idle CPU chase and repeated trial. Original WatchPointer integrates heading continuously on device and sends latest pose, reliable clicks separate. Current host integration of lossy rate packets and embedded motion-only controls differ. Adapt device heading + negotiated fixed32B CIM4, independent acknowledged CIN pointer events, latest-motion receiver; regression under dropped motion before next physical trial. Existing radio/reset cause unknown; no new MIC authorized.",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -143504,6 +143502,23 @@
               "outcome": "1104_REAL_FRAMES_NO_MISSING_PHYSICAL_DRIFT_REJECTED_NO_CLICK_REQUEST",
               "mode0Restored": true,
               "microphoneStarted": false
+            },
+            {
+              "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/owner-trial-v4/result.json",
+              "outcome": "OWNER_PHYSICAL_EXPERIENCE_FAILED",
+              "ownerRaw": [
+                "这个体验太一般了",
+                "你应该没有按照开源仓库的成熟体验来吧"
+              ],
+              "samples": 1095,
+              "missingSequence": 2759,
+              "gapEvents": 85,
+              "clickRequests": 3,
+              "dragRequests": 0,
+              "disconnected": true,
+              "mode0Restored": false,
+              "microphoneStarted": false,
+              "causeNotProven": "Actual receive stalls hundreds of milliseconds to1.1s; no evidence assigning all stalls or reset to one source."
             }
           ],
           "mcuFusion": {
@@ -143603,6 +143618,10 @@
               "Complete original Apple apps copied/running unchanged",
               "Identical CoreMotion sensor accuracy or physical feel",
               "Final Owner physical acceptance; installed Windows110 shares the current pointer core/source and no new host change was made in this CPU batch"
+            ],
+            "architectureMismatchConfirmed": [
+              "Heading integration previously moved from device to host across lossy BLE",
+              "Physical click/hold previously depended on motion packets rather than separate reliable control"
             ]
           },
           "processingDecision": "Use board Fusion AHRS/bias at61.44MHz; host maps aim to cursor. Cost supports this choice; no CPU-upgrade decision justified by IMU alone.",
@@ -143615,7 +143634,8 @@
             "cpuEmptyPolling": "PASS real Opus9 cases byte-identical; successor fault still checked before encoding and boundary",
             "cpuProductNoScreen": "PASS production product PCM/cue/STOP/reboot/resource-yield/deadline",
             "cpuFunctionAttribution": "PASS actual non-MIC hardware SPI/IMU/BLE source fixes; matched recording comparison still deferred",
-            "normal815PassiveChain": "PASS753frames/no loss/error/CPU observer disabled/mode0 restored/board released"
+            "normal815PassiveChain": "PASS753frames/no loss/error/CPU observer disabled/mode0 restored/board released",
+            "normal820PassiveChain": "PASS scoped754 QPC frames0loss, observer disabled/mode0 restored; first pre-ready3-frame skip retained; physical feel not accepted"
           },
           "buildFailuresPreserved": [
             "First RAM measurement attached in Stop1/HSI and ended early; excluded",
@@ -143623,7 +143643,7 @@
             "Pause test fixture had an80ms first interval; corrected to25*40ms, original assertion retained",
             "One Windows native check found a frame-period variable out of scope; fixed, final check passed"
           ],
-          "latestOwnerCpuRequest": "继续拆剩余30%/36.43%，记录每个服务开着占用多少；评估真实可并发全开是否跑进100%及是否需要换芯片。",
+          "latestOwnerCpuRequest": "Owner接受19%先到这里，不再追空闲小数；继续IMU鼠标可用性并找鼠标路径优化空间。要求保留每服务空闲/工作与并发表。",
           "cpuAttribution20261112": {
             "offline797": {
               "seconds": 19.934647,
@@ -143848,6 +143868,11 @@
                 "liveReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
                 "ordinaryWirelessOtaQualified": false
               }
+            },
+            "recording817Deferred": {
+              "result": "OWNER_ENDED_WITHOUT_START",
+              "microphoneStartCommands": 0,
+              "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/cpu817-owner/result.json"
             }
           },
           "normal800": {
@@ -143976,6 +144001,142 @@
             "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
             "installReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
             "liveReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+            "ordinaryWirelessOtaQualified": false
+          },
+          "serviceCpuLedger": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261112-imu-pointer/cpu-service-costs.json",
+          "ownerCpuStoppingPoint": {
+            "at": "2026-11-12T15:51:26+08:00",
+            "idleAcceptedAsCurrentStoppingPointPercent": 19.128559327149684,
+            "scope": "BLE-connected diagnostic awake idle; not deep Stop or a complete product/sale acceptance",
+            "next": "IMU pointer usability/related repeated service work",
+            "newAudioRequestThisBatch": false
+          },
+          "serviceCpuRemainderBatch": {
+            "at": "2026-11-12T16:02:39+08:00",
+            "ownerSteering": "Keep idle~19% stopping point; continue mouse usability and related repeated-work optimization. Record service work/idle and mutually exclusive modes.",
+            "sourceCommits": [
+              "3273fa2",
+              "a3c2906"
+            ],
+            "sourcePushed": true,
+            "sameClockHz": 61439820,
+            "serviceLedger": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261112-imu-pointer/cpu-service-costs.json",
+            "idleBefore816Percent": 34.58213328808248,
+            "idle817Percent": 19.128559327149684,
+            "idle819Percent": 19.005273692859493,
+            "pointer817Percent": 34.27999248826291,
+            "pointer819Percent": 32.883919819787955,
+            "pointerReductionPercentagePoints": 1.3960726684749574,
+            "pointerIrqPercent": 11.585115413664235,
+            "fusionPercent": 0.172,
+            "pointer819Samples": 1319,
+            "pointer819SensorHz": 98.49050963981468,
+            "pointer819Missing": 0,
+            "clockScope": "CPU totals from independent RTC/Run-only timer; include diagnostic cost. IRQ/nested rows overlap. No retail-build CPU percentage derived.",
+            "normal820": {
+              "firmware": 66820,
+              "sourceCommit": "a3c2906",
+              "state": "NORMAL_INSTALLED_PASSIVE_CHAIN_VERIFIED_OWNER_MOUSE_PENDING",
+              "binBytes": 412684,
+              "textBytes": 411116,
+              "dataBytes": 1568,
+              "bssIncludingStackBytes": 88096,
+              "staticDataBssExcludingStackBytes": 68160,
+              "stackReservedBytes": 21504,
+              "staticRamDeltaVs815": 0,
+              "flashDeltaVs815Bytes": 128,
+              "originalImageBudgetBytes": 412216,
+              "imageBudgetOverBytes": 468,
+              "cpuObserverEnabled": false,
+              "hardwareSpiDefault": true,
+              "coreHz": 61439820,
+              "originalOwnersUnchanged": 37,
+              "mode0Restored": true,
+              "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66820-normal-mouse-services\\result.json",
+              "installReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install820\\result.json",
+              "passiveQpcReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live820-qpc\\result.json",
+              "qpcSamples": 754,
+              "qpcMissingSequence": 0,
+              "qpcReadyFrames": 649,
+              "qpcReadyHostMedianMs": 7.5951,
+              "qpcReadyHostP95Ms": 15.6059,
+              "qpcReadyHostMaxMs": 30.5898,
+              "qpcResolutionSeconds": 1e-07,
+              "originalMicSessionUnchanged": true,
+              "boardReleasedAfterEngineering": true,
+              "physicalFeelQualified": false,
+              "ordinaryWirelessOtaQualified": false
+            },
+            "operatorAudioSample": {
+              "result": "ENDED_WITHOUT_START",
+              "microphoneStartCommands": 0,
+              "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\cpu817-owner\\result.json"
+            },
+            "ownerPointerTrial": {
+              "state": "ORIGINAL_POPUP_PREPARED_NO_CURSOR_BEFORE_START",
+              "script": "C:/Users/Billy/Documents/Codex/2026-11-03/companion-firmware-66662-luna/recovery-work/imu_pointer_owner_trial_v4.py",
+              "output": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\owner-trial-v4",
+              "sessionId": 21675,
+              "lease": "Claim only after Start; waiting popup does not reserve board; release on actual stop"
+            },
+            "failuresAndCorrections": [
+              {
+                "case": "First817 build",
+                "outcome": "REFUSED_SOURCE_CHANGED_DURING_BUILD",
+                "cause": "Volatile ISR counter adjustment made during compile; source frozen/committed and817r2 rebuilt. First output never packaged or installed."
+              },
+              {
+                "case": "Normal820 first passive read",
+                "outcome": "755frames,3 missing before device-ready at~561ms; ready phase no missing",
+                "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live820\\result.json",
+                "interpretation": "Preserved, exact RF cause unproven; not re-labelled full zero-loss. No cursor output during calibration."
+              },
+              {
+                "case": "Old Windows host timing",
+                "outcome": "INVALID_AS_PRECISE_HOST_INTERARRIVAL",
+                "cause": "Python3.11 monotonic uses GetTickCount64 with15.625ms resolution; old15/16ms fields not exact. CPU RTC and device timestamps unaffected.",
+                "replacement": "QPC perf_counter_ns resolution100ns, normal820 ready median7.5951/P9515.6059/max30.5898ms,754frames0missing. No end-to-end cursor-latency claim."
+              }
+            ],
+            "remaining": [
+              "Owner physical pointer movement/click/drag and old floaty/no-body-click feedback remain open",
+              "Current recording+Opus+BLE full-load CPU and actual WBA25/cache/platform adaptation not newly measured",
+              "Original Flash budget over468B remains unchanged contract; static RAM unchanged",
+              "Ordinary wireless OTA fragmented contiguous-staging limitation and Owner explicit hardware blocks remain open"
+            ]
+          },
+          "normal820": {
+            "firmware": 66820,
+            "sourceCommit": "a3c2906",
+            "state": "NORMAL_INSTALLED_PASSIVE_CHAIN_VERIFIED_OWNER_MOUSE_PENDING",
+            "binBytes": 412684,
+            "textBytes": 411116,
+            "dataBytes": 1568,
+            "bssIncludingStackBytes": 88096,
+            "staticDataBssExcludingStackBytes": 68160,
+            "stackReservedBytes": 21504,
+            "staticRamDeltaVs815": 0,
+            "flashDeltaVs815Bytes": 128,
+            "originalImageBudgetBytes": 412216,
+            "imageBudgetOverBytes": 468,
+            "cpuObserverEnabled": false,
+            "hardwareSpiDefault": true,
+            "coreHz": 61439820,
+            "originalOwnersUnchanged": 37,
+            "mode0Restored": true,
+            "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66820-normal-mouse-services\\result.json",
+            "installReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install820\\result.json",
+            "passiveQpcReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live820-qpc\\result.json",
+            "qpcSamples": 754,
+            "qpcMissingSequence": 0,
+            "qpcReadyFrames": 649,
+            "qpcReadyHostMedianMs": 7.5951,
+            "qpcReadyHostP95Ms": 15.6059,
+            "qpcReadyHostMaxMs": 30.5898,
+            "qpcResolutionSeconds": 1e-07,
+            "originalMicSessionUnchanged": true,
+            "boardReleasedAfterEngineering": true,
+            "physicalFeelQualified": false,
             "ordinaryWirelessOtaQualified": false
           }
         }
@@ -145236,6 +145397,31 @@
         "staticRamBytes": 67960,
         "stackReservedBytes": 21504,
         "physicalQualification": "Prior788/session388 scoped single-click/one durable double-tap retained as prior evidence; current791 PTT not qualified. Current long399 running."
+      },
+      "baselineBeforeServiceCpuBatch20261112": {
+        "firmwareVersion": 66815,
+        "uiGeneration": 85,
+        "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
+        "sourceCommit": "507ddb8",
+        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Retained firmware Git worktree507ddb8 pushed; normal815 maintenance installed, hardware SPI default, observer off.",
+        "evidenceAvailability": "Current package/source and normal passive IMU/BLE receipts retained; no full-core or ordinary OTA qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently",
+        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+        "appBytes": 412556,
+        "staticRamBytes": 68160,
+        "stackReservedBytes": 21504,
+        "physicalQualification": "Normal815753frames/no loss/IMU errors, mode0 restored and board released; Owner feel and matched recording CPU comparison OPEN.",
+        "ordinaryWirelessOtaQualified": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -270437,8 +270623,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T15:34:23+08:00",
-            "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+            "updatedAt": "2026-11-12T16:28:53+08:00",
+            "state": "OWNER_PRODUCT_AND_GUIDANCE_UI_REJECTED_COHERENT_USABILITY_REWORK_IN_PROGRESS",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -270446,7 +270632,7 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
+            "next": "Owner明确产品界面和带验窗都混乱、看不懂且AI味重；原guide只到连接/新录音说明即取消，0新录音/已退出释放。当前最高可执行项是整批整理产品入口/层级/主操作/说明和原窗口当前步骤，不再弹旧版让Owner硬验。保持111/142交付事实与原资料，先改完整使用路径并工程核对，再同源整批交付和带验；实卡总验、鼠标失败、模型/长期/售卖范围仍未完成。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.111",
@@ -270670,19 +270856,19 @@
               "wholePhysicalTotalAcceptancePassed": false,
               "saleQualified": false,
               "physicalAcceptanceDependency": {
-                "state": "CURRENT_EMBEDDED_WORKPOINT_MUST_BIND_LATEST_NORMAL_FIRMWARE_BEFORE_PHYSICAL_TOTAL_ONLY",
-                "observedAt": "2026-11-12T13:53:02+08:00",
-                "boardHolder": "codex",
+                "state": "MATCHED_NORMAL_FIRMWARE_RESTORED_AND_RELEASED_POINTER_FAILURE_RETAINED_RECORDING_CHAIN_PENDING",
+                "observedAt": "2026-11-12T16:05:02+08:00",
+                "boardHolder": null,
                 "lastBoardRelease": {
                   "side": "codex",
-                  "at": "2026-11-12T13:29:26+08:00",
-                  "item": "Companion IMU/CPU集中修复：无录音传感链路与普通版资源核对",
-                  "result": "FW66802 CIM3 fresh BLE read complete: 1829 samples, missing0, mode0 restored, MIC session unchanged, no OS cursor control; handles closed"
+                  "at": "2026-11-12T16:02:31+08:00",
+                  "item": "Companion IMU鼠标FW66820原弹窗实体体验",
+                  "result": "Original pointer trial stopped; native/BLE/UART handles closed;0 MIC/audio reads"
                 },
                 "recordedBaselineInBacklog": 66791,
                 "firmwareIdentityNotQueriedHere": true,
                 "ownerPromptStarted": false,
-                "explanation": "The original installer has restored normal FW66804/UI85, verified its running identity and idle state and closed its handles. The original20s CPU recording was deferred with0 START commands, so no CPU improvement is claimed. Current physical-total readiness depends on the live lease and one Owner total-use round.",
+                "explanation": "Normal820 restoration and16:01:17 release are matched with source and installed111 offline validator. The subsequent pointer trial actually stopped/released16:02:31; Owner said体验很一般, disconnect and missing-data evidence remain unqualified in the original IMU scope. Continue only the requested normal new-recording-to-result purpose on frozen111/820; no pointer retest or whole-product pass. Recheck live lease and product source at real Start.",
                 "next": "Read the original embedded workpoint latest normal-firmware receipt and actual lease when physical use is ready; do not keep rebuilding software kits for each intermediate firmware.",
                 "concentratedScope": [
                   "IMU drift, drag/click/tap and release/return-to-recording behavior, owned by the active embedded/IMU workpoint.",
@@ -270690,6 +270876,97 @@
                   "Merge the completed pointer/host changes with the already-delivered coherent meeting workspace into one matching normal Windows candidate; no half-finished source in the installer."
                 ],
                 "ordinaryFirmwarePackage": {
+                  "at": "2026-11-12T15:58:45+08:00",
+                  "state": "ORDINARY_FIRMWARE_PACKAGE_VERIFIED_INSTALLATION_AND_OWNER_TOTAL_USE_PENDING",
+                  "firmware": 66820,
+                  "resourceVersion": 85,
+                  "firmwareSourceCommit": "a3c2906d2b7f0e70e01dafafba7f2df13ca939da",
+                  "compiledSourceFiles": 783,
+                  "committedSourceFilesMatched": 776,
+                  "committedSourceMismatches": [],
+                  "externalOrGeneratedSourceFiles": [
+                    "_external-build-output/companion_wba_resource_contract.h",
+                    "_external-build-output/profile.json",
+                    "_external-build-output/ui-partition.bin",
+                    "_external-build-output/power-profile.json",
+                    "_external-build-output/wba_board_power_profile.h",
+                    "_external-build-output/wba_recording_audio_identity.h",
+                    "_external-build-output/wba_update_trust_anchor.h"
+                  ],
+                  "sourceEolOnly": [],
+                  "package": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66820-package\\companion-update.cup",
+                  "packageSha256": "865feaae2f5f026ae50e056676fdbba4989bb56c9c7f0ba45d25ceca8e4b921e",
+                  "manifest": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66820-package\\ota_manifest.json",
+                  "manifestSha256": "726da7b10de8993deb57687705cd9aed43ab0d7bc80c5147e1d8f3f68cac5e3f",
+                  "binSha256": "cc5683d448cd1de4b850e9d44e7b27c38f8928bb963714f6d3cc674821cbc91c",
+                  "elfSha256": "98f8e93c1f923a6f9cf5f757bf3ffa944f1c9d77957512db851ebdd335b96de5",
+                  "publicKeySha256": "4f743840a0679f22ca0bbd1160800a3ca3ee90d1c65c67583ab2ece983f1d4c8",
+                  "keyId": 1145394737,
+                  "staticRamOrStackQualified": false,
+                  "actualCurrentBoardIdentityQueried": false,
+                  "ordinaryFirmwareInstalledVerified": false,
+                  "physicalTotalAcceptancePassed": false,
+                  "saleQualified": false
+                },
+                "ordinaryFirmwareInstallation": {
+                  "at": "2026-11-12T16:05:02+08:00",
+                  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+                  "firmware": 66820,
+                  "ui": 85,
+                  "packageSha256": "865feaae2f5f026ae50e056676fdbba4989bb56c9c7f0ba45d25ceca8e4b921e",
+                  "firmwareSourceCommit": "a3c2906d2b7f0e70e01dafafba7f2df13ca939da",
+                  "bootAndNormalApplicationVerified": true,
+                  "microphoneRunningAtObservation": false,
+                  "pairingAndRecordingMetadataPreserved": true,
+                  "bootWrites": 0,
+                  "originalAudioReads": 0,
+                  "originalAudioWrites": 0,
+                  "allInstallerHandlesClosed": true,
+                  "sourceReceiptSha256": "6a9bc8833a61189fa5caff413bc97f103406b53faf63db802894ad29fc6da0af",
+                  "deviceUidAndRecordingCatalogExcluded": true,
+                  "normalObserverEnabled": false,
+                  "actualNormalRestorationReleaseLine": "- **已释放**：轮流 Codex，2026-11-12T15:20:39+08:00；一项：IMU/CPU服务账：拆剩余36%，无MIC空闲与指向采样，准备一次原弹窗录音；完成恢复普通版。做完立刻释放。状态 docs/board_turn.json。；2026-11-12T16:01:17+08:00 CPU服务账和鼠标调度修复完成；已装普通FW66820/UI85，观察器关闭，61.44MHz。QPC被动754帧无丢序，模式0恢复，MIC0、原37录音/配对元数据保持；句柄关闭。Owner鼠标原窗仅点击开始后重新领板。；句柄关闭后再交接。",
+                  "subsequentPointerTrialRelease": {
+                    "side": "codex",
+                    "at": "2026-11-12T16:02:31+08:00",
+                    "item": "Companion IMU鼠标FW66820原弹窗实体体验",
+                    "result": "Original pointer trial stopped; native/BLE/UART handles closed;0 MIC/audio reads"
+                  },
+                  "pointerTrialQualified": false,
+                  "pointerTrialReceiptSha256": "efe02265617100476fd420d4af0586cad97a27aaa88f8199e2cf1a521802bb65",
+                  "pointerTrialFeedback": "体验很一般",
+                  "pointerTrialDisconnected": true,
+                  "pointerModeRestoreAcknowledged": false,
+                  "actualNewLongRecordingQualified": false,
+                  "physicalTotalAcceptancePassed": false,
+                  "saleQualified": false
+                },
+                "firmwareInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\ordinary-firmware-fw66820-installed.json",
+                "firmwareIdentityVerifiedByOriginalInstaller": true,
+                "firmwareReceiptIsHistoricalNotLive": false,
+                "softwareWorkBlockedByThisDependency": false,
+                "actualLeaseItem": "Companion IMU鼠标FW66820原弹窗实体体验",
+                "previousHistoricalOrdinaryFirmwareInstallation": {
+                  "at": "2026-11-12T13:48:24+08:00",
+                  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+                  "firmware": 66804,
+                  "ui": 85,
+                  "packageSha256": "73edba9c4d7389267903ca099df97087662ac92e1f9d9a40dd5ac717d64e649c",
+                  "firmwareSourceCommit": "00964fac7012ec4a999cf3b50f91a67d69d2cbb5",
+                  "bootAndNormalApplicationVerified": true,
+                  "microphoneRunningAtObservation": false,
+                  "recordingFaultAtObservation": "0",
+                  "pairingAndRecordingMetadataPreserved": true,
+                  "bootWrites": 0,
+                  "originalAudioReads": 0,
+                  "originalAudioWrites": 0,
+                  "allInstallerHandlesClosed": true,
+                  "sourceReceiptSha256": "5606fb1475b5165aa9b619e16174404e8f10e3a3d365901a76061671d6da0683",
+                  "deviceUidAndRecordingCatalogExcluded": true,
+                  "actualNewLongRecordingQualified": false,
+                  "cpuImprovementPhysicallyMeasured": false
+                },
+                "previousHistoricalOrdinaryFirmwarePackage": {
                   "at": "2026-11-12T12:36:59+08:00",
                   "state": "ORDINARY_FIRMWARE_PACKAGE_VERIFIED_INSTALLATION_AND_OWNER_TOTAL_USE_PENDING",
                   "firmware": 66802,
@@ -270721,31 +270998,7 @@
                   "ordinaryFirmwareInstalledVerified": false,
                   "physicalTotalAcceptancePassed": false,
                   "saleQualified": false
-                },
-                "ordinaryFirmwareInstallation": {
-                  "at": "2026-11-12T13:48:24+08:00",
-                  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
-                  "firmware": 66804,
-                  "ui": 85,
-                  "packageSha256": "73edba9c4d7389267903ca099df97087662ac92e1f9d9a40dd5ac717d64e649c",
-                  "firmwareSourceCommit": "00964fac7012ec4a999cf3b50f91a67d69d2cbb5",
-                  "bootAndNormalApplicationVerified": true,
-                  "microphoneRunningAtObservation": false,
-                  "recordingFaultAtObservation": "0",
-                  "pairingAndRecordingMetadataPreserved": true,
-                  "bootWrites": 0,
-                  "originalAudioReads": 0,
-                  "originalAudioWrites": 0,
-                  "allInstallerHandlesClosed": true,
-                  "sourceReceiptSha256": "5606fb1475b5165aa9b619e16174404e8f10e3a3d365901a76061671d6da0683",
-                  "deviceUidAndRecordingCatalogExcluded": true,
-                  "actualNewLongRecordingQualified": false,
-                  "cpuImprovementPhysicallyMeasured": false
-                },
-                "firmwareInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\ordinary-firmware-installed.json",
-                "firmwareIdentityVerifiedByOriginalInstaller": true,
-                "firmwareReceiptIsHistoricalNotLive": true,
-                "softwareWorkBlockedByThisDependency": false
+                }
               },
               "latestOwnerContinuation": {
                 "ownerQuote": "意思就是你现在一定要板才可以做是吧？然后没有板的话，就前端那些东西就不能做了。然后前后端的话，就是非固建端的东西就不能做。",
@@ -270885,13 +271138,118 @@
                 "ownerPromptStarted": false,
                 "boardAccessed": false
               },
-              "frontendAcceptedPurposeClosed": true,
-              "softwareReadyForLaterBoardJointTest": true,
+              "frontendAcceptedPurposeClosed": false,
+              "softwareReadyForLaterBoardJointTest": false,
               "previousVerifiedWindows110": {
                 "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
                 "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
                 "softwareKitReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json"
-              }
+              },
+              "latestOwnerPhysicalContinuation": {
+                "acceptedAt": "2026-11-12T15:47:59+08:00",
+                "ownerQuote": "现在他房卡那边应该是可以释放占用，然后你再做一遍那个全链条还是怎么样？好的好的。",
+                "decision": "Continue the existing one concentrated physical recording-to-result use on installed111/142. Do not rerun unchanged software acceptance or build new apps. Read latest normal-firmware source/installation receipt and live lease first; use original prompt and real Start before opening normal product; no host MIC command.",
+                "state": "GUIDED_ATTEMPT_CANCELLED_OWNER_REJECTED_BOTH_UI_REWORK_REQUIRED",
+                "liveHolderAtCheck": "codex",
+                "liveItemAtCheck": "Companion IMU鼠标FW66820原弹窗实体体验",
+                "liveHeldSince": null,
+                "previousActualRelease": {
+                  "side": "codex",
+                  "at": "2026-11-12T15:07:40+08:00",
+                  "item": "Companion CPU/IMU集中修复：普通路径轻量负载测量并恢复正常版，无录音",
+                  "result": "CPU/IMU集中修复已交回普通FW66815/UI85：默认硬件SPI，观察器关闭，61.44MHz；753帧CIM3无丢序/IMU错误，模式0已恢复，MIC未启动，原37条录音及配对元数据保留；各串口/BLE/预览进程已关闭。"
+                },
+                "softwareReady": true,
+                "ownerPromptStarted": false,
+                "boardClaimed": false,
+                "hostStartCommands": 0,
+                "frontendAcceptedPurposeRemainsClosed": true,
+                "lastCheckedAt": "2026-11-12T16:28:53+08:00",
+                "preparedNormalCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\ordinary-firmware-fw66820-installed.json",
+                "latestOwnerClarification": "然后的话，现在不是这样子啊，你。是，我决定用途，这不对吧？我都不知道这个东西怎么用，你看你做了什么东西，一项一项功能我验收啊。我就说，你给我验收的东西是要带领我验收，而不是这样子验收。只是你交付一次性交付完整而已。",
+                "clarificationDecision": "Owner wants guided functional acceptance, with entry/actions/expected outcome per function. One complete software delivery and one continuous shared window; Next/Back navigate, do not silently mark pass. Collect issues then repair/deliver related changes together. Do not leave Owner to invent a purpose or discover controls.",
+                "previousAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\owner-total-attempt-20261112-160525.json",
+                "previousActualPopupFeedback": "你这个要一项一项验收，不然我咋验收嘞？",
+                "previousAttemptNewRecordings": 0,
+                "previousAttemptAccepted": false,
+                "previousAttemptEndedAt": "2026-11-12T16:06:04.912+08:00",
+                "previousAttemptLeaseReleased": true,
+                "currentWholeUseRun": {
+                  "privateDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows111-fw66820-20261112",
+                  "controllerPid": 15148,
+                  "promptPid": 26360,
+                  "lastObservedState": "OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW",
+                  "ownerStartedAt": "2026-11-12T16:23:27.298+08:00",
+                  "appClosedAt": "2026-11-12T16:24:55.056+08:00",
+                  "finishedAt": "2026-11-12T16:24:56.800+08:00",
+                  "boardLease": false,
+                  "guidedStepIndex": 1,
+                  "hostMicCommands": 0,
+                  "physicalTotalAcceptancePassed": false
+                },
+                "supersededFreeUseInterpretation": {
+                  "latestOwnerClarification": "不要指引我一项项验收，不然我咋验收呢？这一次性整体的验收。",
+                  "clarificationDecision": "Use one natural complete purpose and one final overall feedback. Remove the prescribed button/recording-to-export route and forced two-hour duration from Owner-facing instructions. Engineering retains version/integrity checks and uncovered long-recording/reliability/model/sale conditions; no native rebuild or repeated per-feature signoff.",
+                  "currentWholeUseRun": {
+                    "privateDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-whole-use-windows111-fw66820-20261112",
+                    "controllerPid": 13136,
+                    "promptPid": 20260,
+                    "lastObservedState": "OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW",
+                    "ownerStartedAt": "2026-11-12T16:09:17.357+08:00",
+                    "boardLease": false,
+                    "hostMicCommands": 0,
+                    "oneOverallFeedbackOnly": true,
+                    "noPrescribedFeatureRoute": true,
+                    "noRequiredUseDuration": true,
+                    "physicalTotalAcceptancePassed": false
+                  }
+                },
+                "previousFreeUseAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\owner-whole-use-attempt-20261112.json",
+                "previousFreeUseAttemptCancelled": true,
+                "previousFreeUseAttemptNewRecordings": 0,
+                "previousFreeUseAttemptEndedAt": "2026-11-12T16:09:24.302+08:00",
+                "guidedFunctions": [
+                  "认识界面与连接",
+                  "在卡片上新录一段",
+                  "接收、保存与回听",
+                  "转文字",
+                  "纪要与原话核对",
+                  "跟进清单与字面依据",
+                  "补充文档",
+                  "会议 AI 与来源",
+                  "带走选中的结果",
+                  "日期与日历交接",
+                  "退出后重开",
+                  "一次整体结论"
+                ],
+                "guidedStepCount": 12,
+                "guidedInput": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Acceptance-Supplement.txt"
+              },
+              "ownerUiUsabilityRework20261112": {
+                "id": "owner-ui-usability20261112",
+                "receivedAt": "2026-11-12T16:28:53+08:00",
+                "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
+                "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
+                "ownerClarification": "两边都有",
+                "state": "OPEN_PRODUCT_AND_GUIDANCE_UI_USABILITY_REWORK",
+                "previousWindowsVersion": "0.1.111",
+                "previousAndroidVersion": "0.1.142",
+                "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
+                "installedAndEngineeringReviewed": false,
+                "candidateVersion": null,
+                "actualPreviousAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\owner-guided-attempt-20261112.json",
+                "guidedStepsReached": [
+                  0,
+                  1
+                ],
+                "newPhysicalRecordings": 0,
+                "physicalTotalAcceptancePassed": false,
+                "saleQualified": false,
+                "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
+                "noMoreOwnerPromptUntilSubstantiveRepair": true,
+                "nativeDeliveryChangesNotStarted": true
+              },
+              "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json"
             },
             "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
             "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit142\\share-result.json",
@@ -278063,7 +278421,7 @@
     },
     "currentBatch": {
       "at": "2026-11-12T15:34:23+08:00",
-      "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+      "state": "FRONTEND111142_OWNER_UI_REJECTED_USABILITY_REWORK_OPEN",
       "done": "此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。",
       "remaining": "当前普通固件实物总验仍待原嵌软匹配身份/占用；其它平台真机、独立模型与正式发布/服务等原范围未由本批关闭。Windows111 OS保存/取消与普通接收本轮未重跑，复用109完全相同实现有效证据。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
@@ -278073,7 +278431,9 @@
         "done": "Windows108/Android141普通跟进与字面依据整批已安装；导入/编辑/文档/备份原已验范围保留。",
         "remaining": "109/142单张交接仅源码；原非模型实卡可靠性/正式发布/完整对标与模型质量仍开放。",
         "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json"
-      }
+      },
+      "ownerUiFeedbackId": "owner-ui-usability20261112",
+      "previousSoftwareDeliveryStillRetained": true
     },
     "previousBatch": {
       "at": "2026-11-02T15:48:16+08:00",
