@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-12T22:26:23+08:00",
+  "state": "RECORDING_WORKSPACE116_FROZEN_NORMAL_BUILD_PENDING",
+  "version": "0.1.116",
+  "sourceCommit": "2433bf662a79ea3b11da657bd59356d3a6c7e4f8",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "branch": "work/recording-workspace116-frozen-20261112",
+  "priorDeliveredSource": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+  "authoringSourceCommit": "943ea1eaa7500b6170749381c0daa9ee5efa139f",
+  "productFilesChanged": [
+    "apps/windows/src/App.tsx",
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/deviceConnectionStatus.ts",
+    "packages/ui/src/recordingPresentation.ts",
+    "packages/ui/src/recordingWorkspace.css"
+  ],
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "currentAndroid": "0.1.142",
+  "plannedAndroidVisualBatch": "0.1.143",
+  "ownerExperienceAccepted": false,
+  "saleQualified": false,
+  "buildKind": "normal local release",
+  "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows116-local\\result.json"
+}

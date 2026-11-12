@@ -1,0 +1,7 @@
+{
+  "state": "CANONICAL_DELIVERY_FINALIZED_SOURCE_PROTECTION_NOT_YET_COMMITTED",
+  "error": "NameError: git was not defined at source-protection stage",
+  "productOrDataFailure": false,
+  "canonicalWritten": true,
+  "next": "Fix the missing local command-prefix variable and resume protection only; do not rerun one-shot canonical finalization."
+}

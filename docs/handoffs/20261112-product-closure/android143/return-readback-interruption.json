@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-12T23:01:12+08:00",
+  "state": "ENGINEERING143_RETURN_FINAL_READBACK_INTERRUPTED_AFTER_ORIGINAL_LIBRARY_SWITCH",
+  "reason": "The close adapter was started before the asynchronous return helper had exited. Original-library selection was already durable, so close guards passed, but the helper final readback lost its page. Preserve this as a tooling sequencing failure; no143 original-returned success receipt exists.",
+  "originalLibraryObservedActiveByCloseGuard": true,
+  "oldDataPreservationProvedByEndSession": true,
+  "priorAppearance": "dark",
+  "lastCompletedVisualReviewSetAppearance": "dark",
+  "noDiscardOrMicCommand": true,
+  "final144ReturnHelperAwaitedToExitBeforeClose": true,
+  "final144OrdinaryUiReturnReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android144\\original-returned.json"
+}

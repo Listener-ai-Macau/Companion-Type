@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-12T22:36:02+08:00",
+  "state": "MOBILE_RECORDING_LIBRARY143_SOURCE_REVIEWED_NORMAL_BUILD_PENDING",
+  "version": "0.1.143",
+  "priorInstalled": "0.1.142",
+  "productFilesChanged": [
+    "apps/mobile/src/App.tsx",
+    "apps/mobile/src/recordingLibrary.css",
+    "apps/mobile/src/RecordingLibraryManager.tsx",
+    "apps/android/app/build.gradle",
+    "docs/handoffs/20261112-product-closure/android143"
+  ],
+  "sourceBrowserEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\mobile143-source-r5\\result.json",
+  "nativeBackendChanged": false,
+  "savedOwnerDataChanged": false,
+  "actualPhoneReviewed": false,
+  "ownerExperienceAccepted": false,
+  "retainedPreparationFailures": "Old synthetic bridge lacked current incomingFiles/audioImportStatus/libraryStatus/appPreferences/aiServiceStatus contracts; r1-r3 correctly failed, then current contract fixture was completed. r4 passed; final filter/player refinements passed r5. One web wrapper used cmd incorrectly and failed before compile; direct node tsc/vite completed. No failed package installed.",
+  "sourceCommit": "7bad2b57fdbb6e0728af626e3ea0ae89fedb1e6f"
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-12T22:57:19+08:00",
+  "state": "RECORDING_LIBRARY116144_INSTALLED_ENGINEERING_REVIEWED_OWNER_SHORT_UX_REVIEW_PENDING",
+  "windows": {
+    "version": "0.1.116",
+    "sourceCommit": "2433bf662a79ea3b11da657bd59356d3a6c7e4f8",
+    "installerSha256": "8d062325868167ceda948061c62daad0db0d79adc3bfdbe4050e7a1afc048da7",
+    "installerBytes": 16916920,
+    "installed": true,
+    "originalDataFiles": 247,
+    "originalDataManifestIdentical": true,
+    "coherentNativeJourneyPassed": true,
+    "actualProcessRestartPassed": true
+  },
+  "android": {
+    "version": "0.1.144",
+    "sourceCommit": "d031f5cd68c410048adf0f9c5f5d7b33568c5127",
+    "apkSha256": "a4c37a53f4b7ef261c9b0a05a31ad42c758d9f518c5a49fcbde60dca7b4a65b6",
+    "installed": true,
+    "existingFilesIdenticalDuringInstall": 5359,
+    "originalContentFilesIdenticalAfterReview": 5358,
+    "onlyOldChangeLibraryIndex": true,
+    "allPreviousLibrariesRetained": true,
+    "actualPhoneReviewed": true,
+    "historicalCancellationQuiet": true,
+    "priorActual143NameSearchRestartReused": true,
+    "nativeBackendUnchanged": true
+  },
+  "ownerAcceptanceScope": "Short natural visual and usage-clarity experience only. Engineering owns functionality, computer-generated speech checks and complex/long checks.",
+  "ownerAppearanceAccepted": false,
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "longRecordingQualified": false,
+  "modelGeneralAccuracyQualified": false,
+  "saleQualified": false
+}

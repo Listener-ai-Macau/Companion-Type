@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-12T22:49:39+08:00",
+  "state": "MOBILE144_SAME_COHERENT_BATCH_ACTUAL143_REVIEW_FOUND_HISTORICAL_CANCEL_NOISE_FIXED",
+  "version": "0.1.144",
+  "priorInstalled": "0.1.143",
+  "sameBatch": "recording-library116144",
+  "prior143Source": "7bad2b57fdbb6e0728af626e3ea0ae89fedb1e6f",
+  "reason": "Actual143 phone screenshot still showed an old cancelled import as a persistent red failure in the compact library. Suppress historical completed/cancelled messages; keep current cancellation neutral and actual failures actionable. No Owner technical round or separate143 final kit was delivered.",
+  "productAndCheckFiles": [
+    "apps/mobile/src/AudioImport.tsx",
+    "apps/mobile/src/recordingLibrary.css",
+    "apps/android/app/build.gradle",
+    "tools/test_mobile_audio_import.tsx",
+    "tools/check_android_delivery_source.cjs",
+    "docs\\handoffs\\20261112-product-closure\\android144\\source-review.json"
+  ],
+  "nativeBackendChanged": false,
+  "sourceAffectedImportContractsPassed": true,
+  "priorSourceWholeLibraryReview": "mobile143-source-r5",
+  "priorActual143Review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\android143",
+  "actual144PhoneReviewPending": true,
+  "sourceCommit": "d031f5cd68c410048adf0f9c5f5d7b33568c5127"
+}

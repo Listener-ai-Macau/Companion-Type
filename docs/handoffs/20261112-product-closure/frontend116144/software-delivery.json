@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-12T22:58:34+08:00",
+  "state": "ONE_UI116144_KIT_INSTALLED_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Recording-116-144-20261112.zip",
+  "bytes": 43436362,
+  "sha256": "621727d6cf6dcdf3250e33abda4fd8047c5c774f24319332a93e31850a41b021",
+  "manifest": {
+    "at": "2026-11-12T22:57:19+08:00",
+    "state": "RECORDING_LIBRARY116144_INSTALLED_ENGINEERING_REVIEWED_OWNER_SHORT_UX_REVIEW_PENDING",
+    "entry": "开始使用.txt",
+    "files": [
+      {
+        "path": "电脑/Companion-Windows-0.1.116.msi",
+        "bytes": 16916920,
+        "sha256": "8d062325868167ceda948061c62daad0db0d79adc3bfdbe4050e7a1afc048da7"
+      },
+      {
+        "path": "手机/Companion-Android-0.1.144.apk",
+        "bytes": 51172885,
+        "sha256": "a4c37a53f4b7ef261c9b0a05a31ad42c758d9f518c5a49fcbde60dca7b4a65b6"
+      },
+      {
+        "path": "公开示例/演示安排-电脑合成声音.wav",
+        "bytes": 743230,
+        "sha256": "d1e07b18f5863f9dcb933bc0d59085f3fe083ec7de67b56a98eff408548d5d5b"
+      },
+      {
+        "path": "公开示例/演示安排-实际识别与整理结果.txt",
+        "bytes": 2064,
+        "sha256": "3e534c5bfe1ef4ec55eaa458b35188ab524b6faef6bd3cf02b398ee41e8e8d49"
+      },
+      {
+        "path": "界面/电脑录音库.png",
+        "bytes": 81104,
+        "sha256": "bf3c75ce2190a4d553d20806524aef0235781aca6a7c499ba494402dc3358b7c"
+      },
+      {
+        "path": "界面/手机录音库-公开隔离资料.png",
+        "bytes": 274356,
+        "sha256": "73a55d89cc4d7f1dca2067515ae76f0af0fd19bf0fb4e27e7f3d25d1fe6a5d3e"
+      },
+      {
+        "path": "界面/手机录音详情-公开隔离资料.png",
+        "bytes": 234080,
+        "sha256": "f35149d46092731c2e452eff15edfaa1aff21dca51c62c9f78d2ab9f2b9b18b6"
+      },
+      {
+        "path": "工程记录/电脑/frozen-source.json",
+        "bytes": 1208,
+        "sha256": "985d5e6f80b8e898ec19526d438bcdfd32a4e1a0ff2f832a9e187804d3c1e617"
+      },
+      {
+        "path": "工程记录/电脑/windows-verification.json",
+        "bytes": 5509,
+        "sha256": "68915f01bcb95b271fbac9d26d677df9a3ebd2d76ba373f0c528ac750a4b2e80"
+      },
+      {
+        "path": "工程记录/电脑/installation.json",
+        "bytes": 793,
+        "sha256": "e5cf3dfd610e68bf5f39044924d3a6c99688b62e79a89b338c15faa87428091c"
+      },
+      {
+        "path": "工程记录/电脑/runtime-result.json",
+        "bytes": 7756,
+        "sha256": "7c7d68e8c84de1377cc43ea7c66548f06028bfe41308d0ce83c7e16d4106da40"
+      },
+      {
+        "path": "工程记录/电脑/engineering-self-acceptance/result.json",
+        "bytes": 10464,
+        "sha256": "195505e834de2e2fbde3d4dfeb776f4da1b7582708357cb643cd6ac2901805c5"
+      },
+      {
+        "path": "工程记录/手机/frozen-source.json",
+        "bytes": 1321,
+        "sha256": "64612bd826db7c0ccca97c1365c6fc8fd7283657729d7e29d565f267c63420a2"
+      },
+      {
+        "path": "工程记录/手机/build-result.json",
+        "bytes": 32435,
+        "sha256": "a5e3d15b22d8482d4297a6336be73694f96c73b82a54f2c71be1f26328ece6ae"
+      },
+      {
+        "path": "工程记录/手机/installation.json",
+        "bytes": 384,
+        "sha256": "ef04ab71c2f158945e21a13e1c6eff953cb5065a148d0e7c595b0df43665f6ca"
+      },
+      {
+        "path": "工程记录/手机/library-review-result.json",
+        "bytes": 870,
+        "sha256": "bd3e7f6b650aec93c73053877b575cff6490a8140237cb28c440bf7180eb228c"
+      },
+      {
+        "path": "工程记录/手机/end-session.json",
+        "bytes": 612,
+        "sha256": "29ebcccb7c2ead16b2b9a2f16786f21613912005a04ffc818e8d752a7468ffcd"
+      },
+      {
+        "path": "工程记录/手机/original-returned.json",
+        "bytes": 103,
+        "sha256": "2ae5cd025a238bb893fd75992f4fbdc8001ae7c61928e9d405f57ccb280ddd1f"
+      },
+      {
+        "path": "开始使用.txt",
+        "bytes": 1246,
+        "sha256": "966c303a368d03382a25a24b47d10538849058adcff76740ba85707e003ede5f"
+      }
+    ],
+    "softwarePurposeClosure": {
+      "at": "2026-11-12T22:57:19+08:00",
+      "state": "RECORDING_LIBRARY116144_INSTALLED_ENGINEERING_REVIEWED_OWNER_SHORT_UX_REVIEW_PENDING",
+      "windows": {
+        "version": "0.1.116",
+        "sourceCommit": "2433bf662a79ea3b11da657bd59356d3a6c7e4f8",
+        "installerSha256": "8d062325868167ceda948061c62daad0db0d79adc3bfdbe4050e7a1afc048da7",
+        "installerBytes": 16916920,
+        "installed": true,
+        "originalDataFiles": 247,
+        "originalDataManifestIdentical": true,
+        "coherentNativeJourneyPassed": true,
+        "actualProcessRestartPassed": true
+      },
+      "android": {
+        "version": "0.1.144",
+        "sourceCommit": "d031f5cd68c410048adf0f9c5f5d7b33568c5127",
+        "apkSha256": "a4c37a53f4b7ef261c9b0a05a31ad42c758d9f518c5a49fcbde60dca7b4a65b6",
+        "installed": true,
+        "existingFilesIdenticalDuringInstall": 5359,
+        "originalContentFilesIdenticalAfterReview": 5358,
+        "onlyOldChangeLibraryIndex": true,
+        "allPreviousLibrariesRetained": true,
+        "actualPhoneReviewed": true,
+        "historicalCancellationQuiet": true,
+        "priorActual143NameSearchRestartReused": true,
+        "nativeBackendUnchanged": true
+      },
+      "ownerAcceptanceScope": "Short natural visual and usage-clarity experience only. Engineering owns functionality, computer-generated speech checks and complex/long checks.",
+      "ownerAppearanceAccepted": false,
+      "ownerExperienceAccepted": false,
+      "physicalTotalAcceptancePassed": false,
+      "longRecordingQualified": false,
+      "modelGeneralAccuracyQualified": false,
+      "saleQualified": false
+    }
+  },
+  "allArchiveMemberChecksumsMatched": true,
+  "privateRemoteReadbackVerified": true,
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "remoteReadbackSha256": "621727d6cf6dcdf3250e33abda4fd8047c5c774f24319332a93e31850a41b021",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualWindowsMsiRemoteReadbackVerified": true
+}
