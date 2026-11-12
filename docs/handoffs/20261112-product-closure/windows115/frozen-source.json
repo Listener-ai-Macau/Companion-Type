@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-12T21:37:26+08:00",
+  "state": "APPEARANCE115_FROZEN_NORMAL_RELEASE_BUILD_PENDING",
+  "version": "0.1.115",
+  "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "branch": "work/appearance115-frozen-20261112",
+  "priorDeliveredSource": "8f68f19a9d1bc4fde96e79c459418c12e0772b47",
+  "authoringSourceCommit": "73a7aec81fec879a74c327586386c6416d5d347a",
+  "productFilesChanged": [
+    "apps/windows/src/workspaceRefinement.css",
+    "packages/ui/src/companionDark.css"
+  ],
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "androidUnchanged": "0.1.142",
+  "ownerExperienceAccepted": false,
+  "saleQualified": false,
+  "buildKind": "normal local release",
+  "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows115-local\\result.json"
+}

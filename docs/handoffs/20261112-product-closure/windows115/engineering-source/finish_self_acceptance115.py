@@ -1,0 +1,24 @@
+from pathlib import Path
+from datetime import datetime
+import json,hashlib,subprocess,shutil
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';B=R/'docs/handoffs/20261112-product-closure/windows115';C=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/windows115');O=B/'engineering-self-acceptance'
+read=lambda p:json.loads(p.read_bytes())
+proof=read(B/'windows-verification.json');runtime=read(B/'runtime-result.json');installed=read(B/'installation.json');services=read(C/'self-acceptance-service-readiness/result.json');native=read(Path(runtime['nativeUiEvidence']));restart=runtime['actualNativeProcessRestart']
+assert proof['sourceCommit']==runtime['appSourceCommit']==installed['sourceCommit']=='ba26a969bb7f72966fe0ad18c7bcb67675650509'
+assert installed['installedVersion']==services['version']=='0.1.115' and installed['dataManifestIdentical']
+assert installed['installedExeSha256']==proof['embeddedExeSha256'] and installed['installedDllSha256']==proof['dllSha256']
+assert native['state']=='REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED' and restart['previousAppExited'] and restart['allPublicLibraryRowsUnchanged']
+assert services['settings']['localAsrAvailable'] and services['settings']['deepseekApiKeySet'] and not services['settings']['storageSaveBlocked']
+git=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','pack.threads=1','-c','pack.windowMemory=64m'];old='cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb';stable=[]
+for path in ['apps/windows/src-tauri/src/backend/transcription.rs','apps/windows/src-tauri/src/backend/transcription','apps/windows/src-tauri/src/backend/minutes.rs','apps/windows/src-tauri/src/backend/minutes_context.rs','apps/windows/src-tauri/src/backend/product_settings.rs','apps/windows/src-tauri/src/backend/product_settings']:
+ values=[subprocess.check_output(git+['rev-parse',ref+':'+path],cwd=S,text=True).strip()for ref in [old,proof['sourceCommit']]];assert values[0]==values[1];stable.append(dict(path=path,priorObject=values[0],currentObject=values[1]))
+O.mkdir(exist_ok=False)
+for src,name in [(C/'self-acceptance-service-readiness/result.json','service-readiness.json'),(Path(runtime['nativeUiEvidence']),'continuous-native-result.json')]:shutil.copyfile(src,O/name)
+parent=Path(runtime['nativeUiEvidence']).parent
+for name in ['self-acceptance-library-entry.png','self-acceptance-device-entry.png','self-acceptance-after-process-restart.png','product-date-only-calendar.png']:
+ src=parent/('process-reopen'if 'after-process-restart'in name else '')/name
+ assert src.exists(),name;shutil.copyfile(src,O/name)
+result=dict(at=datetime.now().astimezone().isoformat(timespec='seconds'),state='ENGINEERING_SOFTWARE_SELF_ACCEPTANCE_PASSED_OWNER_PHYSICAL_TOTAL_PENDING',windowsVersion='0.1.115',androidVersion='0.1.142',softwareSelfAcceptancePassed=True,appSourceCommit=proof['sourceCommit'],installedPayloadMatchedInspectedMsi=True,continuousUiEvidence=runtime['nativeUiEvidence'],actualProcessRestartEvidence=restart,deviceEntryHierarchyPassed=True,defaultSyncDetailsClosedAndNoProgressPassed=True,activeSyncPhasesCheckedInSourceBrowser='E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r8/result.json',explicitConnectionStatesSourceEvidence='E:/CodexData/Companion/.build-cache/product-closure20261112/appearance115-source-r1/result.json',actualNativeFirstScreenConnectionVisible=True,sourceFollowupSavePreviewPrivateExportAndDateOnlyPassed=True,actualNativeProcessExitAndRelaunchPassed=True,allPublicLibraryRowsUnchangedAfterRelaunch=True,normalNativeServiceReadiness=services['settings'],exactUnchangedModelAndSettingsObjects=stable,priorModelSource=old,modelInferenceNewlyRun=False,priorAndroid142EvidenceReused=True,newNativeSaveCancelOrOrdinaryRecipientRetested=False,unchangedOsImplementationEvidence=str(B/'unchanged-os-handoff-evidence.json'),ownerPromptOpened=False,boardAccessed=False,privateAudioOrKeysRead=False,ownerExperienceAccepted=False,physicalTotalAcceptancePassed=False,saleQualified=False,nativeBuildsThisReview=0,privateRemoteDeliveryReadbackPending=True,next='Complete one115/unchanged142 private kit and exact remote readback. Rebind the latest actual ordinary firmware and current lease before one guided Owner round; no unchanged112 retry.')
+(O/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+out=Path(__file__).resolve().parent.parent/'outputs';(out/'Companion-115-self-acceptance.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+print(json.dumps({k:result[k]for k in ['at','state','windowsVersion','softwareSelfAcceptancePassed','actualNativeProcessExitAndRelaunchPassed','boardAccessed','ownerExperienceAccepted']},ensure_ascii=False))
