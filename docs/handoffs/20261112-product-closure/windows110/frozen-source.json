@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-12T12:22:20+08:00",
+  "state": "ONE_INTEGRATED_WINDOWS110_SOURCE_FROZEN",
+  "branch": "work/product-total-windows110-20261112",
+  "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+  "baseCommit": "35bf71ea20646b0d9c960ae6b6fd75a68a16753d",
+  "tree": "79f0ee45b7c430792715adcc06c7e330e92e81ec",
+  "version": "0.1.110",
+  "overlayFiles": [],
+  "sourceHashes": {
+    "packages/desktop-input/src/pointer.rs": "e5016a2703b784c42c73bd3dbe37a6643dff8dca455092a661cabb87d75995b9",
+    "apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json": "46a86f05d9022b479a9e96cff3520aeeb1fb2979898c54e82e1e760a31e48518",
+    "packages/desktop-input/src/pointer/tests.rs": "99aab4d3f75aae4ba0dd5c5e9018f3ca2ab83cb305f7d892d679b106673e5098",
+    "packages/desktop-input/examples/pointer_trial.rs": "accbb7e1f882a3d4bda229bb88f9b0b6a42f3463bb48f28e005245554ef98b39",
+    "third_party/imu-pointer/README.md": "247990b48f7dc124e3ec27a7bc366d540f1213873e367a632d5c0d96609a7534",
+    "apps/windows/src/DesktopPointer.tsx": "f3eb9f0b435f756a6be2dd8d85382e74e1725f82c60e5f10d33b37050e1e86da",
+    "packages/desktop-input/examples/pointer_cpu.rs": "08ca752987ed953af7eed72f47a07f258d9ae8f23f5b3d47241e06cd0e3b2c92"
+  },
+  "defaultIndexAndWorkingFilesUntouched": true,
+  "purePointerTestsPassed": true,
+  "typescriptPassed": true,
+  "otaActualProductionModuleTestsPassed": true,
+  "nativeBuilt": false,
+  "installed": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}
