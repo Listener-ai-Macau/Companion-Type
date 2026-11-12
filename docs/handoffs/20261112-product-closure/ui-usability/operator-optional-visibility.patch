@@ -1,0 +1,29 @@
+diff --git "a/C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\shared-operator-before-ui-rework.ps1" "b/C:\\Users\\Billy\\Desktop\\Denzic\\ai-collaboration-workflow\\scripts\\operator_prompt.ps1"
+index c7eaedb..d71b6a7 100644
+--- "a/C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\shared-operator-before-ui-rework.ps1"
++++ "b/C:\\Users\\Billy\\Desktop\\Denzic\\ai-collaboration-workflow\\scripts\\operator_prompt.ps1"
+@@ -543,6 +543,24 @@ function Set-OperatorPromptLiveUpdate {
+             $actionControl.Enabled = $enabled -contains $actionControl.Text
+         }
+     }
++    # Optional per-step visibility; callers that omit it keep the original UI.
++    # Keep only the current navigation and review choices on the same window.
++    if ($null -ne $Update.PSObject.Properties['visibleActions']) {
++        $visibleActions = @($Update.visibleActions)
++        foreach ($actionControl in $runtimeActionButtons) {
++            $actionControl.Visible = $visibleActions -contains $actionControl.Text
++        }
++        if ($null -ne $actionPanel) {
++            $actionPanel.Visible = $visibleActions.Count -gt 0
++            $actionPanel.Width = [Math]::Max(0, (($visibleActions.Count * 158) + 8))
++        }
++    }
++    if ($null -ne $Update.PSObject.Properties['visibleReviews']) {
++        $visibleReviews = @($Update.visibleReviews)
++        foreach ($reviewControl in $buttonPanel.Controls) {
++            $reviewControl.Visible = $visibleReviews -contains $reviewControl.Text
++        }
++    }
+     # A live controller may observe completion itself. This is a controller
+     # result, never a fabricated user click or submitted review.
+     if ($Update.closeRequested -eq $true) {

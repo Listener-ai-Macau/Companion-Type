@@ -1,46 +1,46 @@
 /* Adapted card and workspace styling from Shadcn Dashboard (MIT).
    Copyright (c) 2026 Shadcn Dashboard; see ThirdPartyNotices.txt. */
 :root {
-  --companion-ink: #222126;
-  --companion-muted: #77757f;
-  --companion-accent: #5750aa;
+  --companion-ink: #20242a;
+  --companion-muted: #606773;
+  --companion-accent: #2362b2;
   --companion-surface: #ffffff;
-  --companion-border: #e7e5e6;
-  --companion-canvas: #f8f7f5;
+  --companion-border: #dfe3e8;
+  --companion-canvas: #f6f7f9;
 }
 body { background: var(--companion-canvas); color: var(--companion-ink); }
 .ct-shell { color: var(--companion-ink); }
 .companion-card { background: var(--companion-surface); border: 1px solid var(--companion-border); border-radius: 20px; box-shadow: 0 9px 32px rgba(24, 53, 41, .035); }
 .ct-topbar h1 { font-size: 28px; font-weight: 690; letter-spacing: -.04em; }
-.ct-kicker { color: #77757f; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.ct-kicker { color: #606773; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
 .ct-brand { display:flex; align-items:center; gap:11px; min-width:0; }
 .ct-brand-mark { display:grid; place-items:center; width:38px; height:38px; flex:0 0 auto; border-radius:12px; color:#f6f4f8; background:#24232a; }
 .ct-brand strong, .ct-brand small { display:block; }
-.ct-brand strong { color:#222126; font-size:15px; font-weight:750; letter-spacing:-.035em; }
+.ct-brand strong { color:#20242a; font-size:15px; font-weight:750; letter-spacing:-.035em; }
 .ct-brand small { margin-top:2px; color:#8c8993; font-size:10px; font-weight:500; letter-spacing:.03em; }
 .ct-nav-label { display:none; }
-.ct-simple-status { border-color:#e7e5e6; color:#77757f; background:#fff; box-shadow:0 4px 18px rgba(25,51,39,.025); }
+.ct-simple-status { border-color:#dfe3e8; color:#606773; background:#fff; box-shadow:0 4px 18px rgba(25,51,39,.025); }
 .ct-simple-dot.ok { background:#56ad7e; box-shadow:0 0 0 4px #e5f5eb; }
 .ct-action, .ct-icon-button { border-radius:10px; }
-.ct-action-primary { background:#25242b; border-color:#25242b; color:#fff; }
-.ct-action-primary:hover:not(:disabled) { background:#3a3842; border-color:#3a3842; }
+.ct-action-primary { background:#252b33; border-color:#252b33; color:#fff; }
+.ct-action-primary:hover:not(:disabled) { background:#39414c; border-color:#39414c; }
 .ct-library { padding:26px; }
 .ct-library-head { gap:14px; }
 .ct-library-head strong { font-size:20px; font-weight:720; letter-spacing:-.035em; }
 .ct-section-eyebrow { color:#88858f; font-size:10px; letter-spacing:.12em; }
-.ct-library-search { min-height:44px; margin-top:16px; border-color:#e7e5e6; background:#f8f7f8; }
+.ct-library-search { min-height:44px; margin-top:16px; border-color:#dfe3e8; background:#f8f7f8; }
 .ct-library-search input { background:transparent; }
 .ct-library-card { border-color:#e9e7e9; border-radius:15px; box-shadow:0 4px 16px rgba(29,57,42,.035); }
-.ct-library-card:hover:not(:disabled) { border-color:#c9c4da; box-shadow:0 10px 24px rgba(29,57,42,.07); }
+.ct-library-card:hover:not(:disabled) { border-color:#bdc8d7; box-shadow:0 10px 24px rgba(29,57,42,.07); }
 .ct-windows .ct-library-list { grid-template-columns:repeat(2,minmax(0,1fr));max-height:none;overflow:visible;gap:10px }
 @media(max-width:1100px){.ct-windows .ct-library-list{grid-template-columns:minmax(0,1fr)}}
 @media (min-width: 900px) {
   .ct-shell.ct-windows { width:min(1120px, calc(100vw - 304px)); margin:0 36px 0 268px; padding:34px 0 48px; }
-  .ct-windows .ct-page-navigation { position:fixed; z-index:10; inset:0 auto 0 0; display:flex; flex-direction:column; align-items:stretch; width:232px; min-height:100vh; margin:0; padding:32px 16px; border:0; border-right:1px solid #e7e5e6; border-radius:0; background:#fcfbfa; }
+  .ct-windows .ct-page-navigation { position:fixed; z-index:10; inset:0 auto 0 0; display:flex; flex-direction:column; align-items:stretch; width:232px; min-height:100vh; margin:0; padding:32px 16px; border:0; border-right:1px solid #dfe3e8; border-radius:0; background:#fcfbfa; }
   .ct-windows .ct-brand { margin:0 8px 42px; }
   .ct-windows .ct-nav-label { display:block; margin:0 12px 10px; color:#aaa7ae; font-size:10px; font-weight:700; letter-spacing:.12em; }
-  .ct-windows .ct-page-navigation button { flex:none; justify-content:flex-start; gap:12px; width:100%; min-height:43px; margin:2px 0; padding:11px 13px; border:0; border-radius:10px; color:#77757f; font-size:13px; font-weight:600; }
-  .ct-windows .ct-page-navigation button[aria-current="page"] { color:#4d478c; background:#efedf9; box-shadow:none; }
+  .ct-windows .ct-page-navigation button { flex:none; justify-content:flex-start; gap:12px; width:100%; min-height:43px; margin:2px 0; padding:11px 13px; border:0; border-radius:10px; color:#606773; font-size:13px; font-weight:600; }
+  .ct-windows .ct-page-navigation button[aria-current="page"] { color:#235da8; background:#edf3fb; box-shadow:none; }
   .ct-windows .ct-page-navigation button:hover:not([aria-current="page"]) { color:#302e3a; background:#f1f0f3; }
   .ct-windows .ct-topbar { min-height:54px; margin-bottom:24px; }
   .ct-windows .ct-library-overview .ct-topbar > div, .ct-windows.ct-library-overview .ct-topbar > div { display:block; }
@@ -56,120 +56,120 @@ body { background: var(--companion-canvas); color: var(--companion-ink); }
 @media (prefers-reduced-motion:reduce) { .ct-library-card { transition:none; transform:none !important; } }
 
 /* Shared neutral palette for desktop and phone. */
-.ct-library-empty strong,.ct-library-search input{color:#222126}
-.ct-library-search{color:#77757f}
-.ct-library-search button,.ct-text-button{color:#5750aa}
+.ct-library-empty strong,.ct-library-search input{color:#20242a}
+.ct-library-search{color:#606773}
+.ct-library-search button,.ct-text-button{color:#2362b2}
 .ct-library-card.selected{border-color:#bbb4dc;background:#f5f3fc}
-.ct-shell button:focus-visible,.ct-shell input:focus-visible,.ct-shell summary:focus-visible{outline-color:#7067c0}
+.ct-shell button:focus-visible,.ct-shell input:focus-visible,.ct-shell summary:focus-visible{outline-color:#3674c5}
 /* Device and setup use the same quiet surfaces as the recording library. */
-.ct-windows .ct-readiness,.ct-windows .ct-setup{border-color:#e7e5e6;background:#fff;box-shadow:0 4px 18px rgba(31,29,38,.025)}
+.ct-windows .ct-readiness,.ct-windows .ct-setup{border-color:#dfe3e8;background:#fff;box-shadow:0 4px 18px rgba(31,29,38,.025)}
 .ct-windows .ct-readiness dl>div,.ct-windows .ct-setup-grid>div,.ct-windows .ct-setup-details{border-color:#efedef}
-.ct-windows .ct-readiness dt,.ct-windows .ct-readiness-note,.ct-windows .ct-setup-head p,.ct-windows .ct-setup-note,.ct-windows .ct-setup-grid p{color:#706e78}
-.ct-windows .ct-readiness-capacity summary,.ct-windows .ct-setup-details summary{color:#5750aa}
-.ct-windows .ct-setup-symbol{background:#efedf9;color:#5750aa}
-.ct-windows .ct-recording-activity[aria-label="开始设备录音"],.ct-windows .ct-recording-activity[aria-label="录制电脑会议"],.ct-windows .ct-recording-activity[aria-label="导入已有音频"]{background:#fff;border-color:#e7e5e6}
-.ct-windows .ct-recording-activity[aria-label="开始设备录音"] strong,.ct-windows .ct-recording-activity[aria-label="录制电脑会议"] strong,.ct-windows .ct-recording-activity[aria-label="导入已有音频"] strong{color:#222126}
-.ct-windows .ct-recording-activity[aria-label="开始设备录音"] p,.ct-windows .ct-recording-activity[aria-label="录制电脑会议"] p,.ct-windows .ct-recording-activity[aria-label="导入已有音频"] p{color:#706e78}
-.ct-windows .ct-settings-grid input:focus,.ct-windows .ct-settings-grid select:focus{outline-color:#7067c0}
+.ct-windows .ct-readiness dt,.ct-windows .ct-readiness-note,.ct-windows .ct-setup-head p,.ct-windows .ct-setup-note,.ct-windows .ct-setup-grid p{color:#606773}
+.ct-windows .ct-readiness-capacity summary,.ct-windows .ct-setup-details summary{color:#2362b2}
+.ct-windows .ct-setup-symbol{background:#edf3fb;color:#2362b2}
+.ct-windows .ct-recording-activity[aria-label="开始设备录音"],.ct-windows .ct-recording-activity[aria-label="录制电脑会议"],.ct-windows .ct-recording-activity[aria-label="导入已有音频"]{background:#fff;border-color:#dfe3e8}
+.ct-windows .ct-recording-activity[aria-label="开始设备录音"] strong,.ct-windows .ct-recording-activity[aria-label="录制电脑会议"] strong,.ct-windows .ct-recording-activity[aria-label="导入已有音频"] strong{color:#20242a}
+.ct-windows .ct-recording-activity[aria-label="开始设备录音"] p,.ct-windows .ct-recording-activity[aria-label="录制电脑会议"] p,.ct-windows .ct-recording-activity[aria-label="导入已有音频"] p{color:#606773}
+.ct-windows .ct-settings-grid input:focus,.ct-windows .ct-settings-grid select:focus{outline-color:#3674c5}
 /* Keep the page heading and its keyboard focus ring visible after navigation. */
 .ct-topbar h1{scroll-margin-top:64px}
 /* Windows reading workspace: consistent neutral surfaces, with emphasis on the recording. */
-.ct-windows .ct-meeting-workspace{border-color:#e7e5e6;border-radius:18px;background:#fff;box-shadow:0 8px 28px rgba(31,29,38,.045)}
-.ct-windows .ct-meeting-workspace:focus-visible,.ct-windows .ct-library:focus-visible,.ct-windows .ct-minutes-panel:focus-visible{outline:2px solid #a89fdd;outline-offset:3px}
-.ct-windows .ct-recording-back{margin:18px 28px 0;padding:5px 0;color:#5750aa}
-.ct-windows .ct-meeting-hero{padding:22px 28px 24px;border-color:#eeecee;background:#fff}
-.ct-windows .ct-meeting-hero .ct-section-eyebrow{color:#77757f;letter-spacing:.06em}
+.ct-windows .ct-meeting-workspace{border-color:#dfe3e8;border-radius:18px;background:#fff;box-shadow:0 8px 28px rgba(31,29,38,.045)}
+.ct-windows .ct-meeting-workspace:focus-visible,.ct-windows .ct-library:focus-visible,.ct-windows .ct-minutes-panel:focus-visible{outline:2px solid #82a9dc;outline-offset:3px}
+.ct-windows .ct-recording-back{margin:18px 28px 0;padding:5px 0;color:#2362b2}
+.ct-windows .ct-meeting-hero{padding:22px 28px 24px;border-color:#e5e8ec;background:#fff}
+.ct-windows .ct-meeting-hero .ct-section-eyebrow{color:#606773;letter-spacing:.06em}
 .ct-windows .ct-title-editor{color:#88858f;gap:10px}
-.ct-windows .ct-title-editor input{color:#222126;font-size:26px;font-weight:680;letter-spacing:-.03em;line-height:1.35}
+.ct-windows .ct-title-editor input{color:#20242a;font-size:26px;font-weight:680;letter-spacing:-.03em;line-height:1.35}
 .ct-windows .ct-title-editor input:not([readonly]):hover,.ct-windows .ct-title-editor input:not([readonly]):focus{border-bottom-color:#8d84c6}
-.ct-windows .ct-meeting-hero > div > p:last-child{color:#706e78}
-.ct-windows .ct-pill-good{color:#4d478c;border-color:#e4e0f4;background:#f1effa}
+.ct-windows .ct-meeting-hero > div > p:last-child{color:#606773}
+.ct-windows .ct-pill-good{color:#235da8;border-color:#e4e0f4;background:#f1effa}
 .ct-windows .ct-recording-primary-actions{gap:10px;margin:20px 28px 22px}
-.ct-windows .ct-audio-card{display:block;margin:0 28px 24px;padding:20px 22px;border:1px solid #e9e6ef;border-radius:14px;background:#f8f7fa}
+.ct-windows .ct-audio-card{display:block;margin:0 28px 24px;padding:20px 22px;border:1px solid #e9e6ef;border-radius:14px;background:#f6f7f9}
 .ct-windows .ct-audio-card>div{width:100%;min-width:0}
-.ct-windows .ct-audio-card strong{color:#222126;font-size:14px}
-.ct-windows .ct-audio-card p,.ct-windows .ct-recording-audio-export p{color:#706e78}
+.ct-windows .ct-audio-card strong{color:#20242a;font-size:14px}
+.ct-windows .ct-audio-card p,.ct-windows .ct-recording-audio-export p{color:#606773}
 .ct-windows .ct-audio-card audio{width:min(100%,580px);height:40px;margin-top:12px}
 .ct-windows .ct-audio-tools{gap:8px;margin-top:12px}
-.ct-windows .ct-audio-tools select{border-color:#dedbe2;color:#222126}
+.ct-windows .ct-audio-tools select{border-color:#dedbe2;color:#20242a}
 .ct-windows .ct-recording-text{padding:4px 28px 28px}
-.ct-windows .ct-recording-text h3,.ct-windows .ct-recording-result>summary{color:#29272e}
-.ct-windows .ct-recording-transcript{color:#302e36;line-height:1.9}
-.ct-windows .ct-recording-text-empty,.ct-windows .ct-optional-processing{color:#706e78}
-.ct-windows .ct-recording-more,.ct-windows .ct-recording-result,.ct-windows .ct-result-tools{border-color:#eeecee}
-.ct-windows .ct-recording-more>summary,.ct-windows .ct-result-tools>summary,.ct-windows .ct-saved-details,.ct-windows .ct-note-composer>summary{color:#5750aa}
-.ct-windows .ct-minutes-article,.ct-windows .ct-minutes-article h3,.ct-windows .ct-minutes-article h4{color:#29272e}
-.ct-windows .ct-minutes-article p,.ct-windows .ct-library-text-preview{color:#5e5b65}
-.ct-windows .ct-meeting-document .ct-mode-chip{border-color:#e3e1e6;color:#706e78;background:#f8f7f9}
-.ct-windows .ct-meeting-document .ct-mode-chip.active{border-color:#cbc5e7;color:#4d478c;background:#efedf9}
-.ct-windows .ct-library-icon{color:#5750aa;background:#efedf9}
+.ct-windows .ct-recording-text h3,.ct-windows .ct-recording-result>summary{color:#252a31}
+.ct-windows .ct-recording-transcript{color:#30363e;line-height:1.9}
+.ct-windows .ct-recording-text-empty,.ct-windows .ct-optional-processing{color:#606773}
+.ct-windows .ct-recording-more,.ct-windows .ct-recording-result,.ct-windows .ct-result-tools{border-color:#e5e8ec}
+.ct-windows .ct-recording-more>summary,.ct-windows .ct-result-tools>summary,.ct-windows .ct-saved-details,.ct-windows .ct-note-composer>summary{color:#2362b2}
+.ct-windows .ct-minutes-article,.ct-windows .ct-minutes-article h3,.ct-windows .ct-minutes-article h4{color:#252a31}
+.ct-windows .ct-minutes-article p,.ct-windows .ct-library-text-preview{color:#5b6370}
+.ct-windows .ct-meeting-document .ct-mode-chip{border-color:#e3e1e6;color:#606773;background:#f8f7f9}
+.ct-windows .ct-meeting-document .ct-mode-chip.active{border-color:#bdd0e9;color:#235da8;background:#edf3fb}
+.ct-windows .ct-library-icon{color:#2362b2;background:#edf3fb}
 .ct-windows .ct-library-card.selected{box-shadow:0 0 0 2px rgba(87,80,170,.1)}
 @media(max-width:560px){.ct-windows .ct-recording-back{margin-left:19px;margin-right:19px}.ct-windows .ct-meeting-hero{padding:19px}.ct-windows .ct-recording-primary-actions{margin-left:19px;margin-right:19px}.ct-windows .ct-audio-card{margin-left:19px;margin-right:19px}.ct-windows .ct-recording-text{padding-left:19px;padding-right:19px}}
 .ct-windows .ct-recording-result{margin:0 28px 22px}
 .ct-windows .ct-recording-result>summary{padding:19px 0;font-size:16px;letter-spacing:-.01em}
 .ct-windows .ct-recording-result .ct-meeting-document{padding:2px 0 18px}
-.ct-windows .ct-recording-result .ct-minutes-mode-meta{color:#706e78;font-size:12px;font-weight:600;letter-spacing:.02em;margin-bottom:8px}
-.ct-windows .ct-recording-result .ct-step-meta{color:#706e78;font-size:13px;line-height:1.7}
+.ct-windows .ct-recording-result .ct-minutes-mode-meta{color:#606773;font-size:12px;font-weight:600;letter-spacing:.02em;margin-bottom:8px}
+.ct-windows .ct-recording-result .ct-step-meta{color:#606773;font-size:13px;line-height:1.7}
 .ct-windows .ct-minutes-export-actions{gap:8px;flex-wrap:wrap;margin:14px 0}
 .ct-windows .ct-minutes-article{max-width:820px;margin-top:22px}
-.ct-windows .ct-minutes-article h4{border-color:#eeecee;color:#29272e}
-.ct-windows .ct-minutes-item{padding:13px 15px;border:1px solid #efedf2;border-radius:11px;background:#f8f7fa;color:#302e36;line-height:1.65}
-.ct-windows .ct-minutes-item svg,.ct-windows .ct-minutes-bullet{color:#7770b6}
-.ct-windows .ct-saved-action input{accent-color:#5750aa}
-.ct-windows .ct-action-supplement{color:#5e5b65}
-.ct-windows .ct-action-supplement-label{color:#706e78}
-.ct-windows .ct-full-minutes>summary,.ct-windows .ct-action-item-help,.ct-windows .ct-action-source-legend{color:#706e78}
+.ct-windows .ct-minutes-article h4{border-color:#e5e8ec;color:#252a31}
+.ct-windows .ct-minutes-item{padding:13px 15px;border:1px solid #efedf2;border-radius:11px;background:#f6f7f9;color:#30363e;line-height:1.65}
+.ct-windows .ct-minutes-item svg,.ct-windows .ct-minutes-bullet{color:#5279aa}
+.ct-windows .ct-saved-action input{accent-color:#2362b2}
+.ct-windows .ct-action-supplement{color:#5b6370}
+.ct-windows .ct-action-supplement-label{color:#606773}
+.ct-windows .ct-full-minutes>summary,.ct-windows .ct-action-item-help,.ct-windows .ct-action-source-legend{color:#606773}
 .ct-windows .ct-result-tools>summary,.ct-windows .ct-recording-more>summary{font-size:13px;font-weight:600}
-.ct-windows .ct-meeting-notes.ct-notes-inline{border-color:#eeecee}
-.ct-windows .ct-note-composer>p,.ct-windows .ct-note-export>summary{color:#706e78}
+.ct-windows .ct-meeting-notes.ct-notes-inline{border-color:#e5e8ec}
+.ct-windows .ct-note-composer>p,.ct-windows .ct-note-export>summary{color:#606773}
 @media(max-width:560px){.ct-windows .ct-recording-result{margin-left:19px;margin-right:19px}}
-.ct-windows .ct-audio-advanced{margin-top:14px;padding-top:12px;border-top:1px solid #e6e3eb}
-.ct-windows .ct-audio-advanced>summary{width:fit-content;color:#5750aa;font-size:13px;font-weight:600;cursor:pointer}
-.ct-windows .ct-meeting-workspace>.ct-result-tools{margin:0 28px 20px;border-color:#eeecee}
+.ct-windows .ct-audio-advanced{margin-top:14px;padding-top:12px;border-top:1px solid #e5ebf3}
+.ct-windows .ct-audio-advanced>summary{width:fit-content;color:#2362b2;font-size:13px;font-weight:600;cursor:pointer}
+.ct-windows .ct-meeting-workspace>.ct-result-tools{margin:0 28px 20px;border-color:#e5e8ec}
 .ct-windows .ct-meeting-workspace>.ct-result-tools>summary{padding:14px 0}
 @media(max-width:560px){.ct-windows .ct-meeting-workspace>.ct-result-tools{margin-left:19px;margin-right:19px}}
 /* Keep keyboard navigation visible without the browser's heavy black heading outline. */
-.ct-windows .ct-topbar h1:focus-visible{outline:2px solid #a89fdd;outline-offset:5px;border-radius:3px}
+.ct-windows .ct-topbar h1:focus-visible{outline:2px solid #82a9dc;outline-offset:5px;border-radius:3px}
 /* The library's real saved-content and optional-recovery states share the workspace palette. */
 .ct-windows .ct-recent-recording{border-color:#e8e5eb;background:#faf9fc}
-.ct-windows .ct-recent-recording strong,.ct-windows .ct-recent-recording p.ct-recent-preview{color:#29272e}
-.ct-windows .ct-recent-recording p,.ct-windows .ct-recent-recording small{color:#706e78}
+.ct-windows .ct-recent-recording strong,.ct-windows .ct-recent-recording p.ct-recent-preview{color:#252a31}
+.ct-windows .ct-recent-recording p,.ct-windows .ct-recent-recording small{color:#606773}
 .ct-windows .ct-recovery-compact{border-color:#eae8ed;background:#faf9fb}
-.ct-windows .ct-recovery-history>summary,.ct-windows .ct-recovery-history>p{color:#706e78}
-.ct-windows .ct-recovery-history>summary span{background:#efedf2;color:#5e5b65}
-.ct-windows .ct-library-status-minutesReady{background:#efedf9;color:#4d478c}
-.ct-windows .ct-library-filter{border-color:#e4e1e7;background:#faf9fb;color:#5e5b65}
-.ct-windows .ct-library-more>summary,.ct-windows .ct-listening-more>summary{color:#706e78}
+.ct-windows .ct-recovery-history>summary,.ct-windows .ct-recovery-history>p{color:#606773}
+.ct-windows .ct-recovery-history>summary span{background:#efedf2;color:#5b6370}
+.ct-windows .ct-library-status-minutesReady{background:#edf3fb;color:#235da8}
+.ct-windows .ct-library-filter{border-color:#e4e1e7;background:#faf9fb;color:#5b6370}
+.ct-windows .ct-library-more>summary,.ct-windows .ct-listening-more>summary{color:#606773}
 /* Settings share the same card, field and control rhythm as the reading workspace. */
-.ct-windows .ct-advanced>.ct-panel{margin-top:16px;padding:24px;border:1px solid #e7e5e6;border-radius:16px;background:#fff;box-shadow:0 5px 22px rgba(31,29,38,.035)}
+.ct-windows .ct-advanced>.ct-panel{margin-top:16px;padding:24px;border:1px solid #dfe3e8;border-radius:16px;background:#fff;box-shadow:0 5px 22px rgba(31,29,38,.035)}
 .ct-windows .ct-advanced>.ct-panel:first-child{margin-top:0}
-.ct-windows .ct-panel-title{color:#29272e;font-size:15px;letter-spacing:-.01em}
+.ct-windows .ct-panel-title{color:#252a31;font-size:15px;letter-spacing:-.01em}
 .ct-windows .ct-settings-grid{gap:16px;align-items:start}
 .ct-windows .ct-settings-grid input,.ct-windows .ct-settings-grid select{min-height:42px;border:1px solid #dddbe1;border-radius:9px;padding:9px 11px}
-.ct-windows .ct-mode-chip.active{border-color:#cbc5e7;background:#efedf9;color:#4d478c}
-.ct-windows .ct-advanced-toggle{border-color:#e2dfe5;color:#706e78}
+.ct-windows .ct-mode-chip.active{border-color:#bdd0e9;background:#edf3fb;color:#235da8}
+.ct-windows .ct-advanced-toggle{border-color:#e2dfe5;color:#606773}
 .ct-windows .ct-advanced{background:transparent}
 @media(max-width:560px){.ct-windows .ct-advanced>.ct-panel{padding:18px}}
 /* An empty library should feel intentional and still explain the next action. */
 .ct-windows .ct-library-empty{align-items:center;gap:10px;padding:30px 16px 22px;text-align:center}
-.ct-windows .ct-library-empty>svg{box-sizing:content-box;padding:13px;border:1px solid #ebe8f0;border-radius:15px;color:#7770b6;background:#f5f3fa}
+.ct-windows .ct-library-empty>svg{box-sizing:content-box;padding:13px;border:1px solid #ebe8f0;border-radius:15px;color:#5279aa;background:#f5f3fa}
 .ct-windows .ct-library-empty strong{font-size:15px;letter-spacing:-.01em}
 .ct-windows .ct-library-empty p{font-size:13px;line-height:1.7}
 .ct-windows .ct-library-empty .ct-action{margin-top:7px}
 /* Keep the native pet and update surfaces inside the same desktop workspace. */
-.ct-windows .ct-pet-workspace{width:100%;margin:0 0 24px;color:#302e36}
-.ct-windows .ct-pet-workspace>section[aria-label="宠物聊天"]{max-width:none!important;margin:0!important;padding:26px 28px!important;border:1px solid #e7e5e6!important;border-radius:18px!important;background:#fff;box-shadow:0 8px 28px rgba(31,29,38,.045)}
+.ct-windows .ct-pet-workspace{width:100%;margin:0 0 24px;color:#30363e}
+.ct-windows .ct-pet-workspace>section[aria-label="宠物聊天"]{max-width:none!important;margin:0!important;padding:26px 28px!important;border:1px solid #dfe3e8!important;border-radius:18px!important;background:#fff;box-shadow:0 8px 28px rgba(31,29,38,.045)}
 .ct-windows .ct-pet-workspace>section[aria-label="宠物聊天"]>h2{font-size:20px!important;letter-spacing:-.025em}
-.ct-windows .ct-pet-workspace button{border-color:#e2dfe5;background:#fff;color:#302e36;border-radius:9px}
-.ct-windows .ct-pet-workspace button:hover:not(:disabled){border-color:#c9c4da;background:#f8f7fa}
-.ct-windows .ct-pet-workspace :is(button,input,select,textarea,summary):focus-visible{outline-color:#7067c0}
-.ct-windows .ct-pet-workspace input[type="checkbox"]{accent-color:#5750aa}
-.ct-windows .ct-desktop-update{width:100%;margin:16px 0 28px;padding:24px;border-color:#e7e5e6;border-radius:16px;background:#fff;color:#302e36;box-shadow:0 5px 22px rgba(31,29,38,.035)}
-.ct-windows .ct-desktop-update p{color:#706e78}
+.ct-windows .ct-pet-workspace button{border-color:#e2dfe5;background:#fff;color:#30363e;border-radius:9px}
+.ct-windows .ct-pet-workspace button:hover:not(:disabled){border-color:#bdc8d7;background:#f6f7f9}
+.ct-windows .ct-pet-workspace :is(button,input,select,textarea,summary):focus-visible{outline-color:#3674c5}
+.ct-windows .ct-pet-workspace input[type="checkbox"]{accent-color:#2362b2}
+.ct-windows .ct-desktop-update{width:100%;margin:16px 0 28px;padding:24px;border-color:#dfe3e8;border-radius:16px;background:#fff;color:#30363e;box-shadow:0 5px 22px rgba(31,29,38,.035)}
+.ct-windows .ct-desktop-update p{color:#606773}
 @media(max-width:560px){.ct-windows .ct-pet-workspace>section[aria-label="宠物聊天"]{padding:18px!important}.ct-windows .ct-desktop-update{padding:18px}}
 @media(max-width:720px){.ct-windows .ct-recording-activity{align-items:flex-start;flex-direction:column;gap:12px}}
 /* Prioritize the user's recording choices without hiding the preparation details. */
-.ct-windows .ct-device-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.ct-windows .ct-device-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:18px}
 .ct-windows .ct-device-actions .ct-recording-activity{min-width:0;margin:0;padding:20px;align-items:flex-start;flex-direction:column;gap:16px}
 .ct-windows .ct-device-actions .ct-recording-activity[aria-label="开始设备录音"]{grid-column:1/-1;flex-direction:row;align-items:center}
 .ct-windows .ct-device-actions .ct-recording-activity>div:first-child{min-width:0}

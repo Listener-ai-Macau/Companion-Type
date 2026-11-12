@@ -10,10 +10,10 @@ export function meetingPaneForTarget(id:string):MeetingPane{
  return 'result';
 }
 const panes=[
- {id:'result' as const,label:'纪要与待办',icon:FileText},
- {id:'source' as const,label:'原文与录音',icon:Headphones},
- {id:'materials' as const,label:'补充与跟进',icon:NotebookPen},
- {id:'handoff' as const,label:'带走结果',icon:Send},
+ {id:'result' as const,label:'纪要',icon:FileText},
+ {id:'source' as const,label:'录音与文字',icon:Headphones},
+ {id:'materials' as const,label:'笔记与资料',icon:NotebookPen},
+ {id:'handoff' as const,label:'导出',icon:Send},
 ];
 export function MeetingWorkspaceNav({value,onChange,dirty,notesCount}:{value:MeetingPane;onChange:(pane:MeetingPane)=>void;dirty:Partial<Record<MeetingPane,boolean>>;notesCount:number}){
  const nav=useRef<HTMLElement>(null);

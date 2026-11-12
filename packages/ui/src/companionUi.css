@@ -1702,8 +1702,18 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 
 /* Recording advice stays beside its action; detailed storage accounting is optional. */
 .ct-readiness { padding: 22px; margin-bottom: 14px; border: 1px solid #dbe5d9; border-radius: 18px; background: #fff; }
-.ct-readiness header h2 { margin: 0 0 7px; font-size: 18px; }
-.ct-readiness header p { margin: 0 0 18px; line-height: 1.6; }
+.ct-readiness > header { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.ct-readiness header h2 { margin: 0; font-size: 18px; }
+.ct-readiness header p { margin: 6px 0 0; font-size:13px; line-height: 1.6; }
+.ct-readiness-details { margin-top:14px; padding-top:12px; border-top:1px solid var(--companion-border,#dfe3e8); }
+.ct-readiness-details > summary { cursor:pointer; font-size:12px; color:var(--companion-muted,#606773); }
+.ct-readiness-details[open] > summary { margin-bottom:16px; }
+.ct-alternative-recording > summary,.ct-device-options > summary { cursor:pointer; padding:12px 16px; border:1px solid #dfe3e8; border-radius:6px; font-size:13px; }
+.ct-device-options { margin:14px 0; }
+.ct-device-options[open] > .ct-setup,.ct-alternative-recording[open] > .ct-recording-activity { margin-top:12px; }
+.ct-device-actions > .ct-recording-activity[aria-label="在卡片上录音"] { background:transparent; border-color:#dfe3e8; color:inherit; }
+.ct-device-actions > .ct-recording-activity[aria-label="在卡片上录音"] > div > strong { color:inherit; }
+.ct-theme-dark :is(.ct-alternative-recording,.ct-device-options) > summary,.ct-theme-dark .ct-device-actions > .ct-recording-activity[aria-label="在卡片上录音"] { border-color:#3c444f; }
 .ct-readiness-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; }
 .ct-readiness-grid h3 { margin: 0 0 8px; font-size: 15px; }
 .ct-readiness dl { margin: 12px 0; }

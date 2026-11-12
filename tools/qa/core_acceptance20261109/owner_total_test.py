@@ -36,8 +36,8 @@ class WholeUseTests(unittest.TestCase):
 
     def test_readiness_only_accepts_actual_button_event_from_own_prompt(self):
         self.assertFalse(module.start_requested(json.dumps(dict(event='review_submitted',processId=7,text='action_button|开始整体验收')),7))
-        self.assertFalse(module.start_requested(json.dumps(dict(event='action_button|开始整体验收',processId=8)),7))
-        self.assertTrue(module.start_requested(json.dumps(dict(event='action_button|开始整体验收',processId=7)),7))
+        self.assertFalse(module.start_requested(json.dumps(dict(event='action_button|'+module.START,processId=8)),7))
+        self.assertTrue(module.start_requested(json.dumps(dict(event='action_button|'+module.START,processId=7)),7))
         self.assertFalse(module.start_requested('{incomplete',7))
 
     def test_importing_old_or_nonphysical_long_audio_is_not_a_new_long_recording(self):
@@ -72,7 +72,7 @@ class WholeUseTests(unittest.TestCase):
                     enabled=module.START in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions']
                     if not enabled:self.clicked=False
                     if enabled and not self.clicked and (retry_start or not clock['startClicks']) and (navigate or not clock.get('appLaunched')):
-                        with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|开始整体验收',processId=self.pid))+'\n')
+                        with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|'+module.START,processId=self.pid))+'\n')
                         self.clicked=True;clock['startClicks']+=1
                     if navigate and module.NEXT in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions'] and clock.get('navigationTick')!=clock['tick']:
                         with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|'+module.NEXT,processId=self.pid,at=stamp()))+'\n')

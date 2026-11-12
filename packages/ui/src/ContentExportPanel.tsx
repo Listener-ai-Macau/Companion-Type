@@ -83,8 +83,8 @@ export function ContentExportPanel(props:Props){
  const subtitles=format==='srt';
  return <details ref={panel} id="ct-meeting-export" className={"ct-result-tools ct-content-export"+(props.standalone?" ct-export-workspace":"")} open={props.standalone||undefined}>
    <summary>导出、复制与分享</summary>
-   <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
-   {target&&<div className="ct-note-handoff-scope" role={targetNote?'status':'alert'}>{targetNote?<><strong>{!choice.minutes&&!choice.transcript&&!choice.highlights&&choice.noteIds.length===1&&choice.noteIds[0]===target.noteId?'仅导出这条人工补充':'已调整导出范围'}</strong><p>{targetNote.text.split('\n')[0].replace(/^\s*[-*]\s+\[[ xX]\]\s*/,'')||'图片备注'}</p><small>包含保存的文字、勾选状态和字面依据；原图片可选择图文 ZIP。</small><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setScopeExpanded(value=>!value)}>{scopeExpanded?'收起范围选择':'更改导出范围'}</button></>:<><p>这条补充已变化或移除，请重新选择；尚未导出其它内容。</p><button type="button" className="ct-action" disabled={disabled} onClick={props.onClearTarget}>重新选择内容</button></>}</div>}
+   <p className="ct-step-meta">选择内容和格式，保存到自己的文件夹。</p>
+   {target&&<div className="ct-note-handoff-scope" role={targetNote?'status':'alert'}>{targetNote?<><strong>{!choice.minutes&&!choice.transcript&&!choice.highlights&&choice.noteIds.length===1&&choice.noteIds[0]===target.noteId?'只导出以下笔记':'已调整导出范围'}</strong><p>{targetNote.text.split('\n')[0].replace(/^\s*[-*]\s+\[[ xX]\]\s*/,'')||'图片备注'}</p><small>保留文字、勾选状态和引用。需要原图时选择图文 ZIP。</small><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setScopeExpanded(value=>!value)}>{scopeExpanded?'收起范围选择':'更改导出范围'}</button></>:<><p>这条补充已变化或移除，请重新选择；尚未导出其它内容。</p><button type="button" className="ct-action" disabled={disabled} onClick={props.onClearTarget}>重新选择内容</button></>}</div>}
    <fieldset disabled={disabled} style={{border:0,padding:0,margin:0}}>
      <div hidden={!!target&&!scopeExpanded}>
      <div className="ct-button-row" aria-label="导出内容选择">
@@ -103,16 +103,14 @@ export function ContentExportPanel(props:Props){
    </fieldset>
    {format==='bundle'&&<p className="ct-step-meta">图文 ZIP 解压后打开“打开阅读.html”即可离线阅读。仅包含勾选内容及其中原图，每次图片合计不超过64MB。其它格式保留文字、时间与图片名称，不嵌入原图。</p>}
    {subtitles?<p className="ct-step-meta">字幕只包含有真实时间轴的原文；近似分段不能作为精确字幕。</p>:format==='xlsx'?<p className="ct-step-meta">Excel按章节保留所选正文，适合筛选和后续编辑。</p>:format==='pptx'?<p className="ct-step-meta">按已保存内容分页，文字可在PowerPoint中继续编辑；材料和原文依据一起保留。</p>:format==='png'?<p className="ct-step-meta">将所选内容绘成完整导图图片。长会议建议只选需要的材料；可编辑版本请选“思维导图（可编辑）”。</p>:null}
-   <div className="ct-button-row" style={{marginTop:12}}>
-     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>
-     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('copy')}><Copy size={14}/>复制所选内容</button>
+   <div className="ct-button-row ct-export-main-actions" style={{marginTop:12}}>
      <button type="button" className="ct-action ct-action-primary" disabled={disabled||!props.onSave||!any} onClick={()=>void run('save')}><Download size={14}/>保存 {formats.find(([value])=>value===format)?.[1]}…</button>
-     {props.desktopFileSharing?<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
-       :<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>}
+     <button type="button" className="ct-action" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('copy')}><Copy size={14}/>复制所选内容</button>
+     <button type="button" className="ct-text-button" disabled={disabled||!props.onPreview||!any} onClick={()=>void run('preview')}>预览所选内容</button>
+     {!props.desktopFileSharing?<button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>:null}
    </div>
-   {props.desktopFileSharing&&props.onShare?<p className="ct-step-meta">复制的是上方所选格式的完整文件，可到支持文件粘贴的应用中按 Ctrl+V 添加附件，再自行发送。</p>:null}
-   {props.onShare?<details className="ct-content-share-alternative"><summary>{props.desktopFileSharing?'其他分享方式':'复制文件或在文件夹中分享'}</summary>
-     {props.desktopFileSharing?<><p className="ct-step-meta">使用 Windows 分享面板选择接收应用。</p><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('share')}><Share2 size={14}/>系统分享所选文件…</button></>:<>
+   {props.onShare?<details className="ct-content-share-alternative"><summary>更多分享方式</summary>
+     {props.desktopFileSharing?<><p className="ct-step-meta">复制文件后，可粘贴为附件；系统分享可选择接收应用。</p><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button><button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('share')}><Share2 size={14}/>系统分享所选文件…</button></>:<>
      <p className="ct-step-meta">复制完整文件后，可到支持文件粘贴的应用中按 Ctrl+V。接收位置与是否发送由你确认。</p>
      <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('fileCopy')}><Copy size={14}/>复制所选文件</button>
      </>}

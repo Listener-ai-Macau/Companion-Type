@@ -1,4 +1,4 @@
-.ct-note-handoff-scope,.export-note-scope{display:grid;gap:9px;border:1px solid color-mix(in srgb,currentColor 15%,transparent);border-radius:12px;padding:16px;margin:14px 0 18px;background:color-mix(in srgb,var(--accent-color,var(--accent,#7367c8)) 5%,transparent);min-width:0}
+.ct-note-handoff-scope,.export-note-scope{display:grid;gap:7px;border:1px solid color-mix(in srgb,currentColor 15%,transparent);border-radius:6px;padding:14px;margin:14px 0 18px;background:color-mix(in srgb,currentColor 2%,transparent);min-width:0}
 .ct-note-handoff-scope>strong,.export-note-scope>strong{font-size:13px;font-weight:600}
 .ct-note-handoff-scope>p,.export-note-scope>p{margin:0;line-height:1.7;font-size:14px;overflow-wrap:anywhere}
 .ct-note-handoff-scope>small,.export-note-scope>small{font-size:12px;line-height:1.7;opacity:.65}

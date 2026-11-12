@@ -712,10 +712,10 @@
 
 ### 当前交付基线
 
-- 已保存实板记录：FW66820 / UI85；这不是实时接板查询。
-- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `a3c2906`。
+- 已保存实板记录：FW66821 / UI85；这不是实时接板查询。
+- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `88639f6`。
 - 构建入口：`python tools/build_current_firmware.py --show`。构建参数配方参考版 66685，与已装版本分开显示。
-- 安装证据：[E:\CodexData\Companion\.build-cache\imu-pointer20261112\install820\result.json](E:\CodexData\Companion\.build-cache\imu-pointer20261112\install820\result.json)。
+- 安装证据：[E:\CodexData\Companion\.build-cache\imu-pointer20261112\install821\result.json](E:\CodexData\Companion\.build-cache\imu-pointer20261112\install821\result.json)。
 
 ### 现在推进什么
 

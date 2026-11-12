@@ -1,8 +1,8 @@
 /* One meeting, four everyday purposes. Pane changes keep editors mounted. */
-.ct-windows .ct-meeting-navigation{display:flex;gap:6px;margin:0 28px 24px;padding:5px;background:#f2f0f5;border:1px solid #e8e4ed;border-radius:13px}
-.ct-windows .ct-meeting-navigation button{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-width:0;min-height:43px;padding:9px 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#716a7b;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.ct-windows .ct-meeting-navigation{display:flex;gap:20px;margin:0 28px 20px;padding:0;background:transparent;border:0;border-bottom:1px solid #dfe3e8;border-radius:0}
+.ct-windows .ct-meeting-navigation button{display:flex;align-items:center;justify-content:center;gap:7px;flex:0 1 auto;min-width:0;min-height:42px;padding:10px 4px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:#606773;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
 .ct-windows .ct-meeting-navigation button:hover{color:#43354e;background:#eae5ef}
-.ct-windows .ct-meeting-navigation button[aria-current=page]{background:#fff;border-color:#e5dfeb;color:#503569;box-shadow:0 2px 5px #34204408}
+.ct-windows .ct-meeting-navigation button[aria-current=page]{background:transparent;border-bottom-color:#2362b2;color:#2362b2;box-shadow:none}
 .ct-windows .ct-meeting-navigation button:focus-visible{outline:2px solid #8c6caf;outline-offset:3px}
 .ct-windows .ct-pane-count{font-size:10px;min-width:18px;border-radius:5px;padding:2px;background:#e9e3f1;color:#654779}
 .ct-windows .ct-pane-dirty{font-size:10px;color:#916324}
@@ -21,7 +21,7 @@
 .ct-windows .ct-export-workspace fieldset>.ct-export-format{display:flex;align-items:center;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid #ebe5ee;font-size:13px;font-weight:600}
 .ct-windows .ct-export-workspace select{padding:8px 12px;border:1px solid #ddd3e6;border-radius:8px;color:inherit;background:#fff;font:inherit;max-width:100%}
 .ct-windows .ct-export-workspace .ct-content-preview{margin-top:20px;padding:20px;border:1px solid #e4dce9;border-radius:14px;background:#fff}.ct-windows .ct-export-workspace .ct-content-preview h4{margin:0 0 12px;color:#72627f;font-size:12px}.ct-windows .ct-export-workspace .ct-content-preview pre{margin:0;font:inherit;font-size:14px;line-height:1.9;color:inherit}
-.ct-windows.ct-theme-dark .ct-meeting-navigation{background:#25212d;border-color:#403749}.ct-windows.ct-theme-dark .ct-meeting-navigation button{color:#b8adbf}.ct-windows.ct-theme-dark .ct-meeting-navigation button:hover{background:#332a3e;color:#eee5f5}.ct-windows.ct-theme-dark .ct-meeting-navigation button[aria-current=page]{background:#40324d;border-color:#5f476f;color:#edddfa;box-shadow:none}
+.ct-windows.ct-theme-dark .ct-meeting-navigation{background:transparent;border-color:#3c424c}.ct-windows.ct-theme-dark .ct-meeting-navigation button{color:#b6bec9}.ct-windows.ct-theme-dark .ct-meeting-navigation button:hover{background:#2a3038;color:#edf1f7}.ct-windows.ct-theme-dark .ct-meeting-navigation button[aria-current=page]{background:transparent;border-bottom-color:#9ec5f6;color:#9ec5f6;box-shadow:none}
 .ct-windows.ct-theme-dark .ct-pane-count{background:#53415f;color:#e6d4f3}.ct-windows.ct-theme-dark .ct-pane-dirty{color:#e4bf7c}
 .ct-windows.ct-theme-dark .ct-pane-intro h3,.ct-windows.ct-theme-dark .ct-result-empty h3{color:#f1e8f7}.ct-windows.ct-theme-dark .ct-pane-intro p,.ct-windows.ct-theme-dark .ct-result-empty p{color:#b8adbf}
 .ct-windows.ct-theme-dark .ct-result-empty{background:#27202f;border-color:#51425d;color:#cfb8e3}.ct-windows.ct-theme-dark .ct-result-secondary-actions{border-color:#44384e}.ct-windows.ct-theme-dark .ct-result-secondary-actions>summary{color:#bdabce}

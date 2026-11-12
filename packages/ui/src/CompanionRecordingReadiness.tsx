@@ -58,17 +58,22 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const blocked = busy || recording;
   const headline = preview ? '界面演示，尚未确认真实设备'
     : recording ? '录音进行中，结束后再检查准备状态'
-      : !connected ? '连接设备后，可从电脑开始录音'
+      : !connected ? '连接卡片，接收和查看录音。'
         : saveProblem ? '请先恢复本机保存，再从电脑开始录音'
           : interfaceProblem ? '最近检查未通过，请重新检查录音接口'
             : full ? '设备空间不足，请先同步并确认保存'
               : short ? fragmentedMaybe ? '分散空间可能可用，开始前会重新核对' : '上次读取的空间不够本次时长，请先同步或缩短时长'
                 : save !== 'ready' ? '本机保存状态待读取，请先刷新'
                   : !capacity || capacity.busy ? '剩余可录时长待确认，开始时由设备检查'
-                    : '已连接；开始录音时会再次检查设备空间';
+                    : '已连接，可以用卡片录音。';
 
   return <section className="ct-readiness" aria-label="录前准备">
-    <header><h2>录前准备</h2><p>{headline}</p></header>
+    <header><div><h2>录音卡</h2><p>{headline}</p></div>
+      {!connected ? <button type="button" className="ct-action ct-action-primary" disabled={blocked} onClick={onConnect}>连接设备</button>
+        : <button type="button" className="ct-action" disabled={blocked} onClick={save !== 'ready' ? onRefresh : onCheck}>{save !== 'ready' ? '刷新保存状态' : '检查设备状态'}</button>}
+    </header>
+    <details className="ct-readiness-details" open={saveProblem || interfaceProblem || full || short}>
+    <summary>设备、存储与服务详情</summary>
     <div className="ct-readiness-grid">
       <section aria-label="录音与保存准备">
         <h3>先录下并保存原音</h3>
@@ -78,7 +83,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
             ? 'Windows 配对未完成；先完成系统配对，再点击连接。'
             : lastKnown ? '当前连接未确认；上次设备结果仅供参考。'
               : '当前未连接；设备不在身边也能查看已保存的内容。'}
-            {!connected ? <button type="button" className="ct-text-button" disabled={blocked} onClick={onConnect}>连接设备</button> : null}</dd></div>
+            </dd></div>
           <div><dt>本机保存</dt><dd>{save === 'ready' ? '最近一次保存状态正常。'
             : saveProblem ? '本机保存尚未恢复；先在保存提示中重试，当前不会因此删除已有录音。'
               : '尚未读到保存状态，请刷新后确认。'}
@@ -115,5 +120,6 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
           智能纪要会把选定的文字发送给配置的纪要服务。本地说话人区分组件是可选项，不是录音或保存原音的前提。</p>
       </section>
     </div>
+    </details>
   </section>;
 }

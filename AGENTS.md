@@ -6,7 +6,7 @@
 
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
-- 当前实际交付 Windows0.1.111 / Android0.1.142；已承接的会议资料前端完整目的收口，统一私有包完整回读。Windows111正常本机release、MSI源码/载荷/许可/升级身份、原生连续用途与仅日期确认保存重开、实际升级原245内容文件一致；OS保存/普通接收本轮未新测，复用109相同实现证据。Android142同APK保留整链，补实际系统分享→WPS完整选中备注阅读与取消、原资料/外观和会话收尾。当前软件入口根 docs/handoffs/20261112-product-closure/frontend111142/software-delivery.json；原总验入口默认跟随当前Windows交付收据，软件就绪和当前正常固件身份分开，不用旧804收据误报实卡就绪。实卡/其它平台/模型/正式售卖范围继续保留。
+- 当前实际已装Windows0.1.111 / Android0.1.142与原统一私有包继续保留，原软件证据见根docs/handoffs/20261112-product-closure/frontend111142/software-delivery.json。2026-11-12 Owner实际指出产品界面和带验窗都混乱、看不懂且AI味重，当前可用性目的已重开；沿原activeNonmodelCompletion.ownerProductClosure20261112.ownerUiUsabilityRework20261112集中修复，不把旧工程通过当Owner体验合格。修好并正常安装、工程复核新候选前，不再对未改111弹窗重试。逐功能带领与一次完整交付同时执行，原实卡/模型/售卖未验范围保留。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
 - Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。
@@ -33,6 +33,8 @@
 
 - 正常Windows本机交付入口为 `tools/build_windows_delivery_local.py --output <E盘本批结果目录>`，沿共用固定缓存与容量检查，输出同源正常release及MSI收据；开发check/test仍用 `tools/build_windows_local.py`。构建成功后须独立核验载荷/来源并完成受影响实际使用，不能将本机构建称为CI通过。
 
+
+- 本地Windows原生检查／测试／构建使用当前应用源码的 `tools/build_windows_local.py`，复用 `E:/CodexData/Companion/.build-cache/shared-windows-target`；批次不再新建完整Cargo目标树。构建缓存与密钥共用方法沿Denzic工程规则，开发签名密钥保存在用户目录 `.denzic/keys/Companion/development`，不随缓存清理。
 
 - 固件可编辑源码按 config/current-firmware-recipe.json 的 sourceRoot（当前指向 C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle）读取。查看配方用 `python tools/build_current_firmware.py --show`；新候选明确版本。配方参考FW66663，从已验证 `e3715904c799788037c70400cf295b899c4aefe7` 续作；已保存安装身份由原安装收据读取，不把配方版冒充最近安装版。
 - 保留compact24-nor、UI85外置图集、已验CELT/内存优化及当前配对/时钟/Boot布局。镜像膨胀先对照已验提交与映射定位，不加入无实际用途的救援固件、重复平台层或救护入口，不擅自删现有能力来凑空间。

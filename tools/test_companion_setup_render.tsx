@@ -94,7 +94,7 @@ assert.doesNotMatch(html, /凭据已保存/);
 html = renderToStaticMarkup(<CompanionDashboard snapshot={fixture} busyAction={null} error={null}
   surface="windows" onRefresh={() => {}} onControl={() => {}} />);
 assert.match(html, /Companion 连接与准备/);
-assert.match(html, /可查看已保存的录音/);
+assert.match(html, /aria-label="录音历史"/,'the recording library remains available without a board');
 assert.doesNotMatch(html, /主路径必须连接板子|WB55|Decision: Companion host/);
 
 const storage = new Map<string, string>();

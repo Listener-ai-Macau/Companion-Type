@@ -8,7 +8,7 @@ import { CompanionDashboard } from '../packages/ui/src/CompanionDashboard';
 (globalThis as any).document={activeElement:null,getElementById:()=>null};
 (globalThis as any).HTMLElement=class {};
 (globalThis as any).HTMLButtonElement=class extends HTMLElement {};
-(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{},addEventListener:()=>{},removeEventListener:()=>{}};
 const demo = applyCompanionV1ControlFixture(createCompanionV1Fixture(), { action: 'meetingLoadDemo' });
 const first = structuredClone(demo.host.sessions[0]);
 first.id = 'meeting-a'; first.title = '会议 A'; first.transcriptText = 'A 的转写';
@@ -256,7 +256,7 @@ async function testProductPolish() {
     return node.props.onClick();
   };
   act(() => { renderer = create(<CompanionDashboard {...polishedProps()} />, { createNodeMock: (element: any) => {
-    if (element.type !== 'audio') return {};
+    if (element.type !== 'audio') return {parentElement:null,querySelectorAll:()=>[],addEventListener:()=>{},removeEventListener:()=>{},focus:()=>{},scrollIntoView:()=>{}};
     const node = { paused: false, removed: false, loaded: 0, pause() { this.paused = true; },
       removeAttribute(name: string) { if (name === 'src') this.removed = true; }, load() { this.loaded += 1; } };
     audioNodes.push(node); return node;

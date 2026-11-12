@@ -12,7 +12,7 @@ import psutil
 from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested
 
 TZ = timezone(timedelta(hours=8))
-START = '开始整体验收'
+START = '开始'
 APP_NAME = 'companion-type.exe'
 BOARD_BUSY = 'Shared board is currently occupied; do not interrupt its actual operation.'
 FIRMWARE_PENDING = 'The known firmware/IMU repair and its matching physical receipt are unfinished.'
@@ -227,7 +227,9 @@ def main():
 
     def update(stage, message, actions=(), review=False):
         write_json(updates, dict(progressText=stage, message=message,
-                                enabledActions=list(actions), reviewAllowed=review))
+                                enabledActions=list(actions), visibleActions=list(actions),
+                                visibleReviews=['通过', '遇到问题', '稍后'] if review else ['遇到问题', '稍后'],
+                                reviewAllowed=review))
 
     def board(action, **kwargs):
         command = ['python', str(project / 'tools/board_turn.py'), action, '--side', 'codex']
@@ -253,10 +255,9 @@ def main():
     guide_index = 0
     navigation_not_before = 0
     record.update(guidedStepsTotal=len(STEPS), guidedStepsVisited=[], guidedRouteReachedEnd=False)
-    message = (f'本次对已交付 Companion {version} 做一轮有带领的功能验收。\n\n'
-               '我会在同一个窗口按功能带你操作，每步说明怎么进入、怎么做、应该看到什么。做完点“下一步”，要回看点“上一步”；这些按钮只切换说明，不代表自动通过。\n\n'
-               '整轮从连接和实卡新录音开始，接着覆盖保存回听、文字纪要、来源、跟进、文档、AI、结果导出、日期和重开。中途问题先写在下方，最后一次提交整体结论；相关修改集中修复、整批交付。\n\n'
-               '点“开始整体验收”后打开正常产品。录音步骤会说明实体键操作，本窗口不会代你开录。刚才鼠标手感失败保留在原事项，不要求重验。没空可以选“稍后”。')
+    message = ('我会带你逐步验收，每次只看当前这一步。\n\n'
+               '点“开始”打开软件，从连接录音卡开始。每一步都有操作和预期结果，用“下一步”继续。问题先记在下方，最后一起提交。\n\n'
+               '录音由你按卡片实体键开始，这个窗口不会开录。')
 
     def show_guide():
         nonlocal navigation_not_before
@@ -286,13 +287,13 @@ def main():
     environment = dict(os.environ)
     environment.pop('PSModulePath', None)
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
-               '-Title', 'Companion 集中总验收', '-Message', message,
-               '-ScopeText', f'Windows {version}；普通固件 FW{readiness.get("firmwareVersion")} / UI{readiness.get("uiVersion")}；原音只保留本机。',
+               '-Title', 'Companion 功能验收', '-Message', message,
+               '-ScopeText', '同一轮连续验收 · 最后统一反馈',
                '-ActionButtons', ','.join((START, BACK, NEXT)), '-Buttons', '通过,遇到问题,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),
-               '-EventPath', str(events), '-TextInput', '-ObservationLabel', '整体感受、卡住之处和未用部分（集中写一次即可）',
+               '-EventPath', str(events), '-TextInput', '-ObservationLabel', '问题先记在这里，最后一起提交',
                '-OutputPath', str(cache / 'owner-feedback.txt'), '-Json', '-NoActivate', '-NoTopMost',
-               '-Width', '900', '-Height', '740', '-MessageHeight', '360']
+               '-Width', '760', '-Height', '580', '-MessageHeight', '230']
     app = None
     app_log = None
 
@@ -416,7 +417,7 @@ def main():
                         update('本轮产品已关闭，提交一次整体结论', STEPS[-1][1], review=True)
                     else:
                         update(f'{guide_index + 1}/{len(STEPS)} · 产品已退出，本轮保留',
-                               '本轮产品已退出，已保存结果保留。点“开始整体验收”会重新打开同一版本并继续当前步骤，不会另开一轮或自动录音。\n\n'
+                               '软件已退出，已保存结果保留。点“开始”重新打开并继续当前步骤。\n\n'
                                + STEPS[guide_index][1] + '\n\n如果不继续，可以在下方集中说明问题后选“遇到问题”或“稍后”。', (START,))
                 if prompt.poll() is not None and not running and (app is None or record.get('appClosedAt')):
                     break
