@@ -143345,6 +143345,23 @@
           "physicalCore": "Single click start/stop and one intended double-tap -> exactly one durable source-positioned mark passed on FW66788/session388.",
           "pickup": "Implemented idle motion wake; real pickup, false triggers and final enclosure remain unqualified.",
           "advanced": "Held flick/shake/undo/tilt have firmware/host candidate paths, not all actual physical/Mac qualified; air pointer not implemented. No new gesture promised as retail ready."
+        },
+        "airPointer20261112": {
+          "at": "2026-11-12T09:10:25+08:00",
+          "ownerRequest": "参考m-afham/AirCursor及umarz317/WatchPointer，将IMU空中鼠标功能加入Companion，先验证可行和实际效果",
+          "references": [
+            "https://github.com/m-afham/AirCursor",
+            "https://github.com/umarz317/WatchPointer"
+          ],
+          "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
+          "state": "IMPLEMENTING_AND_VALIDATING_SHARED_IMU_POINTER",
+          "scope": "One handheld pointer path combining relative pointing, tap/hold interaction and optional dwell; reuse existing six-axis LSM6DSO, encrypted device connection and CIN1, do not duplicate microphone or gesture driver.",
+          "sourceBaseline": {
+            "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
+            "windows": "087a0140eebab71734d6cb342de475b84b2ef6d2"
+          },
+          "actualDeviceQualified": false,
+          "saleQualified": false
         }
       },
       "workpointBeforeImuPriority20261109": {
@@ -269757,7 +269774,7 @@
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
             "updatedAt": "2026-11-11T16:24:51+08:00",
-            "state": "OWNER_HANDOFF_SOURCE_ONLY_NO_NATIVE109142",
+            "state": "NEW_FRONTEND_THREAD_OWNER_ALIGNMENT_FIRST",
             "ownerRequestedHandoff": true,
             "originalItems": [
               "CP27-01/notes_images",
@@ -269765,7 +269782,7 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "接手后先核对源码和已有检查/截图，完成同一选中清单交接的匹配原生保存/复制/分享，再集中出包和实装；不重做108/141，不调用advance冒充源码已完整验收。",
+            "next": "先由新会话与Owner对齐主要用户目的、首批页面/范围及验收判据，再承接保留的原单张交接源码与非模型优先级；不要机械沿旧next启动构建或重复顾客。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.108",
@@ -269823,7 +269840,13 @@
             "nativeModelsRun": false,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "Previous108/141 owned phone/display workers closed by original receipts; new product builds not started. Historical PIDs are not live claims."
+            "knownJobState": "Previous108/141 owned phone/display workers closed by original receipts; new product builds not started. Historical PIDs are not live claims.",
+            "ownerAlignmentBeforeContinuation20261112": {
+              "at": "2026-11-12T09:10:20+08:00",
+              "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
+              "priorState": "OWNER_HANDOFF_SOURCE_ONLY_NO_NATIVE109142",
+              "priorNext": "接手后先核对源码和已有检查/截图，完成同一选中清单交接的匹配原生保存/复制/分享，再集中出包和实装；不重做108/141，不调用advance冒充源码已完整验收。"
+            }
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -276984,7 +277007,7 @@
     "nextBatch": {
       "at": "2026-11-11T16:24:51+08:00",
       "status": "OWNER_REQUESTED_AI_HANDOFF",
-      "next": "从docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md接手；沿原core.activeNonmodelCompletion20261110完成同一交接批次。",
+      "next": "在新会话01a1cd4e-ed69-7431-bbea-486848d70b7d与Owner对齐主要用户目的、首批页面范围和完成判据，再沿原软件事项集中交付；原109/142源码保留，不机械启动旧批次。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
@@ -277827,7 +277850,7 @@
     },
     "handoff20261111": {
       "at": "2026-11-11T16:24:51+08:00",
-      "state": "READY_FOR_NEW_AI_SOURCE_REMOTE_VERIFIED",
+      "state": "FRONTEND_COLLABORATION_THREAD_CREATED_PENDING_OWNER_ALIGNMENT",
       "ownerQuote": "先记录一下，然后我请别的AI来接手；重新梳理待办，清理过时误导，该提交的提交，整理工作现场。",
       "scope": "交接和现场保护；本轮不新增功能、不构建、不安装、不接板、不派顾客、不恢复已清除Goal。",
       "entry": "docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md",
@@ -277990,7 +278013,33 @@
       "qualityScope": "普通与复杂会议准确率、逐人/重叠、事实与资源沿原模型合同，单样本3.61%不是通用成绩。",
       "customerScope": "临时AI模拟、Owner实体体验、真人购买分开。141原话已完整承接，不因换AI再次抽购买意见。",
       "historicalPolicy": "原CP任务和质量门、模块Owner签收不改；移出当前入口的别名留存归档，不能按272旧编号或36行算总体百分比。",
-      "sourceRemoteVerification": "docs/handoffs/20261111-owner-ai-handoff/source-remote-verification.json"
+      "sourceRemoteVerification": "docs/handoffs/20261111-owner-ai-handoff/source-remote-verification.json",
+      "ownerRequestedNewThread20261112": {
+        "at": "2026-11-12T09:10:20+08:00",
+        "ownerQuote": "你看这个前端，现在你东西太多了，要不要你把你现在这个会话归档，开个新的会话去接手一下你这个工作。感觉这个前端这边感觉这效率太低了，然后想想办法解决一下这个问题。应该是感觉像是需求不明确还是什么原因，就是你要可能要跟我一起联动协作才行。",
+        "state": "NEW_THREAD_CREATED_STARTED_OWNER_ALIGNMENT_FIRST",
+        "currentPointPreserved": {
+          "state": "OWNER_HANDOFF_SOURCE_ONLY_NO_NATIVE109142",
+          "next": "接手后先核对源码和已有检查/截图，完成同一选中清单交接的匹配原生保存/复制/分享，再集中出包和实装；不重做108/141，不调用advance冒充源码已完整验收。",
+          "sourceCheckpoint": {
+            "windows": "673fcb7a9cae9331d62ed2241a626afd30094721",
+            "android": "cbe1d0e2fa801d6b221103c39294ab411884003f"
+          }
+        },
+        "decision": "按Owner要求新会话接手并归档旧会话；首轮只读当前点/普通界面证据，给精简方案和少数关键产品选择，先对齐首批范围与完成判据；技术实现自主推进，非阻断小意见归同一批，不新增实现动作批准门。",
+        "constraints": "原待办/质量指标/Owner验收/108141交付保留；109142仍仅源码。此轮不构建、不安装、不接设备、不启动模型或模拟顾客。",
+        "newFinding": "Windows源根Git status因third_party/denzic-platform子模块旧相对Git路径不存在而失败；父仓库HEAD仍087a0140。接手后先分清Git元数据路径与依赖原件缺失，不凭此重装全套、删除子模块或直接启动原生构建。",
+        "scope": "原前端完善任务的Owner新指示，不是另建任务树或恢复已清除Goal。",
+        "newThreadId": "01a1cd4e-ed69-7431-bbea-486848d70b7d",
+        "hostId": "local",
+        "requestedTitle": "Companion 前端收敛：需求对齐与完整交付",
+        "createdSuccessfully": true,
+        "observedStarted": true,
+        "observedMessage": "确认108/141交付与109/142源码检查点，正在看会议详情的信息层级以收窄首批范围。",
+        "oldThreadArchiveRequested": true,
+        "archiveAction": "Current thread will call the official archive action after saving this handoff; do not archive the new thread.",
+        "updatedAt": "2026-11-12T09:12:30+08:00"
+      }
     }
   }
 }
