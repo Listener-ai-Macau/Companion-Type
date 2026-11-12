@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-12T18:55:07+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.112",
+  "frozenAppSource": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "exeSha256": "b779aaabd13f8c083a4f7b62e15789e51e5f3ccc7db445f0b70895f81d671226",
+  "dllSha256": "43cb147d275092e135762dd86c3fa6ad1b8693f93f778a5b30dfa40ff6222f6f",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-77605f5d57054400ad9ee13f734f871a",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "appPid": 25244,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 76876446,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 23857912,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    38072
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 12688,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 14328,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 20416,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 27644,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 32924,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 38072,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\private\\77605f5d57054400ad9ee13f734f871a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 207532032,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 787664896,
+    "systemPhysicalPercent": 96.8
+  },
+  "error": "AssertionError('Actual low-memory signal during own UI worker')",
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-12T18:55:14+08:00"
+}

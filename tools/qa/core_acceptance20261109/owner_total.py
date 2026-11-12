@@ -17,6 +17,7 @@ APP_NAME = 'companion-type.exe'
 BOARD_BUSY = 'Shared board is currently occupied; do not interrupt its actual operation.'
 FIRMWARE_PENDING = 'The known firmware/IMU repair and its matching physical receipt are unfinished.'
 UI_REWORK_PENDING = 'Owner rejected the product and guidance UI; finish and install the coherent usability repair before another walkthrough.'
+SELF_REVIEW_PENDING = 'Owner requested engineering self-acceptance before the guided round; finish the current software self-review first.'
 ROOT = Path('C:/Users/Billy/Desktop/Denzic/Companion')
 PRODUCT_PATHS = ('apps/windows/src/', 'apps/windows/src-tauri/', 'packages/ui/src/',
                  'packages/core/src/', 'packages/desktop-input/', 'third_party/imu-pointer/')
@@ -192,6 +193,10 @@ def prepare(project, batch, installed_dir):
     if ui_rework and not (ui_rework.get('installedAndEngineeringReviewed') is True
                           and ui_rework.get('candidateVersion') == version):
         blockers.append(UI_REWORK_PENDING)
+    self_review = (ui_rework or {}).get('preOwnerEngineeringAcceptance20261112')
+    if self_review and not (self_review.get('softwareSelfAcceptancePassed') is True
+                            and self_review.get('windowsVersion') == version):
+        blockers.append(SELF_REVIEW_PENDING)
     dependency = closure.get('physicalAcceptanceDependency', {})
     firmware = dependency.get('ordinaryFirmwareInstallation', {})
     firmware_ready = (dependency.get('state') not in {

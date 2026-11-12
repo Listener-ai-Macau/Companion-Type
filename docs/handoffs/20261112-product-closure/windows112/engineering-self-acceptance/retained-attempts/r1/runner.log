@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 427, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 277, in main
+    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
+                                                                                           ^^^^^^^^^^^^^^^
+AssertionError: Actual low-memory signal during own UI worker

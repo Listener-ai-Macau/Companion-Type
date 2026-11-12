@@ -5,6 +5,17 @@ module.exports=async function productJourney(page,plan,out){
  const nav=()=>page.getByRole('navigation',{name:'会议工作区',exact:true});
  const row=()=>JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);
  const before=row(),unrelated=JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId);
+ if(process.env.COMPANION_ACCEPTANCE_OWNER_PREFLIGHT==='1'){
+  await page.getByRole('button',{name:'设备与同步',exact:true}).click();
+  const readiness=page.getByRole('region',{name:'录前准备',exact:true});
+  await readiness.getByRole('heading',{name:'录音卡',exact:true}).waitFor();
+  await readiness.getByRole('button',{name:'连接设备',exact:true}).waitFor();
+  const secondary=page.locator('details').filter({has:page.locator('summary').getByText('电脑录音与文件导入',{exact:true})});
+  assert(!await secondary.evaluate(node=>node.open));
+  assert(!await page.locator('.ct-device-options').evaluate(node=>node.open));
+  assert((await readiness.boundingBox()).y<(await secondary.boundingBox()).y);
+  await page.screenshot({path:path.join(out,'self-acceptance-device-entry.png'),fullPage:true});
+ }
  async function open(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
  if(!plan.backgroundOnly)await page.bringToFront();await open();await page.locator('#ct-meeting-result-pane').waitFor({state:'visible'});await page.locator('#ct-recording-text').waitFor({state:'hidden'});
  await page.locator('#ct-recording-result[open]').waitFor();

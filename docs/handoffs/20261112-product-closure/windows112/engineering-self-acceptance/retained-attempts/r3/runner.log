@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 439, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 282, in main
+    assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Actual CDP browser is not proven in the private profile and bounded job

@@ -1,0 +1,4 @@
+{
+  "error": "Error: browserType.connectOverCDP: Unexpected status 502 when connecting to http://127.0.0.1:51916/json/version/.\nThis does not look like a DevTools server, try connecting via ws://.\nCall log:\n\u001b[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:51916\u001b[22m\n",
+  "stack": "browserType.connectOverCDP: Unexpected status 502 when connecting to http://127.0.0.1:51916/json/version/.\nThis does not look like a DevTools server, try connecting via ws://.\nCall log:\n\u001b[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:51916\u001b[22m\n\n    at C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:6:31\n    at Object.<anonymous> (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:74:3)"
+}

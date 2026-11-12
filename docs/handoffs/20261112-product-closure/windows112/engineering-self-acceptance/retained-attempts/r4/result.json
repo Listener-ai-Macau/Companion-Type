@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-11-12T18:59:55+08:00",
+  "state": "INSTALLED112_ENGINEERING_SELF_ACCEPTANCE_NOT_PASSED_RETAINED",
+  "appVersion": "0.1.112",
+  "appSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "installedPayloadMatchedInspectedMsi": true,
+  "nativeBuildStarted": false,
+  "ownerPromptOpened": false,
+  "boardAccessed": false,
+  "modelsRun": false,
+  "physicalQualified": false,
+  "saleQualified": false,
+  "loopbackOnlyProxyBypass": true,
+  "completedContinuousJourneyEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\40b2e067e7e24f0891a83bf722e183c5\\ui-result.json",
+  "error": "FileNotFoundError(2, '系统找不到指定的路径。')",
+  "finishedAt": "2026-11-12T18:59:55+08:00"
+}

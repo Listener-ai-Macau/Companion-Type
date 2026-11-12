@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-11-12T18:55:05+08:00",
+  "state": "INSTALLED112_ENGINEERING_SELF_ACCEPTANCE_NOT_PASSED_RETAINED",
+  "appVersion": "0.1.112",
+  "appSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "installedPayloadMatchedInspectedMsi": true,
+  "nativeBuildStarted": false,
+  "ownerPromptOpened": false,
+  "boardAccessed": false,
+  "modelsRun": false,
+  "physicalQualified": false,
+  "saleQualified": false,
+  "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\77605f5d57054400ad9ee13f734f871a\\result.json",
+  "nativeExitCode": 1,
+  "error": "AssertionError('Traceback (most recent call last):\\n  File \"C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting.py\", line 427, in <module>\\n    if __name__==\\'__main__\\':main()\\n                            ^^^^^^\\n  File \"C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting.py\", line 277, in main\\n    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,\\'Actual low-memory signal during own UI worker\\'\\n                                                                                           ^^^^^^^^^^^^^^^\\nAssertionError: Actual low-memory signal during own UI worker\\n')",
+  "finishedAt": "2026-11-12T18:55:14+08:00"
+}

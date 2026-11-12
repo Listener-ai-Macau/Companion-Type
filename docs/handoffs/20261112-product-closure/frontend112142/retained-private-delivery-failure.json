@@ -1,6 +1,6 @@
 {
   "observedAt": "2026-11-12T18:04:22+08:00",
-  "state": "PRIVATE_ASSET_DELIVERY_TLS_FAILURE_RETAINED",
+  "state": "PRIOR_TLS_FAILURE_RETAINED_SAME_PACKAGE_DELIVERY_RECOVERED",
   "attempts": [
     {
       "operation": "gh release upload exact44MB UI112142 archive to existing private draft",
@@ -13,9 +13,11 @@
       "retained": true
     }
   ],
-  "privateRemoteReadbackVerified": false,
+  "privateRemoteReadbackVerified": true,
   "localArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-112-142-20261112.zip",
   "localSha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
   "networkRoutingChanged": false,
-  "publicReleaseCreated": false
+  "publicReleaseCreated": false,
+  "recoveredAt": "2026-11-12T19:06:37+08:00",
+  "unchangedArchiveSha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73"
 }

@@ -1,0 +1,113 @@
+{
+  "at": "2026-11-12T18:57:17+08:00",
+  "state": "NATIVE_WORKFLOW_STOPPED_RETAINED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.112",
+  "frozenAppSource": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "exeSha256": "b779aaabd13f8c083a4f7b62e15789e51e5f3ccc7db445f0b70895f81d671226",
+  "dllSha256": "43cb147d275092e135762dd86c3fa6ad1b8693f93f778a5b30dfa40ff6222f6f",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-40b2e067e7e24f0891a83bf722e183c5",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "appPid": 33476,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 30542594,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 37423580,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    27080
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 3064,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 9140,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 22964,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 27080,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 35740,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 36356,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 414408704,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 1107931136,
+    "systemPhysicalPercent": 95.6
+  },
+  "publicFixtureExportCache": "C:\\Users\\Billy\\AppData\\Local\\ai.listener.companion-type\\content-share\\6e3e7847-416e-4d17-a644-b39c9c4b9bce\\明确虚构·核心会后流程验收-所选内容.txt",
+  "appCacheUsesWindowsKnownFolder": true,
+  "testOnlyFileCreatedOutsidePrivateRoot": true,
+  "privateExportFiles": [
+    {
+      "fileName": "明确虚构·核心会后流程验收-所选内容.txt",
+      "sha256": "a3da3f9d9be0e62969fdc1787cfa2c0fe718c47cfd2a18cc7f063f01289ea46f",
+      "bytes": 403,
+      "actualPackagedAppFileCreated": true,
+      "privateStationClipboardObserved": true,
+      "selectedContentsVerified": true,
+      "ordinaryRecipientTested": false
+    }
+  ],
+  "firstAppPid": 15296,
+  "firstAppExitObserved": true,
+  "error": "AssertionError(\"AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\\n\\n  assert((await page.getByRole('region',{name:'待核对的补充依据',exact:true}).innerText()).includes(note.references[0].quote))\\n\\n    at reopenJourney (C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_product_reopen_ui.cjs:17:2)\\n    at async C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting_ui.cjs:18:17 {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: false,\\n  expected: true,\\n  operator: '==',\\n  diff: 'simple'\\n}\\n\")",
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-12T18:57:37+08:00"
+}

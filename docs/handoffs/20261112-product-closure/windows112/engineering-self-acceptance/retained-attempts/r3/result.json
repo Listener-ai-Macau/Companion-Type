@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-11-12T18:59:16+08:00",
+  "state": "INSTALLED112_ENGINEERING_SELF_ACCEPTANCE_NOT_PASSED_RETAINED",
+  "appVersion": "0.1.112",
+  "appSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "installedPayloadMatchedInspectedMsi": true,
+  "nativeBuildStarted": false,
+  "ownerPromptOpened": false,
+  "boardAccessed": false,
+  "modelsRun": false,
+  "physicalQualified": false,
+  "saleQualified": false,
+  "loopbackOnlyProxyBypass": true,
+  "completedContinuousJourneyEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\40b2e067e7e24f0891a83bf722e183c5\\ui-result.json",
+  "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r3\\product\\docs\\handoffs\\20261109-core-acceptance\\a3aaa54696ca4330a98bc9e67dd015cc\\result.json",
+  "nativeExitCode": 1,
+  "error": "AssertionError('Traceback (most recent call last):\\n  File \"C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting.py\", line 439, in <module>\\n    if __name__==\\'__main__\\':main()\\n                            ^^^^^^\\n  File \"C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\companion-device-closure055\\\\tools\\\\qa\\\\core_acceptance20261109\\\\windows_meeting.py\", line 282, in main\\n    assert any(item[\\'cdpListener\\'] for item in profiles) and all(item[\\'matchesPrivateRoot\\'] and item[\\'belongsToBoundedJob\\'] for item in profiles),\\'Actual CDP browser is not proven in the private profile and bounded job\\';record[\\'webviewProfileVerifiedPrivate\\']=True\\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nAssertionError: Actual CDP browser is not proven in the private profile and bounded job\\n')",
+  "finishedAt": "2026-11-12T18:59:25+08:00"
+}

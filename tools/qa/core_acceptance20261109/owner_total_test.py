@@ -33,6 +33,13 @@ class WholeUseTests(unittest.TestCase):
             with patch.object(module,'app_pids',return_value=[]),patch.object(module.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='')):
                 rejected=module.prepare(root,batch,installed)
             self.assertFalse(rejected['softwareReady']);self.assertFalse(rejected['ready']);self.assertEqual(rejected['blockers'],[module.UI_REWORK_PENDING])
+            rework=closure['ownerUiUsabilityRework20261112'];rework.update(installedAndEngineeringReviewed=True,candidateVersion=version)
+            for passed,review_version,expected in [(False,version,[module.SELF_REVIEW_PENDING]),(True,'0.1.110',[module.SELF_REVIEW_PENDING]),(True,version,[])]:
+                rework['preOwnerEngineeringAcceptance20261112']=dict(softwareSelfAcceptancePassed=passed,windowsVersion=review_version)
+                (root/'docs/product_backlog.json').write_text(json.dumps(data),encoding='utf-8')
+                with patch.object(module,'app_pids',return_value=[]),patch.object(module.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='')):
+                    reviewed=module.prepare(root,batch,installed)
+                self.assertEqual(reviewed['blockers'],expected);self.assertEqual(reviewed['softwareReady'],not expected)
 
     def test_readiness_only_accepts_actual_button_event_from_own_prompt(self):
         self.assertFalse(module.start_requested(json.dumps(dict(event='review_submitted',processId=7,text='action_button|开始整体验收')),7))

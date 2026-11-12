@@ -1,0 +1,133 @@
+{
+  "at": "2026-11-12T19:00:29+08:00",
+  "state": "REAL_NATIVE_PROCESS_REOPEN_SCOPE_PASSED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.112",
+  "frozenAppSource": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "exeSha256": "b779aaabd13f8c083a4f7b62e15789e51e5f3ccc7db445f0b70895f81d671226",
+  "dllSha256": "43cb147d275092e135762dd86c3fa6ad1b8693f93f778a5b30dfa40ff6222f6f",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r5\\private\\359e1c1831c049a1a8e2e028480888ac",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-359e1c1831c049a1a8e2e028480888ac",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "reopenedPreviousEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\40b2e067e7e24f0891a83bf722e183c5\\result.json",
+  "reopenedPreviousPrivateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5",
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "appPid": 27608,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 40962906,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 5835220,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    8488
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 3748,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 4660,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 6892,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 8488,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 9944,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 26408,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\private\\40b2e067e7e24f0891a83bf722e183c5\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 373276672,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 2324549632,
+    "systemPhysicalPercent": 90.7
+  },
+  "ui": {
+    "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+    "firstPid": 15296,
+    "reopenedPid": 27608,
+    "previousAppExited": true,
+    "visibleSavedChecklistRestored": true,
+    "literalReferenceVisible": true,
+    "selectedExportScopeRetained": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "modelsRun": false,
+    "physicalQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": false,
+  "processRestart": {
+    "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+    "firstPid": 15296,
+    "reopenedPid": 27608,
+    "previousAppExited": true,
+    "visibleSavedChecklistRestored": true,
+    "literalReferenceVisible": true,
+    "selectedExportScopeRetained": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "modelsRun": false,
+    "physicalQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-12T19:00:36+08:00"
+}

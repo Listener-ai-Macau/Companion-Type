@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 427, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 392, in main
+    exit_code=w.DWORD();require(K.GetExitCodeProcess(check.process,ctypes.byref(exit_code)));assert exit_code.value==0,(reopened/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+                                                                                                    ^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert((await page.getByRole('region',{name:'待核对的补充依据',exact:true}).innerText()).includes(note.references[0].quote))
+
+    at reopenJourney (C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_product_reopen_ui.cjs:17:2)
+    at async C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting_ui.cjs:18:17 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+

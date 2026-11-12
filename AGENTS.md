@@ -6,7 +6,7 @@
 
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
-- 当前实际已装Windows0.1.112 / Android0.1.142。Owner“产品UI和带验都混乱”的同批修复已正常安装并完成受影响工程复核，统一包见根docs/handoffs/20261112-product-closure/frontend112142/software-delivery.json。Owner尚未体验新版，可用性签收继续开放；原111/142及三次未完成实际轮保留。沿原ownerUiUsabilityRework20261112接续：原窗口一步操作/预期、最后集中反馈。实卡轮需原嵌软最终正常固件与实际释放匹配112，不把旧820身份当当前；独立模型和售卖范围仍未关闭。 私有附件上传TLS失败待续，本地包已完整校验。
+- 当前实际已装Windows0.1.112 / Android0.1.142。Owner“产品UI和带验都混乱”的同批修复已正常安装并完成受影响工程复核，统一包见根docs/handoffs/20261112-product-closure/frontend112142/software-delivery.json。Owner尚未体验新版，可用性签收继续开放；原111/142及三次未完成实际轮保留。沿原ownerUiUsabilityRework20261112接续：原窗口一步操作/预期、最后集中反馈。实卡轮需原嵌软最终正常固件与实际释放匹配112，不把旧820身份当当前；独立模型和售卖范围仍未关闭。 同一112/142包和MSI已恢复私有远端完整回读；Owner要求的工程软件自验及真实进程重开已通过，实卡整轮仍待当前正常固件/实际释放匹配。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
 - Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。

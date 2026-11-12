@@ -1,0 +1,79 @@
+{
+  "at": "2026-11-12T19:06:37+08:00",
+  "state": "ENGINEERING_SOFTWARE_SELF_ACCEPTANCE_PASSED_OWNER_PHYSICAL_TOTAL_PENDING",
+  "windowsVersion": "0.1.112",
+  "androidVersion": "0.1.142",
+  "softwareSelfAcceptancePassed": true,
+  "installedPayloadMatchedInspectedMsi": true,
+  "appSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "continuousUiEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\40b2e067e7e24f0891a83bf722e183c5\\ui-result.json",
+  "actualProcessRestartEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\self-acceptance-r5\\product\\docs\\handoffs\\20261109-core-acceptance\\359e1c1831c049a1a8e2e028480888ac\\result.json",
+  "deviceEntryHierarchyPassed": true,
+  "sourceFollowupSavePreviewPrivateExportAndDateOnlyPassed": true,
+  "actualNativeProcessExitAndRelaunchPassed": true,
+  "allPublicLibraryRowsUnchangedAfterRelaunch": true,
+  "normalNativeServiceReadiness": {
+    "asrProvider": "local-paraformer",
+    "localAsrAvailable": true,
+    "deepseekApiKeySet": true,
+    "deepseekMinutesEnabled": true,
+    "openaiAsrApiKeySet": false,
+    "volcAppKeySet": false,
+    "volcAccessKeySet": false,
+    "storageSaveBlocked": false,
+    "storageWarning": null
+  },
+  "exactUnchangedModelAndSettingsObjects": [
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription.rs",
+      "priorObject": "be95128ee10e5dc4cd7b96e95de0d7499e915c1f",
+      "currentObject": "be95128ee10e5dc4cd7b96e95de0d7499e915c1f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription",
+      "priorObject": "0d211e5d7c4186a4b53a3d77f51a442e91bcd34a",
+      "currentObject": "0d211e5d7c4186a4b53a3d77f51a442e91bcd34a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes.rs",
+      "priorObject": "02230b4f5bbb1069dd524d7e3da6cc9fef7998d6",
+      "currentObject": "02230b4f5bbb1069dd524d7e3da6cc9fef7998d6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes_context.rs",
+      "priorObject": "8b5d343058652a3c7e7c13aca241b625beb3643f",
+      "currentObject": "8b5d343058652a3c7e7c13aca241b625beb3643f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings.rs",
+      "priorObject": "2247cef6683333b5e32b0127769ab6257a9ef817",
+      "currentObject": "2247cef6683333b5e32b0127769ab6257a9ef817"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings",
+      "priorObject": "60d39402f003ed1e3ef6bea9d2d8fc1e55290787",
+      "currentObject": "60d39402f003ed1e3ef6bea9d2d8fc1e55290787"
+    }
+  ],
+  "priorModelSource": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+  "modelInferenceNewlyRun": false,
+  "priorAndroid142EvidenceReused": true,
+  "nativeOsSaveCancelAndOrdinaryRecipientOn112NewlyTested": false,
+  "unchangedOsImplementationEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\unchanged-os-handoff-evidence.json",
+  "ownerPromptOpened": false,
+  "boardAccessed": false,
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "nativeBuildsThisReview": 0,
+  "privateArchiveReadbackNowVerified": true,
+  "privateArchiveSha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
+  "retainedExecutionFailures": [
+    "r1 stopped on actual Windows low-memory signal (~0.8GB available); own job closed. Child CDP HTTP also reached inherited proxy502, fixed by child-only loopback NO_PROXY.",
+    "r2 complete native UI flow passed and real process exit/reopen occurred; new visible-reference assertion compared HTML whitespace with source LF. Exact persisted source retained; fix normalizes visible whitespace only.",
+    "r3 targeted reopen profile guard compared current output profile instead of explicitly reused prior private profile; bounded-job check retained.",
+    "r4 controller parse indentation error before any app launched; fixed and py_compile passed.",
+    "r5 only affected process-reopen phase resumed on the same r2 saved public library/profile; exact rows, visible reference, checklist and export scope passed."
+  ],
+  "next": "Read current embedded normal-firmware restoration and real lease. Bind final signed normal package to exact installed112, then one original shared guided Owner round. No physical prompt while the independent IMU/resource batch is in flight."
+}

@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-12T17:58:44+08:00",
-  "state": "ONE_UI112142_KIT_INSTALLED_REMOTE_READBACK_PENDING",
+  "at": "2026-11-12T19:02:41+08:00",
+  "state": "ONE_UI112142_KIT_INSTALLED_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
   "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-112-142-20261112.zip",
   "bytes": 44496371,
   "sha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
@@ -220,9 +220,12 @@
     "physicalTotalAcceptancePassed": false,
     "saleQualified": false
   },
-  "privateRemoteReadbackVerified": false,
+  "privateRemoteReadbackVerified": true,
   "publishedPublicly": false,
   "ownerExperienceAccepted": false,
   "physicalTotalAcceptancePassed": false,
-  "saleQualified": false
+  "saleQualified": false,
+  "remoteReadbackSha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualWindowsMsiRemoteReadbackVerified": true
 }

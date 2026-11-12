@@ -222,6 +222,15 @@ def main():
   job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if DEDICATED_CI and (a.stage=='transcribe' or os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1') else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
   env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
   for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
+  reopen_from=os.environ.get('COMPANION_ACCEPTANCE_REOPEN_FROM_EVIDENCE')
+  if reopen_from:
+   assert a.stage=='product-background' and not DEDICATED_CI and env.get('COMPANION_TYPE_BLE_NATIVE_DISABLED')=='1'
+   prior_evidence=Path(reopen_from).resolve();previous=json.loads(prior_evidence.read_text(encoding='utf8'));previous_root=Path(previous['privateRoot']).resolve()
+   assert previous_root.is_relative_to(D.parent.parent.resolve()) and previous['inputKind'].startswith('explicit fictional text-only') and previous['firstAppExitObserved'] is True
+   assert previous['frozenAppSource']==v['sourceCommit'] and previous['exeSha256']==v['embeddedExeSha256']
+   env.update(APPDATA=str(previous_root/'roaming'),LOCALAPPDATA=str(previous_root/'local'),TEMP=str(previous_root/'temp'),TMP=str(previous_root/'temp'),COMPANION_TYPE_STATE_PATH=str(previous_root/'state/sessions.json'),COMPANION_TYPE_RECORDING_DIR=str(previous_root/'recordings'),COMPANION_TYPE_PRODUCT_SETTINGS_PATH=str(previous_root/'product-settings.json'),WEBVIEW2_USER_DATA_FOLDER=str(previous_root/'webview'))
+   restart_plan=json.loads((prior_evidence.parent/'plan.json').read_text(encoding='utf8'));restart_plan.update(expectedSnapshot=json.loads((previous_root/'state/sessions.json').read_text(encoding='utf8')),previousAppExited=True,firstPid=previous['firstAppPid'])
+   record.update(reopenedPreviousEvidence=str(prior_evidence),reopenedPreviousPrivateRoot=str(previous_root));save()
   if a.audio:env['COMPANION_ACCEPTANCE_AUDIO_INPUT']=str(a.audio.resolve())
   if a.stage=='transcribe':
    assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
@@ -267,11 +276,14 @@ def main():
       finally:K.CloseHandle(handle)
       # The hosted WebView2 runtime creates EBWebView beneath the requested
       # data folder; both exact layouts are private to this owned test run.
-      profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve() in {(root/'webview').resolve(),(root/'webview/EBWebView').resolve()},'belongsToBoundedJob':bool(in_job.value),'cdpListener':child.pid in listeners})
+      expected_profile=Path(env['WEBVIEW2_USER_DATA_FOLDER']).resolve()
+      profiles.append({'pid':child.pid,'folder':folder,'matchesPrivateRoot':Path(folder).resolve() in {expected_profile,expected_profile/'EBWebView'},'belongsToBoundedJob':bool(in_job.value),'cdpListener':child.pid in listeners})
    except psutil.NoSuchProcess:continue
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
-  log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
+  if reopen_from:
+   restart_plan['reopenedPid']=p.pid;(out/'plan.json').write_text(json.dumps(restart_plan,ensure_ascii=False),encoding='utf8')
+  log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),'product-reopen' if reopen_from else a.stage],env,S,desktop_path,job,log);processes.append(node)
   deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents','editing','incoming','product','product-background'} else 180)
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
@@ -358,6 +370,39 @@ def main():
     (out/'text-clipboard-reply.json').write_text(json.dumps(result),encoding='utf8');handled.add(request.name)
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+  if os.environ.get('COMPANION_ACCEPTANCE_OWNER_PREFLIGHT')=='1':
+   assert a.stage=='product-background' and not DEDICATED_CI and env.get('COMPANION_TYPE_BLE_NATIVE_DISABLED')=='1'
+   first=next(process for process in processes if process.pid==record['appPid']);snapshot=json.loads((state/'sessions.json').read_text(encoding='utf8'))
+   for window in windows(desktop,first.pid):require(U.PostMessageW(window['hwnd'],0x10,0,0))
+   deadline=time.monotonic()+15
+   while alive(first) and time.monotonic()<deadline:time.sleep(.1)
+   assert not alive(first),'Normal owned app close did not exit; no forced Owner-desktop fallback'
+   deadline=time.monotonic()+10
+   while time.monotonic()<deadline:
+    try:
+     with socket.create_connection(('127.0.0.1',port),timeout=.3):pass
+    except OSError:break
+    time.sleep(.1)
+   else:raise AssertionError('Previous private WebView listener did not exit')
+   record.update(state='FIRST_NATIVE_PROCESS_EXITED_REOPEN_CHECK_RUNNING',firstAppPid=first.pid,firstAppExitObserved=True);save()
+   reopened=out/'process-reopen';reopened.mkdir();log=(reopened/'app.log').open('wb');logs.append(log)
+   second=spawn([app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(second);record['appPid']=second.pid;save()
+   deadline=time.monotonic()+45
+   while time.monotonic()<deadline:
+    assert alive(second),'Reopened native app exited before its UI was ready'
+    try:
+     with local_http.open(f'http://127.0.0.1:{port}/json/version',timeout=1) as response:json.load(response)
+     break
+    except Exception:time.sleep(.2)
+   else:raise TimeoutError('Reopened private WebView did not become ready')
+   restart_plan=json.loads((out/'plan.json').read_text(encoding='utf8'));restart_plan.update(expectedSnapshot=snapshot,previousAppExited=True,firstPid=first.pid,reopenedPid=second.pid)
+   (reopened/'plan.json').write_text(json.dumps(restart_plan,ensure_ascii=False),encoding='utf8')
+   log=(reopened/'ui.log').open('wb');logs.append(log);check=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(reopened),'product-reopen'],env,S,desktop_path,job,log);processes.append(check)
+   deadline=time.monotonic()+90
+   while alive(check) and time.monotonic()<deadline:resources();time.sleep(.2)
+   assert not alive(check),'Restart UI verification exceeded its bounded deadline'
+   exit_code=w.DWORD();require(K.GetExitCodeProcess(check.process,ctypes.byref(exit_code)));assert exit_code.value==0,(reopened/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
+   record['processRestart']=json.loads((reopened/'ui-result.json').read_text(encoding='utf8'));assert record['processRestart']['previousAppExited'] and record['processRestart']['allPublicLibraryRowsUnchanged']
   record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage in {'ai','product'} else 3))
   if a.stage=='product':record['state']='REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='product-background':record['state']='REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED';record['remoteOwnedWindowFocused']=False
@@ -366,6 +411,7 @@ def main():
   if a.stage=='documents':record['state']='REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='incoming':record['state']='REAL_NATIVE_OS_INCOMING_FILE_WORKFLOW_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='actions':record['state']='REAL_NATIVE_ACTION_REVIEW_FOLLOWUP_AND_COPY_PASSED';record['remoteOwnedWindowFocused']=True
+  if reopen_from:record.update(state='REAL_NATIVE_PROCESS_REOPEN_SCOPE_PASSED',processRestart=record['ui'])
   if env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1':
    assert record['ordinaryRecipientTested'] and all(row.get('browserAttachment',{}).get('trustedNativePaste') and row['browserAttachment']['sha256']==row['sha256'] for row in receiver.results)
    record['standardBrowserAttachmentsReceivedByteIdentical']=True
