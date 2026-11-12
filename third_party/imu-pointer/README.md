@@ -7,15 +7,15 @@ are recorded in `upstream.json`; this directory contains no compiled upstream ap
 | --- | --- |
 | AirCursor `PointerMapper.axisSpeed`, `PointerSmoother` | Faithful Rust port in `packages/desktop-input/src/pointer.rs`, same 28 px/degree, bounded acceleration, exponential frame smoothing and 120 ms stale target |
 | WatchPointer `OneEuroFilter`, laser projection | Same equations/constants in the same portable core; sensor time drives filtering, frame time drives interpolation |
-| WatchPointer gravity-projected angular rate | Companion adapter substitutes low-pass accelerometer proper acceleration for Apple's fused gravity and subtracts a stationary measured gyro bias; this difference requires physical validation |
-| WatchPointer short tap / 0.35 s hold drag, pre-press pointing history | Physical CIN1/CIM1 button levels, pre-press position, click/hold/release lifecycle |
+| WatchPointer gravity-projected angular rate | CIM1 schema2 carries MCU-computed Fusion AHRS gravity and bias-corrected gyro; old schema1 raw sensors use the same pinned Fusion on desktop. Do not fuse schema2 twice; mounting/user feel still require physical validation |
+| WatchPointer short tap / 0.35 s hold drag, pre-press pointing history | Physical CIN1/CIM1 button levels plus hardware double-tap serial; pre-press position, click/hold/release lifecycle |
 | macOS cursor event APIs | Windows Enigo glue in `pointer/native.rs`, explicit UI activation, Esc exit |
 | AirPods/Watch CoreMotion delivery | Existing LSM6DSO driver and encrypted CIN1 settings subscription; opt-in CIM1 integer stream, no second IMU driver or microphone stream |
 
 The real FW66791 diagnostic channel was measured at about 1 Hz with the gyro
 powered off, including presentation mode. It cannot drive the upstream pointer
 effect directly. The new opt-in firmware mode keeps the existing sensor run
-policy active and publishes the newest 32-byte six-axis sample up to about 26 Hz.
+policy active and publishes each new32-byte sample near100Hz (104Hz gyro/417Hz tap accel in pointer only). Original794 capped this at26Hz and delivered62ms median gaps. The revised firmware uses the existing low-latency interval hint; actual revised latency is pending.
 Its physical rate, board CPU cost, mounting axes and user feel are not qualified
 by host tests or a successful build.
 
@@ -29,7 +29,14 @@ with calibration, pause, recenter and exit. Ordinary recording and hold-to-talk
 remain separate device modes. Disconnect while holding a pointer button retains
 the old key owner until release, so release cannot start a recording.
 
-New firmware installation currently requires recovery from the deleted original
-development signing key. New development credentials are stored outside caches.
-Prepared replacement Boot/CUP artifacts do not mean board trust was changed or
-that OTA/physical pointer acceptance passed. macOS integration remains untested.
+The authorized development-key recovery installed794 without deleting original
+recordings/pairing metadata. A real1104-frame pointer trial moved the cursor but
+Owner rejected drift/feel and no body-tap click. The revised100Hz/Fusion/tap batch
+is not physically accepted. macOS integration remains untested.
+
+Pinned xioTechnologies/Fusion MIT C is unchanged in fusion/. The MCU M33/FPU
+RAM microbenchmark at61.43982MHz measured14–17us mean,23.24us maximum across
+four synthetic phases, state160B, stack356B; this is not Flash execution, BLE,
+recording/Opus concurrency or energy qualification. The product wrapper adds
+timestamp/lifecycle bookkeeping (total168B). Source and raw result are in the
+project IMU receipt. Fusion is active only in explicit pointer mode.

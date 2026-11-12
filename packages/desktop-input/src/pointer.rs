@@ -1,10 +1,11 @@
 //! Ports of AirCursor Pointer.swift and WatchPointer Receiver/WatchPointerApp.
 //! See third_party/imu-pointer for the pinned originals and MIT notices.
-//! Companion-specific parts: CIM1 decoding, raw-acceleration gravity adapter,
-//! stationary gyro bias, physical button edges, and explicit pause/recenter.
+//! Companion-specific parts: CIM1 decoding, upstream Fusion raw-sensor adapter,
+//! stationary gyro bias, physical button/tap edges, and explicit pause/recenter.
 use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
 pub mod native;
+mod fusion;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }
@@ -13,19 +14,19 @@ impl Point {
 }
 #[derive(Clone, Copy, Debug)]
 pub struct Sample {
-    pub sequence: u32, pub sensor_ms: u32, pub held: bool,
+    pub sequence: u32, pub sensor_ms: u32, pub held: bool, pub tap_serial: u8, pub fused: bool,
     pub accel: [f64;3], pub gyro: [f64;3],
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()!=32 || &p[..4]!=b"CIM1" || p[4]!=1 || p[5]!=3 || p[6]&!1!=0 || p[7]!=0 {
+        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2) || p[5]!=3 || p[6]&!1!=0 {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
         for byte in &p[..28] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
         if !crc!=u32::from_le_bytes(p[28..32].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
         let mut s=Self {sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),
-            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,accel:[0.;3],gyro:[0.;3]};
+            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]==2,accel:[0.;3],gyro:[0.;3]};
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
             s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64/100.;}
         Ok(s)
@@ -41,8 +42,8 @@ pub struct Settings {
     pub deadzone: f64, pub acceleration: f64, pub invert_horizontal: bool, pub invert_vertical: bool,
 }
 impl Default for Settings {
-    fn default()->Self {Self {mapping:Mapping::Relative,sensitivity:1.,smoothing:0.55,
-        deadzone:0.6,acceleration:0.35,invert_horizontal:false,invert_vertical:false}}
+    fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
+        deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false}}
 }
 impl Settings {
     pub fn validate(&self)->Result<(), &'static str> {
@@ -87,12 +88,13 @@ impl OneEuro {
     }
 }
 pub fn laser(left:f64,up:f64,speed:f64,b:Bounds)->Point {
+    let [left_edge,top,width,height]=b.primary.unwrap_or([b.left,b.top,b.width,b.height]);
     let h=(-left).clamp(-80.,80.).to_radians(); let v=up.clamp(-80.,80.).to_radians();
-    let unit=b.width*0.5/(25./speed).to_radians().tan();
-    Point{x:b.left+b.width*0.5+h.tan()*unit,y:b.top+b.height*0.5-v.tan()/h.cos()*unit}
+    let unit=width*0.5/(25./speed).to_radians().tan();
+    Point{x:left_edge+width*0.5+h.tan()*unit,y:top+height*0.5-v.tan()/h.cos()*unit}
 }
 #[derive(Clone,Copy)]
-pub struct Bounds {pub left:f64,pub top:f64,pub width:f64,pub height:f64}
+pub struct Bounds {pub left:f64,pub top:f64,pub width:f64,pub height:f64,pub primary:Option<[f64;4]>}
 impl Bounds {
     fn clamp(self,p:Point)->Point {Point{x:p.x.clamp(self.left,self.left+self.width-1.),y:p.y.clamp(self.top,self.top+self.height-1.)}}
 }
@@ -106,21 +108,23 @@ pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:
 
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
-    last:Option<(u32,u32)>, arrival:Option<f64>, frame_at:Option<f64>,
-    bias:[f64;3],bias_sum:[f64;3],calibration_start:Option<u32>,gravity:[f64;3],
+    last:Option<(u32,u32)>, last_tap:Option<u8>, arrival:Option<f64>, frame_at:Option<f64>,sensor_clock:f64,clock_offset:Option<f64>,
+    bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
+    fusion:fusion::Fusion,
     heading:f64,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
     pressed:Option<(f64,Point)>,wait_release:bool,queued:Vec<Button>,history:VecDeque<(f64,Point)>,
 }
 impl Pointer {
     pub fn new(settings:Settings,position:Point)->Self {
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
-            last:None,arrival:None,frame_at:None,bias:[0.;3],bias_sum:[0.;3],calibration_start:None,gravity:[0.;3],
+            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),
             heading:0.,elevation_zero:None,target:None,shown:position,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
     fn reset_motion(&mut self){self.smoother.reset();self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
+    fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.heading=0.;self.elevation_zero=None;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.elevation_zero=None;}
     pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.elevation_zero=None;}
     pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
         let dt=if let Some((sequence,ms))=self.last {
@@ -129,38 +133,49 @@ impl Pointer {
             self.metrics.missing+=(advance-1) as u64;
             s.sensor_ms.wrapping_sub(ms) as f64/1000.
         }else{0.};
-        if dt>0.2 || self.arrival.is_some_and(|at|now-at>0.3) {self.metrics.gaps+=1;self.release();self.reset_motion();}
+        let gap=dt>0.2 || self.arrival.is_some_and(|at|now-at>0.3);
+        if gap {self.metrics.gaps+=1;self.release();self.reset_motion();}
+        // Same fastest-arriving clock alignment as WatchPointer. Button DOWN
+        // uses its sensor sample time, rather than an invented60ms rewind.
+        if gap||self.last.is_none(){self.sensor_clock=s.sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
+        self.clock_offset=Some(self.clock_offset.unwrap_or(f64::INFINITY).min(now-self.sensor_clock));
+        let measured_at=self.sensor_clock+self.clock_offset.unwrap();
+        // Consume the serial even while paused/calibrating. A lost packet may
+        // carry the same event again; reconnect/baseline must never replay it.
+        let tapped=self.last_tap.is_some_and(|previous|s.tap_serial.wrapping_sub(previous)==1);
+        self.last_tap=Some(s.tap_serial);
         self.last=Some((s.sequence,s.sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
         if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
         let norm=s.accel.iter().map(|x|x*x).sum::<f64>().sqrt();
+        let rates=std::array::from_fn(|i|s.gyro[i]-self.bias[i]);
+        let (up,rate)=if s.fused {
+            (s.accel.map(|v|v/norm.max(1.)),rates)
+        }else{self.fusion.step(rates,s.accel,if dt>0.&&dt<0.2{dt}else{0.})};
         if !self.metrics.calibrated {
             // Raw LSM6DSO has no Apple's fused gravity/bias. Learn bias only
             // from a continuous stationary second, never while the card moves.
             let still=(850.0..=1150.0).contains(&norm) && s.gyro.iter().all(|x|x.abs()<3.) && !s.held;
-            if !still || dt>0.2 {self.calibration_start=None;self.bias_sum=[0.;3];self.metrics.calibration_samples=0;return;}
+            if !still || dt>0.2 {self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.metrics.calibration_samples=0;return;}
             let start=*self.calibration_start.get_or_insert(s.sensor_ms);
             self.metrics.calibration_samples+=1;
-            for i in 0..3 {self.bias_sum[i]+=s.gyro[i];}
+            for i in 0..3 {self.bias_sum[i]+=s.gyro[i];self.accel_sum[i]+=s.accel[i];}
             if s.sensor_ms.wrapping_sub(start)>=1000 && self.metrics.calibration_samples>=20 {
-                for i in 0..3 {self.bias[i]=self.bias_sum[i]/self.metrics.calibration_samples as f64;self.gravity[i]=s.accel[i];}
+                for i in 0..3 {self.bias[i]=self.bias_sum[i]/self.metrics.calibration_samples as f64;}
+                if !s.fused {self.fusion.align(self.accel_sum.map(|v|v/self.metrics.calibration_samples as f64));}
                 self.metrics.calibrated=true;
             }
             return;
         }
-        if self.metrics.paused {return;}
-        // Adapt the input only: accelerometer proper acceleration points UP,
-        // whereas CoreMotion's gravity points DOWN. Filter non-gravity motion.
-        let a=if dt>0. {1.-(-dt/0.15).exp()}else{0.};
-        if (750.0..=1250.0).contains(&norm) {for i in 0..3 {self.gravity[i]+=a*(s.accel[i]-self.gravity[i]);}}
-        let gn=self.gravity.iter().map(|x|x*x).sum::<f64>().sqrt().max(1.);
-        let up=self.gravity.map(|x|x/gn);let rate=std::array::from_fn::<_,3,_>(|i|s.gyro[i]-self.bias[i]);
+        // CoreMotion already supplies fused gravity. Raw LSM6DSO does not:
+        // reuse x-io Fusion's no-magnetometer AHRS/bias instead of an added
+        // low-pass delay. Its NWU gravity matches proper-acceleration UP.
         let yaw=(0..3).map(|i|rate[i]*up[i]).sum::<f64>();
         let pitch=rate[0];
         match self.settings.mapping {
             Mapping::Relative=>{
                 let dx=-axis_speed(yaw,&self.settings)*if self.settings.invert_horizontal{-1.}else{1.};
                 let dy=-axis_speed(pitch,&self.settings)*if self.settings.invert_vertical{-1.}else{1.};
-                self.smoother.target(Point{x:dx,y:dy},now);
+                if !self.metrics.paused {self.smoother.target(Point{x:dx,y:dy},now);}
             },
             Mapping::Laser=>{
                 self.heading+=yaw*dt.min(0.05);
@@ -168,15 +183,25 @@ impl Pointer {
                 let zero=*self.elevation_zero.get_or_insert(elevation);
                 let left=((self.heading+180.).rem_euclid(360.)-180.)*if self.settings.invert_horizontal{-1.}else{1.};
                 let height=(elevation-zero)*if self.settings.invert_vertical{-1.}else{1.};
+                if self.metrics.paused {return;} // Aim still tracks while paused, as upstream.
                 let point=laser(left,height,self.settings.sensitivity,bounds);
+                if self.target.is_none(){self.shown=point;}
                 if dt>0. && dt<0.2 {self.target=Some(Point{x:self.filter_x.update(point.x,dt),y:self.filter_y.update(point.y,dt)});}
             }
         }
+        if self.metrics.paused {return;}
         if self.wait_release {if !s.held {self.wait_release=false;}return;}
+        if tapped && !gap && !s.held && self.pressed.is_none() && !self.metrics.dragging {
+            // Hardware double-tap is one intentional click. Reuse the same
+            // pre-press history to avoid clicking at the tap-induced wobble.
+            let point=self.press_point(measured_at-0.1); // Upstream fallback when no touch-down timestamp exists.
+            self.shown=point;
+            self.queued.push(Button::Click(point));
+        }
         if s.held && self.pressed.is_none() {
             // WatchPointer's pre-press position prevents button-pressure jitter.
-            let point=self.history.iter().rev().find(|(at,_)|*at<=now-0.06).map(|(_,p)|*p).unwrap_or(self.shown);
-            self.pressed=Some((now,point));
+            let point=self.press_point(measured_at);
+            self.pressed=Some((measured_at,point));
         } else if !s.held {
             if let Some((_,point))=self.pressed.take() {
                 self.queued.push(if self.metrics.dragging {Button::Up}else{Button::Click(point)});
@@ -196,9 +221,9 @@ impl Pointer {
             Mapping::Relative=>{let delta=self.smoother.step(now,dt,self.settings.smoothing);Point{x:self.shown.x+delta.x,y:self.shown.y+delta.y}},
             Mapping::Laser=>{let p=self.target.unwrap_or(self.shown);let follow=1.-(-dt/0.005).exp();Point{x:self.shown.x+(p.x-self.shown.x)*follow,y:self.shown.y+(p.y-self.shown.y)*follow}}
         };
-        let next=bounds.clamp(next);
-        if next.distance(self.shown)>0.05 {self.shown=next;f.position=Some(next);}
-        if self.history.len()==360 {self.history.pop_front();}self.history.push_back((now,self.shown));f
+        let next=if self.settings.mapping==Mapping::Laser{next}else{bounds.clamp(next)};
+        if (next.x-self.shown.x).abs()+(next.y-self.shown.y).abs()>0.05 {self.shown=next;f.position=Some(bounds.clamp(next));}
+        if self.history.len()==360 {self.history.pop_front();}self.history.push_back((now,bounds.clamp(self.shown)));f
     }
 }
 

@@ -1,7 +1,8 @@
 {
   "shas": {
     "air": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
-    "watch": "504137a1a8748e3560f1c203d06fbd4e0832d582"
+    "watch": "504137a1a8748e3560f1c203d06fbd4e0832d582",
+    "fusion": "a8d7224f36a0ec82345ef49a3db50e65f8d3bab8"
   },
   "files": [
     {
@@ -43,6 +44,72 @@
       "project": "watch",
       "path": "Watch/WatchPointer/WatchPointerApp.swift",
       "url": "https://github.com/umarz317/WatchPointer/blob/main/Watch/WatchPointer/WatchPointerApp.swift"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionAhrs.c",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionAhrs.c",
+      "sha256": "611678dbaa531db3b360cf3f3097a52cd60d7cf2f93be0753748d8674b9cb5fb"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionAhrs.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionAhrs.h",
+      "sha256": "fd726d91ece9a5a0074151e5b777aa9578fe3f365a03b94be7d62e4084d23200"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionBias.c",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionBias.c",
+      "sha256": "b6409e21bc1a1590e46fd01cd93edae5e0d04494081c4182a48a6116de53e3e0"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionBias.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionBias.h",
+      "sha256": "88f8f5ebb99c315da39929b57dc8f8695e8a2aff6b2fd1474f84163a095e4868"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionConfig.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionConfig.h",
+      "sha256": "1042ea5f363551d774a339e53c7cc4ce4cb1a5b90eb8fdda19d5ac2e8009ccd6"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionConvention.c",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionConvention.c",
+      "sha256": "69356ff3bcf7d22f0bb12df9ba3cc1afc8a3e1bd627eef1f1f237cf7e64a5d65"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionConvention.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionConvention.h",
+      "sha256": "781f26fb04d3d0bee5070c5e4e13f6f6fb953a57368e83a6b9bc87da3e266a3c"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionInline.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionInline.h",
+      "sha256": "4911c37b8876066054345307f91e6ad015c3b261b036fab619dcd090b45b7dd1"
+    },
+    {
+      "project": "fusion",
+      "path": "Fusion/FusionMath.h",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/Fusion/FusionMath.h",
+      "sha256": "c7f8a14111418ccc2e8c81ab7718baa7c2b3a6f87756954a2922579405d056a0"
+    },
+    {
+      "project": "fusion",
+      "path": "LICENSE.md",
+      "url": "https://github.com/xioTechnologies/Fusion/blob/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8/LICENSE.md",
+      "sha256": "deea99a9e5920dc1cb5bfd7730fba6ca3fdab691bde7760aa1642e65c650ccca"
+    },
+    {
+      "project": "air",
+      "path": "Sources/AirCursorCore/Settings.swift",
+      "url": "https://github.com/m-afham/AirCursor/blob/b1ac85182a27b1d766ac487df22a6a908a4188f7/Sources/AirCursorCore/Settings.swift",
+      "sha256": "20a46c27ce4d538a079489a2be4bae07f8214400cb56e208f2e7b36de85b31c8"
     }
   ]
 }

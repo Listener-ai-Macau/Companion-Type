@@ -1,6 +1,6 @@
 use super::*;
-fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.}}
-fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,accel:[0.,0.,1000.],gyro:[0.;3]}}
+fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
+fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
     for n in 0..=27 {p.sample(sample(n+1,n*40,false),n as f64*0.04,bounds());p.frame(n as f64*0.04,bounds());}
@@ -60,4 +60,50 @@ fn sensor_clock_wrap_duplicate_and_sequence_gap_are_not_integrated_twice(){
     p.sample(sample(1,24,false),1.12,bounds());assert_eq!(p.metrics.missing,1);
     let count=p.metrics.samples;p.sample(sample(1,24,true),1.13,bounds());
     assert_eq!(p.metrics.samples,count);assert_eq!(p.metrics.duplicates,1);assert!(p.pressed.is_none());
+}
+
+
+#[test]
+fn fused_c_fixture_is_not_fused_again_and_has_tap_serial() {
+    let hex="43494d31020301ff07000000f0ffffff0100feffe8036b03589eff7fe5204850";
+    let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let s=Sample::parse(&bytes).unwrap();assert!(s.fused);assert_eq!(s.tap_serial,255);
+    let mut p=calibrated();let mut s=sample(29,1120,false);
+    s.fused=true;s.accel=[0.,500.,866.];p.sample(s,1.12,bounds());
+    assert!(p.target.unwrap().y<400.);
+}
+#[test]
+fn body_double_tap_click_is_once_with_wrap_and_never_replayed_after_pause_or_gap() {
+    let mut p=calibrated();
+    let mut s=sample(29,1120,false);s.tap_serial=255;p.sample(s,1.12,bounds());
+    assert!(p.frame(1.12,bounds()).buttons.is_empty());
+    s.sequence=30;s.sensor_ms=1160;s.tap_serial=0;p.sample(s,1.16,bounds());
+    assert!(matches!(p.frame(1.16,bounds()).buttons.as_slice(),[Button::Click(_)]));
+    s.sequence=31;s.sensor_ms=1200;p.sample(s,1.2,bounds());assert!(p.frame(1.2,bounds()).buttons.is_empty());
+    p.pause(true);s.sequence=32;s.sensor_ms=1240;s.tap_serial=1;p.sample(s,1.24,bounds());
+    p.pause(false);s.sequence=33;s.sensor_ms=1280;p.sample(s,1.28,bounds());assert!(p.frame(1.28,bounds()).buttons.is_empty());
+    s.sequence=34;s.sensor_ms=1680;s.tap_serial=2;p.sample(s,1.68,bounds());assert!(p.frame(1.68,bounds()).buttons.is_empty());
+}
+#[test]
+fn upstream_fusion_tracks_physical_roll_without_raw_acceleration_lowpass() {
+    let mut f=fusion::Fusion::default();f.step([0.;3],[0.,0.,1000.],0.01);f.align([0.,0.,1000.]);
+    let mut up=[0.;3];
+    for n in 1..=200 {
+        let angle=(n as f64*0.1).to_radians();
+        up=f.step([10.,0.,0.],[0.,angle.sin()*1000.,angle.cos()*1000.],0.01).0;
+    }
+    let measured=up[1].atan2(up[2]).to_degrees();
+    assert!((measured-20.).abs()<0.5,"physical roll={measured}");
+}
+
+#[test]
+fn watch_pause_keeps_tracking_aim_and_primary_screen_controls_projection_scale() {
+    let b=Bounds{width:3840.,primary:Some([0.,0.,1920.,1080.]),..bounds()};
+    assert!((laser(-25.,0.,1.,b).x-1920.).abs()<1e-8);
+    let defaults=Settings::default();assert_eq!((defaults.smoothing,defaults.deadzone,defaults.acceleration),(0.55,3.,0.6));
+    let mut p=calibrated();p.pause(true);
+    for n in 29..=53 {let mut s=sample(n,(n-1)*40,false);s.fused=true;s.gyro[2]=10.;p.sample(s,(n-1) as f64*0.04,bounds());}
+    assert!((p.heading-10.).abs()<0.01);assert!(p.frame(2.08,bounds()).position.is_none());
+    p.pause(false);let mut s=sample(54,2120,false);s.fused=true;p.sample(s,2.12,bounds());
+    assert!(p.target.unwrap().x<800.); // Resume points to current aim, not the pre-pause heading.
 }

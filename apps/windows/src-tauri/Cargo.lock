@@ -588,6 +588,7 @@ name = "companion-desktop-input"
 version = "0.1.0"
 dependencies = [
  "arboard",
+ "cc",
  "enigo",
  "log",
  "once_cell",

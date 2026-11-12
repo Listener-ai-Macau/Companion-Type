@@ -35,18 +35,19 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
             let mut cursor=Cursor::open()?;let mut update=Instant::now();let mut next=Instant::now();
             while !frame_stop.load(Ordering::Acquire) {
                 if controls_cursor && Cursor::escape(){frame_stop.store(true,Ordering::Release);break;}
-                let (frame,metrics)={let mut p=frame_pointer.lock().unwrap_or_else(|e|e.into_inner());
+                let (frame,metrics,period)={let mut p=frame_pointer.lock().unwrap_or_else(|e|e.into_inner());
                     if recenter.swap(false,Ordering::AcqRel){p.recenter(cursor.position()?);}
-                    let frame=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());(frame,p.metrics.clone())};
+                    let frame=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());
+                    (frame,p.metrics.clone(),if p.settings.mapping==companion_desktop_input::pointer::Mapping::Laser{4_166_667}else{8_333_333})};
                 if controls_cursor {if let Err(e)=cursor.apply(frame){frame_stop.store(true,Ordering::Release);return Err(e);}}
                 if update.elapsed()>=Duration::from_millis(200){
                     change(|s|{s.metrics=metrics.clone();if s.ready {s.message=if metrics.stream_stale{"正在等待动作数据，光标已停止。"}
                         else if metrics.paused{"已暂停，点击继续或退出。"}
                         else if !metrics.calibrated{"请把卡片放稳约1秒，正在校准…"}
-                        else if controls_cursor{"左右转动移动光标；短按点击，按住拖拽。Esc退出。"}
+                        else if controls_cursor{"左右转动移动光标；双敲机身或短按点击，按住拖拽。Esc退出。"}
                         else{"动作预览中，未控制光标。"}.into();}});update=Instant::now();
                 }
-                next+=Duration::from_nanos(8_333_333);
+                next+=Duration::from_nanos(period);
                 if let Some(wait)=next.checked_duration_since(Instant::now()){std::thread::sleep(wait);}else{next=Instant::now();}
             }
             cursor.release()
@@ -77,10 +78,10 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
 #[cfg(windows)]
 fn desktop_bounds()->companion_desktop_input::pointer::Bounds {
     use windows::Win32::UI::WindowsAndMessaging::{GetSystemMetrics,SM_XVIRTUALSCREEN,SM_YVIRTUALSCREEN,SM_CXVIRTUALSCREEN,SM_CYVIRTUALSCREEN};
-    unsafe {companion_desktop_input::pointer::Bounds{left:GetSystemMetrics(SM_XVIRTUALSCREEN) as f64,top:GetSystemMetrics(SM_YVIRTUALSCREEN) as f64,width:GetSystemMetrics(SM_CXVIRTUALSCREEN).max(1) as f64,height:GetSystemMetrics(SM_CYVIRTUALSCREEN).max(1) as f64}}
+    unsafe {companion_desktop_input::pointer::Bounds{left:GetSystemMetrics(SM_XVIRTUALSCREEN) as f64,top:GetSystemMetrics(SM_YVIRTUALSCREEN) as f64,width:GetSystemMetrics(SM_CXVIRTUALSCREEN).max(1) as f64,height:GetSystemMetrics(SM_CYVIRTUALSCREEN).max(1) as f64,primary:Some([0.,0.,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CXSCREEN).max(1) as f64,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CYSCREEN).max(1) as f64])}}
 }
 #[cfg(not(windows))]
-fn desktop_bounds()->companion_desktop_input::pointer::Bounds {companion_desktop_input::pointer::Bounds{left:0.,top:0.,width:1.,height:1.}}
+fn desktop_bounds()->companion_desktop_input::pointer::Bounds {companion_desktop_input::pointer::Bounds{left:0.,top:0.,width:1.,height:1.,primary:None}}
 pub fn control(action:&str)->Result<Status,String>{
     let session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;
     let s=session.as_ref().ok_or("空中鼠标尚未开启。")?;

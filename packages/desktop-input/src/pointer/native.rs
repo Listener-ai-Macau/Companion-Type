@@ -11,7 +11,7 @@ impl Cursor {
     pub fn bounds(&self)->Bounds {
         use windows::Win32::UI::WindowsAndMessaging::{GetSystemMetrics,SM_XVIRTUALSCREEN,SM_YVIRTUALSCREEN,SM_CXVIRTUALSCREEN,SM_CYVIRTUALSCREEN};
         unsafe {Bounds{left:GetSystemMetrics(SM_XVIRTUALSCREEN) as f64,top:GetSystemMetrics(SM_YVIRTUALSCREEN) as f64,
-            width:GetSystemMetrics(SM_CXVIRTUALSCREEN).max(1) as f64,height:GetSystemMetrics(SM_CYVIRTUALSCREEN).max(1) as f64}}
+            width:GetSystemMetrics(SM_CXVIRTUALSCREEN).max(1) as f64,height:GetSystemMetrics(SM_CYVIRTUALSCREEN).max(1) as f64,primary:Some([0.,0.,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CXSCREEN).max(1) as f64,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CYSCREEN).max(1) as f64])}}
     }
     pub fn escape()->bool {unsafe {windows::Win32::UI::Input::KeyboardAndMouse::GetAsyncKeyState(0x1b)<0}}
     fn move_to(&mut self,p:Point)->Result<(),String>{self.input.move_mouse(p.x.round() as i32,p.y.round() as i32,Coordinate::Abs).map_err(|e|e.to_string())}
@@ -37,7 +37,7 @@ pub struct Cursor;
 impl Cursor {
     pub fn open()->Result<Self,String>{Err("空中鼠标当前支持Windows客户端。".into())}
     pub fn position(&self)->Result<Point,String>{Err("Unsupported platform".into())}
-    pub fn bounds(&self)->Bounds{Bounds{left:0.,top:0.,width:1.,height:1.}}
+    pub fn bounds(&self)->Bounds{Bounds{left:0.,top:0.,width:1.,height:1.,primary:None}}
     pub fn escape()->bool{false}
     pub fn apply(&mut self,_:Frame)->Result<(),String>{Err("Unsupported platform".into())}
     pub fn release(&mut self)->Result<(),String>{Ok(())}

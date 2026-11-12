@@ -2,7 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {invoke} from '@tauri-apps/api/core';
 type Settings={mapping:'relative'|'laser';sensitivity:number;smoothing:number;deadzone:number;acceleration:number;invertHorizontal:boolean;invertVertical:boolean};
 type Status={enabled:boolean;ready:boolean;controlsCursor:boolean;message:string;metrics:{samples:number;missing:number;sensorHz:number;calibrated:boolean;dragging:boolean;paused:boolean}};
-const defaults:Settings={mapping:'relative',sensitivity:1,smoothing:0.55,deadzone:0.6,acceleration:0.35,invertHorizontal:false,invertVertical:false};
+const defaults:Settings={mapping:'laser',sensitivity:1,smoothing:0.55,deadzone:3,acceleration:0.6,invertHorizontal:false,invertVertical:false};
 const idle:Status={enabled:false,ready:false,controlsCursor:false,message:'',metrics:{samples:0,missing:0,sensorHz:0,calibrated:false,dragging:false,paused:false}};
 export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:boolean}){
  const [settings,setSettings]=useState(defaults),[status,setStatus]=useState(idle),[busy,setBusy]=useState(false),[error,setError]=useState('');
@@ -14,7 +14,7 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
  return <details className="ct-desktop-input" aria-label="空中鼠标">
   <summary>空中鼠标 · 转动卡片移动光标</summary>
   <p>连接后点击启用，把卡片放稳约1秒完成校准。拿起卡片，长边朝前，左右转动移动光标，上下转动控制高度。</p>
-  <p>短按卡片按键点击；按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
+  <p>双敲机身或短按卡片按键点击；按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
   <div className="ct-button-row">
    <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,mapping:e.target.value as Settings['mapping']})}><option value="relative">相对移动 · AirCursor</option><option value="laser">指向屏幕 · WatchPointer</option></select></label>
    <label>灵敏度 <input aria-label="空中鼠标灵敏度" type="range" min="0.2" max="3" step="0.1" value={settings.sensitivity} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,sensitivity:Number(e.target.value)})}/>{settings.sensitivity.toFixed(1)}</label>
@@ -24,7 +24,7 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
   <div className="ct-button-row">
    {!status.enabled?<button className="ct-action" disabled={busy||blocked||!connected} onClick={()=>void run('start_companion_pointer',{settings,controlsCursor:true})}>启用空中鼠标</button>:<>
     <button disabled={busy||!status.ready} onClick={()=>control(status.metrics.paused?'resume':'pause')}>{status.metrics.paused?'继续控制':'暂停控制'}</button>
-    <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>以当前位置为中心</button>
+    <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>重新定位</button>
     <button disabled={busy||!status.ready} onClick={()=>control('calibrate')}>放稳重新校准</button>
     <button className="ct-action" disabled={busy} onClick={()=>control('stop')}>退出并回到录音</button>
    </>}
