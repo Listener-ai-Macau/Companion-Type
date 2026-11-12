@@ -1,0 +1,19 @@
+from pathlib import Path
+from datetime import datetime
+import json,re,copy,psutil,shutil
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');B=R/'docs/handoffs/20261112-product-closure/windows115';out=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/windows115-local');read=lambda p:json.loads(p.read_bytes());b=read(out/'result.json');p=psutil.Process(22160);assert abs(p.create_time()-1794490663.8229928)<.1;assert b['sourceCommit']=='ba26a969bb7f72966fe0ad18c7bcb67675650509';probe_path=B.parent/'windows114/step-issue-reporting/native-preview-r2/result.json';probe=read(probe_path);assert probe['state']=='ORIGINAL_STEP_REPORT_ACTION_AND_EXACT_ACK_PRIVATE_RENDERING_PASSED'and probe['newDraftPreservedAgainstOldAck']and probe['ownerClipboardSequenceUnchangedAtObservation'];at=datetime.now().astimezone().isoformat(timespec='seconds')
+guide=dict(at=at,state='INDIVIDUAL_ISSUE_CAPTURE_ENGINEERING_REVIEWED_OWNER_CONFIRMATION_PENDING',controllerCasesPassed=13,issueParserCasesPassed=2,originalSharedWindowProbe=str(probe_path),sharedSourceSha256=probe['sharedSourceSha256'],individualReportsStayInSameWindow=True,exactTextAcknowledgmentClearsOnlySubmittedText=True,newDraftRetainedAgainstOldAcknowledgment=True,recordingAndDeviceActionsOnReport=0,newNativeBuildRequiredForGuide=False,privateModelessEngineeringHostOnly=True,actualOwnerModalRuntimeNewlyProved=False,ownerExperienceAccepted=False)
+(B/'guide-issue-recording.json').write_text(json.dumps(guide,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+P=R/'docs/product_backlog.json';raw=P.read_bytes();text=raw.decode('utf8');d=json.loads(text);m=d['owner_module_execution'];a=m['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110'];before=copy.deepcopy(a);cur=copy.deepcopy(m['currentBatch']);nxt=copy.deepcopy(m['nextBatch']);u=a['ownerProductClosure20261112']['ownerUiUsabilityRework20261112'];build=dict(directory=str(out),sourceRoot='E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source',sourceCommit=b['sourceCommit'],toolSessionId=88783,worker=dict(pid=p.pid,createdAt=p.create_time()),state=b['state'],normalWebBuildPassed=True,installed=False,storageBefore=b['storageBefore']);u.update(updatedAt=at,state='APPEARANCE115_NORMAL_BUILD_RUNNING_INDIVIDUAL_ISSUE_GUIDE_REVIEWED',currentWindowsBuild=build,individualIssueGuidance=guide)
+for issue in u['issueReports']:
+ if issue['id']=='GUIDE114-ISSUE-LOCALIZATION':issue.update(state='IMPLEMENTED_ENGINEERING_REVIEWED_OWNER_CONFIRMATION_PENDING',engineeringReceipt=str(B/'guide-issue-recording.json'))
+next_action='115外观批正常包正在固定源/共享目标构建（88783/PID22160）；原窗口逐条记录问题/精确输入确认/不跳步不重启已工程复核，通过私有原窗探针，Owner实际新按钮未验。完成同源包核验、实际首屏/连续流程/保资料升级和一包交付后，按步骤继续；连接慢但可接受仍单独待测，外观和每条问题分别保留。'
+a.update(updatedAt=at,state=u['state'],next=next_action,knownJobState='Only one normal115 builder active here; original-window engineering probe finished/closed on a private station. No Owner product/prompt/board/model job;114 actual round already exited/released.');m['currentBatch'].update(at=at,state=a['state'],next=next_action);m['nextBatch'].update(at=at,status=a['state'],next=next_action)
+def splice(key,old,new):
+ global text
+ hits=[]
+ for match in re.finditer(r'(?m)^([ \t]*)"'+re.escape(key)+r'":\s*',text):
+  v,n=json.JSONDecoder().raw_decode(text[match.end():])
+  if v==old:hits.append((match,n))
+ assert len(hits)==1;match,n=hits[0];text=text[:match.end()]+json.dumps(new,ensure_ascii=False,indent=2).replace('\n','\r\n'+match.group(1))+text[match.end()+n:]
+splice('activeNonmodelCompletion20261110',before,a);splice('currentBatch',cur,m['currentBatch']);splice('nextBatch',nxt,m['nextBatch']);json.loads(text);assert P.read_bytes()==raw;P.write_bytes(text.encode('utf8'));print(json.dumps(dict(state=a['state'],build=build,guide=guide),ensure_ascii=False))

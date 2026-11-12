@@ -1,0 +1,400 @@
+{
+  "startedAt": "2026-11-12T21:39:08+08:00",
+  "state": "ORIGINAL_STEP_REPORT_ACTION_AND_EXACT_ACK_PRIVATE_RENDERING_PASSED",
+  "sharedSourceSha256": "88682c8b0963a9cde6b1b2f53c191cb1aac89973acb78a0f6ef5616bc9d13d32",
+  "ownerPromptOpened": false,
+  "ownerInputUsed": false,
+  "physicalOrProductStarted": false,
+  "soundDisabledForEngineeringPreviewOnly": true,
+  "frames": [
+    {
+      "stage": "ready",
+      "visibleButtons": [
+        "开始",
+        "结束本轮",
+        "稍后"
+      ],
+      "image": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\step-issue-reporting\\native-preview-r1\\ready.png",
+      "controls": [
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            203,
+            682
+          ]
+        },
+        {
+          "text": "开始",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            41,
+            651,
+            191,
+            679
+          ]
+        },
+        {
+          "text": "等待开始  Companion 功能验收",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            120,
+            765,
+            146
+          ]
+        },
+        {
+          "text": "你现在做 - 同一轮连续验收 · 最后统一反馈",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            152,
+            765,
+            172
+          ]
+        },
+        {
+          "text": "准备好后开始。",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            174,
+            765,
+            404
+          ]
+        },
+        {
+          "text": "问题先记在这里，最后一起提交",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            412,
+            765,
+            432
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            434,
+            765,
+            636
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            765,
+            682
+          ]
+        },
+        {
+          "text": "结束本轮",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            675,
+            651,
+            761,
+            679
+          ]
+        },
+        {
+          "text": "稍后",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            581,
+            651,
+            667,
+            679
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "report",
+      "visibleButtons": [
+        "上一步",
+        "记录问题",
+        "下一步",
+        "结束本轮",
+        "稍后"
+      ],
+      "image": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\step-issue-reporting\\native-preview-r1\\report.png",
+      "controls": [
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            519,
+            682
+          ]
+        },
+        {
+          "text": "上一步",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            41,
+            651,
+            191,
+            679
+          ]
+        },
+        {
+          "text": "记录问题",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            199,
+            651,
+            349,
+            679
+          ]
+        },
+        {
+          "text": "下一步",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            357,
+            651,
+            507,
+            679
+          ]
+        },
+        {
+          "text": "2/8 · 记下一段安排  Companion 功能验收",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            120,
+            765,
+            146
+          ]
+        },
+        {
+          "text": "你现在做 - 同一轮连续验收 · 最后统一反馈",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            152,
+            765,
+            172
+          ]
+        },
+        {
+          "text": "短按卡片实体键并松开，读这段公开示例：\r\n\r\n“周五下午三点，我们和小林核对演示内容。李明周五上午十点前发出材料，小林周五中午十二点前确认名单。设备预算还没决定，等演示之后再讨论。”\r\n\r\n读完再短按并松开。我们要看它能否留下原音，并把人物、安排和未决定的事整理清楚。",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            174,
+            765,
+            404
+          ]
+        },
+        {
+          "text": "问题先记在这里，最后一起提交",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            412,
+            765,
+            432
+          ]
+        },
+        {
+          "text": "公开问题A：按钮不清楚",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            434,
+            765,
+            636
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            765,
+            682
+          ]
+        },
+        {
+          "text": "结束本轮",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            675,
+            651,
+            761,
+            679
+          ]
+        },
+        {
+          "text": "稍后",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            581,
+            651,
+            667,
+            679
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "final",
+      "visibleButtons": [
+        "上一步",
+        "记录问题",
+        "结束本轮",
+        "通过",
+        "稍后"
+      ],
+      "image": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\step-issue-reporting\\native-preview-r1\\final.png",
+      "controls": [
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            361,
+            682
+          ]
+        },
+        {
+          "text": "上一步",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            41,
+            651,
+            191,
+            679
+          ]
+        },
+        {
+          "text": "记录问题",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            199,
+            651,
+            349,
+            679
+          ]
+        },
+        {
+          "text": "8/8 · 提交整轮结论  Companion 功能验收",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            120,
+            765,
+            146
+          ]
+        },
+        {
+          "text": "你现在做 - 同一轮连续验收 · 最后统一反馈",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            152,
+            765,
+            172
+          ]
+        },
+        {
+          "text": "正常关闭 Companion。之前记录的每条问题都已分别保存，不必重写。\r\n\r\n在下方只补充整体感受和本轮没完成的部分，再选择整轮结论。“下一步”只切换说明；问题仍逐条处理、整批交付。",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            174,
+            765,
+            404
+          ]
+        },
+        {
+          "text": "问题先记在这里，最后一起提交",
+          "kind": "WindowsForms10.Static.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            412,
+            765,
+            432
+          ]
+        },
+        {
+          "text": "公开问题A：按钮不清楚",
+          "kind": "WindowsForms10.Edit.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            434,
+            765,
+            636
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.187dc23_r3_ad1",
+          "rect": [
+            37,
+            648,
+            765,
+            682
+          ]
+        },
+        {
+          "text": "结束本轮",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            675,
+            651,
+            761,
+            679
+          ]
+        },
+        {
+          "text": "通过",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            581,
+            651,
+            667,
+            679
+          ]
+        },
+        {
+          "text": "稍后",
+          "kind": "WindowsForms10.Button.app.0.187dc23_r3_ad1",
+          "rect": [
+            487,
+            651,
+            573,
+            679
+          ]
+        }
+      ]
+    }
+  ],
+  "engineeringHostInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run and DrawToBitmap timer for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+  "instrumentationSha256": "57257c690726fb3245eb3f1706a105d9e04a09f3252ade058703f664e3ab6c1d",
+  "modalOwnerRuntimeNotNewlyProved": true,
+  "privateStation": "CompanionGuide-2d027e87e88b4eab83331fe31b0d7cf2",
+  "pid": 14136,
+  "separateReportActionKeptOriginalWindowAlive": true,
+  "exactReportedTextAndStepCaptured": true,
+  "ackClearedOnlyExactSubmittedText": true,
+  "newDraftPreservedAgainstOldAck": true,
+  "actualOwnerModalRuntimeNewlyProved": false,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "finishedAt": "2026-11-12T21:39:14+08:00"
+}

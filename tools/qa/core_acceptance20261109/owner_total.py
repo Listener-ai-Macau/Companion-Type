@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import argparse, hashlib, json, os, re, subprocess, time
 import psutil
-from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested, native_multiline
+from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested, navigation_event, native_multiline
 from owner_total_issues import REPORT,reported_issues
 
 TZ = timezone(timedelta(hours=8))
@@ -268,7 +268,7 @@ def main():
         value=dict(progressText=stage, message=native_multiline(message),
                                 enabledActions=list(actions), visibleActions=list(actions),
                                 visibleReviews=['通过', '结束本轮', '稍后'] if review else ['结束本轮', '稍后'],
-                                observationLabel='只写当前这一条问题，点“记录问题”后可继续',
+                                observationLabel=f'当前第{guide_index+1}步 · {STEPS[guide_index][0]}：写一条问题后点“记录问题”',
                                 reviewAllowed=review)
         if record.get('ownerStartedAt'):
             value['eventContext']=dict(version=version,stepIndex=guide_index,stepTitle=STEPS[guide_index][0])
@@ -339,7 +339,7 @@ def main():
     environment.pop('PSModulePath', None)
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
                '-Title', 'Companion 功能验收', '-Message', native_multiline(message),
-               '-ScopeText', '同一轮连续验收 · 最后统一反馈',
+               '-ScopeText', '逐步体验 · 每条问题单独记录',
                '-ActionButtons', ','.join((START, BACK, REPORT, NEXT)), '-Buttons', '通过,结束本轮,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),
                '-EventPath', str(events), '-TextInput', '-ObservationLabel', '只写当前这一条问题，点“记录问题”后可继续',
@@ -444,20 +444,23 @@ def main():
                         datetime.fromisoformat(record['ownerStartedAt']).timestamp(),version,STEPS,seen_issue_events)
                     for issue in new_reports:
                         if not issue['ownerQuote'].strip():
-                            show_guide()
                             update(f'{guide_index+1}/{len(STEPS)} · 先写这一条问题',
                                 STEPS[guide_index][1]+'\n\n在下方写当前遇到的一条问题，再点“记录问题”。',
                                 guide_actions(),review=bool(record.get('appClosedAt'))and record['guidedRouteReachedEnd'])
                             continue
                         issue.update(id=f"ISSUE-{len(record['individualIssues'])+1:03d}",firmwareVersion=readiness.get('firmwareVersion'),sourceCommit=readiness['sourceCommit'],ownerRound=str(cache))
                         issue_dir=cache/'issues';issue_dir.mkdir(exist_ok=True);write_json(issue_dir/(issue['id']+'.json'),issue)
-                        record['individualIssues'].append(issue);record['individualIssueCount']=len(record['individualIssues']);write_json(issue_dir/'index.json',record['individualIssues']);input_ack=dict(id=issue['eventId'],text=issue['ownerQuote']);save();show_guide()
+                        record['individualIssues'].append(issue);record['individualIssueCount']=len(record['individualIssues']);write_json(issue_dir/'index.json',record['individualIssues']);input_ack=dict(id=issue['eventId'],text=issue['ownerQuote'],stepIndex=issue['stepIndex']);save()
                         update(f"{guide_index+1}/{len(STEPS)} · 已记录 {issue['id']}",STEPS[guide_index][1]+'\n\n这一条问题已单独保存，可以继续本步或点“下一步”。',
                             guide_actions(),review=bool(record.get('appClosedAt'))and record['guidedRouteReachedEnd'])
                 if app is not None and prompt.poll() is None and not record.get('appClosedAt'):
                     complete_events = event_text.rfind('\n') + 1
-                    action = navigation_requested(event_text[consumed_navigation_chars:complete_events], prompt.pid, navigation_not_before)
+                    navigation=navigation_event(event_text[consumed_navigation_chars:complete_events],prompt.pid,navigation_not_before)
+                    action=navigation['event'].removeprefix('action_button|')if navigation else None
                     consumed_navigation_chars = complete_events
+                    if action and str(navigation.get('text')or'').strip() and not(input_ack and input_ack.get('stepIndex')==guide_index and input_ack['text']==navigation['text']):
+                        update(f'{guide_index+1}/{len(STEPS)} · 这条问题尚未记录',STEPS[guide_index][1]+'\n\n下方还有这一条问题，请先点“记录问题”；也可清空输入后继续。',guide_actions())
+                        action=None
                     if action == BACK:
                         guide_index = max(0, guide_index - 1)
                         show_guide()

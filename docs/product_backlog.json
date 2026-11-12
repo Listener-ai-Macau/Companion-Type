@@ -133845,7 +133845,8 @@
         "physicalQualification": "Actual GATT registration, five read-only full lengths, encrypted BLE and1000 raw frames missing0; no new full recording/OTA/gesture qualification",
         "ordinaryWirelessOtaQualified": false,
         "engineeringCaptureOnly": false,
-        "normalRestorationRequired": false
+        "normalRestorationRequired": false,
+        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66828-ble-sram\\delivery.json"
       },
       "packages": [
         {
@@ -143425,7 +143426,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "BLE_SRAM_STRUCTURAL_REFACTOR_OWNER_PRIORITY",
+          "state": "BLE_POOL_REFACTOR_HOST_AND_ST_ALLOCATOR_VERIFIED_INSTALL_WAITING_EXISTING_RECORDING",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143433,11 +143434,12 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-12T21:15:03+08:00",
+          "updatedAt": "2026-11-12T21:41:52+08:00",
           "sourceCommit": {
-            "firmware": "7bbc8d0",
+            "firmware": "6960f21",
             "firmwareResourceTool": "1bb3ad3",
-            "windows": "ad325f16"
+            "windows": "ad325f16",
+            "firmwareApplicationCandidate": "9288833"
           },
           "sourceProtectedRemotely": true,
           "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\resource-input-concentrated-batch.json",
@@ -143454,10 +143456,9 @@
             "actualBoardCpuMeasured": false
           },
           "remaining": [
-            "Finish checking/integrating live raw desktop motion with existing pause/control/drag/coexistence path.",
-            "Natural direction and spatial tap calibration/physical acceptance still open; left/right is not TAP_SRC axis/sign.",
-            "Normal827 raw-click queue fix is installed; not a full mouse or sale pass.",
-            "Keep broader original embedded/OTA/deferred items."
+            "Normal829 pooled queue installation and actual burst/reconnect/Stop1/affected sync qualification remain open while recording408 is active.",
+            "Natural direction/spatial left-right click and complete ordinary Windows mouse delivery remain open; host ad325 source integrated/tested32.",
+            "Original broader embedded/OTA/deferred boundaries remain; no sale qualification."
           ],
           "firmwareInstalled": 66828,
           "normal795BuiltNotInstalled": true,
@@ -143469,7 +143470,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Owner认为216B太小，继续同批BLE结构性压缩，不以此关闭SRAM事项。正常828/7bbc已装并验证5个只读完整长度、1000原始IMU帧missing0、mode0/idle恢复，板卡已释放；不重做无关录音。先评估大头：官方LL14315B不可仅改Host链接数缩掉，GATT7860/Host3880/AMM4024/配对2032/产品队列2096；找可去重复及AMM物理开销预算，保持MTU512/包池/双509/事件FIFO640。鼠标ad325已推送/32core/native/TS通过，完整Windows/自然方向左右敲击仍开放，827自然窗Cancel仅rest16帧已结束。",
+          "executionPoint": "Owner要求216B之外继续结构性压缩。应用9288833/验证6960f21均已推送；正常829签名候选：GATT产品队列2096→672B（512B短命令环形+借原ST AMM长命令），保持8项/245B真实WBA输入、MTU512/双509/包池/FIFO640/配对缓存；AMM借不到保留源事件、前台退队重试，现有foreground quantum含产品队列避免饥饿。整机静态68280→66632（节省1648），BLE39059→37419（节省1640），Flash+320；Host3880跨bank，音频栈前gap2936→7040，移动不重复算节省。120轮队列/8最大/回收重初始化/借用失败重试及真实ST AMM/MM/list32位（12timers+3maxHCI同时持有）通过，非RF/吞吐资格。829构建/签名/本机正常114离线校验可用，但尚未OTA：准备时normal828正在录音408，未停录/升级，BLE/UART句柄关闭并释放板。当前实板仍828/7bbc，5只读完整值+1000raw无缺号已验。下一步当前录音自然收尾并板可用后，真实普通829 OTA/短长命令突发/重连与Stop1/受影响录音同步；如新证据不改善回退保留828。随后回同批鼠标ad325正常交付/自然方向与左右点击实体资格，不重做取消的827rest16样本。",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -144348,11 +144349,30 @@
             "baselineBytes": 39059,
             "baselineStaticBytes": 68280,
             "decision": "先保留1连接/MTU512/双509B通道/包池/640B事件FIFO/配对缓存，校核官方固定LL成本及GATT只读值实际长度；旧compact AMM不能仅凭逻辑额度相同启用",
-            "state": "216B_GATT_CHANGE_INSTALLED_VERIFIED_OWNER_REQUESTS_STRUCTURAL_KIB_REDUCTION",
+            "state": "POOLED829_READY_NOT_INSTALLED_EXISTING_RECORDING408",
             "installed66828": true,
             "saved216": true,
             "ownerFollowup": "216 B改善太小，重构降低SRAM，尽量不损失性能",
-            "actualBleBytes": 38843
+            "actualBleBytes": 38843,
+            "safe216Installed": true,
+            "applicationSource": "9288833",
+            "validationSource": "6960f21",
+            "currentInstalled": 66828,
+            "candidate": 66829,
+            "bleStaticBefore": 39059,
+            "bleStaticAfterCandidate": 37419,
+            "staticBefore": 68280,
+            "staticAfterCandidate": 66632,
+            "totalSaved": 1648,
+            "mainStackGapBefore": 2936,
+            "mainStackGapAfterCandidate": 7040,
+            "actualStAllocator32HostPassed": true,
+            "physicalNewQueuePassed": false,
+            "ordinaryOtaStarted": false,
+            "currentRecording": 408,
+            "currentDelivery": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66828-ble-sram\\delivery.json",
+            "candidateDelivery": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66829-ble-sram\\delivery.json",
+            "resourceComparison": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\ble-sram-comparison.json"
           }
         }
       },
@@ -270894,8 +270914,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T21:36:38+08:00",
-            "state": "APPEARANCE115_AND_INDIVIDUAL_STEP_REPORT_SOURCE_READY_FOR_NORMAL_BUILD",
+            "updatedAt": "2026-11-12T21:45:05+08:00",
+            "state": "APPEARANCE115_NORMAL_BUILD_RUNNING_INDIVIDUAL_ISSUE_GUIDE_REVIEWED",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -270903,7 +270923,7 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "同批外观收敛与逐步独立问题记录已源码落实，正常115只从已交付114合入2个样式文件。一次正常包构建/首屏与连续流程自验/保资料升级/同包交付；期间完成原共用窗口的实际记录与精确清空检查。匹配后再按步骤带领，问题逐条处理、交付整批完成；原实物/模型/售卖未验保留。",
+            "next": "115外观批正常包正在固定源/共享目标构建（88783/PID22160）；原窗口逐条记录问题/精确输入确认/不跳步不重启已工程复核，通过私有原窗探针，Owner实际新按钮未验。完成同源包核验、实际首屏/连续流程/保资料升级和一包交付后，按步骤继续；连接慢但可接受仍单独待测，外观和每条问题分别保留。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.114",
@@ -270972,7 +270992,7 @@
             "nativeModelsRun": false,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "114 actual round ended21:14:28 and exact lease released. No own GUI/board/model job. Freezing one115 visual batch on delivered114; original per-issue guidance adapter is checked separately, no per-issue native build.",
+            "knownJobState": "Only one normal115 builder active here; original-window engineering probe finished/closed on a private station. No Owner product/prompt/board/model job;114 actual round already exited/released.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271613,7 +271633,7 @@
                 "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
                 "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
                 "ownerClarification": "两边都有",
-                "state": "APPEARANCE115_AND_INDIVIDUAL_STEP_REPORT_SOURCE_READY_FOR_NORMAL_BUILD",
+                "state": "APPEARANCE115_NORMAL_BUILD_RUNNING_INDIVIDUAL_ISSUE_GUIDE_REVIEWED",
                 "previousWindowsVersion": "0.1.111",
                 "previousAndroidVersion": "0.1.142",
                 "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
@@ -271629,7 +271649,7 @@
                 "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
                 "noMoreOwnerPromptUntilSubstantiveRepair": true,
                 "nativeDeliveryChangesNotStarted": false,
-                "updatedAt": "2026-11-12T21:36:38+08:00",
+                "updatedAt": "2026-11-12T21:45:05+08:00",
                 "implementation": {
                   "firstScreen": "Explicit recording-card link state and one connect action, also visible with an existing library",
                   "devicePage": "Connection state independent of storage/service advice, primary action leads to saved recordings",
@@ -271652,18 +271672,21 @@
                 "newReceivedCardRows": 0,
                 "actualCardRecordingCountNotDirectlyQueried": true,
                 "currentWindowsBuild": {
-                  "directory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows114-local",
-                  "sourceCommit": "8f68f19a9d1bc4fde96e79c459418c12e0772b47",
+                  "directory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows115-local",
                   "sourceRoot": "E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source",
-                  "toolSessionId": null,
-                  "worker": null,
-                  "state": "BUILT_INSPECTED_INSTALLED_SELF_ACCEPTED_PRIVATE_DELIVERED",
+                  "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+                  "toolSessionId": 88783,
+                  "worker": {
+                    "pid": 22160,
+                    "createdAt": 1794490663.8229928
+                  },
+                  "state": "LOCAL_NORMAL_RELEASE_BUILDING",
                   "normalWebBuildPassed": true,
-                  "installed": true,
+                  "installed": false,
                   "storageBefore": {
                     "cache": "E:\\CodexData\\Companion\\.build-cache",
-                    "logicalBytes": 61154330869,
-                    "freeBytes": 319639007232,
+                    "logicalBytes": 61506209649,
+                    "freeBytes": 319144226816,
                     "limitBytes": 85899345920,
                     "reservedJobBytes": 8589934592,
                     "minimumFreeBytes": 32212254720,
@@ -272228,10 +272251,11 @@
                     "stepIndex": null,
                     "stepTitle": "逐步验收的问题记录",
                     "ownerQuote": "一个验收，我会报一个问题…所有东西都聚集在一起…很难看那个问题在哪",
-                    "state": "INDIVIDUAL_CAPTURE_IMPLEMENTED_CONTROLLER_CASES_PASSED_NATIVE_SHARED_WINDOW_PROBE_PENDING",
+                    "state": "IMPLEMENTED_ENGINEERING_REVIEWED_OWNER_CONFIRMATION_PENDING",
                     "blocking": true,
                     "decision": "Each report gets its own ID, current step, exact version, observed time and raw text. Reporting stays in the original shared window and can continue the same purpose; final conclusion remains separate. No per-issue native rebuild.",
-                    "coreImplementation": "tools/qa/core_acceptance20261109/owner_total_issues.py"
+                    "coreImplementation": "tools/qa/core_acceptance20261109/owner_total_issues.py",
+                    "engineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\guide-issue-recording.json"
                   }
                 ],
                 "previousOwner114Attempt": {
@@ -272377,6 +272401,22 @@
                   "currentNormalFirmware": 66828,
                   "normalActualInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\ordinary-firmware-fw66828-installed.json",
                   "ownerPromptDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows114-fw66828-20261112"
+                },
+                "individualIssueGuidance": {
+                  "at": "2026-11-12T21:45:05+08:00",
+                  "state": "INDIVIDUAL_ISSUE_CAPTURE_ENGINEERING_REVIEWED_OWNER_CONFIRMATION_PENDING",
+                  "controllerCasesPassed": 13,
+                  "issueParserCasesPassed": 2,
+                  "originalSharedWindowProbe": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\step-issue-reporting\\native-preview-r2\\result.json",
+                  "sharedSourceSha256": "88682c8b0963a9cde6b1b2f53c191cb1aac89973acb78a0f6ef5616bc9d13d32",
+                  "individualReportsStayInSameWindow": true,
+                  "exactTextAcknowledgmentClearsOnlySubmittedText": true,
+                  "newDraftRetainedAgainstOldAcknowledgment": true,
+                  "recordingAndDeviceActionsOnReport": 0,
+                  "newNativeBuildRequiredForGuide": false,
+                  "privateModelessEngineeringHostOnly": true,
+                  "actualOwnerModalRuntimeNewlyProved": false,
+                  "ownerExperienceAccepted": false
                 }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
@@ -279663,14 +279703,14 @@
       }
     },
     "nextBatch": {
-      "at": "2026-11-12T21:16:59+08:00",
-      "status": "OWNER114_GUIDED_ROUND_WAITING_OWNER_START",
-      "next": "当前114已实际连接并走到录音安排步骤；连接偏慢但Owner接受，单独保留待测。优先把原带验改成按当前步骤独立报问题、记录后继续，保留同一用途最后结论；随后集中处理UI外观。当前原窗已关闭而实际应用仍运行时，保留原guardian/实际lease到应用正常退出，不重开竞争实例、不提前释放。所有问题各有ID和步骤，不混成一段原话或逐条重包。",
+      "at": "2026-11-12T21:45:05+08:00",
+      "status": "APPEARANCE115_NORMAL_BUILD_RUNNING_INDIVIDUAL_ISSUE_GUIDE_REVIEWED",
+      "next": "115外观批正常包正在固定源/共享目标构建（88783/PID22160）；原窗口逐条记录问题/精确输入确认/不跳步不重启已工程复核，通过私有原窗探针，Owner实际新按钮未验。完成同源包核验、实际首屏/连续流程/保资料升级和一包交付后，按步骤继续；连接慢但可接受仍单独待测，外观和每条问题分别保留。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-12T21:16:59+08:00",
-      "state": "OWNER114_GUIDED_ROUND_WAITING_OWNER_START",
+      "at": "2026-11-12T21:45:05+08:00",
+      "state": "APPEARANCE115_NORMAL_BUILD_RUNNING_INDIVIDUAL_ISSUE_GUIDE_REVIEWED",
       "done": "连接状态与主入口114已实际安装，默认首页和设备主区可见状态，保留静默收取。原资料完全保持，原生连续资料流程及真实重开通过；同一114/142私有包与MSI完整回读。",
       "remaining": "114真实连接Owner说还可以；连接速度、UI外观、分步报问题分别记录。完整用途未完成；应用/guardian实际结束前保留现场，整体UI与实卡/模型/售卖未签收。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend114142\\software-delivery.json",
@@ -279683,7 +279723,7 @@
       },
       "ownerUiFeedbackId": "owner-ui-usability20261112",
       "previousSoftwareDeliveryStillRetained": true,
-      "next": "当前114已实际连接并走到录音安排步骤；连接偏慢但Owner接受，单独保留待测。优先把原带验改成按当前步骤独立报问题、记录后继续，保留同一用途最后结论；随后集中处理UI外观。当前原窗已关闭而实际应用仍运行时，保留原guardian/实际lease到应用正常退出，不重开竞争实例、不提前释放。所有问题各有ID和步骤，不混成一段原话或逐条重包。",
+      "next": "115外观批正常包正在固定源/共享目标构建（88783/PID22160）；原窗口逐条记录问题/精确输入确认/不跳步不重启已工程复核，通过私有原窗探针，Owner实际新按钮未验。完成同源包核验、实际首屏/连续流程/保资料升级和一包交付后，按步骤继续；连接慢但可接受仍单独待测，外观和每条问题分别保留。",
       "ownerExperienceAccepted": false
     },
     "previousBatch": {

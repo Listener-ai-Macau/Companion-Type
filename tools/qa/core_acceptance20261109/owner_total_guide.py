@@ -30,7 +30,7 @@ def native_multiline(text):
     return text.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '\r\n')
 
 
-def navigation_requested(events, prompt_pid, not_before):
+def navigation_event(events, prompt_pid, not_before):
     for line in events.splitlines():
         try:
             event = json.loads(line)
@@ -40,5 +40,10 @@ def navigation_requested(events, prompt_pid, not_before):
         action = event.get('event', '').removeprefix('action_button|')
         if (event.get('event') == 'action_button|' + action and action in (NEXT, BACK)
                 and event.get('processId') == prompt_pid and at >= not_before):
-            return action
+            return event
     return None
+
+
+def navigation_requested(events, prompt_pid, not_before):
+    event=navigation_event(events,prompt_pid,not_before)
+    return event['event'].removeprefix('action_button|')if event else None
