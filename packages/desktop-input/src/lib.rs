@@ -3,6 +3,7 @@
 //! No recording, model, service or app-focus activation lives in this crate.
 #![allow(dead_code, unused_imports)]
 mod types;
+pub mod pointer;
 pub use types::{InsertStatus, PasteShortcut};
 #[cfg(windows)]
 mod insertion;

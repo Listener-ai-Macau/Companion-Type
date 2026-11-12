@@ -84,6 +84,7 @@ fn operation_name(kind: u8) -> &'static str {
         20 => "pet finding",
         21 => "pet personality and memory",
         22 => "desktop dictation",
+        23 => "air pointer",
         _ => "unknown device operation",
     }
 }
@@ -138,6 +139,7 @@ impl CompanionCoordinator {
     pub(crate) fn is_shutting_down(&self)->bool {self.shutdown.requested()}
     pub(crate) fn request_shutdown(&self) {
         crate::backend::desktop_dictation::request_stop();
+        crate::backend::desktop_pointer::request_stop();
         self.shutdown.request();
         crate::backend::recording_sync::request_process_shutdown();
         crate::backend::meeting_processing_job::cancel_for_shutdown();
@@ -416,10 +418,19 @@ impl CompanionCoordinator {
     }
 
     pub(crate) fn begin_desktop_dictation(&self)->Result<(String,crate::backend::recording_wire::transport::Peer,CompanionDeviceOperationLease),String>{
-        if !cfg!(windows){return Err("电脑输入当前支持Windows客户端。".into());}
-        let lease=self.begin_foreground_operation_kind(22)?;
+        if crate::backend::desktop_pointer::status().enabled {return Err("请先退出空中鼠标，再启用按住说话。".into());}
+        self.begin_desktop_mode(22)
+    }
+    pub(crate) fn begin_desktop_pointer(&self)->Result<(String,crate::backend::recording_wire::transport::Peer,CompanionDeviceOperationLease),String>{
+        let input=crate::backend::desktop_dictation::status();
+        if input.enabled||input.processing {return Err("请先退出按住说话并等待文字保存，再启用空中鼠标。".into());}
+        self.begin_desktop_mode(23)
+    }
+    fn begin_desktop_mode(&self,kind:u8)->Result<(String,crate::backend::recording_wire::transport::Peer,CompanionDeviceOperationLease),String>{
+        if !cfg!(windows){return Err("电脑模式当前支持Windows客户端。".into());}
+        let lease=self.begin_foreground_operation_kind(kind)?;
         let snapshot=self.backend.snapshot()?;
-        if snapshot_has_active_recording(&snapshot)||snapshot.device.recording{return Err("请先结束并保存当前录音，再切换按住说话。".into());}
+        if snapshot_has_active_recording(&snapshot)||snapshot.device.recording{return Err("请先结束并保存当前录音，再切换电脑模式。".into());}
         let device=self.management_device()?;
         let peer=crate::backend::known_segmented_peer(&device).ok_or("请先正常连接录音卡并读取目录。")?;
         Ok((device,peer,lease))

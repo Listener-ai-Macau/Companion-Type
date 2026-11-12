@@ -1,0 +1,10 @@
+# Development symbols and incremental copies caused tens of GiB of duplicated
+# Windows static libraries/PDBs. Release profile and shipped optimization stay
+# unchanged. Use tools/build_windows_local.py for the shared local target.
+[profile.dev]
+debug = 0
+incremental = false
+
+[profile.test]
+debug = 0
+incremental = false

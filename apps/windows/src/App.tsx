@@ -17,6 +17,7 @@ import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDeskto
 import { PetChat } from './PetChat';
 import {CloseReview} from './CloseReview';
 import {DesktopDictation} from './DesktopDictation';
+import {DesktopPointer} from './DesktopPointer';
 import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
@@ -308,8 +309,9 @@ export function App() {
     <div className="ct-window-shell">
     {isTauriRuntime()?<CloseReview unsaved={hasUnsavedEdits} client={nativeCloseReview}/>:null}
     <CompanionDashboard
-      deviceExtra={isTauriRuntime()?<DesktopDictation connected={Boolean(snapshot?.device.connected&&snapshot.device.mode==='windowsNative')}
-        blocked={busyAction!==null||boardOnlineBusy||Boolean(snapshot?.device.recording||snapshot?.meeting.active)}/>:null}
+      deviceExtra={isTauriRuntime()?<><DesktopDictation connected={Boolean(snapshot?.device.connected&&snapshot.device.mode==='windowsNative')}
+        blocked={busyAction!==null||boardOnlineBusy||Boolean(snapshot?.device.recording||snapshot?.meeting.active)}/><DesktopPointer connected={Boolean(snapshot?.device.connected&&snapshot.device.mode==='windowsNative')}
+        blocked={busyAction!==null||boardOnlineBusy||Boolean(snapshot?.device.recording||snapshot?.meeting.active)}/></>:null}
       petPanel={isTauriRuntime()?<PetChat onUnsavedChange={setPetUnsavedEdits} connected={Boolean(snapshot?.device.connected)} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}
@@ -318,7 +320,7 @@ export function App() {
       renderIncomingFiles={isTauriRuntime()?onOpen=><WindowsIncomingFiles busy={busyAction!==null||boardOnlineBusy||hasUnsavedEdits||Boolean(snapshot?.device.recording||snapshot?.meeting.active)} onChanged={()=>void refresh()} onOpen={onOpen}/>:undefined}
       audioEditNotice={isTauriRuntime()?<WindowsAudioEditNotice onChanged={()=>void refresh()}/>:null}
       onCancelMeetingQuestion={isTauriRuntime()?cancelCompanionMeetingQuestion:undefined}
-      onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw'), import('../src-tauri/resources/licenses/ShadcnDashboardMIT.txt?raw')]).then(([components, models, template]) => `${components.default}\n\n${models.default}\n\nShadcn Dashboard — https://github.com/shadcndashboard/shadcndashboard\n${template.default}`)}
+      onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw'), import('../src-tauri/resources/licenses/ShadcnDashboardMIT.txt?raw'), import('../src-tauri/resources/licenses/AirCursorMIT.txt?raw'), import('../src-tauri/resources/licenses/WatchPointerMIT.txt?raw')]).then(([components, models, template, air, watch]) => `${components.default}\n\n${models.default}\n\nShadcn Dashboard — https://github.com/shadcndashboard/shadcndashboard\n${template.default}\n\nAirCursor — https://github.com/m-afham/AirCursor\n${air.default}\n\nWatchPointer — https://github.com/umarz317/WatchPointer\n${watch.default}`)}
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
         || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}

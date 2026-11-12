@@ -27,6 +27,16 @@ type CompanionCoordinatorState<'a> = State<'a, Arc<CompanionCoordinator>>;
 type BoardOnlineLiveManagerState<'a> = State<'a, Arc<CompanionBoardOnlineLiveManager>>;
 
 #[tauri::command]
+pub fn get_companion_pointer()->crate::backend::desktop_pointer::Status {crate::backend::desktop_pointer::status()}
+#[tauri::command]
+pub async fn start_companion_pointer(coordinator:CompanionCoordinatorState<'_>,settings:companion_desktop_input::pointer::Settings,controls_cursor:bool)
+    ->Result<crate::backend::desktop_pointer::Status,String>{
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||crate::backend::desktop_pointer::start(coordinator,settings,controls_cursor)).await.map_err(|_|"空中鼠标切换未完成。".to_string())?
+}
+#[tauri::command]
+pub fn control_companion_pointer(action:String)->Result<crate::backend::desktop_pointer::Status,String>{crate::backend::desktop_pointer::control(&action)}
+#[tauri::command]
 pub fn get_companion_desktop_input()->crate::backend::desktop_dictation::Status {crate::backend::desktop_dictation::status()}
 #[tauri::command]
 pub async fn start_companion_desktop_input(coordinator:CompanionCoordinatorState<'_>,shortcut:Option<companion_desktop_input::PasteShortcut>)

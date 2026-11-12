@@ -1,0 +1,48 @@
+{
+  "shas": {
+    "air": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
+    "watch": "504137a1a8748e3560f1c203d06fbd4e0832d582"
+  },
+  "files": [
+    {
+      "project": "watch",
+      "path": "Watch/WatchPointer/ContentView.swift",
+      "url": "https://github.com/umarz317/WatchPointer/blob/main/Watch/WatchPointer/ContentView.swift"
+    },
+    {
+      "project": "watch",
+      "path": "Mac/Sources/WatchPointer/Receiver.swift",
+      "url": "https://github.com/umarz317/WatchPointer/blob/main/Mac/Sources/WatchPointer/Receiver.swift"
+    },
+    {
+      "project": "watch",
+      "path": "LICENSE",
+      "url": "https://github.com/umarz317/WatchPointer/blob/main/LICENSE"
+    },
+    {
+      "project": "air",
+      "path": "Sources/AirCursorCore/Pointer.swift",
+      "url": "https://github.com/m-afham/AirCursor/blob/main/Sources/AirCursorCore/Pointer.swift"
+    },
+    {
+      "project": "air",
+      "path": "Sources/AirCursorCore/Motion.swift",
+      "url": "https://github.com/m-afham/AirCursor/blob/main/Sources/AirCursorCore/Motion.swift"
+    },
+    {
+      "project": "air",
+      "path": "Sources/AirCursorCore/Math.swift",
+      "url": "https://github.com/m-afham/AirCursor/blob/main/Sources/AirCursorCore/Math.swift"
+    },
+    {
+      "project": "air",
+      "path": "LICENSE",
+      "url": "https://github.com/m-afham/AirCursor/blob/main/LICENSE"
+    },
+    {
+      "project": "watch",
+      "path": "Watch/WatchPointer/WatchPointerApp.swift",
+      "url": "https://github.com/umarz317/WatchPointer/blob/main/Watch/WatchPointer/WatchPointerApp.swift"
+    }
+  ]
+}

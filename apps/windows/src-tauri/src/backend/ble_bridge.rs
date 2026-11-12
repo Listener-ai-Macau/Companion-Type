@@ -40,7 +40,7 @@ mod segmented;
 mod batch_interval;
 mod recorder_control;
 mod desktop_input;
-pub(crate) use desktop_input::{listen as listen_desktop_input, Update as DesktopInputUpdate};
+pub(crate) use desktop_input::{listen as listen_desktop_input, listen_mode as listen_pointer_input, Update as DesktopInputUpdate};
 mod legacy_reclaim;
 pub(crate) mod pet_caption;
 pub(crate) mod pet_profile;

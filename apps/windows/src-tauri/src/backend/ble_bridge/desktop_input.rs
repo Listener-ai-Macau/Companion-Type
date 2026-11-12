@@ -8,6 +8,7 @@ use std::sync::{
 
 pub(crate) enum Update {
     Ready(InputStatus),
+    Motion(companion_desktop_input::pointer::Sample),
     Physical(InputStatus),
     Reconcile(InputStatus),
     Reconnecting(String),
@@ -74,6 +75,14 @@ pub(crate) fn listen(
     connection: Arc<tokio::sync::Mutex<()>>,
     notify: impl Fn(Update) + Send + Sync + 'static,
 ) -> Result<(), String> {
+    listen_mode(device_id,peer,stop,connection,1,notify)
+}
+
+pub(crate) fn listen_mode(
+    device_id:&str, peer:super::super::recording_wire::transport::Peer,
+    stop:Arc<AtomicBool>,connection:Arc<tokio::sync::Mutex<()>>,mode:u8,
+    notify:impl Fn(Update)+Send+Sync+'static,
+)->Result<(),String> {
     run_native_blocking(async {
         loop {
             if stop.load(Ordering::Acquire) {
@@ -117,7 +126,7 @@ pub(crate) fn listen(
                     remember_prepared_device(shared).await?;
                     notify(Update::Reconcile(current.clone()));
                     let waiting = StdInstant::now();
-                    while current.mode != 1 && current.flags & 6 != 0 {
+                    while current.mode != mode && current.flags & 6 != 0 {
                         if stop.load(Ordering::Acquire) {
                             return Err("已取消电脑输入；原录音保留，请松开按键。".into());
                         }
@@ -132,12 +141,13 @@ pub(crate) fn listen(
                             exchange(&device, &characteristic, &mut values, &peer, None).await?;
                         notify(Update::Reconcile(current.clone()));
                     }
-                    let initial = if current.mode == 1 && current.options == 0 {
+                    let initial = if current.mode == mode && current.options == 0 {
                         current
                     } else {
-                        exchange(&device, &characteristic, &mut values, &peer, Some(1)).await?
+                        exchange(&device, &characteristic, &mut values, &peer, Some(mode)).await?
                     };
-                    if initial.result != 0 || initial.mode != 1 {
+                    if mode==3 && initial.result==2 {return Err("此固件尚不支持空中鼠标，请先升级录音卡固件。".into());}
+                    if initial.result != 0 || initial.mode != mode {
                         return Err("请先松开按键并结束当前录音，再启用电脑输入。".into());
                     }
                     notify(Update::Ready(initial));
@@ -149,6 +159,7 @@ pub(crate) fn listen(
                             value=values.next()=>{
                                 let value=value.ok_or("录音卡交互连接已断开。")?;
                                 if value.uuid==SETTINGS_UUID {
+                                    if mode==3 {if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value) {notify(Update::Motion(sample));continue;}}
                                     if let Ok(status)=InputStatus::parse(&value.value,&peer) {
                                         if status.request==0 {trace_input("physical", &status);notify(Update::Physical(status));}
                                     }

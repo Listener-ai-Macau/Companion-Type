@@ -24,7 +24,7 @@ impl InputStatus {
         if p.len() != 64
             || &p[..4] != b"CIN1"
             || p[4] != 1
-            || p[6] > 2
+            || p[6] > 3
             || p[40..52] != peer.uid
             || u64::from_le_bytes(p[52..60].try_into().unwrap()) != peer.epoch
             || crc32fast::hash(&p[..60]) != u32::from_le_bytes(p[60..64].try_into().unwrap())
@@ -56,7 +56,7 @@ pub(crate) fn query(peer: &Peer, nonce: u32) -> Result<[u8; 36], String> {
 }
 
 fn encode_request(peer: &Peer, operation: u8, mode: u8, nonce: u32) -> Result<[u8; 36], String> {
-    if mode > 1 || nonce == 0 {
+    if (mode > 1 && mode != 3) || nonce == 0 {
         return Err("电脑输入模式请求无效。".into());
     }
     let mut p = [0u8; 36];
