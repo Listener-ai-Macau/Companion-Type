@@ -3,7 +3,7 @@ const categories:ReadonlyArray<{kind:MeetingOutlineItem['kind'];titles:readonly 
  {kind:'summary',titles:['会议概览','全会重点','Summary','会议摘要','重点'],label:'会议重点',hint:'快速了解讨论内容'},
  {kind:'decisions',titles:['Decisions','讨论结论（需核对）','讨论结论','决策'],label:'讨论结论',hint:'结合原话确认'},
  {kind:'actions',titles:['Action Items','行动事项','待办'],label:'行动事项',hint:'核对负责人和时间'},
- {kind:'questions',titles:['Questions','待解问题'],label:'待解问题',hint:'留待下次跟进'},
+ {kind:'questions',titles:['Questions','Open Questions','待解问题','待确认问题'],label:'待解问题',hint:'留待下次跟进'},
 ];
 /** Reading index only. Never derives decisions, commitments or people from prose. */
 function savedSections(markdown:string) {

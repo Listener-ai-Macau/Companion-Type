@@ -1,0 +1,31 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../../..'),{build}=require(root+'/node_modules/esbuild'),{chromium}=require(root+'/node_modules/@playwright/test');
+const out=process.argv[2]||process.env.COMPANION_WORKSPACE_OUTPUT||'E:/CodexData/Companion/.build-cache/product-closure20261112/source-workspace';fs.mkdirSync(out,{recursive:true});
+let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKING_COMPLETE_WORKSPACE_SOURCE',nativeQualified:false,hardwareQualified:false,modelsRun:false};
+(async()=>{try{
+ await build({entryPoints:[__dirname+'/meeting_workspace_harness.tsx'],outfile:out+'/workspace.js',bundle:true,platform:'browser',format:'iife',jsx:'automatic',tsconfig:root+'/apps/windows/tsconfig.json'});
+ server=http.createServer((req,res)=>{const name=path.basename(new URL(req.url,'http://localhost').pathname);if(['workspace.js','workspace.css'].includes(name)){res.setHeader('Content-Type',name.endsWith('.js')?'text/javascript':'text/css');res.end(fs.readFileSync(out+'/'+name));return;}res.setHeader('Content-Type','text/html; charset=utf-8');res.end('<!doctype html><html lang="zh-CN"><head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/workspace.css"></head><body><div id="app"></div><script src="/workspace.js"></script></body></html>');});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
+ browser=await chromium.launch({channel:'msedge',headless:true,args:['--disable-gpu']});const context=await browser.newContext({viewport:{width:1360,height:950},serviceWorkers:'block'});await context.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(origin);await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
+ const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
+ assert.equal(await nav.locator('button').count(),4);
+ assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
+ await page.screenshot({path:out+'/result-light.png',fullPage:true});
+ await nav.getByRole('button',{name:'原文与录音',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
+ await nav.getByRole('button',{name:/补充与跟进/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
+ const item=page.getByRole('textbox',{name:'跟进事项 2',exact:true});await item.fill('核对同一张清单的内容范围，确认不混入其他个人草稿');
+ await nav.getByRole('button',{name:'纪要与待办',exact:true}).click();await nav.getByRole('button',{name:/补充与跟进/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+ await page.locator('#fixture-failure').click();await page.getByRole('button',{name:'保存修改',exact:true}).click();await page.getByText(/保存尚未确认/).first().waitFor();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+ await page.locator('#fixture-failure').click();const save=page.getByRole('button',{name:/^(重试)?保存修改$/,exact:true});await save.click();
+ await page.getByRole('button',{name:'导出这张清单',exact:true}).click();assert(await page.locator('#ct-meeting-handoff-pane').isVisible());
+ const panel=page.locator('.ct-content-export');await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();assert((await preview.innerText()).includes('核对同一张清单'));assert(!(await preview.innerText()).includes('另一次沟通'));
+ await panel.getByRole('button',{name:'保存 PDF…',exact:true}).click();await panel.getByText('已取消保存，原内容保持不变。',{exact:true}).waitFor();assert((await preview.innerText()).includes('核对同一张清单'));
+ await page.screenshot({path:out+'/handoff-light.png',fullPage:true});
+ await nav.getByRole('button',{name:'纪要与待办',exact:true}).click();
+ const theme=page.getByRole('button',{name:/切换.*深色|切换到深色|深色模式/}).first();if(await theme.count())await theme.click();else await page.locator('.ct-shell').evaluate(n=>n.classList.add('ct-theme-dark'));
+ await page.screenshot({path:out+'/result-dark.png',fullPage:true});
+ for(const width of [1000,760]){await page.setViewportSize({width,height:900});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:out+'/result-dark-'+width+'.png',fullPage:true});}
+ assert.deepEqual(errors,[]);result.state='COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED';result.covered=['meeting result first','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows'];
+}catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
+}finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});

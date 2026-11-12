@@ -85,7 +85,7 @@ def frozen_app(root):
  shutil.copytree(S/'apps/windows/src-tauri/resources/licenses',app/'licenses');shutil.copy2(S/'apps/windows/src-tauri/resources/opus-license.txt',app/'licenses/opus.txt')
  return app,v
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents','editing','incoming'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents','editing','incoming','product'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  if a.stage in {'documents','incoming'}:
@@ -204,7 +204,7 @@ def main():
   if a.stage=='transcribe':
    assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
    env['COMPANION_TYPE_LOCAL_ASR_DIR']=os.environ['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']
-  if a.stage in {'actions','context','documents','editing','incoming'}:
+  if a.stage in {'actions','context','documents','editing','incoming','product'}:
    assert DEDICATED_CI,'The normal visible-window clipboard journey runs only on an owned dedicated CI runner'
    env['COMPANION_TYPE_BACKGROUND_WINDOW']='0'
    record['normalVisibleWindowOnDedicatedRunner']=True
@@ -245,7 +245,7 @@ def main():
   record['observedWebviewProfiles']=profiles;save()
   assert any(item['cdpListener'] for item in profiles) and all(item['matchesPrivateRoot'] and item['belongsToBoundedJob'] for item in profiles),'Actual CDP browser is not proven in the private profile and bounded job';record['webviewProfileVerifiedPrivate']=True
   log=(out/'ui.log').open('wb');logs.append(log);node=spawn([shutil.which('node'),S/'tools/qa/core_acceptance20261109/windows_meeting_ui.cjs',str(port),str(out),a.stage],env,S,desktop_path,job,log);processes.append(node)
-  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents','editing','incoming'} else 180)
+  deadline=time.monotonic()+(1200 if a.stage=='transcribe' else 480 if a.stage in {'audio','context','documents','editing','incoming','product'} else 180)
   while alive(node) and time.monotonic()<deadline:
    resources();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual low-memory signal during own UI worker'
    for request in sorted(out.glob('dialog-request-*.json')):
@@ -289,6 +289,7 @@ def main():
         received['pdfContentMatch']='Source excerpt retained after layout-whitespace normalization only'
        else:assert expected in text
       else:assert '周一至周五' in text and '临时区' not in text and '基于修订后的转写生成' in text
+     elif a.stage=='product':assert data['expected'] in text and data['excluded'] not in text
      else:assert '人工软件验收草稿' in text and '工程验收补充' in text
      received['selectedContentsVerified']=True
     record.setdefault('receivedFiles',[]).append(received)
@@ -341,7 +342,7 @@ def main():
   record['testStationClipboardSequenceUnchangedAtObservation']=before_clip==U.GetClipboardSequenceNumber()
   record['ownerClipboardSequenceUnchangedAtObservation']=None if DEDICATED_CI else record['testStationClipboardSequenceUnchangedAtObservation']
   record['remotePickerFocusUsed']=any(json.loads(path.read_text(encoding='utf8')).get('focusWithinOwnedRemotePickerUsed',False) for path in out.glob('dialog-reply-*.json'))
-  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context','documents','editing','incoming'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
+  record['keyboardMouseOrForegroundControlUsed']=bool(receiver and receiver.remote_input_used) or record['remotePickerFocusUsed'] or bool(DEDICATED_CI and a.stage in {'actions','context','documents','editing','incoming','product'});record['ownerKeyboardMouseOrForegroundControlUsed']=False
   if desktop and not DEDICATED_CI:U.CloseDesktop(desktop)
   if not DEDICATED_CI:U.CloseWindowStation(station)
   K.CloseHandle(low);record['finishedAt']=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds');save()

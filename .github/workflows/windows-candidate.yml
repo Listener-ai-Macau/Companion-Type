@@ -8,7 +8,7 @@ on:
       operation:
         description: Build a candidate or verify an existing matched candidate
         type: choice
-        options: [candidate, context, editing]
+        options: [candidate, context, editing, product]
         default: candidate
       candidate_spec:
         description: Repository path to the independently inspected candidate spec
@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: windows-candidate-${{ github.ref }}-${{ (contains(github.event.head_commit.message, '[windows-build]') || contains(github.event.head_commit.message, '[windows-bundle]') || inputs.operation == 'candidate') && 'build' || (contains(github.event.head_commit.message, '[core-documents]') || contains(github.event.head_commit.message, '[core-context]') || contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'context' || inputs.operation == 'editing') && 'runtime' || github.run_id }}
+  group: windows-candidate-${{ github.ref }}-${{ (contains(github.event.head_commit.message, '[windows-build]') || contains(github.event.head_commit.message, '[windows-bundle]') || inputs.operation == 'candidate') && 'build' || (contains(github.event.head_commit.message, '[core-documents]') || contains(github.event.head_commit.message, '[core-context]') || contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'context' || inputs.operation == 'editing' || inputs.operation == 'product') && 'runtime' || github.run_id }}
   cancel-in-progress: false
 
 jobs:
@@ -98,7 +98,7 @@ jobs:
           retention-days: 7
           if-no-files-found: warn
   context-acceptance:
-    if: contains(github.event.head_commit.message, '[core-context]') || contains(github.event.head_commit.message, '[core-documents]') || contains(github.event.head_commit.message, '[core-audio-edit]') || (github.event_name == 'workflow_dispatch' && (inputs.operation == 'context' || inputs.operation == 'editing'))
+    if: contains(github.event.head_commit.message, '[core-context]') || contains(github.event.head_commit.message, '[core-documents]') || contains(github.event.head_commit.message, '[core-audio-edit]') || (github.event_name == 'workflow_dispatch' && (inputs.operation == 'context' || inputs.operation == 'editing' || inputs.operation == 'product'))
     runs-on: windows-2022
     timeout-minutes: 20
     permissions:
@@ -114,7 +114,7 @@ jobs:
       - name: Verify the matched packaged image-note workflow on an isolated runner
         env:
           GH_TOKEN: ${{ github.token }}
-          COMPANION_CORE_PHASE: ${{ (contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'editing') && 'editing' || contains(github.event.head_commit.message, '[core-documents]') && 'documents' || 'context' }}
+          COMPANION_CORE_PHASE: ${{ inputs.operation == 'product' && 'product' || (contains(github.event.head_commit.message, '[core-audio-edit]') || inputs.operation == 'editing') && 'editing' || contains(github.event.head_commit.message, '[core-documents]') && 'documents' || 'context' }}
           COMPANION_ACCEPTANCE_CANDIDATE_SPEC: ${{ github.event_name == 'workflow_dispatch' && inputs.candidate_spec || contains(github.event.head_commit.message, '[core-audio-edit]') && 'docs/handoffs/android-media-import20261110/windows095/runtime-spec.json' || contains(github.event.head_commit.message, '[core-documents]') && 'docs/handoffs/android-media-import20261110/windows108/runtime-spec.json' || 'docs/handoffs/android-media-import20261110/windows087/runtime-spec.json' }}
         run: python tools/qa/core_acceptance20261109/run_ci.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

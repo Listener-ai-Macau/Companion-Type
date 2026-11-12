@@ -34,7 +34,7 @@ function stamp(ms: number) {
 }
 
 export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange, onDraftSessionsChange,
-  sourceSelection, onSeekSource, audioSeekBlocked = false, lookup, onReturnLookup }: {
+  sourceSelection, onSeekSource, audioSeekBlocked = false, lookup, onReturnLookup,lookupKind }: {
   session: CompanionV1HostSession; visible: boolean; blocked: boolean;
   onSave?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onUnsavedChange: (unsaved: boolean) => void;
@@ -42,6 +42,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   sourceSelection?: CompanionTranscriptSource | null;
   onSeekSource?: (source: CompanionTranscriptSource) => Promise<void>;
   audioSeekBlocked?: boolean;
+  lookupKind?:'minutes'|'note';
   lookup?:TranscriptLookup|null;
   onReturnLookup?:()=>void;
 }) {
@@ -200,7 +201,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         <button type="button" className="ct-action" disabled={Boolean(saving)} onClick={() => cancel(session.id)}>取消修订</button>
       </div>
     </div> : <>
-      <TranscriptFind key={session.id} texts={rows.length?rows.map(row=>row.text):companionReviewedTranscript(session).split('\n')} lookup={lookup} onReturn={onReturnLookup}>{highlight=><div className="ct-transcript-lines">
+      <TranscriptFind key={session.id} texts={rows.length?rows.map(row=>row.text):companionReviewedTranscript(session).split('\n')} lookup={lookup} lookupKind={lookupKind} onReturn={onReturnLookup}>{highlight=><div className="ct-transcript-lines">
         {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}
           data-source-selected={selection?.index === index ? 'true' : undefined}
           tabIndex={selection?.index === index ? -1 : undefined}

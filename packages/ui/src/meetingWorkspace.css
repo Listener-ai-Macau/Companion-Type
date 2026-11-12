@@ -1,0 +1,37 @@
+/* One meeting, four everyday purposes. Pane changes keep editors mounted. */
+.ct-windows .ct-meeting-navigation{display:flex;gap:6px;margin:0 28px 24px;padding:5px;background:#f2f0f5;border:1px solid #e8e4ed;border-radius:13px}
+.ct-windows .ct-meeting-navigation button{display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-width:0;min-height:43px;padding:9px 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#716a7b;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.ct-windows .ct-meeting-navigation button:hover{color:#43354e;background:#eae5ef}
+.ct-windows .ct-meeting-navigation button[aria-current=page]{background:#fff;border-color:#e5dfeb;color:#503569;box-shadow:0 2px 5px #34204408}
+.ct-windows .ct-meeting-navigation button:focus-visible{outline:2px solid #8c6caf;outline-offset:3px}
+.ct-windows .ct-pane-count{font-size:10px;min-width:18px;border-radius:5px;padding:2px;background:#e9e3f1;color:#654779}
+.ct-windows .ct-pane-dirty{font-size:10px;color:#916324}
+.ct-windows .ct-meeting-pane[hidden],.ct-windows .ct-meeting-audio-edit[hidden]{display:none!important}
+.ct-windows .ct-meeting-pane{min-height:200px;animation:ct-pane-in .16s ease-out}
+.ct-windows .ct-pane-intro{margin:0 28px 24px}
+.ct-windows .ct-pane-intro h3{font-size:21px;letter-spacing:-.025em;margin:0 0 8px;color:#302736}
+.ct-windows .ct-pane-intro p{margin:0;color:#77707e;font-size:13px;line-height:1.7}
+.ct-windows .ct-result-empty{margin:0 28px 28px;padding:32px;border:1px dashed #ded4e8;border-radius:16px;background:#fcfafc;color:#6d597e}
+.ct-windows .ct-result-empty h3{margin:14px 0 10px;font-size:21px;color:#352b3c}.ct-windows .ct-result-empty p{font-size:14px;line-height:1.9;max-width:620px;color:#756b7d}.ct-windows .ct-result-empty .ct-button-row{margin-top:20px}
+.ct-windows .ct-result-primary-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:24px 0 12px}
+.ct-windows .ct-result-secondary-actions{margin:12px 0 20px;border-top:1px solid #ebe5f0;padding-top:14px}.ct-windows .ct-result-secondary-actions>summary{font-size:12px;color:#786885;cursor:pointer}.ct-windows .ct-result-secondary-actions>div{padding-top:12px}
+.ct-windows .ct-content-export.ct-export-workspace{margin-top:0;border:0;padding-top:0}.ct-windows .ct-export-workspace>summary{display:none}.ct-windows .ct-export-workspace>.ct-step-meta:first-of-type{display:none}
+.ct-windows #ct-meeting-handoff-pane>.ct-result-tools:not(.ct-content-export){margin-inline:28px}
+.ct-windows .ct-export-workspace fieldset{padding:20px!important;border:1px solid #e8e1ed!important;border-radius:14px;background:#fcfafc}
+.ct-windows .ct-export-workspace fieldset>.ct-export-format{display:flex;align-items:center;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid #ebe5ee;font-size:13px;font-weight:600}
+.ct-windows .ct-export-workspace select{padding:8px 12px;border:1px solid #ddd3e6;border-radius:8px;color:inherit;background:#fff;font:inherit;max-width:100%}
+.ct-windows .ct-export-workspace .ct-content-preview{margin-top:20px;padding:20px;border:1px solid #e4dce9;border-radius:14px;background:#fff}.ct-windows .ct-export-workspace .ct-content-preview h4{margin:0 0 12px;color:#72627f;font-size:12px}.ct-windows .ct-export-workspace .ct-content-preview pre{margin:0;font:inherit;font-size:14px;line-height:1.9;color:inherit}
+.ct-windows.ct-theme-dark .ct-meeting-navigation{background:#25212d;border-color:#403749}.ct-windows.ct-theme-dark .ct-meeting-navigation button{color:#b8adbf}.ct-windows.ct-theme-dark .ct-meeting-navigation button:hover{background:#332a3e;color:#eee5f5}.ct-windows.ct-theme-dark .ct-meeting-navigation button[aria-current=page]{background:#40324d;border-color:#5f476f;color:#edddfa;box-shadow:none}
+.ct-windows.ct-theme-dark .ct-pane-count{background:#53415f;color:#e6d4f3}.ct-windows.ct-theme-dark .ct-pane-dirty{color:#e4bf7c}
+.ct-windows.ct-theme-dark .ct-pane-intro h3,.ct-windows.ct-theme-dark .ct-result-empty h3{color:#f1e8f7}.ct-windows.ct-theme-dark .ct-pane-intro p,.ct-windows.ct-theme-dark .ct-result-empty p{color:#b8adbf}
+.ct-windows.ct-theme-dark .ct-result-empty{background:#27202f;border-color:#51425d;color:#cfb8e3}.ct-windows.ct-theme-dark .ct-result-secondary-actions{border-color:#44384e}.ct-windows.ct-theme-dark .ct-result-secondary-actions>summary{color:#bdabce}
+.ct-windows.ct-theme-dark .ct-export-workspace fieldset{background:#27212e;border-color:#4b3d56!important}.ct-windows.ct-theme-dark .ct-export-workspace fieldset>.ct-export-format{border-color:#493b54}.ct-windows.ct-theme-dark .ct-export-workspace select{background:#302737;border-color:#5d496b}.ct-windows.ct-theme-dark .ct-export-workspace .ct-content-preview{background:#241e2b;border-color:#493a56}.ct-windows.ct-theme-dark .ct-export-workspace .ct-content-preview h4{color:#bdabce}
+@keyframes ct-pane-in{from{opacity:.65}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ct-windows .ct-meeting-pane{animation:none}}
+@media(max-width:700px){.ct-windows .ct-meeting-navigation{margin-inline:19px;gap:2px}.ct-windows .ct-meeting-navigation button{padding:9px 5px;gap:5px;font-size:12px}.ct-windows .ct-meeting-navigation button svg{display:none}.ct-windows .ct-pane-dirty{font-size:9px}.ct-windows .ct-pane-intro,.ct-windows .ct-result-empty{margin-inline:19px}.ct-windows .ct-result-empty{padding:24px}.ct-windows .ct-export-workspace fieldset{padding:14px!important}}
+
+.ct-windows #ct-meeting-materials-pane{padding:0 28px 24px}.ct-windows #ct-meeting-materials-pane .meeting-reference-workspace{margin-top:0}.ct-windows #ct-meeting-materials-pane .reference-workspace-heading h3{font-size:21px}.ct-windows #ct-meeting-materials-pane .reference-workspace-heading p{font-size:13px}
+@media(max-width:700px){.ct-windows #ct-meeting-materials-pane{padding-inline:19px}}
+
+.ct-windows .ct-content-export.ct-export-workspace{margin-inline:28px}.ct-windows .ct-export-workspace .ct-note-handoff-scope+fieldset .ct-export-format{margin-top:0;padding-top:0;border-top:0}
+@media(max-width:700px){.ct-windows .ct-content-export.ct-export-workspace{margin-inline:19px}}

@@ -9,7 +9,7 @@ export type ContentExportTarget={requestId:string;sessionId:string;noteId:string
 type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png'|'bundle';
 const formats:readonly [Format,string][]=[['bundle','图文 ZIP（含原图）'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['txt','TXT'],['markdown','Markdown'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['png','思维导图 PNG'],['srt','字幕 SRT']];
 type Preview={contentHash:string;textContent?:string|null};
-type Props={target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
+type Props={standalone?:boolean;target?:ContentExportTarget|null;onClearTarget?:()=>void;sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersion:string;minutes:boolean;transcript:boolean;highlights:boolean;timing:boolean;exactTiming:boolean;notes:{id:string;text:string}[];blocked:boolean;desktopFileSharing?:boolean;unsaved:{title:boolean;minutes:boolean;transcript:boolean;highlights:boolean;notes:boolean};
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
  onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
  onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
@@ -81,7 +81,7 @@ export function ContentExportPanel(props:Props){
  const disabled=props.blocked||phase!==null;
  const setChecked=(name:'minutes'|'transcript'|'highlights'|'timeline',checked:boolean)=>setSelection(old=>({...old,[name]:checked,...(name==='transcript'&&!checked?{timeline:false}:{})}));
  const subtitles=format==='srt';
- return <details ref={panel} id="ct-meeting-export" className="ct-result-tools ct-content-export">
+ return <details ref={panel} id="ct-meeting-export" className={"ct-result-tools ct-content-export"+(props.standalone?" ct-export-workspace":"")} open={props.standalone||undefined}>
    <summary>导出、复制与分享</summary>
    <p className="ct-step-meta">选择需要带走的已保存内容。复制、文件预览与导出使用同一份选择。</p>
    {target&&<div className="ct-note-handoff-scope" role={targetNote?'status':'alert'}>{targetNote?<><strong>{!choice.minutes&&!choice.transcript&&!choice.highlights&&choice.noteIds.length===1&&choice.noteIds[0]===target.noteId?'仅导出这条人工补充':'已调整导出范围'}</strong><p>{targetNote.text.split('\n')[0].replace(/^\s*[-*]\s+\[[ xX]\]\s*/,'')||'图片备注'}</p><small>包含保存的文字、勾选状态和字面依据；原图片可选择图文 ZIP。</small><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setScopeExpanded(value=>!value)}>{scopeExpanded?'收起范围选择':'更改导出范围'}</button></>:<><p>这条补充已变化或移除，请重新选择；尚未导出其它内容。</p><button type="button" className="ct-action" disabled={disabled} onClick={props.onClearTarget}>重新选择内容</button></>}</div>}
@@ -97,7 +97,7 @@ export function ContentExportPanel(props:Props){
        <div style={{display:'grid',gap:8,margin:'10px 0'}}>{props.notes.map(note=>{const title=note.text.split('\n')[0].slice(0,90)||'未命名补充';return <label key={note.id} style={{display:'flex',alignItems:'flex-start',gap:8}}><input type="checkbox" checked={choice.noteIds.includes(note.id)} disabled={subtitles} aria-label={`选择材料：${title}`} onChange={e=>{const checked=e.currentTarget.checked;setSelection(old=>({...old,noteIds:checked?[...old.noteIds,note.id]:old.noteIds.filter(id=>id!==note.id)}));}}/><span>{title}</span></label>;})}</div>
      </details>:null}
      </div>
-     <label>文件格式 <select aria-label="所选内容文件格式" value={format} onChange={e=>{const value=e.currentTarget.value as Format;setFormat(value);if(value==='srt')setSelection({minutes:false,transcript:true,highlights:false,timeline:true,noteIds:[]});}}>
+     <label className="ct-export-format">文件格式 <select aria-label="所选内容文件格式" value={format} onChange={e=>{const value=e.currentTarget.value as Format;setFormat(value);if(value==='srt')setSelection({minutes:false,transcript:true,highlights:false,timeline:true,noteIds:[]});}}>
        {formats.map(([value,label])=><option key={value} value={value} disabled={value==='srt'&&!props.exactTiming}>{label}</option>)}
      </select></label>
    </fieldset>
