@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-12T22:10:32+08:00",
+  "version": "0.1.115",
+  "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+  "issues": [
+    {
+      "eventId": "861ea4c85daa62157b5131513fac21dbaed3e0274f6432fe0abda66fda34a7e7",
+      "reportedAt": "2026-11-12T14:05:37.4844844Z",
+      "version": "0.1.115",
+      "stepIndex": 0,
+      "stepTitle": "看见并连接录音卡",
+      "ownerQuote": "感觉正在寻找并还是老样子，UI有点丑。UI 可能要重构一下，要变得高级一点的 UI。。",
+      "id": "ISSUE-001",
+      "firmwareVersion": 66828,
+      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
+    },
+    {
+      "eventId": "f21c316536cb102e532d28b4d63379092a79cc3fd57b9286609bf135e63393d7",
+      "reportedAt": "2026-11-12T14:06:40.7587236Z",
+      "version": "0.1.115",
+      "stepIndex": 2,
+      "stepTitle": "保存与回听",
+      "ownerQuote": "这个有点太复杂了，你这个全部记录应该要。大概简单说一下，用那个。命名说一下，不然人家找不到这个是什么鬼东西。",
+      "id": "ISSUE-002",
+      "firmwareVersion": 66828,
+      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
+    },
+    {
+      "eventId": "c388a4fa2c068d10f998b3f274000793b13e765b0f866c8735891cae87fe2a8f",
+      "reportedAt": "2026-11-12T14:07:11.2562811Z",
+      "version": "0.1.115",
+      "stepIndex": 3,
+      "stepTitle": "转成文字",
+      "ownerQuote": "这边完全看的，一一直是待转写之类的，然后。好像也不是说很好用。不是很好用，现在不是很好用。然后的话，之前弄过的。主要是那些，这个录音管理还是没有做得很好。",
+      "id": "ISSUE-003",
+      "firmwareVersion": 66828,
+      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
+    }
+  ],
+  "scope": {
+    "at": "2026-11-12T22:10:32+08:00",
+    "ownerQuote": "这些你可以用那个电脑声音简单做一下吧，我只要体验人能体验的就好，其他那些长。什么长的会叫那些我就不体验了，主要是我体验的是人体验的东西，这些啊，就是简单体验一下就可以，那些复杂的功能就你来做或者是怎么样。反正我现在体验起来就是感觉 UI 啊那些都不是特别好。然后呢，使用逻辑比较混乱，功能那些我就没有再体验了，功能那些你确认没问题就行。",
+    "state": "OWNER_SHORT_UX_ONLY_ENGINEERING_OWNS_FUNCTIONAL_VERIFICATION",
+    "ownerExpectedExperience": "Short natural use focused on visual quality, finding a recording and clear next action; no long recording, failure checklist or full-function qualification.",
+    "engineeringWork": "Use clearly labelled computer-generated public audio for actual ordinary import, local ASR, result organisation, save, export and reopening. Complex and physical checks stay engineering responsibility; synthetic media does not qualify microphone, BLE, actual long recording or general model accuracy.",
+    "noAdditionalTechnicalOwnerRound": true,
+    "existingRoundNavigationIsNotFunctionalAcceptance": true
+  },
+  "ownerAppearanceAccepted": false,
+  "functionalAcceptanceFromNavigation": false,
+  "physicalTotalAcceptancePassed": false
+}

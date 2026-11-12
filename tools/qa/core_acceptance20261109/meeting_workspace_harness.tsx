@@ -6,6 +6,7 @@ import '../../../packages/ui/src/companionUi.css';
 import '../../../packages/ui/src/companionDesign.css';
 import '../../../packages/ui/src/companionDark.css';
 import '../../../apps/windows/src/workspaceRefinement.css';
+import '../../../packages/ui/src/recordingWorkspace.css';
 
 const original=createCompanionV1Fixture();
 const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',status:'minutesReady',source:'importedTranscript',startedAt:'2026-11-12T01:00:00Z',durationMs:600000,

@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-12T22:20:51+08:00",
+  "state": "ACTUAL_INSTALLED115_COMPUTER_VOICE_LOCAL_ASR_CONFIGURED_MINUTES_EXPORT_AND_REOPEN_COMPLETED",
+  "version": "0.1.115",
+  "appSourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
+  "syntheticAudio": true,
+  "privateAudioRead": false,
+  "deviceAccess": false,
+  "microphoneCapture": false,
+  "asrSidecarUsed": false,
+  "transcriptInjected": false,
+  "cloudAudioUpload": false,
+  "steps": [
+    {
+      "name": "actual-local-asr",
+      "exitCode": 0,
+      "seconds": 4.844
+    },
+    {
+      "name": "actual-configured-minutes",
+      "exitCode": 0,
+      "seconds": 3.046
+    },
+    {
+      "name": "save-result",
+      "exitCode": 0,
+      "seconds": 0.063
+    },
+    {
+      "name": "read-after-process-restart",
+      "exitCode": 0,
+      "seconds": 0.047
+    }
+  ],
+  "audio": {
+    "bytes": 743230,
+    "sha256": "d1e07b18f5863f9dcb933bc0d59085f3fe083ec7de67b56a98eff408548d5d5b",
+    "seconds": 23.2245,
+    "rate": 16000,
+    "channels": 1
+  },
+  "actualLocalAsrCompleted": true,
+  "transcriptCharacters": 74,
+  "asrProvider": "local-paraformer",
+  "minutesSource": "llm_deepseek",
+  "minutesQuality": "final",
+  "actualConfiguredMinutesCompleted": true,
+  "savedStateUnchangedAcrossProcesses": true,
+  "originalSyntheticWavUnchanged": true,
+  "guiAudioImportQualified": false,
+  "modelGeneralAccuracyQualified": false,
+  "physicalRecordingQualified": false,
+  "longRecordingQualified": false,
+  "saleQualified": false,
+  "finishedAt": "2026-11-12T22:20:59+08:00"
+}
