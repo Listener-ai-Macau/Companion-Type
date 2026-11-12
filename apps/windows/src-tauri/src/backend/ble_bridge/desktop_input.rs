@@ -1,6 +1,7 @@
 //! Keep the enabled desktop mode on the same verified recorder across link loss.
 use super::super::recorder_input::{self, InputStatus};
 use super::*;
+use futures::FutureExt;
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     Arc,
@@ -40,9 +41,11 @@ async fn exchange(
     values: &mut Notifications,
     peer: &super::super::recording_wire::transport::Peer,
     mode: Option<u8>,
+    pointer_v4:bool,
 ) -> Result<InputStatus, String> {
     let nonce = segmented::nonce();
     let message = match mode {
+        Some(3) if pointer_v4 => recorder_input::pointer_request(peer,nonce)?,
         Some(mode) => recorder_input::request(peer, mode, nonce)?,
         None => recorder_input::query(peer, nonce)?,
     };
@@ -112,7 +115,7 @@ pub(crate) fn listen_mode(
                     // Query carries the original UID/epoch and performs no MIC
                     // command. A new handle may only resume this same recorder.
                     let mut current =
-                        exchange(&device, &characteristic, &mut values, &peer, None).await?;
+                        exchange(&device, &characteristic, &mut values, &peer, None,false).await?;
                     if current.result != 0 {
                         return Err("录音卡尚未确认当前输入状态。".into());
                     }
@@ -138,31 +141,78 @@ pub(crate) fn listen_mode(
                         ));
                         tokio::time::sleep(StdDuration::from_millis(250)).await;
                         current =
-                            exchange(&device, &characteristic, &mut values, &peer, None).await?;
+                            exchange(&device, &characteristic, &mut values, &peer, None,false).await?;
                         notify(Update::Reconcile(current.clone()));
                     }
-                    let initial = if current.mode == mode && current.options == 0 {
+                    let wanted_options=if mode==3{8}else{0};
+                    let mut initial = if current.mode == mode && current.options == wanted_options {
                         current
                     } else {
-                        exchange(&device, &characteristic, &mut values, &peer, Some(mode)).await?
+                        exchange(&device, &characteristic, &mut values, &peer, Some(mode),mode==3).await?
                     };
+                    // Old normal firmware remains usable with its original
+                    // schema3 controls. New firmware negotiates CIM4 explicitly.
+                    if mode==3&&initial.result==2 {
+                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),false).await?;
+                    }
                     if mode==3 && initial.result==2 {return Err("此固件尚不支持空中鼠标，请先升级录音卡固件。".into());}
                     if initial.result != 0 || initial.mode != mode {
                         return Err("请先松开按键并结束当前录音，再启用电脑输入。".into());
                     }
                     notify(Update::Ready(initial));
                     drop(acquisition);
+                    // ACK writes run concurrently with receipt/rendering: a
+                    // slow GATT round trip must not queue old aim poses.
+                    // The device exposes only its queue head. A newer head
+                    // proves the previous ACK arrived; duplicate retries can
+                    // therefore share one latest ACK slot without losing order.
+                    let (ack_tx,mut ack_rx)=tokio::sync::watch::channel(None::<u32>);
+                    let acknowledgements=async {
+                        while ack_rx.changed().await.is_ok() {
+                            let sequence=(*ack_rx.borrow_and_update()).unwrap();
+                            let message=recorder_input::pointer_ack(&peer,sequence)?;
+                            tokio::time::timeout(StdDuration::from_secs(2),device.peripheral.write(&characteristic,&message,WriteType::WithResponse))
+                                .await.map_err(|_|"动作确认超时。".to_string())?
+                                .map_err(|e|format!("动作确认未完成：{e}"))?;
+                        }
+                        Ok::<(),String>(())
+                    };
+                    tokio::pin!(acknowledgements);
                     let mut tick = tokio::time::interval(StdDuration::from_millis(100));
                     loop {
                         tokio::select! {
+                            result=&mut acknowledgements=>{result?;return Err("动作确认通道已结束。".into());},
                             _=tick.tick()=>if stop.load(Ordering::Acquire) {break;},
                             value=values.next()=>{
-                                let value=value.ok_or("录音卡交互连接已断开。")?;
-                                if value.uuid==SETTINGS_UUID {
-                                    if mode==3 {if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value) {notify(Update::Motion(sample));continue;}}
-                                    if let Ok(status)=InputStatus::parse(&value.value,&peer) {
-                                        if status.request==0 {trace_input("physical", &status);notify(Update::Physical(status));}
+                                let mut value=value.ok_or("录音卡交互连接已断开。")?;
+                                let mut latest=None;
+                                let mut physical=Vec::new();
+                                // Drain a ready burst without replaying old
+                                // motion. Every physical edge keeps its order.
+                                for index in 0..64 {
+                                    if value.uuid==SETTINGS_UUID {
+                                        if mode==3 {if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value) {
+                                            if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
+                                        }}
+                                        if let Ok(status)=InputStatus::parse(&value.value,&peer) {
+                                            if status.request==0 {
+                                                trace_input("physical", &status);
+                                                physical.push(status);
+                                            }
+                                        }
                                     }
+                                    if index==63{break;}
+                                    match values.next().now_or_never(){Some(Some(next))=>value=next,Some(None)=>return Err("录音卡交互连接已断开。".into()),None=>break}
+                                }
+                                if let Some(sample)=latest{notify(Update::Motion(sample));}
+                                // Establish the latest sensor clock before
+                                // applying controls from this same burst. A
+                                // recovered motion gap must not erase a new
+                                // reliable DOWN that arrived beside it.
+                                for status in physical {
+                                    let ack=mode==3&&status.options&8!=0&&status.events&0x1e00!=0;
+                                    let sequence=status.sequence;notify(Update::Physical(status));
+                                    if ack{ack_tx.send(Some(sequence)).map_err(|_|"动作确认通道已结束。".to_string())?;}
                                 }
                             }
                         }
@@ -172,7 +222,7 @@ pub(crate) fn listen_mode(
                 .await;
                 // Physical release owns STOP. Explicitly leaving the mode has
                 // to receive a real mode0 ACK before reporting it restored.
-                let restored = exchange(&device, &characteristic, &mut values, &peer, Some(0))
+                let restored = exchange(&device, &characteristic, &mut values, &peer, Some(0),false)
                     .await
                     .and_then(|s| {
                         if s.result == 0 && s.mode == 0 {

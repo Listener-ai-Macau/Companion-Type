@@ -53,8 +53,8 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
             cursor.release()
         });
         let result=if frames.is_ok(){
-            let p=pointer.clone();
-            super::ble_bridge::listen_pointer_input(&device,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,move|event|{
+            let p=pointer.clone();let event_stop=stop.clone();let failure=Arc::new(Mutex::new(None));let event_failure=failure.clone();
+            let result=super::ble_bridge::listen_pointer_input(&device,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,move|event|{
                 use super::ble_bridge::DesktopInputUpdate;
                 match event {
                     DesktopInputUpdate::Motion(sample)=>{
@@ -62,10 +62,17 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
                         let b=desktop_bounds();p.lock().unwrap_or_else(|e|e.into_inner()).sample(sample,origin.elapsed().as_secs_f64(),b);
                     },
                     DesktopInputUpdate::Ready(_)=>{p.lock().unwrap_or_else(|e|e.into_inner()).calibrate();change(|s|{s.ready=true;});},
+                    DesktopInputUpdate::Physical(s) if s.mode==3&&s.options&8!=0=>{
+                        if let Err(message)=p.lock().unwrap_or_else(|e|e.into_inner()).control(companion_desktop_input::pointer::Control{sequence:s.sequence,sensor_ms:s.event_ms,events:s.events}){
+                            *event_failure.lock().unwrap_or_else(|e|e.into_inner())=Some(message.to_string());event_stop.store(true,Ordering::Release);
+                        }
+                    },
                     DesktopInputUpdate::Reconnecting(message)=>{p.lock().unwrap_or_else(|e|e.into_inner()).pause(true);change(|s|{s.ready=false;s.message=message;});},
                     _=>{},
                 }
-            })
+            });
+            let message=failure.lock().unwrap_or_else(|e|e.into_inner()).take();
+            match message{Some(message)=>Err(message),None=>result}
         }else {Err("光标任务未能启动。".into())};
         stop.store(true,Ordering::Release);
         let frame_result=frames.map_err(|_|"光标任务未能启动。".to_string()).and_then(|h|h.join().map_err(|_|"光标任务已中断。".to_string()).and_then(|r|r));

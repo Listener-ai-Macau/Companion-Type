@@ -1,6 +1,6 @@
 use super::*;
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
-fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
+fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
     for n in 0..=27 {p.sample(sample(n+1,n*40,false),n as f64*0.04,bounds());p.frame(n as f64*0.04,bounds());}
@@ -124,4 +124,78 @@ fn board_calibrated_packet_uses_q14_gravity_and_no_second_fixed_host_bias() {
     assert!(p.metrics.calibrated);assert_eq!(p.bias,[0.;3]);assert!(p.heading.abs()<1e-10);
     s.sequence+=1;s.sensor_ms+=10;s.device_ready=Some(false);p.sample(s,21.,bounds());
     assert!(!p.metrics.calibrated);assert!(p.frame(21.,bounds()).position.is_none());
+}
+
+fn aim_sample(seq:u32,ms:u32,heading:f64)->Sample {
+    Sample{fused:true,device_ready:Some(true),aim:Some([heading,90.,0.]),..sample(seq,ms,false)}
+}
+fn aim_pointer()->Pointer {
+    let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
+    p.sample(aim_sample(1,0,0.),0.,bounds());p.sample(aim_sample(2,10,0.),0.01,bounds());p.frame(0.01,bounds());p
+}
+#[test]
+fn cim4_matches_independent_c_fixture_and_preserves_angles_rates_gravity() {
+    let hex="43494d31040303ff07000000f0ffffffd204000000206d37d7f66b03b831ec81";
+    let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let s=Sample::parse(&bytes).unwrap();assert_eq!(s.aim,Some([12.34,-23.45,8.75]));
+    assert_eq!(s.device_ready,Some(true));assert_eq!(s.accel[0],0.);assert_eq!(s.accel[1],500.);
+}
+#[test]
+fn device_heading_recovers_all_turns_when_eighty_motion_packets_are_missing() {
+    let mut full=aim_pointer();let mut lossy=aim_pointer();let mut legacy=aim_pointer();
+    legacy.heading_zero=None;
+    // Watch's device loop integrates90deg/s at100Hz regardless of whether
+    // its BLE write is accepted. Drop the middle800ms at the receiver.
+    for n in 1..=100 {
+        let s=aim_sample(n+2,n*10+10,n as f64*0.9);let now=n as f64*0.01+0.01;
+        full.sample(s,now,bounds());full.frame(now,bounds());
+        if n<=10||n>90 {
+            lossy.sample(s,now,bounds());lossy.frame(now,bounds());
+            let mut old=s;old.aim=None;old.gyro=[0.,0.,90.];legacy.sample(old,now,bounds());
+        }
+    }
+    assert!((full.heading-90.).abs()<1e-8);assert!((lossy.heading-full.heading).abs()<1e-8);
+    assert_eq!(lossy.metrics.missing,80);assert!(legacy.heading<25.,"old integration loses the turn: {}",legacy.heading);
+    // Recenter and wrap use the absolute device heading, without a reset
+    // command or another round trip to the card.
+    lossy.recenter(Point{x:960.,y:540.});lossy.sample(aim_sample(103,1020,179.),1.02,bounds());
+    lossy.sample(aim_sample(104,1030,-179.),1.03,bounds());assert!((lossy.heading-2.).abs()<1e-8);
+}
+#[test]
+fn reliable_click_survives_missing_motion_and_duplicate_control_is_not_replayed() {
+    let mut p=aim_pointer();
+    let down=Control{sequence:1,sensor_ms:30,events:DOWN};
+    let up=Control{sequence:2,sensor_ms:120,events:UP};
+    assert_eq!(p.control(down),Ok(true));assert_eq!(p.control(down),Ok(false));
+    // No motion packet carries either button edge.
+    assert_eq!(p.control(up),Ok(true));assert_eq!(p.control(up),Ok(false));
+    assert!(matches!(p.frame(0.2,bounds()).buttons.as_slice(),[Button::Click(_)]));
+    assert!(p.frame(0.21,bounds()).buttons.is_empty());
+    // A complete short press replayed in one foreground retains one click.
+    p.control(Control{sequence:3,sensor_ms:200,events:DOWN|UP}).unwrap();
+    assert!(matches!(p.frame(0.22,bounds()).buttons.as_slice(),[Button::Click(_)]));
+    // CIM4 copies of level/tap serial cannot produce duplicate buttons.
+    let mut s=aim_sample(3,230,0.);s.held=true;s.tap_serial=1;p.sample(s,0.23,bounds());
+    s.sequence+=1;s.sensor_ms+=10;s.held=false;s.tap_serial=2;p.sample(s,0.24,bounds());
+    assert!(p.frame(0.24,bounds()).buttons.is_empty());
+    p.control(Control{sequence:4,sensor_ms:250,events:DOWN}).unwrap();
+    p.control(Control{sequence:5,sensor_ms:700,events:UP}).unwrap();
+    assert!(matches!(p.frame(0.25,bounds()).buttons.as_slice(),[Button::Down(_),Button::Up]));
+    let mut s=aim_sample(100,1000,5.);s.held=true;p.sample(s,1.,bounds());
+    p.control(Control{sequence:6,sensor_ms:990,events:DOWN}).unwrap();
+    p.control(Control{sequence:7,sensor_ms:1030,events:UP}).unwrap();
+    assert!(matches!(p.frame(1.,bounds()).buttons.as_slice(),[Button::Click(_)]));
+}
+#[test]
+fn reliable_drag_release_pause_overflow_and_sequence_wrap_are_bounded() {
+    // Simulate regular motion during the hold, rather than a stale gap.
+    let mut p=aim_pointer();p.control(Control{sequence:u32::MAX,sensor_ms:30,events:DOWN}).unwrap();
+    for n in 3..=40 {let mut s=aim_sample(n,n*10,0.);s.held=true;p.sample(s,n as f64*0.01,bounds());p.frame(n as f64*0.01,bounds());}
+    assert!(p.metrics.dragging);
+    assert_eq!(p.control(Control{sequence:1,sensor_ms:410,events:UP}),Ok(true));
+    assert_eq!(p.frame(0.41,bounds()).buttons,vec![Button::Up]);
+    p.pause(true);p.control(Control{sequence:2,sensor_ms:420,events:CLICK}).unwrap();p.pause(false);
+    assert!(p.frame(0.42,bounds()).buttons.is_empty());
+    assert!(p.control(Control{sequence:3,sensor_ms:430,events:OVERFLOW|UP}).is_err());
+    assert!(!p.metrics.dragging);
 }

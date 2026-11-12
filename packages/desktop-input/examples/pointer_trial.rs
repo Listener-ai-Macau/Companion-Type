@@ -1,7 +1,7 @@
 //! Owner hardware trial adapter for the SAME core/native glue as the app.
 //! stdin: {wire:hex CIM1} / {action:pause|resume|calibrate|recenter|relative|laser|stop}.
 //! No BLE, MIC, ASR, app focus or algorithm implementation lives here.
-use companion_desktop_input::pointer::{native::Cursor,Button,Mapping,Pointer,Sample,Settings};
+use companion_desktop_input::pointer::{native::Cursor,Button,Control,Mapping,Pointer,Sample,Settings};
 use std::{io::{self,BufRead,Write},sync::{mpsc,Arc,atomic::{AtomicBool,Ordering}},time::{Instant,Duration}};
 fn main(){if let Err(e)=run(){eprintln!("{e}");std::process::exit(1);}}
 fn run()->Result<(),String>{
@@ -24,6 +24,9 @@ fn run()->Result<(),String>{
                     "relative"|"laser"=>{p.settings.mapping=if action=="laser"{Mapping::Laser}else{Mapping::Relative};p.recenter(cursor.position()?);},
                     "stop"=>{stop.store(true,Ordering::Release);},_=>{}
                 }
+            }
+            if let Some(event)=value.get("control") {
+                if let Ok(event)=serde_json::from_value::<Control>(event.clone()) {p.control(event).map_err(str::to_string)?;}
             }
             if let Some(hex)=value.get("wire").and_then(|v|v.as_str()).filter(|h|h.len()==64){
                 let wire=(0..64).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16)).collect::<Result<Vec<_>,_>>();

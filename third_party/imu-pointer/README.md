@@ -8,7 +8,7 @@ are recorded in `upstream.json`; this directory contains no compiled upstream ap
 | AirCursor `PointerMapper.axisSpeed`, `PointerSmoother` | Faithful Rust port in `packages/desktop-input/src/pointer.rs`, same 28 px/degree, bounded acceleration, exponential frame smoothing and 120 ms stale target |
 | WatchPointer `OneEuroFilter`, laser projection | Same equations/constants in the same portable core; sensor time drives filtering, frame time drives interpolation |
 | WatchPointer gravity-projected angular rate | CIM1 schema2 carries MCU-computed Fusion AHRS gravity and bias-corrected gyro; old schema1 raw sensors use the same pinned Fusion on desktop. Do not fuse schema2 twice; mounting/user feel still require physical validation |
-| WatchPointer short tap / 0.35 s hold drag, pre-press pointing history | Physical CIN1/CIM1 button levels plus hardware double-tap serial; pre-press position, click/hold/release lifecycle |
+| WatchPointer reliable short tap / 0.35 s hold drag, pre-press pointing history | Negotiated CIN1 pointer controls retain ordered DOWN/UP/click timestamps until host ACK; legacy CIM3 level/tap-serial fallback remains |
 | macOS cursor event APIs | Windows Enigo glue in `pointer/native.rs`, explicit UI activation, Esc exit |
 | AirPods/Watch CoreMotion delivery | Existing LSM6DSO driver and encrypted CIN1 settings subscription; opt-in CIM1 integer stream, no second IMU driver or microphone stream |
 
@@ -49,4 +49,28 @@ bias from an already adapting corrected rate. Only upstream FusionAhrsUpdate
 with a zero magnetometer is used: consumer gravity is invariant to the
 NoMagnetometer helper's startup yaw-zeroing. The real C test compares both
 gravity outputs over5000 updates. No upstream vendor file is modified.
-The original Watch/Air mapping, filters and click semantics are unchanged.
+The mapping/filter equations were ported, but this did not establish end-to-end parity. The original v4 physical trial was rejected by Owner;1095 samples had85 gaps/2759 missing sequences and a disconnect. Earlier claims of unchanged click semantics did not cover the unreliable motion-only transport.
+
+
+The next adapter explicitly negotiates pointer option8 and CIM1 schema4.
+The MCU integrates heading at each sensor update BEFORE publication, using the
+original Watch vertical angular-rate dot product and50ms integration clamp.
+Failed aim delivery is superseded by the next absolute heading. The fixed32B
+packet carries heading centidegrees, Q14 gravity, yaw/pitch rates and readiness;
+the same original laser/1-Euro/frame-follow equations remain on the computer.
+
+CIN1 CLICK512/DOWN1024/UP2048 are independent controls, with original device
+timestamps and monotonically increasing sequence. Eight12B entries retain
+ordered edges until a UID/epoch-verified CIN1 operation2 ACK naming the head.
+Only the head is retried every40ms; a later ACK cannot consume an earlier edge.
+Overflow4096 explicitly ends the host pointer session and releases any drag;
+it cannot silently turn a lost release into a stuck mouse button.
+Mode0/1 and legacy pointer option0 keep their prior wire behavior. The new
+receiver negotiates option8, falls back to option0 with old firmware, drains
+CIM4 motion bursts to their latest pose, and sends control ACKs concurrently
+rather than blocking motion receipt for a GATT round trip.
+
+This is a platform adaptation of the original architecture, not an assertion
+of identical CoreMotion sensor accuracy or radio latency. Packet-loss replay
+verifies recovered orientation and exactly-once physical controls; physical
+feel and the separate long receive stalls remain unqualified until actual use.

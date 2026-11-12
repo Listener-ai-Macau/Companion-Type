@@ -16,17 +16,26 @@ impl Point {
 pub struct Sample {
     pub sequence: u32, pub sensor_ms: u32, pub held: bool, pub tap_serial: u8, pub fused: bool, pub device_ready: Option<bool>,
     pub accel: [f64;3], pub gyro: [f64;3],
+    /// CIM4: device heading, world-vertical yaw rate, device-X pitch rate.
+    /// Heading is integrated BEFORE lossy delivery, as in WatchPointer.
+    pub aim: Option<[f64;3]>,
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3) || p[5]!=3 || p[6]&!(if p[4]==3{3}else{1})!=0 {
+        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4) || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
         for byte in &p[..28] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
         if !crc!=u32::from_le_bytes(p[28..32].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
         let mut s=Self {sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),
-            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]>=2,device_ready:if p[4]==3{Some(p[6]&2!=0)}else{None},accel:[0.;3],gyro:[0.;3]};
+            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]>=2,device_ready:if p[4]>=3{Some(p[6]&2!=0)}else{None},accel:[0.;3],gyro:[0.;3],aim:None};
+        if p[4]==4 {
+            let value=|at|i16::from_le_bytes(p[at..at+2].try_into().unwrap()) as f64/100.;
+            s.aim=Some([value(16),value(24),value(26)]);
+            for i in 0..3{s.accel[i]=i16::from_le_bytes(p[18+2*i..20+2*i].try_into().unwrap()) as f64*1000./16384.;}
+            return Ok(s);
+        }
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
             if p[4]==3{s.accel[i]*=1000./16384.;}
             s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64/100.;}
@@ -101,6 +110,9 @@ impl Bounds {
 }
 #[derive(Clone,Copy,Debug,PartialEq)]
 pub enum Button {Click(Point),Down(Point),Up}
+#[derive(Clone,Copy,Debug,Deserialize)]
+pub struct Control {pub sequence:u32,pub sensor_ms:u32,pub events:u16}
+pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const OVERFLOW:u16=4096;
 #[derive(Default)]
 pub struct Frame {pub position:Option<Point>,pub buttons:Vec<Button>}
 #[derive(Clone,Debug,Default,Serialize)]
@@ -112,21 +124,49 @@ pub struct Pointer {
     last:Option<(u32,u32)>, last_tap:Option<u8>, arrival:Option<f64>, frame_at:Option<f64>,sensor_clock:f64,clock_offset:Option<f64>,
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
-    heading:f64,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
+    heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
+    last_control:Option<u32>,
     pressed:Option<(f64,Point)>,wait_release:bool,queued:Vec<Button>,history:VecDeque<(f64,Point)>,
 }
 impl Pointer {
     pub fn new(settings:Settings,position:Point)->Self {
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
             last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),
-            heading:0.,elevation_zero:None,target:None,shown:position,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
+            heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
     fn reset_motion(&mut self){self.smoother.reset();self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.elevation_zero=None;}
-    pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.elevation_zero=None;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;}
+    pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.heading_zero=None;self.elevation_zero=None;}
+    /// Reliable control is independent of motion loss. Retries are consumed
+    /// exactly once, including while paused/calibrating; stale input is not
+    /// replayed later. The caller ACKs only after this function has consumed it.
+    pub fn control(&mut self,event:Control)->Result<bool,&'static str> {
+        if self.last_control.is_some_and(|last|{let n=event.sequence.wrapping_sub(last);n==0||n>=0x8000_0000}){return Ok(false);}
+        self.last_control=Some(event.sequence);
+        if event.events&OVERFLOW!=0{self.release();return Err("动作连接停顿过久，请重新开启空中鼠标。");}
+        if self.metrics.paused||!self.metrics.calibrated{if event.events&UP!=0{self.wait_release=false;}return Ok(true);}
+        let measured_at=self.last.map(|(_,ms)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
+        // A new reliable DOWN is an intentional edge, unlike an unknown held
+        // level in a recovered motion packet. UP without a matching DOWN is
+        // consumed without clicking after pause/calibration/stale release.
+        if event.events&(DOWN|UP)!=0{self.wait_release=false;}
+        if event.events&DOWN!=0 && self.pressed.is_none(){self.pressed=Some((measured_at,self.press_point(measured_at)));}
+        if event.events&UP!=0 {
+            if let Some((at,point))=self.pressed.take(){
+                if self.metrics.dragging{self.queued.push(Button::Up);}
+                else if measured_at-at>=0.35{self.queued.push(Button::Down(point));self.queued.push(Button::Up);}
+                else {self.queued.push(Button::Click(point));}
+            }
+            self.metrics.dragging=false;self.wait_release=false;
+        }
+        if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
+            let point=self.press_point(measured_at-0.1);self.shown=point;self.queued.push(Button::Click(point));
+        }
+        Ok(true)
+    }
     pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
         let dt=if let Some((sequence,ms))=self.last {
             let advance=s.sequence.wrapping_sub(sequence);
@@ -158,6 +198,7 @@ impl Pointer {
                 // another fixed host bias while device bias keeps adapting
                 // would manufacture a drifting zero rate.
                 self.bias=[0.;3];self.metrics.calibrated=true;self.heading=0.;
+                self.heading_zero=s.aim.map(|aim|aim[0]);
                 self.elevation_zero=Some((s.accel[1]/norm.max(1.)).clamp(-1.,1.).asin().to_degrees());
                 return;
             }
@@ -184,8 +225,8 @@ impl Pointer {
         // CoreMotion already supplies fused gravity. Raw LSM6DSO does not:
         // reuse x-io Fusion's no-magnetometer AHRS/bias instead of an added
         // low-pass delay. Its NWU gravity matches proper-acceleration UP.
-        let yaw=(0..3).map(|i|rate[i]*up[i]).sum::<f64>();
-        let pitch=rate[0];
+        let yaw=s.aim.map(|aim|aim[1]).unwrap_or_else(||(0..3).map(|i|rate[i]*up[i]).sum::<f64>());
+        let pitch=s.aim.map(|aim|aim[2]).unwrap_or(rate[0]);
         match self.settings.mapping {
             Mapping::Relative=>{
                 let dx=-axis_speed(yaw,&self.settings)*if self.settings.invert_horizontal{-1.}else{1.};
@@ -193,7 +234,8 @@ impl Pointer {
                 if !self.metrics.paused {self.smoother.target(Point{x:dx,y:dy},now);}
             },
             Mapping::Laser=>{
-                self.heading+=yaw*dt.min(0.05);
+                if let Some(aim)=s.aim {self.heading=(aim[0]-*self.heading_zero.get_or_insert(aim[0])+180.).rem_euclid(360.)-180.;}
+                else {self.heading+=yaw*dt.min(0.05);}
                 let elevation=up[1].clamp(-1.,1.).asin().to_degrees();
                 let zero=*self.elevation_zero.get_or_insert(elevation);
                 let left=((self.heading+180.).rem_euclid(360.)-180.)*if self.settings.invert_horizontal{-1.}else{1.};
@@ -201,10 +243,12 @@ impl Pointer {
                 if self.metrics.paused {return;} // Aim still tracks while paused, as upstream.
                 let point=laser(left,height,self.settings.sensitivity,bounds);
                 if self.target.is_none(){self.shown=point;}
-                if dt>0. && dt<0.2 {self.target=Some(Point{x:self.filter_x.update(point.x,dt),y:self.filter_y.update(point.y,dt)});}
+                let filter_dt=if dt>0.&&dt<0.2{dt}else{0.};
+                self.target=Some(Point{x:self.filter_x.update(point.x,filter_dt),y:self.filter_y.update(point.y,filter_dt)});
             }
         }
         if self.metrics.paused {return;}
+        if s.aim.is_some(){if !s.held{self.wait_release=false;}return;} // CIN owns CIM4 physical controls.
         if self.wait_release {if !s.held {self.wait_release=false;}return;}
         if tapped && !gap && !s.held && self.pressed.is_none() && !self.metrics.dragging {
             // Hardware double-tap is one intentional click. Reuse the same

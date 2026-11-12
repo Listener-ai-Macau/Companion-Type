@@ -48,14 +48,16 @@ impl InputStatus {
     }
 }
 pub(crate) fn request(peer: &Peer, mode: u8, nonce: u32) -> Result<[u8; 36], String> {
-    encode_request(peer, 1, mode, nonce)
+    encode_request(peer, 1, mode, 0, nonce)
 }
+pub(crate) fn pointer_request(peer:&Peer,nonce:u32)->Result<[u8;36],String>{encode_request(peer,1,3,8,nonce)}
+pub(crate) fn pointer_ack(peer:&Peer,sequence:u32)->Result<[u8;36],String>{encode_request(peer,2,0,0,sequence)}
 
 pub(crate) fn query(peer: &Peer, nonce: u32) -> Result<[u8; 36], String> {
-    encode_request(peer, 0, 0, nonce)
+    encode_request(peer, 0, 0, 0, nonce)
 }
 
-fn encode_request(peer: &Peer, operation: u8, mode: u8, nonce: u32) -> Result<[u8; 36], String> {
+fn encode_request(peer: &Peer, operation: u8, mode: u8, options:u8, nonce: u32) -> Result<[u8; 36], String> {
     if (mode > 1 && mode != 3) || nonce == 0 {
         return Err("电脑输入模式请求无效。".into());
     }
@@ -64,6 +66,7 @@ fn encode_request(peer: &Peer, operation: u8, mode: u8, nonce: u32) -> Result<[u
     p[4] = 1;
     p[5] = operation;
     p[6] = mode;
+    p[7] = options;
     p[8..12].copy_from_slice(&nonce.to_le_bytes());
     p[12..24].copy_from_slice(&peer.uid);
     p[24..32].copy_from_slice(&peer.epoch.to_le_bytes());
