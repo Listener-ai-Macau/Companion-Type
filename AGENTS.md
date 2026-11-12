@@ -7,7 +7,7 @@
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
 - 嵌软与存储布局快读：docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md顶部和同目录memory-layout.json。普通FW66826/UI85已安装、UART工程版已退出；几何以当前源码/实际ELF和原待办为准，交接不作为第二套参数。
-- 当前实际已装Windows0.1.112 / Android0.1.142，普通FW66826/UI85已恢复启动并释放。Owner112实际轮在连接后的反复同步显示处停止；最新澄清为保留接上自动收取、正常不显示进度，主动查询才显示详情。沿原ownerUiUsabilityRework20261112.quietSyncFeedback集中修复Windows113，源码/活跃阶段显示已复核，匹配正常交付与工程自验前不再派旧112。原实卡长录、完整IMU、模型质量和售卖未验保持。
+- 当前实际已装Windows0.1.113 / Android0.1.142。Owner112实际轮的同步显示反馈已按最新澄清修复：接上继续自动收取，正常无进度，主动查询才显示详情；113正常包已装、原资料保持、实际原生连续流程与真实进程重开自验通过，113/142同包私有完整回读匹配。Owner113整轮尚未开始；最新普通827/UI85实际安装/正常模式恢复/释放、源包与113离线校验已匹配，沿原一个带验窗口接续；不以旧826当当前。长录、完整IMU、模型质量与售卖未验保持。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
 - Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。

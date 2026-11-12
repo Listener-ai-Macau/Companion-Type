@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-12T20:14:16+08:00",
+  "state": "ENGINEERING_SOFTWARE_SELF_ACCEPTANCE_PASSED_OWNER_PHYSICAL_TOTAL_PENDING",
+  "windowsVersion": "0.1.113",
+  "androidVersion": "0.1.142",
+  "softwareSelfAcceptancePassed": true,
+  "appSourceCommit": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "installedPayloadMatchedInspectedMsi": true,
+  "continuousUiEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows113\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\230fc929d9bd4ebfbf7a9cb239c52a15\\result.json",
+  "actualProcessRestartEvidence": {
+    "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+    "firstPid": 324,
+    "reopenedPid": 15056,
+    "previousAppExited": true,
+    "visibleSavedChecklistRestored": true,
+    "literalReferenceVisible": true,
+    "selectedExportScopeRetained": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "modelsRun": false,
+    "physicalQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "deviceEntryHierarchyPassed": true,
+  "defaultSyncDetailsClosedAndNoProgressPassed": true,
+  "activeSyncPhasesCheckedInSourceBrowser": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r7/result.json",
+  "sourceFollowupSavePreviewPrivateExportAndDateOnlyPassed": true,
+  "actualNativeProcessExitAndRelaunchPassed": true,
+  "allPublicLibraryRowsUnchangedAfterRelaunch": true,
+  "normalNativeServiceReadiness": {
+    "asrProvider": "local-paraformer",
+    "localAsrAvailable": true,
+    "deepseekApiKeySet": true,
+    "deepseekMinutesEnabled": true,
+    "openaiAsrApiKeySet": false,
+    "volcAppKeySet": false,
+    "volcAccessKeySet": false,
+    "storageSaveBlocked": false,
+    "storageWarning": null
+  },
+  "exactUnchangedModelAndSettingsObjects": [
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription.rs",
+      "priorObject": "be95128ee10e5dc4cd7b96e95de0d7499e915c1f",
+      "currentObject": "be95128ee10e5dc4cd7b96e95de0d7499e915c1f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/transcription",
+      "priorObject": "0d211e5d7c4186a4b53a3d77f51a442e91bcd34a",
+      "currentObject": "0d211e5d7c4186a4b53a3d77f51a442e91bcd34a"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes.rs",
+      "priorObject": "02230b4f5bbb1069dd524d7e3da6cc9fef7998d6",
+      "currentObject": "02230b4f5bbb1069dd524d7e3da6cc9fef7998d6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/minutes_context.rs",
+      "priorObject": "8b5d343058652a3c7e7c13aca241b625beb3643f",
+      "currentObject": "8b5d343058652a3c7e7c13aca241b625beb3643f"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings.rs",
+      "priorObject": "2247cef6683333b5e32b0127769ab6257a9ef817",
+      "currentObject": "2247cef6683333b5e32b0127769ab6257a9ef817"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/product_settings",
+      "priorObject": "60d39402f003ed1e3ef6bea9d2d8fc1e55290787",
+      "currentObject": "60d39402f003ed1e3ef6bea9d2d8fc1e55290787"
+    }
+  ],
+  "priorModelSource": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+  "modelInferenceNewlyRun": false,
+  "priorAndroid142EvidenceReused": true,
+  "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "unchangedOsImplementationEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows113\\unchanged-os-handoff-evidence.json",
+  "ownerPromptOpened": false,
+  "boardAccessed": false,
+  "privateAudioOrKeysRead": false,
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "nativeBuildsThisReview": 0,
+  "privateRemoteDeliveryReadbackPending": false,
+  "next": "Complete one113/unchanged142 private kit and exact remote readback. Rebind the latest actual ordinary firmware and current lease before one guided Owner round; no unchanged112 retry.",
+  "privateArchiveReadbackNowVerified": true,
+  "privateArchiveSha256": "0784dd00540c8b1003505291fe25ac5c26d393707df4a52c72f5f230b4bff326",
+  "ordinaryFirmwareInstallationConfirmed": true,
+  "currentNormalFirmware": 66827,
+  "normalActualInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows113\\ordinary-firmware-fw66827-installed.json",
+  "readyForOwnerGuidedRound": true
+}

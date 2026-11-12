@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-12T20:14:10+08:00",
+  "state": "INSTALLED113_REDACTED_NATIVE_SERVICE_READINESS_READ",
+  "version": "0.1.113",
+  "settings": {
+    "asrProvider": "local-paraformer",
+    "localAsrAvailable": true,
+    "deepseekApiKeySet": true,
+    "deepseekMinutesEnabled": true,
+    "openaiAsrApiKeySet": false,
+    "volcAppKeySet": false,
+    "volcAccessKeySet": false,
+    "storageSaveBlocked": false,
+    "storageWarning": null
+  },
+  "originalOwnerLibraryRead": false,
+  "privateAudioRead": false,
+  "modelsStarted": false,
+  "boardAccessed": false,
+  "cloudCalled": false,
+  "serviceKeysPrinted": false,
+  "scope": "Normal product settings read with an isolated empty session library. Presence flags are not successful live inference or service quality evidence."
+}

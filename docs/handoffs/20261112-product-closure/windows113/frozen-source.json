@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-12T19:58:23+08:00",
+  "state": "QUIET_SYNC113_FROZEN_NORMAL_RELEASE_BUILD_PENDING",
+  "version": "0.1.113",
+  "sourceCommit": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "branch": "work/quiet-sync113-frozen-20261112",
+  "priorDeliveredSource": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "authoringSourceCommit": "835a2e41537f68d1eb54b0a54e3a01fefd9379f6",
+  "productFilesChanged": [
+    "packages/ui/src/CompanionDashboard.tsx"
+  ],
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "noCargoTargetOrNodeDependencyOrGitObjectCopies": true,
+  "normalFirmware826Preserved": true,
+  "androidUnchanged": "0.1.142",
+  "ownerUiAccepted": false,
+  "physicalQualified": false,
+  "saleQualified": false,
+  "buildKind": "normal local release",
+  "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows113-local\\result.json"
+}

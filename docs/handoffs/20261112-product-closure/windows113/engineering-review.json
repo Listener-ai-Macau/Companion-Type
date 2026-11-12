@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-12T20:14:17+08:00",
+  "state": "UI113_PRODUCT_AND_GUIDANCE_REPAIR_INSTALLED_ENGINEERING_REVIEWED_OWNER_REVIEW_PENDING",
+  "uiFeedbackId": "owner-ui-usability20261112",
+  "windowsVersion": "0.1.113",
+  "androidUnchanged": "0.1.142",
+  "productSourceCommit": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "productUiChangeCommit": "835a2e41537f68d1eb54b0a54e3a01fefd9379f6",
+  "nativeJourney": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows113\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\230fc929d9bd4ebfbf7a9cb239c52a15\\result.json",
+  "sourceBrowserEvidence": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r7",
+  "actualGuideRender": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-native-preview-r7\\result.json",
+  "guideRenderHostingInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run and DrawToBitmap timer for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+  "originalModalOwnerRuntimeNotNewlyProved": true,
+  "guidanceMultilineNativeCrLfConfirmed": true,
+  "affectedLifecycleTestsPassed": 12,
+  "actualOsReuseEvidenceAccepted": true,
+  "rejectedIncompleteOrChangedEvidenceCases": [
+    "exactCommittedFiles",
+    "exactCommandBlocks",
+    "currentNativeUiRouteRechecked",
+    "currentNativeUiEvidence",
+    "changed export operation digest"
+  ],
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "quietSyncFeedbackId": "owner-sync-display20261112",
+  "softwareSelfAcceptancePassed": true,
+  "actualNativeProcessRestart": {
+    "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+    "firstPid": 324,
+    "reopenedPid": 15056,
+    "previousAppExited": true,
+    "visibleSavedChecklistRestored": true,
+    "literalReferenceVisible": true,
+    "selectedExportScopeRetained": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "modelsRun": false,
+    "physicalQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "softwareSelfAcceptanceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows113\\engineering-self-acceptance\\result.json",
+  "guideUnchangedRenderingEvidenceReused": true,
+  "activeSyncPhasesEvidenceScope": "Source-browser r7; real113 device entry separately checked quiet by native journey."
+}

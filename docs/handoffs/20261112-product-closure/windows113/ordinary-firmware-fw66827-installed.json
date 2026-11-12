@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-12T20:16:14+08:00",
+  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+  "firmware": 66827,
+  "ui": 85,
+  "packageSha256": "afbb285da59537e7e3dae7b9cbdeb7f81480ea972e33df88ec3a5e6fb51008f9",
+  "firmwareSourceCommit": "95cf9ecf8b5e8029447e7caf7d22757eca5de9ad",
+  "bootAndNormalApplicationVerified": true,
+  "microphoneRunningAtObservation": false,
+  "pairingAndRecordingMetadataPreserved": true,
+  "bootWrites": 0,
+  "originalAudioReads": 0,
+  "originalAudioWrites": 0,
+  "allInstallerHandlesClosed": true,
+  "sourceReceiptSha256": "67f826e4a1a14afed40e498c2f7fff4854d06dc2c801c89bc177e5a6a62c27b1",
+  "sourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install827-normal\\result.json",
+  "deviceUidAndRecordingCatalogExcluded": true,
+  "normalObserverEnabled": false,
+  "normalRawUartEnabled": false,
+  "actualLastRelease": {
+    "side": "codex",
+    "at": "2026-11-12T19:57:43+08:00",
+    "item": "Companion IMU827 existing-hardware desktop raw capture",
+    "result": "Desktop raw capture closed BLE/UART; no MIC/audio/cursor commands"
+  },
+  "latestNormalModeRestorationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\mouse-complete\\passive827\\result.json",
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}
