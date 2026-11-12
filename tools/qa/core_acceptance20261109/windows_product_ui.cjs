@@ -6,7 +6,7 @@ module.exports=async function productJourney(page,plan,out){
  const row=()=>JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);
  const before=row(),unrelated=JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId);
  async function open(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
- if(!plan.backgroundOnly)await page.bringToFront();await open();assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
+ if(!plan.backgroundOnly)await page.bringToFront();await open();await page.locator('#ct-meeting-result-pane').waitFor({state:'visible'});await page.locator('#ct-recording-text').waitFor({state:'hidden'});
  await page.screenshot({path:path.join(out,'product-result-light.png'),fullPage:true});
  await nav().getByRole('button',{name:'带走结果',exact:true}).click();
  const complete=page.locator('.ct-content-export');await complete.getByRole('button',{name:'预览所选内容',exact:true}).click();
@@ -16,7 +16,7 @@ module.exports=async function productJourney(page,plan,out){
  await nav().getByRole('button',{name:'原文与录音',exact:true}).click();await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
  const search=page.getByRole('searchbox',{name:'查找可引用的原文',exact:true});await search.fill(before.transcriptText.split('\n')[0].slice(0,12));
  const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(before.transcriptText.includes(quote));
- await page.getByRole('button',{name:'引用原文片段 1',exact:true}).click();assert(await page.locator('#ct-meeting-materials-pane').isVisible());
+ await page.getByRole('button',{name:'引用原文片段 1',exact:true}).click();await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
  const notes=page.locator('#ct-recording-notes'),composer=notes.locator('.ct-note-composer');
  await composer.getByRole('textbox',{name:'新录音备注',exact:true}).fill('本次人工跟进\n- [ ] 核对采购清单\n- [ ] 确认追加费用，尚未批准');
  await composer.getByRole('combobox',{name:'补充类型',exact:true}).selectOption('followup');
@@ -29,10 +29,10 @@ module.exports=async function productJourney(page,plan,out){
  await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).click();
  const savedUntil=Date.now()+15000;while(!row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单')&&Date.now()<savedUntil)await wait(100);fs.writeFileSync(path.join(out,'product-public-note-save.json'),JSON.stringify({savedNote:row().meetingNotes.find(n=>n.id===saved.id),noteRevision:row().noteRevision,ui:await notes.innerText(),checked:await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).isChecked()},null,2));assert(row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单'));
  await card().getByRole('button',{name:'查看当前依据',exact:true}).click();await page.getByRole('region',{name:'待核对的补充依据',exact:true}).waitFor({state:'visible'});
- await page.getByRole('button',{name:/返回.*备注|返回.*补充/}).first().click();assert(await page.locator('#ct-meeting-materials-pane').isVisible());
+ await page.getByRole('button',{name:/返回.*备注|返回.*补充/}).first().click();await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
  await page.reload();await page.locator('.ct-shell').waitFor();await open();await nav().getByRole('button',{name:/补充与跟进/}).click();
  assert(await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).isChecked());const persisted=row().meetingNotes.find(n=>n.id===saved.id);
- await card().getByRole('button',{name:'导出这张清单',exact:true}).click();assert(await page.locator('#ct-meeting-handoff-pane').isVisible());const panel=page.locator('.ct-content-export');
+ await card().getByRole('button',{name:'导出这张清单',exact:true}).click();await page.locator('#ct-meeting-handoff-pane').waitFor({state:'visible'});const panel=page.locator('.ct-content-export');
  await panel.getByLabel('所选内容文件格式').selectOption('txt');await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();
  const expected=await preview.locator('pre').innerText(),quotedPersisted=persisted.text.split('\n').map(line=>'> '+line).join('\n');assert(expected.includes(quotedPersisted));assert(expected.replace(/^> ?/gm,'').includes(quote));assert(!expected.includes('EXCLUDED_CORE_NOTE_20261109'));
  async function dialog(id,action,file,trigger){fs.writeFileSync(path.join(out,'dialog-request-'+id+'.json'),JSON.stringify({action,path:file,sha256:null}));await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),end=Date.now()+90000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));assert.equal(JSON.parse(fs.readFileSync(reply)).state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');}
