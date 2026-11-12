@@ -21,7 +21,7 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3]}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3]}
 pub struct Desktop {
     fusion:fusion::Fusion,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],rest_up:[f64;3],earth_bias:[f64;3],
@@ -33,13 +33,15 @@ impl Default for Desktop {
 }
 impl Desktop {
     fn stop(&mut self){self.state.moving=false;self.state.velocity_mps=[0.;2];self.filtered=[0.;2];self.quiet=0.;self.stroke=0.;self.braking=false;}
-    pub fn tap(&mut self){self.stop();self.state.clutched=true;}
+    fn clutch(&mut self){self.stop();self.state.clutched=true;self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];}
+    pub fn tap(&mut self){self.clutch();}
+    pub fn pause_translation(&mut self){self.stop();}
     pub fn sample(&mut self,s:Raw)->Point {
         let dt=if let Some((sequence,ms))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return Point::default();}
             let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
-            if n!=1||dt>0.05||dt<=0.{self.state.gaps+=1;self.stop();self.state.clutched=true;self.last=Some((s.sequence,s.sensor_ms));return Point::default();}
+            if n!=1||dt>0.05||dt<=0.{self.state.gaps+=1;self.clutch();self.last=Some((s.sequence,s.sensor_ms));return Point::default();}
             dt
         }else{0.01};
         self.last=Some((s.sequence,s.sensor_ms));self.state.samples+=1;
@@ -58,20 +60,33 @@ impl Desktop {
             self.state.calibrated=true;self.stop();return Point::default();
         }
         let rates=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
+        self.state.gyro_dps=rates;
         let (earth,up)=self.fusion.desktop_step(rates,s.accel_mg,dt,!self.state.moving);
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
+        if self.state.clutched {
+            // Natural use can put the card back at a different angle. Waiting
+            // for the OLD gravity plane/residual to become quiet locks it out.
+            // Re-arm from stable raw observations at the NEW resting pose.
+            let stable=(850. ..=1150.).contains(&norm)&&rates.iter().all(|x|x.abs()<2.)&&
+                (self.count==0||(0..3).all(|i|(s.accel_mg[i]-self.accel_sum[i]/self.count as f64).abs()<15.));
+            if !stable{self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];self.quiet=0.;return Point::default();}
+            self.count+=1;self.quiet+=dt;
+            for i in 0..3{self.accel_sum[i]+=s.accel_mg[i];self.gyro_sum[i]+=s.gyro_dps[i];}
+            if self.quiet>=0.3&&self.count>=20{
+                let accel=self.accel_sum.map(|x|x/self.count as f64);let norm=accel.iter().map(|x|x*x).sum::<f64>().sqrt();
+                self.rest_up=accel.map(|x|x/norm);self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
+                self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
+                self.state.clutched=false;self.stop();
+            }
+            return Point::default();
+        }
         let agreement=(0..3).map(|i|up[i]*self.rest_up[i]).sum::<f64>();
         // A desk stroke keeps the original plane. Tilt/lift/tap candidates
         // suspend displacement; no pretense of knowing table contact from IMU.
         if agreement<0.978||linear[2].abs()>1.5||norm<650.||norm>1350. {
-            self.stop();self.state.clutched=true;return Point::default();
+            self.clutch();return Point::default();
         }
         let planar=linear[0].hypot(linear[1]);let quiet=planar<0.055&&rates.iter().all(|x|x.abs()<2.);
-        if self.state.clutched {
-            self.quiet=if quiet{self.quiet+dt}else{0.};
-            if self.quiet>=0.2{self.state.clutched=false;self.stop();}
-            return Point::default();
-        }
         if !self.state.moving {
             // Adapt residual bias only while classified at rest, never from
             // the middle of a constant-velocity stroke.
@@ -80,7 +95,7 @@ impl Desktop {
             self.state.moving=true;self.stroke=0.;self.braking=false;
         }
         self.stroke+=dt;
-        if self.stroke>2.0{self.stop();self.state.clutched=true;return Point::default();}
+        if self.stroke>2.0{self.clutch();return Point::default();}
         let old=self.state.velocity_mps;
         for i in 0..2 {
             self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));
@@ -115,5 +130,12 @@ mod tests {
         let mut d=ready();d.sample(raw(121,100.,0.));let before=d.state.position_m;
         d.sample(raw(200,0.,0.));assert_eq!(d.state.position_m,before);assert!(d.state.clutched);
         let mut d=ready();let mut s=raw(121,0.,0.);s.accel_mg[2]=1500.;assert_eq!(d.sample(s),Point::default());assert!(d.state.clutched);
+    }
+    #[test]fn putting_down_at_a_different_angle_rearms_without_returning_to_old_pose(){
+        let mut d=ready();let mut s=raw(121,0.,0.);s.accel_mg=[0.,200.,980.];s.gyro_dps=[40.,0.,0.];d.sample(s);d.tap();
+        for n in 122..222{let mut s=raw(n,0.,0.);s.accel_mg=[0.,200.,980.];d.sample(s);}
+        assert!(!d.state.clutched);let before=d.state.position_m;
+        for n in 222..322{let mut s=raw(n,0.,0.);s.accel_mg=[0.,200.,980.];d.sample(s);}
+        assert!((d.state.position_m[0]-before[0]).hypot(d.state.position_m[1]-before[1])<0.001);
     }
 }
