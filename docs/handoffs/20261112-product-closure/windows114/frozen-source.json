@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-12T20:46:33+08:00",
+  "state": "CONNECTION114_FROZEN_NORMAL_RELEASE_BUILD_PENDING",
+  "version": "0.1.114",
+  "sourceCommit": "8f68f19a9d1bc4fde96e79c459418c12e0772b47",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "branch": "work/connection-entry114-frozen-20261112",
+  "priorDeliveredSource": "1c6cceb4514dd229ed3fcdd79e9a007d02943250",
+  "authoringSourceCommit": "54aaf78fb7fc925491477f97c19f9ea89a9e81e2",
+  "productFilesChanged": [
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/CompanionRecordingReadiness.tsx",
+    "packages/ui/src/deviceConnectionStatus.ts",
+    "packages/ui/src/companionUi.css"
+  ],
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "androidUnchanged": "0.1.142",
+  "ownerExperienceAccepted": false,
+  "physicalQualified": false,
+  "saleQualified": false,
+  "buildKind": "normal local release",
+  "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows114-local\\result.json"
+}
