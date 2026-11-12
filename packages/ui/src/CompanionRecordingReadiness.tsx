@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { recordingCapacityAvailableSeconds, recordingCapacityCanFit, recordingCapacityRequiredBytes, type CompanionV1RecordingCapacity, type CompanionV1Snapshot } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
+import {deviceConnectionStatus} from './deviceConnectionStatus';
+import type {CompanionV1ControlAction} from '@companion-type/core';
 
 export function recordingRoomLabel(seconds: number) {
   const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60);
@@ -22,7 +24,7 @@ export function fragmentedSpaceMayFit(c: CompanionV1RecordingCapacity, seconds: 
 
 /** The last device report is advice, not a replacement for START's space check. */
 export function CompanionRecordingReadiness({ snapshot, settings, recording, busy, durationSeconds,
-  onConnect, onCheck, onSettings, onRefresh, capacityDetails, actionsAbove = false }: {
+  onConnect, onCheck, onSettings, onRefresh, onLibrary, busyAction=null, capacityDetails, actionsAbove = false }: {
   snapshot: CompanionV1Snapshot | null;
   settings: CompanionProductSettingsPublic | null;
   recording: boolean;
@@ -32,6 +34,8 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   onCheck: () => void;
   onSettings: () => void;
   onRefresh: () => void;
+  onLibrary?: () => void;
+  busyAction?:CompanionV1ControlAction|'refresh'|null;
   capacityDetails?: ReactNode;
   actionsAbove?: boolean;
 }) {
@@ -56,6 +60,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const minutesConfigured = Boolean(settings?.deepseekMinutesEnabled && settings.deepseekApiKeySet
     && settings.deepseekBaseUrl.trim() && settings.deepseekModel.trim());
   const blocked = busy || recording;
+  const connection=deviceConnectionStatus(snapshot,busyAction);
   const headline = preview ? '界面演示，尚未确认真实设备'
     : recording ? '录音进行中，结束后再检查准备状态'
       : !connected ? '连接卡片，接收和查看录音。'
@@ -68,10 +73,14 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
                     : '已连接，可以用卡片录音。';
 
   return <section className="ct-readiness" aria-label="录前准备">
-    <header><div><h2>录音卡</h2><p>{headline}</p></div>
-      {!connected ? <button type="button" className="ct-action ct-action-primary" disabled={blocked} onClick={onConnect}>连接设备</button>
+    <header><div><h2>录音卡</h2>
+      <p className={`ct-connection-state ct-connection-${connection.tone}`} role="status"><span aria-hidden="true"/>{connection.label}</p>
+      <p>{connection.hint}</p></div>
+      {!connected ? <button type="button" className="ct-action ct-action-primary" disabled={blocked||connection.pending} onClick={onConnect}>{connection.pending?'正在连接…':'连接设备'}</button>
+        : onLibrary ? <button type="button" className="ct-action ct-action-primary" onClick={onLibrary}>查看我的记录</button>
         : <button type="button" className="ct-action" disabled={blocked} onClick={save !== 'ready' ? onRefresh : onCheck}>{save !== 'ready' ? '刷新保存状态' : '检查设备状态'}</button>}
     </header>
+    {connected&&(saveProblem||interfaceProblem||full||short)?<p className="ct-step-warn" role="alert">{headline}</p>:null}
     <details className="ct-readiness-details" open={saveProblem || interfaceProblem || full || short}>
     <summary>设备、存储与服务详情</summary>
     <div className="ct-readiness-grid">

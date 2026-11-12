@@ -20,6 +20,7 @@ import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, typ
 import {splitGeneratedMeetingMetadata} from './meetingReading';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
+import {deviceConnectionStatus} from './deviceConnectionStatus';
 import { CompanionHelp } from './CompanionHelp';
 import {recorderKeyGuide} from './recorderKeyGuide';
 import { CompanionPrivacyCleanup } from './CompanionPrivacyCleanup';
@@ -793,6 +794,7 @@ export function CompanionDashboard({
   const connected = Boolean(snapshot?.connected || device?.connected);
   // A cached report cannot establish a live connection for the Windows recording entry.
   const devicePageConnected = connected && (surface !== 'windows' || (snapshot?.source !== 'lastKnown' && snapshot?.source !== 'unavailable'));
+  const connection=deviceConnectionStatus(snapshot,busyAction);
 
   useEffect(() => {
     if(libraryFilters.trash)return;
@@ -1902,7 +1904,7 @@ export function CompanionDashboard({
   }, [error, nameError, connected, recordingLibrary.length, hasMinutes, selectedMinutesStale, recoveryView?.message, selectedMinutesVariant?.quality, selectedSession?.minutes?.quality, manualMinutes]);
 
   const renderRecordingReadiness = () => (<CompanionRecordingReadiness snapshot={snapshot} settings={productSettings} recording={oobeBlockedByRecording} actionsAbove={surface === 'windows'}
-        busy={controlsBusy} durationSeconds={unlimitedDeviceRecording ? null : durationValid ? boardMaxDurationSeconds : null}
+        busy={controlsBusy} busyAction={busyAction} onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}} durationSeconds={unlimitedDeviceRecording ? null : durationValid ? boardMaxDurationSeconds : null}
         onConnect={() => onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined})}
         onCheck={() => onControl({action:'oobeRunChecks',deviceId:device?.deviceId??undefined})}
         onSettings={openSettings} onRefresh={onRefresh} capacityDetails={<>
@@ -1974,6 +1976,12 @@ export function CompanionDashboard({
         </button>
         </div>
       </header>
+      {surface==='windows'&&pageView!=='device'?<section className="ct-connection-strip" aria-label="录音卡连接">
+        <div><p className={`ct-connection-state ct-connection-${connection.tone}`} role="status"><Bluetooth size={17} aria-hidden="true"/><span>录音卡 · {connection.label}</span></p>
+          <p className="ct-connection-hint">{connection.hint}</p></div>
+        <button type="button" className={`ct-action${connection.connected?'':' ct-action-primary'}`} disabled={!connection.connected&&(controlsBusy||oobeBlockedByRecording||connection.pending)}
+          onClick={()=>{openDeviceRecording();if(!connection.connected)onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined});}}>{connection.connected?'查看设备':connection.pending?'正在连接…':'连接录音卡'}</button>
+      </section>:null}
       {helpOpen ? <CompanionHelp device={device} onReadLicenses={onReadLicenses} onSettings={()=>{setHelpOpen(false);openSettings();}} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
@@ -2093,7 +2101,7 @@ export function CompanionDashboard({
             <p>{recordingLibrary.length} 条记录{libraryFilters.trash?' · 回收站':''}</p>
           </div>
           <div className="ct-button-row">
-          {recordingLibrary.length>0?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
+          {recordingLibrary.length>0&&(surface!=='windows'||devicePageConnected)?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
             <Mic size={15} />{devicePageConnected?'用卡片录音':'连接录音卡'}</button>:null}
           {surface==='windows' && onImportAudio ? <button type="button" className="ct-action" onClick={openAudioImport}>导入已有音频</button> : null}
           <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
@@ -2120,7 +2128,7 @@ export function CompanionDashboard({
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关录音或补充' : libraryFilters.trash?'回收站为空':onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的录音' : '暂无录音'}</strong>
             <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '先连接录音卡。用卡片实体键录音，结束后会在这里接收；转文字可在接收后进行。'}</p>
-            <button type="button" className="ct-action ct-action-primary" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openDeviceRecording}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到记录库':onlyPendingSessions && recordingLibrary.length ? '查看全部记录' : '连接录音卡'}</button></div>
+            {libraryQuery||libraryFilters.trash||onlyPendingSessions&&recordingLibrary.length||surface!=='windows'||devicePageConnected?<button type="button" className="ct-action ct-action-primary" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openDeviceRecording}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到记录库':onlyPendingSessions && recordingLibrary.length ? '查看全部记录' : devicePageConnected?'用卡片录音':'连接录音卡'}</button>:null}</div>
         ) : (
           <div className="ct-library-list">
             {renderedLibrary.map((session) => {
@@ -2833,7 +2841,7 @@ export function CompanionDashboard({
             onClick={() => onControl({action:'deviceSyncRecordings',deviceId:device?.deviceId??undefined})}>
             <Download size={16} /><span>接收设备录音</span>
           </button> : null}
-          <button type="button" className="ct-action" onClick={()=>{setDetailSessionId(null);navigatePage('library');}}>查看我的记录</button>
+          {surface!=='windows'||!devicePageConnected?<button type="button" className="ct-action" onClick={()=>{setDetailSessionId(null);navigatePage('library');}}>查看我的记录</button>:null}
         </div>
         <details className="ct-setup-details">
           <summary>远程控制卡片录音</summary>
