@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-12T14:31:39+08:00",
+  "state": "ACTUAL_EXTERNAL_BUNDLE_CONTAINS_EXACTLY_SELECTED_NOTE_AND_LITERAL_REFERENCES",
+  "zipEntries": [
+    "会议材料.md",
+    "打开阅读.html",
+    "备注来源.json"
+  ],
+  "noteCount": 1,
+  "selectedId": "16863a2d-6a46-4876-ac72-8c9b4b96eeff",
+  "unselectedNotesAndImagesExcluded": true,
+  "bothExternalFilesReadBackBeforeOwnTempRemoval": true,
+  "temporaryFilesRemovedOnlyByExactPathAndSha256": true,
+  "initialHarnessFailurePreserved": {
+    "productChangeNeeded": false,
+    "reason": "First TXT check incorrectly expected body-only bytes; saved TXT correctly includes the meeting title plus the complete preview body. A second harness check incorrectly added an extra trailing newline. Exact saved bytes and original public screenshots retained; no product change or re-save of TXT."
+  }
+}

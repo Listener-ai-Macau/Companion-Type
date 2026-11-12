@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-12T14:34:10+08:00",
+  "state": "ANDROID142_INSTALLED_COHERENT_SOFTWARE_PURPOSE_NATIVE_FILE_SAVE_REOPEN_AND_OLD_CONTENT_PRESERVATION_PASSED",
+  "version": "0.1.142",
+  "sourceCommit": "0d0c0ac566d8456f54becbcc73237097afb3a211",
+  "apkSha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25",
+  "apkBytes": 51171413,
+  "signerMatchesExisting141": true,
+  "actualInstalledApkHashMatched": true,
+  "actualPurpose": [
+    "Open the declared public saved meeting and read its materials",
+    "Create, save and check ordinary follow-up; find literal XLSX and transcript sources without converting human notes into recording facts",
+    "Switch meeting/material/AI panes while keeping unsent follow-up and AI drafts; no model calls",
+    "Export exactly one follow-up and its literal sources using the full 419-character preview and real system Save picker",
+    "Read back actual external TXT and ZIP, validate exact selected note and references and exclusion of unrelated notes/images",
+    "Restart the real app process and reopen the saved checked follow-up and full source references",
+    "Return the original library and original appearance through normal controls, close the owned non-main display and release the phone"
+  ],
+  "previewCharacters": 419,
+  "nativeTxtAndZipSavedAndReadBack": true,
+  "ordinaryMessengerSendRetested": false,
+  "modelsCloudMicBleOrBoardUsed": false,
+  "previousAppFiles": 5194,
+  "previousContentFilesByteIdentical": 5193,
+  "onlyOldChangeLibraryIndex": true,
+  "allPreviousLibrariesRetained": true,
+  "ownerMainDisplayOperated": false,
+  "physicalCardAcceptancePassed": false,
+  "modelQualityQualified": false,
+  "saleQualified": false,
+  "receipts": [
+    "build-result.json",
+    "installation.json",
+    "detail-workflow.json",
+    "selected-note-result.json",
+    "selected-bundle-readback.json",
+    "process-restart.json",
+    "detail-reopened.json",
+    "original-returned.json",
+    "end-session.json"
+  ]
+}
