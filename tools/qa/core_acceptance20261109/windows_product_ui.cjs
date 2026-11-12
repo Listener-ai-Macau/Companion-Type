@@ -50,9 +50,11 @@ module.exports=async function productJourney(page,plan,out){
   await page.getByRole('button',{name:'编辑清单',exact:true}).click();await page.getByLabel('待办 1 时间与负责人',{exact:true}).click();
   await page.getByRole('textbox',{name:'待办 1 时间',exact:true}).fill('十一月十六日之前');await page.getByRole('button',{name:'保存修改',exact:true}).click();
   await page.getByRole('button',{name:'保存修改',exact:true}).waitFor({state:'hidden'});
-  await page.locator('summary').filter({hasText:'清单与日历工具'}).click();await page.getByRole('button',{name:'导出到日历',exact:true}).click();await page.getByRole('button',{name:'日历事项 1 确认清单截止日期和时刻',exact:true}).click();
-  const dateDialog=page.getByRole('dialog',{name:'待办 1 日历时间',exact:true});await dateDialog.waitFor();assert(!await dateDialog.getByRole('checkbox',{name:'待办 1 指定时刻',exact:true}).isChecked());
-  await dateDialog.getByLabel('待办 1 日历日期',{exact:true}).fill('2026-11-16');await dateDialog.getByRole('button',{name:'确认这个截止时间',exact:true}).click();
+  await page.locator('summary').filter({hasText:'清单与日历工具'}).click();await page.getByRole('button',{name:'导出到日历',exact:true}).click();
+  const dateDialog=page.getByRole('dialog',{name:'待办 1 日历时间',exact:true}),reviewRow=page.getByRole('button',{name:'日历事项 1 确认清单截止日期和时刻',exact:true});
+  await Promise.race([dateDialog.waitFor(),reviewRow.waitFor()]);if(!await dateDialog.isVisible())await reviewRow.click();
+  await dateDialog.waitFor();assert(!await dateDialog.getByRole('checkbox',{name:'待办 1 指定时刻',exact:true}).isChecked());
+  await dateDialog.getByLabel('待办 1 日历日期',{exact:true}).fill('2026-11-16');await dateDialog.getByRole('button',{name:/^(确认这个截止时间|使用此日历时间)$/}).click();
   await page.getByRole('button',{name:'保存修改并返回日历预览',exact:true}).click();
   await page.getByRole('region',{name:'逐项日历预览',exact:true}).getByText(/清单截止：2026年11月16日前/).waitFor();
   assert(row().minutesByMode.offlineStore.markdown.includes('due: 2026-11-16前'));
