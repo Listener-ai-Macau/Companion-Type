@@ -56,10 +56,11 @@ export function RecordingLibraryManager<T extends ManagedRow>({rows,allRows,stat
  }
  function finish(){if((destination.trim()||labels.trim())&&selected.length&&!window.confirm('还有未应用的分类输入，离开选择模式并放弃这些输入？'))return;setManaging(false);setSelected([]);setDestination('');setLabels('');setError('');}
  return <section className="library-manager" aria-label="录音分类与批量管理">
+  <details className="library-filter-details"><summary>筛选{folder!=='*'||tag!=='*'?' · 已筛选':''}</summary>
   <div className="library-organization-filters">
    <label><Folder size={16} aria-hidden="true"/><span className="visually-hidden">按文件夹筛选</span><select aria-label="按文件夹筛选" value={folder} disabled={disabled||!ready} onChange={e=>setFolder(e.target.value)}><option value="*">全部文件夹</option><option value="">未分类</option>{folder!=='*'&&folder!==''&&!folders.includes(folder)&&<option value={folder}>{folder}（暂无录音）</option>}{folders.map(value=><option key={value} value={value}>{value.replaceAll('/',' / ')}</option>)}</select></label>
    <label><Tag size={16} aria-hidden="true"/><span className="visually-hidden">按标签筛选</span><select aria-label="按标签筛选" value={tag} disabled={disabled||!ready} onChange={e=>setTag(e.target.value)}><option value="*">全部标签</option>{tag!=='*'&&!tags.includes(tag)&&<option value={tag}>{tag}（暂无录音）</option>}{tags.map(value=><option key={value} value={value}>{value}</option>)}</select></label>
-  </div>
+  </div></details>
   {status&&!ready&&<p className="library-management-error" role="alert">{status.error??'分类暂不能读取；原音仍可打开或备份。'}</p>}
   <div className="library-management-heading"><div><strong>{title}</strong><span>{searching?'查找中':`${filtered.length} 条${folder!=='*'||tag!=='*'?' · 已筛选':''}`}</span></div><button className="text-button" type="button" disabled={disabled} onClick={()=>managing?finish():setManaging(true)}>{managing?'完成':'选择'}</button></div>
   {managing&&<div className="library-selection-bar"><strong><CheckSquare size={16}/>已选 {selected.length} 条</strong><div><button type="button" className="text-button" disabled={disabled||!filtered.length} onClick={selectAll}>全选当前结果</button><button type="button" className="text-button" disabled={disabled||!selected.length} onClick={()=>setSelected([])}>取消选择</button></div></div>}
