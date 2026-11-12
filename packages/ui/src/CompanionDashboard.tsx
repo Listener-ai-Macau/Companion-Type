@@ -40,6 +40,7 @@ import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
 import {libraryPreview,latestSavedResult} from './libraryPreview';
+import {recordingDisplayTitle,recordingDateGroup,recordingTextState,hasGeneratedRecordingName} from './recordingPresentation';
 import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
@@ -1954,6 +1955,7 @@ export function CompanionDashboard({
         <div>
           <p className="ct-kicker">Companion Type</p>
           <h1 ref={pageHeading} tabIndex={-1}>{pageView === 'library' ? savedDetailOpen?'记录详情':'我的记录' : pageView === 'device' ? '设备与同步' : pageView === 'pet' ? '我的宠物' : '设置与工具'}</h1>
+          {pageView==='library'&&!savedDetailOpen?<p className="ct-page-description">找到一段录音，回听、读文字，或整理成纪要。</p>:null}
         </div>
         <div className="ct-topbar-actions">
         {surface === 'windows' ? <button type="button" className="ct-icon-button" onClick={toggleDesktopTheme}
@@ -1990,7 +1992,7 @@ export function CompanionDashboard({
       <nav className="ct-page-navigation" aria-label="主要功能">
         <div className="ct-brand" aria-label="Companion">
           <span className="ct-brand-mark" aria-hidden="true"><Mic size={19}/></span>
-          <span><strong>Companion</strong><small>你的随身记录</small></span>
+          <span><strong>Companion</strong><small>随身录音 · 随时回看</small></span>
         </div>
         <span className="ct-nav-label">工作空间</span>
         <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
@@ -2010,7 +2012,7 @@ export function CompanionDashboard({
       </section> : null}
 
       <div className="ct-page-panel" hidden={pageView !== 'library'}>
-      {recentSavedResult&&!oobeBlockedByRecording&&!savedDetailOpen?<section className="ct-recent-recording" aria-label="最近处理的记录">
+      {recentSavedResult&&!oobeBlockedByRecording&&!savedDetailOpen&&onlyPendingSessions?<section className="ct-recent-recording" aria-label="最近处理的记录">
         <div><span className="ct-section-eyebrow">{recentSavedResult.manual?'继续上次的清单':'继续上次的整理'}</span>
           <strong>{meetingTitle(recentSavedResult.session)}</strong>
           <small><time dateTime={recentSavedResult.at}>{recordingTimeLabel(recentSavedResult.at)}</time></small>
@@ -2018,7 +2020,7 @@ export function CompanionDashboard({
         <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy} onClick={openRecentSavedResult}>
           {recentSavedResult.manual?'打开清单':'打开整理结果'}</button>
       </section>:null}
-      {recentSavedRecording && (!recentSavedResult || (recentSavedRecording.processingPolicy==='localTranscription' && recentSavedResult.session.id!==recentSavedRecording.id)) && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label={localSaveConfirmed ? '最近保存的录音' : '最近录音，保存状态待确认'}>
+      {recentSavedRecording && onlyPendingSessions && (!recentSavedResult || (recentSavedRecording.processingPolicy==='localTranscription' && recentSavedResult.session.id!==recentSavedRecording.id)) && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label={localSaveConfirmed ? '最近保存的录音' : '最近录音，保存状态待确认'}>
         <div>
           <span className="ct-section-eyebrow">{cardRecordingStatus(recentSavedRecording,{saved:localSaveConfirmed,modelReady:Boolean(productSettings?.localAsrAvailable),automatic:productSettings?.autoLocalCardTranscription===true}) ?? (localSaveConfirmed ? '最近保存的录音' : '最近录音 · 保存待确认')}</span>
           <strong>{meetingTitle(recentSavedRecording)}</strong>
@@ -2097,8 +2099,8 @@ export function CompanionDashboard({
       <CompanionCard ref={recordingLibraryRegion} className="ct-library" aria-label="录音历史" tabIndex={-1} hidden={savedDetailOpen}>
         <div className="ct-library-head">
           <div>
-            <strong>{libraryFilters.trash?'回收站':'全部记录'}</strong>
-            <p>{recordingLibrary.length} 条记录{libraryFilters.trash?' · 回收站':''}</p>
+            <strong>{libraryFilters.trash?'回收站':libraryQuery?'搜索结果':onlyPendingSessions?'待整理的录音':'录音库'}</strong>
+            <p>{visibleLibrary.length} 条{libraryFilters.trash?' · 可恢复':libraryQuery?'匹配的记录':' · 按录音时间排列'}</p>
           </div>
           <div className="ct-button-row">
           {recordingLibrary.length>0&&(surface!=='windows'||devicePageConnected)?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
@@ -2110,7 +2112,7 @@ export function CompanionDashboard({
         </div>
         <label className="ct-library-search"><Search size={15} /><span className="ct-sr-only">搜索录音全文</span>
           <input value={libraryQuery} onChange={(event) => setLibraryQuery(event.target.value)}
-            placeholder="搜索录音和补充" aria-label="搜索标题、转写、补充或整理结果" />
+            placeholder="搜标题、录音文字或笔记" aria-label="搜索标题、转写、补充或整理结果" />
           {libraryQuery ? <button type="button" onClick={() => setLibraryQuery('')}>清除</button> : null}
         </label>
         <details className="ct-library-more" open={libraryToolsOpen}
@@ -2131,11 +2133,14 @@ export function CompanionDashboard({
             {libraryQuery||libraryFilters.trash||onlyPendingSessions&&recordingLibrary.length||surface!=='windows'||devicePageConnected?<button type="button" className="ct-action ct-action-primary" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openDeviceRecording}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到记录库':onlyPendingSessions && recordingLibrary.length ? '查看全部记录' : devicePageConnected?'用卡片录音':'连接录音卡'}</button>:null}</div>
         ) : (
           <div className="ct-library-list">
-            {renderedLibrary.map((session) => {
+            {renderedLibrary.map((session,index) => {
               const selected = session.id === snapshot?.host.selectedSessionId;
               const boardId = session.deviceRecordingId;
               // Preview only saved text. Bound work per row and preserve the full original.
               const preview = libraryPreview(session,libraryQuery);
+              const textState=meetingHasFinalMinutes(session)?null:recordingTextState(session,{automatic:productSettings?.autoLocalCardTranscription!==false,localReady:productSettings?.localAsrAvailable===true});
+              const day=recordingDateGroup(session);
+              const showDay=index===0||day!==recordingDateGroup(renderedLibrary[index-1]);
               const statusLabel = session.organization?.trashedAt ? '回收站'
                 : session.status === 'recording' ? '录制中'
                 : session.pendingReason === 'needs_device_sync' ? '待同步'
@@ -2147,10 +2152,12 @@ export function CompanionDashboard({
                 : session.status === 'transcribed'
                   ? session.source === 'importedTranscript' ? '已导入' : '已转写'
                   : session.pendingReason === 'needs_transcription'
-                    ? '待转写'
+                     ? '可回听'
                     : '已保存');
               return (
-                <div className="ct-library-entry" key={session.id}>
+                <Fragment key={session.id}>
+                {showDay?<div className="ct-library-day" role="heading" aria-level={3}>{day}</div>:null}
+                <div className="ct-library-entry">
                 {libraryToolsOpen&&(onSaveLibraryOrganization||onExportLibrary||onSaveLibraryLifecycle)?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${isTextOnlyImport(session)?'导入文字':formatDuration(session.durationMs)}`}
                   checked={Object.hasOwn(librarySelection,session.id)} disabled={controlsBusy||oobeBlockedByRecording||storageBlocked}
                   onChange={e=>setLibrarySelection(old=>{const next={...old};if(e.target.checked)next[session.id]=session.organization?.revision??0;else delete next[session.id];return next;})}/>:null}
@@ -2163,13 +2170,13 @@ export function CompanionDashboard({
                   aria-pressed={selected}
                   title={session.sourceDeviceId ? `来源设备：${session.sourceDeviceId}` : undefined}
                 >
-                  <span className="ct-library-icon"><FileText size={17} /></span>
+                  <span className="ct-library-icon">{isTextOnlyImport(session)?<FileText size={19} />:<Headphones size={19}/>}</span>
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
                     <small><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time></small>
                     {preview.text ? <span className="ct-library-text-preview">
                       {preview.label ? <span className="ct-library-text-partial">{preview.label} · </span> : null}{preview.text}
-                    </span> : null}
+                    </span> : textState?<span className="ct-library-text-preview">{textState.hint}</span>:null}
                     {deviceStorageFullNotice(session) ? <small className="ct-step-warn">设备空间已满，录音提前停止</small> : null}
                     {session.organization?.protected?<small>已保护</small>:null}
                     {session.organization?.trashedAt?<small>移入时间：{trashTimeLabel(session.organization.trashedAt)}</small>:null}
@@ -2182,10 +2189,11 @@ export function CompanionDashboard({
                       {session.sourceDeviceId ? ` · 设备 ${session.sourceDeviceId.replace(/[:-]/g, '').slice(-4).toUpperCase()}` : ''}
                     </small>
                   </span>
-                  <span className={`ct-library-status ct-library-status-${session.status}`}>{statusLabel}</span>
+                  <span className="ct-library-card-end"><span className={`ct-library-status ct-library-status-${session.status}${textState?' ct-state-'+textState.tone:''}`}>{!localSaveConfirmed?'保存待确认':textState?.label??statusLabel}</span><span className="ct-library-open">打开记录 <span aria-hidden="true">↗</span></span></span>
                     {companionTranscriptUnmappedEdges(session).length > 0 ? <small className="ct-step-warn">部分原音尚无对应文字</small> : null}
                 </button>
                 </div>
+                </Fragment>
               );
             })}
             {visibleLibrary.length > 50 ? <div className="ct-library-window">
@@ -2231,6 +2239,7 @@ export function CompanionDashboard({
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
               <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
+              {hasGeneratedRecordingName(selectedSession)?<p className="ct-recording-name-hint">按录音开头或时间显示，点击名称可改名。</p>:null}
               {titleDirty ? <div className="ct-inline-edit-actions">
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy || selectedRecordingBeingCaptured || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
@@ -2262,7 +2271,7 @@ export function CompanionDashboard({
           {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part !== 'minutes' ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {!savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
           <div className="ct-recording-primary-actions">
-            {!finalTranscript && !journey?.handlesFailure ? <button type="button" className="ct-action ct-action-primary"
+            {!finalTranscript && !journey?.handlesFailure && !(journey?.destination==='settings') ? <button type="button" className="ct-action ct-action-primary"
               disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || transcriptReviewUnsaved || minutesDirty || transcriptEditor.current.dirty}
               onClick={() => {
                 if (!canTranscribe || controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || minutesDirty || transcriptEditor.current.dirty) return;
@@ -2281,7 +2290,7 @@ export function CompanionDashboard({
             转文字需要先配置转写服务，原音已保留。<button type="button" className="ct-text-button" onClick={openSettings}>去配置</button>
           </p> : null}
           {transcriptionRunning ? <p className="ct-recording-notice" role="status">正在转文字，完成后会显示在这里。原音会保留。</p> : recoveryView?.isProcessing ? <p className="ct-recording-notice" role="status">{recoveryView.label}，完成后文字会显示在这里。</p> : null}
-          {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription}
+          {journey && (!journey.optional||!finalTranscript) && !recoveryView?.isProcessing ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked} onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow}/> : null}
           {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{operationErrorText(selectedSession.recovery.lastError)}</p> : null}
           {audioResult?.sessionId===selectedSession.id ? <div className="ct-recording-notice ct-step-warn" role="status">
@@ -2787,7 +2796,7 @@ export function CompanionDashboard({
           </div>
           <details className="ct-recording-more" open={recordingToolsOpen} onToggle={event=>setRecordingToolsOpen(event.currentTarget.open)}>
             <summary>录音与高级工具{titleDirty||minutesDirty||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
-            {journey?.optional ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+            {journey?.optional && finalTranscript ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
             <div id="ct-recording-audio-export" className="ct-recording-audio-export" tabIndex={-1}>
@@ -3812,8 +3821,7 @@ function meetingMinutesMarkdown(session: CompanionV1HostSession, mode: Companion
 }
 
 function meetingTitle(session: CompanionV1HostSession): string {
-  if (session.title.trim() && session.title !== 'Companion device recording') return session.title;
-  return session.deviceRecordingId != null ? `会议录音 #${session.deviceRecordingId}` : '未命名会议';
+  return recordingDisplayTitle(session);
 }
 
 function meetingSource(session: CompanionV1HostSession): string {
