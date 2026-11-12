@@ -6,7 +6,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,ope
 }){
   const[draft,setDraft]=useState<CalendarTimeDraft|null>(null),dialog=useRef<HTMLDialogElement|null>(null),activePending=useRef<typeof onPending>(undefined);
   const open=!!draft,lastRequested=useRef<string|undefined>(undefined);
-  const begin=()=>{if(disabled||draft||activePending.current)return;activePending.current=onPending;onPending?.(1);const seeded=seedCalendarTime(value);setDraft(openWithTime?{...seeded,timed:true}:scope==='common'&&!seeded.date?{...seeded,timed:false}:seeded);};
+  const begin=()=>{if(disabled||draft||activePending.current)return;activePending.current=onPending;onPending?.(1);const seeded=seedCalendarTime(value);setDraft(openWithTime?{...seeded,timed:true}:!seeded.date?{...seeded,timed:false}:seeded);};
   useEffect(()=>{if(openRequestKey&&lastRequested.current!==openRequestKey){lastRequested.current=openRequestKey;begin();}},[openRequestKey]);
   const finishPending=()=>{const callback=activePending.current;activePending.current=undefined;callback?.(-1);};
   useEffect(()=>()=>finishPending(),[]);

@@ -70,3 +70,22 @@ assert.equal(tree.root.findAllByType('dialog').length,0,'Confirming one row must
 assert.equal(button('保存修改并返回日历预览').props.disabled,false,'The confirmed draft can be saved without another unsolicited dialog');
 act(()=>tree.unmount());
 console.log('PASS actual review-to-time intent opens the unresolved row and seeds authored fields without saving/exporting');
+
+// A customer with a prose deadline must be able to confirm just a date.
+// Keep an explicit request to add a clock and existing authored times separate.
+const prose='[ ] 联系场地；日期仍需场地方确认 (due: 十一月十六日之前)';
+let dateValue=prose;
+act(()=>{tree=create(<ActionListEditor value={dateValue} disabled={false} calendarRequestKey="date-only-prose" onChange={next=>{dateValue=next;}}/>);});
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 指定时刻'}).props.checked,false);
+assert.equal(tree.root.findAllByProps({'aria-label':'待办 1 日历时刻'}).length,0);
+assert.equal(dateValue,prose,'Opening does not resolve an incomplete date or change prose');
+act(()=>tree.root.findByProps({'aria-label':'待办 1 日历日期'}).props.onChange({target:{value:'2026-11-16'}}));
+assert.equal(button('使用此日历时间').props.disabled,false,'A chosen date needs no invented time or extra uncheck');
+act(()=>button('使用此日历时间').props.onClick());
+assert.equal(dateValue,'[ ] 联系场地；日期仍需场地方确认 (due: 2026-11-16前)');
+act(()=>tree.unmount());
+act(()=>{tree=create(<ActionListEditor value="[ ] 核对场地 (due: 2026-11-16)" disabled={false} calendarRequestKey="explicit-clock" calendarRequestTimed onChange={()=>{throw Error('Opening must not save');}}/>);});
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 指定时刻'}).props.checked,true);
+assert.equal(button('使用此日历时间').props.disabled,true,'Explicit add-time still requires an actual chosen clock');
+act(()=>tree.unmount());
+console.log('PASS prose deadline date-only confirmation without forced time, original conditions retained and explicit clock requirement preserved');
