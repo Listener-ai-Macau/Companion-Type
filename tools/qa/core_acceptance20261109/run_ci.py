@@ -84,7 +84,7 @@ try:
   cases=product/'docs/handoffs/20261109-core-acceptance';paths=list(cases.iterdir());assert len(paths)==1
   detail=json.loads((paths[0]/'result.json').read_text(encoding='utf8'));record.update(nativeUiExitCode=code,nativeUiState=detail['state']);save()
   assert code==0 and detail['ui']['state']=='REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_SAVE_CANCEL_COPY_AND_RECIPIENT_PASSED'
-  record.update(state='WINDOWS109_COHERENT_NATIVE_MEETING_JOURNEY_PASSED',modelsRun=False,wholeCoreCandidateQualified=False)
+  record.update(state='WINDOWS'+record['appVersion'].split('.')[-1]+'_COHERENT_NATIVE_MEETING_JOURNEY_PASSED',modelsRun=False,wholeCoreCandidateQualified=False)
  elif PHASE=='editing':
   run('install-native-picker-dependency',[sys.executable,'-m','pip','install','--disable-pip-version-check','comtypes==1.4.16'])
   tool=S/'tools/qa/core_acceptance20261109'
