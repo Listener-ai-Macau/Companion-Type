@@ -1,0 +1,107 @@
+{
+  "at": "2026-11-12T14:35:10+08:00",
+  "state": "ONE_SOFTWARE_110142_KIT_INSTALLED_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Software-110-142-20261112.zip",
+  "bytes": 43569344,
+  "sha256": "a4deca0afff6a34deb283de5efdd274bb836ad09fb840ee43ee793752ffabb83",
+  "allArchiveMemberChecksumsMatched": true,
+  "manifest": {
+    "at": "2026-11-12T14:34:10+08:00",
+    "state": "COHERENT_SOFTWARE_CANDIDATE_110142_INSTALLED_AND_SCOPED_ACCEPTANCE_PASSED",
+    "userResult": "已有/导入会议资料→阅读与核对原文→保存跟进及引用→重开继续→预览指定内容并拿走可读文件；无板也可完成软件工作。",
+    "entry": "开始使用.txt",
+    "windows": {
+      "version": "0.1.110",
+      "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+      "installerSha256": "6002aed36dc12cc1e8d5089ed1de491b49e35ffdb51c86128fc658650e926ef9",
+      "runtimeState": "WINDOWS110_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED",
+      "currentMouseChecklistSaveReopenPassed": true,
+      "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
+      "originalDataFiles": 245,
+      "originalDataManifestIdentical": true
+    },
+    "android": {
+      "at": "2026-11-12T14:34:10+08:00",
+      "state": "ANDROID142_INSTALLED_COHERENT_SOFTWARE_PURPOSE_NATIVE_FILE_SAVE_REOPEN_AND_OLD_CONTENT_PRESERVATION_PASSED",
+      "version": "0.1.142",
+      "sourceCommit": "0d0c0ac566d8456f54becbcc73237097afb3a211",
+      "apkSha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25",
+      "apkBytes": 51171413,
+      "signerMatchesExisting141": true,
+      "actualInstalledApkHashMatched": true,
+      "actualPurpose": [
+        "Open the declared public saved meeting and read its materials",
+        "Create, save and check ordinary follow-up; find literal XLSX and transcript sources without converting human notes into recording facts",
+        "Switch meeting/material/AI panes while keeping unsent follow-up and AI drafts; no model calls",
+        "Export exactly one follow-up and its literal sources using the full 419-character preview and real system Save picker",
+        "Read back actual external TXT and ZIP, validate exact selected note and references and exclusion of unrelated notes/images",
+        "Restart the real app process and reopen the saved checked follow-up and full source references",
+        "Return the original library and original appearance through normal controls, close the owned non-main display and release the phone"
+      ],
+      "previewCharacters": 419,
+      "nativeTxtAndZipSavedAndReadBack": true,
+      "ordinaryMessengerSendRetested": false,
+      "modelsCloudMicBleOrBoardUsed": false,
+      "previousAppFiles": 5194,
+      "previousContentFilesByteIdentical": 5193,
+      "onlyOldChangeLibraryIndex": true,
+      "allPreviousLibrariesRetained": true,
+      "ownerMainDisplayOperated": false,
+      "physicalCardAcceptancePassed": false,
+      "modelQualityQualified": false,
+      "saleQualified": false,
+      "receipts": [
+        "build-result.json",
+        "installation.json",
+        "detail-workflow.json",
+        "selected-note-result.json",
+        "selected-bundle-readback.json",
+        "process-restart.json",
+        "detail-reopened.json",
+        "original-returned.json",
+        "end-session.json"
+      ]
+    },
+    "optionalMac": {
+      "source": "a9296fbcfe728f90fc128718a2cf9e4d9fcd3d95",
+      "buildRun": 42838249701,
+      "swiftBuildTestsBundleMcpPassed": true,
+      "actualMacQualified": false
+    },
+    "files": [
+      {
+        "path": "windows/Companion-Windows-0.1.110.msi",
+        "bytes": 16826808,
+        "sha256": "6002aed36dc12cc1e8d5089ed1de491b49e35ffdb51c86128fc658650e926ef9"
+      },
+      {
+        "path": "android/Companion-Android-0.1.142.apk",
+        "bytes": 51171413,
+        "sha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25"
+      },
+      {
+        "path": "optional-macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      }
+    ],
+    "noRecorderBoardRequiredForThisSoftwarePurpose": true,
+    "physicalTotalAcceptancePassed": false,
+    "modelsRunHere": false,
+    "ownerPrivateAudioOrKeysIncluded": false,
+    "saleQualified": false,
+    "remaining": [
+      "One current-firmware physical total-use/long-record/radio recovery and phone-card chain",
+      "Physical pointer feel and concurrent CPU/audio reliability in the original embedded workpoint",
+      "Actual Mac hardware qualification; new110 OS Save/Cancel and ordinary recipient were not re-run",
+      "Independent model quality, paused scopes and formal public sale/service conditions"
+    ]
+  },
+  "privateRemoteReadbackVerified": true,
+  "publishedPublicly": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "remoteReadbackSha256": "a4deca0afff6a34deb283de5efdd274bb836ad09fb840ee43ee793752ffabb83",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualAndroidApkRemoteReadbackVerified": true
+}

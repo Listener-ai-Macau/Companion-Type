@@ -173,7 +173,7 @@ def main():
     project = args.project_root.resolve()
     batch = (args.batch or project / 'docs/handoffs/20261112-product-closure').resolve()
     readiness = prepare(project, batch, args.installed_dir)
-    if not args.run or (not readiness['ready'] and not only_board_blocked(readiness)):
+    if not args.run or not readiness['ready']:
         print(json.dumps(readiness, ensure_ascii=False, indent=2))
         return 0 if readiness['ready'] else 2
     if os.name != 'nt':

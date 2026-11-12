@@ -126,11 +126,11 @@ class WholeUseTests(unittest.TestCase):
     def test_final_owner_review_after_actual_exit_is_preserved_as_scoped_software_feedback(self):
         self.assertTrue(self.exercise('通过',6)['softwareOwnerAccepted'])
 
-    def test_busy_board_waits_in_the_same_window_and_starts_only_after_release(self):
-        result=self.exercise('通过',6,busy_until=2)
-        self.assertTrue(result['softwareOwnerAccepted'])
-        self.assertGreaterEqual(self.last_clock['appLaunchedAt'],2)
-        self.assertEqual(self.last_clock['startClicks'],1)
+    def test_initially_busy_board_does_not_open_another_owner_window(self):
+        ready=dict(ready=False,version='0.1.110',sourceCommit='frozen',blockers=[module.BOARD_BUSY])
+        with patch.object(module,'prepare',return_value=ready),patch.object(module.subprocess,'Popen')as popen,patch('sys.argv',['owner_total.py','--run']),contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(module.main(),2)
+            popen.assert_not_called()
 
     def test_claim_race_never_replays_the_earlier_start_when_the_board_later_frees(self):
         result=self.exercise('稍后',6,claim_race=True,retry_start=False,expect_app=False)

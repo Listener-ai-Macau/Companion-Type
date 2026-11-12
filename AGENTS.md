@@ -6,9 +6,9 @@
 
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
-- 当前实际交付 Windows0.1.110 / Android0.1.141，普通FW66802/UI85已恢复并确认启动；完整核心候选ZIP（含原Mac候选）已私有上传及完整回读一致。110后台连续目的通过，OS保存/普通接收复用109相同代码与依赖证据。实卡总验收尚未开录，Owner要求别的工程占用时先做离线工作、释放后续同一轮，不反复弹占用窗。当前入口与来源以根 docs/handoffs/20261112-product-closure/windows110/complete-delivery.json 及后续真实收据为准；Android142仍为源码检查点。
+- 当前实际交付 Windows0.1.110 / Android0.1.142，统一软件包已私有上传及完整回读。Android142真手机公开资料完整目的、保存/勾选/引用、完整预览、系统TXT/ZIP保存回读及实际进程重开通过，原资料保留，测试会话已关闭。Windows110后台连续目的通过；OS保存/普通接收复用109完全相同实现证据，110未新测。当前软件入口为根 docs/handoffs/20261112-product-closure/software110142/software-delivery.json。无板也继续前端/应用后端/资料流程；实卡长录/恢复/资源/手感按原嵌软项单独总验，初始占用不弹窗。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
-- 本轮 Owner 要求整理后交给另一 AI；不自动恢复已清除 Goal，不因交接构建、安装、接板、启动训练或重新派顾客。后续开发沿原 core.activeNonmodelCompletion20261110，不重建任务树。
+- Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。
 - 已过时的062/66687下一步、044/069候选与旧运行句柄已退出当前入口；原记录、整理前全文及SHA在本次交接目录。保存过的PID/设备在线/安装收据不是实时探测。
 

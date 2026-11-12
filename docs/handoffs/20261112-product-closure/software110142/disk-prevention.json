@@ -1,0 +1,138 @@
+{
+  "at": "2026-11-12T10:38:30+08:00",
+  "state": "KNOWN_DISK_GROWTH_SOURCES_FIXED_AND_ONE_TIME_CLEANUP_COMPLETE",
+  "ownerClarification": "这次清理完以后不要再清理；以后预防持续膨胀，不靠反复人工清理。",
+  "rootCauses": [
+    {
+      "kind": "Repeated failed Git packing",
+      "temporaryPacksPreviously": 521,
+      "temporaryPackGiBPreviously": 120.815,
+      "affectedCommonGit": "E:/DenzicRetired/recovered-software050/.git",
+      "fix": "Repository-local gc.auto=0 and maintenance.auto=false; actual subsequent commits do not retry this failed repack.",
+      "tmpPackFilesAfter": 0
+    },
+    {
+      "kind": "Independent compiler target copies",
+      "firmwareVersionDirectoriesObserved": 232,
+      "firmwareObjectsGiBObserved": 16.665,
+      "fix": "Firmware and Windows local entry points reuse fixed compiler workspaces; version/batch results do not duplicate object trees."
+    }
+  ],
+  "earlierCleanupInOtherCompanionChat": {
+    "at": "2026-11-12T09:49:25+08:00",
+    "deletedGitTemporaryFiles": 521,
+    "deletedDebugTargets": 3,
+    "deletedLogicalBytes": 183780273868,
+    "freeBytesBefore": 137276538880,
+    "freeBytesAfter": 311846338560,
+    "gitRefsUnchanged": true,
+    "connectivityExitCode": 2,
+    "preexistingMissingHistoricalAarObject": "99a8373877d0727e03cb949010794695f83d8cc1",
+    "gitGarbageAfter": "count: 11256\nsize: 2764051\nin-pack: 9386\npacks: 30\nsize-pack: 400366\nprune-packable: 147\ngarbage: 0\nsize-garbage: 0\nalternate: C:/Users/Billy/Desktop/Denzic/Companion/Companion-Type/.git/objects\n",
+    "userRecordingsTouched": false,
+    "sourcesTouched": false
+  },
+  "additionalOneTimeCleanup": {
+    "at": "2026-11-12T10:34:32.293318+08:00",
+    "root": "E:\\CodexData\\Companion\\.build-cache\\firmware",
+    "deletedObjects": 36181,
+    "deletedLogicalBytes": 17298713460,
+    "actualFreeIncreaseBytes": 17372823552,
+    "preservedFilesVerified": 39691,
+    "preservedFileMismatches": 0,
+    "recordingsTouched": false,
+    "sourcesTouched": false,
+    "keysTouched": false,
+    "scheduled": false
+  },
+  "gitAudit": {
+    "independentRepositories": 12,
+    "temporaryPackFiles": 0,
+    "temporaryPackBytes": 0
+  },
+  "prevention": {
+    "sharedImplementationCommit": "c977d947",
+    "firmwareEntryCommit": "87e44c4e",
+    "windowsEntryCommit": "ab19c4e1",
+    "exclusiveOsLocks": true,
+    "windowsDevAndTestDebugSymbols": false,
+    "windowsIncrementalCopies": false,
+    "buildCacheStartBudgetGiB": 80,
+    "minFreeGiB": 30,
+    "jobReserveGiB": {
+      "firmware": 1,
+      "windows": 3
+    },
+    "onBudgetExceeded": "Refuse to start the new build; do not allocate another cache or automatically delete user data.",
+    "scope": "Current local Companion firmware and Windows entry points. This is a pre-build capacity check, not an OS-level quota on arbitrary scripts.",
+    "scheduledDeletion": false,
+    "automaticRecurringCleanup": false,
+    "privateKeysOutsideCache": true
+  },
+  "validation": {
+    "state": "PASS",
+    "repeatedBuildsUseOneObjectTree": true,
+    "versionedResultsContainNoObjects": true,
+    "failedBuildDoesNotInheritPreviousSuccess": true,
+    "existingEvidenceNotOverwritten": true,
+    "simultaneousWriterBlocked": true,
+    "budgetStopsBeforeWrite": true,
+    "junctionsExcluded": true,
+    "productBuilds": 0,
+    "hardwareAccess": false
+  },
+  "realFirmwareBuild": {
+    "version": 66795,
+    "exitCode": 0,
+    "intermediateCopies": 0,
+    "sharedWorkspace": "E:\\CodexData\\Companion\\.build-cache\\firmware\\shared-wba-build",
+    "evidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66795-normal",
+    "triggeredByThisDiskCheck": false
+  },
+  "buildCacheLogicalBytesAfter": 53935671738,
+  "freeBytesAtReport": {
+    "C": 330703736832,
+    "E": 327179874304
+  },
+  "retained": {
+    "allNonObjectFirmwareFilesVerified": 39691,
+    "hashMismatches": 0,
+    "sourceAndUserRecordingsAndKeys": true,
+    "newestFiveFirmwareBuilds": true
+  },
+  "remaining": {
+    "tenDayNetGrowthMeasured": false,
+    "reason": "No comparable ten-day baseline. Present logical sizes and moved-file creation dates do not prove a net growth rate.",
+    "oldGitHistoricalArtifactMissing": "99a8373877d0727e03cb949010794695f83d8cc1",
+    "oldGitHistoryRepair": "Pre-existing historical AAR object remains missing; do not re-enable automatic repacking until repaired. Current application candidate inputs are independently verified.",
+    "futureScope": "New custom build/download entry points must use fixed caches and declare their space estimate; unrelated WJ/personal data not changed."
+  },
+  "originalProductClosurePreserved": {
+    "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+    "buildRun": 43137887077,
+    "nativeBuildSucceeded": true,
+    "totalAcceptanceComplete": false
+  },
+  "continuedDevelopmentCheck": {
+    "at": "2026-11-12T12:35:59+08:00",
+    "firmware": 66802,
+    "exitCode": 0,
+    "sharedWorkspace": "E:\\CodexData\\Companion\\.build-cache\\firmware\\shared-wba-build",
+    "intermediateCopies": 0,
+    "versionDirectoryObjects": 0,
+    "tmpPackFiles": 0,
+    "cacheLogicalBytesBeforeBuild": 54801006640,
+    "automaticCleanupFiles": 0,
+    "evidenceReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66802-normal-empty-poll\\storage-receipt.json"
+  },
+  "androidBuildEntry": {
+    "sourceCommit": "0d0c0ac566d8456f54becbcc73237097afb3a211",
+    "sharedWorkspace": "E:\\CodexData\\Companion\\.build-cache\\shared-android-build",
+    "jobReserveGiB": 2,
+    "exclusiveOsLock": true,
+    "normalBuildSucceeded": true,
+    "automaticDeletion": false,
+    "existingNativeAarReused": true,
+    "tenDayNetGrowthMeasured": false
+  }
+}
