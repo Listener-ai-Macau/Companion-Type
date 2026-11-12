@@ -27,7 +27,7 @@ module.exports=async function productJourney(page,plan,out){
  const card=()=>notes.locator('.ct-notes-list > li').filter({has:page.getByRole('button',{name:'编辑备注 '+saved.id,exact:true})});
  await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).check();
  const savedUntil=Date.now()+15000;while(!row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单')&&Date.now()<savedUntil)await wait(100);assert(row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单'));
- await card().getByRole('button',{name:'查看当前依据',exact:true}).click();assert(await page.locator('#ct-recording-text-review').isVisible());
+ await card().getByRole('button',{name:'查看当前依据',exact:true}).click();await page.getByRole('region',{name:'待核对的补充依据',exact:true}).waitFor({state:'visible'});
  await page.getByRole('button',{name:/返回.*备注|返回.*补充/}).first().click();assert(await page.locator('#ct-meeting-materials-pane').isVisible());
  await page.reload();await page.locator('.ct-shell').waitFor();await open();await nav().getByRole('button',{name:/补充与跟进/}).click();
  assert(await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).isChecked());const persisted=row().meetingNotes.find(n=>n.id===saved.id);
