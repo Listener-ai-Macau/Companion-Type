@@ -269886,8 +269886,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T10:54:34+08:00",
-            "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
+            "updatedAt": "2026-11-12T10:57:24+08:00",
+            "state": "WINDOWS109_DELIVERED_TOTAL_ACCEPTANCE_PENDING_MATCHED_FIRMWARE_AND_IMU_REPAIR",
             "ownerRequestedHandoff": true,
             "originalItems": [
               "CP27-01/notes_images",
@@ -269895,7 +269895,7 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "109已安装并完成同包原生完整软件流程、鼠标保存重开和真实文件交接；245份原资料一致，私有草稿远端读回一致。等待当前实板IMU/固件维护收尾及匹配身份，再集中一次实卡/长录/完整目的总验收；正式整机发布条件继续按原阻断，不逐功能派Owner。",
+            "next": "109软件已交付且同包原生总流程已过；板卡已释放，但刚完成维护的实际固件身份收据待嵌软归档，IMU漂移/敲击反馈仍在返修。等匹配固件与在途IMU修复同批稳定后再做一次实卡完整目的总验收，不以板卡空闲或软件已装当整机通过，不逐功能派Owner。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.109",
@@ -270005,13 +270005,13 @@
             "ownerProductClosure20261112": {
               "at": "2026-11-12T09:26:11+08:00",
               "ownerQuote": "但完整使用体验、实卡可靠性和正式交付还没有一起收口 需要收口, 并且避免零碎, 可以不用每一个功能都验收, 就是最后跑一下总验收, 现在太碎了感觉现在像是拼图不是一个完整产品, 太乱了逻辑, 然后的话你解决一下这个问题",
-              "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
+              "state": "WINDOWS109_DELIVERED_TOTAL_ACCEPTANCE_PENDING_MATCHED_FIRMWARE_AND_IMU_REPAIR",
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
               "currentPoint": "108/141已交付；109/142单张交接源检查点保留。现在开始会议详情组合实现，先精确修复当前子模块Git工作树元数据，不重装依赖。",
               "done": false,
-              "updatedAt": "2026-11-12T10:54:34+08:00",
+              "updatedAt": "2026-11-12T10:57:24+08:00",
               "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
               "acceptanceToolCommit": "7e068d18",
               "buildRun": 43137887077,
@@ -270106,12 +270106,20 @@
               "wholePhysicalTotalAcceptancePassed": false,
               "saleQualified": false,
               "physicalAcceptanceDependency": {
-                "state": "WAITING_SHARED_BOARD_FIRMWARE_WORK",
-                "holderItem": "Companion IMU：已授权开发密钥恢复及六轴流CPU验证",
-                "observedAt": "2026-11-12T10:54:34+08:00",
-                "boardClaimedByThisFrontendTask": false,
+                "state": "BOARD_RELEASED_MATCHED_FIRMWARE_RECEIPT_AND_IMU_REPAIR_PENDING",
+                "observedAt": "2026-11-12T10:57:24+08:00",
+                "boardHolder": null,
+                "lastBoardRelease": {
+                  "side": "codex",
+                  "at": "2026-11-12T10:53:11+08:00",
+                  "item": "Companion IMU：已授权开发密钥恢复及六轴流CPU验证",
+                  "result": "FW66794维护安装及26Hz/CPU观测完成；Owner实物反馈漂、敲击点击未接入，按未通过保留。实体体验已结束，模式0确认、MIC未启动、BLE与子进程已关闭，转离线改进同一IMU功能。"
+                },
+                "recordedBaselineInBacklog": 66791,
+                "firmwareIdentityNotQueriedHere": true,
                 "ownerPromptStarted": false,
-                "next": "Wait for the other actual board operation to finish and its matching firmware receipt. Then one Owner total-use acceptance via original Denzic prompt; no per-feature sign-offs or concurrent recording/firmware activity."
+                "explanation": "The prior board operation has released its lease. Its release reports maintained FW66794 and an unresolved Owner IMU drift/tap interaction result. Wait for the matching final firmware receipt and the in-flight IMU integration repair, then run one total-use acceptance on a frozen batch; do not claim current whole-product qualification.",
+                "next": "Firmware owner finishes matching current installation evidence and the known drift/tap repair. Integrate only that completed batch; then original popup, one total-use acceptance including physical recording and long-duration coverage. Do not repeat the already-passed 109 software journey without a relevant change."
               }
             },
             "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json"
@@ -277441,7 +277449,7 @@
     },
     "sharedWindowsIntegration20261110": {
       "at": "2026-11-11T15:20:58+08:00",
-      "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
+      "state": "WINDOWS109_DELIVERED_TOTAL_ACCEPTANCE_PENDING_MATCHED_FIRMWARE_AND_IMU_REPAIR",
       "reservedVersion": "0.1.109",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
@@ -277792,7 +277800,23 @@
       "installed": true,
       "installedVersion": "0.1.109",
       "runtimeRun": 43144208633,
-      "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json"
+      "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json",
+      "physicalAcceptanceDependency": {
+        "state": "BOARD_RELEASED_MATCHED_FIRMWARE_RECEIPT_AND_IMU_REPAIR_PENDING",
+        "observedAt": "2026-11-12T10:57:24+08:00",
+        "boardHolder": null,
+        "lastBoardRelease": {
+          "side": "codex",
+          "at": "2026-11-12T10:53:11+08:00",
+          "item": "Companion IMU：已授权开发密钥恢复及六轴流CPU验证",
+          "result": "FW66794维护安装及26Hz/CPU观测完成；Owner实物反馈漂、敲击点击未接入，按未通过保留。实体体验已结束，模式0确认、MIC未启动、BLE与子进程已关闭，转离线改进同一IMU功能。"
+        },
+        "recordedBaselineInBacklog": 66791,
+        "firmwareIdentityNotQueriedHere": true,
+        "ownerPromptStarted": false,
+        "explanation": "The prior board operation has released its lease. Its release reports maintained FW66794 and an unresolved Owner IMU drift/tap interaction result. Wait for the matching final firmware receipt and the in-flight IMU integration repair, then run one total-use acceptance on a frozen batch; do not claim current whole-product qualification.",
+        "next": "Firmware owner finishes matching current installation evidence and the known drift/tap repair. Integrate only that completed batch; then original popup, one total-use acceptance including physical recording and long-duration coverage. Do not repeat the already-passed 109 software journey without a relevant change."
+      }
     },
     "retiredBatchAliases20261111": {
       "historicalOnly": true,
