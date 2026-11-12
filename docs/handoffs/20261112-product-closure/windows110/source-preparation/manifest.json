@@ -1,0 +1,62 @@
+{
+  "at": "2026-11-12T12:06:12+08:00",
+  "sourceOnlySnapshot": true,
+  "activePrompt": "C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow/scripts/operator_prompt.ps1",
+  "snapshotsAreNotActiveUI": true,
+  "files": [
+    {
+      "path": "baseline-result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ota-key-compatibility\\baseline-result.json",
+      "bytes": 1636,
+      "sha256": "b57af79b66e7a5cfd9e05d5388911539f4a840235b0b008f1d82feb6f9aed360"
+    },
+    {
+      "path": "baseline-tests.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ota-key-compatibility\\baseline-tests.log",
+      "bytes": 1003,
+      "sha256": "d204205fa7d437d9377f2a5704e3438c6353ead38fb2c2d7562cfce3f2f69a93"
+    },
+    {
+      "path": "fixed-result.json",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ota-key-compatibility\\fixed-result.json",
+      "bytes": 1638,
+      "sha256": "0b502a833a9404c5183d59b89415d721732fc1ad0cad9b5ad859dcc8ce85f686"
+    },
+    {
+      "path": "fixed-tests.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ota-key-compatibility\\fixed-tests.log",
+      "bytes": 572,
+      "sha256": "d2626b5841232316102de73b7d0cd555c103e7d2b35febc2277431081ebc0123"
+    },
+    {
+      "path": "fixed-compile-first-debug-bound-failure.log",
+      "canonicalSource": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ota-key-compatibility\\fixed-compile-first-debug-bound-failure.log",
+      "bytes": 978,
+      "sha256": "55b4142d09774bc2d38db63e86034d04531bb5479b76e8b745a0504e49b8939c"
+    },
+    {
+      "path": "operator_prompt.ps1.snapshot.txt",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\ai-collaboration-workflow\\scripts\\operator_prompt.ps1",
+      "bytes": 25827,
+      "sha256": "a439e5b911ab2f1bf57915ee91262515d0a21d57729b677b1ee63eff7a62e88e"
+    },
+    {
+      "path": "operator_prompt_ui.ps1.snapshot.txt",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\ai-collaboration-workflow\\scripts\\operator_prompt_ui.ps1",
+      "bytes": 2842,
+      "sha256": "dfb3b4e194aba84d743a0f5456614278eec81adaca22ad0453150e0c8918262c"
+    },
+    {
+      "path": "total-use-preparation.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\total-use-preparation.json",
+      "bytes": 7321,
+      "sha256": "2d5c12ec1bc1ea7818133c0fdf731e7bf0f31c6e2e3c6a9d7259fa74b7c056d9"
+    },
+    {
+      "path": "total-use-readiness.json",
+      "canonicalSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\total-use-readiness.json",
+      "bytes": 3450,
+      "sha256": "77cdca763fc53989749071cd4d1844f3dc3bf23f31fa3d67ada2870a4a651557"
+    }
+  ]
+}

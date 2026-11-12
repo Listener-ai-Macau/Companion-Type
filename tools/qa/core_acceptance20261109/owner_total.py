@@ -226,7 +226,14 @@ def main():
             # Closing the prompt early never skips waiting for the actual app
             # exit and reading its final metadata. It also never stops recording.
             while True:
-                if prompt.poll() is not None and app is not None and app.poll() is None:
+                running = (app is not None and app.poll() is None) or bool(app_pids())
+                if app is not None and record.get('appClosedAt') and running:
+                    record.setdefault('previousAppClosures', []).append(record.pop('appClosedAt'))
+                    record['state'] = 'OWNER_CONTINUING_SAME_TOTAL_USE'
+                    save()
+                    update('继续同一轮完整使用',
+                           'Companion 已重新打开，继续完成同一目的即可，不用重新开始验收。用完关闭产品，再在这里集中提交感受。')
+                if prompt.poll() is not None and app is not None and running:
                     record['promptClosedBeforeAppExit'] = True
                 event_text = events.read_text(encoding='utf-8-sig') if events.exists() else ''
                 if app is None and prompt.poll() is None and start_requested(event_text, prompt.pid):
@@ -251,7 +258,8 @@ def main():
                     update('在 Companion 中完成自己的完整目的',
                            '正常产品已由你的点击启动。按自己的目的录音和使用；长录覆盖需要同一场实际录音至少2小时。\n\n'
                            '这段时间不用盯此窗口，不用逐功能打勾。遇到问题保留当前结果、集中写在这里即可，不用为同一问题反复录。用完关闭 Companion 后提交整体结论。')
-                if app is not None and app.poll() is not None and not record.get('appClosedAt') and not app_pids():
+                running = (app is not None and app.poll() is None) or bool(app_pids())
+                if app is not None and not running and not record.get('appClosedAt'):
                     app_log.close()
                     record['appClosedAt'] = now()
                     after = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else []
@@ -267,7 +275,7 @@ def main():
                     update('本轮产品已关闭，集中反馈',
                            '本轮产品已退出，实际保存结果已记录。请集中写下是否顺手、哪里卡住、还有哪些没用到，再选择整体结论。\n\n'
                            '未实际覆盖的长录、准确率或其它条件会如实保留，不会仅凭点“通过”认定整机合格。', review=True)
-                if prompt.poll() is not None and (app is None or record.get('appClosedAt')):
+                if prompt.poll() is not None and not running and (app is None or record.get('appClosedAt')):
                     break
                 time.sleep(.4)
             response = json.loads(stdout.read_text(encoding='utf-8-sig').strip())

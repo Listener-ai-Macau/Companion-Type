@@ -4,6 +4,13 @@ use std::{fs,path::{Path,PathBuf}};
 use serde_json::Value;
 use sha2::{Digest,Sha256};
 pub(super) const KEY_SHA:&str="3cf111a3787d31d4cc597dbff5dd6f200ccebc350a53494d8b5a7053ec920085";
+// Owner-approved recovery of the development signing key on 2026-11-12.
+// These are descriptor fingerprints only. Resident Boot still authenticates
+// the actual P-256 signature using its own installed public key before erase.
+const RECOVERED_DEVELOPMENT_KEY_SHA:&str="4f743840a0679f22ca0bbd1160800a3ca3ee90d1c65c67583ab2ece983f1d4c8";
+fn supported_key_fingerprint(value:&str)->bool {
+    matches!(value,KEY_SHA|RECOVERED_DEVELOPMENT_KEY_SHA)
+}
 // Matches the firmware's canonical flash_geometry.json (P496).
 // Different layouts are different signed targets, never an App OTA migration.
 #[derive(Clone,Copy,Debug,PartialEq,Eq)]
@@ -74,8 +81,11 @@ pub(super) fn load(path:&Path)->Result<Package,String> {
     let d:Value=serde_json::from_slice(&fs::read(&path).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
     if text(&d,"schema")?!="companion.wba.simple-ota.v3"||text(&d,"capability")?!="companion_simple_ota_v3"||
        text(&d,"mcu")?!="STM32WBA55CEU6"||
-       text(&d,"public_key_sha256")?!=KEY_SHA||number(&d,"key_id")?!=0x44455631||d["download_resume"]!=false {
+       number(&d,"key_id")?!=0x44455631||d["download_resume"]!=false {
         return Err("需要最简单文件版CE升级包；旧的双组件升级包不再发送".into());
+    }
+    if !supported_key_fingerprint(text(&d,"public_key_sha256")?) {
+        return Err("升级包的签名来源不受当前软件支持，未向设备发送内容。".into());
     }
     let layout=Layout::from_hardware(text(&d,"hardware_revision")?)?;
     layout.check_metadata(&d)?;
@@ -136,6 +146,13 @@ impl Package {
 }
 #[cfg(test)] mod tests {
     use super::*;
+    #[test] fn only_known_development_key_fingerprints_are_admitted() {
+        assert!(supported_key_fingerprint(KEY_SHA));
+        assert!(supported_key_fingerprint(RECOVERED_DEVELOPMENT_KEY_SHA));
+        for unknown in ["", "4f743840", &"0".repeat(64), &RECOVERED_DEVELOPMENT_KEY_SHA.to_ascii_uppercase()] {
+            assert!(!supported_key_fingerprint(unknown));
+        }
+    }
     #[test] fn changed_layout_requires_explicit_protected_identity_before_begin() {
         let mut p=Package{id:String::new(),file:vec![],firmware_bytes:8,resource_bytes:8192,
             app_version:573,resource_version:84,static_bytes:8192,payload_sha:[7;32],layout:Layout::NOR24};
@@ -177,6 +194,9 @@ impl Package {
             let temp=std::env::temp_dir().join(format!("companion-simple-{}",uuid::Uuid::new_v4()));fs::create_dir(&temp).unwrap();
             let d:Value=serde_json::from_slice(&fs::read(&source).unwrap()).unwrap();let name=text(&d,"file").unwrap();
             fs::copy(&source,temp.join("ota_manifest.json")).unwrap();fs::copy(source.parent().unwrap().join(name),temp.join(name)).unwrap();
+            let mut unknown_key=d.clone();unknown_key["public_key_sha256"]="0".repeat(64).into();
+            fs::write(temp.join("ota_manifest.json"),serde_json::to_vec(&unknown_key).unwrap()).unwrap();
+            assert!(load(&temp.join("ota_manifest.json")).err().unwrap().contains("签名来源不受"));
             // JSON labels cannot substitute for the signed target/address.
             let mut wrong=d.clone();wrong["hardware_revision"]=if p.layout==Layout::NOR24 {
                 "COMPANION-WBA55CE-V1.1".into()

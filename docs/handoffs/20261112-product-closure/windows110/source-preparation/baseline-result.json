@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-12T11:44:59+08:00",
+  "phase": "baseline",
+  "state": "REAL_NEW_KEY_PACKAGE_REJECTION_REPRODUCED",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\backend\\system_ota.rs",
+  "sourceSha256": "d05809745ef03b9ac14bf471e9ce91e0a8588ef26c6a9d9b5f72f4aa5641cf91",
+  "compileExit": 0,
+  "testExit": 101,
+  "actualProductionModuleCompiled": true,
+  "cachedLibraries": {
+    "serde_json": "E:\\CodexData\\Companion\\.build-cache\\shared-windows-target\\debug\\deps\\libserde_json-c4e2f24e23b7f81b.rlib",
+    "sha2": "E:\\CodexData\\Companion\\.build-cache\\shared-windows-target\\debug\\deps\\libsha2-0a319d9859ffe00b.rlib",
+    "crc32fast": "E:\\CodexData\\Companion\\.build-cache\\shared-windows-target\\debug\\deps\\libcrc32fast-bcaff1cee5fb9916.rlib",
+    "uuid": "E:\\CodexData\\Companion\\.build-cache\\shared-windows-target\\debug\\deps\\libuuid-9161a844cd21cfca.rlib"
+  },
+  "fixtures": [
+    {
+      "path": "E:\\CodexData\\Companion\\.build-cache\\firmware\\fw66791-button-lifecycle-package\\ota_manifest.json",
+      "firmware": 66791,
+      "publicKeySha256": "3cf111a3787d31d4cc597dbff5dd6f200ccebc350a53494d8b5a7053ec920085"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66797-package\\ota_manifest.json",
+      "firmware": 66797,
+      "publicKeySha256": "4f743840a0679f22ca0bbd1160800a3ca3ee90d1c65c67583ab2ece983f1d4c8"
+    }
+  ],
+  "newCargoTargetAllocated": false,
+  "appLaunched": false,
+  "boardAccess": false,
+  "hostSignatureVerificationClaimed": false
+}

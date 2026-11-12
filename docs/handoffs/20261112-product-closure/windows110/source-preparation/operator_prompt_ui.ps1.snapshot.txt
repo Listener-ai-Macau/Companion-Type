@@ -1,0 +1,99 @@
+#requires -Version 7.0
+
+function Convert-PromptEscapedNewlines {
+    param([AllowNull()][string]$Text)
+
+    if ($null -eq $Text) {
+        return ""
+    }
+
+    return $Text -replace '(`r`n|`n|\\r\\n|\\n|/r/n|/n)', [Environment]::NewLine
+}
+
+function Ensure-OperatorPromptUser32 {
+    if ("OperatorPrompt.User32" -as [type]) {
+        return
+    }
+    try {
+        Add-Type -Namespace OperatorPrompt -Name User32 -MemberDefinition @'
+[System.Runtime.InteropServices.DllImport("user32.dll")]
+public static extern bool FlashWindow(System.IntPtr hwnd, bool invert);
+
+[System.Runtime.InteropServices.DllImport("user32.dll")]
+public static extern bool MessageBeep(uint type);
+'@ | Out-Null
+    } catch {
+        # Flash/message beep are best-effort cues.
+    }
+}
+
+function Invoke-OperatorPromptCue {
+    if ($NoSound) {
+        return
+    }
+    try {
+        Ensure-OperatorPromptUser32
+        [void][OperatorPrompt.User32]::MessageBeep(0xffffffff)
+    } catch {
+        # Continue to wav/system sound fallbacks below.
+    }
+    try {
+        $mediaFiles = @(
+            "$env:WINDIR\Media\notify.wav",
+            "$env:WINDIR\Media\ding.wav"
+        )
+        foreach ($mediaFile in $mediaFiles) {
+            if (Test-Path -LiteralPath $mediaFile) {
+                $player = New-Object System.Media.SoundPlayer($mediaFile)
+                $player.PlaySync()
+                Start-Sleep -Milliseconds 80
+            }
+        }
+    } catch {
+        # Continue to system sound and Console.Beep fallbacks below.
+    }
+    try {
+        [System.Media.SystemSounds]::Exclamation.Play()
+        Start-Sleep -Milliseconds 120
+        [System.Media.SystemSounds]::Asterisk.Play()
+        Start-Sleep -Milliseconds 120
+        [System.Media.SystemSounds]::Exclamation.Play()
+    } catch {
+        # Continue to Console.Beep fallback below.
+    }
+    try {
+        [Console]::Beep(880, 140)
+        Start-Sleep -Milliseconds 70
+        [Console]::Beep(1046, 140)
+        Start-Sleep -Milliseconds 70
+        [Console]::Beep(880, 140)
+    } catch {
+        # Some shells disable Console.Beep; the visible prompt is still useful.
+    }
+}
+
+function Invoke-OperatorPromptFlash {
+    param([IntPtr]$Handle)
+
+    try {
+        Ensure-OperatorPromptUser32
+        for ($i = 0; $i -lt 8; $i++) {
+            [void][OperatorPrompt.User32]::FlashWindow($Handle, $true)
+            Start-Sleep -Milliseconds 110
+        }
+    } catch {
+        # The top-most prompt still provides the primary visual cue.
+    }
+}
+
+function New-PromptButton {
+    param([string]$Text)
+
+    $button = New-Object System.Windows.Forms.Button
+    $button.Text = $Text
+    $button.Width = 86
+    $button.Height = 28
+    $button.Margin = New-Object System.Windows.Forms.Padding(4, 3, 4, 3)
+    $button.Font = New-Object System.Drawing.Font("Microsoft YaHei UI", 9)
+    return $button
+}

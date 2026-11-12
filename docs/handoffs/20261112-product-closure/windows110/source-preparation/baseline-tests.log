@@ -1,0 +1,19 @@
+
+running 5 tests
+test system_ota::tests::rejects_ce_ram_hole ... ok
+test system_ota::tests::file_names_cannot_escape ... ok
+test system_ota::tests::changed_layout_requires_explicit_protected_identity_before_begin ... ok
+test system_ota::tests::exact_running_identity_and_released_workspace_are_required ... ok
+test system_ota::tests::exact_real_producer_file_and_corruption ... FAILED
+
+failures:
+
+failures:
+    system_ota::tests::exact_real_producer_file_and_corruption
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+
+
+thread 'system_ota::tests::exact_real_producer_file_and_corruption' (24324) panicked at C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\apps\windows\src-tauri\src\backend\system_ota.rs:176:33:
+called `Result::unwrap()` on an `Err` value: "需要最简单文件版CE升级包；旧的双组件升级包不再发送"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -29,7 +29,7 @@ class WholeUseTests(unittest.TestCase):
         self.assertFalse(facts[0]['beganDuringOwnerWindow']);self.assertTrue(facts[1]['beganDuringOwnerWindow'])
         self.assertNotIn('private words',json.dumps(facts))
 
-    def exercise(self,selected,prompt_closes_at):
+    def exercise(self,selected,prompt_closes_at,reopens=False):
         with tempfile.TemporaryDirectory(prefix='whole-use-check-',dir=Path(__file__).parent)as directory:
             root=Path(directory).resolve();self.assertEqual(root.parent,Path(__file__).parent.resolve())
             project=root/'project';batch=project/'batch';batch.mkdir(parents=True)
@@ -59,7 +59,9 @@ class WholeUseTests(unittest.TestCase):
                         clock['metadata_written']=True
                     return 0
             def popen(command,**kwargs):
-                return FakePrompt(command,**kwargs)if '-File'in command else FakeApp()
+                if '-File'in command:return FakePrompt(command,**kwargs)
+                clock['appLaunched']=True
+                return FakeApp()
             def board_run(command,**kwargs):
                 action=command[2]
                 if action=='status':return SimpleNamespace(returncode=0,stdout=json.dumps(dict(holder=None)))
@@ -72,10 +74,17 @@ class WholeUseTests(unittest.TestCase):
             ready=dict(ready=True,version='0.1.110',sourceCommit='frozen-source',blockers=[])
             argv=['owner_total.py','--run','--project-root',str(project),'--batch',str(batch),'--output',str(output),
                   '--installed-dir',str(root/'installed')]
-            with patch.object(module,'prepare',return_value=ready),patch.object(module,'app_pids',return_value=[]),\
+            def pids():return [7003]if reopens and 5<=clock['tick']<8 else []
+            original_read_text=Path.read_text
+            def safe_read(path,*args,**kwargs):
+                if path==state and clock.get('appLaunched'):
+                    self.assertFalse(clock['tick']<4 or (reopens and 5<=clock['tick']<8),'Mutable index read while normal product is alive')
+                return original_read_text(path,*args,**kwargs)
+            with patch.object(module,'prepare',return_value=ready),patch.object(module,'app_pids',side_effect=pids),\
                  patch.object(module,'now',side_effect=stamp),patch.object(module.time,'sleep',side_effect=lambda _:clock.update(tick=clock['tick']+1)),\
                  patch.object(module.subprocess,'Popen',side_effect=popen),patch.object(module.subprocess,'run',side_effect=board_run),\
-                 patch.dict(os.environ,{'APPDATA':str(appdata)}),patch('sys.argv',argv),contextlib.redirect_stdout(io.StringIO()):
+                 patch.dict(os.environ,{'APPDATA':str(appdata)}),patch.object(Path,'read_text',safe_read),\
+                 patch('sys.argv',argv),contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(module.main(),0)
             result=json.loads((batch/'owner-total-result.json').read_text(encoding='utf-8'))
             private=json.loads((output/'progress.json').read_text(encoding='utf-8'))
@@ -95,6 +104,11 @@ class WholeUseTests(unittest.TestCase):
 
     def test_final_owner_review_after_actual_exit_is_preserved_as_scoped_software_feedback(self):
         self.assertTrue(self.exercise('通过',6)['softwareOwnerAccepted'])
+
+    def test_owner_can_reopen_the_product_and_finish_the_same_round(self):
+        result=self.exercise('通过',10,reopens=True)
+        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertEqual(result['appClosedAt'],'2026-11-12T08:00:08+08:00')
 
 
 if __name__=='__main__':unittest.main(verbosity=2)
