@@ -2,20 +2,26 @@
 //! stdin: {wire:hex CIM1} / {action:pause|resume|calibrate|recenter|relative|laser|stop}.
 //! No BLE, MIC, ASR, app focus or algorithm implementation lives here.
 use companion_desktop_input::pointer::{native::Cursor,Button,Control,Mapping,Pointer,Sample,Settings};
-use std::{io::{self,BufRead,Write},sync::{mpsc,Arc,atomic::{AtomicBool,Ordering}},time::{Instant,Duration}};
+use std::{io::{self,BufRead,Write},sync::{mpsc,Arc,Mutex,atomic::{AtomicBool,Ordering}},time::{Instant,Duration}};
 fn main(){if let Err(e)=run(){eprintln!("{e}");std::process::exit(1);}}
 fn run()->Result<(),String>{
     let controls=std::env::args().any(|a|a=="--control");
     let mut cursor=Cursor::open()?;let mut p=Pointer::new(Settings::default(),cursor.position()?);
     let mut preview_position=cursor.position()?;
     let stop=Arc::new(AtomicBool::new(false));let input_stop=stop.clone();let(tx,rx)=mpsc::sync_channel::<serde_json::Value>(8);
+    let motion=Arc::new(Mutex::new(None));let input_motion=motion.clone();
     std::thread::spawn(move||{for line in io::stdin().lock().lines(){
         let Ok(line)=line else{break;};let Ok(value)=serde_json::from_str(&line)else{continue;};
+        if let Some(hex)=value.get("wire").and_then(|v|v.as_str()).filter(|h|h.len()==64){
+            let wire=(0..64).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16)).collect::<Result<Vec<_>,_>>();
+            if let Ok(wire)=wire{if let Ok(s)=Sample::parse(&wire){if s.aim.is_some(){*input_motion.lock().unwrap_or_else(|e|e.into_inner())=Some(s);continue;}}}
+        }
         if tx.send(value).is_err(){break;}
     }input_stop.store(true,Ordering::Release);});
     let origin=Instant::now();let mut next=Instant::now();let mut report=Instant::now();let(mut clicks,mut drags)=(0u64,0u64);
     while !stop.load(Ordering::Acquire){
         if controls && Cursor::escape(){break;}
+        if let Some(s)=motion.lock().unwrap_or_else(|e|e.into_inner()).take(){p.sample(s,origin.elapsed().as_secs_f64(),cursor.bounds());}
         while let Ok(value)=rx.try_recv(){
             if let Some(action)=value.get("action").and_then(|v|v.as_str()){
                 match action {
@@ -26,7 +32,11 @@ fn run()->Result<(),String>{
                 }
             }
             if let Some(event)=value.get("control") {
-                if let Ok(event)=serde_json::from_value::<Control>(event.clone()) {p.control(event).map_err(str::to_string)?;}
+                if let Ok(event)=serde_json::from_value::<Control>(event.clone()) {
+                    let accepted=p.control(event).map_err(str::to_string)?;
+                    println!("{}",serde_json::json!({"stage":"controlConsumed","sequence":event.sequence,"accepted":accepted}));
+                    io::stdout().flush().map_err(|e|e.to_string())?;
+                }
             }
             if let Some(hex)=value.get("wire").and_then(|v|v.as_str()).filter(|h|h.len()==64){
                 let wire=(0..64).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16)).collect::<Result<Vec<_>,_>>();
