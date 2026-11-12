@@ -43,3 +43,15 @@ void companion_fusion_step(void *handle,const float gyro[3],const float accel[3]
     const FusionVector up=FusionAhrsGetGravity(&s->ahrs);
     for(unsigned i=0;i<3;++i){gravity[i]=up.array[i];corrected[i]=g.array[i];}
 }
+void companion_fusion_desktop_step(void *handle,const float gyro[3],const float accel[3],float dt,bool correct_gravity,float earth[3],float gravity[3]) {
+    CompanionFusion *s=(CompanionFusion*)handle;
+    const float gain=correct_gravity?0.5f:0.0f;
+    if(s->ahrs.gain!=gain){
+        FusionAhrsSettings a=fusionAhrsDefaultSettings;a.sampleRate=1.0f/dt;a.gain=gain;
+        a.gyroscopeRange=250.0f;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
+        FusionAhrsSetSettings(&s->ahrs,&a);
+    }
+    float corrected[3];companion_fusion_step(handle,gyro,accel,dt,gravity,corrected);
+    const FusionVector acceleration=FusionAhrsGetEarthAcceleration(&s->ahrs);
+    for(unsigned i=0;i<3;++i)earth[i]=acceleration.array[i]*9.80665f;
+}

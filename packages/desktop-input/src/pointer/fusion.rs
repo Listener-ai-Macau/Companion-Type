@@ -6,6 +6,7 @@ unsafe extern "C" {
     fn companion_fusion_configure(handle:*mut c_void,sample_rate:f32);
     fn companion_fusion_align(handle:*mut c_void,accel:*const f32);
     fn companion_fusion_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,gravity:*mut f32,corrected:*mut f32);
+    fn companion_fusion_desktop_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,correct_gravity:bool,earth:*mut f32,gravity:*mut f32);
 }
 pub struct Fusion {handle:NonNull<c_void>,configured:bool}
 // Upstream state has no thread affinity/global mutable state. Access is owned
@@ -14,6 +15,11 @@ unsafe impl Send for Fusion {}
 impl Default for Fusion {fn default()->Self{Self{handle:NonNull::new(unsafe{companion_fusion_create()}).expect("Fusion state allocation"),configured:false}}}
 impl Drop for Fusion {fn drop(&mut self){unsafe{companion_fusion_destroy(self.handle.as_ptr())}}}
 impl Fusion {
+    pub fn desktop_step(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64,correct_gravity:bool)->([f64;3],[f64;3]){
+        let gyro=gyro.map(|v|v as f32);let accel=accel.map(|v|v as f32);let(mut earth,mut up)=([0f32;3],[0f32;3]);
+        unsafe{companion_fusion_desktop_step(self.handle.as_ptr(),gyro.as_ptr(),accel.as_ptr(),dt as f32,correct_gravity,earth.as_mut_ptr(),up.as_mut_ptr())};
+        (earth.map(f64::from),up.map(f64::from))
+    }
     pub fn align(&mut self,accel:[f64;3]){let a=accel.map(|v|v as f32);unsafe{companion_fusion_align(self.handle.as_ptr(),a.as_ptr())};}
     pub fn step(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64)->([f64;3],[f64;3]) {
         if !self.configured && dt>0. && dt<0.2 {

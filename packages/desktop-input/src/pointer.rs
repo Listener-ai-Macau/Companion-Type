@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
 pub mod native;
 mod fusion;
+pub mod desktop;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }

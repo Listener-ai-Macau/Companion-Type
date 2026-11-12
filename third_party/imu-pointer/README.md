@@ -78,3 +78,29 @@ feel and the separate long receive stalls remain unqualified until actual use.
 Owner mouse-coexistence adaptation: Windows cursor glue detects real cursor movement relative to its own last output. Both mappings adopt the ordinary mouse position. Laser projection retains the original equations but shifts its anchor and resets the old interpolation residual, so an unchanged card cannot pull the cursor back. Seventeen core regressions include this handover and subsequent card movement; actual OS coexistence remains pending physical use.
 
 Left/right enclosure tap location is NOT implemented or qualified. LSM6DSO TAP_SRC axis/sign denotes acceleration direction, not contact position. WatchPointer obtains left/right clicks from separate touch controls; this source must not imply those are IMU surface-location recognition. Single/double tapping, enclosure-region discrimination and ordinary mouse double-click are separate input contracts.
+
+
+Existing-hardware desktop feasibility (Owner constraint,2026-11-12):
+firmware option24 (CIM4 control8 + raw16) publishes fixed32B CIM5 raw mg
+acceleration and centidegree/s gyro. Each single-tap source (TAP_IA,
+axis and sign) is retained in CIN1 event bookmark field for this mode only,
+and acknowledged independently of motion. This is data for actual planar
+motion/contact-separability evaluation, not a declared reliable left/right
+touch location. Normal pointer options0/8 and recording double-taps retain
+their previous behavior; no optical or touch hardware is added.
+
+The current PC reference core in pointer/desktop.rs reuses unchanged Fusion
+for Earth-frame gravity removal. It adds causal stroke integration, rest bias
+adaptation, braking/rest zero-velocity decisions and tilt/vertical clutch.
+Its ordinary mouse path is NOT enabled by this reference. Firmware does not
+yet run this new displacement estimator; MCU placement/resource measurement
+follows useful real-data validation, not synthetic test success.
+
+Reference reviewed: xioTechnologies/Gait-Tracking/gait_tracking.py
+(https://github.com/xioTechnologies/Gait-Tracking/blob/main/gait_tracking.py).
+That example computes future-dependent velocity interpolation between known
+stroke endpoints and uses a foot-motion threshold. Neither is copied as a
+real-time desktop pointer. The compiled shared algorithm remains the pinned
+Fusion source; Companion causal decisions are labelled as adaptation, with
+real slow strokes, stopping drift, constant velocity, lifting and contact
+confusion still requiring physical data.
