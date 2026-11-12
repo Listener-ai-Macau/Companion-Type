@@ -161,7 +161,7 @@ def main():
   session['meetingNotes'][0]['text']='EXCLUDED_CORE_NOTE_20261109 不选择的个人草稿'
   control=json.loads(json.dumps(session));control.update(id='core-product-unrelated',title='明确虚构·不参与本次操作的记录');sessions.append(control)
   (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
-  (root/'exports').mkdir();(root/'received-files').mkdir()
+  (root/'exports').mkdir() # The ordinary Shell receiver creates its own empty destination.
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  if a.stage in {'documents','incoming'}:
   assert DEDICATED_CI,'Document native pickers only on the disposable CI machine'
