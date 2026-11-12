@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-12T13:31:23+08:00",
+  "state": "ONE_COMPLETE_CANDIDATE_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112.zip",
+  "bytes": 44959774,
+  "sha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
+  "manifest": {
+    "at": "2026-11-12T13:30:19+08:00",
+    "state": "COMPANION_COMPLETE_FROZEN_CORE_CANDIDATE_PHYSICAL_TOTAL_PENDING",
+    "userResult": "同一套版本完成录音、正常接收、纪要/出处核对、跟进、重开与带走结果；集中一次整体反馈。",
+    "entry": "开始使用.txt",
+    "primaryPlatform": "Windows",
+    "windows": {
+      "version": "0.1.110",
+      "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+      "installed": true,
+      "originalUserDataFiles": 245,
+      "originalDataHashIdentical": true,
+      "privateContinuousPurposePassed": true,
+      "newNativeSystemDialogAndRecipientRetested": false,
+      "unchanged109OsEvidenceReused": true
+    },
+    "firmware": {
+      "at": "2026-11-12T13:30:19+08:00",
+      "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+      "firmware": 66802,
+      "ui": 85,
+      "packageSha256": "8cb276cbcae513db4d6dec6220c0347896f2ea0464d3303e42476d66fd2408bf",
+      "firmwareSourceCommit": "59f6fa293a537e24a999637e1e197a4f5dd93312",
+      "bootAndNormalApplicationVerified": true,
+      "microphoneRunningAtObservation": false,
+      "recordingFaultAtObservation": "0",
+      "pairingAndRecordingMetadataPreserved": true,
+      "bootWrites": 0,
+      "originalAudioReads": 0,
+      "originalAudioWrites": 0,
+      "allInstallerHandlesClosed": true,
+      "sourceReceiptSha256": "4da1466564ee070a8909662985d75522b05955ca8faf367bdd2137f7f310a0a9",
+      "deviceUidAndRecordingCatalogExcluded": true,
+      "actualNewLongRecordingQualified": false,
+      "cpuImprovementPhysicallyMeasured": false
+    },
+    "android": {
+      "version": "0.1.141",
+      "sourceCommit": "a97f0b3ef68a58f17282688ae32b2289d149d8a7",
+      "actualApkAndDeclaredUiVerified": true
+    },
+    "retainedMac": {
+      "source": "a9296fbcfe728f90fc128718a2cf9e4d9fcd3d95",
+      "buildRun": 42838249701,
+      "swiftBuildTestsBundleMcpPassed": true,
+      "actualMacQualified": false
+    },
+    "files": [
+      {
+        "path": "windows/Companion-Windows-0.1.110.msi",
+        "bytes": 16826808,
+        "sha256": "6002aed36dc12cc1e8d5089ed1de491b49e35ffdb51c86128fc658650e926ef9"
+      },
+      {
+        "path": "firmware/companion-update.cup",
+        "bytes": 1363260,
+        "sha256": "8cb276cbcae513db4d6dec6220c0347896f2ea0464d3303e42476d66fd2408bf"
+      },
+      {
+        "path": "firmware/ota_manifest.json",
+        "bytes": 1548,
+        "sha256": "009e094e13756828ec0157fbf993eeb7ca07c6b3183caa37d58196e06b4fb3a3"
+      },
+      {
+        "path": "android/Companion-Android-0.1.141.apk",
+        "bytes": 51192605,
+        "sha256": "84663a57948873780eb16705041eda7c70ab5ab58aa7263c5b66d088a394dbe8"
+      },
+      {
+        "path": "macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      }
+    ],
+    "retainedComponentsRebuilt": false,
+    "previousVerifiedPackageSha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+    "modelsRunHere": false,
+    "ownerPrivateAudioOrPrivateKeysIncluded": false,
+    "physicalTotalAcceptancePassed": false,
+    "saleQualified": false,
+    "remaining": [
+      "Current physical full-purpose and >=2h recording coverage",
+      "Real CPU improvement/concurrent reliability and unknown pointer hand feel",
+      "Android current-real-card full chain and actual Mac qualification",
+      "Independent model/facts, paused scopes and formal public sale/service gates"
+    ],
+    "actualBoardOperation": {
+      "holder": null,
+      "item": "Companion IMU/CPU集中修复：无录音传感链路与普通版资源核对"
+    },
+    "knownHostedTestCondition": "GitHub110 native system workflow did not start due account billing; current110 private-station purpose passed, unchanged OS implementation evidence reused from109."
+  },
+  "allArchiveMemberChecksumsMatched": true,
+  "privateRemoteReadbackVerified": true,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "remoteReadbackSha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "publishedPublicly": false
+}

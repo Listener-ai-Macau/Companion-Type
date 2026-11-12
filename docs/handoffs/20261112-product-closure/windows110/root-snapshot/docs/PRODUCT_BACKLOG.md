@@ -6,7 +6,7 @@
 
 - 首批Windows会议详情到会后交接，纪要与待办优先；原Android交付和源码检查点保留。
 - 当前实际交付：Windows0.1.110 / Android0.1.141。
-- 本批：WINDOWS110_SCOPED_CONTINUOUS_SOFTWARE_JOURNEY_INSTALLED_PRIVATE_DELIVERY_PASSED_PHYSICAL_TOTAL_PENDING；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
+- 本批：ONE_COMPLETE_FROZEN_CORE_KIT_DELIVERED_PHYSICAL_TOTAL_USE_PENDING；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
 - 不逐功能要求Owner签收；工程保留必要数据保护和已知故障核对，再集中交付和总验收。
 - 实卡可靠性、模型质量、正式发布/服务及既定暂停项按真实结果保留，不由页面或构建通过自动关闭。
 
@@ -29,10 +29,10 @@
 
 以下直接读取同事维护的当前批次；不从旧共享版本别名推断安装。
 
-- **已交付：** Windows110整批已安装，245份原资料哈希一致，私有整包回读一致。新包原生后台连续读/出处/跟进/保存重开/预览/实际TXT生成通过；OS保存取消与普通接收复用109相同实现有效证据。Android141原交付保留。
-- **仍未完成：** 实卡仍由原CPU工程项占用，待普通FW66802实际恢复与身份收据；然后一次完整实卡用途及当前长录集中反馈。110独立机OS交接本次未重测；独立模型质量/公开销售/既定暂停范围保持真实未完成。
-- **当前下一步：** 现有嵌软CPU操作结束并恢复普通FW66802、核对实际安装后，使用Windows110同批正常产品，在原单一弹窗连续完成真实录音（含当前>=2h覆盖）→正常接收/处理→核对出处/跟进→重开与带走，最后集中给整体结论；不要求逐功能Owner先签收。
-- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\windows110\windows-delivery.json>)
+- **已交付：** 一个完整候选ZIP已私有交付并完整回读：Windows110、已实际启动确认的普通FW66802/UI85、现有Android141与原Mac候选；Windows原245份资料保留、后台完整会后目的通过、未变OS交接沿109有效证据。
+- **仍未完成：** 仅候选交付完成，实卡当前长录/完整真实使用/指针手感未整体验收；CPU采样已稍后，实际优化降幅未测。手机当前实卡整链、Mac真机、独立模型及正式售卖条件按原范围保留。
+- **当前下一步：** 同一冻结Windows110/FW66802候选执行一次集中实际使用及当前长录覆盖，最后结合真实保存结果和一次反馈收尾；未实测范围不虚关。
+- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\windows110\complete-delivery.json>)
 
 各模块旧版本实施笔记保留在历史索引，不混入本页当前交付。
 

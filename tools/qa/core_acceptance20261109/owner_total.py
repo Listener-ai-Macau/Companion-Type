@@ -13,6 +13,7 @@ import psutil
 TZ = timezone(timedelta(hours=8))
 START = '开始整体验收'
 APP_NAME = 'companion-type.exe'
+BOARD_BUSY = 'Shared board is currently occupied; do not interrupt its actual operation.'
 ROOT = Path('C:/Users/Billy/Desktop/Denzic/Companion')
 PRODUCT_PATHS = ('apps/windows/src/', 'apps/windows/src-tauri/', 'packages/ui/src/',
                  'packages/core/src/', 'packages/desktop-input/', 'third_party/imu-pointer/')
@@ -54,6 +55,10 @@ def start_requested(events, prompt_pid):
         if event.get('event') == 'action_button|' + START and event.get('processId') == prompt_pid:
             return True
     return False
+
+
+def only_board_blocked(readiness):
+    return not readiness.get('ready') and readiness.get('blockers') == [BOARD_BUSY]
 
 
 def timestamp(value):
@@ -144,9 +149,11 @@ def prepare(project, batch, installed_dir):
         blockers.append('The known firmware/IMU repair and its matching physical receipt are unfinished.')
     board = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
     if board.get('holder') is not None:
-        blockers.append('Shared board is currently occupied; do not interrupt its actual operation.')
+        blockers.append(BOARD_BUSY)
     return dict(at=now(), state='READY_FOR_ONE_TOTAL_USE' if not blockers else 'FINISH_CURRENT_BATCH_BEFORE_OWNER_TOTAL_USE',
                 ready=not blockers, version=version, sourceCommit=verification['sourceCommit'],
+                firmwareVersion=dependency.get('ordinaryFirmwareInstallation', {}).get('firmware'),
+                uiVersion=dependency.get('ordinaryFirmwareInstallation', {}).get('ui'),
                 installedExeSha256=verification['embeddedExeSha256'],
                 installedDllSha256=verification['dllSha256'], blockers=blockers,
                 currentProductDifferences=changed, readOnly=True, ownerPromptStarted=False,
@@ -166,7 +173,7 @@ def main():
     project = args.project_root.resolve()
     batch = (args.batch or project / 'docs/handoffs/20261112-product-closure').resolve()
     readiness = prepare(project, batch, args.installed_dir)
-    if not args.run or not readiness['ready']:
+    if not args.run or (not readiness['ready'] and not only_board_blocked(readiness)):
         print(json.dumps(readiness, ensure_ascii=False, indent=2))
         return 0 if readiness['ready'] else 2
     if os.name != 'nt':
@@ -182,6 +189,7 @@ def main():
     stdout = cache / 'prompt-output.json'
     lease_item = 'Companion集中总验收：' + cache.name + ':' + now()
     record = dict(at=now(), state='WAITING_OWNER_START', version=readiness['version'],
+                  firmwareVersion=readiness.get('firmwareVersion'), uiVersion=readiness.get('uiVersion'),
                   sourceCommit=readiness['sourceCommit'], controllerPid=os.getpid(),
                   boardLease=False, hostStartCommands=0, privateContentPrinted=False,
                   physicalTotalAcceptancePassed=False, saleQualified=False,
@@ -212,18 +220,31 @@ def main():
             record['boardLease'] = False
 
     version = readiness['version']
+    waiting_for_board = only_board_blocked(readiness)
+    consumed_start_chars = 0
     message = (f'本轮使用已安装的 Companion {version}，只集中验收一次。\n\n'
                '点“开始整体验收”后打开正常产品。选一场你本来就想保留的内容，按卡片开始录音，正常接收、看文字、核对来源、留下跟进并带走结果；按你的目的连续使用，不用遍历每个按钮。\n\n'
                '要覆盖当前长录可靠性，请让同一场实卡录音持续至少2小时，期间可以继续做自己的事。录音只由你操作卡片开始，本窗口不会开录。\n\n'
                '用完关闭 Companion，再在这里集中写下整体感受并选择结论。只有产品实际关闭后，“通过”才可用；遇到阻断可随时写明问题，不用重录。没空可以选“稍后”。')
-    update('整批准备完成，等待你开始', message, (START,))
+    def wait_for_board():
+        nonlocal waiting_for_board
+        waiting_for_board = True
+        record['state'] = 'WAITING_SHARED_BOARD_IN_SAME_WINDOW'
+        save()
+        update('等待当前设备工程检查结束',
+               '这一套候选已经准备好，实卡当前正被另一项工程检查占用。请先继续做自己的事，本窗口不会打开产品或开始录音。\n\n'
+               '设备空闲并重新核对版本后，原窗口会启用“开始整体验收”；届时再点一次开始即可。最后只在这里集中反馈，不用重开验收。')
+    if waiting_for_board:
+        wait_for_board()
+    else:
+        update('整批准备完成，等待你开始', message, (START,))
     shell = Path('C:/Users/Billy/AppData/Local/Microsoft/WindowsApps/pwsh.exe')
     shared = project.parent / 'ai-collaboration-workflow/scripts/operator_prompt.ps1'
     environment = dict(os.environ)
     environment.pop('PSModulePath', None)
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
                '-Title', 'Companion 集中总验收', '-Message', message,
-               '-ScopeText', f'Windows {version}；同批实卡与完整目的；原音只保留本机。',
+               '-ScopeText', f'Windows {version}；普通固件 FW{readiness.get("firmwareVersion")} / UI{readiness.get("uiVersion")}；原音只保留本机。',
                '-ActionButtons', START, '-Buttons', '通过,遇到问题,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),
                '-EventPath', str(events), '-TextInput', '-ObservationLabel', '整体感受、卡住之处和未用部分（集中写一次即可）',
@@ -250,14 +271,41 @@ def main():
                            'Companion 已重新打开，继续完成同一目的即可，不用重新开始验收。用完关闭产品，再在这里集中提交感受。')
                 if prompt.poll() is not None and app is not None and running:
                     record['promptClosedBeforeAppExit'] = True
+                if app is None and waiting_for_board and prompt.poll() is None:
+                    try:
+                        current_board = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
+                    except json.JSONDecodeError:
+                        time.sleep(.4)
+                        continue
+                    if current_board.get('holder') is None:
+                        fresh = prepare(project, batch, args.installed_dir)
+                        if fresh['ready']:
+                            waiting_for_board = False
+                            record['state'] = 'WAITING_OWNER_START'
+                            save()
+                            update('同一套候选与设备已就绪，等待你开始', message, (START,))
+                        elif not only_board_blocked(fresh):
+                            raise RuntimeError('Batch preparation changed while waiting: ' + '; '.join(fresh['blockers']))
                 event_text = events.read_text(encoding='utf-8-sig') if events.exists() else ''
-                if app is None and prompt.poll() is None and start_requested(event_text, prompt.pid):
+                if app is None and prompt.poll() is None and start_requested(event_text[consumed_start_chars:], prompt.pid):
+                    consumed_start_chars = len(event_text)
                     fresh = prepare(project, batch, args.installed_dir)
                     if not fresh['ready']:
+                        if only_board_blocked(fresh):
+                            wait_for_board()
+                            continue
                         raise RuntimeError('Preparation changed before the Owner start: ' + '; '.join(fresh['blockers']))
                     if board('status')['holder'] is not None:
-                        raise RuntimeError('Shared board became occupied; no takeover.')
-                    claim = board('claim', item=lease_item)
+                        wait_for_board()
+                        continue
+                    try:
+                        claim = board('claim', item=lease_item)
+                    except RuntimeError:
+                        current_board = json.loads((project / 'docs/board_turn.json').read_text(encoding='utf-8'))
+                        if current_board.get('holder') is not None:
+                            wait_for_board()
+                            continue
+                        raise
                     if claim.get('result') != 'TURN_CLAIMED':
                         raise RuntimeError('Board claim not confirmed.')
                     record['boardLease'] = True
@@ -312,7 +360,7 @@ def main():
             record['finishedAt'] = now()
             save()
     # Owner private text is deliberately not copied into the repository batch.
-    public = {key: record.get(key) for key in ['state', 'version', 'sourceCommit', 'ownerStartedAt', 'appClosedAt',
+    public = {key: record.get(key) for key in ['state', 'version', 'firmwareVersion', 'uiVersion', 'sourceCommit', 'ownerStartedAt', 'appClosedAt',
                'finishedAt', 'softwareOwnerAccepted', 'twoHourRecordingObserved', 'newPhysicalToTextObserved',
                'physicalTotalAcceptancePassed', 'saleQualified', 'boardLease', 'hostStartCommands']}
     public['privateEvidenceDirectory'] = str(cache)

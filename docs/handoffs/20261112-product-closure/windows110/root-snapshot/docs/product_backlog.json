@@ -143417,7 +143417,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "CPU_SOURCE_OPTIMIZATION_INSTALLED_WAITING_ORIGINAL_POPUP_START_FOR_MEASURED_DELTA",
+          "state": "COHERENT_CPU_IMU_BATCH_COMPACT_COUNTER_BUILD_AND_PASSIVE_VERIFICATION",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143425,7 +143425,7 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-12T12:23:57+08:00",
+          "updatedAt": "2026-11-12T13:36:40+08:00",
           "sourceCommit": {
             "windows": "35bf71ea",
             "firmware": "59f6fa2",
@@ -143452,7 +143452,7 @@
             "Prior Owner floaty/no-body-click negative feedback remains OPEN until actual use",
             "Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed"
           ],
-          "firmwareInstalled": 66801,
+          "firmwareInstalled": 66802,
           "normal795BuiltNotInstalled": true,
           "ownerFeedback": "鼠标已能移动，但飘、不好用，期待机身敲击点击；原始反馈保留，未通过。",
           "clockConstraint": {
@@ -143462,7 +143462,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "FW801 installed normally running after explicit signed App-only maintenance (Boot/pairing/original catalog unchanged). Original popup cpu801-owner is open, waiting explicit Start; no new MIC or cursor started. On Start compare one20s normal CMC3 recording with799 using identical17-stage observer, stop/save, then install ready observer-off802. Both source repos pushed. Preserve pending coherent pointer experience and original negative feedback.",
+          "executionPoint": "Normal802 restored after Owner chose Later, no new CPU microphone sample occurred. Real802 CIM3 background read:1829 samples, missing0, ready1.146s, no MIC/audio/cursor; frame path matches installed Windows110 source exactly. Added empty microphone-poll fast path retaining IRQ/error/queued DMA paths; host production-body test passes.803 compact RTC/TIM2 CPU observer installing for non-MIC whole-board pointer measurement,804 observer-off normal building. Final batch returns normal firmware and releases board. No new Owner popup while background work remains.",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -143613,7 +143613,7 @@
             "Pause test fixture had an80ms first interval; corrected to25*40ms, original assertion retained",
             "One Windows native check found a frame-period variable out of scope; fixed, final check passed"
           ],
-          "latestOwnerCpuRequest": "查清90多CPU的来源，评估FPU可适用部分，现场开发同时考虑RAM/Flash资源优化；保持61.44MHz",
+          "latestOwnerCpuRequest": "集中修复CPU/FPU/IMU，不再零碎交付；评估积分位移有无必要和有用的高级IMU功能，Owner交由工程判断。",
           "cpuAttribution20261112": {
             "offline797": {
               "seconds": 19.934647,
@@ -143647,7 +143647,7 @@
               "firmware": 66801,
               "comparisonFirmware": 66799,
               "same17StageObserver": true,
-              "state": "ORIGINAL_POPUP_WAITING_NO_NEW_MIC",
+              "state": "OWNER_DEFERRED_NO_AUDIO",
               "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\cpu801-owner\\result.json",
               "controller": "C:/Users/Billy/Documents/Codex/2026-11-03/companion-firmware-66662-luna/recovery-work/cpu801_owner.py",
               "sessionId": 34117,
@@ -143657,7 +143657,15 @@
                 "scope": "This one CPU capture only; on verified stop/save restore802, preserve metadata, save delta and release board; no periodic task"
               }
             },
-            "sourceProtectedRemotely": true
+            "sourceProtectedRemotely": true,
+            "matchedComparison": {
+              "at": "2026-11-12T13:22:28+08:00",
+              "ownerStarted": false,
+              "samplingComplete": false,
+              "normalRestoreExit": 0,
+              "normal802Installed": true,
+              "completedAt": "2026-11-12T13:24:53+08:00"
+            }
           },
           "normal800": {
             "built": true,
@@ -143680,7 +143688,7 @@
           },
           "normal802": {
             "built": true,
-            "installed": false,
+            "installed": true,
             "binBytes": 412812,
             "textBytes": 411244,
             "dataBytes": 1568,
@@ -143690,6 +143698,60 @@
             "cpuPatchStaticRamDelta": 0,
             "budgetOverBytes": 596,
             "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66802-normal-empty-poll\\result.json"
+          },
+          "live802": {
+            "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/live802/result.json",
+            "samples": 1829,
+            "missing": 0,
+            "hostHz": 96.68888183645404,
+            "sensorHz": 96.11441190388558,
+            "firstReadyMs": 1146,
+            "noMicNoAudioNoOsCursor": true,
+            "primaryRecenterRemovedForSteadyPreview": true,
+            "previewAfter30ReadySamplesRangePixels": {
+              "x": 0.5868017986895211,
+              "y": 1.9227197469793964
+            },
+            "stationaryPhysicallyConfirmed": false,
+            "physicalFeelQualified": false
+          },
+          "installedWindows110Compatible": {
+            "receipt": "docs/handoffs/20261112-product-closure/windows110/windows-delivery.json",
+            "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+            "comparedCommittedFiles": [
+              "packages/desktop-input/src/pointer.rs",
+              "packages/desktop-input/src/pointer/tests.rs",
+              "apps/windows/src/DesktopPointer.tsx",
+              "apps/windows/src-tauri/src/backend/desktop_pointer.rs"
+            ],
+            "equalToCurrentIgnoringEol": true,
+            "newRepackageNecessary": false
+          },
+          "imuAdvancedDecision20261112": {
+            "ownerReply": "你研究一下有没有这个必要吧…IMU还能做什么高级功能",
+            "continuous3dPosition": {
+              "decision": "DO_NOT_ADD_TO_CURRENT_PRODUCT_BATCH",
+              "reason": "Six-axis sensing has no absolute position reference. Acceleration bias and gravity/orientation error grow after double integration; FPU speed does not fix observability/drift.",
+              "example": "Hypothetical constant0.01m/s^2 acceleration error gives0.5m position error after10s by0.5*a*t^2; explanatory math, not measured sensor error.",
+              "sources": [
+                "https://x-io.co.uk/contact/",
+                "https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-696.html"
+              ]
+            },
+            "selectedValueOrder": [
+              "Make existing air pointer/calibration/click/drag usable first, plus pickup connection readiness and durable recording double-tap highlights",
+              "Optional held-dictation flick submit and shake cancel: firmware event paths exist, current Windows request uses options0; not a delivered gesture feature",
+              "Presentation next/previous: device-mode branch exists; public host path not established, future reuse candidate"
+            ],
+            "hardwareOffload": {
+              "capabilities": "LSM6DSO wake/tap/6D/activity/FSM; wake and double tap already use chip hardware. ST has vendor FSM examples; no large duplicate algorithm or unqualified FSM configuration installed.",
+              "references": [
+                "https://www.st.com/resource/en/application_note/an5192-lsm6dso-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf",
+                "https://github.com/STMicroelectronics/st-mems-finite-state-machine"
+              ]
+            },
+            "fpu": "Actual build uses Cortex-M33 SP hard FPU for Fusion; fixed-point PDM/Opus already use their existing integer/DSP optimizations. Do not blindly rewrite integer audio as float.",
+            "scope": "Research decision attached to existing CP04-08, not a second feature tree or sale promise"
           }
         }
       },
@@ -268564,9 +268626,9 @@
         "evidence": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\core-delivery-priority-review-r1",
         "boundaries": "没有操作手机/卡、消费录音、安装驱动、占用独显、修改网络、发送客户邀请或启动新训练。",
         "ownerCoreAcceptanceCandidate20261109": {
-          "at": "2026-11-11T10:49:26+08:00",
+          "at": "2026-11-12T13:33:58+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "OWNER_HANDOFF_INSTALLED108141_SOURCE109142_NOT_BUILT",
+          "state": "ONE_COMPLETE_FROZEN_CORE_KIT_DELIVERED_PHYSICAL_TOTAL_USE_PENDING",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -268590,7 +268652,7 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "108/141同源普通清单/引用整批已安装和私有全量回读。选中单张清单及依据交接、长行编辑已有源码和受影响检查；尚未原生构建/实装，转交下一AI。",
+          "currentCheckpoint": "同一完整核心候选包已组装、逐成员校验、私有上传并完整回读；Windows110已安装、原245份资料不变；普通FW66802/UI85已恢复并确认启动，安装器句柄关闭，原录音/配对/Boot保留。等待一个真实完整用途的集中验收结果。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
           "next": "ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110",
@@ -268598,7 +268660,7 @@
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
-          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
+          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
             "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
@@ -270126,8 +270188,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T13:00:07+08:00",
-            "state": "WINDOWS110_SCOPED_CONTINUOUS_SOFTWARE_JOURNEY_INSTALLED_PRIVATE_DELIVERY_PASSED_PHYSICAL_TOTAL_PENDING",
+            "updatedAt": "2026-11-12T13:33:58+08:00",
+            "state": "ONE_COMPLETE_FROZEN_CORE_KIT_DELIVERED_PHYSICAL_TOTAL_USE_PENDING",
             "ownerRequestedHandoff": true,
             "originalItems": [
               "CP27-01/notes_images",
@@ -270135,7 +270197,7 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "Complete the existing embedded operation and bind the actual ordinary firmware installation receipt; one whole physical recording-to-usable-result acceptance, including current long-record coverage. No per-feature Owner sign-off queue.",
+            "next": "完整候选已统一交付；Owner已要求占用期先做离线工作，实际释放后续同一轮整体验收，不重复派占用提示。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.110",
@@ -270149,8 +270211,8 @@
             },
             "sourceState": "WINDOWS110_MATCHED_NATIVE_SOFTWARE_DELIVERED_PHYSICAL_TOTAL_PENDING",
             "sourceChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\selected-note-handoff\\ci-preflight.json",
-            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
-            "lastCompletePackageSha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
+            "lastCompletePackageSha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
             "lastCustomerRaw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
             "lastCustomerReadSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
             "lastCustomerReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
@@ -270245,13 +270307,13 @@
             "ownerProductClosure20261112": {
               "at": "2026-11-12T09:26:11+08:00",
               "ownerQuote": "但完整使用体验、实卡可靠性和正式交付还没有一起收口 需要收口, 并且避免零碎, 可以不用每一个功能都验收, 就是最后跑一下总验收, 现在太碎了感觉现在像是拼图不是一个完整产品, 太乱了逻辑, 然后的话你解决一下这个问题",
-              "state": "WINDOWS110_SCOPED_CONTINUOUS_SOFTWARE_JOURNEY_INSTALLED_PRIVATE_DELIVERY_PASSED_PHYSICAL_TOTAL_PENDING",
+              "state": "ONE_COMPLETE_FROZEN_CORE_KIT_DELIVERED_PHYSICAL_TOTAL_USE_PENDING",
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "Windows110同一冻结整包已跑完隔离后台连续目的并实际安装，OS保存/普通接收复用109相同实现证据，原有资料哈希一致；Android141保留。普通固件802包和源码已核，但实卡由原嵌软CPU项占用，等待该项恢复普通固件后再一次实际总使用。",
+              "currentPoint": "同一完整核心候选包已组装、逐成员校验、私有上传并完整回读；Windows110已安装、原245份资料不变；普通FW66802/UI85已恢复并确认启动，安装器句柄关闭，原录音/配对/Boot保留。等待一个真实完整用途的集中验收结果。",
               "done": false,
-              "updatedAt": "2026-11-12T13:00:07+08:00",
+              "updatedAt": "2026-11-12T13:42:59+08:00",
               "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
               "acceptanceToolCommit": "7e068d18",
               "buildRun": 43154438761,
@@ -270346,20 +270408,20 @@
               "wholePhysicalTotalAcceptancePassed": false,
               "saleQualified": false,
               "physicalAcceptanceDependency": {
-                "state": "WAITING_SHARED_BOARD_FIRMWARE_WORK",
-                "observedAt": "2026-11-12T13:00:07+08:00",
-                "boardHolder": "codex",
+                "state": "NORMAL_FW802_BOOT_VERIFIED_READY_WHEN_CURRENT_BOARD_OPERATION_RELEASED",
+                "observedAt": "2026-11-12T13:33:58+08:00",
+                "boardHolder": null,
                 "lastBoardRelease": {
                   "side": "codex",
-                  "at": "2026-11-12T11:15:51+08:00",
-                  "item": "Companion IMU：61.44MHz板端Fusion资源实测",
-                  "result": "开源Fusion真实M33/FPU微基准完成：RCC PLL61.43982MHz，AHRS124B+偏置36B，栈356B，104Hz平均CPU0.145–0.174%，最大1428cycles/23.24us。只写临时SRAM、未改Flash/录音/配对，原FW66794已恢复UART空闲；离线适配板端计算。"
+                  "at": "2026-11-12T13:29:26+08:00",
+                  "item": "Companion IMU/CPU集中修复：无录音传感链路与普通版资源核对",
+                  "result": "FW66802 CIM3 fresh BLE read complete: 1829 samples, missing0, mode0 restored, MIC session unchanged, no OS cursor control; handles closed"
                 },
                 "recordedBaselineInBacklog": 66791,
                 "firmwareIdentityNotQueriedHere": true,
                 "ownerPromptStarted": false,
-                "explanation": "The existing embedded CPU workpoint has installed diagnostic FW66801 and already opened its original Owner sampling prompt; its stated next action is restore ordinary FW66802. No competing board operation or extra Owner prompt is started here. Ordinary firmware identity and matching receipt must precede total-use acceptance.",
-                "next": "Wait for the existing workpoint to finish its recording and restore the ordinary candidate. Bind the exact ordinary firmware receipt toWindows110; unknown final hand feel and long-record reliability are covered together in the total use, without separate feature sign-offs.",
+                "explanation": "The original installer has restored normal FW66802/UI85, verified its running identity and idle state and closed its handles. The original20s CPU recording was deferred with0 START commands, so no CPU improvement is claimed. Current physical-total readiness depends on the live lease and one Owner total-use round.",
+                "next": "Use the matched ordinary802/Windows110 pair for one actual purpose and final feedback after the board is available. No separate feature sign-off prerequisite.",
                 "concentratedScope": [
                   "IMU drift, drag/click/tap and release/return-to-recording behavior, owned by the active embedded/IMU workpoint.",
                   "The same normal firmware at measured 61.44MHz: real recording+Opus+IMU+BLE concurrency, missed audio/deadlines, RAM and stack within the original budgets.",
@@ -270397,16 +270459,40 @@
                   "ordinaryFirmwareInstalledVerified": false,
                   "physicalTotalAcceptancePassed": false,
                   "saleQualified": false
-                }
+                },
+                "ordinaryFirmwareInstallation": {
+                  "at": "2026-11-12T13:30:19+08:00",
+                  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+                  "firmware": 66802,
+                  "ui": 85,
+                  "packageSha256": "8cb276cbcae513db4d6dec6220c0347896f2ea0464d3303e42476d66fd2408bf",
+                  "firmwareSourceCommit": "59f6fa293a537e24a999637e1e197a4f5dd93312",
+                  "bootAndNormalApplicationVerified": true,
+                  "microphoneRunningAtObservation": false,
+                  "recordingFaultAtObservation": "0",
+                  "pairingAndRecordingMetadataPreserved": true,
+                  "bootWrites": 0,
+                  "originalAudioReads": 0,
+                  "originalAudioWrites": 0,
+                  "allInstallerHandlesClosed": true,
+                  "sourceReceiptSha256": "4da1466564ee070a8909662985d75522b05955ca8faf367bdd2137f7f310a0a9",
+                  "deviceUidAndRecordingCatalogExcluded": true,
+                  "actualNewLongRecordingQualified": false,
+                  "cpuImprovementPhysicallyMeasured": false
+                },
+                "firmwareInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\ordinary-firmware-installed.json",
+                "firmwareIdentityVerifiedByOriginalInstaller": true
               },
               "latestOwnerContinuation": {
-                "ownerQuote": "那你看看继续修复一下，然后看下怎么跑个什么总验收之类的呗。然后，对啊，需要集中验收才行，不要碎碎碎碎片化了。",
-                "acceptedAt": "2026-11-12T11:26:42+08:00",
+                "ownerQuote": "应该完成了吧？你看一下，继续把整一轮东西完整交付一下。然后不要搞这么零碎之类的。",
+                "acceptedAt": "2026-11-12T13:33:58+08:00",
                 "ownerDecision": "Continue the existing product closure; repair a complete batch, then one concentrated total-use acceptance, no per-feature Owner sign-offs.",
                 "currentActualDelivery": {
                   "windows": "0.1.110",
                   "android": "0.1.141",
-                  "windowsNativeContinuousWorkflowPassed": true
+                  "firmware": 66802,
+                  "ui": 85,
+                  "oneCompletePrivateArchiveVerified": true
                 },
                 "requiredRepairBatch": [
                   "IMU drift, drag/click/tap and release/return-to-recording behavior, owned by the active embedded/IMU workpoint.",
@@ -270424,8 +270510,8 @@
                 "preservedBoundaries": "Screen/power/production pauses and original speed deferrals remain. WBA25 is a future hardware migration; current physical evidence is on the existing board. Independent model accuracy/retail conditions are not silently closed.",
                 "readyNow": false,
                 "remaining": [
-                  "Only the existing embedded operation may finish its active diagnostic sampling and restore the ordinary firmware.",
-                  "Bind that actual firmware installation, then one consolidated Owner use with physical recording, saved reception, review/follow-up/takeaway and current long-duration coverage."
+                  "Owner deferred the pre-start waiting window while another engineering operation occupied the board; finish offline delivery work, then wait for the actual release before resuming this same total-use batch.",
+                  "No physical recording or product-use result is available from that deferred window."
                 ],
                 "adapter": "tools/qa/core_acceptance20261109/owner_total.py",
                 "prepareCommand": "python tools/qa/core_acceptance20261109/owner_total.py --prepare --batch C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110",
@@ -270443,7 +270529,7 @@
                 "resourceAndFeelAcceptance": "Unverified hand feel and real concurrent CPU/audio results are contents of the one total use, not separate Owner-signoff prerequisites. First finish known executable source repairs and bind a frozen installed firmware/software pair. Resource measurements and the current >=2h actual recording are collected in the same overall acceptance; unchanged valid evidence is reused.",
                 "sourceAdapterFollowup": "Reopened normal app is tracked in the same round, review controls return to disabled during continued use, and final metadata is never read while a normal app process is alive."
               },
-              "acceptanceAdapterSha256": "f43ba9952618d113e8a99b472478ce7f01a0d42bc91feba7ed5290ae30ffc009",
+              "acceptanceAdapterSha256": "8ea489825566ad90747721c4c2ea6e2e490ad5b926049f33fd5a65716e19c22a",
               "nextCandidate": {
                 "version": "0.1.110",
                 "state": "INSTALLED_BACKGROUND_PURPOSE_UNCHANGED_OS_EVIDENCE_AND_PRIVATE_READBACK_PASSED",
@@ -270475,7 +270561,27 @@
               "nativeSoftwareClosureEvidenceAccepted": true,
               "unchangedNativeOsHandoffEvidenceReused": true,
               "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
-              "nativeSoftwareEvidenceScope": "WINDOWS110_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED"
+              "nativeSoftwareEvidenceScope": "WINDOWS110_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED",
+              "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
+              "completeDeliverySha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
+              "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112.zip",
+              "ownerTotalStatus": "DEFERRED_BEFORE_START_WAIT_FOR_OTHER_ENGINEERING_RELEASE",
+              "ownerTotalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\owner-total-result.json",
+              "latestOwnerConcentratedFeedback": {
+                "at": "2026-11-12T13:39:50.310+08:00",
+                "privateRaw": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-total-windows110-fw802\\progress.json",
+                "privateRawSha256": "8eead13005a7126361372fc4b37d16bc960141b2aee96b4b4c2a37755c2266e6",
+                "privateTextCopiedToRepository": false,
+                "handling": "Owner asks to do other executable work while the other operation owns the board; resume the same total-use batch only after release, no repeated occupied-board prompts.",
+                "productOpened": false,
+                "hostMicStartCommands": 0
+              },
+              "singleWindowLeaseWaitFix": {
+                "knownFailure": "Board was reclaimed between read-only readiness and actual launch; no popup/MIC started on the failed preflight.",
+                "fix": "Same original window can wait with Start disabled; a claim race consumes its original Start and requires a fresh actual click after release, never automatically replays readiness.",
+                "isolatedLifecycleTestsPassed": 9,
+                "guiOrHardwareInThoseTests": false
+              }
             },
             "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json"
           },
@@ -277636,17 +277742,17 @@
       }
     },
     "nextBatch": {
-      "at": "2026-11-12T13:02:08+08:00",
-      "status": "ONE_PHYSICAL_TOTAL_USE_AFTER_EXISTING_EMBEDDED_OPERATION",
-      "next": "现有嵌软CPU操作结束并恢复普通FW66802、核对实际安装后，使用Windows110同批正常产品，在原单一弹窗连续完成真实录音（含当前>=2h覆盖）→正常接收/处理→核对出处/跟进→重开与带走，最后集中给整体结论；不要求逐功能Owner先签收。",
+      "at": "2026-11-12T13:33:58+08:00",
+      "status": "ONE_TOTAL_USE_ON_MATCHED_ORDINARY_FW_AND_WINDOWS",
+      "next": "同一冻结Windows110/FW66802候选执行一次集中实际使用及当前长录覆盖，最后结合真实保存结果和一次反馈收尾；未实测范围不虚关。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-12T13:02:08+08:00",
-      "state": "WINDOWS110_SCOPED_CONTINUOUS_SOFTWARE_JOURNEY_INSTALLED_PRIVATE_DELIVERY_PASSED_PHYSICAL_TOTAL_PENDING",
-      "done": "Windows110整批已安装，245份原资料哈希一致，私有整包回读一致。新包原生后台连续读/出处/跟进/保存重开/预览/实际TXT生成通过；OS保存取消与普通接收复用109相同实现有效证据。Android141原交付保留。",
-      "remaining": "实卡仍由原CPU工程项占用，待普通FW66802实际恢复与身份收据；然后一次完整实卡用途及当前长录集中反馈。110独立机OS交接本次未重测；独立模型质量/公开销售/既定暂停范围保持真实未完成。",
-      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
+      "at": "2026-11-12T13:33:58+08:00",
+      "state": "ONE_COMPLETE_FROZEN_CORE_KIT_DELIVERED_PHYSICAL_TOTAL_USE_PENDING",
+      "done": "一个完整候选ZIP已私有交付并完整回读：Windows110、已实际启动确认的普通FW66802/UI85、现有Android141与原Mac候选；Windows原245份资料保留、后台完整会后目的通过、未变OS交接沿109有效证据。",
+      "remaining": "仅候选交付完成，实卡当前长录/完整真实使用/指针手感未整体验收；CPU采样已稍后，实际优化降幅未测。手机当前实卡整链、Mac真机、独立模型及正式售卖条件按原范围保留。",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
       "previousVerifiedBatch": {
         "at": "2026-11-11T16:24:51+08:00",
         "state": "108141_INSTALLED_PRIVATE_PACKAGE_VERIFIED",
@@ -277848,78 +277954,48 @@
         "installedDllSha256": "7a98b4823c213be0aa54b9098155a5d6223459d3cc403d7f0f109a53e8916d8b",
         "physicalTotalAcceptancePassed": false
       },
-      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141-delivered-result.json",
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
       "package": {
-        "at": "2026-11-11T15:01:53+08:00",
-        "state": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
-        "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows108-android141.zip",
-        "bytes": 47540723,
-        "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+        "at": "2026-11-12T13:31:23+08:00",
+        "state": "ONE_COMPLETE_CANDIDATE_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+        "package": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112.zip",
+        "bytes": 44959774,
+        "sha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
         "files": [
           {
+            "path": "windows/Companion-Windows-0.1.110.msi",
+            "bytes": 16826808,
+            "sha256": "6002aed36dc12cc1e8d5089ed1de491b49e35ffdb51c86128fc658650e926ef9"
+          },
+          {
             "path": "firmware/companion-update.cup",
-            "bytes": 1360220,
-            "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+            "bytes": 1363260,
+            "sha256": "8cb276cbcae513db4d6dec6220c0347896f2ea0464d3303e42476d66fd2408bf"
           },
           {
             "path": "firmware/ota_manifest.json",
             "bytes": 1548,
-            "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
-          },
-          {
-            "path": "macos/CompanionMac-candidate.zip",
-            "bytes": 736161,
-            "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
-          },
-          {
-            "path": "windows/Companion-Windows-0.1.108.msi",
-            "bytes": 16839048,
-            "sha256": "c09ea165c2fe763246ffb888b52e4a1773e15ac30df6ad54d2dc8f8f57a4fc3c"
+            "sha256": "009e094e13756828ec0157fbf993eeb7ca07c6b3183caa37d58196e06b4fb3a3"
           },
           {
             "path": "android/Companion-Android-0.1.141.apk",
             "bytes": 51192605,
             "sha256": "84663a57948873780eb16705041eda7c70ab5ab58aa7263c5b66d088a394dbe8"
+          },
+          {
+            "path": "macos/CompanionMac-candidate.zip",
+            "bytes": 736161,
+            "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
           }
         ],
         "draftOnly": true,
         "saleQualified": false,
         "ownerPrivateDataUploaded": false,
-        "sourceRecipe": "original active work item packageDefinition",
-        "assetId": 734506993,
-        "readback": {
-          "method": "four-bounded-official-CDN-range-readers",
-          "workers": 4,
-          "sections": 12,
-          "bufferBytesPerWorker": 131072,
-          "bytes": 47540723,
-          "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
-          "seconds": 6.375,
-          "retainedTransientReads": [],
-          "authSentOnlyToGitHubApi": true,
-          "signedUrlOrTokenPersisted": false,
-          "routingModified": false
-        },
         "readbackByteIdentical": true,
-        "finishedAt": "2026-11-11T15:02:22+08:00",
-        "resourceLimits": {
-          "pid": 29432,
-          "cpuRate": 1000,
-          "cpuControlFlags": 5,
-          "cpuPercentMaximum": 10.0,
-          "inLimitedJob": true,
-          "jobPrivateCommitLimitBytes": 536870912,
-          "jobMemoryLimitEnabled": true,
-          "jobPeakPrivateCommitBytes": 164184064,
-          "cpuPriorityClass": 64,
-          "memoryPagePriority": 1,
-          "memoryPagePriorityIsReclaimHintNotRamCap": true,
-          "gpuPriorityClass": 0,
-          "gpuUtilizationHardCapped": false,
-          "scope": "This worker and its descendants only; no global or other-app changes."
-        }
+        "readbackSha256": "d7ab68b36316c6fa156169c920b1f2327dabd6afed14e43b03b46065e5628a00",
+        "physicalTotalAcceptancePassed": false
       },
-      "next": "Complete the existing embedded operation and bind the actual ordinary firmware installation receipt; one whole physical recording-to-usable-result acceptance, including current long-record coverage. No per-feature Owner sign-off queue.",
+      "next": "完整候选已统一交付；Owner已要求占用期先做离线工作，实际释放后续同一轮整体验收，不重复派占用提示。",
       "pendingAudioEditingWorkpoint": "groups/CP27-16/nonDestructiveSourceMapping20261110",
       "pendingAudioEditingVersionReservation": null,
       "pendingAudioEditingBranch": "work/device-phone-closure055-20261106",
@@ -278219,7 +278295,77 @@
         }
       },
       "updatedAt": "2026-11-12T13:00:07+08:00",
-      "currentInstalledWindows": "0.1.110"
+      "currentInstalledWindows": "0.1.110",
+      "previousComplete108141Package": {
+        "at": "2026-11-11T15:01:53+08:00",
+        "state": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
+        "package": "E:\\CodexData\\Companion\\deliveries\\20261111-companion-core-windows108-android141.zip",
+        "bytes": 47540723,
+        "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+        "files": [
+          {
+            "path": "firmware/companion-update.cup",
+            "bytes": 1360220,
+            "sha256": "e039878a47efcee971a262af8565716bd9b595109e411460ae9e100ba8602c10"
+          },
+          {
+            "path": "firmware/ota_manifest.json",
+            "bytes": 1548,
+            "sha256": "ce64e14521cccb33ac1a482c28efd3f123754995bd2c1a03fd8b982f554bf913"
+          },
+          {
+            "path": "macos/CompanionMac-candidate.zip",
+            "bytes": 736161,
+            "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+          },
+          {
+            "path": "windows/Companion-Windows-0.1.108.msi",
+            "bytes": 16839048,
+            "sha256": "c09ea165c2fe763246ffb888b52e4a1773e15ac30df6ad54d2dc8f8f57a4fc3c"
+          },
+          {
+            "path": "android/Companion-Android-0.1.141.apk",
+            "bytes": 51192605,
+            "sha256": "84663a57948873780eb16705041eda7c70ab5ab58aa7263c5b66d088a394dbe8"
+          }
+        ],
+        "draftOnly": true,
+        "saleQualified": false,
+        "ownerPrivateDataUploaded": false,
+        "sourceRecipe": "original active work item packageDefinition",
+        "assetId": 734506993,
+        "readback": {
+          "method": "four-bounded-official-CDN-range-readers",
+          "workers": 4,
+          "sections": 12,
+          "bufferBytesPerWorker": 131072,
+          "bytes": 47540723,
+          "sha256": "9cf86b4b2cadbfe31ca505a895a0930a85b42ee9a99b5e5dd646f370ca45fa15",
+          "seconds": 6.375,
+          "retainedTransientReads": [],
+          "authSentOnlyToGitHubApi": true,
+          "signedUrlOrTokenPersisted": false,
+          "routingModified": false
+        },
+        "readbackByteIdentical": true,
+        "finishedAt": "2026-11-11T15:02:22+08:00",
+        "resourceLimits": {
+          "pid": 29432,
+          "cpuRate": 1000,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 10.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 536870912,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 164184064,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        }
+      }
     },
     "retiredBatchAliases20261111": {
       "historicalOnly": true,

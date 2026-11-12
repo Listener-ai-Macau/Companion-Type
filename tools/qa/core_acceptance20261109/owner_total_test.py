@@ -29,21 +29,27 @@ class WholeUseTests(unittest.TestCase):
         self.assertFalse(facts[0]['beganDuringOwnerWindow']);self.assertTrue(facts[1]['beganDuringOwnerWindow'])
         self.assertNotIn('private words',json.dumps(facts))
 
-    def exercise(self,selected,prompt_closes_at,reopens=False):
+    def exercise(self,selected,prompt_closes_at,reopens=False,busy_until=0,claim_race=False,retry_start=True,expect_app=True):
         with tempfile.TemporaryDirectory(prefix='whole-use-check-',dir=Path(__file__).parent)as directory:
             root=Path(directory).resolve();self.assertEqual(root.parent,Path(__file__).parent.resolve())
             project=root/'project';batch=project/'batch';batch.mkdir(parents=True)
-            (project/'docs').mkdir();board_path=project/'docs/board_turn.json';board_path.write_text(json.dumps(dict(holder=None)))
+            (project/'docs').mkdir();board_path=project/'docs/board_turn.json';board_path.write_text(json.dumps(dict(holder='grok' if busy_until else None)))
             appdata=root/'roaming';state=appdata/'Companion Type/state/sessions.json';state.parent.mkdir(parents=True);state.write_text('[]')
-            output=root/'private-run';clock=dict(tick=0,released=False,metadata_written=False,command=[])
+            output=root/'private-run';clock=dict(tick=0,released=False,metadata_written=False,command=[],busyUntil=busy_until,startClicks=0,claimAttempts=0,promptCount=0)
             origin=datetime(2026,11,12,8,0,tzinfo=timezone(timedelta(hours=8)))
             def stamp():return (origin+timedelta(seconds=clock['tick'])).isoformat()
             class FakePrompt:
                 pid=7001
                 def __init__(self,command,**kwargs):
                     clock['command']=command;self.stream=kwargs['stdout'];self.written=False
-                    event=Path(command[command.index('-EventPath')+1]);event.write_text(json.dumps(dict(event='action_button|开始整体验收',processId=self.pid)))
+                    self.event=Path(command[command.index('-EventPath')+1]);self.updates=Path(command[command.index('-UpdatePath')+1]);self.clicked=False
+                    clock['promptCount']+=1
                 def poll(self):
+                    enabled=module.START in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions']
+                    if not enabled:self.clicked=False
+                    if enabled and not self.clicked and (retry_start or not clock['startClicks']):
+                        with self.event.open('a',encoding='utf-8')as stream:stream.write(json.dumps(dict(event='action_button|开始整体验收',processId=self.pid))+'\n')
+                        self.clicked=True;clock['startClicks']+=1
                     if clock['tick']<prompt_closes_at:return None
                     if not self.written:
                         self.stream.write(json.dumps(dict(selected=selected,text='Private Owner feedback')).encode());self.stream.flush();self.written=True
@@ -54,24 +60,35 @@ class WholeUseTests(unittest.TestCase):
                     if clock['tick']<4:return None
                     if not clock['metadata_written']:
                         state.write_text(json.dumps([dict(id='new',source='deviceFlash',deviceRecordingKey=dict(deviceUid='unit',formatEpoch='epoch',sessionId='new'),
-                            durationMs=12000,startedAt=origin.isoformat(),audioStored=True,transcriptFinal=True,
+                            durationMs=12000,startedAt=(origin+timedelta(seconds=clock['appLaunchedAt'])).isoformat(),audioStored=True,transcriptFinal=True,
                             transcriptText='Private recording words',captureIncomplete=False)]))
                         clock['metadata_written']=True
                     return 0
             def popen(command,**kwargs):
                 if '-File'in command:return FakePrompt(command,**kwargs)
-                clock['appLaunched']=True
+                clock['appLaunched']=True;clock['appLaunchedAt']=clock['tick']
                 return FakeApp()
             def board_run(command,**kwargs):
                 action=command[2]
-                if action=='status':return SimpleNamespace(returncode=0,stdout=json.dumps(dict(holder=None)))
+                if action=='status':return SimpleNamespace(returncode=0,stdout=board_path.read_text())
                 if action=='claim':
+                    clock['claimAttempts']+=1
+                    if claim_race and clock['claimAttempts']==1:
+                        clock['busyUntil']=clock['tick']+2;board_path.write_text(json.dumps(dict(holder='grok',item='other operation')))
+                        return SimpleNamespace(returncode=1,stdout='{}')
                     item=command[command.index('--item')+1];board_path.write_text(json.dumps(dict(holder='codex',item=item)))
                     return SimpleNamespace(returncode=0,stdout=json.dumps(dict(result='TURN_CLAIMED')))
                 self.assertEqual(action,'release');self.assertTrue(clock['metadata_written'])
                 clock['released']=True;board_path.write_text(json.dumps(dict(holder=None)))
                 return SimpleNamespace(returncode=0,stdout='{}')
             ready=dict(ready=True,version='0.1.110',sourceCommit='frozen-source',blockers=[])
+            def prepare(*args):
+                busy=json.loads(board_path.read_text())['holder']is not None
+                return {**ready,'ready':not busy,'blockers':[module.BOARD_BUSY]if busy else []}
+            def sleep(_):
+                clock['tick']+=1
+                if json.loads(board_path.read_text())['holder']=='grok'and clock['tick']>=clock['busyUntil']:
+                    board_path.write_text(json.dumps(dict(holder=None)))
             argv=['owner_total.py','--run','--project-root',str(project),'--batch',str(batch),'--output',str(output),
                   '--installed-dir',str(root/'installed')]
             def pids():return [7003]if reopens and 5<=clock['tick']<8 else []
@@ -80,17 +97,21 @@ class WholeUseTests(unittest.TestCase):
                 if path==state and clock.get('appLaunched'):
                     self.assertFalse(clock['tick']<4 or (reopens and 5<=clock['tick']<8),'Mutable index read while normal product is alive')
                 return original_read_text(path,*args,**kwargs)
-            with patch.object(module,'prepare',return_value=ready),patch.object(module,'app_pids',side_effect=pids),\
-                 patch.object(module,'now',side_effect=stamp),patch.object(module.time,'sleep',side_effect=lambda _:clock.update(tick=clock['tick']+1)),\
+            with patch.object(module,'prepare',side_effect=prepare),patch.object(module,'app_pids',side_effect=pids),\
+                 patch.object(module,'now',side_effect=stamp),patch.object(module.time,'sleep',side_effect=sleep),\
                  patch.object(module.subprocess,'Popen',side_effect=popen),patch.object(module.subprocess,'run',side_effect=board_run),\
                  patch.dict(os.environ,{'APPDATA':str(appdata)}),patch.object(Path,'read_text',safe_read),\
                  patch('sys.argv',argv),contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(module.main(),0)
             result=json.loads((batch/'owner-total-result.json').read_text(encoding='utf-8'))
             private=json.loads((output/'progress.json').read_text(encoding='utf-8'))
-            self.assertTrue(clock['released']);self.assertTrue(result['newPhysicalToTextObserved'])
+            self.assertEqual(clock['promptCount'],1)
+            self.assertEqual(clock['released'],expect_app)
+            if expect_app:self.assertTrue(result['newPhysicalToTextObserved'])
+            else:self.assertFalse(result.get('newPhysicalToTextObserved'))
             self.assertFalse(result['physicalTotalAcceptancePassed']);self.assertFalse(result['saleQualified'])
             self.assertNotIn('Private',json.dumps(result));self.assertIn('Private Owner feedback',json.dumps(private))
+            self.last_clock=clock
             self.assertIn('-RequireReviewAllowed',clock['command']);self.assertIn('-NoActivate',clock['command'])
             self.assertNotIn('-NoSound',clock['command']);self.assertNotIn('-TimeoutSeconds',clock['command'])
             return result
@@ -104,6 +125,25 @@ class WholeUseTests(unittest.TestCase):
 
     def test_final_owner_review_after_actual_exit_is_preserved_as_scoped_software_feedback(self):
         self.assertTrue(self.exercise('通过',6)['softwareOwnerAccepted'])
+
+    def test_busy_board_waits_in_the_same_window_and_starts_only_after_release(self):
+        result=self.exercise('通过',6,busy_until=2)
+        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertGreaterEqual(self.last_clock['appLaunchedAt'],2)
+        self.assertEqual(self.last_clock['startClicks'],1)
+
+    def test_claim_race_never_replays_the_earlier_start_when_the_board_later_frees(self):
+        result=self.exercise('稍后',6,claim_race=True,retry_start=False,expect_app=False)
+        self.assertFalse(result['softwareOwnerAccepted'])
+        self.assertNotIn('appLaunched',self.last_clock)
+        self.assertEqual(self.last_clock['claimAttempts'],1)
+        self.assertEqual(self.last_clock['startClicks'],1)
+
+    def test_claim_race_accepts_a_fresh_click_in_the_same_window_after_release(self):
+        result=self.exercise('通过',6,claim_race=True)
+        self.assertTrue(result['softwareOwnerAccepted'])
+        self.assertEqual(self.last_clock['startClicks'],2)
+        self.assertEqual(self.last_clock['claimAttempts'],2)
 
     def test_owner_can_reopen_the_product_and_finish_the_same_round(self):
         result=self.exercise('通过',10,reopens=True)
