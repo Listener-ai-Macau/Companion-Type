@@ -1,21 +1,34 @@
 /* Desktop visual refinement: calm surfaces and clearer hierarchy across existing pages. */
-.ct-shell.ct-windows{font-family:"Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif}
-.ct-windows .ct-topbar h1{font-size:24px;line-height:1.3;letter-spacing:-.01em}
+.ct-shell.ct-windows{font-family:"Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif;font-size:14px}
+.ct-windows .ct-topbar h1,.ct-windows.ct-library-overview .ct-topbar h1{font-size:22px;line-height:1.35;letter-spacing:0;font-weight:650}
 .ct-windows .ct-kicker{display:none}
-.ct-windows .ct-brand-mark{width:40px;height:40px;border-radius:13px}
+.ct-windows .ct-brand-mark{width:32px;height:32px;border-radius:8px}
 .ct-windows .ct-brand strong{font-size:16px}
 .ct-windows .ct-page-navigation button{min-height:40px;border-radius:6px}
 .ct-windows .ct-simple-status{border-radius:6px;padding:10px 14px}
 .ct-windows :is(.ct-library,.ct-meeting-workspace,.ct-readiness,.ct-setup,.ct-advanced>.ct-panel,.ct-desktop-update){border-radius:8px;box-shadow:none}
-.ct-windows .ct-library{padding:22px}
-.ct-windows .ct-library-head strong{font-size:18px}
-.ct-windows .ct-library-search{min-height:42px;border-radius:6px}
-.ct-windows .ct-library-card{border:0;border-bottom:1px solid var(--companion-border);border-radius:0;box-shadow:none}
+.ct-windows .ct-library{padding:18px 20px}
+.ct-windows .ct-library-head strong{font-size:17px;font-weight:650}
+.ct-windows .ct-library-search{min-height:38px;border-radius:6px}
+.ct-windows .ct-library-card{padding:14px 12px;border:0;border-bottom:1px solid var(--companion-border);border-radius:0;box-shadow:none;background:transparent;transform:none}
+.ct-windows .ct-library-card:hover:not(:disabled){background:#f3f6fa;box-shadow:none;transform:none}
+.ct-windows .ct-library-card.selected{background:#edf3fa}
+@media(min-width:720px){.ct-windows .ct-library-card{grid-template-columns:28px minmax(0,1fr) max-content;align-items:center;column-gap:12px}.ct-windows .ct-library-status{grid-column:3;grid-row:1;margin:0;align-self:center;justify-self:end}.ct-windows .ct-library-icon{width:28px;height:28px;border-radius:6px}}
+.ct-windows.ct-theme-dark .ct-library-card{background:transparent;border-color:#35404d}
+.ct-windows.ct-theme-dark .ct-library-card:hover:not(:disabled),.ct-windows.ct-theme-dark .ct-library-card.selected{background:#293544}
 .ct-windows .ct-library-list{gap:0;grid-template-columns:minmax(0,1fr)}
 .ct-windows .ct-library-empty{padding-block:38px 30px;gap:12px}
 .ct-windows .ct-library-empty>svg{padding:16px;border-radius:18px}
 .ct-windows .ct-device-actions{gap:14px}
-.ct-windows .ct-device-actions .ct-recording-activity{padding:20px;border-radius:8px}
+.ct-windows .ct-device-actions .ct-recording-activity{padding:18px 20px;border-radius:8px}
+.ct-windows .ct-readiness{padding:18px 20px}
+.ct-windows .ct-connection-strip{padding:12px 16px;margin-bottom:14px}
+.ct-windows .ct-connection-state{font-size:15px!important}
+.ct-windows.ct-theme-dark .ct-connection-hint{color:#b4bfcd}
+.ct-windows.ct-library-overview .ct-recent-recording{padding:12px 16px;border-radius:8px;background:transparent;box-shadow:none}
+.ct-windows.ct-library-overview .ct-recent-recording>div{display:flex;align-items:baseline;gap:8px 12px;flex-wrap:wrap}
+.ct-windows.ct-library-overview .ct-recent-recording strong{margin:0;font-size:14px;font-weight:600}
+.ct-windows.ct-library-overview .ct-recent-recording small{margin:0}
 .ct-windows .ct-advanced>.ct-panel{padding:22px;margin-top:18px}
 .ct-windows .ct-panel-title{font-size:17px;letter-spacing:-.025em}
 .ct-windows .ct-settings-grid{gap:18px 22px}
@@ -29,9 +42,10 @@
 .ct-windows.ct-theme-dark .ct-service-privacy{color:#c3bdcc}
 .ct-windows.ct-theme-dark .ct-service-privacy summary{color:#9ec5f6}
 .ct-windows .ct-settings-grid :is(input,select){min-height:40px;border-radius:6px}
-.ct-windows .ct-action,.ct-windows .ct-icon-button{border-radius:6px}
+.ct-windows .ct-action,.ct-windows .ct-icon-button{border-radius:6px;min-height:36px;padding:8px 12px;font-size:13px}
+.ct-windows .ct-topbar .ct-icon-button{width:36px;height:36px;padding:8px}
 .ct-windows .ct-meeting-hero{padding-top:26px;padding-bottom:26px}
-.ct-windows .ct-audio-card{border-radius:16px;padding:22px 24px}
+.ct-windows .ct-audio-card{border-radius:8px;padding:18px 20px}
 .ct-windows .ct-recording-transcript{line-height:1.95}
 @media(max-width:560px){.ct-windows .ct-library,.ct-windows .ct-advanced>.ct-panel{padding:18px}.ct-windows .ct-device-actions .ct-recording-activity{padding:18px}}
 @media(prefers-reduced-motion:no-preference){.ct-windows .ct-library-card{transition:border-color .16s ease,box-shadow .16s ease}.ct-windows .ct-action{transition:background-color .16s ease,border-color .16s ease}}

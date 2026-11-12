@@ -15,8 +15,9 @@ body:has(.ct-windows.ct-theme-dark){background:#111116;color:#efedf2}.ct-windows
 .ct-windows.ct-theme-dark .ct-action-primary{background:#e6edf6!important;border-color:#e6edf6!important;color:#202027!important}
 .ct-windows.ct-theme-dark :is(input,textarea,select){background:#252b33!important;border-color:#454e5b!important;color:#edf1f7!important}
 .ct-windows.ct-theme-dark .ct-library-search input,.ct-windows.ct-theme-dark .ct-title-editor input{background:transparent!important}
-.ct-windows.ct-theme-dark :is(.ct-library-card,.ct-recording-activity){background:#232a33!important;border-color:#343c47!important;color:#edf1f7!important}
-.ct-windows.ct-theme-dark .ct-library-card.selected{background:#29384c!important;border-color:#746ba4!important}
+.ct-windows.ct-theme-dark .ct-recording-activity{background:#232a33!important;border-color:#343c47!important;color:#edf1f7!important}
+.ct-windows.ct-theme-dark .ct-library-card{background:transparent!important;border-color:#35404d!important;color:#edf1f7!important}
+.ct-windows.ct-theme-dark .ct-library-card.selected{background:#293544!important;border-color:#52657c!important}
 .ct-windows.ct-theme-dark :is(.ct-library-icon,.ct-pill-good,.ct-library-status-minutesReady){background:#2a3a50!important;border-color:#415573!important;color:#bad4f5!important}
 .ct-windows.ct-theme-dark :is(.ct-recording-more,.ct-recording-result,.ct-result-tools,.ct-audio-advanced,.ct-minutes-article h4,.ct-readiness dl>div,.ct-setup-grid>div,.ct-setup-details){border-color:#343b45!important}
 .ct-windows.ct-theme-dark :is(.ct-recording-back,.ct-text-button,.ct-recording-more>summary,.ct-result-tools>summary,.ct-saved-details,.ct-audio-advanced>summary){color:#9ec5f6!important}
