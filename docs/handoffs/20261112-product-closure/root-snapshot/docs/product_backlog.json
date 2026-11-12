@@ -133712,7 +133712,7 @@
     }
   },
   "maintenance_queue": {
-    "updated": "2026-10-26T10:11:57.109109+08:00",
+    "updated": "2026-11-12T10:38:30+08:00",
     "interrupted_work_point": {
       "task": "workspace cleanup and owner progress overview",
       "result": "Cleanup executed; 140.20GiB/242588 generated files removed, README overview written; owner summary still to deliver.",
@@ -133734,6 +133734,69 @@
             "result": "Cleared 41.338 GiB logical of idle incremental compilation and rlib/rmeta intermediates; retained executables, DLLs, PDBs, installers, source snapshots, recordings and failure evidence.",
             "evidence": "C:\\Users\\Billy\\Documents\\Codex\\system-maintenance\\disk-20261026\\project-cleanup-verification.json",
             "active_work_unchanged": true
+          },
+          {
+            "id": "DISK-GROWTH-PREVENTION-20261112",
+            "at": "2026-11-12T10:15:00+08:00",
+            "status": "done",
+            "ownerQuote": "那你看下 companion 或者 dancing 的开发这边，它总是会发生一些硬盘泄露问题，就是。之前清理了，但是你要看一下怎么防止这个硬盘泄露，要修一下这个问题。就是他可能十天就会加200G 硬盘这样子。",
+            "scope": "Companion及Denzic开发产生的持续磁盘增长；先按当前目录、历史清理证据和实际writer定位，再修生成/复用/终态清理及保留上限。",
+            "preservedFrontendWorkpoint": {
+              "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+              "nativeBuildRun": 43137887077,
+              "state": "Final109 candidate building; whole-product closure remains active."
+            },
+            "priorCleanupEvidence": "C:/Users/Billy/Documents/Codex/system-maintenance/disk-20261026/project-cleanup-verification.json",
+            "initialDiskFreeBytes": {
+              "C": 332188508160,
+              "E": 310142971904
+            },
+            "reportedTenDayGrowthVerified": false,
+            "currentChanges": "Known Git retry cause disabled; fixed shared compiler targets, exclusive locks and entry budgets implemented. One-time old firmware objects removed with final artifact hashes unchanged. No recurring deletion task.",
+            "completedAt": "2026-11-12T10:38:30+08:00",
+            "ownerClarification": "这次清理完以后不要再清理；以后预防持续膨胀，不靠反复人工清理。",
+            "state": "KNOWN_DISK_GROWTH_SOURCES_FIXED_AND_ONE_TIME_CLEANUP_COMPLETE",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\disk-growth-result.json",
+            "additionalDeletedLogicalBytes": 17298713460,
+            "preventiveImplementation": {
+              "sharedImplementationCommit": "c977d947",
+              "firmwareEntryCommit": "87e44c4e",
+              "windowsEntryCommit": "ab19c4e1",
+              "exclusiveOsLocks": true,
+              "windowsDevAndTestDebugSymbols": false,
+              "windowsIncrementalCopies": false,
+              "buildCacheStartBudgetGiB": 80,
+              "minFreeGiB": 30,
+              "jobReserveGiB": {
+                "firmware": 1,
+                "windows": 3
+              },
+              "onBudgetExceeded": "Refuse to start the new build; do not allocate another cache or automatically delete user data.",
+              "scope": "Current local Companion firmware and Windows entry points. This is a pre-build capacity check, not an OS-level quota on arbitrary scripts.",
+              "scheduledDeletion": false,
+              "automaticRecurringCleanup": false,
+              "privateKeysOutsideCache": true
+            },
+            "validation": {
+              "state": "PASS",
+              "repeatedBuildsUseOneObjectTree": true,
+              "versionedResultsContainNoObjects": true,
+              "failedBuildDoesNotInheritPreviousSuccess": true,
+              "existingEvidenceNotOverwritten": true,
+              "simultaneousWriterBlocked": true,
+              "budgetStopsBeforeWrite": true,
+              "junctionsExcluded": true,
+              "productBuilds": 0,
+              "hardwareAccess": false
+            },
+            "realBuildUsedSharedWorkspace": true,
+            "remaining": {
+              "tenDayNetGrowthMeasured": false,
+              "reason": "No comparable ten-day baseline. Present logical sizes and moved-file creation dates do not prove a net growth rate.",
+              "oldGitHistoricalArtifactMissing": "99a8373877d0727e03cb949010794695f83d8cc1",
+              "oldGitHistoryRepair": "Pre-existing historical AAR object remains missing; do not re-enable automatic repacking until repaired. Current application candidate inputs are independently verified.",
+              "futureScope": "New custom build/download entry points must use fixed caches and declare their space estimate; unrelated WJ/personal data not changed."
+            }
           }
         ]
       },
@@ -133748,12 +133811,12 @@
         "result": "Updated shared source and Companion/Firmware/Type/Claude/resume entries to exact latest three rules; current task retained."
       }
     ],
-    "next_action": "工作区清理与规则同步已交接，已恢复原宠物软件主线并完成P173/P174集中460；继续具体可执行项，保留硬件依赖。"
+    "next_action": "磁盘复发已按已知源头修复；不定时清理。继续原Windows109完整产品收口，当前原生整流程尚未交付，实卡与正式交付按真实总验收收口。"
   },
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-11T14:20:36+08:00",
+      "updatedAt": "2026-11-12T10:13:40+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -134495,7 +134558,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
+      "next": "Same IMU pointer work: upstream adapters and source checks completed; Owner asked to stop further disk cleanup and prevent recurrence, prevention is applied. Explain existing upgrade signing and resolve its direction before the prepared development Boot trust replacement; then validate live CIM1/board CPU and one usable pointing/click/drag experience. No physical IMU qualification or installed Windows pointer yet.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -143354,14 +143417,41 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "IMPLEMENTING_AND_VALIDATING_SHARED_IMU_POINTER",
-          "scope": "One handheld pointer path combining relative pointing, tap/hold interaction and optional dwell; reuse existing six-axis LSM6DSO, encrypted device connection and CIN1, do not duplicate microphone or gesture driver.",
+          "state": "HOST_ADAPTED_COMPILED_PHYSICAL_INSTALL_PENDING_SIGNING_CLARIFICATION",
+          "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
             "windows": "087a0140eebab71734d6cb342de475b84b2ef6d2"
           },
           "actualDeviceQualified": false,
-          "saleQualified": false
+          "saleQualified": false,
+          "updatedAt": "2026-11-12T10:13:40+08:00",
+          "sourceCommit": {
+            "windows": "45f72213f0bac76d6c9fc80635d92d816ffc41cc",
+            "firmware": "408f899",
+            "upstreamAirCursor": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
+            "upstreamWatchPointer": "504137a1a8748e3560f1c203d06fbd4e0832d582"
+          },
+          "sourceProtectedRemotely": true,
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\progress.json",
+          "portableAlgorithmCpu": {
+            "workload": "SYNTHETIC_UNOPTIMIZED_MAPPING_ONLY_NO_BLE_OR_OS",
+            "samplesPerMode": 250000,
+            "framesPerMode": 1250000,
+            "relativeUsPerSamplePlusFiveFrames": 1.107,
+            "laserUsPerSamplePlusFiveFrames": 0.9,
+            "singleCoreDutyAt25HzPercent": {
+              "relative": 0.002767,
+              "laser": 0.002249
+            },
+            "actualBoardCpuMeasured": false
+          },
+          "remaining": [
+            "Resolve Owner question on existing upgrade signing before Boot trust replacement",
+            "Real high-rate CIM1, board CPU, release/disconnect and mounting-axis validation",
+            "Prepared owner pointing/click/drag trial through original popup",
+            "Integrate matching built/installed Windows candidate with current frontend delivery batch; source check is not an installed product"
+          ]
         }
       },
       "workpointBeforeImuPriority20261109": {
@@ -144572,6 +144662,29 @@
           "deliveredAs": "Self-contained chat tutorial using actual visible labels; no new firmware/build/installation or re-opening operator window.",
           "voiceInputStillRequiresActualOwnerUse": true
         }
+      },
+      "workspaceStorage20261112": {
+        "updatedAt": "2026-11-12T10:13:40+08:00",
+        "state": "ROOT_CAUSE_PREVENTION_APPLIED_FURTHER_DELETION_STOPPED",
+        "ownerLatestRequest": "不要再清理；主要解决磁盘持续膨胀",
+        "result": {
+          "orphanGitTemporaryPacks": 521,
+          "orphanGiB": 120.815,
+          "rebuildableDebugTargetsRemoved": 3,
+          "actualFreedGiB": 162.581,
+          "gitGarbageAfter": 0,
+          "refsUnchanged": true,
+          "gitAutomaticRepackDisabledInAffectedCommonRepository": true,
+          "sharedCargoTarget": "E:/CodexData/Companion/.build-cache/shared-windows-target",
+          "devAndTestDebugSymbolsDisabled": true,
+          "incrementalCopiesDisabled": true,
+          "normalSourceCommitProducedNewTemporaryPacks": false,
+          "furtherDeletionStoppedByOwner": true,
+          "scheduledAutomaticDeletion": false,
+          "preexistingMissingHistoricalArtifactBlob": "99a8373877d0727e03cb949010794695f83d8cc1"
+        },
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\progress.json",
+        "resumeWorkpoint": "Continue the existing IMU pointer task, preserve recording and original sale blocks; current signing direction needs clarification, no board changes made."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -269773,8 +269886,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T09:57:59+08:00",
-            "state": "IMPLEMENTING_COHERENT_PRODUCT_CLOSURE",
+            "updatedAt": "2026-11-12T10:54:34+08:00",
+            "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
             "ownerRequestedHandoff": true,
             "originalItems": [
               "CP27-01/notes_images",
@@ -269782,10 +269895,10 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "等待最终Windows109构建43137887077；独立核MSI→同包连续原生总流程→升级保留原资料→一次实卡总验收。不安装已取消的1be候选。",
+            "next": "109已安装并完成同包原生完整软件流程、鼠标保存重开和真实文件交接；245份原资料一致，私有草稿远端读回一致。等待当前实板IMU/固件维护收尾及匹配身份，再集中一次实卡/长录/完整目的总验收；正式整机发布条件继续按原阻断，不逐功能派Owner。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-            "currentInstalledWindows": "0.1.108",
+            "currentInstalledWindows": "0.1.109",
             "currentInstalledAndroid": "0.1.141",
             "plannedWindowsVersion": "0.1.109",
             "plannedAndroidVersion": "0.1.142",
@@ -269892,19 +270005,19 @@
             "ownerProductClosure20261112": {
               "at": "2026-11-12T09:26:11+08:00",
               "ownerQuote": "但完整使用体验、实卡可靠性和正式交付还没有一起收口 需要收口, 并且避免零碎, 可以不用每一个功能都验收, 就是最后跑一下总验收, 现在太碎了感觉现在像是拼图不是一个完整产品, 太乱了逻辑, 然后的话你解决一下这个问题",
-              "state": "WINDOWS109_FINAL_COHERENT_PRODUCT_NATIVE_BUILD_RUNNING",
+              "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
               "currentPoint": "108/141已交付；109/142单张交接源检查点保留。现在开始会议详情组合实现，先精确修复当前子模块Git工作树元数据，不重装依赖。",
               "done": false,
-              "updatedAt": "2026-11-12T09:57:59+08:00",
+              "updatedAt": "2026-11-12T10:54:34+08:00",
               "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
               "acceptanceToolCommit": "7e068d18",
               "buildRun": 43137887077,
               "sourceChecks": "Complete source journey passed: purpose panes, draft retention, failed save/retry, exact single-note preview, cancel and themes/narrow windows. Matching native/physical total acceptance still pending.",
-              "nativeBuilt": false,
-              "installed": false,
+              "nativeBuilt": true,
+              "installed": true,
               "hardwareQualified": false,
               "implementation": "Windows会议详情四个明确用途区域；纪要/待办优先，原文/补充与交接分开显示；保留挂载的草稿、原生存储与导出；来源回跳及返回补充保持可达；单张清单接入统一交接区；旧工具保留在次要入口。",
               "gitMetadataRepair": {
@@ -269922,8 +270035,86 @@
                 }
               ],
               "readableExport": "All ordinary selected-content preview/copy/file formats use the same readable minutes projection: Chinese standard headings and exact generated transport-header removal; original body, uncertainty, numbers, source notes, literal code, saved data and raw JSON/legacy exports remain intact.",
-              "acceptanceView": "Current PRODUCT_BACKLOG view and closurePolicy follow Owner final whole-product acceptance; original per-item evidence remains, no per-feature Owner sign-off queue."
-            }
+              "acceptanceView": "Current PRODUCT_BACKLOG view and closurePolicy follow Owner final whole-product acceptance; original per-item evidence remains, no per-feature Owner sign-off queue.",
+              "nativeBuildConclusion": "success",
+              "nativeVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-verification.json",
+              "runtimeRun": 43144208633,
+              "appSourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+              "testSourceCommit": "4b1b2a59bbf7d4045a4c64277486adec0563c042",
+              "retainedRuntimeAttempts": [
+                {
+                  "run": 43140818635,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Observer selected an audio-only review container for an imported-text fixture; visible imported source was present."
+                },
+                {
+                  "run": 43141193321,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Observer expected raw unquoted manual text within the deliberately provenance-quoted export; actual text was present."
+                },
+                {
+                  "run": 43141704038,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Immediate native checkbox click assertion failed before persistence confirmation; note-save timing remains under review."
+                },
+                {
+                  "run": 43142034000,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Native checkbox click did not persist in the observed interval; do not claim mouse interaction qualified."
+                },
+                {
+                  "run": 43142449116,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Observer waited for the entire details element to be hidden; closed summary is intentionally still visible. Wait for the save button/form instead."
+                },
+                {
+                  "run": 43142937093,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Public-note persistence succeeded; test setup pre-created the ordinary receiver destination, so its required fresh mkdir refused."
+                },
+                {
+                  "run": 43143215466,
+                  "state": "FAILED_RETAINED",
+                  "finding": "Whole workflow including native dialogs and ordinary receiver completed; final unrelated-row equality caught fixture null/empty fields omitted by native serde. Canonical fixture updated before any action, no content comparator weakening."
+                },
+                {
+                  "run": 43143503007,
+                  "state": "PASSED_KEYBOARD_PATH",
+                  "testSource": "361500cd",
+                  "productRebuilt": false
+                },
+                {
+                  "run": 43143840547,
+                  "state": "PASSED_SAME_KEYBOARD_SOURCE_RETAINED",
+                  "testSource": "361500cd",
+                  "finding": "Dispatch immediately after push still selected the prior ref; do not count as mouse coverage. The exact head was checked; full-SHA dispatch rejected with HTTP422, branch ref confirmed before next dispatch."
+                },
+                {
+                  "run": 43144208633,
+                  "state": "PASSED_MOUSE_COMPLETE_PATH",
+                  "testSource": "4b1b2a59bbf7d4045a4c64277486adec0563c042",
+                  "productRebuilt": false
+                }
+              ],
+              "runtimeApproach": "Same independently inspected and installed MSI/EXE/DLL; continuous native flows include source lookup, draft retention, save/check/reopen, complete and selected-content previews, native Save/Cancel dialogs, clipboard file and ordinary Shell recipient. Separate final mouse path passed after waiting for form closure.",
+              "nativeWholeSoftwareJourneyPassed": true,
+              "mouseAndKeyboardSavedChecklistPathsPassed": true,
+              "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\installation.json",
+              "windowsDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json",
+              "existingUserDataFilesPreserved": 245,
+              "privateRemoteDeliveryReadbackMatched": true,
+              "wholePhysicalTotalAcceptancePassed": false,
+              "saleQualified": false,
+              "physicalAcceptanceDependency": {
+                "state": "WAITING_SHARED_BOARD_FIRMWARE_WORK",
+                "holderItem": "Companion IMU：已授权开发密钥恢复及六轴流CPU验证",
+                "observedAt": "2026-11-12T10:54:34+08:00",
+                "boardClaimedByThisFrontendTask": false,
+                "ownerPromptStarted": false,
+                "next": "Wait for the other actual board operation to finish and its matching firmware receipt. Then one Owner total-use acceptance via original Denzic prompt; no per-feature sign-offs or concurrent recording/firmware activity."
+              }
+            },
+            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json"
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -277250,7 +277441,7 @@
     },
     "sharedWindowsIntegration20261110": {
       "at": "2026-11-11T15:20:58+08:00",
-      "state": "WINDOWS109_FINAL_COHERENT_PRODUCT_NATIVE_BUILD_RUNNING",
+      "state": "WINDOWS109_DELIVERED_TOTAL_PRODUCT_ACCEPTANCE_PENDING_SHARED_BOARD",
       "reservedVersion": "0.1.109",
       "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
@@ -277596,7 +277787,12 @@
       },
       "pendingUnifiedDeliveryState": "INSTALLED107_RETAINS105_AND106_PRESENTATION",
       "nativeCandidateSource": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
-      "nativeBuildRun": 43137887077
+      "nativeBuildRun": 43137887077,
+      "nativeBuilt": true,
+      "installed": true,
+      "installedVersion": "0.1.109",
+      "runtimeRun": 43144208633,
+      "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json"
     },
     "retiredBatchAliases20261111": {
       "historicalOnly": true,

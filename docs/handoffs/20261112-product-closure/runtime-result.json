@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-12T02:51:42.261524+00:00",
+  "state": "WINDOWS109_COHERENT_NATIVE_MEETING_JOURNEY_PASSED",
+  "testSourceCommit": "4b1b2a59bbf7d4045a4c64277486adec0563c042",
+  "appSourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+  "appVersion": "0.1.109",
+  "nativeRecompiled": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "deviceOrPhoneAccess": false,
+  "exactMsiExeSha256": "2aac90bfd82bd7545459246e0418e74e66d7b366abacc6f21b8ea48bd32fb6c6",
+  "exactMsiDllSha256": "6176b2976373522cb8558339558e972aa27f6af4b992df32005a85a24b9cb67c",
+  "frozenNativeBytesMatchedApprovedMsi": true,
+  "nativeUiExitCode": 0,
+  "nativeUiState": "REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED",
+  "finishedAt": "2026-11-12T02:52:37.022175+00:00"
+}
