@@ -19,6 +19,40 @@ pub fn source(session:&CompanionV1HostSession,mode:&str,choice:&Selection)->Resu
     selected_source(session,mode,choice,false)
 }
 
+// Presentation for ordinary handoff only. Complete JSON/legacy raw exports
+// and the saved source remain untouched. Remove only our exact generated
+// transport header; speech, manual material, unknown sections and code stay literal.
+fn readable_minutes(markdown:&str)->String {
+    let lines:Vec<_>=markdown.lines().collect();
+    let mut result=Vec::new();let mut i=0;let mut fence:Option<(u8,usize)>=None;
+    while i<lines.len(){
+        let line=lines[i];let trimmed=line.trim_start();
+        let bytes=trimmed.as_bytes();
+        if matches!(bytes.first(),Some(b'`'|b'~')) {
+            let marker=bytes[0];let count=bytes.iter().take_while(|&&b|b==marker).count();
+            if count>=3 {
+                if let Some((kind,length))=fence {if marker==kind&&count>=length&&trimmed[count..].trim().is_empty(){fence=None;}}
+                else {fence=Some((marker,count));}
+                result.push(line.to_owned());i+=1;continue;
+            }
+        }
+        if fence.is_none()&&i+5<lines.len()&&line.starts_with("# ")&&!line[2..].trim().is_empty()
+            &&lines[i+1].is_empty()&&lines[i+2].strip_prefix("Generated: ").is_some_and(|s|!s.is_empty())
+            &&lines[i+3].strip_prefix("Duration: ").and_then(|s|s.strip_suffix(" ms")).is_some_and(|s|s.parse::<u64>().is_ok())
+            &&lines[i+4].strip_prefix("Source: ").is_some_and(|s|!s.is_empty())
+            &&matches!(lines[i+5],"Minutes engine: rules_l0 (draft)"|"Minutes engine: llm_deepseek (final)") {
+            result.push(line.to_owned());result.push(String::new());i+=6;continue;
+        }
+        let presented=if fence.is_none(){match line.trim_end(){
+            "## Summary"=>"## 会议摘要", "## Decisions"=>"## 讨论结论（需核对）",
+            "## Action Items"=>"## 行动事项", "## Questions"|"## Open Questions"=>"## 待确认问题",
+            "## Keywords"=>"## 关键词", _=>line,
+        }}else{line};
+        result.push(presented.to_owned());i+=1;
+    }
+    let mut output=result.join("\n");if markdown.ends_with('\n'){output.push('\n');}output
+}
+
 fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,literal_transcript:bool)->Result<String,String>{
     super::library_lifecycle::require_available(session)?;
     if !matches!(mode,"offlineStore"|"onlineLive") {return Err("不支持的会议版本。".into());}
@@ -28,7 +62,7 @@ fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,l
     if ids.len()!=choice.note_ids.len()||ids.len()>128 {return Err("所选材料重复或过多，请重新选择。".into());}
     if ids.iter().any(|id|!session.meeting_notes.iter().any(|note|&note.id==*id)){return Err("所选材料已不存在，请重新选择；未导出其他材料。".into());}
     let mut parts=Vec::new();
-    if choice.minutes {parts.push(super::export::saved_minutes_markdown_for_mode(session,mode)?);}
+    if choice.minutes {parts.push(readable_minutes(&super::export::saved_minutes_markdown_for_mode(session,mode)?));}
     if choice.transcript {
         super::export::require_final_transcript(session)?;
         if !super::transcript_review::effective_unrecognized(session).is_empty(){
@@ -104,6 +138,28 @@ pub(crate) fn materialize_bytes(title:&str,format:Format,bytes:Vec<u8>)->Result<
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn content109_readable_handoff_keeps_facts_and_raw_saved_source(){
+        let raw="# 采购沟通\n\nGenerated: 2026-11-12T01:00:00Z\nDuration: 12000 ms\nSource: importedTranscript\nMinutes engine: llm_deepseek (final)\n\n## Summary\n预算12,000.00尚未批准，FALSE和0保留。\n\n## Action Items\n- [ ] 核对采购清单\n\n## Open Questions\n- 等待书面确认。\n\n```text\n## Summary\nGenerated: 用户原文\n```\n";
+        let text=readable_minutes(raw);
+        assert!(!text.contains("Minutes engine: llm_deepseek (final)"));
+        assert!(!text.contains("Duration: 12000 ms"));assert!(text.contains("# 采购沟通"));
+        assert!(text.contains("## 会议摘要")&&text.contains("## 行动事项")&&text.contains("## 待确认问题"));
+        assert!(text.contains("预算12,000.00尚未批准，FALSE和0保留。"));
+        assert!(text.contains("```text\n## Summary\nGenerated: 用户原文\n```"));
+        let mut row=sample();
+        row.minutes.as_mut().unwrap().markdown=raw.into();
+        row.minutes_by_mode.offline_store.as_mut().unwrap().markdown=raw.into();
+        let before=serde_json::to_vec(&row).unwrap();
+        let choice=Selection{minutes:true,transcript:false,highlights:false,timeline:false,note_ids:vec![]};
+        let selected=source(&row,"offlineStore",&choice).unwrap();
+        assert!(selected.contains("## 会议摘要")&&!selected.contains("Minutes engine:"));
+        assert_eq!(prepare(&row,"offlineStore",Format::Txt,&choice).unwrap().bytes,selected.as_bytes());
+        assert_eq!(serde_json::to_vec(&row).unwrap(),before);
+        let manual="用户原文：Generated: 自述\nDuration: 5 ms\n## 未知自定义标题\n- FALSE 0 未批准";
+        assert_eq!(readable_minutes(manual),manual);
+    }
+
     fn sample()->CompanionV1HostSession {
         let mut rows:Vec<CompanionV1HostSession>=serde_json::from_str(include_str!("../calendar_test_fixtures/p738-sessions.json")).unwrap();
         let mut row=rows.remove(0);row.transcript_text="李明：11月8日前核对20%差额，尚未确认采购。".into();row.transcript_final=true;

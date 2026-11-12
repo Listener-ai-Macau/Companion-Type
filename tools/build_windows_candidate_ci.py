@@ -73,7 +73,7 @@ try:
    artifacts.append(Path(item['executable']))
  assert len(artifacts)==1,artifacts
  test=artifacts[0].resolve();assert test.parent==(T/'release/deps').resolve() and test.suffix=='.exe'
- record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['initial_unreachable_tests','backend::export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
+ record['affectedTestBinary']={'path':test.name,'sha256':sha(test),'compiledOnce':True,'filters':['initial_unreachable_tests','backend::export::tests','backend::content_export::tests','meeting_note','document_context','privacy','session_store','audio_artifacts','desktop_dictation','recorder_input','audio_derivation','audio_editing','audio_edit_job','meeting_audio_mix','import_audio','incoming_files']};save()
  record['affectedTestBinary']['filters']+=['local_card_processing','manual_processing_policy','backend::recording_wire::receiver::local::tests','backend::recorder_control::local_adoption::tests','backend::persistence::tests','backend::product_settings::tests','backend::transcription::tests'];save()
  record['affectedTestBinary']['filters']+=['customer_followthrough','backend::minutes::tests','backend::minutes::short_evidence::tests'];save()
  for scope in record['affectedTestBinary']['filters']:

@@ -8,6 +8,11 @@ module.exports=async function productJourney(page,plan,out){
  async function open(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
  await page.bringToFront();await open();assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
  await page.screenshot({path:path.join(out,'product-result-light.png'),fullPage:true});
+ await nav().getByRole('button',{name:'带走结果',exact:true}).click();
+ const complete=page.locator('.ct-content-export');await complete.getByRole('button',{name:'预览所选内容',exact:true}).click();
+ const completePreview=complete.getByRole('region',{name:'所选正文预览',exact:true});await completePreview.waitFor();const completeText=await completePreview.innerText();
+ assert(completeText.includes('会议摘要')&&completeText.includes('尚未批准'));assert(!completeText.includes('Minutes engine:')&&!completeText.includes('Generated:')&&!completeText.includes('EXCLUDED_CORE_NOTE_20261109'));
+
  await nav().getByRole('button',{name:'原文与录音',exact:true}).click();await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
  const search=page.getByRole('searchbox',{name:'查找可引用的原文',exact:true});await search.fill(before.transcriptText.split('\n')[0].slice(0,12));
  const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(before.transcriptText.includes(quote));

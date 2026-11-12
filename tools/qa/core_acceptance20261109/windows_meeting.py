@@ -154,6 +154,10 @@ def main():
   assert DEDICATED_CI,'Complete native product workflow belongs to the disposable CI machine'
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
   session['retention']['audioCached']=False
+  presented='# '+session['title']+'\n\nGenerated: 2026-11-12T01:00:00Z\nDuration: 12000 ms\nSource: importedTranscript\nMinutes engine: llm_deepseek (final)\n\n'+text
+  session['minutes'].update(markdown=presented,source='userEdited')
+  session['minutesByMode']['offlineStore'].update(markdown=presented,source='userEdited')
+
   session['meetingNotes'][0]['text']='EXCLUDED_CORE_NOTE_20261109 不选择的个人草稿'
   control=json.loads(json.dumps(session));control.update(id='core-product-unrelated',title='明确虚构·不参与本次操作的记录');sessions.append(control)
   (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
