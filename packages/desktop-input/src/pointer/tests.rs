@@ -36,6 +36,62 @@ fn coarse_ready()->Pointer{
     let mut s=raw_sample(121);s.gyro_dps[2]=20.;p.sample_raw(s,3.21);assert!(p.frame(3.22,bounds()).position.is_some());
 }
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
+fn side_profile()->contact::Profile{contact::Profile{left:[0.,0.,0.,1.,0.,0.],right:[0.,0.,0.,-1.,0.,0.]}}
+fn side_ready()->Pointer{
+    let mut p=Pointer::new(Settings{mapping:Mapping::Relative,desktop_motion:true,contact_profile:Some(side_profile()),..Settings::default()},Point{x:960.,y:540.});
+    for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}p
+}
+#[test]fn learned_right_and_left_contacts_reach_distinct_system_buttons_once_each(){
+    let mut p=side_ready();let mut clicks=vec![];
+    for n in 121..210{
+        let mut s=raw_sample(n);if n==150{s.gyro_dps[0]=-70.;}if n==185{s.gyro_dps[0]=70.;}
+        p.sample_raw(s,n as f64/100.);
+        if n==151||n==186{let e=Control{sequence:if n==151{1}else{2},sensor_ms:(n-1)*10,events:CLICK};assert!(p.control(e).unwrap());assert!(!p.control(e).unwrap());}
+        clicks.extend(p.frame(n as f64/100.,bounds()).buttons);
+    }
+    assert_eq!(clicks.len(),2);assert!(matches!(clicks[0],Button::RightClick(_)));assert!(matches!(clicks[1],Button::Click(_)));
+}
+#[test]fn two_contacts_are_two_clicks_and_pause_cannot_replay_a_pending_contact(){
+    let mut p=side_ready();let mut clicks=vec![];
+    for n in 121..210{
+        let mut s=raw_sample(n);if n==150||n==185{s.gyro_dps[0]=70.;}p.sample_raw(s,n as f64/100.);
+        if n==151||n==186{p.control(Control{sequence:if n==151{1}else{2},sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        clicks.extend(p.frame(n as f64/100.,bounds()).buttons);
+    }
+    assert_eq!(clicks.len(),2);assert!(clicks.iter().all(|c|matches!(c,Button::Click(_))));
+    p.control(Control{sequence:3,sensor_ms:2090,events:CLICK}).unwrap();p.pause(true);p.pause(false);
+    for n in 210..240{p.sample_raw(raw_sample(n),n as f64/100.);assert!(p.frame(n as f64/100.,bounds()).buttons.is_empty());}
+}
+#[test]fn ordinary_mouse_motion_reanchors_a_delayed_side_click(){
+    let mut p=side_ready();let mut clicks=vec![];
+    for n in 121..170{
+        let mut s=raw_sample(n);if n==150{s.gyro_dps[0]=-70.;}p.sample_raw(s,n as f64/100.);
+        if n==151{p.control(Control{sequence:1,sensor_ms:1500,events:CLICK}).unwrap();p.external_position(Point{x:1600.,y:800.});}
+        clicks.extend(p.frame(n as f64/100.,bounds()).buttons);
+    }
+    assert_eq!(clicks,vec![Button::RightClick(Point{x:1600.,y:800.})]);
+}
+#[test]fn profile_roundtrip_keeps_the_model_and_invalid_model_cannot_enable_input(){
+    let p=Settings{mapping:Mapping::Relative,desktop_motion:true,contact_profile:Some(side_profile()),contact_device:Some("card-a".into()),..Settings::default()};
+    let round:Settings=serde_json::from_str(&serde_json::to_string(&p).unwrap()).unwrap();assert!(round.validate().is_ok());assert_eq!(round.contact_device.as_deref(),Some("card-a"));
+    let mut bad=round;bad.contact_profile.as_mut().unwrap().right=bad.contact_profile.as_ref().unwrap().left;assert!(bad.validate().is_err());
+}
+#[test]fn full_pointer_calibration_collects_two_sides_without_any_cursor_or_click_output(){
+    let mut p=coarse_ready();p.learn_contact(contact::Side::Left).unwrap();
+    let mut control=0;
+    for n in 121..281{
+        let mut s=raw_sample(n);if [150,200,250].contains(&n){s.gyro_dps[0]=70.;}p.sample_raw(s,n as f64/100.);
+        if [151,201,251].contains(&n){control+=1;p.control(Control{sequence:control,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        let f=p.frame(n as f64/100.,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());
+    }
+    assert_eq!(p.contact_status().left_samples,3);p.learn_contact(contact::Side::Right).unwrap();
+    for n in 281..441{
+        let mut s=raw_sample(n);if [310,360,410].contains(&n){s.gyro_dps[0]=-70.;}p.sample_raw(s,n as f64/100.);
+        if [311,361,411].contains(&n){control+=1;p.control(Control{sequence:control,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        let f=p.frame(n as f64/100.,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());
+    }
+    assert_eq!(p.contact_status().right_samples,3);p.finish_contacts().unwrap();assert!(p.settings.contact_profile.is_some());
+}
 fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});

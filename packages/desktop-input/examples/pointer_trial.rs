@@ -30,6 +30,10 @@ fn run()->Result<(),String>{
                 match action {
                     "pause"=>p.pause(true),"resume"=>p.pause(false),"calibrate"=>p.calibrate(),
                     "recenter"=>p.recenter(cursor.position()?),
+                    "contact-left"=>p.learn_contact(companion_desktop_input::pointer::contact::Side::Left).map_err(str::to_string)?,
+                    "contact-right"=>p.learn_contact(companion_desktop_input::pointer::contact::Side::Right).map_err(str::to_string)?,
+                    "contact-save"=>p.finish_contacts().map_err(str::to_string)?,
+                    "contact-cancel"=>p.cancel_contacts(),"contact-clear"=>p.clear_contacts(),
                     "relative"|"laser"|"desktop"=>{p.settings.desktop_motion=action=="desktop";p.settings.mapping=if action=="laser"{Mapping::Laser}else{Mapping::Relative};p.calibrate();p.recenter(cursor.position()?);},
                     "stop"=>{stop.store(true,Ordering::Release);},_=>{}
                 }
@@ -49,11 +53,11 @@ fn run()->Result<(),String>{
         if stop.load(Ordering::Acquire){break;}
         let f=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());
         if let Some(position)=f.position{preview_position=position;}
-        if controls{let c=f.buttons.iter().filter(|e|matches!(e,Button::Click(_))).count() as u64;
+        if controls{let c=f.buttons.iter().filter(|e|matches!(e,Button::Click(_)|Button::RightClick(_))).count() as u64;
             let d=f.buttons.iter().filter(|e|matches!(e,Button::Down(_))).count() as u64;
             cursor.apply(f)?;clicks+=c;drags+=d;}
         if report.elapsed()>Duration::from_millis(250){
-            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));
+            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"contacts":p.contact_status(),"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));
             io::stdout().flush().map_err(|e|e.to_string())?;report=Instant::now();
         }
         next+=Duration::from_nanos(if p.settings.mapping==Mapping::Laser{4_166_667}else{8_333_333});

@@ -32,6 +32,7 @@ impl Cursor {
         for event in f.buttons {
             match event {
                 Button::Click(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Left,Direction::Press).map_err(|e|e.to_string())?;self.down=true;self.release()?;},
+                Button::RightClick(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Right,Direction::Click).map_err(|e|e.to_string())?;},
                 Button::Down(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Left,Direction::Press).map_err(|e|e.to_string())?;self.down=true;},
                 Button::Up=>self.release()?,
             }

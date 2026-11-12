@@ -8,6 +8,7 @@ pub mod native;
 mod fusion;
 pub mod desktop;
 pub mod intent;
+pub mod contact;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }
@@ -53,14 +54,17 @@ pub struct Settings {
     pub mapping: Mapping, pub sensitivity: f64, pub smoothing: f64,
     pub deadzone: f64, pub acceleration: f64, pub invert_horizontal: bool, pub invert_vertical: bool,
     pub desktop_motion: bool,
+    pub contact_profile:Option<contact::Profile>,
+    pub contact_device:Option<String>,
 }
 impl Default for Settings {
     fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
-            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false}}
+            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,contact_profile:None,contact_device:None}}
 }
 impl Settings {
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
+        if let Some(profile)=&self.contact_profile{profile.validate()?;if !self.desktop_motion{return Err("左右轻敲需要原始动作模式。");}}
         if !self.sensitivity.is_finite() || !(0.2..=3.).contains(&self.sensitivity) ||
            !self.smoothing.is_finite() || !(0.0..=0.97).contains(&self.smoothing) ||
            !self.deadzone.is_finite() || !(0.0..=5.).contains(&self.deadzone) ||
@@ -113,7 +117,7 @@ impl Bounds {
     fn clamp(self,p:Point)->Point {Point{x:p.x.clamp(self.left,self.left+self.width-1.),y:p.y.clamp(self.top,self.top+self.height-1.)}}
 }
 #[derive(Clone,Copy,Debug,PartialEq)]
-pub enum Button {Click(Point),Down(Point),Up}
+pub enum Button {Click(Point),RightClick(Point),Down(Point),Up}
 #[derive(Clone,Copy,Debug,Deserialize)]
 pub struct Control {pub sequence:u32,pub sensor_ms:u32,pub events:u16}
 pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const OVERFLOW:u16=4096;
@@ -129,6 +133,7 @@ pub struct Pointer {
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
     coarse:Option<intent::Intent>,
+    contacts:contact::Contact,
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
     laser_offset:Point,last_projected:Option<Point>,
     last_control:Option<u32>,
@@ -136,15 +141,16 @@ pub struct Pointer {
 }
 impl Pointer {
     pub fn new(settings:Settings,position:Point)->Self {
+        let contacts=contact::Contact::new(settings.contact_profile.clone());
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
-            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,
+            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
-    fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
+    fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;self.contacts.clear_stream();}
     fn reset_motion(&mut self){self.smoother.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
-    pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.coarse=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.contacts.cancel();self.coarse=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
     /// A newly verified link may start a new device sequence/time domain.
     /// Keep its first levels as a baseline; fresh control edges still own input.
     pub fn begin_stream(&mut self){
@@ -157,6 +163,7 @@ impl Pointer {
     /// unchanged card pose must stay here; subsequent card motion adds to it.
     pub fn external_position(&mut self,position:Point) {
         self.shown=position;
+        self.contacts.reanchor(position);
         // A contact after using the ordinary mouse must not rewind into the
         // old card-only cursor history, even during the upstream tap rewind.
         self.history.clear();
@@ -179,10 +186,15 @@ impl Pointer {
         if event.events&OVERFLOW!=0{self.release();return Err("动作连接停顿过久，请重新开启空中鼠标。");}
         if self.metrics.paused||!self.metrics.calibrated{if event.events&UP!=0{self.wait_release=false;}return Ok(true);}
         let measured_at=self.last.map(|(_,ms)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
+        if self.contacts.status.learning.is_some(){
+            if event.events&CLICK!=0{self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),self.shown);}
+            return Ok(true);
+        }
         // A new reliable DOWN is an intentional edge, unlike an unknown held
         // level in a recovered motion packet. UP without a matching DOWN is
         // consumed without clicking after pause/calibration/stale release.
         if event.events&(DOWN|UP)!=0{self.wait_release=false;}
+        if event.events&DOWN!=0{self.contacts.discard_pending();}
         if event.events&DOWN!=0 && self.pressed.is_none(){self.pressed=Some((measured_at,self.press_point(measured_at)));}
         if event.events&UP!=0 {
             if let Some((at,point))=self.pressed.take(){
@@ -194,7 +206,9 @@ impl Pointer {
         }
         if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
             if let Some(c)=self.coarse.as_mut(){c.tap();}
-            let point=self.press_point(measured_at-0.1);self.shown=point;self.queued.push(Button::Click(point));
+            let point=self.press_point(measured_at-0.1);
+            if self.contacts.is_active(){self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),point);}
+            else{self.shown=point;self.queued.push(Button::Click(point));}
         }
         Ok(true)
     }
@@ -221,10 +235,22 @@ impl Pointer {
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
         if !self.settings.desktop_motion{return;}
         if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
+        self.contacts.sample(s);
         let c=self.coarse.get_or_insert_with(intent::Intent::default);c.settings=self.settings.clone();
         c.sample(s,now);self.metrics.calibrated=c.desktop.state.calibrated;
         if self.metrics.paused{c.clear_motion();}
     }
+    pub fn contact_status(&self)->contact::Status{self.contacts.status.clone()}
+    pub fn learn_contact(&mut self,side:contact::Side)->Result<(),&'static str>{
+        if !self.settings.desktop_motion{return Err("先启用桌面平移和转动，再校准左右轻敲。");}
+        if !self.metrics.calibrated||self.metrics.paused{return Err("先放稳卡片完成动作校准，再校准左右轻敲。");}
+        self.release();self.reset_motion();self.contacts.learn(side);Ok(())
+    }
+    pub fn finish_contacts(&mut self)->Result<(),&'static str>{
+        self.settings.contact_profile=Some(self.contacts.finish()?);self.reset_motion();Ok(())
+    }
+    pub fn cancel_contacts(&mut self){self.contacts.cancel();self.reset_motion();}
+    pub fn clear_contacts(&mut self){self.contacts=contact::Contact::new(None);self.settings.contact_profile=None;self.settings.contact_device=None;}
     pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
         if self.settings.desktop_motion{return;}
         let Some((dt,gap,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
@@ -319,8 +345,15 @@ impl Pointer {
         let stale=self.arrival.is_none_or(|at|now-at>0.3);
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
+        if !stale&&!self.metrics.paused&&self.metrics.calibrated{
+            let was_pending=self.contacts.pending();
+            let clicks=self.contacts.poll(now);
+            if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){c.tap();}}
+            for(side,point)in clicks{self.shown=point;self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});}
+        }
         let mut f=Frame{position:None,buttons:std::mem::take(&mut self.queued)};
         if stale || self.metrics.paused || !self.metrics.calibrated {return f;}
+        if self.contacts.status.learning.is_some()||self.contacts.pending(){return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=0.35 {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         let next=match self.settings.mapping {
             Mapping::Relative=>{let delta=if let Some(c)=self.coarse.as_mut(){c.frame(now)}else{self.smoother.step(now,dt,self.settings.smoothing)};Point{x:self.shown.x+delta.x,y:self.shown.y+delta.y}},
