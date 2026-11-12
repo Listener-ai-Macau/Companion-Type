@@ -21,7 +21,7 @@ module.exports=async function productJourney(page,plan,out){
  const saved=row().meetingNotes.find(n=>n.text.includes('本次人工跟进'));assert(saved&&saved.references.some(r=>r.quote===quote));
  const card=()=>notes.locator('.ct-notes-list > li').filter({has:page.getByRole('button',{name:'编辑备注 '+saved.id,exact:true})});
  await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).check();
- await page.waitForTimeout(350);assert(row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单'));
+ const savedUntil=Date.now()+15000;while(!row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单')&&Date.now()<savedUntil)await wait(100);assert(row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单'));
  await card().getByRole('button',{name:'查看当前依据',exact:true}).click();assert(await page.locator('#ct-recording-text-review').isVisible());
  await page.getByRole('button',{name:/返回.*备注|返回.*补充/}).first().click();assert(await page.locator('#ct-meeting-materials-pane').isVisible());
  await page.reload();await page.locator('.ct-shell').waitFor();await open();await nav().getByRole('button',{name:/补充与跟进/}).click();
@@ -31,7 +31,7 @@ module.exports=async function productJourney(page,plan,out){
  const expected=await preview.locator('pre').innerText();assert(expected.includes(persisted.text));assert(expected.includes(quote));assert(!expected.includes('EXCLUDED_CORE_NOTE_20261109'));
  async function dialog(id,action,file,trigger){fs.writeFileSync(path.join(out,'dialog-request-'+id+'.json'),JSON.stringify({action,path:file,sha256:null}));await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),end=Date.now()+90000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));assert.equal(JSON.parse(fs.readFileSync(reply)).state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');}
  await dialog('product-cancel','cancel',null,()=>panel.getByRole('button',{name:'保存 TXT…',exact:true}).click());await panel.getByText('已取消保存，原内容保持不变。',{exact:true}).waitFor();
- const destination=path.join(out,'本次人工跟进.txt');await dialog('product-save','save',destination,()=>panel.getByRole('button',{name:'保存 TXT…',exact:true}).click());await panel.getByText(/已保存：本次人工跟进.txt/).waitFor();assert(fs.readFileSync(destination,'utf8').includes(persisted.text));
+ const destination=path.join(plan.exportDirectory,'本次人工跟进.txt');await dialog('product-save','save',destination,()=>panel.getByRole('button',{name:'保存 TXT…',exact:true}).click());await panel.getByText(/已保存：本次人工跟进.txt/).waitFor();assert(fs.readFileSync(destination,'utf8').includes(persisted.text));
  await panel.getByRole('button',{name:'复制所选内容',exact:true}).click();await panel.getByText('已复制所选内容，可粘贴到常用应用。',{exact:true}).waitFor();
  await panel.getByRole('button',{name:'复制所选文件',exact:true}).click();const feedback=panel.getByLabel('所选内容操作结果');await feedback.getByText(/文件已复制：/).waitFor();const name=(await feedback.innerText()).match(/文件已复制：(.+?)。可在/s)?.[1];assert(name);
  fs.writeFileSync(path.join(out,'handoff-request-product.json'),JSON.stringify({fileName:name,format:'txt',expected:persisted.text,excluded:'EXCLUDED_CORE_NOTE_20261109'}));const reply=path.join(out,'handoff-reply-product.json'),end=Date.now()+30000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));const received=JSON.parse(fs.readFileSync(reply,'utf8'));

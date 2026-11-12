@@ -150,6 +150,15 @@ def main():
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
   session['retention']['audioCached']=False;(state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+ if a.stage=='product':
+  assert DEDICATED_CI,'Complete native product workflow belongs to the disposable CI machine'
+  session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
+  session['retention']['audioCached']=False
+  session['meetingNotes'][0]['text']='EXCLUDED_CORE_NOTE_20261109 不选择的个人草稿'
+  control=json.loads(json.dumps(session));control.update(id='core-product-unrelated',title='明确虚构·不参与本次操作的记录');sessions.append(control)
+  (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
+  (root/'exports').mkdir();(root/'received-files').mkdir()
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
  if a.stage in {'documents','incoming'}:
   assert DEDICATED_CI,'Document native pickers only on the disposable CI machine'
   session.update(source='importedTranscript',audioPath=None,audioStored=False,audioBytes=0,chunks=[],deviceRecordingId=None,deviceRecordingKey=None,sourceDeviceId=None,meetingTracks=None)
@@ -316,7 +325,8 @@ def main():
     (out/'text-clipboard-reply.json').write_text(json.dumps(result),encoding='utf8');handled.add(request.name)
    time.sleep(.25)
   assert not alive(node),'UI workflow exceeded its bounded stage timeout';code=w.DWORD();require(K.GetExitCodeProcess(node.process,ctypes.byref(code)));assert code.value==0,(out/'ui.log').read_text(encoding='utf8',errors='replace')[-1800:]
-  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage=='ai' else 3))
+  record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage in {'ai','product'} else 3))
+  if a.stage=='product':record['state']='REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='context':record['state']='REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='editing':record['state']='REAL_NATIVE_AUDIO_EDITING_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='documents':record['state']='REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED';record['remoteOwnedWindowFocused']=True
