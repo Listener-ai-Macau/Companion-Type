@@ -270921,8 +270921,14 @@
               "updatedAt": "2026-11-12T18:04:22+08:00",
               "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
               "acceptanceToolCommit": "3fc02d1eadd29de292146bc2aba7fd751acde02e",
-              "buildRun": 43154438761,
-              "sourceChecks": "Windows110 frozen native payload/source/licenses verified; private-station continuous purpose passed. System dialogs and ordinary recipient evidence reused only after exact code/command/dependency comparison with109. Hosted110 job never started due account billing; physical total use remains pending.",
+              "buildRun": null,
+              "sourceChecks": {
+                "typeCheckPassed": true,
+                "affectedUiComponentsPassed": true,
+                "sourceBrowserFullJourney": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r5",
+                "guideLifecyclePassed": 12,
+                "actualNativeJourney": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\runtime-result.json"
+              },
               "nativeBuilt": true,
               "installed": true,
               "hardwareQualified": false,
@@ -270943,8 +270949,8 @@
               ],
               "readableExport": "All ordinary selected-content preview/copy/file formats use the same readable minutes projection: Chinese standard headings and exact generated transport-header removal; original body, uncertainty, numbers, source notes, literal code, saved data and raw JSON/legacy exports remain intact.",
               "acceptanceView": "Current PRODUCT_BACKLOG view and closurePolicy follow Owner final whole-product acceptance; original per-item evidence remains, no per-feature Owner sign-off queue.",
-              "nativeBuildConclusion": "success",
-              "nativeVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-verification.json",
+              "nativeBuildConclusion": "NORMAL_LOCAL_RELEASE_MSI_VERIFIED_INSTALLED_DATA_PRESERVED",
+              "nativeVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\windows-verification.json",
               "runtimeRun": null,
               "appSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
               "testSourceCommit": "dcd721dfd2b811b47288f86b6b415f170590d2da",
@@ -271003,7 +271009,7 @@
                   "productRebuilt": false
                 }
               ],
-              "runtimeApproach": "Same independently inspected and installed MSI/EXE/DLL; continuous native flows include source lookup, draft retention, save/check/reopen, complete and selected-content previews, native Save/Cancel dialogs, clipboard file and ordinary Shell recipient. Separate final mouse path passed after waiting for form closure.",
+              "runtimeApproach": "Current112 actual packaged background ordinary UI journey passed; changed export render route checked. Exact unchanged7 OS/backend files,4 commands,15 dependency packages and entire export state/operation prefix reuse prior109 actual OS dialog/receiver evidence. Native system dialogs/ordinary recipient not new-tested112.",
               "nativeWholeSoftwareJourneyPassed": false,
               "mouseAndKeyboardSavedChecklistPathsPassed": true,
               "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\installation.json",
@@ -271311,23 +271317,20 @@
               },
               "acceptanceAdapterSha256": "17f3835c64260a211ca109d24722ed16f16b455754ed9fa172f10c750b38d885",
               "nextCandidate": {
-                "version": "0.1.111",
-                "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
-                "basePointerCommit": "35bf71ea20646b0d9c960ae6b6fd75a68a16753d",
-                "sourceRepair": "Existing unresolved-prose date-only confirmation no longer forces a clock; all delivered110 meeting/pointer/key-compatibility behavior retained.",
-                "actualProductionModuleRegression": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ota-key-compatibility.json",
+                "version": "0.1.112",
+                "state": "INSTALLED_ENGINEERING_REVIEWED_OWNER_GUIDED_REVIEW_PENDING",
+                "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+                "branch": "work/ui-usability112-frozen-20261112",
+                "sourceRoot": "E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source",
+                "sourceRepair": "Product entry/record/result/export hierarchy and original shared guidance repaired together; current Owner acceptance pending.",
                 "newMsiBuilt": true,
                 "installed": true,
                 "latestSourceFreezePending": false,
-                "reason": "One current accepted frontend purpose and later board joint-use entry; normal local MSI independently matched and installed.",
-                "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
-                "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
-                "branch": "work/device-phone-closure055-20261106",
-                "buildRun": null,
-                "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-verification.json",
-                "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\runtime-result.json",
+                "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\windows-verification.json",
+                "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\runtime-result.json",
                 "buildKind": "Normal local release, no hosted CI claim",
-                "localBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows111-local-r3\\result.json"
+                "localBuildReceipt": "E:/CodexData/Companion/.build-cache/product-closure20261112/windows112-local-r2/result.json",
+                "next": "原嵌软当前修复完成并恢复正常固件后，核对最终包与安装身份、实际占用，绑定已装112/142后在同一原窗口逐步带领、最后集中反馈。未取得匹配正常固件前不弹物理验收窗；软件安装交付无需等板。 私有附件上传网络恢复后继续同一包上传/完整回读，不重编译、不改普通网络分流。"
               },
               "previousVerifiedWindows109": {
                 "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
@@ -271344,9 +271347,9 @@
               "unchangedNativeOsHandoffEvidenceReused": true,
               "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
               "nativeSoftwareEvidenceScope": "Current112 actual packaged background ordinary UI journey passed; changed export render route checked. Exact unchanged7 OS/backend files,4 commands,15 dependency packages and entire export state/operation prefix reuse prior109 actual OS dialog/receiver evidence. Native system dialogs/ordinary recipient not new-tested112.",
-              "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
-              "completeDeliverySha256": "d0d0ed8e6195dfbaa43d704cefadf0ef421a61aebb6dc27db4d5b2ba5e2331a0",
-              "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112-FW804.zip",
+              "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend112142\\software-delivery.json",
+              "completeDeliverySha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
+              "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-112-142-20261112.zip",
               "ownerTotalStatus": "NEW_UI_OWNER_GUIDED_TOTAL_PENDING_MATCHED_FINAL_NORMAL_FIRMWARE",
               "ownerTotalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\owner-total-result.json",
               "latestOwnerConcentratedFeedback": {
@@ -271532,11 +271535,12 @@
                   "sourceRoot": "E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source",
                   "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
                   "uiProductBaseCommit": "fe8b1de1e29e52b8c9264a6a3ab67cf14dd7409b",
-                  "state": "LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING",
+                  "state": "LOCAL_NORMAL_RELEASE_VERIFIED_AND_INSTALLED",
                   "finishedAt": "2026-11-12T17:32:19+08:00",
                   "installed": true,
                   "activeWorker": null,
-                  "toolSessionId": null
+                  "toolSessionId": null,
+                  "originalBuildReceiptState": "LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING"
                 },
                 "retainedBuildPreparationFailures": [
                   "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261112-product-closure/ui-usability/frozen-preparation-failure.json",
@@ -271553,7 +271557,10 @@
                 "guidanceNativeRenderingEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-native-preview-r7\\result.json",
                 "guidanceNativeRenderingScope": "Original shared controls, per-step actions and CRLF paragraphs visually checked in a private station; engineering Application.Run/DrawToBitmap hosting only, actual Owner modal use remains pending.",
                 "retainedGuidancePreparationFailures": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-preview-preparation.json",
-                "retainedPrivateDeliveryFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend112142\\retained-private-delivery-failure.json"
+                "retainedPrivateDeliveryFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend112142\\retained-private-delivery-failure.json",
+                "sourceProtectionVerifiedRemoteAncestor": "1e778a90",
+                "sourceProtectionObservedRemoteHead": "26c9ef9e721ce489e638e7282c9db5b2261a97de",
+                "sourceProtectionVerifiedAt": "2026-11-12T18:08:39+08:00"
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
               "previousVerifiedWindows111": {
@@ -271565,7 +271572,37 @@
                 "currentSoftwareDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Frontend-Ready-111-142-20261112.zip",
                 "currentSoftwareDeliverySha256": "0f1242805950687188bf882ea8a058cf15a1ab99d9d85f8797ef3e6740a7ac18",
                 "nativeSoftwareEvidenceScope": "WINDOWS111_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED"
-              }
+              },
+              "previousBuildAndAcceptancePointersBefore112": {
+                "nextCandidate": {
+                  "version": "0.1.111",
+                  "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+                  "basePointerCommit": "35bf71ea20646b0d9c960ae6b6fd75a68a16753d",
+                  "sourceRepair": "Existing unresolved-prose date-only confirmation no longer forces a clock; all delivered110 meeting/pointer/key-compatibility behavior retained.",
+                  "actualProductionModuleRegression": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ota-key-compatibility.json",
+                  "newMsiBuilt": true,
+                  "installed": true,
+                  "latestSourceFreezePending": false,
+                  "reason": "One current accepted frontend purpose and later board joint-use entry; normal local MSI independently matched and installed.",
+                  "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
+                  "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+                  "branch": "work/device-phone-closure055-20261106",
+                  "buildRun": null,
+                  "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-verification.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\runtime-result.json",
+                  "buildKind": "Normal local release, no hosted CI claim",
+                  "localBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows111-local-r3\\result.json"
+                },
+                "nativeVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-verification.json",
+                "buildRun": 43154438761,
+                "runtimeRun": null,
+                "runtimeApproach": "Same independently inspected and installed MSI/EXE/DLL; continuous native flows include source lookup, draft retention, save/check/reopen, complete and selected-content previews, native Save/Cancel dialogs, clipboard file and ordinary Shell recipient. Separate final mouse path passed after waiting for form closure.",
+                "sourceChecks": "Windows110 frozen native payload/source/licenses verified; private-station continuous purpose passed. System dialogs and ordinary recipient evidence reused only after exact code/command/dependency comparison with109. Hosted110 job never started due account billing; physical total use remains pending.",
+                "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
+                "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112-FW804.zip",
+                "completeDeliverySha256": "d0d0ed8e6195dfbaa43d704cefadf0ef421a61aebb6dc27db4d5b2ba5e2331a0"
+              },
+              "buildKind": "Normal local release; no hosted CI claim"
             },
             "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\windows-delivery.json",
             "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit142\\share-result.json",

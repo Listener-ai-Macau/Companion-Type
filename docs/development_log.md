@@ -1,3 +1,6 @@
+<!-- ui112142-current-pointer-reconciliation -->
+2026-11-12T18:08:39+08:00 同批入口整理：旧nextCandidate111/nativeVerification110/旧CI号保留为历史，当前执行统一到已装本机release112和同一个112/142包；原构建收据“待独立检查”仅保留历史状态，当前已检查并安装。源码/工程证据1e778a90已确认是实际远端26c9ef9e祖先；最初push受继承SHELL影响，任务局部sh后同路径成功，无全局Git/SSH/网络变更。附件域名另用无授权HEAD仍TLS失败，远端安装包继续未完成。
+
 <!-- ui112142-coherent-delivery20261112 -->
 ## 2026-11-12T18:04:22+08:00 — Owner产品界面与原窗口带验同批修复，112已装，Owner整轮仍待匹配固件
 

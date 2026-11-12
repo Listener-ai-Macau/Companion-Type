@@ -6,7 +6,7 @@
 
 - 首批Windows会议详情到会后交接，纪要与待办优先；原Android交付和源码检查点保留。
 - 当前实际交付：Windows0.1.112 / Android0.1.142。
-- 本批：UI112142_INSTALLED_ENGINEERING_REVIEWED_OWNER_GUIDED_TOTAL_PENDING；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
+- 本批：UI112142_INSTALLED_ENGINEERING_REVIEWED_OWNER_GUIDED_TOTAL_PENDING；原生构建：None。源码、构建、实装和整体验收分别记录。
 - 不逐功能要求Owner签收；工程保留必要数据保护和已知故障核对，再集中交付和总验收。
 - 实卡可靠性、模型质量、正式发布/服务及既定暂停项按真实结果保留，不由页面或构建通过自动关闭。
 
