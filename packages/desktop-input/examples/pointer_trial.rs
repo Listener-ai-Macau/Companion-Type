@@ -11,7 +11,7 @@ fn run()->Result<(),String>{
     let stop=Arc::new(AtomicBool::new(false));let input_stop=stop.clone();let(tx,rx)=mpsc::sync_channel::<serde_json::Value>(8);
     let motion=Arc::new(Mutex::new(None));let input_motion=motion.clone();
     std::thread::spawn(move||{for line in io::stdin().lock().lines(){
-        let Ok(line)=line else{break;};let Ok(value)=serde_json::from_str(&line)else{continue;};
+        let Ok(line)=line else{break;};let Ok(value)=serde_json::from_str::<serde_json::Value>(&line)else{continue;};
         if let Some(hex)=value.get("wire").and_then(|v|v.as_str()).filter(|h|h.len()==64){
             let wire=(0..64).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16)).collect::<Result<Vec<_>,_>>();
             if let Ok(wire)=wire{if let Ok(s)=Sample::parse(&wire){if s.aim.is_some(){*input_motion.lock().unwrap_or_else(|e|e.into_inner())=Some(s);continue;}}}
