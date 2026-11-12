@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-12T21:16:59+08:00",
+  "ownerQuote": "感觉这个录音卡它连接速度有点慢。但是还可以，这个还可以。就是它的 UI 有点丑，看下再优化一下。 或者的话呢，应该是一个验收，我会报一个问题，不是说一个问题所有东西都聚集在一起，这样就很难看那个问题在哪。",
+  "items": [
+    {
+      "receivedAt": "2026-11-12T21:16:59+08:00",
+      "windowsVersion": "0.1.114",
+      "firmwareVersion": 66828,
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows114-fw66828-20261112",
+      "ownerStartedAt": "2026-11-12T21:10:28.165+08:00",
+      "guidedStepsVisited": [
+        0,
+        1
+      ],
+      "fullOwnerQuote": "感觉这个录音卡它连接速度有点慢。但是还可以，这个还可以。就是它的 UI 有点丑，看下再优化一下。 或者的话呢，应该是一个验收，我会报一个问题，不是说一个问题所有东西都聚集在一起，这样就很难看那个问题在哪。",
+      "id": "UI114-CONNECTION-SPEED",
+      "stepIndex": 0,
+      "stepTitle": "连接录音卡",
+      "ownerQuote": "连接速度有点慢。但是还可以",
+      "state": "ACCEPTABLE_FOR_CURRENT_ROUND_TIMING_NOT_MEASURED",
+      "blocking": false,
+      "decision": "Keep connected flow. Measure actual connection stages before tuning; navigation elapsed time is not BLE connect time."
+    },
+    {
+      "receivedAt": "2026-11-12T21:16:59+08:00",
+      "windowsVersion": "0.1.114",
+      "firmwareVersion": 66828,
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows114-fw66828-20261112",
+      "ownerStartedAt": "2026-11-12T21:10:28.165+08:00",
+      "guidedStepsVisited": [
+        0,
+        1
+      ],
+      "fullOwnerQuote": "感觉这个录音卡它连接速度有点慢。但是还可以，这个还可以。就是它的 UI 有点丑，看下再优化一下。 或者的话呢，应该是一个验收，我会报一个问题，不是说一个问题所有东西都聚集在一起，这样就很难看那个问题在哪。",
+      "id": "UI114-APPEARANCE",
+      "stepIndex": null,
+      "stepTitle": "整体界面外观",
+      "ownerQuote": "UI 有点丑，看下再优化一下",
+      "state": "OPEN_FOR_COHERENT_VISUAL_REFINEMENT",
+      "blocking": false,
+      "decision": "Inspect typography, density and hierarchy in the actual product. Collect the full-purpose experience, refine related surfaces together, then one matched delivery."
+    },
+    {
+      "receivedAt": "2026-11-12T21:16:59+08:00",
+      "windowsVersion": "0.1.114",
+      "firmwareVersion": 66828,
+      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows114-fw66828-20261112",
+      "ownerStartedAt": "2026-11-12T21:10:28.165+08:00",
+      "guidedStepsVisited": [
+        0,
+        1
+      ],
+      "fullOwnerQuote": "感觉这个录音卡它连接速度有点慢。但是还可以，这个还可以。就是它的 UI 有点丑，看下再优化一下。 或者的话呢，应该是一个验收，我会报一个问题，不是说一个问题所有东西都聚集在一起，这样就很难看那个问题在哪。",
+      "id": "GUIDE114-ISSUE-LOCALIZATION",
+      "stepIndex": null,
+      "stepTitle": "逐步验收的问题记录",
+      "ownerQuote": "一个验收，我会报一个问题…所有东西都聚集在一起…很难看那个问题在哪",
+      "state": "IMPLEMENTING_STEP_BOUND_INDIVIDUAL_ISSUE_CAPTURE",
+      "blocking": true,
+      "decision": "Each report gets its own ID, current step, exact version, observed time and raw text. Reporting stays in the original shared window and can continue the same purpose; final conclusion remains separate. No per-issue native rebuild."
+    }
+  ]
+}

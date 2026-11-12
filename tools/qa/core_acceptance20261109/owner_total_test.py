@@ -59,7 +59,7 @@ class WholeUseTests(unittest.TestCase):
         self.assertFalse(facts[0]['beganDuringOwnerWindow']);self.assertTrue(facts[1]['beganDuringOwnerWindow'])
         self.assertNotIn('private words',json.dumps(facts))
 
-    def exercise(self,selected,prompt_closes_at,reopens=False,busy_until=0,claim_race=False,retry_start=True,expect_app=True,navigate=False):
+    def exercise(self,selected,prompt_closes_at,reopens=False,busy_until=0,claim_race=False,retry_start=True,expect_app=True,navigate=False,reports=False):
         with tempfile.TemporaryDirectory(prefix='whole-use-check-',dir=Path(__file__).parent)as directory:
             root=Path(directory).resolve();self.assertEqual(root.parent,Path(__file__).parent.resolve())
             project=root/'project';batch=project/'batch';batch.mkdir(parents=True)
@@ -76,6 +76,10 @@ class WholeUseTests(unittest.TestCase):
                     self.event=Path(command[command.index('-EventPath')+1]);self.updates=Path(command[command.index('-UpdatePath')+1]);self.clicked=False
                     clock['promptCount']+=1
                 def poll(self):
+                    current_update=json.loads(self.updates.read_text(encoding='utf-8'))
+                    if reports and clock['tick']in [2,5]and module.REPORT in current_update['enabledActions']and clock['tick']not in clock.get('reportedTicks',[]):
+                        with self.event.open('a',encoding='utf8')as stream:stream.write(json.dumps(dict(event='action_button|'+module.REPORT,processId=self.pid,at=stamp(),text='独立问题'+str(clock['tick']),context=current_update['eventContext']))+'\n')
+                        clock.setdefault('reportedTicks',[]).append(clock['tick'])
                     enabled=module.START in json.loads(self.updates.read_text(encoding='utf-8'))['enabledActions']
                     if not enabled:self.clicked=False
                     if enabled and not self.clicked and (retry_start or not clock['startClicks']) and (navigate or not clock.get('appLaunched')):
@@ -143,6 +147,8 @@ class WholeUseTests(unittest.TestCase):
                 self.assertEqual(module.main(),0)
             result=json.loads((batch/'owner-total-result.json').read_text(encoding='utf-8'))
             private=json.loads((output/'progress.json').read_text(encoding='utf-8'))
+            if reports:
+                self.assertEqual([x['ownerQuote']for x in private['individualIssues']],['独立问题2','独立问题5']);self.assertEqual(private['guidedStepsVisited'],[0]);self.assertEqual(len(list((output/'issues').glob('ISSUE-*.json'))),2);self.assertEqual(clock['launches'],1);self.assertEqual(clock['claimAttempts'],1)
             self.assertEqual(clock['promptCount'],1)
             self.assertEqual(clock['released'],expect_app)
             if expect_app:self.assertTrue(result['newPhysicalToTextObserved'])
@@ -157,6 +163,9 @@ class WholeUseTests(unittest.TestCase):
     def test_prompt_closed_early_still_waits_for_app_and_records_final_saved_state(self):
         result=self.exercise('遇到问题',2)
         self.assertFalse(result['softwareOwnerAccepted']);self.assertTrue(result['appClosedAt'])
+
+    def test_individual_reports_keep_one_window_and_do_not_advance_or_restart(self):
+        self.exercise('结束本轮',8,reports=True)
 
     def test_early_pass_is_not_accepted_even_after_app_later_exits(self):
         self.assertFalse(self.exercise('通过',2)['softwareOwnerAccepted'])

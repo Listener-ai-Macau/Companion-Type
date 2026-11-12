@@ -1,0 +1,65 @@
+--- operator_prompt.before.ps1
++++ operator_prompt.ps1
+@@ -360,6 +360,8 @@
+ $script:reviewEventWritten = $false
+ $script:closedEventWritten = $false
+ $script:reviewAllowed = -not $RequireReviewAllowed
++$script:lastInputAcknowledgment = ""
++$script:eventContext = $null
+ 
+ function Save-OperatorPromptResult {
+     if ($textBox -ne $null) {
+@@ -400,6 +402,7 @@
+         at = [DateTime]::UtcNow.ToString("o")
+         selected = $script:selected
+         text = $script:text
++        context = $script:eventContext
+         spoken_text = if ($hasSpokenText) { $SpokenText } else { $null }
+         output_path = if ($OutputPath -ne "") { $OutputPath } else { $null }
+         window_bounds = $windowBounds
+@@ -471,6 +474,7 @@
+                 [void]$textBox.Focus()
+                 $textBox.SelectionStart = $textBox.TextLength
+             }
++            if ($null -ne $script:eventContext -and $null -ne $textBox) { $script:text = $textBox.Text }
+             Write-OperatorPromptEvent -Event ("action_button|" + $this.Text)
+         })
+         [void]$actionPanel.Controls.Add($actionButton)
+@@ -560,6 +564,21 @@
+         foreach ($reviewControl in $buttonPanel.Controls) {
+             $reviewControl.Visible = $visibleReviews -contains $reviewControl.Text
+         }
++    }
++    # Optional context and acknowledgment for separate per-step reports.
++    if ($null -ne $Update.PSObject.Properties['eventContext']) {
++        $script:eventContext = $Update.eventContext
++    }
++    if ($null -ne $Update.PSObject.Properties['observationLabel'] -and $null -ne $observationLabelControl) {
++        $observationLabelControl.Text = [string]$Update.observationLabel
++    }
++    $ack = $Update.inputAcknowledgment
++    if ($null -ne $ack -and -not [string]::IsNullOrWhiteSpace([string]$ack.id) -and [string]$ack.id -ne $script:lastInputAcknowledgment) {
++        if ($null -ne $textBox -and $textBox.Text -ceq [string]$ack.text) {
++            $textBox.Clear()
++            $script:text = ""
++        }
++        $script:lastInputAcknowledgment = [string]$ack.id
+     }
+     # A live controller may observe completion itself. This is a controller
+     # result, never a fabricated user click or submitted review.
+@@ -589,6 +608,15 @@
+     $reviewAllowedTimer.Start()
+ }
+ 
++# Apply an authored initial visibility/context before the first visible frame.
++if ($LiveUpdates -and -not [string]::IsNullOrWhiteSpace($UpdatePath)) {
++    try {
++        $initialUpdate = Get-Content -LiteralPath $UpdatePath -Raw -Encoding UTF8 | ConvertFrom-Json
++        if ($null -ne $initialUpdate.PSObject.Properties['visibleActions']) {
++            Set-OperatorPromptLiveUpdate -Update $initialUpdate
++        }
++    } catch { }
++}
+ [void]$form.ShowDialog()
+ if ($timeoutTimer -ne $null) {
+     $timeoutTimer.Stop()

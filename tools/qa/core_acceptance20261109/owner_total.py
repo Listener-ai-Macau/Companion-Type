@@ -10,6 +10,7 @@ from pathlib import Path
 import argparse, hashlib, json, os, re, subprocess, time
 import psutil
 from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested, native_multiline
+from owner_total_issues import REPORT,reported_issues
 
 TZ = timezone(timedelta(hours=8))
 START = '开始'
@@ -262,11 +263,17 @@ def main():
     def save():
         write_json(cache / 'progress.json', record)
 
+    input_ack=None
     def update(stage, message, actions=(), review=False):
-        write_json(updates, dict(progressText=stage, message=native_multiline(message),
+        value=dict(progressText=stage, message=native_multiline(message),
                                 enabledActions=list(actions), visibleActions=list(actions),
-                                visibleReviews=['通过', '遇到问题', '稍后'] if review else ['遇到问题', '稍后'],
-                                reviewAllowed=review))
+                                visibleReviews=['通过', '结束本轮', '稍后'] if review else ['结束本轮', '稍后'],
+                                observationLabel='只写当前这一条问题，点“记录问题”后可继续',
+                                reviewAllowed=review)
+        if record.get('ownerStartedAt'):
+            value['eventContext']=dict(version=version,stepIndex=guide_index,stepTitle=STEPS[guide_index][0])
+        if input_ack:value['inputAcknowledgment']=input_ack
+        write_json(updates,value)
 
     def board(action, **kwargs):
         command = ['python', str(project / 'tools/board_turn.py'), action, '--side', 'codex']
@@ -290,14 +297,19 @@ def main():
     waiting_for_board = only_board_blocked(readiness)
     consumed_start_chars = 0
     consumed_navigation_chars = 0
+    seen_issue_events=set()
+    record['individualIssues']=[]
     guide_index = 0
     navigation_not_before = 0
     record.update(guidedStepsTotal=len(STEPS), guidedStepsVisited=[], guidedRouteReachedEnd=False)
     message = ('这轮做一件完整的事：把一段口头安排，变成可回听的记录和能带走的整理结果。\n\n'
                '现在只做第一步：点“开始”打开软件，先看第一屏上方的“录音卡”。未连接就点“连接录音卡”；看到“已连接”后点本窗口“下一步”。\n\n'
                '连接后录音会自动收取，不必找同步按钮或等进度条。录音仍由你按卡片实体键开停，这个窗口不会开录。\n\n'
-               '每次只看当前一步，最后一起说哪里难用、结果有没有用。')
+               '每次只看当前一步。遇到问题写一条，点“记录问题”单独保存并继续；“结束本轮”才结束。最后再给整体结论。')
 
+    def guide_actions():
+        if record.get('appClosedAt') and guide_index<len(STEPS)-1:return [START,REPORT]
+        return ([BACK] if guide_index else [])+[REPORT]+([NEXT] if guide_index<len(STEPS)-1 else [])
     def show_guide():
         nonlocal navigation_not_before
         navigation_not_before = time.time() + .8
@@ -306,7 +318,7 @@ def main():
             record['guidedStepsVisited'].append(guide_index)
         record['guidedRouteReachedEnd'] = guide_index == len(STEPS) - 1
         save()
-        actions = ([BACK] if guide_index else []) + ([NEXT] if guide_index < len(STEPS) - 1 else [])
+        actions = guide_actions()
         update(f'{guide_index + 1}/{len(STEPS)} · {STEPS[guide_index][0]}', STEPS[guide_index][1],
                actions, review=bool(record.get('appClosedAt')) and record['guidedRouteReachedEnd'])
     def wait_for_board():
@@ -328,9 +340,9 @@ def main():
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
                '-Title', 'Companion 功能验收', '-Message', native_multiline(message),
                '-ScopeText', '同一轮连续验收 · 最后统一反馈',
-               '-ActionButtons', ','.join((START, BACK, NEXT)), '-Buttons', '通过,遇到问题,稍后',
+               '-ActionButtons', ','.join((START, BACK, REPORT, NEXT)), '-Buttons', '通过,结束本轮,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),
-               '-EventPath', str(events), '-TextInput', '-ObservationLabel', '问题先记在这里，最后一起提交',
+               '-EventPath', str(events), '-TextInput', '-ObservationLabel', '只写当前这一条问题，点“记录问题”后可继续',
                '-OutputPath', str(cache / 'owner-feedback.txt'), '-Json', '-NoActivate', '-NoTopMost',
                '-Width', '760', '-Height', '580', '-MessageHeight', '230']
     app = None
@@ -426,6 +438,22 @@ def main():
                         record['guidedReopenObserved'] = True
                     consumed_navigation_chars = event_text.rfind('\n') + 1
                     show_guide()
+                if app is not None and prompt.poll() is None:
+                    complete_events = event_text.rfind('\n') + 1
+                    new_reports=reported_issues(event_text[:complete_events],prompt.pid,
+                        datetime.fromisoformat(record['ownerStartedAt']).timestamp(),version,STEPS,seen_issue_events)
+                    for issue in new_reports:
+                        if not issue['ownerQuote'].strip():
+                            show_guide()
+                            update(f'{guide_index+1}/{len(STEPS)} · 先写这一条问题',
+                                STEPS[guide_index][1]+'\n\n在下方写当前遇到的一条问题，再点“记录问题”。',
+                                guide_actions(),review=bool(record.get('appClosedAt'))and record['guidedRouteReachedEnd'])
+                            continue
+                        issue.update(id=f"ISSUE-{len(record['individualIssues'])+1:03d}",firmwareVersion=readiness.get('firmwareVersion'),sourceCommit=readiness['sourceCommit'],ownerRound=str(cache))
+                        issue_dir=cache/'issues';issue_dir.mkdir(exist_ok=True);write_json(issue_dir/(issue['id']+'.json'),issue)
+                        record['individualIssues'].append(issue);record['individualIssueCount']=len(record['individualIssues']);write_json(issue_dir/'index.json',record['individualIssues']);input_ack=dict(id=issue['eventId'],text=issue['ownerQuote']);save();show_guide()
+                        update(f"{guide_index+1}/{len(STEPS)} · 已记录 {issue['id']}",STEPS[guide_index][1]+'\n\n这一条问题已单独保存，可以继续本步或点“下一步”。',
+                            guide_actions(),review=bool(record.get('appClosedAt'))and record['guidedRouteReachedEnd'])
                 if app is not None and prompt.poll() is None and not record.get('appClosedAt'):
                     complete_events = event_text.rfind('\n') + 1
                     action = navigation_requested(event_text[consumed_navigation_chars:complete_events], prompt.pid, navigation_not_before)
@@ -460,7 +488,7 @@ def main():
                     else:
                         update(f'{guide_index + 1}/{len(STEPS)} · 产品已退出，本轮保留',
                                '软件已退出，已保存结果保留。点“开始”重新打开并继续当前步骤。\n\n'
-                               + STEPS[guide_index][1] + '\n\n如果不继续，可以在下方集中说明问题后选“遇到问题”或“稍后”。', (START,))
+                               + STEPS[guide_index][1] + '\n\n问题可在下方分别记录；需要停止时选“结束本轮”或“稍后”。', (START,REPORT))
                 if prompt.poll() is not None and not running and (app is None or record.get('appClosedAt')):
                     break
                 time.sleep(.4)
@@ -474,7 +502,7 @@ def main():
             record.update(state='TOTAL_USE_NEEDS_ATTENTION', error=str(error))
             save()
             update('本轮保留，先处理实际问题',
-                   '准备或本轮使用遇到实际问题，已保留状态。请不用重复录音或按键，可集中写下看到的情况后选“遇到问题”或“稍后”。')
+                   '准备或本轮使用遇到实际问题，已保留状态。请不用重复录音或按键，可写下看到的情况后选“结束本轮”或“稍后”。')
             while prompt.poll() is None or (app is not None and app.poll() is None):
                 time.sleep(.5)
         finally:
