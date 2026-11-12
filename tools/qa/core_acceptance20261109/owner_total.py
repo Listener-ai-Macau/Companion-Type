@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import argparse, hashlib, json, os, re, subprocess, time
 import psutil
-from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested
+from owner_total_guide import STEPS, NEXT, BACK, RESTART_INDEX, navigation_requested, native_multiline
 
 TZ = timezone(timedelta(hours=8))
 START = '开始'
@@ -104,6 +104,32 @@ def physical_facts(before_ids, rows, owner_started, closed_at):
     return facts
 
 
+def os_handoff_reuse_ready(evidence):
+    """Keep legacy whole-file proof, or bind unchanged operations to a rechecked UI."""
+    commands = evidence.get('exactCommandBlocks', [])
+    required_commands = {'preview_companion_meeting_export', 'copy_companion_meeting_content',
+                         'share_companion_meeting_content', 'export_companion_meeting'}
+    if {row.get('command') for row in commands} != required_commands or not evidence.get('unchangedOsDependencyPackages'):
+        return False
+    if evidence.get('state') == 'UNCHANGED_NATIVE_DIALOG_AND_ORDINARY_RECIPIENT_IMPLEMENTATION_EVIDENCE_REUSED':
+        return len(evidence.get('exactCommittedFiles', [])) >= 8
+    if evidence.get('state') != 'UNCHANGED_OS_BACKEND_WITH_CHANGED_UI_ROUTE_RECHECKED':
+        return False
+    required_files = {'packages/ui/src/shareHandoff.ts', 'apps/windows/src-tauri/src/file_clipboard.rs',
+        'apps/windows/src-tauri/src/backend/content_export.rs', 'apps/windows/src-tauri/src/backend/export_text_layout.rs',
+        'apps/windows/src-tauri/src/content_handoff.rs', 'apps/windows/src-tauri/src/backend/export.rs',
+        'apps/windows/src-tauri/src/backend/meeting_document_export.rs'}
+    operations = evidence.get('uiExportStateAndOperations', {})
+    digest = operations.get('normalizedLfSha256', '')
+    return ({row.get('path') for row in evidence.get('exactCommittedFiles', [])} == required_files
+        and operations.get('path') == 'packages/ui/src/ContentExportPanel.tsx'
+        and bool(re.fullmatch('[a-f0-9]{64}', digest))
+        and operations.get('priorNormalizedLfSha256') == digest
+        and operations.get('bytes', 0) > 0 and operations.get('uiRenderingChanged') is True
+        and evidence.get('currentNativeUiRouteRechecked') is True
+        and bool(evidence.get('currentNativeUiEvidence')))
+
+
 def prepare(project, batch, installed_dir):
     blockers = []
     verification = json.loads((batch / 'windows-verification.json').read_text(encoding='utf-8'))
@@ -120,15 +146,16 @@ def prepare(project, batch, installed_dir):
         reused = runtime.get('unchangedOsHandoffEvidence', {})
         prior_path = batch.parent / 'runtime-result.json'
         prior = json.loads(prior_path.read_text(encoding='utf-8')) if prior_path.is_file() else {}
-        scoped_journey = (runtime.get('state') == 'WINDOWS' + version.split('.')[-1] + '_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED'
-            and reused.get('state') == 'UNCHANGED_NATIVE_DIALOG_AND_ORDINARY_RECIPIENT_IMPLEMENTATION_EVIDENCE_REUSED'
+        scoped_journey = (runtime.get('state') in {
+            'WINDOWS' + version.split('.')[-1] + '_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED',
+            'WINDOWS' + version.split('.')[-1] + '_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_OS_BACKEND_EVIDENCE_REUSED'}
+            and os_handoff_reuse_ready(reused)
             and reused.get('currentAppSourceCommit') == verification['sourceCommit']
             and prior.get('state') == 'WINDOWS109_COHERENT_NATIVE_MEETING_JOURNEY_PASSED'
             and reused.get('priorAppSourceCommit') == prior.get('appSourceCommit')
             and reused.get('priorRuntimeTestSource') == prior.get('testSourceCommit')
-            and len(reused.get('exactCommittedFiles', [])) >= 8
-            and len(reused.get('exactCommandBlocks', [])) == 4
-            and bool(reused.get('unchangedOsDependencyPackages')))
+            and (reused.get('state') != 'UNCHANGED_OS_BACKEND_WITH_CHANGED_UI_ROUTE_RECHECKED'
+                 or reused.get('currentNativeUiEvidence') == runtime.get('nativeUiEvidence')))
     if runtime.get('nativeUiExitCode') != 0 or not (direct_journey or scoped_journey):
         blockers.append('The continuous native software journey has not passed.')
     if installation.get('installedVersion') != version or not installation.get('dataManifestIdentical'):
@@ -231,7 +258,7 @@ def main():
         write_json(cache / 'progress.json', record)
 
     def update(stage, message, actions=(), review=False):
-        write_json(updates, dict(progressText=stage, message=message,
+        write_json(updates, dict(progressText=stage, message=native_multiline(message),
                                 enabledActions=list(actions), visibleActions=list(actions),
                                 visibleReviews=['通过', '遇到问题', '稍后'] if review else ['遇到问题', '稍后'],
                                 reviewAllowed=review))
@@ -292,7 +319,7 @@ def main():
     environment = dict(os.environ)
     environment.pop('PSModulePath', None)
     command = [str(shell), '-NoLogo', '-NoProfile', '-File', str(shared),
-               '-Title', 'Companion 功能验收', '-Message', message,
+               '-Title', 'Companion 功能验收', '-Message', native_multiline(message),
                '-ScopeText', '同一轮连续验收 · 最后统一反馈',
                '-ActionButtons', ','.join((START, BACK, NEXT)), '-Buttons', '通过,遇到问题,稍后',
                '-RequireReviewAllowed', '-LiveUpdates', '-UpdatePath', str(updates),

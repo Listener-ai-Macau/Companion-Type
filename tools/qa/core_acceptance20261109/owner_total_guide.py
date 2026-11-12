@@ -39,6 +39,11 @@ STEPS = (('连接录音卡', '在软件导航点“设备与同步”，再点�
 RESTART_INDEX = next(i for i, step in enumerate(STEPS) if len(step) == 3)
 
 
+def native_multiline(text):
+    """WinForms multiline edits require CRLF for real paragraph breaks."""
+    return text.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '\r\n')
+
+
 def navigation_requested(events, prompt_pid, not_before):
     for line in events.splitlines():
         try:
