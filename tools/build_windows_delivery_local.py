@@ -37,7 +37,7 @@ def main():
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
    record['storageBefore']=preflight(cache,reserve_gib=8)
-   observed=inspect(target,ROOT,source_dir=ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
+   observed=inspect(target,ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    assert not capture(['git','status','--porcelain','--untracked-files=no']),'Commit the exact source before a normal delivery build'
    assert capture(['git','ls-tree','HEAD','third_party/denzic-platform']).split()[2]==record['platformCommit']
    record['rustc']=capture(['rustc','+1.95.0','--version']);record['node']=capture(['node','--version'])
@@ -47,6 +47,7 @@ def main():
    record['sourceFiles']=[{'path':name,'sha256':sha(ROOT/name)} for name in names if (ROOT/name).is_file()]
    before_manifest=(ROOT/'apps/windows/src-tauri/Cargo.toml').read_bytes()
    run('windows-web',['cmd','/d','/c','npm.cmd','run','build:windows'])
+   observed=inspect(target,ROOT,source_dir=ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    dist=ROOT/'apps/windows/dist';record['webAssets']=[{'path':p.relative_to(dist).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(dist.rglob('*')) if p.is_file()]
    record['state']='LOCAL_NORMAL_RELEASE_BUILDING';save()
    run('cargo-release',['cargo','build','--release','--locked','--offline','--manifest-path',ROOT/'apps/windows/src-tauri/Cargo.toml'])

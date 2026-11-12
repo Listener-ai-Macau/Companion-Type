@@ -140,7 +140,12 @@ def prepare(project, batch, installed_dir):
             blockers.append('Installed candidate bytes differ: ' + name)
     if app_pids():
         blockers.append('Preserve the current running Owner app; do not start a competing session.')
-    source = project / 'companion-device-closure055'
+    source = Path(verification.get('frozenSourceRoot') or project / 'companion-device-closure055').resolve()
+    if verification.get('frozenSourceRoot'):
+        actual_head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=source, capture_output=True,
+                                     text=True, encoding='utf-8')
+        if actual_head.returncode or actual_head.stdout.strip() != verification['sourceCommit']:
+            blockers.append('The inspected frozen native source no longer matches its declared commit.')
     diff = subprocess.run(['git', '-c', 'core.quotePath=false', 'diff', '--name-only',
                            verification['sourceCommit'], '--', *PRODUCT_PATHS],
                           cwd=source, capture_output=True, text=True, encoding='utf-8')
