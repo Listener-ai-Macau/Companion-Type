@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-11-12T17:52:26+08:00",
+  "state": "ENGINEERING_GUIDE_PREVIEW_FAILED_RETAINED",
+  "sharedSourceSha256": "94978d25097aaa3ecb882a8ec438aa1391eec47cd7bdd761ce783cdd2cab4733",
+  "ownerPromptOpened": false,
+  "ownerInputUsed": false,
+  "physicalOrProductStarted": false,
+  "soundDisabledForEngineeringPreviewOnly": true,
+  "frames": [],
+  "privateStation": "CompanionGuide-0862209e932a454092d4b8872cdc6bb3",
+  "pid": 14468,
+  "error": "AssertionError('Original prompt exited; see retained process.log')",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "finishedAt": "2026-11-12T17:52:27+08:00"
+}

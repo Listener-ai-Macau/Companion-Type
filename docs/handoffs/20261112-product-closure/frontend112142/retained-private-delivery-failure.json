@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-11-12T18:04:22+08:00",
+  "state": "PRIVATE_ASSET_DELIVERY_TLS_FAILURE_RETAINED",
+  "attempts": [
+    {
+      "operation": "gh release upload exact44MB UI112142 archive to existing private draft",
+      "result": "TLS handshake timeout to uploads.github.com before upload confirmation",
+      "retained": true
+    },
+    {
+      "operation": "same exact upload after refreshing private release metadata",
+      "result": "TLS handshake timeout to uploads.github.com before upload confirmation",
+      "retained": true
+    }
+  ],
+  "privateRemoteReadbackVerified": false,
+  "localArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-112-142-20261112.zip",
+  "localSha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
+  "networkRoutingChanged": false,
+  "publicReleaseCreated": false
+}

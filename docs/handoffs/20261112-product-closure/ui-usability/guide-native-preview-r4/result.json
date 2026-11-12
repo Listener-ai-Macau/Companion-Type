@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-11-12T17:54:14+08:00",
+  "state": "ENGINEERING_GUIDE_PREVIEW_FAILED_RETAINED",
+  "sharedSourceSha256": "94978d25097aaa3ecb882a8ec438aa1391eec47cd7bdd761ce783cdd2cab4733",
+  "ownerPromptOpened": false,
+  "ownerInputUsed": false,
+  "physicalOrProductStarted": false,
+  "soundDisabledForEngineeringPreviewOnly": true,
+  "frames": [],
+  "engineeringHostInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run only for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+  "instrumentationSha256": "92f214a75c2060ad13bddc642f889c305ab659d67c8e41829a55bc7ca860b8c5",
+  "modalOwnerRuntimeNotNewlyProved": true,
+  "privateStation": "CompanionGuide-75c865e7c72e400f839848cac86e702a",
+  "pid": 20752,
+  "error": "AssertionError()",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "finishedAt": "2026-11-12T17:54:17+08:00"
+}

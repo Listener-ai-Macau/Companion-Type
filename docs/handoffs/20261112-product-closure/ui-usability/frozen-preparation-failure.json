@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-12T17:19:20+08:00",
+  "state": "FROZEN_CHECKOUT_PREPARATION_FAILED_BEFORE_NATIVE_BUILD",
+  "reason": "Relocating the platform through a junction made its inherited relative .git path resolve on E; parent git status rejected it. Existing C source untouched.",
+  "next": "Keep the completed parent checkout and node link; replace only the task-created platform junction with an exact detached platform worktree.",
+  "nativeBuilds": 0,
+  "sourceCheckoutRepeated": false
+}

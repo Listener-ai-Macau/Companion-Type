@@ -5,8 +5,8 @@
 **当前执行：完整产品收口，最后集中总验收。**
 
 - 首批Windows会议详情到会后交接，纪要与待办优先；原Android交付和源码检查点保留。
-- 当前实际交付：Windows0.1.111 / Android0.1.142。
-- 本批：FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
+- 当前实际交付：Windows0.1.112 / Android0.1.142。
+- 本批：UI112142_INSTALLED_ENGINEERING_REVIEWED_OWNER_GUIDED_TOTAL_PENDING；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
 - 不逐功能要求Owner签收；工程保留必要数据保护和已知故障核对，再集中交付和总验收。
 - 实卡可靠性、模型质量、正式发布/服务及既定暂停项按真实结果保留，不由页面或构建通过自动关闭。
 
@@ -29,10 +29,10 @@
 
 以下直接读取同事维护的当前批次；不从旧共享版本别名推断安装。
 
-- **已交付：** 此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。
-- **仍未完成：** 当前普通固件实物总验仍待原嵌软匹配身份/占用；其它平台真机、独立模型与正式发布/服务等原范围未由本批关闭。Windows111 OS保存/取消与普通接收本轮未重跑，复用109完全相同实现有效证据。
-- **当前下一步：** 前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。
-- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\frontend111142\software-delivery.json>)
+- **已交付：** 产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。
+- **仍未完成：** Owner尚未体验新版产品UI与带验窗，当前正常固件/实卡整轮、长录/恢复及独立模型和正式发布/售卖范围仍开放。Windows112的系统保存/取消与普通接收本轮未重跑，复用未变底层与操作代码证据，新UI路线另实测。 GitHub私有附件上传两次TLS握手超时，远端交付回读待恢复；本地包及已安装新版可用。
+- **当前下一步：** 原嵌软当前修复完成并恢复正常固件后，核对最终包与安装身份、实际占用，绑定已装112/142后在同一原窗口逐步带领、最后集中反馈。未取得匹配正常固件前不弹物理验收窗；软件安装交付无需等板。 私有附件上传网络恢复后继续同一包上传/完整回读，不重编译、不改普通网络分流。
+- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\frontend112142\software-delivery.json>)
 
 各模块旧版本实施笔记保留在历史索引，不混入本页当前交付。
 
@@ -712,10 +712,10 @@
 
 ### 当前交付基线
 
-- 已保存实板记录：FW66821 / UI85；这不是实时接板查询。
-- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `88639f6`。
+- 已保存实板记录：FW66823 / UI85；这不是实时接板查询。
+- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `97da0c6`。
 - 构建入口：`python tools/build_current_firmware.py --show`。构建参数配方参考版 66685，与已装版本分开显示。
-- 安装证据：[E:\CodexData\Companion\.build-cache\imu-pointer20261112\install821\result.json](E:\CodexData\Companion\.build-cache\imu-pointer20261112\install821\result.json)。
+- 安装证据：[E:\CodexData\Companion\.build-cache\imu-pointer20261112\install823\result.json](E:\CodexData\Companion\.build-cache\imu-pointer20261112\install823\result.json)。
 
 ### 现在推进什么
 

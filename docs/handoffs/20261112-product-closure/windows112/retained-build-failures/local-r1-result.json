@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-12T17:20:18+08:00",
+  "state": "LOCAL_WINDOWS_DELIVERY_BUILD_FAILED_RETAINED",
+  "sourceCommit": "fe8b1de1e29e52b8c9264a6a3ab67cf14dd7409b",
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "version": "0.1.112",
+  "modelsRun": false,
+  "boardAccessed": false,
+  "installed": false,
+  "hostedCiRun": null,
+  "saleQualified": false,
+  "steps": [],
+  "cpuHardCapPercent": 10,
+  "jobPrivateCommitLimitBytes": 6442450944,
+  "resourceLimits": {
+    "jobPrivateCommitLimitBytes": 6442450944,
+    "jobPeakPrivateCommitBytes": 13197312,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "scope": "This native compiler family only; model limits and Owner processes unchanged"
+  },
+  "storageBefore": {
+    "cache": "E:\\CodexData\\Companion\\.build-cache",
+    "logicalBytes": 60074371887,
+    "freeBytes": 321017413632,
+    "limitBytes": 85899345920,
+    "reservedJobBytes": 8589934592,
+    "minimumFreeBytes": 32212254720,
+    "deletedFiles": 0
+  },
+  "error": "AssertionError('SOURCE_INPUTS_NOT_READY')"
+}

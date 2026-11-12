@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-12T17:58:44+08:00",
+  "state": "UI112_PRODUCT_AND_GUIDANCE_REPAIR_INSTALLED_ENGINEERING_REVIEWED_OWNER_REVIEW_PENDING",
+  "uiFeedbackId": "owner-ui-usability20261112",
+  "windowsVersion": "0.1.112",
+  "androidUnchanged": "0.1.142",
+  "productSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "productUiChangeCommit": "fe8b1de1e29e52b8c9264a6a3ab67cf14dd7409b",
+  "nativeJourney": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\e0ea4571cea54c6ea1c494d146622935\\result.json",
+  "sourceBrowserEvidence": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r5",
+  "actualGuideRender": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-native-preview-r7\\result.json",
+  "guideRenderHostingInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run and DrawToBitmap timer for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+  "originalModalOwnerRuntimeNotNewlyProved": true,
+  "guidanceMultilineNativeCrLfConfirmed": true,
+  "affectedLifecycleTestsPassed": 12,
+  "actualOsReuseEvidenceAccepted": true,
+  "rejectedIncompleteOrChangedEvidenceCases": [
+    "exactCommittedFiles",
+    "exactCommandBlocks",
+    "currentNativeUiRouteRechecked",
+    "currentNativeUiEvidence",
+    "changed export operation digest"
+  ],
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

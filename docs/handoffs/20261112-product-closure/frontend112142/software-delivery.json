@@ -1,0 +1,228 @@
+{
+  "at": "2026-11-12T17:58:44+08:00",
+  "state": "ONE_UI112142_KIT_INSTALLED_REMOTE_READBACK_PENDING",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-112-142-20261112.zip",
+  "bytes": 44496371,
+  "sha256": "b08f5b150ae9daae927bd4815f621ca2d56c38e228b3fbefe4a444fdcb22da73",
+  "allArchiveMemberChecksumsMatched": true,
+  "manifest": {
+    "at": "2026-11-12T17:58:44+08:00",
+    "state": "UI112142_INSTALLED_COHERENT_REPAIR_DELIVERY_OWNER_GUIDED_REVIEW_PENDING",
+    "entry": "开始使用.txt",
+    "files": [
+      {
+        "path": "windows/Companion-Windows-0.1.112.msi",
+        "bytes": 16900536,
+        "sha256": "ad7e5efb5e9c01ae53658800f9d097522a8f044bf86493d49ed8e72017bd3994"
+      },
+      {
+        "path": "android/Companion-Android-0.1.142.apk",
+        "bytes": 51171413,
+        "sha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25"
+      },
+      {
+        "path": "optional-macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      },
+      {
+        "path": "evidence/windows112/frozen-source.json",
+        "bytes": 253,
+        "sha256": "54a1ffca41fbfda6424e79b48387f88a20c401535fc6ac3ebab69df400b399e1"
+      },
+      {
+        "path": "evidence/windows112/windows-verification.json",
+        "bytes": 5505,
+        "sha256": "2e70599f3620965233e7596daa042dc1547b90ea3e7428264035f55785609908"
+      },
+      {
+        "path": "evidence/windows112/runtime-result.json",
+        "bytes": 7195,
+        "sha256": "02dc0cc69a0d07cfd79028370ced9a79bdfdbfc8736ea4d3ddfd8e0250585e0e"
+      },
+      {
+        "path": "evidence/windows112/installation.json",
+        "bytes": 793,
+        "sha256": "701203317eace1a73e74cce553b218402037f65f1e17ae83b5356686aa8aa9fb"
+      },
+      {
+        "path": "evidence/windows112/windows-delivery.json",
+        "bytes": 1008,
+        "sha256": "dad84a647ea2ea7d52f681caceca491a9fbfcffa7e5af5008f5b54f2c3e1ff1c"
+      },
+      {
+        "path": "evidence/windows112/unchanged-os-handoff-evidence.json",
+        "bytes": 5813,
+        "sha256": "094a3b718d8792f1fa0b056be4886aa32b5f89842464226fef122ddd7f4a10c2"
+      },
+      {
+        "path": "evidence/windows112/engineering-review.json",
+        "bytes": 1641,
+        "sha256": "8e904bcbe723296ee48de22c9714e747003c2acba45e0269408fd3cb6f2623b3"
+      },
+      {
+        "path": "evidence/android142/build-result.json",
+        "bytes": 32435,
+        "sha256": "41c2cb56f49ee244c2548c19d1eedba4d9d04c27a5052e38ed3782881f19a4f0"
+      },
+      {
+        "path": "evidence/android142/installation.json",
+        "bytes": 384,
+        "sha256": "e7b63af5ef841287cd0b9c4f54a4e7c99eb8ce91de810245e527c5039210f174"
+      },
+      {
+        "path": "evidence/android142/detail-workflow.json",
+        "bytes": 4036,
+        "sha256": "7253bfd97d30df5d2a8eb094b799e2b69c31c1ef13a8551e7c10bfa96a1ecdc3"
+      },
+      {
+        "path": "evidence/android142/selected-note-result.json",
+        "bytes": 2797,
+        "sha256": "b8a3d82f85650cef5611df57a29fd8cb69042a8646abbc0245b6dbf105f0dee8"
+      },
+      {
+        "path": "evidence/android142/selected-bundle-readback.json",
+        "bytes": 867,
+        "sha256": "580b93e4455c35fb6d1c29b22e74de605222c24fe6ff83f75e993fc4a90bdffc"
+      },
+      {
+        "path": "evidence/android142/detail-reopened.json",
+        "bytes": 299,
+        "sha256": "8a132d1f26f0ebd4c476175a6c67c7c617aa3dcf88e8195eb18ec3e644711030"
+      },
+      {
+        "path": "evidence/android142/end-session.json",
+        "bytes": 612,
+        "sha256": "ec990c62b1604789aa4f6125aa692433d2f273f3507305374edf7a2eec76c68a"
+      },
+      {
+        "path": "evidence/android142-ordinary-handoff/share-result.json",
+        "bytes": 2243,
+        "sha256": "cdb0cb33a30139c4eec2a57c0bde7f2ddbe231a0235069782654fb8c4d445758"
+      },
+      {
+        "path": "evidence/android142-ordinary-handoff/end-session.json",
+        "bytes": 612,
+        "sha256": "010252804b840f74ca4ed63404d4e212cd1a0a9abdd33b6f7c873b4124ba5699"
+      },
+      {
+        "path": "evidence/android142-ordinary-handoff/ordinary-wps-receiver.png",
+        "bytes": 761523,
+        "sha256": "033d8bb31ecd0cac88d04f62c86cd5722e5d9c5622096462e06234afe9744200"
+      },
+      {
+        "path": "examples/Companion-public-selected142.txt",
+        "bytes": 1233,
+        "sha256": "9c89db289159c08369758851ea58414aed1ba56f63360feff104353432e15b63"
+      },
+      {
+        "path": "examples/Companion-public-selected142.zip",
+        "bytes": 3448,
+        "sha256": "05c6542f05dbdf848dda039c59027f55191bd5cdb661ed2b1f8f6281556b990c"
+      },
+      {
+        "path": "examples/Companion-Acceptance-Supplement.txt",
+        "bytes": 574,
+        "sha256": "33c82ddcb4f440a80c35523c5a55ba78939b5da3333358fa7eba94b308f97bc1"
+      },
+      {
+        "path": "界面/新版纪要.png",
+        "bytes": 238871,
+        "sha256": "f84bb91eecfe51c2a959f9e4ba481235e4c78eeb8340881636f813e59dfbce5d"
+      },
+      {
+        "path": "界面/新版导出.png",
+        "bytes": 381612,
+        "sha256": "aaec0941f72216bd4077767a3af5cdee47fbf55e0661e72d5a545819a71b840c"
+      },
+      {
+        "path": "界面/带验窗口.png",
+        "bytes": 18721,
+        "sha256": "22c444a0dc53ca7955d7032b399140bf3013e8b01ae6e3056669b14ed17159d2"
+      },
+      {
+        "path": "带验说明.txt",
+        "bytes": 3708,
+        "sha256": "2a5418c040593c95d451969b593bff8a27a14665a6b055d8f6eb77f99dc055a4"
+      }
+    ],
+    "softwarePurposeClosure": {
+      "at": "2026-11-12T17:58:44+08:00",
+      "state": "UI112142_INSTALLED_COHERENT_REPAIR_DELIVERY_OWNER_GUIDED_REVIEW_PENDING",
+      "windows": {
+        "at": "2026-11-12T17:58:44+08:00",
+        "state": "WINDOWS112_UI_REPAIR_NORMAL_LOCAL_MSI_INSTALLED_AND_COHERENT_NATIVE_JOURNEY_PASSED",
+        "version": "0.1.112",
+        "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+        "installerSha256": "ad7e5efb5e9c01ae53658800f9d097522a8f044bf86493d49ed8e72017bd3994",
+        "installerBytes": 16900536,
+        "windowsDeliverable": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Windows-0.1.112.msi",
+        "runtimeState": "WINDOWS112_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_OS_BACKEND_EVIDENCE_REUSED",
+        "dateOnlyCalendarSavedAndReopened": true,
+        "originalDataFiles": 247,
+        "originalDataManifestIdentical": true,
+        "localNormalReleaseBuilt": true,
+        "hostedCiRun": null,
+        "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
+        "unchangedOsBackendAndOperationsEvidenceReused": true,
+        "currentUiExportRouteRechecked": true,
+        "ownerExperienceAccepted": false,
+        "saleQualified": false
+      },
+      "android": {
+        "version": "0.1.142",
+        "sourceCommit": "0d0c0ac566d8456f54becbcc73237097afb3a211",
+        "apkSha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25",
+        "installed": true,
+        "reusedUnchanged": true,
+        "priorFullSoftwarePurposePreserved": true,
+        "actualSystemSaveTxtZipAndProcessReopenPassed": true,
+        "actualOrdinaryWpsRecipientViewedSelectedNote": true,
+        "systemShareCancelPreservedNotes": true,
+        "allPreviousLibrariesRetained": true,
+        "originalContentFilesByteIdentical": 5248
+      },
+      "engineeringReview": {
+        "at": "2026-11-12T17:58:44+08:00",
+        "state": "UI112_PRODUCT_AND_GUIDANCE_REPAIR_INSTALLED_ENGINEERING_REVIEWED_OWNER_REVIEW_PENDING",
+        "uiFeedbackId": "owner-ui-usability20261112",
+        "windowsVersion": "0.1.112",
+        "androidUnchanged": "0.1.142",
+        "productSourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+        "productUiChangeCommit": "fe8b1de1e29e52b8c9264a6a3ab67cf14dd7409b",
+        "nativeJourney": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\e0ea4571cea54c6ea1c494d146622935\\result.json",
+        "sourceBrowserEvidence": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r5",
+        "actualGuideRender": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-native-preview-r7\\result.json",
+        "guideRenderHostingInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run and DrawToBitmap timer for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+        "originalModalOwnerRuntimeNotNewlyProved": true,
+        "guidanceMultilineNativeCrLfConfirmed": true,
+        "affectedLifecycleTestsPassed": 12,
+        "actualOsReuseEvidenceAccepted": true,
+        "rejectedIncompleteOrChangedEvidenceCases": [
+          "exactCommittedFiles",
+          "exactCommandBlocks",
+          "currentNativeUiRouteRechecked",
+          "currentNativeUiEvidence",
+          "changed export operation digest"
+        ],
+        "ownerExperienceAccepted": false,
+        "physicalTotalAcceptancePassed": false,
+        "saleQualified": false
+      },
+      "ownerExperienceAccepted": false,
+      "physicalTotalAcceptancePassed": false,
+      "modelQualityQualifiedByThisBatch": false,
+      "saleQualified": false
+    },
+    "ownerPrivateAudioOrKeysIncluded": false,
+    "softwareHasNoBoardDependency": true,
+    "ownerExperienceAccepted": false,
+    "physicalTotalAcceptancePassed": false,
+    "saleQualified": false
+  },
+  "privateRemoteReadbackVerified": false,
+  "publishedPublicly": false,
+  "ownerExperienceAccepted": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

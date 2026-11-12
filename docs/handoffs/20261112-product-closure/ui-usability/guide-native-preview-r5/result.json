@@ -1,0 +1,130 @@
+{
+  "startedAt": "2026-11-12T17:54:52+08:00",
+  "state": "ENGINEERING_GUIDE_PREVIEW_FAILED_RETAINED",
+  "sharedSourceSha256": "94978d25097aaa3ecb882a8ec438aa1391eec47cd7bdd761ce783cdd2cab4733",
+  "ownerPromptOpened": false,
+  "ownerInputUsed": false,
+  "physicalOrProductStarted": false,
+  "soundDisabledForEngineeringPreviewOnly": true,
+  "frames": [
+    {
+      "stage": "ready",
+      "visibleButtons": [
+        "开始",
+        "遇到问题",
+        "稍后"
+      ],
+      "image": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\guide-native-preview-r5\\ready.png",
+      "controls": [
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            668,
+            207,
+            702
+          ]
+        },
+        {
+          "text": "开始",
+          "kind": "WindowsForms10.Button.app.0.1b86410_r3_ad1",
+          "rect": [
+            45,
+            671,
+            195,
+            699
+          ]
+        },
+        {
+          "text": "等待开始  Companion 功能验收",
+          "kind": "WindowsForms10.Static.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            140,
+            769,
+            166
+          ]
+        },
+        {
+          "text": "你现在做 - 同一轮连续验收 · 最后统一反馈",
+          "kind": "WindowsForms10.Static.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            172,
+            769,
+            192
+          ]
+        },
+        {
+          "text": "正在载入当前步骤",
+          "kind": "WindowsForms10.Edit.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            194,
+            769,
+            424
+          ]
+        },
+        {
+          "text": "问题先记在这里，最后一起提交",
+          "kind": "WindowsForms10.Static.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            432,
+            769,
+            452
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Edit.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            454,
+            769,
+            656
+          ]
+        },
+        {
+          "text": "",
+          "kind": "WindowsForms10.Window.8.app.0.1b86410_r3_ad1",
+          "rect": [
+            41,
+            668,
+            769,
+            702
+          ]
+        },
+        {
+          "text": "遇到问题",
+          "kind": "WindowsForms10.Button.app.0.1b86410_r3_ad1",
+          "rect": [
+            679,
+            671,
+            765,
+            699
+          ]
+        },
+        {
+          "text": "稍后",
+          "kind": "WindowsForms10.Button.app.0.1b86410_r3_ad1",
+          "rect": [
+            585,
+            671,
+            671,
+            699
+          ]
+        }
+      ]
+    }
+  ],
+  "engineeringHostInstrumentation": "Original in-memory source; ShowDialog replaced by Application.Run and DrawToBitmap timer for private noninteractive rendering; original UI helper absolute path. Production caller unchanged.",
+  "instrumentationSha256": "3f177526f28624e49654889eb13858ad5e614f4d71d8efb60bd82770b1311927",
+  "modalOwnerRuntimeNotNewlyProved": true,
+  "privateStation": "CompanionGuide-819a3b406dc54b149af19627efce1cb8",
+  "pid": 38284,
+  "error": "AssertionError(('ready', 'current instructions not shown'))",
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "finishedAt": "2026-11-12T17:54:55+08:00"
+}

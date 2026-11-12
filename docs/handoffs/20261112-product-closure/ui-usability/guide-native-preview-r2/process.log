@@ -1,0 +1,6 @@
+ParentContainsErrorRecordException: C:\Users\Billy\Desktop\Denzic\ai-collaboration-workflow\scripts\operator_prompt.ps1:592
+Line |
+ 592 |  [void]$form.ShowDialog()
+     |  ~~~~~~~~~~~~~~~~~~~~~~~~
+     | 调用“ShowDialog”并传入“0”个参数时发生异常：“当应用程序不是以 UserInteractive 模式运行时显示模式对话框或窗体是无效操作。请指定 ServiceNotification 或
+     | DefaultDesktopOnly 样式，以显示服务应用程序发出的通知。”

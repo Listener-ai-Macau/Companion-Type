@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-12T18:04:22+08:00",
+  "state": "UI112142_INSTALLED_LOCAL_COHERENT_DELIVERY_OWNER_REVIEW_PENDING",
+  "windowsVersion": "0.1.112",
+  "androidVersion": "0.1.142",
+  "ownerExperienceAccepted": false,
+  "privateRemoteReadbackVerified": false,
+  "next": "原嵌软当前修复完成并恢复正常固件后，核对最终包与安装身份、实际占用，绑定已装112/142后在同一原窗口逐步带领、最后集中反馈。未取得匹配正常固件前不弹物理验收窗；软件安装交付无需等板。 私有附件上传网络恢复后继续同一包上传/完整回读，不重编译、不改普通网络分流。",
+  "retainedControllerFailure": "Final timeline write used write_text(bytes); rejected before writing timeline. Corrected to write_bytes and resumed only the missing log/receipt, not canonical rewrites."
+}

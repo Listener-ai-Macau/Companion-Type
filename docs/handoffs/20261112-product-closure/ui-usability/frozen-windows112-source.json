@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-12T17:19:21+08:00",
+  "state": "EXACT112_SOURCE_FROZEN_WITH_SHARED_DEPENDENCIES_BUILD_PENDING",
+  "sourceCommit": "bd4b902795c6103e34d7b4f5f09a99c9f6e03bfe",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "authoringSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+  "checkoutTrackedBytes": 712433215,
+  "checkoutEntries": 5908,
+  "gitObjectCopies": 0,
+  "cargoTargetCopies": 0,
+  "nodeDependencyCopies": 0,
+  "platformSource": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source\\third_party\\denzic-platform",
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "platformOriginSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\third_party\\denzic-platform",
+  "originalPlatformGitFileUnchanged": true,
+  "retainedPreparationFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ui-usability\\frozen-preparation-failure.json",
+  "nativeBuilt": false,
+  "installed": false,
+  "otherAuthoringWorktreeEditsPreserved": true,
+  "uiProductBaseCommit": "fe8b1de1e29e52b8c9264a6a3ab67cf14dd7409b",
+  "toolingDeltaPaths": [
+    "tools/build_windows_delivery_local.py"
+  ],
+  "sourceProtectedBranch": "work/ui-usability112-frozen-20261112",
+  "normalBuildOutput": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows112-local-r2",
+  "normalBuildInProgress": true
+}
