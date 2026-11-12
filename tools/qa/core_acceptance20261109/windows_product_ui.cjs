@@ -6,7 +6,7 @@ module.exports=async function productJourney(page,plan,out){
  const row=()=>JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);
  const before=row(),unrelated=JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId);
  async function open(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
- await page.bringToFront();await open();assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
+ if(!plan.backgroundOnly)await page.bringToFront();await open();assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
  await page.screenshot({path:path.join(out,'product-result-light.png'),fullPage:true});
  await nav().getByRole('button',{name:'带走结果',exact:true}).click();
  const complete=page.locator('.ct-content-export');await complete.getByRole('button',{name:'预览所选内容',exact:true}).click();
@@ -36,13 +36,15 @@ module.exports=async function productJourney(page,plan,out){
  await panel.getByLabel('所选内容文件格式').selectOption('txt');await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();
  const expected=await preview.locator('pre').innerText(),quotedPersisted=persisted.text.split('\n').map(line=>'> '+line).join('\n');assert(expected.includes(quotedPersisted));assert(expected.replace(/^> ?/gm,'').includes(quote));assert(!expected.includes('EXCLUDED_CORE_NOTE_20261109'));
  async function dialog(id,action,file,trigger){fs.writeFileSync(path.join(out,'dialog-request-'+id+'.json'),JSON.stringify({action,path:file,sha256:null}));await trigger();const reply=path.join(out,'dialog-reply-'+id+'.json'),end=Date.now()+90000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));assert.equal(JSON.parse(fs.readFileSync(reply)).state,'OWNED_NATIVE_FILE_PICKER_ACTION_COMPLETED');}
+ if(!plan.backgroundOnly){
  await dialog('product-cancel','cancel',null,()=>panel.getByRole('button',{name:'保存 TXT…',exact:true}).click());await panel.getByText('已取消保存，原内容保持不变。',{exact:true}).waitFor();
  const destination=path.join(plan.exportDirectory,'本次人工跟进.txt');await dialog('product-save','save',destination,()=>panel.getByRole('button',{name:'保存 TXT…',exact:true}).click());await panel.getByText(/已保存：本次人工跟进.txt/).waitFor();assert(fs.readFileSync(destination,'utf8').includes(quotedPersisted));
+ }
  await panel.getByRole('button',{name:'复制所选内容',exact:true}).click();await panel.getByText('已复制所选内容，可粘贴到常用应用。',{exact:true}).waitFor();
  await panel.getByRole('button',{name:'复制所选文件',exact:true}).click();const feedback=panel.getByLabel('所选内容操作结果');await feedback.getByText(/文件已复制：/).waitFor();const name=(await feedback.innerText()).match(/文件已复制：(.+?)。可在/s)?.[1];assert(name);
  fs.writeFileSync(path.join(out,'handoff-request-product.json'),JSON.stringify({fileName:name,format:'txt',expected:quotedPersisted,excluded:'EXCLUDED_CORE_NOTE_20261109'}));const reply=path.join(out,'handoff-reply-product.json'),end=Date.now()+30000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));const received=JSON.parse(fs.readFileSync(reply,'utf8'));
  await page.screenshot({path:path.join(out,'product-handoff-light.png'),fullPage:true});
  await nav().getByRole('button',{name:'纪要与待办',exact:true}).click();const theme=page.getByRole('button',{name:/切换.*深色/}).first();await theme.click();await page.screenshot({path:path.join(out,'product-result-dark.png'),fullPage:true});
  assert.equal(row().transcriptText,before.transcriptText);assert.deepEqual(row().minutes,before.minutes);assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId),unrelated);
- return {state:'REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_SAVE_CANCEL_COPY_AND_RECIPIENT_PASSED',notesPersisted:true,literalSourceRetained:true,exactSelectedNote:true,ordinaryRecipient:received,originalMeetingAndOtherRecordsUnchanged:true,modelsRun:false,hardwareQualified:false};
+ return {state:plan.backgroundOnly?'REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_AND_PRIVATE_FILE_PASSED':'REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_SAVE_CANCEL_COPY_AND_RECIPIENT_PASSED',nativeSaveCancelRetested:!plan.backgroundOnly,ordinaryRecipientRetested:!plan.backgroundOnly,notesPersisted:true,literalSourceRetained:true,exactSelectedNote:true,ordinaryRecipient:received,originalMeetingAndOtherRecordsUnchanged:true,modelsRun:false,hardwareQualified:false};
 };
