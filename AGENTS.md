@@ -6,7 +6,7 @@
 
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
-- 当前实际交付 Windows0.1.110 / Android0.1.142，统一软件包已私有上传及完整回读。Android142真手机公开资料完整目的、保存/勾选/引用、完整预览、系统TXT/ZIP保存回读及实际进程重开通过，原资料保留，测试会话已关闭。Windows110后台连续目的通过；OS保存/普通接收复用109完全相同实现证据，110未新测。当前软件入口为根 docs/handoffs/20261112-product-closure/software110142/software-delivery.json。无板也继续前端/应用后端/资料流程；实卡长录/恢复/资源/手感按原嵌软项单独总验，初始占用不弹窗。
+- 当前实际交付 Windows0.1.111 / Android0.1.142；已承接的会议资料前端完整目的收口，统一私有包完整回读。Windows111正常本机release、MSI源码/载荷/许可/升级身份、原生连续用途与仅日期确认保存重开、实际升级原245内容文件一致；OS保存/普通接收本轮未新测，复用109相同实现证据。Android142同APK保留整链，补实际系统分享→WPS完整选中备注阅读与取消、原资料/外观和会话收尾。当前软件入口根 docs/handoffs/20261112-product-closure/frontend111142/software-delivery.json；原总验入口默认跟随当前Windows交付收据，软件就绪和当前正常固件身份分开，不用旧804收据误报实卡就绪。实卡/其它平台/模型/正式售卖范围继续保留。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
 - Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。
@@ -30,6 +30,9 @@
 - 规则/文档/交接整理不触发产品构建、安装、硬件操作或客户体验。
 
 ## 当前源码、构建与资源
+
+- 正常Windows本机交付入口为 `tools/build_windows_delivery_local.py --output <E盘本批结果目录>`，沿共用固定缓存与容量检查，输出同源正常release及MSI收据；开发check/test仍用 `tools/build_windows_local.py`。构建成功后须独立核验载荷/来源并完成受影响实际使用，不能将本机构建称为CI通过。
+
 
 - 固件可编辑源码按 config/current-firmware-recipe.json 的 sourceRoot（当前指向 C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle）读取。查看配方用 `python tools/build_current_firmware.py --show`；新候选明确版本。配方参考FW66663，从已验证 `e3715904c799788037c70400cf295b899c4aefe7` 续作；已保存安装身份由原安装收据读取，不把配方版冒充最近安装版。
 - 保留compact24-nor、UI85外置图集、已验CELT/内存优化及当前配对/时钟/Boot布局。镜像膨胀先对照已验提交与映射定位，不加入无实际用途的救援固件、重复平台层或救护入口，不擅自删现有能力来凑空间。

@@ -1,0 +1,18 @@
+{
+  "state": "AFFECTED_CALENDAR_FLOW_FAILED",
+  "rows": [
+    {
+      "name": "test_calendar_deadline",
+      "exitCode": 0
+    },
+    {
+      "name": "test_calendar_review_items",
+      "exitCode": 0
+    },
+    {
+      "name": "test_calendar_event_export",
+      "exitCode": 1
+    }
+  ],
+  "initialRunnerPreparationFailure": "The general UI runner does not register existing calendar contracts; used its same esbuild/environment mechanism with explicit existing calendar entry points. No product rebuild or product-source change for the runner."
+}

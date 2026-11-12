@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-12T15:32:27.669+08:00",
+  "state": "FINISH_CURRENT_BATCH_BEFORE_OWNER_TOTAL_USE",
+  "ready": false,
+  "version": "0.1.111",
+  "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+  "softwareReady": true,
+  "firmwareIdentityBindingReady": false,
+  "firmwareVersion": null,
+  "uiVersion": null,
+  "installedExeSha256": "b45e6cfe08cbde044e13c6f4eef04b10fd52dc876957eb8f1aa84912c3f98caf",
+  "installedDllSha256": "4a6782c9ffef3ac3d6464fed4268c6002682ff134d0d14eac06b8c59fa243b1d",
+  "blockers": [
+    "The known firmware/IMU repair and its matching physical receipt are unfinished.",
+    "Shared board is currently occupied; do not interrupt its actual operation."
+  ],
+  "currentProductDifferences": [],
+  "readOnly": true,
+  "ownerPromptStarted": false,
+  "boardClaimed": false,
+  "modelsRun": false,
+  "hostMicCommands": 0
+}

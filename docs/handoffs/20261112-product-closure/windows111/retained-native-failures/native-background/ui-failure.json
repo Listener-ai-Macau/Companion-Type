@@ -1,0 +1,4 @@
+{
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '导出到日历', exact: true })\u001b[22m\n",
+  "stack": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '导出到日历', exact: true })\u001b[22m\n\n    at productJourney (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_product_ui.cjs:53:60)\n    at async C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:18:17"
+}

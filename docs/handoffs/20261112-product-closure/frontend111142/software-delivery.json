@@ -1,0 +1,87 @@
+{
+  "at": "2026-11-12T15:33:14+08:00",
+  "state": "ONE_FRONTEND111142_KIT_INSTALLED_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Frontend-Ready-111-142-20261112.zip",
+  "bytes": 43812416,
+  "sha256": "0f1242805950687188bf882ea8a058cf15a1ab99d9d85f8797ef3e6740a7ac18",
+  "allArchiveMemberChecksumsMatched": true,
+  "manifest": {
+    "at": "2026-11-12T15:32:28+08:00",
+    "state": "FRONTEND_ACCEPTED_MEETING_PURPOSE_CLOSED_READY_FOR_LATER_BOARD_JOINT_ACCEPTANCE",
+    "entry": "开始使用.txt",
+    "files": [
+      {
+        "path": "windows/Companion-Windows-0.1.111.msi",
+        "bytes": 16810424,
+        "sha256": "abe172391e7305d68c639eaef7edacb68868e847dda26d2b21d5a7a7255d6e6d"
+      },
+      {
+        "path": "android/Companion-Android-0.1.142.apk",
+        "bytes": 51171413,
+        "sha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25"
+      },
+      {
+        "path": "optional-macos/CompanionMac-candidate.zip",
+        "bytes": 736161,
+        "sha256": "620cea6fb981e173ecf64d4bbcf29ef7b81022f6273fe2480ee31114534afdb8"
+      }
+    ],
+    "softwarePurposeClosure": {
+      "at": "2026-11-12T15:32:28+08:00",
+      "state": "FRONTEND_ACCEPTED_MEETING_PURPOSE_CLOSED_READY_FOR_LATER_BOARD_JOINT_ACCEPTANCE",
+      "windows": {
+        "at": "2026-11-12T15:32:28+08:00",
+        "state": "WINDOWS111_MATCHED_NORMAL_LOCAL_MSI_NATIVE_COHERENT_DATE_ONLY_AND_INSTALLED_DATA_PRESERVATION_PASSED",
+        "version": "0.1.111",
+        "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+        "installerSha256": "abe172391e7305d68c639eaef7edacb68868e847dda26d2b21d5a7a7255d6e6d",
+        "installerBytes": 16810424,
+        "windowsDeliverable": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Windows-0.1.111.msi",
+        "runtimeState": "WINDOWS111_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED",
+        "dateOnlyCalendarSavedAndReopened": true,
+        "originalDataFiles": 245,
+        "originalDataManifestIdentical": true,
+        "localNormalReleaseBuilt": true,
+        "hostedCiRun": null,
+        "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
+        "unchanged109OsEvidenceReused": true,
+        "saleQualified": false
+      },
+      "android": {
+        "version": "0.1.142",
+        "sourceCommit": "0d0c0ac566d8456f54becbcc73237097afb3a211",
+        "apkSha256": "5401ae7a6b893482afdcb64e587441606eb0f7d73f88b8d5de4d408905bfec25",
+        "installed": true,
+        "previousFullSoftwarePurposePreserved": true,
+        "actualSystemSaveTxtZipAndProcessReopenPassed": true,
+        "actualOrdinaryWpsRecipientViewedSelectedNote": true,
+        "systemShareCancelPreservedNotes": true,
+        "allPreviousLibrariesRetained": true,
+        "originalContentFilesByteIdentical": 5248,
+        "onlyOldChangeLibraryIndex": true,
+        "modelsMicBleUsed": false
+      },
+      "softwareScope": [
+        "Meeting reading/source lookup and manual follow-up with clear source boundaries",
+        "Full selected-content preview, exact per-note scope, save/reopen and actual phone ordinary-file handoff",
+        "Date-only manual confirmation without forced time; explicit add-clock behavior preserved",
+        "Default total-use entry follows current delivered Windows receipt; software-ready and current-firmware-ready are separate"
+      ],
+      "physicalTotalAcceptancePassed": false,
+      "modelQualityQualifiedByThisBatch": false,
+      "saleQualified": false
+    },
+    "physicalTotalAcceptancePassed": false,
+    "saleQualified": false,
+    "ownerPrivateAudioOrKeysIncluded": false,
+    "retainedMacActualHardwareQualified": false,
+    "softwareHasNoBoardDependency": true
+  },
+  "privateRemoteReadbackVerified": true,
+  "publishedPublicly": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false,
+  "remoteReadbackSha256": "0f1242805950687188bf882ea8a058cf15a1ab99d9d85f8797ef3e6740a7ac18",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualWindowsMsiRemoteReadbackVerified": true
+}

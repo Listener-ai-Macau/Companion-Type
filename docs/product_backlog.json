@@ -56244,12 +56244,12 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion142 public software acceptance",
+          "reservedFor": "Companion142 public software acceptance customer-edit142-20261112",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-12T14:17:58+08:00",
+          "requestedAt": "2026-11-12T14:56:24+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-12T14:31:59+08:00",
+          "releasedAt": "2026-11-12T15:13:45+08:00",
           "releaseReason": "Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
@@ -133816,33 +133816,34 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-12T10:13:40+08:00",
+      "updatedAt": "2026-11-12T15:10:12+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
       "baseline": {
-        "firmwareVersion": 66791,
+        "firmwareVersion": 66815,
         "uiGeneration": 85,
         "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
-        "sourceCommit": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate791.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\firmware791-ota-identity.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\input788-physical-reconciled.json",
+        "sourceCommit": "507ddb8",
+        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "C-retained Git worktree, normal signed791 OTA installed; source replay reproducer fixed.",
-        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "sourceRootAvailability": "Retained firmware Git worktree507ddb8 pushed; normal815 maintenance installed, hardware SPI default, observer off.",
+        "evidenceAvailability": "Current package/source and normal passive IMU/BLE receipts retained; no full-core or ordinary OTA qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
-        "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\firmware791-actual-installation.json",
-        "appBytes": 409772,
-        "staticRamBytes": 67960,
+        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+        "appBytes": 412556,
+        "staticRamBytes": 68160,
         "stackReservedBytes": 21504,
-        "physicalQualification": "Prior788/session388 scoped single-click/one durable double-tap retained as prior evidence; current791 PTT not qualified. Current long399 running."
+        "physicalQualification": "Normal815753frames/no loss/IMU errors, mode0 restored and board released; Owner feel and matched recording CPU comparison OPEN.",
+        "ordinaryWirelessOtaQualified": false
       },
       "packages": [
         {
@@ -134094,13 +134095,19 @@
           "title": "Companion录音卡IMU交互：敲击重点",
           "status": "open",
           "category": "Owner最新优先插入；原编号复用，屏幕/宠物仍暂停",
-          "current": "正常785/942e117保持；385无动作、386未完成、387未确认五组，均不能作为修复版实体故障复现。387原音55.450s完整、编码峰5296/PDM峰2039us、音频异常0。Owner明确反馈协助流程难用，未接受；本时段主要为提示适配和竞品核对，无新固件功能交付。",
-          "next": "停止多窗口/五组计时派发，先后台定位当前录中IMU模式/中断链；BLE已确认正常785，但UART入口无完整快照，本轮未SWD/未RAM加载/未复位，不盲重试。下一次真人只做一次自然双敲并获得即时明确反馈。随后复核动静睡眠/拿起就绪现有实现，再接重点回听/AI聚焦原任务。",
+          "current": "普通FW66815/UI85已装，硬件SPI默认、CPU测量关闭；CIM3板端Fusion/校准与当前Windows110同核。已定位CIN重复生成、GPIO模拟和OTA/主循环空轮询并修复：同类无MIC指向场景平均56.65→36.43%，约98.62Hz无丢序；普通版753帧约97.76Hz、无丢序/IMU错误、模式0恢复，板卡已交回。",
+          "next": "沿embedded.next：现有高级手势主机接入与同一原弹窗体验，不重跑旧387无动作或已排除的805低采样结果。",
           "remaining": [
-            "确认真实录音期间417Hz模式/芯片双击事件与零重点的断点，并修复。",
-            "当前实板轻敲与普通拿起/放下/走动误触、原音绑定；最终外壳资格仍待实际条件。"
+            "Finish current optional advanced-IMU host integration and one normal product delivery; use existing firmware gestures/upstream pointer, no speculative3D displacement tracker",
+            "Original Owner popup physical pointer/click/drag experience; previous floaty/no-body-click negative feedback remains OPEN",
+            "Matched recording+Opus+BLE CPU comparison remains deferred by Owner; current36.4256% is non-MIC diagnostic pointer load, not standby or normal-build final CPU",
+            "Original Flash budget gap340B remains optimization item; static RAM unchanged",
+            "Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed"
           ],
-          "doneWhen": "录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。"
+          "doneWhen": "录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。",
+          "evidence": [
+            "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\progress.json"
+          ]
         }
       ],
       "verified": [
@@ -134558,7 +134565,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Prioritize real CPU attribution/resource optimization within the same IMU usable-experience batch. Candidate796/host68f51078 built, not installed; preserve that workpoint, first locate original90%/encoder evidence and optimize measured bottleneck, then install matching pair and original-popup experience.",
+      "next": "Continue existing CP04-08 advanced IMU host integration and one original-popup physical pointer/click/drag trial. CPU source hotspots fixed/pushed507ddb8; ordinary815 hardware-SPI/observer-off installed and read back, board released. Recording+Opus+BLE CPU remains Owner-deferred, Flash over original budget340B and ordinary OTA fragmented staging remain open; do not restore old795/791 workpoints.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -143417,7 +143424,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "PRIORITY_CPU_FUNCTION_ATTRIBUTION_BEFORE_FURTHER_GESTURE_DEVELOPMENT",
+          "state": "CPU_REMAINDER_AND_SERVICE_CAPACITY_ATTRIBUTION",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143425,10 +143432,10 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-12T14:15:10+08:00",
+          "updatedAt": "2026-11-12T15:18:43+08:00",
           "sourceCommit": {
             "windows": "35bf71ea",
-            "firmware": "59f6fa2",
+            "firmware": "507ddb8",
             "upstreamAirCursor": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
             "upstreamWatchPointer": "504137a1a8748e3560f1c203d06fbd4e0832d582"
           },
@@ -143447,12 +143454,13 @@
             "actualBoardCpuMeasured": false
           },
           "remaining": [
-            "Complete matched BLE-connected CPU comparison for empty-poll source optimization at61.44MHz; detailed observer overhead stays explicit",
-            "Install normal observer-off version and complete updated CIM3/device calibration readout, then coherent Owner pointer/click/drag through original popup",
-            "Prior Owner floaty/no-body-click negative feedback remains OPEN until actual use",
+            "Finish current optional advanced-IMU host integration and one normal product delivery; use existing firmware gestures/upstream pointer, no speculative3D displacement tracker",
+            "Original Owner popup physical pointer/click/drag experience; previous floaty/no-body-click negative feedback remains OPEN",
+            "Matched recording+Opus+BLE CPU comparison remains deferred by Owner; current36.4256% is non-MIC diagnostic pointer load, not standby or normal-build final CPU",
+            "Original Flash budget gap340B remains optimization item; static RAM unchanged",
             "Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed"
           ],
-          "firmwareInstalled": 66802,
+          "firmwareInstalled": 66815,
           "normal795BuiltNotInstalled": true,
           "ownerFeedback": "鼠标已能移动，但飘、不好用，期待机身敲击点击；原始反馈保留，未通过。",
           "clockConstraint": {
@@ -143462,7 +143470,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Owner prioritizes careful function-level CPU analysis before advanced IMU and one overall delivery.807 restores~96Hz with0loss and valid18windows; peak bound62.5081→57.1676%, remaining load still OPEN. Added seven optional inclusive envelopes to existing Run-only TIM2 counter (no new IRQ/timer, only112B diagnostic storage), measuring product, BLE, CIN status construction/CRC, IMU GPIO bus, Fusion, pointer send, main services; paused UART only after scope ends.809 diagnostic compiled and installing; no MIC/cursor. Next20s read must identify dominant costs before more source tuning, then consolidate normal build/advanced feature work. Original Owner negative feel and recording CPU measurement remain open.",
+          "executionPoint": "Resume from normal815; no new product behavior changes.813 has~13.52 percentage points outside product/main envelopes. Add source-bound diagnostic envelopes for loop prefix, low-power Run-only work and observer self-cost plus existing PDM/Opus/NOR hooks; exact test passed.816 diagnostic builds. After install, compare connected idle and pointer without MIC, then one original Start popup if actual concurrent audio measurement is necessary; no percentage sum across overlapping or mutually exclusive services. Restore815 or next normal candidate and release board after measurement.",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -143594,7 +143602,7 @@
             "notClaimed": [
               "Complete original Apple apps copied/running unchanged",
               "Identical CoreMotion sensor accuracy or physical feel",
-              "Native installed Windows candidate or final Owner acceptance"
+              "Final Owner physical acceptance; installed Windows110 shares the current pointer core/source and no new host change was made in this CPU batch"
             ]
           },
           "processingDecision": "Use board Fusion AHRS/bias at61.44MHz; host maps aim to cursor. Cost supports this choice; no CPU-upgrade decision justified by IMU alone.",
@@ -143605,7 +143613,9 @@
             "nativeWindowsCheck": "PASS latest source",
             "webWindowsBuild": "PASS latest source",
             "cpuEmptyPolling": "PASS real Opus9 cases byte-identical; successor fault still checked before encoding and boundary",
-            "cpuProductNoScreen": "PASS production product PCM/cue/STOP/reboot/resource-yield/deadline"
+            "cpuProductNoScreen": "PASS production product PCM/cue/STOP/reboot/resource-yield/deadline",
+            "cpuFunctionAttribution": "PASS actual non-MIC hardware SPI/IMU/BLE source fixes; matched recording comparison still deferred",
+            "normal815PassiveChain": "PASS753frames/no loss/error/CPU observer disabled/mode0 restored/board released"
           },
           "buildFailuresPreserved": [
             "First RAM measurement attached in Stop1/HSI and ended early; excluded",
@@ -143613,7 +143623,7 @@
             "Pause test fixture had an80ms first interval; corrected to25*40ms, original assertion retained",
             "One Windows native check found a frame-period variable out of scope; fixed, final check passed"
           ],
-          "latestOwnerCpuRequest": "先仔细分析CPU到底谁在占用，再把IMU高级功能做好，最后整体交付；集中修复，避免零碎。",
+          "latestOwnerCpuRequest": "继续拆剩余30%/36.43%，记录每个服务开着占用多少；评估真实可并发全开是否跑进100%及是否需要换芯片。",
           "cpuAttribution20261112": {
             "offline797": {
               "seconds": 19.934647,
@@ -143634,7 +143644,7 @@
               "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/cpu799-connected-r2/result.json"
             },
             "excluded": "Original second797 wired START while BLE-linked did not start new audio; cached first token/timing discarded. Malformed first799 CMC3 start rejected before MIC; corrected normal CMC3 session406 used once.",
-            "actualBottleneck": "PDM~16%, Opus~22%, IRQ~1-2%; remaining foreground split across frequent capture/pipeline/HAL/BLE callbacks. Detailed instrumentation contributes its own cost. Fusion isolated core~0.15%, not main CPU load.",
+            "actualBottleneck": "Separate workloads retained: recording797/799 includes PDM/Opus plus expensive cooperative foreground; no matched post-fix MIC sample yet. Current pointer-only809/811 identifies repeated CIN packet build, GPIO SPI, OTA idle polling and sequencer/foreground as dominant; Fusion~0.17%, not reason for high CPU.",
             "optimization": "No screen: keep checkpoints around real HAL/BLE/runtime work; skip3 around compiled-out presenter/render. Empty recorder below horizon does not revalidate immutable successor; PCM/boundary still validates; background I/O still progresses.",
             "tests": {
               "realOpusByteEquality": "PASS9 running/STOP/PAUSE/final cases; empty-sample and boundary corruption checked before encode",
@@ -143705,6 +143715,139 @@
               "coreHz": 61439820,
               "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/live807/result.json",
               "state": "RATE_REGRESSION_REPAIRED_AND_OBSERVED_CPU_GAIN_NOT_FULL_CPU_CLOSURE"
+            },
+            "function809": {
+              "firmware": 66809,
+              "meanBusyPercent": 56.65355693965654,
+              "peakOneSecondPercent": 57.5573,
+              "sensorHz": 96.3445,
+              "missing": 0,
+              "coreHz": 61439820,
+              "inputStatusPercent": 11.118712043198956,
+              "imuGpioPercent": 9.478480121282253,
+              "fusionPercent": 0.17782611860942799,
+              "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/live809/function-analysis.json",
+              "nestedInclusiveRowsNotSummable": true,
+              "noMicNoAudioNoOsCursor": true
+            },
+            "hardware811": {
+              "firmware": 66811,
+              "meanBusyPercent": 45.494368184017766,
+              "peakOneSecondPercent": 47.2053,
+              "sensorHz": 98.43577184389319,
+              "samples": 1870,
+              "missing": 0,
+              "imuErrorCount": 0,
+              "coreHz": 61439820,
+              "inputStatusBuildCalls": 2,
+              "imuIoPercent": 2.084811868227459,
+              "fusionPercent": 0.17035249465410576,
+              "otaPollPercent": 7.879608513622881,
+              "receipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/live811/function-analysis.json",
+              "scope": "No MIC; continuous IMU plus BLE pointer.811 adds6 more diagnostic envelopes vs809; physical feel not accepted.",
+              "noMicNoAudioNoOsCursor": true
+            },
+            "functionHotspotsBatch": {
+              "at": "2026-11-12T15:02:29+08:00",
+              "sourceCommits": [
+                "118affb",
+                "507ddb8"
+              ],
+              "sourcePushed": true,
+              "clockHz": 61439820,
+              "workload": "No MIC. Continuous ~104Hz configured IMU plus encrypted BLE pointer streaming. Not standby or recording+compression. Inclusive function rows contain interrupts and overlap.",
+              "baseline809": {
+                "meanRunPercent": 56.65355693965654,
+                "statusBuildPercent": 11.118712043198956,
+                "statusCalls": 17496,
+                "gpioIoPercent": 9.478480121282253,
+                "fusionPercent": 0.17782611860942799,
+                "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live809\\function-analysis.json"
+              },
+              "hardware811": {
+                "meanRunPercent": 45.494368184017766,
+                "otaPollPercent": 7.879608513622881,
+                "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live811\\function-analysis.json"
+              },
+              "quiet813": {
+                "meanRunPercent": 36.42561217480252,
+                "peakOneSecondBusyUpperPercent": 37.9574,
+                "validWindows": 18,
+                "invalidWindows": 0,
+                "sensorHz": 98.6242159084919,
+                "samples": 1872,
+                "missingSamples": 0,
+                "imuErrorCount": 0,
+                "statusBuildCalls": 2,
+                "fusionPercent": 0.1613020099248587,
+                "otaPollPercent": 1.6946776607941205,
+                "receipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live813\\function-analysis.json"
+              },
+              "changes": [
+                "Default IMU hardware SPI1 instead of inherited shared GPIO flag; software panel bus retained",
+                "Only build CIN1 packet when flags/feedback or sticky event changes; wire bytes unchanged",
+                "Only query configured14 SDK task bits, not32",
+                "Quiet pointer product/BLE traversal every5ms or immediately for tasks/key/10ms IMU deadline/capture/storage/OTA/NVM; recording/display cadence retained",
+                "Idle/terminal OTA status reuses published snapshot while comparing real controller metadata; queued/receiving/durable credit path unchanged; async transitions invalidate",
+                "Normal headless UART panel service returns on empty turn; sound request/completion path retained, unrelated EPD status text omitted"
+              ],
+              "validation": {
+                "cinByteParity": "PASS1000 varied packets and10000 unchanged builder0, failed publish retry",
+                "readyQuery": "PASS20000 masks/gates with exact configured IDs",
+                "pointerCadence": "PASS screen0/1, independent10ms IMU deadline, wrap and urgent services",
+                "otaDurability": "PASS existing real DOV1/GATT+CE8840 arena suite plus10000 idle builder0 and async/busy retry",
+                "live": "1872 actual frames, no MIC/audio/OS cursor, mode0 restored; hardware SPI produced161 unique gravity triples and1188 gyro triples"
+              },
+              "failuresRetained": [
+                "805 lower CPU rejected: sensor rate fell87.365Hz;807 independent sensor deadline restored~96Hz",
+                "First second797 capture never started; cached timing excluded",
+                "812 and814 built but not installed; batched further quiet-service/normal resource changes"
+              ],
+              "limitations": [
+                "Observer firmware metrics include observer cost; normal observer-off CPU not inferred by subtracting estimates",
+                "Latest5-line headless empty-console change507ddb8 is included in normal815, not measured in813 percentages",
+                "Recording+Opus concurrent CPU comparison deferred by Owner at13:22, no new microphone authorization used",
+                "Owner pointer drift/click/drag experience still OPEN; actual sale qualification false",
+                "Normal wireless OTA fragmented contiguous staging limitation still OPEN"
+              ],
+              "normalCandidate": {
+                "firmware": 66815,
+                "state": "NORMAL_INSTALLED_AND_PASSIVE_CHAIN_VERIFIED",
+                "sourceCommit": "507ddb8",
+                "binBytes": 412556,
+                "textBytes": 410988,
+                "dataBytes": 1568,
+                "bssIncludingStackBytes": 88096,
+                "stackReservedBytes": 21504,
+                "staticDataBssExcludingStackBytes": 68160,
+                "staticRamDeltaVs802": 0,
+                "flashSavedVs802Bytes": 256,
+                "originalFlashBudgetBytes": 412216,
+                "flashBudgetOverBytes": 340,
+                "cpuObserverEnabled": false,
+                "hardwareSpiDefault": true,
+                "samples": 753,
+                "sensorHz": 97.76391055642226,
+                "missingSamples": 0,
+                "imuErrorCount": 0,
+                "coreHz": 61439820,
+                "mode0Restored": true,
+                "cpuReadbackFlags": 0,
+                "otaReadableCachedBudget": {
+                  "state": "IDLE",
+                  "flags": 15,
+                  "phy": "2M/2M",
+                  "ciUnits": 6,
+                  "mtu": 512
+                },
+                "catalogOwnersUnchanged": 37,
+                "pairingMetadataPreserved": true,
+                "boardReleased": true,
+                "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
+                "installReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
+                "liveReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+                "ordinaryWirelessOtaQualified": false
+              }
             }
           },
           "normal800": {
@@ -143796,6 +143939,44 @@
             },
             "fpu": "Actual build uses Cortex-M33 SP hard FPU for Fusion; fixed-point PDM/Opus already use their existing integer/DSP optimizations. Do not blindly rewrite integer audio as float.",
             "scope": "Research decision attached to existing CP04-08, not a second feature tree or sale promise"
+          },
+          "normal815": {
+            "firmware": 66815,
+            "state": "NORMAL_INSTALLED_AND_PASSIVE_CHAIN_VERIFIED",
+            "sourceCommit": "507ddb8",
+            "binBytes": 412556,
+            "textBytes": 410988,
+            "dataBytes": 1568,
+            "bssIncludingStackBytes": 88096,
+            "stackReservedBytes": 21504,
+            "staticDataBssExcludingStackBytes": 68160,
+            "staticRamDeltaVs802": 0,
+            "flashSavedVs802Bytes": 256,
+            "originalFlashBudgetBytes": 412216,
+            "flashBudgetOverBytes": 340,
+            "cpuObserverEnabled": false,
+            "hardwareSpiDefault": true,
+            "samples": 753,
+            "sensorHz": 97.76391055642226,
+            "missingSamples": 0,
+            "imuErrorCount": 0,
+            "coreHz": 61439820,
+            "mode0Restored": true,
+            "cpuReadbackFlags": 0,
+            "otaReadableCachedBudget": {
+              "state": "IDLE",
+              "flags": 15,
+              "phy": "2M/2M",
+              "ciUnits": 6,
+              "mtu": 512
+            },
+            "catalogOwnersUnchanged": 37,
+            "pairingMetadataPreserved": true,
+            "boardReleased": true,
+            "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66815-normal-cpu-batch\\result.json",
+            "installReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install815\\result.json",
+            "liveReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\live815\\result.json",
+            "ordinaryWirelessOtaQualified": false
           }
         }
       },
@@ -145031,6 +145212,30 @@
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\progress.json",
         "resumeWorkpoint": "Continue the existing IMU pointer task, preserve recording and original sale blocks; current signing direction needs clarification, no board changes made.",
         "newEntryException": "Fusion C benchmark/host physics use only bounded few-file objects in the same IMU batch (<2MiB estimate), not another complete native tree; full Windows/firmware builds reuse existing shared targets. No further cleanup."
+      },
+      "baselineBeforeCpuImuBatch20261112": {
+        "firmwareVersion": 66791,
+        "uiGeneration": 85,
+        "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
+        "sourceCommit": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\candidate791.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\firmware791-ota-identity.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\input788-physical-reconciled.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "C-retained Git worktree, normal signed791 OTA installed; source replay reproducer fixed.",
+        "evidenceAvailability": "Current source commits, normal package and scoped hardware receipts retained; this is not full-core qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently",
+        "latestNormalObservationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\firmware791-actual-installation.json",
+        "appBytes": 409772,
+        "staticRamBytes": 67960,
+        "stackReservedBytes": 21504,
+        "physicalQualification": "Prior788/session388 scoped single-click/one durable double-tap retained as prior evidence; current791 PTT not qualified. Current long399 running."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -268670,9 +268875,9 @@
         "evidence": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\core-delivery-priority-review-r1",
         "boundaries": "没有操作手机/卡、消费录音、安装驱动、占用独显、修改网络、发送客户邀请或启动新训练。",
         "ownerCoreAcceptanceCandidate20261109": {
-          "at": "2026-11-12T14:37:22+08:00",
+          "at": "2026-11-12T15:34:23+08:00",
           "ownerQuote": "先把1～2 周预算内交出一套完整的核心验收候选这个做了吧, 是不是现在工作方式有问题, 做事情太过于零碎了",
-          "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
+          "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
           "outcome": "交付一套Windows、Android和录音卡可按真实会议完整使用目的验收的核心候选；原音可保留/恢复，会议能找回/回听、转写修订、分人确认、AI整理核对、导出交付和重开继续。",
           "planningBudget": {
             "startDate": "2026-11-09",
@@ -268696,15 +268901,15 @@
             "沿已有原件/版本和有效证据接续，禁止失败后改用演示仍报完整通过",
             "后台优先，真实实体依赖集中处理，不占Owner日用前台；不自动发送内容给联系人"
           ],
-          "currentCheckpoint": "Windows110/Android142已实际安装并集中软件交付；手机完整公开会后目的、原文引用、跟进保存/勾选、草稿保留、真实系统TXT/ZIP保存回读和进程重开通过。Windows110后台连续目的通过，未变OS交接复用109有效证据。软件无需板；实卡/当前长录/并发资源/手感沿原嵌软项单独总验，不虚关。",
+          "currentCheckpoint": "此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。",
           "acceptanceRule": "同一真实使用目的留下可追溯输入、实际普通操作与结果；机器可核部分工程完成，真实原生/实体/客户范围各自保留。不得用演示/模拟/一个模块读回替代整条通过。",
           "firstFocus": "Windows现有安装版的完整会后交付：同一隔离会议真实UI操作与原生后端、实际文件接收和重开；先修实际阻断，再集中收敛候选。",
-          "next": "软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。",
+          "next": "activeNonmodelCompletion20261110",
           "saleQualified": false,
           "allCompetitorRowsStillRequired": true,
           "modelsRun": false,
           "previousFrontendNext": "沿ownerDevicePhoneClosure055.ownerWindowsFileCopy07820261109.next：Windows优先，手机稍后。",
-          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
+          "lastOutcome": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
           "activeWindowsAudio20261109": {
             "at": "2026-11-09T15:44:32+08:00",
             "state": "WINDOWS_REAL_PUBLIC_AUDIO_IMPORT_PLAYBACK_DELIVERY_REOPEN_PASSED",
@@ -269621,9 +269826,9 @@
             {
               "block": "双端与实卡同一候选",
               "state": "OPEN",
-              "facts": "最新Windows108/Android141已安装打包；FW66791/Mac仅保留原字节，不替代最新同一实卡完整链与长录资格。",
+              "facts": "当前软件111/142已匹配交付并具软件就绪收据；当前正常固件与实卡总验由原嵌软绑定最新实际身份，不能用旧包安装收据代替。",
               "exit": "同源Windows/Android/固件按同一场保存、恢复、回听、转写/AI及交付实际贯通。",
-              "reviewedAt": "2026-11-11T16:24:51+08:00"
+              "reviewedAt": "2026-11-12T15:34:23+08:00"
             },
             {
               "block": "长录/连接/异常恢复可靠性",
@@ -269641,10 +269846,10 @@
             },
             {
               "block": "非模型软件完整性",
-              "state": "OPEN",
-              "facts": "108/141实际交付，导入/编辑/资料/清单/引用/恢复已验范围保留；109/142交接新入口仅源码，正式第三方接收及完整平台范围开放。",
+              "state": "ACCEPTED_FRONTEND_PURPOSE_CLOSED_OTHER_SCOPE_OPEN",
+              "facts": "本批111/142已原生安装、完整会后使用、单条交接及日期确认通过，Android普通WPS接收已实测；Windows OS交接复用109相同实现证据，其它平台和原独立功能范围保留。",
               "exit": "原规定功能有普通入口、保存/取消/失败/恢复和对应实际验收。",
-              "reviewedAt": "2026-11-11T16:24:51+08:00"
+              "reviewedAt": "2026-11-12T15:34:23+08:00"
             },
             {
               "block": "正式发布与服务边界",
@@ -269656,9 +269861,9 @@
             {
               "block": "完整用户验收",
               "state": "OPEN",
-              "facts": "140售前/假设售后和141新假设售后AI模拟已承接原话；无真人付款/长期资格，也未整体Owner签收。",
+              "facts": "本批工程已完成公开资料连贯使用与真实原生文件交接，原AI反馈保留；当前整机Owner实际完整用途和长录等仍待集中总验，不称真人购买或长期合格。",
               "exit": "完成可用整批后沿原客户流程承接实际收益、困惑与错误，工程解决真实阻断。",
-              "reviewedAt": "2026-11-11T16:24:51+08:00"
+              "reviewedAt": "2026-11-12T15:34:23+08:00"
             }
           ],
           "androidWholeSourceIntegration": {
@@ -270232,8 +270437,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T14:37:22+08:00",
-            "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
+            "updatedAt": "2026-11-12T15:34:23+08:00",
+            "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -270241,47 +270446,53 @@
               "CP27-03/export"
             ],
             "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-            "next": "软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。",
+            "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-            "currentInstalledWindows": "0.1.110",
+            "currentInstalledWindows": "0.1.111",
             "currentInstalledAndroid": "0.1.142",
-            "plannedWindowsVersion": "0.1.110",
+            "plannedWindowsVersion": "0.1.111",
             "plannedAndroidVersion": "0.1.142",
             "plannedVersionsBuilt": true,
             "sourceCheckpoint": {
-              "windows": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+              "windows": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
               "android": "0d0c0ac566d8456f54becbcc73237097afb3a211"
             },
-            "sourceState": "MATCHED_WINDOWS110_ANDROID142_NATIVE_SOFTWARE_DELIVERED_WITH_SCOPED_EVIDENCE",
-            "sourceChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android142\\build-result.json",
-            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
-            "lastCompletePackageSha256": "a4deca0afff6a34deb283de5efdd274bb836ad09fb840ee43ee793752ffabb83",
+            "sourceState": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+            "sourceChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\frontend-result.json",
+            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
+            "lastCompletePackageSha256": "0f1242805950687188bf882ea8a058cf15a1ab99d9d85f8797ef3e6740a7ac18",
             "lastCustomerRaw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
             "lastCustomerReadSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
             "lastCustomerReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
             "deliveryExecution": {
-              "userResult": "只交接自己选中的一张人工跟进及依据，清楚预览后保存、复制或分享；相关编辑长行可完整读。",
-              "evidenceRoot": "docs/handoffs/20261110-android-media-import",
-              "logDirectory": "followup-108141",
+              "userResult": "阅读会议资料、回找来源、保存跟进、重开继续与指定范围交接；仅日期确认可直接完成，后续同一套软件接板总验。",
+              "evidenceRoot": "docs/handoffs/20261112-product-closure",
+              "logDirectory": "frontend111142",
               "steps": [
                 {
-                  "id": "selected-note-handoff-source",
-                  "receipt": "selected-note-handoff/source-result.json",
+                  "id": "frontend111142-installed-private-delivery",
+                  "receipt": "frontend111142/software-delivery.json",
                   "equals": {
-                    "state": "SELECTED_MANUAL_NOTE_HANDOFF_SOURCE_COMPLETE"
+                    "state": "ONE_FRONTEND111142_KIT_INSTALLED_PRIVATE_DELIVERY_FULL_READBACK_VERIFIED",
+                    "privateRemoteReadbackVerified": true,
+                    "allArchiveMemberChecksumsMatched": true
                   },
-                  "prepare": "Reuse existing ContentExportPanel noteIds and Windows native note_ids; inspect Android adapter next. Complete one coherent per-note handoff entry/preview/save/copy/share with original revision/privacy guards, plus readable long-item editing; no new export backend or per-label package. Preserve141 complete feedback and108/141 delivered baseline."
+                  "binary": {
+                    "pathField": "archive",
+                    "shaField": "sha256"
+                  }
                 }
               ],
-              "afterDelivery": "Build/verify matched candidates as one whole result, preserve user data, whole package and private remote readback; original broad scope and sale gates remain.",
+              "afterDelivery": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
               "actualNativeDelivery": {
-                "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
-                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
+                "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
                 "softwarePurposeComplete": true,
                 "boardRequired": false,
                 "physicalAndSaleComplete": false
-              }
+              },
+              "previousCompletedSourcePreparation": "docs/handoffs/20261110-android-media-import/selected-note-handoff/source-result.json"
             },
             "singleNoteHandoffScope": {
               "existingItems": [
@@ -270306,7 +270517,7 @@
             "nativeModelsRun": false,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "Android142 build, phone native software acceptance, phone cleanup/hold release and private remote readback completed. No Owner prompt or board operation started in this software batch.",
+            "knownJobState": "Local normal111 release, native journey, upgrade, Android142 ordinary WPS handoff, private package readback and phone cleanup completed. No physical Owner prompt or board command started.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -270358,13 +270569,13 @@
             "ownerProductClosure20261112": {
               "at": "2026-11-12T09:26:11+08:00",
               "ownerQuote": "但完整使用体验、实卡可靠性和正式交付还没有一起收口 需要收口, 并且避免零碎, 可以不用每一个功能都验收, 就是最后跑一下总验收, 现在太碎了感觉现在像是拼图不是一个完整产品, 太乱了逻辑, 然后的话你解决一下这个问题",
-              "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
+              "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "Windows110/Android142已实际安装并集中软件交付；手机完整公开会后目的、原文引用、跟进保存/勾选、草稿保留、真实系统TXT/ZIP保存回读和进程重开通过。Windows110后台连续目的通过，未变OS交接复用109有效证据。软件无需板；实卡/当前长录/并发资源/手感沿原嵌软项单独总验，不虚关。",
+              "currentPoint": "此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。",
               "done": false,
-              "updatedAt": "2026-11-12T14:37:22+08:00",
+              "updatedAt": "2026-11-12T15:34:23+08:00",
               "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
               "acceptanceToolCommit": "7e068d18",
               "buildRun": 43154438761,
@@ -270453,7 +270664,7 @@
               "nativeWholeSoftwareJourneyPassed": false,
               "mouseAndKeyboardSavedChecklistPathsPassed": true,
               "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\installation.json",
-              "windowsDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
+              "windowsDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
               "existingUserDataFilesPreserved": 245,
               "privateRemoteDeliveryReadbackMatched": true,
               "wholePhysicalTotalAcceptancePassed": false,
@@ -270541,7 +270752,7 @@
                 "acceptedAt": "2026-11-12T14:37:22+08:00",
                 "ownerDecision": "Frontend, application backend, data/export/persistence and software acceptance do not require the shared recorder. Finish the executable software delivery now; preserve physical/firmware acceptance independently.",
                 "currentActualDelivery": {
-                  "windows": "0.1.110",
+                  "windows": "0.1.111",
                   "android": "0.1.142",
                   "oneSoftwareArchivePrivateReadbackVerified": true,
                   "physicalFirmwareIdentityOwnedByOriginalEmbeddedWorkpoint": true
@@ -270581,26 +270792,28 @@
                 ],
                 "resourceAndFeelAcceptance": "Unverified hand feel and real concurrent CPU/audio results are contents of the one total use, not separate Owner-signoff prerequisites. First finish known executable source repairs and bind a frozen installed firmware/software pair. Resource measurements and the current >=2h actual recording are collected in the same overall acceptance; unchanged valid evidence is reused.",
                 "sourceAdapterFollowup": "Reopened normal app is tracked in the same round, review controls return to disabled during continued use, and final metadata is never read while a normal app process is alive.",
-                "currentNonfirmwareWork": "COMPLETED: frozen source0d0c0ac5, actual native Android142, real-phone coherent software purpose and Windows110 one-kit private full readback; no board used.",
+                "currentNonfirmwareWork": "Completed accepted frontend closure and one installed111/142 software delivery; latest Owner instruction and current workpoint are in latestOwnerFrontendContinuation.",
                 "physicalWorkPreserved": true
               },
-              "acceptanceAdapterSha256": "8ea489825566ad90747721c4c2ea6e2e490ad5b926049f33fd5a65716e19c22a",
+              "acceptanceAdapterSha256": "17f3835c64260a211ca109d24722ed16f16b455754ed9fa172f10c750b38d885",
               "nextCandidate": {
-                "version": "0.1.110",
-                "state": "INSTALLED_BACKGROUND_PURPOSE_UNCHANGED_OS_EVIDENCE_AND_PRIVATE_READBACK_PASSED",
+                "version": "0.1.111",
+                "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
                 "basePointerCommit": "35bf71ea20646b0d9c960ae6b6fd75a68a16753d",
-                "sourceRepair": "Host still pinned only the pre-recovery development key; fixed with exact old+recovered fingerprints, unchanged key ID/target/digest/header checks and resident Boot authentication.",
+                "sourceRepair": "Existing unresolved-prose date-only confirmation no longer forces a clock; all delivered110 meeting/pointer/key-compatibility behavior retained.",
                 "actualProductionModuleRegression": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\ota-key-compatibility.json",
                 "newMsiBuilt": true,
                 "installed": true,
                 "latestSourceFreezePending": false,
-                "reason": "The final tested pointer alignment is committed in35bf71ea. The isolated frozen branch contains the same committed tree; shared default index/worktree remain untouched.",
-                "next": "Complete the existing embedded operation and bind the actual ordinary firmware installation receipt; one whole physical recording-to-usable-result acceptance, including current long-record coverage. No per-feature Owner sign-off queue.",
-                "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
-                "branch": "work/product-total-windows110-20261112",
-                "buildRun": 43154438761,
-                "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-verification.json",
-                "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\runtime-result.json"
+                "reason": "One current accepted frontend purpose and later board joint-use entry; normal local MSI independently matched and installed.",
+                "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
+                "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+                "branch": "work/device-phone-closure055-20261106",
+                "buildRun": null,
+                "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-verification.json",
+                "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\runtime-result.json",
+                "buildKind": "Normal local release, no hosted CI claim",
+                "localBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows111-local-r3\\result.json"
               },
               "previousVerifiedWindows109": {
                 "sourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
@@ -270616,7 +270829,7 @@
               "nativeSoftwareClosureEvidenceAccepted": true,
               "unchangedNativeOsHandoffEvidenceReused": true,
               "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
-              "nativeSoftwareEvidenceScope": "WINDOWS110_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED",
+              "nativeSoftwareEvidenceScope": "WINDOWS111_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED",
               "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
               "completeDeliverySha256": "d0d0ed8e6195dfbaa43d704cefadf0ef421a61aebb6dc27db4d5b2ba5e2331a0",
               "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Complete-Candidate-20261112-FW804.zip",
@@ -270638,18 +270851,55 @@
                 "guiOrHardwareInThoseTests": false,
                 "sourcePolicyVerified": true
               },
-              "currentSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
-              "currentSoftwareDeliverySha256": "a4deca0afff6a34deb283de5efdd274bb836ad09fb840ee43ee793752ffabb83",
-              "currentSoftwareDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Software-110-142-20261112.zip",
+              "currentSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
+              "currentSoftwareDeliverySha256": "0f1242805950687188bf882ea8a058cf15a1ab99d9d85f8797ef3e6740a7ac18",
+              "currentSoftwareDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Frontend-Ready-111-142-20261112.zip",
               "androidDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\android-delivery.json",
-              "coherentSoftwarePurposeComplete": true
+              "coherentSoftwarePurposeComplete": true,
+              "latestOwnerFrontendContinuation": {
+                "acceptedAt": "2026-11-12T14:51:05+08:00",
+                "ownerQuote": "你懂，那你就把之前前端的那些东西收口，然后到时候跟板子一定可以先去测试。",
+                "userOutcome": "前端/应用后端已有使用目的的剩余交接与日期确认集中完成、版本与实际保存结果明确，实板可用时直接进行完整链路总验。",
+                "scope": [
+                  "Existing accepted meeting reading/source/follow-up/export purpose; no unrelated account/team features",
+                  "Date-only confirmation from unresolved prose without requiring an invented clock; preserve explicit add-time and existing authored times",
+                  "Real installed Android selected-note external handoff/cancel path with a local ordinary receiver, no messages sent",
+                  "One verified matching Windows delivery and unchanged Android142, one board-total adapter; no board access in software work"
+                ],
+                "softwareInstalledBaseline": {
+                  "windows": "0.1.110",
+                  "android": "0.1.142"
+                },
+                "reservedWindowsVersion": "0.1.111",
+                "physicalAndModelAndSaleQualified": false,
+                "completedAt": "2026-11-12T15:34:23+08:00",
+                "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+                "currentInstalledSoftware": {
+                  "windows": "0.1.111",
+                  "android": "0.1.142"
+                },
+                "actualSoftwareResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\frontend-result.json",
+                "totalUseReadiness": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\total-use-readiness.json",
+                "softwareReady": true,
+                "physicalReady": false,
+                "ownerPromptStarted": false,
+                "boardAccessed": false
+              },
+              "frontendAcceptedPurposeClosed": true,
+              "softwareReadyForLaterBoardJointTest": true,
+              "previousVerifiedWindows110": {
+                "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
+                "softwareKitReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json"
+              }
             },
-            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\windows-delivery.json",
-            "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\android-delivery.json",
+            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
+            "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit142\\share-result.json",
             "previousSelectedSourceCheckpoint": {
               "windows": "673fcb7a9cae9331d62ed2241a626afd30094721",
               "android": "cbe1d0e2fa801d6b221103c39294ab411884003f"
-            }
+            },
+            "frontendAcceptedPurposeClosed": true
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -270704,13 +270954,13 @@
             "functionalFlow": "普通选择→原文件完整保留→后台可取消转换→本地转写/原文时间→现有AI纪要→Word/SRT系统保存→整库备份恢复→原音/结果校验→回收站/精确清除"
           },
           "nonmodelSaleStatus20261110": {
-            "at": "2026-11-11T16:24:51+08:00",
-            "phase": "108/141已实际交付；新单张交接仅源码，已转交接",
+            "at": "2026-11-12T15:34:23+08:00",
+            "phase": "本轮已承接前端完整目的111/142实际交付，可接后续实卡集中总验；全产品售卖仍未放行。",
             "percentage": null,
             "percentageReason": "原对标项同时包含已验子范围、未实现能力、物理/外部依赖与用户待验，不能按提交、包或全为pending的行数编造整体百分比。",
             "delivered": {
-              "windows": "Windows099实际安装；人工跟进/字面引用/当前来源核对/失源保留/所选TXT与JSON/14内容文件备份恢复与精确清除普通匹配MSI通过，245原应用文件相同。",
-              "android": "Android136实际安装并修复135原生截图复选框与重复正文；真实两主题、来源保存回跳/编辑/重启及数据保护过；相同Java/AAR135原生56文件恢复、TXT/ZIP/2原图和30文件精确清除资格保留实际版本。",
+              "windows": "此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。",
+              "android": "Android142同一APK保留已验引用/保存/重开/系统TXT与ZIP；补实际系统分享、取消和普通WPS完整选中备注阅读，原5248内容文件相同、仅新增公开库索引，原库和外观返回，测试会话关闭。",
               "audioEditing": "Windows095/Android131完整包，匹配普通编辑/来源/任务恢复/备份与分范围清理实际通过；安装升级保留245旧文件，整包私有完整回读一致。",
               "documentReading": "096/132结构化表格/原始文字/材料回跳、双端普通界面及备份恢复、两类完整自然用途已按所述范围完成，私有整包回读一致。",
               "recentNotesReading": "097/133双端普通保存/最近与创建顺序/全文展开/完整编辑取消/搜索命中全文及文档阅读呈现通过，已安装且完整私有包回读一致；两类AI模拟完成会前便签保存回找。",
@@ -270718,9 +270968,7 @@
               "manualFollowupSources": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\manual-followup-delivered-result.json"
             },
             "openSoftware": [
-              "单张清单及依据交接/可见预览/长行编辑109/142源码待原生出包与实际验证。",
-              "完整结果导出默认范围/中文呈现、仅日期确认仍有已承接可用性问题。",
-              "旧WinRT与具体第三方接收端、完整账号跨端/团队/集成及原竞品剩余范围未关闭。"
+              "本批单张交接、完整预览、中文结果呈现和日期确认已按实际范围交付；其它平台/接收端及原账号跨端、团队、集成等独立范围不由本批关闭。"
             ],
             "openHardware": "沿embedded当前匹配长录、连接/异常恢复、电源与实物门，不由应用通过继承关闭。",
             "openReleaseAndService": "正式签名/渠道、许可隐私/支持费用及原账号跨端、团队、集成等范围待完成。",
@@ -270778,8 +271026,8 @@
               }
             },
             "currentClientVersions": {
-              "windows": "0.1.108",
-              "android": "0.1.141"
+              "windows": "0.1.111",
+              "android": "0.1.142"
             }
           },
           "latestOwnerContinuation20261110": {
@@ -272957,12 +273205,12 @@
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
       "at": "2026-11-11T16:24:51+08:00",
-      "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
+      "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
       "result": "Windows108/Android141已安装并完整私有归档；109/142仅新源码检查点，非模型总体及整机均未售卖合格。",
-      "next": "软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。",
+      "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
       "mobileVisualRevision20261102": {
         "state": "NEUTRAL_CANDIDATES_UNACCEPTED",
         "request": "用户认为手机设计缺乏吸引力，要求参考竞品并做好深色模式；2026-11-02澄清保留浅色、暂不需要设备诊断功能。",
@@ -277808,17 +278056,17 @@
       }
     },
     "nextBatch": {
-      "at": "2026-11-12T14:37:22+08:00",
-      "status": "SOFTWARE_BATCH_DELIVERED_CONCENTRATED_FEEDBACK_PHYSICAL_TOTAL_INDEPENDENT",
-      "next": "软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。",
+      "at": "2026-11-12T15:34:23+08:00",
+      "status": "FRONTEND_BATCH_CLOSED_LATER_ONE_MATCHED_BOARD_JOINT_ACCEPTANCE",
+      "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-12T14:37:22+08:00",
-      "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
-      "done": "Windows110/Android142已实际安装并集中软件交付；手机完整公开会后目的、原文引用、跟进保存/勾选、草稿保留、真实系统TXT/ZIP保存回读和进程重开通过。Windows110后台连续目的通过，未变OS交接复用109有效证据。软件无需板；实卡/当前长录/并发资源/手感沿原嵌软项单独总验，不虚关。",
-      "remaining": "当前普通固件实卡长录/断连恢复/手机实卡整链/资源与手感、Mac真机、独立模型及正式售卖条件仍按原任务开放；本批未测Android普通聊天应用发文件，Windows110系统交接未新测。",
-      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
+      "at": "2026-11-12T15:34:23+08:00",
+      "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+      "done": "此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。",
+      "remaining": "当前普通固件实物总验仍待原嵌软匹配身份/占用；其它平台真机、独立模型与正式发布/服务等原范围未由本批关闭。Windows111 OS保存/取消与普通接收本轮未重跑，复用109完全相同实现有效证据。",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
       "previousVerifiedBatch": {
         "at": "2026-11-11T16:24:51+08:00",
         "state": "108141_INSTALLED_PRIVATE_PACKAGE_VERIFIED",
@@ -277983,9 +278231,9 @@
     },
     "sharedWindowsIntegration20261110": {
       "at": "2026-11-11T15:20:58+08:00",
-      "state": "SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE",
-      "reservedVersion": "0.1.110",
-      "sourceBranch": "work/product-total-windows110-20261112",
+      "state": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+      "reservedVersion": "0.1.111",
+      "sourceBranch": "work/device-phone-closure055-20261106",
       "sourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
       "mustIncludeSources": [
         "047f41a400ff9d68e74a85b15ad165ca043fd7e3",
@@ -277995,12 +278243,12 @@
         "e59518b1a5ad24d6953e52c8cb151746fe50ab48"
       ],
       "verifiedDocumentRuntime": 42924060870,
-      "installedSourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\installation.json",
+      "installedSourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\installation.json",
       "reason": "Two independent090 lineages exist. Installed input090 has additional pairing/input fixes; document090 has new material reading. Neither may replace/drop the other. Further host changes should preserve the forthcoming merged091 source, not derive only from the old input branch. Firmware/physical priorities and pauses are unchanged.",
       "canonicalWorkpoint": "owner_module_execution.embedded.physicalCardUsability20261111",
       "sourceIntegrationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\windows091\\source-integration.json",
-      "sourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
-      "normalBuildRun": 43154438761,
+      "sourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+      "normalBuildRun": null,
       "installedFalseUntilActualUpgrade": false,
       "installation": {
         "state": "WINDOWS110_INSTALLED_ORIGINAL_USER_DATA_IDENTICAL",
@@ -278021,8 +278269,8 @@
         "physicalTotalAcceptancePassed": false
       },
       "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows110\\complete-delivery.json",
-      "package": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json",
-      "next": "软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。",
+      "package": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
+      "next": "前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。",
       "pendingAudioEditingWorkpoint": "groups/CP27-16/nonDestructiveSourceMapping20261110",
       "pendingAudioEditingVersionReservation": null,
       "pendingAudioEditingBranch": "work/device-phone-closure055-20261106",
@@ -278047,9 +278295,9 @@
         "currentlyInstalledUnchanged": "0.1.91",
         "physicalRecordingUntouched": true
       },
-      "pendingUnifiedVersion": "0.1.107",
+      "pendingUnifiedVersion": "0.1.111",
       "pendingUnifiedBranch": "work/recorder-core-integration-20261110",
-      "pendingUnifiedReason": "Actual installed107 retains105 incoming/card-first/local-only and106 meeting hierarchy source; customer follow-through repair delivered together. Do not downgrade to106.",
+      "pendingUnifiedReason": "Current111/142 accepted frontend purpose actually delivered; future board binding must use the original embedded latest normal-firmware receipt.",
       "recorderInput094Pending": {
         "at": "2026-11-11T01:53:30+08:00",
         "sourceCommit": "397148f7f3b69f57c8423053a816d8daf7c6ea23",
@@ -278065,8 +278313,8 @@
         "unifiedSource": "c6ea5e328d2a3f39c9982c479b1c1f016f9cced6",
         "unifiedVersion": "0.1.95"
       },
-      "pendingUnifiedSource": "a4fcfb21ef265c0374b644ea3cb7b11b3b0ad103",
-      "pendingUnifiedBuildRun": 42965523671,
+      "pendingUnifiedSource": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+      "pendingUnifiedBuildRun": null,
       "pendingUnifiedSourceMergedAt": "2026-11-11T02:35:13+08:00",
       "recorderConnection101Pending": {
         "at": "2026-11-11T11:00:11+08:00",
@@ -278255,14 +278503,14 @@
           }
         }
       },
-      "pendingUnifiedDeliveryState": "INSTALLED107_RETAINS105_AND106_PRESENTATION",
-      "nativeCandidateSource": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
-      "nativeBuildRun": 43137887077,
+      "pendingUnifiedDeliveryState": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+      "nativeCandidateSource": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
+      "nativeBuildRun": null,
       "nativeBuilt": true,
       "installed": true,
-      "installedVersion": "0.1.109",
+      "installedVersion": "0.1.111",
       "runtimeRun": 43144208633,
-      "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows-delivery.json",
+      "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
       "physicalAcceptanceDependency": {
         "state": "BOARD_RELEASED_MATCHED_FIRMWARE_RECEIPT_AND_IMU_REPAIR_PENDING",
         "observedAt": "2026-11-12T10:57:24+08:00",
@@ -278285,15 +278533,10 @@
         "Merge the completed pointer/host changes with the already-delivered coherent meeting workspace into one matching normal Windows candidate; no half-finished source in the installer."
       ],
       "acceptanceAdapter": "tools/qa/core_acceptance20261109/owner_total.py",
-      "nextWindowsVersionReserved": "0.1.110",
-      "nextCandidateState": "INSTALLED_BACKGROUND_PURPOSE_UNCHANGED_OS_EVIDENCE_AND_PRIVATE_READBACK_PASSED",
-      "nextCandidateScope": [
-        "Committed IMU integration plus remaining upstream alignment",
-        "Already delivered coherent meeting workspace",
-        "Recovered OTA-key compatibility",
-        "One continuous Owner acceptance after the frozen pair is ready"
-      ],
-      "nextCandidateSourceCommit": "7533b4c067ff0bdaa28267b6df5339da2bcd2d4c",
+      "nextWindowsVersionReserved": "0.1.111",
+      "nextCandidateState": "FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED",
+      "nextCandidateScope": "Existing date-only confirmation and coherent software handoff/board-ready batch; no firmware change",
+      "nextCandidateSourceCommit": "897089374c051c0ff2e919e8b9cce2e570d3e13a",
       "nextCandidateBuildRun": 43154438761,
       "previousWindows108Integration": {
         "sourceCommit": "e59518b1a5ad24d6953e52c8cb151746fe50ab48",
@@ -278321,8 +278564,8 @@
           "limitations": "No interactive app opened, foreground interaction, private content inspected or printed, ordinary recipient paste, phone or device operation or model inference."
         }
       },
-      "updatedAt": "2026-11-12T14:37:22+08:00",
-      "currentInstalledWindows": "0.1.110",
+      "updatedAt": "2026-11-12T15:34:23+08:00",
+      "currentInstalledWindows": "0.1.111",
       "previousComplete108141Package": {
         "at": "2026-11-11T15:01:53+08:00",
         "state": "ORDINARY_FOLLOWUP_COMPLETE_CANDIDATE_PRIVATE_DRAFT_FULL_READBACK_IDENTICAL",
@@ -278393,7 +278636,7 @@
           "scope": "This worker and its descendants only; no global or other-app changes."
         }
       },
-      "currentSoftwarePackage": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\software110142\\software-delivery.json"
+      "currentSoftwarePackage": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json"
     },
     "retiredBatchAliases20261111": {
       "historicalOnly": true,

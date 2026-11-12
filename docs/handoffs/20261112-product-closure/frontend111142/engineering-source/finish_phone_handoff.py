@@ -1,0 +1,16 @@
+from pathlib import Path
+from datetime import datetime
+import json,subprocess,hashlib
+r=Path('C:/Users/Billy/Desktop/Denzic/Companion');p=Path('E:/CodexData/Companion/.build-cache/android-media-import20261110/customer-edit142-20261112');o=r/'docs/handoffs/20261110-android-media-import/customer-edit142';a=r/'.cache/ble-rate-20261019/android-central-diagnostic/platform-tools/adb.exe'
+def adb(args):return subprocess.check_output([str(a),'-s','d6bd213d',*map(str,args)],text=True,encoding='utf-8')
+started=json.loads((p/'local-receiver-started.json').read_bytes());assert started['recipientInitiallyClosed'] and started['mainUnchangedDuringLaunch']
+assert adb(['shell','pidof','cn.wps.moffice_eng']).strip()==started['ownRecipientPid']
+state=adb(['shell','dumpsys','activity','activities']);main=next(x for x in state.split('Display #') if x.startswith('0 (activities from top to bottom):'));assert not any('cn.wps.moffice_eng' in x for x in main.splitlines() if 'Hist  #' in x)
+own=next(x for x in state.split('Display #') if x.startswith('40 '));assert 'cn.wps.moffice.writer.multiactivity.Writer1' in own
+image=o/'ordinary-wps-receiver.png';assert image.is_file()
+cancel=json.loads((o/'share-cancel.json').read_bytes());selected=json.loads((o/'share-before.json').read_bytes())['selected'];assert selected['text'] in cancel['previewBody']
+record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'ANDROID142_SELECTED_NOTE_ACTUAL_SYSTEM_SHARE_CANCEL_AND_ORDINARY_WPS_LOCAL_VIEW_PASSED','version':'0.1.142','installedApkUnchanged':True,'ownedDisplay':40,'selectedNoteId':selected['id'],'selectedText':selected['text'],'previewBody':cancel['previewBody'],'ordinaryRecipient':'cn.wps.moffice_eng','ordinaryEntry':'分享文件 → 系统分享面板 → WPS Office → 使用WPS Office查看','newRecipientInitiallyClosed':True,'exactPublicTitleAndEntireSelectedNoteVisuallyVerified':True,'unselectedNotesOrImagesVisible':False,'receiverCanvasTextNotExposedThroughAccessibility':True,'publicReceiverScreenshotSha256':hashlib.sha256(image.read_bytes()).hexdigest(),'cancelPreservedNotes':True,'explicitNotSentNotice':True,'ownerMainDisplayOperated':False,'ownerMainUnchangedDuringRecipientLaunch':True,'messagesSent':0,'recipientFileEditedOrCloudUploadRequested':False,'boardMicBleModelsUsed':False,'engineeringNotCustomerFirstUse':True,'adapterFailuresPreserved':'Initial chooser scroll inertia and a subchoice accessibility parent-click did not select a target; ordinary coordinate tap of the observed subchoice opened WPS. A one-second immediate window assertion raced target startup; same opened target was then observed and public display captured. No product changes, reinstall or data edit for adapter corrections.'}
+adb(['shell','am','force-stop','cn.wps.moffice_eng']);assert not subprocess.run([str(a),'-s','d6bd213d','shell','pidof','cn.wps.moffice_eng'],capture_output=True).stdout.strip();record['exactOwnRecipientClosed']=True
+adb(['shell','am','start','--display','40','-n','com.denzic.companion.app/.MainActivity'])
+(o/'share-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+print('Actual WPS received and displayed the entire selected public note; only this newly launched recipient closed, no message sent or original note changed.')

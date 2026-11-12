@@ -5,8 +5,8 @@
 **当前执行：完整产品收口，最后集中总验收。**
 
 - 首批Windows会议详情到会后交接，纪要与待办优先；原Android交付和源码检查点保留。
-- 当前实际交付：Windows0.1.110 / Android0.1.142。
-- 本批：SOFTWARE110142_INSTALLED_COHERENT_PURPOSE_AND_ONE_PRIVATE_KIT_DELIVERED_PHYSICAL_TOTAL_SEPARATE；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
+- 当前实际交付：Windows0.1.111 / Android0.1.142。
+- 本批：FRONTEND111142_ACCEPTED_PURPOSE_CLOSED_INSTALLED_AND_BOARD_JOINT_ENTRY_PREPARED；原生构建：43154438761。源码、构建、实装和整体验收分别记录。
 - 不逐功能要求Owner签收；工程保留必要数据保护和已知故障核对，再集中交付和总验收。
 - 实卡可靠性、模型质量、正式发布/服务及既定暂停项按真实结果保留，不由页面或构建通过自动关闭。
 
@@ -29,10 +29,10 @@
 
 以下直接读取同事维护的当前批次；不从旧共享版本别名推断安装。
 
-- **已交付：** Windows110/Android142已实际安装并集中软件交付；手机完整公开会后目的、原文引用、跟进保存/勾选、草稿保留、真实系统TXT/ZIP保存回读和进程重开通过。Windows110后台连续目的通过，未变OS交接复用109有效证据。软件无需板；实卡/当前长录/并发资源/手感沿原嵌软项单独总验，不虚关。
-- **仍未完成：** 当前普通固件实卡长录/断连恢复/手机实卡整链/资源与手感、Mac真机、独立模型及正式售卖条件仍按原任务开放；本批未测Android普通聊天应用发文件，Windows110系统交接未新测。
-- **当前下一步：** 软件110/142批次已完成，无需等板或重复构建安装。接续先承接本批实际使用的集中反馈；实物总验仅在原嵌软工程收敛正常固件、实际设备可用时，用同一原版提示窗完成真实采音到结果与现有长录覆盖。初始占用不再开窗，等待时推进原待办可独立软件工作。
-- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\software110142\software-delivery.json>)
+- **已交付：** 此前已承接的会议资料前端主目的集中收口：Windows111实际升级、原245份资料不变，连续原生来源/跟进/保存重开/导出及仅日期确认保存重开通过；Android142保留原整链并补实测系统分享→WPS完整单条正文。一个统一私有包完整回读，软件就绪与当前正常固件身份分开，默认联测入口跟随本次交付。
+- **仍未完成：** 当前普通固件实物总验仍待原嵌软匹配身份/占用；其它平台真机、独立模型与正式发布/服务等原范围未由本批关闭。Windows111 OS保存/取消与普通接收本轮未重跑，复用109完全相同实现有效证据。
+- **当前下一步：** 前端这批已交付，不重包、不逐功能派Owner。接板时读取原嵌软最新正常固件及实际占用收据，绑定本次111/142，沿同一原版窗口做真实录音→正常接收→文字/来源/跟进→重开→带走结果的集中总验，覆盖原当前长录/恢复/资源与手感；初始占用不弹窗。不以本批关闭独立模型、其它平台/原完整范围或正式售卖条件。
+- [交付依据](<C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261112-product-closure\frontend111142\software-delivery.json>)
 
 各模块旧版本实施笔记保留在历史索引，不混入本页当前交付。
 
@@ -712,10 +712,10 @@
 
 ### 当前交付基线
 
-- 已保存实板记录：FW66791 / UI85；这不是实时接板查询。
-- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `f43f548db7b07b1dab0dafd268ca848de40c5aea`。
+- 已保存实板记录：FW66815 / UI85；这不是实时接板查询。
+- 当前源码：`C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle`，固件改动提交 `507ddb8`。
 - 构建入口：`python tools/build_current_firmware.py --show`。构建参数配方参考版 66685，与已装版本分开显示。
-- 安装证据：[C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\firmware791-ota-identity.json](C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66762\delivery-first-20261110\firmware791-ota-identity.json)。
+- 安装证据：[E:\CodexData\Companion\.build-cache\imu-pointer20261112\install815\result.json](E:\CodexData\Companion\.build-cache\imu-pointer20261112\install815\result.json)。
 
 ### 现在推进什么
 
@@ -724,7 +724,7 @@
 | 资源可靠性与电源验收 | 受阻 / 软件栈/休眠计时已收尾；电源实测受阻 / 本侧 | 电量raw0..2与DMM4.047V不符，原因未定位；按Owner要求先挂起，保留旧可读及两次对照证据。；充电接入/拔出与PG/STAT实物对照；当前无USB充电线，不能把上拉确认当充电验收。；低电阈值与录中低电封口的真实电源验证；ADC和可控供电条件未齐，原功能/模型保留。；万用表实测空闲、自动深睡、录音和同步电流，给出测量条件及续航范围；Owner明确无法测，先后置，不再催接线或拿深睡统计当实测。 |
 | 当前手机配对与正常加密连接 | 当前App崩溃修复已实际使用；冷5秒单样本过，自动恢复10秒仍待改善 / 本侧 | 当前717096十次进程冷启后正常选择均1.918–2.090<=5秒，097正常路径2.102秒通过；不把复用连接算冷连。；历史早期0x3E本批未复现也未取得失败空口；不能宣称已解释或跨机型全稳。只在新现场触发留证，不继续盲调正常参数。；启动库读取时设备导航吞点击及显示状态已修源码7529d5a8，098已精确实装并保留333原音，普通入口/冷连接待下一板卡轮次。 |
 | 当前普通升级与传输指标 | 正常OTA达体验门；完整录音成立，动态停录可用等待待优化 / 本侧 | 720097真实333录7363.5秒/并传7200.328秒，60段15472076B和3个完整WAV/误差20ms通过，正常2h非预期断链0、采音异常0、栈4344/guard0/low0；整项仍FAIL：编码P95/峰5.5/7.307ms、PDM峰3.197ms、采音间隔tick8保守9ms>8。先定位同步时处理/调度并修源头，保持61.44MHz/音质/原资源预算，不恢复CPU百分比门。自动恢复7.109<=10秒，同任务/前缀保留且空口新own连接确认；旧脚本额外waiting状态判据FAIL保留并单独复核通过，不把UI状态当产品门槛。098入口修复源码7529d5a8已实装，后端/JNI不变、333全部120文件SHA不变，普通手机入口/冷连待下一板卡轮次。短332任何长度含物理回收50继续FAIL；原电源/声学/生产/屏幕block保持。 |
-| Companion录音卡IMU交互：敲击重点 | Owner最新优先插入；原编号复用，屏幕/宠物仍暂停 / 本侧 | 确认真实录音期间417Hz模式/芯片双击事件与零重点的断点，并修复。；当前实板轻敲与普通拿起/放下/走动误触、原音绑定；最终外壳资格仍待实际条件。 |
+| Companion录音卡IMU交互：敲击重点 | Owner最新优先插入；原编号复用，屏幕/宠物仍暂停 / 本侧 | Finish current optional advanced-IMU host integration and one normal product delivery; use existing firmware gestures/upstream pointer, no speculative3D displacement tracker；Original Owner popup physical pointer/click/drag experience; previous floaty/no-body-click negative feedback remains OPEN；Matched recording+Opus+BLE CPU comparison remains deferred by Owner; current36.4256% is non-MIC diagnostic pointer load, not standby or normal-build final CPU；Original Flash budget gap340B remains optimization item; static RAM unchanged；Ordinary OTA contiguous fragmented staging limitation remains OPEN; no old recording consumed |
 
 #### 资源可靠性与电源验收
 
@@ -749,8 +749,8 @@
 
 #### Companion录音卡IMU交互：敲击重点
 
-- 已有：正常785/942e117保持；385无动作、386未完成、387未确认五组，均不能作为修复版实体故障复现。387原音55.450s完整、编码峰5296/PDM峰2039us、音频异常0。Owner明确反馈协助流程难用，未接受；本时段主要为提示适配和竞品核对，无新固件功能交付。
-- 下一步：停止多窗口/五组计时派发，先后台定位当前录中IMU模式/中断链；BLE已确认正常785，但UART入口无完整快照，本轮未SWD/未RAM加载/未复位，不盲重试。下一次真人只做一次自然双敲并获得即时明确反馈。随后复核动静睡眠/拿起就绪现有实现，再接重点回听/AI聚焦原任务。
+- 已有：普通FW66815/UI85已装，硬件SPI默认、CPU测量关闭；CIM3板端Fusion/校准与当前Windows110同核。已定位CIN重复生成、GPIO模拟和OTA/主循环空轮询并修复：同类无MIC指向场景平均56.65→36.43%，约98.62Hz无丢序；普通版753帧约97.76Hz、无丢序/IMU错误、模式0恢复，板卡已交回。
+- 下一步：沿embedded.next：现有高级手势主机接入与同一原弹窗体验，不重跑旧387无动作或已排除的805低采样结果。
 - 交付结果：录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。
 - 原任务：[CP04-08](PRODUCT_BACKLOG_HISTORY.md#cp04-08)、[CP27-17](PRODUCT_BACKLOG_HISTORY.md#cp27-17)
 

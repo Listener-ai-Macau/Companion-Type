@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-12T14:54:08+08:00",
+  "state": "LOCAL_WINDOWS_DELIVERY_BUILD_FAILED_RETAINED",
+  "sourceCommit": "fa5dbe000034e2103e3884084c620bb23514f2dd",
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "version": "0.1.111",
+  "modelsRun": false,
+  "boardAccessed": false,
+  "installed": false,
+  "hostedCiRun": null,
+  "saleQualified": false,
+  "steps": [],
+  "error": "ValueError('Model-family private committed memory budget must be at most 2GiB')"
+}

@@ -1,0 +1,4 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('#ct-meeting-materials-pane').isVisible())\n",
+  "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('#ct-meeting-materials-pane').isVisible())\n\n    at productJourney (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_product_ui.cjs:19:70)\n    at async C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\windows_meeting_ui.cjs:18:17"
+}
