@@ -287,7 +287,15 @@ def main():
     data=json.loads(request.read_text(encoding='utf8'));source=copied_path();assert source.name==data['fileName'] and source.parent.name and source.parent.parent.name=='content-share'
     if a.stage=='product-background':
      assert not DEDICATED_CI and station_name()==name and name.lower()!='winsta0'
-     assert source.resolve().is_relative_to(root.resolve())
+     # Tauri resolves Windows KnownFolder cache independently of LOCALAPPDATA
+     # overrides. Inspect only this station's newly generated public-fixture file,
+     # never enumerate or read other contents of the ordinary application cache.
+     cache_root=(Path(os.environ['LOCALAPPDATA'])/json.loads((S/'apps/windows/src-tauri/tauri.conf.json').read_text(encoding='utf8'))['identifier']/'content-share').resolve()
+     assert not source.is_symlink() and not source.parent.is_symlink()
+     assert source.resolve().parent.parent==cache_root
+     assert str(uuid.UUID(source.parent.name))==source.parent.name
+     assert source.stat().st_mtime>=datetime.fromisoformat(record['at']).timestamp()-1 and source.stat().st_size<1024**2
+     record.update(publicFixtureExportCache=str(source),appCacheUsesWindowsKnownFolder=True,testOnlyFileCreatedOutsidePrivateRoot=True)
      text=source.read_text(encoding='utf8');assert data['expected'] in text and data['excluded'] not in text
      received=dict(fileName=source.name,sha256=sha(source),bytes=source.stat().st_size,actualPackagedAppFileCreated=True,privateStationClipboardObserved=True,selectedContentsVerified=True,ordinaryRecipientTested=False)
      record.setdefault('privateExportFiles',[]).append(received)
