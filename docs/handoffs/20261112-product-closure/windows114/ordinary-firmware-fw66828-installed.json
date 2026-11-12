@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-12T21:08:47+08:00",
+  "state": "DEVELOPMENT_IN_PLACE_INSTALLED_AND_BOOT_VERIFIED",
+  "firmware": 66828,
+  "ui": 85,
+  "packageSha256": "7f86aba7cd8d88103620353e6d3bdbf826e86c2a604d9243d15852667714cafa",
+  "firmwareSourceCommit": "7bbc8d01f7b97dd42c626157e2ca3bc50ebcc31a",
+  "bootAndNormalApplicationVerified": true,
+  "microphoneRunningAtObservation": false,
+  "pairingAndRecordingMetadataPreserved": true,
+  "bootWrites": 0,
+  "originalAudioReads": 0,
+  "originalAudioWrites": 0,
+  "allInstallerHandlesClosed": true,
+  "sourceReceiptSha256": "f024cfd7584973f69f74f731abc55d69ad19a37f4e83516d2f994541ccd9f1e4",
+  "sourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\install828-ble-sram\\result.json",
+  "deviceUidAndRecordingCatalogExcluded": true,
+  "normalObserverEnabled": false,
+  "normalRawUartEnabled": false,
+  "actualNormalRelease": {
+    "side": "codex",
+    "at": "2026-11-12T21:07:13+08:00",
+    "item": "Companion FW66828 BLE SRAM reservation verification",
+    "result": "FW66828 installed, GATT five status values/read lengths and normal raw stream verified; mode0 restored, UART idle/fault0; all own BLE/UART/SWD handles closed; no MIC or original audio read"
+  },
+  "embeddedRegistryAtBinding": 66827,
+  "sourcePrecedence": "Actual new828 signed installer/boot/normal release supersedes the older registry snapshot; this UI task does not edit embedded baseline.",
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

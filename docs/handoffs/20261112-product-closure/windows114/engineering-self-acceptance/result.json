@@ -90,5 +90,9 @@
   "privateRemoteDeliveryReadbackPending": false,
   "next": "Complete one114/unchanged142 private kit and exact remote readback. Rebind the latest actual ordinary firmware and current lease before one guided Owner round; no unchanged112 retry.",
   "privateArchiveReadbackNowVerified": true,
-  "privateArchiveSha256": "d8726eb5f4a0d681319f5046f23aaa8b27430bbc78b662c5a32851b68cbd62f8"
+  "privateArchiveSha256": "d8726eb5f4a0d681319f5046f23aaa8b27430bbc78b662c5a32851b68cbd62f8",
+  "ordinaryFirmwareInstallationConfirmed": true,
+  "currentNormalFirmware": 66828,
+  "normalActualInstallationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows114\\ordinary-firmware-fw66828-installed.json",
+  "readyForOwnerGuidedRound": true
 }
