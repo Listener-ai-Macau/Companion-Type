@@ -6,6 +6,9 @@ small logs/receipts and final deliverables, never another complete Cargo tree.
 from pathlib import Path
 import argparse,os,subprocess,sys
 from check_type_build_target import inspect
+sys.path.insert(0,str(Path(os.environ.get('DENZIC_WORKFLOW_ROOT',
+    'C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow'))/'scripts'))
+from development_storage import exclusive_build,preflight,StorageLimit
 
 ROOT=Path(__file__).resolve().parents[1]
 def main():
@@ -19,6 +22,15 @@ def main():
     if a.filter and a.task!='test':p.error('--filter applies to test')
     cache=Path(os.environ.get('COMPANION_BUILD_CACHE','E:/CodexData/Companion/.build-cache'))
     target=cache/'shared-windows-target'
+    try:
+        with exclusive_build(cache/'.shared-windows-build.lock'):
+            preflight(cache)
+            return build(a,target)
+    except (StorageLimit,OSError) as error:
+        print(str(error),file=sys.stderr)
+        return 2
+
+def build(a,target):
     state=inspect(target,ROOT,source_dir=ROOT)
     if state['result']!='TARGET_IDLE_AT_OBSERVATION':
         print(state['result']+': the existing target is in use; do not allocate a duplicate target')
