@@ -160,6 +160,14 @@ def main():
 
   session['meetingNotes'][0]['text']='EXCLUDED_CORE_NOTE_20261109 不选择的个人草稿'
   control=json.loads(json.dumps(session));control.update(id='core-product-unrelated',title='明确虚构·不参与本次操作的记录');sessions.append(control)
+  # Match the native serializer's representation before the first save so the
+  # unrelated-row byte comparison detects content changes, not omitted empty
+  # legacy fixture fields. Only these known empty optional fields are omitted.
+  for fixture_row in sessions:
+   for key in ['deviceRecordingId','deviceRecordingKey','sourceDeviceId','meetingTracks']:
+    if fixture_row.get(key) is None:fixture_row.pop(key,None)
+   for key in ['calendarCopies','calendarSlotCopies']:
+    if fixture_row.get(key)==[]:fixture_row.pop(key,None)
   (state/'sessions.json').write_text(json.dumps(sessions,ensure_ascii=False),encoding='utf8')
   (root/'exports').mkdir() # The ordinary Shell receiver creates its own empty destination.
   plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan.update(appVersion=v['version'],exportDirectory=str(root/'exports'),receivedDirectory=str(root/'received-files'),statePath=str(state/'sessions.json'),recordingDirectory=str(root/'recordings'));(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
