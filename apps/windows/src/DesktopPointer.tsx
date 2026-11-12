@@ -25,7 +25,6 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
    {!status.enabled?<button className="ct-action" disabled={busy||blocked||!connected} onClick={()=>void run('start_companion_pointer',{settings,controlsCursor:true})}>启用空中鼠标</button>:<>
     <button disabled={busy||!status.ready} onClick={()=>control(status.metrics.paused?'resume':'pause')}>{status.metrics.paused?'继续控制':'暂停控制'}</button>
     <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>重新定位</button>
-    <button disabled={busy||!status.ready} onClick={()=>control('calibrate')}>放稳重新校准</button>
     <button className="ct-action" disabled={busy} onClick={()=>control('stop')}>退出并回到录音</button>
    </>}
   </div>

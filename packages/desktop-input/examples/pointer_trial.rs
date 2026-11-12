@@ -7,6 +7,7 @@ fn main(){if let Err(e)=run(){eprintln!("{e}");std::process::exit(1);}}
 fn run()->Result<(),String>{
     let controls=std::env::args().any(|a|a=="--control");
     let mut cursor=Cursor::open()?;let mut p=Pointer::new(Settings::default(),cursor.position()?);
+    let mut preview_position=cursor.position()?;
     let stop=Arc::new(AtomicBool::new(false));let input_stop=stop.clone();let(tx,rx)=mpsc::sync_channel::<serde_json::Value>(8);
     std::thread::spawn(move||{for line in io::stdin().lock().lines(){
         let Ok(line)=line else{break;};let Ok(value)=serde_json::from_str(&line)else{continue;};
@@ -31,16 +32,17 @@ fn run()->Result<(),String>{
         }
         if stop.load(Ordering::Acquire){break;}
         let f=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());
+        if let Some(position)=f.position{preview_position=position;}
         if controls{let c=f.buttons.iter().filter(|e|matches!(e,Button::Click(_))).count() as u64;
             let d=f.buttons.iter().filter(|e|matches!(e,Button::Down(_))).count() as u64;
             cursor.apply(f)?;clicks+=c;drags+=d;}
         if report.elapsed()>Duration::from_millis(250){
-            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"clickRequests":clicks,"dragRequests":drags}));
+            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));
             io::stdout().flush().map_err(|e|e.to_string())?;report=Instant::now();
         }
         next+=Duration::from_nanos(if p.settings.mapping==Mapping::Laser{4_166_667}else{8_333_333});
         if let Some(wait)=next.checked_duration_since(Instant::now()){std::thread::sleep(wait);}else{next=Instant::now();}
     }
     cursor.release()?;
-    println!("{}",serde_json::json!({"stage":"stopped","metrics":p.metrics,"clickRequests":clicks,"dragRequests":drags}));Ok(())
+    println!("{}",serde_json::json!({"stage":"stopped","metrics":p.metrics,"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));Ok(())
 }

@@ -40,3 +40,13 @@ four synthetic phases, state160B, stack356B; this is not Flash execution, BLE,
 recording/Opus concurrency or energy qualification. The product wrapper adds
 timestamp/lifecycle bookkeeping (total168B). Source and raw result are in the
 project IMU receipt. Fusion is active only in explicit pointer mode.
+
+
+The next sensor adapter uses CIM1 schema3: Q14 unit gravity, corrected gyro,
+and device-calibration readiness in bit1. A continuous measured stationary
+second seeds upstream FusionBias; the host does not subtract another fixed
+bias from an already adapting corrected rate. Only upstream FusionAhrsUpdate
+with a zero magnetometer is used: consumer gravity is invariant to the
+NoMagnetometer helper's startup yaw-zeroing. The real C test compares both
+gravity outputs over5000 updates. No upstream vendor file is modified.
+The original Watch/Air mapping, filters and click semantics are unchanged.

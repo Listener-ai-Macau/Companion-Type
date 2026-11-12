@@ -14,20 +14,21 @@ impl Point {
 }
 #[derive(Clone, Copy, Debug)]
 pub struct Sample {
-    pub sequence: u32, pub sensor_ms: u32, pub held: bool, pub tap_serial: u8, pub fused: bool,
+    pub sequence: u32, pub sensor_ms: u32, pub held: bool, pub tap_serial: u8, pub fused: bool, pub device_ready: Option<bool>,
     pub accel: [f64;3], pub gyro: [f64;3],
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2) || p[5]!=3 || p[6]&!1!=0 {
+        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3) || p[5]!=3 || p[6]&!(if p[4]==3{3}else{1})!=0 {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
         for byte in &p[..28] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
         if !crc!=u32::from_le_bytes(p[28..32].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
         let mut s=Self {sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),
-            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]==2,accel:[0.;3],gyro:[0.;3]};
+            sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]>=2,device_ready:if p[4]==3{Some(p[6]&2!=0)}else{None},accel:[0.;3],gyro:[0.;3]};
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
+            if p[4]==3{s.accel[i]*=1000./16384.;}
             s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64/100.;}
         Ok(s)
     }
@@ -147,6 +148,20 @@ impl Pointer {
         self.last=Some((s.sequence,s.sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
         if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
         let norm=s.accel.iter().map(|x|x*x).sum::<f64>().sqrt();
+        if let Some(ready)=s.device_ready {
+            if !ready {
+                if self.metrics.calibrated{self.release();self.reset_motion();}
+                self.metrics.calibrated=false;return;
+            }
+            if !self.metrics.calibrated {
+                // Firmware has measured its own stationary bias. Subtracting
+                // another fixed host bias while device bias keeps adapting
+                // would manufacture a drifting zero rate.
+                self.bias=[0.;3];self.metrics.calibrated=true;self.heading=0.;
+                self.elevation_zero=Some((s.accel[1]/norm.max(1.)).clamp(-1.,1.).asin().to_degrees());
+                return;
+            }
+        }
         let rates=std::array::from_fn(|i|s.gyro[i]-self.bias[i]);
         let (up,rate)=if s.fused {
             (s.accel.map(|v|v/norm.max(1.)),rates)

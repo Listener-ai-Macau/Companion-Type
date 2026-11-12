@@ -1,6 +1,6 @@
 use super::*;
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
-fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,accel:[0.,0.,1000.],gyro:[0.;3]}}
+fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
     for n in 0..=27 {p.sample(sample(n+1,n*40,false),n as f64*0.04,bounds());p.frame(n as f64*0.04,bounds());}
@@ -106,4 +106,22 @@ fn watch_pause_keeps_tracking_aim_and_primary_screen_controls_projection_scale()
     assert!((p.heading-10.).abs()<0.01);assert!(p.frame(2.08,bounds()).position.is_none());
     p.pause(false);let mut s=sample(54,2120,false);s.fused=true;p.sample(s,2.12,bounds());
     assert!(p.target.unwrap().x<800.); // Resume points to current aim, not the pre-pause heading.
+}
+
+
+#[test]
+fn board_calibrated_packet_uses_q14_gravity_and_no_second_fixed_host_bias() {
+    let hex="43494d31030303ff07000000f0ffffff000000206d376b03589eff7f10f854e6";
+    let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let s=Sample::parse(&bytes).unwrap();assert!(s.fused);assert_eq!(s.device_ready,Some(true));
+    assert!((s.accel[1]-500.).abs()<0.01);
+    let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
+    let mut s=sample(1,0,false);s.fused=true;s.device_ready=Some(false);s.gyro=[0.8,-0.7,0.5];
+    for n in 0..100 {s.sequence=n+1;s.sensor_ms=n*10;p.sample(s,n as f64*0.01,bounds());}
+    assert!(!p.metrics.calibrated);
+    s.device_ready=Some(true);s.gyro=[0.;3];
+    for n in 100..2100 {s.sequence=n+1;s.sensor_ms=n*10;p.sample(s,n as f64*0.01,bounds());p.frame(n as f64*0.01,bounds());}
+    assert!(p.metrics.calibrated);assert_eq!(p.bias,[0.;3]);assert!(p.heading.abs()<1e-10);
+    s.sequence+=1;s.sensor_ms+=10;s.device_ready=Some(false);p.sample(s,21.,bounds());
+    assert!(!p.metrics.calibrated);assert!(p.frame(21.,bounds()).position.is_none());
 }
