@@ -1,4 +1,40 @@
 use super::*;
+fn raw_sample(n:u32)->desktop::Raw{desktop::Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+fn coarse_ready()->Pointer{
+    let mut p=Pointer::new(Settings{mapping:Mapping::Relative,desktop_motion:true,..Settings::default()},Point{x:960.,y:540.});
+    for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}
+    assert!(p.metrics.calibrated);p
+}
+#[test]fn raw_desktop_path_moves_and_keeps_ordinary_mouse_position_without_snapback(){
+    let mut p=coarse_ready();let mut s=raw_sample(121);s.gyro_dps[2]=20.;p.sample_raw(s,1.21);
+    assert!(p.frame(1.22,bounds()).position.unwrap().x<960.);
+    p.external_position(Point{x:1600.,y:800.});
+    assert!(p.control(Control{sequence:1,sensor_ms:1210,events:CLICK}).unwrap());
+    let click=p.frame(1.225,bounds());assert!(matches!(click.buttons[0],Button::Click(Point{x:1600.,y:800.})));
+    for n in 122..150{p.sample_raw(raw_sample(n),n as f64/100.);assert!(p.frame(n as f64/100.,bounds()).position.is_none());}
+    assert_eq!(p.shown,Point{x:1600.,y:800.});
+    let mut s=raw_sample(150);s.gyro_dps[2]=-20.;p.sample_raw(s,1.5);
+    assert!(p.frame(1.51,bounds()).position.unwrap().x>1600.);
+}
+#[test]fn raw_contact_reuses_reliable_control_clock_rewinds_and_consumes_retry_once(){
+    let mut p=coarse_ready();let mut s=raw_sample(121);s.gyro_dps[2]=90.;p.sample_raw(s,1.21);p.frame(1.22,bounds());
+    let click=Control{sequence:1,sensor_ms:1210,events:CLICK};assert!(p.control(click).unwrap());
+    assert!(!p.control(click).unwrap());let frame=p.frame(1.23,bounds());
+    assert_eq!(frame.buttons.len(),1);assert!(matches!(frame.buttons[0],Button::Click(Point{x:960.,y:540.})));
+    assert!(p.frame(1.24,bounds()).buttons.is_empty());
+}
+#[test]fn raw_mode_does_not_silently_accept_a_different_pose_schema_and_calibration_restarts(){
+    let mut p=coarse_ready();let count=p.metrics.samples;
+    p.sample(sample(900,2000,false),2.,bounds());assert_eq!(p.metrics.samples,count);
+    p.calibrate();assert!(!p.metrics.calibrated);p.sample_raw(raw_sample(122),1.22);assert!(!p.metrics.calibrated);
+    let invalid=Settings{desktop_motion:true,..Settings::default()};assert!(invalid.validate().is_err());
+}
+#[test]fn new_raw_stream_accepts_restart_counter_without_waiting_for_old_sequence(){
+    let mut p=coarse_ready();p.pause(true);p.begin_stream();p.pause(false);
+    for n in 0..121{p.sample_raw(raw_sample(n),2.+n as f64/100.);p.frame(2.+n as f64/100.,bounds());}
+    assert!(p.metrics.calibrated);assert!(!p.metrics.paused);
+    let mut s=raw_sample(121);s.gyro_dps[2]=20.;p.sample_raw(s,3.21);assert!(p.frame(3.22,bounds()).position.is_some());
+}
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
 fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {

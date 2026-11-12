@@ -6,7 +6,9 @@ use std::{io::{self,BufRead,Write},sync::{mpsc,Arc,Mutex,atomic::{AtomicBool,Ord
 fn main(){if let Err(e)=run(){eprintln!("{e}");std::process::exit(1);}}
 fn run()->Result<(),String>{
     let controls=std::env::args().any(|a|a=="--control");
-    let mut cursor=Cursor::open()?;let mut p=Pointer::new(Settings::default(),cursor.position()?);
+    let desktop=std::env::args().any(|a|a=="--desktop");
+    let settings=Settings{desktop_motion:desktop,mapping:if desktop{Mapping::Relative}else{Settings::default().mapping},..Settings::default()};
+    let mut cursor=Cursor::open()?;let mut p=Pointer::new(settings,cursor.position()?);
     let mut preview_position=cursor.position()?;
     let stop=Arc::new(AtomicBool::new(false));let input_stop=stop.clone();let(tx,rx)=mpsc::sync_channel::<serde_json::Value>(8);
     let motion=Arc::new(Mutex::new(None));let input_motion=motion.clone();
@@ -28,7 +30,7 @@ fn run()->Result<(),String>{
                 match action {
                     "pause"=>p.pause(true),"resume"=>p.pause(false),"calibrate"=>p.calibrate(),
                     "recenter"=>p.recenter(cursor.position()?),
-                    "relative"|"laser"=>{p.settings.mapping=if action=="laser"{Mapping::Laser}else{Mapping::Relative};p.recenter(cursor.position()?);},
+                    "relative"|"laser"|"desktop"=>{p.settings.desktop_motion=action=="desktop";p.settings.mapping=if action=="laser"{Mapping::Laser}else{Mapping::Relative};p.calibrate();p.recenter(cursor.position()?);},
                     "stop"=>{stop.store(true,Ordering::Release);},_=>{}
                 }
             }
@@ -41,7 +43,7 @@ fn run()->Result<(),String>{
             }
             if let Some(hex)=value.get("wire").and_then(|v|v.as_str()).filter(|h|h.len()==64){
                 let wire=(0..64).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16)).collect::<Result<Vec<_>,_>>();
-                if let Ok(wire)=wire {if let Ok(s)=Sample::parse(&wire){p.sample(s,origin.elapsed().as_secs_f64(),cursor.bounds());}}
+                if let Ok(wire)=wire {if let Ok(s)=companion_desktop_input::pointer::desktop::Raw::parse(&wire){p.sample_raw(s,origin.elapsed().as_secs_f64());}else if let Ok(s)=Sample::parse(&wire){p.sample(s,origin.elapsed().as_secs_f64(),cursor.bounds());}}
             }
         }
         if stop.load(Ordering::Acquire){break;}

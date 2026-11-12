@@ -9,13 +9,14 @@ use std::time::{Instant,Duration};
 #[serde(rename_all="camelCase")]
 pub struct Status {pub enabled:bool,pub ready:bool,pub controls_cursor:bool,pub message:String,pub metrics:Metrics,pub settings:Settings}
 static STATUS:LazyLock<Mutex<Status>>=LazyLock::new(||Mutex::new(Status::default()));
-struct Session {stop:Arc<AtomicBool>,pointer:Arc<Mutex<Pointer>>,recenter:Arc<AtomicBool>}
+struct Session {stop:Arc<AtomicBool>,pointer:Arc<Mutex<Pointer>>,recenter:Arc<AtomicBool>,user_paused:Arc<AtomicBool>}
 static SESSION:LazyLock<Mutex<Option<Session>>>=LazyLock::new(||Mutex::new(None));
 fn change(f:impl FnOnce(&mut Status)){f(&mut STATUS.lock().unwrap_or_else(|e|e.into_inner()));}
 pub fn status()->Status{STATUS.lock().unwrap_or_else(|e|e.into_inner()).clone()}
 pub fn request_stop(){if let Some(s)=SESSION.lock().unwrap_or_else(|e|e.into_inner()).as_ref(){s.stop.store(true,Ordering::Release);}}
 pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cursor:bool)->Result<Status,String>{
     settings.validate().map_err(str::to_string)?;
+    let pointer_options=if settings.desktop_motion{24}else{8};
     let mut session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;
     if session.is_some(){return Err("空中鼠标已经开启。".into());}
     let (device,peer,lease)=coordinator.begin_desktop_pointer()?;
@@ -24,7 +25,8 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
     let cursor=Cursor::open()?;let position=cursor.position()?;drop(cursor);
     let pointer=Arc::new(Mutex::new(Pointer::new(settings.clone(),position)));
     let stop=Arc::new(AtomicBool::new(false));let recenter=Arc::new(AtomicBool::new(false));
-    *session=Some(Session{stop:stop.clone(),pointer:pointer.clone(),recenter:recenter.clone()});
+    let user_paused=Arc::new(AtomicBool::new(false));
+    *session=Some(Session{stop:stop.clone(),pointer:pointer.clone(),recenter:recenter.clone(),user_paused:user_paused.clone()});
     change(|s|{*s=Status{enabled:true,ready:false,controls_cursor,message:"正在连接动作通道…".into(),metrics:Metrics::default(),settings};});
     let spawn=std::thread::Builder::new().name("companion-pointer".into()).spawn(move||{
         let _lease=lease;let origin=Instant::now();let frame_stop=stop.clone();let frame_pointer=pointer.clone();
@@ -45,6 +47,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
                     change(|s|{s.metrics=metrics.clone();if s.ready {s.message=if metrics.stream_stale{"正在等待动作数据，光标已停止。"}
                         else if metrics.paused{"已暂停，点击继续或退出。"}
                         else if !metrics.calibrated{"请把卡片放稳约1秒，正在校准…"}
+                        else if controls_cursor&&s.settings.desktop_motion{"平移或转动控制方向；轻敲或短按点击，按住拖拽。Esc退出。"}
                         else if controls_cursor{"左右转动移动光标；双敲机身或短按点击，按住拖拽。Esc退出。"}
                         else{"动作预览中，未控制光标。"}.into();}});update=Instant::now();
                 }
@@ -55,14 +58,15 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
         });
         let result=if frames.is_ok(){
             let p=pointer.clone();let event_stop=stop.clone();let failure=Arc::new(Mutex::new(None));let event_failure=failure.clone();
-            let result=super::ble_bridge::listen_pointer_input(&device,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,move|event|{
+            let result=super::ble_bridge::listen_pointer_input(&device,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,pointer_options,move|event|{
                 use super::ble_bridge::DesktopInputUpdate;
                 match event {
                     DesktopInputUpdate::Motion(sample)=>{
                         // Mapping needs monitor geometry; Win32 read only.
                         let b=desktop_bounds();p.lock().unwrap_or_else(|e|e.into_inner()).sample(sample,origin.elapsed().as_secs_f64(),b);
                     },
-                    DesktopInputUpdate::Ready(_)=>{p.lock().unwrap_or_else(|e|e.into_inner()).calibrate();change(|s|{s.ready=true;});},
+                    DesktopInputUpdate::RawMotion(sample)=>{p.lock().unwrap_or_else(|e|e.into_inner()).sample_raw(sample,origin.elapsed().as_secs_f64());},
+                    DesktopInputUpdate::Ready(_)=>{let mut p=p.lock().unwrap_or_else(|e|e.into_inner());p.begin_stream();p.pause(user_paused.load(Ordering::Acquire));change(|s|{s.ready=true;});},
                     DesktopInputUpdate::Physical(s) if s.mode==3&&s.options&8!=0=>{
                         if let Err(message)=p.lock().unwrap_or_else(|e|e.into_inner()).control(companion_desktop_input::pointer::Control{sequence:s.sequence,sensor_ms:s.event_ms,events:s.events}){
                             *event_failure.lock().unwrap_or_else(|e|e.into_inner())=Some(message.to_string());event_stop.store(true,Ordering::Release);
@@ -95,8 +99,8 @@ pub fn control(action:&str)->Result<Status,String>{
     let s=session.as_ref().ok_or("空中鼠标尚未开启。")?;
     match action {
         "stop"=>{s.stop.store(true,Ordering::Release);change(|s|s.message="正在恢复录音模式…".into());},
-        "pause"=>s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(true),
-        "resume"=>s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(false),
+        "pause"=>{s.user_paused.store(true,Ordering::Release);s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(true);},
+        "resume"=>{s.user_paused.store(false,Ordering::Release);s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(false);},
         "calibrate"=>s.pointer.lock().unwrap_or_else(|e|e.into_inner()).calibrate(),
         "recenter"=>{s.recenter.store(true,Ordering::Release);},
         _=>return Err("未知空中鼠标操作。".into())

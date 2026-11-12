@@ -10,6 +10,7 @@ use std::sync::{
 pub(crate) enum Update {
     Ready(InputStatus),
     Motion(companion_desktop_input::pointer::Sample),
+    RawMotion(companion_desktop_input::pointer::desktop::Raw),
     Physical(InputStatus),
     Reconcile(InputStatus),
     Reconnecting(String),
@@ -41,11 +42,11 @@ async fn exchange(
     values: &mut Notifications,
     peer: &super::super::recording_wire::transport::Peer,
     mode: Option<u8>,
-    pointer_v4:bool,
+    pointer_options:u8,
 ) -> Result<InputStatus, String> {
     let nonce = segmented::nonce();
     let message = match mode {
-        Some(3) if pointer_v4 => recorder_input::pointer_request(peer,nonce)?,
+        Some(3) if pointer_options!=0 => recorder_input::pointer_request_options(peer,nonce,pointer_options)?,
         Some(mode) => recorder_input::request(peer, mode, nonce)?,
         None => recorder_input::query(peer, nonce)?,
     };
@@ -78,12 +79,12 @@ pub(crate) fn listen(
     connection: Arc<tokio::sync::Mutex<()>>,
     notify: impl Fn(Update) + Send + Sync + 'static,
 ) -> Result<(), String> {
-    listen_mode(device_id,peer,stop,connection,1,notify)
+    listen_mode(device_id,peer,stop,connection,1,0,notify)
 }
 
 pub(crate) fn listen_mode(
     device_id:&str, peer:super::super::recording_wire::transport::Peer,
-    stop:Arc<AtomicBool>,connection:Arc<tokio::sync::Mutex<()>>,mode:u8,
+    stop:Arc<AtomicBool>,connection:Arc<tokio::sync::Mutex<()>>,mode:u8,pointer_options:u8,
     notify:impl Fn(Update)+Send+Sync+'static,
 )->Result<(),String> {
     run_native_blocking(async {
@@ -115,7 +116,7 @@ pub(crate) fn listen_mode(
                     // Query carries the original UID/epoch and performs no MIC
                     // command. A new handle may only resume this same recorder.
                     let mut current =
-                        exchange(&device, &characteristic, &mut values, &peer, None,false).await?;
+                        exchange(&device, &characteristic, &mut values, &peer, None,0).await?;
                     if current.result != 0 {
                         return Err("录音卡尚未确认当前输入状态。".into());
                     }
@@ -141,19 +142,19 @@ pub(crate) fn listen_mode(
                         ));
                         tokio::time::sleep(StdDuration::from_millis(250)).await;
                         current =
-                            exchange(&device, &characteristic, &mut values, &peer, None,false).await?;
+                            exchange(&device, &characteristic, &mut values, &peer, None,0).await?;
                         notify(Update::Reconcile(current.clone()));
                     }
-                    let wanted_options=if mode==3{8}else{0};
+                    let wanted_options=if mode==3{pointer_options}else{0};
                     let mut initial = if current.mode == mode && current.options == wanted_options {
                         current
                     } else {
-                        exchange(&device, &characteristic, &mut values, &peer, Some(mode),mode==3).await?
+                        exchange(&device, &characteristic, &mut values, &peer, Some(mode),wanted_options).await?
                     };
                     // Old normal firmware remains usable with its original
                     // schema3 controls. New firmware negotiates CIM4 explicitly.
-                    if mode==3&&initial.result==2 {
-                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),false).await?;
+                    if mode==3&&initial.result==2&&wanted_options==8 {
+                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),0).await?;
                     }
                     if mode==3 && initial.result==2 {return Err("此固件尚不支持空中鼠标，请先升级录音卡固件。".into());}
                     if initial.result != 0 || initial.mode != mode {
@@ -194,6 +195,12 @@ pub(crate) fn listen_mode(
                                         if mode==3 {if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value) {
                                             if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
                                         }}
+                                        // Raw planar integration needs every
+                                        // received sensor interval, not CIM4's
+                                        // latest device-integrated heading slot.
+                                        if mode==3&&wanted_options==24 {
+                                            if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){notify(Update::RawMotion(sample));}
+                                        }
                                         if let Ok(status)=InputStatus::parse(&value.value,&peer) {
                                             if status.request==0 {
                                                 trace_input("physical", &status);
@@ -222,7 +229,7 @@ pub(crate) fn listen_mode(
                 .await;
                 // Physical release owns STOP. Explicitly leaving the mode has
                 // to receive a real mode0 ACK before reporting it restored.
-                let restored = exchange(&device, &characteristic, &mut values, &peer, Some(0),false)
+                let restored = exchange(&device, &characteristic, &mut values, &peer, Some(0),0)
                     .await
                     .and_then(|s| {
                         if s.result == 0 && s.mode == 0 {

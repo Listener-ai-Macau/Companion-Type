@@ -52,13 +52,15 @@ pub enum Mapping { #[default] Relative, Laser }
 pub struct Settings {
     pub mapping: Mapping, pub sensitivity: f64, pub smoothing: f64,
     pub deadzone: f64, pub acceleration: f64, pub invert_horizontal: bool, pub invert_vertical: bool,
+    pub desktop_motion: bool,
 }
 impl Default for Settings {
     fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
-        deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false}}
+            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false}}
 }
 impl Settings {
     pub fn validate(&self)->Result<(), &'static str> {
+        if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
         if !self.sensitivity.is_finite() || !(0.2..=3.).contains(&self.sensitivity) ||
            !self.smoothing.is_finite() || !(0.0..=0.97).contains(&self.smoothing) ||
            !self.deadzone.is_finite() || !(0.0..=5.).contains(&self.deadzone) ||
@@ -126,6 +128,7 @@ pub struct Pointer {
     last:Option<(u32,u32)>, last_tap:Option<u8>, arrival:Option<f64>, frame_at:Option<f64>,sensor_clock:f64,clock_offset:Option<f64>,
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
+    coarse:Option<intent::Intent>,
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
     laser_offset:Point,last_projected:Option<Point>,
     last_control:Option<u32>,
@@ -134,20 +137,30 @@ pub struct Pointer {
 impl Pointer {
     pub fn new(settings:Settings,position:Point)->Self {
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
-            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),
+            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
-    fn reset_motion(&mut self){self.smoother.reset();self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
+    fn reset_motion(&mut self){self.smoother.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.coarse=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    /// A newly verified link may start a new device sequence/time domain.
+    /// Keep its first levels as a baseline; fresh control edges still own input.
+    pub fn begin_stream(&mut self){
+        self.calibrate();self.last=None;self.last_tap=None;self.last_control=None;
+        self.arrival=None;self.frame_at=None;self.clock_offset=None;self.sensor_clock=0.;
+    }
     pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
     /// An ordinary mouse moved the real cursor since our last OS output.
     /// Re-anchor to that position, canceling the old follow residual. The next
     /// unchanged card pose must stay here; subsequent card motion adds to it.
     pub fn external_position(&mut self,position:Point) {
         self.shown=position;
+        // A contact after using the ordinary mouse must not rewind into the
+        // old card-only cursor history, even during the upstream tap rewind.
+        self.history.clear();
+        if let Some(c)=self.coarse.as_mut(){c.clear_motion();}
         if self.settings.mapping==Mapping::Laser {
             if let Some(projected)=self.last_projected {
                 self.laser_offset=Point{x:position.x-projected.x,y:position.y-projected.y};
@@ -180,30 +193,45 @@ impl Pointer {
             self.metrics.dragging=false;self.wait_release=false;
         }
         if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
+            if let Some(c)=self.coarse.as_mut(){c.tap();}
             let point=self.press_point(measured_at-0.1);self.shown=point;self.queued.push(Button::Click(point));
         }
         Ok(true)
     }
-    pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
-        let dt=if let Some((sequence,ms))=self.last {
-            let advance=s.sequence.wrapping_sub(sequence);
-            if advance==0 || advance>=0x8000_0000 {self.metrics.duplicates+=1;return;}
+    fn observe_clock(&mut self,sequence:u32,sensor_ms:u32,now:f64)->Option<(f64,bool,f64)> {
+        let dt=if let Some((previous,ms))=self.last {
+            let advance=sequence.wrapping_sub(previous);
+            if advance==0 || advance>=0x8000_0000 {self.metrics.duplicates+=1;return None;}
             self.metrics.missing+=(advance-1) as u64;
-            s.sensor_ms.wrapping_sub(ms) as f64/1000.
+            sensor_ms.wrapping_sub(ms) as f64/1000.
         }else{0.};
         let gap=dt>0.2 || self.arrival.is_some_and(|at|now-at>0.3);
         if gap {self.metrics.gaps+=1;self.release();self.reset_motion();}
         // Same fastest-arriving clock alignment as WatchPointer. Button DOWN
         // uses its sensor sample time, rather than an invented60ms rewind.
-        if gap||self.last.is_none(){self.sensor_clock=s.sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
+        if gap||self.last.is_none(){self.sensor_clock=sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
         self.clock_offset=Some(self.clock_offset.unwrap_or(f64::INFINITY).min(now-self.sensor_clock));
         let measured_at=self.sensor_clock+self.clock_offset.unwrap();
+        self.last=Some((sequence,sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
+        if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
+        Some((dt,gap,measured_at))
+    }
+    /// CIM5 remains raw sensor data. Reuse the same physical control clock,
+    /// history, pause, drag and native output instead of inventing a CIM4 pose.
+    pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
+        if !self.settings.desktop_motion{return;}
+        if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
+        let c=self.coarse.get_or_insert_with(intent::Intent::default);c.settings=self.settings.clone();
+        c.sample(s,now);self.metrics.calibrated=c.desktop.state.calibrated;
+        if self.metrics.paused{c.clear_motion();}
+    }
+    pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
+        if self.settings.desktop_motion{return;}
+        let Some((dt,gap,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
         // Consume the serial even while paused/calibrating. A lost packet may
         // carry the same event again; reconnect/baseline must never replay it.
         let tapped=self.last_tap.is_some_and(|previous|s.tap_serial.wrapping_sub(previous)==1);
         self.last_tap=Some(s.tap_serial);
-        self.last=Some((s.sequence,s.sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
-        if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
         let norm=s.accel.iter().map(|x|x*x).sum::<f64>().sqrt();
         if let Some(ready)=s.device_ready {
             if !ready {
@@ -295,7 +323,7 @@ impl Pointer {
         if stale || self.metrics.paused || !self.metrics.calibrated {return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=0.35 {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         let next=match self.settings.mapping {
-            Mapping::Relative=>{let delta=self.smoother.step(now,dt,self.settings.smoothing);Point{x:self.shown.x+delta.x,y:self.shown.y+delta.y}},
+            Mapping::Relative=>{let delta=if let Some(c)=self.coarse.as_mut(){c.frame(now)}else{self.smoother.step(now,dt,self.settings.smoothing)};Point{x:self.shown.x+delta.x,y:self.shown.y+delta.y}},
             Mapping::Laser=>{let p=self.target.unwrap_or(self.shown);let follow=1.-(-dt/0.005).exp();Point{x:self.shown.x+(p.x-self.shown.x)*follow,y:self.shown.y+(p.y-self.shown.y)*follow}}
         };
         let next=if self.settings.mapping==Mapping::Laser{next}else{bounds.clamp(next)};
