@@ -41,7 +41,15 @@ impl Desktop {
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return Point::default();}
             let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
-            if n!=1||dt>0.05||dt<=0.{self.state.gaps+=1;self.clutch();self.last=Some((s.sequence,s.sensor_ms));return Point::default();}
+            if n!=1||dt>0.05||dt<=0.{
+                self.state.gaps+=1;self.clutch();self.last=Some((s.sequence,s.sensor_ms));
+                // A gap invalidates displacement integration, not the CURRENT
+                // rate observation. The coarse angular path must never reuse
+                // the rate from before the gap as this sample's direction.
+                self.state.gyro_dps=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
+                if !self.state.calibrated{self.start_ms=None;}
+                return Point::default();
+            }
             dt
         }else{0.01};
         self.last=Some((s.sequence,s.sensor_ms));self.state.samples+=1;
