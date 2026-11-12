@@ -10,8 +10,7 @@ from check_type_build_target import inspect
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,'C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow/scripts')
 from development_storage import exclusive_build,preflight
-sys.path.insert(0,'C:/Users/Billy/Desktop/Denzic/Companion/model-research/src')
-from moss_windows_resource_limits_20261104 import WorkerLimits
+from windows_build_limits import NativeBuildLimits
 
 def sha(path):
  with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -33,7 +32,7 @@ def main():
   assert result.returncode==0,name+' failed; preserved '+str(out/(name+'.log'))
   print('Finished '+name,flush=True)
  try:
-  limits=WorkerLimits(10,2*1024**3);record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=2*1024**3)
+  limits=NativeBuildLimits();record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=6*1024**3,resourceLimits=limits.query())
   with exclusive_build(cache/'.shared-windows-build.lock'):
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
@@ -68,6 +67,7 @@ def main():
    binary=(pair/'companion-type.exe').read_bytes();assert binary.count(b'__TAURI_BUNDLE_TYPE_VAR_UNK')==1
    resources=ROOT/'apps/windows/src-tauri/resources'
    record.update(state='LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING',msi=str(installer),msiSha256=sha(installer),expectedEmbeddedExeSha256=hashlib.sha256(binary.replace(b'__TAURI_BUNDLE_TYPE_VAR_UNK',b'__TAURI_BUNDLE_TYPE_VAR_MSI')).hexdigest(),expectedDllSha256=sha(pair/'companion_type_lib.dll'),licenseFiles=[{'path':p.relative_to(resources).as_posix(),'sha256':sha(p)} for p in (resources/'licenses').rglob('*') if p.is_file()]+[{'path':'opus-license.txt','sha256':sha(resources/'opus-license.txt')}],normalReleaseOptimization=True,nativeAndWebUnchangedAfterBundle=True,sharedTarget=str(target),intermediateTargetCopies=0,automaticDeletion=False,finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'));save()
+   record['resourceLimits']=limits.query();save()
    print(json.dumps({k:record[k] for k in ['state','sourceCommit','version','msi','msiSha256']},ensure_ascii=False))
  except BaseException as error:
   record.update(state='LOCAL_WINDOWS_DELIVERY_BUILD_FAILED_RETAINED',error=repr(error));save();(out/'failure.txt').write_text(traceback.format_exc(),encoding='utf-8');raise
