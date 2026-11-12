@@ -199,3 +199,31 @@ fn reliable_drag_release_pause_overflow_and_sequence_wrap_are_bounded() {
     assert!(p.control(Control{sequence:3,sensor_ms:430,events:OVERFLOW|UP}).is_err());
     assert!(!p.metrics.dragging);
 }
+
+#[test]
+fn ordinary_mouse_reanchors_laser_without_snap_back_or_losing_next_card_turn() {
+    let mut p=aim_pointer();
+    // There is unfinished interpolation when the ordinary mouse takes over.
+    p.sample(aim_sample(3,20,5.),0.02,bounds());p.frame(0.02,bounds());
+    let physical=Point{x:1200.,y:700.};p.external_position(physical);
+    for n in 4..30 {
+        p.sample(aim_sample(n,n*10,5.),n as f64*0.01,bounds());
+        assert!(p.frame(n as f64*0.01,bounds()).position.is_none());
+        assert!(p.shown.distance(physical)<1e-8);
+    }
+    p.sample(aim_sample(30,300,7.),0.3,bounds());
+    assert!(p.frame(0.3,bounds()).position.unwrap().x<physical.x);
+    // A second ordinary move establishes a new anchor again.
+    let physical=Point{x:600.,y:300.};p.external_position(physical);
+    p.sample(aim_sample(31,310,7.),0.31,bounds());
+    assert!(p.frame(0.31,bounds()).position.is_none());assert_eq!(p.shown,physical);
+}
+#[test]
+fn ordinary_mouse_reanchors_relative_motion_instead_of_restoring_old_position() {
+    let mut p=aim_pointer();p.settings.mapping=Mapping::Relative;
+    let physical=Point{x:1250.,y:720.};p.external_position(physical);
+    for n in 3..30 {let mut s=aim_sample(n,n*10,0.);s.aim=Some([0.,0.,0.]);p.sample(s,n as f64*0.01,bounds());assert!(p.frame(n as f64*0.01,bounds()).position.is_none());}
+    assert_eq!(p.shown,physical);
+    let mut s=aim_sample(30,300,0.);s.aim=Some([0.,15.,0.]);p.sample(s,0.3,bounds());
+    assert!(p.frame(0.3,bounds()).position.unwrap().x<physical.x);
+}

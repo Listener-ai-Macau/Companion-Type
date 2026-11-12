@@ -21,6 +21,7 @@ fn run()->Result<(),String>{
     let origin=Instant::now();let mut next=Instant::now();let mut report=Instant::now();let(mut clicks,mut drags)=(0u64,0u64);
     while !stop.load(Ordering::Acquire){
         if controls && Cursor::escape(){break;}
+        if controls{if let Some(position)=cursor.external_position()?{p.external_position(position);}}
         if let Some(s)=motion.lock().unwrap_or_else(|e|e.into_inner()).take(){p.sample(s,origin.elapsed().as_secs_f64(),cursor.bounds());}
         while let Ok(value)=rx.try_recv(){
             if let Some(action)=value.get("action").and_then(|v|v.as_str()){

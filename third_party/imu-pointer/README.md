@@ -74,3 +74,7 @@ This is a platform adaptation of the original architecture, not an assertion
 of identical CoreMotion sensor accuracy or radio latency. Packet-loss replay
 verifies recovered orientation and exactly-once physical controls; physical
 feel and the separate long receive stalls remain unqualified until actual use.
+
+Owner mouse-coexistence adaptation: Windows cursor glue detects real cursor movement relative to its own last output. Both mappings adopt the ordinary mouse position. Laser projection retains the original equations but shifts its anchor and resets the old interpolation residual, so an unchanged card cannot pull the cursor back. Seventeen core regressions include this handover and subsequent card movement; actual OS coexistence remains pending physical use.
+
+Left/right enclosure tap location is NOT implemented or qualified. LSM6DSO TAP_SRC axis/sign denotes acceleration direction, not contact position. WatchPointer obtains left/right clicks from separate touch controls; this source must not imply those are IMU surface-location recognition. Single/double tapping, enclosure-region discrimination and ordinary mouse double-click are separate input contracts.

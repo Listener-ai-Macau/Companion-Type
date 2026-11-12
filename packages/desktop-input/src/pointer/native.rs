@@ -3,10 +3,10 @@ use super::{Bounds,Button,Frame,Point};
 #[cfg(windows)]
 use enigo::{Enigo,Settings,Mouse,Coordinate,Direction};
 #[cfg(windows)]
-pub struct Cursor {input:Enigo,down:bool}
+pub struct Cursor {input:Enigo,down:bool,expected:Option<Point>}
 #[cfg(windows)]
 impl Cursor {
-    pub fn open()->Result<Self,String> {Ok(Self{input:Enigo::new(&Settings::default()).map_err(|e|e.to_string())?,down:false})}
+    pub fn open()->Result<Self,String> {Ok(Self{input:Enigo::new(&Settings::default()).map_err(|e|e.to_string())?,down:false,expected:None})}
     pub fn position(&self)->Result<Point,String>{let(x,y)=self.input.location().map_err(|e|e.to_string())?;Ok(Point{x:x as f64,y:y as f64})}
     pub fn bounds(&self)->Bounds {
         use windows::Win32::UI::WindowsAndMessaging::{GetSystemMetrics,SM_XVIRTUALSCREEN,SM_YVIRTUALSCREEN,SM_CXVIRTUALSCREEN,SM_CYVIRTUALSCREEN};
@@ -14,7 +14,19 @@ impl Cursor {
             width:GetSystemMetrics(SM_CXVIRTUALSCREEN).max(1) as f64,height:GetSystemMetrics(SM_CYVIRTUALSCREEN).max(1) as f64,primary:Some([0.,0.,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CXSCREEN).max(1) as f64,GetSystemMetrics(windows::Win32::UI::WindowsAndMessaging::SM_CYSCREEN).max(1) as f64])}}
     }
     pub fn escape()->bool {unsafe {windows::Win32::UI::Input::KeyboardAndMouse::GetAsyncKeyState(0x1b)<0}}
-    fn move_to(&mut self,p:Point)->Result<(),String>{self.input.move_mouse(p.x.round() as i32,p.y.round() as i32,Coordinate::Abs).map_err(|e|e.to_string())}
+    pub fn external_position(&mut self)->Result<Option<Point>,String>{
+        let p=self.position()?;
+        if let Some(expected)=self.expected {
+            // SendInput's normalized coordinates may round one pixel. Keep
+            // the same expected position until a real accumulated move.
+            if p.distance(expected)>1.5{self.expected=Some(p);return Ok(Some(p));}
+        }else{self.expected=Some(p);}
+        Ok(None)
+    }
+    fn move_to(&mut self,p:Point)->Result<(),String>{
+        let p=Point{x:p.x.round(),y:p.y.round()};
+        self.input.move_mouse(p.x as i32,p.y as i32,Coordinate::Abs).map_err(|e|e.to_string())?;self.expected=Some(p);Ok(())
+    }
     pub fn apply(&mut self,f:Frame)->Result<(),String> {
         // Rewind to pre-press point for click/down, then continue dragging.
         for event in f.buttons {
@@ -39,6 +51,7 @@ impl Cursor {
     pub fn position(&self)->Result<Point,String>{Err("Unsupported platform".into())}
     pub fn bounds(&self)->Bounds{Bounds{left:0.,top:0.,width:1.,height:1.,primary:None}}
     pub fn escape()->bool{false}
+    pub fn external_position(&mut self)->Result<Option<Point>,String>{Ok(None)}
     pub fn apply(&mut self,_:Frame)->Result<(),String>{Err("Unsupported platform".into())}
     pub fn release(&mut self)->Result<(),String>{Ok(())}
 }

@@ -125,6 +125,7 @@ pub struct Pointer {
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
+    laser_offset:Point,last_projected:Option<Point>,
     last_control:Option<u32>,
     pressed:Option<(f64,Point)>,wait_release:bool,queued:Vec<Button>,history:VecDeque<(f64,Point)>,
 }
@@ -132,14 +133,28 @@ impl Pointer {
     pub fn new(settings:Settings,position:Point)->Self {
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
             last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),
-            heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
+            heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
     fn reset_motion(&mut self){self.smoother.reset();self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;}
-    pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.heading_zero=None;self.elevation_zero=None;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    /// An ordinary mouse moved the real cursor since our last OS output.
+    /// Re-anchor to that position, canceling the old follow residual. The next
+    /// unchanged card pose must stay here; subsequent card motion adds to it.
+    pub fn external_position(&mut self,position:Point) {
+        self.shown=position;
+        if self.settings.mapping==Mapping::Laser {
+            if let Some(projected)=self.last_projected {
+                self.laser_offset=Point{x:position.x-projected.x,y:position.y-projected.y};
+            }
+            self.target=Some(position);
+            self.filter_x=OneEuro{value:Some(position.x),velocity:0.};
+            self.filter_y=OneEuro{value:Some(position.y),velocity:0.};
+        }
+    }
     /// Reliable control is independent of motion loss. Retries are consumed
     /// exactly once, including while paused/calibrating; stale input is not
     /// replayed later. The caller ACKs only after this function has consumed it.
@@ -241,7 +256,8 @@ impl Pointer {
                 let left=((self.heading+180.).rem_euclid(360.)-180.)*if self.settings.invert_horizontal{-1.}else{1.};
                 let height=(elevation-zero)*if self.settings.invert_vertical{-1.}else{1.};
                 if self.metrics.paused {return;} // Aim still tracks while paused, as upstream.
-                let point=laser(left,height,self.settings.sensitivity,bounds);
+                let projected=laser(left,height,self.settings.sensitivity,bounds);self.last_projected=Some(projected);
+                let point=Point{x:projected.x+self.laser_offset.x,y:projected.y+self.laser_offset.y};
                 if self.target.is_none(){self.shown=point;}
                 let filter_dt=if dt>0.&&dt<0.2{dt}else{0.};
                 self.target=Some(Point{x:self.filter_x.update(point.x,filter_dt),y:self.filter_y.update(point.y,filter_dt)});

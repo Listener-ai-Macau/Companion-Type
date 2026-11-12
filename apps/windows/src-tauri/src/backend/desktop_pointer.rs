@@ -36,6 +36,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,settings:Settings,controls_cu
             while !frame_stop.load(Ordering::Acquire) {
                 if controls_cursor && Cursor::escape(){frame_stop.store(true,Ordering::Release);break;}
                 let (frame,metrics,period)={let mut p=frame_pointer.lock().unwrap_or_else(|e|e.into_inner());
+                    if controls_cursor{if let Some(position)=cursor.external_position()?{p.external_position(position);}}
                     if recenter.swap(false,Ordering::AcqRel){p.recenter(cursor.position()?);}
                     let frame=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());
                     (frame,p.metrics.clone(),if p.settings.mapping==companion_desktop_input::pointer::Mapping::Laser{4_166_667}else{8_333_333})};
