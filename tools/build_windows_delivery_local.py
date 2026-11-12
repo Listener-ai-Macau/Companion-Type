@@ -25,7 +25,7 @@ def main():
  record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'LOCAL_WINDOWS_DELIVERY_BUILD_PREPARING','sourceCommit':capture(['git','rev-parse','HEAD']),'platformCommit':capture(['git','rev-parse','HEAD'],ROOT/'third_party/denzic-platform'),'version':json.loads((ROOT/'apps/windows/src-tauri/tauri.conf.json').read_bytes())['version'],'modelsRun':False,'boardAccessed':False,'installed':False,'hostedCiRun':None,'saleQualified':False,'steps':[]}
  def save():(out/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  save()
- env={**os.environ,'CARGO_TARGET_DIR':str(target),'CARGO_INCREMENTAL':'0','CARGO_PROFILE_DEV_DEBUG':'0','CARGO_PROFILE_TEST_DEBUG':'0','CARGO_BUILD_JOBS':'2','RUSTUP_TOOLCHAIN':'1.95.0','PYTHONUTF8':'1'}
+ env={**os.environ,'CARGO_TARGET_DIR':str(target),'CARGO_INCREMENTAL':'0','CARGO_PROFILE_DEV_DEBUG':'0','CARGO_PROFILE_TEST_DEBUG':'0','CARGO_BUILD_JOBS':'1','RUSTUP_TOOLCHAIN':'1.95.0','PYTHONUTF8':'1'}
  def run(name,command,cwd=ROOT):
   started=time.monotonic();print('Starting '+name,flush=True)
   with (out/(name+'.log')).open('wb') as log:result=subprocess.run(list(map(str,command)),cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
@@ -33,7 +33,7 @@ def main():
   assert result.returncode==0,name+' failed; preserved '+str(out/(name+'.log'))
   print('Finished '+name,flush=True)
  try:
-  limits=WorkerLimits(10,6*1024**3);record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=6*1024**3)
+  limits=WorkerLimits(10,2*1024**3);record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=2*1024**3)
   with exclusive_build(cache/'.shared-windows-build.lock'):
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
