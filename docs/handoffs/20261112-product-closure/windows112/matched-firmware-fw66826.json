@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-12T19:26:56+08:00",
+  "state": "ORDINARY_FIRMWARE_PACKAGE_VERIFIED_INSTALLATION_AND_OWNER_TOTAL_USE_PENDING",
+  "firmware": 66826,
+  "resourceVersion": 85,
+  "firmwareSourceCommit": "9f93997b097332d1b52b43bbdb601c3dcac6bfd2",
+  "compiledSourceFiles": 783,
+  "committedSourceFilesMatched": 776,
+  "committedSourceMismatches": [],
+  "externalOrGeneratedSourceFiles": [
+    "_external-build-output/companion_wba_resource_contract.h",
+    "_external-build-output/profile.json",
+    "_external-build-output/ui-partition.bin",
+    "_external-build-output/power-profile.json",
+    "_external-build-output/wba_board_power_profile.h",
+    "_external-build-output/wba_recording_audio_identity.h",
+    "_external-build-output/wba_update_trust_anchor.h"
+  ],
+  "sourceEolOnly": [],
+  "package": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66826-package\\companion-update.cup",
+  "packageSha256": "5aac29cade4ba288e36858d0fc44d02df58a8bb25142ceb422bba7869d653bac",
+  "manifest": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66826-package\\ota_manifest.json",
+  "manifestSha256": "dc047dec6d5926eccd72020c40ced66524c464dc297ca6536c9afefb82cc5c81",
+  "binSha256": "667b7d945a35dad68366ac66069d26987e1dc69c7b72a7c164fcb17c13be7410",
+  "elfSha256": "871f4ac7e34fb2661df4a18817e1c44f8f321b3783555f976284bd58bc724d54",
+  "publicKeySha256": "4f743840a0679f22ca0bbd1160800a3ca3ee90d1c65c67583ab2ece983f1d4c8",
+  "keyId": 1145394737,
+  "staticRamOrStackQualified": false,
+  "actualCurrentBoardIdentityQueried": false,
+  "ordinaryFirmwareInstalledVerified": false,
+  "physicalTotalAcceptancePassed": false,
+  "saleQualified": false
+}

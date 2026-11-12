@@ -1,3 +1,6 @@
+<!-- self112-final-normal826-offline-preparation -->
+2026-11-12T19:28:42+08:00 同一自验轮离线准备完成：普通826/UI85源码9f93997共783输入/776已提交源逐一匹配，BIN/CUP/manifest哈希核对，screen/rawUART/CPUobserver/周期诊断均关闭；当前已装112原生离线验证器接受同包，未接板/未传输。原install826-normal仍为安装责任入口，其结果当次只到OFFLINE_SIGNED_PACKAGE_VALID，不能当写入/启动已确认。板此刻仍属原19:09:35普通826安装项；等真实收尾/释放后再绑定实际身份，未弹Owner窗。软件自验工具/证据a878fc08已推送；首次远端earlyEOF保留，一次同提交重推成功，无GC/网络配置变更。
+
 <!-- self112-board-release-scope-correction -->
 2026-11-12T19:09:17+08:00 实际复核占用已释放，最新释放为18:58:31诊断串口关闭/OFF requested；这不是正常固件恢复确认。更正前述“仍持板”当前口径：本任务未领板，剩余实际依赖是原嵌软最终正常安装/恢复身份，不能把free当正常固件已就绪。
 

@@ -270897,7 +270897,7 @@
             "nativeModelsRun": false,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "Engineering software round and identical private archive/MSI readback complete. No own GUI/build/model/device job active. Latest board lease snapshot holder=None; final normal-firmware restoration/source binding remains pending in original IMU workpoint.",
+            "knownJobState": "Software112 self-acceptance and identical private package/MSI delivery complete; ordinary826 source/package and exact112 offline validator passed. Original installer still owns board (codex); no own board/GUI/MIC job. Installation/startup/release confirmation pending.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271057,7 +271057,7 @@
               "saleQualified": false,
               "physicalAcceptanceDependency": {
                 "state": "CURRENT_EMBEDDED_WORKPOINT_MUST_BIND_LATEST_NORMAL_FIRMWARE_BEFORE_PHYSICAL_TOTAL_ONLY",
-                "observedAt": "2026-11-12T19:09:17+08:00",
+                "observedAt": "2026-11-12T19:28:42+08:00",
                 "boardHolder": null,
                 "lastBoardRelease": {
                   "side": "codex",
@@ -271277,9 +271277,9 @@
                     "grok"
                   ],
                   "next": null,
-                  "holder": null,
-                  "leaseLine": null,
-                  "heldSince": null,
+                  "holder": "codex",
+                  "leaseLine": "- **占用中**：轮流 Codex，2026-11-12T19:09:35+08:00；一项：Install ordinary826 consolidated visual-resource fix; finish engineering restoration。做完立刻释放。状态 docs/board_turn.json。",
+                  "heldSince": "2026-11-12T19:09:35+08:00",
                   "turnMinutes": 0,
                   "turnWindow": "retired-2026-11-03",
                   "openedAt": "2026-11-12T18:58:31+08:00",
@@ -271298,11 +271298,21 @@
                     ],
                     "codex": []
                   },
-                  "updatedAt": "2026-11-12T18:58:31+08:00",
-                  "item": "824 UART byte-level diagnosis; no MIC/cursor",
+                  "updatedAt": "2026-11-12T19:09:35+08:00",
+                  "item": "Install ordinary826 consolidated visual-resource fix; finish engineering restoration",
                   "urgent": false
                 },
-                "latestEmbeddedProgress": "Original IMU thread has real UART output and is still shrinking no-display resource code/restoring normal firmware; no final restoration receipt matched here."
+                "latestEmbeddedProgress": "Original IMU thread has real UART output and is still shrinking no-display resource code/restoring normal firmware; no final restoration receipt matched here.",
+                "preparedNormalCandidate": {
+                  "firmware": 66826,
+                  "ui": 85,
+                  "sourceCommit": "9f93997b097332d1b52b43bbdb601c3dcac6bfd2",
+                  "packageSha256": "5aac29cade4ba288e36858d0fc44d02df58a8bb25142ceb422bba7869d653bac",
+                  "sourceAndManifestVerified": true,
+                  "installedWindows112OfflineValidatorPassed": true,
+                  "installationAndBootConfirmed": false,
+                  "originalInstaller": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/install826-normal/result.json"
+                }
               },
               "latestOwnerContinuation": {
                 "ownerQuote": "意思就是你现在一定要板才可以做是吧？然后没有板的话，就前端那些东西就不能做了。然后前后端的话，就是非固建端的东西就不能做。",
@@ -271684,7 +271694,15 @@
                   ],
                   "next": "Read current embedded normal-firmware restoration and real lease. Bind final signed normal package to exact installed112, then one original shared guided Owner round. No physical prompt while the independent IMU/resource batch is in flight.",
                   "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\engineering-self-acceptance\\result.json",
-                  "completedAt": "2026-11-12T19:06:37+08:00"
+                  "completedAt": "2026-11-12T19:06:37+08:00",
+                  "testToolingCommit": "a878fc087f56cd995cd2d6fc7d753b0068ccacc6",
+                  "normal826PackageSourceOfflineVerified": true,
+                  "normal826Installed112ValidatorPassed": true,
+                  "ordinaryFirmwareInstallationConfirmed": false,
+                  "offlineFirmwareEvidence": [
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\matched-firmware-fw66826.json",
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows112\\offline-validator-fw66826.json"
+                  ]
                 }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
