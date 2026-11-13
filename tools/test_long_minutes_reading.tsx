@@ -129,10 +129,10 @@ if(process.env.COMPANION_TEST_PUBLIC_SOURCE_MINUTES){
  act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
  const article=tree.root.findByProps({id:'ct-recording-result'}).findAllByType('article')[0];
  const topics=article.findAllByProps({className:'ct-overview-topic'});
- assert.equal(topics.length,8);assert.ok(topics.every((n:any)=>!n.props.open));
- const labels=topics.map((n:any)=>text(n.findByType('summary'))).join('\n');
+ assert.equal(topics.length,8);assert.ok(topics.every((n:any)=>n.type==='section'));
+ const labels=topics.map((n:any)=>text(n.findByType('h5'))).join('\n');
  assert.ok(labels.includes('果蔬')&&labels.includes('蛋糕')&&labels.includes('日化')&&labels.includes('奶制品'),'later topics remain in the default reading index');
- assert.ok(topics.every((n:any)=>text(n.findByProps({className:'ct-overview-topic-body'})).trim().startsWith(text(n.findByType('summary')).trim())),'opening a topic retains its complete generated wording and source links');
+ assert.ok(topics.every((n:any)=>n.findAllByType('details').length===0&&text(n.findByProps({className:'ct-overview-topic-body'})).trim().length>20),'each topic exposes its actual notes directly without an opening gate');
  assert.ok(!article.findAllByType('button').some((n:any)=>text(n).includes('其余')));
  act(()=>tree.unmount());
 }

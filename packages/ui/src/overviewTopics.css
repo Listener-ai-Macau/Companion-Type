@@ -1,8 +1,7 @@
-/* Existing generated fallback points: show every topic before opening detail. */
-.ct-overview-topic{margin:0;border-bottom:1px solid var(--nb-line,var(--line,#e4e4e7));color:var(--nb-ink,var(--ink,#18181b))}
-.ct-overview-topic>summary{box-sizing:border-box;min-height:44px;padding:10px 0;cursor:pointer;font-size:14px;line-height:1.6;color:inherit}
-.ct-overview-topic>summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
-.ct-overview-topic-preview{display:inline-block;vertical-align:middle;max-width:calc(100% - 22px);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ct-overview-topic-body{padding:0 0 14px 18px;overflow-wrap:anywhere}
-.ct-overview-topic-body>p{margin:0!important}
+/* Visible document sections, following mature meeting-note heading/list patterns. */
+.ct-overview-topic{min-width:0;margin:0 0 23px;color:var(--nb-ink,var(--ink,#202735));break-inside:avoid}
+.ct-overview-topic-title{margin:0 0 7px!important;color:inherit;font-size:15px;line-height:1.6;font-weight:600;letter-spacing:0}
+.ct-overview-topic-body{min-width:0;padding:0 0 0 14px;border-left:2px solid var(--nb-line,var(--line,#e1e6ef));overflow-wrap:anywhere}
+.ct-overview-topic-body>p{margin:0!important;color:inherit;font-size:14px;line-height:1.85}
 .ct-overview-topic-body .minutes-reading{padding:0;border:0;background:transparent;box-shadow:none}
+.ct-overview-topic-body .ct-minutes-source-links{display:block;margin-top:7px}
