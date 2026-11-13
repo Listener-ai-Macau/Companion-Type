@@ -258,7 +258,7 @@ pub(super) fn transcribe_pet_utterance(audio: &Path) -> Result<String, String> {
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
     super::super::meeting_processing_job::check_current()?;
     let root = root()?;
-    let (runtime, kind) = load_preferred(&root)?;
+    let (mut runtime, kind) = load_preferred(&root)?;
     let mut file = File::open(audio).map_err(|e| e.to_string())?;
     let (start, len) = wav_data(&mut file)?;
     let mut offset = 0u64;
@@ -266,7 +266,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     let mut anchors = Vec::new();
     let mut unrecognized = Vec::new();
     let profile = super::chunk_cache::Profile::from_configuration(
-        &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1","punctuation":runtime.punctuation_profile()}),
+        &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
     while offset < len {
         super::super::meeting_processing_job::check_current()?;
@@ -309,6 +309,8 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         }
         offset += buf.len() as u64;
     }
+    runtime.finish_punctuation(&root,&mut parts,super::super::meeting_processing_job::check_current)?;
+    for (anchor,text) in anchors.iter_mut().zip(&parts){anchor.text=text.clone();}
     super::super::meeting_processing_job::check_current()?;
     let text = super::normalize_transcript(&parts.join("\n"));
     if text.is_empty() {
