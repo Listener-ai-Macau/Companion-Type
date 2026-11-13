@@ -3,7 +3,7 @@ import React from 'react';
 import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
-import {meetingHeadingForDisplay} from '../packages/ui/src/meetingReading';
+import {meetingHeadingForDisplay,splitGeneratedMeetingMetadata} from '../packages/ui/src/meetingReading';
 import {splitLongMinutesEvidence} from '../packages/ui/src/briefMinutes';
 import {readFileSync} from 'node:fs';
 
@@ -23,6 +23,12 @@ assert.ok(!enhancedSplit.overview.includes('讨论项目交付'));
 assert.ok(enhancedSplit.overview.includes('会议重点：项目交付'));
 assert.ok(enhancedSplit.overview.includes('准备材料'));
 const conciseMarkdown='## 会议概览\n\n> AI根据详细纪要整理，请结合原文核对。\n\n- 会议重点：项目交付\n\n'+markdown;
+const defaultTemplateMarkdown='> 整理视角：会议\n\n'+conciseMarkdown;
+const projectedDefault=splitGeneratedMeetingMetadata(defaultTemplateMarkdown);
+assert.ok(projectedDefault.body.startsWith('## 会议概览'),'default template label must not prevent overview/evidence folding');
+assert.ok(projectedDefault.body.includes('长会议已按原文顺序处理全部2段'));
+assert.ok(projectedDefault.body.includes('讨论项目交付')&&projectedDefault.body.includes('小王负责准备材料。'));
+assert.ok(!projectedDefault.metadata?.includes('会议重点：项目交付'),'overview must never be hidden as metadata');
 const conciseSplit=splitLongMinutesEvidence(conciseMarkdown);
 assert.ok(conciseSplit?.detailSummary?.includes('讨论项目交付'));
 assert.ok(conciseSplit?.overview.includes('会议重点：项目交付'));
@@ -66,8 +72,8 @@ assert.ok(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summa
 act(()=>tree.unmount());
 // The new format must keep the useful overview and one actionable checklist,
 // while the complete summary and original evidence remain separately available.
-row.minutes!.source='llm_deepseek';row.minutes!.markdown=conciseMarkdown;
-row.minutesByMode!.offlineStore!.source='llm_deepseek';row.minutesByMode!.offlineStore!.markdown=conciseMarkdown;
+row.minutes!.source='llm_deepseek';row.minutes!.markdown=defaultTemplateMarkdown;
+row.minutesByMode!.offlineStore!.source='llm_deepseek';row.minutesByMode!.offlineStore!.markdown=defaultTemplateMarkdown;
 saves.length=0;
 act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
 act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());

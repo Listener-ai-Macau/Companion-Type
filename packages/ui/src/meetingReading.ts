@@ -6,8 +6,10 @@ export function splitGeneratedMeetingMetadata(markdown:string):{body:string;meta
   if(marker){const c=marker[1][0];if(!fence)fence=c;else if(fence===c)fence=null;continue;}
   if(fence||!/^# [^\r\n]+$/.test(lines[i])||lines[i+1]!==''||!/^Generated: .+/.test(lines[i+2]||'')||!/^Duration: \d+ ms$/.test(lines[i+3]||'')||!/^Source: .+/.test(lines[i+4]||'')||!/^Minutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))$/.test(lines[i+5]||''))continue;
   const prefix=lines.slice(0,i);
-  const generatedPerspective=prefix.length===2&&/^> 整理视角：[^\r\n]+$/.test(prefix[0])&&prefix[1]==='';
-  const metadata=lines.slice(generatedPerspective?0:i,i+6).join('\n');return {body:[...(generatedPerspective?[]:prefix),...lines.slice(i+6)].join('\n'),metadata};
+  const generatedPerspective=prefix.length>=2&&/^> 整理视角：[^\r\n]+$/.test(prefix[0])&&prefix[1]==='';
+  // A generated overview can stand between the template label and metadata.
+  // Remove only that label; keep every overview/notice line in the reading body.
+  const metadata=[...(generatedPerspective?prefix.slice(0,2):[]),...lines.slice(i,i+6)].join('\n');return {body:[...(generatedPerspective?prefix.slice(2):prefix),...lines.slice(i+6)].join('\n'),metadata};
  }
  return {body:markdown,metadata:null};
 }
