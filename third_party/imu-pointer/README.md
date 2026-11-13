@@ -104,3 +104,30 @@ real-time desktop pointer. The compiled shared algorithm remains the pinned
 Fusion source; Companion causal decisions are labelled as adaptation, with
 real slow strokes, stopping drift, constant velocity, lifting and contact
 confusion still requiring physical data.
+
+2026-11-13 planar-only workpoint: Owner rejected the angular trial and chose
+planar translation first. `pointer/intent.rs` now has only Rest/Translation;
+gyro data serves Fusion, never an angular cursor fallback. Recognised rest
+clears the interpolation tail. The old mixed mapper is preserved only in
+`examples/support/legacy_mixed_intent.rs` for causal comparisons, not linked
+into the normal core. The desktop adapter no longer locks XY to the initial
+tilt or treats moderate Earth-Z surface motion as a table-contact decision.
+The existing gross-impact/gap reset and two-second integration bound remain.
+
+These changes do not establish useful planar tracking. The old resumed trace
+has5302 missing sequences and no physical trajectory truth; the current830
+unattended20s trace includes observed movement and cannot all be labelled
+stationary. Removing the old tilt gate did not improve either recorded trace;
+removing the Z gate gave only limited extra output. Do not call increased
+pixel travel, passing synthetic cases, or a compiled trial better user feel.
+The current normal app still pauses desktopMotion; the portable trial is an
+engineering candidate, not an installed normal Windows delivery.
+
+Additional upstream review: ashankgupta/nicla-vision-air-mouse's receiver
+still drives the cursor from gx/gz, so it is not planar translation.
+chili-epfl/qml-imu uses velocity decay including gyro magnitude, which kills
+a nonrotating stroke. FedericoPacheco/gym-imu8364239758220783aeeb4c97568fc0a4adbbce67
+provides a causal trapezoid/bias/stationarity estimator but has MPU-specific
+fitted bands and can classify constant velocity as rest; it is reviewed, not
+represented as a drop-in mouse or copied into the product. No new upstream
+translation implementation has been claimed from these searches.

@@ -24,12 +24,12 @@ impl Raw {
 pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3]}
 pub struct Desktop {
     fusion:fusion::Fusion,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
-    accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],rest_up:[f64;3],earth_bias:[f64;3],
+    accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
     pub state:State,
 }
 impl Default for Desktop {
-    fn default()->Self{Self{fusion:fusion::Fusion::default(),last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],rest_up:[0.,0.,1.],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,state:State::default()}}
+    fn default()->Self{Self{fusion:fusion::Fusion::default(),last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,state:State::default()}}
 }
 impl Desktop {
     fn stop(&mut self){self.state.moving=false;self.state.velocity_mps=[0.;2];self.filtered=[0.;2];self.quiet=0.;self.stroke=0.;self.braking=false;}
@@ -62,14 +62,13 @@ impl Desktop {
             for i in 0..3{self.accel_sum[i]+=s.accel_mg[i];self.gyro_sum[i]+=s.gyro_dps[i];}
             if s.sensor_ms.wrapping_sub(start)<1000||self.count<80{return Point::default();}
             let accel=self.accel_sum.map(|x|x/self.count as f64);self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
-            let n=accel.iter().map(|x|x*x).sum::<f64>().sqrt();
-            self.rest_up=accel.map(|x|x/n);self.fusion.align(accel);
+            self.fusion.align(accel);
             let (earth,_)=self.fusion.desktop_step([0.;3],accel,dt,true);self.earth_bias=earth;
             self.state.calibrated=true;self.stop();return Point::default();
         }
         let rates=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
         self.state.gyro_dps=rates;
-        let (earth,up)=self.fusion.desktop_step(rates,s.accel_mg,dt,!self.state.moving);
+        let (earth,_)=self.fusion.desktop_step(rates,s.accel_mg,dt,!self.state.moving);
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
@@ -81,17 +80,21 @@ impl Desktop {
             self.count+=1;self.quiet+=dt;
             for i in 0..3{self.accel_sum[i]+=s.accel_mg[i];self.gyro_sum[i]+=s.gyro_dps[i];}
             if self.quiet>=0.3&&self.count>=20{
-                let accel=self.accel_sum.map(|x|x/self.count as f64);let norm=accel.iter().map(|x|x*x).sum::<f64>().sqrt();
-                self.rest_up=accel.map(|x|x/norm);self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
+                let accel=self.accel_sum.map(|x|x/self.count as f64);
+                self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
                 self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
                 self.state.clutched=false;self.stop();
             }
             return Point::default();
         }
-        let agreement=(0..3).map(|i|up[i]*self.rest_up[i]).sum::<f64>();
-        // A desk stroke keeps the original plane. Tilt/lift/tap candidates
-        // suspend displacement; no pretense of knowing table contact from IMU.
-        if agreement<0.978||linear[2].abs()>1.5||norm<650.||norm>1350. {
+        // Fusion already rotates acceleration into the Earth frame. Comparing
+        // the current tilt to the old resting tilt imposed an unrelated12deg
+        // lock and disabled genuine translation during a natural grip change.
+        // Earth Z is not used for2D movement. A moderate vertical desk bump
+        // must not lock out XY until a fresh resting calibration: raw822 had
+        // exactly that failure at9.714s. Retain the existing gross-impact
+        // boundary; neither norm nor orientation proves physical table contact.
+        if norm<650.||norm>1350. {
             self.clutch();return Point::default();
         }
         let planar=linear[0].hypot(linear[1]);let quiet=planar<0.055&&rates.iter().all(|x|x.abs()<2.);
@@ -145,5 +148,28 @@ mod tests {
         assert!(!d.state.clutched);let before=d.state.position_m;
         for n in 222..322{let mut s=raw(n,0.,0.);s.accel_mg=[0.,200.,980.];d.sample(s);}
         assert!((d.state.position_m[0]-before[0]).hypot(d.state.position_m[1]-before[1])<0.001);
+    }
+    #[test]fn compensated_translation_keeps_working_during_a_natural_orientation_change(){
+        let mut d=ready();let mut distance=0.;
+        // Rotate about X at15deg/s while translating along world X. The raw
+        // gravity vector rotates with the body; this is a coherent6axis trace,
+        // not a changed expected cursor direction or a loosened angle gate.
+        for n in 121..271{
+            let t=(n-120)as f64*0.01;let angle=(15.*t).to_radians();
+            let a=if t<=0.2{100.}else if t>=1.3{-100.}else{0.};
+            let mut s=raw(n,0.,0.);s.accel_mg=[a,angle.sin()*1000.,angle.cos()*1000.];s.gyro_dps=[15.,0.,0.];
+            distance+=d.sample(s).x;
+            assert!(!d.state.clutched,"tilt must not suppress compensated translation at{t}s");
+        }
+        assert!(distance>0.12,"expected continuous translation, got{distance}");
+    }
+    #[test]fn moderate_vertical_surface_bump_does_not_lock_out_horizontal_translation(){
+        let mut d=ready();
+        for n in 121..141{d.sample(raw(n,100.,0.));}
+        let before=d.state.position_m[0];
+        let mut s=raw(141,0.,0.);s.accel_mg[2]=1170.;d.sample(s);
+        assert!(!d.state.clutched);
+        for n in 142..172{d.sample(raw(n,0.,0.));}
+        assert!(d.state.position_m[0]>before+0.04);
     }
 }

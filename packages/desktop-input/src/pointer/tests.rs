@@ -6,15 +6,16 @@ fn coarse_ready()->Pointer{
     assert!(p.metrics.calibrated);p
 }
 #[test]fn raw_desktop_path_moves_and_keeps_ordinary_mouse_position_without_snapback(){
-    let mut p=coarse_ready();let mut s=raw_sample(121);s.gyro_dps[2]=20.;p.sample_raw(s,1.21);
-    assert!(p.frame(1.22,bounds()).position.unwrap().x<960.);
+    let mut p=coarse_ready();
+    for n in 121..131{let mut s=raw_sample(n);s.accel_mg[0]=100.;p.sample_raw(s,n as f64/100.);p.frame(n as f64/100.,bounds());}
+    assert!(p.shown.x>960.);
     p.external_position(Point{x:1600.,y:800.});
-    assert!(p.control(Control{sequence:1,sensor_ms:1210,events:CLICK}).unwrap());
-    let click=p.frame(1.225,bounds());assert!(matches!(click.buttons[0],Button::Click(Point{x:1600.,y:800.})));
-    for n in 122..150{p.sample_raw(raw_sample(n),n as f64/100.);assert!(p.frame(n as f64/100.,bounds()).position.is_none());}
+    assert!(p.control(Control{sequence:1,sensor_ms:1300,events:CLICK}).unwrap());
+    let click=p.frame(1.305,bounds());assert!(matches!(click.buttons[0],Button::Click(Point{x:1600.,y:800.})));
+    for n in 131..180{p.sample_raw(raw_sample(n),n as f64/100.);assert!(p.frame(n as f64/100.,bounds()).position.is_none());}
     assert_eq!(p.shown,Point{x:1600.,y:800.});
-    let mut s=raw_sample(150);s.gyro_dps[2]=-20.;p.sample_raw(s,1.5);
-    assert!(p.frame(1.51,bounds()).position.unwrap().x>1600.);
+    for n in 180..190{let mut s=raw_sample(n);s.accel_mg[0]=-100.;p.sample_raw(s,n as f64/100.);p.frame(n as f64/100.,bounds());}
+    assert!(p.shown.x<1600.);
 }
 #[test]fn raw_contact_reuses_reliable_control_clock_rewinds_and_consumes_retry_once(){
     let mut p=coarse_ready();let mut s=raw_sample(121);s.gyro_dps[2]=90.;p.sample_raw(s,1.21);p.frame(1.22,bounds());
@@ -33,7 +34,8 @@ fn coarse_ready()->Pointer{
     let mut p=coarse_ready();p.pause(true);p.begin_stream();p.pause(false);
     for n in 0..121{p.sample_raw(raw_sample(n),2.+n as f64/100.);p.frame(2.+n as f64/100.,bounds());}
     assert!(p.metrics.calibrated);assert!(!p.metrics.paused);
-    let mut s=raw_sample(121);s.gyro_dps[2]=20.;p.sample_raw(s,3.21);assert!(p.frame(3.22,bounds()).position.is_some());
+    for n in 121..131{let mut s=raw_sample(n);s.accel_mg[0]=100.;p.sample_raw(s,2.+n as f64/100.);p.frame(2.+n as f64/100.,bounds());}
+    assert!(p.shown.x>960.);
 }
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
 fn side_profile()->contact::Profile{contact::Profile{left:[0.,0.,0.,1.,0.,0.],right:[0.,0.,0.,-1.,0.,0.]}}
