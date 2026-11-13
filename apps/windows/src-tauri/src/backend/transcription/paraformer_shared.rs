@@ -261,11 +261,10 @@ pub(super) struct Runtime {
 impl Drop for Runtime {
     fn drop(&mut self) {
         self.punctuation.take();
-        unsafe { (self.destroy)(self.recognizer) }
+        if !self.recognizer.is_null(){unsafe { (self.destroy)(self.recognizer) }}
     }
 }
 impl Runtime {
-    pub(super) fn punctuation_profile(&self)->Option<&'static str>{self.punctuation.as_ref().map(|_|punctuation::MODEL_SHA)}
     pub(super) fn load(root: &Path, runtime_root: &Path) -> Result<Self, String> {
         Self::load_model(root, runtime_root, ModelKind::Paraformer)
     }
@@ -383,7 +382,7 @@ impl Runtime {
             if recognizer.is_null() {
                 return Err("本地语音模型无法启动，原录音保留。".into());
             }
-            let punctuation=punctuation::Punctuator::optional(&lib,root);
+            let punctuation=None;
             Ok(Self {
                 _onnx: onnx,
                 #[cfg(windows)]
@@ -401,7 +400,21 @@ impl Runtime {
             })
         }
     }
+    // Keep only one neural model resident. Raw ASR cache entries stay raw;
+    // punctuation is a later stage and never changes their recognition words.
+    pub(super) fn finish_punctuation<F>(&mut self,root:&Path,texts:&mut [String],mut check:F)->Result<(),String>
+    where F:FnMut()->Result<(),String> {
+        check()?;
+        if !self.recognizer.is_null(){unsafe{(self.destroy)(self.recognizer)};self.recognizer=std::ptr::null();}
+        if texts.is_empty(){return Ok(());}
+        self.punctuation=punctuation::Punctuator::optional(&self._sherpa,root);
+        if let Some(punctuation)=&self.punctuation {
+            for text in texts {check()?;*text=punctuation.apply(text);}
+        }
+        check()
+    }
     pub(super) fn transcribe(&self, pcm: &[u8]) -> Result<String, String> {
+        if self.recognizer.is_null(){return Err("本地识别阶段已结束，请重新发起转写。".into());}
         let samples: Vec<f32> = pcm
             .chunks_exact(2)
             .map(|x| i16::from_le_bytes([x[0], x[1]]) as f32 / 32768.0)
@@ -422,7 +435,7 @@ impl Runtime {
                 (self.destroy_result)(p);
                 let value: RecognitionResult =
                     serde_json::from_str(&json).map_err(|e| e.to_string())?;
-                Ok(self.punctuation.as_ref().map(|p|p.apply(&value.text)).unwrap_or(value.text))
+                Ok(value.text)
             })();
             (self.destroy_stream)(stream);
             result
