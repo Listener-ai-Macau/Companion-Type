@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-13T20:14:22+08:00",
+  "state": "ACTUAL127_NATIVE_PUBLIC_SOURCE30_ASR_SCORED",
+  "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-source-full30-127\\native-import-r4\\product\\docs\\handoffs\\20261109-core-acceptance\\524f351cac6e4646b2cc554da70fe512\\result.json",
+  "sourceAudioSha256": "d6ab13a19fec81df257036b5cdc19eb47aea7c96fb140e3bd3f6977e84586347",
+  "transcriptSha256": "91a1b9101b60dd8572a99cfab7bc4a3efc12fc6351f971c40ff18c99b168151e",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "scores": {
+    "intersectingIntervals": {
+      "referenceCharacters": 6579,
+      "hypothesisCharacters": 6480,
+      "errors": 336,
+      "cer": 0.05107159142726858,
+      "replace": 153,
+      "insert": 42,
+      "delete": 141
+    },
+    "completeIntervalsOnly": {
+      "referenceCharacters": 6570,
+      "hypothesisCharacters": 6480,
+      "errors": 339,
+      "cer": 0.051598173515981734,
+      "replace": 153,
+      "insert": 48,
+      "delete": 138
+    }
+  },
+  "wordsEqualPriorControlledSourceAsr": false,
+  "wordEditsVersusPriorControlledSourceAsr": 30,
+  "referenceGivenToModels": false,
+  "newModelOrCloudJob": false,
+  "normalization": "NFKC lower letters/numbers; annotation angle markers excluded; spoken fillers and numbers retained.",
+  "punctuationUsedForReadabilityOnly": true,
+  "physicalCaptureOrGeneralAccuracyQualified": false
+}

@@ -1,0 +1,124 @@
+{
+  "at": "2026-11-13T21:17:43+08:00",
+  "role": "Protection snapshots only. Root Companion docs remain sole editable backlog/timeline; never backflow snapshots.",
+  "softwareArchiveSha256": "b48cc9fc874d6261213bc666496e3dfea57c56f6587b25dbaaeb290018eaefb5",
+  "sourceHeads": {
+    "work/template129-complete-frozen-20261113": "af02c09d6b7b5773ed9d7ef76ffc0be98937bb81",
+    "work/template129-complete-reader-20261113": "ad84482609f37d7780d6e1518256257d7e361f7e",
+    "work/template154-complete-reader-20261113": "cecb43a5e755405a49cb4fe01fc44fd0a0ac591b"
+  },
+  "actualInstalledWindows": "0.1.129",
+  "actualInstalledAndroid": "0.1.154",
+  "interrupted01a3Included": false,
+  "mixedRoom01a7AudioTextOrRawLogsIncluded": false,
+  "allFailuresAndOriginalRecordingsRetainedLocally": true,
+  "fullAcceptancePassed": false,
+  "ownerExperienceAccepted": false,
+  "inventory": [
+    {
+      "file": "docs/product_backlog.json",
+      "sha256": "bde61a58db1371cbe90f1cff3e04b1ecafc70ed078c8649c90ebdac906bf39a3",
+      "bytes": 19189907
+    },
+    {
+      "file": "docs/development_log.md",
+      "sha256": "48d91de788b88ed0e03d47fb40719a661b31f565d816024e187866aed3825e1a",
+      "bytes": 7201445
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/root-project-rules129154-snapshot.txt",
+      "sha256": "e9b63a477d0ee7b2c9af3918aec126d5bf721100442ea08de3a018651468ab07",
+      "bytes": 18123
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/complete-product129154-software.json",
+      "sha256": "39128366c2a616daa2b13351fc53772317fb3d469cffb0f34c59b33f22ef451c",
+      "bytes": 3599
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/source-protection.json",
+      "sha256": "0f6229fafb5c44063879be0ab0e534fa73add563dfbc29d7a891124c1a8475cd",
+      "bytes": 451
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/fixed-cache-budget.json",
+      "sha256": "7e800a98df1e04ba2625f4b51058e5d4e7f22390ef55aad9fc932d43f20ea46b",
+      "bytes": 242
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/actual-native-reader.json",
+      "sha256": "bba81bf24a8af085898b41684ee093e99920d6ce1507a9bee59df7e080a3e238",
+      "bytes": 561
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/public-source-evaluation.json",
+      "sha256": "34877f206bc7fc44c2ac103cb6b5272cdc691148668bb767f61e86cfde8270fb",
+      "bytes": 1579
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/phone-closed.json",
+      "sha256": "f18222e014123b522901982ac81a655cb5ce5f4a080278a7b0059ba20f40400e",
+      "bytes": 612
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/run_public_level_control.py",
+      "sha256": "42e5b391c544786e6dee9eebc67d8bc1f6a678155a8a6bdf632b7fa3ce9d9029",
+      "bytes": 7891
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/stop_active_level_control.py",
+      "sha256": "d872fb73acbf1e35476de7879c7390626ce5d1d90e15243f9cadba43d9a8b7f2",
+      "bytes": 1930
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/evaluate_resumed_level_controls.py",
+      "sha256": "aa616ace50c562804eef17287d3a75beab3cb4d85a949a338144578cb2c2ef64",
+      "bytes": 8621
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/close_resumed_public30.py",
+      "sha256": "617bf4442a638e72dcebe177006619df88ac8e794cdf1a79e4f29e5c718b42ab",
+      "bytes": 12610
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/run_public_source127_round.py",
+      "sha256": "404f437db73f2d7fde987f493bca9190168d651e6ee3c707fc3cd0a4b1991a92",
+      "bytes": 12769
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/run_resumed_phone154.py",
+      "sha256": "40cfc6f18b5a29a518ec6902093f0b4f88077d8fb778b74cfe52240035544b6b",
+      "bytes": 1650
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/review_resumed_phone154.cjs",
+      "sha256": "fa51334dfcbd17e7333f816fb5fe90f394dbcce3fd63cf998f6f5bff4bca2746",
+      "bytes": 4042
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/assemble_resumed129154.py",
+      "sha256": "c9d2fdd3e4738ff7e62b4022157975c283778f2af06ba90674dcbcfc35206038",
+      "bytes": 10879
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/protect_resumed129154.py",
+      "sha256": "406fd5f00d35597694fa067897651fa8f9dc0bfeff7b7fd9d6a443f5ce20ca21",
+      "bytes": 3409
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/close_resumed129154_records.py",
+      "sha256": "4d0aa47a87b7ea3412836345c5f63f543766102215ad0057a58f1b9e9962ae5f",
+      "bytes": 11588
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/windows_candidate_delivery.py",
+      "sha256": "a93baa38da656ed2e7c1e6e21fb1478025591470c5ffd7d1e6dc74002d476695",
+      "bytes": 16327
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/resumed129154/engineering/protect_resumed129154_checkpoint.py",
+      "sha256": "be1d3e3db7ba885cabc4d2d435b24ba72469e262c51a8de295c15dff1990ce82",
+      "bytes": 4426
+    }
+  ]
+}
