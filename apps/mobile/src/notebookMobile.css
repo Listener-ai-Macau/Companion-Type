@@ -1,7 +1,7 @@
 /* Notebook mobile shell: the same recordings -> reader hierarchy as the desktop app. */
 .mobile-app{--accent:#416657;--accent-soft:#eaf1ed;--line:#e3e9e6;--ink:#23312d;--muted:#64746d;--bg:#fff;--surface:#fff;--surface-soft:#f8faf9;font-family:"Segoe UI","Microsoft YaHei UI","Noto Sans CJK SC",system-ui,sans-serif;height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .mobile-app[data-theme=dark]{--accent:#b5d0bf;--accent-soft:#2a3c32;--line:#34413a;--ink:#e4ece7;--muted:#a2b3a9;--bg:#1b2220;--surface:#1b2220;--surface-soft:#171d1b;color-scheme:dark}
-.mobile-app main{padding:26px 22px 32px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain}
+.mobile-app main{padding:20px 22px 32px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain}
 .mobile-app .mobile-header{height:57px;min-height:57px;padding:0 20px;gap:10px;flex:none;border-bottom:1px solid var(--line);background:var(--surface);box-shadow:none}
 .mobile-app .brand-dot{display:grid;place-items:center;width:29px;height:29px;border-radius:8px;background:var(--ink);color:var(--surface);box-shadow:none}
 .mobile-app .mobile-header strong{font-size:15px;font-weight:600;letter-spacing:-.02em}
@@ -38,19 +38,19 @@
 .mobile-app .bottom-nav{position:static;flex:none;padding:7px 0 max(7px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface);box-shadow:none}
 .mobile-app .bottom-nav button{min-height:44px;font-size:11px;font-weight:400;border-radius:0;background:transparent}
 .mobile-app .bottom-nav button[aria-current=page]{color:var(--accent);background:transparent}
-.mobile-app .detail-title{margin-bottom:23px}
+.mobile-app .detail-page{padding-top:18px}.mobile-app .detail-title{margin-bottom:16px;align-items:flex-start}.mobile-app .detail-title h1{margin-top:0;font-size:22px;line-height:1.4}.mobile-app .detail-title>.text-button{margin-top:2px}.mobile-app .detail-status-row{margin-bottom:10px}
 .mobile-app .detail-meta,.mobile-app .recording-state{font-size:11px;line-height:1.8;color:var(--muted)}
 .mobile-app .recording-state{padding:0;border:0;background:transparent}
-.mobile-app .player-card,.mobile-app[data-theme=dark] .player-card{padding:17px 0;margin:0 0 14px;border:0;border-block:1px solid var(--line);border-radius:0;background:var(--surface);box-shadow:none}
+.mobile-app .player-card,.mobile-app[data-theme=dark] .player-card{padding:12px 0;margin:0 0 16px;border:0;border-block:1px solid var(--line);border-radius:0;background:var(--surface);box-shadow:none}
 .mobile-app .player-control{gap:10px}
 .mobile-app .player-button{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);box-shadow:none}
 .mobile-app .player-copy>strong{font-size:13px;font-weight:500;color:var(--ink)}
 .mobile-app .player-copy>span{font-size:11px;color:var(--muted)}
-.mobile-app .meeting-recording-tools{margin-block:12px 20px;border:0}
+.mobile-app .meeting-recording-tools{margin-block:28px 20px;border-top:1px solid var(--line)}
 .mobile-app .meeting-recording-tools>summary{font-size:11px;color:var(--muted)}
-.mobile-app .recording-content-navigation{position:relative;display:flex;align-items:stretch;gap:15px;margin:0 0 24px;border-bottom:1px solid var(--line)}
-.mobile-app .detail-tabs{display:flex;flex:1;gap:22px;overflow:visible;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
-.mobile-app .detail-tabs button{display:block;min-height:44px;padding:10px 0;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted);box-shadow:none;font-size:13px;white-space:nowrap}
+.mobile-app .recording-content-navigation{position:sticky;top:0;z-index:4;background:var(--surface);display:flex;align-items:stretch;gap:15px;margin:0 0 24px;border-bottom:1px solid var(--line)}
+.mobile-app .detail-tabs{position:static;display:flex;flex:1;gap:22px;overflow:visible;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.mobile-app .detail-tabs button{flex:none;min-width:44px;display:block;min-height:44px;padding:10px 0;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted);box-shadow:none;font-size:13px;white-space:nowrap}
 .mobile-app .detail-tabs button[aria-selected=true]{border-bottom-color:var(--accent);background:transparent;color:var(--ink);font-weight:600}
 .mobile-app .recording-content-more{margin:0;padding:0;border:0;font-size:12px;flex:none}
 .mobile-app .recording-content-more>summary{min-height:44px;display:flex;align-items:center;color:var(--muted)}
@@ -86,3 +86,5 @@
 .mobile-app .transcript-find-field input{background:transparent}
 .mobile-app .library-search-scope button,.mobile-app summary,.mobile-app button{touch-action:manipulation}
 @media(pointer:coarse){.mobile-app button,.mobile-app select{min-height:44px}.mobile-app input,.mobile-app textarea{font-size:16px}}
+
+.mobile-app .meeting-reading-indexed{display:block}.mobile-app .meeting-reading-sidebar{position:static;margin-bottom:12px;padding:0;border:0}.mobile-app .meeting-outline{display:flex;flex-wrap:wrap;gap:6px 15px}.mobile-app .meeting-outline button{padding:5px 0;border:0;background:transparent;color:var(--accent);font:inherit;font-size:12px}.mobile-app .reference-workspace-tools{margin:0 0 14px}.mobile-app .minutes-preamble-generated{display:none}

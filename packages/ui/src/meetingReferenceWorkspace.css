@@ -7,3 +7,5 @@
 .reference-workspace-panel{min-width:0;padding-top:12px}.reference-workspace-panel[hidden]{display:none!important}
 .meeting-reference-workspace .document-context{border-top:0;margin-top:0}.meeting-reference-workspace .meeting-ai-workbench{margin-top:0}
 @media(max-width:380px){.reference-workspace-tabs>button{gap:5px;font-size:12px;padding-inline:5px}.reference-workspace-tabs>button>svg{width:14px;height:14px}}
+.reference-workspace-tools{display:flex;align-items:center;justify-content:flex-end;gap:18px;flex-wrap:wrap;margin:0 0 14px}
+.reference-workspace-tools button{padding:6px 0;border:0;background:transparent;color:var(--companion-accent,var(--accent,#395e4e));font:inherit;font-size:12px}
