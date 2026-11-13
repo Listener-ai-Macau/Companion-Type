@@ -339,3 +339,26 @@ fn ordinary_mouse_reanchors_relative_motion_instead_of_restoring_old_position() 
     let mut s=aim_sample(30,300,0.);s.aim=Some([0.,15.,0.]);p.sample(s,0.3,bounds());
     assert!(p.frame(0.3,bounds()).position.unwrap().x<physical.x);
 }
+
+#[test]
+fn actual_typec_front_lift_moves_up_in_the_existing_angular_mapper() {
+    // Physically labelled device frames bind the board's connector direction
+    // to the upstream screen projection; no fitted or generated sensor values.
+    let fixture:serde_json::Value=serde_json::from_str(include_str!("fixtures/typec-forward66830.json")).unwrap();
+    assert_eq!(fixture["frontSensorAxis"],"+Y");
+    let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
+    let mut start=None;let mut highest:f64=540.;
+    for packet in fixture["packets"].as_array().unwrap() {
+        let hex=packet.as_str().unwrap();
+        let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+        let s=Sample::parse(&bytes).unwrap();assert!(s.aim.is_some());
+        let first=*start.get_or_insert(s.sensor_ms);
+        let now=s.sensor_ms.wrapping_sub(first)as f64/1000.;
+        p.sample(s,now,bounds());
+        let frame=p.frame(now,bounds());assert!(frame.buttons.is_empty());
+        if let Some(position)=frame.position{highest=highest.min(position.y);}
+    }
+    assert!(p.metrics.calibrated);
+    assert!(!p.settings.desktop_motion);
+    assert!(highest<340.,"raising the physical Type-C front must move upward, got {highest}");
+}

@@ -25,7 +25,7 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
  const control=(action:string)=>void run('control_companion_pointer',{action});
  return <details className="ct-desktop-input" aria-label="空中鼠标">
   <summary>空中鼠标 · 转动卡片移动光标</summary>
-  <p>点击启用后，将卡片稳住约1秒，放在桌面或拿稳都可以，不必严格水平。校准完成后，左右转动、上下倾斜来移动光标；桌面平移已暂停。</p><p>换握姿时，稳住卡片，点“以当前握姿居中”即可，不需要重新校准传感器。</p>
+  <p>将Type-C接口朝向屏幕，这一端就是前方。点击启用后，按舒服的握姿稳住约1秒，不必严格水平。随后左右转动、抬高或放低Type-C端来移动光标；平移已暂停。</p><p>保持Type-C端朝前；换握持角度时，稳住卡片，点“以当前握姿居中”即可。无需抬头学习方向或分别采样上下左右。</p>
   <p>敲击机身或短按卡片按键点击；按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
   <div className="ct-button-row">
    <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,mapping:e.target.value as Settings['mapping'],desktopMotion:false,contactProfile:null,contactDevice:null})}><option value="relative">相对移动 · AirCursor</option><option value="laser">指向屏幕 · WatchPointer</option></select></label>
