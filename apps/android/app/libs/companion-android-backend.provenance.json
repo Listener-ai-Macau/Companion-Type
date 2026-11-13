@@ -1,13 +1,13 @@
 {
-  "at": "2026-11-10T11:17:35+08:00",
-  "aarSha256": "d543787cb119a4fc9189062a5c73d90996d4366265f548bcca550f163cd83823",
-  "backendSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "at": "2026-11-13T14:57:08+08:00",
+  "aarSha256": "a0f2ec48d9e170fd4c53fbca9cb8022184b96fbf56e248147928159e70ee18bc",
+  "backendSourceCommit": "152b67069e56a6848b927e5c6fb1cc050bbb4e31",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-audio-import-backend20261110",
-  "remoteSourceVerified": true,
-  "nativeSourceCommit": "0810c03733d65adc3cf3de2f54769d58f878dc97",
-  "nativeLibrarySha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110",
+  "remoteSourceVerified": false,
+  "nativeSourceCommit": "152b67069e56a6848b927e5c6fb1cc050bbb4e31",
+  "nativeLibrarySha256": "43b9e07c44b5db9fef70840241e4c4ed6a0e2d5f4d4d27e70e34c520df488503",
   "nativeLibrary16KiBElfAligned": true,
-  "nativeRebuiltThisBatch": false,
+  "nativeRebuiltThisBatch": true,
   "nativeProductionSourceIdenticalToNativeSourceCommit": true,
   "nativeInheritedReceipt": null,
   "aarBase062Sha256": "e1eb24a9795a8a68be287a235c852f27ea9cee8be3abbf30458a8e5e06403f76",
@@ -16,7 +16,7 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Independent imported original media and verified lossless speech parts; existing recorder protocol, device paths, native decoder and model binaries retained.",
+  "scope": "Actual production backend targeted minutes contract correction: uncertain source evidence separate from meeting questions; concise faithful summary instructions. Rebuilt native arm64 from adapted production source, all Java and other AAR entries retained. No speech model or recorder protocol change.",
   "javaSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
@@ -34,7 +34,7 @@
   "inherited095Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability096\\build\\inherited-provenance095.json",
   "inherited096Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability097\\build\\inherited-provenance096.json",
   "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
-  "nativeBuildReceipt": "E:/CodexData/Companion/.build-cache/control106/native-build/result.json",
+  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-native-actual-r3\\result.json",
   "javaClassesChangedFrom107": [
     "com/denzic/companion/mobile/DurableConsume$Pending.class",
     "com/denzic/companion/mobile/DurableConsume.class",
@@ -58,7 +58,7 @@
     "com/denzic/companion/mobile/SegmentReceiver.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo107": true,
-  "nativeLibrariesByteIdenticalTo6087901": true,
+  "nativeLibrariesByteIdenticalTo6087901": false,
   "javaImportClassesChanged": [
     "com/denzic/companion/mobile/DeviceBookmarkCache$1.class",
     "com/denzic/companion/mobile/DeviceBookmarkCache$Saved.class",
@@ -102,5 +102,8 @@
     "com/denzic/companion/mobile/RecordingLibrary$State.class",
     "com/denzic/companion/mobile/RecordingLibrary.class"
   ],
-  "importedOriginalReencoded": false
+  "importedOriginalReencoded": false,
+  "previousAarSha256": "d543787cb119a4fc9189062a5c73d90996d4366265f548bcca550f163cd83823",
+  "allOtherAarEntriesByteIdenticalToPrevious": true,
+  "javaClassesChangedThisBatch": false
 }
