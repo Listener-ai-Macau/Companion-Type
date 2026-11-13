@@ -55,7 +55,7 @@
     "designDecision": "Use one consistent typography/spacing/navigation vocabulary and recordings-to-reading hierarchy. Existing shadcn-derived CSS patches did not establish a coherent product foundation; do not combine dashboard/chat template skins.",
     "upstreamCodeImported": false
   },
-  "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
+  "next": "118/145随身笔记这一批已安装并完成实际Windows连续保存/限定导出/真正重开、手机公开库改名/文字保存/导出入口/主题和真正重开，原资料保护已核。一个完整软件包已私有完整回读匹配。Owner整体外观/自然使用仍未通过，后续只短做人感体验，问题按原稳定ID集中承接；不把软件自验当Owner满意。固件长录/鼠标/独立模型/售卖沿原各自最新待办；不重启已由Owner要求停止的117长录。",
   "completedAt": "2026-11-13T08:15:01+08:00",
   "preview": {
     "state": "DESIGN_PREVIEW_READY_NOT_INSTALLED_PRODUCT",
@@ -95,5 +95,8 @@
       "render-existing-destination-refusal.txt"
     ],
     "visualReviewCorrection": "Export button foreground inherited dark-on-dark despite local interaction QA passing; corrected scoped specificity and checked fresh render. Narrow workbench navigation and tab semantics corrected. Wrapper destination refusal preserved; regenerated with force before final QA."
-  }
+  },
+  "currentState": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+  "currentApplicationDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
+  "selectedDirection": "随身笔记"
 }

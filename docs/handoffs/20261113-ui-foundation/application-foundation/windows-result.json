@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-13T00:59:54.043Z",
+  "state": "COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED",
+  "nativeQualified": false,
+  "hardwareQualified": false,
+  "modelsRun": false,
+  "fullWorkspaceJourneyCompleted": true,
+  "notebookMasterDetailDraftGuardAndNarrowBackPassed": true,
+  "notebookConnectionStatesPassed": [
+    "connecting",
+    "reconnecting",
+    "pairing",
+    "connected",
+    "stale",
+    "storage",
+    "failed"
+  ],
+  "covered": [
+    "connection before recording tools",
+    "saved minutes visible immediately",
+    "without minutes opens source",
+    "four coherent panes",
+    "draft retained between panes",
+    "failed save retains draft",
+    "retry saves same draft",
+    "single-note handoff reveals pane",
+    "preview excludes other notes",
+    "cancel retains content",
+    "both themes and narrow windows",
+    "all background sync phases quiet by default",
+    "explicit detail query only",
+    "record changes do not reset an open query",
+    "closing details stays quiet",
+    "real failure remains actionable without unsolicited progress"
+  ]
+}

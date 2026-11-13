@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-13T09:28:27+08:00",
+  "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Notebook-118-145-20261113.zip",
+  "bytes": 42382019,
+  "sha256": "0c5c39abab24399413f6ec7b6d092cac732e337241f0f2d8dd1d3201b0693462",
+  "windows": {
+    "version": "0.1.118",
+    "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+    "installer": "Companion-Windows-0.1.118.msi",
+    "sha256": "68c60c37ae0a14b40fafbcde2e4a4238dafc1660b152611ebee5b21a9ad81c93",
+    "installed": true,
+    "actualNativeUiReviewed": true,
+    "actualProcessRestartPassed": true
+  },
+  "android": {
+    "version": "0.1.145",
+    "sourceCommit": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+    "installer": "Companion-Android-0.1.145.apk",
+    "sha256": "3b8a6fca8f36c50351739c91ff9d37104896bcad04230475476f8c1c8f3f118d",
+    "installed": true,
+    "actualPhoneUiReviewed": true,
+    "actualProcessRestartPassed": true
+  },
+  "manifest": {
+    "at": "2026-11-13T09:27:50+08:00",
+    "product": "Companion",
+    "batch": "随身笔记界面118/145",
+    "windows": {
+      "version": "0.1.118",
+      "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+      "installer": "Companion-Windows-0.1.118.msi",
+      "sha256": "68c60c37ae0a14b40fafbcde2e4a4238dafc1660b152611ebee5b21a9ad81c93",
+      "installed": true,
+      "actualNativeUiReviewed": true,
+      "actualProcessRestartPassed": true
+    },
+    "android": {
+      "version": "0.1.145",
+      "sourceCommit": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+      "installer": "Companion-Android-0.1.145.apk",
+      "sha256": "3b8a6fca8f36c50351739c91ff9d37104896bcad04230475476f8c1c8f3f118d",
+      "installed": true,
+      "actualPhoneUiReviewed": true,
+      "actualProcessRestartPassed": true
+    },
+    "engineeringSelfAcceptancePassed": true,
+    "ownerAppearanceAccepted": false,
+    "ownerExperienceAccepted": false,
+    "modelsRun": false,
+    "physicalTotalAcceptancePassed": false,
+    "saleQualified": false
+  },
+  "privateRemoteReadbackVerified": true,
+  "engineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\engineering-self-acceptance.json",
+  "ownerAppearanceAccepted": false,
+  "ownerExperienceAccepted": false,
+  "saleQualified": false,
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualWindowsMsiRemoteReadbackVerified": true
+}

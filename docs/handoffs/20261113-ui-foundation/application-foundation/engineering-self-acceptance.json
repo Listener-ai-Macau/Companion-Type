@@ -1,0 +1,1128 @@
+{
+  "at": "2026-11-13T09:27:50+08:00",
+  "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CONTINUOUS_SOFTWARE_JOURNEY_PASSED",
+  "windows": {
+    "proof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows118\\windows-verification.json",
+    "runtime": {
+      "at": "2026-11-13T09:21:51+08:00",
+      "state": "WINDOWS118_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_OS_BACKEND_EVIDENCE_REUSED",
+      "testSourceCommit": "31ba0c89f5ce293fee877a245c5e8eaa2f5a66d1",
+      "appSourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+      "appVersion": "0.1.118",
+      "nativeRecompiled": false,
+      "nativeUiExitCode": 0,
+      "nativeUiState": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+      "nativeUiEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows118\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\c37778c04e2c46d6bf2cae3ef24cfd4b\\result.json",
+      "newDateOnlySavedAndReopened": true,
+      "actualNativeProcessRestart": {
+        "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+        "firstPid": 27632,
+        "reopenedPid": 6132,
+        "previousAppExited": true,
+        "visibleSavedChecklistRestored": true,
+        "literalReferenceVisible": true,
+        "selectedExportScopeRetained": true,
+        "allPublicLibraryRowsUnchanged": true,
+        "modelsRun": false,
+        "physicalQualified": false,
+        "identity": {
+          "url": "http://tauri.localhost/",
+          "tauri": true,
+          "title": "Companion Type"
+        }
+      },
+      "desktopIsolation": "Private noninteractive window station on owner PC",
+      "ownerKeyboardMouseOrForegroundControlUsed": false,
+      "ownerClipboardSequenceUnchangedAtObservation": false,
+      "newNativeSaveCancelOrOrdinaryRecipientRetested": false,
+      "unchangedOsHandoffEvidence": {
+        "at": "2026-11-13T09:21:29+08:00",
+        "state": "UNCHANGED_OS_BACKEND_WITH_CHANGED_UI_ROUTE_RECHECKED",
+        "priorAppSourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+        "priorRuntimeRun": 43144208633,
+        "priorRuntimeTestSource": "4b1b2a59bbf7d4045a4c64277486adec0563c042",
+        "currentAppSourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+        "exactCommittedFiles": [
+          {
+            "path": "packages/ui/src/shareHandoff.ts",
+            "committedBlobSha256": "2e1e101051e219371aa6a628ae3083ddda764da0c0a9a4144eab7eb6b57b98ea"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/file_clipboard.rs",
+            "committedBlobSha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/backend/content_export.rs",
+            "committedBlobSha256": "0fb51bb762636aa2982025037df8ef43b94413133084cdaa5c884a629dd0c06d"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+            "committedBlobSha256": "93c0274806aec8fc3d3af730ee5ea8919a4c576f78e76d7e10214bb626dc97fc"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/content_handoff.rs",
+            "committedBlobSha256": "d364aae4419d01321ce3dd7bc370f94becd5002494987db6f1c0204363a83409"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/backend/export.rs",
+            "committedBlobSha256": "0c39e2923688d882f8f657963b534e05c25a2547eea8c097ec6c10135aab31cb"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/backend/meeting_document_export.rs",
+            "committedBlobSha256": "074a9882f8404412247b3b0a7b9fa4c321ae56a984e9ae5d34d9e49987550b27"
+          }
+        ],
+        "newOrdinaryRecipientTested": false,
+        "exactCommandBlocks": [
+          {
+            "path": "apps/windows/src-tauri/src/commands.rs",
+            "command": "preview_companion_meeting_export",
+            "normalizedLfBlockSha256": "db01af17fbaabd76d9a76641fb27d2a532bd64d9771165f178ee21ffa57df0e2"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/commands.rs",
+            "command": "copy_companion_meeting_content",
+            "normalizedLfBlockSha256": "73120ca9950dd5d48f850b5f6db6d090829dd20d059eacbff80746c278b35aca"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/commands.rs",
+            "command": "share_companion_meeting_content",
+            "normalizedLfBlockSha256": "89e0791bddf27be2c8f36fb25de6f42d7731d4e8208b1856b3f8892a03922c32"
+          },
+          {
+            "path": "apps/windows/src-tauri/src/commands.rs",
+            "command": "export_companion_meeting",
+            "normalizedLfBlockSha256": "5cf3cd91fc0373fa3d87a69575705eb67c2ea0d006f74c4072ec1a02731763af"
+          }
+        ],
+        "unchangedOsDependencyPackages": [
+          {
+            "name": "clipboard-win",
+            "version": "5.4.3",
+            "checksum": "052af7878466feccda12ba7a6a67d019d712f296809559b47c12c8cc196d3a9a"
+          },
+          {
+            "name": "rfd",
+            "version": "0.16.0",
+            "checksum": "a15ad77d9e70a92437d8f74c35d99b4e4691128df018833e99f90bcd36152672"
+          },
+          {
+            "name": "tauri",
+            "version": "2.11.3",
+            "checksum": "c2616f96cb644bf2c5c456d9de4d5d5100e592d7424c74d8b55c5cb96e359e93"
+          },
+          {
+            "name": "tauri-runtime",
+            "version": "2.11.3",
+            "checksum": "b0b4bc95aed361b0019067d189a1174a603d460d0f6c72606512d59fc9c12ec8"
+          },
+          {
+            "name": "tauri-runtime-wry",
+            "version": "2.11.3",
+            "checksum": "fe41e015bf8fc4d6477ff4926a0ef769dc64ff34c7b0038b6f7cacae892acb5c"
+          },
+          {
+            "name": "windows",
+            "version": "0.54.0",
+            "checksum": "9252e5725dbed82865af151df558e754e4a3c2c30818359eb17465f1346a1b49"
+          },
+          {
+            "name": "windows",
+            "version": "0.56.0",
+            "checksum": "1de69df01bdf1ead2f4ac895dc77c9351aefff65b2f3db429a343f9cbf05e132"
+          },
+          {
+            "name": "windows",
+            "version": "0.58.0",
+            "checksum": "dd04d41d93c4992d421894c18c8b43496aa748dd4c081bac0dc93eb0489272b6"
+          },
+          {
+            "name": "windows",
+            "version": "0.61.3",
+            "checksum": "9babd3a767a4c1aef6900409f85f5d53ce2544ccdfaa86dad48c91782c6d6893"
+          },
+          {
+            "name": "windows-core",
+            "version": "0.54.0",
+            "checksum": "12661b9c89351d684a50a8a643ce5f608e20243b9fb84687800163429f161d65"
+          },
+          {
+            "name": "windows-core",
+            "version": "0.56.0",
+            "checksum": "4698e52ed2d08f8658ab0c39512a7c00ee5fe2688c65f8c0a4f06750d729f2a6"
+          },
+          {
+            "name": "windows-core",
+            "version": "0.58.0",
+            "checksum": "6ba6d44ec8c2591c134257ce647b7ea6b20335bf6379a27dac5f1641fcf59f99"
+          },
+          {
+            "name": "windows-core",
+            "version": "0.61.2",
+            "checksum": "c0fdd3ddb90610c7638aa2b3a3ab2904fb9e5cdbecc643ddb3647212781c4ae3"
+          },
+          {
+            "name": "windows-core",
+            "version": "0.62.2",
+            "checksum": "b8e83a14d34d0623b51dce9581199302a221863196a1dde71a7663a4c2be9deb"
+          },
+          {
+            "name": "wry",
+            "version": "0.55.1",
+            "checksum": "186f9871daa55fd9c016578b810d149de58367113db7fb72b462d2323ce19514"
+          }
+        ],
+        "uiExportStateAndOperations": {
+          "path": "packages/ui/src/ContentExportPanel.tsx",
+          "scope": "Entire component state, selection binding, request construction and operation implementation before JSX rendering",
+          "normalizedLfSha256": "29dd9e7ad7b7c0c343c7b55e3cd73f34aed1f11bfb9708bd3ce88693649c802d",
+          "priorNormalizedLfSha256": "29dd9e7ad7b7c0c343c7b55e3cd73f34aed1f11bfb9708bd3ce88693649c802d",
+          "bytes": 6064,
+          "uiRenderingChanged": true
+        },
+        "nativeSystemOperationsOn112Retested": false,
+        "currentNativeUiRouteRechecked": true,
+        "currentNativeUiEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows118\\native-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\c37778c04e2c46d6bf2cae3ef24cfd4b\\result.json"
+      },
+      "hostedRuntimeRun": null,
+      "modelsRun": false,
+      "deviceOrPhoneAccess": false,
+      "saleQualified": false
+    },
+    "installation": {
+      "state": "WINDOWS118_INSTALLED_ORIGINAL_USER_DATA_IDENTICAL",
+      "startedAt": "2026-11-13T09:23:25+08:00",
+      "candidateVersion": "0.1.118",
+      "previousInstalledVersion": "0.1.116",
+      "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+      "msiSha256": "68c60c37ae0a14b40fafbcde2e4a4238dafc1660b152611ebee5b21a9ad81c93",
+      "existingDataFiles": 247,
+      "dataContentsPrinted": false,
+      "modelsRun": false,
+      "installerExitCode": 0,
+      "finishedAt": "2026-11-13T09:23:30+08:00",
+      "dataManifestIdentical": true,
+      "installedVersion": "0.1.118",
+      "installedExeSha256": "662d6aa64279a2e2eecb3e1e47718a2385cce865388f0e5415db53d7b87a17c6",
+      "installedDllSha256": "6558405c6c91abaff10621e711f41954360513d2424501c9cb2967fcfc80fb6c",
+      "preservedIndependentEngineeringCli": [],
+      "physicalTotalAcceptancePassed": false
+    },
+    "unchangedCurrent117Core": [
+      {
+        "path": "apps/windows/src-tauri/src",
+        "current117CoreTree": "55f1bfe41604b826fa6be3354fe4e1f24616874f",
+        "delivered118Tree": "55f1bfe41604b826fa6be3354fe4e1f24616874f"
+      },
+      {
+        "path": "packages/core/src",
+        "current117CoreTree": "d4539bbd8c023b77b8eedff93f5e17c9ddad70e3",
+        "delivered118Tree": "d4539bbd8c023b77b8eedff93f5e17c9ddad70e3"
+      }
+    ]
+  },
+  "android": {
+    "build": {
+      "at": "2026-11-13T09:05:13+08:00",
+      "state": "ANDROID_SOFTWARE_CANDIDATE_BUILT_SOURCE_NATIVE_PAYLOAD_SIGNER_AND_DATA_FLOW_VERIFIED",
+      "sourceCommit": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+      "versionCode": 145,
+      "versionName": "0.1.145",
+      "sharedWorkspace": "E:\\CodexData\\Companion\\.build-cache\\shared-android-build",
+      "storageBefore": {
+        "cache": "E:\\CodexData\\Companion\\.build-cache",
+        "logicalBytes": 63905794690,
+        "freeBytes": 316516597760,
+        "limitBytes": 85899345920,
+        "reservedJobBytes": 2147483648,
+        "minimumFreeBytes": 32212254720,
+        "deletedFiles": 0
+      },
+      "nativeAarSha256": "d543787cb119a4fc9189062a5c73d90996d4366265f548bcca550f163cd83823",
+      "backendSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+      "nativeLibrariesRebuilt": false,
+      "modelsRun": false,
+      "boardAccessed": false,
+      "phoneAccessed": false,
+      "steps": [
+        {
+          "name": "selected-note-and-editor-ui",
+          "exitCode": 0,
+          "seconds": 0.656
+        },
+        {
+          "name": "mobile-source-and-web-build",
+          "exitCode": 0,
+          "seconds": 28.5
+        },
+        {
+          "name": "normal-android-apk",
+          "exitCode": 0,
+          "seconds": 80.156
+        },
+        {
+          "name": "compile-real-backend-selection-check",
+          "exitCode": 0,
+          "seconds": 2.203
+        },
+        {
+          "name": "actual-java-store-preview-export-reopen",
+          "exitCode": 0,
+          "seconds": 0.875
+        },
+        {
+          "name": "apk16k-alignment",
+          "exitCode": 0,
+          "seconds": 0.047
+        },
+        {
+          "name": "apk-signature",
+          "exitCode": 0,
+          "seconds": 0.672
+        },
+        {
+          "name": "apk-identity",
+          "exitCode": 0,
+          "seconds": 0.25
+        }
+      ],
+      "apk": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\android145-native\\Companion-Android-0.1.145.apk",
+      "apkSha256": "3b8a6fca8f36c50351739c91ff9d37104896bcad04230475476f8c1c8f3f118d",
+      "apkBytes": 51169813,
+      "signerSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+      "signerMatchesExisting141": true,
+      "zip16KiBAligned": true,
+      "webAssets": [
+        {
+          "path": "index.html",
+          "sha256": "faec8fd1931896ceb656e4ea8d8db190fea0604b1aa24e71c18689f7042648db"
+        },
+        {
+          "path": "manifest.webmanifest",
+          "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+        },
+        {
+          "path": "assets/index-CHDINfPm.js",
+          "sha256": "bb6283b8af02880b9d2c61c7eb337de592052392ef4b2418b571bc9604738d41"
+        },
+        {
+          "path": "assets/index-oh6KAXsm.css",
+          "sha256": "6925308882a4544e27019e66a7e3c8d096522543ff959f9cd6fb4a779fcf3a2d"
+        },
+        {
+          "path": "assets/reader.worker-yk2MbMgO.js",
+          "sha256": "c063163ec88b603627437e4aacca6a41c553801b5daac3cb55ad6040ada78bbe"
+        },
+        {
+          "path": "document-engine/pdf.min.mjs",
+          "sha256": "522ad2c83bc8a0010e7f0cc60d0892b77c8d2bf2c9702dc12288311d94270f42"
+        },
+        {
+          "path": "document-engine/pdf.worker.min.mjs",
+          "sha256": "b4c8353ded0d88d2e2009574a29eb4e0c3ff7e942ecdf51ef5f71566a9667f31"
+        },
+        {
+          "path": "document-engine/ThirdPartyNotices.txt",
+          "sha256": "5436ad87b3638a8a8da98a80ff1d7290a7b69f2b41e8b9278ddc101c2041c6f9"
+        },
+        {
+          "path": "document-engine/cmaps/78-EUC-H.bcmap",
+          "sha256": "d92a261336dc18b8c03a46eb4d462382d33f4338fa195d303256b2031434c874"
+        },
+        {
+          "path": "document-engine/cmaps/78-EUC-V.bcmap",
+          "sha256": "61670bebc4e4827b67230c054fd0d820d6e30c3584d02e386804e62bbedc032a"
+        },
+        {
+          "path": "document-engine/cmaps/78-H.bcmap",
+          "sha256": "ece6415b853d61e1b2560165151407d35cf16e6556932b85a13ea75276b77402"
+        },
+        {
+          "path": "document-engine/cmaps/78-RKSJ-H.bcmap",
+          "sha256": "696b1f973c97623496703809eaaa5f9b40696c77540057413f4b826a08edfa7b"
+        },
+        {
+          "path": "document-engine/cmaps/78-RKSJ-V.bcmap",
+          "sha256": "53cb6d560ab377da48cf65d6dcacb0bdb31f13fab7066c580de38c12a73a7ff9"
+        },
+        {
+          "path": "document-engine/cmaps/78-V.bcmap",
+          "sha256": "289000f02fd34872b6975503217f33abae6bee676e7d28f640473a67c8db1712"
+        },
+        {
+          "path": "document-engine/cmaps/78ms-RKSJ-H.bcmap",
+          "sha256": "a2442595218f5f8bd8e1b42188e368587d876cfe0cc4cd87196f077c878f72e2"
+        },
+        {
+          "path": "document-engine/cmaps/78ms-RKSJ-V.bcmap",
+          "sha256": "f8ddceba96bfd9d3740bd1789ee30d1f47c78371520a8084f71f7df58f19be0b"
+        },
+        {
+          "path": "document-engine/cmaps/83pv-RKSJ-H.bcmap",
+          "sha256": "44040051ec818fe09b9703472bea72efd2759d5eeb5ff0d77c718d6bb5e6d1df"
+        },
+        {
+          "path": "document-engine/cmaps/90ms-RKSJ-H.bcmap",
+          "sha256": "c13e043e85ff715b75bb03801e8fd0fb8f3a75e4a48496faa6baaf92b5b48ba1"
+        },
+        {
+          "path": "document-engine/cmaps/90ms-RKSJ-V.bcmap",
+          "sha256": "499bb916ce1adbe4289b6e5811f4dc20eb238cdc2ffad20cf26ae56716885bab"
+        },
+        {
+          "path": "document-engine/cmaps/90msp-RKSJ-H.bcmap",
+          "sha256": "7b8b3b8bbf821702e9a4df9f3596ce292380c8c1b0925dedadbb4e4b2d80498b"
+        },
+        {
+          "path": "document-engine/cmaps/90msp-RKSJ-V.bcmap",
+          "sha256": "6296c2b5c07dca8128e96d5296d621a3268803d4fa0e5812a21e52fe2802aacb"
+        },
+        {
+          "path": "document-engine/cmaps/90pv-RKSJ-H.bcmap",
+          "sha256": "fb5103f03d3a34547e18d316e52b6d9b26e485c662999222f84d2ba54c2e4fa8"
+        },
+        {
+          "path": "document-engine/cmaps/90pv-RKSJ-V.bcmap",
+          "sha256": "7bcb5ad2ba55b9662ce379e16c2d9cc2b82d621a579807353741172e4af615c2"
+        },
+        {
+          "path": "document-engine/cmaps/Add-H.bcmap",
+          "sha256": "a2ffab28b990998181bcca9b0e914bb2207820f100ae31d5c469444892e5ad8e"
+        },
+        {
+          "path": "document-engine/cmaps/Add-RKSJ-H.bcmap",
+          "sha256": "b29f4b52e2465d0485856d5e69f1ba69927deb2848d8fd328c8035583b35bb7e"
+        },
+        {
+          "path": "document-engine/cmaps/Add-RKSJ-V.bcmap",
+          "sha256": "2aa2232c283a3f5d0997c2834a36cead0b79ce2657944cfeed08140c293460ff"
+        },
+        {
+          "path": "document-engine/cmaps/Add-V.bcmap",
+          "sha256": "25125d3b1be64e86b2df5b3344170b45a42bcaa0b46e43a34314ef73c166e542"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-0.bcmap",
+          "sha256": "8c65be9d51a9f269a547dc12460707aaf4031ab67ebe8a2900f4b4cc6b3e450e"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-1.bcmap",
+          "sha256": "73152bc1a59cc594b414ac6068be48e5512b96ae85920c40e32a99269fdb0c04"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-2.bcmap",
+          "sha256": "a1b8d353bdef9584c820464e8f1c9e2013d64ebf433cba0aa831dddf515818c2"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-3.bcmap",
+          "sha256": "2ffc0c75c79fafde506163d3c08c390d183251009f3fbf6ae50d1167d14b9570"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-4.bcmap",
+          "sha256": "98a1f470c878c6b9691a4d7aef776af8ac9b55f5587c9fafa00547f3bf655716"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-5.bcmap",
+          "sha256": "ddd6e29955eb8cb545f2ebd09c628c3bbda5023256eda1b728f743c75fb77829"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-6.bcmap",
+          "sha256": "317bb2db71e0e5b7b0c47b75de1da915c2e22f65f0c0861507f9ca7ba238f8a2"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-CNS1-UCS2.bcmap",
+          "sha256": "e665837f2197c6bd08cd8955ad4d6932cee2398e2e328b25b00e6bfb3bd72af9"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-0.bcmap",
+          "sha256": "8b81cce8a11d510e505704953cfa4e4ab080c1a0cab991145a3512ee433946b9"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-1.bcmap",
+          "sha256": "0426983081788ec7202703e71f1efa4b860f75b936994236010b39d89251a81e"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-2.bcmap",
+          "sha256": "e67b37a83b160ab3831306a71a605893b24454ee81ac9b6123bf2d3984d268d5"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-3.bcmap",
+          "sha256": "aa299afc3e12a28726147305f191be28c7498078c8b182ece7886ac79cd99078"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-4.bcmap",
+          "sha256": "8fbd7d74c2ddb1350c1cecce54a73fde3f5453093d4bed445283ec0033d2097f"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-5.bcmap",
+          "sha256": "c22cb2fcff24112fa31dab2111bdc51957006576d31aad5a25e67793ac01428c"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-GB1-UCS2.bcmap",
+          "sha256": "20507620260c0c935c35afc1e70e5888aa7125d5ec7ffc03cef1959feb2c1641"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-0.bcmap",
+          "sha256": "464f08905236f5703b1f5cf8358767c8b18e6bcc808840d081f1de2c7ab38134"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-1.bcmap",
+          "sha256": "4c823848722187d1ffe75ae3f5f9126ccd2d7895a05fad14c919fb119e037008"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-2.bcmap",
+          "sha256": "7810fb808e367e70429e90a9478fe6a3fdc3e214f25c7582ce9c2da6a242315c"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-3.bcmap",
+          "sha256": "84deb1828711ad3d390c9899c38abce1bf619d65ff7bf1a326ec95acc45f08f8"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-4.bcmap",
+          "sha256": "3f8a4f974919c2b8bae5d10175ffa2673be140481e00840542c85d48ef184067"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-5.bcmap",
+          "sha256": "1d3ce4ff28d977f8cf37a912ae4ec811f4175c3167b1ec0b2567feec3e79e1db"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-6.bcmap",
+          "sha256": "5609797b9401b30be72ef9645da62a87829f058c3be4b5c623383119f584b1d9"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Japan1-UCS2.bcmap",
+          "sha256": "66c5d0dc4964f4093e77b194023f3a0f689324028ec8330e1e1d0570bcba7c2f"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Korea1-0.bcmap",
+          "sha256": "dfb8c3874f0e5a8c3acf597d2c12d2b63e90bc5e4f0fce990ec4c56077d80b32"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Korea1-1.bcmap",
+          "sha256": "62f277b7b1c441c007797ae707d5c37258d029ce4661a2b911e2e1ee35e6adc1"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Korea1-2.bcmap",
+          "sha256": "1d77068af462f96d7ad28ad7e7d43eef6423c685b479d7dc25ff5df38db0380d"
+        },
+        {
+          "path": "document-engine/cmaps/Adobe-Korea1-UCS2.bcmap",
+          "sha256": "857b723088be97255053562bfa41bd1075a7f7910d3bab59a0645c8bbc7060ff"
+        },
+        {
+          "path": "document-engine/cmaps/B5-H.bcmap",
+          "sha256": "718ad0ffbef4c34f8f3f31292c462e519cd567a5511fc8b346c60010d64f4ef9"
+        },
+        {
+          "path": "document-engine/cmaps/B5-V.bcmap",
+          "sha256": "b5c37383517477620ced927b6b4ffd4f4cc6230d8051b5b46a21d6768e07f7d8"
+        },
+        {
+          "path": "document-engine/cmaps/B5pc-H.bcmap",
+          "sha256": "bab6028aead1d6149400e904ab10cfd319082d826473ed4c582c8eeed920f17e"
+        },
+        {
+          "path": "document-engine/cmaps/B5pc-V.bcmap",
+          "sha256": "41543142b9767f3b76133899fc8453282b01ad3c653acaeea42d78c5a7d08c63"
+        },
+        {
+          "path": "document-engine/cmaps/CNS-EUC-H.bcmap",
+          "sha256": "e8f89cd61e6486b948205da46499d659ed0aed949b7095fd3c8e95ffe2b0e7a9"
+        },
+        {
+          "path": "document-engine/cmaps/CNS-EUC-V.bcmap",
+          "sha256": "cae422bec2ac6dbe86bf921cec942bacd2d0b733ffcca5f91b3ba14e917025a0"
+        },
+        {
+          "path": "document-engine/cmaps/CNS1-H.bcmap",
+          "sha256": "e8487971ab20cd16f3de3e8ac56ec994b72b658ad113f2818239dfd5108f501a"
+        },
+        {
+          "path": "document-engine/cmaps/CNS1-V.bcmap",
+          "sha256": "42df8076aaa7574505e7304af83a3323ec032c4177d64b1309db8c043d594a8a"
+        },
+        {
+          "path": "document-engine/cmaps/CNS2-H.bcmap",
+          "sha256": "bc6024d274d440f0625c69e25f37036ef6cb6689432ceaa160d3432a2a716ca7"
+        },
+        {
+          "path": "document-engine/cmaps/CNS2-V.bcmap",
+          "sha256": "2e4f70a8afd23a121030fc2e5b5f3816e903b11e7ba8b8c09654b31c80399c38"
+        },
+        {
+          "path": "document-engine/cmaps/ETen-B5-H.bcmap",
+          "sha256": "87ee6b3f5bfda5fe26fa35431264c7d73070d10dbbf398a75185d63ae322c18d"
+        },
+        {
+          "path": "document-engine/cmaps/ETen-B5-V.bcmap",
+          "sha256": "47dc0d2c21e3bde317947aec1675ceabc1d5460a60bf9c24334b8c407a17172c"
+        },
+        {
+          "path": "document-engine/cmaps/ETenms-B5-H.bcmap",
+          "sha256": "d5f5a73da4173b7da9a3a20e16f26f9cd5d12deb1553409919e0cec6fd37fdee"
+        },
+        {
+          "path": "document-engine/cmaps/ETenms-B5-V.bcmap",
+          "sha256": "18252fca90f472f479af1bddd60d6ab51c8e1b55dcf6845951426504934543e0"
+        },
+        {
+          "path": "document-engine/cmaps/ETHK-B5-H.bcmap",
+          "sha256": "d2f10fa519336bc4efcc7b6deb9604b75429946b40d82e311cb3a97a1994c89a"
+        },
+        {
+          "path": "document-engine/cmaps/ETHK-B5-V.bcmap",
+          "sha256": "1fea3fd0d9f0f679f80505800851ef2e4131d81127e18c006938ffa2f4c8b247"
+        },
+        {
+          "path": "document-engine/cmaps/EUC-H.bcmap",
+          "sha256": "f9939cd57fccdc65c5d9f4c205fd497ebdbd283643308da5663801a8c1d9c595"
+        },
+        {
+          "path": "document-engine/cmaps/EUC-V.bcmap",
+          "sha256": "1283a50a706507c4436da83ede9ad7a4440be25378f2e96f6c81a430081426a3"
+        },
+        {
+          "path": "document-engine/cmaps/Ext-H.bcmap",
+          "sha256": "4000ed4e61a1c668ef453bbd0603cfa383defa793abd46a57ed870d7f527350b"
+        },
+        {
+          "path": "document-engine/cmaps/Ext-RKSJ-H.bcmap",
+          "sha256": "e0d2f0df337660e73813238dd4a725f11f0621b90f3273857db253d0e7694caa"
+        },
+        {
+          "path": "document-engine/cmaps/Ext-RKSJ-V.bcmap",
+          "sha256": "f617a22b6d67febb187990952006c91a9f5a4db21155d268c656252d0c21985d"
+        },
+        {
+          "path": "document-engine/cmaps/Ext-V.bcmap",
+          "sha256": "c2087fb845a9e3acea0c2922cd40e6af67e11957bec74dcd597f1285edd490ce"
+        },
+        {
+          "path": "document-engine/cmaps/GB-EUC-H.bcmap",
+          "sha256": "928bad06fd84a48f5ba7150d7716609119fb660f2aaa73eccad81ddab9b9d203"
+        },
+        {
+          "path": "document-engine/cmaps/GB-EUC-V.bcmap",
+          "sha256": "a9ad88ac2479da529b16dc48abc5952332e27bc355335f91df5729a587533324"
+        },
+        {
+          "path": "document-engine/cmaps/GB-H.bcmap",
+          "sha256": "1018c777a8910b5bb46d7d54a4aee9d51ca5cff8addb2b41c969d9101cb3fd1c"
+        },
+        {
+          "path": "document-engine/cmaps/GB-V.bcmap",
+          "sha256": "0b96789143c0bbf9f1641ae7165b3456dccd14dabffcbb0bd654d5bf6f94f863"
+        },
+        {
+          "path": "document-engine/cmaps/GBK-EUC-H.bcmap",
+          "sha256": "2103fed28650ede096a2281104a1a8a4304dae0db414342c636867522307123b"
+        },
+        {
+          "path": "document-engine/cmaps/GBK-EUC-V.bcmap",
+          "sha256": "a7fd35dd14d9dbdb955f34e6c0630618b6620dfd09d4283b2f65a65ce77fcaea"
+        },
+        {
+          "path": "document-engine/cmaps/GBK2K-H.bcmap",
+          "sha256": "3d919ae72af16c5cc6846ec87a4326a9f125e493c59d3628429d35c2c95fe8c4"
+        },
+        {
+          "path": "document-engine/cmaps/GBK2K-V.bcmap",
+          "sha256": "b927fdfd595c07ce9158bf2ec13f4641b2e83b01c70989dadfabd6ed7c6ac2dc"
+        },
+        {
+          "path": "document-engine/cmaps/GBKp-EUC-H.bcmap",
+          "sha256": "d15ebd8e81fb4fe8a244f1b1e877922e03500ac69eddf5001093e502430451d2"
+        },
+        {
+          "path": "document-engine/cmaps/GBKp-EUC-V.bcmap",
+          "sha256": "fdc736d46e642625dccc8ad8c59f2c69fc7db7a13f2e799c6c6b779e707bb97a"
+        },
+        {
+          "path": "document-engine/cmaps/GBpc-EUC-H.bcmap",
+          "sha256": "3c4a4eb82f05abe51f6650985c630e180438bfdd491318f5d20d2ec29236e1c3"
+        },
+        {
+          "path": "document-engine/cmaps/GBpc-EUC-V.bcmap",
+          "sha256": "215bdfa2842705624b4cf4cd29b8e3c720f1e192365e0305c11030a424c84d7c"
+        },
+        {
+          "path": "document-engine/cmaps/GBT-EUC-H.bcmap",
+          "sha256": "dc5f44e48a39f3367ae28665027d8ab1d8cedb5a9dcc5068a900acd6709f60f9"
+        },
+        {
+          "path": "document-engine/cmaps/GBT-EUC-V.bcmap",
+          "sha256": "a1ad24e63653b8aa388c18fa5e498f007564e43dde699a9f91ccb4645c999be8"
+        },
+        {
+          "path": "document-engine/cmaps/GBT-H.bcmap",
+          "sha256": "8afda745a505763f3ff54c8126eeb48ef376ea9ed07d9f42ff9a22c5c547ec57"
+        },
+        {
+          "path": "document-engine/cmaps/GBT-V.bcmap",
+          "sha256": "cdc2ec5c3c7c7033290c9a8894878202f08674eb9b1ae7d36218430326768771"
+        },
+        {
+          "path": "document-engine/cmaps/GBTpc-EUC-H.bcmap",
+          "sha256": "7b23e2f7bfdb6c918f567b7324bf858f398bd8cd5f268d74ece19a3c91bf4f32"
+        },
+        {
+          "path": "document-engine/cmaps/GBTpc-EUC-V.bcmap",
+          "sha256": "d7a1b13ead9ab511cf2cd01de6ce8b02aa8e8767e84895337d7a3b67f039f93b"
+        },
+        {
+          "path": "document-engine/cmaps/H.bcmap",
+          "sha256": "a0233e21047ec00b852125b243cbcf30abee511155b6d8159c24f944384bc9ee"
+        },
+        {
+          "path": "document-engine/cmaps/Hankaku.bcmap",
+          "sha256": "b454701f7aecd7856769016dfd04ca64280a060f2c67a2466d50b4395d24974e"
+        },
+        {
+          "path": "document-engine/cmaps/Hiragana.bcmap",
+          "sha256": "2ed669394756dd9458651cd9995ab29ab691ecb7686659003306cdf22767a414"
+        },
+        {
+          "path": "document-engine/cmaps/HKdla-B5-H.bcmap",
+          "sha256": "5242bce18fb13ab4cc59b146a03eba36e4ce42667eeff09e10981a9d2aa4996b"
+        },
+        {
+          "path": "document-engine/cmaps/HKdla-B5-V.bcmap",
+          "sha256": "2e0537f786c0791d41a925f72bad2d4e7268aa6cbf15a1400a722672cec38e2c"
+        },
+        {
+          "path": "document-engine/cmaps/HKdlb-B5-H.bcmap",
+          "sha256": "fdc8159984bf5dbe475c0d5dfcb621ecee4dea07c38c668bd77f4c679e23b9b3"
+        },
+        {
+          "path": "document-engine/cmaps/HKdlb-B5-V.bcmap",
+          "sha256": "b249eb9dcb915ab45057c5d4d7aa55ef88d0efbb092af6bae0b2d4705d139abf"
+        },
+        {
+          "path": "document-engine/cmaps/HKgccs-B5-H.bcmap",
+          "sha256": "ab64c7fc5e9b2e97750cc4f269b0da14fd8649e49151b7598c8df86599bac591"
+        },
+        {
+          "path": "document-engine/cmaps/HKgccs-B5-V.bcmap",
+          "sha256": "02ebdf7cdffb5395fb21091cd58a013a18ae5388922822f9dc6292ef16b98956"
+        },
+        {
+          "path": "document-engine/cmaps/HKm314-B5-H.bcmap",
+          "sha256": "bfd8bbde6b36a9da4c1c902c74121a30d9807a7079a00eeea218be6adc223cef"
+        },
+        {
+          "path": "document-engine/cmaps/HKm314-B5-V.bcmap",
+          "sha256": "2a64a815cfb6fdd480674a868762e3d161fda17543b20c9209978559f0667164"
+        },
+        {
+          "path": "document-engine/cmaps/HKm471-B5-H.bcmap",
+          "sha256": "49d7c037758826b5b6c0fa329c35bbf25d3943197754e72ecd30c6fb04d745e6"
+        },
+        {
+          "path": "document-engine/cmaps/HKm471-B5-V.bcmap",
+          "sha256": "be24c109e78aa4fe3c1f27d30aab3ed0741e783fa1b6b6c2719741072b54b132"
+        },
+        {
+          "path": "document-engine/cmaps/HKscs-B5-H.bcmap",
+          "sha256": "08599378f41d96b40537adef6e6edcc4a787bc63f5accf47c026df4905a13914"
+        },
+        {
+          "path": "document-engine/cmaps/HKscs-B5-V.bcmap",
+          "sha256": "d073542b7dad1c4cbf01c1af5f0cd13218d1281a491956e310c55702fc8705c4"
+        },
+        {
+          "path": "document-engine/cmaps/Katakana.bcmap",
+          "sha256": "3b6ca6642fbf8822da00d5e58a8aa275216d5c32dbf2bd73e934197fc9fc5c53"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-EUC-H.bcmap",
+          "sha256": "6784e16dbc5861c036c23d3e55f0d4ba0975a3e464da0ee8e49bcfff0be070c4"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-EUC-V.bcmap",
+          "sha256": "fdb36bad85e9924823d49db374067988e024cf80fc894711f2c9178951cbbe95"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-H.bcmap",
+          "sha256": "c1f6d61f1d3304fd539a65ae72624fa567ecc3853bf52e283958a7a2515b3eee"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-Johab-H.bcmap",
+          "sha256": "939993d213f68db763bf156217c217ae23af082b91a0eacecf3d11eb4ff8ef8c"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-Johab-V.bcmap",
+          "sha256": "5d61967aac0e666def721e8b8d0fed8f95a879a14f2e76ce516c3d11c621e519"
+        },
+        {
+          "path": "document-engine/cmaps/KSC-V.bcmap",
+          "sha256": "d7da5afd9f1fe74816d79c9325f0139a4efb6438664ebfdf9a7aa92f3034360f"
+        },
+        {
+          "path": "document-engine/cmaps/KSCms-UHC-H.bcmap",
+          "sha256": "5b70d8f6a4fa9e2283dc649f0ff95d906d56efbee50a20e8d2faec3a8fed078e"
+        },
+        {
+          "path": "document-engine/cmaps/KSCms-UHC-HW-H.bcmap",
+          "sha256": "a5e6ba22aceb02fdedee11bfb9ed138463d89e85b87810b9f075b469d936f8ec"
+        },
+        {
+          "path": "document-engine/cmaps/KSCms-UHC-HW-V.bcmap",
+          "sha256": "890332a6a26880d463a12f2a6ff048bf9cf7e45077cfb1ca8815b89baa7bf411"
+        },
+        {
+          "path": "document-engine/cmaps/KSCms-UHC-V.bcmap",
+          "sha256": "1631b531c9a40c8cbe24c2317dba107362e49fa6e18af620414d627c111d570c"
+        },
+        {
+          "path": "document-engine/cmaps/KSCpc-EUC-H.bcmap",
+          "sha256": "709480682c55cedbb0124b9960d78e28febeee0df2e34607d61aac6601647ec7"
+        },
+        {
+          "path": "document-engine/cmaps/KSCpc-EUC-V.bcmap",
+          "sha256": "031707887d6fc2378a36cdb6775334fd7a236c3f95048d8436abf43fe26fc49d"
+        },
+        {
+          "path": "document-engine/cmaps/LICENSE",
+          "sha256": "aa92ab5a472974865a96fd4a4e9c13bb41bf6fe1b309cb6b8da48bc9e19839a2"
+        },
+        {
+          "path": "document-engine/cmaps/NWP-H.bcmap",
+          "sha256": "286c6c9e335da330928a01edc3c97a3a623f1f7f3c42762b0a7dc2f651b1a78f"
+        },
+        {
+          "path": "document-engine/cmaps/NWP-V.bcmap",
+          "sha256": "3a75fb7b59adfb172710758c425d8ac6c93fd5360a64dd4afd5dd04e60ab4b4d"
+        },
+        {
+          "path": "document-engine/cmaps/RKSJ-H.bcmap",
+          "sha256": "a70de61a22a898f693f02cc011c3e3cff2e10aaa7cddb4661e456a21ae859f78"
+        },
+        {
+          "path": "document-engine/cmaps/RKSJ-V.bcmap",
+          "sha256": "68c1a64506471a524ea5cfc3b3a9f8f70031989a6bd95427b1351f33ccf50b06"
+        },
+        {
+          "path": "document-engine/cmaps/Roman.bcmap",
+          "sha256": "1c6b3ef9d9e5cb1aa329142ce9414b90f9b6d7f9182a2a9e927378dab8f0d43f"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UCS2-H.bcmap",
+          "sha256": "779428116752f34e2490a1941d24e4634c71e3c22d053b811d2090ae2fb3c704"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UCS2-V.bcmap",
+          "sha256": "1e5cc184b850ea44abc2df8ae5674279df668e8edf5e2a1a2ea2bd77adbd280f"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF16-H.bcmap",
+          "sha256": "32ff139b3c7b91d6ad25f994701f3ce7b242906022c418fd73e6493fc228bfe5"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF16-V.bcmap",
+          "sha256": "278eb1e68d1a236c60ef59472cf0176ee0d45f364285e76ca12419a08d46fb9a"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF32-H.bcmap",
+          "sha256": "bf26eb67fe19ee5ba915799e80ca72408400aa8342fdf6a244a4f44de8f97336"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF32-V.bcmap",
+          "sha256": "f7da3caf83ceb1cb37936fa10700d9ba6e9c3f72c5bc9724e3ac79bff0c0179e"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF8-H.bcmap",
+          "sha256": "2f2a742bcd1a84a148a4a518b9eed51a8f9c6ca5ed3bc5e2e41fff97de5dc2d8"
+        },
+        {
+          "path": "document-engine/cmaps/UniCNS-UTF8-V.bcmap",
+          "sha256": "b7c3f10780a8c62dd1c8ff6c30dc1e4e23b6cdc87c3a96fcd514cc98ffd3af9d"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UCS2-H.bcmap",
+          "sha256": "9201569b402e81ad8860650bd86350c4fa28e5dd5971f05fcacaf40f51de18ed"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UCS2-V.bcmap",
+          "sha256": "f10282335e4d64203bc2a653a3a47d745ec76c8ae04549f4d50180c1899be216"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF16-H.bcmap",
+          "sha256": "386fd39581245c034da016a92d23f3df1117d169f996100050b264fc09a84e35"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF16-V.bcmap",
+          "sha256": "0473cfbba612b92dd9918f0ff8aee9112897c48e0ffdc0eb82da3144ed8ea84a"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF32-H.bcmap",
+          "sha256": "f48a145dc4e3ed1dca1dde7111716a72306a2a4191ab05c6bae3a5c3a961cd2f"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF32-V.bcmap",
+          "sha256": "106acc49b7118bdef944e32107b4f348238f3929a0a15d3b7aab7b9101535993"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF8-H.bcmap",
+          "sha256": "f217b439c80ee5fa1bc2cf6d1defcc319f8d84483d166a00ee199e05a68588df"
+        },
+        {
+          "path": "document-engine/cmaps/UniGB-UTF8-V.bcmap",
+          "sha256": "a64df947632878eacc532fa193c735c92a383b7d66e6f8374ac193af7c64fc63"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UCS2-H.bcmap",
+          "sha256": "ad2352f40870880fbf7f8ee5abadff743fbd025fbf9830b8ada472d1c5e4da0b"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UCS2-HW-H.bcmap",
+          "sha256": "16e87edca954177c0881c874859d6783220925d821b5cdfb8755b61ebd93f9ce"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UCS2-HW-V.bcmap",
+          "sha256": "1973457e2c0192819947e56068625b34fb9a72ecc8a476ce6d7eaae5f73e2e5c"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UCS2-V.bcmap",
+          "sha256": "42a133d8e2ce9dd6d2288018e01592d2bf2435b326d39b94ea0b6e6a44ac33d3"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF16-H.bcmap",
+          "sha256": "f6a89c5688978548c83fcee990e205bc63c74274d5c69b49032a3bd4c49a05ee"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF16-V.bcmap",
+          "sha256": "c67126fc7c73850855186bb0d6482ac0a365057e0b58778c4ab9f234683fef53"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF32-H.bcmap",
+          "sha256": "96195950ce0fe24443d8eb426fa6b88534ec421d7bef9046f0b2362809cfba73"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF32-V.bcmap",
+          "sha256": "ed4dafda402bdd19c4d5d8bf2ab41473c0f86f384552b4c7b963d6627daedeb1"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF8-H.bcmap",
+          "sha256": "798fb0bf06ab0788d1f6a91c2db7de581612eef03c628f10e8f7ecd8f70ab448"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS-UTF8-V.bcmap",
+          "sha256": "1021611424f913b2df0bfdbe94bd327c04e224ec89d8e821c6501ea3d21f4265"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF16-H.bcmap",
+          "sha256": "710a32d7cb43fd6bd9dbf30da5971f8c941590f74441e208d852c2be0e74cc97"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF16-V.bcmap",
+          "sha256": "3b149aff5c5707b57fb3215d1775852c8b1f413ec0f679ea628f25cf87fe098d"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF32-H.bcmap",
+          "sha256": "8d2658e18741af7937d586a57c89729a6fec0d86121197c1f8518aa58b29cdfb"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF32-V.bcmap",
+          "sha256": "6dd475782f2897648a683c48b2fa015a15b8f06856760bddc8a17a63f418bacb"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF8-H.bcmap",
+          "sha256": "691c614ce432b3e62486efb54e5c84c6da5afe9b51b21253bde4758feb484183"
+        },
+        {
+          "path": "document-engine/cmaps/UniJIS2004-UTF8-V.bcmap",
+          "sha256": "40a8c7ea2d46711c5f78fc9a878a7db68b1543ba5cd60ecf14f519a2deb829b7"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISPro-UCS2-HW-V.bcmap",
+          "sha256": "6826f94d789d7bf1960668c1c5819c34c9585c1b23152fbc19ee81c7df08524b"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISPro-UCS2-V.bcmap",
+          "sha256": "493de9fd1a08f7946065d8ab58f0c3c9fe489f5a0f109f2d05a3169b4bd5789f"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISPro-UTF8-V.bcmap",
+          "sha256": "6181d382cf736c5e09492e8be9f26f31fa25b7462253f23ab16646af432cad81"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISX0213-UTF32-H.bcmap",
+          "sha256": "692044e1fb33445668632bc9fe7386805c624864be1ddeb29d65bb0c99fc630c"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISX0213-UTF32-V.bcmap",
+          "sha256": "dd54e16ca7bffb3a886242549b2bf7d78a277087f7c60d2636f118c21a5b0646"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISX02132004-UTF32-H.bcmap",
+          "sha256": "f80ea5a989be30ccda5a8804baef6d3b4b044d2b339bf8b31c671b2466171cf6"
+        },
+        {
+          "path": "document-engine/cmaps/UniJISX02132004-UTF32-V.bcmap",
+          "sha256": "94c22bd99e771c5fbe0dd8dc39850570d4db0075074aca13e272813edd7cc57f"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UCS2-H.bcmap",
+          "sha256": "a1081396ab4adb6f4a5b6c15f896963c244c1c9bcb65ce5616d06096a1b9811c"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UCS2-V.bcmap",
+          "sha256": "6cab547431958fbdc1d401d06ebd4dd61a73f5509a10f974df32bcbca11a2e43"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF16-H.bcmap",
+          "sha256": "42d35b396286499dfae1737a07adb3a64500df37b426580bfb1d3ea872938519"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF16-V.bcmap",
+          "sha256": "5bdb7390c80dcc136cb47d41dc7460082560969c17322ee739fe3020fb642410"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF32-H.bcmap",
+          "sha256": "3a01ec51ed1b828101351e337ffb8250abe11880032e5210f881170fed2588de"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF32-V.bcmap",
+          "sha256": "dfda895eceaed081af030dbbb962b49629eea817fc3c02bae15db93d0c68acd7"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF8-H.bcmap",
+          "sha256": "3fac9c65145f72d7d42157a3b9c5ed6904632184e6a0888f2b828699afd2002f"
+        },
+        {
+          "path": "document-engine/cmaps/UniKS-UTF8-V.bcmap",
+          "sha256": "9ecc6cf30dd354b9778ddba163b6cc7302b087ce9f39d1ba73472d2b75ed13ca"
+        },
+        {
+          "path": "document-engine/cmaps/V.bcmap",
+          "sha256": "b9ad1c0c09ff14bca52f9a28a9767eb857ad0e8946e64ba14c7387a7eb69866a"
+        },
+        {
+          "path": "document-engine/cmaps/WP-Symbol.bcmap",
+          "sha256": "543923bead225732aba30976690ee89095a19628277b5863efecc2c728d5d7bf"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitDingbats.pfb",
+          "sha256": "845c752392b6c914fb989c75a08b7792b88f542d2499042ef2889f8c814a16ed"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitFixed.pfb",
+          "sha256": "b6c8fe53f134b8b6d4578cd2d544df4cee9624c4efa8d51a560fb40ea296101b"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitFixedBold.pfb",
+          "sha256": "f1b7159702973f54fc86254ea38bcf3712b2a736eb3a0995751e9f4bb45ad603"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitFixedBoldItalic.pfb",
+          "sha256": "8a000945843bd31add06aee63bf9fd41b7578b4f3242a4b7cd46349ad9d24d4d"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitFixedItalic.pfb",
+          "sha256": "5007faf8320fa1fcc08b8894b356ad976f60b992ba29ee5272578bbdebaf3876"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitSerif.pfb",
+          "sha256": "4f57d2b9d884af8f907bf22df6019b52d86cbf6214fdbd02b1ae05472a543f35"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitSerifBold.pfb",
+          "sha256": "0bdf4b04e964139818d51eda03d566ba999fc3ba2421b1c6c51f9dc969022e80"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitSerifBoldItalic.pfb",
+          "sha256": "a406cac82583bf98175cb62c87ed5e95c45fbb34eece63a10b0a13e793cb2e10"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitSerifItalic.pfb",
+          "sha256": "610ae0687198045c4db5d1a6650fd5e92536631706382eb8b72e38df578d0ae9"
+        },
+        {
+          "path": "document-engine/standard_fonts/FoxitSymbol.pfb",
+          "sha256": "47967d055530e7357088a08403115425643ec2cdfd6201ba8af0fbd7116c1539"
+        },
+        {
+          "path": "document-engine/standard_fonts/LICENSE_FOXIT",
+          "sha256": "b578cdd2345840ada550bd12519533812320d5f1d21cf4c1c7e1b1b0a31c98b7"
+        },
+        {
+          "path": "document-engine/standard_fonts/LICENSE_LIBERATION",
+          "sha256": "d2c4d5b3e115a519cb58eb691aa64538397e2611f9ebe801392cf9667997e7dc"
+        }
+      ],
+      "nativeLibraries": [
+        {
+          "path": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+          "sha256": "c4bcc49d46ae4faeccd8902da07ccf4976208ba860d6f7af9952d7f49e662110"
+        },
+        {
+          "path": "jni/arm64-v8a/libonnxruntime.so",
+          "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad"
+        },
+        {
+          "path": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+          "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278"
+        }
+      ],
+      "intermediateCopies": 0,
+      "phoneInstalled": false,
+      "physicalTotalAcceptancePassed": false,
+      "saleQualified": false
+    },
+    "phone": {
+      "key": "4e784923475f4e808dd5a3fa2cf715084405bab5d4575fc0c49e999d3b048778:1:1",
+      "title": "公开演示安排 · 随身笔记回找",
+      "transcript": "零零一超市主管零零六 a 零零七 b\n零零八 c 零零九 d 把各个区的这个咱这个负责人啊叫过来咱简单呃做一个交流呃咱超市啊近期的销售啊嗯比往期的要好\n呃明显的客流量客流量也多了呃咱这个销售这个呃营业额也上去了呃这都是大家或者在座的呃努力的出现的状况估计估作各位在家也出了\n在下面也出了不少的呃力气啊也做了很多的这个呃营销的一些方案呃希望大家以后啊要继续保持啊这种工作状态那下面呢就是看看各位还有没有\n呃工程上的一些要求或者需求呃给我这个主管提一下我这边尽量呃满足各位的呃呃需求呃在我的能力之上我能满足的满足能力这这我的能力也有限\n要是呃有特大的需求或者要求我会上报呃进行上上级领导进行评估一下嗯在\n工程公开补充：这里只检查文字保存，不代表录音识别。",
+      "revision": 2,
+      "ownedDisplay": 44,
+      "defaultTab": "纪要",
+      "actualFixedExportEntryOpened": true,
+      "modelsRun": false,
+      "boardAccessed": false,
+      "state": "ACTUAL_INSTALLED145_NOTEBOOK_CONTINUOUS_LIBRARY_RENAME_TRANSCRIPT_SAVE_EXPORT_ENTRY_THEMES_AND_PROCESS_REOPEN_PASSED",
+      "actualPhoneReviewed": true,
+      "actualProcessRestartPassed": true,
+      "unrelatedPublicRowsUnchanged": true,
+      "ownerMainDisplayOperated": false,
+      "ownerAppearanceAccepted": false,
+      "hardwareQualified": false,
+      "saleQualified": false
+    },
+    "endSession": {
+      "at": "2026-11-13T09:15:10+08:00",
+      "state": "ANDROID145_PUBLIC_SOFTWARE_ACCEPTANCE_CLOSED_OLD_CONTENT_PRESERVED",
+      "actualVersion": "0.1.145",
+      "preexistingFiles": 5414,
+      "preexistingFilesByteIdentical": 5413,
+      "onlyOldChangeLibraryIndex": true,
+      "allPreviousLibrariesRetained": true,
+      "newPublicLibraries": [
+        "eb34f36c-0383-4636-b7ba-28633bbb82cd"
+      ],
+      "newFilesOnlyInDeclaredPublicLibraries": 57,
+      "ownerMainDisplayOperated": false,
+      "ownedAppDisplayForwardJarClosed": true,
+      "publicTemporaryZipRemovedByExactSha": true,
+      "modelsCloudMicBleUsed": false,
+      "usbKeepAwakeUnchanged": true
+    }
+  },
+  "sourceChecks": {
+    "windows": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\windows-source-final3\\result.json",
+    "android": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\mobile-source-final2\\result.json"
+  },
+  "limitations": [
+    "Engineering UI and scoped software contracts only; Owner final aesthetics/usability unaccepted.",
+    "No new microphone, recording-card, ASR, cloud or general quality run in this UI batch.",
+    "Actual native OS dialog/ordinary-recipient code proven unchanged and prior evidence reused; current UI routes and save/export preview/restart checked.",
+    "Owner clipboard sequence changed during isolated native test observation; do not claim its global sequence remained unchanged. No Owner keyboard/focus/clipboard content used."
+  ],
+  "failuresRetained": [
+    "Mobile source synthetic bridge initially returned null AI materials; fixture contracts corrected, no product-null response claimed.",
+    "Phone first tab-count check ran before detail loaded; await corrected without rebuild.",
+    "Phone ordinary return final10s readback timed out after original activation; independent native index and DOM appearance plus close data guards confirmed return. Original failure retained.",
+    "A temporary scoped installer exemption was prepared while117 ran, but no Companion process was running at actual installation. It was unused and removed; original standard guard retained. Initial receipt state label corrected with prior record kept."
+  ],
+  "ownerAppearanceAccepted": false,
+  "saleQualified": false
+}

@@ -1,0 +1,481 @@
+diff --git a/apps/windows/src/App.tsx b/apps/windows/src/App.tsx
+index 99088b92..06f14cc8 100644
+--- a/apps/windows/src/App.tsx
++++ b/apps/windows/src/App.tsx
+@@ -21,10 +21,8 @@ import {DesktopPointer} from './DesktopPointer';
+ import {nativeCloseReview} from './closeReviewClient';
+ import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
+ import '../../../packages/ui/src/companionUi.css';
+-import '../../../packages/ui/src/companionDesign.css';
+ import '../../../packages/ui/src/companionDark.css';
+-import './workspaceRefinement.css';
+-import '../../../packages/ui/src/recordingWorkspace.css';
++import '../../../packages/ui/src/notebookFoundation.css';
+ 
+ import {
+   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
+diff --git a/packages/ui/src/CompanionDashboard.tsx b/packages/ui/src/CompanionDashboard.tsx
+index 2790b968..aa02807a 100644
+--- a/packages/ui/src/CompanionDashboard.tsx
++++ b/packages/ui/src/CompanionDashboard.tsx
+@@ -693,6 +693,12 @@ export function CompanionDashboard({
+     setMeetingPane(selectedSession&&!savedMinutes?'source':'result');
+   },[selectedSession?.id]);
+   const savedDetailOpen=Boolean(selectedSession&&detailSessionId===selectedSession.id);
++  const notebookInitialSelection=useRef(false);
++  useEffect(()=>{
++    if(surface!=='windows'||!selectedSession||notebookInitialSelection.current)return;
++    notebookInitialSelection.current=true;
++    if(window.matchMedia('(min-width:761px)').matches)setDetailSessionId(selectedSession.id);
++  },[selectedSession?.id,surface]);
+   const qaDefaulted=useRef(false);
+   useEffect(()=>{if(selectedSession&&!qaDefaulted.current&&companionSessionHasFinalTranscript(selectedSession)){qaDefaulted.current=true;setQaSelected([selectedSession.id]);}},[selectedSession?.id,selectedSession?.transcriptFinal]);
+   const device = snapshot?.device;
+@@ -813,7 +819,12 @@ export function CompanionDashboard({
+   useEffect(()=>{
+     if (!savedDetailOpen || pageView !== 'library') return;
+     savedRecordingWorkspace.current?.focus({preventScroll:true});
+-    savedRecordingWorkspace.current?.scrollIntoView({block:'start'});
++    const reader=savedRecordingWorkspace.current;
++    if(surface==='windows'&&reader){
++      const chrome=document.querySelector('.ct-notebook-chrome')?.getBoundingClientRect().height??56;
++      const navigation=document.querySelector('.ct-page-navigation')?.getBoundingClientRect().height??48;
++      window.scrollTo({top:Math.max(0,reader.getBoundingClientRect().top+window.scrollY-chrome-navigation),behavior:'instant'});
++    }else reader?.scrollIntoView({block:'start'});
+   },[savedDetailOpen,selectedSession?.id,pageView]);
+   const rememberRecordingOpener = () => {
+     recordingOpener.current = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
+@@ -1944,65 +1955,38 @@ export function CompanionDashboard({
+       if(audioEditUnsaved && event.target instanceof Element && event.target.closest('button,a')&&!event.target.closest('.ct-audio-edit-panel')){
+         event.preventDefault();event.stopPropagation();document.querySelector('.ct-audio-edit-draft')?.scrollIntoView({block:'nearest'});
+       }
+-    }} className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
++    }} className={`ct-shell ct-simple ct-${surface}${surface==='windows'?' ct-notebook':''}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
+       {audioEditNotice}
+       {renderIncomingFiles?.(id=>{rememberRecordingOpener();setReferenceView('notes');setOpenSavedRecordingTarget(null);setOpenSavedRecordingId(id);navigatePage('library');onControl({action:'meetingSelectSession',sessionId:id});})}
+       {previewWaiting?<div className="ct-status-banner" role="status">
+         <p>正在核对已保存的内容，尚未开始保存或复制。</p>
+         <button type="button" className="ct-action" onClick={()=>previewTask.current?.cancel()}>取消等待</button>
+       </div>:null}
+-      <header className="ct-topbar">
+-        <div>
+-          <p className="ct-kicker">Companion Type</p>
+-          <h1 ref={pageHeading} tabIndex={-1}>{pageView === 'library' ? savedDetailOpen?'记录详情':'我的记录' : pageView === 'device' ? '设备与同步' : pageView === 'pet' ? '我的宠物' : '设置与工具'}</h1>
+-          {pageView==='library'&&!savedDetailOpen?<p className="ct-page-description">找到一段录音，回听、读文字，或整理成纪要。</p>:null}
+-        </div>
++      <header className="ct-topbar ct-notebook-chrome">
++        <div className="ct-notebook-brand"><span className="ct-brand-mark" aria-hidden="true"><Mic size={18}/></span><strong>Companion</strong></div>
++        <h1 ref={pageHeading} className="ct-sr-only" tabIndex={-1}>{pageView==='library'?'我的录音':pageView==='device'?'录音卡':pageView==='pet'?'我的宠物':'设置'}</h1>
+         <div className="ct-topbar-actions">
+-        {surface === 'windows' ? <button type="button" className="ct-icon-button" onClick={toggleDesktopTheme}
+-          aria-label={desktopTheme === 'dark' ? '切换至浅色模式' : '切换至深色模式'}
+-          title={desktopTheme === 'dark' ? '切换至浅色模式' : '切换至深色模式'}>
+-          {desktopTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+-        </button> : null}
+-        <button ref={helpTrigger} type="button" className="ct-action" aria-expanded={helpOpen}
+-          aria-controls="ct-use-help" onClick={()=>helpOpen?closeQuickGuide():openQuickGuide()}>
+-          <FileText size={16} />使用帮助</button>
+-        <button
+-          className="ct-icon-button"
+-          type="button"
+-          onClick={onRefresh}
+-          disabled={busyAction !== null}
+-          title="刷新"
+-          aria-label="刷新"
+-        >
+-          <RefreshCw size={18} />
+-        </button>
++          {surface==='windows'?<button type="button" className={`ct-notebook-device ct-connection-${connection.tone}`}
++            aria-label={`录音卡 · ${connection.label}`} title={connection.hint} aria-current={pageView==='device'?'page':undefined}
++            onClick={openDeviceRecording}><Bluetooth size={16} aria-hidden="true"/><span>录音卡</span><span className="ct-notebook-device-state" role="status">{connection.label}</span></button>:null}
++          {surface==='windows'?<button type="button" className="ct-icon-button" onClick={toggleDesktopTheme} aria-label={desktopTheme==='dark'?'切换至浅色模式':'切换至深色模式'}>{desktopTheme==='dark'?<Sun size={17}/>:<Moon size={17}/>}</button>:null}
++          <button ref={helpTrigger} type="button" className="ct-text-button" aria-expanded={helpOpen} aria-controls="ct-use-help" onClick={()=>helpOpen?closeQuickGuide():openQuickGuide()}>帮助</button>
++          <button className="ct-icon-button" type="button" onClick={onRefresh} disabled={busyAction!==null} aria-label="刷新"><RefreshCw size={17}/></button>
+         </div>
+       </header>
+-      {surface==='windows'&&pageView!=='device'?<section className="ct-connection-strip" aria-label="录音卡连接">
+-        <div><p className={`ct-connection-state ct-connection-${connection.tone}`} role="status"><Bluetooth size={17} aria-hidden="true"/><span>录音卡 · {connection.label}</span></p>
+-          <p className="ct-connection-hint">{connection.hint}</p></div>
+-        <button type="button" className={`ct-action${connection.connected?'':' ct-action-primary'}`} disabled={!connection.connected&&(controlsBusy||oobeBlockedByRecording||connection.pending)}
+-          onClick={()=>{openDeviceRecording();if(!connection.connected)onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined});}}>{connection.connected?'查看设备':connection.pending?'正在连接…':'连接录音卡'}</button>
+-      </section>:null}
+       {helpOpen ? <CompanionHelp device={device} onReadLicenses={onReadLicenses} onSettings={()=>{setHelpOpen(false);openSettings();}} onPrivacy={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
+         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
+         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
+         onDiagnostics={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}
+ 
+       <nav className="ct-page-navigation" aria-label="主要功能">
+-        <div className="ct-brand" aria-label="Companion">
+-          <span className="ct-brand-mark" aria-hidden="true"><Mic size={19}/></span>
+-          <span><strong>Companion</strong><small>随身录音 · 随时回看</small></span>
+-        </div>
+-        <span className="ct-nav-label">工作空间</span>
+-        <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
+-          onClick={() => {setDetailSessionId(null);navigatePage('library');}}><Headphones size={16} />我的记录</button>
+-        <button type="button" aria-current={pageView === 'device' ? 'page' : undefined}
+-          onClick={() => navigatePage('device')}><Bluetooth size={16} />设备与同步</button>
+-        {surface === 'windows' && petPanel ? <button type="button" aria-current={pageView === 'pet' ? 'page' : undefined}
+-          onClick={() => navigatePage('pet')}><Heart size={16} />我的宠物</button> : null}
+-        <button type="button" aria-current={pageView === 'settings' ? 'page' : undefined}
+-          onClick={() => {setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings');}}><ChevronDown size={16} />设置与工具</button>
++        <button type="button" aria-current={pageView==='library'&&!libraryFilters.favorites?'page':undefined}
++          onClick={()=>{setDetailSessionId(null);setLibraryFilters(value=>({...value,favorites:false}));navigatePage('library');}}><Headphones size={16}/>录音</button>
++        <button type="button" aria-current={pageView==='library'&&libraryFilters.favorites?'page':undefined}
++          onClick={()=>{setDetailSessionId(null);setLibraryFilters(value=>({...value,favorites:true,trash:false}));navigatePage('library');}}>收藏</button>
++        {surface!=='windows'?<button type="button" aria-current={pageView==='device'?'page':undefined} onClick={openDeviceRecording}><Bluetooth size={16}/>录音卡</button>:null}
++        {surface==='windows'&&petPanel?<button type="button" aria-current={pageView==='pet'?'page':undefined} onClick={()=>navigatePage('pet')}><Heart size={16}/>宠物</button>:null}
++        <button type="button" aria-current={pageView==='settings'?'page':undefined} onClick={()=>{setSettingsReturn(null);setShowAdvanced(true);navigatePage('settings');}}>设置</button>
+       </nav>
+ 
+       {oobeBlockedByRecording ? <section className="ct-simple-status" aria-live="polite">
+@@ -2090,24 +2074,24 @@ export function CompanionDashboard({
+             onClick={() => onControl({ action: 'deviceConnect', deviceId: device?.deviceId ?? undefined })}><RefreshCw size={15} />读取设备状态</button>}
+       </section> : null}
+ 
+-      <div className="ct-page-panel" hidden={pageView !== 'library'}>
++      <div className="ct-page-panel ct-notebook-content" hidden={pageView !== 'library'}>
+       {snapshot ? <CompanionRecoveryCenter snapshot={snapshot} blocked={controlsBusy || oobeBlockedByRecording}
+         savingBusy={controlsBusy} asrReady={asrConfigured}
+         minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
+         onSelectSession={sessionId=>{setOpenSavedRecordingId(sessionId);onControl({action:'meetingSelectSession',sessionId});}}
+         onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
+-      <CompanionCard ref={recordingLibraryRegion} className="ct-library" aria-label="录音历史" tabIndex={-1} hidden={savedDetailOpen}>
++      <div className="ct-notebook-library-column">
++      <CompanionCard ref={recordingLibraryRegion} className="ct-library" aria-label="录音历史" tabIndex={-1} hidden={surface!=='windows'&&savedDetailOpen}>
+         <div className="ct-library-head">
+           <div>
+-            <strong>{libraryFilters.trash?'回收站':libraryQuery?'搜索结果':onlyPendingSessions?'待整理的录音':'录音库'}</strong>
+-            <p>{visibleLibrary.length} 条{libraryFilters.trash?' · 可恢复':libraryQuery?'匹配的记录':' · 按录音时间排列'}</p>
++            <strong>{libraryFilters.trash?'回收站':libraryQuery?'搜索结果':libraryFilters.favorites?'收藏的录音':onlyPendingSessions?'待整理的录音':'我的录音'}</strong>
++            <p>{visibleLibrary.length} 条{libraryFilters.trash?' · 可恢复':libraryQuery?'匹配的录音':''}</p>
+           </div>
+           <div className="ct-button-row">
+-          {recordingLibrary.length>0&&(surface!=='windows'||devicePageConnected)?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
++          {surface!=='windows'&&recordingLibrary.length>0?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>
+             <Mic size={15} />{devicePageConnected?'用卡片录音':'连接录音卡'}</button>:null}
+-          {surface==='windows' && onImportAudio ? <button type="button" className="ct-action" onClick={openAudioImport}>导入已有音频</button> : null}
+-          <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
+-            onClick={() => setOnlyPendingSessions((value) => !value)}>{onlyPendingSessions ? '显示全部录音' : '只看待整理'}</button>
++          {surface==='windows' && onImportAudio ? <button type="button" className="ct-action" onClick={openAudioImport} aria-label="导入已有音频">＋ 导入</button> : null}
++
+           </div>
+         </div>
+         <label className="ct-library-search"><Search size={15} /><span className="ct-sr-only">搜索录音全文</span>
+@@ -2118,6 +2102,7 @@ export function CompanionDashboard({
+         <details className="ct-library-more" open={libraryToolsOpen}
+           onToggle={event=>setLibraryToolsOpen(event.currentTarget.open)}>
+           <summary>筛选与整理{libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to||libraryFilters.trash?' · 已筛选':''}{Object.keys(librarySelection).length?` · 已选 ${Object.keys(librarySelection).length} 条`:''}</summary>
++        <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions} onClick={()=>setOnlyPendingSessions(value=>!value)}>{onlyPendingSessions?'显示全部录音':'只看待整理'}</button>
+         <CompanionLibraryTools sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
+           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
+           restoreBlocked={controlsBusy||oobeBlockedByRecording||snapshot?.host.persistence?.status==='unsaved'}
+@@ -2165,7 +2150,13 @@ export function CompanionDashboard({
+                   type="button"
+                   key={session.id}
+                   className={`ct-library-card ${selected ? 'selected' : ''}`}
+-                  onClick={() => {rememberRecordingOpener();setReferenceView('notes');setOpenSavedRecordingTarget(preview.target??null);setOpenSavedRecordingId(session.id); onControl({ action: 'meetingSelectSession', sessionId: session.id });}}
++                  onClick={() => {
++                    if(selectedSession?.id!==session.id&&(titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved||libraryUnsaved||audioEditUnsaved)){
++                      setLibraryCurrentMessage('当前录音有未保存的修改，请先保存或取消，再打开另一条。');savedRecordingWorkspace.current?.focus({preventScroll:true});return;
++                    }
++                    setLibraryCurrentMessage('');rememberRecordingOpener();setReferenceView('notes');setOpenSavedRecordingTarget(preview.target??null);setOpenSavedRecordingId(session.id);
++                    if(selectedSession?.id===session.id)setDetailSessionId(session.id);else onControl({action:'meetingSelectSession',sessionId:session.id});
++                  }}
+                   disabled={busyAction !== null||Boolean(libraryFilters.trash)}
+                   aria-pressed={selected}
+                   title={session.sourceDeviceId ? `来源设备：${session.sourceDeviceId}` : undefined}
+@@ -2189,7 +2180,7 @@ export function CompanionDashboard({
+                       {session.sourceDeviceId ? ` · 设备 ${session.sourceDeviceId.replace(/[:-]/g, '').slice(-4).toUpperCase()}` : ''}
+                     </small>
+                   </span>
+-                  <span className="ct-library-card-end"><span className={`ct-library-status ct-library-status-${session.status}${textState?' ct-state-'+textState.tone:''}`}>{!localSaveConfirmed?'保存待确认':textState?.label??statusLabel}</span><span className="ct-library-open">打开记录 <span aria-hidden="true">↗</span></span></span>
++                  <span className="ct-library-card-end"><span className={`ct-library-status ct-library-status-${session.status}${textState?' ct-state-'+textState.tone:''}`}>{!localSaveConfirmed?'保存待确认':textState?.label??statusLabel}</span></span>
+                     {companionTranscriptUnmappedEdges(session).length > 0 ? <small className="ct-step-warn">部分原音尚无对应文字</small> : null}
+                 </button>
+                 </div>
+@@ -2226,6 +2217,12 @@ export function CompanionDashboard({
+         </li>)}</ol> : <p>队列为空。</p>}
+         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
+       </section></details>:null}
++      </div>
++      {surface==='windows'&&!savedDetailOpen?<section className="ct-notebook-placeholder" aria-label="打开录音">
++        <Headphones size={27} aria-hidden="true"/><h2>{recordingLibrary.length?'打开一条录音':'把声音留在这里'}</h2>
++        <p>{recordingLibrary.length?'从左侧选择录音，在这里回听、读文字和整理纪要。':'连接录音卡后，录音会自动收进资料库。也可以导入已有音频。'}</p>
++        {!recordingLibrary.length?<button type="button" className="ct-action ct-action-primary" onClick={openDeviceRecording}>连接录音卡</button>:null}
++      </section>:null}
+       {selectedSession ? (
+         <section ref={savedRecordingWorkspace} id="ct-saved-recording-workspace" className="ct-meeting-workspace" aria-label="当前记录" tabIndex={-1} hidden={!savedDetailOpen}>
+           <button type="button" className="ct-text-button ct-recording-back" disabled={controlsBusy}
+@@ -2234,7 +2231,7 @@ export function CompanionDashboard({
+             <div>
+               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
+               <label className="ct-title-editor"><span className="ct-sr-only">记录标题</span><Pencil size={15} />
+-                <input value={titleDraft} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
++                <input value={titleDirty?titleDraft:meetingTitle(selectedSession)} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
+                   readOnly={!onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
+                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
+               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
+@@ -2245,7 +2242,7 @@ export function CompanionDashboard({
+                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
+               </div> : null}
+             </div>
+-            {!(textOnlyImport && manualMinutes && !onlineMinutes) ? <div className="ct-meeting-badges">
++            {!textOnlyImport ? <div className="ct-meeting-badges">
+               {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '文字已生成'}</span>
+                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
+                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
+diff --git a/packages/ui/src/MeetingReadingFrame.tsx b/packages/ui/src/MeetingReadingFrame.tsx
+index e8619a80..a4968dd1 100644
+--- a/packages/ui/src/MeetingReadingFrame.tsx
++++ b/packages/ui/src/MeetingReadingFrame.tsx
+@@ -42,7 +42,7 @@ export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:st
+   target.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  }
+  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
+-  {(items.length>=2||titles.length>=2)&&<aside className="meeting-reading-sidebar"><details className="meeting-outline-collapse" open={indexed}><summary>章节导航</summary><nav className="meeting-outline" aria-label="会议速览">
++  {indexed&&(items.length>=2||titles.length>=2)&&<aside className="meeting-reading-sidebar"><details className="meeting-outline-collapse" open={indexed}><summary>章节导航</summary><nav className="meeting-outline" aria-label="会议速览">
+    {items.length>=2&&<div className="meeting-outline-grid">{items.map(item=>{const Icon=icons[item.kind];return <button type="button" key={item.kind}
+     className={`meeting-outline-card meeting-outline-${item.kind}`} onClick={()=>navigate(item.title)} aria-current={active===item.title?'location':undefined} aria-label={`${item.label}，${item.count} 条，${item.hint}`}>
+     <span className="meeting-outline-label"><Icon size={16} aria-hidden="true"/>{item.label}<ArrowUpRight size={13} aria-hidden="true"/></span>
+diff --git a/packages/ui/src/MeetingWorkspaceNav.tsx b/packages/ui/src/MeetingWorkspaceNav.tsx
+index 34b14bfa..25ad9db7 100644
+--- a/packages/ui/src/MeetingWorkspaceNav.tsx
++++ b/packages/ui/src/MeetingWorkspaceNav.tsx
+@@ -11,8 +11,8 @@ export function meetingPaneForTarget(id:string):MeetingPane{
+ }
+ const panes=[
+  {id:'result' as const,label:'纪要',icon:FileText},
+- {id:'source' as const,label:'录音与文字',icon:Headphones},
+- {id:'materials' as const,label:'笔记与资料',icon:NotebookPen},
++ {id:'source' as const,label:'文字',icon:Headphones},
++ {id:'materials' as const,label:'补充',icon:NotebookPen},
+  {id:'handoff' as const,label:'导出',icon:Send},
+ ];
+ export function MeetingWorkspaceNav({value,onChange,dirty,notesCount}:{value:MeetingPane;onChange:(pane:MeetingPane)=>void;dirty:Partial<Record<MeetingPane,boolean>>;notesCount:number}){
+@@ -24,7 +24,7 @@ export function MeetingWorkspaceNav({value,onChange,dirty,notesCount}:{value:Mee
+   else if(event.key==='Home')next=0;else if(event.key==='End')next=panes.length-1;else return;
+   event.preventDefault();onChange(panes[next].id);nav.current?.querySelectorAll<HTMLButtonElement>('button')[next]?.focus();
+  }}>
+-  {panes.map(p=><button type="button" key={p.id} aria-current={value===p.id?'page':undefined} onClick={()=>onChange(p.id)}>
++  {panes.map(p=><button type="button" key={p.id} className={p.id==='handoff'?'ct-meeting-export-trigger':undefined} aria-current={value===p.id?'page':undefined} onClick={()=>onChange(p.id)}>
+    <p.icon size={17} aria-hidden="true"/><span>{p.label}</span>
+    {dirty[p.id]?<small className="ct-pane-dirty" aria-label="有未保存的修改">未保存</small>:p.id==='materials'&&notesCount>0?<small className="ct-pane-count">{notesCount}</small>:null}
+   </button>)}
+diff --git a/packages/ui/src/notebookFoundation.css b/packages/ui/src/notebookFoundation.css
+new file mode 100644
+index 00000000..93c7f16c
+--- /dev/null
++++ b/packages/ui/src/notebookFoundation.css
+@@ -0,0 +1,112 @@
++/* Companion notebook foundation. Replaces the former dashboard/refinement/workspace skins.
++   Functional components retain their own styles; the shell, library and reader share these tokens. */
++.ct-shell.ct-windows.ct-notebook{--nb-paper:#fff;--nb-side:#f8faf9;--nb-ink:#23312d;--nb-muted:#64746d;--nb-line:#e3e9e6;--nb-selected:#eaf1ed;--nb-accent:#416657;--companion-surface:var(--nb-paper);--companion-ink:var(--nb-ink);--companion-muted:var(--nb-muted);--companion-border:var(--nb-line);--companion-accent:var(--nb-accent);width:100%;max-width:none;min-height:100dvh;margin:0;padding:0;background:var(--nb-paper);color:var(--nb-ink);font:14px/1.7 "Segoe UI","Microsoft YaHei UI",sans-serif}
++.ct-shell.ct-windows.ct-notebook.ct-theme-dark{--nb-paper:#1b2220;--nb-side:#171d1b;--nb-ink:#e4ece7;--nb-muted:#a2b3a9;--nb-line:#34413a;--nb-selected:#2a3c32;--nb-accent:#b5d0bf;color-scheme:dark}
++.ct-notebook .ct-notebook-chrome{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;min-height:56px;margin:0;padding:10px 24px;border-bottom:1px solid var(--nb-line);background:var(--nb-paper)}
++.ct-notebook .ct-notebook-brand{display:flex;align-items:center;gap:10px;font-size:16px;letter-spacing:-.02em}
++.ct-notebook .ct-brand-mark{display:grid;place-items:center;flex:none;width:29px;height:29px;border-radius:8px;background:var(--nb-ink);color:var(--nb-paper)}
++.ct-notebook .ct-topbar-actions{display:flex;align-items:center;gap:13px;margin-left:auto}
++.ct-notebook .ct-notebook-device{display:inline-flex;align-items:center;gap:7px;border:0;padding:5px 8px;background:transparent;color:var(--nb-ink);font:inherit;font-size:12px;border-radius:6px}
++.ct-notebook .ct-notebook-device-state{font-size:11px;color:var(--nb-muted)}
++.ct-notebook .ct-notebook-device[aria-current=page]{background:var(--nb-selected)}
++.ct-notebook .ct-page-navigation{position:sticky;top:56px;z-index:19;display:flex;align-items:stretch;gap:26px;inset-inline:auto;width:100%;min-height:48px;margin:0;padding:0 26px;border:0;border-bottom:1px solid var(--nb-line);border-radius:0;background:var(--nb-paper)}
++.ct-notebook .ct-page-navigation button{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:none;min-height:48px;margin:0;padding:8px 0;border:0;border-bottom:2px solid transparent;border-radius:0;box-shadow:none;background:transparent;color:var(--nb-muted);font-size:13px;font-weight:400}
++.ct-notebook .ct-page-navigation button[aria-current=page]{background:transparent;color:var(--nb-ink);border-bottom-color:var(--nb-accent);font-weight:600}
++.ct-notebook .ct-page-navigation button:last-child{margin-left:auto}
++.ct-notebook .ct-notebook-content{display:grid;grid-template-columns:300px minmax(0,1fr);gap:0;align-items:start;min-height:calc(100dvh - 105px);margin:0}
++.ct-notebook .ct-notebook-content[hidden]{display:none!important}
++.ct-notebook .ct-notebook-content>.ct-recovery-compact,.ct-notebook .ct-notebook-content>.ct-recovery-center{grid-column:1/-1}
++.ct-notebook .ct-notebook-library-column{position:sticky;top:105px;min-width:0;max-height:calc(100dvh - 105px);overflow:auto;align-self:start;background:var(--nb-side);border-right:1px solid var(--nb-line);min-height:calc(100dvh - 105px)}
++.ct-notebook .ct-library{margin:0;padding:25px 14px 22px;border:0;border-radius:0;background:var(--nb-side);box-shadow:none}
++.ct-notebook .ct-library-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:0 7px}
++.ct-notebook .ct-library-head strong{font-size:16px;font-weight:600;letter-spacing:-.02em}
++.ct-notebook .ct-library-head p{margin:4px 0 0;font-size:11px;color:var(--nb-muted)}
++.ct-notebook .ct-library-head .ct-button-row{margin:0;gap:5px;flex:none}
++.ct-notebook .ct-library-head .ct-action{padding:4px 8px;min-height:30px;border:0;background:transparent;font-size:12px;color:var(--nb-muted)}
++.ct-notebook .ct-library-search{display:flex;align-items:center;gap:8px;min-height:37px;margin:18px 5px 13px;padding:6px 10px;border:1px solid var(--nb-line);border-radius:7px;background:var(--nb-paper);color:var(--nb-muted)}
++.ct-notebook .ct-library-search input{width:100%;min-width:0;padding:0;border:0;background:transparent;color:var(--nb-ink);font-size:12px}
++.ct-notebook .ct-library-search input::placeholder{color:var(--nb-muted)}
++.ct-notebook .ct-library-more{margin:10px 7px 16px;border:0;background:transparent}
++.ct-notebook .ct-library-more>summary{font-size:11px;color:var(--nb-muted)}
++.ct-notebook .ct-library-list{display:flex;flex-direction:column;gap:3px;max-height:none;overflow:visible}
++.ct-notebook .ct-library-day{padding:15px 10px 8px;color:var(--nb-muted);font-size:11px}
++.ct-notebook .ct-library-entry{display:flex;align-items:flex-start;gap:6px;min-width:0}
++.ct-notebook .ct-library-entry>input{margin-top:20px;flex:none}
++.ct-notebook .ct-library-card{display:block;width:100%;min-width:0;margin:0;padding:16px 12px;border:0;border-radius:8px;background:transparent;box-shadow:none;text-align:left;color:var(--nb-ink)}
++.ct-notebook .ct-library-card.selected{background:var(--nb-selected);box-shadow:none}
++.ct-notebook .ct-library-card:hover:not(:disabled){background:var(--nb-selected);box-shadow:none;transform:none}
++.ct-notebook .ct-library-icon{display:none}
++.ct-notebook .ct-library-card-main{display:block;min-width:0}
++.ct-notebook .ct-library-card-main strong{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:600;line-height:1.7;color:var(--nb-ink)}
++.ct-notebook .ct-library-card-main small{display:block;margin-top:5px;font-size:11px;line-height:1.7;color:var(--nb-muted)}
++.ct-notebook .ct-library-text-preview{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:7px;font-size:12px;line-height:1.8;color:var(--nb-muted)}
++.ct-notebook .ct-library-card-end{display:flex;align-items:center;gap:6px;margin-top:8px}
++.ct-notebook .ct-library-status{padding:0;border:0;border-radius:0;background:transparent;color:var(--nb-muted);font-size:11px;font-weight:400}
++.ct-notebook .ct-listening-more{padding:0 21px 18px}
++.ct-notebook .ct-notebook-placeholder{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;min-height:580px;max-width:530px;margin:auto;padding:48px;color:var(--nb-muted)}
++.ct-notebook .ct-notebook-placeholder h2{margin:0;color:var(--nb-ink);font-size:22px;font-weight:600}
++.ct-notebook .ct-notebook-placeholder p{margin:0;line-height:1.9}
++.ct-notebook .ct-meeting-workspace{min-width:0;width:100%;margin:0;border:0;border-radius:0;background:var(--nb-paper);box-shadow:none}
++.ct-notebook .ct-meeting-workspace[hidden]{display:none!important}
++.ct-notebook .ct-recording-back{margin:15px 32px 0;color:var(--nb-muted);font-size:12px}
++.ct-notebook .ct-meeting-hero{display:block;margin:0;padding:30px 36px 24px;border:0;background:var(--nb-paper)}
++.ct-notebook .ct-meeting-hero .ct-section-eyebrow{margin:0 0 8px;color:var(--nb-muted);font-size:11px;letter-spacing:0}
++.ct-notebook .ct-title-editor{display:flex;gap:9px;align-items:center;color:var(--nb-muted)}
++.ct-notebook .ct-title-editor input{min-width:0;width:100%;padding:0 0 5px;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:var(--nb-ink);font-size:25px;line-height:1.5;font-weight:600;letter-spacing:-.025em}
++.ct-notebook .ct-title-editor input:focus{border-bottom-color:var(--nb-accent)}
++.ct-notebook .ct-meeting-hero p,.ct-notebook .ct-recording-name-hint{font-size:11px;color:var(--nb-muted);line-height:1.8}
++.ct-notebook .ct-meeting-badges{display:flex;gap:8px;margin-top:12px}
++.ct-notebook .ct-pill{padding:0;border:0;border-radius:0;background:transparent;color:var(--nb-muted);font-size:11px}
++.ct-notebook .ct-meeting-navigation{display:flex;align-items:center;gap:23px;flex-wrap:wrap;margin:0 36px;padding:0;border:0;border-bottom:1px solid var(--nb-line);border-radius:0;background:transparent}
++.ct-notebook .ct-meeting-navigation button{display:inline-flex;gap:6px;align-items:center;min-height:41px;padding:7px 0;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:var(--nb-muted);font-size:13px;font-weight:400}
++.ct-notebook .ct-meeting-navigation button[aria-current=page]{color:var(--nb-ink);border-bottom-color:var(--nb-accent);background:transparent;font-weight:600}
++.ct-notebook .ct-meeting-navigation .ct-meeting-export-trigger{margin-left:auto}
++.ct-notebook .ct-recording-primary-actions{display:flex;gap:9px;flex-wrap:wrap;margin:20px 36px}
++.ct-notebook .ct-action,.ct-notebook .ct-icon-button{min-height:33px;padding:6px 11px;border:1px solid var(--nb-line);border-radius:7px;box-shadow:none;background:var(--nb-paper);color:var(--nb-ink);font-size:12px;font-weight:400}
++.ct-notebook .ct-icon-button{display:inline-flex;align-items:center;justify-content:center;min-width:32px;padding:6px}
++.ct-notebook .ct-action-primary{background:var(--nb-ink);border-color:var(--nb-ink);color:var(--nb-paper)}
++.ct-notebook .ct-action-primary:hover:not(:disabled){background:var(--nb-ink);filter:brightness(.92)}
++.ct-notebook .ct-text-button{color:var(--nb-accent);font-size:12px;font-weight:400}
++.ct-notebook .ct-recording-result{margin:0 36px 24px;border-color:var(--nb-line)}
++.ct-notebook .ct-recording-result>summary{padding:14px 0;color:var(--nb-ink);font-size:14px;font-weight:600}
++.ct-notebook .ct-result-empty{margin:16px 36px 30px;padding:24px 0;border:0;background:transparent;box-shadow:none;text-align:left}
++.ct-notebook .ct-result-empty h3{font-size:17px;font-weight:600}
++.ct-notebook .ct-result-empty p{font-size:13px;line-height:1.9;color:var(--nb-muted)}
++.ct-notebook .ct-audio-card{display:block;margin:0 36px 24px;padding:16px 0;border:0;border-block:1px solid var(--nb-line);border-radius:0;background:transparent;box-shadow:none}
++.ct-notebook .ct-audio-card>div{width:100%;min-width:0}
++.ct-notebook .ct-audio-card audio{width:100%;max-width:600px;height:40px}
++.ct-notebook .ct-recording-text,.ct-notebook .ct-meeting-pane{min-width:0}
++.ct-notebook .ct-recording-text{padding:0 36px 26px}
++.ct-notebook .ct-recording-transcript{font-size:14px;line-height:2;color:var(--nb-ink)}
++.ct-notebook .ct-minutes-article{margin-top:22px;max-width:780px;font-size:14px;line-height:1.9;color:var(--nb-ink)}
++.ct-notebook .ct-minutes-item{border:0;border-radius:0;background:transparent;padding:9px 0;box-shadow:none;color:var(--nb-ink)}
++.ct-notebook .ct-minutes-article :is(h3,h4){color:var(--nb-ink);font-weight:600}
++.ct-notebook .ct-recording-more,.ct-notebook .ct-result-tools{margin:0 36px 24px;border-color:var(--nb-line)}
++.ct-notebook .ct-recording-more>summary,.ct-notebook .ct-result-tools>summary{padding:14px 0;color:var(--nb-muted);font-size:12px}
++.ct-notebook .ct-recording-notice,.ct-notebook .ct-journey{margin-inline:36px;border-radius:7px;box-shadow:none;font-size:12px}
++.ct-notebook>.ct-page-panel:not(.ct-notebook-content){max-width:1000px;margin:0 auto;padding:30px 32px}
++.ct-notebook>.ct-page-panel:empty{display:none}
++.ct-notebook .ct-notebook-chrome .ct-topbar-actions{align-items:center}
++.ct-notebook .ct-library-search input{height:23px}
++.ct-notebook .ct-library-card-end{justify-content:flex-start}
++.ct-notebook .ct-pane-count{background:var(--nb-selected);color:var(--nb-muted);font-size:11px}
++.ct-notebook .ct-action-review-tools{background:transparent;border-radius:0}
++.ct-notebook .ct-meeting-badges{justify-content:flex-start;margin:8px 0 0}
++.ct-notebook .ct-imported-save-status{margin:0 36px 14px;color:var(--nb-muted);font-size:11px}
++.ct-notebook.ct-theme-dark .ct-text-button{color:var(--nb-accent)!important}
++.ct-notebook .ct-footer{padding:16px 26px;margin:0;border-top:1px solid var(--nb-line);color:var(--nb-muted);font-size:11px}
++.ct-notebook .ct-library-tools :is(input,select){max-width:100%;min-width:0}
++.ct-notebook .ct-library-tools .ct-button-row{flex-wrap:wrap}
++/* Legacy dark rules only supply functional tool surfaces. Keep notebook chrome on its own palette. */
++.ct-notebook.ct-theme-dark :is(.ct-library,.ct-meeting-workspace,.ct-meeting-hero){background:var(--nb-paper)!important;border-color:var(--nb-line)!important}
++.ct-notebook.ct-theme-dark .ct-library{background:var(--nb-side)!important}
++.ct-notebook.ct-theme-dark .ct-page-navigation{background:var(--nb-paper)!important;border-color:var(--nb-line)!important}
++.ct-notebook.ct-theme-dark .ct-page-navigation button{color:var(--nb-muted)!important}
++.ct-notebook.ct-theme-dark .ct-page-navigation button[aria-current=page]{color:var(--nb-ink)!important;background:transparent!important}
++.ct-notebook.ct-theme-dark .ct-library-card.selected{background:var(--nb-selected)!important;border-color:transparent!important}
++.ct-notebook.ct-theme-dark :is(.ct-audio-card,.ct-minutes-item,.ct-library-status,.ct-pill){background:transparent!important;border-color:var(--nb-line)!important;color:var(--nb-muted)!important}
++.ct-notebook.ct-theme-dark .ct-action-primary{background:var(--nb-ink)!important;border-color:var(--nb-ink)!important;color:var(--nb-paper)!important}
++@media(min-width:761px){.ct-notebook .ct-recording-back{display:none}}
++@media(max-width:1000px) and (min-width:761px){.ct-notebook .ct-notebook-content{grid-template-columns:260px minmax(0,1fr)}.ct-notebook .ct-meeting-hero{padding-inline:24px}.ct-notebook .ct-meeting-navigation,.ct-notebook .ct-recording-result,.ct-notebook .ct-recording-primary-actions,.ct-notebook .ct-audio-card,.ct-notebook .ct-recording-more,.ct-notebook .ct-recording-notice,.ct-notebook .ct-result-tools{margin-inline:24px}.ct-notebook .ct-recording-text{padding-inline:24px}}
++@media(max-width:760px){.ct-notebook .ct-notebook-chrome{padding-inline:17px;gap:10px}.ct-notebook .ct-topbar-actions{gap:9px}.ct-notebook .ct-notebook-device-state{display:none}.ct-notebook .ct-notebook-device{padding-inline:3px}.ct-notebook .ct-topbar-actions>.ct-icon-button:last-child{display:none}.ct-notebook .ct-page-navigation{padding-inline:20px;gap:25px}.ct-notebook .ct-notebook-content{display:block}.ct-notebook .ct-notebook-library-column{position:static;max-height:none;min-height:calc(100dvh - 105px);overflow:visible;border:0}.ct-notebook.ct-meeting-detail .ct-notebook-library-column{display:none}.ct-notebook .ct-notebook-placeholder{display:none}.ct-notebook .ct-library{padding:25px 18px}.ct-notebook .ct-library-head strong{font-size:21px}.ct-notebook .ct-library-card-main strong{font-size:15px}.ct-notebook .ct-library-card{padding-block:20px}.ct-notebook .ct-meeting-hero{padding:23px}.ct-notebook .ct-meeting-navigation{margin-inline:23px;gap:18px}.ct-notebook .ct-recording-result,.ct-notebook .ct-recording-primary-actions,.ct-notebook .ct-audio-card,.ct-notebook .ct-recording-more,.ct-notebook .ct-recording-notice,.ct-notebook .ct-result-tools{margin-inline:23px}.ct-notebook .ct-recording-text{padding-inline:23px}.ct-notebook>.ct-page-panel:not(.ct-notebook-content){padding:23px}.ct-notebook .ct-meeting-navigation button{font-size:12px}}
++@media(pointer:coarse){.ct-notebook button,.ct-notebook .ct-library-search{min-height:44px}.ct-notebook input{font-size:16px}}
+diff --git a/tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx b/tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx
+index 9068f658..ebf17f5d 100644
+--- a/tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx
++++ b/tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx
+@@ -3,10 +3,8 @@ import {createRoot} from 'react-dom/client';
+ import {CompanionDashboard} from '../../../packages/ui/src/CompanionDashboard';
+ import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../../../packages/core/src/companionV1';
+ import '../../../packages/ui/src/companionUi.css';
+-import '../../../packages/ui/src/companionDesign.css';
+ import '../../../packages/ui/src/companionDark.css';
+-import '../../../apps/windows/src/workspaceRefinement.css';
+-import '../../../packages/ui/src/recordingWorkspace.css';
++import '../../../packages/ui/src/notebookFoundation.css';
+ 
+ const original=createCompanionV1Fixture();
+ const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',status:'minutesReady',source:'importedTranscript',startedAt:'2026-11-12T01:00:00Z',durationMs:600000,
+@@ -17,6 +15,7 @@ const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',statu
+  minutes:{status:'minutesReady',quality:'final',source:'userEdited',generatedAt:'2026-11-12T01:00:00Z',markdown:'## Summary\n\n本周聚焦会议详情和完整交接，预算仍待确认。\n\n## Decisions\n\n- 先完成完整流程，再集中验收。\n\n## Action Items\n\n- [ ] 核对交接文件范围\n- [ ] 确认预算依据\n\n## Open Questions\n\n- 预算尚未确认。'},minutesByMode:{offlineStore:null,onlineLive:null},pendingReason:null};
+ if(new URLSearchParams(location.search).has('without-minutes'))(row as any).minutes=null;
+ const initial={...original,host:{...original.host,selectedSessionId:row.id,sessions:[row as any],persistence:{status:'ready'}}} as any;
++if(new URLSearchParams(location.search).has('notebook-library'))initial.host.sessions.push({...structuredClone(row),id:'public-other-meeting',title:'客户讨论 · 文字示例'});
+ const connectionFixture=new URLSearchParams(location.search).get('connection');
+ if(connectionFixture){
+  initial.source=connectionFixture==='stale'?'lastKnown':'firmware';initial.connected=initial.device.connected=['connected','stale','storage'].includes(connectionFixture);initial.device.mode='windowsNative';
+diff --git a/tools/qa/core_acceptance20261109/verify_workspace.cjs b/tools/qa/core_acceptance20261109/verify_workspace.cjs
+index 550b54ae..f54454f3 100644
+--- a/tools/qa/core_acceptance20261109/verify_workspace.cjs
++++ b/tools/qa/core_acceptance20261109/verify_workspace.cjs
+@@ -10,21 +10,21 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
+  if(process.env.COMPANION_WORKSPACE_SYNC_ONLY!=='1'){
+  await page.goto(origin);await page.locator('.ct-library-card').filter({hasText:'产品周会'}).waitFor();
+  await page.screenshot({path:out+'/library-light.png',fullPage:true});
+- await page.getByRole('button',{name:'设备与同步',exact:true}).click();
++ await page.getByRole('button',{name:/^录音卡 ·/}).click();
+  const devicePage=page.locator('#ct-device-recording-page');await devicePage.waitFor();
+  const connectionTop=await devicePage.locator('.ct-readiness').boundingBox();const recordingBelow=await devicePage.getByRole('region',{name:'在卡片上录音',exact:true}).boundingBox();
+  assert(connectionTop&&recordingBelow&&connectionTop.y<recordingBelow.y,'Connection must appear before recording tools');
+  await page.screenshot({path:out+'/device-light.png',fullPage:true});
+- await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
++ await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
+  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
+  assert.equal(await nav.locator('button').count(),4);
+  assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
+  assert(await page.getByText('本周聚焦会议详情和完整交接，预算仍待确认。',{exact:true}).isVisible(),'Saved minutes must be visible immediately, without opening a disclosure');
+  await page.screenshot({path:out+'/result-light.png',fullPage:true});
+- await nav.getByRole('button',{name:'录音与文字',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
+- await nav.getByRole('button',{name:/笔记与资料/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
++ await nav.getByRole('button',{name:'文字',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
++ await nav.getByRole('button',{name:/补充/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
+  const item=page.getByRole('textbox',{name:'跟进事项 2',exact:true});await item.fill('核对同一张清单的内容范围，确认不混入其他个人草稿');
+- await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/笔记与资料/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
++ await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/补充/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+  await page.locator('#fixture-failure').click();await page.getByRole('button',{name:'保存修改',exact:true}).click();await page.getByText(/保存尚未确认/).first().waitFor();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+  await page.locator('#fixture-failure').click();const save=page.getByRole('button',{name:/^(重试)?保存修改$/,exact:true});await save.click();
+  await page.getByRole('button',{name:'导出这张清单',exact:true}).click();assert(await page.locator('#ct-meeting-handoff-pane').isVisible());
+@@ -41,11 +41,34 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
+  await page.screenshot({path:out+'/new-recording-source.png',fullPage:true});
+  result.fullWorkspaceJourneyCompleted=true;
+  }
++ await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?notebook-library=1');
++ await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
++ assert(await page.locator('.ct-library').isVisible(),'Desktop library remains beside its reader');
++ const title=page.getByRole('textbox',{name:'记录标题',exact:true});await title.fill('尚未保存的会议名称');
++ await page.locator('.ct-library-card').filter({hasText:'客户讨论'}).click();
++ assert.equal(await title.inputValue(),'尚未保存的会议名称');
++ await page.getByText('当前录音有未保存的修改，请先保存或取消，再打开另一条。',{exact:true}).waitFor();
++ await page.locator('.ct-inline-edit-actions').getByRole('button',{name:'取消',exact:true}).click();
++ await page.locator('.ct-library-card').filter({hasText:'客户讨论'}).click();
++ assert.equal(await title.inputValue(),'客户讨论 · 文字示例');
++ await page.setViewportSize({width:390,height:900});
++ assert(!await page.locator('.ct-notebook-library-column').isVisible(),'Narrow reader is one screen');
++ await page.getByRole('button',{name:'← 返回记录库',exact:true}).click();
++ assert(await page.locator('.ct-library').isVisible());
++ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
++ await page.screenshot({path:out+'/narrow-library.png',fullPage:true});
++ result.notebookMasterDetailDraftGuardAndNarrowBackPassed=true;
++ const connectionLabels={connecting:'正在连接',reconnecting:'正在重连',pairing:'需要配对',connected:'已连接',stale:'未连接',storage:'已连接',failed:'连接未成功'};
++ for(const [condition,label]of Object.entries(connectionLabels)){
++  await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?connection='+condition);
++  const device=page.locator('.ct-notebook-device');await device.waitFor();assert((await device.innerText()).includes(label),condition+' must retain its real connection state');
++ }
++ result.notebookConnectionStatesPassed=Object.keys(connectionLabels);
+  await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?with-sync=1');
+  await page.locator('.ct-shell').waitFor();
+  const syncRegion=()=>page.getByRole('region',{name:'录音同步进度',exact:true});
+  assert.equal(await syncRegion().count(),0);assert.equal(await page.locator('.ct-shell progress').count(),0);
+- await page.getByRole('button',{name:'设备与同步',exact:true}).click();
++ await page.getByRole('button',{name:/^录音卡 ·/}).click();
+  const syncDetails=page.locator('.ct-sync-details');
+  for(const phase of ['receiving','saving','reclaiming','paused','idle']){
+   await page.locator('#fixture-sync-controls').getByRole('button',{name:phase,exact:true}).click();
+@@ -61,7 +84,7 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
+  await page.locator('#fixture-sync-controls').getByRole('button',{name:'reclaiming',exact:true}).click();assert.equal(await syncRegion().count(),0);
+  await page.locator('#fixture-sync-controls').getByRole('button',{name:'blocked',exact:true}).click();
+  await page.getByRole('button',{name:'查看同步详情',exact:true}).click();await syncRegion().getByText('自动同步已暂停',{exact:true}).waitFor();
+- await page.getByRole('button',{name:'我的记录',exact:true}).click();assert.equal(await syncRegion().count(),0);
++ await page.getByRole('button',{name:'录音',exact:true}).click();assert.equal(await syncRegion().count(),0);
+  assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
+ }catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
+ }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,31 @@
+{
+  "windows": {
+    "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "before": "bdfeed4cfce5a5f6ad104c4d876c9ed0e577a69e",
+    "commit": "4ca0f7509fff69543311d1ed8c5808422eecba5c",
+    "files": [
+      "apps/windows/src/App.tsx",
+      "packages/ui/src/CompanionDashboard.tsx",
+      "packages/ui/src/MeetingReadingFrame.tsx",
+      "packages/ui/src/MeetingWorkspaceNav.tsx",
+      "packages/ui/src/notebookFoundation.css",
+      "tools/qa/core_acceptance20261109/meeting_workspace_harness.tsx",
+      "tools/qa/core_acceptance20261109/verify_workspace.cjs"
+    ],
+    "nativeInstalled": false
+  },
+  "android": {
+    "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+    "before": "d031f5cd68c410048adf0f9c5f5d7b33568c5127",
+    "commit": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+    "files": [
+      "apps/mobile/src/App.tsx",
+      "apps/mobile/src/TranscriptReader.tsx",
+      "apps/mobile/src/RecordingContentNavigation.tsx",
+      "apps/mobile/src/notebookMobile.css",
+      "apps/android/app/build.gradle",
+      "tools/qa/core_acceptance20261109/verify_notebook_mobile.cjs"
+    ],
+    "nativeInstalled": false
+  }
+}
