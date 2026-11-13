@@ -86,6 +86,13 @@ def frozen_app(root):
  return app,v
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['inspect','handoff','audio','ai','transcribe','actions','context','documents','editing','incoming','product','product-background'],default='inspect');parser.add_argument('--library',type=Path);parser.add_argument('--audio',type=Path);parser.add_argument('--reviewed-ai',type=Path);a=parser.parse_args()
+ public_import=None
+ if os.environ.get('COMPANION_ACCEPTANCE_PUBLIC_SOURCE_IMPORT'):
+  assert a.stage=='product-background' and a.audio and not DEDICATED_CI
+  public_import=json.loads(Path(os.environ['COMPANION_ACCEPTANCE_PUBLIC_SOURCE_IMPORT']).read_text(encoding='utf8'))
+  assert public_import['audioSha256']=='d6ab13a19fec81df257036b5cdc19eb47aea7c96fb140e3bd3f6977e84586347' and sha(a.audio)==public_import['audioSha256']
+  assert public_import['durationSeconds']==1800 and public_import['publicSourceOnly'] is True
+  assert sha(Path(public_import['localModelRoot'])/'ct-transformer-punctuation-zh-en-2024/model.onnx')=='e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd'
  psutil.Process().nice(psutil.IDLE_PRIORITY_CLASS)
  low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
  if a.stage in {'documents','incoming'}:
@@ -212,6 +219,9 @@ def main():
  if a.stage in {'ai','actions'}:record['inputKind']='Actual cached public AI minutes after declared manual source review; ordinary reading and export, no new cloud request or ASR'
  if whole_delivery:record['inputKind']='The same actual public imported audio and new fixed-product ASR, followed by actual cloud AI; reading/audio playback/document receipt and restoration continuation, no new ASR/cloud call in this UI stage'
  if a.stage=='transcribe':record.update(inputKind='Actual public S_R004S03C01 audio through the fixed current product CPU ASR; no training, provider substitution or cloud audio',modelsRun=True,modelResearchOrTrainingRun=False)
+ if public_import:
+  plan=json.loads((out/'plan.json').read_text(encoding='utf8'));plan['publicSourceImport']=public_import;(out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+  record.update(inputKind='Verified public AISHELL4 source30m opened by the ordinary native incoming-file workflow, explicitly stored as a new recording and transcribed with fixed local ASR; software path only, no acoustic or board qualification.',modelsRun=True,sourceAudioSha256=public_import['audioSha256'],cloudAudioUploaded=False,modelResearchOrTrainingRun=False)
  name=station_name() if DEDICATED_CI else 'CompanionCore-'+token
  station=old_station if DEDICATED_CI else require(U.CreateWindowStationW(name,0,0x37f,None));desktop=None;job=None;processes=[];logs=[];receiver=None;handled=set();dialog_workers={}
  try:
@@ -219,7 +229,7 @@ def main():
   desktop_path=name+'\\'+object_name(desktop)
   record['privateStation']=name;record['stationVerifiedBeforeLaunch']=True
   record['desktopIsolation']='Dedicated disposable GitHub Windows runner; no owner desktop' if DEDICATED_CI else 'Private noninteractive window station on owner PC'
-  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if DEDICATED_CI and (a.stage=='transcribe' or os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1') else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
+  job=require(K.CreateJobObjectW(None,None));limit=ExtendedLimits();limit.BasicLimitInformation.LimitFlags=0x2000|0x200;limit.JobMemoryLimit=(3072 if DEDICATED_CI and (a.stage=='transcribe' or os.environ.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1') else 2048 if public_import else 1536)*1024**2;require(K.SetInformationJobObject(job,9,ctypes.byref(limit),ctypes.sizeof(limit)));cpu=CpuRate(0x1|0x4,CPU_PERCENT*100);require(K.SetInformationJobObject(job,15,ctypes.byref(cpu),ctypes.sizeof(cpu)));record['cpuHardCapPercent']=CPU_PERCENT;record['ownJobPrivateCommitLimitBytes']=limit.JobMemoryLimit
   env={**os.environ,'APPDATA':str(root/'roaming'),'LOCALAPPDATA':str(root/'local'),'TEMP':str(root/'temp'),'TMP':str(root/'temp'),'COMPANION_TYPE_STATE_PATH':str(state/'sessions.json'),'COMPANION_TYPE_RECORDING_DIR':str(root/'recordings'),'COMPANION_TYPE_PRODUCT_SETTINGS_PATH':str(root/'product-settings.json'),'COMPANION_TYPE_BACKGROUND_WINDOW':'1','COMPANION_TYPE_DISABLE_AUTO_RECOVERY':'1','COMPANION_TYPE_DISABLE_AUTO_RECONNECT':'1','COMPANION_TYPE_WEBVIEW_ARGS':f'--remote-debugging-port={port} --mute-audio --disable-gpu','WEBVIEW2_USER_DATA_FOLDER':str(root/'webview')}
   for key in ['DEEPSEEK_API_KEY','OPENAI_API_KEY','COMPANION_TYPE_ASR_API_KEY','COMPANION_TYPE_VOLC_APP_KEY','COMPANION_TYPE_VOLC_ACCESS_KEY','GH_TOKEN','GITHUB_TOKEN','ACTIONS_RUNTIME_TOKEN','ACTIONS_ID_TOKEN_REQUEST_TOKEN']:env.pop(key,None)
   reopen_from=os.environ.get('COMPANION_ACCEPTANCE_REOPEN_FROM_EVIDENCE')
@@ -232,6 +242,7 @@ def main():
    restart_plan=json.loads((prior_evidence.parent/'plan.json').read_text(encoding='utf8'));restart_plan.update(expectedSnapshot=json.loads((previous_root/'state/sessions.json').read_text(encoding='utf8')),previousAppExited=True,firstPid=previous['firstAppPid'])
    record.update(reopenedPreviousEvidence=str(prior_evidence),reopenedPreviousPrivateRoot=str(previous_root));save()
   if a.audio:env['COMPANION_ACCEPTANCE_AUDIO_INPUT']=str(a.audio.resolve())
+  if public_import:env.update(COMPANION_TYPE_LOCAL_ASR_DIR=public_import['localModelRoot'],COMPANION_TYPE_ASR_CACHE_DIR=str(root/'asr-cache'))
   if a.stage=='transcribe':
    assert DEDICATED_CI and os.environ.get('COMPANION_ACCEPTANCE_FIXED_ASR_ROOT'),'Fixed product inference only on the dedicated runner'
    env['COMPANION_TYPE_LOCAL_ASR_DIR']=os.environ['COMPANION_ACCEPTANCE_FIXED_ASR_ROOT']
@@ -252,8 +263,9 @@ def main():
    expected_id=specification.get('sessionId','v1-real-installed-1794533232243')
    expected_key=specification.get('recordingKey',{'deviceUid':'120011000d50335754363720','formatEpoch':'5a6584e1707422bb','sessionId':'000000000000019f'})
    assert len(source_rows)==1 and source_rows[0]['id']==expected_id
-   assert source_rows[0]['deviceRecordingKey']==expected_key
-   assert sha(source_state)==specification['stateSha256'] and source_rows[0]['source']=='boardDevice'
+   assert source_rows[0].get('deviceRecordingKey')==expected_key
+   source_kind=specification.get('sourceKind','boardDevice');assert source_kind in {'boardDevice','importedAudio'}
+   assert sha(source_state)==specification['stateSha256'] and source_rows[0]['source']==source_kind
    assert source_rows[0]['transcriptFinal']
    if specification.get('retranscriptionOnly'):
     # Bind every fresh public run to its completed capture receipt below;
@@ -262,16 +274,27 @@ def main():
     env['COMPANION_TYPE_LOCAL_ASR_DIR']=specification['localModelRoot']
     record['modelsRun']=True
    else:assert source_rows[0]['minutesByMode']['offlineStore']['source']=='llm_deepseek'
-   capture=json.loads(Path(specification['captureReceipt']).read_text(encoding='utf8'));assert capture['ownHandlesClosed'] and capture['release']['result']=='TURN_RELEASED'
-   assert any(stage.get('sessionId')==expected_id and stage.get('recordingKey')==expected_key
-    and stage.get('state')=='NATIVE_ORIGINAL_SAVED' for stage in capture['stages'])
+   if source_kind=='boardDevice':
+    capture=json.loads(Path(specification['captureReceipt']).read_text(encoding='utf8'));assert capture['ownHandlesClosed'] and capture['release']['result']=='TURN_RELEASED'
+    assert any(stage.get('sessionId')==expected_id and stage.get('recordingKey')==expected_key
+     and stage.get('state')=='NATIVE_ORIGINAL_SAVED' for stage in capture['stages'])
+   else:
+    imported=json.loads(Path(specification['nativeImportEvidence']).read_text(encoding='utf8'))
+    manifest=json.loads(Path(specification['nativeImportManifest']).read_text(encoding='utf8'))
+    assert imported['state']=='REAL_NATIVE_PUBLIC_SOURCE_IMPORT_LOCAL_ASR_AND_REOPEN_PASSED' and imported['processRestart']['allPublicLibraryRowsUnchanged']
+    assert imported['ui']['newAsrRun'] and imported['ui']['cloudCalls']==0 and imported['ui']['sessionId']==expected_id
+    assert manifest['sourceAudioSha256']=='d6ab13a19fec81df257036b5cdc19eb47aea7c96fb140e3bd3f6977e84586347' and sha(Path(manifest['originalPath']))==manifest['sourceAudioSha256']
+    assert manifest['sessionId']==expected_id and source_rows[0]['audioPath']==manifest['decodedPath'] and sha(Path(manifest['decodedPath']))==manifest['decodedAudioSha256']
+    assert hashlib.sha256(source_rows[0]['transcriptText'].encode('utf8')).hexdigest()==manifest['transcriptSha256']
+    upstream=Path(specification['upstreamStatePath']);assert upstream==Path(imported['privateRoot'])/'state/sessions.json'
+    assert source_rows==[row for row in json.loads(upstream.read_text(encoding='utf8')) if row['id']==expected_id]
    for file,digest in specification['originalAudioFiles'].items():assert sha(Path(specification['recordingDir'])/file)==digest
    (state/'sessions.json').write_text(json.dumps(source_rows,ensure_ascii=False),encoding='utf8')
    plan.update(sessionId=source_rows[0]['id'],title=source_rows[0]['title'],realPublicReview=True,realPublicSpec=specification,statePath=str(state/'sessions.json'),expectedSnapshot=source_rows)
    (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
    env['COMPANION_TYPE_RECORDING_DIR']=specification['recordingDir']
-   record.update(inputKind='Exact declared new public acoustic recording with actual fixed-product ASR and configured DeepSeek results; isolated UI reads same recording originals. No reference transcription or fabricated result.',realPublicSessionId=source_rows[0]['id'],realPublicSourceStateSha256=specification['stateSha256'],realPublicSpecification=real_public)
-  log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe',plan['incomingAudio']] if a.stage=='incoming' else [app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
+   record.update(inputKind=('Verified public-source ordinary native import, actual local ASR and configured text-only DeepSeek results; software reading only, no acoustic/board claim.' if source_kind=='importedAudio' else 'Exact declared new public acoustic recording with actual fixed-product ASR and configured DeepSeek results; isolated UI reads same recording originals. No reference transcription or fabricated result.'),realPublicSessionId=source_rows[0]['id'],realPublicSourceStateSha256=specification['stateSha256'],realPublicSpecification=real_public)
+  log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe',public_import['audioInput']] if public_import else [app/'companion-type.exe',plan['incomingAudio']] if a.stage=='incoming' else [app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
   deadline=time.monotonic()+60
   import urllib.request
   local_http=urllib.request.build_opener(urllib.request.ProxyHandler({}))
@@ -433,6 +456,7 @@ def main():
   record['ui']=json.loads((out/'ui-result.json').read_text(encoding='utf8'));record['state']='NATIVE_PRIVATE_UI_INSPECTED' if a.stage=='inspect' else 'REAL_NATIVE_PUBLIC_AUDIO_FLOW_PASSED' if a.stage=='audio' else 'REAL_NATIVE_FIXED_PRODUCT_AUDIO_TRANSCRIPTION_PASSED' if a.stage=='transcribe' else 'REAL_NATIVE_REVIEWED_AI_READING_AND_HANDOFF_PASSED' if a.stage=='ai' else 'REAL_NATIVE_MEETING_SELECTED_FILES_RECEIVED_IN_ORDINARY_APP';record['ordinaryRecipientTested']=bool(receiver and len(receiver.results)==(2 if a.stage=='audio' else 5 if a.stage=='ai' and whole_delivery and env.get('COMPANION_ACCEPTANCE_BROWSER_ATTACHMENTS')=='1' else 1 if a.stage in {'ai','product'} else 3))
   if a.stage=='product':record['state']='REAL_NATIVE_COHERENT_PRODUCT_JOURNEY_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='product-background':record['state']='REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED';record['remoteOwnedWindowFocused']=False
+  if public_import:record['state']='REAL_NATIVE_PUBLIC_SOURCE_IMPORT_LOCAL_ASR_AND_REOPEN_PASSED'
   if a.stage=='context':record['state']='REAL_NATIVE_RECORDING_IMAGE_CONTEXT_AND_SELECTED_ZIP_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='editing':record['state']='REAL_NATIVE_AUDIO_EDITING_UI_PASSED';record['remoteOwnedWindowFocused']=True
   if a.stage=='documents':record['state']='REAL_NATIVE_DOCUMENT_CONTEXT_UI_PASSED';record['remoteOwnedWindowFocused']=True

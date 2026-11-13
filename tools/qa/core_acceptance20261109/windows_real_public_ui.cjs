@@ -7,10 +7,16 @@ module.exports=async(page,plan,out,reopened)=>{
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectFoldedOverview){
-  await article.locator('[data-meeting-heading="会议概览"]').waitFor();
+  const heading=spec.overviewHeading||'会议概览';assert(['会议概览','全会重点'].includes(heading));await article.locator('[data-meeting-heading="'+heading+'"]').waitFor();
   const summary=article.locator('summary').filter({hasText:/^查看完整(?:会议摘要|摘要和关键词)$/});assert.equal(await summary.count(),1);const full=summary.locator('..');assert.equal(await full.evaluate(el=>el.open),false);
   assert.equal(await article.locator('[data-meeting-heading="Summary"]').isVisible(),false,'Detailed summary must start folded');
   await full.locator(':scope>summary').click();assert((await full.innerText()).length>300,'Complete generated detail must remain readable');await full.locator(':scope>summary').click();assert.equal(await full.evaluate(el=>el.open),false);
+ }
+ if(spec.expectTopicDisclosures){
+  const topics=article.locator('.ct-overview-topic');assert.equal(await topics.count(),spec.expectedTopicCount);
+  for(const point of await topics.all())assert.equal(await point.evaluate(e=>e.open),false);
+  await topics.first().locator('summary').click();assert((await topics.first().locator('.ct-overview-topic-body').innerText()).length>100);await topics.first().locator('summary').click();
+  await page.evaluate(()=>window.scrollTo(0,0));const last=await topics.last().locator('summary').boundingBox();assert(last&&last.y+last.height<=await page.evaluate(()=>innerHeight),'All major fallback topics must be visible in the initial viewport');
  }
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'actual-public-minutes-light-viewport.png'),fullPage:false});
