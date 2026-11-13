@@ -46,6 +46,44 @@ jobs:
           path: paired-product-asr-output/
           retention-days: 7
           if-no-files-found: warn
+  pointer-native:
+    if: contains(github.event.head_commit.message, '[pointer-native]')
+    runs-on: windows-2022
+    timeout-minutes: 15
+    env:
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_PROFILE_TEST_DEBUG: '0'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Use the same Rust compiler as the normal candidate
+        run: rustup toolchain install 1.95.0 --profile minimal --no-self-update
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ${{ runner.temp }}/companion-pointer-target
+          key: pointer-native-rust195-v1-${{ hashFiles('packages/desktop-input/Cargo.lock') }}
+      - name: Check the angular core and actual Windows input on this disposable desktop
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/companion-pointer-target
+        run: |
+          New-Item -ItemType Directory -Force pointer-native-output | Out-Null
+          cargo +1.95.0 test --locked --manifest-path packages/desktop-input/Cargo.toml --lib pointer:: 2>&1 | Tee-Object pointer-native-output/core.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo +1.95.0 run --locked --manifest-path packages/desktop-input/Cargo.toml --example pointer_native_acceptance -- pointer-native-output/result.json 2>&1 | Tee-Object pointer-native-output/native.log
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: companion-pointer-native-${{ github.sha }}
+          path: pointer-native-output/
+          retention-days: 7
+          if-no-files-found: warn
   core-ui:
     if: contains(github.event.head_commit.message, '[core-ui]')
     runs-on: windows-2022
