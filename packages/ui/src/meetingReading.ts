@@ -1,4 +1,8 @@
 /** Display-only handling of the exact generated metadata header; source markdown stays intact. */
+export function isGeneratedReadingNotice(line:string):boolean {
+ return line==='> AI根据详细纪要整理，请结合原文核对。'
+  || /^> 长会议已按原文顺序处理全部\d+段。分段原文依据见下文，识别和事实准确性仍需核对。$/.test(line);
+}
 export function splitGeneratedMeetingMetadata(markdown:string):{body:string;metadata:string|null} {
  const lines=markdown.split(/\r?\n/);let fence:string|null=null;
  for(let i=0;i<lines.length;i++){
