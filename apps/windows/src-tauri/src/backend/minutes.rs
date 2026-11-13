@@ -1486,7 +1486,7 @@ mod tests {
         });
         let session=session_with_text("明天下午讨论产品包装。");let l0=rules_l0_minutes(&session,"now");
         let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
-        let mut result=finalize_minutes(Ok(native.minutes),l0,&session);short_evidence::append(&mut result,&native.evidence);
+        let result=finalize_native_result(native,l0,&session);
         assert!(result.markdown.contains("## 原话核对"));assert!(result.markdown.contains("原话：“明天下午讨论产品包装。”"));
         assert_eq!(result.quality,"final");server.join().unwrap();
     }
@@ -1518,9 +1518,10 @@ mod tests {
         });
         let session=session_with_text("明天下午讨论产品包装。谁负责报价？");let l0=rules_l0_minutes(&session,"now");
         let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
-        let mut result=finalize_minutes(Ok(native.minutes),l0,&session);short_evidence::append(&mut result,&native.evidence);
+        let result=finalize_native_result(native,l0,&session);
         assert_eq!(result.quality,"final");assert!(result.summary.iter().any(|s|s.contains("产品包装")));
-        assert!(result.questions.iter().any(|q|q.contains("问题来源分类未完成")));
+        assert!(result.markdown.contains("问题来源分类未完成"));
+        assert!(!result.questions.iter().any(|q|q.contains("问题来源分类未完成")));
         assert!(result.questions.iter().any(|q|q.contains("谁负责报价？")));
         assert!(!result.questions.iter().any(|q|q.contains("未经原话支持")));
         assert!(result.markdown.contains("问题来源分类未完成"));assert!(result.markdown.contains("原话核对"));

@@ -28,6 +28,7 @@ module.exports=async function productJourney(page,plan,out){
  async function open(){await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
  if(!plan.backgroundOnly)await page.bringToFront();await open();await page.locator('#ct-meeting-result-pane').waitFor({state:'visible'});await page.locator('#ct-recording-text').waitFor({state:'hidden'});
  await page.locator('#ct-recording-result[open]').waitFor();
+ const lightSwitch=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await lightSwitch.count())await lightSwitch.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
  await page.screenshot({path:path.join(out,'product-result-light.png'),fullPage:true});
  await page.locator('.ct-reader-export').click();
  const complete=page.locator('.ct-content-export');await complete.getByRole('button',{name:'预览所选内容',exact:true}).click();
@@ -66,7 +67,7 @@ module.exports=async function productJourney(page,plan,out){
  await panel.getByRole('button',{name:'复制所选文件',exact:true}).click();const feedback=panel.getByLabel('所选内容操作结果');await feedback.getByText(/文件已复制：/).waitFor();const name=(await feedback.innerText()).match(/文件已复制：(.+?)。可在/s)?.[1];assert(name);
  fs.writeFileSync(path.join(out,'handoff-request-product.json'),JSON.stringify({fileName:name,format:'txt',expected:quotedPersisted,excluded:'EXCLUDED_CORE_NOTE_20261109'}));const reply=path.join(out,'handoff-reply-product.json'),end=Date.now()+30000;while(!fs.existsSync(reply)&&Date.now()<end)await wait(100);assert(fs.existsSync(reply));const received=JSON.parse(fs.readFileSync(reply,'utf8'));
  await page.screenshot({path:path.join(out,'product-handoff-light.png'),fullPage:true});
- await nav().getByRole('button',{name:'纪要',exact:true}).click();const theme=page.getByRole('button',{name:/切换.*深色/}).first();await theme.click();await page.screenshot({path:path.join(out,'product-result-dark.png'),fullPage:true});
+ await nav().getByRole('button',{name:'纪要',exact:true}).click();const theme=page.getByRole('button',{name:/切换.*深色/}).first();await theme.click();assert((await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));await page.screenshot({path:path.join(out,'product-result-dark.png'),fullPage:true});
  assert.equal(row().transcriptText,before.transcriptText);assert.deepEqual(row().minutes,before.minutes);assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId),unrelated);
  if(plan.verifyDateOnly){
   await page.getByRole('button',{name:'编辑纪要',exact:true}).click();await page.getByLabel('待办 1 时间与负责人',{exact:true}).click();
