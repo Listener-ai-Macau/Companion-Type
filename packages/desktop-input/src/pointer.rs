@@ -146,7 +146,8 @@ impl Pointer {
             last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
-    fn release(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;self.contacts.clear_stream();}
+    fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
+    fn release(&mut self) {self.release_button();self.contacts.clear_stream();}
     fn reset_motion(&mut self){self.smoother.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
@@ -244,7 +245,7 @@ impl Pointer {
     pub fn learn_contact(&mut self,side:contact::Side)->Result<(),&'static str>{
         if !self.settings.desktop_motion{return Err("先启用桌面平移和转动，再校准左右轻敲。");}
         if !self.metrics.calibrated||self.metrics.paused{return Err("先放稳卡片完成动作校准，再校准左右轻敲。");}
-        self.release();self.reset_motion();self.contacts.learn(side);Ok(())
+        self.release_button();self.reset_motion();self.contacts.learn(side);Ok(())
     }
     pub fn finish_contacts(&mut self)->Result<(),&'static str>{
         self.settings.contact_profile=Some(self.contacts.finish()?);self.reset_motion();Ok(())

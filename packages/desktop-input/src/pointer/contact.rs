@@ -64,7 +64,8 @@ impl Contact {
         self.profile=Some(profile.clone());self.status.calibrated=true;self.cancel();Ok(profile)
     }
     pub fn sample(&mut self,s:Raw){
-        if !self.is_active(){return;}
+        // Keep the recent raw baseline before the owner enters calibration.
+        // A first natural tap must not be lost waiting for a new160ms window.
         if !s.accel_mg.iter().chain(s.gyro_dps.iter()).all(|x|x.is_finite()){return;}
         if self.raw.back().is_some_and(|p|{let n=s.sequence.wrapping_sub(p.sequence);n==0||n>=0x8000_0000}){return;}
         if self.raw.len()==64{self.raw.pop_front();}self.raw.push_back(s);
@@ -138,5 +139,12 @@ impl Contact {
         assert_eq!(c.status.left_samples,3);assert!(c.finish().is_err());c.learn(Side::Right);
         for ms in(1500..3000).step_by(10){c.sample(raw(ms,-1.));if ms%500==210{c.contact(ms-10,ms as f64/1000.,Point::default());}assert!(c.poll(ms as f64/1000.).is_empty());}
         assert_eq!(c.status.right_samples,3);c.finish().unwrap();assert!(c.status.calibrated);assert!(c.status.learning.is_none());
+    }
+    #[test]fn first_tap_can_use_the_stationary_baseline_received_before_learning(){
+        let mut c=Contact::new(None);
+        for ms in(0..200).step_by(10){c.sample(raw(ms,1.));}
+        c.learn(Side::Left);
+        for ms in(200..250).step_by(10){c.sample(raw(ms,1.));if ms==210{c.contact(200,0.21,Point::default());}assert!(c.poll(ms as f64/1000.).is_empty());}
+        assert_eq!(c.status.left_samples,1);
     }
 }

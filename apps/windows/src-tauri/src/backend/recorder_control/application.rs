@@ -209,6 +209,27 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
     if snapshot.host.sessions.iter().any(|r|r.status=="recording" && r.id!=host) {
         return Err("另一场录音正在进行，未控制或新开录音。".into());
     }
+    // STOP has already saved and exactly reclaimed this original. FINALIZE
+    // completes the host operation too; it must not reopen a retired radio
+    // session merely to query an already consumed device recording.
+    if matches!(command,2|3) && saved.as_ref().is_some_and(|j|j.ended()&&j.pending.is_none()) {
+        let row=snapshot.host.sessions.iter().find(|r|r.id==host).ok_or("原录音尚未保存。")?;
+        let journal=saved.as_ref().unwrap();journal.validate_sealed_end()?;
+        if row.recorder_control_uncertain || journal.key!=row.device_recording_key || journal.anchor!=row.device_recording_id {
+            return Err("原录音的结束记录尚未核对，未完成另一场录音。".into());
+        }
+        if let Some(key)=row.device_recording_key.as_ref() {
+            let key=SessionKey::from_public(key)?;
+            if (journal.uid,journal.epoch)!=(key.device_uid,key.format_epoch) {
+                return Err("原录音结束记录与保存来源不同。".into());
+            }
+        }
+        super::super::board_meeting::device_control_target(snapshot,request)?;
+        if super::super::board_stop::completed_retry(snapshot,&host)? {
+            if let Some(echo)=snapshot.last_control.as_mut(){echo.action=request.action;}
+            return Ok(true);
+        }
+    }
     let max_seconds=if command==1 {
         if let Some(journal)=saved.as_ref() {journal.max_seconds}
         else if request.duration_ms==Some(0) {

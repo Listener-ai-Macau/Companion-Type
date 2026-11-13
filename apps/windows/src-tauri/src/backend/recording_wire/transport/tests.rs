@@ -331,6 +331,33 @@ fn wba_logical_recording_keeps_owned_row_through_partial_receive_stop_and_reclai
     drop(r);Receiver::verify_completed_row(&rows[0]).unwrap();
     snapshot.host.sessions=rows.clone();
     assert!(crate::backend::board_stop::completed_retry(&mut snapshot,&row.id).unwrap());
+    // The current CMC3 path runs before legacy board_stop routing. A saved
+    // and reclaimed original must also finalize when BLE is unavailable.
+    let previous_state=std::env::var_os("COMPANION_TYPE_STATE_PATH");
+    let previous_disabled=std::env::var_os("COMPANION_TYPE_BLE_NATIVE_DISABLED");
+    struct Restore(Option<std::ffi::OsString>,Option<std::ffi::OsString>);
+    impl Drop for Restore {fn drop(&mut self){for(name,value)in[("COMPANION_TYPE_STATE_PATH",&self.0),("COMPANION_TYPE_BLE_NATIVE_DISABLED",&self.1)]{
+        if let Some(value)=value{std::env::set_var(name,value);}else{std::env::remove_var(name);}}}}
+    let _restore=Restore(previous_state,previous_disabled);
+    std::env::set_var("COMPANION_TYPE_STATE_PATH",&index);std::env::set_var("COMPANION_TYPE_BLE_NATIVE_DISABLED","1");
+    let key=&ds[0].key;
+    snapshot.host.sessions[0].recorder_control=Some(serde_json::from_value(serde_json::json!({
+        "schema":1,"hostSession":row.id,"deviceId":device,"uid":key.device_uid,"epoch":key.format_epoch,
+        "startRequest":7,"maxSeconds":60,"key":key.public_key(),"anchor":91,"pending":null,
+        "confirmed":{"command":2,"sequence":1,"request":9,"state":2,"durationMs":snapshot.host.sessions[0].duration_ms,"finishedLocally":false}
+    })).unwrap());
+    snapshot.host.sessions[0].recorder_control_uncertain=false;snapshot.host.persistence.status="ready".into();
+    snapshot.connected=false;snapshot.device.connected=false;
+    let saved_rows=serde_json::to_value(&snapshot.host.sessions).unwrap();let saved_index=std::fs::read(&index).unwrap();
+    let bridge=crate::backend::ble_bridge::CompanionBleBridge::detect_default();
+    for action in [crate::companion_v1::CompanionV1ControlAction::MeetingStop,crate::companion_v1::CompanionV1ControlAction::MeetingFinalize] {
+        let request=crate::control_request(action,Some(row.id.clone()));
+        assert!(crate::backend::recorder_control::apply(&mut snapshot,&request,&bridge).unwrap());
+        assert_eq!(snapshot.last_control.as_ref().unwrap().action,action);
+        assert!(!snapshot.connected&&!snapshot.device.connected&&!snapshot.meeting.active);
+        assert_eq!(serde_json::to_value(&snapshot.host.sessions).unwrap(),saved_rows);
+        assert_eq!(std::fs::read(&index).unwrap(),saved_index);
+    }
     let mut changed=rows[0].clone();changed.chunks[0].bytes+=1;
     assert!(Receiver::verify_completed_row(&changed).is_err());
     assert_eq!(root.parent(),Some(std::env::temp_dir().as_path()));std::fs::remove_dir_all(root).unwrap();
