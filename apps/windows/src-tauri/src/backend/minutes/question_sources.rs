@@ -53,7 +53,7 @@ impl Contract {
         result
     }
 
-    pub(super) fn project(&self, object: &Value) -> Result<Vec<String>, String> {
+    pub(super) fn project(&self, object: &Value) -> Result<(Vec<String>, Vec<String>), String> {
         let rows = object.get("questionClassification").and_then(Value::as_array)
             .ok_or("纪要缺少问题来源分类；原文与草稿保留，未认定整理完成。")?;
         if rows.len() != self.units.len() {
@@ -71,15 +71,16 @@ impl Contract {
         }
         // Projection follows source order, regardless of provider row order.
         let mut result = Vec::new();
+        let mut review = Vec::new();
         for (text, kind) in self.units.iter().zip(classified) {
             match kind {
                 Some(Kind::Statement) => (),
                 Some(Kind::Question) => result.push(format!("原文提问：“{text}”")),
-                Some(Kind::Unclear) => result.push(format!("原话待核对：“{text}”")),
+                Some(Kind::Unclear) => review.push(format!("原话待核对：“{text}”")),
                 None => return Err("纪要有原句尚未分类；原文与草稿保留。".into()),
             }
         }
-        Ok(result)
+        Ok((result, review))
     }
 }
 
@@ -94,4 +95,22 @@ mod fallback_tests {
         assert!(q[1].contains("什么时候交货？"));assert!(q[2].contains("Can we ship?"));
         assert!(!q.iter().any(|v|v.contains("未确认价格")));
     }
+}
+
+#[cfg(test)]
+mod review_projection_tests {
+ use super::*;
+ #[test]
+ fn unclear_source_is_preserved_separately_from_a_real_meeting_question(){
+  let contract=Contract{units:vec!["这这那个呃".into(),"下周几点开始？".into(),"每层不超过四件。".into()]};
+  let object=serde_json::json!({"questionClassification":[{"sourceId":3,"kind":"statement"},{"sourceId":1,"kind":"unclear"},{"sourceId":2,"kind":"question"}]});
+  let (questions,review)=contract.project(&object).unwrap();
+  assert_eq!(questions,vec!["原文提问：“下周几点开始？”"]);
+  assert_eq!(review,vec!["原话待核对：“这这那个呃”"]);
+ }
+ #[test]
+ fn an_incomplete_classification_cannot_discard_unknown_source(){
+  let contract=Contract{units:vec!["原话不清楚".into(),"何时交付？".into()]};
+  assert!(contract.project(&serde_json::json!({"questionClassification":[{"sourceId":2,"kind":"question"}]})).is_err());
+ }
 }

@@ -286,6 +286,7 @@ pub(super) struct NativeMinutesResult {
     minutes: CompanionV1MeetingMinutes,
     evidence: Vec<short_evidence::Entry>,
     overview: Option<Vec<long_meeting::ConcisePoint>>,
+    source_review:Vec<String>,
 }
 
 pub(super) fn finalize_native_result(result:Result<NativeMinutesResult,String>, draft:CompanionV1MeetingMinutes,
@@ -295,6 +296,10 @@ pub(super) fn finalize_native_result(result:Result<NativeMinutesResult,String>, 
             let mut result=finalize_minutes(Ok(native.minutes),draft,session);
             short_evidence::append(&mut result,&native.evidence);
             if let Some(overview)=native.overview {long_meeting::prepend_concise_overview(&mut result,&overview);}
+            if !native.source_review.is_empty(){
+                result.markdown.push_str("\n\n## 待核对片段\n\n");
+                for source in native.source_review{result.markdown.push_str("- ");result.markdown.push_str(&source);result.markdown.push('\n');}
+            }
             result
         },
         Err(error)=>finalize_minutes(Err(error),draft,session),
@@ -308,11 +313,12 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
     if !session.meeting_notes.is_empty()
         && (session.duration_ms > 120_000 || session.transcript_text.chars().count() > 4000) {
         return long_meeting::run_with_context(endpoint,model,api_key,session,&l0.generated_at,client,template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
     }
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
+    system.push_str("\n阅读质量：摘要按主题合并相关讨论，优先用3至6条完整简洁的中文句子说明有依据的要点；信息确实较多时可增加。省略语气词、无内容应答、重复铺垫和逐句流水账，保留数字、单位、否定、条件和未知归属。听不清的片段不要猜测原意，也不要把‘转写很乱/只能听出某个词’当会议议题写进摘要。问题只含会上实际提出且含义可辨的问题；无法辨认的原句交给独立的来源核对，不升级为问题、决定或任务。来源片段是供检查的原始证据，不能因被提供就推断其语义可靠。");
     if let Some(template)=template {system.push_str(&template.prompt());}
     let overview_requested=template.is_none() && session.meeting_notes.is_empty()
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
@@ -326,10 +332,10 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
         || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
             return long_meeting::run_with_context(endpoint,model,api_key,session,&l0.generated_at,client,template)
-                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
         }
         return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client,template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
@@ -337,6 +343,7 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
             let overview=if overview_requested && minutes.summary.len()>8 {
                 long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
             } else {None};
+            let mut source_review=Vec::new();
             if context_plan::eligible(session) {
                 let plan=context_plan::validate(&object,session)?;
                 minutes.action_items=plan.action_items;
@@ -349,12 +356,12 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
                 // projection can create visible questions/review notices;
                 // free-form suggested interpretations are not source content.
                 minutes.questions = match contract.project(&object) {
-                    Ok(questions)=>questions,
-                    Err(_)=>contract.literal_questions(),
+                    Ok((questions,review))=>{source_review=review;questions},
+                    Err(_)=>{let mut questions=contract.literal_questions();if !questions.is_empty(){source_review.push(questions.remove(0));}questions},
                 };
                 minutes.markdown.clear();
             }
-            Ok(NativeMinutesResult{minutes,evidence,overview})
+            Ok(NativeMinutesResult{minutes,evidence,overview,source_review})
         })
 }
 
