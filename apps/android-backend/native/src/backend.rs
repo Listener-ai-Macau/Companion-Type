@@ -65,10 +65,8 @@ pub fn generate(session:&CompanionV1HostSession,endpoint:&str,model:&str,key:&st
     struct Restore(Option<PathBuf>);impl Drop for Restore {fn drop(&mut self){let previous=self.0.take();CACHE_ROOT.with(|r|{r.replace(previous);});}}
     let _restore=Restore(old);
     let draft=minutes::rules_l0_minutes(session,&chrono::Utc::now().to_rfc3339());
-    match minutes::run_finalized_deepseek_request(endpoint,model,key,session,&draft,&client) {
-        Ok(minutes)=>Ok(minutes),
-        Err(reason)=>Ok(minutes::finalize_minutes(Err(reason),draft,session)),
-    }
+    let result=minutes::run_deepseek_request(endpoint,model,key,session,&draft,&client);
+    Ok(minutes::finalize_minutes(result,draft,session))
 }
 fn http_policy_endpoint(endpoint:&str)->Result<reqwest::Url,String>{
     let url=crate::http_policy::endpoint(endpoint).map_err(|e|format!("纪要服务配置无效：{e}"))?;
