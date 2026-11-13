@@ -1,11 +1,11 @@
 //! Optional local punctuation. Never replace recognizer words or numeric tokens.
 use libloading::Library;
 use std::{ffi::{c_char,c_void,CStr,CString},path::Path};
-pub(super) const DIRECTORY:&str="ct-transformer-punctuation-zh-en-2024";
-pub(super) const MODEL_SHA:&str="e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd";
-pub(super) const MODEL_SIZE:u64=294_372_519;
-pub(super) const MODEL_URL:&str="https://huggingface.co/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/432aeba669265e7aeb06b9359753419683b38597/model.onnx";
-pub(super) const MIRROR_URL:&str="https://hf-mirror.com/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/432aeba669265e7aeb06b9359753419683b38597/model.onnx";
+pub(crate) const DIRECTORY:&str="ct-transformer-punctuation-zh-en-2024";
+pub(crate) const MODEL_SHA:&str="e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd";
+pub(crate) const MODEL_SIZE:u64=294_372_519;
+pub(crate) const MODEL_URL:&str="https://huggingface.co/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/432aeba669265e7aeb06b9359753419683b38597/model.onnx";
+pub(crate) const MIRROR_URL:&str="https://hf-mirror.com/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/432aeba669265e7aeb06b9359753419683b38597/model.onnx";
 #[repr(C)]
 struct Config {model:*const c_char,threads:i32,debug:i32,provider:*const c_char}
 type Create=unsafe extern "C" fn(*const Config)->*const c_void;

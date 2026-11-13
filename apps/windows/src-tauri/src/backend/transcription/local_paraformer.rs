@@ -118,7 +118,7 @@ pub(super) fn prepare() -> Result<(), String> {
     lock.try_lock().map_err(|_| "本地模型正在准备，请稍候。")?;
     let stage = parent.join(format!("local-asr-{}", uuid::Uuid::new_v4()));
     fs::create_dir(&stage).map_err(|e| format!("无法准备本地模型：{e}"))?;
-    let mut result = (|| {
+    let mut result: Result<(),String> = (|| {
         super::super::audio_components::prepare_runtime(&stage, &dest)?;
         let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15))
             .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
