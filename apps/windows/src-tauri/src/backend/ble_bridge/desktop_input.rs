@@ -1,7 +1,7 @@
 //! Keep the enabled desktop mode on the same verified recorder across link loss.
 use super::super::recorder_input::{self, InputStatus};
 use super::*;
-use futures::FutureExt;
+use super::desktop_input_stream::{self as input_stream, Notifications};
 use std::sync::{
     atomic::{AtomicBool, Ordering},
     Arc,
@@ -16,10 +16,7 @@ pub(crate) enum Update {
     Reconnecting(String),
 }
 
-type Notifications =
-    std::pin::Pin<Box<dyn futures::Stream<Item = btleplug::api::ValueNotification> + Send>>;
-
-fn trace_input(source: &str, status: &InputStatus) {
+pub(super) fn trace_input(source: &str, status: &InputStatus) {
     use std::sync::{atomic::AtomicUsize, LazyLock};
     static ENABLED: LazyLock<bool> = LazyLock::new(|| std::env::var_os("COMPANION_DESKTOP_INPUT_DIAGNOSTICS").is_some());
     static COUNT: AtomicUsize = AtomicUsize::new(0);
@@ -57,6 +54,7 @@ async fn exchange(
             .await
             .map_err(|error| format!("录音卡模式读取/切换未完成：{error}"))?;
         while let Some(value) = values.next().await {
+            let value=value?;
             if value.uuid == SETTINGS_UUID {
                 if let Ok(status) = InputStatus::parse(&value.value, peer) {
                     if status.request == nonce {
@@ -88,6 +86,7 @@ pub(crate) fn listen_mode(
     notify:impl Fn(Update)+Send+Sync+'static,
 )->Result<(),String> {
     run_native_blocking(async {
+        let mut stream_recoveries=0u8;
         loop {
             if stop.load(Ordering::Acquire) {
                 return Err("已停止重连；请下次连接时核对录音卡模式，原音保留。".into());
@@ -99,14 +98,18 @@ pub(crate) fn listen_mode(
                 Some(device) => device,
                 None => connect_recorder_device_with_clock(Some(device_id), false).await?,
             };
+            let stream_failed=AtomicBool::new(false);
             let result = on_native_link(&device, async {
                 let characteristic =
                     find_characteristic(&device.peripheral.characteristics(), SETTINGS_UUID)?;
-                let mut values = device
-                    .peripheral
-                    .notifications()
-                    .await
-                    .map_err(|e| format!("交互通知未就绪：{e}"))?;
+                #[cfg(windows)]
+                let mut values:Notifications=Box::pin(device.peripheral.checked_notifications().map(|value|
+                    value.map(|(value,_)|value).map_err(|e|format!("交互通知接收失败：{e}"))));
+                #[cfg(not(windows))]
+                let mut values:Notifications=Box::pin(device.peripheral.notifications().await
+                    .map_err(|e|format!("交互通知未就绪：{e}"))?.map(Ok));
+                #[cfg(all(test,windows))]
+                let mut values=hardware_test::motion_delivery_fault(values,mode);
                 device
                     .peripheral
                     .subscribe(&characteristic)
@@ -162,71 +165,31 @@ pub(crate) fn listen_mode(
                     }
                     notify(Update::Ready(initial));
                     drop(acquisition);
-                    // ACK writes run concurrently with receipt/rendering: a
-                    // slow GATT round trip must not queue old aim poses.
-                    // The device exposes only its queue head. A newer head
-                    // proves the previous ACK arrived; duplicate retries can
-                    // therefore share one latest ACK slot without losing order.
-                    let (ack_tx,mut ack_rx)=tokio::sync::watch::channel(None::<u32>);
-                    let acknowledgements=async {
-                        while ack_rx.changed().await.is_ok() {
-                            let sequence=(*ack_rx.borrow_and_update()).unwrap();
-                            let message=recorder_input::pointer_ack(&peer,sequence)?;
-                            tokio::time::timeout(StdDuration::from_secs(2),device.peripheral.write(&characteristic,&message,WriteType::WithResponse))
+                    let input_characteristic=&characteristic;
+                    let input_peer=&peer;
+                    let input_device=&device;
+                    let receive=input_stream::receive(&mut values,mode,wanted_options,&peer,&stop,&notify,
+                        |sequence|async move {
+                            let message=recorder_input::pointer_ack(input_peer,sequence)?;
+                            tokio::time::timeout(StdDuration::from_secs(2),input_device.peripheral.write(input_characteristic,&message,WriteType::WithResponse))
                                 .await.map_err(|_|"动作确认超时。".to_string())?
-                                .map_err(|e|format!("动作确认未完成：{e}"))?;
+                                .map_err(|e|format!("动作确认未完成：{e}"))
+                        }).await;
+                    if let Err(error)=receive {
+                        if mode==3&&!stop.load(Ordering::Acquire) {
+                            stream_failed.store(true,Ordering::Release);
+                            notify(Update::Reconnecting("鼠标动作通道已停顿，光标已停止，正在恢复连接。".into()));
                         }
-                        Ok::<(),String>(())
-                    };
-                    tokio::pin!(acknowledgements);
-                    let mut tick = tokio::time::interval(StdDuration::from_millis(100));
-                    loop {
-                        tokio::select! {
-                            result=&mut acknowledgements=>{result?;return Err("动作确认通道已结束。".into());},
-                            _=tick.tick()=>if stop.load(Ordering::Acquire) {break;},
-                            value=values.next()=>{
-                                let mut value=value.ok_or("录音卡交互连接已断开。")?;
-                                let mut latest=None;
-                                let mut physical=Vec::new();
-                                // Drain a ready burst without replaying old
-                                // motion. Every physical edge keeps its order.
-                                for index in 0..64 {
-                                    if value.uuid==SETTINGS_UUID {
-                                        if mode==3 {if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value) {
-                                            if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
-                                        }}
-                                        // Raw planar integration needs every
-                                        // received sensor interval, not CIM4's
-                                        // latest device-integrated heading slot.
-                                        if mode==3&&wanted_options==24 {
-                                            if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){notify(Update::RawMotion(sample));}
-                                        }
-                                        if let Ok(status)=InputStatus::parse(&value.value,&peer) {
-                                            if status.request==0 {
-                                                trace_input("physical", &status);
-                                                physical.push(status);
-                                            }
-                                        }
-                                    }
-                                    if index==63{break;}
-                                    match values.next().now_or_never(){Some(Some(next))=>value=next,Some(None)=>return Err("录音卡交互连接已断开。".into()),None=>break}
-                                }
-                                if let Some(sample)=latest{notify(Update::Motion(sample));}
-                                // Establish the latest sensor clock before
-                                // applying controls from this same burst. A
-                                // recovered motion gap must not erase a new
-                                // reliable DOWN that arrived beside it.
-                                for status in physical {
-                                    let ack=mode==3&&status.options&8!=0&&status.events&0x1e00!=0;
-                                    let sequence=status.sequence;notify(Update::Physical(status));
-                                    if ack{ack_tx.send(Some(sequence)).map_err(|_|"动作确认通道已结束。".to_string())?;}
-                                }
-                            }
-                        }
+                        return Err(error.message());
                     }
                     Ok(())
                 }
                 .await;
+                // A broken notification receiver cannot prove a mode0 ACK.
+                // Retire this exact owner below, then verify the same peer on
+                // its fresh connection. Explicit Stop still takes the normal
+                // mode0 handshake and cannot report restoration prematurely.
+                if stream_failed.load(Ordering::Acquire){return run;}
                 // Physical release owns STOP. Explicitly leaving the mode has
                 // to receive a real mode0 ACK before reporting it restored.
                 let restored = exchange(&device, &characteristic, &mut values, &peer, Some(0),0)
@@ -266,15 +229,89 @@ pub(crate) fn listen_mode(
             #[cfg(not(windows))]
             let lost = false;
             drop(retirement);
-            if lost && !stop.load(Ordering::Acquire) {
+            let recover_stream=stream_failed.load(Ordering::Acquire)&&stream_recoveries<2;
+            if recover_stream{stream_recoveries+=1;}
+            if (lost||recover_stream) && !stop.load(Ordering::Acquire) {
                 // Existing acquisition owns its bounded retries/retirement.
                 // Do not replay START, change device or drop pending targets.
-                notify(Update::Reconnecting(
-                    "录音卡连接中断，正在重新连接同一设备；原音保留，先不用重录。".into(),
-                ));
+                eprintln!("desktop_input recovery mode={mode} observed_link_loss={lost} stream_failure={} stream_retry={stream_recoveries}",stream_failed.load(Ordering::Acquire));
+                notify(Update::Reconnecting(if mode==3 {
+                    "鼠标连接中断，光标已停止，正在重新连接同一卡片。"
+                } else {"录音卡连接中断，正在重新连接同一设备；原音保留，先不用重录。"}.into()));
                 continue;
+            }
+            if stream_failed.load(Ordering::Acquire)&&!stop.load(Ordering::Acquire){
+                return Err(format!("鼠标动作通道未能恢复，控制已停止；可重新开启鼠标。{}",result.unwrap_err()));
             }
             return result;
         }
     })
+}
+
+#[cfg(all(test,windows))]
+mod hardware_test {
+    use super::*;
+    use std::sync::Mutex;
+    static STALL_ONE_RECEIVER:AtomicBool=AtomicBool::new(false);
+    pub(super) fn motion_delivery_fault(values:Notifications,mode:u8)->Notifications {
+        if mode!=3||!STALL_ONE_RECEIVER.load(Ordering::Acquire){return values;}
+        let mut count=0usize;let mut drop_motion=false;
+        Box::pin(values.filter_map(move|value|{
+            let motion=value.as_ref().is_ok_and(|v|v.uuid==SETTINGS_UUID&&
+                companion_desktop_input::pointer::Sample::parse(&v.value).is_ok());
+            if motion {
+                count+=1;
+                if count==100&&STALL_ONE_RECEIVER.swap(false,Ordering::AcqRel){drop_motion=true;}
+            }
+            futures::future::ready(if motion&&drop_motion{None}else{Some(value)})
+        }))
+    }
+
+    #[test]
+    #[ignore="Requires explicitly leased fixed Companion830; real protected BLE, no MIC or cursor"]
+    fn real_830_live_session_recovers_a_stalled_motion_receiver_and_restores_mode0(){
+        const DEVICE:&str="C8:ED:45:EB:95:B4";
+        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("830-fixed-uid-no-mic-no-cursor"));
+        let peer=run_native_blocking(async {
+            let mut device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
+            let status=read_optional_status(&device.peripheral,&device.peripheral.characteristics(),DEVICE_STATUS_UUID,116).await
+                .ok_or("No protected identity/capability reply")?;
+            let peer=super::super::super::recording_wire::transport::Peer::from_status(&status)?
+                .ok_or("No actual V2 peer")?;
+            let uid=peer.uid.iter().map(|b|format!("{b:02x}")).collect::<String>();
+            if uid!="120011000d50335754363720"{close_native_device(&device).await;return Err("Wrong fixed MCU UID".into());}
+            device.user_connection=true;device.verified_uid=Some(uid);device.recording_peer=Some(peer.clone());
+            remember_prepared_device(device).await?;Ok(peer)
+        }).expect("protected same-board preparation");
+        let stop=Arc::new(AtomicBool::new(false));let timeout_stop=stop.clone();
+        let ending=std::thread::spawn(move||{for _ in 0..400{
+            if timeout_stop.load(Ordering::Acquire){return;}
+            std::thread::sleep(StdDuration::from_millis(100));
+        }timeout_stop.store(true,Ordering::Release);});
+        let started=StdInstant::now();let ready=Arc::new(std::sync::atomic::AtomicUsize::new(0));
+        let samples=Arc::new(std::sync::atomic::AtomicUsize::new(0));let rows=Arc::new(Mutex::new(Vec::<String>::new()));
+        let ready_count=ready.clone();let sample_count=samples.clone();let report=rows.clone();let complete=stop.clone();
+        let external_acl=std::env::var("COMPANION_IMU_HARDWARE_FAULT").as_deref()==Ok("external-acl");
+        STALL_ONE_RECEIVER.store(!external_acl,Ordering::Release);
+        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,8,move|event|{
+            match event {
+                Update::Ready(_)=>{let n=ready_count.fetch_add(1,Ordering::AcqRel)+1;
+                    eprintln!("IMU_HARDWARE_READY index={n} elapsed_ms={}",started.elapsed().as_millis());
+                    report.lock().unwrap().push(format!("ready={n} elapsed_ms={}",started.elapsed().as_millis()));},
+                Update::Reconnecting(message)=>report.lock().unwrap().push(format!("reconnecting elapsed_ms={} {message}",started.elapsed().as_millis())),
+                Update::Motion(_)=>{let n=sample_count.fetch_add(1,Ordering::AcqRel)+1;
+                    if ready_count.load(Ordering::Acquire)>=2&&n>=300{complete.store(true,Ordering::Release);}},
+                _=>{},
+            }
+        });
+        STALL_ONE_RECEIVER.store(false,Ordering::Release);stop.store(true,Ordering::Release);ending.join().unwrap();
+        let cleanup=run_native_blocking(async{
+            let old=PREPARED_DEVICE_CONNECTION.lock().unwrap().disconnect(Some(DEVICE));
+            if let Some(old)=old{disconnect_native_device(&old.device).await?;}Ok(())
+        });
+        eprintln!("IMU_REAL_RECOVERY rows={:?} samples={} result={result:?} cleanup={cleanup:?} mode0_ack_required=true microphone_commands=0 cursor_output=false",rows.lock().unwrap(),samples.load(Ordering::Acquire));
+        cleanup.expect("owned native handles closed");result.expect("same-peer recovery and actual mode0 restoration ACK");
+        assert!(ready.load(Ordering::Acquire)>=2,"fresh owner was not made ready");
+        assert!(samples.load(Ordering::Acquire)>=300,"new owner did not deliver real motion");
+    }
 }
