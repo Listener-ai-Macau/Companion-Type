@@ -1,5 +1,6 @@
 import { MeetingReadingFrame } from '../../../packages/ui/src/MeetingReadingFrame';
 import { isGeneratedReadingNotice, meetingHeadingForDisplay, splitGeneratedMeetingMetadata } from '../../../packages/ui/src/meetingReading';
+import '../../../packages/ui/src/overviewTopics.css';
 
 type Section={title:string|null;body:string};
 /** Split only level-two headings outside code fences; all other source text stays intact. */
@@ -38,6 +39,8 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
   const title=section.title?meetingHeadingForDisplay(section.title):null;
   if(!title)return <div key={index} className={/^>\s*整理视角：[^\r\n]+$/.test(section.body.trim())?'minutes-preamble minutes-preamble-generated':'minutes-preamble'}>{renderText(section.body)}</div>;
   if(/^(分段原文依据|原文依据|补充原文（供核对）|原话核对|待核对片段|Keywords)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
+  const fallback=display.metadata&&section.title==='全会重点'&&section.body.split('\n').every(line=>!line.trim()||/^[-*]\s+\S/.test(line));
+  if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{points.map((point,i)=><details className="ct-overview-topic" key={`${i}:${point}`}><summary><span className="ct-overview-topic-preview">{point}</span></summary><div className="ct-overview-topic-body">{renderText(point)}</div></details>)}</section>;}
   // Action cards own their one shared filter and their folding. Splitting the
   // source into two render calls would produce two incomplete action scopes.
   const remaining=['Action Items','行动事项'].includes(section.title!)?null:excerpt(section.body);
