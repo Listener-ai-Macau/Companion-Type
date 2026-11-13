@@ -21993,3 +21993,147 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+GamepadMotionHelpers f1a76007ec058122a4bb6f19c816c6c0c7b7f12a
+{"ecosystem": "vendored-native", "license": "MIT", "name": "GamepadMotionHelpers", "role": "Unchanged player-space function only; platform axes wrapper, no extra AHRS.", "source": "https://github.com/JibbSmart/GamepadMotionHelpers/tree/f1a76007ec058122a4bb6f19c816c6c0c7b7f12a", "version": "f1a76007ec058122a4bb6f19c816c6c0c7b7f12a"}
+TEXT cab235520dc9bda018e27ccc8c533ecf375766823f9ed918f3698fa52aaffa33 — gamepad/LICENSE
+MIT License
+
+Copyright (c) 2020-2023 Julian "Jibb" Smart
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+JoyShockMapper-tightening bb69784488937e0a5e21988b966eccd9f04d504e
+{"ecosystem": "vendored-native", "license": "MIT", "name": "JoyShockMapper-tightening", "role": "Zero-cutoff recovery formula adaptation only, no JSM/HID/SDL application.", "source": "https://github.com/Electronicks/JoyShockMapper/tree/bb69784488937e0a5e21988b966eccd9f04d504e", "version": "bb69784488937e0a5e21988b966eccd9f04d504e"}
+TEXT 7997d80880bd475209e9409dbf8a6f9a5866c9c8be957ed4d95da4dae66b4006 — gamepad/JSM-LICENSE.md
+## MIT License
+
+Copyright 2018-2021 Julian "Jibb" Smart; Copyright 2021- Nicolas Lessard.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+AirCursor b1ac85182a27b1d766ac487df22a6a908a4188f7
+{"ecosystem": "vendored-native", "license": "MIT", "name": "AirCursor", "role": "Existing relative mapping, interpolation and cursor-history ports.", "source": "https://github.com/m-afham/AirCursor/tree/b1ac85182a27b1d766ac487df22a6a908a4188f7", "version": "b1ac85182a27b1d766ac487df22a6a908a4188f7"}
+TEXT ac5569da19be1ab3d4581d246b98aeb7e278262dc0c8eff52cf19d5967c1180b — air/LICENSE
+MIT License
+
+Copyright (c) 2026 m-afham and AirCursor contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+WatchPointer 504137a1a8748e3560f1c203d06fbd4e0832d582
+{"ecosystem": "vendored-native", "license": "MIT", "name": "WatchPointer", "role": "Existing absolute projection/1-Euro/physical-control interaction ports.", "source": "https://github.com/umarz317/WatchPointer/tree/504137a1a8748e3560f1c203d06fbd4e0832d582", "version": "504137a1a8748e3560f1c203d06fbd4e0832d582"}
+TEXT 0dd72cf0b083b1c0db8aaa1143f12a39b8b5aaa5ed87406215278cbbcd159d05 — watch/LICENSE
+MIT License
+
+Copyright (c) 2026 Umar Afzal
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+Fusion a8d7224f36a0ec82345ef49a3db50e65f8d3bab8
+{"ecosystem": "vendored-native", "license": "MIT", "name": "Fusion", "role": "Existing desktop raw-source AHRS and calibration adapter.", "source": "https://github.com/xioTechnologies/Fusion/tree/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8", "version": "a8d7224f36a0ec82345ef49a3db50e65f8d3bab8"}
+TEXT deea99a9e5920dc1cb5bfd7730fba6ca3fdab691bde7760aa1642e65c650ccca — fusion/LICENSE.md
+
+The MIT License (MIT)
+
+Copyright (c) 2021 x-io Technologies
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+VQF-rest 86ba56bdd3158b9b05f9f9fe5596866ba326438c
+{"ecosystem": "vendored-native", "license": "MIT", "name": "VQF-rest", "role": "Rest/filter-routine Rust port for the preserved experimental planar path only.", "source": "https://github.com/dlaidig/vqf/tree/86ba56bdd3158b9b05f9f9fe5596866ba326438c", "version": "86ba56bdd3158b9b05f9f9fe5596866ba326438c"}
+TEXT 5070dbdb548fe72702647bfa9281806b0242f1f4c8f16434d9f5b54a7b21b315 — VQF-MIT.txt
+MIT License
+
+Copyright (c) 2021 Daniel Laidig <laidig@control.tu-berlin.de>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

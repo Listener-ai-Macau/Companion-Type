@@ -3,7 +3,8 @@
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
     "apps/windows/src-tauri/Cargo.lock": "d5302fec9bbf33b7f23b0e8deb11cfb779800a9f1f6c3089e6e30f038a00795e",
-    "package-lock.json": "5deeee47d806e214408016e384ae07d754b9893d68aa8420967b6b24788d8291"
+    "package-lock.json": "5deeee47d806e214408016e384ae07d754b9893d68aa8420967b6b24788d8291",
+    "third_party/imu-pointer/gamepad/GamepadMotion.hpp": "f070bb1327cf5b1fbc336d570382d4c088e5ffae9f031dd0af8f81153581e690"
   },
   "components": [
     {
@@ -9179,6 +9180,102 @@
           "origin": "Exact pinned upstream copyright and permission notice"
         }
       ]
+    },
+    {
+      "name": "GamepadMotionHelpers",
+      "version": "f1a76007ec058122a4bb6f19c816c6c0c7b7f12a",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Unchanged player-space function only; platform axes wrapper, no extra AHRS.",
+      "source": "https://github.com/JibbSmart/GamepadMotionHelpers/tree/f1a76007ec058122a4bb6f19c816c6c0c7b7f12a",
+      "texts": [
+        {
+          "path": "gamepad/LICENSE",
+          "sha256": "cab235520dc9bda018e27ccc8c533ecf375766823f9ed918f3698fa52aaffa33",
+          "file": "texts/cab235520dc9bda018e27ccc8c533ecf375766823f9ed918f3698fa52aaffa33.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
+    },
+    {
+      "name": "JoyShockMapper-tightening",
+      "version": "bb69784488937e0a5e21988b966eccd9f04d504e",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Zero-cutoff recovery formula adaptation only, no JSM/HID/SDL application.",
+      "source": "https://github.com/Electronicks/JoyShockMapper/tree/bb69784488937e0a5e21988b966eccd9f04d504e",
+      "texts": [
+        {
+          "path": "gamepad/JSM-LICENSE.md",
+          "sha256": "7997d80880bd475209e9409dbf8a6f9a5866c9c8be957ed4d95da4dae66b4006",
+          "file": "texts/7997d80880bd475209e9409dbf8a6f9a5866c9c8be957ed4d95da4dae66b4006.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
+    },
+    {
+      "name": "AirCursor",
+      "version": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Existing relative mapping, interpolation and cursor-history ports.",
+      "source": "https://github.com/m-afham/AirCursor/tree/b1ac85182a27b1d766ac487df22a6a908a4188f7",
+      "texts": [
+        {
+          "path": "air/LICENSE",
+          "sha256": "ac5569da19be1ab3d4581d246b98aeb7e278262dc0c8eff52cf19d5967c1180b",
+          "file": "texts/ac5569da19be1ab3d4581d246b98aeb7e278262dc0c8eff52cf19d5967c1180b.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
+    },
+    {
+      "name": "WatchPointer",
+      "version": "504137a1a8748e3560f1c203d06fbd4e0832d582",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Existing absolute projection/1-Euro/physical-control interaction ports.",
+      "source": "https://github.com/umarz317/WatchPointer/tree/504137a1a8748e3560f1c203d06fbd4e0832d582",
+      "texts": [
+        {
+          "path": "watch/LICENSE",
+          "sha256": "0dd72cf0b083b1c0db8aaa1143f12a39b8b5aaa5ed87406215278cbbcd159d05",
+          "file": "texts/0dd72cf0b083b1c0db8aaa1143f12a39b8b5aaa5ed87406215278cbbcd159d05.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
+    },
+    {
+      "name": "Fusion",
+      "version": "a8d7224f36a0ec82345ef49a3db50e65f8d3bab8",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Existing desktop raw-source AHRS and calibration adapter.",
+      "source": "https://github.com/xioTechnologies/Fusion/tree/a8d7224f36a0ec82345ef49a3db50e65f8d3bab8",
+      "texts": [
+        {
+          "path": "fusion/LICENSE.md",
+          "sha256": "deea99a9e5920dc1cb5bfd7730fba6ca3fdab691bde7760aa1642e65c650ccca",
+          "file": "texts/deea99a9e5920dc1cb5bfd7730fba6ca3fdab691bde7760aa1642e65c650ccca.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
+    },
+    {
+      "name": "VQF-rest",
+      "version": "86ba56bdd3158b9b05f9f9fe5596866ba326438c",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Rest/filter-routine Rust port for the preserved experimental planar path only.",
+      "source": "https://github.com/dlaidig/vqf/tree/86ba56bdd3158b9b05f9f9fe5596866ba326438c",
+      "texts": [
+        {
+          "path": "VQF-MIT.txt",
+          "sha256": "5070dbdb548fe72702647bfa9281806b0242f1f4c8f16434d9f5b54a7b21b315",
+          "file": "texts/5070dbdb548fe72702647bfa9281806b0242f1f4c8f16434d9f5b54a7b21b315.txt",
+          "origin": "Pinned upstream copyright and permission text"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [
@@ -9210,5 +9307,5 @@
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 286
+  "licenseTextCount": 293
 }

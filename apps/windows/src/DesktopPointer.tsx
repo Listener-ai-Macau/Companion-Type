@@ -1,12 +1,14 @@
 import {useEffect,useRef,useState} from 'react';
 import {invoke} from '@tauri-apps/api/core';
 type Profile={left:number[];right:number[]};
-type Settings={mapping:'relative'|'laser';sensitivity:number;smoothing:number;deadzone:number;acceleration:number;invertHorizontal:boolean;invertVertical:boolean;desktopMotion:boolean;contactProfile?:Profile|null;contactDevice?:string|null};
+type Settings={mapping:'relative'|'laser';sensitivity:number;smoothing:number;deadzone:number;acceleration:number;invertHorizontal:boolean;invertVertical:boolean;desktopMotion:boolean;relativeDirect:boolean;tapClick:boolean;contactProfile?:Profile|null;contactDevice?:string|null};
 type ContactStatus={learning:'left'|'right'|null;leftSamples:number;rightSamples:number;calibrated:boolean;missedWindows:number;uncertain:number;lastSide:'left'|'right'|null};
 type Status={enabled:boolean;ready:boolean;controlsCursor:boolean;message:string;deviceId?:string;settings?:Settings;contacts?:ContactStatus;metrics:{samples:number;missing:number;sensorHz:number;calibrated:boolean;dragging:boolean;paused:boolean}};
-const defaults:Settings={mapping:'laser',sensitivity:1,smoothing:0.55,deadzone:3,acceleration:0.6,invertHorizontal:false,invertVertical:false,desktopMotion:false};
+const defaults:Settings={mapping:'relative',sensitivity:1,smoothing:0,deadzone:0,acceleration:0,invertHorizontal:false,invertVertical:false,desktopMotion:false,relativeDirect:true,tapClick:false};
 const idle:Status={enabled:false,ready:false,controlsCursor:false,message:'',metrics:{samples:0,missing:0,sensorHz:0,calibrated:false,dragging:false,paused:false}};
-const savedKey='companion-pointer-contact-v1';
+// Keep the old laser/planar settings intact under their original key. This
+// profile has deliberately different motion and physical-key semantics.
+const savedKey='companion-pointer-relative-v2';
 function savedSettings():Settings{try{
  const saved=JSON.parse(localStorage.getItem(savedKey)||'null') as Settings|null;
  if(saved?.desktopMotion||saved?.contactProfile){
@@ -25,18 +27,18 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
  const control=(action:string)=>void run('control_companion_pointer',{action});
  return <details className="ct-desktop-input" aria-label="空中鼠标">
   <summary>空中鼠标 · 转动卡片移动光标</summary>
-  <p>将Type-C接口朝向屏幕，这一端就是前方。点击启用后，按舒服的握姿稳住约1秒，不必严格水平。随后左右转动、抬高或放低Type-C端来移动光标；平移已暂停。</p><p>保持Type-C端朝前；换握持角度时，稳住卡片，点“以当前握姿居中”即可。无需抬头学习方向或分别采样上下左右。</p>
-  <p>敲击机身或短按卡片按键点击；按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
+  <p>像拿遥控器一样拿着卡片，Type-C端朝前。启用后先稳住约1秒，再小幅左右转向、抬高或放低Type-C端。相对模式中，转动才移动，停手光标停在当前位置。</p>
+  <p>短按卡片实体键点击；按住片刻并转动可拖拽，松开结束。换握姿时点“暂停换握姿”，调整好再继续。此模式下按键用于鼠标，退出后恢复录音；电脑 Esc 随时退出。</p>
   <div className="ct-button-row">
-   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,mapping:e.target.value as Settings['mapping'],desktopMotion:false,contactProfile:null,contactDevice:null})}><option value="relative">相对移动 · AirCursor</option><option value="laser">指向屏幕 · WatchPointer</option></select></label>
+   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>{const relative=e.target.value==='relative';setSettings({...defaults,mapping:relative?'relative':'laser',relativeDirect:relative,tapClick:!relative,sensitivity:settings.sensitivity,...(!relative?{smoothing:0.55,deadzone:3,acceleration:0.6}:{})});}}><option value="relative">相对遥控 · 推荐</option><option value="laser">激光指向 · 进阶</option></select></label>
    <label>灵敏度 <input aria-label="空中鼠标灵敏度" type="range" min="0.2" max="3" step="0.1" value={settings.sensitivity} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,sensitivity:Number(e.target.value)})}/>{settings.sensitivity.toFixed(1)}</label>
    <label><input type="checkbox" checked={settings.invertHorizontal} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,invertHorizontal:e.target.checked})}/>反转左右</label>
    <label><input type="checkbox" checked={settings.invertVertical} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,invertVertical:e.target.checked})}/>反转上下</label>
   </div>
   <div className="ct-button-row">
    {!status.enabled?<button className="ct-action" disabled={busy||blocked||!connected} onClick={()=>void run('start_companion_pointer',{settings,controlsCursor:true})}>启用空中鼠标</button>:<>
-    <button disabled={busy||!status.ready} onClick={()=>control(status.metrics.paused?'resume':'pause')}>{status.metrics.paused?'继续控制':'暂停控制'}</button>
-    <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>以当前握姿居中</button>
+    <button disabled={busy||!status.ready} onClick={()=>control(status.metrics.paused?'resume':'pause')}>{status.metrics.paused?'从这里继续':'暂停换握姿'}</button>
+    {settings.mapping==='laser'&&<button disabled={busy||!status.ready} onClick={()=>control('recenter')}>以当前握姿居中</button>}
     <button className="ct-action" disabled={busy} onClick={()=>control('stop')}>退出并回到录音</button>
    </>}
   </div>
@@ -44,6 +46,6 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
   {status.message&&<p role="status" aria-live="polite">{status.message}</p>}
   {status.enabled&&<p>{status.metrics.calibrated?'已就绪':'请稳住卡片约1秒，无需水平'} · {status.metrics.paused?'已暂停':status.metrics.dragging?'正在拖拽':status.ready?'动作已连接':'连接中'}</p>}
   {error&&<p role="alert">{error}</p>}
-  <p>移动算法适配自 AirCursor 与 WatchPointer；不采集麦克风音频。</p>
+  <p>适合临时遥控、演示和点选。移动时无需一直瞄准屏幕中心；相对模式默认使用实体按键点击，不用敲击机身。鼠标模式不采集麦克风音频。</p>
  </details>;
 }

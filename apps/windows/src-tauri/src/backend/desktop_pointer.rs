@@ -19,7 +19,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
     // persisted clients must not reactivate the mixed experimental mapper.
     if settings.desktop_motion {return Err("桌面平移已暂停，请使用转动／倾斜模式。".into());}
     settings.validate().map_err(str::to_string)?;
-    let pointer_options=if settings.desktop_motion{24}else{8};
+    let pointer_options=settings.pointer_options();
     let mut session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;
     if session.is_some(){return Err("空中鼠标已经开启。".into());}
     let (device,peer,lease)=coordinator.begin_desktop_pointer()?;
@@ -51,11 +51,12 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                 if controls_cursor {if let Err(e)=cursor.apply(frame){frame_stop.store(true,Ordering::Release);return Err(e);}}
                 if update.elapsed()>=Duration::from_millis(200){
                     change(|s|{s.metrics=metrics.clone();s.contacts=contacts.clone();if s.ready {s.message=if metrics.stream_stale{"正在等待动作数据，光标已停止。"}
-                        else if metrics.paused{"已暂停，点击继续或退出。"}
+                        else if metrics.paused{"已暂停；换好握姿后，从当前位置继续。"}
                         else if !metrics.calibrated{"请把卡片放稳约1秒，正在校准…"}
                         else if contacts.learning.is_some(){if contacts.learning==Some(companion_desktop_input::pointer::contact::Side::Left){"请在左侧自然轻敲三次；校准时不控制光标。"}else{"请在右侧自然轻敲三次；校准时不控制光标。"}}
                         else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"平移或转动控制方向；左侧轻敲左击，右侧轻敲右击；连续轻敲两次即双击。按住按键拖拽，Esc退出。"}
                         else if controls_cursor&&s.settings.desktop_motion{"平移或转动控制方向；轻敲或短按左击，按住拖拽。可校准左右轻敲。Esc退出。"}
+                        else if controls_cursor&&s.settings.relative_direct{"小幅转向移动；短按实体键点击，按住拖拽。暂停可换握姿，Esc退出。"}
                         else if controls_cursor{"左右转动移动光标；敲击机身或短按点击，按住拖拽。Esc退出。"}
                         else{"动作预览中，未控制光标。"}.into();}});update=Instant::now();
                 }

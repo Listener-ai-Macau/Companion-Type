@@ -7,4 +7,9 @@ fn main() {
         .file("src/pointer/fusion_adapter.c").compile("companion_pointer_fusion");
     println!("cargo:rerun-if-changed={}",source.display());
     println!("cargo:rerun-if-changed=src/pointer/fusion_adapter.c");
+    let mut player=cc::Build::new();player.cpp(true);
+    if player.get_compiler().is_like_msvc(){player.flag("/std:c++17");}else{player.flag("-std=c++17");}
+    player.include("../../third_party/imu-pointer/gamepad").file("src/pointer/player_space.cpp").compile("companion_pointer_player_space");
+    println!("cargo:rerun-if-changed=src/pointer/player_space.cpp");
+    println!("cargo:rerun-if-changed=../../third_party/imu-pointer/gamepad");
 }

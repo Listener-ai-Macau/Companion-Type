@@ -52,7 +52,7 @@ pub(crate) fn request(peer: &Peer, mode: u8, nonce: u32) -> Result<[u8; 36], Str
 }
 pub(crate) fn pointer_request(peer:&Peer,nonce:u32)->Result<[u8;36],String>{encode_request(peer,1,3,8,nonce)}
 pub(crate) fn pointer_request_options(peer:&Peer,nonce:u32,options:u8)->Result<[u8;36],String>{
-    if !matches!(options,8|24){return Err("鼠标模式参数无效。".into());}
+    if !matches!(options,8|24|40){return Err("鼠标模式参数无效。".into());}
     encode_request(peer,1,3,options,nonce)
 }
 pub(crate) fn pointer_ack(peer:&Peer,sequence:u32)->Result<[u8;36],String>{encode_request(peer,2,0,0,sequence)}
