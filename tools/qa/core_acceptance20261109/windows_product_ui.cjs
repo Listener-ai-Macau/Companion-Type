@@ -11,7 +11,7 @@ module.exports=async function productJourney(page,plan,out){
   const connectionBox=await connection.boundingBox();assert(connectionBox&&connectionBox.y>=0&&connectionBox.y+connectionBox.height<=await page.evaluate(()=>innerHeight));
   await connection.getByRole('button',{name:'连接录音卡',exact:true}).waitFor();
   await page.screenshot({path:path.join(out,'self-acceptance-library-entry.png'),fullPage:true});
-  await page.getByRole('button',{name:'设备与同步',exact:true}).click();
+  await page.getByRole('button',{name:/^录音卡 ·/}).click();
   const readiness=page.getByRole('region',{name:'录前准备',exact:true});
   await readiness.getByRole('heading',{name:'录音卡',exact:true}).waitFor();
   await readiness.getByRole('button',{name:'连接设备',exact:true}).waitFor();
@@ -26,7 +26,7 @@ module.exports=async function productJourney(page,plan,out){
   assert((await readiness.boundingBox()).y<(await secondary.boundingBox()).y);
   await page.screenshot({path:path.join(out,'self-acceptance-device-entry.png'),fullPage:true});
  }
- async function open(){await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
+ async function open(){await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
  if(!plan.backgroundOnly)await page.bringToFront();await open();await page.locator('#ct-meeting-result-pane').waitFor({state:'visible'});await page.locator('#ct-recording-text').waitFor({state:'hidden'});
  await page.locator('#ct-recording-result[open]').waitFor();
  await page.screenshot({path:path.join(out,'product-result-light.png'),fullPage:true});
@@ -35,14 +35,14 @@ module.exports=async function productJourney(page,plan,out){
  const completePreview=complete.getByRole('region',{name:'所选正文预览',exact:true});await completePreview.waitFor();const completeText=await completePreview.innerText();
  assert(completeText.includes('会议摘要')&&completeText.includes('尚未批准'));assert(!completeText.includes('Minutes engine:')&&!completeText.includes('Generated:')&&!completeText.includes('EXCLUDED_CORE_NOTE_20261109'));
 
- await nav().getByRole('button',{name:'录音与文字',exact:true}).click();await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
+ await nav().getByRole('button',{name:'文字',exact:true}).click();await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
  const search=page.getByRole('searchbox',{name:'查找可引用的原文',exact:true});await search.fill(before.transcriptText.split('\n')[0].slice(0,12));
  const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(before.transcriptText.includes(quote));
  await page.getByRole('button',{name:'引用原文片段 1',exact:true}).click();await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
  const notes=page.locator('#ct-recording-notes'),composer=notes.locator('.ct-note-composer');
  await composer.getByRole('textbox',{name:'新录音备注',exact:true}).fill('本次人工跟进\n- [ ] 核对采购清单\n- [ ] 确认追加费用，尚未批准');
  await composer.getByRole('combobox',{name:'补充类型',exact:true}).selectOption('followup');
- await nav().getByRole('button',{name:'纪要',exact:true}).click();await nav().getByRole('button',{name:/笔记与资料/}).click();
+ await nav().getByRole('button',{name:'纪要',exact:true}).click();await nav().getByRole('button',{name:/补充/}).click();
  const first=composer.getByRole('textbox',{name:'跟进事项 2',exact:true});assert.equal(await first.inputValue(),'核对采购清单');
  await composer.getByRole('button',{name:'保存备注',exact:true}).click();await notes.getByText('备注已保存到本机。',{exact:true}).waitFor();
  await composer.getByRole('button',{name:'保存备注',exact:true}).waitFor({state:'hidden'});
@@ -52,7 +52,7 @@ module.exports=async function productJourney(page,plan,out){
  const savedUntil=Date.now()+15000;while(!row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单')&&Date.now()<savedUntil)await wait(100);fs.writeFileSync(path.join(out,'product-public-note-save.json'),JSON.stringify({savedNote:row().meetingNotes.find(n=>n.id===saved.id),noteRevision:row().noteRevision,ui:await notes.innerText(),checked:await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).isChecked()},null,2));assert(row().meetingNotes.find(n=>n.id===saved.id).text.includes('- [x] 核对采购清单'));
  await card().getByRole('button',{name:'查看当前依据',exact:true}).click();await page.getByRole('region',{name:'待核对的补充依据',exact:true}).waitFor({state:'visible'});
  await page.getByRole('button',{name:/返回.*备注|返回.*补充/}).first().click();await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
- await page.reload();await page.locator('.ct-shell').waitFor();await open();await nav().getByRole('button',{name:/笔记与资料/}).click();
+ await page.reload();await page.locator('.ct-shell').waitFor();await open();await nav().getByRole('button',{name:/补充/}).click();
  assert(await card().getByRole('checkbox',{name:'核对采购清单',exact:true}).isChecked());const persisted=row().meetingNotes.find(n=>n.id===saved.id);
  await card().getByRole('button',{name:'导出这张清单',exact:true}).click();await page.locator('#ct-meeting-handoff-pane').waitFor({state:'visible'});const panel=page.locator('.ct-content-export');
  await panel.getByLabel('所选内容文件格式').selectOption('txt');await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();
