@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-13T11:15:12+08:00",
+  "state": "READER120146_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Reader-120-146-20261113.zip",
+  "bytes": 42385657,
+  "sha256": "d5ea70a8593edf0e4de59ec43dbae37346c4a74cac08db1324fc62fff12db8d8",
+  "windows": {
+    "version": "0.1.120",
+    "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+    "installer": "Companion-Windows-0.1.120.msi",
+    "sha256": "a505243a1e5a57ef956e70eeb3de61550f6f5d0b416d64a6238b676fb2d0acbc",
+    "installed": true
+  },
+  "android": {
+    "version": "0.1.146",
+    "sourceCommit": "2fda58ac159328dbe3c84accf5ac05b6af023df8",
+    "installer": "Companion-Android-0.1.146.apk",
+    "sha256": "003bae9cddbca61a993510d46b37c9543882b4296f7fa8a8a2cef209864d0478",
+    "installed": true
+  },
+  "engineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\engineering-self-acceptance.json",
+  "privateRemoteReadbackVerified": true,
+  "ownerAppearanceAccepted": false,
+  "ownerExperienceAccepted": false,
+  "saleQualified": false,
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "individualWindowsMsiReadbackVerified": true
+}

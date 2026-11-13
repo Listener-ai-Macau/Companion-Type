@@ -1,0 +1,100 @@
+{
+  "viewport": {
+    "innerWidth": 391,
+    "innerHeight": 869,
+    "dpr": 3.6812500953674316,
+    "visual": 1
+  },
+  "styles": [
+    "https://appassets.androidplatform.net/www/assets/index-C_U8q65j.css"
+  ],
+  "tabs": [
+    {
+      "text": "纪要",
+      "box": {
+        "x": 21.9991512298584,
+        "y": 307.4108581542969,
+        "width": 43.9983024597168,
+        "height": 43.9983024597168
+      },
+      "textBox": {
+        "x": 31.9991512298584,
+        "y": 320.58148193359375,
+        "width": 23.99405860900879,
+        "height": 15.755523681640625
+      },
+      "style": {
+        "font": "600 12px \"Segoe UI\", \"Microsoft YaHei UI\", \"Noto Sans CJK SC\", system-ui, sans-serif",
+        "minWidth": "44px",
+        "width": "43.9983px",
+        "padding": "10px 6px",
+        "display": "block",
+        "transform": "none",
+        "zoom": "1",
+        "textSizeAdjust": "auto"
+      },
+      "parent": {
+        "width": 308.1791076660156,
+        "style": "flex"
+      }
+    },
+    {
+      "text": "文字",
+      "box": {
+        "x": 87.9966049194336,
+        "y": 307.4108581542969,
+        "width": 43.9983024597168,
+        "height": 43.9983024597168
+      },
+      "textBox": {
+        "x": 97.9966049194336,
+        "y": 320.58148193359375,
+        "width": 23.994056701660156,
+        "height": 15.755523681640625
+      },
+      "style": {
+        "font": "600 12px \"Segoe UI\", \"Microsoft YaHei UI\", \"Noto Sans CJK SC\", system-ui, sans-serif",
+        "minWidth": "44px",
+        "width": "43.9983px",
+        "padding": "10px 6px",
+        "display": "block",
+        "transform": "none",
+        "zoom": "1",
+        "textSizeAdjust": "auto"
+      },
+      "parent": {
+        "width": 308.1791076660156,
+        "style": "flex"
+      }
+    },
+    {
+      "text": "笔记",
+      "box": {
+        "x": 153.99404907226562,
+        "y": 307.4108581542969,
+        "width": 43.9983024597168,
+        "height": 43.9983024597168
+      },
+      "textBox": {
+        "x": 163.99404907226562,
+        "y": 320.58148193359375,
+        "width": 23.994064331054688,
+        "height": 15.755523681640625
+      },
+      "style": {
+        "font": "600 12px \"Segoe UI\", \"Microsoft YaHei UI\", \"Noto Sans CJK SC\", system-ui, sans-serif",
+        "minWidth": "44px",
+        "width": "43.9983px",
+        "padding": "10px 6px",
+        "display": "block",
+        "transform": "none",
+        "zoom": "1",
+        "textSizeAdjust": "auto"
+      },
+      "parent": {
+        "width": 308.1791076660156,
+        "style": "flex"
+      }
+    }
+  ]
+}

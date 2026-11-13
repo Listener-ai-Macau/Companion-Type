@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-13T11:04:00+08:00",
+  "state": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.120",
+  "frozenAppSource": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+  "exeSha256": "3910e38888d11b98ad63ca3193423e4b97004b327ce8169286adaf700463ca2b",
+  "dllSha256": "ef5928492b574c2210853540aec7ac3f12295b04c817b4e271c659ac2b24e8fc",
+  "inputKind": "Exact new public acoustic019f with actual installed118 ASR and configured DeepSeek results; isolated UI reads same recording originals. No reference transcription or fabricated result.",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-a49c94b9a7c04b6ab73d2115864c4d6a",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "realPublicSessionId": "v1-real-installed-1794533232243",
+  "realPublicSourceStateSha256": "d5d8776fa80a3721584d80a039446b7d3e706dbd4d84162f548ff8c3d714c5b6",
+  "realPublicSpecification": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\public019f-spec.json",
+  "appPid": 31356,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 9177560,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 14026130,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    19704
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 2456,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 5556,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 18036,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 19704,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 22440,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 30896,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\private\\a49c94b9a7c04b6ab73d2115864c4d6a\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 440152064,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 4504657920,
+    "systemPhysicalPercent": 81.9
+  },
+  "firstAppPid": 9932,
+  "firstAppExitObserved": true,
+  "processRestart": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "previousAppExited": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "firstPid": 9932,
+    "reopenedPid": 31356,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": false,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "ui": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": true,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": false,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-13T11:04:13+08:00"
+}

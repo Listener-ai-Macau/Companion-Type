@@ -1,0 +1,10 @@
+PASS customer reading: imported text identity, native-audio identity, authored checklist label, note-hit navigation, localized preview, literal search, explicit calendar time and unchanged durable input
+PASS direct copy: native text/no file dialog, explicit unavailable fallback, changed-source exclusion and unchanged original
+PASS friendly calendar editing: readable value, exact timestamp preserved until explicit change
+PASS saved-list return: authored result wins shared source word, true saved timestamp, trash excluded, durable data unchanged
+PASS real native manual timestamp: epoch-ms save beats older ISO provider result before any export, no stored date rewrite
+PASS checklist hierarchy: visible date/owner summary, no automatic form expansion or draft rewrite, other-task edit retains exact completed timestamp and owner
+PASS calendar context: exact excerpt, explicit date and ambiguous source guard
+PASS calendar pre-save review: parser/fingerprint, cancellation/timeout releases UI, late reply cannot export, duplicates and original preserved
+PASS full saved checklist QR decode, byte limit without truncation, ordinary UI intent, native preview source, cancel/late/stale/edit guards; no device/cloud/phone claim
+audio import action and cancellation UI passed

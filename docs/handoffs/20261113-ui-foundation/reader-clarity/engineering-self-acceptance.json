@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-13T11:13:50+08:00",
+  "state": "READER120146_INSTALLED_CONTINUOUS_ENGINEERING_SELF_REVIEW_COMPLETE_OWNER_UX_OPEN",
+  "windows": {
+    "version": "0.1.120",
+    "source": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+    "actualNativeRuntime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\runtime-result.json",
+    "realPublicSavedResults": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\real-public019f-native\\review.json",
+    "previousInstalledVersion": "0.1.119",
+    "originalFilesUnchanged": 247,
+    "retainsCurrent119AndTiltOnly87e6CommittedSource": true,
+    "newPhysicalPointerQualification": false
+  },
+  "android": {
+    "version": "0.1.146",
+    "source": "2fda58ac159328dbe3c84accf5ac05b6af023df8",
+    "actualPhone": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android146\\library-review-result.json",
+    "closed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android146\\end-session.json",
+    "originalFilesIdentical": 5470,
+    "onlyPriorIndexChangedForOneNewPublicLibrary": true,
+    "allPriorLibrariesRetained": true
+  },
+  "sourceChecks": {
+    "continuous": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\windows-source-r1\\result.json",
+    "emptyMultipleRealPublicDeviceLayouts": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\layout-review-r1\\result.json",
+    "mobile": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\mobile-source-r1\\result.json",
+    "affectedComponentContracts": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\customer-contracts-r3.log"
+  },
+  "failuresRetained": [
+    "First stylesheet rewrite patch was rejected before file mutation; replaced the one existing foundation stylesheet from an owned source file.",
+    "Visual review caught inherited library-grid columns squeezing rows; corrected before native freeze.",
+    "Existing component contracts lacked matchMedia and two tests replaced the shared window mock; fixed test setup, then adapted the renamed editor control. Full affected contracts passed.",
+    "Phone146 first strict44px assertion rejected real43.9983px device-pixel quantization; native computed min-width44px and all text inside. Added0.5CSSpx tolerance; exact same APK passed, no rebuild.",
+    "Windows initial upgrade preflight correctly rejected old118 predecessor: embedded119 had independently installed. Read exact119 receipt, verified source ancestry and ended Owner controller, preserved initial folder and upgraded119→120 normally."
+  ],
+  "limitations": [
+    "Owner aesthetics/clarity/usability acceptance remains open.",
+    "Native OS dialog/ordinary recipient operations reuse exact unchanged backend/command evidence; moved route and actual private native export reviewed.",
+    "This batch does not rerun recording, ASR/cloud, physical pointer, long-duration or whole-device/sales qualification. Prior public meeting content-quality issues remain."
+  ],
+  "ownerAppearanceAccepted": false,
+  "saleQualified": false
+}

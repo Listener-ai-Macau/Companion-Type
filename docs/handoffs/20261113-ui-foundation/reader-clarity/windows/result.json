@@ -1,0 +1,156 @@
+{
+  "at": "2026-11-13T11:02:30+08:00",
+  "state": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.120",
+  "frozenAppSource": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+  "exeSha256": "3910e38888d11b98ad63ca3193423e4b97004b327ce8169286adaf700463ca2b",
+  "dllSha256": "ef5928492b574c2210853540aec7ac3f12295b04c817b4e271c659ac2b24e8fc",
+  "inputKind": "explicit fictional text-only software workflow fixture; not a real meeting/ASR/capture test",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-1317475831894f918ffa66961b9ac1b8",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "appPid": 4820,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 40306568,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 10814874,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    31500
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 23760,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 25448,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 26552,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 30772,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 31500,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 31624,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows120\\native-background-r1\\private\\1317475831894f918ffa66961b9ac1b8\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 491356160,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 3953872896,
+    "systemPhysicalPercent": 84.1
+  },
+  "publicFixtureExportCache": "C:\\Users\\Billy\\AppData\\Local\\ai.listener.companion-type\\content-share\\08db86df-d65b-4833-a77b-1b03a045f12d\\明确虚构·核心会后流程验收-所选内容.txt",
+  "appCacheUsesWindowsKnownFolder": true,
+  "testOnlyFileCreatedOutsidePrivateRoot": true,
+  "privateExportFiles": [
+    {
+      "fileName": "明确虚构·核心会后流程验收-所选内容.txt",
+      "sha256": "a3da3f9d9be0e62969fdc1787cfa2c0fe718c47cfd2a18cc7f063f01289ea46f",
+      "bytes": 403,
+      "actualPackagedAppFileCreated": true,
+      "privateStationClipboardObserved": true,
+      "selectedContentsVerified": true,
+      "ordinaryRecipientTested": false
+    }
+  ],
+  "firstAppPid": 17272,
+  "firstAppExitObserved": true,
+  "processRestart": {
+    "state": "ACTUAL_NATIVE_PROCESS_RESTART_RESTORED_SAVED_SOURCE_FOLLOWUP_AND_EXPORT",
+    "firstPid": 17272,
+    "reopenedPid": 4820,
+    "previousAppExited": true,
+    "visibleSavedChecklistRestored": true,
+    "literalReferenceVisible": true,
+    "selectedExportScopeRetained": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "modelsRun": false,
+    "physicalQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "ui": {
+    "state": "REAL_NATIVE_COHERENT_MEETING_SOURCE_FOLLOWUP_REOPEN_PREVIEW_AND_PRIVATE_FILE_PASSED",
+    "dateOnlyCalendarSavedAndReopened": true,
+    "nativeSaveCancelRetested": false,
+    "ordinaryRecipientRetested": false,
+    "notesPersisted": true,
+    "literalSourceRetained": true,
+    "exactSelectedNote": true,
+    "ordinaryRecipient": {
+      "fileName": "明确虚构·核心会后流程验收-所选内容.txt",
+      "sha256": "a3da3f9d9be0e62969fdc1787cfa2c0fe718c47cfd2a18cc7f063f01289ea46f",
+      "bytes": 403,
+      "actualPackagedAppFileCreated": true,
+      "privateStationClipboardObserved": true,
+      "selectedContentsVerified": true,
+      "ordinaryRecipientTested": false
+    },
+    "originalMeetingAndOtherRecordsUnchanged": true,
+    "modelsRun": false,
+    "hardwareQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": false,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-13T11:02:47+08:00"
+}

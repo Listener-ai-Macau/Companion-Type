@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-13T02:55:42.026Z",
+  "phase": "before-restart",
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(geometry.every(x=>x.textInside&&x.boxWidth>=44))\n"
+}

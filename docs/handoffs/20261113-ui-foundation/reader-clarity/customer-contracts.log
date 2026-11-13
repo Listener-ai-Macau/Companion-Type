@@ -1,0 +1,70 @@
+The above error occurred in the <CompanionDashboard> component:
+
+    at CompanionDashboard (file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_customer_reading.tsx.mjs:10380:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_customer_reading.tsx.mjs:10692
+    if (window.matchMedia("(min-width:761px)").matches) setDetailSessionId(selectedSession.id);
+               ^
+
+TypeError: window.matchMedia is not a function
+    at file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_customer_reading.tsx.mjs:10692:16
+    at commitHookEffectListMount (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:13038:26)
+    at commitPassiveMountOnFiber (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14461:11)
+    at commitPassiveMountEffects_complete (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14421:9)
+    at commitPassiveMountEffects_begin (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14408:7)
+    at commitPassiveMountEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14396:3)
+    at flushPassiveEffectsImpl (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16287:3)
+    at flushPassiveEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16236:14)
+    at E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16051:9
+    at flushActQueue (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react\cjs\react.development.js:2667:24)
+
+Node.js v24.15.0
+The above error occurred in the <CompanionDashboard> component:
+
+    at CompanionDashboard (file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_calendar_export_review.tsx.mjs:10380:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_calendar_export_review.tsx.mjs:10692
+    if (window.matchMedia("(min-width:761px)").matches) setDetailSessionId(selectedSession.id);
+               ^
+
+TypeError: window.matchMedia is not a function
+    at file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_calendar_export_review.tsx.mjs:10692:16
+    at commitHookEffectListMount (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:13038:26)
+    at commitPassiveMountOnFiber (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14461:11)
+    at commitPassiveMountEffects_complete (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14421:9)
+    at commitPassiveMountEffects_begin (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14408:7)
+    at commitPassiveMountEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14396:3)
+    at flushPassiveEffectsImpl (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16287:3)
+    at flushPassiveEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16236:14)
+    at E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16051:9
+    at flushActQueue (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react\cjs\react.development.js:2667:24)
+
+Node.js v24.15.0
+The above error occurred in the <CompanionDashboard> component:
+
+    at CompanionDashboard (file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_checklist_phone.tsx.mjs:10382:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_checklist_phone.tsx.mjs:10694
+    if (window.matchMedia("(min-width:761px)").matches) setDetailSessionId(selectedSession.id);
+               ^
+
+TypeError: window.matchMedia is not a function
+    at file:///C:/Users/Billy/Desktop/Denzic/Companion/companion-device-closure055/.cache/software-contracts/customer-EjbuQs/test_checklist_phone.tsx.mjs:10694:16
+    at commitHookEffectListMount (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:13038:26)
+    at commitPassiveMountOnFiber (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14461:11)
+    at commitPassiveMountEffects_complete (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14421:9)
+    at commitPassiveMountEffects_begin (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14408:7)
+    at commitPassiveMountEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:14396:3)
+    at flushPassiveEffectsImpl (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16287:3)
+    at flushPassiveEffects (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16236:14)
+    at E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react-test-renderer\cjs\react-test-renderer.development.js:16051:9
+    at flushActQueue (E:\CodexData\Companion\.build-cache\document-context20261110\node-dependencies\node_modules\react\cjs\react.development.js:2667:24)
+
+Node.js v24.15.0
+audio import action and cancellation UI passed

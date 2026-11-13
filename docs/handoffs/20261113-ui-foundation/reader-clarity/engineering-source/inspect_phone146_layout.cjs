@@ -1,0 +1,6 @@
+const fs=require('fs');const C='C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261110-android-media-import',O=C+'/android146';
+const{connect}=require(C+'/organization_ui.cjs');
+(async()=>{const{page,browser}=await connect();try{
+ const data=await page.evaluate(()=>({viewport:{innerWidth,innerHeight,dpr:devicePixelRatio,visual:visualViewport?.scale},styles:[...document.querySelectorAll('link[rel=stylesheet]')].map(x=>x.href),tabs:[...document.querySelectorAll('.detail-tabs button')].map(n=>{const range=document.createRange();range.selectNodeContents(n);const b=n.getBoundingClientRect(),r=range.getBoundingClientRect(),c=getComputedStyle(n);return {text:n.textContent,box:{x:b.x,y:b.y,width:b.width,height:b.height},textBox:{x:r.x,y:r.y,width:r.width,height:r.height},style:{font:c.font,minWidth:c.minWidth,width:c.width,padding:c.padding,display:c.display,transform:c.transform,zoom:c.zoom,textSizeAdjust:c.webkitTextSizeAdjust},parent:{width:n.parentElement.getBoundingClientRect().width,style:getComputedStyle(n.parentElement).display}};})}));
+ fs.writeFileSync(O+'/actual-layout-inspection.json',JSON.stringify(data,null,2));await page.screenshot({path:O+'/actual-layout-inspection.png'});console.log(JSON.stringify(data));
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});
