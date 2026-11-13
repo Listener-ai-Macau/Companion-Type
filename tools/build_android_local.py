@@ -13,7 +13,7 @@ WORK=CACHE/'shared-android-build'
 sys.path.insert(0,str(ROOT.parent/'ai-collaboration-workflow/scripts'))
 from development_storage import exclusive_build,preflight
 sys.path.insert(0,str(ROOT/'model-research/src'))
-from moss_windows_resource_limits_20261104 import WorkerLimits,SystemRamPressure
+from moss_windows_resource_limits_20261104 import WorkerLimits
 
 def sha(path):
  with Path(path).open('rb')as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -22,7 +22,10 @@ def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--evidence',type=Path,required=True);a=parser.parse_args()
  output=a.evidence.resolve();assert output!=WORK and not output.is_relative_to(WORK) and not WORK.is_relative_to(output)
  assert not output.exists(),'Keep prior build evidence'
- limits=WorkerLimits(5,2*1024**3);pressure=SystemRamPressure();assert not pressure.low(),'Actual system low-memory signal; no build started'
+ # This entry compiles/packages only. Its private commit, CPU and low worker
+ # priorities remain bounded; it may page under system RAM pressure. Model
+ # inference and app acceptance retain their separate actual-pressure guards.
+ limits=WorkerLimits(5,2*1024**3)
  jdk=Path('C:/Program Files/Eclipse Adoptium/jdk-25.0.0.36-hotspot');sdk=CACHE/'android-sdk';bt=sdk/'build-tools/36.0.0';gradle=CACHE/'gradle-9.7.1/bin/gradle.bat';jsonjar=CACHE/'android054-materials/json-20240303.jar'
  required=[jdk/'bin/java.exe',jdk/'bin/javac.exe',gradle,sdk/'platforms/android-35/android.jar',bt/'apksigner.bat',bt/'zipalign.exe',bt/'aapt2.exe',jsonjar,SOURCE/'node_modules/esbuild/bin/esbuild',SOURCE/'node_modules/typescript/bin/tsc',Path(os.environ['USERPROFILE'])/'.android/debug.keystore']
  missing=[str(p)for p in required if not p.is_file()];assert not missing,missing
@@ -41,7 +44,6 @@ def main():
   record=dict(at=datetime.now().astimezone().isoformat(timespec='seconds'),state='BUILDING_COMPLETE_ANDROID_SOFTWARE_CANDIDATE',sourceCommit=commit,versionCode=version,versionName=version_name,sharedWorkspace=str(WORK),storageBefore=storage,nativeAarSha256=backend['aarSha256'],backendSourceCommit=backend['backendSourceCommit'],nativeLibrariesRebuilt=False,modelsRun=False,boardAccessed=False,phoneAccessed=False,steps=[])
   def save():(output/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
   def run(name,args,cwd=SOURCE):
-   assert not pressure.low(),'Actual system low-memory signal; stopping own build'
    started=time.monotonic()
    with (output/(name+'.log')).open('wb')as log:r=subprocess.run(list(map(str,args)),cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
    record['steps'].append(dict(name=name,exitCode=r.returncode,seconds=round(time.monotonic()-started,3)));save();print(name+': exit='+str(r.returncode),flush=True)
