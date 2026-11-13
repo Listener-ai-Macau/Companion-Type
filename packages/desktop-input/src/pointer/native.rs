@@ -17,6 +17,13 @@ fn absolute_move(p:Point,b:Bounds)->(Point,windows::Win32::UI::Input::KeyboardAn
     }}})
 }
 #[cfg(windows)]
+fn click_inputs(p:Point,b:Bounds,right:bool)->(Point,[windows::Win32::UI::Input::KeyboardAndMouse::INPUT;3]){
+    use windows::Win32::UI::Input::KeyboardAndMouse::{INPUT,INPUT_0,INPUT_MOUSE,MOUSEINPUT,MOUSEEVENTF_LEFTDOWN,MOUSEEVENTF_LEFTUP,MOUSEEVENTF_RIGHTDOWN,MOUSEEVENTF_RIGHTUP};
+    let(p,movement)=absolute_move(p,b);
+    let edge=|flags|INPUT{r#type:INPUT_MOUSE,Anonymous:INPUT_0{mi:MOUSEINPUT{dwFlags:flags,dwExtraInfo:enigo::EVENT_MARKER as usize,..Default::default()}}};
+    (p,[movement,edge(if right{MOUSEEVENTF_RIGHTDOWN}else{MOUSEEVENTF_LEFTDOWN}),edge(if right{MOUSEEVENTF_RIGHTUP}else{MOUSEEVENTF_LEFTUP})])
+}
+#[cfg(windows)]
 pub struct Cursor {input:Enigo,down:bool,expected:Option<Point>}
 #[cfg(windows)]
 impl Cursor {
@@ -45,12 +52,30 @@ impl Cursor {
         }
         self.expected=Some(p);Ok(())
     }
+    fn click(&mut self,p:Point,right:bool)->Result<(),String>{
+        use windows::Win32::UI::Input::KeyboardAndMouse::{SendInput,INPUT};
+        static TRACE:std::sync::OnceLock<bool>=std::sync::OnceLock::new();
+        let trace=*TRACE.get_or_init(||std::env::var("COMPANION_DESKTOP_INPUT_DIAGNOSTICS").as_deref()==Ok("1"));
+        let before=if trace{self.position().ok()}else{None};
+        let(p,inputs)=click_inputs(p,self.bounds(),right);
+        // Win32 guarantees one array's events stay serial and cannot be
+        // interspersed with another mouse/user sequence. Use one transaction
+        // for the target move, button down and up instead of three calls.
+        let sent=unsafe{SendInput(&inputs,std::mem::size_of::<INPUT>()as i32)};
+        if trace{eprintln!("desktop_pointer_native_click right={right} target_x={} target_y={} before={before:?} submitted={sent} expected=3",p.x,p.y);}
+        if sent!=3{
+            let error=windows::core::Error::from_win32();
+            let _=self.input.button(if right{enigo::Button::Right}else{enigo::Button::Left},Direction::Release);
+            return Err(format!("系统未完整接收鼠标点击（{sent}/3）：{error}"));
+        }
+        self.expected=Some(p);Ok(())
+    }
     pub fn apply(&mut self,f:Frame)->Result<(),String> {
         // Rewind to pre-press point for click/down, then continue dragging.
         for event in f.buttons {
             match event {
-                Button::Click(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Left,Direction::Press).map_err(|e|e.to_string())?;self.down=true;self.release()?;},
-                Button::RightClick(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Right,Direction::Click).map_err(|e|e.to_string())?;},
+                Button::Click(p)=>self.click(p,false)?,
+                Button::RightClick(p)=>self.click(p,true)?,
                 Button::Down(p)=>{self.move_to(p)?;self.input.button(enigo::Button::Left,Direction::Press).map_err(|e|e.to_string())?;self.down=true;},
                 Button::Up=>self.release()?,
             }
@@ -85,6 +110,18 @@ mod tests {
         let b=Bounds{left:-100.,top:300.,width:1.,height:1.,primary:None};
         let(p,_)=absolute_move(Point{x:9000.,y:-4000.},b);assert_eq!(p,Point{x:-100.,y:300.});
         let m=event(p,b);assert_eq!((m.dx,m.dy),(0,0));
+    }
+    #[test]fn native_click_keeps_virtual_target_down_and_up_in_one_batch(){
+        use windows::Win32::UI::Input::KeyboardAndMouse::{MOUSEEVENTF_LEFTDOWN,MOUSEEVENTF_LEFTUP,MOUSEEVENTF_RIGHTDOWN,MOUSEEVENTF_RIGHTUP};
+        let bounds=Bounds{left:-1920.,top:0.,width:3840.,height:1080.,primary:None};
+        for right in [false,true]{
+            let(p,inputs)=click_inputs(Point{x:-960.,y:540.},bounds,right);assert_eq!(p,Point{x:-960.,y:540.});
+            let [movement,down,up]=inputs.map(|v|{assert_eq!(v.r#type,INPUT_MOUSE);unsafe{v.Anonymous.mi}});
+            assert_eq!(movement.dwFlags,MOUSEEVENTF_MOVE|MOUSEEVENTF_ABSOLUTE|MOUSEEVENTF_VIRTUALDESK);
+            assert!((16300..16500).contains(&movement.dx));
+            assert_eq!(down.dwFlags,if right{MOUSEEVENTF_RIGHTDOWN}else{MOUSEEVENTF_LEFTDOWN});
+            assert_eq!(up.dwFlags,if right{MOUSEEVENTF_RIGHTUP}else{MOUSEEVENTF_LEFTUP});
+        }
     }
 }
 #[cfg(windows)]

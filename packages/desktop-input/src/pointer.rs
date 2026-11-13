@@ -53,6 +53,9 @@ pub enum Mapping { #[default] Relative, Laser }
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all="camelCase")]
 pub enum RelativeHorizontal { #[default] Turn, Tilt }
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all="camelCase")]
+pub enum KeyRole { #[default] ClickDrag, Regrip }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default, rename_all="camelCase")]
 pub struct Settings {
@@ -61,12 +64,13 @@ pub struct Settings {
     pub desktop_motion: bool,
     pub relative_direct:bool,pub tap_click:bool,
     pub relative_horizontal:RelativeHorizontal,
+    pub key_role:KeyRole,
     pub contact_profile:Option<contact::Profile>,
     pub contact_device:Option<String>,
 }
 impl Default for Settings {
     fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
-            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,relative_horizontal:RelativeHorizontal::Turn,contact_profile:None,contact_device:None}}
+            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,relative_horizontal:RelativeHorizontal::Turn,key_role:KeyRole::ClickDrag,contact_profile:None,contact_device:None}}
 }
 impl Settings {
     pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,relative_horizontal:RelativeHorizontal::Tilt,tap_click:true,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
@@ -74,6 +78,7 @@ impl Settings {
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
         if self.relative_direct&&(self.desktop_motion||self.mapping!=Mapping::Relative){return Err("direct gyro requires relative angular mapping");}
+        if self.key_role==KeyRole::Regrip&&!self.relative_direct{return Err("按住换握姿需要相对遥控模式。");}
         if let Some(profile)=&self.contact_profile{profile.validate()?;if !self.desktop_motion{return Err("左右轻敲需要原始动作模式。");}}
         if !self.sensitivity.is_finite() || !(0.2..=3.).contains(&self.sensitivity) ||
            !self.smoothing.is_finite() || !(0.0..=0.97).contains(&self.smoothing) ||
@@ -138,7 +143,7 @@ pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const 
 pub struct Frame {pub position:Option<Point>,pub buttons:Vec<Button>}
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub stream_stale:bool}
+pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool}
 
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
@@ -161,7 +166,7 @@ impl Pointer {
             last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
-    fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.pressed=None;self.wait_release=true;}
+    fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.metrics.regripping=false;self.pressed=None;self.wait_release=true;}
     fn release(&mut self) {self.release_button();self.contacts.clear_stream();}
     fn reset_motion(&mut self){self.smoother.reset();self.relative.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn drag_delay(&self)->f64{if self.settings.relative_direct{0.18}else{0.35}}
@@ -203,6 +208,15 @@ impl Pointer {
         if self.last_control.is_some_and(|last|{let n=event.sequence.wrapping_sub(last);n==0||n>=0x8000_0000}){return Ok(false);}
         self.last_control=Some(event.sequence);
         if event.events&OVERFLOW!=0{self.release();return Err("动作连接停顿过久，请重新开启空中鼠标。");}
+        // Established gyro clutch semantics (JSM GYRO_OFF): hold to disengage
+        // motion, return to a comfortable grip, release at the same cursor.
+        // This is explicit intent, not a guessed reverse-motion classifier.
+        if self.settings.key_role==KeyRole::Regrip&&event.events&(DOWN|UP)!=0{
+            if event.events&DOWN!=0{self.release_button();self.metrics.regripping=true;}
+            if event.events&UP!=0{self.metrics.regripping=false;}
+            self.reset_motion();self.history.clear();return Ok(true);
+        }
+        if self.metrics.regripping{return Ok(true);}
         if event.events==CLICK&&!self.settings.tap_click{return Ok(true);}
         if self.metrics.paused||!self.metrics.calibrated{if event.events&UP!=0{self.wait_release=false;}return Ok(true);}
         let measured_at=self.last.map(|(_,ms)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
@@ -392,14 +406,14 @@ impl Pointer {
         let stale=self.arrival.is_none_or(|at|now-at>0.3);
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
-        if !stale&&!self.metrics.paused&&self.metrics.calibrated{
+        if !stale&&!self.metrics.paused&&!self.metrics.regripping&&self.metrics.calibrated{
             let was_pending=self.contacts.pending();
             let clicks=self.contacts.poll(now);
             if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){c.tap();}}
             for(side,point)in clicks{self.shown=point;self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});}
         }
         let mut f=Frame{position:None,buttons:std::mem::take(&mut self.queued)};
-        if stale || self.metrics.paused || !self.metrics.calibrated {return f;}
+        if stale || self.metrics.paused || self.metrics.regripping || !self.metrics.calibrated {return f;}
         if self.contacts.status.learning.is_some()||self.contacts.pending(){return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=self.drag_delay() {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         if self.settings.relative_direct&&self.pressed.is_some()&&!self.metrics.dragging{return f;}
