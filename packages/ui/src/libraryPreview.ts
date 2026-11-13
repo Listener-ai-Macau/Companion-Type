@@ -2,6 +2,7 @@ import {nativeActionParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
 import {materialAnswerText,readMaterialNote} from './aiMaterialNote';
 import {companionReviewedTranscript,companionSessionHasFinalTranscript} from '@companion-type/core';
+import {cleanHesitations} from './transcriptReading';
 import type {CompanionV1HostSession} from '../../core/src/companionV1';
 
 type Preview={text:string;label?:string;target?:'source'|'result'};
@@ -48,7 +49,16 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
   const reviewed=companionReviewedTranscript(session);
   const originalLabel=companionSessionHasFinalTranscript(session)?undefined:'片段';
   const query=rawQuery.trim().toLocaleLowerCase();
-  if(!query)return{text:excerpt(reviewed),label:originalLabel};
+  if(!query){
+    const saved=session.minutesByMode?.[session.meetingMode]??session.minutes;
+    if(saved?.quality==='final'&&(!('status'in saved)||saved.status==='minutesReady')&&saved.processing?.complete!==false
+      &&['llm_deepseek','userEdited'].includes(String(saved.source))&&!/```|~~~/.test(saved.markdown)){
+      const section=/^## 会议概览\r?\n([\s\S]*?)(?=^##? |^> 长会议已|$(?![\s\S]))/m.exec(saved.markdown);
+      const point=section?.[1].split(/\r?\n/).find(line=>/^[-*] \S/.test(line));
+      if(point)return {text:excerpt(point.replace(/^[-*] /,'')),label:'纪要',target:'result'};
+    }
+    return{text:excerpt(cleanHesitations(reviewed).text),label:originalLabel};
+  }
   const candidates:Candidate[]=[
     ...(session.meetingNotes??[]).flatMap(note=>{
       const answer=materialAnswerText(note),material=readMaterialNote(note);

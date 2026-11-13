@@ -1179,6 +1179,10 @@ export function CompanionDashboard({
   };
   const openAudioImport = () => {setShowWorkflow(false);setRecordingAlternativesOpen(true);navigatePage('device','ct-audio-import');};
   const openContentExport = () => revealMeetingTool('ct-meeting-export');
+  const toggleRecordingPlayback = () => {
+    if (playbackOpen) {audioElement.current?.pause(); meetingAudioControl.current?.pause(); setPlaybackOpen(false); return;}
+    setPlaybackOpen(true); if (!preparedAudio) void prepareAudio();
+  };
   const openWorkflow = () => {
     setShowWorkflow(true);
     navigatePage('device', 'ct-workflow');
@@ -2178,7 +2182,7 @@ export function CompanionDashboard({
                   <span className="ct-library-icon">{isTextOnlyImport(session)?<FileText size={19} />:<Headphones size={19}/>}</span>
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
-                    <small><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time></small>
+                    <small className="ct-library-recording-meta"><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time><span>· {isTextOnlyImport(session)?'导入文字':formatDuration(session.durationMs)}</span></small>
                     {preview.text ? <span className="ct-library-text-preview">
                       {preview.label ? <span className="ct-library-text-partial">{preview.label} · </span> : null}{preview.text}
                     </span> : textState?<span className="ct-library-text-preview">{textState.hint}</span>:null}
@@ -2188,7 +2192,6 @@ export function CompanionDashboard({
                     {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
                       {session.organization.favorite?'★ 收藏 · ':''}{session.organization.folder||'未分类'}{session.organization.tags.length?' · '+session.organization.tags.join(' · '):''}
                     </small>:null}
-                    <small className="ct-library-recording-meta">{isTextOnlyImport(session)?'导入文字':formatDuration(session.durationMs)}</small>
                   </span>
                   <span className="ct-library-card-end" hidden={localSaveConfirmed&&!session.captureIncomplete&&!['recording'].includes(session.status)&&(!textState||textState.tone==='neutral')&&!session.organization?.trashedAt}><span className={`ct-library-status ct-library-status-${session.status}${textState?' ct-state-'+textState.tone:''}`}>{!localSaveConfirmed?'保存待确认':textState?.label??statusLabel}</span></span>
                     {companionTranscriptUnmappedEdges(session).length > 0 ? <small className="ct-step-warn">部分原音尚无对应文字</small> : null}
@@ -2258,7 +2261,11 @@ export function CompanionDashboard({
               {offlineMinutes ? <span className="ct-pill">{offlineMinutes.source === 'userAuthored' ? '手写清单' : isTextOnlyImport(selectedSession) ? (offlineReady ? '文字整理' : '整理草稿') : offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
             </div> : null}
-            {surface==='windows'?<button type="button" className="ct-action ct-reader-export" onClick={()=>{setNoteExportTarget(null);revealMeetingTool('ct-meeting-export');}}><Download size={16}/>导出</button>:null}
+            {surface==='windows'?<div className="ct-reader-header-actions">
+              {!textOnlyImport&&!playbackOpen?<button type="button" className="ct-action ct-reader-replay" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
+                disabled={Boolean(audioBlockedReason)||audioBusy} title={audioBlockedReason??undefined} onClick={toggleRecordingPlayback}><Headphones size={16}/>{audioBusy?'正在准备…':'回听'}</button>:null}
+              <button type="button" className="ct-action ct-reader-export" onClick={()=>{setNoteExportTarget(null);revealMeetingTool('ct-meeting-export');}}><Download size={16}/>导出</button>
+            </div>:null}
           </header>
           {deviceStorageFullNotice(selectedSession) ? <p className="ct-recording-notice ct-step-warn" role="status">{deviceStorageFullNotice(selectedSession)}</p> : null}
           {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part !== 'minutes' ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
@@ -2272,12 +2279,9 @@ export function CompanionDashboard({
                 setTranscribePromptSession(null);
                 onControl({action:'meetingTranscribeAudio',sessionId:selectedSession.id});
               }}><FileText size={16}/>{transcriptionRunning?'正在转文字…':recoveryView?.isProcessing?'正在处理…':selectedSession.captureIncomplete?'片段转文字':'转文字'}</button> : null}
-            {!textOnlyImport&&!playbackOpen ? <button type="button" className="ct-action ct-reader-replay" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
+            {surface!=='windows'&&!textOnlyImport&&!playbackOpen ? <button type="button" className="ct-action ct-reader-replay" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
               disabled={Boolean(audioBlockedReason) || audioBusy} title={audioBlockedReason ?? undefined}
-              onClick={() => {
-                if (playbackOpen) {audioElement.current?.pause(); meetingAudioControl.current?.pause(); setPlaybackOpen(false); return;}
-                setPlaybackOpen(true); if (!preparedAudio) void prepareAudio();
-              }}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button> : null}
+              onClick={toggleRecordingPlayback}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button> : null}
           </div>
           {transcribePromptSession===selectedSession.id && !asrConfigured ? <p className="ct-recording-notice" role="status">
             转文字需要先配置转写服务，原音已保留。<button type="button" className="ct-text-button" onClick={openSettings}>去配置</button>

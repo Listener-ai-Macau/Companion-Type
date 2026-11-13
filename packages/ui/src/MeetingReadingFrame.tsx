@@ -5,6 +5,7 @@ import './meetingReadingFrame.css';
 
 export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:string;sections?:readonly string[];children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
+ const outline=useRef<HTMLDetailsElement>(null);
  const sectionKey=sections.join('\n');
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
@@ -35,11 +36,12 @@ export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:st
   for(let ancestor=target.parentElement;ancestor&&ancestor!==content.current;ancestor=ancestor.parentElement)
    if(ancestor.tagName==='DETAILS')(ancestor as HTMLDetailsElement).open=true;
   target.tabIndex=-1;target.focus({preventScroll:true});
+  if(outline.current)outline.current.open=false;
   setActive(title);
   target.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
  }
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
-  {indexed&&titles.length>=2&&<aside className="meeting-reading-sidebar"><details className="meeting-outline-collapse"><summary>目录</summary><nav className="meeting-outline" aria-label="会议速览">
+  {indexed&&titles.length>=2&&<aside className="meeting-reading-sidebar"><details ref={outline} className="meeting-outline-collapse" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}><summary>目录</summary><nav className="meeting-outline" aria-label="会议速览">
    {titles.map((title,i)=><button type="button" key={i} aria-current={active===title?'location':undefined} onClick={()=>navigate(title)}>{meetingHeadingForDisplay(title)}</button>)}
   </nav></details></aside>}
   <div className="meeting-reading-content" ref={content}>{children}</div>

@@ -4,6 +4,8 @@ import {act,create} from 'react-test-renderer';
 import {cleanHesitations,transcriptParagraphs} from '../packages/ui/src/transcriptReading';
 import {MeetingTopic,topicReadingParts} from '../packages/ui/src/MeetingTopic';
 import {TranscriptFind} from '../packages/ui/src/TranscriptFind';
+import {readFileSync} from 'node:fs';
+import {libraryPreview} from '../packages/ui/src/libraryPreview';
 
 const original='嗯，我们呃，不能把三个月改成两个月。\n嗯。\n啊？\n他说“嗯、呃是原话”，那个那个产品仍需核对。';
 const cleaned=cleanHesitations(original);
@@ -25,4 +27,17 @@ let tree:any;act(()=>{tree=create(<TranscriptFind texts={[text]}>{highlight=><><
 const input=tree.root.findByType('input');act(()=>input.props.onChange({target:{value:'不能删除'}}));
 assert.equal(tree.root.findByType('mark').children.join(''),'不能删除');
 act(()=>tree.unmount());
+const savedSample=process.env.COMPANION_TEST_POLISH_MINUTES??process.env.COMPANION_TEST_PUBLIC_SOURCE_MINUTES;
+if(savedSample){
+ const session=JSON.parse(readFileSync(savedSample,'utf8'));
+ const before=JSON.stringify(session);const view=libraryPreview(session,'');
+ // A validated stored overview is a useful library identity; the source is
+ // still searchable literally and must keep its existing source destination.
+ if(session.minutesByMode.offlineStore.markdown.includes('## 会议概览')){
+  assert.equal(view.label,'纪要');assert.equal(view.target,'result');assert(view.text.includes('果蔬'));
+ }
+ assert(libraryPreview(session,'呃').text.includes('呃'));
+ assert.equal(libraryPreview(session,'呃').target,'source');
+ assert.equal(JSON.stringify(session),before);
+}
 console.log('PASS note hierarchy, reversible cleanup, short-answer/quote/number conditions and paragraph source search.');
