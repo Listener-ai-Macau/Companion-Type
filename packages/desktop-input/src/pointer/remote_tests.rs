@@ -99,3 +99,26 @@ fn ready()->Pointer{
     p.pause(true);p.control(Control{sequence:4,sensor_ms:500,events:CLICK}).unwrap();p.pause(false);
     assert!(p.frame(0.5,bounds()).buttons.is_empty());
 }
+
+#[test]fn held_clutch_regrips_without_returning_the_cursor_or_clicking(){
+    let mut p=Pointer::new(Settings{key_role:KeyRole::Regrip,..Settings::relative_remote()},Point{x:960.,y:540.});
+    for n in 1..22{let t=n as f64/100.;p.sample(sample(n,[0.,10.,0.]),t,bounds());p.frame(t,bounds());}
+    let target=p.shown;p.control(Control{sequence:1,sensor_ms:220,events:DOWN}).unwrap();
+    assert!(p.metrics.regripping);
+    for n in 22..72{let t=n as f64/100.;p.sample(sample(n,[5.,-10.,0.]),t,bounds());let f=p.frame(t,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());}
+    p.control(Control{sequence:2,sensor_ms:710,events:CLICK}).unwrap();assert!(p.frame(0.711,bounds()).buttons.is_empty());
+    p.control(Control{sequence:3,sensor_ms:720,events:UP}).unwrap();assert!(!p.metrics.regripping);
+    let f=p.frame(0.72,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());assert_eq!(p.shown,target);
+    for n in 73..83{let t=n as f64/100.;p.sample(sample(n,[0.;3]),t,bounds());assert!(p.frame(t,bounds()).position.is_none());}
+    for n in 83..94{let t=n as f64/100.;p.sample(sample(n,[0.,2.,0.]),t,bounds());p.frame(t,bounds());}
+    assert!(p.shown.x>target.x);assert_eq!(p.shown.y,target.y);
+    p.control(Control{sequence:4,sensor_ms:930,events:CLICK}).unwrap();assert!(matches!(p.frame(0.931,bounds()).buttons.as_slice(),[Button::Click(_)]));
+}
+#[test]fn clutch_release_does_not_cancel_user_pause_and_gaps_cannot_leave_it_held(){
+    let mut p=Pointer::new(Settings{key_role:KeyRole::Regrip,..Settings::relative_remote()},Point{x:960.,y:540.});
+    p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
+    p.control(Control{sequence:1,sensor_ms:10,events:DOWN}).unwrap();p.pause(true);
+    p.control(Control{sequence:2,sensor_ms:20,events:UP}).unwrap();assert!(p.metrics.paused);assert!(!p.metrics.regripping);
+    p.pause(false);p.control(Control{sequence:3,sensor_ms:30,events:DOWN}).unwrap();
+    assert!(p.frame(0.5,bounds()).buttons.is_empty());assert!(!p.metrics.regripping);assert!(p.metrics.stream_stale);
+}

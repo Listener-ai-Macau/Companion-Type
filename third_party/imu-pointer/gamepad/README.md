@@ -17,3 +17,12 @@ required for roll; projected CIM4 cannot supply that axis.
 The relative profile preserves subpixel displacement between frames, uses the physically labelled Type-C pitch sign, freezes button-pressure movement until a180ms drag threshold, and clears its filter on release/pause/ordinary-mouse takeover. Body taps now use the existing LSM6DSO hardware single-tap/reliable CIN event as left clicks; retries cannot click twice and a tap clears its impact's remaining velocity. Two distinct taps remain two clicks. Recorder double-tap marking and the legacy profile are retained. The UI uses a new saved-profile key, preserving old laser/planar preferences. There is no absolute screen-center projection or planar acceleration integration in this profile. No MCU code, sample rate, memory or processing changes are needed for this repair.
 
 This is an implementation candidate. Formula checks, source-labelled direction and synthetic responsiveness are separate from actual enclosure feel and physical click/drag acceptance.
+
+The Owner130 return-to-grip feedback adds JSM's existing `GYRO_OFF` clutch
+semantics (same pinned main.cpp, GyroButtonAssignment): an explicit held key
+disengages motion, release resumes from the same cursor. It is a separate
+key-role choice; the original click/drag role remains available. Shell taps
+remain the click source with the regrip role. No reverse-motion suppression
+classifier, new calibration estimator, or MCU code is introduced. Windows
+clicks use a single documented SendInput array containing target/down/up,
+with optional QA submission-count/target tracing, rather than separate calls.
