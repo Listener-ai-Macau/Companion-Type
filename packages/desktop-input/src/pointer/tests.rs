@@ -226,6 +226,26 @@ fn aim_pointer()->Pointer {
     p.sample(aim_sample(1,0,0.),0.,bounds());p.sample(aim_sample(2,10,0.),0.01,bounds());p.frame(0.01,bounds());p
 }
 #[test]
+fn laser_start_and_recenter_keep_the_existing_cursor_for_the_first_click() {
+    let initial=Point{x:1450.,y:810.};
+    let mut p=Pointer::new(Settings::default(),initial);
+    for n in 0..25 {
+        p.sample(aim_sample(n+1,n*10,0.),n as f64/100.,bounds());
+        assert!(p.frame(n as f64/100.,bounds()).position.is_none());
+    }
+    p.control(Control{sequence:1,sensor_ms:240,events:CLICK}).unwrap();
+    assert_eq!(p.frame(0.245,bounds()).buttons,vec![Button::Click(initial)]);
+    let recentered=Point{x:420.,y:260.};p.recenter(recentered);
+    for n in 25..50 {
+        p.sample(aim_sample(n+1,n*10,15.),n as f64/100.,bounds());
+        assert!(p.frame(n as f64/100.,bounds()).position.is_none());
+    }
+    p.control(Control{sequence:2,sensor_ms:490,events:CLICK}).unwrap();
+    assert_eq!(p.frame(0.495,bounds()).buttons,vec![Button::Click(recentered)]);
+    p.sample(aim_sample(51,500,13.),0.5,bounds());
+    assert!(p.frame(0.51,bounds()).position.unwrap().x>recentered.x);
+}
+#[test]
 fn cim4_matches_independent_c_fixture_and_preserves_angles_rates_gravity() {
     let hex="43494d31040303ff07000000f0ffffffd204000000206d37d7f66b03b831ec81";
     let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();

@@ -53,7 +53,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                         else if contacts.learning.is_some(){if contacts.learning==Some(companion_desktop_input::pointer::contact::Side::Left){"请在左侧自然轻敲三次；校准时不控制光标。"}else{"请在右侧自然轻敲三次；校准时不控制光标。"}}
                         else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"平移或转动控制方向；左侧轻敲左击，右侧轻敲右击；连续轻敲两次即双击。按住按键拖拽，Esc退出。"}
                         else if controls_cursor&&s.settings.desktop_motion{"平移或转动控制方向；轻敲或短按左击，按住拖拽。可校准左右轻敲。Esc退出。"}
-                        else if controls_cursor{"左右转动移动光标；双敲机身或短按点击，按住拖拽。Esc退出。"}
+                        else if controls_cursor{"左右转动移动光标；敲击机身或短按点击，按住拖拽。Esc退出。"}
                         else{"动作预览中，未控制光标。"}.into();}});update=Instant::now();
                 }
                 next+=Duration::from_nanos(period);

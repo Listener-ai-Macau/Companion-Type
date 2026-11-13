@@ -313,9 +313,14 @@ impl Pointer {
                 let left=((self.heading+180.).rem_euclid(360.)-180.)*if self.settings.invert_horizontal{-1.}else{1.};
                 let height=(elevation-zero)*if self.settings.invert_vertical{-1.}else{1.};
                 if self.metrics.paused {return;} // Aim still tracks while paused, as upstream.
-                let projected=laser(left,height,self.settings.sensitivity,bounds);self.last_projected=Some(projected);
+                let projected=laser(left,height,self.settings.sensitivity,bounds);
+                // Anchor the upstream projection at the real cursor on the
+                // first pose after start/recenter. Seeding `shown` from
+                // screen centre made the first click jump even without an OS
+                // move frame. Subsequent pose deltas keep the same projection.
+                if self.last_projected.is_none(){self.laser_offset=Point{x:self.shown.x-projected.x,y:self.shown.y-projected.y};}
+                self.last_projected=Some(projected);
                 let point=Point{x:projected.x+self.laser_offset.x,y:projected.y+self.laser_offset.y};
-                if self.target.is_none(){self.shown=point;}
                 let filter_dt=if dt>0.&&dt<0.2{dt}else{0.};
                 self.target=Some(Point{x:self.filter_x.update(point.x,filter_dt),y:self.filter_y.update(point.y,filter_dt)});
             }
