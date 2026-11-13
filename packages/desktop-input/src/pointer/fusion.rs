@@ -30,3 +30,25 @@ impl Fusion {
         (up.map(f64::from),corrected.map(f64::from))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn measured_gyro_rebias_does_not_keep_a_previous_runtime_bias_after_alignment(){
+        let mut f=Fusion::default();let accel=[90.,100.,970.];
+        f.align(accel);
+        // Runtime correction has learned a small residual. The caller then
+        // measures a NEW resting bias and supplies already-rebiased zero gyro.
+        // Reusing the old residual would manufacture rotation while at rest.
+        for _ in 0..2000{f.desktop_step([0.4,0.25,0.3],accel,0.01,true);}
+        f.align(accel);
+        let baseline=f.desktop_step([0.;3],accel,0.01,true).0;
+        let mut max_horizontal=0f64;
+        for _ in 0..300{
+            let earth=f.desktop_step([0.;3],accel,0.01,false).0;
+            max_horizontal=max_horizontal.max((earth[0]-baseline[0]).hypot(earth[1]-baseline[1]));
+        }
+        assert!(max_horizontal<0.02,"a static rebased gyro created{max_horizontal}m/s2 horizontal acceleration");
+    }
+}

@@ -29,6 +29,10 @@ void companion_fusion_align(void *handle,const float accel[3]) {
     /* Initialise from the already measured stationary gravity. This runs the
      * upstream correction with ZERO angular motion; it is not fabricated
      * sensor data or an extra integration of the user's movement. */
+    /* The caller has also replaced its measured gyro bias. Keeping Fusion's
+     * residual from the OLD bias subtracts it again from the new zero and
+     * manufactures rotation/linear acceleration while physically stationary. */
+    FusionBiasSetOffset(&s->bias,zero);
     FusionAhrsRestart(&s->ahrs);
     for(unsigned i=0;i<300;++i)FusionAhrsUpdateNoMagnetometer(&s->ahrs,zero,a);
     FusionAhrsSkipStartup(&s->ahrs);
