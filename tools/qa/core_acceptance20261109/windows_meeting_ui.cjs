@@ -16,7 +16,7 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
   fs.writeFileSync(path.join(out,'ui-controls.json'),JSON.stringify(await page.locator('button,input,select,summary').evaluateAll(nodes=>nodes.map(node=>({tag:node.tagName,text:node.innerText||'',aria:node.getAttribute('aria-label'),type:node.getAttribute('type')}))),null,2));
   await page.screenshot({path:path.join(out,'native-workspace.png'),fullPage:true});
   if(plan.realPublicReview){
-   const result=await require('./windows_real_public_ui.cjs')(page,plan,out,stage==='product-reopen');
+   const result=await require(plan.realPublicSpec?.retranscriptionOnly?'./windows_public_retranscribe_ui.cjs':'./windows_real_public_ui.cjs')(page,plan,out,stage==='product-reopen');
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(stage==='product-reopen'){
    const result=await require('./windows_product_reopen_ui.cjs')(page,plan,out);
