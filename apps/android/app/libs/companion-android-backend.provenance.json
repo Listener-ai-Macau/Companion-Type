@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-13T14:57:08+08:00",
-  "aarSha256": "a0f2ec48d9e170fd4c53fbca9cb8022184b96fbf56e248147928159e70ee18bc",
-  "backendSourceCommit": "152b67069e56a6848b927e5c6fb1cc050bbb4e31",
+  "at": "2026-11-13T15:37:40+08:00",
+  "aarSha256": "322e23708d4905c0248389202298e988ab0669374a2d9bf91415697ab2ec7b86",
+  "backendSourceCommit": "1309e0713aca8c14580174c5fa835db4b9daecba",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-audio-import-backend20261110",
   "remoteSourceVerified": false,
-  "nativeSourceCommit": "152b67069e56a6848b927e5c6fb1cc050bbb4e31",
-  "nativeLibrarySha256": "43b9e07c44b5db9fef70840241e4c4ed6a0e2d5f4d4d27e70e34c520df488503",
+  "nativeSourceCommit": "b96f88da4e3635845ef06755ddaa54a6017f5970",
+  "nativeLibrarySha256": "5d22a5cc18979af843ebae4ceb6b04aa26c9cafeeaca473daebdafcd28e3caef",
   "nativeLibrary16KiBElfAligned": true,
   "nativeRebuiltThisBatch": true,
   "nativeProductionSourceIdenticalToNativeSourceCommit": true,
@@ -16,8 +16,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Actual production backend targeted minutes contract correction: uncertain source evidence separate from meeting questions; concise faithful summary instructions. Rebuilt native arm64 from adapted production source, all Java and other AAR entries retained. No speech model or recorder protocol change.",
-  "javaSourceCommit": "f55f8e83b77c10ca34db442971a045eca1acfdf4",
+  "scope": "Safe local punctuation in existing shared inference, literal and numeric guards, cache profile binding, pinned model preparation on both fresh/existing local model paths. Preserve recorder Java/classes, all other native runtimes, protocol and model recognizer/default. Punctuation weights downloaded separately.",
+  "javaSourceCommit": "1309e0713aca8c14580174c5fa835db4b9daecba",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
   "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt.",
@@ -34,7 +34,7 @@
   "inherited095Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability096\\build\\inherited-provenance095.json",
   "inherited096Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability097\\build\\inherited-provenance096.json",
   "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
-  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-native-actual-r3\\result.json",
+  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-punctuation-native\\result.json",
   "javaClassesChangedFrom107": [
     "com/denzic/companion/mobile/DurableConsume$Pending.class",
     "com/denzic/companion/mobile/DurableConsume.class",
@@ -103,7 +103,13 @@
     "com/denzic/companion/mobile/RecordingLibrary.class"
   ],
   "importedOriginalReencoded": false,
-  "previousAarSha256": "d543787cb119a4fc9189062a5c73d90996d4366265f548bcca550f163cd83823",
+  "previousAarSha256": "a0f2ec48d9e170fd4c53fbca9cb8022184b96fbf56e248147928159e70ee18bc",
   "allOtherAarEntriesByteIdenticalToPrevious": true,
-  "javaClassesChangedThisBatch": false
+  "javaClassesChangedThisBatch": [
+    "com/denzic/companion/mobile/LocalModelPreparation.class"
+  ],
+  "javaSourceChangedThisBatch": [
+    "LocalModelPreparation.java"
+  ],
+  "allOtherJarEntriesByteIdentical": true
 }
