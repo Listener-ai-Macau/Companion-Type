@@ -81,11 +81,13 @@ import {
   ChevronUp,
   Download,
   Eraser,
+  Ellipsis,
   FileText,
   HardDrive,
   Headphones,
   Heart,
   Link2,
+  ListFilter,
   Mic,
   Moon,
   Pencil,
@@ -94,6 +96,7 @@ import {
   Search,
   Shield,
   Square,
+  SquareCheck,
   Sun,
   Trash2,
   Unlink,
@@ -2106,9 +2109,9 @@ export function CompanionDashboard({
             <button type="button" aria-pressed={!onlyPendingSessions} onClick={()=>setOnlyPendingSessions(false)}>全部</button>
             <button type="button" aria-pressed={onlyPendingSessions} onClick={()=>setOnlyPendingSessions(true)}>待整理</button>
           </div>
-          <button type="button" className="ct-action" onClick={()=>setLibraryPanel('filter')}>筛选{libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.from||libraryFilters.to?' · 已启用':''}</button>
-          <button type="button" className="ct-action" aria-pressed={libraryToolsOpen} onClick={()=>setLibraryToolsOpen(v=>!v)}>{libraryToolsOpen?'取消选择':'选择'}</button>
-          <button type="button" className="ct-action" onClick={()=>setLibraryPanel('manage')}>管理{Object.keys(librarySelection).length?` (${Object.keys(librarySelection).length})`:''}</button>
+          <button type="button" className="ct-action ct-library-icon" aria-label="筛选" title="筛选录音" data-active={libraryFilters.folder!=='*'||!!libraryFilters.tag||!!libraryFilters.from||!!libraryFilters.to} onClick={()=>setLibraryPanel('filter')}><ListFilter size={15}/></button>
+          <button type="button" className="ct-action ct-library-icon" aria-label={libraryToolsOpen?'取消选择':'选择'} title={libraryToolsOpen?'取消选择':'选择录音'} aria-pressed={libraryToolsOpen} onClick={()=>setLibraryToolsOpen(v=>!v)}><SquareCheck size={15}/></button>
+          <button type="button" className="ct-action ct-library-icon" aria-label="管理" title={Object.keys(librarySelection).length?`管理已选的 ${Object.keys(librarySelection).length} 条录音`:'管理录音'} onClick={()=>setLibraryPanel('manage')}><Ellipsis size={15}/></button>
         </div>
         <LibraryPanel open={libraryPanel!==null} title={libraryPanel==='filter'?'筛选录音':'管理录音'} blocked={libraryUnsaved||libraryBusy} onClose={()=>setLibraryPanel(null)}>
         <CompanionLibraryTools mode={libraryPanel==='filter'?'filter':'manage'} sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}

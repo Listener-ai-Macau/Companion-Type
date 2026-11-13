@@ -105,7 +105,7 @@ pub(super) fn prepare() -> Result<(), String> {
         && shared::verified(&official.join("model.int8.onnx"), shared::OFFICIAL_MODEL_SHA).is_ok()
         && shared::verified(&official.join("tokens.txt"), shared::OFFICIAL_TOKENS_SHA).is_ok()
         && ASSETS[2..].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()) {
-        return Ok(());
+        return prepare_punctuation(&dest);
     }
     let parent = dest.parent().ok_or("无法准备本地模型目录。")?;
     fs::create_dir_all(parent).map_err(|e| format!("无法创建本地模型目录：{e}"))?;
@@ -179,7 +179,20 @@ pub(super) fn prepare() -> Result<(), String> {
             let _ = fs::remove_dir_all(actual);
         }
     }
-    result
+    result?;
+    prepare_punctuation(&dest)
+}
+fn prepare_punctuation(dest:&Path)->Result<(),String>{
+    use shared::punctuation as p;
+    let dir=dest.join(p::DIRECTORY);fs::create_dir_all(&dir).map_err(|e|e.to_string())?;
+    let final_file=dir.join("model.onnx");
+    if shared::verified(&final_file,p::MODEL_SHA).is_ok(){return Ok(());}
+    let partial=dir.join("model.onnx.partial");
+    let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15)).timeout(std::time::Duration::from_secs(600)).build().map_err(|e|e.to_string())?;
+    model_download::fetch_sources(&client,&[p::MODEL_URL,p::MIRROR_URL],p::MODEL_SIZE,p::MODEL_SHA,&partial)?;
+    let dir=dir.canonicalize().map_err(|e|e.to_string())?;
+    super::super::export::replace_file(&partial.canonicalize().map_err(|e|e.to_string())?,&dir.join("model.onnx"))?;
+    shared::verified(&dir.join("model.onnx"),p::MODEL_SHA)
 }
 // A broken preferred model must not hide a usable verified older model.
 fn load_preferred(root: &Path) -> Result<(Runtime, ModelKind), String> {
@@ -247,7 +260,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     let mut anchors = Vec::new();
     let mut unrecognized = Vec::new();
     let profile = super::chunk_cache::Profile::from_configuration(
-        &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
+        &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1","punctuation":runtime.punctuation_profile()}),
     )?;
     while offset < len {
         super::super::meeting_processing_job::check_current()?;

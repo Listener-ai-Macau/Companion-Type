@@ -909,6 +909,9 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             Ok(())
         })());
     }
+    if args.iter().any(|arg|arg=="--prepare-local-transcription-models") {
+        return Some(backend::prepare_local_asr().map(|_|println!("local_transcription_models_json={{\"status\":\"VERIFIED\",\"recordedAudio\":false,\"uploadedAudio\":false}}")));
+    }
     if args.iter().any(|arg|arg=="--prepare-audio-components") {
         return Some(CompanionCoordinator::new_fixture().prepare_audio_components().map(|_|println!("audio_components_json={{\"status\":\"VERIFIED_AND_LOADED\",\"recordedAudio\":false,\"uploadedAudio\":false}}")));
     }

@@ -26,3 +26,11 @@ Paraformer zh-small（原有模型的兼容支持）
 - tokens.txt SHA-256: 4b2d964e18b9cf139b473003b6698fb2ed9a2a5ec55b93daa677b28f578897aa
 
 模型权重与本软件分别提供。运行时组件的许可见本软件的其他第三方许可说明。
+
+CT-Transformer 本地中英文标点模型（与本地转写模型分别下载）
+- 转换发布方 csukuangfj，固定修订432aeba669265e7aeb06b9359753419683b38597。
+  https://huggingface.co/csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/tree/432aeba669265e7aeb06b9359753419683b38597
+- 上游模型：https://modelscope.cn/models/iic/punc_ct-transformer_zh-cn-common-vocab272727-pytorch/summary
+- 使用同一已归属的 sherpa-onnx 运行时；模型权重不随安装包分发，许可沿模型发布方与 FunASR 模型协议。
+- model.onnx SHA-256: e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd；294372519 bytes。
+- 只补标点，拒绝改动原词、数字及数字中的分隔符；缺失或验证失败时保留原转写。
