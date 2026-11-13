@@ -3,7 +3,7 @@
 //! Causal stroke integration/zero-velocity decisions are Companion adapters;
 //! the upstream Gait-Tracking end-of-stroke interpolation is NONCAUSAL and is
 //! deliberately not represented as a real-time mouse implementation.
-use super::{fusion,Point};
+use super::{fusion,rest,Point};
 use serde::Serialize;
 
 #[derive(Clone,Copy,Debug)]
@@ -21,17 +21,21 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3]}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3]}
 pub struct Desktop {
-    fusion:fusion::Fusion,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
+    fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
     pub state:State,
 }
 impl Default for Desktop {
-    fn default()->Self{Self{fusion:fusion::Fusion::default(),last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,state:State::default()}}
+    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,state:State::default()}}
 }
 impl Desktop {
+    /// Coarse short-stroke mouse candidate, rather than metric dead reckoning.
+    /// Rest confirmation deliberately discards sustained quiet coasting. Keep
+    /// Default's reference integrator for explicit constant-velocity analysis.
+    pub fn coarse_gestures()->Self{Self{rest:Some(rest::Rest::default()),..Self::default()}}
     fn stop(&mut self){self.state.moving=false;self.state.velocity_mps=[0.;2];self.filtered=[0.;2];self.quiet=0.;self.stroke=0.;self.braking=false;}
     fn clutch(&mut self){self.stop();self.state.clutched=true;self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];}
     pub fn tap(&mut self){self.clutch();}
@@ -42,6 +46,7 @@ impl Desktop {
             if n==0||n>=0x8000_0000{return Point::default();}
             let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
             if n!=1||dt>0.05||dt<=0.{
+                if let Some(rest)=self.rest.as_mut(){*rest=rest::Rest::default();}self.state.stationary=false;
                 self.state.gaps+=1;self.clutch();self.last=Some((s.sequence,s.sensor_ms));
                 // A gap invalidates displacement integration, not the CURRENT
                 // rate observation. The coarse angular path must never reuse
@@ -53,6 +58,7 @@ impl Desktop {
             dt
         }else{0.01};
         self.last=Some((s.sequence,s.sensor_ms));self.state.samples+=1;
+        self.state.stationary=self.rest.as_mut().is_some_and(|rest|rest.sample(s.gyro_dps,s.accel_mg));
         let norm=s.accel_mg.iter().map(|x|x*x).sum::<f64>().sqrt();
         if !self.state.calibrated {
             if !(850. ..=1150.).contains(&norm)||s.gyro_dps.iter().any(|x|x.abs()>3.){
@@ -68,7 +74,7 @@ impl Desktop {
         }
         let rates=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
         self.state.gyro_dps=rates;
-        let (earth,_)=self.fusion.desktop_step(rates,s.accel_mg,dt,!self.state.moving);
+        let (earth,_)=self.fusion.desktop_step(rates,s.accel_mg,dt,self.state.stationary||!self.state.moving);
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
@@ -86,6 +92,12 @@ impl Desktop {
                 self.state.clutched=false;self.stop();
             }
             return Point::default();
+        }
+        if self.state.stationary{
+            // Residual gravity/offset is not evidence of continued motion.
+            // Confirm rest from raw six-axis deviations independently of the
+            // integrated velocity, then discard that residual and old tail.
+            self.stop();self.earth_bias=earth;self.state.linear_mps2=[0.;3];return Point::default();
         }
         // Fusion already rotates acceleration into the Earth frame. Comparing
         // the current tilt to the old resting tilt imposed an unrelated12deg
@@ -171,5 +183,41 @@ mod tests {
         assert!(!d.state.clutched);
         for n in 142..172{d.sample(raw(n,0.,0.));}
         assert!(d.state.position_m[0]>before+0.04);
+    }
+    fn coarse_ready()->Desktop{
+        let mut d=Desktop::coarse_gestures();for n in 0..121{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d
+    }
+    #[test]fn quiet_sensor_bias_change_cannot_start_and_sustain_coarse_cursor_motion(){
+        let mut d=coarse_ready();
+        // Slow residual changes can pass an absolute acceleration start limit
+        // after AHRS correction freezes. Raw deviations still identify quiet
+        // input; this exercises the reported self-moving cursor mechanism.
+        let before=d.state.position_m;
+        for n in 121..1121{let offset=((n-121)as f64*0.2).min(25.);d.sample(raw(n,offset,0.));}
+        assert!(d.state.stationary);assert!(!d.state.moving);
+        assert_eq!(d.state.velocity_mps,[0.;2]);assert_eq!(d.state.position_m,before);
+    }
+    #[test]fn coarse_short_strokes_retain_all_four_directions_then_stop(){
+        for (axis,sign)in [(0,1.),(0,-1.),(1,1.),(1,-1.)]{
+            let mut d=coarse_ready();
+            for n in 121..211{
+                let a=if n<131{150.*sign}else if (146..156).contains(&n){-150.*sign}else{0.};
+                d.sample(raw(n,if axis==0{a}else{0.},if axis==1{a}else{0.}));
+            }
+            assert!(d.state.position_m[axis]*sign>0.01,"direction {axis}/{sign}: {:?}",d.state);
+            assert!(d.state.position_m[1-axis].abs()<0.002);
+            assert!(d.state.stationary);assert_eq!(d.state.velocity_mps,[0.;2]);
+            let stopped=d.state.position_m;
+            for n in 211..311{d.sample(raw(n,0.,0.));}
+            assert_eq!(d.state.position_m,stopped);
+        }
+    }
+    #[test]fn coarse_rest_tradeoff_is_explicit_and_does_not_claim_sustained_constant_speed(){
+        let mut d=coarse_ready();for n in 121..141{d.sample(raw(n,100.,0.));}
+        assert!(d.state.moving);
+        for n in 141..231{d.sample(raw(n,0.,0.));}
+        assert!(d.state.stationary);assert!(!d.state.moving);assert_eq!(d.state.velocity_mps,[0.;2]);
+        // The reference integrator's separate constant-velocity test remains
+        // unchanged. A coarse rest classifier cannot claim that same contract.
     }
 }

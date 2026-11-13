@@ -16,7 +16,7 @@ fn main(){
             let zero=*origin.get_or_insert(sample.sensor_ms);let now=sample.sensor_ms.wrapping_sub(zero)as f64/1000.;
             intent.sample(sample,now);let motion=intent.frame(now);
             legacy.sample(sample,now);let previous=legacy.frame(now);
-            println!("{}",serde_json::json!({"sensorMs":sample.sensor_ms,"deltaMeters":delta,"state":desktop.state,"coarseDeltaPixels":motion,"movementSource":intent.source,
+            println!("{}",serde_json::json!({"sensorMs":sample.sensor_ms,"deltaMeters":delta,"state":desktop.state,"gestureState":intent.desktop.state,"coarseDeltaPixels":motion,"movementSource":intent.source,
                 "legacyDeltaPixels":previous,"legacyMovementSource":legacy.source}));
         }}
     }

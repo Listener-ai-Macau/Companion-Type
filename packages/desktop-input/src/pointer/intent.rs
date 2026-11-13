@@ -11,7 +11,7 @@ pub struct Intent {
     smoother:Smoother,at:Option<f64>,last:Option<(u32,u32,f64)>,
 }
 impl Default for Intent {
-    fn default()->Self{Self{desktop:Desktop::default(),source:Source::Rest,settings:Settings{mapping:Mapping::Relative,..Settings::default()},
+    fn default()->Self{Self{desktop:Desktop::coarse_gestures(),source:Source::Rest,settings:Settings{mapping:Mapping::Relative,..Settings::default()},
         smoother:Smoother::default(),at:None,last:None}}
 }
 impl Intent {

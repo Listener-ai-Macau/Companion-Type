@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
 pub mod native;
 mod fusion;
+mod rest;
 pub mod desktop;
 pub mod intent;
 pub mod contact;
