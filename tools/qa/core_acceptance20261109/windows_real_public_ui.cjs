@@ -16,7 +16,15 @@ module.exports=async(page,plan,out,reopened)=>{
   const topics=article.locator('.ct-overview-topic');assert.equal(await topics.count(),spec.expectedTopicCount);
   for(const point of await topics.all())assert.equal(await point.evaluate(e=>e.open),false);
   await topics.first().locator('summary').click();assert((await topics.first().locator('.ct-overview-topic-body').innerText()).length>100);await topics.first().locator('summary').click();
-  await page.evaluate(()=>window.scrollTo(0,0));const last=await topics.last().locator('summary').boundingBox();assert(last&&last.y+last.height<=await page.evaluate(()=>innerHeight),'All major fallback topics must be visible in the initial viewport');
+  await page.evaluate(()=>window.scrollTo(0,0));
+  const geometry=await topics.evaluateAll(nodes=>({width:innerWidth,height:innerHeight,shellWidth:document.querySelector('.ct-shell').scrollWidth,topics:nodes.map(node=>{const summary=node.querySelector('summary'),box=summary.getBoundingClientRect(),css=getComputedStyle(node);return{top:box.top,bottom:box.bottom,height:box.height,width:box.width,marginTop:css.marginTop,marginBottom:css.marginBottom,padding:css.padding};})}));
+  fs.writeFileSync(path.join(out,'actual-topic-geometry.json'),JSON.stringify(geometry,null,2));await page.screenshot({path:path.join(out,'actual-topic-viewport.png'),fullPage:false});
+  assert(geometry.shellWidth<=geometry.width,'The reader must not introduce horizontal page overflow');
+  assert(geometry.topics.every(point=>point.height>=32&&point.height<=56),'Each default topic must remain one compact reading row');
+  const initiallyVisible=geometry.topics.filter(point=>point.top>=0&&point.bottom<=geometry.height).length;
+  assert(initiallyVisible>=Math.min(6,spec.expectedTopicCount),'The initial view must reach the middle meeting topics, beyond the early long paragraphs');
+  await topics.last().locator('summary').scrollIntoViewIfNeeded();const last=await topics.last().locator('summary').boundingBox();assert(last&&last.y>=0&&last.y+last.height<=geometry.height,'Later topics remain reachable by normal scrolling without an extra show-more gate');
+  await page.screenshot({path:path.join(out,'actual-last-topic-viewport.png'),fullPage:false});await page.evaluate(()=>window.scrollTo(0,0));
  }
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'actual-public-minutes-light-viewport.png'),fullPage:false});
@@ -36,5 +44,5 @@ module.exports=async(page,plan,out,reopened)=>{
  const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();const text=await preview.innerText();for(const term of spec.expectedExportTerms||['超市','四层','设备录音'])assert(text.includes(term),term);assert(!text.includes('Minutes engine:')&&!text.includes('Generated:'));
  fs.writeFileSync(path.join(out,'actual019f-ui-readable-preview.txt'),text);await page.screenshot({path:path.join(out,'actual019f-export.png'),fullPage:true});
  assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')),original);
- return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:true,actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
+ return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:spec.sourceKind!=='importedAudio',actualPublicImportedAudioResultsRead:spec.sourceKind==='importedAudio',actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,actualFallbackTopicListAndOrdinaryScrollChecked:!!spec.expectTopicDisclosures,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
 };
