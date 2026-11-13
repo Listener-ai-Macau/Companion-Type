@@ -391,7 +391,7 @@ fn run_deepseek_request_with_evidence(
     system.push_str("\n阅读质量：摘要按主题合并相关讨论，优先用3至6条完整简洁的中文句子说明有依据的要点；信息确实较多时可增加。省略语气词、无内容应答、重复铺垫和逐句流水账，保留数字、单位、否定、条件和未知归属。听不清的片段不要猜测原意，也不要把‘转写很乱/只能听出某个词’当会议议题写进摘要。问题只含会上实际提出且含义可辨的问题；无法辨认的原句交给独立的来源核对，不升级为问题、决定或任务。来源片段是供检查的原始证据，不能因被提供就推断其语义可靠。");
     system.push_str("\n行动清单应覆盖原话已明确的主任务及执行时顺带要求的核实、准备和跟进，不因同属一个负责人而遗漏子任务。保留条件与暂定，不把备选方案升级为已决定的任务。尽量在顶层 evidence 数组中为每个 actionItems 条目提供连续原话，field 为 actionItems，index 对应条目下标，quote 覆盖动作及其负责人、时间。due可保留原话中的相对或不完整时间，不因缺少年份、不能转成完整日历日期就留空，也不推算缺失日期。");
     if let Some(template)=template {system.push_str(&template.prompt());}
-    let overview_requested=template.is_none() && session.meeting_notes.is_empty()
+    let overview_requested=template.map_or(true,|template|template.id=="meeting") && session.meeting_notes.is_empty()
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
     if overview_requested {
         system.push_str(SHORT_OVERVIEW_PROMPT);
@@ -399,6 +399,10 @@ fn run_deepseek_request_with_evidence(
     if let Some(contract) = &question_sources {
         user_payload.push_str(&contract.instruction());
         system.push_str(question_sources::SYSTEM_CONTRACT);
+        // Native rendering already replaces provider Markdown after projecting
+        // source classifications. Spend the response budget on facts and IDs,
+        // rather than asking for a second copy of the same detailed document.
+        system.push_str("\n本次由本机根据结构化字段生成完整Markdown，markdown字段返回空字符串；前述摘要、事实锚点、evidence和问题来源分类要求全部保留，不再重复撰写Markdown正文。questionClassification是必填顶层字段，格式为[{\"sourceId\":1,\"kind\":\"statement\"}]，按本次全部来源单元逐项填写，不能用questions或unsupportedClaims代替。");
     }
     if session.meeting_notes.is_empty() { system.push_str(short_evidence::PROMPT); }
     if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
@@ -413,7 +417,8 @@ fn run_deepseek_request_with_evidence(
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
             let evidence=if session.meeting_notes.is_empty() {short_evidence::capture(&object,&minutes,&session.transcript_text)} else {Vec::new()};
-            let overview=if overview_requested && minutes.summary.len()>8 {
+            let overview=if overview_requested && (minutes.summary.len()>8
+                || minutes.summary.iter().map(|item|item.chars().count()).sum::<usize>()>600) {
                 long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
             } else {None};
             let mut source_review=Vec::new();
@@ -442,7 +447,7 @@ fn run_deepseek_request_with_evidence(
         })
 }
 
-const SHORT_OVERVIEW_PROMPT: &str = "\n请在同一 JSON 中同时输出 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论；不要添加新事实。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。";
+const SHORT_OVERVIEW_PROMPT: &str = "\n请在同一 JSON 中同时输出 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论，每条尽量不超过80字；不要添加新事实。保留否定、条件和不确定性，不把转写中无法辨认的名词或含混数字写成确定结论。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。";
 
 const COMPUTER_MEETING_SOURCE_CONTEXT: &str = "这场会议的【麦克风】和【电脑声音】标记只表示采集通道，不代表不同发言人或会议讨论的内容。麦克风可能同时录到电脑扬声器，两个通道中相同或近似的内容可能是同一段话的回声；整理时合并明确重复的事实和任务，不要把回声、通道名称或重复本身写成会议议题，不凭通道推断人数、身份、负责人或发言先后。两路内容可能各有独立发言，保留无法确认重复的内容和各自不同的负责人、日期、条件，不要为了去重删除独有信息。";
 
@@ -1428,7 +1433,7 @@ mod tests {
     }
 
     #[test]
-    fn verbose_short_minutes_add_overview_in_the_same_request_and_keep_details() {
+    fn default_meeting_with_few_long_bullets_keeps_details_and_adds_readable_overview() {
         use std::io::{Read,Write};
         let listener=std::net::TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
         let server=std::thread::spawn(move||{
@@ -1442,22 +1447,27 @@ mod tests {
                     if request.len()>=i+4+length{break;}
                 }
             }
-            assert!(String::from_utf8(request).unwrap().contains("同一 JSON"));
-            let summary=(0..10).map(|i|format!("产品包装讨论重点{i}")).collect::<Vec<_>>();
+            let request=String::from_utf8(request).unwrap();
+            assert!(request.contains("同一 JSON"));
+            assert!(request.contains("markdown字段返回空字符串"));
+            assert!(request.contains("questionClassification是必填顶层字段"));
+            let summary=(0..5).map(|i|format!("产品包装讨论重点{i}。{}","比较现有方案，尚未确定后续采用哪一种包装。".repeat(12))).collect::<Vec<_>>();
             let content=serde_json::json!({"summary":summary,"decisions":[],"actionItems":[],"questions":[],"keywords":[],
                 "questionClassification":[{"sourceId":1,"kind":"statement"}],
                 "overview":[{"text":"讨论产品包装方案。","sources":[0,1]},
-                    {"text":"比较包装细节。","sources":[3,4]},{"text":"明确后续方向。","sources":[8,9]}],"markdown":"# 会议"});
+                    {"text":"比较包装细节。","sources":[2,3]},{"text":"包装方案尚未确定。","sources":[4]}],"markdown":""});
             let response=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content.to_string()}}]}).to_string();
             write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
         });
         let mut session=session_with_text("明天下午讨论产品包装。");session.duration_ms=420_000;
         let l0=rules_l0_minutes(&session,"now");
-        let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
+        let template=crate::companion_v1::MinutesTemplate{id:"meeting".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
+        let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),Some(&template)).unwrap();
         let result=finalize_native_result(native,l0,&session);
-        assert_eq!(result.quality,"final");assert_eq!(result.summary.len(),10);
+        assert_eq!(result.quality,"final");assert_eq!(result.summary.len(),5);
         assert!(result.markdown.starts_with("## 会议概览"));
-        assert!(result.markdown.contains("产品包装讨论重点9"));
+        assert!(result.markdown.contains("产品包装讨论重点4"));
+        assert!(!result.markdown.contains("问题来源分类未完成"));
         server.join().unwrap();
     }
 
