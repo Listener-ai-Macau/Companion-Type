@@ -7,6 +7,7 @@ import './notebookMobile.css';
 import {RecordingContentNavigation} from './RecordingContentNavigation';
 import { MobileMindMap } from './MindMapView';
 import { TranscriptReader } from './TranscriptReader';
+import { MinutesText } from './MinutesText';
 import {MeetingAssistant} from './MeetingAssistant';
 import {AiServiceSettings,type AiServiceStatus} from './AiServiceSettings';
 import {MeetingAiWorkbench,type AiAnswer,type AiMaterial,type AiScope} from '../../../packages/ui/src/MeetingAiWorkbench';
@@ -67,7 +68,6 @@ function clock(value:number){const seconds=Math.max(0,Math.floor(value/1000)),ho
 function ExportOption({id,label,description,icon,disabled,onClick}:{id:string;label:string;description:string;icon:ReactNode;disabled:boolean;onClick:()=>void}) {
  return <button className="export-option" aria-label={label} aria-describedby={`export-description-${id}`} disabled={disabled} onClick={onClick}><span className="export-option-icon" aria-hidden="true">{icon}</span><span className="export-option-copy"><strong>{label}</strong><small id={`export-description-${id}`}>{description}</small></span><ChevronRight className="export-option-arrow" size={16} aria-hidden="true"/></button>;
 }
-function MinutesText({text}:{text:string}){let fenced=false;return <div className="minutes-reading">{text.split(/\r?\n/).map((line,index)=>{if(/^\s*(```|~~~)/.test(line)){fenced=!fenced;return <p className="minutes-code" key={index}>{line}</p>;}if(fenced)return <p className="minutes-code" key={index}>{line||'\u00a0'}</p>;const heading=/^#{1,3}\s+(.+)$/.exec(line);if(heading)return <h3 key={index}>{heading[1]}</h3>;const quote=/^>\s?(.*)$/.exec(line);if(quote)return <p className="minutes-quote" key={index}>{quote[1]}</p>;const item=/^\s*[-*]\s+(.+)$/.exec(line);if(item)return <p className="minutes-item" key={index}><span aria-hidden="true">•</span>{item[1]}</p>;if(!line.trim())return <div className="minutes-gap" key={index}/>;return <p key={index}>{line}</p>;})}</div>;}
 function LongSourceReferences({text,detail,busy,onReview}:{text:string;detail:Detail;busy:boolean;onReview:(quote:string)=>void}) {
  if(/^\s*(`{3,}|~{3,})/m.test(text))return <MinutesText text={text}/>;
  const stale=detail.minutesChanged||detail.transcriptUnreadable||detail.beforeUnreadable;

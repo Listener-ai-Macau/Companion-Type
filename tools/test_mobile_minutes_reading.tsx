@@ -24,7 +24,8 @@ assert(fenced.slice(0,fenced.indexOf('minutes-generation')).includes('AI根据�
 const fallback='## 全会重点\n\n'+Array.from({length:8},(_,i)=>'- 议题'+(i+1)+'：完整原话中的条件、数字和否定保持，未决定取消。').join('\n')+'\n\n'+envelope+'## Summary\n\n- 完整摘要仍保留。';
 const fallbackHtml=render(fallback);
 assert.equal((fallbackHtml.match(/class="ct-overview-topic"/g)||[]).length,8);
-assert(fallbackHtml.includes('议题8：完整原话中的条件、数字和否定保持，未决定取消。'));
+assert(fallbackHtml.includes('议题8')&&fallbackHtml.includes('完整原话中的条件、数字和否定保持，未决定取消。'));
+assert(!fallbackHtml.includes('ct-overview-topic-preview'),'topic wording is visible as notes rather than a truncated disclosure label');
 assert.equal((render('## 全会重点\n\n- 人工内容，没有生成标记。').match(/class="ct-overview-topic"/g)||[]).length,0);
 assert(render(body).includes('minutes-full-summary'),'complete long detail stays available behind the overview');
 assert(!render(body.replace(notice,'> 部分纪要：已完成1/2段。')).includes('minutes-full-summary'),'an incomplete source result must not be folded as complete');

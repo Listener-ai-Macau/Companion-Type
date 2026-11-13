@@ -1,6 +1,8 @@
 import { MeetingReadingFrame } from '../../../packages/ui/src/MeetingReadingFrame';
 import { isGeneratedReadingNotice, meetingHeadingForDisplay, splitGeneratedMeetingMetadata } from '../../../packages/ui/src/meetingReading';
 import '../../../packages/ui/src/overviewTopics.css';
+import '../../../packages/ui/src/meetingNoteDocument.css';
+import {MeetingTopic} from '../../../packages/ui/src/MeetingTopic';
 
 type Section={title:string|null;body:string};
 /** Split only level-two headings outside code fences; all other source text stays intact. */
@@ -41,7 +43,7 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
   if(/^(分段原文依据|原文依据|补充原文（供核对）|原话核对|待核对片段|Keywords)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
   if(['Summary','摘要'].includes(section.title!)&&notices.some(line=>line.startsWith('> 长会议已按原文顺序处理全部'))&&headings.some(({s})=>['全会重点','会议概览'].includes(s.title!)))return <details key={index} className="minutes-source-section minutes-full-summary"><summary data-meeting-heading={section.title}><span>完整会议摘要</span><span>展开查看</span></summary>{renderText(section.body)}</details>;
   const fallback=display.metadata&&section.title==='全会重点'&&section.body.split('\n').every(line=>!line.trim()||/^[-*]\s+\S/.test(line));
-  if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{points.map((point,i)=><details className="ct-overview-topic" key={`${i}:${point}`}><summary><span className="ct-overview-topic-preview">{point}</span></summary><div className="ct-overview-topic-body">{renderText(point)}</div></details>)}</section>;}
+  if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{points.map((point,i)=><MeetingTopic text={point} key={`${i}:${point}`}/>)}</section>;}
   // Action cards own their one shared filter and their folding. Splitting the
   // source into two render calls would produce two incomplete action scopes.
   const remaining=['Action Items','行动事项'].includes(section.title!)?null:excerpt(section.body);
