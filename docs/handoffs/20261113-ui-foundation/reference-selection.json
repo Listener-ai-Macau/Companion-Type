@@ -1,0 +1,99 @@
+{
+  "at": "2026-11-13T08:01:54+08:00",
+  "feedback": {
+    "id": "UI116-DESIGN-FOUNDATION",
+    "receivedAt": "2026-11-13T08:01:54+08:00",
+    "channel": "Owner chat",
+    "versionContext": {
+      "windows": "0.1.116",
+      "android": "0.1.144"
+    },
+    "specificInAppRunOrStepObserved": false,
+    "ownerQuote": "感觉你这个 ui 还是从底上要重构一下，现在感觉就像是一个 ai 在做的 ui。感觉可能做好看点，做精致点，有没有什么公开的 ai 模板，ui模板之类的。",
+    "state": "OWNER_REJECTS_CURRENT_OVERALL_DESIGN_ARCHITECTURE_REEVALUATION",
+    "relatedPriorIssues": [
+      "UI115-001",
+      "UI114-APPEARANCE"
+    ],
+    "ownerAccepted": false,
+    "decision": "Stop consecutive cosmetic patches on the existing dashboard. Compare complete mature application layouts and an explicit design system; create one coherent recording/reading prototype before native integration. Owner still only judges visual quality and natural use; engineering owns functionality.",
+    "referenceSelectionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reference-selection.json"
+  },
+  "research": {
+    "state": "PRIMARY_REFERENCES_AND_COHERENT_DESIGN_PREVIEW_READY_NATIVE_REWORK_OPEN",
+    "ownerFeedbackId": "UI116-DESIGN-FOUNDATION",
+    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reference-selection.json",
+    "sources": [
+      {
+        "name": "shadcn/ui Mail v3",
+        "preview": "https://v3.shadcn.com/examples/mail",
+        "license": "MIT",
+        "licenseSource": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+        "role": "Complete list/reading layout reference; legacy v3 preview explicitly identified."
+      },
+      {
+        "name": "Untitled UI React",
+        "preview": "https://www.untitledui.com/react",
+        "source": "https://github.com/untitleduico/react",
+        "license": "MIT for public repository components; PRO pages have separate terms",
+        "role": "Typography, spacing, navigation and component consistency reference."
+      },
+      {
+        "name": "assistant-ui",
+        "preview": "https://www.assistant-ui.com/examples",
+        "source": "https://github.com/assistant-ui/assistant-ui",
+        "license": "MIT",
+        "role": "Optional contextual AI panel reference, not the recording app shell."
+      }
+    ],
+    "currentProductTemplateUse": "Current companionDesign.css already contains adapted Shadcn Dashboard styles. Changing the library name alone would not remedy the composition problem.",
+    "thirdPartyCodeImportedThisRound": false,
+    "nativeBuildStarted": false,
+    "installedAppChanged": false,
+    "recommendedDirection": "随身笔记",
+    "alternativeDirection": "录音工作台",
+    "designDecision": "Use one consistent typography/spacing/navigation vocabulary and recordings-to-reading hierarchy. Existing shadcn-derived CSS patches did not establish a coherent product foundation; do not combine dashboard/chat template skins.",
+    "upstreamCodeImported": false
+  },
+  "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
+  "completedAt": "2026-11-13T08:15:01+08:00",
+  "preview": {
+    "state": "DESIGN_PREVIEW_READY_NOT_INSTALLED_PRODUCT",
+    "path": "C:\\Users\\Billy\\.codex\\visualizations\\2026\\11\\12\\01a1cd4e-ed69-7431-bbea-486848d70b7d\\companion-design-foundation.html",
+    "sha256": "8506725e24df78bcff370e7a753cc428f27e27a99ea1fccccb0ced875f8bb350",
+    "bytes": 535505,
+    "protectedSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\design-preview.html",
+    "variants": [
+      "随身笔记",
+      "录音工作台"
+    ],
+    "recommended": "随身笔记",
+    "qa": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\preview-qa.json",
+    "engineeringViewedScreenshots": [
+      "notebook-1056-light.png",
+      "notebook-1056-dark.png",
+      "workbench-1056-light.png",
+      "notebook-422-light.png",
+      "workbench-422-light.png"
+    ],
+    "checkedWidths": [
+      1024,
+      736,
+      390,
+      320
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "checks": "Actual standalone host carousel/icons, primary local interactions, keyboard tabs and label linkage, export text visible, narrow library/detail/back and device/settings availability, no horizontal overflow, embedded public audio duration23.2245 and muted headless playback.",
+    "scope": "Interactive layout and appearance concept; no native build, install, board, microphone, user file access or model runs. Public SAPI audio reused with 32 derived waveform bins. Example note text marked fictional. Existing installed116/144 retained. Owner acceptance remains false.",
+    "failuresRetained": [
+      "preview-qa-initial-test-assertion-mismatch.json",
+      "preview-qa-second-test-assertion-mismatch.json",
+      "notebook-1056-light-before-visual-review.png",
+      "render-existing-destination-refusal.txt"
+    ],
+    "visualReviewCorrection": "Export button foreground inherited dark-on-dark despite local interaction QA passing; corrected scoped specificity and checked fresh render. Narrow workbench navigation and tab semantics corrected. Wrapper destination refusal preserved; regenerated with force before final QA."
+  }
+}

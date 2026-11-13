@@ -1,0 +1,11 @@
+{
+  "startedAt": "2026-11-13T00:10:54.504Z",
+  "scope": "Interactive design preview only; no installed application or hardware qualification",
+  "checks": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "hostCarouselInitialized": true,
+  "hostIconsRendered": true,
+  "passed": false,
+  "fatal": "Error: expect(locator).toContainText(expected) failed\n\nLocator: locator('iframe').contentFrame().locator('[data-variant=\"随身笔记\"] .cn-app').locator('.cn-document-body')\nExpected substring: \"预算还没定\"\nReceived string:    \"原话这是电脑合成的公开录音示例。周五下午三点，我们和小林核对演示内容。李明周五上午十点前发出材料，小林周五中午十二点前确认名单。设备预算还没决定，等演示之后再讨论。\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"to.have.text\" with timeout 5000ms\n  - waiting for locator('iframe').contentFrame().locator('[data-variant=\"随身笔记\"] .cn-app').locator('.cn-document-body')\n    13 × locator resolved to <article class=\"cn-document-body\">…</article>\n       - unexpected value \"原话这是电脑合成的公开录音示例。周五下午三点，我们和小林核对演示内容。李明周五上午十点前发出材料，小林周五中午十二点前确认名单。设备预算还没决定，等演示之后再讨论。\"\n\n    at captureRawStack (E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\node-dependencies\\node_modules\\playwright-core\\lib\\coreBundle.js:3172:17)\n    at callMatcherAsStep (E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\node-dependencies\\node_modules\\playwright\\lib\\matchers\\expect.js:12877:57)\n    at Object.toContainText (E:\\CodexData\\Companion\\.build-cache\\document-context20261110\\node-dependencies\\node_modules\\playwright\\lib\\matchers\\expect.js:12867:23)\n    at main (C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\verify_ui_foundation_preview20261113.cjs:26:51)"
+}

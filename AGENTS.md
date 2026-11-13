@@ -6,8 +6,8 @@
 
 - Denzic 共用方法只读 C:/Users/Billy/Desktop/Denzic/AGENTS.md 及其引用的工程规则、customer_engineering_workflow.md 第8、9节；本文件只保留 Companion 边界。
 - 唯一可编辑待办 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json；唯一完整时间线同目录 development_log.md。应用工作树同名文件是远端保护快照，不回灌覆盖根目录。交接入口 docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md 是索引，不是第二份待办。
-- 嵌软与存储布局快读：docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md顶部和同目录memory-layout.json。普通FW66828/UI85已安装、UART工程版已退出；几何以当前源码/实际ELF和原待办为准，交接不作为第二套参数。
-- 当前实际已装Windows0.1.116 / Android0.1.144。本批集中重整录音库/名称日期/真实状态与详情入口；Owner115三条UI原话各自保留，116/144已正常安装、同源包核验、电脑原生保存/导出/实际重开、手机公开隔离资料回找/主题/真实重开及历史取消提示复核、原资料保护与一个私有完整包回读完成。143实机发现的取消红提示在同批144修正，失败/中间版保留；未另派Owner。Owner明确只简短人感体验，功能/电脑声音/复杂长录由工程负责，后续不用八步功能清单。23秒电脑中文声已实际本机ASR/已配DeepSeek、116所选中文结果导出通过，原音/私人内容不上传。外观好用未由Owner确认，实卡长录/独立模型质量/完整IMU/正式售卖仍按原工程事项；不因UI软件交付关闭。
+- 嵌软与存储布局快读：docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md顶部和同目录memory-layout.json。普通FW66829/UI85已通过普通签名OTA安装、UART工程版已退出；几何以当前源码/实际ELF和原待办为准，交接不作为第二套参数。
+- 当前实际已装Windows0.1.116 / Android0.1.144，原同源交付、资料保护、真实保存/导出/重开与23秒公开电脑声证据保留。Owner于2026-11-13明确认为UI仍像AI拼接、要求底层重构与公开模板；沿原UI116-DESIGN-FOUNDATION承接，外观/好用不通过。现已核验Untitled UI公开MIT组件（PRO另条款）、shadcn Mail v3和assistant-ui，并给出“随身笔记/录音工作台”两套完整响应式交互草案，推荐随身笔记；收据docs/handoffs/20261113-ui-foundation/reference-selection.json。仅设计预览就绪，尚未接入/构建/安装真实应用，不把草案当软件完成；后续按一个一致设计体系整体重组、工程集中自验交付。Owner只短看观感和自然使用，功能/长录/复杂检查由工程承担，不再八步清单。实卡长录、独立模型质量、完整IMU、最终硬件及正式售卖继续沿原待办，当前UI不接板、不停原录音。
 - Windows 源码 companion-device-closure055，分支 work/device-phone-closure055-20261106；Android 源码 companion-core-android20261109，分支 work/core-acceptance-android-20261109。recovered-software050、旧 E 盘前端和早期后端子目录为历史/依赖来源，不能当当前应用工作树。
 - Owner于2026-11-12已要求继续完成整轮交付，并澄清非固件软件不等板；沿原 core.activeNonmodelCompletion20261110 接续，不恢复已清除Goal、不另建任务树。纯交接/规则编辑本身不触发新构建、安装、录音或顾客。
 - 原六模块 Owner 签收、质量合同、已验范围和失败保留；原272个 CP 编号是历史/需求索引，36项是跨产品套餐能力并集，均不能直接用来算完成百分比。

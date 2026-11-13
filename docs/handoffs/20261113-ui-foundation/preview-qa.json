@@ -1,0 +1,216 @@
+{
+  "startedAt": "2026-11-13T00:13:34.366Z",
+  "scope": "Interactive design preview only; no installed application or hardware qualification",
+  "checks": [
+    {
+      "variant": "随身笔记",
+      "interaction": "search, selection, transcript/minutes, export preview, favorite filter, theme",
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "light",
+      "viewport": 1056,
+      "layout": {
+        "width": 1024,
+        "scrollWidth": 1022,
+        "clientWidth": 1022,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "light",
+      "viewport": 768,
+      "layout": {
+        "width": 736,
+        "scrollWidth": 734,
+        "clientWidth": 734,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "light",
+      "viewport": 422,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 388,
+        "clientWidth": 388,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "light",
+      "viewport": 352,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 318,
+        "clientWidth": 318,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "dark",
+      "viewport": 1056,
+      "layout": {
+        "width": 1024,
+        "scrollWidth": 1022,
+        "clientWidth": 1022,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "dark",
+      "viewport": 768,
+      "layout": {
+        "width": 736,
+        "scrollWidth": 734,
+        "clientWidth": 734,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "dark",
+      "viewport": 422,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 388,
+        "clientWidth": 388,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "随身笔记",
+      "theme": "dark",
+      "viewport": 352,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 318,
+        "clientWidth": 318,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "interaction": "search, selection, transcript/minutes, export preview, favorite filter, theme",
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "light",
+      "viewport": 1056,
+      "layout": {
+        "width": 1024,
+        "scrollWidth": 1022,
+        "clientWidth": 1022,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "light",
+      "viewport": 768,
+      "layout": {
+        "width": 736,
+        "scrollWidth": 734,
+        "clientWidth": 734,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "light",
+      "viewport": 422,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 388,
+        "clientWidth": 388,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "light",
+      "viewport": 352,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 318,
+        "clientWidth": 318,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "dark",
+      "viewport": 1056,
+      "layout": {
+        "width": 1024,
+        "scrollWidth": 1022,
+        "clientWidth": 1022,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "dark",
+      "viewport": 768,
+      "layout": {
+        "width": 736,
+        "scrollWidth": 734,
+        "clientWidth": 734,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "dark",
+      "viewport": 422,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 388,
+        "clientWidth": 388,
+        "over": []
+      },
+      "passed": true
+    },
+    {
+      "variant": "录音工作台",
+      "theme": "dark",
+      "viewport": 352,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 318,
+        "clientWidth": 318,
+        "over": []
+      },
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "hostCarouselInitialized": true,
+  "hostIconsRendered": true,
+  "actualEmbeddedAudioDuration": 23.2245,
+  "publicAudioPlaybackAdvancedMutedHeadless": true,
+  "failures": [],
+  "passed": true
+}

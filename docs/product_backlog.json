@@ -133816,37 +133816,37 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-12T20:29:19+08:00",
+      "updatedAt": "2026-11-13T08:05:34+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
       "baseline": {
-        "firmwareVersion": 66828,
+        "firmwareVersion": 66829,
         "uiGeneration": 85,
         "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
-        "sourceCommit": "7bbc8d0",
-        "buildReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/fw66828-ble-sram/result.json",
-        "installationReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/install828-ble-sram/result.json",
-        "idleReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/ble-sram/post-uart.txt",
+        "sourceCommit": "9288833",
+        "buildReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\fw66829-pooled-ble\\result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\shared-core20261113\\ordinary-ota829\\result.json",
+        "idleReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\shared-core20261113\\reconnect829\\result.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Current7bbc8d0 pushed; normal828 installed and boot/idle verified; screen/UART-engineering/CPU-observer disabled",
+        "sourceRootAvailability": "Normal829 installed by ordinary signed OTA and idle confirmed; source9288833 + validation6960f21 retained; subsequent2e03e12 tools only",
         "evidenceAvailability": "Current package/source and normal passive IMU/BLE receipts retained; no full-core or ordinary OTA qualification.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
         "latestNormalObservationReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/ble-sram/passive828/result.json",
-        "appBytes": 406104,
-        "staticRamBytes": 68064,
+        "appBytes": 406424,
+        "staticRamBytes": 66632,
         "stackReservedBytes": 21504,
-        "physicalQualification": "Actual GATT registration, five read-only full lengths, encrypted BLE and1000 raw frames missing0; no new full recording/OTA/gesture qualification",
-        "ordinaryWirelessOtaQualified": false,
+        "physicalQualification": "Scoped normal OTA104898ms/joint/app-resource/temporary release;32mixed writes/responses;994raw no sequence loss; native protected reconnect/actual idle; not new long recording/Opus or full queue exhaustion/gesture qualification",
+        "ordinaryWirelessOtaQualified": true,
         "engineeringCaptureOnly": false,
         "normalRestorationRequired": false,
-        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66828-ble-sram\\delivery.json"
+        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66829-ble-sram\\delivery.json"
       },
       "packages": [
         {
@@ -134567,7 +134567,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "当前正常826已交回；续作只看 imuRecorderFeatures.airPointer20261112.executionPoint，布局见原HANDOFF与memory-layout.json。",
+      "next": "本轮共用829验收与待验范围见 imuRecorderFeatures.airPointer20261112.executionPoint；原硬件block/速度后置不变。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135293,7 +135293,7 @@
           "maximumMs": 5000,
           "scope": "Same frozen native ordinary full identity/catalogue probe, all attempts/cleanup included; extracted from existing actual log, no repeated board operation. One sample, not intermittent root closure."
         },
-        "firmwareVersion": 66788,
+        "firmwareVersion": 66829,
         "saleQualified": false,
         "imuPhysicalSample": true,
         "windowsNormalColdCurrentCasesPass": true,
@@ -135373,7 +135373,20 @@
         "desktopInput089PackageReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\candidate-current089-phone127.json",
         "desktopInput089OfflineUiPassed": true,
         "windowsDesktopInputInstalled": true,
-        "currentFirmwareVersion": 66791
+        "currentFirmwareVersion": 66791,
+        "latestSharedCore829": {
+          "at": "2026-11-13T08:07:22+08:00",
+          "firmware": 66829,
+          "windows": "0.1.116",
+          "android": "0.1.144",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json",
+          "scopedOtaCommandRawReconnectPass": true,
+          "currentTwoHourPass": false,
+          "fullPhoneChainPass": false,
+          "imuMousePhysicalPass": false,
+          "macRuntimePass": false,
+          "saleQualified": false
+        }
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -143426,7 +143439,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "IMU_CONTACT_BATCH_SOURCE_VERIFIED_PHYSICAL_PENDING_SRAM_TUNING_PAUSED",
+          "state": "SHARED829_NORMAL_OTA_MIXED_COMMANDS_RAW_RECONNECT_PASSED_PHYSICAL_MOUSE_PENDING",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143434,7 +143447,7 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-12T22:45:59+08:00",
+          "updatedAt": "2026-11-13T08:12:41+08:00",
           "sourceCommit": {
             "firmware": "6960f21",
             "firmwareResourceTool": "1bb3ad3",
@@ -143460,7 +143473,7 @@
             "Natural direction/spatial left-right click and complete ordinary Windows mouse delivery remain open; host ad325 source integrated/tested32.",
             "Original broader embedded/OTA/deferred boundaries remain; no sale qualification."
           ],
-          "firmwareInstalled": 66828,
+          "firmwareInstalled": 66829,
           "normal795BuiltNotInstalled": true,
           "ownerFeedback": "鼠标已能移动，但飘、不好用，期待机身敲击点击；原始反馈保留，未通过。",
           "clockConstraint": {
@@ -143470,7 +143483,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Owner优先IMU；已集中完成host070d6c6c并推送：可靠CLICK关联raw六轴短窗口，个人左右校准/保存/卡片匹配，真实native右键，双敲保留两次点击，校准不输出鼠标、普通鼠标共用不回跳。42项指针检查、同源native app check、直接node TypeScript和mock命令源组件流程通过。左右模型是本硬件host适配原型，非AirCursor/WatchPointer已有的空间识别，尚无当前实物准确率；正常Windows安装包不包含本批，未改板固件。当前仍normal828/UI85，MIC停录且无故障。原窗“Companion 左右轻敲：两步验证”待实际Start，先左三下再右三下，不录音/不控制鼠标，等待不占板；不要另弹窗口、不要把无Start判失败。SRAM829保留未安装/未实板验，暂停继续调参。",
+          "executionPoint": "Owner忙，左右轻敲原窗选稍后且无Start，停止人工派发。继续同批829/116后台短录/同场恢复及当前长录、070完整鼠标候选与统一交付；新测试音仅本机0ASR/0云/0外放，不读旧原音；原ADC/电流/Capture新板/屏幕/速度后置保持。全部可后台项收敛后一个候选包，实体方向/左右/单双击/拖拽留Owner有空一次体验，未通过不称售卖。",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -144161,18 +144174,10 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "WAITING_OWNER_START_NOT_FAILURE",
-            "sessionId": 75620,
-            "controllerPid": 4640,
-            "title": "Companion 左右轻敲：两步验证",
-            "output": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\mouse-complete\\owner-contacts828",
-            "script": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-03\\companion-firmware-66662-luna\\recovery-work\\imu_contacts828_owner.py",
-            "scriptSha256": "c234385f55114625547efe99f43cedf2d5d10e225bc6cbbc2e994c38d176ba76",
-            "actualStartObserved": false,
-            "claimsBoardOnlyAfterStart": true,
-            "readsMotionOnly": true,
-            "noMicNoOsOutput": true,
-            "waitingPopupReservesBoard": false
+            "state": "OWNER_GESTURES_DEFERRED_NO_POPUP",
+            "previousOperatorResult": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/shared-core20261113/owner-contacts829/result.json",
+            "backgroundBatch": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/concentrated20261113",
+            "microphoneScope": "Only new scoped engineering recordings, local receive, no ASR/cloud/speaker. Owner requests independent background validation."
           },
           "latestOwnerMouseFeedback": [
             "顺滑度是修好了, 但是点击那些都没有, 然后用起来也很不好用 然后的话呢，现在我如果同时用鼠标，你那个鼠标会把我的鼠标总是移到原位，就它不能跟别的鼠标兼容嘛，它只是需要考虑移动就可以了。",
@@ -144357,7 +144362,7 @@
             "baselineBytes": 39059,
             "baselineStaticBytes": 68280,
             "decision": "先保留1连接/MTU512/双509B通道/包池/640B事件FIFO/配对缓存，校核官方固定LL成本及GATT只读值实际长度；旧compact AMM不能仅凭逻辑额度相同启用",
-            "state": "FURTHER_TUNING_PAUSED829_PRESERVED_NOT_INSTALLED",
+            "state": "NORMAL829_INSTALLED_SCOPED_OTA_COMMANDS_RAW_RECONNECT_PASSED_RECORDING_LONG_PENDING",
             "installed66828": true,
             "saved216": true,
             "ownerFollowup": "216 B改善太小，重构降低SRAM，尽量不损失性能",
@@ -144365,7 +144370,7 @@
             "safe216Installed": true,
             "applicationSource": "9288833",
             "validationSource": "6960f21",
-            "currentInstalled": 66828,
+            "currentInstalled": 66829,
             "candidate": 66829,
             "bleStaticBefore": 39059,
             "bleStaticAfterCandidate": 37419,
@@ -144375,18 +144380,20 @@
             "mainStackGapBefore": 2936,
             "mainStackGapAfterCandidate": 7040,
             "actualStAllocator32HostPassed": true,
-            "physicalNewQueuePassed": false,
-            "ordinaryOtaStarted": false,
+            "physicalNewQueuePassed": "32 mixed writes/responses; simultaneous8 and exhaustion not observed",
+            "ordinaryOtaStarted": true,
             "currentRecording": 408,
             "currentDelivery": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66828-ble-sram\\delivery.json",
             "candidateDelivery": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66829-ble-sram\\delivery.json",
             "resourceComparison": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\ble-sram-comparison.json",
-            "priority": "PAUSED_FURTHER_TUNING_BY_OWNER_KEEP829_AND_QUALIFICATION_PENDING",
-            "currentRecordingObservation": "408是829早期安装准备时的历史快照；本批正常828串口preflight已确认MIC停录，不再以408正在录音作为当前阻断。"
+            "priority": "NO_FURTHER_TUNING_KEEP_CURRENT_QUALIFICATION_SCOPE",
+            "currentRecordingObservation": "408是829早期安装准备时的历史快照；本批正常828串口preflight已确认MIC停录，不再以408正在录音作为当前阻断。",
+            "currentExistingRecordingEvidenceHistorical": true
           },
           "ownerResumeImu20261112": {
             "raw": "大概我们现在这个 s i a m 它还有优化空间吗？没有优化空间的话，那就先算，先专注把那些 i m u 的高级功能给做了。",
-            "decision": "仍有少量空间但暂无证明可无性能代价大幅压缩；保留829候选及待验，不继续抠内存。优先完整鼠标方向、左右接触点击、拖拽与普通鼠标共用；当前板由owner115完整体验占用，离线实现，不占端口。"
+            "decision": "仍有少量空间但暂无证明可无性能代价大幅压缩；保留829候选及待验，不继续抠内存。优先完整鼠标方向、左右接触点击、拖拽与普通鼠标共用；当前板由owner115完整体验占用，离线实现，不占端口。",
+            "latestOwnerRequest": "先验证该验证的东西，继续开发Capture和Companion共用核心；两端是否基本开发好"
           },
           "mouseContactBatch20261112": {
             "sourceCommit": "070d6c6cf91f71d59dc0b72fb7d26d1bcf32ec26",
@@ -144396,6 +144403,25 @@
             "mcuNewCode": false,
             "physicalQualified": false,
             "normalMsiDelivered": false
+          },
+          "sharedCoreVerification20261113": {
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json",
+            "state": "SHARED829_NORMAL_OTA_MIXED_COMMANDS_RAW_RECONNECT_PASSED_PHYSICAL_MOUSE_PENDING",
+            "ordinaryOtaPassed": true,
+            "matchedRecordingAndLongPassed": false,
+            "captureHardwareQualified": false
+          },
+          "operator828Terminal20261113": {
+            "state": "CLOSED_CANCEL_BEFORE_START_NOT_GESTURE_FAILURE",
+            "eventAtLocal": "2026-11-13T07:43:12+08:00",
+            "events": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/mouse-complete/owner-contacts828/events.jsonl",
+            "originalResultMissing": true,
+            "controllerLive": false
+          },
+          "ownerConcentratedDelivery20261113": {
+            "at": "2026-11-13T08:12:41+08:00",
+            "raw": "我现在有点忙，先把不需要我验证的做了，整块打包，有空一次性验收；不要零碎交付。",
+            "decision": "Owner实物采样稍后，当前窗已关闭且无Start/无采集，不重弹。承接既有工程负责后台录音/长录的授权，后台仅创建本轮新测试录音并本机保存，不做ASR/云/外放，不需Owner动作；先现版829/116受影响录音与恢复，再同批117鼠标与当前稳定双端合并候选，不逐项安装。售卖仍未合格，明确block不新增。"
           }
         }
       },
@@ -145732,10 +145758,38 @@
         "ordinaryWirelessOtaQualified": false
       },
       "memoryLayoutCurrent": {
-        "at": "2026-11-12T19:30:31+08:00",
+        "at": "2026-11-13T08:05:34+08:00",
         "entry": "docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md",
         "machineReadable": "docs/handoffs/20261111-owner-ai-handoff/memory-layout.json",
-        "sourceFirmware": 66826
+        "sourceFirmware": 66829
+      },
+      "baselineBeforeShared82920261113": {
+        "firmwareVersion": 66828,
+        "uiGeneration": 85,
+        "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
+        "sourceCommit": "7bbc8d0",
+        "buildReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/fw66828-ble-sram/result.json",
+        "installationReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/install828-ble-sram/result.json",
+        "idleReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/ble-sram/post-uart.txt",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "Current7bbc8d0 pushed; normal828 installed and boot/idle verified; screen/UART-engineering/CPU-observer disabled",
+        "evidenceAvailability": "Current package/source and normal passive IMU/BLE receipts retained; no full-core or ordinary OTA qualification.",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently",
+        "latestNormalObservationReceipt": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/ble-sram/passive828/result.json",
+        "appBytes": 406104,
+        "staticRamBytes": 68064,
+        "stackReservedBytes": 21504,
+        "physicalQualification": "Actual GATT registration, five read-only full lengths, encrypted BLE and1000 raw frames missing0; no new full recording/OTA/gesture qualification",
+        "ordinaryWirelessOtaQualified": false,
+        "engineeringCaptureOnly": false,
+        "normalRestorationRequired": false,
+        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261112-companion-fw66828-ble-sram\\delivery.json"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -270937,8 +270991,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-12T23:01:12+08:00",
-            "state": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
+            "updatedAt": "2026-11-13T08:15:01+08:00",
+            "state": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -270946,7 +271000,7 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "116/144这一批已安装、工程自验、原资料保护、私有完整回读完成。Owner后续只需自然短体验外观、找录音和使用顺序，问题逐条定位并集中处理；不再派八步功能清单/长录给Owner。复杂实卡/长录由工程沿原固件待办，在实际占用空闲且现场允许时执行，当前UI不占板、不停止已有录音；独立模型普适质量、完整IMU/最终硬件/正式售卖边界继续保留。",
+            "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.116",
@@ -270993,7 +271047,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "All own116/144 build, private native/phone app, CDP/display and publish jobs completed. No new Owner prompt or own board lease. Current board lease is read from shared status and remains with its actual item.",
+            "knownJobState": "Design references and responsive interactive concept checked. No new native/app/device/model job; installed116/144 retained. Product foundation implementation and Owner aesthetics remain open.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271045,13 +271099,13 @@
             "ownerProductClosure20261112": {
               "at": "2026-11-12T09:26:11+08:00",
               "ownerQuote": "但完整使用体验、实卡可靠性和正式交付还没有一起收口 需要收口, 并且避免零碎, 可以不用每一个功能都验收, 就是最后跑一下总验收, 现在太碎了感觉现在像是拼图不是一个完整产品, 太乱了逻辑, 然后的话你解决一下这个问题",
-              "state": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
+              "state": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "116/144这一批已安装、工程自验、原资料保护、私有完整回读完成。Owner后续只需自然短体验外观、找录音和使用顺序，问题逐条定位并集中处理；不再派八步功能清单/长录给Owner。复杂实卡/长录由工程沿原固件待办，在实际占用空闲且现场允许时执行，当前UI不占板、不停止已有录音；独立模型普适质量、完整IMU/最终硬件/正式售卖边界继续保留。",
+              "currentPoint": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
               "done": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-              "updatedAt": "2026-11-12T23:01:12+08:00",
+              "updatedAt": "2026-11-13T08:15:01+08:00",
               "sourceCommit": "2433bf662a79ea3b11da657bd59356d3a6c7e4f8",
               "acceptanceToolCommit": "3fc02d1eadd29de292146bc2aba7fd751acde02e",
               "buildRun": null,
@@ -271541,7 +271595,7 @@
               "completeDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend116144\\software-delivery.json",
               "completeDeliverySha256": "621727d6cf6dcdf3250e33abda4fd8047c5c774f24319332a93e31850a41b021",
               "completeDeliveryArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Recording-116-144-20261112.zip",
-              "ownerTotalStatus": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
+              "ownerTotalStatus": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
               "ownerTotalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\owner-guided115-terminal20261112.json",
               "latestOwnerConcentratedFeedback": {
                 "receivedAt": "2026-11-12T21:16:59+08:00",
@@ -271686,7 +271740,7 @@
                 "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
                 "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
                 "ownerClarification": "两边都有",
-                "state": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
+                "state": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
                 "previousWindowsVersion": "0.1.111",
                 "previousAndroidVersion": "0.1.142",
                 "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
@@ -271700,9 +271754,9 @@
                 "physicalTotalAcceptancePassed": false,
                 "saleQualified": false,
                 "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
-                "noMoreOwnerPromptUntilSubstantiveRepair": false,
+                "noMoreOwnerPromptUntilSubstantiveRepair": true,
                 "nativeDeliveryChangesNotStarted": false,
-                "updatedAt": "2026-11-12T23:01:12+08:00",
+                "updatedAt": "2026-11-13T08:15:01+08:00",
                 "implementation": {
                   "firstScreen": "Explicit recording-card link state and one connect action, also visible with an existing library",
                   "devicePage": "Connection state independent of storage/service advice, primary action leads to saved recordings",
@@ -272348,7 +272402,7 @@
                     "stepIndex": null,
                     "stepTitle": "整体界面外观",
                     "ownerQuote": "UI 有点丑，看下再优化一下",
-                    "state": "IMPLEMENTED_INSTALLED116144_ENGINEERING_REVIEWED_OWNER_SHORT_UX_PENDING",
+                    "state": "OWNER116144_REPORTS_STILL_UNREFINED_FOUNDATION_REWORK_CONTINUES",
                     "blocking": false,
                     "decision": "Inspect typography, density and hierarchy in the actual product. Collect the full-purpose experience, refine related surfaces together, then one matched delivery.",
                     "sourceWholePurposeEvidence": "E:/CodexData/Companion/.build-cache/product-closure20261112/ui-usability-source-r8/result.json",
@@ -272359,7 +272413,8 @@
                       "UI115-002",
                       "UI115-003"
                     ],
-                    "ownerAccepted": false
+                    "ownerAccepted": false,
+                    "followupId": "UI116-DESIGN-FOUNDATION"
                   },
                   {
                     "receivedAt": "2026-11-12T21:16:59+08:00",
@@ -272396,12 +272451,13 @@
                     "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
                     "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112",
                     "originalRoundIssueId": "ISSUE-001",
-                    "state": "IMPLEMENTED_INSTALLED116144_ENGINEERING_REVIEWED_OWNER_SHORT_UX_PENDING",
+                    "state": "OWNER116144_REPORTS_STILL_UNREFINED_FOUNDATION_REWORK_CONTINUES",
                     "decision": "Rebuild a coherent library, connection identity and recording detail hierarchy together; spacing-only115 did not resolve Owner perception.",
                     "blocking": false,
                     "sourceWholePurposeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ui-usability-source-r10\\result.json",
                     "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend116144\\software-delivery.json",
-                    "ownerAccepted": false
+                    "ownerAccepted": false,
+                    "followupId": "UI116-DESIGN-FOUNDATION"
                   },
                   {
                     "eventId": "f21c316536cb102e532d28b4d63379092a79cc3fd57b9286609bf135e63393d7",
@@ -272440,6 +272496,26 @@
                     "sourceWholePurposeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\ui-usability-source-r10\\result.json",
                     "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend116144\\software-delivery.json",
                     "ownerAccepted": false
+                  },
+                  {
+                    "id": "UI116-DESIGN-FOUNDATION",
+                    "receivedAt": "2026-11-13T08:01:54+08:00",
+                    "channel": "Owner chat",
+                    "versionContext": {
+                      "windows": "0.1.116",
+                      "android": "0.1.144"
+                    },
+                    "specificInAppRunOrStepObserved": false,
+                    "ownerQuote": "感觉你这个 ui 还是从底上要重构一下，现在感觉就像是一个 ai 在做的 ui。感觉可能做好看点，做精致点，有没有什么公开的 ai 模板，ui模板之类的。",
+                    "state": "DESIGN_REFERENCES_AND_INTERACTIVE_CONCEPT_READY_NATIVE_REWORK_OPEN",
+                    "relatedPriorIssues": [
+                      "UI115-001",
+                      "UI114-APPEARANCE"
+                    ],
+                    "ownerAccepted": false,
+                    "decision": "Stop consecutive cosmetic patches on the existing dashboard. Compare complete mature application layouts and an explicit design system; create one coherent recording/reading prototype before native integration. Owner still only judges visual quality and natural use; engineering owns functionality.",
+                    "referenceSelectionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reference-selection.json",
+                    "previewReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reference-selection.json"
                   }
                 ],
                 "previousOwner114Attempt": {
@@ -272918,7 +272994,83 @@
                     "ownerTechnicalRetestRequested": false,
                     "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\android144\\library-review-result.json"
                   }
-                ]
+                ],
+                "designFoundationRework20261113": {
+                  "state": "PRIMARY_REFERENCES_AND_COHERENT_DESIGN_PREVIEW_READY_NATIVE_REWORK_OPEN",
+                  "ownerFeedbackId": "UI116-DESIGN-FOUNDATION",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reference-selection.json",
+                  "sources": [
+                    {
+                      "name": "shadcn/ui Mail v3",
+                      "preview": "https://v3.shadcn.com/examples/mail",
+                      "license": "MIT",
+                      "licenseSource": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+                      "role": "Complete list/reading layout reference; legacy v3 preview explicitly identified."
+                    },
+                    {
+                      "name": "Untitled UI React",
+                      "preview": "https://www.untitledui.com/react",
+                      "source": "https://github.com/untitleduico/react",
+                      "license": "MIT for public repository components; PRO pages have separate terms",
+                      "role": "Typography, spacing, navigation and component consistency reference."
+                    },
+                    {
+                      "name": "assistant-ui",
+                      "preview": "https://www.assistant-ui.com/examples",
+                      "source": "https://github.com/assistant-ui/assistant-ui",
+                      "license": "MIT",
+                      "role": "Optional contextual AI panel reference, not the recording app shell."
+                    }
+                  ],
+                  "currentProductTemplateUse": "Current companionDesign.css already contains adapted Shadcn Dashboard styles. Changing the library name alone would not remedy the composition problem.",
+                  "thirdPartyCodeImportedThisRound": false,
+                  "nativeBuildStarted": false,
+                  "installedAppChanged": false,
+                  "recommendedDirection": "随身笔记",
+                  "alternativeDirection": "录音工作台",
+                  "designDecision": "Use one consistent typography/spacing/navigation vocabulary and recordings-to-reading hierarchy. Existing shadcn-derived CSS patches did not establish a coherent product foundation; do not combine dashboard/chat template skins.",
+                  "upstreamCodeImported": false,
+                  "preview": {
+                    "state": "DESIGN_PREVIEW_READY_NOT_INSTALLED_PRODUCT",
+                    "path": "C:\\Users\\Billy\\.codex\\visualizations\\2026\\11\\12\\01a1cd4e-ed69-7431-bbea-486848d70b7d\\companion-design-foundation.html",
+                    "sha256": "8506725e24df78bcff370e7a753cc428f27e27a99ea1fccccb0ced875f8bb350",
+                    "bytes": 535505,
+                    "protectedSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\design-preview.html",
+                    "variants": [
+                      "随身笔记",
+                      "录音工作台"
+                    ],
+                    "recommended": "随身笔记",
+                    "qa": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\preview-qa.json",
+                    "engineeringViewedScreenshots": [
+                      "notebook-1056-light.png",
+                      "notebook-1056-dark.png",
+                      "workbench-1056-light.png",
+                      "notebook-422-light.png",
+                      "workbench-422-light.png"
+                    ],
+                    "checkedWidths": [
+                      1024,
+                      736,
+                      390,
+                      320
+                    ],
+                    "themes": [
+                      "light",
+                      "dark"
+                    ],
+                    "checks": "Actual standalone host carousel/icons, primary local interactions, keyboard tabs and label linkage, export text visible, narrow library/detail/back and device/settings availability, no horizontal overflow, embedded public audio duration23.2245 and muted headless playback.",
+                    "scope": "Interactive layout and appearance concept; no native build, install, board, microphone, user file access or model runs. Public SAPI audio reused with 32 derived waveform bins. Example note text marked fictional. Existing installed116/144 retained. Owner acceptance remains false.",
+                    "failuresRetained": [
+                      "preview-qa-initial-test-assertion-mismatch.json",
+                      "preview-qa-second-test-assertion-mismatch.json",
+                      "notebook-1056-light-before-visual-review.png",
+                      "render-existing-destination-refusal.txt"
+                    ],
+                    "visualReviewCorrection": "Export button foreground inherited dark-on-dark despite local interaction QA passing; corrected scoped specificity and checked fresh render. Narrow workbench navigation and tab semantics corrected. Wrapper destination refusal preserved; regenerated with force before final QA."
+                  },
+                  "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。"
+                }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
               "previousVerifiedWindows111": {
@@ -280238,16 +280390,16 @@
       }
     },
     "nextBatch": {
-      "at": "2026-11-12T23:01:12+08:00",
-      "status": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
-      "next": "116/144这一批已安装、工程自验、原资料保护、私有完整回读完成。Owner后续只需自然短体验外观、找录音和使用顺序，问题逐条定位并集中处理；不再派八步功能清单/长录给Owner。复杂实卡/长录由工程沿原固件待办，在实际占用空闲且现场允许时执行，当前UI不占板、不停止已有录音；独立模型普适质量、完整IMU/最终硬件/正式售卖边界继续保留。",
+      "at": "2026-11-13T08:15:01+08:00",
+      "status": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
+      "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-12T23:01:12+08:00",
-      "state": "RECORDING_WORKSPACE116144_INSTALLED_SELF_REVIEWED_PRIVATE_DELIVERED_OWNER_SHORT_UX_PENDING",
+      "at": "2026-11-13T08:15:01+08:00",
+      "state": "COHERENT_DESIGN_PREVIEW_READY_NATIVE_FOUNDATION_REWORK_OPEN",
       "done": "115外观已收紧并实际安装；原窗口逐条问题独立编号/步骤/版本，记录后可继续。114连接入口与静默收取保持。原资料不变、原生连续流程/真实重开通过，同一115/142私有包和MSI完整回读。",
-      "remaining": "本批116/144已完整交付，Owner短人感反馈待下一次自然使用；复杂实卡/长录由工程负责并沿原占用/固件事项接续，完整售卖未签收。",
+      "remaining": "整体设计草案已就绪；真实应用设计底层重构和Owner观感尚未关闭，未构建或安装新版本。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend115142\\software-delivery.json",
       "previousVerifiedBatch": {
         "at": "2026-11-11T16:24:51+08:00",
@@ -280258,7 +280410,7 @@
       },
       "ownerUiFeedbackId": "owner-ui-usability20261112",
       "previousSoftwareDeliveryStillRetained": true,
-      "next": "116/144这一批已安装、工程自验、原资料保护、私有完整回读完成。Owner后续只需自然短体验外观、找录音和使用顺序，问题逐条定位并集中处理；不再派八步功能清单/长录给Owner。复杂实卡/长录由工程沿原固件待办，在实际占用空闲且现场允许时执行，当前UI不占板、不停止已有录音；独立模型普适质量、完整IMU/最终硬件/正式售卖边界继续保留。",
+      "next": "已给出公开模板来源及两套完整可交互设计草案，推荐“随身笔记”。当前116/144仍为已装基线，UI116-DESIGN-FOUNDATION未关闭；后续按一致视觉系统整体重组应用壳、录音库及内容阅读，把真实保存/回听/导出和设备状态接回同一路径，工程集中自验后整批交付。Owner只看观感与自然使用，不派逐功能或复杂长录清单。",
       "ownerExperienceAccepted": false
     },
     "previousBatch": {
