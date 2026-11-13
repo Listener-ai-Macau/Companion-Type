@@ -1,5 +1,7 @@
 //! Candidate offline ASR; runtime and model are supplied separately.
 use libloading::Library;
+#[path = "punctuation.rs"]
+pub(super) mod punctuation;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use std::{
@@ -247,6 +249,7 @@ pub(super) struct Runtime {
     _providers: Library,
     _sherpa: Library,
     recognizer: *const c_void,
+    punctuation: Option<punctuation::Punctuator>,
     create_stream: CreateStream,
     destroy_stream: DestroyStream,
     accept: AcceptWaveform,
@@ -257,10 +260,12 @@ pub(super) struct Runtime {
 }
 impl Drop for Runtime {
     fn drop(&mut self) {
+        self.punctuation.take();
         unsafe { (self.destroy)(self.recognizer) }
     }
 }
 impl Runtime {
+    pub(super) fn punctuation_profile(&self)->Option<&'static str>{self.punctuation.as_ref().map(|_|punctuation::MODEL_SHA)}
     pub(super) fn load(root: &Path, runtime_root: &Path) -> Result<Self, String> {
         Self::load_model(root, runtime_root, ModelKind::Paraformer)
     }
@@ -378,12 +383,14 @@ impl Runtime {
             if recognizer.is_null() {
                 return Err("本地语音模型无法启动，原录音保留。".into());
             }
+            let punctuation=punctuation::Punctuator::optional(&lib,root);
             Ok(Self {
                 _onnx: onnx,
                 #[cfg(windows)]
                 _providers: providers,
                 _sherpa: lib,
                 recognizer,
+                punctuation,
                 create_stream,
                 destroy_stream,
                 accept,
@@ -415,7 +422,7 @@ impl Runtime {
                 (self.destroy_result)(p);
                 let value: RecognitionResult =
                     serde_json::from_str(&json).map_err(|e| e.to_string())?;
-                Ok(value.text)
+                Ok(self.punctuation.as_ref().map(|p|p.apply(&value.text)).unwrap_or(value.text))
             })();
             (self.destroy_stream)(stream);
             result

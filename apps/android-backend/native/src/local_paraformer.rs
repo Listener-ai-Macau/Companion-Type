@@ -165,7 +165,7 @@ where F: FnMut(u64, u64) -> Result<(), String> {
     }
     let (runtime,kind)=selected.ok_or_else(||first_error.unwrap_or_else(||"本地转写模型不可用。".into()))?;
     let cache = super::asr_cache::Cache::optional(cache_dir, &serde_json::json!({
-        "provider":kind.provider(), "model":kind.model_hash(), "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1"
+        "provider":kind.provider(), "model":kind.model_hash(), "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1","punctuation":runtime.punctuation_profile()
     }));
     let (text, duration_ms, segments, unrecognized) = process_files(wavs, &metadata, |pcm| {
         let completed = match cache.as_ref().and_then(|cache|cache.lookup(pcm)) {

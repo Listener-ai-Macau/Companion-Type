@@ -91,9 +91,29 @@ public final class LocalModelPreparation {
         try {prepareOfficial(modelRoot,new URL(OFFICIAL_BASE),new URL(MIRROR_BASE),OFFICIAL_RAW,resource("metadata.bin"),OFFICIAL_MODEL,resource("tokens.txt"),OFFICIAL_TOKENS,progress);}
         catch(IOException error) {
             if(Thread.currentThread().isInterrupted())throw error;
-            try {if(modelRoot!=null&&isPrepared(modelRoot))return;}
-            catch(IOException fallbackError){error.addSuppressed(fallbackError);}
-            throw error;
+            try {if(modelRoot==null||!isPrepared(modelRoot))throw error;}
+            catch(IOException fallbackError){if(fallbackError!=error)error.addSuppressed(fallbackError);throw error;}
+        }
+        preparePunctuation(modelRoot,progress);
+    }
+    private static void preparePunctuation(Path modelRoot,Progress progress)throws IOException {
+        Asset asset=new Asset("model.onnx",294_372_519L,"e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd");
+        Path dir=modelRoot.resolve("ct-transformer-punctuation-zh-en-2024");Files.createDirectories(dir);
+        try(FileChannel channel=FileChannel.open(modelRoot.resolve(".punctuation-prepare.lock"),StandardOpenOption.CREATE,StandardOpenOption.WRITE)) {
+            FileLock lock;try{lock=channel.tryLock();}catch(OverlappingFileLockException error){throw new IOException("model preparation is already running",error);}
+            if(lock==null)throw new IOException("model preparation is already running");
+            try {
+                Path destination=dir.resolve(asset.name),partial=dir.resolve(".model.onnx.partial");
+                if(verified(destination,asset))return;
+                if(Files.exists(partial)&&Files.size(partial)>=asset.size&&!verified(partial,asset))Files.delete(partial);
+                String relative="csukuangfj/sherpa-onnx-punct-ct-transformer-zh-en-vocab272727-2024-04-12/resolve/432aeba669265e7aeb06b9359753419683b38597/model.onnx";
+                if(!verified(partial,asset)) {
+                    try {download(new URL("https://huggingface.co/"+relative),partial,asset,0,asset.size,progress);}
+                    catch(IOException first){if(Thread.currentThread().isInterrupted())throw first;try{download(new URL("https://hf-mirror.com/"+relative),partial,asset,0,asset.size,progress);}catch(IOException second){second.addSuppressed(first);throw second;}}
+                }
+                if(!verified(partial,asset))throw new IOException("punctuation model failed verification; retry preparation");
+                Files.move(partial,destination,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+            } finally {lock.release();}
         }
     }
     private static byte[] resource(String name)throws IOException {
