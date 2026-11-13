@@ -1,6 +1,6 @@
 /* Notebook mobile shell: the same recordings -> reader hierarchy as the desktop app. */
-.mobile-app{--accent:#18181b;--accent-soft:#f4f4f5;--line:#e4e4e7;--ink:#18181b;--muted:#71717a;--bg:#fff;--surface:#fff;--surface-soft:#fafafa;font-family:"Segoe UI","Microsoft YaHei UI","Noto Sans CJK SC",system-ui,sans-serif;height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.mobile-app[data-theme=dark]{--accent:#fafafa;--accent-soft:#27272a;--line:#27272a;--ink:#fafafa;--muted:#a1a1aa;--bg:#09090b;--surface:#09090b;--surface-soft:#18181b;color-scheme:dark}
+.mobile-app{--accent:var(--notebook-accent);--accent-soft:var(--notebook-selection);--line:var(--notebook-line);--ink:var(--notebook-ink);--muted:var(--notebook-muted);--bg:var(--notebook-paper);--surface:var(--notebook-paper);--surface-soft:var(--notebook-soft);font-family:var(--notebook-font);height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.mobile-app[data-theme=dark]{color-scheme:dark}
 .mobile-app main{padding:20px 22px 32px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain}
 .mobile-app .mobile-header{height:57px;min-height:57px;padding:0 20px;gap:10px;flex:none;border-bottom:1px solid var(--line);background:var(--surface);box-shadow:none}
 .mobile-app .brand-dot{display:grid;place-items:center;width:29px;height:29px;border-radius:8px;background:var(--ink);color:var(--surface);box-shadow:none}
