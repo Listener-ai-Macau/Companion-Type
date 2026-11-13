@@ -163,11 +163,11 @@ where F: FnMut(u64, u64) -> Result<(), String> {
             Err(error)=>if first_error.is_none(){first_error=Some(error);},
         }
     }
-    let (runtime,kind)=selected.ok_or_else(||first_error.unwrap_or_else(||"本地转写模型不可用。".into()))?;
+    let (mut runtime,kind)=selected.ok_or_else(||first_error.unwrap_or_else(||"本地转写模型不可用。".into()))?;
     let cache = super::asr_cache::Cache::optional(cache_dir, &serde_json::json!({
-        "provider":kind.provider(), "model":kind.model_hash(), "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1","punctuation":runtime.punctuation_profile()
+        "provider":kind.provider(), "model":kind.model_hash(), "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1"
     }));
-    let (text, duration_ms, segments, unrecognized) = process_files(wavs, &metadata, |pcm| {
+    let (_, duration_ms, mut segments, unrecognized) = process_files(wavs, &metadata, |pcm| {
         let completed = match cache.as_ref().and_then(|cache|cache.lookup(pcm)) {
             Some(done) => done,
             None => {
@@ -186,6 +186,10 @@ where F: FnMut(u64, u64) -> Result<(), String> {
         };
         progress(done_ms, total_ms)
     })?;
+    let mut texts:Vec<String>=segments.iter().map(|segment|segment.text.clone()).collect();
+    runtime.finish_punctuation(model_dir,&mut texts,||progress(total_ms,total_ms))?;
+    for (segment,text) in segments.iter_mut().zip(&texts){segment.text=text.clone();}
+    let text=texts.join("\n");
     Ok(TimedTranscript { schema: 1, text, provider: kind.provider().to_string(), duration_ms, segments, unrecognized })
 }
 
