@@ -1,6 +1,6 @@
 /* Notebook mobile shell: the same recordings -> reader hierarchy as the desktop app. */
-.mobile-app{--accent:#416657;--accent-soft:#eaf1ed;--line:#e3e9e6;--ink:#23312d;--muted:#64746d;--bg:#fff;--surface:#fff;--surface-soft:#f8faf9;font-family:"Segoe UI","Microsoft YaHei UI","Noto Sans CJK SC",system-ui,sans-serif;height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.mobile-app[data-theme=dark]{--accent:#b5d0bf;--accent-soft:#2a3c32;--line:#34413a;--ink:#e4ece7;--muted:#a2b3a9;--bg:#1b2220;--surface:#1b2220;--surface-soft:#171d1b;color-scheme:dark}
+.mobile-app{--accent:#18181b;--accent-soft:#f4f4f5;--line:#e4e4e7;--ink:#18181b;--muted:#71717a;--bg:#fff;--surface:#fff;--surface-soft:#fafafa;font-family:"Segoe UI","Microsoft YaHei UI","Noto Sans CJK SC",system-ui,sans-serif;height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.mobile-app[data-theme=dark]{--accent:#fafafa;--accent-soft:#27272a;--line:#27272a;--ink:#fafafa;--muted:#a1a1aa;--bg:#09090b;--surface:#09090b;--surface-soft:#18181b;color-scheme:dark}
 .mobile-app main{padding:20px 22px 32px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain}
 .mobile-app .mobile-header{height:57px;min-height:57px;padding:0 20px;gap:10px;flex:none;border-bottom:1px solid var(--line);background:var(--surface);box-shadow:none}
 .mobile-app .brand-dot{display:grid;place-items:center;width:29px;height:29px;border-radius:8px;background:var(--ink);color:var(--surface);box-shadow:none}
@@ -88,3 +88,7 @@
 @media(pointer:coarse){.mobile-app button,.mobile-app select{min-height:44px}.mobile-app input,.mobile-app textarea{font-size:16px}}
 
 .mobile-app .meeting-reading-indexed{display:block}.mobile-app .meeting-reading-sidebar{position:static;margin-bottom:12px;padding:0;border:0}.mobile-app .meeting-outline{display:flex;flex-wrap:wrap;gap:6px 15px}.mobile-app .meeting-outline button{padding:5px 0;border:0;background:transparent;color:var(--accent);font:inherit;font-size:12px}.mobile-app .reference-workspace-tools{margin:0 0 14px}.mobile-app .minutes-preamble-generated{display:none}
+
+/* Neutral Mail component foundation, shadcn/ui MIT; same semantic states in both themes. */
+.mobile-app :is(.detail-card,.reading-card,.minutes-card,.minutes-section,.minutes-summary,.source-evidence-item,.detail-reference,.meeting-recording-tools){background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:none}
+.mobile-app .minutes-section :is(p,li){line-height:1.85}.mobile-app .minutes-source-section{margin-block:20px;border-block:1px solid var(--line);padding-block:12px}.mobile-app .minutes-source-section>summary{font-size:13px;color:var(--muted)}

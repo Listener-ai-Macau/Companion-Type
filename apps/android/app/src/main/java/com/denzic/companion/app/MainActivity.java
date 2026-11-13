@@ -1242,7 +1242,7 @@ public final class MainActivity extends Activity {
             case "stopSync": RecordingSyncService.stop(this); return syncStatus();
             case "status": return syncStatus();
             case "licenses": {
-                String[] files = {"www/document-engine/ThirdPartyNotices.txt", "ShadcnDashboardMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-document-font-OFL.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
+                String[] files = {"www/document-engine/ThirdPartyNotices.txt", "ShadcnDashboardMIT.txt","ShadcnUiMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-document-font-OFL.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
                 StringBuilder text = new StringBuilder();
                 for (String file : files) {
                     text.append("\n\n--- ").append(file).append(" ---\n");

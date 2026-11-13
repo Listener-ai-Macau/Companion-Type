@@ -5,7 +5,7 @@ import {TranscriptFind} from '../../../packages/ui/src/TranscriptFind';
 import type {TranscriptLookup} from '../../../packages/ui/src/transcriptMatching';
 
 export function TranscriptReader({text,searchRequest,lookup,onReturnLookup}:{text:string;searchRequest?:TranscriptLookup|null;lookup?:TranscriptLookup|null;onReturnLookup?:()=>void}) {
- const [mode,setMode]=useState<'clean'|'original'>('original');
+ const [mode,setMode]=useState<'clean'|'original'>('clean');
  useEffect(()=>{if(searchRequest)setMode('original');},[searchRequest?.id]);
  useEffect(()=>{if(lookup)setMode('original');},[lookup?.id]);
  const cleaned=useMemo(()=>cleanHesitations(text),[text]);

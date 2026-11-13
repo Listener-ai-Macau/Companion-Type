@@ -59,7 +59,7 @@ fn main() {
         let out=std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
         let mut text=std::fs::read_to_string(&original).expect("desktop minutes");
         text=text.lines().map(|line|if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n");
-        for module in ["long_meeting","short_memo","context_plan","question_sources"] {
+        for module in ["long_meeting","short_memo","context_plan","question_sources","template","short_evidence"] {
             let declaration=if module=="long_meeting" {"pub(super) mod long_meeting;".to_string()}else{format!("mod {module};")};
             assert_eq!(text.matches(&declaration).count(),1);
             let source=root.join("minutes").join(format!("{module}.rs"));

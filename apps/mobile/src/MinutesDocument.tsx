@@ -29,7 +29,7 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
  return <MeetingReadingFrame markdown={markdown} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{manualReview&&<p className="manual-minutes-note">含人工修订 · 负责人和时间请按实际安排确认</p>}{sections.map((section,index)=>{
   const title=section.title?meetingHeadingForDisplay(section.title):null;
   if(!title)return <div key={index} className={/^>\s*整理视角：[^\r\n]+$/.test(section.body.trim())?'minutes-preamble minutes-preamble-generated':'minutes-preamble'}>{renderText(section.body)}</div>;
-  if(/^(分段原文依据|原文依据)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
+  if(/^(分段原文依据|原文依据|补充原文（供核对）|原话核对|待核对片段|Keywords)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
   // Action cards own their one shared filter and their folding. Splitting the
   // source into two render calls would produce two incomplete action scopes.
   const remaining=['Action Items','行动事项'].includes(section.title!)?null:excerpt(section.body);
