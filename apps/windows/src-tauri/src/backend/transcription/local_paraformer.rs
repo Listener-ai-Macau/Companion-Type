@@ -105,7 +105,8 @@ pub(super) fn prepare() -> Result<(), String> {
         && shared::verified(&official.join("model.int8.onnx"), shared::OFFICIAL_MODEL_SHA).is_ok()
         && shared::verified(&official.join("tokens.txt"), shared::OFFICIAL_TOKENS_SHA).is_ok()
         && ASSETS[2..].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()) {
-        return prepare_punctuation(&dest);
+        let _=prepare_punctuation(&dest);
+        return Ok(());
     }
     let parent = dest.parent().ok_or("无法准备本地模型目录。")?;
     fs::create_dir_all(parent).map_err(|e| format!("无法创建本地模型目录：{e}"))?;
@@ -180,11 +181,16 @@ pub(super) fn prepare() -> Result<(), String> {
         }
     }
     result?;
-    prepare_punctuation(&dest)
+    // Optional punctuation must not turn a verified usable ASR setup into a
+    // failure when the network is unavailable. The runtime keeps raw words.
+    let _=prepare_punctuation(&dest);
+    Ok(())
 }
 fn prepare_punctuation(dest:&Path)->Result<(),String>{
     use shared::punctuation as p;
     let dir=dest.join(p::DIRECTORY);fs::create_dir_all(&dir).map_err(|e|e.to_string())?;
+    let lock=fs::OpenOptions::new().read(true).write(true).create(true).open(dir.join("prepare.lock")).map_err(|e|e.to_string())?;
+    lock.try_lock().map_err(|_|"本地标点模型正在准备，请稍候。")?;
     let final_file=dir.join("model.onnx");
     if shared::verified(&final_file,p::MODEL_SHA).is_ok(){return Ok(());}
     let partial=dir.join("model.onnx.partial");
