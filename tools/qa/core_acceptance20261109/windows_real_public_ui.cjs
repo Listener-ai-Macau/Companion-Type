@@ -13,8 +13,9 @@ module.exports=async(page,plan,out,reopened)=>{
   await full.locator(':scope>summary').click();assert((await full.innerText()).length>300,'Complete generated detail must remain readable');await full.locator(':scope>summary').click();assert.equal(await full.evaluate(el=>el.open),false);
  }
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
+ await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'actual-public-minutes-light-viewport.png'),fullPage:false});
  await page.screenshot({path:path.join(out,'actual-public-minutes-light.png'),fullPage:true});
- await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();assert((await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));await page.screenshot({path:path.join(out,'actual-public-minutes-dark.png'),fullPage:true});
+ await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();assert((await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'actual-public-minutes-dark-viewport.png'),fullPage:false});await page.screenshot({path:path.join(out,'actual-public-minutes-dark.png'),fullPage:true});
  await nav().getByRole('button',{name:'文字',exact:true}).click();for(const term of transcriptTerms)assert((await page.locator('#ct-recording-text').innerText()).includes(term),term);
  if(!reopened){
   await page.getByRole('button',{name:'回听',exact:true}).click();const player=page.locator('#ct-recording-playback audio').first();await player.waitFor();

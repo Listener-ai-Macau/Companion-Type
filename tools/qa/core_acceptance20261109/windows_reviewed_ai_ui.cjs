@@ -7,7 +7,9 @@ module.exports=async function reviewedAiJourney(page,plan,out){
  const minutes=workspace.locator('#ct-recording-result');
  await minutes.getByRole('heading',{name:'会中问题',exact:true}).waitFor();
  assert.equal(await minutes.getByRole('heading',{name:'待解问题',exact:true}).count(),0);
- const summary=minutes.getByText(new RegExp('长会议已整理全部 '+plan.aiChunks+' 段'));await summary.waitFor();
+ const retained=minutes.locator('.ct-source-review');await retained.locator(':scope>summary').click();
+ await retained.getByText(new RegExp('长会议已按原文顺序处理全部'+plan.aiChunks+'段')).waitFor();
+ await retained.locator(':scope>summary').click();
  const full=minutes.getByText('查看完整摘要和关键词',{exact:true});
  if(await full.count() && !await minutes.getByText(/周一至周五人流量稍少/).isVisible())await full.click();
  if(plan.wholeMeetingDelivery)assert.ok((await minutes.innerText()).includes(plan.expectedExportContains));

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import React from 'react';import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
-(globalThis as any).document={activeElement:null,getElementById:()=>null};(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
+(globalThis as any).document={activeElement:null,getElementById:()=>null};(globalThis as any).window={...((globalThis as any).window??{}),requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});snapshot.host.persistence={status:'ready'};
 const row=snapshot.host.sessions[0];row.id='reading-density';row.source='importedTranscript';row.audioPath=null;row.audioBytes=0;row.audioStored=false;row.sourceDeviceId=null;row.deviceRecordingId=null;row.deviceRecordingKey=null;row.deviceTotalLength=null;row.deviceSha256=null;row.recorderControl=null;row.recorderControlUncertain=false;row.chunks=[];row.retention.audioCached=false;row.title='样品清单';row.transcriptText='确认尺寸，未测完不要写通过。';row.transcriptFinal=true;row.pendingReason=null;row.captureIncomplete=false;
 row.audioPath=null;row.audioBytes=0;row.audioStored=false;row.sourceDeviceId=null;row.deviceRecordingId=null;

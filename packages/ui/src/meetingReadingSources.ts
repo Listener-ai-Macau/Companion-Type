@@ -2,13 +2,16 @@
  * Exact source/review sections remain available together beneath the main note.
  * Authored documents without the native generation envelope are unchanged.
  */
-import {splitGeneratedMeetingMetadata} from './meetingReading';
+import {isGeneratedReadingNotice,splitGeneratedMeetingMetadata} from './meetingReading';
 export function meetingReadingSources(markdown:string):{body:string;review:string}{
  if(!splitGeneratedMeetingMetadata(markdown).metadata)return {body:markdown,review:''};
- const main:string[]=[],review:string[]=[];let target=main,fence:string|null=null,questions=false;
+ const main:string[]=[],review:string[]=[],notices:string[]=[];let target=main,fence:string|null=null,questions=false;
  for(const line of markdown.split(/\r?\n/)){
   const marker=/^\s*(`{3,}|~{3,})/.exec(line);
   if(marker){const c=marker[1][0];if(!fence)fence=c;else if(fence===c)fence=null;target.push(line);continue;}
+  // Keep the native parser's envelope intact. Only the main renderer suppresses
+  // these exact duplicate notices; the complete text stays in this disclosure.
+  if(!fence&&isGeneratedReadingNotice(line)&&!notices.includes(line))notices.push(line);
   const heading=!fence?/^## (.+)$/.exec(line):null;
   if(heading){
    questions=heading[1]==='Questions';
@@ -23,5 +26,6 @@ export function meetingReadingSources(markdown:string):{body:string;review:strin
   }
   target.push(line);
  }
+ if(notices.length)review.push('','## 整理说明','',...notices);
  return {body:main.join('\n'),review:review.join('\n')};
 }

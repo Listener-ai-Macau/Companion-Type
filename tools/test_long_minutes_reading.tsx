@@ -5,6 +5,7 @@ import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packag
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {meetingHeadingForDisplay,splitGeneratedMeetingMetadata} from '../packages/ui/src/meetingReading';
 import {splitLongMinutesEvidence} from '../packages/ui/src/briefMinutes';
+import {meetingReadingSources} from '../packages/ui/src/meetingReadingSources';
 import {readFileSync} from 'node:fs';
 
 (globalThis as any).document={activeElement:null,getElementById:()=>null};
@@ -25,6 +26,10 @@ assert.ok(enhancedSplit.overview.includes('准备材料'));
 const conciseMarkdown='## 会议概览\n\n> AI根据详细纪要整理，请结合原文核对。\n\n- 会议重点：项目交付\n\n'+markdown;
 const defaultTemplateMarkdown='> 整理视角：会议\n\n'+conciseMarkdown;
 const projectedDefault=splitGeneratedMeetingMetadata(defaultTemplateMarkdown);
+const noticeProjection=meetingReadingSources(defaultTemplateMarkdown);
+assert.ok(noticeProjection.review.includes('AI根据详细纪要整理')&&noticeProjection.review.includes('长会议已按原文顺序处理全部2段'));
+const authoredNotice='## 我自己的说明\n\n> AI根据详细纪要整理，请结合原文核对。';
+assert.deepEqual(meetingReadingSources(authoredNotice),{body:authoredNotice,review:''});
 assert.ok(projectedDefault.body.startsWith('## 会议概览'),'default template label must not prevent overview/evidence folding');
 assert.ok(projectedDefault.body.includes('长会议已按原文顺序处理全部2段'));
 assert.ok(projectedDefault.body.includes('讨论项目交付')&&projectedDefault.body.includes('小王负责准备材料。'));
@@ -84,6 +89,9 @@ assert.ok(text(summaryDetail).includes('讨论项目交付'));
 const mainArticle=updated.findAllByType('article')[0];
 assert.ok(text(mainArticle).includes('会议重点：项目交付'));
 assert.ok(!text(mainArticle).includes('讨论项目交付'));
+assert.ok(!text(mainArticle).includes('AI根据详细纪要整理')&&!text(mainArticle).includes('长会议已按原文顺序处理全部'));
+assert.ok(!updated.findAllByProps({role:'status'}).some((n:any)=>text(n).includes('长会议已整理全部')),'completed processing metadata must not compete with the note');
+assert.ok(updated.findAllByProps({className:'ct-result-reading-toolbar'}).some((n:any)=>text(n).includes('AI 整理 · 请核对')));
 assert.ok(updated.findAllByType('details').some((d:any)=>d.props.className?.includes('ct-source-review')&&text(d).includes('关键词')),'keywords remain available in the source/review disclosure');
 assert.ok(updated.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
 const updatedTasks=updated.findAllByType('input').filter((n:any)=>String(n.props['aria-label']).startsWith('标记完成：'));
@@ -91,6 +99,7 @@ assert.equal(updatedTasks.length,1);
 await act(async()=>updatedTasks[0].props.onChange({target:{checked:true}}));
 assert.match(saves[0].markdown,/\[x\] 待核对：准备材料/);
 assert.ok(saves[0].markdown.includes('讨论项目交付') && saves[0].markdown.includes('小王负责准备材料。'));
+assert.ok(saves[0].markdown.includes('AI根据详细纪要整理')&&saves[0].markdown.includes('长会议已按原文顺序处理全部2段'),'display simplification must preserve the complete saved document');
 row.minutes!.source='userEdited';row.minutes!.markdown=saves[0].markdown;
 row.minutesByMode!.offlineStore!.source='userEdited';row.minutesByMode!.offlineStore!.markdown=saves[0].markdown;
 act(()=>tree.update(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
@@ -98,6 +107,16 @@ const reopened=tree.root.findByProps({id:'ct-recording-result'});
 assert.ok(reopened.findAllByType('summary').some((s:any)=>['查看完整摘要和关键词','查看完整会议摘要'].includes(text(s))));
 assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
 assert.equal(reopened.findAllByType('input').filter((n:any)=>String(n.props['aria-label']).startsWith('恢复为待办：')).length,1);
+act(()=>tree.unmount());
+
+// An incomplete long result is actionable information, not a duplicate notice.
+const partial=structuredClone(snapshot);
+partial.host.sessions[0].minutesByMode!.offlineStore!.processing={...processing,complete:false,completedChunks:1,processedSourceBytes:50};
+partial.host.sessions[0].minutes!.processing={...processing,complete:false,completedChunks:1,processedSourceBytes:50};
+act(()=>tree=create(<CompanionDashboard snapshot={partial} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}/>));
+act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
+assert.ok(tree.root.findAllByProps({role:'status'}).some((n:any)=>text(n).includes('部分纪要：已整理 1/2 段')));
+assert.ok(tree.root.findAllByType('button').some((n:any)=>text(n)==='继续整理当前纪要'));
 act(()=>tree.unmount());
 
 // When supplied, inspect the actual public 130-minute installed-program result.

@@ -19,7 +19,7 @@ import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import {CompanionDeviceRecordings,type DeviceRecordingActions} from './CompanionDeviceRecordings';
 import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
-import {splitGeneratedMeetingMetadata} from './meetingReading';
+import {isGeneratedReadingNotice,splitGeneratedMeetingMetadata} from './meetingReading';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import {deviceConnectionStatus} from './deviceConnectionStatus';
@@ -2390,20 +2390,18 @@ export function CompanionDashboard({
               {minutesDisplayContext?<p className="ct-minutes-mode-meta">{(selectedMinutesVariant??legacyMinutes)?.source==='rules_l0'&&(selectedMinutesVariant??legacyMinutes)?.quality==='draft'
                 ? '整理未完成。下方是基础草稿，尚未应用本次补充；原话和补充均已保存。'
                 : '本次依据原话＋你选择的补充整理；补充不是录音识别。'}</p>:null}
-              {minutesProcessing ? <div className={companionMinutesProcessingComplete(minutesProcessing) ? 'ct-minutes-mode-meta' : 'ct-step-warn'} role="status">
-                {companionMinutesProcessingComplete(minutesProcessing)
-                  ? `长会议已整理全部 ${minutesProcessing.totalChunks} 段；各段原文依据已保留，内容请核对。`
-                  : `部分纪要：已整理 ${minutesProcessing.completedChunks}/${minutesProcessing.totalChunks} 段，原文与已完成分段都已保留。`}
-                {!companionMinutesProcessingComplete(minutesProcessing) ? <button type="button" className="ct-action"
+              {minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing) ? <div className="ct-step-warn" role="status">
+                {`部分纪要：已整理 ${minutesProcessing.completedChunks}/${minutesProcessing.totalChunks} 段，原文与已完成分段都已保留。`}
+                {<button type="button" className="ct-action"
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !finalTranscript || transcriptReviewUnsaved || editingMinutes || selectedMinutesStale}
-                  onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>继续整理当前纪要</button> : null}
+                  onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>继续整理当前纪要</button>}
               </div> : null}
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
-              </div> : surface!=='windows' && selectedMinutesVariant && !manualMinutes ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于修订文字' : ''}</p> : null}
+              </div> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
-              {!editingMinutes?<div className="ct-result-reading-toolbar"><span>{manualMinutes?'手写内容':selectedMinutesVariant?.source==='userEdited'?'含人工修订':'AI 整理 · 请核对'}</span><button type="button" className="ct-text-button" disabled={!hasMinutes||!onSaveMeeting||selectedRecordingBeingCaptured} onClick={()=>{setCalendarEditAll(false);setCalendarEditLine(undefined);setCalendarEditRequest(null);setEditingMinutes(true);}}>编辑纪要</button></div>:null}
+              {!editingMinutes?<div className="ct-result-reading-toolbar"><span>{manualMinutes?'手写内容':selectedMinutesVariant?.source==='userEdited'?'含人工修订':selectedMinutesVariant?.source==='rules_l0'?'原句摘录草稿':selectedMinutesVariant?.quality==='draft'?'速记草稿':'AI 整理 · 请核对'}{!manualMinutes&&companionTranscriptReviewRevision(selectedSession)!==null?' · 基于修订文字':''}</span><button type="button" className="ct-text-button" disabled={!hasMinutes||!onSaveMeeting||selectedRecordingBeingCaptured} onClick={()=>{setCalendarEditAll(false);setCalendarEditLine(undefined);setCalendarEditRequest(null);setEditingMinutes(true);}}>编辑纪要</button></div>:null}
               {!editingMinutes&&hasMinutes?renderSavedReading():null}
               {(selectedSession.minutesByMode?.history ?? []).some(item=>item.mode===minutesViewMode) ? <details className="ct-minutes-history">
                 <summary>查看以前的整理结果</summary>
@@ -3862,13 +3860,14 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
     if(markdown.startsWith(envelope))reading=markdown.slice(envelope.length);
   }
   reading=splitGeneratedMeetingMetadata(reading).body;
+  const hideGeneratedNotices=!noteContext&&Boolean(splitGeneratedMeetingMetadata(savedMarkdown).metadata);
   // The detail page already owns the current recording title. Hide only its
   // duplicated leading document heading while reading; saved markdown, editor,
   // exports, source-note provenance and later authored headings remain intact.
   const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked,compactSources:!!noteContext,recordingTime,contextKey:actionContextKey,title:recordingTitle}:undefined;
   const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
   if(longEvidence)return <div className="ct-brief-minutes">
-    <MarkdownMinutes markdown={longEvidence.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+    <MarkdownMinutes markdown={longEvidence.overview} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
     {longEvidence.detailSummary?<details className="ct-full-minutes"><summary>{longEvidence.detailKeywords?'查看完整摘要和关键词':'查看完整会议摘要'}</summary>
       <MarkdownMinutes markdown={longEvidence.detailSummary} {...sourceProps}/>
       {longEvidence.detailKeywords?<MarkdownMinutes markdown={longEvidence.detailKeywords} {...sourceProps}/>:null}
@@ -3884,7 +3883,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   </details>:null;
   const shortOverview=compactAllowed&&!noteContext?splitShortMinutesOverview(shortReading):null;
   if(shortOverview)return <div className="ct-brief-minutes">
-    <MarkdownMinutes markdown={shortOverview.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+    <MarkdownMinutes markdown={shortOverview.overview} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
     <details className="ct-full-minutes"><summary>{shortOverview.hasSources?'查看完整摘要和补充原文':'查看完整摘要'}</summary>
       <MarkdownMinutes markdown={shortOverview.detail} {...sourceProps}/>
     </details>
@@ -3893,7 +3892,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   const brief = compactAllowed ? briefMinutes(shortReading, transcript, durationMs, !!noteContext) : null;
   if (!brief) return <div className="ct-brief-minutes">
     
-      <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
+      <MarkdownMinutes markdown={shortReading} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
     {shortSource}
     {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
       
@@ -3923,7 +3922,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false,hideGeneratedNotices=false }: { markdown: string;hideDocumentTitle?:boolean;hideGeneratedNotices?:boolean;
   actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string;contextKey?:string;title?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string }) {
@@ -3934,8 +3933,12 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
     return saved&&saved.text===row.text&&saved.completed===row.completed?[[row.lineIndex,saved] as const]:[];
   }));
   const blocks: Array<{ type: 'title' | 'heading' | 'item' | 'text'; text: string;action?:SavedAction }> = [];
+  let noticeFence:string|null=null;
   markdown.split(/\r?\n/).forEach((raw,lineIndex) => {
     const line = raw.trim();
+    const marker=/^\s*(`{3,}|~{3,})/.exec(raw);
+    if(marker){const kind=marker[1][0];noticeFence=noticeFence===kind?null:noticeFence??kind;}
+    if(hideGeneratedNotices&&!noticeFence&&isGeneratedReadingNotice(raw))return;
     if (!line || /^Generated:|^Duration:|^Source:|^Minutes engine:/i.test(line)) return;
     if (line.startsWith('# ')) blocks.push({ type: 'title', text: line.slice(2) });
     else if (/^#{2,3} /.test(line)) blocks.push({ type: 'heading', text: line.replace(/^#{2,3} /, '') });

@@ -7,7 +7,7 @@ import {companionMinutesReferencedSources} from '../packages/core/src/minutesSou
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {splitShortMinutesEvidence,splitShortMinutesOverview,briefMinutes} from '../packages/ui/src/briefMinutes';
 (globalThis as any).document={activeElement:null,getElementById:()=>null};
-(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
+(globalThis as any).window={...((globalThis as any).window??{}),requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
 (globalThis as any).HTMLElement=class {};(globalThis as any).HTMLButtonElement=class extends HTMLElement {};
 const source='明天下午讨论产品包装。小王负责整理报价，周五之前发给大家。';
 const main='# 包装会议\n\n## Summary\n- 讨论产品包装\n\n## Decisions\n- None captured\n\n## Action Items\n- 整理报价 (owner: 小王, due: 周五)\n\n## Questions\n- None captured\n\n## Keywords\n包装';
