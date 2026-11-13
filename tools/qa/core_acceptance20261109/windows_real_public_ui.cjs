@@ -31,6 +31,14 @@ module.exports=async(page,plan,out,reopened)=>{
  await page.screenshot({path:path.join(out,'actual-public-minutes-light.png'),fullPage:true});
  await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();assert((await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'actual-public-minutes-dark-viewport.png'),fullPage:false});await page.screenshot({path:path.join(out,'actual-public-minutes-dark.png'),fullPage:true});
  await nav().getByRole('button',{name:'文字',exact:true}).click();for(const term of transcriptTerms)assert((await page.locator('#ct-recording-text').innerText()).includes(term),term);
+ if(spec.expectReadableTranscript){
+  const body=page.getByRole('region',{name:'录音转写文字',exact:true});
+  await page.getByRole('button',{name:'原始转写',exact:true}).click();const originalText=await body.innerText();
+  assert.equal(originalText.replace(/\s/g,''),row.transcriptText.replace(/\s/g,''),'Original recognition remains complete');
+  await page.getByRole('button',{name:'流畅阅读',exact:true}).click();const clean=await body.innerText();
+  assert(clean.length<originalText.length);assert(clean.includes('三个月'));assert(await body.locator('p').count()>10);
+  await page.screenshot({path:path.join(out,'actual-readable-transcript-viewport.png'),fullPage:false});
+ }
  if(!reopened){
   await page.getByRole('button',{name:'回听',exact:true}).click();const player=page.locator('#ct-recording-playback audio').first();await player.waitFor();
   await page.waitForFunction(()=>{const a=document.querySelector('#ct-recording-playback audio');return a&&a.readyState>=1&&Number.isFinite(a.duration);},{},{timeout:30000});
@@ -44,5 +52,5 @@ module.exports=async(page,plan,out,reopened)=>{
  const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();const text=await preview.innerText();for(const term of spec.expectedExportTerms||['超市','四层','设备录音'])assert(text.includes(term),term);assert(!text.includes('Minutes engine:')&&!text.includes('Generated:'));
  fs.writeFileSync(path.join(out,'actual019f-ui-readable-preview.txt'),text);await page.screenshot({path:path.join(out,'actual019f-export.png'),fullPage:true});
  assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')),original);
- return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:spec.sourceKind!=='importedAudio',actualPublicImportedAudioResultsRead:spec.sourceKind==='importedAudio',actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,actualFallbackTopicListAndOrdinaryScrollChecked:!!spec.expectTopicDisclosures,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
+ return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:spec.sourceKind!=='importedAudio',actualPublicImportedAudioResultsRead:spec.sourceKind==='importedAudio',actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,actualReadableAndCompleteOriginalTranscriptSwitchChecked:!!spec.expectReadableTranscript,actualFallbackTopicListAndOrdinaryScrollChecked:!!spec.expectTopicDisclosures,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
 };
