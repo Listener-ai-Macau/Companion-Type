@@ -57,7 +57,7 @@ fn run()->Result<(),String>{
             let d=f.buttons.iter().filter(|e|matches!(e,Button::Down(_))).count() as u64;
             cursor.apply(f)?;clicks+=c;drags+=d;}
         if report.elapsed()>Duration::from_millis(250){
-            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"contacts":p.contact_status(),"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));
+            println!("{}",serde_json::json!({"stage":"running","controlsCursor":controls,"mapping":p.settings.mapping,"metrics":p.metrics,"contacts":p.contact_status(),"planarState":p.planar_state(),"position":preview_position,"clickRequests":clicks,"dragRequests":drags}));
             io::stdout().flush().map_err(|e|e.to_string())?;report=Instant::now();
         }
         next+=Duration::from_nanos(if p.settings.mapping==Mapping::Laser{4_166_667}else{8_333_333});

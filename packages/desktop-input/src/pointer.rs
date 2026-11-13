@@ -242,6 +242,9 @@ impl Pointer {
         if self.metrics.paused{c.clear_motion();}
     }
     pub fn contact_status(&self)->contact::Status{self.contacts.status.clone()}
+    /// Experimental planar readiness differs from sensor calibration: after an
+    /// impact/gap the user may need to rest before displacement can resume.
+    pub fn planar_state(&self)->Option<&desktop::State>{self.coarse.as_ref().map(|c|&c.desktop.state)}
     pub fn learn_contact(&mut self,side:contact::Side)->Result<(),&'static str>{
         if !self.settings.desktop_motion{return Err("先启用桌面平移和转动，再校准左右轻敲。");}
         if !self.metrics.calibrated||self.metrics.paused{return Err("先放稳卡片完成动作校准，再校准左右轻敲。");}
