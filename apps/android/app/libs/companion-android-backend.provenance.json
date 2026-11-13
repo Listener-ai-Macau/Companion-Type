@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-13T17:01:58+08:00",
-  "aarSha256": "531ee4b5540321bf11456016136ffe68aed506e74ef6315e70da5e156a4ffe43",
-  "backendSourceCommit": "606cd51bccd4ea6c687d678573366cf8e4397038",
+  "at": "2026-11-13T17:23:53+08:00",
+  "aarSha256": "39acfbedb8cb4294be0455b3faa40d0033c25cc544aa6a2ae8c964f91a999a96",
+  "backendSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-audio-import-backend20261110",
   "remoteSourceVerified": false,
-  "nativeSourceCommit": "606cd51bccd4ea6c687d678573366cf8e4397038",
-  "nativeLibrarySha256": "8c5c5e5d323fc14451117a62d534ad4074a1aec397aa76d1ec8775880571b1a2",
+  "nativeSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+  "nativeLibrarySha256": "a957c77d8480cbb9f11a8c07e6cc3f07be406e4c49a8dea3ca05b48b486300eb",
   "nativeLibrary16KiBElfAligned": true,
   "nativeRebuiltThisBatch": true,
   "nativeProductionSourceIdenticalToNativeSourceCommit": true,
@@ -16,7 +16,7 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Actual production native backend: release ASR recognizer before local punctuation; reuse raw cache and enable concise default meeting overview for few long summary bullets. Complete detailed/source contracts retained. All Java and other AAR entries unchanged; no recognizer weights, shared runtime binaries, or recorder protocol change.",
+  "scope": "Actual long meeting source review: do not turn unclear mid-sentence fragments into confirmed facts; distinguish proposals from decisions. Overview covers all major subjects; long summaries receive overview even with few bullets. Reader template metadata projection repaired. Native ASR/punctuation code identical to actual149 tested source, all Java/other AAR entries preserved. No model/recorder protocol change.",
   "javaSourceCommit": "1309e0713aca8c14580174c5fa835db4b9daecba",
   "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
@@ -34,7 +34,7 @@
   "inherited095Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability096\\build\\inherited-provenance095.json",
   "inherited096Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability097\\build\\inherited-provenance096.json",
   "inherited098Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability099\\build\\inherited-provenance098.json",
-  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-serial-overview-native-r2\\result.json",
+  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-long-actual-native\\result.json",
   "javaClassesChangedFrom107": [
     "com/denzic/companion/mobile/DurableConsume$Pending.class",
     "com/denzic/companion/mobile/DurableConsume.class",
@@ -103,7 +103,7 @@
     "com/denzic/companion/mobile/RecordingLibrary.class"
   ],
   "importedOriginalReencoded": false,
-  "previousAarSha256": "322e23708d4905c0248389202298e988ab0669374a2d9bf91415697ab2ec7b86",
+  "previousAarSha256": "531ee4b5540321bf11456016136ffe68aed506e74ef6315e70da5e156a4ffe43",
   "allOtherAarEntriesByteIdenticalToPrevious": true,
   "javaClassesChangedThisBatch": false,
   "javaSourceChangedThisBatch": [
