@@ -6,6 +6,12 @@ module.exports=async(page,plan,out,reopened)=>{
  await page.locator('.ct-library-card').first().click();await nav().waitFor();
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
+ if(spec.expectFoldedOverview){
+  await article.locator('[data-meeting-heading="会议概览"]').waitFor();
+  const full=article.locator('details').filter({has:page.locator('summary').filter({hasText:/^查看完整(?:会议摘要|摘要和关键词)$/})});assert.equal(await full.count(),1);assert.equal(await full.evaluate(el=>el.open),false);
+  assert.equal(await article.locator('[data-meeting-heading="Summary"]').isVisible(),false,'Detailed summary must start folded');
+  await full.locator(':scope>summary').click();assert((await full.innerText()).length>300,'Complete generated detail must remain readable');await full.locator(':scope>summary').click();assert.equal(await full.evaluate(el=>el.open),false);
+ }
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
  await page.screenshot({path:path.join(out,'actual-public-minutes-light.png'),fullPage:true});
  await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();assert((await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));await page.screenshot({path:path.join(out,'actual-public-minutes-dark.png'),fullPage:true});
@@ -23,5 +29,5 @@ module.exports=async(page,plan,out,reopened)=>{
  const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();const text=await preview.innerText();for(const term of spec.expectedExportTerms||['超市','四层','设备录音'])assert(text.includes(term),term);assert(!text.includes('Minutes engine:')&&!text.includes('Generated:'));
  fs.writeFileSync(path.join(out,'actual019f-ui-readable-preview.txt'),text);await page.screenshot({path:path.join(out,'actual019f-export.png'),fullPage:true});
  assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')),original);
- return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:true,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
+ return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:true,actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
 };
