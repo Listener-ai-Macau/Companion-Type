@@ -3,7 +3,7 @@ import React from 'react';import {act,create} from 'react-test-renderer';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {savedExportPreview,SavedPreviewInterrupted} from '../packages/ui/src/savedExportPreview';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
-(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
+(globalThis as any).window={...(globalThis as any).window,requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
 snapshot.host.persistence={status:'ready'};
 const row=snapshot.host.sessions[0];row.minutesByMode.offlineStore!.markdown='## 行动项\n- [ ] 带身份证 (due: 2026-10-28 晚上)';

@@ -3,6 +3,7 @@
 // Tests needing real DOM interaction use the installed/browser entry instead.
 globalThis.document??={activeElement:null,querySelector:()=>null,getElementById:()=>null};
 globalThis.window??={};
+globalThis.window.matchMedia??=(media)=>({media,matches:false,onchange:null,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){},dispatchEvent(){return true;}});
 globalThis.window.requestAnimationFrame??=(callback)=>{callback(0);return 0;};
 globalThis.window.cancelAnimationFrame??=()=>{};
 globalThis.window.setTimeout??=globalThis.setTimeout;

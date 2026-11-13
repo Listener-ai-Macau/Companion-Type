@@ -64,7 +64,7 @@ await act(async()=>pending({contentHash:'a'.repeat(64),textContent:message}));
 assert.equal(tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length,0,'A title/source change invalidates pending QR data');
 snapshot=JSON.parse(original);defer=false;
 await act(async()=>tree.update(<CompanionDashboard {...props()}/>));
-await act(async()=>button('编辑清单').props.onClick());
+await act(async()=>button('编辑纪要').props.onClick());
 assert.equal(button('显示文字二维码'),undefined,'Editing cannot disclose a previous saved/draft mixture');
 act(()=>tree.unmount());
 assert.equal(JSON.stringify(snapshot),original);

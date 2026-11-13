@@ -17,14 +17,14 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.screenshot({path:out+'/device-light.png',fullPage:true});
  await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
- assert.equal(await nav.locator('button').count(),4);
+ assert.equal(await nav.locator('button').count(),3);
  assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
  assert(await page.getByText('本周聚焦会议详情和完整交接，预算仍待确认。',{exact:true}).isVisible(),'Saved minutes must be visible immediately, without opening a disclosure');
  await page.screenshot({path:out+'/result-light.png',fullPage:true});
  await nav.getByRole('button',{name:'文字',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
- await nav.getByRole('button',{name:/补充/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
+ await nav.getByRole('button',{name:/笔记/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
  const item=page.getByRole('textbox',{name:'跟进事项 2',exact:true});await item.fill('核对同一张清单的内容范围，确认不混入其他个人草稿');
- await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/补充/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+ await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/笔记/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
  await page.locator('#fixture-failure').click();await page.getByRole('button',{name:'保存修改',exact:true}).click();await page.getByText(/保存尚未确认/).first().waitFor();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
  await page.locator('#fixture-failure').click();const save=page.getByRole('button',{name:/^(重试)?保存修改$/,exact:true});await save.click();
  await page.getByRole('button',{name:'导出这张清单',exact:true}).click();assert(await page.locator('#ct-meeting-handoff-pane').isVisible());
@@ -85,6 +85,6 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.locator('#fixture-sync-controls').getByRole('button',{name:'blocked',exact:true}).click();
  await page.getByRole('button',{name:'查看同步详情',exact:true}).click();await syncRegion().getByText('自动同步已暂停',{exact:true}).waitFor();
  await page.getByRole('button',{name:'录音',exact:true}).click();assert.equal(await syncRegion().count(),0);
- assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
+ assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','three reading panes and fixed header export','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
 }catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});

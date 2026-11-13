@@ -6,7 +6,7 @@ module.exports=async function reopenJourney(page,plan,out){
  await page.locator('.ct-library-card').filter({hasText:plan.title}).click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
  await page.locator('#ct-recording-result[open]').waitFor();
- await nav.getByRole('button',{name:/补充/}).click();
+ await nav.getByRole('button',{name:/笔记/}).click();
  const expected=plan.expectedSnapshot.find(row=>row.id===plan.sessionId);
  const note=expected.meetingNotes.find(row=>row.text.includes('本次人工跟进'));
  assert(note&&note.references.length>0);

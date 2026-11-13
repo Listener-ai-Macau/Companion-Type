@@ -45,7 +45,7 @@ act(()=>{tree=create(<CompanionTranscriptReview session={{...row,source:'boardDe
 assert.match(text(tree.toJSON()),/可对照原音/);act(()=>tree.unmount());
 (globalThis as any).HTMLButtonElement=class {};
 (globalThis as any).document={activeElement:null};
-(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>fn()};
+(globalThis as any).window={...(globalThis as any).window,requestAnimationFrame:(fn:()=>void)=>fn()};
 const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{}});
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 assert.match(text(tree.toJSON()),/手写清单已保存/);

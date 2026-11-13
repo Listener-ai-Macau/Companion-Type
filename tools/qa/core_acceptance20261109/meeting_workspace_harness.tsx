@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import publicRecorded019f from './fixtures/public-recorded019f.json';
 import {createRoot} from 'react-dom/client';
 import {CompanionDashboard} from '../../../packages/ui/src/CompanionDashboard';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../../../packages/core/src/companionV1';
@@ -16,6 +17,8 @@ const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',statu
 if(new URLSearchParams(location.search).has('without-minutes'))(row as any).minutes=null;
 const initial={...original,host:{...original.host,selectedSessionId:row.id,sessions:[row as any],persistence:{status:'ready'}}} as any;
 if(new URLSearchParams(location.search).has('notebook-library'))initial.host.sessions.push({...structuredClone(row),id:'public-other-meeting',title:'客户讨论 · 文字示例'});
+if(new URLSearchParams(location.search).has('actual-public-019f')){initial.host.sessions=[structuredClone(publicRecorded019f)];initial.host.selectedSessionId=publicRecorded019f.id;}
+if(new URLSearchParams(location.search).has('empty-library')){initial.host.sessions=[];initial.host.selectedSessionId=null;}
 const connectionFixture=new URLSearchParams(location.search).get('connection');
 if(connectionFixture){
  initial.source=connectionFixture==='stale'?'lastKnown':'firmware';initial.connected=initial.device.connected=['connected','stale','storage'].includes(connectionFixture);initial.device.mode='windowsNative';
@@ -39,9 +42,9 @@ function View(){
  onPauseSync={()=>setSyncPhase('paused')}
  productSettings={{asrProvider:'local-paraformer',localAsrAvailable:true,deepseekMinutesEnabled:false,deepseekApiKeySet:false,autoLocalCardTranscription:true,openaiAsrEndpoint:'',openaiAsrModel:'',deepseekBaseUrl:'',deepseekModel:'',bleCompress:false} as any}
  onControl={request=>setSnapshot(s=>applyCompanionV1ControlFixture(s,request))} onRefresh={()=>{}}
- onSaveMeeting={async request=>{if(fail)throw Error('公开故障用例：保存失败，修改保留。');const next=structuredClone(snapshot);const current=next.host.sessions[0];if(request.title!==undefined)current.title=request.title;setSnapshot(next);return next;}}
- onSaveNote={async request=>{if(fail)throw Error('公开故障用例：保存失败，修改保留。');const next=structuredClone(snapshot),current=next.host.sessions[0];current.noteRevision=(current.noteRevision??0)+1;const note={id:request.noteId,text:request.text??'',kind:request.kind??'note',references:request.references??[],bookmarkId:request.bookmarkId,createdAt:'2026-11-12T01:00:00Z',updatedAt:'2026-11-12T01:30:00Z'};current.meetingNotes=request.action==='delete'?current.meetingNotes?.filter(n=>n.id!==request.noteId):[...(current.meetingNotes??[]).filter(n=>n.id!==request.noteId),note];setSnapshot(next);return next;}}
- onPreviewMeetingExport={async request=>{const selection=request.contentSections;const current=snapshot.host.sessions[0];let text='';if(selection?.minutes)text+=current.minutes?.markdown??'';if(selection?.transcript)text+='\n'+current.transcriptText;for(const id of selection?.noteIds??[])text+='\n'+(current.meetingNotes??[]).find(n=>n.id===id)?.text;return{contentHash:'a'.repeat(64),textContent:text};}}
+ onSaveMeeting={async request=>{if(fail)throw Error('公开故障用例：保存失败，修改保留。');const next=structuredClone(snapshot);const current=next.host.sessions.find(row=>row.id===request.sessionId);if(request.title!==undefined)current.title=request.title;setSnapshot(next);return next;}}
+ onSaveNote={async request=>{if(fail)throw Error('公开故障用例：保存失败，修改保留。');const next=structuredClone(snapshot),current=next.host.sessions.find(row=>row.id===request.sessionId);current.noteRevision=(current.noteRevision??0)+1;const note={id:request.noteId,text:request.text??'',kind:request.kind??'note',references:request.references??[],bookmarkId:request.bookmarkId,createdAt:'2026-11-12T01:00:00Z',updatedAt:'2026-11-12T01:30:00Z'};current.meetingNotes=request.action==='delete'?current.meetingNotes?.filter(n=>n.id!==request.noteId):[...(current.meetingNotes??[]).filter(n=>n.id!==request.noteId),note];setSnapshot(next);return next;}}
+ onPreviewMeetingExport={async request=>{const selection=request.contentSections;const current=snapshot.host.sessions.find(row=>row.id===request.sessionId);let text='';if(selection?.minutes)text+=current.minutes?.markdown??'';if(selection?.transcript)text+='\n'+current.transcriptText;for(const id of selection?.noteIds??[])text+='\n'+(current.meetingNotes??[]).find(n=>n.id===id)?.text;return{contentHash:'a'.repeat(64),textContent:text};}}
  onExportMeeting={async()=>{if(fail)throw Error('公开故障用例：文件保存失败，可重试。');return null;}}
  onCopyMeetingContent={async()=>({status:'copied'})}
  onShareMeetingContent={async()=>({status:'fileCopied',bytes:20,fileName:'公开会议.pdf'}) as any}

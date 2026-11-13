@@ -16,7 +16,7 @@ module.exports=async(page,plan,out,reopened)=>{
   await player.press('Space');await player.evaluate(el=>el.pause());
   fs.writeFileSync(path.join(out,'actual019f-playback.json'),JSON.stringify({duration,position:await player.evaluate(el=>el.currentTime),mutedHeadlessReplay:true,ordinaryAudioControlSpaceKey:true},null,2));
  }
- await nav().getByRole('button',{name:'导出',exact:true}).click();const panel=page.locator('.ct-content-export');await panel.getByLabel('录音文字',{exact:true}).check();await panel.getByLabel('整理结果',{exact:true}).check();await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();
+ await page.locator('.ct-reader-export').click();const panel=page.locator('.ct-content-export');await panel.getByLabel('录音文字',{exact:true}).check();await panel.getByLabel('整理结果',{exact:true}).check();await panel.getByRole('button',{name:'预览所选内容',exact:true}).click();
  const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();const text=await preview.innerText();assert(text.includes('超市')&&text.includes('四层')&&text.includes('设备录音'));assert(!text.includes('Minutes engine:')&&!text.includes('Generated:'));
  fs.writeFileSync(path.join(out,'actual019f-ui-readable-preview.txt'),text);await page.screenshot({path:path.join(out,'actual019f-export.png'),fullPage:true});
  assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')),original);
