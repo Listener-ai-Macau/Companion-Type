@@ -26,4 +26,6 @@ const fallbackHtml=render(fallback);
 assert.equal((fallbackHtml.match(/class="ct-overview-topic"/g)||[]).length,8);
 assert(fallbackHtml.includes('议题8：完整原话中的条件、数字和否定保持，未决定取消。'));
 assert.equal((render('## 全会重点\n\n- 人工内容，没有生成标记。').match(/class="ct-overview-topic"/g)||[]).length,0);
+assert(render(body).includes('minutes-full-summary'),'complete long detail stays available behind the overview');
+assert(!render(body.replace(notice,'> 部分纪要：已完成1/2段。')).includes('minutes-full-summary'),'an incomplete source result must not be folded as complete');
 console.log('PASS mobile meeting reading: one origin note, complete generated details retained; missing-source warnings and authored words preserved.');
