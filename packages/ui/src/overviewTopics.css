@@ -1,0 +1,8 @@
+/* Existing generated fallback points: show every topic before opening detail. */
+.ct-overview-topic{margin:0;border-bottom:1px solid var(--nb-line,var(--line,#e4e4e7));color:var(--nb-ink,var(--ink,#18181b))}
+.ct-overview-topic>summary{box-sizing:border-box;min-height:44px;padding:10px 0;cursor:pointer;font-size:14px;line-height:1.6;color:inherit}
+.ct-overview-topic>summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.ct-overview-topic-preview{display:inline-block;vertical-align:middle;max-width:calc(100% - 22px);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ct-overview-topic-body{padding:0 0 14px 18px;overflow-wrap:anywhere}
+.ct-overview-topic-body>p{margin:0!important}
+.ct-overview-topic-body .minutes-reading{padding:0;border:0;background:transparent;box-shadow:none}

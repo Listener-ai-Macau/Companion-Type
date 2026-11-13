@@ -119,6 +119,24 @@ assert.ok(tree.root.findAllByProps({role:'status'}).some((n:any)=>text(n).includ
 assert.ok(tree.root.findAllByType('button').some((n:any)=>text(n)==='继续整理当前纪要'));
 act(()=>tree.unmount());
 
+// A failed optional concise request retains long source-backed fallback points.
+// All major topics must be present before opening one paragraph, rather than
+// showing three early paragraphs and hiding the later half of the meeting.
+if(process.env.COMPANION_TEST_PUBLIC_SOURCE_MINUTES){
+ const actual=JSON.parse(readFileSync(process.env.COMPANION_TEST_PUBLIC_SOURCE_MINUTES,'utf8'));
+ const actualState=structuredClone(snapshot);actualState.host.sessions=[actual];actualState.host.selectedSessionId=actual.id;
+ act(()=>tree=create(<CompanionDashboard snapshot={actualState} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}/>));
+ act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
+ const article=tree.root.findByProps({id:'ct-recording-result'}).findAllByType('article')[0];
+ const topics=article.findAllByProps({className:'ct-overview-topic'});
+ assert.equal(topics.length,8);assert.ok(topics.every((n:any)=>!n.props.open));
+ const labels=topics.map((n:any)=>text(n.findByType('summary'))).join('\n');
+ assert.ok(labels.includes('果蔬')&&labels.includes('蛋糕')&&labels.includes('日化')&&labels.includes('奶制品'),'later topics remain in the default reading index');
+ assert.ok(topics.every((n:any)=>text(n.findByProps({className:'ct-overview-topic-body'})).trim().startsWith(text(n.findByType('summary')).trim())),'opening a topic retains its complete generated wording and source links');
+ assert.ok(!article.findAllByType('button').some((n:any)=>text(n).includes('其余')));
+ act(()=>tree.unmount());
+}
+
 // When supplied, inspect the actual public 130-minute installed-program result.
 // This verifies the real saved format without submitting its audio or text.
 if (process.env.COMPANION_TEST_PUBLIC_MINUTES) {
