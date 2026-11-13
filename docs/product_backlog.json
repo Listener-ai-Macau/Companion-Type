@@ -133816,7 +133816,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-13T21:47:16+08:00",
+      "updatedAt": "2026-11-13T22:13:08+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -134602,7 +134602,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Observe this SAME original131 body-click/held-regrip experience and complete feedback; explicit Start before cursor. No new sampling window. Memory budgets allocated; no board RAM filled. Preserve old130/8.42s/RF failures.",
+      "next": "Normal133 matched payload/basic no-cursor compatibility, then one affected click/held-stabilization experience. Keep Owner131 first-connect failure,missing197/gaps9 open; do not repeat unchanged stability/speed tests or alter chip tap threshold blindly.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -143462,7 +143462,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "NORMAL131_COHERENT_REGRIP_CLICK_CANDIDATE_READY_PHYSICAL_OPEN",
+          "state": "OWNER131_CLICK_TARGET_REPAIR_NORMAL133_BUILD",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143471,7 +143471,7 @@
           "actualDeviceQualified": false,
           "saleQualified": false,
           "updatedAt": "2026-11-13T21:47:16+08:00",
-          "sourceCommit": "fcf85dd818baf1d1cd5ffd50ba6243a398b36889",
+          "sourceCommit": "01b10839e4d36a1a70bef586e09cb85154dd2ff2",
           "sourceProtectedRemotely": true,
           "receipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\delivery.json",
           "portableAlgorithmCpu": {
@@ -144192,13 +144192,11 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "OWNER_ANGULAR_EXPERIENCE_ACTIVE",
-            "session": 85573,
-            "boardHeld": true,
-            "ownerPopupLaunched": true,
-            "result": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\owner-experience\\result.json",
-            "next": "Observe this SAME original131 body-click/held-regrip experience and complete feedback; explicit Start before cursor. No new sampling window. Memory budgets allocated; no board RAM filled. Preserve old130/8.42s/RF failures.",
-            "ownerResultLastObservedAt": "2026-11-13T21:50:50+08:00"
+            "state": "BUILDING_NORMAL133_TARGETED_CLICK_REPAIR",
+            "session": null,
+            "boardHeld": false,
+            "ownerPopupLaunched": false,
+            "next": "Normal133 matched payload/basic no-cursor compatibility, then one affected click/held-stabilization experience. Keep Owner131 first-connect failure,missing197/gaps9 open; do not repeat unchanged stability/speed tests or alter chip tap threshold blindly."
           },
           "latestOwnerMouseFeedback": {
             "id": "IMU-OWNER124-ANGULAR-FEEL",
@@ -145361,9 +145359,196 @@
             "normalWindowsInstalled": false,
             "ownerPopupLaunched": true,
             "ownerStarted": true,
-            "ownerState": "OWNER_ANGULAR_EXPERIENCE_ACTIVE",
+            "ownerState": "OWNER_EXPERIENCE_ENDED",
             "ownerPopupSession": 85573,
-            "ownerResult": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\owner-experience\\result.json"
+            "ownerResult": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\owner-experience\\result.json",
+            "ownerFinished": true,
+            "ownerOutcome": {
+              "at": "2026-11-13T22:13:08+08:00",
+              "ownerWindowResult": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\owner-experience\\result.json",
+              "ownerPopupText": "",
+              "ownerChatRaw": "就感觉你这个倾斜的好像可以用，但是。哦怎么说嘞？就是他。他点击那部分还是比较难用的，你看下怎么样优化一下。点击识别不到",
+              "ownerState": "OWNER_EXPERIENCE_ENDED",
+              "movementTentativelyUsableOnly": true,
+              "clickAccepted": false,
+              "clickAreaReceipts": 0,
+              "physicalTapEvents": 17,
+              "nativeClickSubmissions": 13,
+              "allNativeSubmissionsAccepted": true,
+              "clickRewindPixels": {
+                "median": 288.41983288255335,
+                "maximum": 828.4177690030556
+              },
+              "firstFourTapEventsBeforeCalibrationReady": true,
+              "attemptedFingerTapTotalUnknown": true,
+              "physicalEvents": [
+                {
+                  "hostMs": 1794577787533,
+                  "sensorMs": 5095465,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577788081,
+                  "sensorMs": 5096012,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577788111,
+                  "sensorMs": 5096049,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577788523,
+                  "sensorMs": 5096456,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577795274,
+                  "sensorMs": 5103211,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577803547,
+                  "sensorMs": 5111478,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577803674,
+                  "sensorMs": 5111609,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577805182,
+                  "sensorMs": 5113116,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577805257,
+                  "sensorMs": 5113191,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577805834,
+                  "sensorMs": 5113769,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577806052,
+                  "sensorMs": 5113986,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577816224,
+                  "sensorMs": 5124128,
+                  "events": 1024
+                },
+                {
+                  "hostMs": 1794577816403,
+                  "sensorMs": 5124338,
+                  "events": 2048
+                },
+                {
+                  "hostMs": 1794577817161,
+                  "sensorMs": 5125065,
+                  "events": 1024
+                },
+                {
+                  "hostMs": 1794577817363,
+                  "sensorMs": 5125293,
+                  "events": 2048
+                },
+                {
+                  "hostMs": 1794577819800,
+                  "sensorMs": 5127692,
+                  "events": 1024
+                },
+                {
+                  "hostMs": 1794577820040,
+                  "sensorMs": 5127973,
+                  "events": 2048
+                },
+                {
+                  "hostMs": 1794577844882,
+                  "sensorMs": 5152821,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577849998,
+                  "sensorMs": 5157931,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577850042,
+                  "sensorMs": 5157974,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577856973,
+                  "sensorMs": 5164907,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577865513,
+                  "sensorMs": 5173035,
+                  "events": 512
+                },
+                {
+                  "hostMs": 1794577875821,
+                  "sensorMs": 5183749,
+                  "events": 512
+                }
+              ],
+              "nativeClickLines": [
+                "desktop_pointer_native_click right=false target_x=468 target_y=989 before=Some(Point { x: 485.0, y: 967.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=636 target_y=800 before=Some(Point { x: 622.0, y: 534.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=579 target_y=694 before=Some(Point { x: 268.0, y: 467.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=798 target_y=1074 before=Some(Point { x: 863.0, y: 793.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=772 target_y=996 before=Some(Point { x: 450.0, y: 1334.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=839 target_y=1123 before=Some(Point { x: 845.0, y: 1117.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=977 target_y=1171 before=Some(Point { x: 1051.0, y: 1179.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=1208 target_y=1285 before=Some(Point { x: 1296.0, y: 1288.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=2532 target_y=529 before=Some(Point { x: 2210.0, y: 531.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=2501 target_y=516 before=Some(Point { x: 2127.0, y: 665.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=1420 target_y=637 before=Some(Point { x: 1950.0, y: 235.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=396 target_y=929 before=Some(Point { x: 106.0, y: 153.0 }) submitted=3 expected=3",
+                "desktop_pointer_native_click right=false target_x=0 target_y=644 before=Some(Point { x: 0.0, y: 411.0 }) submitted=3 expected=3"
+              ],
+              "firstConnectFailure": [
+                {
+                  "at": "2026-11-13T21:49:31+08:00",
+                  "action": "开始体验",
+                  "error": "RuntimeError('Error: page.evaluate: Native BLE connect failed: BLE initial connect exhausted 4 attempts: attempt 1: connect BLE device C8:ED:45:EB:95:B4: Not connected | attempt 2: connect BLE device C8:ED:45:EB:95:B4: Not connected | attempt 3: connect BLE device C8:ED:45:EB:95:B4: Not connected | attempt 4: connect BLE device C8:ED:45:EB:95:B4: Not connected')"
+                }
+              ],
+              "successfulConnectMs": 2135.8047999965493,
+              "finalMetrics": {
+                "samples": 10718,
+                "missing": 197,
+                "duplicates": 0,
+                "gaps": 9,
+                "sensorHz": 98.58784821341331,
+                "calibrated": true,
+                "calibrationSamples": 0,
+                "dragging": false,
+                "paused": false,
+                "regripping": false,
+                "streamStale": false
+              },
+              "realStreamFailureRetained": "Owner131 missing197/gaps9; successful short preview does not close this stability issue.",
+              "boardReleased": true,
+              "decision": "Remove100ms rewind only for direct-relative shell clicks; reanchor already-queued clicks after ordinary mouse takeover. Clutch disables motion but permits shell clicks. Expose received-tap feedback during calibration. Preserve accepted roll/pitch and legacy laser compensation; no blind chip threshold change.",
+              "regression": {
+                "old131": "68 passed,3 new click regressions failed",
+                "repair": "72 passed, including early-tap dedup/readiness feedback"
+              },
+              "source": "01b10839e4d36a1a70bef586e09cb85154dd2ff2",
+              "normalSource": "a0b1858e5de126974a050d64516e195ceb5b7007",
+              "version": "0.1.133",
+              "readerBaseline": "e55e3b35",
+              "firmware": 66832,
+              "firmwareChanged": false,
+              "physicalFixQualified": false
+            }
           },
           "memoryGrowthBudget20261113": {
             "receipt": "config/companion-memory-growth-budget.json",
@@ -145375,6 +145560,17 @@
             "actualUsageChanged": false,
             "ownerRequest": "怎么会有账面上未分配的东西，这么奇怪呢？你帮我分配一下呀。",
             "decision": "逐段核对真实ELF与_sbrk，分配明确增长预算，现有栈不缩减；不造无人使用的填充数组。"
+          },
+          "clickTargetRepair20261113": {
+            "state": "SOURCE_FIXED_NORMAL133_BUILD_STARTING",
+            "version": "0.1.133",
+            "source": "01b10839",
+            "normalSource": "a0b1858e5de126974a050d64516e195ceb5b7007",
+            "readerBaseline": "e55e3b35",
+            "evidence": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\relative-clickpoint\\owner131-click-analysis.json",
+            "firmwareChanged": false,
+            "relatedTestsPassed": 72,
+            "physicalFeelAccepted": false
           }
         }
       },
@@ -272011,8 +272207,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-13T22:07:31+08:00",
-            "state": "NOTES132155_INSTALLED_NATIVE_READING_AND_TRANSCRIPT_SWITCH_CHECKED_OWNER_JUDGMENT_OPEN",
+            "updatedAt": "2026-11-13T22:34:29+08:00",
+            "state": "VISUAL_POLISH_SOURCE_PREVIEW_READY_INSTALLED132155_RETAINED",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -272020,7 +272216,7 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "一次交付132/155完整阅读场景及真实截图，Owner只短体验整体清晰/顺手，不发逐功能清单或后台工程弹窗。下一主要缺口仍是实卡复杂人声/纪要事实可靠性；先对照已有失败与真实原件定位，手机AI配置依赖保留。不得把清理语气词写成识别准确率提升，不处理01a3/01a7，不用继续小样式版本替代同批收益。",
+            "next": "给出本轮完整视觉对照、具体差距及现有增强能力盘点。当前源头精修保持一个检查点，下一相关完整软件交付再从最新已保存且验证过的输入候选整合并核原生/实机，不逐间距反复重包。Owner观感仍开放；原识别/纪要事实、手机AI和整机售卖缺口保留。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.132",
@@ -272067,7 +272263,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "本轮已对照Notta/Granola官方纪要结构完成132/155同批阅读修订，两端正常升级；实际132真实会议概览/双主题/流畅与原始切换/静音回听/所选导出/真正重开、155实机公开资料阅读/切换/主题/进程重开通过。电脑249旧资料一致，手机6052旧内容一致，原库/外观恢复，自有显示53关闭。一个统一包已私有完整回读。Owner观感未签收；可逆语气词处理不等于实卡识别/纪要事实质量达标，手机AI未配置，整机售卖继续开放。",
+            "knownJobState": "132/155仍为正常已装版；Owner有限肯定但精致感未通过。本轮已实际查看Granola官方交互界面、量测差距并完成双端统一视觉源码/响应式交互预览，第一条内容从403.77提前到276.28px。源码已保留，未因纯视觉再原生重包/安装；不冒充实际新版验收或模型改善。",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -272779,7 +272975,7 @@
                 "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
                 "noMoreOwnerPromptUntilSubstantiveRepair": true,
                 "nativeDeliveryChangesNotStarted": false,
-                "updatedAt": "2026-11-13T22:07:31+08:00",
+                "updatedAt": "2026-11-13T22:34:29+08:00",
                 "implementation": {
                   "firstScreen": "Explicit recording-card link state and one connect action, also visible with an existing library",
                   "devicePage": "Connection state independent of storage/service advice, primary action leads to saved recordings",
@@ -274390,7 +274586,7 @@
                   "androidFrontendSource": "e064b2a80e210ae831e79cf13985696f8b8f2984",
                   "androidVersion": "0.1.155",
                   "androidNativeReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-native-actual-r3\\result.json",
-                  "updatedAt": "2026-11-13T22:07:31+08:00",
+                  "updatedAt": "2026-11-13T22:34:29+08:00",
                   "androidBackendSource": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
                   "realPublicCapture": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-unattended-r2\\result.json",
                   "physicalRecordingDurationMs": 1808210,
@@ -274460,7 +274656,7 @@
                   "privateRemoteReadbackVerified": true,
                   "uiWorkflowEngineeringPassed": true,
                   "inviteOwnerAcceptance": false,
-                  "currentPoint": "本轮已对照Notta/Granola官方纪要结构完成132/155同批阅读修订，两端正常升级；实际132真实会议概览/双主题/流畅与原始切换/静音回听/所选导出/真正重开、155实机公开资料阅读/切换/主题/进程重开通过。电脑249旧资料一致，手机6052旧内容一致，原库/外观恢复，自有显示53关闭。一个统一包已私有完整回读。Owner观感未签收；可逆语气词处理不等于实卡识别/纪要事实质量达标，手机AI未配置，整机售卖继续开放。",
+                  "currentPoint": "132/155仍为正常已装版；Owner有限肯定但精致感未通过。本轮已实际查看Granola官方交互界面、量测差距并完成双端统一视觉源码/响应式交互预览，第一条内容从403.77提前到276.28px。源码已保留，未因纯视觉再原生重包/安装；不冒充实际新版验收或模型改善。",
                   "activeSpeakerControl": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-level-control-full30-fixed20261113\\result.json",
                   "playbackLevelRepair": {
                     "state": "FULL30_PLAYBACK_AND_DURABLE_CAPTURE_COMPLETE_ACCURACY_SCOPE_OPEN",
@@ -274583,9 +274779,40 @@
                     "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notes132155-delivery.json",
                     "privateRemoteReadbackVerified": true,
                     "sourceProtection": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\source-protection132155.json",
-                    "currentPoint": "本轮已对照Notta/Granola官方纪要结构完成132/155同批阅读修订，两端正常升级；实际132真实会议概览/双主题/流畅与原始切换/静音回听/所选导出/真正重开、155实机公开资料阅读/切换/主题/进程重开通过。电脑249旧资料一致，手机6052旧内容一致，原库/外观恢复，自有显示53关闭。一个统一包已私有完整回读。Owner观感未签收；可逆语气词处理不等于实卡识别/纪要事实质量达标，手机AI未配置，整机售卖继续开放。"
+                    "currentPoint": "本轮已对照Notta/Granola官方纪要结构完成132/155同批阅读修订，两端正常升级；实际132真实会议概览/双主题/流畅与原始切换/静音回听/所选导出/真正重开、155实机公开资料阅读/切换/主题/进程重开通过。电脑249旧资料一致，手机6052旧内容一致，原库/外观恢复，自有显示53关闭。一个统一包已私有完整回读。Owner观感未签收；可逆语气词处理不等于实卡识别/纪要事实质量达标，手机AI未配置，整机售卖继续开放。",
+                    "visualPolishReview": {
+                      "at": "2026-11-13T22:19:54+08:00",
+                      "feedbackId": "UI116-DESIGN-FOUNDATION",
+                      "ownerQuotes": [
+                        "感觉还行吧，那你大概给我看了，要简约一下这个东西，然后还有没有什么高级什么增强功能之类的你看一下。就是感觉这个 AI 它那个。UI 方面还是做的不够精致，就感觉很普通的感觉。没有让你有一种就是用心打磨过的感觉。这反正我感觉现在 UI 还是做的比较烂。",
+                        "看这个 ui 方面怎么提升嘛，看看人家的都是怎么弄的，然后看一下分解一下，为什么照抄一下人家。感觉也可以把人家那种该有的高级感给弄出来。"
+                      ],
+                      "state": "VISUAL_POLISH_SOURCE_PREVIEW_READY_INSTALLED132155_RETAINED",
+                      "baselineWindows": "0.1.132",
+                      "baselineAndroid": "0.1.155",
+                      "ownerResponse": "132/155还行仅为有限肯定；普通、不够精致仍未通过。",
+                      "visualReference": "Granola official interactive notepad at https://www.granola.ai/",
+                      "measuredAudit": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/visual-polish-audit/result.json",
+                      "finding": "1440px baseline starts first point at403.77px: title/replay/tabs/provenance/outline each consume a row. Reused blue surfaces do not distinguish reading and control hierarchy. Font inspection confirms real Microsoft YaHei UI; not a missing-font defect.",
+                      "decision": "Adapt one coherent notepad visual grammar: compact reader header, quieter chrome, shared palette/type/spacing, ordinary source-backed library snippet, contextual existing capabilities. No new feature pile or speculative model/hardware changes.",
+                      "advancedCapabilitiesInventory": "Existing meeting Q&A, source lookup, quote-to-note, template organization and selected export; assess placement and verified scope before adding anything.",
+                      "nativeBuildOrInstallStarted": false,
+                      "ownerDesktopUsed": false,
+                      "modelsOrBoardUsed": false,
+                      "ownerAccepted": false,
+                      "updatedAt": "2026-11-13T22:34:29+08:00",
+                      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\visual-polish-review.json",
+                      "sourceWindows": "e7603bd59ea70da2947fa776fbc678015c140ff1",
+                      "sourceAndroid": "600a05a3b76d05246ac3da8699b5967329da554a",
+                      "actualSourcePreviewReady": true,
+                      "newNativeBuiltOrInstalled": false,
+                      "firstContentTopBefore": 403.765625,
+                      "firstContentTopAfter": 276.28125,
+                      "previewDirectory": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-Polish-20261113"
+                    }
                   }
-                }
+                },
+                "currentDesignPreview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\visual-polish-review.json"
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
               "previousVerifiedWindows111": {
@@ -282505,7 +282732,7 @@
       },
       "embeddedPointerCurrent20261113": {
         "at": "2026-11-13T16:44:16+08:00",
-        "reservedWindowsVersion": "0.1.131",
+        "reservedWindowsVersion": "0.1.133",
         "source": "fc964ab7d89a8d788b513d99978c359332c60322",
         "baseFrontend123": "d36222d74182cfe244040aa6026efbaf539c76eb",
         "fixOnly": "db327ed09ee1dc6aefa462f97fa2701d9cb95ab0",
@@ -282569,6 +282796,14 @@
           "state": "NORMAL131_SOURCE_MSI_AND_NO_CURSOR832_LIFECYCLE_VERIFIED_NOT_INSTALLED",
           "inherits": "normal130 including complete129",
           "delivery": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\delivery.json"
+        },
+        "click133BuildReservation20261113": {
+          "version": "0.1.133",
+          "source": "a0b1858e5de126974a050d64516e195ceb5b7007",
+          "sourceRoot": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/complete-experience20261113/link-repair/source",
+          "state": "SOURCE_FROZEN_NORMAL_BUILD_STARTING",
+          "readerBaseline": "e55e3b35",
+          "preserves131Clutch": true
         }
       }
     },

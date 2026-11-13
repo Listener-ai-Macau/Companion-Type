@@ -1,0 +1,73 @@
+{
+  "at": "2026-11-13T22:34:29+08:00",
+  "state": "VISUAL_POLISH_SOURCE_PREVIEW_READY_INSTALLED132155_RETAINED",
+  "scope": "Official visual-reference breakdown and real-source desktop/phone reading preview. No native build/install/model/cloud/hardware/Owner desktop operation this round.",
+  "visualReference": {
+    "url": "https://www.granola.ai/",
+    "officialWidgetAudited": true,
+    "paperRgb": "247,247,242",
+    "titlePixels": 20,
+    "titleFamily": "quadrant; reference only, not imported",
+    "referenceImageNotBundledIntoProduct": true
+  },
+  "sourceWindows": "e7603bd59ea70da2947fa776fbc678015c140ff1",
+  "sourceAndroid": "600a05a3b76d05246ac3da8699b5967329da554a",
+  "currentInstalledWindows": "0.1.132",
+  "lastVerifiedInstalledAndroid": "0.1.155",
+  "newNativeBuiltOrInstalled": false,
+  "firstContentTopBefore": 403.765625,
+  "firstContentTopAfter": 276.28125,
+  "firstContentEarlierPixels": 127.484375,
+  "readingColumnWidth": 680,
+  "desktopWidths": [
+    1440,
+    1024
+  ],
+  "phoneWidths": [
+    390,
+    320
+  ],
+  "lightDarkChecked": true,
+  "outlineSelectionClosesAndEscapeReturnsFocus": true,
+  "originalTranscriptSwitchAndSearchRetained": true,
+  "savedOverviewPreviewAndLiteralRawSearchChecked": true,
+  "modelsOrCloudRun": false,
+  "boardOrMicrophoneUsed": false,
+  "changes": [
+    "Title/replay/export share one header; recorded metadata uses one row.",
+    "Provenance stays visible; outline is a requested popover and closes after navigation/Escape.",
+    "One shared desktop/phone palette/font/spacing vocabulary replaces competing blue surfaces.",
+    "Existing saved concise overview supplies default library preview; literal source search remains unchanged.",
+    "Reading width and content/control alignment are fixed; focus/hover/disabled and reduced-motion states retained."
+  ],
+  "existingEnhancements": [
+    {
+      "capability": "会议问答",
+      "source": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "scope": "Existing configured service and selected-source behavior; not called this round."
+    },
+    {
+      "capability": "纪要/笔记回到原话",
+      "source": "packages/ui/src/CompanionDashboard.tsx",
+      "scope": "Existing unique-source match or explicit keyword search; not a new word-level timing guarantee."
+    },
+    {
+      "capability": "摘原话到笔记",
+      "source": "packages/ui/src/TranscriptQuoteCapture.tsx",
+      "scope": "Existing source-preserving quote capture; no newly invented notes."
+    },
+    {
+      "capability": "模板整理/所选内容导出",
+      "source": "packages/ui/src/CompanionDashboard.tsx",
+      "scope": "Existing behavior; no new native backend or service added."
+    }
+  ],
+  "actualUiAcceptance": false,
+  "ownerAppearanceAccepted": false,
+  "fullAcceptancePassed": false,
+  "saleQualified": false,
+  "previewDirectory": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-Polish-20261113",
+  "auditReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-polish-audit\\result.json",
+  "previewReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-polish-component-preview-r2\\result.json",
+  "remaining": "Installed application remains132/155. This source polish awaits the next coherent software delivery, with matching native verification then. Owner whole-product polish judgment, original ASR/minutes factual reliability, phone AI configuration and sale qualification remain open."
+}
