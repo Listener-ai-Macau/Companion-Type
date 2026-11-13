@@ -328,7 +328,7 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
         system.push_str(question_sources::SYSTEM_CONTRACT);
         // Native rendering replaces provider Markdown after source projection.
         // Keep the response budget for complete structured facts and source IDs.
-        system.push_str("\n本次由本机根据结构化字段生成完整Markdown，markdown字段返回空字符串；前述摘要、事实锚点、evidence和问题来源分类要求全部保留，不再重复撰写Markdown正文。questionClassification是必填顶层字段，格式为[{\"sourceId\":1,\"kind\":\"statement\"}]，按本次全部来源单元逐项填写，不能用questions或unsupportedClaims代替。");
+        system.push_str("\n本次由本机根据结构化字段生成完整Markdown，markdown字段只返回文档标题；前述摘要、事实锚点、evidence和问题来源分类要求全部保留，不再重复撰写Markdown正文。questionClassification是必填顶层字段，格式为[{\"sourceId\":1,\"kind\":\"statement\"}]，按本次全部来源单元逐项填写，不能用questions或unsupportedClaims代替。");
     }
     if session.meeting_notes.is_empty() { system.push_str(short_evidence::PROMPT); }
     if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
