@@ -133833,7 +133833,7 @@
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal830 installed by ordinary signed OTA; source6818a91 remotely preserved; matched host119 still building.",
+        "sourceRootAvailability": "Normal830 installed by ordinary signed OTA;6818a91 remotely preserved; installed Windows120 includes prior pointer source87e6; Type-C guide d66 source preserved.",
         "evidenceAvailability": "Current830 ordinary OTA and passive modes/restore passed; physical pointer usability still awaiting Owner.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -143462,7 +143462,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "OWNER119_NOT_ACCEPTED_TARGETED_ADAPTER_AND_LINK_REPAIR",
+          "state": "CONCENTRATED_ANGULAR_ONLY_NATIVE_MOUSE_REPAIR",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -144197,10 +144197,8 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "ONE_PHYSICAL_TYPEC_FORWARD_ENGINEERING_VERIFICATION_ORIGINAL_POPUP",
-            "session": 92671,
-            "folder": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\typec-front-axis-check",
-            "noMicrophoneOrCursor": true
+            "state": "REPAIRING_NATIVE_VIRTUAL_DESKTOP_COORDINATES_BEFORE_ONE_CONCENTRATED_CANDIDATE",
+            "boardHeld": false
           },
           "latestOwnerMouseFeedback": [
             "顺滑度是修好了, 但是点击那些都没有, 然后用起来也很不好用 然后的话呢，现在我如果同时用鼠标，你那个鼠标会把我的鼠标总是移到原位，就它不能跟别的鼠标兼容嘛，它只是需要考虑移动就可以了。",
@@ -144583,12 +144581,46 @@
             "chosenGripReference": "Latest Owner supersedes lift choice: fix forward as Type-C connector exit direction, verify actual PCB/sensor mapping, stationary bias plus neutral zero only. No new lift classifier/calibration module written.",
             "latestOwnerFeedback": "当前握姿居中只是零点，不清楚前后左右；Owner选自然抬头一次，询问成熟校准交互。",
             "priorLiftChoice": "Explicitly replaced by Owner subsequent Type-C-front instruction; no algorithm had been implemented.",
-            "fixedFront": "Owner latest: Type-C connector exit direction is provisional physical forward; screen/card front terminology separate.",
+            "fixedFront": "+Y toward Type-C exit",
             "fixedFrontDirectionVerification": "One engineering-only fixed-front sensor measurement pending; daily gyro bias/neutral only, no one-lift learning.",
             "liftCalibrationImplemented": false,
             "ownerDirectTiltFeedback": "感觉以当前卧姿居中，就是你当前要知道什么是前后左右啊。感觉你能不能知道哪里是前后左右嘞？",
             "ownerDirectTiltActuallyStarted": true,
-            "ownerDirectTiltReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\owner-direct-tilt-feedback.json"
+            "ownerDirectTiltReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\owner-direct-tilt-feedback.json",
+            "fixedFrontAxisVerified": true,
+            "frontFaceNormal": "+Z",
+            "profileReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\typec-front-profile.json",
+            "realCaptureRegressionPassed": true,
+            "uiGuidanceCommit": "d66abcf196b88b743c72742f932a9845d83ec1e6"
+          },
+          "ownerConcentratedAcceptance20261113": {
+            "at": "2026-11-13T13:44:08+08:00",
+            "raw": "继续这样做完，何时达到验收标准，再一次性给我验收。",
+            "outcome": "Fixed Type-C-forward angular-only mouse: start, aim, click, drag, coexist with normal mouse, exit to recorder, one coherent normal candidate and one final Owner trial.",
+            "timeBudget": "One working day target for concentrated acceptance candidate; no claim of whole sale qualification.",
+            "baseline": {
+              "firmware": 66830,
+              "windowsInstalled": "0.1.120",
+              "windowsSource": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+              "latestPointerSource": "d66abcf196b88b743c72742f932a9845d83ec1e6"
+            },
+            "confirmedNewProductBug": "Native Enigo0.2.1 maps absolute input to primary screen only, while portable pointer uses virtual-desktop bounds. This creates wrong positions and false external-mouse reanchors on secondary/negative-coordinate displays.",
+            "gates": [
+              "Fixed Type-C +Y / face +Z: actual pose capture and regression retained, no daily4direction sampling.",
+              "Ordinary verified connect through complete catalogue<=5s; device bias calibration clearly reported, duplicate Start does not restart.",
+              "Angular path only; normal live stream no>=300ms stale interval; correct native output on virtual desktop.",
+              "Reliable short-key/single tap click once, double contacts twice; held>=350ms drag, release and exit never leave mouse button down.",
+              "Ordinary mouse movement reanchors without returning to old card cursor; native virtual/negative coordinates and OS injection checked.",
+              "Esc/normal stop ACKs mode0, releases buttons and restores recorder double-tap; unchanged core evidence reused."
+            ],
+            "finalOwnerSession": "Only after matched normal candidate and affected engineering checks; original popup, no partial resampling or interim Owner tests.",
+            "blocksUnchanged": [
+              "Screen/touch",
+              "Planar/spatial side-contact experiment Owner paused",
+              "Battery ADC/charge/actual current",
+              "Production/final new-board hardware",
+              "Old transfer-speed optimisations Owner deferred"
+            ]
           }
         }
       },
@@ -271212,7 +271244,7 @@
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
             "updatedAt": "2026-11-13T11:16:43+08:00",
-            "state": "READER120146_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+            "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -271220,7 +271252,7 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "120/146已同批安装，原资料保护/实际连续保存与限定导出/真正重开、同019f已保存真实结果查看回听已核，一个完整双端软件包已私有完整下载回读匹配。Owner只短做人感自然使用，整体好看/清楚/顺手仍未签收；新问题回同UI116-DESIGN-FOUNDATION集中承接。旧真人短会内容质量、实卡/鼠标/模型/硬件/售卖沿原各自最新任务，不由UI检查关闭；不为UI重复录音或模型。",
+            "next": "沿原UI116-DESIGN-FOUNDATION完成一批真实可用的软件修复：按已固定MIT的shadcn Mail/sidebar-09统一完整界面层级与中性设计，Meetily Community作会议阅读/原文对照参考；修正文稿/纪要与不确定片段的用途，工程完成约30分钟公开中文会议源音/实卡同模型对照。先完成真实代码与内容质量自验，再一次匹配双端交付和短Owner回访；当前120/146整体被Owner否定，不再沿同条件派验。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.120",
@@ -271267,7 +271299,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "120/146 build/native UI/phone/restart jobs finished. Exact current119 predecessor matched before120 upgrade; original119 Owner experience already ended10:55:38 with link closed and TURN_RELEASED. This UI batch has no live device, microphone, ASR/cloud, phone display or build worker.",
+            "knownJobState": "Owner120 prompt and normal product both closed13:50:43; session30277 completed. No live board/MIC/model/cloud/build/phone job. Requested30-minute comparison is NOT_STARTED. Upstream reference files pinned, production integration pending.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271323,9 +271355,9 @@
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "120/146已同批安装，原资料保护/实际连续保存与限定导出/真正重开、同019f已保存真实结果查看回听已核，一个完整双端软件包已私有完整下载回读匹配。Owner只短做人感自然使用，整体好看/清楚/顺手仍未签收；新问题回同UI116-DESIGN-FOUNDATION集中承接。旧真人短会内容质量、实卡/鼠标/模型/硬件/售卖沿原各自最新任务，不由UI检查关闭；不为UI重复录音或模型。",
+              "currentPoint": "沿原UI116-DESIGN-FOUNDATION完成一批真实可用的软件修复：按已固定MIT的shadcn Mail/sidebar-09统一完整界面层级与中性设计，Meetily Community作会议阅读/原文对照参考；修正文稿/纪要与不确定片段的用途，工程完成约30分钟公开中文会议源音/实卡同模型对照。先完成真实代码与内容质量自验，再一次匹配双端交付和短Owner回访；当前120/146整体被Owner否定，不再沿同条件派验。",
               "done": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-              "updatedAt": "2026-11-13T11:16:43+08:00",
+              "updatedAt": "2026-11-13T13:58:46+08:00",
               "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
               "acceptanceToolCommit": "3fc02d1eadd29de292146bc2aba7fd751acde02e",
               "buildRun": null,
@@ -271426,7 +271458,7 @@
               "wholePhysicalTotalAcceptancePassed": false,
               "saleQualified": false,
               "physicalAcceptanceDependency": {
-                "state": "MATCHED_NORMAL828_RESTORED_RELEASED_WITH_INSTALLED115_OWNER_GUIDE_READY",
+                "state": "CURRENT_EMBEDDED_WORKPOINT_MUST_BIND_LATEST_NORMAL_FIRMWARE_BEFORE_PHYSICAL_TOTAL_ONLY",
                 "observedAt": "2026-11-12T22:02:07+08:00",
                 "boardHolder": null,
                 "lastBoardRelease": {
@@ -271438,7 +271470,7 @@
                 "recordedBaselineInBacklog": 66791,
                 "firmwareIdentityNotQueriedHere": true,
                 "ownerPromptStarted": false,
-                "explanation": "Original828 signed installer, current828 baseline, and latest normal828 read-only release match installed115 offline validator. Latest peer observation21:36 saw active recording; current state is unknown here. Original guide first preserves/finishes any current recording before a fresh public sample. No UI-task board query, firmware or MIC command.",
+                "explanation": "旧物理导览仍引用828安装收据；当前嵌软正常交付为830。保留旧安装原证据，当前实卡总验收需按最新正常安装重新绑定，不能由前端120/UI检查宣称已通过。本次已保存公开会议副本人感体验不连接实卡。",
                 "next": "115实际首屏/设备主区与连续流程自验、保资料升级、同包交付已完成；当前828实际签名安装、最新只读828状态与115离线校验匹配；829未装。最近21:36观察录音仍在继续，当前状态未查询，原窗先让Owner确认并正常保存已有段，再新开短公开样例。用原单窗按口头安排→回听→文字纪要→带走结果继续Owner体验，真实开始后再申领和启动软件，实体键开停；最后集中反馈。Owner整体易用性/吸引力、实卡长录/完整IMU/模型/售卖仍未签收。",
                 "concentratedScope": [
                   "IMU drift, drag/click/tap and release/return-to-recording behavior, owned by the active embedded/IMU workpoint.",
@@ -271732,7 +271764,10 @@
                 },
                 "softwareWindowsVersion": "0.1.118",
                 "softwareAndroidVersion": "0.1.145",
-                "softwareReadyForLaterJointTest": true
+                "softwareReadyForLaterJointTest": true,
+                "staleBindingDiscoveredAt": "2026-11-13T13:51:59+08:00",
+                "latestSharedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\batch-result.json",
+                "latestSharedNormalFirmware": 66830
               },
               "latestOwnerContinuation": {
                 "ownerQuote": "意思就是你现在一定要板才可以做是吧？然后没有板的话，就前端那些东西就不能做了。然后前后端的话，就是非固建端的东西就不能做。",
@@ -271960,12 +271995,12 @@
                 "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
                 "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
                 "ownerClarification": "两边都有",
-                "state": "READER120146_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+                "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
                 "previousWindowsVersion": "0.1.111",
                 "previousAndroidVersion": "0.1.142",
                 "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
                 "installedAndEngineeringReviewed": true,
-                "candidateVersion": "0.1.118",
+                "candidateVersion": "0.1.120",
                 "actualPreviousAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\owner-guided-attempt-20261112.json",
                 "guidedStepsReached": [
                   0,
@@ -271974,7 +272009,7 @@
                 "physicalTotalAcceptancePassed": false,
                 "saleQualified": false,
                 "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
-                "noMoreOwnerPromptUntilSubstantiveRepair": false,
+                "noMoreOwnerPromptUntilSubstantiveRepair": true,
                 "nativeDeliveryChangesNotStarted": false,
                 "updatedAt": "2026-11-13T09:30:30+08:00",
                 "implementation": {
@@ -271999,14 +272034,14 @@
                 "newReceivedCardRows": 0,
                 "actualCardRecordingCountNotDirectlyQueried": true,
                 "currentWindowsBuild": {
-                  "state": "NORMAL118_INSTALLED_NATIVE_UI_AND_ACTUAL_REOPEN_CHECKED",
-                  "version": "0.1.118",
+                  "state": "NORMAL120_INSTALLED_NATIVE_UI_AND_ACTUAL_REOPEN_CHECKED",
+                  "version": "0.1.120",
                   "completed": true,
                   "installed": true,
-                  "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
-                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows118\\windows-verification.json",
-                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows118\\runtime-result.json",
-                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows118\\installation.json",
+                  "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\windows-verification.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\runtime-result.json",
+                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\installation.json",
                   "worker": null
                 },
                 "retainedBuildPreparationFailures": [
@@ -272029,102 +272064,102 @@
                 "sourceProtectionObservedRemoteHead": "26c9ef9e721ce489e638e7282c9db5b2261a97de",
                 "sourceProtectionVerifiedAt": "2026-11-12T18:08:39+08:00",
                 "preOwnerEngineeringAcceptance20261112": {
-                  "windowsVersion": "0.1.118",
-                  "androidVersion": "0.1.145",
+                  "windowsVersion": "0.1.120",
+                  "androidVersion": "0.1.146",
                   "softwareSelfAcceptancePassed": true,
                   "actualNativeProcessRestartPassed": true,
                   "actualPhoneReviewed": true,
-                  "currentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\engineering-self-acceptance.json",
+                  "currentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\engineering-self-acceptance.json",
                   "privateRemoteReadbackVerified": true,
                   "ownerPromptStarted": false,
                   "ownerExpectedExperience": "Short natural aesthetic/clarity/use feedback, no technical checklist."
                 },
                 "currentOwnerAttempt": {
-                  "at": "2026-11-12T22:03:39.321+08:00",
-                  "state": "OWNER_FEEDBACK_RECEIVED_REQUIRES_EVIDENCE_REVIEW",
-                  "version": "0.1.115",
-                  "firmwareVersion": 66828,
-                  "uiVersion": 85,
-                  "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
-                  "controllerPid": 19676,
+                  "at": "2026-11-13T13:48:06.475+08:00",
+                  "state": "OWNER_FEEDBACK_RECEIVED",
+                  "version": "0.1.120",
+                  "androidVersion": "0.1.146",
+                  "ownerQuote": "可以啊，没问题没问题，然后的话，你现在看下能不能带我完整验收一下。现在基本上那个全录音闭环是做完了对吧？然后前端那些也是基本上搞得差不多了，然后就只剩下模型端要修。",
+                  "scope": "Short coherent human use of real saved public recording: find, replay, read/edit, export and reopen. Prior physical recording chain engineering evidence reused; this is not a fresh physical or model qualification.",
+                  "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\review-spec.json",
+                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                  "controllerPid": 20840,
                   "boardLease": false,
-                  "hostStartCommands": 0,
-                  "privateContentPrinted": false,
+                  "newMicrophoneCommands": 0,
+                  "newModelOperations": 0,
+                  "softwareOwnerAccepted": false,
                   "physicalTotalAcceptancePassed": false,
                   "saleQualified": false,
-                  "softwareOwnerAccepted": false,
-                  "twoHourRecordingObserved": false,
-                  "individualIssues": [
-                    {
-                      "eventId": "861ea4c85daa62157b5131513fac21dbaed3e0274f6432fe0abda66fda34a7e7",
-                      "reportedAt": "2026-11-12T14:05:37.4844844Z",
-                      "version": "0.1.115",
-                      "stepIndex": 0,
-                      "stepTitle": "看见并连接录音卡",
-                      "ownerQuote": "感觉正在寻找并还是老样子，UI有点丑。UI 可能要重构一下，要变得高级一点的 UI。。",
-                      "id": "ISSUE-001",
-                      "firmwareVersion": 66828,
-                      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
-                    },
-                    {
-                      "eventId": "f21c316536cb102e532d28b4d63379092a79cc3fd57b9286609bf135e63393d7",
-                      "reportedAt": "2026-11-12T14:06:40.7587236Z",
-                      "version": "0.1.115",
-                      "stepIndex": 2,
-                      "stepTitle": "保存与回听",
-                      "ownerQuote": "这个有点太复杂了，你这个全部记录应该要。大概简单说一下，用那个。命名说一下，不然人家找不到这个是什么鬼东西。",
-                      "id": "ISSUE-002",
-                      "firmwareVersion": 66828,
-                      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
-                    },
-                    {
-                      "eventId": "c388a4fa2c068d10f998b3f274000793b13e765b0f866c8735891cae87fe2a8f",
-                      "reportedAt": "2026-11-12T14:07:11.2562811Z",
-                      "version": "0.1.115",
-                      "stepIndex": 3,
-                      "stepTitle": "转成文字",
-                      "ownerQuote": "这边完全看的，一一直是待转写之类的，然后。好像也不是说很好用。不是很好用，现在不是很好用。然后的话，之前弄过的。主要是那些，这个录音管理还是没有做得很好。",
-                      "id": "ISSUE-003",
-                      "firmwareVersion": 66828,
-                      "sourceCommit": "ba26a969bb7f72966fe0ad18c7bcb67675650509",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112"
-                    }
-                  ],
-                  "guidedStepsTotal": 8,
-                  "guidedStepsVisited": [
-                    0,
+                  "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                  "visitedSteps": [
                     1,
                     2,
-                    3,
-                    4,
-                    5,
-                    6
+                    3
                   ],
-                  "guidedRouteReachedEnd": false,
-                  "promptPid": 2904,
-                  "boardLeaseHeldSince": "2026-11-12T22:05:10+08:00",
-                  "ownerStartedAt": "2026-11-12T22:05:10.583+08:00",
-                  "appPid": 22256,
-                  "guidedStepIndex": 6,
-                  "individualIssueCount": 3,
-                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112",
-                  "liveProcessObservedAt": "2026-11-12T22:10:32+08:00",
+                  "promptPid": 18596,
+                  "appPid": 12440,
+                  "ownerStartedAt": "2026-11-13T13:48:51.452+08:00",
                   "toolSessionId": null,
-                  "promptClosedBeforeAppExit": true,
-                  "appClosedAt": "2026-11-12T22:16:27.300+08:00",
-                  "closedAtGuidedStep": 6,
-                  "newCardResults": [],
-                  "newPhysicalToTextObserved": false,
+                  "observedAt": "2026-11-13T13:51:59+08:00",
+                  "individualIssues": [
+                    {
+                      "eventId": "11856be07f5ede9e5135e894c8d4b5680c41cf580ab3e351794939e5361d2dc6",
+                      "reportedAt": "2026-11-13T05:49:15.6601245Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "感觉这个绿色不太好看这个UI",
+                      "id": "ISSUE-001",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "a51efa61c452c900e89b091f7db496d09ba3cef528d620f1384cc16cb45aeb2d",
+                      "reportedAt": "2026-11-13T05:49:44.2823602Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "因为你看你这个摘要，太多那些什么语气词之类的。然后啊对呀，不太好不太好。然后你看这个多点功能，AI增强模式，这个你看一下大概不知道这个会在开什么。有点乱。",
+                      "id": "ISSUE-002",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "aaa49c80cf24414d3fa3dd5a11efe7266e84cec31fb2daa8fdad28886167068e",
+                      "reportedAt": "2026-11-13T05:50:04.9901522Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "哦，转录那里也是比较奇怪。这个会你看可以搞个半个小时的会议，然后用那个啥吧。这个不太行不太行，然后另外这个东西它。录音卡为什么没有自动连接？",
+                      "id": "ISSUE-003",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "38b280a5412fb0142bec9cb137d9f64ba5f7c1033598cc4a044dfdee5ac1896e",
+                      "reportedAt": "2026-11-13T05:50:25.7985698Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "然后那个筛选整理有点太乱了，这个 ui 还是不太行，这个 ui 不太行。还是很乱的感觉。",
+                      "id": "ISSUE-004",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    }
+                  ],
+                  "promptClosedBeforeProductExit": true,
+                  "appClosedAt": "2026-11-13T13:50:43.017+08:00",
+                  "finishedAt": "2026-11-13T13:50:43.030+08:00",
+                  "ownerCompletedExperience": false,
+                  "originalStateAndAudioUnchanged": true,
                   "ownerResponse": {
-                    "selected": "结束本轮",
+                    "selected": "稍后",
                     "text": "",
                     "spoken_text": null,
-                    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows115-step-issues-fw66828-20261112\\owner-feedback.txt"
+                    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\owner-feedback.txt"
                   },
-                  "finishedAt": "2026-11-12T22:16:27.558+08:00",
-                  "terminalObservedAt": "2026-11-12T22:26:23+08:00"
+                  "actualProcessReopenObserved": false,
+                  "fullGuidedAcceptanceCompleted": false
                 },
                 "quietSyncFeedback": {
                   "id": "owner-sync-display20261112",
@@ -272717,6 +272752,66 @@
                       }
                     ],
                     "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json"
+                  },
+                  {
+                    "eventId": "11856be07f5ede9e5135e894c8d4b5680c41cf580ab3e351794939e5361d2dc6",
+                    "reportedAt": "2026-11-13T05:49:15.6601245Z",
+                    "version": "0.1.120",
+                    "stepIndex": 0,
+                    "stepTitle": "找到并听这场会议",
+                    "ownerQuote": "感觉这个绿色不太好看这个UI",
+                    "id": "UI120-OWNER-001",
+                    "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                    "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                    "relatedParentId": "UI116-DESIGN-FOUNDATION",
+                    "state": "OPEN_IN_COMPLETE_PRODUCT_REWORK",
+                    "ownerAccepted": false,
+                    "decisionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json"
+                  },
+                  {
+                    "eventId": "a51efa61c452c900e89b091f7db496d09ba3cef528d620f1384cc16cb45aeb2d",
+                    "reportedAt": "2026-11-13T05:49:44.2823602Z",
+                    "version": "0.1.120",
+                    "stepIndex": 0,
+                    "stepTitle": "找到并听这场会议",
+                    "ownerQuote": "因为你看你这个摘要，太多那些什么语气词之类的。然后啊对呀，不太好不太好。然后你看这个多点功能，AI增强模式，这个你看一下大概不知道这个会在开什么。有点乱。",
+                    "id": "UI120-OWNER-002",
+                    "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                    "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                    "relatedParentId": "UI116-DESIGN-FOUNDATION",
+                    "state": "OPEN_IN_COMPLETE_PRODUCT_REWORK",
+                    "ownerAccepted": false,
+                    "decisionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json"
+                  },
+                  {
+                    "eventId": "aaa49c80cf24414d3fa3dd5a11efe7266e84cec31fb2daa8fdad28886167068e",
+                    "reportedAt": "2026-11-13T05:50:04.9901522Z",
+                    "version": "0.1.120",
+                    "stepIndex": 0,
+                    "stepTitle": "找到并听这场会议",
+                    "ownerQuote": "哦，转录那里也是比较奇怪。这个会你看可以搞个半个小时的会议，然后用那个啥吧。这个不太行不太行，然后另外这个东西它。录音卡为什么没有自动连接？",
+                    "id": "UI120-OWNER-003",
+                    "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                    "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                    "relatedParentId": "UI116-DESIGN-FOUNDATION",
+                    "state": "OPEN_IN_COMPLETE_PRODUCT_REWORK",
+                    "ownerAccepted": false,
+                    "decisionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json"
+                  },
+                  {
+                    "eventId": "38b280a5412fb0142bec9cb137d9f64ba5f7c1033598cc4a044dfdee5ac1896e",
+                    "reportedAt": "2026-11-13T05:50:25.7985698Z",
+                    "version": "0.1.120",
+                    "stepIndex": 0,
+                    "stepTitle": "找到并听这场会议",
+                    "ownerQuote": "然后那个筛选整理有点太乱了，这个 ui 还是不太行，这个 ui 不太行。还是很乱的感觉。",
+                    "id": "UI120-OWNER-004",
+                    "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                    "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                    "relatedParentId": "UI116-DESIGN-FOUNDATION",
+                    "state": "OPEN_IN_COMPLETE_PRODUCT_REWORK",
+                    "ownerAccepted": false,
+                    "decisionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json"
                   }
                 ],
                 "previousOwner114Attempt": {
@@ -273158,13 +273253,13 @@
                     "state": "RECORDING_WORKSPACE116_SOURCE_CHECKED_NORMAL_PACKAGE_PENDING"
                   }
                 },
-                "candidateAndroidVersion": "0.1.145",
+                "candidateAndroidVersion": "0.1.146",
                 "softwareSelfAcceptancePassed": true,
-                "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\engineering-self-acceptance.json",
+                "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\engineering-self-acceptance.json",
                 "currentSoftwareDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
                 "deliveredVersions": {
-                  "windows": "0.1.118",
-                  "android": "0.1.145"
+                  "windows": "0.1.120",
+                  "android": "0.1.146"
                 },
                 "engineeringDiscoveredSameBatchIssues": [
                   {
@@ -273497,7 +273592,14 @@
                 },
                 "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\software-delivery.json",
                 "lastHandledOwnerFeedbackId": "UI116-DESIGN-FOUNDATION",
-                "lastHandledOwnerRaw": "看的东西还是有点乱，就是没有这么清晰明了的感觉，有点像是 AI 做的。这个 UI 能不能再好好设计一下？逻辑清晰一点，好用一点。都看的很乱，大家都不知道在干嘛。"
+                "lastHandledOwnerRaw": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。",
+                "completeProductRework20261113": {
+                  "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
+                  "decision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json",
+                  "templateAdoption": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\template-adoption.json",
+                  "receivedAt": "2026-11-13T13:58:46+08:00",
+                  "ownerQuote": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。"
+                }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
               "previousVerifiedWindows111": {
@@ -273624,7 +273726,7 @@
               },
               "engineeringCoherentSoftwarePurposePassed": true
             },
-            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows118\\windows-verification.json",
+            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\windows-verification.json",
             "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android145\\library-review-result.json",
             "previousSelectedSourceCheckpoint": {
               "windows": "673fcb7a9cae9331d62ed2241a626afd30094721",

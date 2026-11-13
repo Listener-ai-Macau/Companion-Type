@@ -1,0 +1,108 @@
+{
+  "at": "2026-11-13T13:58:46+08:00",
+  "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
+  "ownerQuote": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。",
+  "ownerActualRound": {
+    "startedAt": "2026-11-13T13:48:51.452+08:00",
+    "closedAt": "2026-11-13T13:50:43.017+08:00",
+    "selected": "稍后",
+    "issues": [
+      {
+        "eventId": "11856be07f5ede9e5135e894c8d4b5680c41cf580ab3e351794939e5361d2dc6",
+        "reportedAt": "2026-11-13T05:49:15.6601245Z",
+        "version": "0.1.120",
+        "stepIndex": 0,
+        "stepTitle": "找到并听这场会议",
+        "ownerQuote": "感觉这个绿色不太好看这个UI",
+        "id": "ISSUE-001",
+        "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+        "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+      },
+      {
+        "eventId": "a51efa61c452c900e89b091f7db496d09ba3cef528d620f1384cc16cb45aeb2d",
+        "reportedAt": "2026-11-13T05:49:44.2823602Z",
+        "version": "0.1.120",
+        "stepIndex": 0,
+        "stepTitle": "找到并听这场会议",
+        "ownerQuote": "因为你看你这个摘要，太多那些什么语气词之类的。然后啊对呀，不太好不太好。然后你看这个多点功能，AI增强模式，这个你看一下大概不知道这个会在开什么。有点乱。",
+        "id": "ISSUE-002",
+        "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+        "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+      },
+      {
+        "eventId": "aaa49c80cf24414d3fa3dd5a11efe7266e84cec31fb2daa8fdad28886167068e",
+        "reportedAt": "2026-11-13T05:50:04.9901522Z",
+        "version": "0.1.120",
+        "stepIndex": 0,
+        "stepTitle": "找到并听这场会议",
+        "ownerQuote": "哦，转录那里也是比较奇怪。这个会你看可以搞个半个小时的会议，然后用那个啥吧。这个不太行不太行，然后另外这个东西它。录音卡为什么没有自动连接？",
+        "id": "ISSUE-003",
+        "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+        "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+      },
+      {
+        "eventId": "38b280a5412fb0142bec9cb137d9f64ba5f7c1033598cc4a044dfdee5ac1896e",
+        "reportedAt": "2026-11-13T05:50:25.7985698Z",
+        "version": "0.1.120",
+        "stepIndex": 0,
+        "stepTitle": "找到并听这场会议",
+        "ownerQuote": "然后那个筛选整理有点太乱了，这个 ui 还是不太行，这个 ui 不太行。还是很乱的感觉。",
+        "id": "ISSUE-004",
+        "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+        "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+      }
+    ],
+    "reachedBeyondFirstGuidanceStep": false,
+    "exportOrReopenAcceptanceObserved": false,
+    "originalStateAndAudioUnchanged": true
+  },
+  "primaryOutcome": "An ordinary user can turn one real Chinese meeting into a recording they can find, understand, correct, export and reopen without learning engineering controls.",
+  "templateAdoption": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\template-adoption.json",
+  "knownProblems": [
+    {
+      "id": "palette",
+      "source": "ISSUE-001",
+      "problem": "Owner dislikes the green palette. Native inherited dark/blue/green surfaces are inconsistent with the neutral source preview.",
+      "action": "Use one neutral light/dark token system from the selected reference, consistent buttons, borders, type scale and spacing on actual desktop and phone."
+    },
+    {
+      "id": "information-architecture",
+      "source": "ISSUE-002 / ISSUE-004",
+      "problem": "Filters, organisation and AI tools still expose too many choices and unclear effects.",
+      "action": "Use the selected sidebar/list/document hierarchy. Primary flow is recording, transcript and minutes. Library filters, multi-select and organisation are separate requested panels; explicit action names belong beside their content. Secondary capabilities remain reachable."
+    },
+    {
+      "id": "minutes-quality",
+      "source": "ISSUE-002",
+      "problem": "Actual019f minutes put unintelligible ASR fragments in meeting questions and repeat filler-heavy source material in the main reading body.",
+      "action": "Fix the actual generation and reading contract: uncertain material stays attached to source/time for review; do not promote fragments to a meeting question, decision or task. Preserve raw transcript and original generated versions; no manual fake clean success."
+    },
+    {
+      "id": "transcription-quality",
+      "source": "ISSUE-003",
+      "problem": "Actual Chinese recording quality is not adequate. Existing louder public playback improved early male speech but does not qualify general accuracy.",
+      "action": "Use the requested approximately30-minute public Chinese human meeting, compare original source and card-captured audio with the same declared model and alignment. Separate playback/capture degradation from ASR errors; reuse prior failed model comparisons, select only on actual evidence."
+    },
+    {
+      "id": "acceptance-preparation",
+      "source": "ISSUE-003",
+      "problem": "This round disabled device connection, so Owner could not experience expected automatic connection.",
+      "action": "Record this as adapter scope failure, not a product auto-connect failure. Next physical experience must use current normal830 evidence, live board ownership and explicit readiness in the original shared window; no silent capture."
+    }
+  ],
+  "nextBatch": [
+    "Implement the complete selected template hierarchy and one neutral design system in real Windows/phone code, including existing unsaved-data/recovery/export behavior.",
+    "Fix false question/uncertain-source promotion in the actual minutes path and validate the public Chinese meeting content, with raw results retained.",
+    "Run requested approximately30-minute source/card comparison under authorized real playback conditions and current shared-board ownership; current status NOT_STARTED, no live worker.",
+    "Only after the coherent batch is usable: build matched normal Windows/Android once, complete the affected engineering journey with actual imperfect results and preserve existing data, then one short guided Owner revisit."
+  ],
+  "notCompleted": [
+    "Template code is pinned and reviewed, not integrated into production yet.",
+    "No new application package is built or installed by this planning/research batch.",
+    "No new30-minute recording or general model qualification is complete.",
+    "Owner overall usability, attraction and sales readiness remain unaccepted."
+  ],
+  "noMoreOwnerPromptUntilSubstantiveRepair": true,
+  "newNativeBuilds": 0,
+  "newMicBoardAsrCloudOperations": 0
+}

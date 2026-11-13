@@ -1,0 +1,100 @@
+{
+  "at": "2026-11-13T13:56:22+08:00",
+  "purpose": "Pinned licensed upstream review inputs, not shipped Companion code or a product-completion claim.",
+  "projects": [
+    {
+      "name": "meetily",
+      "repo": "Zackriya-Solutions/meetily",
+      "commit": "07c4dfd45361bb6776916a0d46f493dda447f471",
+      "files": [
+        {
+          "path": "LICENSE.md",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/LICENSE.md",
+          "bytes": 1074,
+          "sha256": "4a7c284ffd75a00f39e4e0382951bb51b415e9e86a693a8aa5e838042542ba49"
+        },
+        {
+          "path": "frontend/src/components/MeetingDetails/MeetingDetailsSplitView.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/MeetingDetails/MeetingDetailsSplitView.tsx",
+          "bytes": 6341,
+          "sha256": "fda3fc3de3feae40112bdf899f25f2160dcea9c7056216ad67527cfaebd83897"
+        },
+        {
+          "path": "frontend/src/components/MeetingDetails/TranscriptPanel.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/MeetingDetails/TranscriptPanel.tsx",
+          "bytes": 3699,
+          "sha256": "9a6fbb8a55e82bf935ee6db8625ca1470f2c0280598f9276fe499d47dfcf09d8"
+        },
+        {
+          "path": "frontend/src/components/MeetingDetails/SummaryPanel.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/MeetingDetails/SummaryPanel.tsx",
+          "bytes": 12217,
+          "sha256": "4a6fbb5b9574b6c7ea082836b8c163497b2a0299e59d914afab873ee46c8c817"
+        },
+        {
+          "path": "frontend/src/components/MeetingDetails/TranscriptButtonGroup.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/MeetingDetails/TranscriptButtonGroup.tsx",
+          "bytes": 3325,
+          "sha256": "8294aec83b48a05a3430c5c186909b45ce15ca1d32bae70856419930639893cd"
+        },
+        {
+          "path": "frontend/src/components/MeetingDetails/SummaryGeneratorButtonGroup.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/MeetingDetails/SummaryGeneratorButtonGroup.tsx",
+          "bytes": 6599,
+          "sha256": "e7c9de2a1d27d84f4dc631a6cb29ed159e3d9a78dc502c3e0263fc1bfd99758c"
+        },
+        {
+          "path": "frontend/src/components/Sidebar/index.tsx",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/components/Sidebar/index.tsx",
+          "bytes": 31951,
+          "sha256": "651d632049d02c5b937d6cf8a9c3d933fc915d835e25fa57c6550ec9206cc312"
+        },
+        {
+          "path": "frontend/src/app/globals.css",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/src/app/globals.css",
+          "bytes": 4002,
+          "sha256": "699db5b6f64a1191aa878d092decd3bffe09c81e246f96e726a93c1e44cae6a4"
+        },
+        {
+          "path": "frontend/package.json",
+          "source": "https://raw.githubusercontent.com/Zackriya-Solutions/meetily/07c4dfd45361bb6776916a0d46f493dda447f471/frontend/package.json",
+          "bytes": 4486,
+          "sha256": "f7d9ec07daaf8d71466a1ca165a2d78ad487d32f6b4e811082cfd6f697df52ce"
+        }
+      ],
+      "license": "MIT"
+    },
+    {
+      "name": "shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "commit": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "files": [
+        {
+          "path": "LICENSE.md",
+          "source": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/LICENSE.md",
+          "bytes": 1063,
+          "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/blocks/sidebar-09/page.tsx",
+          "source": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/new-york-v4/blocks/sidebar-09/page.tsx",
+          "bytes": 1718,
+          "sha256": "f2b5564758e3c76f01f780d199b3346849e630a2558f022ac2597b2e9152b8b1"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/blocks/sidebar-09/components/app-sidebar.tsx",
+          "source": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/new-york-v4/blocks/sidebar-09/components/app-sidebar.tsx",
+          "bytes": 8884,
+          "sha256": "4fbb2883687aa9971b827f2e4e65062d021d763aee5e025693b4074e28d14e62"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/ui/sidebar.tsx",
+          "source": "https://raw.githubusercontent.com/shadcn-ui/ui/dd41d19e2f80ff6891951f7ced74c2c9a650b065/apps/v4/registry/new-york-v4/ui/sidebar.tsx",
+          "bytes": 21713,
+          "sha256": "2ba1a9b9422f4172373f4cd0587b675d2331a41f4fa68f65dab2b23ca98fd9d2"
+        }
+      ],
+      "license": "MIT"
+    }
+  ]
+}
