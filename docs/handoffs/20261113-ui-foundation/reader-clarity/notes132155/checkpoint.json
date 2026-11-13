@@ -1,0 +1,113 @@
+{
+  "at": "2026-11-13T22:07:46+08:00",
+  "role": "Remote protection snapshots only; root Companion docs remain the only editable backlog and timeline. Never backflow snapshots.",
+  "failuresAndOriginalsRetainedLocally": true,
+  "privateOrMixedRoomAudioTextIncluded": false,
+  "fullAcceptancePassed": false,
+  "inventory": [
+    {
+      "file": "docs/product_backlog.json",
+      "sha256": "c93dac7617e83964e2aadf98d397bcc9b4bc4dd1f25d93271cd872439c7ea2b7"
+    },
+    {
+      "file": "docs/development_log.md",
+      "sha256": "9f37d5312747ee0cd571bc087f71509b330bd1971433890ede327bd07bdc4b0e"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/root-rules-snapshot.txt",
+      "sha256": "4838bbd73109d550b211f2cae5c94d7e3798cdc55fc34312f6d2bfe253dd1a5b"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155-delivery.json",
+      "sha256": "7017f5288f55e6e16956a2c06d4fda384712df2fbaaef8415c6eef38e290768a"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/source-protection.json",
+      "sha256": "cf61ddc0dd926c83e59d702d0b6fe6f5f449d07fc787b1847a7d13497254d674"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/cache-budget.json",
+      "sha256": "fb8cb702eb0cc10177d27afac6dc3d96fa352b3aa3b5143430126947a244c9a3"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/native-reading.json",
+      "sha256": "92dcf4be0b4a71845bd262b5d8d5c8674647a2fcb1694ba3e712d1d858bcd64d"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/public-minutes-regeneration.json",
+      "sha256": "0f5e573c27aa730bfe18f3b82d6a6e406813bb30152f1097d850170c1599dfc3"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/phone-closed.json",
+      "sha256": "daa33280383de7d4de0ff2d329b5d53b72ccef1a488b0e88e83764ed9ee9e396"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/start_note_readability_followup.py",
+      "sha256": "62483582c4c007d8c3acc22bcee4310b021d398269ee33113b713ad78f2ac97b"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/sync_note_readability_sources.py",
+      "sha256": "2ca007fce989099b4a9d9f49788cbe7ba8abbf7795839174f273fbef094c1411"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/verify_note_readability.py",
+      "sha256": "e7995c5a4fb47ed3bc83ccc0c475f3b9fb5634ea31146184a628e38c76a54842"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/probe_existing_concise_overview.py",
+      "sha256": "5c3eb2dd83f7b4ac633feddc6ba1ec71fad550ce6c9fbae29246917843b42baf"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/regenerate_public_note_readability.py",
+      "sha256": "c81fa270b57cda4ebe6a8d5d041dbf17f28d6e625215d714bac021db269b2af4"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/preview_note_readability.cjs",
+      "sha256": "f00e5e96b93eb6b081a9a6817d7e078a513a395f5d32aebe35ede95d4ef32b98"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/run_preview_note_readability.py",
+      "sha256": "6e5d8f86e166d0abd65a9fd2b1905c0528594b059cc554facbd93ae630584020"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/freeze_note_readability132155.py",
+      "sha256": "3dad0d80662c252bade62f26c62ae460f2087de242a906703784543c2f802738"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/checkpoint_note_readability.py",
+      "sha256": "bf02c3359a1fe85943f5f2db1177cd6286b8aa686d4ce39f48321066d2624b24"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/review_note_readability132.py",
+      "sha256": "5cce59f429ad6ae7a5d357c92d7ce5655fbb8f21d33c4ba5ade68dde24a11933"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/run_note_phone155.py",
+      "sha256": "197d4d5d15bfd8c4575ff60eadea3d58c1e22965f4f5e6d8693f3b08b22a5fb9"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/review_resumed_phone155.cjs",
+      "sha256": "1c40ef875aa4f166c3dea913688d9f2e289fb08ca03ddab9e8b8bb1f24a57e3e"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/install_note132.py",
+      "sha256": "42df76974e9ee08ca5c9480ba5c9e331bf7f91cdd53b660ed90d130c76209511"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/assemble_note132155.py",
+      "sha256": "60dcb1811cfcbbb7b2ca13b6ec93f21c96529ad3502378103848dc38bc80e078"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/protect_note132155_archive.py",
+      "sha256": "f235d6d0e5b26abf5c8b37199e49a9026a904572aef0c776699bb7161181d4e1"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/close_note132155.py",
+      "sha256": "8113d5cb701ac47577231e1fc1209bea58854e6b78f681fd2893f612d7aa199f"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notes132155/engineering/protect_note132155_checkpoint.py",
+      "sha256": "e923404a1ff5b3d95eb5eb65418ed09c9e60c66e0aa64605649590abcaaee744"
+    }
+  ]
+}

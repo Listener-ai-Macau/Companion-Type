@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-13T22:04:19+08:00",
+  "state": "NOTES132155_INSTALLED_NATIVE_READING_AND_TRANSCRIPT_SWITCH_CHECKED_OWNER_JUDGMENT_OPEN",
+  "windowsVersion": "0.1.132",
+  "androidVersion": "0.1.155",
+  "windowsSource": "e55e3b35e66f944779505334faaeeab16cc87a58",
+  "androidSource": "e064b2a80e210ae831e79cf13985696f8b8f2984",
+  "windowsOldDataFilesIdentical": 249,
+  "phoneOldContentFilesIdentical": 6052,
+  "phoneOriginalLibraryAndAppearanceRestored": true,
+  "ownPhoneDisplayClosed": true,
+  "references": [
+    {
+      "name": "Notta official overview/chapters/actions",
+      "url": "https://www.notta.ai/en/features/ai-summary"
+    },
+    {
+      "name": "Granola official grouped notes/templates",
+      "url": "https://docs.granola.ai/help-center/taking-notes/customise-notes-with-templates"
+    },
+    {
+      "name": "Granola official source checking",
+      "url": "https://docs.granola.ai/help-center/taking-notes/ai-enhanced-notes"
+    }
+  ],
+  "adaptation": "Official information hierarchy adapted to Chinese notes; licensed shadcn navigation retained. No proprietary assets/code imported. Source topic prefixes only; no invented note titles or meeting facts.",
+  "engineering": {
+    "actual132NativeNotesThemesReversibleTranscriptSwitchMutedReplaySelectedExportAndProcessReopen": true,
+    "actual155PhonePublicNotesThemesTranscriptSwitchAndProcessReopen": true,
+    "cleanPublicMinutesRegeneratedByActual129": true,
+    "transcriptionEngineChanged": false,
+    "originalTranscriptAndExportRetained": true,
+    "phoneNewModelOrCloudRun": false,
+    "phoneAiConfigured": false,
+    "noNewSpeakerOrBoardCapture": true
+  },
+  "remaining": [
+    "Owner对清晰/好看/顺手的实际判断尚未签收。",
+    "流畅阅读属于可逆显示处理，未解决实卡复杂人声的错字或通用纪要事实可靠性；简短应答、原话与条件保留。",
+    "手机AI服务未配置，未声称本轮手机云纪要已生成。",
+    "整机、输入手感和正式售卖资格仍开放。"
+  ],
+  "fullAcceptancePassed": false,
+  "saleQualified": false,
+  "ownerAccepted": false,
+  "privateOrMixedRoomAudioTextIncluded": false,
+  "rawAudioModelsKeysCredentialsIncluded": false,
+  "ownerPopupSent": false,
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Notes-132-155-20261113.zip",
+  "archiveBytes": 43477735,
+  "sha256": "4fb4b57826ba6af0e47cc14dba2fd51c4523ff9534aadc999da6d9d18b776a37",
+  "msiSha256": "b94d974e5b39df79620826a278135dbeb8455cc2e505b51f2a4a2cc5b8a9a376",
+  "apkSha256": "0277021b20e665d27ffdedb1fb348bea9512a6792963a91b84d8a6722cde90ff",
+  "privateRemoteReadbackVerified": true,
+  "publishedPublicly": false,
+  "report": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\complete-notes132155\\本轮交付说明.txt",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "remoteArchiveName": "Companion-Notes-132-155-20261113.zip",
+  "privateReadbackSha256": "4fb4b57826ba6af0e47cc14dba2fd51c4523ff9534aadc999da6d9d18b776a37",
+  "privateRemoteProtectedAt": "2026-11-13T22:05:35+08:00"
+}

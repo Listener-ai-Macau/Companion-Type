@@ -37,6 +37,7 @@ module.exports=async(page,plan,out,reopened)=>{
   assert.equal(originalText.replace(/\s/g,''),row.transcriptText.replace(/\s/g,''),'Original recognition remains complete');
   await page.getByRole('button',{name:'流畅阅读',exact:true}).click();const clean=await body.innerText();
   assert(clean.length<originalText.length);assert(clean.includes('三个月'));assert(await body.locator('p').count()>10);
+  fs.writeFileSync(path.join(out,'actual-readable-transcript.txt'),clean);
   await page.screenshot({path:path.join(out,'actual-readable-transcript-viewport.png'),fullPage:false});
  }
  if(!reopened){

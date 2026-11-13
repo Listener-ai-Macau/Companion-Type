@@ -287,7 +287,19 @@ def main():
     assert manifest['sessionId']==expected_id and source_rows[0]['audioPath']==manifest['decodedPath'] and sha(Path(manifest['decodedPath']))==manifest['decodedAudioSha256']
     assert hashlib.sha256(source_rows[0]['transcriptText'].encode('utf8')).hexdigest()==manifest['transcriptSha256']
     upstream=Path(specification['upstreamStatePath']);assert upstream==Path(imported['privateRoot'])/'state/sessions.json'
-    assert source_rows==[row for row in json.loads(upstream.read_text(encoding='utf8')) if row['id']==expected_id]
+    imported_rows=[row for row in json.loads(upstream.read_text(encoding='utf8')) if row['id']==expected_id]
+    if specification.get('nativeRegenerationReceipt'):
+     regeneration_path=Path(specification['nativeRegenerationReceipt']);regeneration=json.loads(regeneration_path.read_text(encoding='utf8'))
+     assert regeneration['state']=='PUBLIC_NATIVE129_FIVE_POINT_OVERVIEW_REGENERATED_AND_CONTENT_READ'
+     assert regeneration['publicOnly'] and regeneration['cloudTextOnly'] and regeneration['previousStateUntouched'] and regeneration['originalTranscriptUnchanged']
+     assert regeneration['sourceTextSha256']==manifest['transcriptSha256']
+     assert len(imported_rows)==1
+     result_fields={'minutes','minutesByMode','exportMarkdown','exportedAt'}
+     assert {k:v for k,v in source_rows[0].items() if k not in result_fields}=={k:v for k,v in imported_rows[0].items() if k not in result_fields}
+     regenerated_state=regeneration_path.parent/'sessions.json'
+     assert source_rows==json.loads(regenerated_state.read_text(encoding='utf8'))
+     assert source_rows[0]==json.loads((regeneration_path.parent/'minutes.json').read_text(encoding='utf8'))
+    else:assert source_rows==imported_rows
    for file,digest in specification['originalAudioFiles'].items():assert sha(Path(specification['recordingDir'])/file)==digest
    (state/'sessions.json').write_text(json.dumps(source_rows,ensure_ascii=False),encoding='utf8')
    plan.update(sessionId=source_rows[0]['id'],title=source_rows[0]['title'],realPublicReview=True,realPublicSpec=specification,statePath=str(state/'sessions.json'),expectedSnapshot=source_rows)
