@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-13T10:05:06+08:00",
+  "state": "ACTUAL_NORMALIZED_SPEAKER_TO_MIC_COMPARISON_LOCAL_ASR_COMPLETED_REVIEW_PENDING",
+  "version": "0.1.118",
+  "sessionId": "v1-real-installed-1794535275636",
+  "recordingKey": {
+    "deviceUid": "120011000d50335754363720",
+    "formatEpoch": "5a6584e1707422bb",
+    "sessionId": "00000000000001a0"
+  },
+  "captureResult": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\volume-reference\\capture-normalized-r1\\result.json",
+  "asrSeconds": 15.922,
+  "asrProvider": "local-paraformer",
+  "transcriptCharacters": 441,
+  "baseline019f": {
+    "envelopeCorrelation": 0.19534891959055048,
+    "sourceOffsetSeconds": 28.45,
+    "matchingPublic110Seconds": {
+      "rms": 894.4714944312087,
+      "rmsDbfs": -31.27766860399944,
+      "peak": 27975.0,
+      "clippedSamples": 0
+    }
+  },
+  "normalized01a0": {
+    "envelopeCorrelation": 0.4832832300179641,
+    "sourceOffsetSeconds": 0.8,
+    "matchingPublic110Seconds": {
+      "rms": 1876.835640705278,
+      "rmsDbfs": -24.84047385902247,
+      "peak": 31958.0,
+      "clippedSamples": 0
+    }
+  },
+  "matchingCapturedRmsIncreaseDb": 6.437194744976971,
+  "originalAudioFiles": {
+    "board-session-31a9c2a6d7a1fec79ee5c1228d26861657e28732cb26ec98637bfedd173b5c1b-0000-132724-afb87f7c3289a127.opus": "70ab4367c389a3a0b9c4ca9adadea26587e18b04f22ee7707d0cff2b1d2fc43f",
+    "board-session-31a9c2a6d7a1fec79ee5c1228d26861657e28732cb26ec98637bfedd173b5c1b.wav": "570ccc9c133363beadd738de3bfa9bf983f69ca76172288e12ea419c9e577d2f"
+  },
+  "originalAudioUnchanged": true,
+  "referenceTextFed": false,
+  "cloudRequested": false,
+  "private019eRead": false,
+  "deviceAccessByAsr": false,
+  "ownerAudibilityAccepted": false,
+  "modelGeneralQualityQualified": false
+}

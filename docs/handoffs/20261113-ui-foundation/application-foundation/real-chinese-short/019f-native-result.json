@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-13T09:58:38+08:00",
+  "state": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+  "stage": "product-background",
+  "frozenAppVersion": "0.1.118",
+  "frozenAppSource": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+  "exeSha256": "662d6aa64279a2e2eecb3e1e47718a2385cce865388f0e5415db53d7b87a17c6",
+  "dllSha256": "6558405c6c91abaff10621e711f41954360513d2424501c9cb2967fcfc80fb6c",
+  "inputKind": "Exact new public acoustic019f with actual installed118 ASR and configured DeepSeek results; isolated UI reads same recording originals. No reference transcription or fabricated result.",
+  "privateRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e",
+  "ownerClipboardContentsRead": false,
+  "ordinaryRecipientTested": false,
+  "wholeCoreCandidateQualified": false,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "phoneAccessed": false,
+  "privateStation": "CompanionCore-9554ad3f0a7a440fb2f6d3ebf466a63e",
+  "stationVerifiedBeforeLaunch": true,
+  "desktopIsolation": "Private noninteractive window station on owner PC",
+  "cpuHardCapPercent": 5,
+  "ownJobPrivateCommitLimitBytes": 1610612736,
+  "noninteractiveProductScope": true,
+  "normalVisibleWindowOnDedicatedRunner": false,
+  "nativeSaveCancelOrOrdinaryRecipientRetested": false,
+  "realPublicSessionId": "v1-real-installed-1794533232243",
+  "realPublicSourceStateSha256": "d5d8776fa80a3721584d80a039446b7d3e706dbd4d84162f548ff8c3d714c5b6",
+  "realPublicSpecification": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\public019f-spec.json",
+  "appPid": 23544,
+  "webviewAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0",
+  "nativeWindowsOnPrivateDesktop": [
+    {
+      "hwnd": 3803552,
+      "title": "Companion Type"
+    },
+    {
+      "hwnd": 19401034,
+      "title": ""
+    }
+  ],
+  "cdpListenerPids": [
+    24116
+  ],
+  "observedWebviewProfiles": [
+    {
+      "pid": 5544,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 23632,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 24116,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": true
+    },
+    {
+      "pid": 26016,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 26488,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    },
+    {
+      "pid": 28684,
+      "folder": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\private\\9554ad3f0a7a440fb2f6d3ebf466a63e\\webview\\EBWebView",
+      "matchesPrivateRoot": true,
+      "belongsToBoundedJob": true,
+      "cdpListener": false
+    }
+  ],
+  "webviewProfileVerifiedPrivate": true,
+  "sampledJobPrivateCommitPeakBytes": 472236032,
+  "lastResourceObservation": {
+    "availablePhysicalBytes": 6200451072,
+    "systemPhysicalPercent": 75.1
+  },
+  "firstAppPid": 26056,
+  "firstAppExitObserved": true,
+  "processRestart": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "previousAppExited": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "firstPid": 26056,
+    "reopenedPid": 23544,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": false,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "ui": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": true,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "remoteOwnedWindowFocused": false,
+  "testStationClipboardSequenceUnchangedAtObservation": true,
+  "ownerClipboardSequenceUnchangedAtObservation": true,
+  "remotePickerFocusUsed": false,
+  "keyboardMouseOrForegroundControlUsed": false,
+  "ownerKeyboardMouseOrForegroundControlUsed": false,
+  "finishedAt": "2026-11-13T09:59:03+08:00"
+}

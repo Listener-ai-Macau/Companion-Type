@@ -1,0 +1,101 @@
+{
+  "at": "2026-11-13T10:00:55+08:00",
+  "state": "SCOPED_BACKGROUND_RECORDING_BATCH_PASSED",
+  "firmware": 66829,
+  "windows": "0.1.118",
+  "ownerAuthorization": "Owner requests background engineering work before one candidate; physical gestures deferred.",
+  "asrRequests": 0,
+  "cloudRequests": 0,
+  "speakerOutputs": 0,
+  "originalAudioReads": 0,
+  "ownHandlesClosed": true,
+  "stages": [
+    {
+      "at": "2026-11-13T10:03:11+08:00",
+      "stage": "short",
+      "state": "NATIVE_ORIGINAL_SAVED",
+      "seconds": 120,
+      "newStartRequests": 1,
+      "physicalOwnerAction": false,
+      "sessionId": "v1-real-installed-1794535275636",
+      "recordingKey": {
+        "deviceUid": "120011000d50335754363720",
+        "formatEpoch": "5a6584e1707422bb",
+        "sessionId": "00000000000001a0"
+      },
+      "sealedChunks": 0,
+      "captureObservedAt": "2026-11-13T10:01:17+08:00",
+      "captureObservedUnixNs": 1794535277081446300,
+      "hostElapsedSeconds": 120.255,
+      "activeFollowWindows": 0,
+      "unexpectedDisconnectObservations": 0,
+      "exitCode": 0,
+      "finishedAt": "2026-11-13T10:03:23+08:00",
+      "audioDurationMs": 120390.0,
+      "wav": {
+        "channels": 1,
+        "sampleRate": 16000,
+        "frames": 1926240
+      },
+      "observedFollowSpanSeconds": null,
+      "microphoneSamplesLocalOnly": true,
+      "asrRequested": false,
+      "cloudRequested": false
+    }
+  ],
+  "nativeSource": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+  "nativeInstalled": false,
+  "protectedTerminalCounters": {
+    "5": {
+      "wire": "43524d310500010100e0a3c600540000f01000004c7fa903019b6200e299c1fa",
+      "flags": 1,
+      "schema": 1,
+      "values": [
+        21504,
+        4336,
+        61439820,
+        6462209
+      ]
+    },
+    "6": {
+      "wire": "43524d3106001f023310b4f984170000082f000088130515d007e7092a8521f0",
+      "flags": 31,
+      "schema": 2,
+      "values": [
+        6020,
+        12040,
+        352654216,
+        166135760
+      ]
+    },
+    "7": {
+      "wire": "43524d3107000101c9c9a99000000000000000000000000000000000ade2206f",
+      "flags": 1,
+      "schema": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "8": {
+      "wire": "43524d31080005010e658d474e810300000000000700000003000000dc0ef328",
+      "flags": 5,
+      "schema": 1,
+      "values": [
+        229710,
+        0,
+        7,
+        3
+      ]
+    }
+  },
+  "radioPhysicalIdleObserved": false,
+  "preexistingMetadataIdentical": true,
+  "finishedAt": "2026-11-13T10:03:38+08:00",
+  "release": {
+    "result": "TURN_RELEASED",
+    "next": null
+  }
+}

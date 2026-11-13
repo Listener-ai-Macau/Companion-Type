@@ -134041,13 +134041,12 @@
           "tasks": [
             "CP09-02"
           ],
-          "current": "已装747/104；过期窗口后的已配对握手误断连已修，实际2.0493s目录可用；早期133/0x3E不同阶段仍开放，不写配对稳定性全部通过。",
+          "current": "当前829与正常117新进程普通连接4242.9804ms<=5s样本通过；同原件断开重接35.430秒与暂停继续15.420秒完整保存，偶发RF根因没有新的失败证据不能全部关闭。",
           "remaining": [
-            "当前717096十次进程冷启后正常选择均1.918–2.090<=5秒，097正常路径2.102秒通过；不把复用连接算冷连。",
-            "历史早期0x3E本批未复现也未取得失败空口；不能宣称已解释或跨机型全稳。只在新现场触发留证，不继续盲调正常参数。",
-            "启动库读取时设备导航吞点击及显示状态已修源码7529d5a8，098已精确实装并保留333原音，普通入口/冷连接待下一板卡轮次。"
+            "早期0x3E/首次连接偶发原失败保留；只在新现场触发时取对应证据定位，不重复无变化试验。",
+            "手机正常入口和完整链由前端当前匹配交付验收。"
           ],
-          "next": "沿embedded.next。",
+          "next": "新失败修板端源头；无失败复用已验样本，主线继续IMU。",
           "doneWhen": "新手机在正常有限配对窗口内完成配对和加密目录访问，失败可恢复；不清其它绑定，不读取原录音。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\phone069\\actual-phone-pairing.json"
@@ -134067,11 +134066,13 @@
           "tasks": [
             "CP23-10"
           ],
-          "current": "747/104已装；新357二十秒首收38.296873仍FAIL50；首有效PCM、早期0x3E建链失败、app超4544B和最终2h均开放。已修过期旧窗口误踢已配对新连接，正常窗口过期后目录2.0493s通过这一明确缺陷。",
+          "current": "当前829普通OTA104.898s/postFinish74.881s，版本/布局/UI85共同确认、临时空间释放；资源App406424B/static66632B在预算内。短019f285.520秒完整保存回收；019e按Owner停止1840.340秒保存，未给本轮新2h结论。",
           "remaining": [
-            "720097真实333录7363.5秒/并传7200.328秒，60段15472076B和3个完整WAV/误差20ms通过，正常2h非预期断链0、采音异常0、栈4344/guard0/low0；整项仍FAIL：编码P95/峰5.5/7.307ms、PDM峰3.197ms、采音间隔tick8保守9ms>8。先定位同步时处理/调度并修源头，保持61.44MHz/音质/原资源预算，不恢复CPU百分比门。自动恢复7.109<=10秒，同任务/前缀保留且空口新own连接确认；旧脚本额外waiting状态判据FAIL保留并单独复核通过，不把UI状态当产品门槛。098入口修复源码7529d5a8已实装，后端/JNI不变、333全部120文件SHA不变，普通手机入口/冷连待下一板卡轮次。短332任何长度含物理回收50继续FAIL；原电源/声学/生产/屏幕block保持。"
+            "原任何长度含回收>=50KiB/s旧失败按Owner后置，OTA payload73.643KiB/s不替代此门。",
+            "旧耐久/恢复/满盘证据按范围复用；新增板端故障或实质改动再补对应检查，本轮不重跑2h。",
+            "原电源/声学/生产/屏幕及未来Capture硬件条件保持。"
           ],
-          "next": "沿embedded.next。",
+          "next": "沿当前priorityDecision；不恢复747/399旧正在运行状态。",
           "doneWhen": "实际完整签名升级、正确版本/资源/哈希/临时区释放与旧目录核对通过，并达到当前正常传输/资源指标。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\ota-measurements.json",
@@ -134098,13 +134099,12 @@
           "title": "Companion录音卡IMU交互：敲击重点",
           "status": "open",
           "category": "Owner最新优先插入；原编号复用，屏幕/宠物仍暂停",
-          "current": "普通FW66820/UI85已装，源a3c2906推送；空闲约19%停点按Owner保留，鼠标整板34.28→32.88%，算法约0.17%；1319帧约98.49Hz0丢序。普通版QPC754帧0丢序，首次启动校准段3帧缺口保留；旧15/16ms粗时钟不作精确延迟。原鼠标v4弹窗等待真实体验，未开始不接管光标，等待不占板。",
-          "next": "沿embedded.next，先承接原鼠标v4实体反馈，不再追空闲小数或重复弹录音窗口。",
+          "current": "当前普通829/UI85、61.44MHz；118保留117鼠标实现与首敲基线修复、43算法用例，994raw帧约98.08Hz零缺序；自然实物方向/点击拖拽/误触仍未全通过。",
+          "next": "沿当前priorityDecision第1、2项。",
           "remaining": [
-            "Owner physical pointer movement/click/drag and old floaty/no-body-click feedback remain open",
-            "Current recording+Opus+BLE full-load CPU and actual WBA25/cache/platform adaptation not newly measured",
-            "Original Flash budget over468B remains unchanged contract; static RAM unchanged",
-            "Ordinary wireless OTA fragmented contiguous-staging limitation and Owner explicit hardware blocks remain open"
+            "成熟上游对照及完整实物鼠标体验，现有contact/intent扩展仍实验。",
+            "当前允许组合的CPU/栈按受影响范围确认；全负载不能由历史各服务相加。",
+            "新RGB灯已记录方案，等新板到；原明确硬件block保留。"
           ],
           "doneWhen": "录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。",
           "evidence": [
@@ -134560,14 +134560,49 @@
           "captureFeedback": {
             "newBoard": "LED only; GPIO/polarity TBD",
             "currentBoard": "WBA55 sample has no LED; no vibration",
-            "doubleClick": "No independent action in this batch"
+            "doubleClick": "No independent action in this batch",
+            "state": "OWNER_DEFERRED_UNTIL_NEW_BOARD_ARRIVES",
+            "ownerClarificationAt": "2026-11-13T09:43:01+08:00",
+            "ownerRaw": "状态灯先想录音卡怎么打，先记录，到时候板子到了再说；不单IMU，固件端其他外设也负责。",
+            "hardwareSelection": {
+              "gpio": null,
+              "activeLevel": null,
+              "ledType": "RGB_EXPECTED_BY_OWNER_NOT_YET_HARDWARE_VERIFIED",
+              "pwmAvailable": null
+            },
+            "proposal": {
+              "sleep": "off",
+              "recording": "slow blink, initial proposal 150ms on/850ms off",
+              "connectingOrSynchronizing": "faster blink; never mask an active recording indication",
+              "saved": "one brief steady light only after actual save confirmation",
+              "bookmarkConfirmed": "one brief confirmation burst, then return to recording",
+              "faultOrFull": "three-blink group, details kept in device status"
+            },
+            "designStatus": "PROPOSAL_NOT_OWNER_EXPERIENCE_APPROVAL",
+            "priority": "recording first; transient confirmed events then resume base state",
+            "implementation": "Reuse current 8-byte capture_feedback projection. Board-specific GPIO/polarity/PWM adapter selected after hardware. No new always-on raw BLE stream or busy-wait effects.",
+            "actualLedHardwareQualified": false,
+            "rgbOwnerClarification": {
+              "at": "2026-11-13T09:47:22+08:00",
+              "raw": "应该是有RGB灯，可以有不同的颜色；先不管，固件继续理顺。",
+              "state": "RGB_PROPOSAL_ONLY_WAIT_NEW_BOARD"
+            },
+            "proposalColors": {
+              "recording": "red slow blink",
+              "connectingOrSynchronizing": "blue blink",
+              "saved": "green brief steady",
+              "bookmarkConfirmed": "green brief burst then return to red recording",
+              "faultOrFull": "red triple flash",
+              "sleep": "off"
+            },
+            "colorPlanApproved": false
           },
           "storageRequirementReview": "owner_module_execution.embedded.gapReview.secondReview20261106.offlineStorage"
         },
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "本轮共用829验收与待验范围见 imuRecorderFeatures.airPointer20261112.executionPoint；原硬件block/速度后置不变。",
+      "next": "沿priorityDecision.currentExecutable：当前829基础主干已具备并有范围明确证据；集中收尾IMU可用性/成熟组件及资源，不重开前端会议链和2h。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135063,37 +135098,37 @@
         }
       },
       "priorityDecision": {
-        "at": "2026-11-10T16:01:25+08:00",
+        "at": "2026-11-13T09:47:22+08:00",
         "ownerRaw": "你就把接下来的优先级修一下，block的东西就block；除了block以外的东西都已经做了吗，可以交付、售卖吗？",
         "correction": "现行优先级字段仍停在11月5/6日的日期/维护入口旧顺序，与embedded.next不一致，已纠正。原结果和已过范围保留，不把规则/文档/验收工具数量算产品进展。上一轮较多时间用于验收适配，未产生新固件修复，明确保留这一投入事实。",
         "ordered": [
           {
             "order": 1,
-            "task": "CP04-01",
-            "scope": "正常开录至首个真实PCM<=1.5s；保留可录时长/音质/资源预算",
-            "status": "GUIDANCE088_INSTALLED_NATIVE_FIRST_USE_PASS_PHYSICAL_FIRST_WORD_PENDING",
-            "next": "新/旧/未知按键说明、可选提示音和实际设备首用/帮助已完成；复用已有首PCM修复，实体第一句话回听按原Owner后置保持。"
+            "task": "CP04-08",
+            "scope": "已交付IMU基本手势与鼠标移动/点击/拖拽的自然可用性",
+            "status": "IMPLEMENTED_AND_PARTLY_TESTED_PHYSICAL_USABILITY_OPEN",
+            "next": "对照AirCursor/WatchPointer/Fusion及ST官方示例收敛，优先修现有用户问题，自研空间识别标实验；Owner有空再集中弹一次完整体验窗。"
           },
           {
             "order": 2,
-            "task": "CP23-10",
-            "scope": "当前匹配版本长录/录中同步及普通手机交付链，按受影响范围冻结验收",
-            "status": "CURRENT791_091_ORIGINAL399_TWO_HOUR_RUNNING",
-            "next": "389/391原音均收齐，历史2h失败保留。已修必读状态读取的源头恢复后开始第三场399，只一次START，当前无断连；按原2h/完整性/零采音异常门收尾，不重开内部编码耗时门。"
+            "task": "CP21-03",
+            "scope": "固件底层与CPU/SRAM/内部外部Flash资源",
+            "status": "829_FLASH_SRAM_WITHIN_BUDGET_CONCURRENT_CPU_NOT_NEWLY_MEASURED",
+            "next": "沿现有模块账本与服务成本表，按组件变动核资源与可同时开启组合；不盲减栈/协议缓冲或把老数据称新测。"
           },
           {
             "order": 3,
             "task": "CP09-02",
-            "scope": "首次连接及原会话中断恢复；冷目录<=5s、恢复<=10s、不重复START",
-            "status": "SOURCE090_DEFAULT_COLD4640MS_AND_READY360S_PASS_RECOVERY_CURRENT_LONG_PENDING",
-            "next": "091合并753800da，默认冷连接4.6404255s和空闲就绪360.654s零断连已实测；实际丢链后的同任务恢复及当前手机完整链仍需确认，不拿就绪稳定替代恢复。"
+            "scope": "连接和同一原件恢复可靠性",
+            "status": "LATEST_NORMAL_CONNECT4243MS_AND_ORIGINAL_RECOVERY_SCOPED_PASS_INTERMITTENT_RF_OPEN",
+            "next": "复用当日正常117恢复/暂停与连接样本。间歇根因只在新失败现场定位，不循环盲调正常连接参数。"
           },
           {
-            "task": "CP04-08",
-            "scope": "录音卡IMU双击重点，关联CP27-17",
-            "status": "SINGLE_CLICK_AND_ONE_DURABLE_DOUBLE_TAP_PHYSICAL_PASS_PICKUP_AND_FALSE_TRIGGER_PENDING",
-            "next": "当前788实板388：单击开始/停止、一次双敲产生一个耐久重点与原音位置匹配，基础可用；拿起唤醒已实现未做完整实物/误触验收，扩展手势仅候选，不宣称全可用。停止重复旧五组计时窗。",
-            "order": 4
+            "order": 4,
+            "task": "CP23-10",
+            "scope": "录音存储同步OTA与既有用户功能回归",
+            "status": "CURRENT829_TARGETED_AND_OTA_PASS_PRIOR_ENDURANCE_REUSED_BY_OWNER_DIRECTION",
+            "next": "当前短019f已285.520秒完整保存回收；前端接全链。旧2h/失败原证保留，Owner本轮不要求新跑2h；新增固件改动只取受影响检查。"
           }
         ],
         "doNotReopen": [
@@ -135101,9 +135136,9 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "原791/冻结091会话399持续录音与同步，预计00:30后停录完整校验；先读实际终态并确认句柄/板卡交回，失败只收回同一原399，不盲开新长录。Windows092正常MSI与本机模型可用、Mac对应修复候选已同包（含手机当前130），但实体输入/Mac仍未通过。399收尾后运行recovery-work/accept_windows092_held.py原版弹窗，只一次实体按住完整句，核原音/识别/自动入框及模式0ACK，记录唯一物理START，不能把有问题记成稍后。手机130原CP27-16会话已实际结束并回到原用户库，可以后续接实卡全链；自然IMU及真实Mac继续原范围。原block/后置保持；后续统一Windows保留7046f32d及文档/音频编辑源。",
-        "lastUpdatedAt": "2026-11-10T23:53:38+08:00",
-        "lastOwnerRaw": "能修复就修复，实在难修先不用管；先把售卖的东西修好，再慢慢优化技术指标。IMU那些都可以，对吧？",
+        "currentExecutable": "优先当前IMU自然使用与成熟上游算法/交互对照；必要组件改动同步核Flash/SRAM/CPU，形成完整体验候选。RGB等新板；中文短会全链由前端继续。当前无长录在跑，不重新开2小时，不恢复后置速度或屏幕。",
+        "lastUpdatedAt": "2026-11-13T09:47:22+08:00",
+        "lastOwnerRaw": "RGB灯先按多颜色记录，先继续理顺嵌软，基础固件是不是差不多。",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
         ],
@@ -135183,15 +135218,16 @@
         "activeBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
         "postReleaseOptimization": [
           "原编码6239us>6000us等内部耗时，保留失败及已备789/790归因包，不再作为正常功能验收前置。"
-        ]
+        ],
+        "previousCurrentSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\readiness-before-current-scope.json"
       },
       "releaseReadiness": {
-        "at": "2026-11-11T01:02:58+08:00",
-        "firmware": 66791,
-        "coreDelivery": "ONE_COHERENT_092_AND_MAC_FIX_CANDIDATE_BUILT_ORIGINAL399_STILL_RUNNING",
+        "at": "2026-11-13T09:47:22+08:00",
+        "firmware": 66829,
+        "coreDelivery": "CURRENT829_BASIC_RECORDER_SCOPED_VERIFIED_IMU_USABILITY_REMAINS",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "FW791/Windows091 original399 current long continues; no qualification yet. Unified092/MSI and corresponding Mac candidate fix real source/UI issues but are not physical/Mac qualified. Phone complete chain and natural IMU remain open. Explicit blocks and deferred metrics unchanged.",
+        "openSoftware": "Current baseline829 has scoped ordinary OTA/recording/receive/recovery/resource evidence. Remaining firmware work is natural IMU usability, source-faithful advanced functions and affected concurrent resource assessment. Client short-meeting ASR/minutes/reopen belongs to frontend. No new2h run under Owner13 instruction.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -135208,8 +135244,8 @@
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
-        "nonBlockedCompletionScope": "Owner2026-11-10：内部编码/PDM/调度耗时仅观察，不单独挡交付。正常录音/停录/耐久保存/完整回听/同步及同任务恢复、零实际漏音/采音异常、用户连接/控制/等待与原资源预算仍必需；当前匹配最终2h与实体/Mac范围按原任务验，原明确block/后置保持。",
-        "phoneVersion": "0.1.131",
+        "nonBlockedCompletionScope": "Owner13: firmware side owns device capture/storage/BLE/OTA/IMU/peripherals/resources; client recording operations/ASR/minutes/full-use chain delegated frontend. Converge existing user-visible firmware functionality; current829 targeted evidence reused. Owner directed stop long1840.340s/save and use short285.520s, no new2h rerun. Existing power/hardware/production/acoustic/speed/display blocks/pauses/deferrals retained.",
+        "phoneVersion": "0.1.145",
         "scopeBeforeOwnerExcludedBlocked20261109": {
           "coreDelivery": "OPEN_ANY_LENGTH_RATE_STARTUP_INITIAL_CONNECTION_INTERMITTENT_OTA_FINAL2H",
           "completionScope": "Normal configuration restored; no short-speed qualification; latest OTA rate fails",
@@ -135227,11 +135263,11 @@
         },
         "matchedCoreCandidateFrozen": false,
         "coreCandidateBatchRef": "docs/product_backlog.json#/owner_module_execution/frontendWindowsMobile20261102/ownerCoreDeliveryPriority20261104/ownerCoreAcceptanceCandidate20261109",
-        "currentCoreShortBatchAccepted": false,
-        "currentCoreShortBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\core776-targeted-acceptance.json",
+        "currentCoreShortBatchAccepted": true,
+        "currentCoreShortBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\batch-result.json",
         "windowsCoreCandidateBuilt": true,
         "currentCoreLongPassed": false,
-        "currentCoreLongReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\file-commit094\\original399-integrity.json",
+        "currentCoreLongReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\long117-current\\long\\stop-own-original.json",
         "repairCandidateBuilt": true,
         "repairCandidateInstalled": true,
         "currentCoreLongRunning": false,
@@ -135305,49 +135341,49 @@
         "internalTimingBlockingRelease": false,
         "currentRemainingScope": [
           {
-            "id": "normal-app-and-phone-chain",
-            "tasks": [
-              "CP04-01",
-              "CP09-02",
-              "CP23-10"
-            ],
-            "status": "NORMAL_WINDOWS094_CANDIDATE_ANDROID131_LAST_OBSERVED_COMPLETE_PHONE_CHAIN_OPEN",
-            "remaining": "Android131安装及原库交回已记录，手机录音/收取/回听/同场恢复仍待本轮完整实卡资格；Windows094正常MSI已核对，不以构建代替全链。",
-            "type": "Implemented source plus delivery and affected end-to-end qualification"
-          },
-          {
-            "id": "current-functional-two-hour",
-            "tasks": [
-              "CP23-10"
-            ],
-            "status": "FAILED_LOCAL_INDEX_COMMIT_ORIGINAL399_FULLY_RECOVERED",
-            "remaining": "原399音频完整收回；本地索引写入失败使2h目标未满足。修复后用一致候选完成当前录音与同步门。",
-            "type": "Actual user-function reliability qualification, not a new codec optimization project",
-            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\file-commit094\\original399-integrity.json",
-            "passed": false
-          },
-          {
             "id": "imu-basic-natural-use",
             "tasks": [
               "CP04-08",
               "CP27-17"
             ],
-            "status": "ONE_INTENDED_DOUBLE_TAP_AND_SINGLE_CLICK_PASS_PICKUP_FALSE_TRIGGERS_PENDING",
-            "remaining": "Current788/session388 single-click start/stop and one intended double-tap -> one durable source-bound mark passed. Real pickup/wake and ordinary pickup/putdown/carry false triggers remain unqualified. Final unavailable hardware/enclosure and first-word/acoustic items retain their existing Owner-deferred scope.",
-            "type": "Existing implementation needs scoped actual natural-use confirmation"
+            "status": "IMPLEMENTED_BASE_GESTURES_NATURAL_FALSE_TRIGGER_USE_PENDING",
+            "remaining": "旧单击开停与一次耐久双敲标记实物证据保留；拿起/放下/携带误触和当前实物体验未完整通过。",
+            "type": "Firmware IMU reliability and usability"
           },
           {
-            "id": "mac-held-dictation-core-promise",
+            "id": "imu-advanced-pointer",
             "tasks": [
-              "CP15-09",
-              "CP15-02"
+              "CP04-08",
+              "CP15-09"
             ],
-            "status": "WINDOWS094_AND_MAC_A929_CANDIDATES_READY_PHYSICAL_CHAINS_OPEN",
-            "remaining": "Windows094源397148f7正常包已核对，原版实体窗等待一次自然按住说话；Mac源a9296fbc候选CI通过，实际Mac蓝牙/授权/编辑器输入仍待实机。",
-            "type": "Host application integration and actual-device qualification; distinct from current MCU basic recorder"
+            "status": "AIR_WATCH_FUSION_PORT_PRESENT_CUSTOM_CONTACT_INTENT_EXPERIMENTAL",
+            "remaining": "移动/点击/拖拽与普通鼠标共用需整体验证；空间左右敲击与桌面平移未有已验成熟上游实现，不把算法用例当实物准确率。",
+            "type": "Advanced feature development plus physical experience"
+          },
+          {
+            "id": "current-resource-concurrency",
+            "tasks": [
+              "CP21-03",
+              "CP24-08"
+            ],
+            "status": "829_FLASH_SRAM_IN_BUDGET_HISTORICAL_CPU_SCOPED",
+            "remaining": "829 App406424B/静态SRAM66632B在原预算内；历史819空闲19.005%/鼠标32.884%不作当前并发实测。必要新增组件按受影响组合核CPU/栈，不能把互斥录音+鼠标或各模式峰值相加。",
+            "type": "Firmware resource budget and affected validation"
+          },
+          {
+            "id": "frontend-full-chain",
+            "tasks": [
+              "CP04-01",
+              "CP09-02",
+              "CP23-10",
+              "CP15-09"
+            ],
+            "status": "HANDED_TO_FRONTEND_019F_SHORT_ORIGINAL_SAVED",
+            "remaining": "前端承接公开中文短会音量/真实转写/纪要/导出/重开和主机/Mac实际输入；嵌软只处理暴露的具体板端缺陷。",
+            "type": "External owner handoff, not duplicated embedded work"
           }
         ],
-        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66762\\delivery-first-20261110\\desktop-input092\\current-workpoint.json",
+        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\batch-result.json",
         "completionMeaning": {
           "at": "2026-11-10T16:30:56+08:00",
           "ownerQuestion": "这几组收尾都跑完后，是不是整个Companion或Capture都完成？",
@@ -135386,7 +135422,15 @@
           "imuMousePhysicalPass": false,
           "macRuntimePass": false,
           "saleQualified": false
-        }
+        },
+        "coreFeaturesImplemented": true,
+        "windowsVersion": "0.1.118",
+        "frontendDeliveryReceipt": "docs/handoffs/20261113-ui-foundation/application-foundation/software-delivery.json",
+        "currentCoreShortBatchScope": "Actual829 and normal117 payload, own285.520s MIC original fully saved/received/reclaimed; ASR/minutes/UI experience not qualified by embedded.",
+        "currentCoreLongStatus": "OWNER_STOPPED_SAVED_NO_NEW_TWO_HOUR_VERDICT_REUSE_PRIOR_SCOPED_ENDURANCE",
+        "currentOriginalRecoverySamplePass": true,
+        "currentOriginalRecoveryReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\recording117-recovery-pause-r2\\result.json",
+        "previousCurrentAssessmentSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\readiness-before-current-scope.json"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -137278,12 +137322,12 @@
         }
       },
       "metricAcceptance": {
-        "at": "2026-11-10T16:01:25+08:00",
+        "at": "2026-11-13T09:47:22+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "Normal760 restored within original resources; latest OTA37.266693 fails50 although functional installation completed; short remains FAIL, whole sale unqualified.",
+        "currentFacts": "Current829 ordinary OTA total104.898s/postFinish74.881s/joint version+layout+UI85 confirmed and staging released; App406424B/static66632B/reservedstack21504B within original budgets. Normal117 connect4242.9804ms one process sample. Original any-length recording>=50KiB/s failures stay Owner-deferred; no fresh qualification by payload73.643KiB/s. Natural IMU and full concurrent currentCPU remain unqualified.",
         "verdict": "USER_EXPERIENCE_AND_FUNCTION_FIRST_INTERNAL_TIMING_DEFERRED",
         "result": "NOT_QUALIFIED",
-        "functionalOtaResult": "PASS_ONE_751_EXACT_NORMAL_INSTALL_PRIOR750_FAILURE_OPEN",
+        "functionalOtaResult": "PASS_SCOPED_829_EXACT_NORMAL_SIGNED_INSTALL",
         "ownerQuotes": [
           "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
           "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
@@ -137291,34 +137335,34 @@
         "next": "沿当前embedded.next；保留既有实测/失败，内部耗时不独立挡功能交付。",
         "latestValues": {
           "payload_rate_kib_s": {
-            "value": 37.266693111798276,
-            "status": "FAIL_CURRENT50_NORMAL760",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "value": 73.6434032852923,
+            "status": "SCOPED_OTA_PAYLOAD_NOT_ANY_LENGTH_RECORDING_QUALIFICATION",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "total_seconds": {
-            "value": 139.378,
-            "status": "PASS_SINGLE_CASE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "value": 104.898,
+            "status": "PASS_SCOPED_NORMAL829",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "post_finish_verify_seconds": {
-            "value": 87.068,
-            "status": "PASS_SINGLE_CASE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "value": 74.881,
+            "status": "PASS_SCOPED_NORMAL829",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "application_bytes": {
-            "value": 412212,
-            "status": "PASS_ORIGINAL_BUDGET",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "value": 406424,
+            "status": "PASS_ORIGINAL_BUDGET_NORMAL829",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "static_data_bss_bytes": {
-            "value": 67896,
-            "status": "PASS_ORIGINAL_BUDGET",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "value": 66632,
+            "status": "PASS_ORIGINAL_BUDGET_NORMAL829",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "stack_reserved_bytes": {
             "value": 21504,
-            "status": "PASS_ORIGINAL_BUDGET",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phase-residence759-20261109\\manifest.json"
+            "status": "UNCHANGED_NORMAL829",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\shared-core-verification20261113.json"
           },
           "stack_guard_faults": {
             "value": 0,
@@ -137497,7 +137541,8 @@
           "pdmPeakResult": "PASS",
           "foregroundConservativeUpperMs": 7
         },
-        "functionalRecordingReceiveResult": "OWN362_363_364_365_EXACT_ORIGINAL_AND_PHYSICAL_RECLAIM;OWN363_EXACT_VALID_SOURCE_WAV;FAIL_ANY_LENGTH50;ENGINEERING_ENTRY_ONLY"
+        "functionalRecordingReceiveResult": "OWN362_363_364_365_EXACT_ORIGINAL_AND_PHYSICAL_RECLAIM;OWN363_EXACT_VALID_SOURCE_WAV;FAIL_ANY_LENGTH50;ENGINEERING_ENTRY_ONLY",
+        "previousCurrentSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\readiness-before-current-scope.json"
       },
       "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
       "lastOwnerAssistance": {
@@ -143405,7 +143450,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "SHORT_CHINESE_MEETING_CHAIN_HANDED_TO_FRONTEND_EMBEDDED_SEALING_CURRENT_ORIGINAL",
+          "state": "CONCENTRATED830119_BUILD_AND_NORMAL_OTA_IN_PROGRESS",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143435,9 +143480,9 @@
             "actualBoardCpuMeasured": false
           },
           "remaining": [
-            "Normal829 pooled queue installation and actual burst/reconnect/Stop1/affected sync qualification remain open while recording408 is active.",
-            "Natural direction/spatial left-right click and complete ordinary Windows mouse delivery remain open; host ad325 source integrated/tested32.",
-            "Original broader embedded/OTA/deferred boundaries remain; no sale qualification."
+            "自然方向/左右空间敲击/完整普通鼠标体验仍未通过；117118现有contact和intent自研扩展是实验，优先核成熟上游。",
+            "正常829 OTA/混合包/原录音保持已验证；8项同时队列峰值和全负载资源只在确有影响时补，不重新派2小时或前端全链。",
+            "新板LED的GPIO/灯型/PWM未定，Owner要求先记录方案，板到再接入；原ADC/真实电流及其它明确block继续保留。"
           ],
           "firmwareInstalled": 66829,
           "normal795BuiltNotInstalled": true,
@@ -143449,7 +143494,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Owner补充可拿完整候选来体验，承接此前忙/整块交付，不重弹逐项窗。bdfeed4c正常117 MSI已独立核源码/载荷/312许可/升级身份。实际失败019b在nativeBLE禁用下Finalize0.673s成功、3份原测试音/索引哈希不变；同829/117新35.43秒断开重接和15.42秒实际采音的暂停继续均完整保存，原目录不变，保护端计数零溢出/陈旧/拒绝/deadline/IRQ，MCU61439820Hz。新进程普通连接目录4.243s为一个样本，不当零干扰/间歇失败已根治。当前仅一场019e/host1794531113737正在2h5m持续录音同步；已实际暂停/继续同步，0新Mic命令，终态等待原activeJob路径，不能中途换中心/刷写/查询UART。初版117重测仅UART0字节、0START；已去掉后台产品验收对调试串口依赖，以受保护BLE身份/状态/计数核验，不复位重试，普通蓝牙随后正常。Source Android实际producer f55f8e83 DeviceNames已支持Capture；shadow apps/android-backend旧过滤不是当前AAR来源，无需重复修/重包。当前UI整体重构仍沿原项在进行，最终完整体验包合并真实同源UI及本117完整鼠标/收尾修复；117不独立安装/不交Owner，不把候选叫售卖。 Owner最新纠偏：中文真人公开会议外放、先短会全链不重跑2小时，声音偏小需前端处理；全链专项交前端并明确通知，精确交接见C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\chinese-short-frontend-handoff.json。原019e已按Owner停止保存1840.340秒、不叫耐久失败或2小时通过；当前019f自动停好保存后释放，不重复开录。",
+          "executionPoint": "Owner要求一次集中完成后给体验。已实质修复：正常与raw当前pointer统一ST硬件单次敲击，可靠队列只消费一次、物理键拖拽时不加敲击；退出仍恢复录音双敲。Host原版首次点击会跳屏幕中心已复现(anchor-before.log)，修起始/重新居中投影锚到实际鼠标；初版改动影响暂停的失败保留，收敛后44项全部通过。FW6818a91已正常编译830，406408B比829少16B，静态SRAM66632B和栈21504B不变。当前普通118正给板OTA830，16439；119源2cbb4ec独立小worktree共用原Cargo目标构建29341，不动前端未提交QA。首次119准备遇锁文件版本摘要未同步，零编译，修原许可清单摘要后r2已进入正常release。OTA准备目录/版本十进制参数失误均在BLE前停；后一次只因移动旧收据使端点指针不可用，已真实串口确认当前无BLE/无MIC/无擦除并登记新空闲收据，无绕过/复位；当前实际OTA结果见activeJob。整批完后原版弹窗一次集中体验，当前不接管光标、不重复录音/ASR、不跑2h，RGB和原block保留。",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -144140,21 +144185,14 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "SHORT_019F_AUTOMATIC_STOP_AND_RECEIVE_THEN_RELEASE",
-            "controllerSession": 17236,
-            "speakerSession": 99104,
-            "progress": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\capture\\short\\progress.json",
-            "result": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\capture\\result.json",
-            "recordingKey": {
-              "deviceUid": "120011000d50335754363720",
-              "formatEpoch": "5a6584e1707422bb",
-              "sessionId": "000000000000019f"
-            },
-            "sessionId": "v1-real-installed-1794533232243",
+            "state": "NORMAL830_OTA_AND_FROZEN119_MSI_BUILD",
+            "otaSession": 16439,
+            "otaResult": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\ordinary-ota830-transfer\\result.json",
+            "windowsBuildSession": 29341,
+            "windowsBuildResult": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\windows119-local-r2\\result.json",
             "ownerPopupLive": false,
-            "captureSeconds": 285,
-            "handoffOwner": "frontend",
-            "scope": "One public Chinese human meeting through PC physical speaker; no new two-hour run; ASR/minutes/UI closure assigned frontend"
+            "microphoneCommands": 0,
+            "cursorCommands": 0
           },
           "latestOwnerMouseFeedback": [
             "顺滑度是修好了, 但是点击那些都没有, 然后用起来也很不好用 然后的话呢，现在我如果同时用鼠标，你那个鼠标会把我的鼠标总是移到原位，就它不能跟别的鼠标兼容嘛，它只是需要考虑移动就可以了。",
@@ -144413,7 +144451,7 @@
             "pointerTests": 43,
             "failedOriginalLocalLibrary": "E:/CodexData/Companion/.build-cache/imu-pointer20261112/concentrated20261113/recording-short-recovery/recovery/library",
             "originalPhysicalSession": "000000000000019b",
-            "newLongRunning": true,
+            "newLongRunning": false,
             "uiFoundationRetainsOriginalOpenStatus": true,
             "normalMsiVerified": true,
             "msiSha256": "cff9ac91f2ddc01b4964402c0041108e2e211ec4256b423d1ae96dc83e54dffb",
@@ -144432,7 +144470,37 @@
             ],
             "handoff": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\chinese-short-frontend-handoff.json",
             "owner": "frontend",
-            "state": "SHORT_ORIGINAL_SAVING_HANDOFF_TO_FRONTEND"
+            "state": "NOTIFIED_FRONTEND_SHORT_ORIGINAL_SAVED_BOARD_RELEASED",
+            "notificationThreadId": "01a1cd4e-ed69-7431-bbea-486848d70b7d",
+            "shortActualDurationMs": 285520
+          },
+          "concentratedBatchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\batch-result.json",
+          "upstreamReuseDecision20261113": {
+            "at": "2026-11-13T09:43:01+08:00",
+            "raw": "高级功能尽量找网上好用的开源仓库实现，不自己编算法；还包括其它板上硬件、灯和按钮，资源CPU/SRAM/Flash也是嵌软任务。",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\firmware-components-scope.json",
+            "customContactClassifier": "EXPERIMENTAL_NOT_UPSTREAM_NOT_PHYSICALLY_QUALIFIED",
+            "newAlgorithmWork": "Prefer proven upstream/official implementations; no new ad-hoc classifier in this batch."
+          },
+          "ownerCompleteExperienceBatch20261113": {
+            "at": "2026-11-13T10:08:02+08:00",
+            "raw": "继续，争取一次性全部做完，再给我体验看效果。",
+            "goal": "Concentrated830/119 pointer click+cursor-anchor repair, exact resources and actual encrypted transport before one Owner experience; explicit blocks/RGB deferred.",
+            "firmwareSource": "6818a91",
+            "hostSource": "2cbb4ec49f1e1977481cdb78df887559d4c77208",
+            "firmwareBuilt": 66830,
+            "hostCandidateVersion": "0.1.119",
+            "sourceWorktree": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\windows119-source",
+            "sourceIsolationReason": "Frontend is concurrently editing three QA files in original worktree; no overwrite/stash/commit of their changes. One compact detached source checkout, same existing shared Cargo target; node_modules reused.",
+            "newAlgorithmsWritten": false,
+            "bugBeforeProof": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\anchor-before.log",
+            "pointerTestsPassed": 44,
+            "firmwareFlashBytes": 406408,
+            "flashDelta": -16,
+            "staticRamBytes": 66632,
+            "stackReservedBytes": 21504,
+            "unitFirmwareTapAndRecorderPortPassed": true,
+            "ownerExperienceNotYetStarted": true
           }
         }
       },
@@ -145325,7 +145393,7 @@
         "physicalControllerPid": 27284,
         "previousPhysicalCase": "E:\\CodexData\\Companion\\.build-cache\\file-commit094\\physical-held-final094\\closure-reconciliation.json"
       },
-      "state": "PHYSICAL_CARD_SHORT_CONFIRMED_P0_AUTOMATIC_TRANSCRIPTION_USABILITY",
+      "state": "BASIC_RECORDER_IMPLEMENTED_IMU_USABILITY_AND_RESOURCE_CONVERGENCE",
       "activeDeliveryGoal20261110": {
         "status": "cleared_by_owner",
         "createdAt": "2026-11-10T20:49:40+08:00",
@@ -145847,6 +145915,13 @@
         "rootCauseScope": "Reproduced short file reader versus Windows MoveFileEx replacement; exact historical handle owner/target path was not captured.",
         "installedWindows": "0.1.91",
         "firmwareSourceCommit": "f43f548db7b07b1dab0dafd268ca848de40c5aea"
+      },
+      "ownerFirmwareScope20261113": {
+        "at": "2026-11-13T09:43:01+08:00",
+        "scope": "固件、板级外设、IMU高级功能、CPU/SRAM/Flash及低功耗优化由本会话负责；客户端录音操作/识别/纪要及完整使用链路由前端负责。板端采音、存储和协议可靠性仍属固件。",
+        "implementationMethod": "优先成熟开源/官方实现，只做驱动、轴向、协议和模式适配；保留上游版本/许可；没有可复用算法时明确实验或缺口，不用自造算法冒充成熟实现。",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\firmware-components-scope.json",
+        "currentPriority": "IMU现有功能可用性与成熟组件适配、固件底层和资源；LED先方案，硬件到后接入。"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -271048,8 +271123,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-13T09:30:30+08:00",
-            "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+            "updatedAt": "2026-11-13T10:12:57+08:00",
+            "state": "NOTEBOOK118145_DELIVERED_REAL_CHINESE_SHORT_CHAIN_CHECKED_OWNER_UX_OPEN",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -271057,7 +271132,7 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "118/145随身笔记这一批已安装并完成实际Windows连续保存/限定导出/真正重开、手机公开库改名/文字保存/导出入口/主题和真正重开，原资料保护已核。一个完整软件包已私有完整回读匹配。Owner整体外观/自然使用仍未通过，后续只短做人感体验，问题按原稳定ID集中承接；不把软件自验当Owner满意。固件长录/鼠标/独立模型/售卖沿原各自最新待办；不重启已由Owner要求停止的117长录。",
+            "next": "118/145同一随身笔记软件包已安装交付；019f中文真人短会真实ASR→已配标准纪要→可读导出→实际118回听/阅读/退出重开已核。一次01a0同源短对照实际收音+6.437dB、男声识别明显改善，原音/旧录音保留并已释放；片尾不确定识别被纪要纳入、通用模型事实质量与Owner听感仍开放，不追加同条件重录或2h。默认名称/章节占位等非阻断细节源码已保存，随下一相关实质批次合入，不逐项重包。Owner只短做人感自然体验；原实卡/鼠标/模型/售卖沿各自最新任务。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
             "currentInstalledWindows": "0.1.118",
@@ -271104,7 +271179,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "Own118 build/isolated native UI/upgrade and145 build/owned-phone UI/restart/return/close complete; no own live device/MIC/model or Owner prompt. Software delivery private readback complete. Separate117 long stopped09:22:40 by Owner before standard118 upgrade09:23:25; this UI batch did not stop it or infer its qualification.",
+            "knownJobState": "This frontend batch has no live build/native-UI/phone/ASR/cloud/capture worker. Public01a0 controller ended10:03:38, own handles closed, TURN_RELEASED. Independent119 pointer candidate belongs to embedded current receipts, not this118 delivery.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271160,9 +271235,9 @@
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "118/145随身笔记这一批已安装并完成实际Windows连续保存/限定导出/真正重开、手机公开库改名/文字保存/导出入口/主题和真正重开，原资料保护已核。一个完整软件包已私有完整回读匹配。Owner整体外观/自然使用仍未通过，后续只短做人感体验，问题按原稳定ID集中承接；不把软件自验当Owner满意。固件长录/鼠标/独立模型/售卖沿原各自最新待办；不重启已由Owner要求停止的117长录。",
+              "currentPoint": "118/145同一随身笔记软件包已安装交付；019f中文真人短会真实ASR→已配标准纪要→可读导出→实际118回听/阅读/退出重开已核。一次01a0同源短对照实际收音+6.437dB、男声识别明显改善，原音/旧录音保留并已释放；片尾不确定识别被纪要纳入、通用模型事实质量与Owner听感仍开放，不追加同条件重录或2h。默认名称/章节占位等非阻断细节源码已保存，随下一相关实质批次合入，不逐项重包。Owner只短做人感自然体验；原实卡/鼠标/模型/售卖沿各自最新任务。",
               "done": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-              "updatedAt": "2026-11-13T09:30:30+08:00",
+              "updatedAt": "2026-11-13T10:12:57+08:00",
               "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
               "acceptanceToolCommit": "3fc02d1eadd29de292146bc2aba7fd751acde02e",
               "buildRun": null,
@@ -273186,6 +273261,113 @@
                     "actualPhoneReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\android144\\library-review-result.json"
                   },
                   "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows116\\engineering-self-acceptance\\result.json"
+                },
+                "realChineseShortMeeting20261113": {
+                  "at": "2026-11-13T09:33:14+08:00",
+                  "state": "REAL_CHINESE_SHORT_CHAIN_CHECKED_PLAYBACK_CONDITION_IMPROVED_OWNER_UX_AND_GENERAL_MODEL_QUALITY_OPEN",
+                  "handoff": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\chinese-short-frontend-handoff.json",
+                  "ownerInstructions": [
+                    "中文真人公开会议，经过电脑实体扬声器到板卡MIC；以后会议场景均优先如此，合成声不作为真实会议验收。",
+                    "先重开短会验证全链闭合，不重跑2小时。",
+                    "会议声音偏小；本轮播放条件不足不能冒充识别通过，也不直接归因模型或嵌软。",
+                    "全链录音同步转写纪要重开体验交给前端负责，并通知那边。"
+                  ],
+                  "sessionId": "v1-real-installed-1794533232243",
+                  "recordingKey": {
+                    "deviceUid": "120011000d50335754363720",
+                    "formatEpoch": "5a6584e1707422bb",
+                    "sessionId": "000000000000019f"
+                  },
+                  "result": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\real-chinese-short\\result.json",
+                  "source": {
+                    "sourcePage": "https://www.aishelltech.com/aishell_4",
+                    "sourceCorpus": "AISHELL-4 real-recorded Mandarin meeting corpus",
+                    "sourceMeeting": "S_R004S03C01",
+                    "sourceFile": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.flac",
+                    "sourceSha256": "c21ce5ce455b87926ca6b486431db2889de5d14be91b55f8cffea31cd94c1262",
+                    "channel": 1,
+                    "startSeconds": 214.06043,
+                    "endSeconds": 490.95596,
+                    "speakersInExcerpt": [
+                      "001-M",
+                      "004-F"
+                    ],
+                    "humanSpeech": true,
+                    "syntheticSpeech": false,
+                    "groundTruthNotFedToAsrOrMinutes": true,
+                    "wav": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\public-human-meeting-source.wav",
+                    "wavSha256": "357ffd697e699c1f424ebd5c23dbe1b99d8890d21d06959d90c4173c30ebba95",
+                    "audio": {
+                      "seconds": 276.8955,
+                      "channels": 1,
+                      "rate": 16000,
+                      "peak": 5101.0,
+                      "rms": 408.7668935913092
+                    },
+                    "purpose": "Owner short full acoustic recording/sync/ASR/minutes/reopen chain, not new 2h endurance"
+                  },
+                  "prior019eAllowedForAsrOrCloud": false,
+                  "noNewStartBeforeInspectingCurrent": false,
+                  "newRecordingStartedByFrontend": true,
+                  "expectedUiVersion": "0.1.118",
+                  "expectedAndroidVersion": "0.1.145",
+                  "audioVolumeFeedback": "Same public110s recorded acoustic RMS improved6.437dB and early male transcript became substantially clearer after loudnorm -16/-1.5 and player100%; system volume unchanged. This is relative digital/acoustic evidence, not Owner subjective audibility or calibrated SPL/SNR. Ambiguous tail recognition remains.",
+                  "asrCompleted": true,
+                  "minutesCompleted": true,
+                  "readableExportCompleted": true,
+                  "actualUiReviewed": true,
+                  "processReopenChecked": true,
+                  "ownerExperienceAccepted": false,
+                  "updatedAt": "2026-11-13T10:12:57+08:00",
+                  "normalizedComparison": {
+                    "sessionId": "v1-real-installed-1794535275636",
+                    "recordingKey": {
+                      "deviceUid": "120011000d50335754363720",
+                      "formatEpoch": "5a6584e1707422bb",
+                      "sessionId": "00000000000001a0"
+                    },
+                    "seconds": 120.39,
+                    "publicPlaybackSeconds": 110,
+                    "normalCaptureAndDurableReceiveCompleted": true,
+                    "captureRelease": "TURN_RELEASED",
+                    "asrSeconds": 15.922,
+                    "transcriptCharacters": 441,
+                    "matchingCapturedRmsIncreaseDb": 6.437194744976971,
+                    "baselineEnvelopeCorrelation": 0.19534891959055048,
+                    "normalizedEnvelopeCorrelation": 0.4832832300179641,
+                    "matchingWindowClippedSamples": 0,
+                    "configuredStandardMinutesCompleted": true,
+                    "readableExportAndCliReopenCompleted": true,
+                    "actualGuiRetested": false,
+                    "originalAudioUnchanged": true,
+                    "systemMasterVolumeChanged": false,
+                    "review": "The actual same-source male section now reads poor-selling products/removal proposal, inventory reports and customer preferences. Last ambiguous recognition about objections has uncertain source and was included in minutes; retain as a content-review issue. No reference transcription supplied; do not call all facts or general ASR quality qualified."
+                  },
+                  "asrAndMinutesQualityReview": "Early male recognition garbled; later vegetable display/cold-storage discussion considerably clearer. No wholesale content-quality pass.",
+                  "oldPrivate019eNeverUsed": true,
+                  "allOriginalAudioUnchanged": true
+                },
+                "readerRefinementsAfterActualPublicInput20261113": {
+                  "at": "2026-11-13T10:12:26+08:00",
+                  "state": "NONBLOCKING_READER_REFINEMENTS_SOURCE_CHECKPOINT_ONLY_NEXT_RELATED_BATCH",
+                  "windowsSource": "a25cfd8a5c0dffb57a73b72bebdf0f26c7461494",
+                  "androidSource": "0c25eb1589a25c1b6f6bdea9e8f8c6d9181b1906",
+                  "installedWindows": "0.1.118",
+                  "installedAndroid": "0.1.145",
+                  "nativeRebuiltForTheseDetails": false,
+                  "sourceChangesDelivered": false,
+                  "checks": [
+                    "Windows tsc noEmit passed",
+                    "Android mobile tsc noEmit passed",
+                    "Generated name stability and saved-data nonmutation contracts passed",
+                    "QA Python and JS syntax passed",
+                    "Exact118 real native public019f playback/read/export-preview and quit/relaunch passed"
+                  ],
+                  "pendingChanges": [
+                    "Generic device/meeting titles project the saved recording date/time, never the noisy opening; custom names and saved data unchanged.",
+                    "Saved completed desktop content no longer repeats completion badges; chapters closed until requested.",
+                    "Reader header spacing reduced; original error/partial-content warnings retained."
+                  ]
                 }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
@@ -280506,17 +280688,17 @@
       }
     },
     "nextBatch": {
-      "at": "2026-11-13T09:30:30+08:00",
-      "status": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
-      "next": "118/145随身笔记这一批已安装并完成实际Windows连续保存/限定导出/真正重开、手机公开库改名/文字保存/导出入口/主题和真正重开，原资料保护已核。一个完整软件包已私有完整回读匹配。Owner整体外观/自然使用仍未通过，后续只短做人感体验，问题按原稳定ID集中承接；不把软件自验当Owner满意。固件长录/鼠标/独立模型/售卖沿原各自最新待办；不重启已由Owner要求停止的117长录。",
+      "at": "2026-11-13T10:12:57+08:00",
+      "status": "NOTEBOOK118145_DELIVERED_REAL_CHINESE_SHORT_CHAIN_CHECKED_OWNER_UX_OPEN",
+      "next": "118/145同一随身笔记软件包已安装交付；019f中文真人短会真实ASR→已配标准纪要→可读导出→实际118回听/阅读/退出重开已核。一次01a0同源短对照实际收音+6.437dB、男声识别明显改善，原音/旧录音保留并已释放；片尾不确定识别被纪要纳入、通用模型事实质量与Owner听感仍开放，不追加同条件重录或2h。默认名称/章节占位等非阻断细节源码已保存，随下一相关实质批次合入，不逐项重包。Owner只短做人感自然体验；原实卡/鼠标/模型/售卖沿各自最新任务。",
       "canonicalPointer": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerCoreAcceptanceCandidate20261109.activeNonmodelCompletion20261110"
     },
     "currentBatch": {
-      "at": "2026-11-13T09:30:30+08:00",
-      "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
-      "done": "115外观已收紧并实际安装；原窗口逐条问题独立编号/步骤/版本，记录后可继续。114连接入口与静默收取保持。原资料不变、原生连续流程/真实重开通过，同一115/142私有包和MSI完整回读。",
-      "remaining": "整批118/145已安装/工程自验；Owner观感和自然使用未认可，原物理/模型/完整产品/售卖要求保留。",
-      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend115142\\software-delivery.json",
+      "at": "2026-11-13T10:12:57+08:00",
+      "state": "NOTEBOOK118145_DELIVERED_REAL_CHINESE_SHORT_CHAIN_CHECKED_OWNER_UX_OPEN",
+      "done": "118/145已安装、原资料保护及一个私有完整回读软件包交付；原019f真人短会已走真实本地转写、已配纪要、可读导出及实际118回听阅读/进程重开；一次同源110秒电平短对照实收+6.437dB、男声识别改善。",
+      "remaining": "Owner自然使用/听感未签收；早期低电平和片尾不确定识别/纪要事实质量仍开放；名称与章节细节仅源码检查点待下一相关批次。原其它资格不关闭。",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\real-chinese-short\\result.json",
       "previousVerifiedBatch": {
         "at": "2026-11-11T16:24:51+08:00",
         "state": "108141_INSTALLED_PRIVATE_PACKAGE_VERIFIED",
@@ -280526,7 +280708,7 @@
       },
       "ownerUiFeedbackId": "owner-ui-usability20261112",
       "previousSoftwareDeliveryStillRetained": true,
-      "next": "118/145随身笔记这一批已安装并完成实际Windows连续保存/限定导出/真正重开、手机公开库改名/文字保存/导出入口/主题和真正重开，原资料保护已核。一个完整软件包已私有完整回读匹配。Owner整体外观/自然使用仍未通过，后续只短做人感体验，问题按原稳定ID集中承接；不把软件自验当Owner满意。固件长录/鼠标/独立模型/售卖沿原各自最新待办；不重启已由Owner要求停止的117长录。",
+      "next": "118/145同一随身笔记软件包已安装交付；019f中文真人短会真实ASR→已配标准纪要→可读导出→实际118回听/阅读/退出重开已核。一次01a0同源短对照实际收音+6.437dB、男声识别明显改善，原音/旧录音保留并已释放；片尾不确定识别被纪要纳入、通用模型事实质量与Owner听感仍开放，不追加同条件重录或2h。默认名称/章节占位等非阻断细节源码已保存，随下一相关实质批次合入，不逐项重包。Owner只短做人感自然体验；原实卡/鼠标/模型/售卖沿各自最新任务。",
       "ownerExperienceAccepted": false
     },
     "previousBatch": {

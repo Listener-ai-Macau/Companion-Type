@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-13T09:44:01+08:00",
+  "state": "ACTUAL_PHYSICAL_PUBLIC019F_ASR_STANDARD_MINUTES_READABLE_EXPORT_PROCESS_REOPEN_COMPLETED_CONTENT_REVIEW_PENDING",
+  "sessionId": "v1-real-installed-1794533232243",
+  "onlyFreshPublic019f": true,
+  "private019eRead": false,
+  "localTextReviewedBeforeCloud": true,
+  "textReview": "The943-character result discusses public supermarket vegetable sales/display/cold storage. First two very short pre-playback recognitions are nonspecific; early male speech is visibly garbled. No identifying/private environmental content found. Preserve full recognition, do not replace it with reference transcription or manually corrected facts.",
+  "cloudAudioUpload": false,
+  "referenceTextFed": false,
+  "originalTranscriptModified": false,
+  "standardMeetingTemplate": true,
+  "steps": [
+    {
+      "name": "actual-standard-minutes-r2",
+      "exitCode": 0,
+      "seconds": 9.969
+    },
+    {
+      "name": "readable-export",
+      "exitCode": 0,
+      "seconds": 0.859
+    },
+    {
+      "name": "read-after-new-process",
+      "exitCode": 0,
+      "seconds": 0.922
+    }
+  ],
+  "minutesSource": "llm_deepseek",
+  "minutesQuality": "final",
+  "minutesCharacters": 1505,
+  "savedStateUnchangedAcrossProcesses": true,
+  "allFourOriginalAudioFilesUnchanged": true,
+  "actualGuiReviewed": false,
+  "modelGeneralQualityQualified": false,
+  "audibilityIssueClosed": false,
+  "ownerExperienceAccepted": false,
+  "finishedAt": "2026-11-13T09:44:13+08:00"
+}

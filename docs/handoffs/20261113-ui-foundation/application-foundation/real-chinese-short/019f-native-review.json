@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-13T09:59:03+08:00",
+  "exitCode": 0,
+  "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\9554ad3f0a7a440fb2f6d3ebf466a63e\\result.json",
+  "nativeState": "REAL_NATIVE_COHERENT_BACKGROUND_PRODUCT_JOURNEY_PASSED",
+  "sourceLibraryAndAllFourOriginalAudioFilesUnchanged": true,
+  "actualGuiResults": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": true,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "actualProcessRestart": {
+    "state": "ACTUAL_PUBLIC019F_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS",
+    "actualPublicSessionId": "v1-real-installed-1794533232243",
+    "actualPhysicalAudioResultsRead": true,
+    "previousAppExited": true,
+    "allPublicLibraryRowsUnchanged": true,
+    "firstPid": 26056,
+    "reopenedPid": 23544,
+    "actual285SecondAudioPreparedAndMutedPlaybackChecked": false,
+    "newAsrOrCloudRequestedByUi": false,
+    "boardAccessed": false,
+    "ownerAppearanceAccepted": false,
+    "modelGeneralQualityQualified": false,
+    "identity": {
+      "url": "http://tauri.localhost/",
+      "tauri": true,
+      "title": "Companion Type"
+    }
+  },
+  "audibilityIssueClosed": false,
+  "ownerExperienceAccepted": false
+}

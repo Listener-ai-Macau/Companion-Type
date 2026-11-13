@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-13T10:00:55.060+08:00",
+  "state": "ONE_NORMALIZED_PUBLIC_SPEAKER_TO_MIC_CAPTURE_RECEIVED",
+  "source": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\volume-reference\\public-human-meeting-playback-normalized.wav",
+  "sourceSha256": "3ab5f1900ca6765082d5eef4c35939507d95d460f04efe4d3db91110b02f2eda",
+  "requestedPlaybackSeconds": 110,
+  "playerVolumePercent": 100,
+  "sourceNormalization": "loudnorm I=-16 TP=-1.5 LRA=7",
+  "systemMasterVolumeBefore": 1.0,
+  "outputDevice": "扬声器 (High Definition Audio Device)",
+  "syntheticSpeech": false,
+  "audioInjected": false,
+  "preexistingAudioSelected": false,
+  "asrRequested": false,
+  "cloudRequested": false,
+  "capturePid": 25168,
+  "recordingKey": {
+    "deviceUid": "120011000d50335754363720",
+    "formatEpoch": "5a6584e1707422bb",
+    "sessionId": "00000000000001a0"
+  },
+  "sessionId": "v1-real-installed-1794535275636",
+  "captureObservedUnixNs": 1794535277081446300,
+  "launchUnixNs": 1794535277204207400,
+  "playerPid": 20676,
+  "playbackFinishedUnixNs": 1794535387525083300,
+  "captureResult": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\volume-reference\\capture-normalized-r1\\result.json",
+  "captureExitCode": 0,
+  "physicalAudibilityOwnerAccepted": false,
+  "recognitionQualityQualified": false,
+  "finishedAt": "2026-11-13T10:03:38.399+08:00",
+  "systemMasterVolumeAfter": 1.0
+}

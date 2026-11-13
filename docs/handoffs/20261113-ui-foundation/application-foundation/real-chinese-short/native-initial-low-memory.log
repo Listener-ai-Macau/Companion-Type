@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 456, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\companion-device-closure055\tools\qa\core_acceptance20261109\windows_meeting.py", line 90, in main
+    low=K.CreateMemoryResourceNotification(0);require(low);value=w.BOOL();require(K.QueryMemoryResourceNotification(low,ctypes.byref(value)));assert not value.value,'Actual Windows low-memory signal; no app launched'
+                                                                                                                                                     ^^^^^^^^^^^^^^^
+AssertionError: Actual Windows low-memory signal; no app launched

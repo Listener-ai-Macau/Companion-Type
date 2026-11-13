@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-13T09:39:04+08:00",
+  "state": "ACTUAL_PHYSICAL_PUBLIC019F_ORIGINAL_LIBRARY_LOCAL_ASR_COMPLETED_TEXT_REVIEW_PENDING",
+  "version": "0.1.118",
+  "sessionId": "v1-real-installed-1794533232243",
+  "onlyFreshPublicRecording": true,
+  "private019eRead": false,
+  "localAsrRequested": true,
+  "cloudAudioUpload": false,
+  "referenceTextFed": false,
+  "transcriptInjected": false,
+  "deviceAccess": false,
+  "statePath": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\capture\\short\\library\\sessions.json",
+  "recordingDir": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\capture\\short\\library\\recordings",
+  "priorIsolatedCopyFailuresRetained": true,
+  "sourceFilesBefore": {
+    "board-session-d3392a59573652543bd181c1604f0ed49984d4e457096cb64ddafdfeff1170d9-0000-132720-1e7bcf82f2968341.opus": "288ecbe3fd791f19de6cab67f44f7b2a3466ad03ad885c68eb791202ed31df73",
+    "board-session-d3392a59573652543bd181c1604f0ed49984d4e457096cb64ddafdfeff1170d9-0001-132721-af2cbd79c22d9d4c.opus": "25b9e69ea0ea30c89e4172eb3f728fd3b83d078fe5f313b27b0c396699b1e345",
+    "board-session-d3392a59573652543bd181c1604f0ed49984d4e457096cb64ddafdfeff1170d9-0002-132722-2499613b467014c4.opus": "c853fd4185b27797d7a7d76206e69711d36e39573e8c09f923e69764d3127458",
+    "board-session-d3392a59573652543bd181c1604f0ed49984d4e457096cb64ddafdfeff1170d9.wav": "9567b53e02486243225680a528b41e9f69a80e4e2de9bc8eef22c0d88e5b71a2"
+  },
+  "exitCode": 0,
+  "seconds": 18.656,
+  "localAsrCompleted": true,
+  "transcriptCharacters": 943,
+  "asrProvider": "local-paraformer",
+  "finishedAt": "2026-11-13T09:39:23+08:00",
+  "allFourOriginalAudioFilesUnchanged": true
+}

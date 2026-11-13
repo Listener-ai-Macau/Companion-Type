@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-13T09:45:32+08:00",
+  "state": "ACTUAL019F_LEVEL_ANALYZED_LOUDER_LIMITED_PUBLIC_PLAYBACK_COPY_PREPARED",
+  "originalRecordedWav": {
+    "path": "\\\\?\\E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\capture\\short\\library\\recordings\\board-session-d3392a59573652543bd181c1604f0ed49984d4e457096cb64ddafdfeff1170d9.wav",
+    "sha256": "9567b53e02486243225680a528b41e9f69a80e4e2de9bc8eef22c0d88e5b71a2",
+    "rms": 1057.798102102649,
+    "rmsDbfs": -29.82094302971138,
+    "peak": 32768.0,
+    "clippedSamples": 43
+  },
+  "publicPlaybackSource": {
+    "path": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\concentrated20261113\\chinese-real-short\\public-human-meeting-source.wav",
+    "sha256": "357ffd697e699c1f424ebd5c23dbe1b99d8890d21d06959d90c4173c30ebba95",
+    "rms": 389.9708556236633,
+    "rmsDbfs": -38.48835567224272,
+    "peak": 3133.0,
+    "clippedSamples": 0
+  },
+  "measuredAcousticAlignment": {
+    "expectedSourceStartAfterRecordingSeconds": 27.8421251,
+    "bestEnvelopeAlignmentSeconds": 28.45,
+    "envelopeCorrelation": 0.25404353504753124,
+    "prePlaybackMedian50msRms": 655.1797978417833,
+    "duringPublicPlaybackMedian50msRms": 814.1706922027731,
+    "interpretation": "Relative signal evidence only; includes microphone/room/background sounds and is not calibrated SPL, guaranteed SNR or intelligibility qualification."
+  },
+  "newPlaybackCopy": {
+    "path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\volume-reference\\public-human-meeting-playback-normalized.wav",
+    "sha256": "3ab5f1900ca6765082d5eef4c35939507d95d460f04efe4d3db91110b02f2eda",
+    "seconds": 249.6173125,
+    "rms": 6216.75037999225,
+    "rmsDbfs": -14.437730107721107,
+    "peak": 27622.0,
+    "clippedSamples": 0,
+    "normalizationFilter": "loudnorm=I=-16:TP=-1.5:LRA=7",
+    "suggestedPlayerVolumePercent": 100,
+    "previousDigitalGain": 6,
+    "previousPlayerVolumePercent": 70,
+    "estimatedDigitalRmsIncreaseVsPreviousPlaybackDb": 11.585639756563603
+  },
+  "synthesizedSpeech": false,
+  "referenceTranscriptUsed": false,
+  "boardAudioModified": false,
+  "newRecordingStarted": false,
+  "actualNewAcousticCaptureChecked": false,
+  "ownerAudibilityAccepted": false
+}

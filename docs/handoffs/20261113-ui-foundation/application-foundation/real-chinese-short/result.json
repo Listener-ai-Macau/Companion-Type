@@ -1,0 +1,92 @@
+{
+  "at": "2026-11-13T10:12:57+08:00",
+  "state": "REAL_CHINESE_SHORT_CHAIN_CHECKED_PLAYBACK_CONDITION_IMPROVED_OWNER_UX_AND_GENERAL_MODEL_QUALITY_OPEN",
+  "installedWindows": "0.1.118",
+  "installedAndroid": "0.1.145",
+  "softwareDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
+  "original019f": {
+    "sessionId": "v1-real-installed-1794533232243",
+    "seconds": 285.52,
+    "localAsrCompleted": true,
+    "asrSeconds": 18.656,
+    "transcriptCharacters": 943,
+    "asrProvider": "local-paraformer",
+    "configuredStandardMinutesCompleted": true,
+    "minutesSource": "llm_deepseek",
+    "minutesSeconds": 9.969,
+    "readableExportCompleted": true,
+    "actualNativeUiReviewed": true,
+    "actualMutedPlaybackVerified": true,
+    "actualNativeProcessExitAndReopen": true,
+    "sourceLibraryAndOriginalAudioUnchangedByUi": true,
+    "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\notebook-foundation20261113\\real-chinese019f118-r3\\native-ui-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\9554ad3f0a7a440fb2f6d3ebf466a63e\\result.json",
+    "review": "Early male recognition garbled; later vegetable display/cold-storage discussion considerably clearer. No wholesale content-quality pass."
+  },
+  "normalizedComparison": {
+    "sessionId": "v1-real-installed-1794535275636",
+    "recordingKey": {
+      "deviceUid": "120011000d50335754363720",
+      "formatEpoch": "5a6584e1707422bb",
+      "sessionId": "00000000000001a0"
+    },
+    "seconds": 120.39,
+    "publicPlaybackSeconds": 110,
+    "normalCaptureAndDurableReceiveCompleted": true,
+    "captureRelease": "TURN_RELEASED",
+    "asrSeconds": 15.922,
+    "transcriptCharacters": 441,
+    "matchingCapturedRmsIncreaseDb": 6.437194744976971,
+    "baselineEnvelopeCorrelation": 0.19534891959055048,
+    "normalizedEnvelopeCorrelation": 0.4832832300179641,
+    "matchingWindowClippedSamples": 0,
+    "configuredStandardMinutesCompleted": true,
+    "readableExportAndCliReopenCompleted": true,
+    "actualGuiRetested": false,
+    "originalAudioUnchanged": true,
+    "systemMasterVolumeChanged": false,
+    "review": "The actual same-source male section now reads poor-selling products/removal proposal, inventory reports and customer preferences. Last ambiguous recognition about objections has uncertain source and was included in minutes; retain as a content-review issue. No reference transcription supplied; do not call all facts or general ASR quality qualified."
+  },
+  "privacy": {
+    "old019eRead": false,
+    "old019eUploaded": false,
+    "cloudAudioUploaded": false,
+    "onlyReviewedNewPublicTestTextSentToConfiguredMinutes": true,
+    "referenceAnnotationFedToModels": false,
+    "syntheticVoiceUsed": false,
+    "originalAudioAltered": false
+  },
+  "sourceCheckpoint": {
+    "at": "2026-11-13T10:12:26+08:00",
+    "state": "NONBLOCKING_READER_REFINEMENTS_SOURCE_CHECKPOINT_ONLY_NEXT_RELATED_BATCH",
+    "windowsSource": "a25cfd8a5c0dffb57a73b72bebdf0f26c7461494",
+    "androidSource": "0c25eb1589a25c1b6f6bdea9e8f8c6d9181b1906",
+    "installedWindows": "0.1.118",
+    "installedAndroid": "0.1.145",
+    "nativeRebuiltForTheseDetails": false,
+    "sourceChangesDelivered": false,
+    "checks": [
+      "Windows tsc noEmit passed",
+      "Android mobile tsc noEmit passed",
+      "Generated name stability and saved-data nonmutation contracts passed",
+      "QA Python and JS syntax passed",
+      "Exact118 real native public019f playback/read/export-preview and quit/relaunch passed"
+    ],
+    "pendingChanges": [
+      "Generic device/meeting titles project the saved recording date/time, never the noisy opening; custom names and saved data unchanged.",
+      "Saved completed desktop content no longer repeats completion badges; chapters closed until requested.",
+      "Reader header spacing reduced; original error/partial-content warnings retained."
+    ]
+  },
+  "failuresRetained": [
+    "019f renamed isolated-copy ASR preflight failed before ASR; complete-copy still retained original artifact-ledger paths. Use original durable library; do not weaken receipt validation.",
+    "Minutes request initially omitted meetingMode and was locally rejected before service call; corrected to standard offlineStore meeting mode.",
+    "First private native UI run stopped on real Windows low-memory signal before launching app; successful retry used the same unmodified118 after memory cleared.",
+    "Normalized comparison analysis initially hit Windows long-path handling before ASR; fixed only analysis path handling, retained failed folder."
+  ],
+  "ownerAppearanceAccepted": false,
+  "ownerAudibilityAccepted": false,
+  "ownerExperienceAccepted": false,
+  "modelGeneralQualityQualified": false,
+  "saleQualified": false,
+  "engineeringProtectionPreparationFailure": "First documentation whitespace check rejected doubled CR produced by Windows write_text on an already-CRLF rule file. Corrected only line endings before commit; canonical task/results were already updated. No product rebuild or repeated recording."
+}
