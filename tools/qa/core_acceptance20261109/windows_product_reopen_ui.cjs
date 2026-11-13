@@ -2,11 +2,11 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 module.exports=async function reopenJourney(page,plan,out){
  assert(plan.previousAppExited&&plan.firstPid!==plan.reopenedPid);
- await page.getByRole('button',{name:'我的记录',exact:true}).click();
+ await page.getByRole('button',{name:'录音',exact:true}).click();
  await page.locator('.ct-library-card').filter({hasText:plan.title}).click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
  await page.locator('#ct-recording-result[open]').waitFor();
- await nav.getByRole('button',{name:/笔记与资料/}).click();
+ await nav.getByRole('button',{name:/补充/}).click();
  const expected=plan.expectedSnapshot.find(row=>row.id===plan.sessionId);
  const note=expected.meetingNotes.find(row=>row.text.includes('本次人工跟进'));
  assert(note&&note.references.length>0);
