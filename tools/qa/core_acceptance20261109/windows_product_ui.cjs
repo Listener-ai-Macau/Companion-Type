@@ -6,10 +6,9 @@ module.exports=async function productJourney(page,plan,out){
  const row=()=>JSON.parse(fs.readFileSync(plan.statePath,'utf8')).find(r=>r.id===plan.sessionId);
  const before=row(),unrelated=JSON.parse(fs.readFileSync(plan.statePath,'utf8')).filter(r=>r.id!==plan.sessionId);
  if(process.env.COMPANION_ACCEPTANCE_OWNER_PREFLIGHT==='1'){
-  const connection=page.getByRole('region',{name:'录音卡连接',exact:true});await connection.waitFor();
+  const connection=page.getByRole('button',{name:'录音卡 · 未连接',exact:true});await connection.waitFor();
   assert(await connection.isVisible());assert((await connection.innerText()).includes('未连接'));
   const connectionBox=await connection.boundingBox();assert(connectionBox&&connectionBox.y>=0&&connectionBox.y+connectionBox.height<=await page.evaluate(()=>innerHeight));
-  await connection.getByRole('button',{name:'连接录音卡',exact:true}).waitFor();
   await page.screenshot({path:path.join(out,'self-acceptance-library-entry.png'),fullPage:true});
   await page.getByRole('button',{name:/^录音卡 ·/}).click();
   const readiness=page.getByRole('region',{name:'录前准备',exact:true});
