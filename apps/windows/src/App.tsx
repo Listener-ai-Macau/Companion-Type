@@ -21,7 +21,6 @@ import {DesktopPointer} from './DesktopPointer';
 import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
-import '../../../packages/ui/src/companionDark.css';
 import '../../../packages/ui/src/notebookFoundation.css';
 
 import {

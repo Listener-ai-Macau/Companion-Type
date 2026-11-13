@@ -9163,6 +9163,22 @@
           "provenance": "Exact license bytes from SHA256-verified locked crates.io source archive"
         }
       ]
+    },
+    {
+      "name": "shadcn-ui-layout",
+      "version": "dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+      "license": "MIT",
+      "ecosystem": "vendored",
+      "role": "Mail/sidebar layout and neutral component style adaptations",
+      "source": "https://github.com/shadcn-ui/ui",
+      "texts": [
+        {
+          "path": "LICENSE.md",
+          "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+          "file": "texts/1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f.txt",
+          "origin": "Exact pinned upstream copyright and permission notice"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [

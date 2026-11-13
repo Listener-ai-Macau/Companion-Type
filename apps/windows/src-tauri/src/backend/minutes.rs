@@ -300,6 +300,7 @@ struct NativeMinutesResult {
     minutes: CompanionV1MeetingMinutes,
     evidence: Vec<short_evidence::Entry>,
     overview: Option<Vec<long_meeting::ConcisePoint>>,
+    source_review: Vec<String>,
 }
 
 fn finalize_native_result(native:NativeMinutesResult, draft:CompanionV1MeetingMinutes,
@@ -308,6 +309,15 @@ fn finalize_native_result(native:NativeMinutesResult, draft:CompanionV1MeetingMi
     short_evidence::append(&mut minutes,&native.evidence);
     if let Some(overview)=native.overview {
         long_meeting::prepend_concise_overview(&mut minutes,&overview);
+    }
+    // Unintelligible source is a review condition, never a meeting question.
+    // Preserve the literal classified source outside the main conclusions;
+    // saved/exported markdown retains it for time-linked source inspection.
+    if !native.source_review.is_empty() {
+        minutes.markdown.push_str("\n\n## 待核对片段\n\n");
+        for source in native.source_review {
+            minutes.markdown.push_str("- ");minutes.markdown.push_str(&source);minutes.markdown.push('\n');
+        }
     }
     minutes
 }
@@ -333,6 +343,16 @@ fn run_deepseek_native_result(
 
 // The installed fault probe calls this same request path with explicit test
 // configuration; it never reads or replaces the user's saved service keys.
+/// Shared mobile entry uses the same validated finalizer as the desktop.
+/// Returning only the provider fields would drop source-review/evidence data.
+pub(super) fn run_finalized_deepseek_request(
+    endpoint:&str, model:&str, api_key:&str, session:&CompanionV1HostSession,
+    l0:&CompanionV1MeetingMinutes, client:&reqwest::blocking::Client,
+)->Result<CompanionV1MeetingMinutes,String>{
+    run_deepseek_request_with_evidence(endpoint,model,api_key,session,l0,client,None)
+        .map(|native|finalize_native_result(native,l0.clone(),session))
+}
+
 pub(super) fn run_deepseek_request(
     endpoint: &str,
     model: &str,
@@ -363,11 +383,12 @@ fn run_deepseek_request_with_evidence(
     if !session.meeting_notes.is_empty()
         && (session.duration_ms > 120_000 || session.transcript_text.chars().count() > 4000) {
         return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
     }
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
+    system.push_str("\n阅读质量：摘要按主题合并相关讨论，优先用3至6条完整简洁的中文句子说明有依据的要点；信息确实较多时可增加。省略语气词、无内容应答、重复铺垫和逐句流水账，保留数字、单位、否定、条件和未知归属。听不清的片段不要猜测原意，也不要把‘转写很乱/只能听出某个词’当会议议题写进摘要。问题只含会上实际提出且含义可辨的问题；无法辨认的原句交给独立的来源核对，不升级为问题、决定或任务。来源片段是供检查的原始证据，不能因被提供就推断其语义可靠。");
     system.push_str("\n行动清单应覆盖原话已明确的主任务及执行时顺带要求的核实、准备和跟进，不因同属一个负责人而遗漏子任务。保留条件与暂定，不把备选方案升级为已决定的任务。尽量在顶层 evidence 数组中为每个 actionItems 条目提供连续原话，field 为 actionItems，index 对应条目下标，quote 覆盖动作及其负责人、时间。due可保留原话中的相对或不完整时间，不因缺少年份、不能转成完整日历日期就留空，也不推算缺失日期。");
     if let Some(template)=template {system.push_str(&template.prompt());}
     let overview_requested=template.is_none() && session.meeting_notes.is_empty()
@@ -384,10 +405,10 @@ fn run_deepseek_request_with_evidence(
         || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
             return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
-                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
         }
         return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None,source_review:Vec::new()});
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
@@ -395,6 +416,7 @@ fn run_deepseek_request_with_evidence(
             let overview=if overview_requested && minutes.summary.len()>8 {
                 long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
             } else {None};
+            let mut source_review=Vec::new();
             if context_plan::eligible(session) {
                 let plan=context_plan::validate(&object,session)?;
                 minutes.action_items=plan.action_items;
@@ -407,12 +429,16 @@ fn run_deepseek_request_with_evidence(
                 // projection can create visible questions/review notices;
                 // free-form suggested interpretations are not source content.
                 minutes.questions = match contract.project(&object) {
-                    Ok(questions)=>questions,
-                    Err(_)=>contract.literal_questions(),
+                    Ok((questions,review))=>{source_review=review;questions},
+                    Err(_)=>{
+                        let mut questions=contract.literal_questions();
+                        if !questions.is_empty(){source_review.push(questions.remove(0));}
+                        questions
+                    },
                 };
                 minutes.markdown.clear();
             }
-            Ok(NativeMinutesResult{minutes,evidence,overview})
+            Ok(NativeMinutesResult{minutes,evidence,overview,source_review})
         })
 }
 
@@ -1381,23 +1407,23 @@ mod tests {
         let evidence=short_evidence::capture(&object,&generated,transcript);
         assert!(finalize_minutes(Ok(generated.clone()),draft.clone(),&session).action_items.is_empty(),
             "the old L0-only path discarded the oral paraphrase");
-        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session);
+        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None,source_review:Vec::new()},draft.clone(),&session);
         assert_eq!(kept.action_items.len(),1);assert_eq!(kept.action_items[0].owner.as_deref(),Some("周嘉"));
         assert_eq!(kept.action_items[0].due.as_deref(),Some("周三前"));
         assert!(kept.markdown.contains("确认线上接入方式"));assert!(kept.markdown.contains(transcript));
         let inline=serde_json::json!({"actionItems":[{"text":"确认线上接入方式","evidence":transcript}]});
         let evidence=short_evidence::capture(&inline,&generated,transcript);
-        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session);
+        let kept=finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None,source_review:Vec::new()},draft.clone(),&session);
         assert_eq!(kept.action_items.len(),1);
         assert_eq!(kept.action_items[0].text,generated.action_items[0].text);
         assert_eq!(kept.action_items[0].owner,generated.action_items[0].owner);
         assert_eq!(kept.action_items[0].due,generated.action_items[0].due);
         let invalid=serde_json::json!({"evidence":[{"field":"actionItems","index":0,"quote":"原文没有说过的依据"}]});
         let evidence=short_evidence::capture(&invalid,&generated,transcript);
-        assert!(finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None},draft.clone(),&session).action_items.is_empty());
+        assert!(finalize_native_result(NativeMinutesResult{minutes:generated.clone(),evidence,overview:None,source_review:Vec::new()},draft.clone(),&session).action_items.is_empty());
         generated.action_items[0].owner=Some("陈同事".into());generated.action_items[0].due=Some("周五".into());
         let evidence=short_evidence::capture(&object,&generated,transcript);
-        let corrected=finalize_native_result(NativeMinutesResult{minutes:generated,evidence,overview:None},draft,&session);
+        let corrected=finalize_native_result(NativeMinutesResult{minutes:generated,evidence,overview:None,source_review:Vec::new()},draft,&session);
         assert_eq!(corrected.action_items.len(),1);assert!(corrected.action_items[0].owner.is_none());assert!(corrected.action_items[0].due.is_none());
     }
 

@@ -6,8 +6,8 @@ import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '.
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import {CompanionLibraryLifeActions} from './CompanionLibraryLifeActions';
 export interface LibraryFilters {folder:string;tag:string;favorites:boolean;from?:string;to?:string;trash?:boolean}
-export function CompanionLibraryTools({sessions,visible,selection,setSelection,filters,setFilters,blocked,restoreBlocked,onSave,onExport,onBackup,onRestore,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
-  sessions:CompanionV1HostSession[];visible:CompanionV1HostSession[];selection:Record<string,number>;
+export function CompanionLibraryTools({mode='all',sessions,visible,selection,setSelection,filters,setFilters,blocked,restoreBlocked,onSave,onExport,onBackup,onRestore,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
+  mode?:'all'|'filter'|'manage';sessions:CompanionV1HostSession[];visible:CompanionV1HostSession[];selection:Record<string,number>;
   setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;restoreBlocked?:boolean;
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExport?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
@@ -62,6 +62,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  return <section className="ct-library-tools" aria-label="录音分类与批量整理">
+  {mode!=='manage'&&<>
   <div className="ct-audio-tools">
    <label>文件夹 <select aria-label="筛选录音文件夹" value={filters.folder} onChange={e=>setFilters({...filters,folder:e.target.value})}>
     <option value="*">全部文件夹</option><option value="">未分类</option>{folders.map(f=><option key={f} value={f}>{f}</option>)}
@@ -75,6 +76,8 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
    <label>结束日期 <input type="date" aria-label="筛选录音结束日期" value={filters.to??''} onChange={e=>setFilters({...filters,to:e.target.value})}/></label>
   </div>
   {filters.from||filters.to?<p role="status">{filters.from&&filters.to&&filters.from>filters.to?'开始日期不能晚于结束日期，请调整日期范围。':'按录音开始的本地日期筛选，包含首尾两天；时间未知的录音在清除日期后可见。'}</p>:null}
+  </>}
+  {mode!=='filter'&&<>
   {onBackup||onRestore?<details><summary>备份与恢复会议库</summary>
     <p>备份包含本机会议文字、纪要、关联录音和自定义模板；文件夹未加密，请保存在可信的位置。换电脑时选择整个备份文件夹恢复，现有同一会议不会被覆盖。</p>
     {draft?<p>请先保存或撤销分类修改。</p>:null}
@@ -83,13 +86,14 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
       {onRestore?<button type="button" className="ct-action" disabled={(restoreBlocked??blocked)||busy||draft} onClick={()=>void restoreLibrary()}>{busy?'正在处理…':'从备份恢复'}</button>:null}
     </div>
   </details>:null}
-  <details><summary>{filters.trash?'恢复或清除所选录音':'整理所选录音'} · 已选 {ids.length} 场</summary>
+  <details open={mode==='manage'?true:undefined}><summary>{filters.trash?'恢复或清除所选录音':'整理所选录音'} · 已选 {ids.length} 场</summary>
    <p>{filters.trash?'勾选要找回的录音，再点恢复；永久清除需要另外确认。':'文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。'}</p>
    <div className="ct-audio-tools">
     <button type="button" className="ct-action" disabled={blocked||(!onSave&&!onExport&&!onSaveLifecycle)||!visible.length||visible.length>1000} onClick={()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])))}>选择当前筛选结果（{visible.length} 场）</button>
     <button type="button" className="ct-action" disabled={busy||!ids.length} onClick={()=>setSelection({})}>清除整理选择</button>
     <span>其中 {ids.filter(id=>!visible.some(s=>s.id===id)).length} 场不在当前筛选中</span>
    </div>
+   {draft?<button type="button" className="ct-action" disabled={busy} onClick={()=>{setApplyFolder(false);setTagAction('keep');setFavorite('keep');}}>撤销分类修改</button>:null}
    {!filters.trash?<fieldset disabled={blocked||busy||!onSave}>
     <label><input type="checkbox" aria-label="修改文件夹" checked={applyFolder} onChange={e=>setApplyFolder(e.target.checked)}/>修改文件夹</label>
     <input aria-label="目标录音文件夹" maxLength={120} value={folder} disabled={!applyFolder} onChange={e=>setFolder(e.target.value)} placeholder="留空表示移到未分类"/>
@@ -119,6 +123,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
     blocked={blocked||busy} draft={draft} onSave={onSaveLifecycle} onPurge={onPurge} onBusyChange={onBusyChange}/>:null}
    {visible.length>1000?<p>一次最多整理1000场，请先缩小筛选范围。</p>:null}
   </details>
+  </>}
   {message?<p role="status">{message}</p>:null}
  </section>;
 }

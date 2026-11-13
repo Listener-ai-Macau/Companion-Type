@@ -4,7 +4,6 @@ import {createRoot} from 'react-dom/client';
 import {CompanionDashboard} from '../../../packages/ui/src/CompanionDashboard';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../../../packages/core/src/companionV1';
 import '../../../packages/ui/src/companionUi.css';
-import '../../../packages/ui/src/companionDark.css';
 import '../../../packages/ui/src/notebookFoundation.css';
 
 const original=createCompanionV1Fixture();

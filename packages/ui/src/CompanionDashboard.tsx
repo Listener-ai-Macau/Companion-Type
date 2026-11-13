@@ -1,3 +1,5 @@
+import {meetingReadingSources} from './meetingReadingSources';
+import {LibraryPanel} from './LibraryPanel';
 import {ContentExportPanel,type ContentExportTarget} from './ContentExportPanel';
 import {MeetingWorkspaceNav,meetingPaneForTarget,type MeetingPane} from './MeetingWorkspaceNav';
 import {ActionReviewTools,useActionReview} from './ActionReviewTools';
@@ -548,6 +550,7 @@ export function CompanionDashboard({
   const [transcriptReviewOpen, setTranscriptReviewOpen] = useState(false);
   const [transcriptCleanView,setTranscriptCleanView]=useState(true);
   const [libraryToolsOpen, setLibraryToolsOpen] = useState(false);
+  const [libraryPanel,setLibraryPanel]=useState<'filter'|'manage'|null>(null);
   const [playbackOpen, setPlaybackOpen] = useState(false);
   const [transcribePromptSession, setTranscribePromptSession] = useState<string | null>(null);
   const [meetingMode, setMeetingMode] = useState<CompanionV1MeetingMode>('offlineStore');
@@ -2098,15 +2101,21 @@ export function CompanionDashboard({
             placeholder="搜标题、录音文字或笔记" aria-label="搜索标题、转写、补充或整理结果" />
           {libraryQuery ? <button type="button" onClick={() => setLibraryQuery('')}>清除</button> : null}
         </label>
-        <details className="ct-library-more" open={libraryToolsOpen}
-          onToggle={event=>setLibraryToolsOpen(event.currentTarget.open)}>
-          <summary>筛选与整理{libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to||libraryFilters.trash?' · 已筛选':''}{Object.keys(librarySelection).length?` · 已选 ${Object.keys(librarySelection).length} 条`:''}</summary>
-        <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions} onClick={()=>setOnlyPendingSessions(value=>!value)}>{onlyPendingSessions?'显示全部录音':'只看待整理'}</button>
-        <CompanionLibraryTools sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
+        <div className="ct-library-toolbar" aria-label="录音列表工具">
+          <div className="ct-library-view-switch" aria-label="录音范围">
+            <button type="button" aria-pressed={!onlyPendingSessions} onClick={()=>setOnlyPendingSessions(false)}>全部</button>
+            <button type="button" aria-pressed={onlyPendingSessions} onClick={()=>setOnlyPendingSessions(true)}>待整理</button>
+          </div>
+          <button type="button" className="ct-action" onClick={()=>setLibraryPanel('filter')}>筛选{libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.from||libraryFilters.to?' · 已启用':''}</button>
+          <button type="button" className="ct-action" aria-pressed={libraryToolsOpen} onClick={()=>setLibraryToolsOpen(v=>!v)}>{libraryToolsOpen?'取消选择':'选择'}</button>
+          <button type="button" className="ct-action" onClick={()=>setLibraryPanel('manage')}>管理{Object.keys(librarySelection).length?` (${Object.keys(librarySelection).length})`:''}</button>
+        </div>
+        <LibraryPanel open={libraryPanel!==null} title={libraryPanel==='filter'?'筛选录音':'管理录音'} blocked={libraryUnsaved||libraryBusy} onClose={()=>setLibraryPanel(null)}>
+        <CompanionLibraryTools mode={libraryPanel==='filter'?'filter':'manage'} sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
           restoreBlocked={controlsBusy||oobeBlockedByRecording||snapshot?.host.persistence?.status==='unsaved'}
           onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBackup={onBackupLibrary?()=>onBackupLibrary(customTemplate):undefined} onRestore={onRestoreLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
-        </details>
+        </LibraryPanel>
         {libraryCurrentMessage?<p role="status">{libraryCurrentMessage}</p>:null}
         {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to)?<div className="ct-library-empty">
           <strong>当前筛选没有录音</strong><p>文件夹、标签、收藏、日期与搜索会同时筛选。清除筛选后可查看已有录音。</p>
@@ -3825,7 +3834,14 @@ function meetingSource(session: CompanionV1HostSession): string {
 }
 
 function MinutesReadingView(props:Parameters<typeof MinutesReadingBody>[0]) {
-  return <MeetingReadingFrame markdown={props.markdown}><MinutesReadingBody {...props}/></MeetingReadingFrame>;
+  const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
+  return <MeetingReadingFrame markdown={props.markdown}>
+    <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
+    {reading.review.trim()?<details className="ct-full-minutes ct-source-review"><summary>原文依据与待核对内容</summary>
+      <p className="ct-step-meta">保留原始转写和先前整理中的核对材料；这里的片段不代表已确认的会议结论。</p>
+      <MarkdownMinutes markdown={reading.review} sources={props.sources} blocked={props.blocked} onOpenSource={props.onOpenSource} onShowTranscript={props.onShowTranscript}/>
+    </details>:null}
+  </MeetingReadingFrame>;
 }
 function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, longEvidenceAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime,actionContextKey='', ...sourceProps }: {
   markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; longEvidenceAllowed?: boolean; noteContext?:CompanionMinutesNoteContext|null;
