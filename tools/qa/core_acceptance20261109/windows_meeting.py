@@ -254,7 +254,12 @@ def main():
    assert len(source_rows)==1 and source_rows[0]['id']==expected_id
    assert source_rows[0]['deviceRecordingKey']==expected_key
    assert sha(source_state)==specification['stateSha256'] and source_rows[0]['source']=='boardDevice'
-   assert source_rows[0]['transcriptFinal'] and source_rows[0]['minutesByMode']['offlineStore']['source']=='llm_deepseek'
+   assert source_rows[0]['transcriptFinal']
+   if specification.get('retranscriptionOnly'):
+    assert specification['recordingKey']['sessionId']=='00000000000001a2'
+    env['COMPANION_TYPE_LOCAL_ASR_DIR']=specification['localModelRoot']
+    record['modelsRun']=True
+   else:assert source_rows[0]['minutesByMode']['offlineStore']['source']=='llm_deepseek'
    capture=json.loads(Path(specification['captureReceipt']).read_text(encoding='utf8'));assert capture['ownHandlesClosed'] and capture['release']['result']=='TURN_RELEASED'
    for file,digest in specification['originalAudioFiles'].items():assert sha(Path(specification['recordingDir'])/file)==digest
    (state/'sessions.json').write_text(json.dumps(source_rows,ensure_ascii=False),encoding='utf8')
