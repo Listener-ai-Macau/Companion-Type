@@ -5,7 +5,8 @@ import {MeetingWorkspaceNav,meetingPaneForTarget,type MeetingPane} from './Meeti
 import {ActionReviewTools,useActionReview} from './ActionReviewTools';
 import {savedActionReview} from './actionReview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
-import { cleanHesitations } from './transcriptReading';
+import { cleanHesitations, transcriptParagraphs } from './transcriptReading';
+import { MeetingTopic } from './MeetingTopic';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {readRestoredCustomTemplates} from './customTemplateBackup';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
@@ -21,6 +22,7 @@ import {CompanionDeviceRecordings,type DeviceRecordingActions} from './Companion
 import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import {isGeneratedReadingNotice,splitGeneratedMeetingMetadata} from './meetingReading';
 import './overviewTopics.css';
+import './meetingNoteDocument.css';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import {deviceConnectionStatus} from './deviceConnectionStatus';
@@ -2728,7 +2730,7 @@ export function CompanionDashboard({
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
-              <details hidden={transcriptReviewOpen} className="ct-transcript-reading-tools"><summary>阅读选项</summary><div role="group" aria-label="转写阅读方式"><button type="button" className="ct-text-button" aria-pressed={transcriptCleanView} onClick={()=>setTranscriptCleanView(true)}>精简阅读</button><button type="button" className="ct-text-button" aria-pressed={!transcriptCleanView} onClick={()=>setTranscriptCleanView(false)}>原始转写</button><span>{transcriptCleanView?'仅显示时略去“嗯、呃”，简短回应也可能被略去；原文未改变。':'显示原始文字与已保存的人工修订。'}</span></div></details><p className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{transcriptCleanView?cleanHesitations(companionReviewedTranscript(selectedSession)).text:companionReviewedTranscript(selectedSession)}</p>{!readingPreview&&onSaveNote&&!transcriptReviewOpen&&<TranscriptQuoteCapture key={'manual-quote:'+selectedSession.id} contextId={selectedSession.id} text={companionReviewedTranscript(selectedSession)} busy={recordingControlBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}}/>}
+              <div hidden={transcriptReviewOpen} className="ct-transcript-reading-tools" role="group" aria-label="转写阅读方式"><button type="button" className="ct-text-button" aria-pressed={transcriptCleanView} onClick={()=>setTranscriptCleanView(true)}>流畅阅读</button><button type="button" className="ct-text-button" aria-pressed={!transcriptCleanView} onClick={()=>setTranscriptCleanView(false)}>原始转写</button><details><summary>阅读说明</summary><span>流畅阅读略去长句中的停顿和重复起头，保留简短回应、引号内原话及数字条件。原始转写和导出仍完整保留。</span></details></div><div className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{transcriptParagraphs(transcriptCleanView?cleanHesitations(companionReviewedTranscript(selectedSession)).text:companionReviewedTranscript(selectedSession)).map((paragraph,index)=><p className="ct-transcript-paragraph" key={index}>{paragraph}</p>)}</div>{!readingPreview&&onSaveNote&&!transcriptReviewOpen&&<TranscriptQuoteCapture key={'manual-quote:'+selectedSession.id} contextId={selectedSession.id} text={companionReviewedTranscript(selectedSession)} busy={recordingControlBusy||storageBlocked||oobeBlockedByRecording} onQuote={draft=>{setManualEvidence(draft);revealMeetingTool('ct-recording-notes');}}/>}
             </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'原音已保留，可以先回听。点“转文字”后，可整理纪要、提取待办或向这场会议提问。'}</p>}
           {transcriptUnmappedEdges.length > 0 ? <div className="ct-step-warn" role="status" aria-label="原音与文字的时间对应">
             {transcriptUnmappedEdges.map(edge => <p key={edge.edge}>
@@ -3978,7 +3980,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
-        if (block.type === 'heading') return <h4 key={index} data-meeting-heading={block.text}>{translateMinutesHeading(block.text)}</h4>;
+        if (block.type === 'heading') return <h4 key={index} className={block.text==='会议概览'?'ct-note-overview-heading':undefined} data-meeting-heading={block.text}>{translateMinutesHeading(block.text)}</h4>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
         const bodyReferences = companionMinutesReferencedSources(sources, sourceParts?.body??block.text);
         const references = bodyReferences.filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
@@ -3995,10 +3997,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           id={`${lookupId}-source-${index}`} title="还没有匹配到可直接跳转的唯一原文片段，点击后可搜索对照。定位状态不等于内容已经核实。" onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
-        if(topicOverview&&index>overviewStart&&index<overviewEnd&&block.type==='item'&&!block.action)return <details className="ct-overview-topic" key={`${index}:${block.text}`}>
-          <summary><span className="ct-overview-topic-preview">{minutesInlineText(block.text)}</span></summary>
-          <div className="ct-overview-topic-body"><p>{minutesInlineText(block.text)}{links}</p></div>
-        </details>;
+        if(topicOverview&&index>overviewStart&&index<overviewEnd&&block.type==='item'&&!block.action)return <MeetingTopic text={block.text} key={`${index}:${block.text}`}>{links}</MeetingTopic>;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
@@ -4021,6 +4020,8 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
               {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div>}</div>;}
+        const overviewPoint=!topicOverview&&overviewStart>=0&&index>overviewStart&&index<overviewEnd;
+        if(overviewPoint)return <p key={index} className={`ct-note-overview-point${index===overviewEnd-1?' ct-note-overview-last':''}`}>{minutesInlineText(block.text)}{links}</p>;
         if (block.type === 'item') return <div className="ct-minutes-item" key={index}><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
         return <p key={index}>{minutesInlineText(block.text)}{links}</p>;
       })}
@@ -4045,7 +4046,7 @@ function minutesInlineText(value: string) {
 
 function translateMinutesHeading(value: string): string {
   const headings: Record<string, string> = {
-    Summary: '摘要', 摘要: '摘要', Decisions: '讨论结论（需核对）', 决定: '关键决定', 'Action Items': '行动项', Questions: '会中问题', 'Open Questions': '待确认问题', 问题: '会中问题', Keywords: '关键词',
+    Summary: '摘要', 摘要: '摘要', Decisions: '讨论结论（需核对）', 决定: '关键决定', 'Action Items': '行动项', Questions: '会中问题', 'Open Questions': '待确认问题', 问题: '会中问题', Keywords: '关键词', '全会重点':'讨论要点',
   };
   return headings[value] ?? value;
 }

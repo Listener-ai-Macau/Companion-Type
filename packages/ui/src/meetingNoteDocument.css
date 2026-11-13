@@ -1,0 +1,49 @@
+/* Document hierarchy follows the official Notta overview/chapters/actions and
+   Granola heading/source patterns. Navigation remains the licensed shadcn base. */
+body .ct-shell.ct-windows.ct-notebook{--nb-ink:#202735;--nb-muted:#6b7485;--nb-line:#e3e7ee;--nb-selected:#edf2fb;--nb-accent:#315ed1;font-family:"Microsoft YaHei UI","Microsoft YaHei","Segoe UI",sans-serif;background:#f5f6f8}
+body .ct-shell.ct-windows.ct-notebook.ct-theme-dark{--nb-ink:#e5eaf3;--nb-muted:#9da9ba;--nb-line:#303b4b;--nb-selected:#25344a;--nb-accent:#9ab9ff;background:#141b25}
+body .ct-windows.ct-notebook .ct-app-navigation{background:var(--nb-side)}
+body .ct-windows.ct-notebook .ct-app-navigation button[aria-current=page]{color:var(--nb-accent)}
+body .ct-windows.ct-notebook .ct-notebook-library-column{background:var(--nb-side)}
+body .ct-windows.ct-notebook .ct-library-card.selected{box-shadow:inset 3px 0 var(--nb-accent);background:var(--nb-selected)}
+body .ct-windows.ct-notebook .ct-title-editor input{font-family:"Microsoft YaHei UI","Microsoft YaHei","Segoe UI",sans-serif;font-size:23px;letter-spacing:0}
+body .ct-windows.ct-notebook .ct-meeting-workspace{background:var(--nb-paper)}
+body .ct-windows.ct-notebook .ct-meeting-hero{padding-top:25px;padding-bottom:10px}
+body .ct-windows.ct-notebook .ct-recording-primary-actions{margin-bottom:12px}
+body .ct-windows.ct-notebook .ct-meeting-navigation{gap:25px}
+body .ct-windows.ct-notebook .ct-meeting-navigation button[aria-current=page]{color:var(--nb-accent)}
+body .ct-windows.ct-notebook .ct-result-reading-toolbar{padding-top:12px}
+body .ct-windows.ct-notebook .ct-minutes-article{max-width:760px;margin-top:8px;font-family:inherit;line-height:1.85}
+body .ct-windows.ct-notebook .ct-minutes-article h4{margin:30px 0 17px;font-size:18px;line-height:1.5;font-weight:650;letter-spacing:0}
+body .ct-windows.ct-notebook .ct-minutes-article h4:first-child{margin-top:14px}
+body .ct-windows.ct-notebook .ct-minutes-article :is(h4[data-meeting-heading="Decisions"],h4[data-meeting-heading="Action Items"],h4[data-meeting-heading="Questions"]){padding:10px 13px;border-left:3px solid var(--nb-accent);border-radius:0 5px 5px 0;background:var(--nb-selected);font-size:15px}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-overview-topic-title{font-size:15px;font-weight:650;line-height:1.7}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-overview-topic-body p{font-size:14px;line-height:1.9;color:var(--nb-ink)}
+body .ct-windows.ct-notebook .ct-full-minutes{margin-top:22px;border-top:1px solid var(--nb-line);padding-top:12px;color:var(--nb-muted)}
+.ct-transcript-paragraph{display:block;margin-bottom:1.15em}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-note-overview-heading{margin:14px 0 0;padding:16px 20px 6px;border-radius:9px 9px 0 0;background:var(--nb-selected);font-size:17px}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-note-overview-point{position:relative;margin:0;padding:8px 20px 8px 36px;background:var(--nb-selected);font-size:14px;line-height:1.85}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-note-overview-point:before{position:absolute;left:20px;content:'•';color:var(--nb-accent)}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-note-overview-last{padding-bottom:18px;border-radius:0 0 9px 9px}
+body .ct-windows.ct-notebook .ct-transcript-reading-tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:0 0 20px}
+body .ct-windows.ct-notebook .ct-transcript-reading-tools>button{padding:6px 12px;border:1px solid var(--nb-line);border-radius:6px;color:var(--nb-muted);background:var(--nb-paper)}
+body .ct-windows.ct-notebook .ct-transcript-reading-tools>button[aria-pressed=true]{color:var(--nb-accent);border-color:var(--nb-accent);background:var(--nb-selected)}
+body .ct-windows.ct-notebook .ct-transcript-reading-tools>details{margin-left:auto;font-size:11px}
+.mobile-app{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans CJK SC","Microsoft YaHei","PingFang SC",sans-serif}
+.mobile-app .minutes-document{display:block;min-width:0}
+.mobile-app .minutes-section{margin:0 0 28px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.mobile-app .minutes-section>h3{font-size:18px;line-height:1.5;margin:25px 0 16px}
+.mobile-app .minutes-document .minutes-section>.minutes-reading{padding:0;border:0;border-radius:0;box-shadow:none;background:transparent}
+.mobile-app .minutes-document .minutes-section .minutes-item{margin:0;padding:8px 0;border:0;line-height:1.85}
+.mobile-app .minutes-document .minutes-section .minutes-gap:first-child{display:none}
+.mobile-app .minutes-document .minutes-section:has(>h3[data-meeting-heading="会议概览"]){padding:17px 18px;border-radius:9px;background:var(--surface-soft)}
+.mobile-app .minutes-document .minutes-section:has(>h3[data-meeting-heading="会议概览"])>h3{margin-top:0}
+.mobile-app .ct-overview-topic{margin-bottom:22px}
+.mobile-app .ct-overview-topic-title{font-size:15px;line-height:1.7;font-weight:650}
+.mobile-app .ct-overview-topic-body>p{font-size:14px;line-height:1.9}
+.mobile-app .transcript-reader-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px}
+.mobile-app .transcript-reader-switch{display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:7px;background:var(--surface-soft)}
+.mobile-app .transcript-reader-switch button{min-height:32px;padding:5px 11px;border:0;border-radius:5px;background:transparent;color:var(--muted);font:inherit;font-size:12px}
+.mobile-app .transcript-reader-switch button[aria-pressed=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px #0001}
+.mobile-app .transcript-reader .transcript p{margin:0 0 1.15em}
+@media(max-width:650px){.ct-windows.ct-notebook .ct-minutes-article{max-width:100%}.ct-windows.ct-notebook .ct-minutes-article h4{font-size:17px}}

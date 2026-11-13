@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "00816abc614f94f75e4d23a335f6d76b319482a60ae4fcf26ec9b53fd8ba1ad3",
-    "package-lock.json": "9422430da7ac72736f6d9341331e36cff1c9526b0dfa18ec383739719cf52163",
+    "apps/windows/src-tauri/Cargo.lock": "bdc69781326ff8c36e744ff8407567d15ecd84136dd61469c3cfca27a4656f65",
+    "package-lock.json": "705ff9d123537edac218e46a1ff4056f607774245c073945c3dae2e605e64cbe",
     "third_party/imu-pointer/gamepad/GamepadMotion.hpp": "f070bb1327cf5b1fbc336d570382d4c088e5ffae9f031dd0af8f81153581e690"
   },
   "components": [
