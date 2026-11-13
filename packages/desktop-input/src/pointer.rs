@@ -50,6 +50,9 @@ impl Sample {
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all="camelCase")]
 pub enum Mapping { #[default] Relative, Laser }
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
+#[serde(rename_all="camelCase")]
+pub enum RelativeHorizontal { #[default] Turn, Tilt }
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(default, rename_all="camelCase")]
 pub struct Settings {
@@ -57,15 +60,16 @@ pub struct Settings {
     pub deadzone: f64, pub acceleration: f64, pub invert_horizontal: bool, pub invert_vertical: bool,
     pub desktop_motion: bool,
     pub relative_direct:bool,pub tap_click:bool,
+    pub relative_horizontal:RelativeHorizontal,
     pub contact_profile:Option<contact::Profile>,
     pub contact_device:Option<String>,
 }
 impl Default for Settings {
     fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
-            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,contact_profile:None,contact_device:None}}
+            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,relative_horizontal:RelativeHorizontal::Turn,contact_profile:None,contact_device:None}}
 }
 impl Settings {
-    pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,tap_click:false,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
+    pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,relative_horizontal:RelativeHorizontal::Tilt,tap_click:true,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
     pub fn pointer_options(&self)->u8{if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
@@ -225,7 +229,12 @@ impl Pointer {
             if let Some(c)=self.coarse.as_mut(){c.tap();}
             let point=self.press_point(measured_at-0.1);
             if self.contacts.is_active(){self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),point);}
-            else{self.shown=point;self.queued.push(Button::Click(point));}
+            else{
+                self.shown=point;self.queued.push(Button::Click(point));
+                // The tap has already supplied its historical click position.
+                // Do not replay the impact's last angular target afterwards.
+                if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}
+            }
         }
         Ok(true)
     }
@@ -323,7 +332,13 @@ impl Pointer {
                 let r=if self.settings.relative_direct{
                     // CIM3 carries the complete device-calibrated gyro. Older
                     // CIM4 can only provide its already projected two rates.
-                    let raw=if s.aim.is_some(){Point{x:yaw,y:pitch}}else{relative::player_space(rate,up)};
+                    let raw=if self.settings.relative_horizontal==RelativeHorizontal::Tilt{
+                        // JSM LOCAL axis selection, adapted to board X-right,
+                        // Y-Type-C, Z-up. Right edge down (+gyroY) moves right;
+                        // pitch is unchanged from the Owner-accepted path.
+                        // CIM4 lacks roll: never substitute its yaw silently.
+                        Point{x:-rate[1],y:pitch}
+                    }else if s.aim.is_some(){Point{x:yaw,y:pitch}}else{relative::player_space(rate,up)};
                     self.relative.sample(raw,dt)
                 }else{Point{x:yaw,y:pitch}};
                 let dx=-axis_speed(r.x,&self.settings)*if self.settings.invert_horizontal{-1.}else{1.};

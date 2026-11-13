@@ -1,8 +1,15 @@
 use super::*;
+#[test]fn owner_side_tilt_reproduction_right_roll_must_move_right(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    for n in 1..102{let now=n as f64/100.;let mut s=sample(n,[0.,10.,0.]);let angle=(now*10.).to_radians();s.accel=[-angle.sin()*1000.,0.,angle.cos()*1000.];p.sample(s,now,bounds());p.frame(now,bounds());}
+    assert!(p.shown.x>1100.,"Owner right-side tilt suppressed: {:?}",p.shown);
+}
 fn bounds()->Bounds{Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
 fn sample(n:u32,gyro:[f64;3])->Sample{Sample{sequence:n,sensor_ms:n*10,held:false,tap_serial:0,fused:true,device_ready:Some(true),accel:[0.,0.,1000.],gyro,aim:None}}
 fn ready()->Pointer{
-    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());p
+    // Preserve the128 turn-profile regressions; the new default is side tilt.
+    let settings=Settings{relative_horizontal:RelativeHorizontal::Turn,tap_click:false,..Settings::relative_remote()};
+    let mut p=Pointer::new(settings,Point{x:960.,y:540.});p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());p
 }
 #[test]fn small_turns_and_subpixel_motion_survive_the_complete_frame_path(){
     for rate in [0.2,1.,2.]{
@@ -62,4 +69,33 @@ fn ready()->Pointer{
         p.sample(s,now,bounds());if let Some(pos)=p.frame(now,bounds()).position{highest=highest.min(pos.y);}
     }
     assert!(highest<440.,"physical front lift must move up, got{highest}");
+}
+
+#[test]fn tilt_direction_and_fine_motion_are_independent_of_pitch_grip(){
+    for pitch in [-60_f64,0.,60.]{for rate in [-2_f64,-0.2,0.2,2.]{
+        let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+        for n in 1..202{let now=n as f64/100.;let mut s=sample(n,[0.,rate,0.]);let a=pitch.to_radians();s.accel=[0.,a.sin()*1000.,a.cos()*1000.];p.sample(s,now,bounds());p.frame(now,bounds());}
+        assert!((p.shown.x-960.)*rate>0.,"pitch{pitch}/roll{rate}: {:?}",p.shown);
+        assert_eq!(p.shown.y,540.);
+    }}
+}
+#[test]fn tilt_keeps_the_same_pitch_response_as_the128_turn_profile(){
+    let mut turn=ready();let mut tilt=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    tilt.sample(sample(1,[0.;3]),0.01,bounds());tilt.frame(0.01,bounds());
+    for n in 2..102{let now=n as f64/100.;let s=sample(n,[-5.,0.,0.]);turn.sample(s,now,bounds());tilt.sample(s,now,bounds());turn.frame(now,bounds());tilt.frame(now,bounds());assert_eq!(tilt.shown,turn.shown);}
+}
+#[test]fn body_taps_click_once_per_physical_edge_without_an_impact_tail(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    for n in 1..22{let now=n as f64/100.;p.sample(sample(n,[0.;3]),now,bounds());p.frame(now,bounds());}
+    let point=p.shown;p.sample(sample(22,[100.,80.,0.]),0.22,bounds());
+    let edge=Control{sequence:1,sensor_ms:220,events:CLICK};
+    assert!(p.control(edge).unwrap());assert!(!p.control(edge).unwrap());
+    let frame=p.frame(0.22,bounds());assert_eq!(frame.buttons,vec![Button::Click(point)]);assert!(frame.position.is_none());
+    p.sample(sample(23,[0.;3]),0.23,bounds());assert!(p.frame(0.23,bounds()).position.is_none());
+    // Two intentional physical taps remain two OS clicks, without a new timer.
+    p.control(Control{sequence:2,sensor_ms:350,events:CLICK}).unwrap();
+    p.control(Control{sequence:3,sensor_ms:480,events:CLICK}).unwrap();
+    assert_eq!(p.frame(0.48,bounds()).buttons,vec![Button::Click(point),Button::Click(point)]);
+    p.pause(true);p.control(Control{sequence:4,sensor_ms:500,events:CLICK}).unwrap();p.pause(false);
+    assert!(p.frame(0.5,bounds()).buttons.is_empty());
 }
