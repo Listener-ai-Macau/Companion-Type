@@ -92,3 +92,6 @@
 /* Neutral Mail component foundation, shadcn/ui MIT; same semantic states in both themes. */
 .mobile-app :is(.detail-card,.reading-card,.minutes-card,.minutes-section,.minutes-summary,.source-evidence-item,.detail-reference,.meeting-recording-tools){background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:none}
 .mobile-app .minutes-section :is(p,li){line-height:1.85}.mobile-app .minutes-source-section{margin-block:20px;border-block:1px solid var(--line);padding-block:12px}.mobile-app .minutes-source-section>summary{font-size:13px;color:var(--muted)}
+.mobile-app .minutes-document{min-width:0;grid-template-columns:minmax(0,1fr)}
+.mobile-app :is(.minutes-section,.ct-overview-topic){min-width:0;max-width:100%}
+.mobile-app .ct-overview-topic>summary{min-width:0;max-width:100%}
