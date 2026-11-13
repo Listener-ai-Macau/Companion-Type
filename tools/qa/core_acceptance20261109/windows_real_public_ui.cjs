@@ -8,7 +8,7 @@ module.exports=async(page,plan,out,reopened)=>{
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectFoldedOverview){
   await article.locator('[data-meeting-heading="会议概览"]').waitFor();
-  const full=article.locator('details').filter({has:page.locator('summary').filter({hasText:/^查看完整(?:会议摘要|摘要和关键词)$/})});assert.equal(await full.count(),1);assert.equal(await full.evaluate(el=>el.open),false);
+  const summary=article.locator('summary').filter({hasText:/^查看完整(?:会议摘要|摘要和关键词)$/});assert.equal(await summary.count(),1);const full=summary.locator('..');assert.equal(await full.evaluate(el=>el.open),false);
   assert.equal(await article.locator('[data-meeting-heading="Summary"]').isVisible(),false,'Detailed summary must start folded');
   await full.locator(':scope>summary').click();assert((await full.innerText()).length>300,'Complete generated detail must remain readable');await full.locator(':scope>summary').click();assert.equal(await full.evaluate(el=>el.open),false);
  }
