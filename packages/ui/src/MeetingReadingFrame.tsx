@@ -42,7 +42,7 @@ export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:st
   target.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
  }
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
-  {indexed&&(items.length>=2||titles.length>=2)&&<aside className="meeting-reading-sidebar"><details className="meeting-outline-collapse" open={indexed}><summary>章节导航</summary><nav className="meeting-outline" aria-label="会议速览">
+  {indexed&&(items.length>=2||titles.length>=2)&&<aside className="meeting-reading-sidebar"><details className="meeting-outline-collapse"><summary>章节导航</summary><nav className="meeting-outline" aria-label="会议速览">
    {items.length>=2&&<div className="meeting-outline-grid">{items.map(item=>{const Icon=icons[item.kind];return <button type="button" key={item.kind}
     className={`meeting-outline-card meeting-outline-${item.kind}`} onClick={()=>navigate(item.title)} aria-current={active===item.title?'location':undefined} aria-label={`${item.label}，${item.count} 条，${item.hint}`}>
     <span className="meeting-outline-label"><Icon size={16} aria-hidden="true"/>{item.label}<ArrowUpRight size={13} aria-hidden="true"/></span>

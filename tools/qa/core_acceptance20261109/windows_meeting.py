@@ -244,6 +244,22 @@ def main():
    # A visible WebView within this inaccessible station remains off the Owner desktop.
    env['COMPANION_TYPE_BACKGROUND_WINDOW']='0'
    record.update(noninteractiveProductScope=True,normalVisibleWindowOnDedicatedRunner=False,nativeSaveCancelOrOrdinaryRecipientRetested=False)
+  real_public=os.environ.get('COMPANION_ACCEPTANCE_REAL_PUBLIC_SPEC')
+  if real_public:
+   assert a.stage=='product-background' and env.get('COMPANION_TYPE_BLE_NATIVE_DISABLED')=='1'
+   specification=json.loads(Path(real_public).read_text(encoding='utf8'))
+   source_state=Path(specification['statePath']);source_rows=json.loads(source_state.read_text(encoding='utf8'))
+   assert len(source_rows)==1 and source_rows[0]['id']=='v1-real-installed-1794533232243'
+   assert source_rows[0]['deviceRecordingKey']['sessionId']=='000000000000019f'
+   assert sha(source_state)==specification['stateSha256'] and source_rows[0]['source']=='boardDevice'
+   assert source_rows[0]['transcriptFinal'] and source_rows[0]['minutesByMode']['offlineStore']['source']=='llm_deepseek'
+   capture=json.loads(Path(specification['captureReceipt']).read_text(encoding='utf8'));assert capture['ownHandlesClosed'] and capture['release']['result']=='TURN_RELEASED'
+   for file,digest in specification['originalAudioFiles'].items():assert sha(Path(specification['recordingDir'])/file)==digest
+   (state/'sessions.json').write_text(json.dumps(source_rows,ensure_ascii=False),encoding='utf8')
+   plan.update(sessionId=source_rows[0]['id'],title=source_rows[0]['title'],realPublicReview=True,realPublicSpec=specification,statePath=str(state/'sessions.json'),expectedSnapshot=source_rows)
+   (out/'plan.json').write_text(json.dumps(plan,ensure_ascii=False),encoding='utf8')
+   env['COMPANION_TYPE_RECORDING_DIR']=specification['recordingDir']
+   record.update(inputKind='Exact new public acoustic019f with actual installed118 ASR and configured DeepSeek results; isolated UI reads same recording originals. No reference transcription or fabricated result.',realPublicSessionId=source_rows[0]['id'],realPublicSourceStateSha256=specification['stateSha256'],realPublicSpecification=real_public)
   log=(out/'app.log').open('wb');logs.append(log);p=spawn([app/'companion-type.exe',plan['incomingAudio']] if a.stage=='incoming' else [app/'companion-type.exe'],env,app,desktop_path,job,log);processes.append(p);record['appPid']=p.pid;record['state']='STARTING_PRIVATE_NATIVE_APP';save()
   deadline=time.monotonic()+60
   import urllib.request

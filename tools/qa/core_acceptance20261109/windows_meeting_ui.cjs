@@ -9,12 +9,16 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
   await page.waitForLoadState('domcontentloaded');await page.locator('.ct-shell').waitFor({timeout:30000});
   const identity=await page.evaluate(()=>({url:location.href,tauri:typeof window.__TAURI_INTERNALS__?.invoke==='function',title:document.title}));
   assert.ok(identity.tauri,'Real Tauri runtime required; no browser/mock fallback');
-  await page.waitForFunction(expected=>document.body.innerText.includes(expected),plan.title,{timeout:30000});
-  const text=await page.locator('body').innerText();assert.ok(text.includes(plan.title));
+  if(plan.realPublicReview)await page.locator('.ct-library-card').first().waitFor({timeout:30000});
+  else await page.waitForFunction(expected=>document.body.innerText.includes(expected),plan.title,{timeout:30000});
+  const text=await page.locator('body').innerText();if(!plan.realPublicReview)assert.ok(text.includes(plan.title));
   fs.writeFileSync(path.join(out,'ui-body.txt'),text);
   fs.writeFileSync(path.join(out,'ui-controls.json'),JSON.stringify(await page.locator('button,input,select,summary').evaluateAll(nodes=>nodes.map(node=>({tag:node.tagName,text:node.innerText||'',aria:node.getAttribute('aria-label'),type:node.getAttribute('type')}))),null,2));
   await page.screenshot({path:path.join(out,'native-workspace.png'),fullPage:true});
-  if(stage==='product-reopen'){
+  if(plan.realPublicReview){
+   const result=await require('./windows_real_public_ui.cjs')(page,plan,out,stage==='product-reopen');
+   fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
+  }else if(stage==='product-reopen'){
    const result=await require('./windows_product_reopen_ui.cjs')(page,plan,out);
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(stage==='product'||stage==='product-background'){

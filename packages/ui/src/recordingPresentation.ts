@@ -1,8 +1,8 @@
-import {companionReviewedTranscript,companionSessionHasFinalTranscript,type CompanionV1HostSession} from '@companion-type/core';
+import {companionSessionHasFinalTranscript,type CompanionV1HostSession} from '@companion-type/core';
 
 // Display projections only: never rename the saved record or invent a topic.
 export function hasGeneratedRecordingName(session:CompanionV1HostSession):boolean {
-  return !session.title.trim() || /^(?:Companion device recording|Companion 录音|设备分段录音|未命名会议|(?:设备|会议)录音\s*#\d+)$/i.test(session.title.trim());
+  return !session.title.trim() || /^(?:Companion device recording|Companion 录音|设备分段录音|未命名会议|(?:设备|会议)录音(?:\s*#\d+)?)$/i.test(session.title.trim());
 }
 
 export function recordingDate(value:string|null|undefined):Date|null {
@@ -13,9 +13,7 @@ export function recordingDate(value:string|null|undefined):Date|null {
 
 export function recordingDisplayTitle(session:CompanionV1HostSession):string {
   if(!hasGeneratedRecordingName(session))return session.title;
-  const text=companionSessionHasFinalTranscript(session)?companionReviewedTranscript(session).trim():'';
-  const opening=text.split(/[\r\n。！？!?]/u).find(line=>line.trim())?.trim();
-  if(opening){const characters=Array.from(opening);return characters.slice(0,28).join('')+(characters.length>28?'…':'');}
+  // A greeting, noise or revised transcript must not rename a recording in the library.
   const date=recordingDate(session.startedAt);
   if(date)return new Intl.DateTimeFormat('zh-CN',{month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(date)+' 的录音';
   return session.deviceRecordingId!=null?`卡片录音 ${session.deviceRecordingId}`:'录音 · 时间未记录';

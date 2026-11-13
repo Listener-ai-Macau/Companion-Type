@@ -40,7 +40,7 @@ import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
 import {libraryPreview,latestSavedResult} from './libraryPreview';
-import {recordingDisplayTitle,recordingDateGroup,recordingTextState,hasGeneratedRecordingName} from './recordingPresentation';
+import {recordingDisplayTitle,recordingDateGroup,recordingTextState} from './recordingPresentation';
 import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
@@ -2232,17 +2232,16 @@ export function CompanionDashboard({
               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
               <label className="ct-title-editor"><span className="ct-sr-only">记录标题</span><Pencil size={15} />
                 <input value={titleDirty?titleDraft:meetingTitle(selectedSession)} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
-                  readOnly={!onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
+                  readOnly={!onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured} title={!onSaveMeeting ? '请在桌面版编辑标题' : '点击名称可改名'}
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
               <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
-              {hasGeneratedRecordingName(selectedSession)?<p className="ct-recording-name-hint">按录音开头或时间显示，点击名称可改名。</p>:null}
               {titleDirty ? <div className="ct-inline-edit-actions">
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy || selectedRecordingBeingCaptured || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
               </div> : null}
             </div>
-            {!textOnlyImport ? <div className="ct-meeting-badges">
+            {!textOnlyImport && !(surface==='windows'&&finalTranscript&&hasMinutes) ? <div className="ct-meeting-badges">
               {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '文字已生成'}</span>
                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
