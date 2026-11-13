@@ -5,10 +5,10 @@ import {TranscriptFind} from '../../../packages/ui/src/TranscriptFind';
 import type {TranscriptLookup} from '../../../packages/ui/src/transcriptMatching';
 
 export function TranscriptReader({text,searchRequest,lookup,onReturnLookup}:{text:string;searchRequest?:TranscriptLookup|null;lookup?:TranscriptLookup|null;onReturnLookup?:()=>void}) {
- const [mode,setMode]=useState<'clean'|'original'>(searchRequest?'original':'clean');
+ const [mode,setMode]=useState<'clean'|'original'>('original');
  useEffect(()=>{if(searchRequest)setMode('original');},[searchRequest?.id]);
  useEffect(()=>{if(lookup)setMode('original');},[lookup?.id]);
  const cleaned=useMemo(()=>cleanHesitations(text),[text]);
  const reading=mode==='clean'?cleaned.text:text;
- return <div className="transcript-reader"><div className="transcript-reader-toolbar"><div className="transcript-reader-switch" role="group" aria-label="转写阅读方式"><button type="button" aria-pressed={mode==='clean'} onClick={()=>setMode('clean')}>精简阅读</button><button type="button" aria-pressed={mode==='original'} onClick={()=>setMode('original')}>原始转写</button></div><span>{mode==='clean'&&cleaned.removed?`已略去 ${cleaned.removed} 个语气字`:mode==='original'?'识别原文':'未发现可清理的语气字'}</span></div>{mode==='clean'&&cleaned.removed>0&&<p className="transcript-reader-note">仅在阅读时略去“嗯、呃”，不改动原文；简短回应也可能被略去，请对照原始转写。</p>}<TranscriptFind texts={[reading]} searchRequest={searchRequest} lookup={lookup} onReturn={onReturnLookup}>{highlight=><p className="transcript">{highlight(reading,0)}</p>}</TranscriptFind></div>;
+ return <div className="transcript-reader"><details className="transcript-reading-options"><summary>阅读选项{mode==='clean'?' · 精简阅读':''}</summary><div className="transcript-reader-toolbar"><div className="transcript-reader-switch" role="group" aria-label="转写阅读方式"><button type="button" aria-pressed={mode==='original'} onClick={()=>setMode('original')}>原始转写</button><button type="button" aria-pressed={mode==='clean'} onClick={()=>setMode('clean')}>精简阅读</button></div></div></details>{mode==='clean'&&cleaned.removed>0&&<p className="transcript-reader-note">仅在阅读时略去“嗯、呃”，不改动原文；简短回应也可能被略去，请对照原始转写。</p>}<TranscriptFind texts={[reading]} searchRequest={searchRequest} lookup={lookup} onReturn={onReturnLookup}>{highlight=><p className="transcript">{highlight(reading,0)}</p>}</TranscriptFind></div>;
 }
