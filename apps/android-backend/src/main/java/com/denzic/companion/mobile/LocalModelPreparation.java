@@ -94,7 +94,12 @@ public final class LocalModelPreparation {
             try {if(modelRoot==null||!isPrepared(modelRoot))throw error;}
             catch(IOException fallbackError){if(fallbackError!=error)error.addSuppressed(fallbackError);throw error;}
         }
-        preparePunctuation(modelRoot,progress);
+        try {preparePunctuation(modelRoot,progress);}
+        catch(IOException error) {
+            // Punctuation is optional; an offline failure must not hide an
+            // already verified usable speech model. Cancellation stays real.
+            if(Thread.currentThread().isInterrupted()||!isPrepared(modelRoot))throw error;
+        }
     }
     private static void preparePunctuation(Path modelRoot,Progress progress)throws IOException {
         Asset asset=new Asset("model.onnx",294_372_519L,"e93593a6dbd69a07f8734ef269dbe861a379755f8d1c8354719432116f2c44bd");
