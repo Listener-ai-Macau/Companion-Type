@@ -20,6 +20,7 @@ import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, reco
 import {CompanionDeviceRecordings,type DeviceRecordingActions} from './CompanionDeviceRecordings';
 import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import {isGeneratedReadingNotice,splitGeneratedMeetingMetadata} from './meetingReading';
+import './overviewTopics.css';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import {deviceConnectionStatus} from './deviceConnectionStatus';
@@ -3927,7 +3928,6 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string }) {
   const lookupId=useId();
-  const [overviewState,setOverviewState]=useState({source:markdown,expanded:false});
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
     return saved&&saved.text===row.text&&saved.completed===row.completed?[[row.lineIndex,saved] as const]:[];
@@ -3972,14 +3972,11 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
   let overviewEnd=overviewStart+1;
   while(overviewEnd<visibleBlocks.length&&visibleBlocks[overviewEnd].type==='item'&&!visibleBlocks[overviewEnd].action)overviewEnd++;
   const overviewCount=overviewStart<0?0:overviewEnd-overviewStart-1;
-  const canFoldOverview=overviewCount>5&&visibleBlocks.slice(overviewStart+1,overviewEnd).every(block=>block.type==='item'&&!block.action);
-  const foldAt=overviewStart+4;
-  const overviewExpanded=overviewState.source===markdown&&overviewState.expanded;
+  const topicOverview=hideGeneratedNotices&&overviewStart>=0&&visibleBlocks[overviewStart].text==='全会重点'&&overviewCount>0;
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   return (
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
-        if(canFoldOverview&&!overviewExpanded&&index>=foldAt&&index<overviewEnd)return index===foldAt?<button key="overview-expand" type="button" className="ct-text-button ct-overview-expand" aria-expanded="false" onClick={()=>setOverviewState({source:markdown,expanded:true})}>查看其余 {overviewCount-3} 条重点</button>:null;
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <h4 key={index} data-meeting-heading={block.text}>{translateMinutesHeading(block.text)}</h4>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
@@ -3998,6 +3995,10 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           id={`${lookupId}-source-${index}`} title="还没有匹配到可直接跳转的唯一原文片段，点击后可搜索对照。定位状态不等于内容已经核实。" onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
+        if(topicOverview&&index>overviewStart&&index<overviewEnd&&block.type==='item'&&!block.action)return <details className="ct-overview-topic" key={`${index}:${block.text}`}>
+          <summary><span className="ct-overview-topic-preview">{minutesInlineText(block.text)}</span></summary>
+          <div className="ct-overview-topic-body"><p>{minutesInlineText(block.text)}{links}</p></div>
+        </details>;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
@@ -4020,7 +4021,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
               {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div>}</div>;}
-        if (block.type === 'item') return <Fragment key={index}><div className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>{canFoldOverview&&overviewExpanded&&index===overviewEnd-1?<button type="button" className="ct-text-button ct-overview-expand" aria-expanded="true" onClick={()=>setOverviewState({source:markdown,expanded:false})}>收起扩展重点</button>:null}</Fragment>;
+        if (block.type === 'item') return <div className="ct-minutes-item" key={index}><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
         return <p key={index}>{minutesInlineText(block.text)}{links}</p>;
       })}
       {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action&&compactActionSource(block.action.text).supplementary)?
