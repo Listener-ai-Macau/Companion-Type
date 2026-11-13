@@ -56244,12 +56244,12 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion146 public software acceptance",
+          "reservedFor": "Companion150 public software acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-13T10:52:22+08:00",
+          "requestedAt": "2026-11-13T17:25:40+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-13T10:59:36+08:00",
+          "releasedAt": "2026-11-13T17:27:44+08:00",
           "releaseReason": "Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
@@ -133816,7 +133816,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-13T08:05:34+08:00",
+      "updatedAt": "2026-11-13T17:42:13+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
@@ -133833,8 +133833,8 @@
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Normal830 installed by ordinary signed OTA;6818a91 remotely preserved; installed Windows120 includes prior pointer source87e6; Type-C guide d66 source preserved.",
-        "evidenceAvailability": "Current830 ordinary OTA and passive modes/restore passed; physical pointer usability still awaiting Owner.",
+        "sourceRootAvailability": "Normal830 installed ordinary signed OTA;6818a91 remotely preserved. NormalWindows121 includes Type-C guide/angular-only and native virtual-desktop fix0aabb1df;120 prior payload retained.",
+        "evidenceAvailability": "Current830 ordinary OTA retained; actual normal121 liveangular/restore and2.704s connect verified. Physical native click/drag/coexistence/feel and intermittent link reliability not closed.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
@@ -134602,7 +134602,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "沿priorityDecision.currentExecutable：当前829基础主干已具备并有范围明确证据；集中收尾IMU可用性/成熟组件及资源，不重开前端会议链和2h。",
+      "next": "纯平移原窗17:43:20–17:44:09已结束，Owner明确放着不动也自己移动，本次失败。3647帧/7控制、stale/gap/missing0，mode0确认并释放；不能归咎掉链。保留294ebc61失败候选和完整原始数据，正在同一份数据查重力/零偏重新校准生命周期，不再弹窗重采。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135136,8 +135136,8 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "优先当前IMU自然使用与成熟上游算法/交互对照；必要组件改动同步核Flash/SRAM/CPU，形成完整体验候选。RGB等新板；中文短会全链由前端继续。当前无长录在跑，不重新开2小时，不恢复后置速度或屏幕。",
-        "lastUpdatedAt": "2026-11-13T09:47:22+08:00",
+        "currentExecutable": "沿airPointer20261112.activeJob先完成正常124及间歇链路后台核验，再一次原版IMU实体验收；无Owner微步骤。",
+        "lastUpdatedAt": "2026-11-13T14:40:11+08:00",
         "lastOwnerRaw": "RGB灯先按多颜色记录，先继续理顺嵌软，基础固件是不是差不多。",
         "previousCompletedReliability": [
           "FW66677连续短眠相位修复已装并验；当前编码配置栈复核完成。"
@@ -135222,12 +135222,12 @@
         "previousCurrentSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\readiness-before-current-scope.json"
       },
       "releaseReadiness": {
-        "at": "2026-11-13T10:11:32+08:00",
+        "at": "2026-11-13T14:40:11+08:00",
         "firmware": 66830,
-        "coreDelivery": "CURRENT830_CORE_REUSED_POINTER_REPAIR_CANDIDATE119_BUILDING",
+        "coreDelivery": "NORMAL830_CORE_REUSED_WINDOWS121_ANGULAR_OWNER_ACCEPTANCE_PENDING",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "Current baseline829 has scoped ordinary OTA/recording/receive/recovery/resource evidence. Remaining firmware work is natural IMU usability, source-faithful advanced functions and affected concurrent resource assessment. Client short-meeting ASR/minutes/reopen belongs to frontend. No new2h run under Owner13 instruction.",
+        "openSoftware": "Normal830/121 relevant engineering checks passed; physical angular mouse clicks/drag/ordinary mouse coexistence and Owner feel, real intermittent BLE reliability remain open. Frontend/model original issues remain with frontend.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -143462,7 +143462,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "CONCENTRATED_ANGULAR_ONLY_NATIVE_MOUSE_REPAIR",
+          "state": "PLANAR_OWNER_REJECTED_STATIC_DRIFT_FIX_ACTIVE",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143470,15 +143470,10 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-13T09:09:44+08:00",
-          "sourceCommit": {
-            "firmware": "6960f21",
-            "firmwareResourceTool": "1bb3ad3",
-            "windows": "ad325f16",
-            "firmwareApplicationCandidate": "9288833"
-          },
+          "updatedAt": "2026-11-13T17:42:13+08:00",
+          "sourceCommit": "294ebc616f6c1df76855846b6eb01366cfaf9a35",
           "sourceProtectedRemotely": true,
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\resource-input-concentrated-batch.json",
+          "receipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\delivery.json",
           "portableAlgorithmCpu": {
             "workload": "SYNTHETIC_UNOPTIMIZED_MAPPING_ONLY_NO_BLE_OR_OS",
             "samplesPerMode": 250000,
@@ -143506,7 +143501,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Owner13 new priority: freeze planar/contact experiment, keep one angular mapping active, clarify automatic stationary bias vs one-click neutral centre; fix original popup file sharing and repeated Start. Native830119 live gap remains open; subsequent pair response absent and hardware attempt stopped, no reset.",
+          "executionPoint": "纯平移原窗17:43:20–17:44:09已结束，Owner明确放着不动也自己移动，本次失败。3647帧/7控制、stale/gap/missing0，mode0确认并释放；不能归咎掉链。保留294ebc61失败候选和完整原始数据，正在同一份数据查重力/零偏重新校准生命周期，不再弹窗重采。",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -144197,14 +144192,33 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "REPAIRING_NATIVE_VIRTUAL_DESKTOP_COORDINATES_BEFORE_ONE_CONCENTRATED_CANDIDATE",
-            "boardHeld": false
+            "state": "OWNER_ENDED_STATIC_DRIFT_ROOT_CAUSE_REPLAY",
+            "session": null,
+            "boardHeld": false,
+            "ownerPopupLaunched": false,
+            "result": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\planar-only-prototype\\state-feedback\\owner-failed\\result.json",
+            "next": "Use SAME real3647-frame trace to reproduce static drift; inspect gravity removal/calibration/bias lifecycle. No further Owner popup or new capture until demonstrated offline correction."
           },
-          "latestOwnerMouseFeedback": [
-            "顺滑度是修好了, 但是点击那些都没有, 然后用起来也很不好用 然后的话呢，现在我如果同时用鼠标，你那个鼠标会把我的鼠标总是移到原位，就它不能跟别的鼠标兼容嘛，它只是需要考虑移动就可以了。",
-            "你这个点击左右键大概是怎么样一个逻辑？就是这个键盘，这个 imu 模拟这个，你之前人家是怎么弄，就是之前的仓库里面那个逻辑大概怎么样，你教我用一下。",
-            "你先看我们这个东西，如果要修成鼠标，现在要怎么做吧？感觉好像不太行的样子。"
-          ],
+          "latestOwnerMouseFeedback": {
+            "id": "IMU-OWNER124-ANGULAR-FEEL",
+            "at": "2026-11-13T16:49:50+08:00",
+            "raw": "感觉上下还行，但是好像它方向反了，应该是 Type C 对着那一面是，往就是它往上倾斜，现在上下是反，然后左右不太行。感觉这个倾倒不是很好用，感觉还是用回平移会好一点。感觉很奇怪现在。",
+            "additionalOwnerRaw": "感觉有点奇怪，我感觉还是平移会好一点，感觉左右倾斜倾斜好像不是很好用的感觉。要平移会好用点。",
+            "source": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\owner124-concentrated\\result.json",
+            "version": "0.1.124",
+            "firmware": 66830,
+            "result": "REJECTED_FEEL_VERTICAL_REVERSED_HORIZONTAL_UNSATISFACTORY_PREFERS_PLANAR",
+            "interpretation": "Owner rejects angular pointing feel; reported vertical reversal remains product issue, not dismissed as user technique. Two click-area receipts do not prove card click acceptance; no dragging observation. Old natural RF cause remains open.",
+            "metrics": {
+              "statusObservations": 524,
+              "staleObserved": 0,
+              "notReadyObserved": 1,
+              "draggingObserved": 0,
+              "gapMaximum": 0,
+              "completeConnectMs": 2452.8237000049558
+            },
+            "next": "Compare pinned upstream control semantics and Companion axis adapter; preserve reliable stream repair. User now prefers planar-only evaluation, no simultaneous tilt mixing. The two named upstreams have no planar translation algorithm; do not enable old mixed experiment and label it upstream parity. No new popup until useful complete candidate."
+          },
           "mouseDesktopMode20261112": {
             "ownerRaw": [
               "两种都希望支持",
@@ -144620,7 +144634,424 @@
               "Battery ADC/charge/actual current",
               "Production/final new-board hardware",
               "Old transfer-speed optimisations Owner deferred"
-            ]
+            ],
+            "candidateVersion": "0.1.124",
+            "candidateSource": "fc964ab7d89a8d788b513d99978c359332c60322",
+            "pointerTestsPassed": 48,
+            "angularUiContractPassed": true,
+            "osActualInjectionNotYetQualified": true,
+            "ciNotRunReason": "GitHub account billing/spending limit",
+            "ciReceipt": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\native-output-fix\\isolated-ci-not-started.json",
+            "firmwareUnchanged": 66830,
+            "boardResourceDelta": 0,
+            "updatedAt": "2026-11-13T16:44:16+08:00",
+            "candidateInstalled": true,
+            "installationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\windows124-upgrade\\result.json",
+            "normalRuntimeReceipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\normal124-concentrated\\result.json",
+            "delivery": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\delivery.json",
+            "ownerWindowResult": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\owner124\\result.json",
+            "engineeringReadyForOwnerAcceptance": false,
+            "physicalClickDragFeelAccepted": false,
+            "wholeSaleQualified": false,
+            "calibrationCondition": {
+              "originalFailurePreserved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\native-output-fix\\original-preview-not-passed.json",
+              "diagnosis": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\native-output-fix\\calibration-condition-diagnosis.json",
+              "rawStationaryReadyMs": 1145.8796,
+              "normalPreviewCalibrationMs": [
+                2688,
+                2906
+              ],
+              "limits": "Raw ready matched first observed continuous stationary1s; native-only runs did not measure stationary.8s observation bound is not Owner calibration acceptance target; physical comfort pending."
+            },
+            "latestOwnerRequest": "那你把那个间歇断链的问题也继续修好，能后台做的先全部做完，然后再一次性弹窗让我验收这个 IMU，不要又零零碎碎地测。",
+            "ownerWindowDeferred": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\native-output-fix\\owner121-concentrated\\result.json",
+            "linkDecisionBasis": "Confirmed active-native stalled-receiver software hole repaired; real controlled recovery passed. Natural119 first RF loss remains unidentified; no new natural loss observed in124 window. No speculative RF or firmware patch.",
+            "linkRepairRealBackendQualified": true,
+            "naturalRfCauseQualified": false,
+            "linkRepairEvidence": {
+              "receiveTests": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\stream-final\\test.log",
+              "originalAckBoundaryFailure": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\stream-tests-ready\\test.log",
+              "realNativeRecovery": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\real-native-recovery-r1\\result.json",
+              "noFault121": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\native121-cause\\result.json",
+              "aclInjectionNotTriggered": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\normal121-acl-baseline\\result.json",
+              "firstHardwareReadyElapsedMs": 119,
+              "staleDetectedElapsedMs": 1926,
+              "secondHardwareReadyElapsedMs": 5174,
+              "recoveryReadyMs": 3248,
+              "actualMode0Ack": true,
+              "normal124": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\normal124-concentrated\\result.json",
+              "freshInstalledDirectory": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\installed124-fresh-directory\\result.json"
+            },
+            "freshInstalledDirectoryReceipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\installed124-fresh-directory\\result.json",
+            "runtimeProof": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\runtime-proof.json",
+            "backgroundBatchComplete": true,
+            "ownerWindowState": "OWNER_ENDED_FEEL_REJECTED",
+            "calibrationConditionLatest": "124 observed1.296–1.313s; stationary condition not independently measured. Keep physical comfort open.",
+            "actualInstalledSource": "fc964ab7d89a8d788b513d99978c359332c60322",
+            "ownerFeedback": {
+              "id": "IMU-OWNER124-ANGULAR-FEEL",
+              "at": "2026-11-13T16:49:50+08:00",
+              "raw": "感觉上下还行，但是好像它方向反了，应该是 Type C 对着那一面是，往就是它往上倾斜，现在上下是反，然后左右不太行。感觉这个倾倒不是很好用，感觉还是用回平移会好一点。感觉很奇怪现在。",
+              "additionalOwnerRaw": "感觉有点奇怪，我感觉还是平移会好一点，感觉左右倾斜倾斜好像不是很好用的感觉。要平移会好用点。",
+              "source": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\link-repair\\owner124-concentrated\\result.json",
+              "version": "0.1.124",
+              "firmware": 66830,
+              "result": "REJECTED_FEEL_VERTICAL_REVERSED_HORIZONTAL_UNSATISFACTORY_PREFERS_PLANAR",
+              "interpretation": "Owner rejects angular pointing feel; reported vertical reversal remains product issue, not dismissed as user technique. Two click-area receipts do not prove card click acceptance; no dragging observation. Old natural RF cause remains open.",
+              "metrics": {
+                "statusObservations": 524,
+                "staleObserved": 0,
+                "notReadyObserved": 1,
+                "draggingObserved": 0,
+                "gapMaximum": 0,
+                "completeConnectMs": 2452.8237000049558
+              },
+              "next": "Compare pinned upstream control semantics and Companion axis adapter; preserve reliable stream repair. User now prefers planar-only evaluation, no simultaneous tilt mixing. The two named upstreams have no planar translation algorithm; do not enable old mixed experiment and label it upstream parity. No new popup until useful complete candidate."
+            }
+          },
+          "ownerPlanarOnly20261113": {
+            "at": "2026-11-13T17:01:53+08:00",
+            "raw": "感觉还是先看一下平移呗。这个倾斜感觉好像不是很好用。的样子。空中鼠标倾斜有点反人类，我感觉。",
+            "decision": "Prioritize planar-only feasibility. Pause angular experience. Reuse actual old raw capture and audited open-source velocity implementations; do not re-enable old mixed translation/angular mode.",
+            "oldSource": "packages/desktop-input/src/pointer/desktop.rs and intent.rs; earlier raw822 captures contain real samples but no measured trajectory truth, including loss/failed mode restore in resumed capture.",
+            "currentDelivery": "Normal830/124 retained, no new pointer candidate installed.",
+            "output": "E:\\CodexData\\Companion\\.build-cache\\imu-pointer20261112\\complete-experience20261113\\planar",
+            "physicalPlanarQualified": false,
+            "updatedAt": "2026-11-13T17:42:13+08:00",
+            "status": "OWNER_PLANAR_REJECTED_STATIC_CURSOR_DRIFT",
+            "latestOwnerRaw": "感觉为什么这样我们这个头颅一鼠标不是特别好用的人家的就是好用的或者你看看能不能把好用的感觉做出来。",
+            "candidate": {
+              "at": "2026-11-13T17:42:13+08:00",
+              "state": "PLANAR_ONLY_ENGINEERING_CANDIDATE_READY_ONE_OWNER_TRIAL_NOT_NORMAL_DELIVERY",
+              "firmware": 66830,
+              "sourceCommit": "294ebc616f6c1df76855846b6eb01366cfaf9a35",
+              "sourceProtectedRemotely": true,
+              "proof": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\planar-only-prototype\\state-feedback\\proof.json",
+              "normalAppInstalledByThisBatch": false,
+              "ownerPopupLaunched": false,
+              "repaired": [
+                "Planar mode never falls back to angular cursor steering.",
+                "Recognised rest clears interpolation tail.",
+                "Earth-frame XY is not disabled by initial tilt or moderate vertical surface disturbance.",
+                "Portable trial exposes actual clutched/rest state rather than reporting only gyro calibration."
+              ],
+              "testsPassed": 50,
+              "real830RawFrames": 1976,
+              "real830RawSeconds": 20.112,
+              "rawMissingSequences": 0,
+              "liveCorePreview": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\planar-only-prototype\\state-feedback\\evidence\\live-core-preview\\result.json",
+              "liveCoreFrames": 1967,
+              "liveCoreSensorHz": 99.99683659527818,
+              "liveCoreStaleObserved": 0,
+              "liveCoreGapObserved": 0,
+              "actualMode0Ack": true,
+              "boardReleased": true,
+              "microphoneCommands": 0,
+              "cursorOutputInBackground": false,
+              "oldReplayOutcome": "No meaningful improvement from removing tilt gate; Z gate removal gives limited extra output. Old resumed capture remains mostly unusable from gaps/re-arm. No physical path truth or feel improvement claimed.",
+              "upstreamDecision": "Additional reviewed repositories are rotational, offline/future-dependent, gyro-decayed or MPU-specific; no mature drop-in planar mouse found or claimed. Existing pinned Fusion and current experimental causal adapter used; no new algorithm invented or imported as a qualified feature.",
+              "limits": [
+                "Short-stroke inertial prototype with existing gross-impact/gap reset and2s integration bound.",
+                "No physical table-contact sensor or trajectory truth; stop/slow stroke/lift still need actual use.",
+                "QA uses existing fixed CIN/Bleak protocol, not a new normal WinRT recovery qualification.",
+                "Original intermittent natural RF cause open; angular Owner trial rejected; sales still unqualified."
+              ],
+              "boardResources": {
+                "appFlashBytes": 406408,
+                "staticSramBytes": 66632,
+                "reservedStackBytes": 21504,
+                "clockMHz": 61.44,
+                "newMcuCodeBytes": 0,
+                "newMcuStaticRamBytes": 0,
+                "currentCpuRemeasured": false
+              },
+              "ownerPhysicalQualified": false,
+              "saleQualified": false,
+              "next": "One original Owner window for a complete natural planar purpose; explicit Start before cursor/board use, no4direction calibration steps. Keep whole negative/positive feedback and raw movement together. Normal MSI integration only after useful feel is established.",
+              "files": [
+                {
+                  "file": "evidence/current830-raw-baseline/analysis.json",
+                  "bytes": 827,
+                  "sha256": "d0e7c46336e530d213c2f05b8f8218e087f5f165062ad782356133704234f066"
+                },
+                {
+                  "file": "evidence/current830-raw-baseline/result.json",
+                  "bytes": 599,
+                  "sha256": "17de446f219562e3b7ad7ce4d0ee4b85463506ed18b24fe9b9b0a845d6c09f88"
+                },
+                {
+                  "file": "evidence/current830-raw-baseline/samples.json",
+                  "bytes": 700802,
+                  "sha256": "a491b8dc5e898a40b4322d4a62ea4e78a11301ede16ef23b252f6b4611714aa3"
+                },
+                {
+                  "file": "evidence/live-core-preview/result.json",
+                  "bytes": 1449,
+                  "sha256": "daed04dd270dff068188c91baf7e6be04531a9491fc660ad3c7302e633f7008e"
+                },
+                {
+                  "file": "evidence/live-core-preview/samples.json",
+                  "bytes": 617982,
+                  "sha256": "55b9715a5798a1c306e0a0d94df624aeedcde0d5482a8198c42bf4337dc9780e"
+                },
+                {
+                  "file": "evidence/live-core-preview/status.json",
+                  "bytes": 65536,
+                  "sha256": "c21bfe24cc81adad2270e9dbfe1c3403613143fd7ae9ad0857fb3d8d5bb3148b"
+                },
+                {
+                  "file": "evidence/mapping-baseline-source.json",
+                  "bytes": 385,
+                  "sha256": "eebd30c3c8f391c4c18dd6feffacf68de71ff658dcefb840b3647ff8815955fd"
+                },
+                {
+                  "file": "evidence/old-raw-observations.json",
+                  "bytes": 4610,
+                  "sha256": "143eb73af2003fbb93ebb4a0a87cfbaabb3a365efc7793fd9772e4b77a4c2dbc"
+                },
+                {
+                  "file": "evidence/planar-bump-replay/result.json",
+                  "bytes": 8668,
+                  "sha256": "897904c056f6223e5a072eac4a7ed52db7fa536d4b90b7e1f0ef29cefe8a04f9"
+                },
+                {
+                  "file": "evidence/planar-bump-tests/cargo.log",
+                  "bytes": 7725,
+                  "sha256": "978606712c017ae65f15c23bd3d3e5ae39fc6c9046576e1d149d89e0859712ae"
+                },
+                {
+                  "file": "evidence/planar-bump-tests/result.json",
+                  "bytes": 753,
+                  "sha256": "e7a44fbda665256fa497a6ea50b6a32761f9f23ab3800402e42fd236407e1640"
+                },
+                {
+                  "file": "evidence/planar-compensation-replay/result.json",
+                  "bytes": 8639,
+                  "sha256": "0c362f3e6f02f44535798da4924a25ce6b8c6a282519a06308f6a74e4ed90da6"
+                },
+                {
+                  "file": "evidence/planar-only-replay/result.json",
+                  "bytes": 8639,
+                  "sha256": "7af2747aa79a6e0233be53811b1fa3383659e60ca84f6b32c52f46608d524455"
+                },
+                {
+                  "file": "evidence/upstream-trees.json",
+                  "bytes": 1299942,
+                  "sha256": "5f7a55fb122a060c61124a1380d538ea3e271228215568501f52b074de79544b"
+                },
+                {
+                  "file": "operator-adapters/original_operator_prompt.py",
+                  "bytes": 1898,
+                  "sha256": "87cb11c978238b8394ae1d75d1a02ca825f738c43b4e846cf072bccb97358b44"
+                },
+                {
+                  "file": "operator-adapters/owner_planar_acceptance.py",
+                  "bytes": 6115,
+                  "sha256": "7fc0b76a21aa9dd8fadb717df98a62ca2c1b668257213216e141c2db64851973"
+                },
+                {
+                  "file": "operator-adapters/planar_trial_session.py",
+                  "bytes": 9520,
+                  "sha256": "8075f60b7224e9a6fac2f3c9e87c730373d7d7d04a9ddc48e4c29c098a16470c"
+                },
+                {
+                  "file": "pointer_trial.exe",
+                  "bytes": 997376,
+                  "sha256": "d471a18646e63d927ce88d1ce6f03cc658e8fc0e5561b7782683532a78e7156a"
+                },
+                {
+                  "file": "proof.json",
+                  "bytes": 7563,
+                  "sha256": "1f5672072dd383f09fb38793b8f82f502ee2f677e0845e68ba501c4e626b17ad"
+                },
+                {
+                  "file": "source/packages/desktop-input/build.rs",
+                  "bytes": 562,
+                  "sha256": "8ccd98bd6616f9c9551ca4569797ae272f07a3218860033ea9cab15e4bb6467d"
+                },
+                {
+                  "file": "source/packages/desktop-input/Cargo.lock",
+                  "bytes": 37359,
+                  "sha256": "4aa76246da2f5ed7d7853e7db86b3e6a97366b415e56e30c21bf2dd95dea717f"
+                },
+                {
+                  "file": "source/packages/desktop-input/Cargo.toml",
+                  "bytes": 783,
+                  "sha256": "edd746cd0fe64d369475615f21b1e8390eca7e9aeea97d3c9fdfdffe86833a2d"
+                },
+                {
+                  "file": "source/packages/desktop-input/examples/pointer_trial.rs",
+                  "bytes": 5582,
+                  "sha256": "916e6f6e01a4aa8187a8a81e352984fa4f92f32739780b62d08d6d9738cc6621"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/insertion/clipboard_handoff/native_recording_retention_test.rs",
+                  "bytes": 14037,
+                  "sha256": "6fb7f0d6688842ae9d05e5d0c3c5501fd5f80ae0a83e4cc397963c5d05cbf6a3"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/insertion/clipboard_handoff/native_supplement_test.rs",
+                  "bytes": 17794,
+                  "sha256": "c8dd68094ed17d0cc6c0611a1c298e51decf642e0f97e8e30ff67a78f6b978ef"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/insertion/clipboard_handoff.rs",
+                  "bytes": 103669,
+                  "sha256": "62838d07d16f2a805cc0c68b55c7a32eac8492d17fb546f32327d1c4bb109055"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/insertion.rs",
+                  "bytes": 51259,
+                  "sha256": "f451c6e7860a8e17984a7c7668e1ca97cc66cd9dc837eac39820099704aa7ef3"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/lib.rs",
+                  "bytes": 1807,
+                  "sha256": "0971bf362b42562a3362d12869bd7853991871c057e5eee127ed34b0d4cd5f9a"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/contact.rs",
+                  "bytes": 9771,
+                  "sha256": "8539a00cc8adf94282e96241f943d050f19f7dcdc0dcbb25ebd61a3b6d835d1b"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/desktop.rs",
+                  "bytes": 11777,
+                  "sha256": "04abb63ddb2155859bcac0c40baca68f31eae2772f0f984dc4e9e58c77d00769"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/fusion.rs",
+                  "bytes": 2332,
+                  "sha256": "83076e7af0ca8f950ea046c6b7b3469896fc2f06d63f17a4cece4a4cfdee6ee7"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/fusion_adapter.c",
+                  "bytes": 3068,
+                  "sha256": "e9b79238286df8ac0821a00755241bc81e04b6638cdc52f73b3ecb846634daba"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/intent.rs",
+                  "bytes": 5062,
+                  "sha256": "5582c2a7401e5216320ec64c3cb68b880cc235b2be372b9a9cd6806242ae288e"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/native.rs",
+                  "bytes": 6440,
+                  "sha256": "f6262696b43efae9d24d7ffefa03c04e720a832766da3e86a12d781a51d664f5"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer/tests.rs",
+                  "bytes": 23130,
+                  "sha256": "b5aa11f9a1536db9349d4ba4f5a1d7dc789634d76076c75df2c5d4267a113c99"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/pointer.rs",
+                  "bytes": 24878,
+                  "sha256": "437b861dc769e13c37c8a3b7e8a94fbd3bdc9335390b3a30d2a515f0a87d1a94"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/selection/windows_uia.rs",
+                  "bytes": 33386,
+                  "sha256": "803831327105f22d1b16d290d40698025eeb4974f06815d20ecd4fdf116c3ef3"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/selection.rs",
+                  "bytes": 36165,
+                  "sha256": "0ecf3970199faba22ee57af108b894d82cda27bb9c0d3c3f3bad8c478cf829af"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/transcript_boundary.rs",
+                  "bytes": 71945,
+                  "sha256": "04bbe5768b9cfcf5b3fafe1f53f5701f340c8cb4bf9c720faa89d81af71ea575"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/types.rs",
+                  "bytes": 475,
+                  "sha256": "85ae44195030c5d33956a7ba3aade2ef444537cd5b39163bdda4d5f05f39a2a6"
+                },
+                {
+                  "file": "source/packages/desktop-input/src/unicode_keystroke.rs",
+                  "bytes": 6455,
+                  "sha256": "c1fa21ad4748dd1d1e6674254c5dedb1874bbfc27f11babb3ff955d593c7cb77"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/air/LICENSE",
+                  "bytes": 1091,
+                  "sha256": "ac5569da19be1ab3d4581d246b98aeb7e278262dc0c8eff52cf19d5967c1180b"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionAhrs.c",
+                  "bytes": 21047,
+                  "sha256": "611678dbaa531db3b360cf3f3097a52cd60d7cf2f93be0753748d8674b9cb5fb"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionAhrs.h",
+                  "bytes": 3902,
+                  "sha256": "fd726d91ece9a5a0074151e5b777aa9578fe3f365a03b94be7d62e4084d23200"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionBias.c",
+                  "bytes": 3191,
+                  "sha256": "b6409e21bc1a1590e46fd01cd93edae5e0d04494081c4182a48a6116de53e3e0"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionBias.h",
+                  "bytes": 1560,
+                  "sha256": "88f8f5ebb99c315da39929b57dc8f8695e8a2aff6b2fd1474f84163a095e4868"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionConfig.h",
+                  "bytes": 635,
+                  "sha256": "1042ea5f363551d774a339e53c7cc4ce4cb1a5b90eb8fdda19d5ac2e8009ccd6"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionConvention.c",
+                  "bytes": 983,
+                  "sha256": "69356ff3bcf7d22f0bb12df9ba3cc1afc8a3e1bd627eef1f1f237cf7e64a5d65"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionConvention.h",
+                  "bytes": 896,
+                  "sha256": "781f26fb04d3d0bee5070c5e4e13f6f6fb953a57368e83a6b9bc87da3e266a3c"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionInline.h",
+                  "bytes": 695,
+                  "sha256": "4911c37b8876066054345307f91e6ad015c3b261b036fab619dcd090b45b7dd1"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/Fusion/FusionMath.h",
+                  "bytes": 15603,
+                  "sha256": "c7f8a14111418ccc2e8c81ab7718baa7c2b3a6f87756954a2922579405d056a0"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/fusion/LICENSE.md",
+                  "bytes": 1085,
+                  "sha256": "deea99a9e5920dc1cb5bfd7730fba6ca3fdab691bde7760aa1642e65c650ccca"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/README.md",
+                  "bytes": 10021,
+                  "sha256": "a41313cf1e730b6a2abc7d9cad8ee800258a87c085576ddda189945b84c47803"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/upstream.json",
+                  "bytes": 4798,
+                  "sha256": "d67693e0625706ab7ed214d60d5da4803d4c344c58977d6976eae715321cfc1d"
+                },
+                {
+                  "file": "source/third_party/imu-pointer/watch/LICENSE",
+                  "bytes": 1067,
+                  "sha256": "0dd72cf0b083b1c0db8aaa1143f12a39b8b5aaa5ed87406215278cbbcd159d05"
+                }
+              ],
+              "bytes": 4283338
+            },
+            "decisionBasis": "Old mixed mode had angular priority; first separate the motion source. Recorded replay still does not prove good planar tracking. Avoid further blind threshold changes; whole new planar purpose is a real different use condition from rejected angular mode. Human trajectory/feel is the missing condition; prepare one shared original window, no new MSI or resampling ladder.",
+            "feedbackId": "IMU-OWNER124-ANGULAR-FEEL",
+            "angularPaused": true,
+            "ownerResult": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\planar-only-prototype\\state-feedback\\owner-failed\\result.json",
+            "ownerRaw": "这不对呀，每次它可以平移以后，它都这样，我重新开始平移，然后我放着不动的时候，它也会平移，就很不对。"
           }
         }
       },
@@ -271243,8 +271674,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-13T11:16:43+08:00",
-            "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
+            "updatedAt": "2026-11-13T17:58:37+08:00",
+            "state": "INSTALLED126150_ONE_SOFTWARE_PACKAGE_PROTECTED_CONTENT_QUALITY_OPEN_SOUND_PAUSED",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -271252,11 +271683,11 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "沿原UI116-DESIGN-FOUNDATION完成一批真实可用的软件修复：按已固定MIT的shadcn Mail/sidebar-09统一完整界面层级与中性设计，Meetily Community作会议阅读/原文对照参考；修正文稿/纪要与不确定片段的用途，工程完成约30分钟公开中文会议源音/实卡同模型对照。先完成真实代码与内容质量自验，再一次匹配双端交付和短Owner回访；当前120/146整体被Owner否定，不再沿同条件派验。",
+            "next": "126/150同批界面与可读性修订已安装、原资料一致、一个候选包已私有完整回读保护；原UI116整体目标未完成，不邀请Owner验收。原始实卡识别CER14.6223%、含混原句仍被纪要确定化、手机AI未配置均保留未通过。继续无声识别/纪要源头质量工作；依赖外放的电平对照等Owner明确允许后重做新原音，不自动恢复，不读取/回听/转写/上传已中断01a3。无需人参与不弹窗。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-            "currentInstalledWindows": "0.1.120",
-            "currentInstalledAndroid": "0.1.146",
+            "currentInstalledWindows": "0.1.126",
+            "currentInstalledAndroid": "0.1.150",
             "plannedWindowsVersion": "0.1.120",
             "plannedAndroidVersion": "0.1.146",
             "plannedVersionsBuilt": true,
@@ -271299,7 +271730,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "Owner120 prompt and normal product both closed13:50:43; session30277 completed. No live board/MIC/model/cloud/build/phone job. Requested30-minute comparison is NOT_STARTED. Upstream reference files pinned, production integration pending.",
+            "knownJobState": "All owned workers ended, no speaker/capture/phone/build/model job; explicitOwner sound pause remains.126/150 installed, one68.2MB software candidate archive protected in existing private draft and complete download hash03fcf35d matches. Not whole acceptance/content/model/sale qualified; no Owner acceptance invitation. See completeProductRework20261113 and soundOutputPolicy.",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -271355,9 +271786,9 @@
               "scope": "沿已确认Windows首批，把录音/导入、自动处理、纪要/待办、出处、补充、交接与恢复连为完整产品；实卡可靠性和正式交付剩余归同一收口，不再逐功能要求Owner验收。Android原交付与源检查点保留。",
               "acceptance": "工程集中完成实现、集成和必要数据保护/已知故障检查，最后用匹配原生包跑完整流程总验收；不逐条功能打包或逐项派Owner测试。",
               "preservedBoundaries": "屏幕/触摸/宠物等Owner暂停项保留；模型原质量专项和真实外部发布条件不虚关。",
-              "currentPoint": "沿原UI116-DESIGN-FOUNDATION完成一批真实可用的软件修复：按已固定MIT的shadcn Mail/sidebar-09统一完整界面层级与中性设计，Meetily Community作会议阅读/原文对照参考；修正文稿/纪要与不确定片段的用途，工程完成约30分钟公开中文会议源音/实卡同模型对照。先完成真实代码与内容质量自验，再一次匹配双端交付和短Owner回访；当前120/146整体被Owner否定，不再沿同条件派验。",
+              "currentPoint": "126/150同批界面与可读性修订已安装、原资料一致、一个候选包已私有完整回读保护；原UI116整体目标未完成，不邀请Owner验收。原始实卡识别CER14.6223%、含混原句仍被纪要确定化、手机AI未配置均保留未通过。继续无声识别/纪要源头质量工作；依赖外放的电平对照等Owner明确允许后重做新原音，不自动恢复，不读取/回听/转写/上传已中断01a3。无需人参与不弹窗。",
               "done": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-              "updatedAt": "2026-11-13T13:58:46+08:00",
+              "updatedAt": "2026-11-13T17:58:37+08:00",
               "sourceCommit": "3151a46c76b310443fc95b9e2e531a5e53893d62",
               "acceptanceToolCommit": "3fc02d1eadd29de292146bc2aba7fd751acde02e",
               "buildRun": null,
@@ -271995,7 +272426,7 @@
                 "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
                 "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
                 "ownerClarification": "两边都有",
-                "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
+                "state": "INSTALLED126150_ONE_SOFTWARE_PACKAGE_PROTECTED_CONTENT_QUALITY_OPEN_SOUND_PAUSED",
                 "previousWindowsVersion": "0.1.111",
                 "previousAndroidVersion": "0.1.142",
                 "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
@@ -272034,14 +272465,15 @@
                 "newReceivedCardRows": 0,
                 "actualCardRecordingCountNotDirectlyQueried": true,
                 "currentWindowsBuild": {
-                  "state": "NORMAL120_INSTALLED_NATIVE_UI_AND_ACTUAL_REOPEN_CHECKED",
-                  "version": "0.1.120",
+                  "state": "NORMAL126_INSTALLED_ACTUAL_REAL_MEETING_READING_EXPORT_REOPEN_VERIFIED_CONTENT_GATE_OPEN",
+                  "version": "0.1.126",
                   "completed": true,
                   "installed": true,
-                  "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
-                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\windows-verification.json",
-                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\runtime-result.json",
-                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows120\\installation.json",
+                  "sourceCommit": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\windows-verification.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\runtime-result.json",
+                  "actualRealPublicRuntime": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/public30-final126-native-review-r2/result.json",
+                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\installation.json",
                   "worker": null
                 },
                 "retainedBuildPreparationFailures": [
@@ -273235,14 +273667,15 @@
                 },
                 "engineeringComputerVoiceEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows116\\computer-voice-backend-evidence.json",
                 "currentAndroidBuild": {
-                  "state": "NORMAL145_INSTALLED_ACTUAL_PUBLIC_PHONE_UI_AND_PROCESS_REOPEN_CHECKED",
-                  "version": "0.1.145",
+                  "state": "NORMAL150_INSTALLED_PUBLIC_UI_SAVE_THEMES_REOPEN_CHECKED_ASR149_UNCHANGED_SOURCE_REUSED",
+                  "version": "0.1.150",
                   "completed": true,
                   "installed": true,
-                  "sourceCommit": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
-                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android145\\installation.json",
-                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android145\\library-review-result.json",
-                  "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android145\\end-session.json",
+                  "sourceCommit": "d59d51fc16a755697a536a8558e13b3f6c37bfe6",
+                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\installation.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\library-review-result.json",
+                  "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\end-session.json",
+                  "asrRuntimeReuse": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\unchanged-asr-runtime-reuse.json",
                   "worker": null
                 },
                 "previousDelivered115142BeforeRecordingWorkspace116144": {
@@ -273590,15 +274023,103 @@
                   "actualDualClientReviewCompleted": true,
                   "privateCompletePackageReadback": true
                 },
-                "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\software-delivery.json",
+                "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product126150-software.json",
                 "lastHandledOwnerFeedbackId": "UI116-DESIGN-FOUNDATION",
                 "lastHandledOwnerRaw": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。",
                 "completeProductRework20261113": {
-                  "state": "OWNER120146_REJECTS_OVERALL_UI_AND_TRANSCRIPTION_LICENSED_TEMPLATE_REWORK_OPEN",
+                  "state": "INSTALLED126150_ONE_SOFTWARE_PACKAGE_PROTECTED_CONTENT_QUALITY_OPEN_SOUND_PAUSED",
                   "decision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json",
                   "templateAdoption": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\template-adoption.json",
                   "receivedAt": "2026-11-13T13:58:46+08:00",
-                  "ownerQuote": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。"
+                  "ownerQuote": "我就还是之前那些问题，就是这个东西虽然说是可以用的，但是。 第一就是 UI 还是太乱了，然后 UI 比较丑，然后不是一个清晰的逻辑。第二就是它那个转写那些质量比较差，所以这个录音卡感觉这样子很难卖，快点给它软件方面完完整完善一下。你看一下怎么样完善一下先吧，看能不能再，找一些公开的，比做人家做的比较好的模板，我们照抄一下。这样自己发挥的话，就会变成这样子。",
+                  "implementationAuthorizedAt": "2026-11-13T14:04:51+08:00",
+                  "implementationOwnerQuote": "可以，那就按这个方案直接开始改，照着成熟模板来，别再自己发挥了。UI和转写质量一起完善好，用半小时的真实中文会议跑一遍，你自己先完整验收，再一次性交付给我体验，不要又搞得零零碎碎的。",
+                  "batchDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113",
+                  "primaryTemplate": "shadcn/ui Mail/sidebar-09 dd41d19e2f80ff6891951f7ced74c2c9a650b065",
+                  "meetingReference": "Meetily Community07c4dfd45361bb6776916a0d46f493dda447f471",
+                  "newPhysicalCaptureStarted": false,
+                  "actualWindowsCandidate": "0.1.126",
+                  "windowsFrozenReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\windows126-frozen-source.json",
+                  "androidNativeSource": "b96f88da4e3635845ef06755ddaa54a6017f5970",
+                  "softwareSourceImplemented": true,
+                  "normalPackagesInstalled": true,
+                  "firstPublicCaptureStoppedByPromptLifetime": true,
+                  "firstAttemptReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-progress.json",
+                  "unattendedPublicCapture": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-unattended-r2\\result.json",
+                  "sourceModelComparison": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\source-model-evaluation.json",
+                  "defaultModelNotChangedBecauseSourceDifferenceSmall": true,
+                  "ownerPopupPolicy": "无需人参与的工程工作后台自行完成；仅真实需要人的动作/判断时使用共用原提示窗。",
+                  "jobs": [],
+                  "androidFrontendSource": "d59d51fc16a755697a536a8558e13b3f6c37bfe6",
+                  "androidVersion": "0.1.150",
+                  "androidNativeReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-native-actual-r3\\result.json",
+                  "updatedAt": "2026-11-13T17:58:37+08:00",
+                  "androidBackendSource": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+                  "realPublicCapture": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-unattended-r2\\result.json",
+                  "physicalRecordingDurationMs": 1808210,
+                  "actualCardAsr": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-analysis\\result.json",
+                  "actualCardDefaultCer": 0.14622283021735827,
+                  "sourceDefaultCer": 0.05259157926736586,
+                  "cardSensevoiceCer": 0.168718650250798,
+                  "highpassOnlyCer": 0.1409028727770178,
+                  "adaptiveNoiseProbeCer": 0.1377108983128135,
+                  "recognizerAndDenoiserDefaultsUnchanged": true,
+                  "reason": "Alternate model worse and simple/FFT preprocessing improvements too small; do not promote same-clip experiments to product quality.",
+                  "localPunctuationPrototype": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\local-punctuation\\result.json",
+                  "safeLocalPunctuationImplemented": true,
+                  "optionalModelOfflineFallbackRetained": true,
+                  "prior122NativeJourney": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows122\\runtime-result.json",
+                  "prior147PhonePublicJourney": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android147\\end-session.json",
+                  "actualInstalledWindowsLastKnown": "0.1.126",
+                  "actualInstalledAndroid": "0.1.150",
+                  "ownerExperienceAccepted": false,
+                  "asrAccuracyQualified": false,
+                  "wholeCoreSaleQualified": false,
+                  "latestWindows124Source": "fc964ab7d89a8d788b513d99978c359332c60322",
+                  "latestWindows124Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\complete-experience20261113\\link-repair\\windows124\\installation.json",
+                  "phone148ClosedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android148\\end-session.json",
+                  "phone148ActualPublicAsr": "E:\\CodexData\\Companion\\.build-cache\\android-media-import20261110\\phone148\\actual-public30.json",
+                  "phone148CloudMinutesConfigured": false,
+                  "desktop124ActualMinutes": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final124\\minutes.json",
+                  "desktop124MinutesContentQualified": false,
+                  "desktopRetranscriptionStoppedByActualSystemLowRam": true,
+                  "sequentialAsrPunctuationSource": "917a366a703688715b7505c3abf725f29ce59a21",
+                  "sequentialAffectedTests": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\native-serial-asr-tests\\result.json",
+                  "defaultMeetingOverviewFixWindows": "6b6b0d43",
+                  "defaultMeetingOverviewFixAndroid": "658494ca",
+                  "windowsInstallation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows125\\installation.json",
+                  "androidClosed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\end-session.json",
+                  "finalDesktopNativeRetranscription": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/public30-retranscription125/result.json",
+                  "affectedLongNativeTests": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\native-long-actual-tests-r3\\result.json",
+                  "actual125FullChain": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final125\\minutes-result.json",
+                  "actual125ContentQualified": false,
+                  "phoneLiveWorker": false,
+                  "finalDesktopNativeReading": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final126-native-review-r2\\result.json",
+                  "finalDesktopActualMinutes": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final126\\minutes-result.json",
+                  "finalDesktopMinutesContentQualified": false,
+                  "officialDenoiserRejected": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\card-gtcrn\\result.json",
+                  "officialDenoiserCardCer": 0.2859097127222982,
+                  "soundOutputPolicy": {
+                    "allowed": false,
+                    "receivedAt": "2026-11-13T17:50:05+08:00",
+                    "ownerQuote": "目前我不能再外放扬声器声音了，因为在开会，等下我叫你可以，就是可以外放扬声器的时候再要外。主要包括一些什么。",
+                    "resumeRequiresExplicitOwnerPermission": true,
+                    "scope": "Engineering test audio, recording playback, reminder tones and speaker-dependent capture. Silent builds/code/UI checks may continue. Do not change Owner meeting audio or global volume.",
+                    "stopReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-level-control-r2\\owner-sound-pause.json",
+                    "currentInterruptedRecordingSession": "00000000000001a3",
+                    "interruptedRecordingMayContainMeetingEnvironment": true,
+                    "doNotReadTranscribeOrUploadInterruptedRecording": true,
+                    "ownedCaptureStopped": true,
+                    "ownHandlesClosed": true,
+                    "boardTurnReleased": true
+                  },
+                  "softwareRevisionReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product126150-software.json",
+                  "softwareRevisionArchive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Software-126-150-20261113.zip",
+                  "softwareRevisionSha256": "03fcf35daa4c9dafa3682860fde8df17eaac0433d89ee4b716089fb1444ffafa",
+                  "privateRemoteReadbackVerified": true,
+                  "uiWorkflowEngineeringPassed": true,
+                  "inviteOwnerAcceptance": false,
+                  "currentPoint": "126/150同批界面与可读性修订已安装、原资料一致、一个候选包已私有完整回读保护；原UI116整体目标未完成，不邀请Owner验收。原始实卡识别CER14.6223%、含混原句仍被纪要确定化、手机AI未配置均保留未通过。继续无声识别/纪要源头质量工作；依赖外放的电平对照等Owner明确允许后重做新原音，不自动恢复，不读取/回听/转写/上传已中断01a3。无需人参与不弹窗。"
                 }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
@@ -281516,6 +282037,21 @@
         "installed": false,
         "ownerDelivered": false,
         "purpose": "Same complete experience candidate integration fact; no separate small Owner delivery or UI priority change."
+      },
+      "embeddedPointerCurrent20261113": {
+        "at": "2026-11-13T16:44:16+08:00",
+        "reservedWindowsVersion": "0.1.124",
+        "source": "fc964ab7d89a8d788b513d99978c359332c60322",
+        "baseFrontend123": "d36222d74182cfe244040aa6026efbaf539c76eb",
+        "fixOnly": "db327ed09ee1dc6aefa462f97fa2701d9cb95ab0",
+        "receipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\delivery.json",
+        "scope": "Actual124 installed,249 original files identical. Preserves frontend123 UI/ASR baseline; pointer recovery and affected normal engineering checks passed. Physical Owner acceptance and original natural RF trigger open.",
+        "actualInstalledWindows": "0.1.124",
+        "installation": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\evidence\\windows124-upgrade\\result.json",
+        "mainlineRepairCommit": "a61160769a7496c3da3955757795581c31ac1f50",
+        "planarPrototypeSource": "294ebc616f6c1df76855846b6eb01366cfaf9a35",
+        "planarPrototype": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\planar-only-prototype\\state-feedback\\delivery.json",
+        "planarScope": "Portable core candidate only; normal app still pauses desktopMotion; no daily installer reservation or upgrade by this batch."
       }
     },
     "retiredBatchAliases20261111": {

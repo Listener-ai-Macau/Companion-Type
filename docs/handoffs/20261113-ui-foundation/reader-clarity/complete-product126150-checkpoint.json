@@ -1,0 +1,101 @@
+{
+  "at": "2026-11-13T17:59:43+08:00",
+  "role": "Remote protection snapshots only; root Companion docs remain sole editable backlog/timeline, never backflow this snapshot.",
+  "sourceBranches": {
+    "at": "2026-11-13T17:28:52+08:00",
+    "sources": [
+      {
+        "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+        "sourceCommit": "ef724821c9bfcd21b781d0b8b691efee7f109afc",
+        "protectedBranch": "work/template126-full-ui-20261113",
+        "pushExitCode": 0,
+        "remoteReadback": "ef724821c9bfcd21b781d0b8b691efee7f109afc"
+      },
+      {
+        "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
+        "sourceCommit": "d59d51fc16a755697a536a8558e13b3f6c37bfe6",
+        "protectedBranch": "work/template150-full-ui-20261113",
+        "pushExitCode": 0,
+        "remoteReadback": "d59d51fc16a755697a536a8558e13b3f6c37bfe6"
+      },
+      {
+        "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-audio-import-backend20261110",
+        "sourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+        "protectedBranch": "work/template150-native-20261113",
+        "pushExitCode": 0,
+        "remoteReadback": "92f53ef78a8cfd78caa60b98767dddbdf4c37583"
+      },
+      {
+        "source": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+        "sourceCommit": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f",
+        "protectedBranch": "work/template126-frozen-20261113",
+        "pushExitCode": 0,
+        "remoteReadback": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f"
+      }
+    ]
+  },
+  "uiRegression": "long-reader-regression passed after retaining shared matchMedia mock/current keyword disclosure",
+  "real126NativeReading": {
+    "at": "2026-11-13T17:35:58+08:00",
+    "state": "ACTUAL126_PUBLIC30_MINUTES_FOLDED_DETAIL_THEMES_REPLAY_SELECTED_EXPORT_AND_REOPEN_PASSED",
+    "version": "0.1.126",
+    "sourceCommit": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f",
+    "nativeEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final126-native-review-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\deada346a76f4f60ab7899ab89f21fee\\result.json",
+    "sourcePublicStateAndAllOriginalAudioFilesUnchanged": true,
+    "ordinaryDefaultOverviewAndCompleteDetailChecked": true,
+    "newAsrOrCloudRequestedByUi": false,
+    "asrPriorUnchangedSourceProof": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-final126\\unchanged-asr-runtime-reuse.json",
+    "ownerExperienceAccepted": false,
+    "recognitionAccuracyQualified": false
+  },
+  "rejectedGtcrn": {
+    "at": "2026-11-13T17:41:22+08:00",
+    "state": "GTCRN_MODEL_COMPARISON_COMPLETE",
+    "inputKind": "Derived local ASR comparison with official GTCRN noise suppression under own CPU/RAM limits. Same raw card original and frame count preserved; no reference given. Prototype only, not a new capture or product default change.",
+    "originalSha256": "0b75349ce1f9cfc0c8f9f5cbb34a7c98123ccb43d5799914a7288ca00808e014",
+    "derivedSha256": "57eb98189f374ecf8f301d9323a2ba2a80552b08860188e3463e6d28119885e0",
+    "referenceGivenToModel": false,
+    "seconds": 36.234,
+    "characters": 5896,
+    "scores": {
+      "intersectingIntervals": {
+        "referenceCharacters": 6579,
+        "errors": 1881,
+        "cer": 0.2859097127222982,
+        "replace": 972,
+        "insert": 53,
+        "delete": 856
+      },
+      "completeIntervalsOnly": {
+        "referenceCharacters": 6570,
+        "errors": 1884,
+        "cer": 0.2867579908675799,
+        "replace": 972,
+        "insert": 59,
+        "delete": 853
+      }
+    },
+    "originalUnchanged": true
+  },
+  "ownerSoundPause": {
+    "at": "2026-11-13T17:47:17+08:00",
+    "reason": "Owner currently in a meeting: stop speaker output now; all sound tests paused until explicit permission to resume. Stop this owned capture; retain original, no ASR/listening/cloud of interrupted recording.",
+    "state": "EXACT_OWNED_TEST_SPEAKER_OUTPUT_STOPPED_CAPTURE_CANCEL_REQUESTED",
+    "stoppedPlayers": [
+      {
+        "pid": 26792,
+        "createdAt": 1794563168.498462,
+        "exactOwnedMedia": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-level-control-r2\\current-minus16.wav"
+      }
+    ],
+    "globalVolumeOrOtherAppsChanged": false,
+    "resumeRequiresExplicitOwnerPermission": true,
+    "interruptedAudioMayContainMeetingEnvironment": true,
+    "interruptedAudioAsrAndCloudProhibited": true
+  },
+  "interrupted01a3AudioIncluded": false,
+  "allActualOriginalAudioRetainedLocally": true,
+  "failedAndSupersededVersionsRetainedLocally": true,
+  "unrelatedDesktopInputEditsIncluded": false,
+  "fullAcceptancePassed": false
+}
