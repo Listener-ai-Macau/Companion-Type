@@ -8,6 +8,18 @@ use std::{future::Future, pin::Pin, sync::atomic::{AtomicBool,Ordering}, time::D
 pub(super) type Notifications=Pin<Box<dyn futures::Stream<Item=Result<ValueNotification,String>>+Send>>;
 pub(super) const MOTION_TIMEOUT:Duration=Duration::from_millis(750);
 
+// Opt-in, process-bounded QA capture of motion packets only. Normal product
+// sessions do not format or write these records; no microphone data is here.
+fn trace_motion_wire(packet:&[u8]) {
+    static ENABLED:std::sync::OnceLock<bool>=std::sync::OnceLock::new();
+    static COUNT:std::sync::atomic::AtomicU32=std::sync::atomic::AtomicU32::new(0);
+    if !*ENABLED.get_or_init(||std::env::var("COMPANION_POINTER_CAPTURE_WIRE").as_deref()==Ok("1")){return;}
+    if COUNT.fetch_update(Ordering::Relaxed,Ordering::Relaxed,|n|(n<12000).then_some(n+1)).is_err(){return;}
+    let host_us=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_micros();
+    let hex=packet.iter().map(|b|format!("{b:02x}")).collect::<String>();
+    eprintln!("desktop_input_motion_wire schema=1 host_unix_us={host_us} packet={hex}");
+}
+
 #[derive(Debug,PartialEq,Eq)]
 pub(super) enum ReceiveError { MotionStopped, Channel(String) }
 impl ReceiveError {
@@ -51,6 +63,7 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                     if value.uuid==SETTINGS_UUID {
                         if mode==3 {
                             if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value){
+                                trace_motion_wire(&value.value);
                                 sequence=Some(sample.sequence);
                                 if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
                             }
