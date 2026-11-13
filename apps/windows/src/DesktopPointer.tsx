@@ -28,7 +28,7 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
  return <details className="ct-desktop-input" aria-label="空中鼠标">
   <summary>空中鼠标 · 转动卡片移动光标</summary>
   <p>Type-C端朝前，先稳住约1秒。默认像小跷跷板一样侧倾：右边压低向右、左边压低向左；抬高Type-C端向上，放低向下。转动才移动，停手光标停在当前位置。</p>
-  <p>轻敲外壳一下是左键，连敲两下是双击。{settings.keyRole==='regrip'?'要拿回舒服的握姿时，按住实体键再把卡片拿回来，松开继续，光标会留在原位。':'短按实体键也能点击，按住片刻并转动可拖拽；换握姿时点“暂停换握姿”，调整好再继续。'}退出后恢复录音和双敲标记；电脑 Esc 随时退出。</p>
+  <p>轻敲外壳一下是左键，连敲两下是双击。{settings.keyRole==='regrip'?'需要点得更稳时，可以按住实体键稳住光标，再轻敲外壳。要拿回舒服的握姿时，按住实体键再把卡片拿回来，松开继续。':'短按实体键也能点击，按住片刻并转动可拖拽；换握姿时点“暂停换握姿”，调整好再继续。'}退出后恢复录音和双敲标记；电脑 Esc 随时退出。</p>
   <div className="ct-button-row">
    <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping==='laser'?'laser':settings.relativeHorizontal} disabled={busy||status.enabled} onChange={e=>{const relative=e.target.value!=='laser';setSettings({...defaults,mapping:relative?'relative':'laser',relativeDirect:relative,relativeHorizontal:e.target.value==='turn'?'turn':'tilt',sensitivity:settings.sensitivity,...(!relative?{smoothing:0.55,deadzone:3,acceleration:0.6,keyRole:'clickDrag' as const}:{})});}}><option value="tilt">左右侧倾 · 推荐</option><option value="turn">左右转向</option><option value="laser">激光指向 · 进阶</option></select></label>
    {settings.relativeDirect&&<label>实体键用途 <select aria-label="空中鼠标实体键用途" value={settings.keyRole} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,keyRole:e.target.value as Settings['keyRole']})}><option value="regrip">按住换握姿 · 推荐</option><option value="clickDrag">短按点击／按住拖拽</option></select></label>}

@@ -143,7 +143,7 @@ pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const 
 pub struct Frame {pub position:Option<Point>,pub buttons:Vec<Button>}
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool}
+pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub tap_events:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool}
 
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
@@ -188,6 +188,16 @@ impl Pointer {
         self.last_emitted=position;
         self.relative.reset();self.smoother.reset();
         self.contacts.reanchor(position);
+        if self.settings.relative_direct{
+            // A reliable click can be queued between two native frames. If
+            // the ordinary mouse took over meanwhile, that click belongs at
+            // the visible cursor, not at the old card-only position.
+            for button in &mut self.queued{match button{
+                Button::Click(point)|Button::RightClick(point)|Button::Down(point)=>*point=position,
+                Button::Up=>{},
+            }}
+            if let Some((_,point))=self.pressed.as_mut(){*point=position;}
+        }
         // A contact after using the ordinary mouse must not rewind into the
         // old card-only cursor history, even during the upstream tap rewind.
         self.history.clear();
@@ -208,6 +218,7 @@ impl Pointer {
         if self.last_control.is_some_and(|last|{let n=event.sequence.wrapping_sub(last);n==0||n>=0x8000_0000}){return Ok(false);}
         self.last_control=Some(event.sequence);
         if event.events&OVERFLOW!=0{self.release();return Err("动作连接停顿过久，请重新开启空中鼠标。");}
+        if event.events&CLICK!=0{self.metrics.tap_events+=1;}
         // Established gyro clutch semantics (JSM GYRO_OFF): hold to disengage
         // motion, return to a comfortable grip, release at the same cursor.
         // This is explicit intent, not a guessed reverse-motion classifier.
@@ -216,7 +227,8 @@ impl Pointer {
             if event.events&UP!=0{self.metrics.regripping=false;}
             self.reset_motion();self.history.clear();return Ok(true);
         }
-        if self.metrics.regripping{return Ok(true);}
+        // GYRO_OFF disengages motion only. A shell tap while the user holds
+        // the cursor steady remains a click, independently of the clutch key.
         if event.events==CLICK&&!self.settings.tap_click{return Ok(true);}
         if self.metrics.paused||!self.metrics.calibrated{if event.events&UP!=0{self.wait_release=false;}return Ok(true);}
         let measured_at=self.last.map(|(_,ms)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
@@ -241,7 +253,10 @@ impl Pointer {
         }
         if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
             if let Some(c)=self.coarse.as_mut(){c.tap();}
-            let point=self.press_point(measured_at-0.1);
+            // A relative mouse clicks where its visible cursor is now. The
+            // laser's historical tap compensation must not teleport it back
+            // through100ms of relative movement (hundreds of pixels in131).
+            let point=if self.settings.relative_direct{self.shown}else{self.press_point(measured_at-0.1)};
             if self.contacts.is_active(){self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),point);}
             else{
                 self.shown=point;self.queued.push(Button::Click(point));

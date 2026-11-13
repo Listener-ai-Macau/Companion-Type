@@ -52,12 +52,12 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                 if update.elapsed()>=Duration::from_millis(200){
                     change(|s|{s.metrics=metrics.clone();s.contacts=contacts.clone();if s.ready {s.message=if metrics.stream_stale{"正在等待动作数据，光标已停止。"}
                         else if metrics.paused{"已暂停；换好握姿后，从当前位置继续。"}
-                        else if metrics.regripping{"正在换握姿，光标保持原位；松开按键继续。"}
-                        else if !metrics.calibrated{"请把卡片放稳约1秒，正在校准…"}
+                        else if metrics.regripping{"光标已稳住，可以轻敲点选或换握姿；松开按键继续。"}
+                        else if !metrics.calibrated{if metrics.tap_events>0{"已收到轻敲；先稳住卡片约1秒，等就绪后再点选。"}else{"请把卡片放稳约1秒，正在校准…"}}
                         else if contacts.learning.is_some(){if contacts.learning==Some(companion_desktop_input::pointer::contact::Side::Left){"请在左侧自然轻敲三次；校准时不控制光标。"}else{"请在右侧自然轻敲三次；校准时不控制光标。"}}
                         else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"平移或转动控制方向；左侧轻敲左击，右侧轻敲右击；连续轻敲两次即双击。按住按键拖拽，Esc退出。"}
                         else if controls_cursor&&s.settings.desktop_motion{"平移或转动控制方向；轻敲或短按左击，按住拖拽。可校准左右轻敲。Esc退出。"}
-                        else if controls_cursor&&s.settings.relative_direct&&s.settings.key_role==companion_desktop_input::pointer::KeyRole::Regrip{"倾斜移动，轻敲外壳点击；按住实体键换握姿，松开继续。Esc退出。"}
+                        else if controls_cursor&&s.settings.relative_direct&&s.settings.key_role==companion_desktop_input::pointer::KeyRole::Regrip{"倾斜移动，轻敲外壳点击；按住实体键可稳住点选或换握姿，松开继续。Esc退出。"}
                         else if controls_cursor&&s.settings.relative_direct{"倾斜移动，轻敲或短按实体键点击，按住拖拽。暂停可换握姿，Esc退出。"}
                         else if controls_cursor{"左右转动移动光标；敲击机身或短按点击，按住拖拽。Esc退出。"}
                         else{"动作预览中，未控制光标。"}.into();}});update=Instant::now();

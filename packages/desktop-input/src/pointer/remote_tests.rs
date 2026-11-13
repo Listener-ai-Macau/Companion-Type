@@ -1,4 +1,25 @@
 use super::*;
+#[test]fn relative_body_tap_hits_the_visible_cursor_without_rewinding_it(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    for n in 1..32{let t=n as f64/100.;p.sample(sample(n,[0.,20.,0.]),t,bounds());p.frame(t,bounds());}
+    let visible=p.shown;p.control(Control{sequence:1,sensor_ms:310,events:CLICK}).unwrap();
+    assert_eq!(p.frame(0.311,bounds()).buttons,vec![Button::Click(visible)]);
+}
+#[test]fn ordinary_mouse_reanchors_a_queued_relative_click_before_native_output(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
+    p.control(Control{sequence:1,sensor_ms:10,events:CLICK}).unwrap();
+    let mouse=Point{x:1500.,y:800.};p.external_position(mouse);
+    assert_eq!(p.frame(0.02,bounds()).buttons,vec![Button::Click(mouse)]);
+}
+#[test]fn held_gyro_clutch_stabilizes_motion_but_still_allows_shell_clicks(){
+    let mut p=Pointer::new(Settings{key_role:KeyRole::Regrip,..Settings::relative_remote()},Point{x:960.,y:540.});
+    p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
+    p.control(Control{sequence:1,sensor_ms:10,events:DOWN}).unwrap();
+    p.sample(sample(2,[50.,80.,0.]),0.02,bounds());
+    p.control(Control{sequence:2,sensor_ms:20,events:CLICK}).unwrap();
+    let f=p.frame(0.02,bounds());assert!(f.position.is_none());assert_eq!(f.buttons,vec![Button::Click(Point{x:960.,y:540.})]);
+}
 #[test]fn owner_side_tilt_reproduction_right_roll_must_move_right(){
     let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
     for n in 1..102{let now=n as f64/100.;let mut s=sample(n,[0.,10.,0.]);let angle=(now*10.).to_radians();s.accel=[-angle.sin()*1000.,0.,angle.cos()*1000.];p.sample(s,now,bounds());p.frame(now,bounds());}
@@ -106,13 +127,22 @@ fn ready()->Pointer{
     let target=p.shown;p.control(Control{sequence:1,sensor_ms:220,events:DOWN}).unwrap();
     assert!(p.metrics.regripping);
     for n in 22..72{let t=n as f64/100.;p.sample(sample(n,[5.,-10.,0.]),t,bounds());let f=p.frame(t,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());}
-    p.control(Control{sequence:2,sensor_ms:710,events:CLICK}).unwrap();assert!(p.frame(0.711,bounds()).buttons.is_empty());
+    p.control(Control{sequence:2,sensor_ms:710,events:CLICK}).unwrap();
+    let steady=p.frame(0.711,bounds());assert!(steady.position.is_none());assert_eq!(steady.buttons,vec![Button::Click(target)]);
     p.control(Control{sequence:3,sensor_ms:720,events:UP}).unwrap();assert!(!p.metrics.regripping);
     let f=p.frame(0.72,bounds());assert!(f.position.is_none()&&f.buttons.is_empty());assert_eq!(p.shown,target);
     for n in 73..83{let t=n as f64/100.;p.sample(sample(n,[0.;3]),t,bounds());assert!(p.frame(t,bounds()).position.is_none());}
     for n in 83..94{let t=n as f64/100.;p.sample(sample(n,[0.,2.,0.]),t,bounds());p.frame(t,bounds());}
     assert!(p.shown.x>target.x);assert_eq!(p.shown.y,target.y);
     p.control(Control{sequence:4,sensor_ms:930,events:CLICK}).unwrap();assert!(matches!(p.frame(0.931,bounds()).buttons.as_slice(),[Button::Click(_)]));
+}
+#[test]fn early_tap_feedback_counts_received_edges_without_faking_a_calibrated_click(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    let tap=Control{sequence:1,sensor_ms:10,events:CLICK};p.control(tap).unwrap();p.control(tap).unwrap();
+    assert_eq!(p.metrics.tap_events,1);assert!(p.frame(0.01,bounds()).buttons.is_empty());
+    p.sample(sample(1,[0.;3]),0.02,bounds());p.frame(0.02,bounds());
+    p.control(Control{sequence:2,sensor_ms:20,events:CLICK}).unwrap();assert_eq!(p.metrics.tap_events,2);
+    assert!(matches!(p.frame(0.021,bounds()).buttons.as_slice(),[Button::Click(_)]));
 }
 #[test]fn clutch_release_does_not_cancel_user_pause_and_gaps_cannot_leave_it_held(){
     let mut p=Pointer::new(Settings{key_role:KeyRole::Regrip,..Settings::relative_remote()},Point{x:960.,y:540.});

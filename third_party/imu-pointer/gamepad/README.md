@@ -26,3 +26,12 @@ remain the click source with the regrip role. No reverse-motion suppression
 classifier, new calibration estimator, or MCU code is introduced. Windows
 clicks use a single documented SendInput array containing target/down/up,
 with optional QA submission-count/target tracing, rather than separate calls.
+
+Owner131 output tracing showed accepted native clicks could target positions
+hundreds of pixels behind the visible cursor. Direct-relative shell taps now
+use the current cursor; the original100ms historical compensation remains in
+the laser profile. A queued relative click also follows a real ordinary-mouse
+takeover before native output. The clutch disengages motion, not shell clicks,
+so it can stabilize a tap as well as regrip. These are input/axis adapters,
+not new IMU classifiers. Received-tap feedback is independent of readiness;
+an early tap remains consumed without an uncalibrated click or later replay.
