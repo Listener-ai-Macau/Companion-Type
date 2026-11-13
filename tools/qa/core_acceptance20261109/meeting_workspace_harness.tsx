@@ -3,10 +3,8 @@ import {createRoot} from 'react-dom/client';
 import {CompanionDashboard} from '../../../packages/ui/src/CompanionDashboard';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../../../packages/core/src/companionV1';
 import '../../../packages/ui/src/companionUi.css';
-import '../../../packages/ui/src/companionDesign.css';
 import '../../../packages/ui/src/companionDark.css';
-import '../../../apps/windows/src/workspaceRefinement.css';
-import '../../../packages/ui/src/recordingWorkspace.css';
+import '../../../packages/ui/src/notebookFoundation.css';
 
 const original=createCompanionV1Fixture();
 const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',status:'minutesReady',source:'importedTranscript',startedAt:'2026-11-12T01:00:00Z',durationMs:600000,
@@ -17,6 +15,7 @@ const row={id:'public-weekly-meeting',title:'产品周会 · 发布准备',statu
  minutes:{status:'minutesReady',quality:'final',source:'userEdited',generatedAt:'2026-11-12T01:00:00Z',markdown:'## Summary\n\n本周聚焦会议详情和完整交接，预算仍待确认。\n\n## Decisions\n\n- 先完成完整流程，再集中验收。\n\n## Action Items\n\n- [ ] 核对交接文件范围\n- [ ] 确认预算依据\n\n## Open Questions\n\n- 预算尚未确认。'},minutesByMode:{offlineStore:null,onlineLive:null},pendingReason:null};
 if(new URLSearchParams(location.search).has('without-minutes'))(row as any).minutes=null;
 const initial={...original,host:{...original.host,selectedSessionId:row.id,sessions:[row as any],persistence:{status:'ready'}}} as any;
+if(new URLSearchParams(location.search).has('notebook-library'))initial.host.sessions.push({...structuredClone(row),id:'public-other-meeting',title:'客户讨论 · 文字示例'});
 const connectionFixture=new URLSearchParams(location.search).get('connection');
 if(connectionFixture){
  initial.source=connectionFixture==='stale'?'lastKnown':'firmware';initial.connected=initial.device.connected=['connected','stale','storage'].includes(connectionFixture);initial.device.mode='windowsNative';

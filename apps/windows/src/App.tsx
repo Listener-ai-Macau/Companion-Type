@@ -21,10 +21,8 @@ import {DesktopPointer} from './DesktopPointer';
 import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
-import '../../../packages/ui/src/companionDesign.css';
 import '../../../packages/ui/src/companionDark.css';
-import './workspaceRefinement.css';
-import '../../../packages/ui/src/recordingWorkspace.css';
+import '../../../packages/ui/src/notebookFoundation.css';
 
 import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,

@@ -11,8 +11,8 @@ export function meetingPaneForTarget(id:string):MeetingPane{
 }
 const panes=[
  {id:'result' as const,label:'纪要',icon:FileText},
- {id:'source' as const,label:'录音与文字',icon:Headphones},
- {id:'materials' as const,label:'笔记与资料',icon:NotebookPen},
+ {id:'source' as const,label:'文字',icon:Headphones},
+ {id:'materials' as const,label:'补充',icon:NotebookPen},
  {id:'handoff' as const,label:'导出',icon:Send},
 ];
 export function MeetingWorkspaceNav({value,onChange,dirty,notesCount}:{value:MeetingPane;onChange:(pane:MeetingPane)=>void;dirty:Partial<Record<MeetingPane,boolean>>;notesCount:number}){
@@ -24,7 +24,7 @@ export function MeetingWorkspaceNav({value,onChange,dirty,notesCount}:{value:Mee
   else if(event.key==='Home')next=0;else if(event.key==='End')next=panes.length-1;else return;
   event.preventDefault();onChange(panes[next].id);nav.current?.querySelectorAll<HTMLButtonElement>('button')[next]?.focus();
  }}>
-  {panes.map(p=><button type="button" key={p.id} aria-current={value===p.id?'page':undefined} onClick={()=>onChange(p.id)}>
+  {panes.map(p=><button type="button" key={p.id} className={p.id==='handoff'?'ct-meeting-export-trigger':undefined} aria-current={value===p.id?'page':undefined} onClick={()=>onChange(p.id)}>
    <p.icon size={17} aria-hidden="true"/><span>{p.label}</span>
    {dirty[p.id]?<small className="ct-pane-dirty" aria-label="有未保存的修改">未保存</small>:p.id==='materials'&&notesCount>0?<small className="ct-pane-count">{notesCount}</small>:null}
   </button>)}

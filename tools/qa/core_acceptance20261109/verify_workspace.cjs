@@ -10,21 +10,21 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  if(process.env.COMPANION_WORKSPACE_SYNC_ONLY!=='1'){
  await page.goto(origin);await page.locator('.ct-library-card').filter({hasText:'产品周会'}).waitFor();
  await page.screenshot({path:out+'/library-light.png',fullPage:true});
- await page.getByRole('button',{name:'设备与同步',exact:true}).click();
+ await page.getByRole('button',{name:/^录音卡 ·/}).click();
  const devicePage=page.locator('#ct-device-recording-page');await devicePage.waitFor();
  const connectionTop=await devicePage.locator('.ct-readiness').boundingBox();const recordingBelow=await devicePage.getByRole('region',{name:'在卡片上录音',exact:true}).boundingBox();
  assert(connectionTop&&recordingBelow&&connectionTop.y<recordingBelow.y,'Connection must appear before recording tools');
  await page.screenshot({path:out+'/device-light.png',fullPage:true});
- await page.getByRole('button',{name:'我的记录',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
+ await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
  assert.equal(await nav.locator('button').count(),4);
  assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
  assert(await page.getByText('本周聚焦会议详情和完整交接，预算仍待确认。',{exact:true}).isVisible(),'Saved minutes must be visible immediately, without opening a disclosure');
  await page.screenshot({path:out+'/result-light.png',fullPage:true});
- await nav.getByRole('button',{name:'录音与文字',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
- await nav.getByRole('button',{name:/笔记与资料/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
+ await nav.getByRole('button',{name:'文字',exact:true}).click();assert(await page.locator('#ct-recording-text').isVisible());assert(!await page.locator('#ct-meeting-result-pane').isVisible());
+ await nav.getByRole('button',{name:/补充/}).click();await page.getByRole('button',{name:'编辑备注 one',exact:true}).click();
  const item=page.getByRole('textbox',{name:'跟进事项 2',exact:true});await item.fill('核对同一张清单的内容范围，确认不混入其他个人草稿');
- await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/笔记与资料/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
+ await nav.getByRole('button',{name:'纪要',exact:true}).click();await nav.getByRole('button',{name:/补充/}).click();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
  await page.locator('#fixture-failure').click();await page.getByRole('button',{name:'保存修改',exact:true}).click();await page.getByText(/保存尚未确认/).first().waitFor();assert.equal(await item.inputValue(),'核对同一张清单的内容范围，确认不混入其他个人草稿');
  await page.locator('#fixture-failure').click();const save=page.getByRole('button',{name:/^(重试)?保存修改$/,exact:true});await save.click();
  await page.getByRole('button',{name:'导出这张清单',exact:true}).click();assert(await page.locator('#ct-meeting-handoff-pane').isVisible());
@@ -41,11 +41,34 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.screenshot({path:out+'/new-recording-source.png',fullPage:true});
  result.fullWorkspaceJourneyCompleted=true;
  }
+ await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?notebook-library=1');
+ await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
+ assert(await page.locator('.ct-library').isVisible(),'Desktop library remains beside its reader');
+ const title=page.getByRole('textbox',{name:'记录标题',exact:true});await title.fill('尚未保存的会议名称');
+ await page.locator('.ct-library-card').filter({hasText:'客户讨论'}).click();
+ assert.equal(await title.inputValue(),'尚未保存的会议名称');
+ await page.getByText('当前录音有未保存的修改，请先保存或取消，再打开另一条。',{exact:true}).waitFor();
+ await page.locator('.ct-inline-edit-actions').getByRole('button',{name:'取消',exact:true}).click();
+ await page.locator('.ct-library-card').filter({hasText:'客户讨论'}).click();
+ assert.equal(await title.inputValue(),'客户讨论 · 文字示例');
+ await page.setViewportSize({width:390,height:900});
+ assert(!await page.locator('.ct-notebook-library-column').isVisible(),'Narrow reader is one screen');
+ await page.getByRole('button',{name:'← 返回记录库',exact:true}).click();
+ assert(await page.locator('.ct-library').isVisible());
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await page.screenshot({path:out+'/narrow-library.png',fullPage:true});
+ result.notebookMasterDetailDraftGuardAndNarrowBackPassed=true;
+ const connectionLabels={connecting:'正在连接',reconnecting:'正在重连',pairing:'需要配对',connected:'已连接',stale:'未连接',storage:'已连接',failed:'连接未成功'};
+ for(const [condition,label]of Object.entries(connectionLabels)){
+  await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?connection='+condition);
+  const device=page.locator('.ct-notebook-device');await device.waitFor();assert((await device.innerText()).includes(label),condition+' must retain its real connection state');
+ }
+ result.notebookConnectionStatesPassed=Object.keys(connectionLabels);
  await page.setViewportSize({width:1360,height:950});await page.goto(origin+'?with-sync=1');
  await page.locator('.ct-shell').waitFor();
  const syncRegion=()=>page.getByRole('region',{name:'录音同步进度',exact:true});
  assert.equal(await syncRegion().count(),0);assert.equal(await page.locator('.ct-shell progress').count(),0);
- await page.getByRole('button',{name:'设备与同步',exact:true}).click();
+ await page.getByRole('button',{name:/^录音卡 ·/}).click();
  const syncDetails=page.locator('.ct-sync-details');
  for(const phase of ['receiving','saving','reclaiming','paused','idle']){
   await page.locator('#fixture-sync-controls').getByRole('button',{name:phase,exact:true}).click();
@@ -61,7 +84,7 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.locator('#fixture-sync-controls').getByRole('button',{name:'reclaiming',exact:true}).click();assert.equal(await syncRegion().count(),0);
  await page.locator('#fixture-sync-controls').getByRole('button',{name:'blocked',exact:true}).click();
  await page.getByRole('button',{name:'查看同步详情',exact:true}).click();await syncRegion().getByText('自动同步已暂停',{exact:true}).waitFor();
- await page.getByRole('button',{name:'我的记录',exact:true}).click();assert.equal(await syncRegion().count(),0);
+ await page.getByRole('button',{name:'录音',exact:true}).click();assert.equal(await syncRegion().count(),0);
  assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','four coherent panes','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
 }catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});
