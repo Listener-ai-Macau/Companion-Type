@@ -15,6 +15,9 @@ fn change(f:impl FnOnce(&mut Status)){f(&mut STATUS.lock().unwrap_or_else(|e|e.i
 pub fn status()->Status{STATUS.lock().unwrap_or_else(|e|e.into_inner()).clone()}
 pub fn request_stop(){if let Some(s)=SESSION.lock().unwrap_or_else(|e|e.into_inner()).as_ref(){s.stop.store(true,Ordering::Release);}}
 pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,controls_cursor:bool)->Result<Status,String>{
+    // Owner paused planar motion while the angular pointer is tuned. Old
+    // persisted clients must not reactivate the mixed experimental mapper.
+    if settings.desktop_motion {return Err("桌面平移已暂停，请使用转动／倾斜模式。".into());}
     settings.validate().map_err(str::to_string)?;
     let pointer_options=if settings.desktop_motion{24}else{8};
     let mut session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;

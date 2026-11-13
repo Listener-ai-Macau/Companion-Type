@@ -7,7 +7,15 @@ type Status={enabled:boolean;ready:boolean;controlsCursor:boolean;message:string
 const defaults:Settings={mapping:'laser',sensitivity:1,smoothing:0.55,deadzone:3,acceleration:0.6,invertHorizontal:false,invertVertical:false,desktopMotion:false};
 const idle:Status={enabled:false,ready:false,controlsCursor:false,message:'',metrics:{samples:0,missing:0,sensorHz:0,calibrated:false,dragging:false,paused:false}};
 const savedKey='companion-pointer-contact-v1';
-function savedSettings():Settings{try{const saved=JSON.parse(localStorage.getItem(savedKey)||'null') as Settings|null;return saved?{...defaults,...saved}:defaults;}catch{return defaults;}}
+function savedSettings():Settings{try{
+ const saved=JSON.parse(localStorage.getItem(savedKey)||'null') as Settings|null;
+ if(saved?.desktopMotion||saved?.contactProfile){
+  // Owner paused planar/contact experiments. Keep those examples for a later
+  // explicit mode rather than restoring mixed motion in the current product.
+  if(!localStorage.getItem(savedKey+'-planar-paused'))localStorage.setItem(savedKey+'-planar-paused',JSON.stringify(saved));
+ }
+ return {...defaults,...saved,desktopMotion:false,contactProfile:null,contactDevice:null};
+}catch{return defaults;}}
 export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:boolean}){
  const [settings,setSettings]=useState(savedSettings),[status,setStatus]=useState(idle),[busy,setBusy]=useState(false),[error,setError]=useState('');
  const pending=useRef(false),mounted=useRef(true);
@@ -17,37 +25,24 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
  const control=(action:string)=>void run('control_companion_pointer',{action});
  return <details className="ct-desktop-input" aria-label="空中鼠标">
   <summary>空中鼠标 · 转动卡片移动光标</summary>
-  <p>{settings.desktopMotion?'连接后启用，先把卡片放稳约1秒。桌面平移或拿起转动都可以控制方向，移动幅度自然即可。':'连接后点击启用，把卡片放稳约1秒完成校准。拿起卡片，长边朝前，左右转动移动光标，上下转动控制高度。'}</p>
-  <p>{settings.desktopMotion?'轻敲机身或短按卡片按键点击；':'双敲机身或短按卡片按键点击；'}按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
+  <p>点击启用后，将卡片稳住约1秒，放在桌面或拿稳都可以，不必严格水平。校准完成后，左右转动、上下倾斜来移动光标；桌面平移已暂停。</p><p>换握姿时，稳住卡片，点“以当前握姿居中”即可，不需要重新校准传感器。</p>
+  <p>敲击机身或短按卡片按键点击；按住超过约半秒拖拽，松开结束。此模式下按键用于鼠标，退出后恢复录音；随时按电脑 Esc 键退出。</p>
   <div className="ct-button-row">
-   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,mapping:e.target.value as Settings['mapping'],desktopMotion:e.target.value==='relative'&&settings.desktopMotion,contactProfile:e.target.value==='laser'?null:settings.contactProfile,contactDevice:e.target.value==='laser'?null:settings.contactDevice})}><option value="relative">相对移动 · AirCursor</option><option value="laser">指向屏幕 · WatchPointer</option></select></label>
-   <label><input type="checkbox" checked={settings.desktopMotion} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,desktopMotion:e.target.checked,mapping:e.target.checked?'relative':settings.mapping,contactProfile:e.target.checked?settings.contactProfile:null,contactDevice:e.target.checked?settings.contactDevice:null})}/>桌面平移和转动一起控制</label>
+   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.mapping} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,mapping:e.target.value as Settings['mapping'],desktopMotion:false,contactProfile:null,contactDevice:null})}><option value="relative">相对移动 · AirCursor</option><option value="laser">指向屏幕 · WatchPointer</option></select></label>
    <label>灵敏度 <input aria-label="空中鼠标灵敏度" type="range" min="0.2" max="3" step="0.1" value={settings.sensitivity} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,sensitivity:Number(e.target.value)})}/>{settings.sensitivity.toFixed(1)}</label>
    <label><input type="checkbox" checked={settings.invertHorizontal} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,invertHorizontal:e.target.checked})}/>反转左右</label>
    <label><input type="checkbox" checked={settings.invertVertical} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,invertVertical:e.target.checked})}/>反转上下</label>
   </div>
-  {!status.enabled&&settings.contactProfile&&<button disabled={busy} onClick={()=>{const next={...settings,contactProfile:null,contactDevice:null};setSettings(next);try{localStorage.setItem(savedKey,JSON.stringify(next));}catch{}}}>清除已保存的左右校准</button>}
-  {status.enabled&&settings.desktopMotion&&<div aria-label="左右轻敲校准">
-   <p>{status.contacts?.learning?'正在校准：按当前握法自然轻敲，不用固定力度；这一步不移动光标或点击。':status.contacts?.calibrated?'已保存这张卡片的左右轻敲校准：左侧左击、右侧右击，连续两次为双击。':'左右轻敲需先按当前握法校准：左侧、右侧各自然轻敲三次。校准期间只收动作，不移动光标或点击。'}</p>
-   <div className="ct-button-row">
-    <button disabled={busy||!status.ready||!status.metrics.calibrated||status.metrics.paused} onClick={()=>control('contact-left')}>开始左侧校准</button>
-    <button disabled={busy||!status.ready||(status.contacts?.leftSamples??0)<3} onClick={()=>control('contact-right')}>继续右侧校准</button>
-    <button disabled={busy||!status.ready||(status.contacts?.leftSamples??0)<3||(status.contacts?.rightSamples??0)<3||!status.contacts?.learning} onClick={()=>control('contact-save')}>保存左右校准</button>
-    {status.contacts?.learning&&<button disabled={busy} onClick={()=>control('contact-cancel')}>取消校准</button>}
-    {status.contacts?.calibrated&&<button disabled={busy} onClick={()=>control('contact-clear')}>清除左右校准</button>}
-   </div>
-   {status.contacts?.learning&&<p role="status">{status.contacts.learning==='left'?'请轻敲左侧':'请轻敲右侧'} · 已收到左侧{status.contacts.leftSamples}次、右侧{status.contacts.rightSamples}次</p>}
-  </div>}
   <div className="ct-button-row">
    {!status.enabled?<button className="ct-action" disabled={busy||blocked||!connected} onClick={()=>void run('start_companion_pointer',{settings,controlsCursor:true})}>启用空中鼠标</button>:<>
     <button disabled={busy||!status.ready} onClick={()=>control(status.metrics.paused?'resume':'pause')}>{status.metrics.paused?'继续控制':'暂停控制'}</button>
-    <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>重新定位</button>
+    <button disabled={busy||!status.ready} onClick={()=>control('recenter')}>以当前握姿居中</button>
     <button className="ct-action" disabled={busy} onClick={()=>control('stop')}>退出并回到录音</button>
    </>}
   </div>
   {!connected&&!status.enabled&&<p>先连接 Companion 录音卡。</p>}
   {status.message&&<p role="status" aria-live="polite">{status.message}</p>}
-  {status.enabled&&<p>{status.metrics.calibrated?'已校准':'等待放稳'} · {status.metrics.paused?'已暂停':status.metrics.dragging?'正在拖拽':status.ready?'动作已连接':'连接中'}</p>}
+  {status.enabled&&<p>{status.metrics.calibrated?'已就绪':'请稳住卡片约1秒，无需水平'} · {status.metrics.paused?'已暂停':status.metrics.dragging?'正在拖拽':status.ready?'动作已连接':'连接中'}</p>}
   {error&&<p role="alert">{error}</p>}
   <p>移动算法适配自 AirCursor 与 WatchPointer；不采集麦克风音频。</p>
  </details>;
