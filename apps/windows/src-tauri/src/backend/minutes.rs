@@ -320,12 +320,15 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
     system.push_str("\n阅读质量：摘要按主题合并相关讨论，优先用3至6条完整简洁的中文句子说明有依据的要点；信息确实较多时可增加。省略语气词、无内容应答、重复铺垫和逐句流水账，保留数字、单位、否定、条件和未知归属。听不清的片段不要猜测原意，也不要把‘转写很乱/只能听出某个词’当会议议题写进摘要。问题只含会上实际提出且含义可辨的问题；无法辨认的原句交给独立的来源核对，不升级为问题、决定或任务。来源片段是供检查的原始证据，不能因被提供就推断其语义可靠。");
     if let Some(template)=template {system.push_str(&template.prompt());}
-    let overview_requested=template.is_none() && session.meeting_notes.is_empty()
+    let overview_requested=template.map_or(true,|template|template.id=="meeting") && session.meeting_notes.is_empty()
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
     if overview_requested {system.push_str(SHORT_OVERVIEW_PROMPT);}
     if let Some(contract) = &question_sources {
         user_payload.push_str(&contract.instruction());
         system.push_str(question_sources::SYSTEM_CONTRACT);
+        // Native rendering replaces provider Markdown after source projection.
+        // Keep the response budget for complete structured facts and source IDs.
+        system.push_str("\n本次由本机根据结构化字段生成完整Markdown，markdown字段返回空字符串；前述摘要、事实锚点、evidence和问题来源分类要求全部保留，不再重复撰写Markdown正文。questionClassification是必填顶层字段，格式为[{\"sourceId\":1,\"kind\":\"statement\"}]，按本次全部来源单元逐项填写，不能用questions或unsupportedClaims代替。");
     }
     if session.meeting_notes.is_empty() { system.push_str(short_evidence::PROMPT); }
     if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
@@ -340,7 +343,8 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
             let evidence=if session.meeting_notes.is_empty(){short_evidence::capture(&object,&minutes,&session.transcript_text)}else{Vec::new()};
-            let overview=if overview_requested && minutes.summary.len()>8 {
+            let overview=if overview_requested && (minutes.summary.len()>8
+                || minutes.summary.iter().map(|item|item.chars().count()).sum::<usize>()>600) {
                 long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
             } else {None};
             let mut source_review=Vec::new();
@@ -365,7 +369,7 @@ pub(super) fn run_deepseek_request_with_evidence(endpoint:&str,model:&str,api_ke
         })
 }
 
-const SHORT_OVERVIEW_PROMPT:&str="\n请在同一 JSON 中同时输出 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论；不要添加新事实。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。";
+const SHORT_OVERVIEW_PROMPT:&str="\n请在同一 JSON 中同时输出 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论，每条尽量不超过80字；不要添加新事实。保留否定、条件和不确定性，不把转写中无法辨认的名词或含混数字写成确定结论。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。";
 
 fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1MeetingMinutes) -> String {
     let source_fact_anchors = l0
