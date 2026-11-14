@@ -7,3 +7,21 @@
 .ai-saved{margin-top:22px;padding-top:15px;border-top:1px solid var(--ai-line)}.ai-saved h4{font-size:13px;margin:0 0 12px}.ai-saved h4 span{color:var(--ai-muted);font-weight:400;margin-left:8px}.ai-saved>details{padding:13px;border:1px solid var(--ai-line);border-radius:12px;margin-top:8px}.ai-saved summary span{flex:1;overflow-wrap:anywhere;font-size:13px}.ai-saved pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.9;margin:15px 0}.ai-saved button{font-size:11px}@media(max-width:380px){.meeting-ai-workbench{padding:16px;border-radius:16px}.meeting-ai-workbench header h3{font-size:15px}}
 
 .ai-related-inputs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}.ai-related-inputs button{font-size:12px}
+
+/* One notebook vocabulary for asking, reviewing a draft and taking it away. */
+body .ct-notebook .meeting-ai-workbench,.mobile-app .meeting-ai-workbench{--ai-ink:var(--notebook-ink);--ai-muted:var(--notebook-muted);--ai-line:var(--notebook-line);--ai-surface:var(--notebook-paper);--ai-soft:var(--notebook-soft);--ai-accent:var(--notebook-accent);padding:0;border:0;border-radius:0;background:transparent;margin:6px 0 22px}
+.meeting-ai-workbench .ai-draft-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 18px}
+.meeting-ai-workbench .ai-draft-heading>div{min-width:0;overflow-wrap:anywhere}
+.meeting-ai-workbench .ai-draft-heading h4{font-size:19px;font-weight:600;line-height:1.6;margin:4px 0 0;color:var(--ai-ink)}
+.meeting-ai-workbench .ai-draft-heading>div>span{font-size:11px;color:var(--ai-muted)}
+.meeting-ai-workbench .ai-draft-heading>button{flex:none}
+.meeting-ai-workbench .ai-draft-document{padding:20px 22px;border:1px solid var(--ai-line);border-radius:9px;background:var(--ai-surface);color:var(--ai-ink)}
+.meeting-ai-workbench .ai-draft-document>p{margin:0 0 16px;font-size:14px;font-weight:400;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}
+.meeting-ai-workbench .ai-draft-document>p:last-child{margin-bottom:0}
+.meeting-ai-workbench .ai-scope-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0;color:var(--ai-muted);font-size:11px}
+.meeting-ai-workbench .ai-scope-actions>button{min-height:30px;padding:4px 7px;font-size:11px}
+.meeting-ai-workbench .ai-saved-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.meeting-ai-workbench .ai-scope>summary::after,.meeting-ai-workbench .ai-saved>details>summary::after{display:none!important;content:none!important}
+body .ct-windows.ct-notebook .ct-meeting-navigation .ct-meeting-ask{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-left:auto;padding-inline:8px;border:0;color:var(--notebook-accent);background:transparent;font-size:12px;font-weight:500}
+.mobile-app .recording-content-navigation>.recording-content-ask{flex:none;align-self:center;padding:7px 0;border:0;background:transparent;color:var(--notebook-accent);font-size:12px;font-weight:500;min-height:38px;white-space:nowrap}
+@media(max-width:420px){.meeting-ai-workbench .ai-draft-document{padding:16px}.meeting-ai-workbench .ai-draft-heading h4{font-size:17px}.meeting-ai-workbench .ai-answer-actions{gap:7px}.mobile-app .recording-content-navigation{gap:12px}}
