@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 11,
+    "startSample": 5247434,
+    "endSample": 5651538,
+    "text": "嗯，所以说呢，这一段时间的销售还可以，呃，但是呢，嗯，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位，嗯，首先呢就是说，比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀、大小啊。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5247434,
+        "endSample": 5651538,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "19fcc06cb874e9775eb074169174b7fbd4af8f5c6e94ba471a6210ffd9271240"
+}

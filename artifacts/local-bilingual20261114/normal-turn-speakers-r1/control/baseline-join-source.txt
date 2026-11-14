@@ -1,0 +1,102 @@
+"""Join preserved local ASR text to independently predicted speaker activity.
+
+The aligner sees recognized text, never reference transcripts or speaker labels.
+The established onset +/-60ms policy remains unchanged. Output paragraphs keep
+every source character; the accompanying unit trace retains uncertain onsets.
+"""
+import math
+
+from practical_transcript_20261107 import normalized_journal, onset_attribution
+
+
+def join_aligned_recording(source_document, leaves, alignment_payloads, speaker_journal, *, audio_seconds, audio_sha256):
+    if source_document.get('isFinal') is not True:
+        raise ValueError('Final local ASR output is required')
+    if not math.isfinite(audio_seconds) or audio_seconds <= 0:
+        raise ValueError('Invalid source duration')
+    if not leaves or len(leaves) != len(alignment_payloads):
+        raise ValueError('Every original source leaf needs its own alignment result')
+    total_samples = round(audio_seconds * 16000)
+    if leaves[0]['startSample'] != 0 or leaves[-1]['endSample'] != total_samples:
+        raise ValueError('Original source coverage is incomplete')
+    if any(a['endSample'] != b['startSample'] for a, b in zip(leaves, leaves[1:])):
+        raise ValueError('Original leaves have a gap or overlap')
+    if source_document['text'] != '\n'.join(leaf['text'] for leaf in leaves):
+        raise ValueError('Original final text differs from the preserved source leaves')
+    if abs(speaker_journal['audioSeconds'] - audio_seconds) > 1/16000:
+        raise ValueError('Speaker journal and source duration differ')
+    if speaker_journal.get('audioSha256') != audio_sha256:
+        raise ValueError('Speaker journal belongs to a different recording')
+    for row in speaker_journal['segments']:
+        if not 0 <= row['start'] < row['end'] <= audio_seconds + .1:
+            raise ValueError('Invalid predicted speaker activity interval')
+    journal, mapping = normalized_journal(speaker_journal)
+    utterances, units, pending_separator = [], [], ''
+    source_offset = 0
+    for leaf_index, (leaf, payload) in enumerate(zip(leaves, alignment_payloads)):
+        if (payload['originalText'] != leaf['text'] or
+                payload['originalStartSample'] != leaf['startSample'] or
+                payload['originalEndSample'] != leaf['endSample'] or
+                ''.join(unit['text'] for unit in payload['units']) != leaf['text']):
+            raise ValueError('Alignment payload differs from its original text or audio interval')
+        if leaf_index:
+            if utterances:
+                utterances[-1]['text'] += '\n'
+            else:
+                pending_separator += '\n'
+            source_offset += 1
+        low_ms, high_ms = round(leaf['startSample']/16), round(leaf['endSample']/16)
+        if low_ms >= high_ms:
+            raise ValueError('Empty original audio leaf')
+        local_duration = (leaf['endSample']-leaf['startSample'])/16000
+        previous_key = None
+        for unit_index, unit in enumerate(payload['units']):
+            local_start, local_end = unit['predictedStartSeconds'], unit['predictedEndSeconds']
+            if not math.isfinite(local_start) or not math.isfinite(local_end):
+                raise ValueError('Nonfinite predicted time; preserve the failed result for explicit review')
+            valid = 0 <= local_start < local_duration
+            onset = leaf['startSample']/16000 + local_start if valid else None
+            if valid:
+                identity = onset_attribution(onset, journal['segments'], duration=audio_seconds, margin=.06)
+                start_ms = max(low_ms, min(high_ms-1, round(onset*1000)))
+                end_ms = max(start_ms+1, min(high_ms, round((onset+.06)*1000)))
+            else:
+                identity = {'speaker': None, 'candidateSpeakers': [], 'overlapDetectedNearOnset': False,
+                            'attribution': 'invalid_predicted_onset_original_word_preserved_unknown'}
+                start_ms = max(low_ms, min(high_ms-1, round(leaf['startSample']/16 + local_start*1000)))
+                end_ms = max(start_ms+1, min(high_ms, round(leaf['startSample']/16 + local_end*1000)))
+            row = {**unit, **identity, 'estimatedOnsetSeconds': onset, 'sourceLeaf': leaf['id'],
+                   'sourceUnit': unit_index, 'textStart': source_offset+unit['textStartCodepoint'],
+                   'textEnd': source_offset+unit['textEndCodepoint'],
+                   'startMs': start_ms, 'endMs': end_ms, 'approximateTiming': True,
+                   'fixedUncertaintyMarginSeconds': .06, 'onsetOnlyNotWordDuration': True}
+            units.append(row)
+            key = (row['speaker'], row['attribution'], tuple(row['candidateSpeakers']))
+            if utterances and key == previous_key:
+                utterances[-1]['text'] += unit['text']
+                utterances[-1]['endMs'] = max(utterances[-1]['endMs'], end_ms)
+                utterances[-1]['unitCount'] += 1
+            else:
+                utterances.append({'text': pending_separator+unit['text'], 'startMs': start_ms, 'endMs': end_ms,
+                                   'speaker': row['speaker'], 'approximateTiming': True,
+                                   'attribution': row['attribution'], 'candidateSpeakers': row['candidateSpeakers'],
+                                   'sourceLeaf': leaf['id'], 'unitCount': 1,
+                                   'timeScope': 'Predicted onsets only; display end is last onset+60ms clipped. Word durations are unverified.'})
+                pending_separator = ''
+            previous_key = key
+        source_offset += len(leaf['text'])
+    if pending_separator:
+        # A transcript containing only separators has no spoken words to label.
+        if utterances:
+            utterances[-1]['text'] += pending_separator
+    if units and ''.join(row['text'] for row in utterances) != source_document['text']:
+        raise AssertionError('Joining speakers changed, dropped or duplicated source characters')
+    if any(source_document['text'][row['textStart']:row['textEnd']] != row['text'] for row in units):
+        raise AssertionError('Unit offsets no longer point to the exact original characters')
+    document = {'isFinal': True, 'text': source_document['text'], 'utterances': utterances}
+    trace = {'tokenEstimates': units, 'nativeToConsecutiveDisplaySpeakerIds': mapping,
+             'allOriginalCharactersPreserved': True, 'originalSamplesCoveredOnce': True,
+             'wordDurationAccuracyMeasured': False, 'newAsrCalls': 0, 'newSpeakerCalls': 0,
+             'realNamesOrRolesInferred': False, 'overlappingWordsRecoveredByJoin': False,
+             'qualityQualified': False}
+    return document, trace

@@ -1,0 +1,21 @@
+{
+  "state": "FIXED_BEFORE_NEW_ALIGNMENT_INFERENCE",
+  "uncertaintyMarginSeconds": 0.06,
+  "method": "Existing onset_attribution; finite onset in original leaf, stable single predicted anonymous speaker throughout onset +/-60ms. Otherwise unknown.",
+  "speakerJournal": {
+    "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+    "sha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+    "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\completed-state.json",
+    "producerSha256": "7b6cbaf0eb236e63c6c1dc6eb586ff158a24a9d1534b79cf7214fce85ac6cc38"
+  },
+  "helperSourceSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+  "speakerSourceSha256": "92aa6284e3da9f867635c93bbf6c7ec7fe49e67f5185c20835d03b57290c0b02",
+  "newSpeakerInference": false,
+  "oldR5IntegratedCpCer": 0.06378378378378378,
+  "oldR5ChronologicalCer": 0.05765765765765766,
+  "r6ChronologicalCer": 0.055375375375375374,
+  "ordinarySpeakerDer": 0.03855615562340746,
+  "differentInputReason": "Previous alignment used older R5 text with fixed30s boundaries. R6 changed recognized text and audio boundaries; do not attach stale R5 times to it.",
+  "trueWordTimeAccuracyMeasured": false,
+  "qualityQualified": false
+}

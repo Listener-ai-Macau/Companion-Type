@@ -1,0 +1,15 @@
+{
+  "state": "PASS_UNIQUE_POSTERIOR_TIE_SILENCE_AND_NATIVE_HALF_VALUE_CARRY",
+  "committedFrames": 5,
+  "secondsPerFrame": 0.01,
+  "rawSpeechFrames": 4,
+  "rawMultiVoiceFrames": 2,
+  "exclusiveSpeechFrames": 3,
+  "speechFramesUnassignedDueToExactPosteriorTie": 1,
+  "thresholdUnchanged": 0.5,
+  "smoothingOrGapFillApplied": false,
+  "speakerCountHintProvided": false,
+  "referenceUsed": false,
+  "newNeuralCalls": 0,
+  "cannotUseExclusiveViewAsOverlapDERProof": true
+}

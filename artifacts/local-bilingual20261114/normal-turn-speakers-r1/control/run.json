@@ -1,0 +1,41 @@
+{
+  "state": "COMPLETE_NORMAL_TURN_ALIGNMENT_JOIN_PENDING",
+  "startedAt": "2026-11-14T20:40:39+08:00",
+  "pid": 21256,
+  "results": [
+    {
+      "stage": "pilot",
+      "exitCode": 0,
+      "privatePeakBytes": 1157394432,
+      "wholeOwnedProcessSeconds": 37.92575740002212
+    },
+    {
+      "stage": "full",
+      "exitCode": 0,
+      "privatePeakBytes": 1211801600,
+      "wholeOwnedProcessSeconds": 131.34735979998368
+    }
+  ],
+  "newAsrCalls": 0,
+  "newSpeakerCalls": 0,
+  "automaticRetries": 0,
+  "workerSourceSha256": "6d1ead6a07beea57436c59d12711b1ac6c96b2c079ddf3e7cb01ff6fb521917a",
+  "inventorySha256": "77c33f6dee6620b2940a7f12461f6197c3fded301085e30446900d0e8c9fd21c",
+  "currentGpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "referencePassedToInference": false,
+  "speakerLabelsPassedToAligner": false,
+  "qualityQualified": false,
+  "resourcesBeforeStage": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 4461510656,
+    "existingRecoveryRequirementExclusiveBytes": null,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  },
+  "finishedAt": "2026-11-14T20:43:29+08:00"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 12,
+    "startSample": 5651538,
+    "endSample": 6146414,
+    "text": "嗯，包括它应该在上呀，在下呀，都是有要求的。嗯，所有的商品呢，都是经过呃加工清洁以后，然后再去陈列的。那不能，我们不能就是说那个那个那个菜呀，带着泥呀，它那么多的泥，你就给它放上去，这是不允许的。包括你现在看到我们超市里面，我们的菜经过就是说，它不会带着泥疙瘩上上上货架子的，都是要去一部分，然后再去嗯，再去陈列的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5651538,
+        "endSample": 6146414,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4d700850aa83078965f04ce15a1004a7d74cad83b0fe3f4c810ae4b9ce7198b0"
+}

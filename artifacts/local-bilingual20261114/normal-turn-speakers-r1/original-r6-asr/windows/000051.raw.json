@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 51,
+    "startSample": 24212734,
+    "endSample": 24663753,
+    "text": "嗯，来低价促销，来促销一些那个我们的产品，还有就是我们的一个那个套装销售活动，比如说我们可以把那个洗衣液、洗衣粉、肥皂这些，然后呃打包打包销售，呃这些，嗯这样的顾客跟呃以一个一个超低价的这个销售方式，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24212734,
+        "endSample": 24663753,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c49e431bd4ea8e603b8a9bc5d08038d3e790dd170d37fbbca3083051b4b62abd"
+}

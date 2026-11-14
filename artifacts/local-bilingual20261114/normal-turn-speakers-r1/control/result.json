@@ -1,0 +1,141 @@
+{
+  "at": "2026-11-14T20:44:19+08:00",
+  "state": "COMPLETE_SINGLE_MIC_NORMAL_TURN_TEXT_AND_SPEAKER_CHAIN_QUALITY_STILL_OPEN",
+  "meeting": "S_R004S03C01",
+  "seconds": 2327.119,
+  "referenceSpeakers": 5,
+  "referenceOverlappingSeconds": 0,
+  "inputChannels": 1,
+  "sourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "sourceDocumentSha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+  "outputDocumentSha256": "09c224e289f1d457b17ab79c88053639e2784e6af9688493985d80578bc1236f",
+  "rawChronological": {
+    "edits": {
+      "replace": 225,
+      "delete": 178,
+      "insert": 58
+    },
+    "cer": 0.055375375375375374,
+    "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+  },
+  "speakerActivityDerReused": 0.03855615562340746,
+  "speakerActivityComponentsReused": {
+    "missed detection": 65.91499699999912,
+    "total": 2074.389489999999,
+    "confusion": 1.3699999999999992,
+    "false alarm": 12.695487000001684,
+    "correct": 2007.1044930000003,
+    "diarization error rate": 0.03855615562340746
+  },
+  "integratedCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 2327.119,
+    "referenceCharacters": 8325,
+    "referenceSpeakers": 5,
+    "predictedTextStreams": 6,
+    "edits": {
+      "replace": 225,
+      "delete": 203,
+      "insert": 83
+    },
+    "totalEdits": 511,
+    "characterErrorRate": 0.061381381381381384,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "001-M",
+        "hypothesisSpeaker": "0",
+        "edits": 198
+      },
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "4",
+        "edits": 70
+      },
+      {
+        "referenceSpeaker": "004-F",
+        "hypothesisSpeaker": "2",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": "005-F",
+        "hypothesisSpeaker": "3",
+        "edits": 116
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 24
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "unknownForcedUnmatched": {
+    "totalEdits": 511,
+    "cer": 0.061381381381381384,
+    "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+  },
+  "unknownText": {
+    "characters": 24,
+    "fractionOfRecognizedCharacters": 0.0029250457038391227,
+    "neverRealIdentityOrOwnerClaim": true
+  },
+  "existingR5IntegratedCpCer": 0.06378378378378378,
+  "existingR5RawCer": 0.05765765765765766,
+  "asrAndBoundaryChangeNotIsolatedByThisComparison": true,
+  "moduleSha256": "c19b0e012f83d4683b40badb2a1d8b2cc1a23e95f805ae49586043afa0c800bb",
+  "paragraphs": 108,
+  "alignedUnits": 8201,
+  "knownAnonymousSpeakers": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceTextAndPunctuationAndNewlinesUnchanged": true,
+  "newAsrCalls": 0,
+  "newSpeakerCalls": 0,
+  "newAlignmentCalls": 76,
+  "pureNewAlignmentSeconds": 24.667002899805084,
+  "ownedAlignmentAttempts": [
+    {
+      "stage": "pilot",
+      "exitCode": 0,
+      "privatePeakBytes": 1157394432,
+      "wholeOwnedProcessSeconds": 37.92575740002212
+    },
+    {
+      "stage": "full",
+      "exitCode": 0,
+      "privatePeakBytes": 1211801600,
+      "wholeOwnedProcessSeconds": 131.34735979998368
+    }
+  ],
+  "wordTimeGroundTruthMeasured": false,
+  "realNamesVerified": false,
+  "installedWindowsAndroidOrCardTested": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "next": "Keep the proven five-speaker ordinary journal. Diagnose remaining source ASR errors and integration seams independently; do not expand overlap training or guess uncertain identities.",
+  "limits": {
+    "pid": 12228,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 127090688,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

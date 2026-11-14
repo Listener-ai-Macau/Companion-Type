@@ -1,0 +1,87 @@
+{
+  "at": "2026-11-14T20:55:36+08:00",
+  "state": "NORMAL_SINGLE_MIC_TURN_TAKING_CHAIN_IMPROVED_COMPLEX_QUALITY_OPEN",
+  "ownerDirection": "先做好单麦多人轮流发言，同一时刻主要一人讲话，再做密集重叠。",
+  "memory": {
+    "availableBytes": 7190740992,
+    "availableGiB": 6.6968994140625,
+    "alignmentCompletedWithoutLowRamStop": true,
+    "ownedAlignmentAttempts": [
+      {
+        "stage": "pilot",
+        "exitCode": 0,
+        "privatePeakBytes": 1157394432,
+        "wholeOwnedProcessSeconds": 37.92575740002212
+      },
+      {
+        "stage": "full",
+        "exitCode": 0,
+        "privatePeakBytes": 1211801600,
+        "wholeOwnedProcessSeconds": 131.34735979998368
+      }
+    ],
+    "otherApplicationsClosed": false
+  },
+  "ordinaryMeeting": {
+    "name": "S_R004S03C01",
+    "seconds": 2327.119,
+    "participants": 5,
+    "referenceOverlapSeconds": 0,
+    "channels": 1,
+    "rawCer": 0.055375375375375374,
+    "rawEdits": 461,
+    "referenceCharacters": 8325,
+    "rawAdditionalEditsToStrictBelowFivePercent": 45,
+    "rawSpeakerJournalDerReused": 0.03855615562340746,
+    "oldR5IntegratedCpCer": 0.06378378378378378,
+    "r6ConservativeIntegratedCpCer": 0.061381381381381384,
+    "r6ExclusiveIntegratedCpCer": 0.058018018018018015,
+    "sameTextReconciliationEditsReduced": 28,
+    "integratedAdditionalEditsToStrictBelowFivePercent": 67,
+    "unconfirmedCharactersBefore": 24,
+    "unconfirmedCharactersAfter": 9,
+    "perPersonRegressionRetained": {
+      "referenceSpeakerForScoringOnly": "003-F",
+      "beforeEdits": 70,
+      "afterEdits": 71
+    },
+    "wordsPunctuationAndNewlinesUnchanged": true,
+    "paragraphs": 98,
+    "allPersonQualityOrGeneralizationQualified": false
+  },
+  "complexRegression": {
+    "name": "L_R003S01C02",
+    "seconds": 2362.945,
+    "participants": 6,
+    "rawCerUnchanged": 0.23155832180728447,
+    "rawSpeakerJournalDerUnchanged": 0.13464234040692016,
+    "beforeIntegratedCpCer": 0.39396035039188565,
+    "afterIntegratedCpCer": 0.2937989857076994,
+    "unconfirmedCharactersBefore": 933,
+    "unconfirmedCharactersAfter": 189,
+    "overlapAudioRecovered": false,
+    "qualified": false
+  },
+  "implementation": {
+    "sameAsrAndSpeakerWeights": true,
+    "newAsrCalls": 0,
+    "newSpeakerCalls": 0,
+    "newAlignmentCalls": 76,
+    "pureAlignmentSeconds": 24.667002899805084,
+    "join": "Existing60ms onset policy; optional exclusive view chooses unique largest already-active posterior per original native frame. No gap fill, smoothing, text editing or threshold search.",
+    "rawMultiVoiceJournalAndOverlapEvidencePreserved": true,
+    "optionalPrototypeOnly": true,
+    "installedProductChanged": false,
+    "officialMethodReference": "https://huggingface.co/pyannote/speaker-diarization-community-1#exclusive-speaker-diarization"
+  },
+  "remaining": [
+    "Ordinary raw ASR still has461 edits and must reduce by at least45 at the current8325-character denominator to reach<5%.",
+    "Ordinary integrated per-speaker text still has483 edits and must reduce by at least67;9 characters remain unconfirmed.",
+    "One ordinary reference speaker increased70->71 edits despite total improvement; not every person improved.",
+    "Both meetings are exposed development cases; no new holdout or multi-room qualification.",
+    "Complex content omissions and simultaneous voices are not repaired by choosing one speaker label.",
+    "Full English-meeting ASR, real card transport and installed Windows/Android integration remain open."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-14T20:50:59.673730+08:00",
+  "state": "POSTERIOR_RECONSTRUCTION_GUARD_REJECTED_ROUNDED_FRAME_CADENCE_BEFORE_ANY_NEW_SCORE",
+  "error": "AssertionError: Posterior cache no longer reproduces the preserved multi-voice journal",
+  "cause": "Audit passed a rounded0.01s cadence; preserved native producer reports0.009999999776482582. Frame values and model remain unchanged; use exact producer cadence rather than a guessed decimal.",
+  "newNeuralCalls": 0,
+  "newMeetingScoresProduced": 0,
+  "oldJournalOrPosteriorsChanged": false,
+  "next": "Keep this failed attempt and use a fresh attempt with the exact already-recorded native cadence."
+}

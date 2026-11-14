@@ -83,3 +83,8 @@ src/*paired_product_asr*20261110.py -text
 src/audit_*20261110.py -text
 
 src/CompanionPairedPhone*20261109.java -text
+
+# Preserve hash-bound ordinary-meeting alignment and speaker reconciliation.
+src/practical_alignment_session_worker_20261114.py -text
+src/companion_local_speaker_document_20261114.py -text
+src/companion_exclusive_journal_20261114.py -text

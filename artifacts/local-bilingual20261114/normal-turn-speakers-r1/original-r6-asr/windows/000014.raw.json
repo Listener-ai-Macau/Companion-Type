@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 14,
+    "startSample": 6581659,
+    "endSample": 7131968,
+    "text": "是不是让人看上去就是，诶，眼睛看上去就是，哎呀，这菜很新鲜呀，比外面的菜要新鲜很多。而且现在天也冷了，也也马上就要零下了，你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿，在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层，层数太多的话，就是说给人眼睛观上去有一种，呃，不太好的这种感觉。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 6581659,
+        "endSample": 7131968,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "2e91f62fb48e85303e82e81ae04e93da56c72164e30df10b9069b7bf05246b77"
+}

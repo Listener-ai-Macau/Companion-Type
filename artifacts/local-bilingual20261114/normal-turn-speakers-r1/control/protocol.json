@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-14T20:39:13+08:00",
+  "state": "FROZEN_BEFORE_NATIVE_ALIGNMENT_INFERENCE",
+  "workerSourceSha256": "6d1ead6a07beea57436c59d12711b1ac6c96b2c079ddf3e7cb01ff6fb521917a",
+  "helperSources": {
+    "practical_alignment_loader_20261107.py": "5f31f7dece1798af66982dfcf9583f20d770dd487cb124842c66f96f1976d0f8",
+    "practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+    "moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+  },
+  "runtimeSources": {
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+  },
+  "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+  "inputPlanSha256": "fe6da2542a9f2d4973feac70f75b4eda88731da9eda7edc55293be4880178781",
+  "inputSelection": "Owner-prioritized existing full single-mic non-overlap meeting. Existing R6 author-boundary raw text only; no new ASR or speaker inference.",
+  "inference": "Official native timestamp classifier, BF16/eager/batch1/use_cache=False. No text/reference/person count/hotwords supplied except unchanged recognized raw text.",
+  "pilotRule": "Reuse unchanged loader exact-logit proof; first actual changed R6 leaf must preserve all text and emit in-bound onset units.",
+  "fullRule": "After actual first-leaf pilot, align this one full normal-turn meeting. Fixed existing onset60ms join; no reference input or policy search.",
+  "timeAccuracyNotAutomaticallyQualified": true,
+  "referencePassedToWorker": false,
+  "speakerLabelsPassedToWorker": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "qualityQualified": false,
+  "defaultProductChanged": false
+}

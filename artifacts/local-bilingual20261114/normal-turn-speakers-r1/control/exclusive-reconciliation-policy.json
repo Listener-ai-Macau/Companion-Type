@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-14T20:47:39.633406+08:00",
+  "state": "FROZEN_BEFORE_EXCLUSIVE_RECONCILIATION_OUTPUT_OR_SCORE",
+  "hypothesis": "Binary multi-voice activity unnecessarily makes otherwise recognizable normal-turn words unknown; a separate exclusive attribution view can reconcile single-stream ASR without changing the preserved multi-voice journal.",
+  "change": "For each existing10ms posterior frame, choose the unique largest native speaker posterior only if the unchanged original0.5 activity condition admits it. Keep exact ties unknown. No gap fill, smoothing, padding, minimum duration, threshold tuning or text edits.",
+  "source": "https://huggingface.co/pyannote/speaker-diarization-community-1#exclusive-speaker-diarization",
+  "implementationIsLocalPosteriorAdapterNotPyannoteModel": true,
+  "originalMultiVoiceJournalPreserved": true,
+  "referencesUsedToPredict": false,
+  "comparisons": [
+    "full ordinary S_R004S03C01 R6 text/alignment",
+    "full complex L_R003S01C02 existing R5 text/alignment regression only"
+  ],
+  "keepRule": "Retain only as experimental optional transcription reconciliation if ordinary full cpCER improves with exact text preservation; report complex changes separately. No product default change, no overlap word-recovery/DER acceptance from exclusive view. Stop if no improvement; no parameter sweep.",
+  "qualityQualified": false
+}

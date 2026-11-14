@@ -1,0 +1,22 @@
+{
+  "binding": {
+    "protocolSha256": "9e9a180e3222c90d209e86b79d53faccf379dde71d0e6e0389103f7e6c97ce18",
+    "planSha256": "fe6da2542a9f2d4973feac70f75b4eda88731da9eda7edc55293be4880178781",
+    "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+    "sourceNodeSha256": "bf5fed2fe3ff31bf35a0a28c737a425cf2bdd9b559b9e805f487c7af1467ddf3",
+    "meeting": "S_R004S03C01"
+  },
+  "payload": {
+    "originalText": "",
+    "originalStartSample": 16207725,
+    "originalEndSample": 16607725,
+    "units": [],
+    "allOriginalCharactersPreserved": true,
+    "neuralInferencePerformed": false,
+    "inferenceSeconds": 0.0,
+    "unresolvedTimeUnits": 0,
+    "wordTimeAccuracyQualified": false,
+    "reason": "No recognized text to align; no words invented from an empty source."
+  },
+  "payloadSha256": "504ea7763f44e1cce2700051169a2349912eae15eebb1b921670c29c486e0440"
+}

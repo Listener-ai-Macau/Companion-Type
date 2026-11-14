@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 40,
+    "startSample": 18851845,
+    "endSample": 19344822,
+    "text": "比如说，呃，比如说现本周六日，嗯，全场七折，疯狂抢购什么的，然后就是，嗯，一个月两个月用一次啦，就是，嗯，就就行，太多的话就是影会也会影响自身的利益，嗯，然后就是主要就是吸引人气，还有就是，嗯，比如说，嗯，过两个月之后可以搞一下那种周六日，嗯，现本周六日购买。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 18851845,
+        "endSample": 19344822,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "62832634ceb9336d17ea556b48ac4f618c5550aa1277b477dd93fcbcbe0d3f35"
+}

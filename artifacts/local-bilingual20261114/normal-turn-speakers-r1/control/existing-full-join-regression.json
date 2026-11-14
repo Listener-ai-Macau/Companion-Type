@@ -1,0 +1,32 @@
+{
+  "state": "PASS_EXISTING_FULL_NORMAL_TURN_JOIN_EXACT_REGRESSION_AND_RECORDING_CONSERVATION",
+  "meeting": "S_R004S03C01",
+  "sourceDocumentSha256": "c5738dac1b90f42d31cfb4353c4517b8aa93df81f797add05ee0552df346c53d",
+  "existingActualUnitsCompared": 8222,
+  "sameTextSpeakerAndDisplayTimesEveryUnit": true,
+  "samePerSpeakerTextAfterParagraphPacking": true,
+  "allSourceCharactersIncludingNewlinesPreserved": true,
+  "wrongRecordingRejected": true,
+  "changedAlignmentTextRejected": true,
+  "sourceSampleGapRejected": true,
+  "paragraphs": 115,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "moduleSha256": "c19b0e012f83d4683b40badb2a1d8b2cc1a23e95f805ae49586043afa0c800bb",
+  "limits": {
+    "pid": 6724,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 35889152,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 10,
+    "startSample": 4759369,
+    "endSample": 5247434,
+    "text": "嗯，但是天冷了以后呢，嗯，说实话我们那个超市的这个，嗯，买菜的这这一块呢，啊，人流量还是比较大的，因为超市里面相对外面的环境的话，它比较暖和一点，嗯，所以说呢，啊，比前段时间呢，嗯，销售的要好一些，嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢做的也比较的好。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 4759369,
+        "endSample": 5247434,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "3f845debfba02f2a90f8bbcdfbe526283e06f58135d62af8761e8dbce2000294"
+}
