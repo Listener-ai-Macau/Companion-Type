@@ -34,6 +34,7 @@ module.exports=async(page,plan,out,reopened)=>{
   const notes=page.locator('#ct-recording-notes');await notes.waitFor();
   const composer=notes.locator('.ct-note-composer');await composer.locator(':scope>summary').click();
   const field=notes.getByRole('textbox',{name:'新录音备注',exact:true});await field.fill('仅用于公开界面检查的临时笔记，不保存。');
+  if(spec.expectNeutralNotes){const palette=await composer.evaluate(n=>({summary:getComputedStyle(n.querySelector('summary')).color,ink:getComputedStyle(n.closest('.ct-notebook')).getPropertyValue('--nb-ink').trim(),description:n.querySelector('p')?.textContent}));const rgb=palette.ink.slice(1).match(/../g).map(value=>parseInt(value,16));assert.equal(palette.summary,'rgb('+rgb.join(', ')+')');assert.equal(palette.description,'备注单独保存，不会改动会议纪要或原话。');}
   await page.screenshot({path:path.join(out,'actual-public-notes-entry.png')});await field.fill('');
   await page.waitForFunction(()=>{const n=document.querySelector('#ct-recording-notes textarea[aria-label="新录音备注"]');return n&&n.value==='';});
   await composer.locator(':scope>summary').click();await nav().getByRole('button',{name:'纪要',exact:true}).click();
