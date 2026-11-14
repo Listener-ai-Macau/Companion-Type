@@ -1,0 +1,141 @@
+{
+  "at": "2026-11-14T22:43:54+08:00",
+  "state": "ACTIVE_WHOLE_PRODUCT_DELIVERY_CONVERGENCE_ROUTE",
+  "ownerQuote": "不要这样子，你需要把整个东西给收敛好了，然后尽快交付出可以达到合格层次，可以达到售卖标准的产品。你看下怎么样搞个合适的这个路径去把这个东西一步步推进完。",
+  "correction": "Convergence means completing the original sellable user outcome. A speaker-only issue is one work item; rejecting a candidate does not stop product delivery. Avoid blind trials without freezing all engineering work.",
+  "userOutcome": "Record a real Chinese/English meeting with the card; see incremental text while receiving; finish or import offline audio; obtain reliable speaker-attributed text and evidence-linked minutes; replay, correct, save, reopen and export on the intended Windows/Android path.",
+  "architecture": {
+    "capture": "One durable original audio/session timeline and recoverable transfer; never replace or consume unsafely acknowledged source audio.",
+    "live": "Existing bounded local incremental ASR as revisable draft; local automatic Chinese/English route must replace the fixed-Chinese research-only assumption before bilingual qualification.",
+    "closed": "One finalization stage over the complete original timeline, reusing valid bound ASR results rather than blindly retranscribing the entire meeting. Whole-recording speaker identity reconciliation and alignment may revise draft identities.",
+    "text": "Current Qwen1.7 is a candidate baseline, not a guaranteed final model. Keep recognized words unchanged through attribution. Repair source omissions and segmentation/recovery defects before training.",
+    "speakers": "Retain current Native8 as a measured baseline. Evaluate an implementable bounded-memory whole-recording identity solution against the returning-speaker failure; old all-in-memory global pipeline is rejected for unchanged rerun.",
+    "minutes": "Use the existing product generation path with source time references. Check against original audio, including decisions, owners, dates, amounts and negation; uncertain source content remains unresolved.",
+    "runtime": "One explicit candidate model/runtime bundle with draft/refining/final/incomplete states, cancellation, resume, errors and versions. PC, phone and actual card capabilities measured separately.",
+    "privacy": "Local-first. No silent cloud fallback or private-recording upload. Any existing explicitly selected network enhancement is separately qualified and cannot stand in for offline quality."
+  },
+  "milestones": [
+    {
+      "id": "D1",
+      "deliverable": "One executable meeting-processing candidate backend",
+      "scope": "Unify incremental PCM and offline-file jobs, Chinese/English selection, revision/finalization states and preserved source output. Bind current ASR, independent alignment and replaceable speaker interface.",
+      "acceptance": "Actual local audio reaches final structured transcript through one supported entry, survives cancel/restart without audio/text loss, and remains compatible with current app data contracts. Internal candidate only; no sale claim.",
+      "current": "Pieces already exist and have separate tests; no single installed complete bilingual/speaker chain has passed."
+    },
+    {
+      "id": "D2",
+      "deliverable": "One ordinary-meeting Chinese/English quality candidate",
+      "scope": "Resolve source word omissions and whole-meeting speaker identity/short responses together. Reuse existing weights first; memory-bound any global processing. Full English meeting and natural code switching are separate checks.",
+      "acceptance": "Original text and speaker gates, per-person deletions/identity/short turns reported on fixed complete development cases. Earlier ordinary results protected. One new intervention must have a concrete reason and measurable benefit.",
+      "current": "Ordinary Chinese raw CER5.54% on one case but14.50% on another; new-case DER15.84%. English full ASR and long natural switching are unqualified."
+    },
+    {
+      "id": "D3",
+      "deliverable": "Complex-meeting text, speaker and faithful-minutes candidate",
+      "scope": "Natural two-/three-person overlap, missed speakers, code switching and source facts. Run content separation/recovery only when the measured omission requires it; preserve both voices and all failed outputs.",
+      "acceptance": "Original overlap/per-person text gates remain. Facts>=95%; critical decisions/ownership/deadlines/amounts/negation correct, no unsupported critical conclusions. Uncertainty marking is useful behavior but not a substitute for the quality gates.",
+      "current": "Complex raw and attributed text still fail; no qualification by ordinary-case improvement."
+    },
+    {
+      "id": "D4",
+      "deliverable": "One installed Windows/Android/card product candidate",
+      "scope": "Integrate the candidate model package into the existing normal app path. Record/transfer/transcribe/minutes/replay/edit/save/reopen/export, interruption and resume, offline operation, model installation and resource behavior.",
+      "acceptance": "Actual intended devices and source versions tested; data preserved; responsibilities follow existing frontend/model/firmware ownership. Batch related changes before packaging. No extrapolation from developer6800XT to all customer PCs or phones.",
+      "current": "Installed148/164 UI delivery exists, but its receipt explicitly does not qualify the new model chain or phone AI generation."
+    },
+    {
+      "id": "D5",
+      "deliverable": "Frozen sales candidate and complete delivery bundle",
+      "scope": "Freeze models/code/rules, then run untouched qualification meetings and actual end-to-end device tests. Include installers, model distribution/attribution, settings, failure recovery, realistic supported devices and measured waiting/cost.",
+      "acceptance": "All original sales gates pass with exact candidate sources; >=3 complete>=30min meetings, >=2 rooms, at least one unseen meeting, >=4people and real overlap per original contract. A failed gate returns to the relevant implementation work; it is not relabeled passed.",
+      "current": "Not qualified. Final holdout not opened by this planning action."
+    }
+  ],
+  "qualityGatesSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-competitive-sale-standard\\benchmark-protocol.json",
+  "qualityGatesSha256": "2a82b5b36b231dd4ba77c670c347bb573aa7a13f225271eb9c5750e309e99623",
+  "unchangedNumericGates": {
+    "ordinaryAndPerPersonChineseCerExclusiveMax": 0.05,
+    "formalDerMax": 0.1,
+    "overlapPerPersonChineseCerExclusiveMax": 0.05,
+    "factsCoverageMin": 0.95,
+    "criticalFactErrorsMax": 0,
+    "qualificationFullMeetingsMin": 3,
+    "qualificationMinutesPerMeetingMin": 30,
+    "qualificationRoomsMin": 2,
+    "qualificationUnseenMeetingsMin": 1
+  },
+  "englishMetricHandling": "Report English WER and critical bilingual facts separately; freeze the English acceptance definition in the quality implementation before qualification. Do not silently reuse Chinese CER as English WER or use4-second switching as full-meeting acceptance.",
+  "performanceHandling": "InitialRTF<=1 remains a development gate. Final product waiting targets must be frozen for the actual supported PC/phone and measured for cold load, live lag and post-stop finalization; no invented P95 from fewer than20 valid samples.",
+  "executionRules": [
+    "One product batch is a complete usable user result; scripts, commits and documents are evidence, not delivered functionality.",
+    "Reuse immutable completed inference and unaffected product evidence. No same-condition failed long reruns.",
+    "Use mature fixed components first. Training is conditional on a reproducible residual and clean training/validation separation; never required just to demonstrate activity.",
+    "A rejected candidate ends that candidate only. Continue other authorized work toward the original product outcome without waiting for repeated continue requests.",
+    "A second independent method is justified only to resolve a defined quality or resource gap; no growing model roster or threshold search.",
+    "Keep one neural inference family at a time, originalCPU5%/private2GiB/actual Windows low-RAM guards for present local work. No other-app termination or system protection changes.",
+    "Actual device participation uses the original shared operator prompt only when human action is necessary; prepare background work first."
+  ],
+  "nextBatch": {
+    "userVisibleGoal": "One supported meeting job can progress from incoming audio or an offline file to a recoverable final transcript and source-linked minutes through the existing product contract.",
+    "modelWork": "First unify candidate backend lifecycle and bilingual input/output; reuse completed Qwen/alignment inputs for integration. In the same batch address speaker finalization memory failure/identity persistence and source-word losses with bounded implementation checks.",
+    "frontendDependency": "Existing frontend task integrates/reviews the versioned candidate via shared backlog; no unsolicited messages, parallel product task tree or takeover of its working files.",
+    "noPrematureShipping": "Do not change the installed default to an unqualified research candidate. Internal executable checkpoint and sellable release have separate states."
+  },
+  "currentInstalledEvidence": {
+    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\ui148164-delivery.json",
+    "sha256": "1a80151b54b99656f278fa2d24a92ae947e2f617e9b594fc8639c7aed108d880",
+    "versions": {
+      "windows": "0.1.148",
+      "android": "0.1.164"
+    },
+    "saleQualified": false
+  },
+  "directFailureEvidence": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\result.json": "6869c68e0324d2c29d6652fd7ae9942a013976ebcc0f8fdd8515aebf738af388",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2\\results\\L_R003S01C02\\completed-state.json": "426751b9ae154a0fb7e9fada3605aab92b4d3b920374f5f8efcd34bccbb9a664"
+  },
+  "developmentAudioOnlyCases": [
+    {
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "audioSeconds": 2327.119
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "audioSeconds": 2362.945
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "audioSeconds": 2049.3615
+    },
+    {
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "audioSeconds": 2142.709375
+    }
+  ],
+  "developmentCasesAreNotFinalQualification": true,
+  "missingQualificationEvidence": [
+    "Unseen multi-room whole-meeting results after freeze",
+    "Full English and long natural Chinese/English switching quality",
+    "Actual card and both installed clients with this exact model candidate",
+    "Critical-fact audit and supported-device finalization latency"
+  ],
+  "technicalReferences": [
+    "https://github.com/QwenLM/Qwen3-ASR",
+    "https://huggingface.co/pyannote/speaker-diarization-community-1",
+    "https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/index.html"
+  ],
+  "schedule": "Dependency-driven checkpoints, not an unsupported sales date. First executable end-to-end candidate determines the remaining measured quality and device work; product outcome remains open until all original gates pass.",
+  "newModelInferenceThisAction": 0,
+  "newWeightUpdatesThisAction": 0,
+  "installedDefaultChangedThisAction": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
