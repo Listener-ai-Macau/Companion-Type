@@ -75,6 +75,27 @@ fn side_ready()->Pointer{
     assert!(moved_while_pending,"contact recognition cannot reintroduce the rejected150ms movement freeze");
     assert_eq!(clicks.len(),1);assert!(matches!(clicks[0],Button::Click(point)if point.x==1500.&&point.y>=800.));
 }
+#[test]fn single_and_double_shell_taps_keep_the_target_at_default_sensitivity(){
+    let origin=Point{x:960.,y:540.};
+    let mut p=Pointer::new(Settings{contact_regions:true,contact_profile:Some(side_profile()),..Settings::relative_remote()},origin);
+    assert_eq!(p.settings.sensitivity,1.);
+    let mut clicks=vec![];
+    for n in 0..105{
+        let mut raw=raw_sample(n);let shock=n==40||n==60;
+        if shock{raw.accel_mg[0]=1000.;raw.gyro_dps[0]=70.;}
+        let motion=Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)};
+        p.sample_raw(raw,n as f64/100.);p.sample(motion,n as f64/100.,bounds());
+        if n==41||n==61{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        let f=p.frame(n as f64/100.,bounds());clicks.extend(f.buttons);
+        assert_eq!(p.shown,origin,"contact impulse leaked into movement at sample{n}");assert!(f.position.is_none());
+    }
+    assert_eq!(clicks,vec![Button::Click(origin),Button::Click(origin)],"two contacts200ms apart remain a same-target double click");
+    for n in 105..125{
+        let mut raw=raw_sample(n);raw.gyro_dps=[0.,2.,0.];
+        p.sample_raw(raw,n as f64/100.);p.sample(Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},n as f64/100.,bounds());p.frame(n as f64/100.,bounds());
+    }
+    assert!(p.shown.x>origin.x,"normal fine movement after the clicks must still work");
+}
 #[test]fn distinct190ms_taps_are_two_clicks_while_a25ms_ring_event_is_suppressed(){
     let mut p=side_ready();let mut clicks=vec![];
     for n in 121..200{
