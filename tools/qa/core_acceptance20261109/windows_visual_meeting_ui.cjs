@@ -11,7 +11,7 @@ module.exports=async(page,spec,out)=>{
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();
  for(const theme of ['light','dark']){
   if(theme==='dark')await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();
-  if(spec.expectVisualOverview)await require('./meeting_overview_ui.cjs')(page,frame,out,theme,expected);
+  if(spec.expectVisualOverview)await require('./meeting_overview_ui.cjs')(page,frame,out,theme,expected,!!spec.expectBriefGlance);
   if(spec.expectClearReading)await require('./meeting_clarity_ui.cjs')(page,frame,out,theme);
   await frame.getByRole('button',{name:'思维导图',exact:true}).click();
   const topics=frame.locator('.meeting-map-branches>li');assert.equal(await topics.count(),expected.length);
