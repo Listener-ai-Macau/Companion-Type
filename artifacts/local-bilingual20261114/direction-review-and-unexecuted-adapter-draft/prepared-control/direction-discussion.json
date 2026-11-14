@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-14T21:27:09.519563+08:00",
+  "state": "DISCUSSION_REQUESTED_NO_TRAINING_STARTED",
+  "ownerQuestions": [
+    "主要是这边这个训练模型这个东西好不好弄？是你觉得是我们训练还是要挑战人家训练的模型？感觉这个东西，你需要看一下这个东西到底要怎么搞。这个好像感觉也搞了很久了。",
+    "感觉主要是你先把之前那些弯路走过的拿出来，看一下这个东西到底要怎么做才好。上网调研一下大大概这东西怎么做。然后之前不是有些什么经验之类的，你看一下。先跟我讨论一下，这个东西要怎么做。"
+  ],
+  "recommendation": "Keep mature pretrained recognizer/aligner/diarizer fixed; close the normal-turn single-mic pipeline before more separation research. Micro-adaptation is conditional, not default. Discuss first as Owner asked.",
+  "newModelInference": 0,
+  "newWeightUpdates": 0,
+  "trainingProcessesRunning": false,
+  "preparedTrainUtterances": 128,
+  "preparedValidationUtterances": 32,
+  "adapterTrialStarted": false,
+  "draftDependenciesIsolated": true,
+  "baseRuntimePackagesChanged": false,
+  "note": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-模型路线复盘与讨论-20261114.txt",
+  "noteSha256": "7caf121ae51e20717c5c8a8cf0416b5d11874721ff2c5d6b39bd3596131e70c5",
+  "qualityQualified": false
+}

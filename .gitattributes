@@ -88,3 +88,7 @@ src/CompanionPairedPhone*20261109.java -text
 src/practical_alignment_session_worker_20261114.py -text
 src/companion_local_speaker_document_20261114.py -text
 src/companion_exclusive_journal_20261114.py -text
+
+# Preserve the unexecuted ASR adaptation draft and its data bindings.
+src/prepare_ordinary_asr_adaptation_20261114.py -text
+src/ordinary_asr_adapter_worker_20261114.py -text

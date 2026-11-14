@@ -1,0 +1,123 @@
+{
+  "at": "2026-11-14T21:10:50+08:00",
+  "state": "COMPLETE_FROZEN_FULL_UTTERANCE_ASR_PILOT_DATA",
+  "sources": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "role": "train",
+      "sourceWholeSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+      "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+      "sourcePath": "train_L/wav/20200707_L_R001S08C01.flac",
+      "eligibleCompleteUtterances": 69,
+      "selectedUtterances": 64,
+      "categoryCounts": {
+        "filler": 15,
+        "erhua": 12,
+        "other": 34,
+        "number_or_unit": 3
+      },
+      "selectedSpeakerCountsForConstructionOnly": {
+        "006-F": 6,
+        "005-F": 9,
+        "002-M": 8,
+        "003-M": 15,
+        "007-M": 20,
+        "001-M": 1,
+        "004-M": 5
+      },
+      "selectedSeconds": 470.72225
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "role": "train",
+      "sourceWholeSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+      "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+      "sourcePath": "train_L/wav/20200708_L_R002S01C01.flac",
+      "eligibleCompleteUtterances": 113,
+      "selectedUtterances": 64,
+      "categoryCounts": {
+        "erhua": 24,
+        "other": 23,
+        "filler": 15,
+        "number_or_unit": 2
+      },
+      "selectedSpeakerCountsForConstructionOnly": {
+        "003-M": 6,
+        "002-M": 22,
+        "001-M": 8,
+        "005-F": 5,
+        "004-M": 3,
+        "007-F": 7,
+        "006-F": 13
+      },
+      "selectedSeconds": 484.3425
+    },
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "role": "validation",
+      "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+      "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+      "sourcePath": "train_L/wav/20200709_L_R002S01C01.flac",
+      "eligibleCompleteUtterances": 131,
+      "selectedUtterances": 16,
+      "categoryCounts": {
+        "erhua": 5,
+        "filler": 4,
+        "number_or_unit": 3,
+        "other": 4
+      },
+      "selectedSpeakerCountsForConstructionOnly": {
+        "003-M": 4,
+        "007-F": 2,
+        "006-F": 2,
+        "002-M": 3,
+        "001-M": 2,
+        "004-F": 3
+      },
+      "selectedSeconds": 112.51668749999999
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "role": "validation",
+      "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "sourcePath": "train_S/wav/20200805_S_R001S01C01.flac",
+      "eligibleCompleteUtterances": 84,
+      "selectedUtterances": 16,
+      "categoryCounts": {
+        "other": 4,
+        "erhua": 4,
+        "number_or_unit": 4,
+        "filler": 4
+      },
+      "selectedSpeakerCountsForConstructionOnly": {
+        "005-M": 4,
+        "002-F": 4,
+        "001-M": 4,
+        "004-F": 4
+      },
+      "selectedSeconds": 104.93693749999997
+    }
+  ],
+  "newNeuralCalls": 0,
+  "finishedAt": "2026-11-14T21:10:53+08:00",
+  "trainUtterances": 128,
+  "validationUtterances": 32,
+  "limits": {
+    "pid": 30772,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 536072192,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "newAudioDownloaded": false
+}

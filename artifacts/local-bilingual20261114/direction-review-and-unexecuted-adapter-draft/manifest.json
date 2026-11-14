@@ -1,0 +1,100 @@
+{
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "8b9c3028d6467ff3be7c793141927841d70f47f52d0590677438f488ca154992"
+    },
+    {
+      "path": "direction-review.txt",
+      "sha256": "7caf121ae51e20717c5c8a8cf0416b5d11874721ff2c5d6b39bd3596131e70c5"
+    },
+    {
+      "path": "peft-wheel-source.json",
+      "sha256": "4687cdd49f7374209ee340308cba32b4416f7e72b9c0d470bd7853c86bddd487"
+    },
+    {
+      "path": "status.json",
+      "sha256": "a0f9d9ccb23ca99be250b540da730bb8832b1d7930c1ba04149dfb5fe390adf3"
+    },
+    {
+      "path": "prepared-control\\capability-control-rule.json",
+      "sha256": "2fcacfb798d74233b15927cdcb176c4263ddae55035f23971937f6c58e011afe"
+    },
+    {
+      "path": "prepared-control\\capability-controls-audio-only.json",
+      "sha256": "b45bab5f5adcef6ca16737977dbc6d1b8e7d80e65acfd7f75befcc9466bfd89b"
+    },
+    {
+      "path": "prepared-control\\direction-discussion.json",
+      "sha256": "1b7c080f962de2b573a2203b2330df0fd74cc465c06c275a80f9b9fdb4cac653"
+    },
+    {
+      "path": "prepared-control\\isolated-peft-install.log",
+      "sha256": "97439f81caf3b9553d27dae0a1fac4a37cdb41b97de517189d0c457c06198821"
+    },
+    {
+      "path": "prepared-control\\isolated-peft.json",
+      "sha256": "bae4b00b9894eae4632a606efad04879b0e643621ae5b8859e0258d3f4d1cbd4"
+    },
+    {
+      "path": "prepared-control\\mixed-control-scoring-only.json",
+      "sha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3"
+    },
+    {
+      "path": "prepared-control\\official-qwen-sft-source-sha256.txt",
+      "sha256": "9568bfa2c652a1236880de8647827ab5e5d9b13186d66af776951f57d9df5898"
+    },
+    {
+      "path": "prepared-control\\official-qwen-sft-source.txt",
+      "sha256": "6f3e5cc530d9da9ff405144fc94a5c4790018eaf956dbc623634818160418976"
+    },
+    {
+      "path": "prepared-control\\preparation.json",
+      "sha256": "ed824c7dd44ca289f98d5cdf57340fe421f4e8df132c105411227a6ce25ae4d2"
+    },
+    {
+      "path": "prepared-control\\protocol.json",
+      "sha256": "032f9b35bc0a82b177ad85e833112cb45dee07001c272f24a6eaf5de49f97f45"
+    },
+    {
+      "path": "prepared-control\\source-provenance.json",
+      "sha256": "281e0a7cd73acedba128a9a6c0d3227df1459cdaecb5507a3ee11391401a569e"
+    },
+    {
+      "path": "prepared-control\\train.json",
+      "sha256": "0ffe388ae31c3449dd48703c0382067dcfa848df2153a70682d659194101fc30"
+    },
+    {
+      "path": "prepared-control\\validation-audio-only.json",
+      "sha256": "7bd93c91f0feb3bb06e3e63bfa800bfa9681c4895c6727b6b8d9af21acf188a2"
+    },
+    {
+      "path": "prepared-control\\validation-scoring-only.json",
+      "sha256": "964050c6536dadf3a61f2f361f85c01358d0db18363371992d018f141f651901"
+    },
+    {
+      "path": "prepared-control\\hip-current\\hip-inventory.json",
+      "sha256": "c17ade53c904fc66d02cd5de6f3bcc25d2d5625eb3d8891bb148a44dd654df0a"
+    },
+    {
+      "path": "prepared-control\\hip-current\\inventory-resources.jsonl",
+      "sha256": "fc1ec1c057b5ccce014ce48e4164290a9670317e57050f3f968a204d49292cd3"
+    },
+    {
+      "path": "prepared-control\\hip-current\\inventory-run.json",
+      "sha256": "62c8a60abcc07af555e605def5da20416a08786e457942d45b166121a6eb02e7"
+    },
+    {
+      "path": "prepared-control\\hip-current\\inventory-worker.log",
+      "sha256": "c3e69ba5de6691e9246c84c615cfea01317dfbccfa78fa94b570334d741647a2"
+    },
+    {
+      "path": "unexecuted-launch-source\\freeze_asr_adapter_controls_20261114.py",
+      "sha256": "c31b53e32f3d65da68da2937776554eb30b08e528acd8023862b7dbfd582e982"
+    },
+    {
+      "path": "unexecuted-launch-source\\run_ordinary_asr_trial_20261114.py",
+      "sha256": "2b3f92eb85b740cbd37af35d4ec3d60027557a7b2801be7f3fabb22e0e9d3724"
+    }
+  ]
+}
