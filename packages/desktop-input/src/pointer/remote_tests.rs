@@ -144,6 +144,15 @@ fn ready()->Pointer{
     p.control(Control{sequence:2,sensor_ms:20,events:CLICK}).unwrap();assert_eq!(p.metrics.tap_events,2);
     assert!(matches!(p.frame(0.021,bounds()).buttons.as_slice(),[Button::Click(_)]));
 }
+#[test]fn forwarded_held_tap_does_not_add_a_second_click_to_legacy_key_click_drag(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
+    p.control(Control{sequence:1,sensor_ms:10,events:DOWN}).unwrap();
+    p.control(Control{sequence:2,sensor_ms:20,events:CLICK}).unwrap();
+    assert!(p.frame(0.02,bounds()).buttons.is_empty());
+    p.control(Control{sequence:3,sensor_ms:50,events:UP}).unwrap();
+    assert_eq!(p.frame(0.05,bounds()).buttons,vec![Button::Click(Point{x:960.,y:540.})]);
+}
 #[test]fn clutch_release_does_not_cancel_user_pause_and_gaps_cannot_leave_it_held(){
     let mut p=Pointer::new(Settings{key_role:KeyRole::Regrip,..Settings::relative_remote()},Point{x:960.,y:540.});
     p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
