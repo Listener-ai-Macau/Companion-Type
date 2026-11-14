@@ -17,7 +17,8 @@ module.exports=async(page,frame,out,tag,options={})=>{
  const item=full.locator('.ct-minutes-item,.minutes-item').first();assert.equal(await item.evaluate(e=>getComputedStyle(e).fontWeight),'400');
  await summary.scrollIntoViewIfNeeded();await page.screenshot({animations:'disabled',path:path.join(out,'actual-clear-expanded-'+tag+'.png')});
  await summary.focus();await page.keyboard.press('Enter');assert(!await full.evaluate(e=>e.open));
- const contents=frame.locator('.meeting-contents');assert.equal(await contents.count(),1);
+ const contents=frame.locator('.meeting-contents');assert.equal(await contents.count(),options.noDirectory?0:1);
+ if(!options.noDirectory){
  await contents.locator('summary').focus();await page.keyboard.press('Enter');assert(await contents.evaluate(e=>e.open));
  await page.keyboard.press('Escape');assert(!await contents.evaluate(e=>e.open));
  await contents.locator('summary').focus();await page.keyboard.press('Enter');
@@ -26,8 +27,9 @@ module.exports=async(page,frame,out,tag,options={})=>{
  const target=options.directoryDisclosureTitle?frame.locator('.meeting-disclosure').filter({has:page.getByText(options.directoryDisclosureTitle,{exact:true})}).first():full;
  assert(await target.evaluate(e=>e.open));
  await target.locator(':scope>summary').focus();await page.keyboard.press('Enter');
+ }
  await frame.locator('.meeting-reading-start').scrollIntoViewIfNeeded();
  await page.screenshot({animations:'disabled',path:path.join(out,'actual-clear-reader-'+tag+'.png')});
  assert(await page.evaluate(()=>document.body.scrollWidth<=innerWidth));
- return {singleViewSwitch:true,oneOptionalDirectory:true,explicitExpandedAndCollapsedState:true,expandedSavedTextLength:text.length,expandedSourceItemsExact:options.expectedText?.length||null,fullWidthDisclosure:layout,keyboardDirectoryRevealsFoldedContent:true,noHorizontalOverflow:true};
+ return {singleViewSwitch:true,optionalDirectoryCount:options.noDirectory?0:1,explicitExpandedAndCollapsedState:true,expandedSavedTextLength:text.length,expandedSourceItemsExact:options.expectedText?.length||null,fullWidthDisclosure:layout,keyboardDirectoryRevealsFoldedContent:!options.noDirectory,noHorizontalOverflow:true};
 };
