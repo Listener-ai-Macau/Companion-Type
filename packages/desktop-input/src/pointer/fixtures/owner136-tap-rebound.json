@@ -1,0 +1,642 @@
+{
+  "source": "Owner136835 actual2026-11-14 physical session; raw gyro centidegrees/s; no audio or reference target ground truth",
+  "input": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\owner-experience-awake20261114\\tap-analysis.json",
+  "taps": [
+    {
+      "sensorMs": 11929883,
+      "after": [
+        {
+          "deltaMs": 11,
+          "gyroCentiDps": [
+            -11986,
+            -17462,
+            3254
+          ]
+        },
+        {
+          "deltaMs": 21,
+          "gyroCentiDps": [
+            -12173,
+            -17664,
+            1604
+          ]
+        },
+        {
+          "deltaMs": 31,
+          "gyroCentiDps": [
+            -10431,
+            -13206,
+            1699
+          ]
+        },
+        {
+          "deltaMs": 41,
+          "gyroCentiDps": [
+            -6944,
+            -6402,
+            1743
+          ]
+        },
+        {
+          "deltaMs": 51,
+          "gyroCentiDps": [
+            -2664,
+            -1007,
+            1369
+          ]
+        },
+        {
+          "deltaMs": 61,
+          "gyroCentiDps": [
+            186,
+            2452,
+            1272
+          ]
+        },
+        {
+          "deltaMs": 71,
+          "gyroCentiDps": [
+            1090,
+            4629,
+            1389
+          ]
+        },
+        {
+          "deltaMs": 81,
+          "gyroCentiDps": [
+            1069,
+            5781,
+            921
+          ]
+        },
+        {
+          "deltaMs": 91,
+          "gyroCentiDps": [
+            1251,
+            7384,
+            640
+          ]
+        },
+        {
+          "deltaMs": 101,
+          "gyroCentiDps": [
+            2218,
+            7929,
+            319
+          ]
+        },
+        {
+          "deltaMs": 111,
+          "gyroCentiDps": [
+            3686,
+            6452,
+            -254
+          ]
+        },
+        {
+          "deltaMs": 121,
+          "gyroCentiDps": [
+            4463,
+            4938,
+            -1167
+          ]
+        },
+        {
+          "deltaMs": 131,
+          "gyroCentiDps": [
+            4476,
+            3864,
+            -2028
+          ]
+        },
+        {
+          "deltaMs": 141,
+          "gyroCentiDps": [
+            4339,
+            3007,
+            -2495
+          ]
+        },
+        {
+          "deltaMs": 151,
+          "gyroCentiDps": [
+            3939,
+            2284,
+            -2568
+          ]
+        },
+        {
+          "deltaMs": 161,
+          "gyroCentiDps": [
+            3072,
+            1902,
+            -2619
+          ]
+        },
+        {
+          "deltaMs": 171,
+          "gyroCentiDps": [
+            2284,
+            1658,
+            -2438
+          ]
+        },
+        {
+          "deltaMs": 181,
+          "gyroCentiDps": [
+            1620,
+            1574,
+            -2116
+          ]
+        },
+        {
+          "deltaMs": 191,
+          "gyroCentiDps": [
+            1361,
+            1755,
+            -1723
+          ]
+        }
+      ]
+    },
+    {
+      "sensorMs": 11930717,
+      "after": [
+        {
+          "deltaMs": 1,
+          "gyroCentiDps": [
+            -1667,
+            -4819,
+            392
+          ]
+        },
+        {
+          "deltaMs": 21,
+          "gyroCentiDps": [
+            -2929,
+            -6654,
+            -5
+          ]
+        },
+        {
+          "deltaMs": 31,
+          "gyroCentiDps": [
+            -2395,
+            -5347,
+            569
+          ]
+        },
+        {
+          "deltaMs": 41,
+          "gyroCentiDps": [
+            -419,
+            -1006,
+            103
+          ]
+        },
+        {
+          "deltaMs": 51,
+          "gyroCentiDps": [
+            905,
+            2098,
+            332
+          ]
+        },
+        {
+          "deltaMs": 61,
+          "gyroCentiDps": [
+            814,
+            4096,
+            385
+          ]
+        },
+        {
+          "deltaMs": 71,
+          "gyroCentiDps": [
+            343,
+            5614,
+            118
+          ]
+        },
+        {
+          "deltaMs": 81,
+          "gyroCentiDps": [
+            556,
+            6457,
+            31
+          ]
+        },
+        {
+          "deltaMs": 91,
+          "gyroCentiDps": [
+            1371,
+            6575,
+            -21
+          ]
+        },
+        {
+          "deltaMs": 101,
+          "gyroCentiDps": [
+            2446,
+            4617,
+            -138
+          ]
+        },
+        {
+          "deltaMs": 111,
+          "gyroCentiDps": [
+            2523,
+            2597,
+            -239
+          ]
+        },
+        {
+          "deltaMs": 121,
+          "gyroCentiDps": [
+            1690,
+            1192,
+            -421
+          ]
+        },
+        {
+          "deltaMs": 131,
+          "gyroCentiDps": [
+            1192,
+            581,
+            -536
+          ]
+        },
+        {
+          "deltaMs": 141,
+          "gyroCentiDps": [
+            1117,
+            534,
+            -649
+          ]
+        },
+        {
+          "deltaMs": 151,
+          "gyroCentiDps": [
+            1006,
+            480,
+            -797
+          ]
+        },
+        {
+          "deltaMs": 161,
+          "gyroCentiDps": [
+            823,
+            600,
+            -839
+          ]
+        },
+        {
+          "deltaMs": 171,
+          "gyroCentiDps": [
+            487,
+            842,
+            -706
+          ]
+        },
+        {
+          "deltaMs": 181,
+          "gyroCentiDps": [
+            383,
+            1133,
+            -526
+          ]
+        },
+        {
+          "deltaMs": 191,
+          "gyroCentiDps": [
+            356,
+            1320,
+            -380
+          ]
+        }
+      ]
+    },
+    {
+      "sensorMs": 11935897,
+      "after": [
+        {
+          "deltaMs": 10,
+          "gyroCentiDps": [
+            837,
+            -13134,
+            2888
+          ]
+        },
+        {
+          "deltaMs": 20,
+          "gyroCentiDps": [
+            -3562,
+            -5265,
+            1227
+          ]
+        },
+        {
+          "deltaMs": 30,
+          "gyroCentiDps": [
+            -3541,
+            -4875,
+            235
+          ]
+        },
+        {
+          "deltaMs": 40,
+          "gyroCentiDps": [
+            -2299,
+            -2215,
+            434
+          ]
+        },
+        {
+          "deltaMs": 50,
+          "gyroCentiDps": [
+            -537,
+            2333,
+            193
+          ]
+        },
+        {
+          "deltaMs": 60,
+          "gyroCentiDps": [
+            642,
+            4980,
+            107
+          ]
+        },
+        {
+          "deltaMs": 70,
+          "gyroCentiDps": [
+            537,
+            5969,
+            -425
+          ]
+        },
+        {
+          "deltaMs": 80,
+          "gyroCentiDps": [
+            1400,
+            4504,
+            43
+          ]
+        },
+        {
+          "deltaMs": 90,
+          "gyroCentiDps": [
+            1194,
+            4333,
+            96
+          ]
+        },
+        {
+          "deltaMs": 100,
+          "gyroCentiDps": [
+            348,
+            4021,
+            -232
+          ]
+        },
+        {
+          "deltaMs": 110,
+          "gyroCentiDps": [
+            -133,
+            3077,
+            -364
+          ]
+        },
+        {
+          "deltaMs": 120,
+          "gyroCentiDps": [
+            -55,
+            1587,
+            -716
+          ]
+        },
+        {
+          "deltaMs": 130,
+          "gyroCentiDps": [
+            243,
+            229,
+            -940
+          ]
+        },
+        {
+          "deltaMs": 140,
+          "gyroCentiDps": [
+            619,
+            -692,
+            -979
+          ]
+        },
+        {
+          "deltaMs": 150,
+          "gyroCentiDps": [
+            600,
+            -1014,
+            -1138
+          ]
+        },
+        {
+          "deltaMs": 160,
+          "gyroCentiDps": [
+            503,
+            -995,
+            -1162
+          ]
+        },
+        {
+          "deltaMs": 170,
+          "gyroCentiDps": [
+            562,
+            -805,
+            -1056
+          ]
+        },
+        {
+          "deltaMs": 180,
+          "gyroCentiDps": [
+            510,
+            -228,
+            -844
+          ]
+        },
+        {
+          "deltaMs": 190,
+          "gyroCentiDps": [
+            315,
+            576,
+            -605
+          ]
+        },
+        {
+          "deltaMs": 200,
+          "gyroCentiDps": [
+            -154,
+            1270,
+            -480
+          ]
+        }
+      ]
+    },
+    {
+      "sensorMs": 11944533,
+      "after": [
+        {
+          "deltaMs": 11,
+          "gyroCentiDps": [
+            7916,
+            4495,
+            9096
+          ]
+        },
+        {
+          "deltaMs": 21,
+          "gyroCentiDps": [
+            -5664,
+            -8110,
+            18198
+          ]
+        },
+        {
+          "deltaMs": 31,
+          "gyroCentiDps": [
+            -8724,
+            -8210,
+            14586
+          ]
+        },
+        {
+          "deltaMs": 41,
+          "gyroCentiDps": [
+            3732,
+            1539,
+            7603
+          ]
+        },
+        {
+          "deltaMs": 51,
+          "gyroCentiDps": [
+            11539,
+            5811,
+            4690
+          ]
+        },
+        {
+          "deltaMs": 61,
+          "gyroCentiDps": [
+            8103,
+            1430,
+            6238
+          ]
+        },
+        {
+          "deltaMs": 71,
+          "gyroCentiDps": [
+            2504,
+            -1698,
+            8823
+          ]
+        },
+        {
+          "deltaMs": 81,
+          "gyroCentiDps": [
+            -809,
+            -1483,
+            8318
+          ]
+        },
+        {
+          "deltaMs": 91,
+          "gyroCentiDps": [
+            512,
+            1313,
+            6567
+          ]
+        },
+        {
+          "deltaMs": 101,
+          "gyroCentiDps": [
+            2420,
+            2229,
+            4646
+          ]
+        },
+        {
+          "deltaMs": 111,
+          "gyroCentiDps": [
+            2805,
+            436,
+            4333
+          ]
+        },
+        {
+          "deltaMs": 121,
+          "gyroCentiDps": [
+            2028,
+            -631,
+            4118
+          ]
+        },
+        {
+          "deltaMs": 131,
+          "gyroCentiDps": [
+            1414,
+            -67,
+            3528
+          ]
+        },
+        {
+          "deltaMs": 141,
+          "gyroCentiDps": [
+            984,
+            744,
+            2307
+          ]
+        },
+        {
+          "deltaMs": 151,
+          "gyroCentiDps": [
+            644,
+            618,
+            1300
+          ]
+        },
+        {
+          "deltaMs": 161,
+          "gyroCentiDps": [
+            -178,
+            -129,
+            502
+          ]
+        },
+        {
+          "deltaMs": 171,
+          "gyroCentiDps": [
+            -673,
+            -247,
+            418
+          ]
+        },
+        {
+          "deltaMs": 181,
+          "gyroCentiDps": [
+            -581,
+            -148,
+            360
+          ]
+        },
+        {
+          "deltaMs": 191,
+          "gyroCentiDps": [
+            54,
+            -5,
+            5
+          ]
+        }
+      ]
+    }
+  ]
+}
