@@ -1,0 +1,14 @@
+{
+  "state": "SIX_ORIGINAL_CASES_BOUND_NO_INFERENCE",
+  "manifest": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\manifest.json",
+  "modelPack": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\model-pack.json",
+  "manifestSha256": "6fa26b04173d8312060a721d9251b6bc1affbed19f26444385fd352714071a3c",
+  "modelPackSha256": "c28046e5c8f67d4da5f6ca66227a2ebda5a3c227d15e21ac4c68d5f867be39cb",
+  "originalSixPreparationGap": "Original six-case control has no pilot/state.json and its metadata-edited protocol does not match the reused pilot hash. Do not fabricate a new PASS binding.",
+  "repair": "Reuse the original native17-r5 protocol and actual passed pilot bytes exactly; substitute only the already declared six-case audio manifest. Neural execution source/native model/decoding/recovery remain unchanged.",
+  "originalExecutionProtocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+  "exactPassedPilotSha256": "6d341d6d5e5d17cf07ce08a0065d3472653fe58f91ceed7874bf9a7cbc52ffcc",
+  "newModelOrTraining": false,
+  "referenceSuppliedToInference": false,
+  "qualityQualified": false
+}

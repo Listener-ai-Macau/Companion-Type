@@ -1,0 +1,157 @@
+{
+  "at": "2026-11-14T14:03:21+08:00",
+  "state": "COMPLETE_SAME_QWEN_SHORT_CONTROL_SECOND_TARGET_FAILURE_DO_NOT_EXPAND",
+  "results": {
+    "overlap-00-mixture": {
+      "text": "看看能掌握什么措施，这个挺普遍，咱们小区、其他小区也有，啊，其他小区怎么？",
+      "audioSha256": "c6b0ed025005f520721b5c1ea16a3f86233bf8d35ad6cee74401547052e56495",
+      "outputSha256": "5c2c5c79605de657b8b28a4708179fd0522d7c4e0014b127d1d4515ca70a2386",
+      "taskReceiptSha256": "73e0027f59ce10c4502152b14dfe8b5a9cf8d12a563eeb4793d6afa4a0956a00",
+      "accumulatedKnownOwnedProcessSeconds": 96.09616800001822,
+      "attemptsWithUnknownDuration": []
+    },
+    "overlap-00-native-1": {
+      "text": "还能找个什么措施？挺普遍的，其他小区也有。",
+      "audioSha256": "30197cbadc3a7fb5d058f5d016014f653f7688d2b2a468038ffb7171b4006162",
+      "outputSha256": "552f0452a6a89415839c6fe22c2ece9a491ee091d4701d99b86093994a056026",
+      "taskReceiptSha256": "8bd24fb60fa61eb185f8eb0745eacbe955c39dc03dd95b183da5499b3fd2c639",
+      "accumulatedKnownOwnedProcessSeconds": 57.63689670001622,
+      "attemptsWithUnknownDuration": []
+    },
+    "overlap-00-native-2": {
+      "text": "呃，这个挺普遍的，咱们小区、其他小区也有啊。",
+      "audioSha256": "7a4ef43503ee73b5c549893502f0bc6e7b58d1255194dcceaae0c06a4468ae56",
+      "outputSha256": "da762ccc95b305175c9982f8ade7479de1bce6a7e6a08de2902aebd4cd7854a7",
+      "taskReceiptSha256": "a5120f5a941a31adeb19949aadcaa793673d2909989a70d3f4af58d8d86c1dff",
+      "accumulatedKnownOwnedProcessSeconds": 59.71750180001254,
+      "attemptsWithUnknownDuration": []
+    },
+    "overlap-01-mixture": {
+      "text": "这个看看是不是咱们本小区的？对，本小区，哎，这就是本小区的。这样这样这样着不是本。",
+      "audioSha256": "a45fccb179b50b0782a712b8ebebbc43b6347459e4c764bb001bd85e17c98489",
+      "outputSha256": "4b271ff8e91fdccb570d172cc6099983bc75c476791fbc4fa1dfade9cec28893",
+      "taskReceiptSha256": "24ae8c2ecd433c3943711cff20d93d2d74d0a6a83993023d0aab25a032a393fe",
+      "accumulatedKnownOwnedProcessSeconds": 63.73341780001647,
+      "attemptsWithUnknownDuration": []
+    },
+    "overlap-01-native-2": {
+      "text": "哎，本小区，哎，这就是本小区的。",
+      "audioSha256": "9a17177ee1a20439bd58e52b0bb3571f2d6f1b94182cf40237db95f5eba4b734",
+      "outputSha256": "7fdf3835fdec8f902133fe7ad21a6d177283df2337d1be1511bc4e2a5ab33c2a",
+      "taskReceiptSha256": "a988758b056d652235d26a41e03034daeebee19640cc0fe5f5ffc0691579dafc",
+      "accumulatedKnownOwnedProcessSeconds": 59.753885700018145,
+      "attemptsWithUnknownDuration": []
+    },
+    "overlap-01-native-3": {
+      "text": "对，或者就是那些碰碰碰碰杯酒鸡的。",
+      "audioSha256": "aafff5f44dde6eb058089b3eed3b4549e0c7c7e7214fe309b16d0c8c960b04bd",
+      "outputSha256": "025e8847c63b6b2b5d5c02acb2a57fa409e411dafe6417395d347eadac3399c0",
+      "taskReceiptSha256": "221d5bbd8b155b11cae3b2f5aeafb45460077f11fb53545420a97454f9d5219f",
+      "accumulatedKnownOwnedProcessSeconds": 59.66462250001496,
+      "attemptsWithUnknownDuration": []
+    }
+  },
+  "targetChecks": [
+    {
+      "case": "overlap-00",
+      "nativePerson": "1",
+      "knownPosthocReferenceIdentity": "002-F",
+      "originalMixtureNativeQwen": "看看能掌握什么措施，这个挺普遍，咱们小区、其他小区也有，啊，其他小区怎么？",
+      "extractedNativeQwen": "还能找个什么措施？挺普遍的，其他小区也有。",
+      "formerExtractedCloudAsr": "咱还能找个什么措施对对对交通便利其他小区也有这个咱们",
+      "fullyContainedUtteranceExactPresence": [
+        {
+          "text": "挺普遍的",
+          "start": 1565.8104925790801,
+          "end": 1566.862,
+          "inMixture": false,
+          "inExtraction": true
+        },
+        {
+          "text": "其他小区也有",
+          "start": 1567.3207522326181,
+          "end": 1568.6526875,
+          "inMixture": true,
+          "inExtraction": true
+        }
+      ],
+      "exactPresenceIsNotWordAlignmentOrCompleteRecognition": true
+    },
+    {
+      "case": "overlap-00",
+      "nativePerson": "2",
+      "knownPosthocReferenceIdentity": "004-M",
+      "originalMixtureNativeQwen": "看看能掌握什么措施，这个挺普遍，咱们小区、其他小区也有，啊，其他小区怎么？",
+      "extractedNativeQwen": "呃，这个挺普遍的，咱们小区、其他小区也有啊。",
+      "formerExtractedCloudAsr": "这个挺普遍咱们小区有其他小区也有其他小区也有啊",
+      "fullyContainedUtteranceExactPresence": [
+        {
+          "text": "这个挺普遍，咱们小区有其他小区也有，",
+          "start": 1564.1070601791594,
+          "end": 1567.6192919315733,
+          "inMixture": false,
+          "inExtraction": false
+        },
+        {
+          "text": "嗯",
+          "start": 1568.7256449335837,
+          "end": 1569.2428750000001,
+          "inMixture": false,
+          "inExtraction": false
+        }
+      ],
+      "exactPresenceIsNotWordAlignmentOrCompleteRecognition": true
+    },
+    {
+      "case": "overlap-01",
+      "nativePerson": "2",
+      "knownPosthocReferenceIdentity": "004-M",
+      "originalMixtureNativeQwen": "这个看看是不是咱们本小区的？对，本小区，哎，这就是本小区的。这样这样这样着不是本。",
+      "extractedNativeQwen": "哎，本小区，哎，这就是本小区的。",
+      "formerExtractedCloudAsr": "这就是本校区呗",
+      "fullyContainedUtteranceExactPresence": [
+        {
+          "text": "本小区他他就是本小区的呀",
+          "start": 1574.2129239110734,
+          "end": 1576.6512500000001,
+          "inMixture": false,
+          "inExtraction": false
+        }
+      ],
+      "exactPresenceIsNotWordAlignmentOrCompleteRecognition": true
+    },
+    {
+      "case": "overlap-01",
+      "nativePerson": "3",
+      "knownPosthocReferenceIdentity": "003-F",
+      "originalMixtureNativeQwen": "这个看看是不是咱们本小区的？对，本小区，哎，这就是本小区的。这样这样这样着不是本。",
+      "extractedNativeQwen": "对，或者就是那些碰碰碰碰杯酒鸡的。",
+      "formerExtractedCloudAsr": "对或者就是那些就是本小区的哼哼哼本小区的但是不是本小区的",
+      "fullyContainedUtteranceExactPresence": [
+        {
+          "text": "对有的就是一些",
+          "start": 1573.9445348410054,
+          "end": 1575.384549859495,
+          "inMixture": false,
+          "inExtraction": false
+        }
+      ],
+      "exactPresenceIsNotWordAlignmentOrCompleteRecognition": true
+    }
+  ],
+  "sameFrozenNativeRecognizerAcrossAllSix": true,
+  "referenceUsedOnlyAfterInference": true,
+  "newSeparationOrTrainingCalls": 0,
+  "interpretation": [
+    "The exact former extracted waveform supports 挺普遍的 under native Qwen; its former cloud error 交通便利 does not alone prove destroyed target audio.",
+    "Recognition back-end compatibility explains part of the former failure; this does not prove all extraction outputs preserve target speech.",
+    "The second target3 still fails the fully contained 对有的就是一些 and emits unrelated text. All-target content protection is not demonstrated.",
+    "Retain the original audio and unknown attribution. Stop the predeclared17-window expansion for this candidate; no tuning on these exposed clips."
+  ],
+  "wholeMeetingOrPureOverlapCerMeasured": false,
+  "fullAutomaticIdentityQualification": false,
+  "scope": "Two fixed8s contexts in one exposed six-person real meeting, four target streams; reference utterances can cross clip boundaries and other speakers appear outside central target pairs.",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false
+}

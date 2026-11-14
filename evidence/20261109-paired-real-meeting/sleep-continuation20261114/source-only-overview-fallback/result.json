@@ -1,0 +1,104 @@
+{
+  "at": "2026-11-14T14:35:46+08:00",
+  "state": "EXISTING_SOURCE_ONLY_FALLBACK_COMPONENT_COMPLETED",
+  "sourceSessionSha256": "8f13628170092ba8d5087398debdabe443aacaa23b8a6375283558323fbabb13",
+  "actualPreviousConciseResponsePointCount": 12,
+  "maximumAllowedByProductParser": 6,
+  "promptCopiedFromCandidateSource": true,
+  "referenceAnswersPassed": false,
+  "sourceTextRewritten": false,
+  "nativeIntegrationPassed": false,
+  "normalLibraryTouched": false,
+  "calls": [
+    {
+      "section": 0,
+      "seconds": 0.7432146999926772,
+      "selected": [
+        0,
+        1,
+        3
+      ],
+      "usage": {
+        "prompt_tokens": 415,
+        "completion_tokens": 10,
+        "total_tokens": 425,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 415
+      }
+    },
+    {
+      "section": 1,
+      "seconds": 1.0447832999925595,
+      "selected": [
+        4,
+        5,
+        7
+      ],
+      "usage": {
+        "prompt_tokens": 292,
+        "completion_tokens": 10,
+        "total_tokens": 302,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 292
+      }
+    },
+    {
+      "section": 2,
+      "seconds": 0.5296680000028573,
+      "selected": [
+        8,
+        9,
+        10
+      ],
+      "usage": {
+        "prompt_tokens": 290,
+        "completion_tokens": 10,
+        "total_tokens": 300,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 290
+      }
+    }
+  ],
+  "qualityQualified": false,
+  "selectedSourceIds": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10
+  ],
+  "selectedItemsCopiedExactly": true,
+  "detailedMarkdownUnchanged": true,
+  "sourceAsrKnownChronologicalCer": 0.4075595,
+  "generalFactualAccuracyQualified": false,
+  "originalBadOverviewPreservedAt": "E:\\CodexData\\Companion\\.model-cache\\complex-minutes20261114\\product133-paraformer-baseline\\offlineStore-session.json",
+  "limits": {
+    "pid": 27632,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 67108864,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 15257600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

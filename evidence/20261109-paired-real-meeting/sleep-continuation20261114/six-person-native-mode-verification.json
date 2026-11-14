@@ -1,0 +1,19 @@
+{
+  "source": "Actual saved native mode wrappers, not the default minutes field",
+  "modes": [
+    {
+      "mode": "offlineStore",
+      "requestedModeReady": true,
+      "processedSourceBytes": 28590,
+      "markdownSha256": "93d5f399405d9079a1a30c71c258fb3cea3f346651cd840423bf1c6ba4e0a541",
+      "transcriptUnchanged": true
+    },
+    {
+      "mode": "onlineLive",
+      "requestedModeReady": true,
+      "processedSourceBytes": 28590,
+      "markdownSha256": "516ea9c077240ff3913966597cde4fa58cecf9fc711d39d75b3fe2abd8742e1c",
+      "transcriptUnchanged": true
+    }
+  ]
+}

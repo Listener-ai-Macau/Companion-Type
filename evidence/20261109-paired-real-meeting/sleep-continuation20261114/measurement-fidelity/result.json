@@ -1,0 +1,93 @@
+{
+  "at": "2026-11-14T13:40:28+08:00",
+  "state": "MEASUREMENT_FIDELITY_CONTROL_PASSED",
+  "review": [
+    {
+      "id": 0,
+      "case": "actual-value-to-cost",
+      "expected": false,
+      "actual": false,
+      "matches": true
+    },
+    {
+      "id": 1,
+      "case": "faithful-gift-value",
+      "expected": true,
+      "actual": true,
+      "matches": true
+    },
+    {
+      "id": 2,
+      "case": "topic-only",
+      "expected": true,
+      "actual": true,
+      "matches": true
+    },
+    {
+      "id": 3,
+      "case": "reversed-value-bound",
+      "expected": false,
+      "actual": false,
+      "matches": true
+    },
+    {
+      "id": 4,
+      "case": "changed-measure-and-unit",
+      "expected": false,
+      "actual": false,
+      "matches": true
+    },
+    {
+      "id": 5,
+      "case": "faithful-speaker-claim",
+      "expected": true,
+      "actual": true,
+      "matches": true
+    },
+    {
+      "id": 6,
+      "case": "collapsed-distance-uncertainty",
+      "expected": false,
+      "actual": false,
+      "matches": true
+    },
+    {
+      "id": 7,
+      "case": "faithful-distance-uncertainty",
+      "expected": true,
+      "actual": true,
+      "matches": true
+    }
+  ],
+  "seconds": 1.231180900009349,
+  "usage": {
+    "prompt_tokens": 925,
+    "completion_tokens": 69,
+    "total_tokens": 994,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 925
+  },
+  "actualOldValueCostAcceptanceReused": true,
+  "weightsOrServiceChanged": false,
+  "privateAudioUploaded": false,
+  "generalFactualQualityQualified": false,
+  "limits": {
+    "pid": 9760,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 67108864,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 51167232,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

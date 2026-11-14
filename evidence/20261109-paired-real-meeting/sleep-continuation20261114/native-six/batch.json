@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_BOUND_NATIVE_CASES_UNSCORED",
+  "at": "2026-11-14T13:52:50+08:00",
+  "pid": 12692,
+  "binding": {
+    "manifestSha256": "6fa26b04173d8312060a721d9251b6bc1affbed19f26444385fd352714071a3c",
+    "modelPackSha256": "c28046e5c8f67d4da5f6ca66227a2ebda5a3c227d15e21ac4c68d5f867be39cb"
+  },
+  "currentDeviceCheck": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "completed": [
+    "overlap-00-mixture",
+    "overlap-00-native-1",
+    "overlap-00-native-2",
+    "overlap-01-mixture",
+    "overlap-01-native-2",
+    "overlap-01-native-3"
+  ],
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "lastAttempt": {
+    "id": "overlap-01-native-3",
+    "exitCode": 0,
+    "adapterSeconds": 60.88273300000583,
+    "taskState": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+    "log": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\run\\console\\overlap-01-native-3-1794635908572576400.log"
+  },
+  "finishedAt": "2026-11-14T13:59:29+08:00"
+}

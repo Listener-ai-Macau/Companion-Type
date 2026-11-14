@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-14T13:32:41+08:00",
+  "state": "PUBLIC_COMPLEX_OVERVIEW_CONTROL_FAILED_RETAINED",
+  "sourceSessionSha256": "8f13628170092ba8d5087398debdabe443aacaa23b8a6375283558323fbabb13",
+  "candidateSource": "8ab57bb16b5128c1fcb17346dc5a0356fb335e73",
+  "usesExactRetainedCandidatePrompts": true,
+  "oldOverviewSourceMapping": "Reconstructed paragraph correspondence for this diagnostic; original generated source IDs were not persisted.",
+  "newOverviewHasActualReturnedSourceIds": true,
+  "referenceAnswersPassed": false,
+  "credentialLoggedOrSaved": false,
+  "calls": [
+    {
+      "name": "old-actual-overview-audit",
+      "seconds": 0.9254710999957751,
+      "usage": {
+        "prompt_tokens": 1121,
+        "completion_tokens": 45,
+        "total_tokens": 1166,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1121
+      },
+      "responseSha256": "975197699d63bdfb1a0327e4be215ebf7f3e846681385ed28bfeeb33137dda61"
+    },
+    {
+      "name": "candidate-overview",
+      "seconds": 3.2160754000069574,
+      "usage": {
+        "prompt_tokens": 958,
+        "completion_tokens": 538,
+        "total_tokens": 1496,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 958
+      },
+      "responseSha256": "88da92e40cc7bc04cc8432f92e5dd8697c8684cb13648139249ac10af838be20"
+    }
+  ],
+  "productSourceOrDefaultChanged": false,
+  "qualityQualified": false,
+  "errorType": "AssertionError"
+}

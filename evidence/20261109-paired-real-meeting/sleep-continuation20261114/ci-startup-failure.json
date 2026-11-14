@@ -1,0 +1,63 @@
+{
+  "url": "https://github.com/Listener-ai-Macau/Companion-Type/actions/runs/43562776758",
+  "runId": 43562776758,
+  "headSha": "1e4b2248cf2224d8ee605602cb81d406df929295",
+  "status": "completed",
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "name": "model-fidelity",
+      "conclusion": "failure",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349926467"
+    },
+    {
+      "name": "core-audio",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927553"
+    },
+    {
+      "name": "context-acceptance",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927563"
+    },
+    {
+      "name": "paired-product-asr",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927564"
+    },
+    {
+      "name": "core-acceptance",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927582"
+    },
+    {
+      "name": "core-ui",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927596"
+    },
+    {
+      "name": "candidate",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927605"
+    },
+    {
+      "name": "pointer-native",
+      "conclusion": "skipped",
+      "steps": [],
+      "checkRunUrl": "https://api.github.com/repos/Listener-ai-Macau/Companion-Type/check-runs/132349927832"
+    }
+  ],
+  "annotations": [
+    {
+      "level": "failure",
+      "message": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings"
+    }
+  ]
+}

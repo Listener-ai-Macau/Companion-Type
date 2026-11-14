@@ -1,0 +1,132 @@
+{
+  "at": "2026-11-14T14:47:07+08:00",
+  "state": "INTERRUPTED_COMPLEX_REQUEST_SEALED_PREFIX_DIAGNOSTIC_ONLY",
+  "fullMeetingStateRetained": "CONFIGURED_COMPLETE_COMPLEX_STREAM_STOPPED_RETAINED",
+  "lastResponseSha256": "a3a25adf2b1d89a9cc6da4e33df5297ab688ef3bde70a628c6c103362b8746f6",
+  "prefixOutputSha256": "52ae9ef122fda1cb1ae1f5e66e88f27d46111aa4507c4b8c1f65a6f4f66af98e",
+  "cutoffSecondsFromProviderNotReference": 1546.192,
+  "sentAudioSeconds": 1553.9,
+  "fullAudioSeconds": 2362.945,
+  "sealedUtterances": 310,
+  "unsealedUtterancesRetainedInOriginal": 1,
+  "referenceUtterancesCrossingProviderCutoff": [],
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "chronologicalTextDiagnostic": {
+    "referenceCharacters": 5706,
+    "hypothesisCharacters": 5745,
+    "edits": {
+      "replace": 424,
+      "delete": 384,
+      "insert": 423
+    },
+    "totalEdits": 1231,
+    "cer": 0.21573781983876622,
+    "isWholeMeetingMetric": false
+  },
+  "anonymousStreamCpCerDiagnostic": {
+    "metric": "cpCER",
+    "audioSeconds": 1546.192,
+    "referenceCharacters": 5706,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 11,
+    "edits": {
+      "replace": 396,
+      "delete": 466,
+      "insert": 505
+    },
+    "totalEdits": 1367,
+    "characterErrorRate": 0.23957237995092884,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "5",
+        "edits": 215
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "7",
+        "edits": 98
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "3",
+        "edits": 107
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "4",
+        "edits": 322
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "2",
+        "edits": 429
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "8",
+        "edits": 30
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "10",
+        "edits": 8
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "9",
+        "edits": 18
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "1",
+        "edits": 24
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "0",
+        "edits": 56
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "6",
+        "edits": 60
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "anonymousSpeakerIds": [
+    "0",
+    "1",
+    "10",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "allAudioSamplesCovered": false,
+  "finalWholeMeetingMetric": false,
+  "wordTimingVerified": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 12696,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 57425920,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

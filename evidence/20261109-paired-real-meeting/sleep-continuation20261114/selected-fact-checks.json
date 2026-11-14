@@ -1,0 +1,133 @@
+{
+  "at": "2026-11-14T13:27:03+08:00",
+  "state": "SELECTED_REFERENCE_ANNOTATION_FACT_DIAGNOSTICS",
+  "meeting": "R8001_M8004",
+  "parser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "checks": [
+    {
+      "id": "meeting-topic",
+      "criterion": "讨论新手机产品；不能变成其它产品或编造公司/型号。",
+      "sourceEvidence": [
+        {
+          "start": 6.9,
+          "end": 18.29,
+          "speaker": "c1",
+          "text": "好嗯，咱们今天针对咱们公司新出产的新出的一款这个手机啊产品啊，进行一下这个研讨会首先咱们确认一下咱们这个产品的目标，这个人群客户群这一块儿。",
+          "knownSourceFileId": "near-N_SPK8013",
+          "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "audience-proposal",
+      "criterion": "保留18–45岁为发言者提出的受众建议；与其它年龄/颜色讨论分清，不据这一句话认定已最终拍板。",
+      "sourceEvidence": [
+        {
+          "start": 83.78,
+          "end": 97.28,
+          "speaker": "c1",
+          "text": "我感觉可以根据年龄，呃和这这种就是不同的人士做一下区分，呃我感觉我们可以主要针对就是嗯十八到四十五之岁的中青年人人群嘛。",
+          "knownSourceFileId": "near-N_SPK8016",
+          "referenceSha256": "f851bd68fed0f900594f561d0db07dae7fcfd64d11785ba9aed5830eaed58299"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "gift-budget",
+      "criterion": "50元以内指赠品价值控制建议；不能写成手机售价50元或已批准的确定采购预算。",
+      "sourceEvidence": [
+        {
+          "start": 754.04,
+          "end": 760.87,
+          "speaker": "c1",
+          "text": "反正赠品的价值我感觉一一般控制在五十块钱以内就可以了，基本上如果如果你要量产的话成本应该都会很低的。",
+          "knownSourceFileId": "near-N_SPK8016",
+          "referenceSha256": "f851bd68fed0f900594f561d0db07dae7fcfd64d11785ba9aed5830eaed58299"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "supplier-quotes",
+      "criterion": "后续列赠品产品项、联系多家报价并控制成本；不编具体供应商/负责人。",
+      "sourceEvidence": [
+        {
+          "start": 759.78,
+          "end": 771.0,
+          "speaker": "c1",
+          "text": "这就看怎么去，到时候把那个咱们所要加的这些产品，到时候列个列一项，是吧，看看咱们选一下包括报价多联多联系几家，看一下这个，成本上控制尽量控制一下。",
+          "knownSourceFileId": "near-N_SPK8013",
+          "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "plan-deadline",
+      "criterion": "保留相对的下周二方案节点；原话有自我修正，不能换算成本次处理日期下的绝对日历日期。",
+      "sourceEvidence": [
+        {
+          "start": 1190.88,
+          "end": 1196.71,
+          "speaker": "c1",
+          "text": "这样我们就下下周，下周二吧，下周二之前把这方案定过来，好不好，那有没有意见。",
+          "knownSourceFileId": "near-N_SPK8013",
+          "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "closing-followup",
+      "criterion": "结尾要求会后催方案、下周二再具体商定；不能说会上全部方案已最终完成。",
+      "sourceEvidence": [
+        {
+          "start": 1526.27,
+          "end": 1538.91,
+          "speaker": "c1",
+          "text": "好，然后呢咱们这个，就就这样，然后下会下之后赶紧催催方案，好吧，然后下周二的时候我们那个再具体商确定一下好吧。行那那就那就先这样分。",
+          "knownSourceFileId": "near-N_SPK8013",
+          "referenceSha256": "10effabaf6ff4ee71aff11c712e9904dc0b14ed591b63ce86e78532f1ab2cc87"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "channel-price-order",
+      "criterion": "平台最低价活动需要分时安排的讨论；不能写成所有平台在同一天同步最低价。",
+      "sourceEvidence": [
+        {
+          "start": 1301.76,
+          "end": 1314.5,
+          "speaker": "c1",
+          "text": "所以我觉得咱们那就还得确定一个时间，然后比如说啊，咱们今天就用这个直播，然后去做那个促销的话那今天直播最低了，那不可能在京东上你还做最低，那这样儿的话，然后你就没法儿。",
+          "knownSourceFileId": "near-N_SPK8014",
+          "referenceSha256": "43541588ec038e2af457b788a2ef38221c23d001ace76ec7d53866be617671ac"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    },
+    {
+      "id": "livestream-condition",
+      "criterion": "讨论直播优惠力度时包含最低价和赠品最多的条件；保留为会议讨论，不当商家对外已承诺条款。",
+      "sourceEvidence": [
+        {
+          "start": 1233.6,
+          "end": 1246.68,
+          "speaker": "c1",
+          "text": "现在这个直播的时候，它好像做的一般都是呃只要当天直播当天就必须是最低价格，然后还得是赠品最多的情况下。这样的话，然后会呃也会影响当天的。",
+          "knownSourceFileId": "near-N_SPK8014",
+          "referenceSha256": "43541588ec038e2af457b788a2ef38221c23d001ace76ec7d53866be617671ac"
+        }
+      ],
+      "originalAudioListenedByEngineer": false
+    }
+  ],
+  "notFullFactCoverage": true,
+  "factAccuracyPercentageClaimed": false,
+  "source": "Official public manual transcript annotations, not a new audio audit or model inference.",
+  "generationInputExcludesThisFile": true,
+  "selectionScope": "Eight targeted content/condition/uncertainty checks. Not a random or exhaustive95%coverage test; no qualification follows."
+}

@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-14T14:02:01+08:00",
+  "state": "COMPLETE_GUARDED_MODEL_FRONTEND",
+  "sourceCommit": "1e4b2248cf2224d8ee605602cb81d406df929295",
+  "command": [
+    "C:\\Windows\\system32\\cmd.exe",
+    "/d",
+    "/c",
+    "npm.cmd",
+    "run",
+    "build:windows"
+  ],
+  "privatePeakBytes": 956882944,
+  "actualWindowsLowRam": false,
+  "qualityQualified": false,
+  "exitCode": 0,
+  "finishedAt": "2026-11-14T14:02:29+08:00",
+  "seconds": 27.886496299994178,
+  "limits": {
+    "pid": 25952,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 972550144,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

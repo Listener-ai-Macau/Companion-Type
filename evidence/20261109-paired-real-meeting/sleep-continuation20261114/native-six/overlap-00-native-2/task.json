@@ -1,0 +1,39 @@
+{
+  "state": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-14T13:55:21+08:00",
+  "binding": {
+    "audioSha256": "7a4ef43503ee73b5c549893502f0bc6e7b58d1255194dcceaae0c06a4468ae56",
+    "audioSeconds": 8.0,
+    "modelPackSha256": "c28046e5c8f67d4da5f6ca66227a2ebda5a3c227d15e21ac4c68d5f867be39cb"
+  },
+  "privateAudioNeverUploaded": true,
+  "attempts": [
+    {
+      "startedAt": "2026-11-14T13:55:22+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\run\\tasks\\overlap-00-native-2\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 59.71750180001254,
+      "privatePeakBytes": 1260797952,
+      "cacheOnlyExpected": false,
+      "exitCode": 0,
+      "finishedAt": "2026-11-14T13:56:22+08:00"
+    }
+  ],
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "meeting": "recording-7a4ef43503ee73b5",
+  "updatedAt": "2026-11-14T13:55:22+08:00",
+  "finishedAt": "2026-11-14T13:56:22+08:00",
+  "output": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\run\\tasks\\overlap-00-native-2\\control\\full\\transcripts\\recording-7a4ef43503ee73b5\\model-output.json",
+  "outputSha256": "da762ccc95b305175c9982f8ade7479de1bce6a7e6a08de2902aebd4cd7854a7",
+  "originalAudioUnchanged": true,
+  "wordAlignmentPending": true,
+  "speakerAttributionPending": true,
+  "accumulatedKnownOwnedProcessSeconds": 59.71750180001254,
+  "attemptsWithUnknownDuration": []
+}

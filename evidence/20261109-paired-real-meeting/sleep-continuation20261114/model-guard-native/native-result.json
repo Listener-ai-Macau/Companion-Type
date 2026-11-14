@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-14T14:03:30+08:00",
+  "state": "FAILED_OR_INTERRUPTED_MODEL_BUILD_RETAINED",
+  "sourceCommit": "1e4b2248cf2224d8ee605602cb81d406df929295",
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "E:\\CodexData\\Companion\\model-complex-fidelity20261114\\tools\\build_windows_local.py",
+    "test",
+    "--filter",
+    "overview",
+    "--output",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\sleep-continuation20261114\\model-guard-native"
+  ],
+  "privatePeakBytes": 1964199936,
+  "actualWindowsLowRam": true,
+  "qualityQualified": false,
+  "stopReason": "actual_windows_low_ram",
+  "exitCode": 15,
+  "finishedAt": "2026-11-14T14:04:58+08:00",
+  "seconds": 88.27841419997276,
+  "limits": {
+    "pid": 18640,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1981476864,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

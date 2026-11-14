@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-14T13:40:26+08:00",
+  "state": "FROZEN_ONE_GENERIC_MEASUREMENT_BINDING_CHANGE_BEFORE_CALL",
+  "purpose": "One change addressing the actual observed value/cost false acceptance; source-bound controls across two exposed real meetings.",
+  "sourcePromptCommit": "8ab57bb16b5128c1fcb17346dc5a0356fb335e73",
+  "onlyChange": "逐个核对数值绑定的对象、指标和单位；同一对象的售价、价值、成本和预算互不等价，不能因金额相同而视为支持。来源未明确承诺的数值不能改成已确定或必须。",
+  "oldPromptSha256": "66736a53550b2f933d6d14169c47b0215f661a423200c82d5e3fecaa03db5f50",
+  "newPromptSha256": "d012d94ea2005bbdcac18f08070d82fdf20c25c9a70b400fca47eb70701a9daf",
+  "expected": [
+    {
+      "id": 0,
+      "case": "actual-value-to-cost",
+      "supported": false
+    },
+    {
+      "id": 1,
+      "case": "faithful-gift-value",
+      "supported": true
+    },
+    {
+      "id": 2,
+      "case": "topic-only",
+      "supported": true
+    },
+    {
+      "id": 3,
+      "case": "reversed-value-bound",
+      "supported": false
+    },
+    {
+      "id": 4,
+      "case": "changed-measure-and-unit",
+      "supported": false
+    },
+    {
+      "id": 5,
+      "case": "faithful-speaker-claim",
+      "supported": true
+    },
+    {
+      "id": 6,
+      "case": "collapsed-distance-uncertainty",
+      "supported": false
+    },
+    {
+      "id": 7,
+      "case": "faithful-distance-uncertainty",
+      "supported": true
+    }
+  ],
+  "expectedAnswersNotSent": true,
+  "providerOrModelChanged": false,
+  "notGeneralQualification": true
+}
