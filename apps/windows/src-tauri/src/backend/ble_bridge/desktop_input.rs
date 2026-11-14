@@ -33,6 +33,24 @@ pub(super) fn trace_input(source: &str, status: &InputStatus) {
     }
 }
 
+// Bounded diagnostics for this existing ACK, including cancellation when a
+// stalled receiver is retired. No extra packet, polling or audio data.
+struct AckTrace {sequence:u32,started:Option<StdInstant>,done:bool}
+impl AckTrace {
+    fn new(sequence:u32)->Self {
+        static ENABLED:std::sync::LazyLock<bool>=std::sync::LazyLock::new(||std::env::var_os("COMPANION_DESKTOP_INPUT_DIAGNOSTICS").is_some());
+        static COUNT:std::sync::atomic::AtomicUsize=std::sync::atomic::AtomicUsize::new(0);
+        let started=(*ENABLED&&COUNT.fetch_add(1,Ordering::Relaxed)<128).then(StdInstant::now);
+        let trace=Self{sequence,started,done:false};trace.log("start",false);trace
+    }
+    fn log(&self,phase:&str,ok:bool){if let Some(start)=self.started{
+        let host=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_micros();
+        eprintln!("desktop_input_ack phase={phase} sequence={} host_unix_us={host} elapsed_us={} ok={ok}",self.sequence,start.elapsed().as_micros());
+    }}
+    fn finish(mut self,ok:bool){self.log("complete",ok);self.done=true;}
+}
+impl Drop for AckTrace {fn drop(&mut self){if !self.done{self.log("cancelled",false);}}}
+
 async fn exchange(
     device: &NativeDevice,
     characteristic: &Characteristic,
@@ -171,9 +189,11 @@ pub(crate) fn listen_mode(
                     let receive=input_stream::receive(&mut values,mode,wanted_options,&peer,&stop,&notify,
                         |sequence|async move {
                             let message=recorder_input::pointer_ack(input_peer,sequence)?;
-                            tokio::time::timeout(StdDuration::from_secs(2),input_device.peripheral.write(input_characteristic,&message,WriteType::WithResponse))
-                                .await.map_err(|_|"动作确认超时。".to_string())?
-                                .map_err(|e|format!("动作确认未完成：{e}"))
+                            let trace=AckTrace::new(sequence);
+                            let result=tokio::time::timeout(StdDuration::from_secs(2),input_device.peripheral.write(input_characteristic,&message,WriteType::WithResponse))
+                                .await.map_err(|_|"动作确认超时。".to_string())
+                                .and_then(|r|r.map_err(|e|format!("动作确认未完成：{e}")));
+                            trace.finish(result.is_ok());result
                         }).await;
                     if let Err(error)=receive {
                         if mode==3&&!stop.load(Ordering::Acquire) {
@@ -265,6 +285,74 @@ mod hardware_test {
             }
             futures::future::ready(if motion&&drop_motion{None}else{Some(value)})
         }))
+    }
+
+    #[test]
+    #[ignore="Leased fixed UID only: real stale-ACK traffic probe, no MIC, no OS cursor, no physical-click acceptance"]
+    fn real_fixed_board_pointer_ack_traffic_probe(){
+        const DEVICE:&str="C8:ED:45:EB:95:B4";
+        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-ack-probe-no-mic-no-cursor"));
+        let expected: u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("explicit actual firmware").parse().unwrap();
+        let result=run_native_blocking(async {
+            let device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
+            let run=on_native_link(&device,async {
+                let wire=read_optional_status(&device.peripheral,&device.peripheral.characteristics(),DEVICE_STATUS_UUID,116).await.ok_or("No protected identity reply")?;
+                let peer=super::super::super::recording_wire::transport::Peer::from_status(&wire)?.ok_or("No actual V2 peer")?;
+                let uid=peer.uid.iter().map(|b|format!("{b:02x}")).collect::<String>();
+                let firmware=u32::from_le_bytes(wire[4..8].try_into().unwrap());
+                if uid!="120011000d50335754363720"||firmware!=expected{return Err("Wrong fixed UID/firmware".into());}
+                let characteristic=find_characteristic(&device.peripheral.characteristics(),SETTINGS_UUID)?;
+                let echoes=Arc::new(std::sync::atomic::AtomicUsize::new(0));let observed=echoes.clone();let checked_peer=peer.clone();
+                let mut values:Notifications=Box::pin(device.peripheral.checked_notifications().map(|v|v.map(|(v,_)|v).map_err(|e|e.to_string()))
+                    .inspect(move|v|{if v.as_ref().ok().filter(|v|v.uuid==SETTINGS_UUID).and_then(|v|InputStatus::parse(&v.value,&checked_peer).ok()).is_some_and(|s|s.request==0xffff_ff00){observed.fetch_add(1,Ordering::Relaxed);}}));
+                device.peripheral.subscribe(&characteristic).await.map_err(|e|e.to_string())?;
+                let current=exchange(&device,&characteristic,&mut values,&peer,None,0).await?;
+                if current.result!=0||current.flags&6!=0||current.events&0x1e00!=0||current.sequence==0xffff_ff00 {
+                    return Err("Probe requires idle audio and no queued physical input; no mode changed".into());
+                }
+                let initial=exchange(&device,&characteristic,&mut values,&peer,Some(3),8).await;
+                if !initial.as_ref().is_ok_and(|s|s.result==0&&s.mode==3){
+                    let restore=exchange(&device,&characteristic,&mut values,&peer,Some(0),0).await;
+                    return Err(format!("Pointer mode not confirmed: {initial:?}; cleanup={restore:?}"));
+                }
+                let stop=AtomicBool::new(false);let phase=std::sync::atomic::AtomicUsize::new(0);
+                let rows=Mutex::new(Vec::<(usize,u32,u128)>::new());let started=StdInstant::now();
+                let writer=async {
+                    tokio::time::sleep(StdDuration::from_secs(2)).await;phase.store(1,Ordering::Release);
+                    let packet=recorder_input::pointer_ack(&peer,0xffff_ff00)?;
+                    let mut times=Vec::new();let mut error=None;
+                    for _ in 0..10 {
+                        let t=StdInstant::now();
+                        let write=tokio::time::timeout(StdDuration::from_secs(2),device.peripheral.write(&characteristic,&packet,WriteType::WithResponse)).await;
+                        times.push(t.elapsed().as_micros());
+                        match write {Ok(Ok(()))=>{},other=>{error=Some(format!("stale ACK write failed: {other:?}"));break;}}
+                        tokio::time::sleep(StdDuration::from_millis(50)).await;
+                    }
+                    phase.store(2,Ordering::Release);tokio::time::sleep(StdDuration::from_secs(2)).await;stop.store(true,Ordering::Release);
+                    error.map_or(Ok(times),Err)
+                };
+                let observe=|u|{
+                    if let Update::Motion(s)=u{rows.lock().unwrap().push((phase.load(Ordering::Acquire),s.sequence,started.elapsed().as_micros()));}
+                };
+                let input_peer=&peer;let input_device=&device;let input_characteristic=&characteristic;
+                let receiver=input_stream::receive(&mut values,3,8,&peer,&stop,&observe,|sequence|async move {
+                    let packet=recorder_input::pointer_ack(input_peer,sequence)?;
+                    input_device.peripheral.write(input_characteristic,&packet,WriteType::WithResponse).await.map_err(|e|e.to_string())
+                });
+                let (writes,received)=tokio::join!(writer,receiver);
+                let restored=exchange(&device,&characteristic,&mut values,&peer,Some(0),0).await;
+                let _=device.peripheral.unsubscribe(&characteristic).await;
+                let rows=rows.into_inner().unwrap();let mut samples=[0u32;3];let mut missing=[0u32;3];let mut max_gap=[0u128;3];
+                for (i,(p,seq,t)) in rows.iter().enumerate(){samples[*p]+=1;if i>0{let (_,previous,at)=rows[i-1];let delta=seq.wrapping_sub(previous);if delta>1&&delta<0x8000_0000{missing[*p]+=delta-1;}max_gap[*p]=max_gap[*p].max(t-at);}}
+                eprintln!("ACK_TRAFFIC_PROBE firmware={firmware} samples={samples:?} missing={missing:?} max_host_gap_us={max_gap:?} write_us={writes:?} echoes={} receive={received:?} mode0={restored:?} microphone_commands=0 cursor_output=false synthetic_physical_events=0",echoes.load(Ordering::Relaxed));
+                received.map_err(|e|e.message())?;writes?;
+                let restored=restored?;if restored.result!=0||restored.mode!=0{return Err("Actual mode0 not confirmed".into());}
+                if samples.iter().any(|n|*n<100){return Err("Insufficient real motion during a probe phase".into());}
+                Ok(())
+            }).await;
+            close_native_device(&device).await;run
+        });
+        result.expect("actual same-owner control traffic and mode0 restoration; not shell-tap qualification");
     }
 
     #[test]

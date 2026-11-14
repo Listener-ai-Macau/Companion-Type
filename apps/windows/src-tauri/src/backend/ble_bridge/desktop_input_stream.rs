@@ -40,6 +40,12 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
         while ack_rx.changed().await.is_ok() {
             let sequence=(*ack_rx.borrow_and_update()).unwrap();
             acknowledge(sequence).await?;
+            // Only this receiver sends to the watch slot. Duplicates already
+            // buffered DURING that write need no second identical write.
+            // A new device retry AFTER completion still wakes changed(), and
+            // a newer pending head must remain pending for its own ACK.
+            let pending=*ack_rx.borrow();
+            if pending==Some(sequence){ack_rx.borrow_and_update();}
         }
         Ok::<(),String>(())
     };
@@ -47,6 +53,7 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
     let mut tick=tokio::time::interval(Duration::from_millis(100));
     let mut motion_at=tokio::time::Instant::now();
     let mut motion_sequence=None;
+    let mut ack_sequence=None;
     loop {
         tokio::select! {
             result=&mut acknowledgements=>{result?;return Err("动作确认通道已结束。".into());},
@@ -96,7 +103,15 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                 for status in physical {
                     let ack=mode==3&&status.options&8!=0&&status.events&0x1e00!=0;
                     let sequence=status.sequence;notify(Update::Physical(status));
-                    if ack{ack_tx.send(Some(sequence)).map_err(|_|"动作确认通道已结束。")?;}
+                    if ack&&ack_sequence.is_none_or(|previous:u32|{
+                        sequence==previous||sequence.wrapping_sub(previous)<0x8000_0000
+                    }){
+                        // Seeing a newer real head proves the previous head
+                        // was removed. A delayed older callback cannot replace
+                        // that newer pending ACK. Same-head retries stay valid.
+                        ack_sequence=Some(sequence);
+                        ack_tx.send(Some(sequence)).map_err(|_|"动作确认通道已结束。")?;
+                    }
                 }
             },
         }
@@ -175,4 +190,35 @@ mod tests {
         let mut values:Notifications=Box::pin(futures::stream::pending());
         assert_eq!(receive(&mut values,1,0,&peer(),&stop,&|_|{},|_|async{Ok(())}).await,Ok(()));ending.await.unwrap();
     }
+    async fn ack_replay(controls:Vec<(u64,u32)>)->Vec<u32>{
+        use std::sync::{Arc,Mutex};
+        let stop=Arc::new(AtomicBool::new(false));let ending=stop.clone();
+        let task=tokio::spawn(async move{tokio::time::sleep(Duration::from_millis(1000)).await;ending.store(true,Ordering::Release);});
+        let origin=tokio::time::Instant::now();
+        let motion_stream=futures::stream::unfold(1u32,|s|async move{tokio::time::sleep(Duration::from_millis(10)).await;Some((Ok(motion(s)),s+1))});
+        let control_stream=futures::stream::iter(controls).then(move|(at,sequence)|async move{tokio::time::sleep_until(origin+Duration::from_millis(at)).await;Ok(click(sequence))});
+        let mut values:Notifications=Box::pin(futures::stream::select(motion_stream,control_stream));
+        let writes=Arc::new(Mutex::new(Vec::new()));let sent=writes.clone();
+        receive(&mut values,3,8,&peer(),&stop,&|_|{},move|s|{let sent=sent.clone();async move{
+            sent.lock().unwrap().push(s);tokio::time::sleep(Duration::from_millis(200)).await;Ok(())
+        }}).await.unwrap();task.await.unwrap();
+        Arc::try_unwrap(writes).unwrap().into_inner().unwrap()
+    }
+    #[tokio::test(start_paused=true)]
+    async fn duplicate_controls_buffered_during_ack_do_not_queue_redundant_writes(){
+        // The actual137 trace received the same12/13/14/15 heads4/8/10/7times.
+        // Coalesce only duplicates already seen while their own ACK is pending.
+        assert_eq!(ack_replay(vec![(100,12),(110,12),(120,12),(130,12)]).await,vec![12]);
+    }
+    #[tokio::test(start_paused=true)]
+    async fn device_retry_after_completed_ack_is_still_acknowledged(){
+        // ATT success alone cannot prove the firmware applied the ACK.
+        assert_eq!(ack_replay(vec![(100,12),(110,12),(600,12)]).await,vec![12,12]);
+    }
+    #[tokio::test(start_paused=true)]
+    async fn newer_head_is_not_lost_to_an_older_callback_or_ack_completion(){
+        assert_eq!(ack_replay(vec![(100,12),(110,12),(180,13),(190,12)]).await,vec![12,13]);
+        assert_eq!(ack_replay(vec![(100,u32::MAX),(180,1),(190,u32::MAX)]).await,vec![u32::MAX,1]);
+    }
+
 }
