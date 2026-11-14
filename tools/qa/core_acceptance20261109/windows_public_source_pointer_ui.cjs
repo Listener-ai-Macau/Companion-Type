@@ -3,8 +3,23 @@ module.exports=async(page,plan,out,reopened)=>{
  await page.locator('.ct-library-card').first().click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});
  if(!reopened){
+  await page.evaluate(()=>{
+   window.__quotePointerEvents=[];
+   document.addEventListener('click',event=>{const e=event.target instanceof Element?event.target:null;window.__quotePointerEvents.push({tag:e?.tagName,aria:e?.closest('button')?.getAttribute('aria-label'),text:e?.textContent?.slice(0,60),trusted:event.isTrusted,clientX:event.clientX,clientY:event.clientY,scrollY});},{capture:true});
+  });
+  async function settledClick(locator,label){
+   await locator.evaluate((e,label)=>{e.setAttribute('data-native-pointer-probe',label);e.scrollIntoView({block:'center',behavior:'instant'});},label);
+   await page.waitForFunction(label=>{
+    const e=document.querySelector('[data-native-pointer-probe="'+label+'"]');if(!e)return false;
+    const r=e.getBoundingClientRect(),key=[label,r.x,r.y,r.width,r.height,scrollY].join(',');
+    if(window.__quoteGeometry?.key!==key){window.__quoteGeometry={key,at:performance.now()};return false;}
+    return performance.now()-window.__quoteGeometry.at>300&&r.top>=60&&r.bottom<=innerHeight;
+   },label,{polling:50});
+   await locator.click();
+   fs.writeFileSync(path.join(out,'pointer-events-after-'+label+'.json'),JSON.stringify(await page.evaluate(()=>window.__quotePointerEvents),null,2));
+  }
   await nav.getByRole('button',{name:'文字',exact:true}).click();
-  await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
+  await settledClick(page.getByRole('button',{name:'引用转写到备注',exact:true}),'open-quote');
   const expected=plan.expectedSnapshot[0].transcriptText;
   await page.getByRole('searchbox',{name:'查找可引用的原文',exact:true}).fill(expected.slice(0,12));
   const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(expected.includes(quote));
@@ -13,18 +28,10 @@ module.exports=async(page,plan,out,reopened)=>{
    document.addEventListener('click',event=>{const e=event.target instanceof Element?event.target:null;window.__quotePointerEvents.push({tag:e?.tagName,aria:e?.closest('button')?.getAttribute('aria-label'),text:e?.textContent?.slice(0,60),trusted:event.isTrusted,scrollY});},{capture:true});
   });
   const button=page.getByRole('button',{name:'引用原文片段 1',exact:true});
-  await button.scrollIntoViewIfNeeded();
-  // Observe settled scroll geometry, rather than race a previous smooth reveal.
-  await page.waitForFunction(()=>{
-   const e=document.querySelector('[aria-label="引用原文片段 1"]');if(!e)return false;
-   const r=e.getBoundingClientRect(),key=[r.x,r.y,r.width,r.height,scrollY].join(',');
-   if(window.__quoteGeometry?.key!==key){window.__quoteGeometry={key,at:performance.now()};return false;}
-   return performance.now()-window.__quoteGeometry.at>250&&r.top>=0&&r.bottom<=innerHeight;
-  },{},{polling:50});
-  await button.click();
+  await settledClick(button,'capture-quote');
   const notes=page.locator('#ct-meeting-materials-pane');
   try{await notes.waitFor({state:'visible',timeout:10000});}
-  finally{fs.writeFileSync(path.join(out,'source-pointer-input.json'),JSON.stringify({events:await page.evaluate(()=>window.__quotePointerEvents),buttonDisabled:await button.isDisabled(),materialsVisible:await notes.isVisible(),ordinaryInput:'Playwright pointer click after observed geometry settled',quoteExactInOriginal:expected.includes(quote)},null,2));}
+  finally{const buttonPresent=await button.count();fs.writeFileSync(path.join(out,'source-pointer-input.json'),JSON.stringify({events:await page.evaluate(()=>window.__quotePointerEvents),buttonPresent,buttonDisabled:buttonPresent?await button.isDisabled():null,materialsVisible:await notes.isVisible(),ordinaryInput:'Playwright pointer click after observed geometry settled',quoteExactInOriginal:expected.includes(quote)},null,2));}
   const composer=page.locator('#ct-recording-notes .ct-note-composer');await composer.waitFor();
   assert((await composer.innerText()).includes(quote));
   await composer.getByRole('button',{name:'移除此引用',exact:true}).click();
