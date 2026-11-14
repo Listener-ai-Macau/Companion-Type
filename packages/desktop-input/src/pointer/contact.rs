@@ -86,8 +86,13 @@ impl Profile {
     }
     fn classify(&self,f:&[[f64;6]])->Option<Side>{
         let l=dtw::distance(&self.left,f);let r=dtw::distance(&self.right,f);
-        if l<r&&l<=self.left_threshold{Some(Side::Left)}
-        else if r<l&&r<=self.right_threshold{Some(Side::Right)}else{None}
+        // GRT's default is useNullRejection=false. The reliable LSM6DSO TAP
+        // already decides whether a contact happened; this stage selects its
+        // side. A radius fitted to only three examples rejected14/14 genuine
+        // Owner contacts. Keep stored thresholds for provenance/compatibility,
+        // without silently enabling the upstream optional rejection mode.
+        if l.is_finite()&&l<r{Some(Side::Left)}
+        else if r.is_finite()&&r<l{Some(Side::Right)}else{None}
     }
 }
 #[derive(Clone,Debug,Default,Serialize)]
