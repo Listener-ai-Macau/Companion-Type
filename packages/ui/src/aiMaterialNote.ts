@@ -11,15 +11,24 @@ export function materialNote(value:AiSave){
 export function readMaterialNote(note:{id:string;text:string;createdAt?:string}):AiMaterial|null{
  if(!note.text.startsWith(prefix))return null;
  const newline=note.text.indexOf('\n');if(newline<0)return null;
- return {id:note.id,title:note.text.slice(prefix.length,newline),body:note.text.slice(newline+1),createdAt:note.createdAt,edited:note.text.slice(newline+1).startsWith('含人工编辑\n')};
+ const raw=note.text.slice(newline+1),parts=readSavedParts(raw);
+ return {id:note.id,title:note.text.slice(prefix.length,newline),body:parts?parts.display:raw,question:parts?.question,createdAt:note.createdAt,edited:raw.startsWith('含人工编辑\n')};
+}
+
+/** Read only the known unambiguous envelope. All saved source quotes survive;
+ * ambiguous or multiline custom envelopes remain literal, without guessing. */
+function readSavedParts(raw:string):{question:string;answer:string;display:string}|null{
+ const header=/^(?:AI生成草稿|含人工编辑)\n(查询未完成[^\n]*\n)?问题：([^\n]+)\n\n/.exec(raw);
+ const marker='\n\n原文依据：\n',end=raw.indexOf(marker);
+ if(!header||end<header[0].length||raw.indexOf(marker,end+marker.length)!==-1)return null;
+ const answer=raw.slice(header[0].length,end),warning=header[1]?.trim();
+ return {question:header[2],answer,display:(warning?warning+'\n\n':'')+raw.slice(header[0].length)};
 }
 
 /** Prefer the saved answer in search previews. Ambiguous/custom notes keep
  * their full text; this never changes the stored material or its sources. */
 export function materialAnswerText(note:{id:string;text:string}):string|null {
- const material=readMaterialNote(note);if(!material)return null;
- const header=/^(?:AI生成草稿|含人工编辑)\n(?:查询未完成[^\n]*\n)?问题：[^\n]+\n\n/.exec(material.body);
- const marker='\n\n原文依据：\n',end=material.body.indexOf(marker);
- if(!header||end<header[0].length||material.body.indexOf(marker,end+marker.length)!==-1)return null;
- return material.body.slice(header[0].length,end).trim()||null;
+ if(!note.text.startsWith(prefix))return null;
+ const newline=note.text.indexOf('\n');if(newline<0)return null;
+ return readSavedParts(note.text.slice(newline+1))?.answer.trim()||null;
 }

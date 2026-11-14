@@ -9,6 +9,7 @@ import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from 
 import { cleanHesitations, transcriptParagraphs } from './transcriptReading';
 import { MeetingTopic } from './MeetingTopic';
 import { MeetingDisclosure } from './MeetingDisclosure';
+import { MinutesTemplatePreview } from './MinutesTemplatePreview';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {readRestoredCustomTemplates} from './customTemplateBackup';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
@@ -646,7 +647,9 @@ export function CompanionDashboard({
   const [referenceView,setReferenceView]=useState<ReferenceView>('notes');
   const [meetingPane,setMeetingPane]=useState<MeetingPane>('result');
   const [noteBusy,setNoteBusy]=useState(false);
-  const [noteUnsaved,setNoteUnsaved]=useState(false);
+  const [manualNoteUnsaved,setNoteUnsaved]=useState(false);
+  const [aiDraftUnsaved,setAiDraftUnsaved]=useState(false);
+  const noteUnsaved=manualNoteUnsaved||aiDraftUnsaved;
   const [audioEditUnsaved,setAudioEditUnsaved]=useState(false);
   const [editSourceSeek,setEditSourceSeek]=useState<{id:string;positionMs:number}|null>(null);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
@@ -2383,7 +2386,7 @@ export function CompanionDashboard({
             if(pane==='result')setRecordingResultOpen(true);
             if(pane==='handoff')setNoteExportTarget(null);
           }} dirty={{result:minutesDirty,source:transcriptReviewUnsaved,materials:noteUnsaved}}
-            notesCount={selectedSession.meetingNotes?.length??0}/>:<nav className="ct-meeting-dock" aria-label="这场会议的工具">
+            notesCount={selectedSession.meetingNotes?.length??0} onAsk={onAskMeetings&&(finalTranscript||documentScopes.length>0)?()=>revealMeetingTool('ct-meeting-qa'):undefined} askBlocked={controlsBusy||qaBusy||storageBlocked}/>:<nav className="ct-meeting-dock" aria-label="这场会议的工具">
             {onExportAudio&&hasOriginalAudio?<button type="button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>{setRecordingToolsOpen(true);revealMeetingTool('ct-recording-audio-export');}}><Download size={16}/>导出录音</button>:null}
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-recording-result');}}><FileText size={16}/>会议纪要</button>:null}
             {finalTranscript?<button type="button" onClick={()=>{setTranscriptReviewOpen(true);revealMeetingTool('ct-recording-text-review');}}><Headphones size={16}/>转写原文</button>:null}
@@ -2689,6 +2692,7 @@ export function CompanionDashboard({
                 {savedCustomTemplates.length ? <optgroup label="已保存或恢复的自定义模板">{savedCustomTemplates.map((saved,index)=>
                   <option key={JSON.stringify([saved.name,saved.instructions])} value={`saved:${index}`}>{saved.name||'未命名模板'}{savedCustomTemplates.filter(item=>item.name===saved.name).length>1?` · 同名 ${savedCustomTemplates.slice(0,index+1).filter(item=>item.name===saved.name).length}`:''}</option>)}</optgroup> : null}
               </select></label>
+              <MinutesTemplatePreview template={templateId==='custom'?{id:'custom',name:customTemplate.name,instructions:customTemplate.instructions}:{id:templateId}}/>
               {templateId==='custom' ? <div className="ct-field">
                 <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>updateCustomTemplate({...customTemplate,name:event.target.value})}/></label>
                 <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>updateCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
@@ -2800,6 +2804,8 @@ export function CompanionDashboard({
               onOpenDocuments={documentAdapter&&!readingPreview?()=>revealMeetingTool('ct-document-context'):undefined}
               onOpenNotes={()=>revealMeetingTool('ct-recording-notes')}
               onOpenSource={(id,quote)=>{if(id.startsWith('document:')){setDocumentSource({id:id.slice(id.lastIndexOf(':')+1),quote,nonce:crypto.randomUUID()});revealMeetingTool('ct-document-context');return;}setQaPendingCitation({sessionId:id,title:meetingTitle(allLibrarySessions.find(row=>row.id===id)??selectedSession),quote});setOpenSavedRecordingId(id);setOpenSavedRecordingTarget('source');if(selectedSession.id!==id)onControl({action:'meetingSelectSession',sessionId:id});}}
+              onUnsavedChange={setAiDraftUnsaved}
+              onExportSaved={onPreviewMeetingExport?noteId=>{setMeetingPane('handoff');setNoteExportTarget({requestId:crypto.randomUUID(),sessionId:selectedSession.id,noteId});}:undefined}
               onLoadSaved={async()=> (selectedSession.meetingNotes??[]).map(readMaterialNote).filter((value):value is NonNullable<typeof value>=>value!==null)}
               onSave={async value=>{if(!onSaveNote)throw Error('当前环境未提供材料保存，请复制文字保留。');const source=qaSessionsRef.current.find(row=>row.id===selectedSession.id&&!row.organization?.trashedAt);if(!source)throw Error('当前会议已移除，未保存到其他会议。');
                 const note=materialNote(value),saved=await onSaveNote({sessionId:source.id,noteId:value.id,expectedRevision:source.noteRevision??0,action:'add',text:note,bookmarkId:null});

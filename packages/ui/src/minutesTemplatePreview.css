@@ -1,0 +1,4 @@
+body .ct-notebook .minutes-template-preview,.mobile-app .minutes-template-preview{padding:12px 0;margin:12px 0;border:0;border-top:1px solid var(--notebook-line);background:transparent;color:var(--notebook-ink)}
+.minutes-template-preview>summary{font-size:12px;font-weight:500;cursor:pointer;color:var(--notebook-accent)}
+body .ct-notebook .minutes-template-preview>p,.mobile-app .minutes-template-preview>p{margin:12px 0 8px;font-size:13px;font-weight:400;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--notebook-ink)}
+.minutes-template-preview>small{font-size:11px;line-height:1.8;color:var(--notebook-muted)}
