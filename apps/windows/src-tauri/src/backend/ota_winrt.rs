@@ -585,6 +585,33 @@ fn wait_ota_rf_admission(path:&std::path::Path,nonce:&str,device:&str,not_before
     }
 }
 
+fn already_installed_system_report(device_id:String,package:&super::system_ota::Package,identity:&[u8],elapsed:Duration)->CompanionOtaBleReport {
+    let transfer=denzic_ota_core::TransferReport{firmware_bytes:0,resumed_bytes:0,data_writes:0,status_reads:2,
+        recovered_offsets:0,active_link_confirmed:true,finish_confirmed:false,
+        timings:denzic_ota_core::TransferTimings{total:elapsed,..Default::default()}};
+    let payload_metrics=super::ota_metrics::PayloadMetrics::paired(0,0,None);
+    let receipt=if &identity[..4]==b"WSI4" {"WSI4-running-layout-version-and-signed-payload-sha"}
+        else {"WSI3-running-version-and-signed-payload-sha"};
+    let system_bundle=Some(serde_json::json!({"bundleId":package.id,"alreadyInstalled":true,
+        "jointConfirmed":true,"temporarySpaceReleased":true,"receipt":receipt,
+        "firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
+        "packageLayout":package.layout_metadata(),"downloadBytesSent":0,"upgradeCommandsSent":0,
+        "verificationElapsedMs":elapsed.as_millis()}));
+    eprintln!("[companion-ota] already_installed_exact_payload_verified=1 data_writes=0 upgrade_commands=0");
+    CompanionOtaBleReport{device_id,transfer,payload_metrics,system_bundle}
+}
+
+// Used before the recording drain only when the current device snapshot hints
+// at this version. The uncached protected running receipt remains authoritative.
+pub(super) fn reconfirm_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<Option<CompanionOtaBleReport>,String> {
+    let started=Instant::now();let target=open_ota_target(requested_device_id)?;
+    read_simple_protected_status(&target)?;
+    let identity=open_read_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"核对已安装的更新")?;
+    let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"核对已安装的更新",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+    if package.needs_download(&current)? {return Ok(None);}
+    Ok(Some(already_installed_system_report(target.device_id.clone(),package,&current,started.elapsed())))
+}
+
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
     let requested_profile=super::ota_flow::SimpleTransportProfile::from_env()?;
     let rf_request=ota_rf_admission_request()?;
@@ -601,7 +628,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
     let identity=open_read_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"当前升级版本")?;
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
-    package.admit(&current)?;drop(identity);
+    if !package.needs_download(&current)? {
+        return Ok(already_installed_system_report(target.device_id.clone(),package,&current,started.elapsed()));
+    }
+    drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
     let transport_profile=requested_profile.resolve(flow,mtu,device_link_budget);
     transport_profile.require_link(device_link_budget)?;

@@ -4213,6 +4213,10 @@ impl CompanionBackend for FixtureCompanionBackend {
         let device_id=effective_device_target(request.device_id.as_deref(),snapshot.device.device_id.as_deref())
             .or(snapshot.device.remembered_device_id).ok_or("请先选择要升级的设备。")?;
         request.device_id=Some(device_id.clone());
+        if let Some(mut report)=firmware_ota::reconfirm_if_current_version(&request,snapshot.device.firmware_version)? {
+            report.elapsed_ms=whole_started.elapsed().as_millis();
+            return Ok(report);
+        }
         eprintln!("[companion-ota] recording_drain_begin device={device_id} ota_begin_allowed=0");
         let drain_started=std::time::Instant::now();
         let operation=match self.ble_bridge.sync_recordings_before_ota(&device_id) {

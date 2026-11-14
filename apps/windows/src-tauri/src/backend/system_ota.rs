@@ -127,6 +127,12 @@ impl Package {
         word(identity,8)==self.resource_version&&word(identity,12)==self.static_bytes&&
         word(identity,16)==0&&word(identity,20)==1&&identity[24..56]==self.payload_sha
     }
+    // Reconfirm the exact running signed payload after a lost installation
+    // receipt. A version label alone cannot turn a retry into success.
+    pub(super) fn needs_download(&self,identity:&[u8])->Result<bool,String> {
+        if self.installed(identity) {return Ok(false);}
+        self.admit(identity)?;Ok(true)
+    }
     pub(super) fn admit(&self,identity:&[u8])->Result<(),String> {
         // A new explicit BEGIN replaces an incomplete receive from byte0.
         // Windows can retain a physical link after the previous app exits;
@@ -186,6 +192,27 @@ impl Package {
         let mut i=vec![0;56];i[..4].copy_from_slice(b"WSI3");
         for (at,n) in [(4,501u32),(8,73),(12,8192),(20,1)]{i[at..at+4].copy_from_slice(&n.to_le_bytes());}i[24..].fill(7);
         assert!(p.installed(&i));i[16]=1;assert!(!p.installed(&i));i[16]=0;i[24]=8;assert!(!p.installed(&i));
+    }
+    #[test] fn retry_confirms_only_the_exact_running_file_without_new_download() {
+        let p=Package{id:String::new(),file:vec![],firmware_bytes:8,resource_bytes:8192,
+            app_version:835,resource_version:85,static_bytes:8192,payload_sha:[7;32],layout:Layout::NOR24};
+        let mut i=vec![0;60];i[..4].copy_from_slice(b"WSI4");
+        for (at,n) in [(4,835u32),(8,85),(12,8192),(20,1),(56,Layout::NOR24.target)] {
+            i[at..at+4].copy_from_slice(&n.to_le_bytes());
+        }
+        i[24..56].fill(7);assert_eq!(p.needs_download(&i),Ok(false));
+        // Same version with another payload, pending work or wrong geometry
+        // must never use the read-only success path.
+        for (at,value) in [(24,8),(16,1),(20,0),(56,0)] {
+            let mut bad=i.clone();bad[at]=value;assert!(p.needs_download(&bad).is_err());
+        }
+        for length in [0,3,55,59,61] {
+            let mut bad=i.clone();bad.resize(length,0);assert!(p.needs_download(&bad).is_err());
+        }
+        i[4..8].copy_from_slice(&834u32.to_le_bytes());
+        i[16..20].copy_from_slice(&4096u32.to_le_bytes());
+        assert_eq!(p.needs_download(&i),Ok(true)); // ordinary fresh BEGIN still allowed
+        i[4..8].copy_from_slice(&836u32.to_le_bytes());assert!(p.needs_download(&i).is_err());
     }
     #[test] fn exact_real_producer_file_and_corruption() {
         let Ok(input)=std::env::var("COMPANION_SIMPLE_PACKAGE_FIXTURE") else{return;};

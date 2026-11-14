@@ -44,6 +44,7 @@ pub struct CompanionFirmwareOtaReport {
     pub protocol: String,
     pub device_id: String,
     pub package_type: String,
+    pub already_installed: bool,
     pub firmware_bytes: usize,
     pub data_writes: u32,
     pub status_reads: u32,
@@ -148,6 +149,20 @@ pub fn validate_ota_package(
     })
 }
 
+pub(super) fn reconfirm_if_current_version(
+    request:&CompanionFirmwareOtaRequest,current_version:Option<u32>,
+)->Result<Option<CompanionFirmwareOtaReport>,String> {
+    let package=super::system_ota::load(Path::new(&request.manifest_path))?;
+    // Leave ordinary higher-version updates on the existing connection path.
+    if current_version!=Some(package.app_version) {return Ok(None);}
+    #[cfg(windows)] {
+        let started=Instant::now();
+        return super::ota_winrt::reconfirm_system_ota_winrt(request.device_id.as_deref(),&package)
+            .map(|result|result.map(|r|report(r,"companion-system-ota".into(),started.elapsed().as_millis())));
+    }
+    #[cfg(not(windows))] {Ok(None)}
+}
+
 pub fn transfer(
     bridge: &CompanionBleBridge,
     request: CompanionFirmwareOtaRequest,
@@ -220,6 +235,7 @@ fn report(
         protocol: denzic_ota_core::PROTOCOL_NAME.to_string(),
         device_id: result.device_id,
         package_type,
+        already_installed: result.system_bundle.as_ref().is_some_and(|b|b["alreadyInstalled"]==true),
         firmware_bytes: result.transfer.firmware_bytes,
         data_writes: result.transfer.data_writes,
         status_reads: result.transfer.status_reads,

@@ -330,7 +330,7 @@ export interface CompanionDashboardProps {
     manifestPath: string;
     firmwarePath: string;
     deviceId?: string | null;
-  }) => Promise<{ packageType: string; firmwareBytes: number; elapsedMs: number; deviceId: string }>;
+  }) => Promise<{ packageType: string; alreadyInstalled?: boolean; firmwareBytes: number; elapsedMs: number; deviceId: string }>;
 }
 
 // Present the existing local rule draft without its generated diagnostic metadata.
@@ -3574,7 +3574,9 @@ export function CompanionDashboard({
                     .then((report) => {
                       if (!report) return;
                       setResourceMsg(
-                        report.packageType==='companion-system-ota'
+                        report.alreadyInstalled
+                          ? '设备已运行这份固件与资源，完整校验已核对，无需重新传输。'
+                          : report.packageType==='companion-system-ota'
                           ? `固件与资源已更新，设备重启确认成功 · ${report.firmwareBytes} B`
                           : `数据传输完成 · ${report.firmwareBytes} B；尚未确认整套升级。`,
                       );

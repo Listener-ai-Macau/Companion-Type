@@ -297,6 +297,7 @@ export type CompanionFirmwareOtaReport = {
   protocol: string;
   deviceId: string;
   packageType: string;
+  alreadyInstalled: boolean;
   firmwareBytes: number;
   dataWrites: number;
   statusReads: number;
