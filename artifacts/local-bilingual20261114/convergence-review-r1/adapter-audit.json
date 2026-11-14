@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-14T22:32:08+08:00",
+  "state": "STATIC_ADAPTER_STREAM_LIFETIME_AUDIT_NO_MIDDLE_RESET_FOUND",
+  "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_nemotron_worker_20261107.py",
+  "workerSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "actualCallLines": {
+    "nemo_speech_diar_stream_open": [
+      64
+    ],
+    "nemo_speech_diar_stream_finish": [
+      83
+    ],
+    "nemo_speech_diar_stream_close": [
+      92
+    ]
+  },
+  "streamOpenFinishCloseInsideAudioPushLoop": false,
+  "runtimeHeader": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-vulkan\\nemo-speech-0.3.0-windows-x86_64-vulkan\\include\\nemo_speech\\diar.h",
+  "runtimeHeaderSha256": "a7139003f203c6dff54f45d41e3f0b0692673e5e98c9498684b610aa438cf5ca",
+  "confirmed": "Adapter opens one stream before the audio loop and only finishes/closes it at end. Completed producer independently records one continuous stream and full sample coverage.",
+  "unknown": "Native model internal identity/cache updates have not been audited. This does not prove the cause is a native cache bug or establish a fix.",
+  "newNeuralCalls": 0,
+  "newWeightUpdates": 0,
+  "productCodeChanged": false
+}
