@@ -155,3 +155,13 @@ body:has(.ct-notebook){background:var(--nb-paper,#fff)}
 .ct-windows.ct-notebook .ct-content-preview pre{background:var(--nb-side);border-color:var(--nb-line);color:var(--nb-ink)}
 .ct-notebook.ct-theme-dark .ct-step-warn{color:#fbbf24}
 .ct-notebook.ct-theme-dark .ct-step-error{color:#fca5a5}
+.ct-windows.ct-notebook .ct-library-active-filters{margin:0 5px 14px}
+.ct-windows.ct-notebook .ct-library-selection-context{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 8px;margin:0 5px 12px;border-block:1px solid var(--nb-line);font-size:12px}
+.ct-windows.ct-notebook .ct-library-selection-context>strong{margin-right:auto;font-size:12px;font-weight:500}
+.ct-windows.ct-notebook .ct-library-selection-context>button{font-size:11px;padding:5px 0}
+.ct-windows.ct-notebook .ct-library-scope-warning{margin:0 8px 12px;color:var(--nb-muted);font-size:11px;line-height:1.7}
+.ct-windows.ct-notebook .ct-library-choose-first{padding:20px 0 8px}
+.ct-windows.ct-notebook .ct-library-choose-first h3{margin:0 0 8px;font-size:17px;font-weight:600}
+.ct-windows.ct-notebook .ct-library-choose-first p{margin:0 0 18px;color:var(--nb-muted);font-size:13px}
+.ct-windows.ct-notebook .ct-library-target-summary{margin:16px 0;padding:12px 14px;border:1px solid var(--nb-line);border-radius:6px;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+.ct-windows.ct-notebook .ct-library-tools>[hidden]{display:none!important}

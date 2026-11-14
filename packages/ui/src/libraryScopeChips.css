@@ -1,0 +1,8 @@
+.library-scope-chips{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:10px 0 16px;min-width:0}
+.library-scope-chips .library-scope-chip{display:inline-flex;align-items:center;gap:7px;max-width:100%;min-height:30px;padding:4px 8px;border:1px solid var(--notebook-line);border-radius:5px;box-shadow:none;background:var(--notebook-paper);color:var(--notebook-ink);font:inherit;font-size:11px;line-height:1.6;text-align:left}
+.library-scope-chip>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.library-scope-chip>svg{flex:none;color:var(--notebook-muted)}
+.library-scope-chips .library-scope-clear{min-height:30px;padding:4px 3px;border:0;border-radius:4px;background:transparent;color:var(--notebook-muted);font:inherit;font-size:11px;line-height:1.6}
+.library-scope-chips button:hover{background:var(--notebook-selection)}
+.library-scope-chips button:focus-visible{outline:2px solid var(--notebook-accent);outline-offset:2px}
+@media(pointer:coarse){.library-scope-chips button{min-height:44px}}

@@ -6,7 +6,7 @@ import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '.
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import {CompanionLibraryLifeActions} from './CompanionLibraryLifeActions';
 export interface LibraryFilters {folder:string;tag:string;favorites:boolean;from?:string;to?:string;trash?:boolean}
-export function CompanionLibraryTools({mode='all',sessions,visible,selection,setSelection,filters,setFilters,blocked,restoreBlocked,onSave,onExport,onBackup,onRestore,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
+export function CompanionLibraryTools({mode='all',sessions,visible,selection,setSelection,filters,setFilters,blocked,restoreBlocked,onSave,onExport,onBackup,onRestore,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange,onChoose}:{
   mode?:'all'|'filter'|'manage';sessions:CompanionV1HostSession[];visible:CompanionV1HostSession[];selection:Record<string,number>;
   setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;restoreBlocked?:boolean;
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
@@ -15,7 +15,7 @@ export function CompanionLibraryTools({mode='all',sessions,visible,selection,set
   onRestore?:()=>Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string;templateRestoreOnly?:boolean})|null>;
   onSaveLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurge?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
-  onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;
+  onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;onChoose?:()=>void;
 }) {
  const [folder,setFolder]=useState('');const [applyFolder,setApplyFolder]=useState(false);
  const [tags,setTags]=useState('');const [tagAction,setTagAction]=useState('keep');const [favorite,setFavorite]=useState('keep');
@@ -61,6 +61,8 @@ export function CompanionLibraryTools({mode='all',sessions,visible,selection,set
   catch(e){setMessage(`恢复未完成：${operationErrorText(e,'save')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
+ const chooseVisible=()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])));
+ const noTargets=mode==='manage'&&!ids.length&&!draft;
  return <section className="ct-library-tools" aria-label="录音分类与批量整理">
   {mode!=='manage'&&<>
   <div className="ct-audio-tools">
@@ -86,11 +88,17 @@ export function CompanionLibraryTools({mode='all',sessions,visible,selection,set
       {onRestore?<button type="button" className="ct-action" disabled={(restoreBlocked??blocked)||busy||draft} onClick={()=>void restoreLibrary()}>{busy?'正在处理…':'从备份恢复'}</button>:null}
     </div>
   </details>:null}
+  {noTargets?<div className="ct-library-choose-first"><h3>先选择要整理的录音</h3><p>选择后可统一分类、导出或移入回收站。</p><div className="ct-button-row">
+   {onChoose?<button type="button" className="ct-action ct-action-primary" disabled={blocked||busy} onClick={onChoose}>返回列表选择</button>:null}
+   <button type="button" className="ct-action" disabled={blocked||busy||!visible.length||visible.length>1000} onClick={chooseVisible}>选择当前结果（{visible.length} 条）</button>
+  </div></div>:null}
+  <div hidden={noTargets}>
+  {mode==='manage'&&ids.length>0?<p className="ct-library-target-summary">已选 {ids.length} 条：{ids.slice(0,3).map(id=>sessions.find(s=>s.id===id)?.title||'未命名录音').join('、')}{ids.length>3?'…':''}</p>:null}
   <details open={mode==='manage'?true:undefined}><summary>{filters.trash?'恢复或清除所选录音':'整理所选录音'} · 已选 {ids.length} 场</summary>
    <p>{filters.trash?'勾选要找回的录音，再点恢复；永久清除需要另外确认。':'文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。'}</p>
    <div className="ct-audio-tools">
-    <button type="button" className="ct-action" disabled={blocked||(!onSave&&!onExport&&!onSaveLifecycle)||!visible.length||visible.length>1000} onClick={()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])))}>选择当前筛选结果（{visible.length} 场）</button>
-    <button type="button" className="ct-action" disabled={busy||!ids.length} onClick={()=>setSelection({})}>清除整理选择</button>
+    <button type="button" className="ct-action" disabled={blocked||busy||draft||(!onSave&&!onExport&&!onSaveLifecycle)||!visible.length||visible.length>1000} onClick={chooseVisible}>选择当前筛选结果（{visible.length} 场）</button>
+    <button type="button" className="ct-action" disabled={busy||draft||!ids.length} onClick={()=>setSelection({})}>清除整理选择</button>
     <span>其中 {ids.filter(id=>!visible.some(s=>s.id===id)).length} 场不在当前筛选中</span>
    </div>
    {draft?<button type="button" className="ct-action" disabled={busy} onClick={()=>{setApplyFolder(false);setTagAction('keep');setFavorite('keep');}}>撤销分类修改</button>:null}
@@ -123,6 +131,7 @@ export function CompanionLibraryTools({mode='all',sessions,visible,selection,set
     blocked={blocked||busy} draft={draft} onSave={onSaveLifecycle} onPurge={onPurge} onBusyChange={onBusyChange}/>:null}
    {visible.length>1000?<p>一次最多整理1000场，请先缩小筛选范围。</p>:null}
   </details>
+  </div>
   </>}
   {message?<p role="status">{message}</p>:null}
  </section>;
