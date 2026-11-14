@@ -95,3 +95,24 @@
 .mobile-app .minutes-document{min-width:0;grid-template-columns:minmax(0,1fr)}
 .mobile-app :is(.minutes-section,.ct-overview-topic){min-width:0;max-width:100%}
 .mobile-app .ct-overview-topic>summary{min-width:0;max-width:100%}
+
+/* Keep the recording itself above its secondary tools, including on short phones. */
+.mobile-app .detail-page{padding-top:20px}
+.mobile-app .detail-title{gap:8px;margin-bottom:12px}
+.mobile-app .detail-title>div{min-width:0;flex:1}
+.mobile-app .detail-title h1{font-size:21px;font-weight:600;line-height:1.45;overflow-wrap:anywhere}
+.mobile-app .detail-title>.text-button{flex:none;min-width:44px;min-height:44px;margin-top:-6px;padding:10px 5px;font-size:11px}
+.mobile-app .detail-meta{margin-top:7px;margin-bottom:0;line-height:1.6}
+.mobile-app .player-card-idle{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;margin-bottom:10px;border-top:0;min-height:44px}
+.mobile-app .player-card-idle .player-control{min-height:44px;min-width:0;flex:1}
+.mobile-app .player-card-idle .player-button{width:30px;height:30px}
+.mobile-app .player-card-idle .player-copy{display:flex;align-items:center;gap:10px;min-width:0}
+.mobile-app .player-card-idle .player-copy>strong{font-size:12px;white-space:nowrap}
+.mobile-app .player-card-idle .player-copy>span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mobile-app .player-card-idle .playback-tools-idle{margin:0;flex:none}
+.mobile-app .player-card-idle .playback-restart{font-size:11px;min-height:44px}
+.mobile-app .recording-content-navigation{margin-bottom:16px}
+.mobile-app #detail-panel-minutes>.minutes-panel-heading{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.mobile-app .recording-content-more>div{min-width:172px;padding:6px;box-shadow:0 4px 16px #00000012}
+.mobile-app .recording-content-more button:hover,.mobile-app .recording-content-more button:focus-visible{background:var(--accent-soft)}
+@media(max-width:350px){.mobile-app main{padding-inline:18px}.mobile-app .detail-title h1{font-size:20px}.mobile-app .detail-tabs{gap:18px}.mobile-app .player-card-idle .player-copy>span{max-width:9em}}
