@@ -41,14 +41,14 @@ def verified_reuse(receipt,target,version,local_crates=False):
  # No changed build scripts, C/FFI sources, manifests, features or toolchain.
  allowed=lambda name:name.endswith('.rs') and (name.startswith('apps/windows/src-tauri/src/') or name.startswith('packages/desktop-input/src/'))
  reference={'third_party/imu-pointer/grt/DTW.cpp'} if local_crates else set()
- assert not removed and added<=reference,'Native source inventory changed; use cold-build reserve'
+ assert not removed and all(name in reference or(local_crates and allowed(name))for name in added),'Native source inventory changed; use cold-build reserve'
  changed=[name for name,digest in inputs.items()if sha(ROOT/name)!=digest]
  assert all(local_crates and allowed(name)for name in changed),'External/native build inputs changed; use cold-build reserve'
  for row in previous['sourceFiles']:
   name=row['path']
   if name.endswith(('Cargo.toml','Cargo.lock')) and name not in ['apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock']:
    assert sha(ROOT/name)==row['sha256'],'Dependency configuration changed: '+name
- for name in added:
+ for name in added&reference:
   # The pinned C++ reference is shipped as source/provenance; neither build
   # script compiles it. The actual linked implementation is the local Rust port.
   assert 'DTW.cpp' not in (ROOT/'packages/desktop-input/build.rs').read_text()
@@ -64,7 +64,7 @@ def verified_reuse(receipt,target,version,local_crates=False):
    before=before.replace(old,('version = "'+version+'"').encode())
   assert before==after,'Cargo dependencies changed; use cold-build reserve'
  assert (target/'release/deps').is_dir() and (target/'release/companion-type.exe').is_file()
- return dict(receipt=str(receipt),receiptSha256=sha(receipt),sourceCommit=previous['sourceCommit'],unchangedNativeInputs=len(inputs)-len(changed),changedLocalRustInputs=changed,newUncompiledReferenceInputs=sorted(added),cargoDependenciesUnchanged=True,reuseScope='two-local-crates'if local_crates else'unchanged-native',reservedGiB=2)
+ return dict(receipt=str(receipt),receiptSha256=sha(receipt),sourceCommit=previous['sourceCommit'],unchangedNativeInputs=len(inputs)-len(changed),changedLocalRustInputs=changed,newLocalRustInputs=sorted(added-reference),newUncompiledReferenceInputs=sorted(added&reference),cargoDependenciesUnchanged=True,reuseScope='two-local-crates'if local_crates else'unchanged-native',reservedGiB=2)
 def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
  parser.add_argument('--reuse-build-receipt',type=Path,help='Completed same-target build with exact native inputs; reserve2GiB for an app-only rebuild')
