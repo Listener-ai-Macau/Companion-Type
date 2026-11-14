@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63"
+  },
+  "raw": {
+    "index": 37,
+    "startSample": 17837999,
+    "endSample": 18391232,
+    "text": "我觉得还得是时间，然后跟着人，然后一块儿，咱们敲定一个最合适的方案出来。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      104288,
+      108475,
+      20412,
+      20450,
+      3837,
+      101889,
+      104578,
+      17340,
+      3837,
+      101889,
+      104474,
+      99261,
+      3837,
+      104335,
+      105353,
+      22382,
+      46944,
+      31235,
+      106873,
+      100389,
+      99898,
+      1773,
+      151645
+    ],
+    "rawDecoded": "我觉得还得是时间，然后跟着人，然后一块儿，咱们敲定一个最合适的方案出来。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.923419200000353,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 553233,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3457,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "73f5f50f8635967c8e844df59d8fb2e69307c36c620d977e6440b3a954dd969a"
+}

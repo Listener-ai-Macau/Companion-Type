@@ -1,0 +1,192 @@
+{
+  "at": "2026-11-14T19:31:05+08:00",
+  "state": "SECOND_PAIRED_NATIVE_INPUT_COMPLETE_STRICT_QUALITY_STILL_OPEN",
+  "memoryAudit": {
+    "scope": "Long-lived applications outside VS Code, excluding temporary build/upload jobs.",
+    "largeConfirmedIdleResidentFound": false,
+    "programsStopped": [],
+    "currentTaskBrowserTabs": 0,
+    "appUpdateWasAutomaticNotMemoryCleanup": true
+  },
+  "modelResume": {
+    "startAvailableBytes": 4001644544,
+    "nativeCompletedAt": "2026-11-14T19:19:07+08:00",
+    "completedWindows": 52,
+    "totalWindows": 52,
+    "model": "Qwen/Qwen3-ASR-1.7B-hf",
+    "weightsChanged": false,
+    "cpuMaximumPercent": 5,
+    "privateMemoryLimitBytes": 2147483648,
+    "cacheFinalizationNewNeuralCalls": 0,
+    "outerAttemptDurationUnknown": [
+      3
+    ]
+  },
+  "strictResults": [
+    {
+      "id": "near-N_SPK8013",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 4049,
+      "hypothesisCharacters": 4052,
+      "edits": {
+        "replace": 285,
+        "delete": 110,
+        "insert": 113
+      },
+      "totalEdits": 508,
+      "cer": 0.1254630773030378,
+      "strictBelowFivePercent": false,
+      "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "outputSha256": "24753b4b35566169b6555ce1b7a8a59dd4931b8f7795239a98257e8a207afab9",
+      "taskReceiptSha256": "7b764ac4aba45290092c365d945a20843d0248da46d5e885c5ec5d520a65cd6f",
+      "accumulatedKnownOwnedProcessSeconds": 906.3692061999973,
+      "attemptsWithUnknownDuration": [],
+      "includesRetainedFailedAttemptTime": true,
+      "modelLoadedSeconds": 39.23673589999089,
+      "sameInputProductParaformer": {
+        "cer": 0.5366757224005927,
+        "edits": {
+          "replace": 332,
+          "delete": 94,
+          "insert": 1747
+        }
+      },
+      "knownSourceIdentityNotAutomaticDiarization": true
+    },
+    {
+      "id": "near-N_SPK8014",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2944,
+      "hypothesisCharacters": 4150,
+      "edits": {
+        "replace": 43,
+        "delete": 31,
+        "insert": 1237
+      },
+      "totalEdits": 1311,
+      "cer": 0.4453125,
+      "strictBelowFivePercent": false,
+      "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+      "taskReceiptSha256": "c8871a29070c283cb387e1e667f5cb92ad9acf8287ae687e05b2cf60d3bdb70a",
+      "accumulatedKnownOwnedProcessSeconds": 367.33712500002,
+      "attemptsWithUnknownDuration": [
+        3
+      ],
+      "includesRetainedFailedAttemptTime": true,
+      "modelLoadedSeconds": null,
+      "sameInputProductParaformer": {
+        "cer": 1.421195652173913,
+        "edits": {
+          "replace": 56,
+          "delete": 26,
+          "insert": 4102
+        }
+      },
+      "knownSourceIdentityNotAutomaticDiarization": true
+    }
+  ],
+  "crosstalkDiagnostic": [
+    {
+      "id": "near-N_SPK8013",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 0,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 0,
+      "examples": [],
+      "outputSha256": "24753b4b35566169b6555ce1b7a8a59dd4931b8f7795239a98257e8a207afab9",
+      "unchangedStrictCer": 0.1254630773030378
+    },
+    {
+      "id": "near-N_SPK8014",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 12,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 9,
+      "examples": [
+        {
+          "inputWindowStartSeconds": 59.683,
+          "inputWindowEndSeconds": 89.676,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 45,
+          "normalizedLiteralQuote": "对而且你现在设计的产品主要推出的是它有照相的功能功能的话是很很很好所以是还是适适合年轻的人",
+          "reference": {
+            "start": 66.72,
+            "end": 81.83,
+            "speaker": "c1",
+            "text": "有蓝色的黄色你要老年人，他不可能用这种颜色，对吧，对而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人。"
+          },
+          "modelWindowText": "呃，设定一下呃，比较适合的年龄段啊。比方说，因为它是有彩色的呀，有蓝色的、黄色的，你要老年人用可能就不太方便。对，而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人群。我感觉可以根据年龄呃和这种就是不同的人士做一下区分。"
+        },
+        {
+          "inputWindowStartSeconds": 158.863,
+          "inputWindowEndSeconds": 186.206,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 63,
+          "normalizedLiteralQuote": "你现在买买手机的话他不一定都是说老年人自己去买老年人根本就不会看一般都是子女给家长去买他会观察里面的一些功能什么的会会会去选择",
+          "reference": {
+            "start": 156.76,
+            "end": 171.87,
+            "speaker": "c1",
+            "text": "但是我觉得还是有针对性的好啊，你现在买买手机的话，他不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。"
+          },
+          "modelWindowText": "你现在买买手机的话，他不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。咋？我感觉我们可以根据就是不同人群稍微做一下差别设计。你像，如果老年人的话，他就是配置稍微低点，音量是刺激或者声音稍微大点；，年轻用的话，可能颜色选择性多一点，配置高一点这种。"
+        },
+        {
+          "inputWindowStartSeconds": 186.206,
+          "inputWindowEndSeconds": 217.277,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8013",
+          "literalCharacters": 22,
+          "normalizedLiteralQuote": "到三十五岁之间大家伙儿觉得可以啊四十五岁之间",
+          "reference": {
+            "start": 198.8,
+            "end": 202.24,
+            "speaker": "c1",
+            "text": "到三十五岁之间，大家伙儿觉得可以，啊四十五岁之间可以对吧？"
+          },
+          "modelWindowText": "好好，哎，咱这个就是跨度，反正就不用特别大。从年轻人来说的，咱主要是年轻年轻化这一块儿，年轻人是吧？十八到三到三十五岁之间，大家伙儿觉得可以，啊，四十五岁之间都可以，对吧？嗯。啊。那咱们这个后续再定一下这个十八到五岁之间的色彩颜色啊，咱们到时候确定一下这个颜色。"
+        },
+        {
+          "inputWindowStartSeconds": 245.051,
+          "inputWindowEndSeconds": 274.661,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8016",
+          "literalCharacters": 22,
+          "normalizedLiteralQuote": "一些市场份额等市场份额呃慢慢做大之后就可以就",
+          "reference": {
+            "start": 242.77,
+            "end": 253.62,
+            "speaker": "c1",
+            "text": "嗯我们前期主要是就是呃价钱可以稍就让利一些多占领一些市场份额，等市场份额呃慢慢做大之后就可以就价钱稍微高点。"
+          },
+          "modelWindowText": "呃，价钱可以收，就是让利一些，多占一些市场份额。等市场份额呃慢慢做大之后，就可以就是价钱稍微高点。你们有什么方？我觉得还是先要看一下推出一下手机的亮点，它它有什么和其他的手机有什么不同的地方？呃，然后再就是在一些电商呃给一些力度，比方说京东啊什么的，跟自然号还有什么样的？"
+        }
+      ],
+      "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+      "unchangedStrictCer": 0.4453125
+    }
+  ],
+  "pendingInputs": [
+    "near-N_SPK8015",
+    "near-N_SPK8016",
+    "far-mic0-common-span"
+  ],
+  "resourcesObservedAfterCompletion": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 3429138432,
+    "existingRecoveryRequirementExclusiveBytes": null,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  },
+  "next": "Continue remaining fixed inputs after original Windows RAM protection permits; do not rerun completed inputs or edit output words.",
+  "limitations": [
+    "Headset inputs have real crosstalk. Literal other-reference examples are not an adjusted CER or exhaustive attribution.",
+    "Only two of five inputs are complete; no complete batch aggregate or automatic diarization claimed.",
+    "This26minute exposed diagnostic does not satisfy the30minute/multiple-meeting qualification contract."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false
+}

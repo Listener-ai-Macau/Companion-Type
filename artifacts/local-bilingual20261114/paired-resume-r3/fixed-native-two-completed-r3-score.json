@@ -1,0 +1,678 @@
+{
+  "at": "2026-11-14T19:24:30+08:00",
+  "state": "PARTIAL_COMPLETED_TASKS_ONLY_NOT_BATCH_SCORE",
+  "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+  "modelRevision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+  "runtimePackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941",
+  "audioManifestSha256": "c07bd6ffbfbc069932d00f30abfff211c6c2a1ad3fc61596646ef5d9f1559ea2",
+  "referenceManifestSha256": "28af572717bd3e86126e9d51b4ce12d3758b6642f197e96fb83f6a59b59d23ba",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "normalizerSourceSha256": "45859723659b91b7ae0750331dc86eba216c631d27d35ebc4979a3663eae971e",
+  "meeting": "R8001_M8004",
+  "commonSecondsPerInput": 1551.82,
+  "sourceUtterances": 604,
+  "results": [
+    {
+      "id": "near-N_SPK8013",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 4049,
+      "hypothesisCharacters": 4052,
+      "edits": {
+        "replace": 285,
+        "delete": 110,
+        "insert": 113
+      },
+      "totalEdits": 508,
+      "cer": 0.1254630773030378,
+      "strictBelowFivePercent": false,
+      "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+      "outputSha256": "24753b4b35566169b6555ce1b7a8a59dd4931b8f7795239a98257e8a207afab9",
+      "taskReceiptSha256": "7b764ac4aba45290092c365d945a20843d0248da46d5e885c5ec5d520a65cd6f",
+      "accumulatedKnownOwnedProcessSeconds": 906.3692061999973,
+      "attemptsWithUnknownDuration": [],
+      "includesRetainedFailedAttemptTime": true,
+      "modelLoadedSeconds": 39.23673589999089,
+      "sameInputProductParaformer": {
+        "cer": 0.5366757224005927,
+        "edits": {
+          "replace": 332,
+          "delete": 94,
+          "insert": 1747
+        }
+      },
+      "knownSourceIdentityNotAutomaticDiarization": true
+    },
+    {
+      "id": "near-N_SPK8014",
+      "metric": "known-headset-source-CER",
+      "referenceCharacters": 2944,
+      "hypothesisCharacters": 4150,
+      "edits": {
+        "replace": 43,
+        "delete": 31,
+        "insert": 1237
+      },
+      "totalEdits": 1311,
+      "cer": 0.4453125,
+      "strictBelowFivePercent": false,
+      "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+      "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+      "taskReceiptSha256": "c8871a29070c283cb387e1e667f5cb92ad9acf8287ae687e05b2cf60d3bdb70a",
+      "accumulatedKnownOwnedProcessSeconds": 367.33712500002,
+      "attemptsWithUnknownDuration": [
+        3
+      ],
+      "includesRetainedFailedAttemptTime": true,
+      "modelLoadedSeconds": null,
+      "sameInputProductParaformer": {
+        "cer": 1.421195652173913,
+        "edits": {
+          "replace": 56,
+          "delete": 26,
+          "insert": 4102
+        }
+      },
+      "knownSourceIdentityNotAutomaticDiarization": true
+    }
+  ],
+  "pending": [
+    "near-N_SPK8015",
+    "near-N_SPK8016",
+    "far-mic0-common-span"
+  ],
+  "nearAggregate": null,
+  "editExamples": {
+    "near-N_SPK8013": [
+      {
+        "op": "replace",
+        "referenceIndex": 6,
+        "hypothesisIndex": 6,
+        "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的",
+        "hypothesisContext": "好嗯咱们今天就咱们公司新出上的新出的一"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 7,
+        "hypothesisIndex": 7,
+        "referenceContext": "好嗯咱们今天针对咱们公司新出产的新出的一",
+        "hypothesisContext": "好嗯咱们今天就咱们公司新出上的新出的一款"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 14,
+        "hypothesisIndex": 13,
+        "referenceContext": "咱们今天针对咱们公司新出产的新出的一款这个手机啊产",
+        "hypothesisContext": "嗯咱们今天就咱们公司新出上的新出的一款这个手机啊产"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 43,
+        "hypothesisIndex": 42,
+        "referenceContext": "一下这个研讨会首先咱们确认一下咱们这个产品的目标这",
+        "hypothesisContext": "一下这个研讨会首先咱们确定一下咱们这个产品的目标这"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 66,
+        "hypothesisIndex": 65,
+        "referenceContext": "标这个人群客户群这一块儿嗯首先谈一下大家伙的一个看",
+        "hypothesisContext": "标这个人群客户群这一块儿呃首先谈一下咱们大家伙的一"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 72,
+        "hypothesisIndex": 71,
+        "referenceContext": "户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那你给",
+        "hypothesisContext": "户群这一块儿呃首先谈一下咱们大家伙的一个看法啊呃那"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 72,
+        "hypothesisIndex": 72,
+        "referenceContext": "户群这一块儿嗯首先谈一下大家伙的一个看法啊嗯那你给",
+        "hypothesisContext": "群这一块儿呃首先谈一下咱们大家伙的一个看法啊呃那你"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 81,
+        "hypothesisIndex": 82,
+        "referenceContext": "谈一下大家伙的一个看法啊嗯那你给阐一下吧这个跨度大",
+        "hypothesisContext": "下咱们大家伙的一个看法啊呃那你再谈一下吧就跨度大一"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 84,
+        "hypothesisIndex": 85,
+        "referenceContext": "大家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是",
+        "hypothesisContext": "大家伙的一个看法啊呃那你再谈一下吧就跨度大一点是吧"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 85,
+        "hypothesisIndex": 86,
+        "referenceContext": "家伙的一个看法啊嗯那你给阐一下吧这个跨度大一点是吧",
+        "hypothesisContext": "家伙的一个看法啊呃那你再谈一下吧就跨度大一点是吧嗯"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 89,
+        "hypothesisIndex": 90,
+        "referenceContext": "个看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后",
+        "hypothesisContext": "个看法啊呃那你再谈一下吧就跨度大一点是吧嗯好然后你"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 90,
+        "hypothesisIndex": 91,
+        "referenceContext": "看法啊嗯那你给阐一下吧这个跨度大一点是吧嗯好然后你",
+        "hypothesisContext": "看法啊呃那你再谈一下吧就跨度大一点是吧嗯好然后你觉"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 123,
+        "hypothesisIndex": 123,
+        "referenceContext": "也可也可以说是有一种反差嗯首先咱们就确定出这个手机",
+        "hypothesisContext": "也可也可以说是有一种反差好首先咱们就确定说这个手机"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 131,
+        "hypothesisIndex": 131,
+        "referenceContext": "一种反差嗯首先咱们就确定出这个手机从这个特点来说就",
+        "hypothesisContext": "一种反差好首先咱们就确定说这个手机这个外从这个特点"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 136,
+        "hypothesisIndex": 136,
+        "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+        "hypothesisContext": "首先咱们就确定说这个手机这个外从这个特点来说就可能"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 136,
+        "hypothesisIndex": 137,
+        "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+        "hypothesisContext": "先咱们就确定说这个手机这个外从这个特点来说就可能就"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 136,
+        "hypothesisIndex": 138,
+        "referenceContext": "首先咱们就确定出这个手机从这个特点来说就可能就是说",
+        "hypothesisContext": "咱们就确定说这个手机这个外从这个特点来说就可能就是"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 149,
+        "hypothesisIndex": 152,
+        "referenceContext": "这个特点来说就可能就是说嗯年龄段儿要跨度大一点对吧",
+        "hypothesisContext": "这个特点来说就可能就是说呃年龄段要跨度大一点对吧大"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 153,
+        "hypothesisIndex": 156,
+        "referenceContext": "来说就可能就是说嗯年龄段儿要跨度大一点对吧大家都同",
+        "hypothesisContext": "来说就可能就是说呃年龄段要跨度大一点对吧大家都同意"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 170,
+        "hypothesisIndex": 172,
+        "referenceContext": "一点对吧大家都同意是吧就一年轻年轻感会就年轻呗是吧",
+        "hypothesisContext": "一点对吧大家都同意是吧就是年轻年轻感就年轻呗是吧嗯"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 176,
+        "hypothesisIndex": 178,
+        "referenceContext": "都同意是吧就一年轻年轻感会就年轻呗是吧嗯对嗯操作不",
+        "hypothesisContext": "都同意是吧就是年轻年轻感就年轻呗是吧嗯对操作不了是"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 185,
+        "hypothesisIndex": 186,
+        "referenceContext": "年轻感会就年轻呗是吧嗯对嗯操作不了是吧容易操作不了",
+        "hypothesisContext": "轻年轻感就年轻呗是吧嗯对操作不了是吧也操作不了对对"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 192,
+        "hypothesisIndex": 192,
+        "referenceContext": "呗是吧嗯对嗯操作不了是吧容易操作不了对对对对不是特",
+        "hypothesisContext": "轻呗是吧嗯对操作不了是吧也操作不了对对对对不是特别"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 193,
+        "hypothesisIndex": 193,
+        "referenceContext": "是吧嗯对嗯操作不了是吧容易操作不了对对对对不是特别",
+        "hypothesisContext": "呗是吧嗯对操作不了是吧也操作不了对对对对不是特别大"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 209,
+        "hypothesisIndex": 208,
+        "referenceContext": "了对对对对不是特别大跨度特别大对咱们对咱可以可以对",
+        "hypothesisContext": "了对对对对不是特别大跨度那么大对咱们对档提可以可以"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 210,
+        "hypothesisIndex": 209,
+        "referenceContext": "对对对对不是特别大跨度特别大对咱们对咱可以可以对嗯",
+        "hypothesisContext": "对对对对不是特别大跨度那么大对咱们对档提可以可以对"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 216,
+        "hypothesisIndex": 215,
+        "referenceContext": "特别大跨度特别大对咱们对咱可以可以对嗯对主要对还得",
+        "hypothesisContext": "特别大跨度那么大对咱们对档提可以可以对对主要对还得"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 216,
+        "hypothesisIndex": 216,
+        "referenceContext": "特别大跨度特别大对咱们对咱可以可以对嗯对主要对还得",
+        "hypothesisContext": "别大跨度那么大对咱们对档提可以可以对对主要对还得看"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 222,
+        "hypothesisIndex": 222,
+        "referenceContext": "别大对咱们对咱可以可以对嗯对主要对还得看我们那个价",
+        "hypothesisContext": "大对咱们对档提可以可以对对主要对还得看我们那个价钱"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 237,
+        "hypothesisIndex": 236,
+        "referenceContext": "要对还得看我们那个价钱和嗯对嗯低频啊啊好可以可以反",
+        "hypothesisContext": "要对还得看我们那个价钱和位置嗯对嗯第一名啊啊好的可"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 237,
+        "hypothesisIndex": 237,
+        "referenceContext": "要对还得看我们那个价钱和嗯对嗯低频啊啊好可以可以反",
+        "hypothesisContext": "对还得看我们那个价钱和位置嗯对嗯第一名啊啊好的可以"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 240,
+        "hypothesisIndex": 241,
+        "referenceContext": "得看我们那个价钱和嗯对嗯低频啊啊好可以可以反正这个",
+        "hypothesisContext": "我们那个价钱和位置嗯对嗯第一名啊啊好的可以反正这个"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 240,
+        "hypothesisIndex": 242,
+        "referenceContext": "得看我们那个价钱和嗯对嗯低频啊啊好可以可以反正这个",
+        "hypothesisContext": "们那个价钱和位置嗯对嗯第一名啊啊好的可以反正这个就"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 241,
+        "hypothesisIndex": 243,
+        "referenceContext": "看我们那个价钱和嗯对嗯低频啊啊好可以可以反正这个就",
+        "hypothesisContext": "那个价钱和位置嗯对嗯第一名啊啊好的可以反正这个就是"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 245,
+        "hypothesisIndex": 247,
+        "referenceContext": "个价钱和嗯对嗯低频啊啊好可以可以反正这个就是跨度反",
+        "hypothesisContext": "和位置嗯对嗯第一名啊啊好的可以反正这个就是跨度反正"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 246,
+        "hypothesisIndex": 248,
+        "referenceContext": "价钱和嗯对嗯低频啊啊好可以可以反正这个就是跨度反正",
+        "hypothesisContext": "位置嗯对嗯第一名啊啊好的可以反正这个就是跨度反正就"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 259,
+        "hypothesisIndex": 260,
+        "referenceContext": "可以反正这个就是跨度反正不就不用特别大从年轻人来说",
+        "hypothesisContext": "可以反正这个就是跨度反正就不用特别大从年轻人来说咱"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 277,
+        "hypothesisIndex": 277,
+        "referenceContext": "大从年轻人来说咱们主单主持年轻年轻化这一块儿吧年轻",
+        "hypothesisContext": "大从年轻人来说咱们主单主推的年轻年轻化这一块儿吧年"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 277,
+        "hypothesisIndex": 278,
+        "referenceContext": "大从年轻人来说咱们主单主持年轻年轻化这一块儿吧年轻",
+        "hypothesisContext": "从年轻人来说咱们主单主推的年轻年轻化这一块儿吧年轻"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 291,
+        "hypothesisIndex": 292,
+        "referenceContext": "轻年轻化这一块儿吧年轻人这一块儿好吧什么十八到三到",
+        "hypothesisContext": "轻年轻化这一块儿吧年轻人一块儿是吧什么十八到三到三"
+      }
+    ],
+    "near-N_SPK8014": [
+      {
+        "op": "insert",
+        "referenceIndex": 37,
+        "hypothesisIndex": 37,
+        "referenceContext": "然后基本上就是嗯让他什么什么类的人群然后都可以这样",
+        "hypothesisContext": "然后基本上就是嗯让他什么也什么类的人群然后都可以这"
+      },
+      {
+        "op": "replace",
+        "referenceIndex": 77,
+        "hypothesisIndex": 78,
+        "referenceContext": "个手机现在基本上外观设计得比较时尚所以我觉得其实嗯",
+        "hypothesisContext": "个手机现在基本上外观设计的比较时尚所以我觉得其实嗯"
+      },
+      {
+        "op": "delete",
+        "referenceIndex": 121,
+        "hypothesisIndex": 122,
+        "referenceContext": "这样我觉得范围更广一些就是什么样的人群都可以选择嘛",
+        "hypothesisContext": "这样我觉得范围更广一些就什么样儿的人群都可以选择嘛"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 125,
+        "hypothesisIndex": 125,
+        "referenceContext": "得范围更广一些就是什么样的人群都可以选择嘛但是我觉",
+        "hypothesisContext": "觉得范围更广一些就什么样儿的人群都可以选择嘛呃设定"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 135,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "么样儿的人群都可以选择嘛呃设定一下呃比较适合的年龄"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 136,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "样儿的人群都可以选择嘛呃设定一下呃比较适合的年龄段"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 137,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "儿的人群都可以选择嘛呃设定一下呃比较适合的年龄段啊"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 138,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "的人群都可以选择嘛呃设定一下呃比较适合的年龄段啊比"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 139,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "人群都可以选择嘛呃设定一下呃比较适合的年龄段啊比方"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 140,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "群都可以选择嘛呃设定一下呃比较适合的年龄段啊比方说"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 141,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "都可以选择嘛呃设定一下呃比较适合的年龄段啊比方说因"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 142,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "可以选择嘛呃设定一下呃比较适合的年龄段啊比方说因为"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 143,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "以选择嘛呃设定一下呃比较适合的年龄段啊比方说因为它"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 144,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "选择嘛呃设定一下呃比较适合的年龄段啊比方说因为它是"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 145,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "择嘛呃设定一下呃比较适合的年龄段啊比方说因为它是有"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 146,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "嘛呃设定一下呃比较适合的年龄段啊比方说因为它是有彩"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 147,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "呃设定一下呃比较适合的年龄段啊比方说因为它是有彩色"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 148,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "设定一下呃比较适合的年龄段啊比方说因为它是有彩色的"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 149,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "定一下呃比较适合的年龄段啊比方说因为它是有彩色的呀"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 150,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "一下呃比较适合的年龄段啊比方说因为它是有彩色的呀有"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 151,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "下呃比较适合的年龄段啊比方说因为它是有彩色的呀有蓝"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 152,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "呃比较适合的年龄段啊比方说因为它是有彩色的呀有蓝色"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 153,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "比较适合的年龄段啊比方说因为它是有彩色的呀有蓝色的"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 154,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "较适合的年龄段啊比方说因为它是有彩色的呀有蓝色的黄"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 155,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "适合的年龄段啊比方说因为它是有彩色的呀有蓝色的黄色"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 156,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "合的年龄段啊比方说因为它是有彩色的呀有蓝色的黄色的"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 157,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "的年龄段啊比方说因为它是有彩色的呀有蓝色的黄色的你"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 158,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "年龄段啊比方说因为它是有彩色的呀有蓝色的黄色的你要"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 159,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "龄段啊比方说因为它是有彩色的呀有蓝色的黄色的你要老"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 160,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "段啊比方说因为它是有彩色的呀有蓝色的黄色的你要老年"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 161,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "啊比方说因为它是有彩色的呀有蓝色的黄色的你要老年人"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 162,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "比方说因为它是有彩色的呀有蓝色的黄色的你要老年人用"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 163,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "方说因为它是有彩色的呀有蓝色的黄色的你要老年人用可"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 164,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "说因为它是有彩色的呀有蓝色的黄色的你要老年人用可能"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 165,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "因为它是有彩色的呀有蓝色的黄色的你要老年人用可能就"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 166,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "为它是有彩色的呀有蓝色的黄色的你要老年人用可能就不"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 167,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "它是有彩色的呀有蓝色的黄色的你要老年人用可能就不太"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 168,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "是有彩色的呀有蓝色的黄色的你要老年人用可能就不太方"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 169,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "有彩色的呀有蓝色的黄色的你要老年人用可能就不太方便"
+      },
+      {
+        "op": "insert",
+        "referenceIndex": 134,
+        "hypothesisIndex": 170,
+        "referenceContext": "什么样的人群都可以选择嘛但是我觉得吧就是现在那个老",
+        "hypothesisContext": "彩色的呀有蓝色的黄色的你要老年人用可能就不太方便对"
+      }
+    ]
+  },
+  "neuralInferencePerformedByScorer": false,
+  "referencesUsedOnlyAfterCompletedInference": true,
+  "pureOverlapWordCerMeasured": false,
+  "wordTimingMeasured": false,
+  "limitations": [
+    "Headsets include real crosstalk; inserted other-speaker words are not automatically hallucinations.",
+    "Far chronological CER has overlap ordering ambiguity and cannot be directly compared with source-associated aggregate CER.",
+    "This exposed Eval diagnostic is shorter than the30minute qualification minimum and is not automatic diarization or a final holdout.",
+    "Dynamic background inference timing is not controlled end-to-end product latency."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 5544,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 201326592,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 18804736,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

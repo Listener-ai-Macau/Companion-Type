@@ -1,0 +1,79 @@
+{
+  "state": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-14T13:22:59+08:00",
+  "binding": {
+    "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+    "audioSeconds": 1551.82,
+    "modelPackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941"
+  },
+  "privateAudioNeverUploaded": true,
+  "attempts": [
+    {
+      "startedAt": "2026-11-14T13:23:00+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 269.384706700017,
+      "privatePeakBytes": 1253289984,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "actual_windows_low_ram",
+      "actualWindowsLowRam": true,
+      "explicitStopRequested": false,
+      "systemAvailableBytesAtStop": 676839424,
+      "exitCode": 15,
+      "finishedAt": "2026-11-14T13:27:30+08:00",
+      "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+    },
+    {
+      "startedAt": "2026-11-14T18:24:50+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\native-attempt-0002.log",
+      "wholeProcessFamilySeconds": 95.92449159998796,
+      "privatePeakBytes": 1248243712,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "explicit_stop",
+      "actualWindowsLowRam": false,
+      "explicitStopRequested": true,
+      "systemAvailableBytesAtStop": 3164966912,
+      "exitCode": 15,
+      "finishedAt": "2026-11-14T18:26:26+08:00",
+      "error": "InterruptedError('已停止本地转写，原音和已保存进度保留，可继续。')"
+    },
+    {
+      "startedAt": "2026-11-14T19:10:49+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\native-attempt-0003.log",
+      "wholeProcessFamilySeconds": null,
+      "privatePeakBytes": 0,
+      "cacheOnlyExpected": false
+    },
+    {
+      "startedAt": "2026-11-14T19:23:02+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\native-attempt-0004.log",
+      "wholeProcessFamilySeconds": 2.0279267000150867,
+      "privatePeakBytes": 23216128,
+      "cacheOnlyExpected": true,
+      "exitCode": 0,
+      "finishedAt": "2026-11-14T19:23:04+08:00"
+    }
+  ],
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "meeting": "recording-779591983f618f40",
+  "updatedAt": "2026-11-14T19:23:02+08:00",
+  "textDraft": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\control\\full\\transcripts\\recording-779591983f618f40\\text-draft.json",
+  "finishedAt": "2026-11-14T19:23:04+08:00",
+  "output": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8014\\control\\full\\transcripts\\recording-779591983f618f40\\model-output.json",
+  "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+  "originalAudioUnchanged": true,
+  "wordAlignmentPending": true,
+  "speakerAttributionPending": true,
+  "accumulatedKnownOwnedProcessSeconds": 367.33712500002,
+  "attemptsWithUnknownDuration": [
+    3
+  ]
+}

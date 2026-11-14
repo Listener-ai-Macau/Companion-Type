@@ -1,0 +1,119 @@
+{
+  "at": "2026-11-14T19:27:24+08:00",
+  "state": "POSTHOC_NATIVE_LITERAL_OTHER_REFERENCE_DIAGNOSTIC_NOT_SCORE_ADJUSTMENT",
+  "scoreReceiptSha256": "5666f20c7aa97ca68b221d23ed1d2fd3ba625ee217fc12435e0dab46fc1a1b27",
+  "referenceManifestSha256": "28af572717bd3e86126e9d51b4ce12d3758b6642f197e96fb83f6a59b59d23ba",
+  "methodReusedFrom": "audit_paired_headset_crosstalk_20261110.py",
+  "methodSourceSha256": "3f3fb6b914f3c466c2a5eb05eca5e7c76b832c1c30ea4b93126d20b57e30784a",
+  "minimumLiteralCharacters": 12,
+  "annotationToleranceSeconds": 0.1,
+  "results": [
+    {
+      "id": "near-N_SPK8013",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 0,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 0,
+      "examples": [],
+      "outputSha256": "24753b4b35566169b6555ce1b7a8a59dd4931b8f7795239a98257e8a207afab9",
+      "unchangedStrictCer": 0.1254630773030378
+    },
+    {
+      "id": "near-N_SPK8014",
+      "transcribedInputWindowsWithNoTargetReferenceSpeech": 12,
+      "suchWindowsWithAtLeastTwelveLiteralOtherSpeakerCharacters": 9,
+      "examples": [
+        {
+          "inputWindowStartSeconds": 59.683,
+          "inputWindowEndSeconds": 89.676,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 45,
+          "normalizedLiteralQuote": "对而且你现在设计的产品主要推出的是它有照相的功能功能的话是很很很好所以是还是适适合年轻的人",
+          "reference": {
+            "start": 66.72,
+            "end": 81.83,
+            "speaker": "c1",
+            "text": "有蓝色的黄色你要老年人，他不可能用这种颜色，对吧，对而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人。"
+          },
+          "modelWindowText": "呃，设定一下呃，比较适合的年龄段啊。比方说，因为它是有彩色的呀，有蓝色的、黄色的，你要老年人用可能就不太方便。对，而且你现在设计的产品主要推出的是它有照相的功能，功能的话是很很很好，所以是还是适适合年轻的人群。我感觉可以根据年龄呃和这种就是不同的人士做一下区分。"
+        },
+        {
+          "inputWindowStartSeconds": 158.863,
+          "inputWindowEndSeconds": 186.206,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8015",
+          "literalCharacters": 63,
+          "normalizedLiteralQuote": "你现在买买手机的话他不一定都是说老年人自己去买老年人根本就不会看一般都是子女给家长去买他会观察里面的一些功能什么的会会会去选择",
+          "reference": {
+            "start": 156.76,
+            "end": 171.87,
+            "speaker": "c1",
+            "text": "但是我觉得还是有针对性的好啊，你现在买买手机的话，他不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。"
+          },
+          "modelWindowText": "你现在买买手机的话，他不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。咋？我感觉我们可以根据就是不同人群稍微做一下差别设计。你像，如果老年人的话，他就是配置稍微低点，音量是刺激或者声音稍微大点；，年轻用的话，可能颜色选择性多一点，配置高一点这种。"
+        },
+        {
+          "inputWindowStartSeconds": 186.206,
+          "inputWindowEndSeconds": 217.277,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8013",
+          "literalCharacters": 22,
+          "normalizedLiteralQuote": "到三十五岁之间大家伙儿觉得可以啊四十五岁之间",
+          "reference": {
+            "start": 198.8,
+            "end": 202.24,
+            "speaker": "c1",
+            "text": "到三十五岁之间，大家伙儿觉得可以，啊四十五岁之间可以对吧？"
+          },
+          "modelWindowText": "好好，哎，咱这个就是跨度，反正就不用特别大。从年轻人来说的，咱主要是年轻年轻化这一块儿，年轻人是吧？十八到三到三十五岁之间，大家伙儿觉得可以，啊，四十五岁之间都可以，对吧？嗯。啊。那咱们这个后续再定一下这个十八到五岁之间的色彩颜色啊，咱们到时候确定一下这个颜色。"
+        },
+        {
+          "inputWindowStartSeconds": 245.051,
+          "inputWindowEndSeconds": 274.661,
+          "approximateInputWindowNotWordAlignment": true,
+          "targetSource": "near-N_SPK8014",
+          "otherSource": "near-N_SPK8016",
+          "literalCharacters": 22,
+          "normalizedLiteralQuote": "一些市场份额等市场份额呃慢慢做大之后就可以就",
+          "reference": {
+            "start": 242.77,
+            "end": 253.62,
+            "speaker": "c1",
+            "text": "嗯我们前期主要是就是呃价钱可以稍就让利一些多占领一些市场份额，等市场份额呃慢慢做大之后就可以就价钱稍微高点。"
+          },
+          "modelWindowText": "呃，价钱可以收，就是让利一些，多占一些市场份额。等市场份额呃慢慢做大之后，就可以就是价钱稍微高点。你们有什么方？我觉得还是先要看一下推出一下手机的亮点，它它有什么和其他的手机有什么不同的地方？呃，然后再就是在一些电商呃给一些力度，比方说京东啊什么的，跟自然号还有什么样的？"
+        }
+      ],
+      "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+      "unchangedStrictCer": 0.4453125
+    }
+  ],
+  "neuralCalls": 0,
+  "asrWordsDeletedOrEdited": false,
+  "strictScoresAdjusted": false,
+  "limitations": [
+    "Posthoc examples only; not exhaustive insertion accounting.",
+    "Window times are approximate; exact speaker/word attribution is not established.",
+    "Other-reference literal matches support crosstalk in these examples, not every insertion.",
+    "Known headset identities are file assignments, not automatic diarization."
+  ],
+  "qualityQualified": false,
+  "limits": {
+    "pid": 3120,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 100663296,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16281600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63"
+  },
+  "raw": {
+    "index": 26,
+    "startSample": 12843632,
+    "endSample": 13275082,
+    "text": "对。然后我们这一个类型，我觉得其实就可以做一个，呃。对，就是它的那个那个品牌形象。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      32664,
+      1773,
+      101889,
+      97639,
+      43288,
+      46944,
+      31905,
+      3837,
+      104288,
+      101045,
+      102003,
+      107685,
+      3837,
+      119108,
+      1773,
+      32664,
+      3837,
+      99486,
+      104121,
+      101095,
+      101095,
+      115264,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对。然后我们这一个类型，我觉得其实就可以做一个，呃。对，就是它的那个那个品牌形象。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 5.096768899995368,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 431450,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 2696,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "c61c69eec92f7ae9c6d04a5eacc2cc72432826239d9d45e02b2d4e2d286eb3c3"
+}

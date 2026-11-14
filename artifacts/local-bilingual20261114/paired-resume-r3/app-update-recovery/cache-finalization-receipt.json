@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-14T19:23:04.356173+08:00",
+  "exitCode": 0,
+  "audioFromFrozenManifest": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\paired-session\\R8001_M8004\\near\\R8001_M8004_N_SPK8014.wav",
+  "priorCommandPreparationFailure": "The first manual CLI path did not exist; failure occurred before task writes or model launch. Corrected by reading frozen audio manifest.",
+  "originalNeuralCompletionProofPreserved": true,
+  "state": "COMPLETE_SAVED_CACHE_FINALIZATION_NO_NEW_MODEL_CALLS",
+  "taskState": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "newNeuralCalls": 0,
+  "cacheOnlyExpected": true,
+  "privatePeakBytes": 23216128,
+  "sourceOutputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+  "attemptsWithUnknownDuration": [
+    3
+  ]
+}

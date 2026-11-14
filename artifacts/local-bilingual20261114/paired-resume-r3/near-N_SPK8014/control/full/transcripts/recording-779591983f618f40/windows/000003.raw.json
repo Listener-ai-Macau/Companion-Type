@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63"
+  },
+  "raw": {
+    "index": 3,
+    "startSample": 1434817,
+    "endSample": 1986173,
+    "text": "但是我觉得吧，就是现在那个老年人也都很时尚。你看现在老年人出去，然后他基本上那个把自己装束的，然后都是大粉大红，然后他很喜欢那种那种特别亮丽的颜色。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 1434817,
+        "endSample": 1986173,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "bdb321751dd49820d4561e7eb525a13ac90f4b41bb3db6f1565c760daf417fd7"
+}
