@@ -156,9 +156,6 @@ pub struct Pointer {
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
     laser_offset:Point,last_projected:Option<Point>,
     last_control:Option<u32>,
-    // Short mechanical-click settling, in the same sensor clock as CIM/CIN.
-    // No gesture is inferred: only a confirmed reliable shell CLICK starts it.
-    tap_settle_until:Option<u32>,
     pressed:Option<(f64,Point)>,wait_release:bool,queued:Vec<Button>,history:VecDeque<(f64,Point)>,
 }
 impl Pointer {
@@ -167,14 +164,11 @@ impl Pointer {
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
             relative:relative::Response::default(),last_emitted:position,
             last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,
-            heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,tap_settle_until:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
+            heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.metrics.regripping=false;self.pressed=None;self.wait_release=true;}
     fn release(&mut self) {self.release_button();self.contacts.clear_stream();}
-    fn reset_motion(&mut self){self.tap_settle_until=None;self.smoother.reset();self.relative.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
-    fn tap_settling(&self)->bool {
-        self.tap_settle_until.is_some_and(|until|self.last.is_some_and(|(_,ms)|(ms.wrapping_sub(until)as i32)<0))
-    }
+    fn reset_motion(&mut self){self.smoother.reset();self.relative.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn drag_delay(&self)->f64{if self.settings.relative_direct{0.18}else{0.35}}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
@@ -268,14 +262,7 @@ impl Pointer {
                 self.shown=point;self.queued.push(Button::Click(point));
                 // The tap has already supplied its historical click position.
                 // Do not replay the impact's last angular target afterwards.
-                if self.settings.relative_direct{
-                    // Click-freeze pattern: keep the visible click point while
-                    // the shell's mechanical rebound settles. Sensor time lets
-                    // late/coalesced packets expire it without extending it.
-                    // See third_party/imu-pointer/tap-click-stability.md.
-                    self.tap_settle_until=Some(event.sensor_ms.wrapping_add(150));
-                    self.smoother.reset();self.relative.reset();
-                }
+                if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}
             }
         }
         Ok(true)
@@ -344,11 +331,6 @@ impl Pointer {
                 self.elevation_zero=Some((s.accel[1]/norm.max(1.)).clamp(-1.,1.).asin().to_degrees());
                 return;
             }
-        }
-        if self.settings.relative_direct&&self.tap_settling(){
-            // Continue sequence/time/readiness accounting above. Discard the
-            // rebound rather than accumulating a delayed cursor jump.
-            self.smoother.reset();self.relative.reset();return;
         }
         let rates=std::array::from_fn(|i|s.gyro[i]-self.bias[i]);
         let (up,rate)=if s.fused {
@@ -447,9 +429,6 @@ impl Pointer {
         }
         let mut f=Frame{position:None,buttons:std::mem::take(&mut self.queued)};
         if stale || self.metrics.paused || self.metrics.regripping || !self.metrics.calibrated {return f;}
-        // A CIM can arrive between reliable CLICK and the next native frame.
-        // Never emit click + impact movement in that same output transaction.
-        if self.settings.relative_direct&&(self.tap_settling()||f.buttons.iter().any(|b|matches!(b,Button::Click(_)|Button::RightClick(_)))){return f;}
         if self.contacts.status.learning.is_some()||self.contacts.pending(){return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=self.drag_delay() {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         if self.settings.relative_direct&&self.pressed.is_some()&&!self.metrics.dragging{return f;}
