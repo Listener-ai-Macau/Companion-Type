@@ -46,8 +46,8 @@ route = {
     },
     'milestones': [
         {'id': 'D1', 'deliverable': 'One executable meeting-processing candidate backend',
-         'scope': 'Unify incremental PCM and offline-file jobs, Chinese/English selection, revision/finalization states and preserved source output. Bind current ASR, independent alignment and replaceable speaker interface.',
-         'acceptance': 'Actual local audio reaches final structured transcript through one supported entry, survives cancel/restart without audio/text loss, and remains compatible with current app data contracts. Internal candidate only; no sale claim.',
+         'scope': 'Unify incremental PCM and offline-file jobs, Chinese/English selection, revision/finalization states and preserved source output. Bind current ASR, independent alignment and replaceable speaker interface. Start internal wiring into the existing product entry in this same batch via the original frontend task.',
+         'acceptance': 'Actual local audio reaches structured transcript/minutes and save/reopen/export through an internal candidate of the existing product entry, survives cancel/restart without audio/text loss, and remains compatible with current data contracts. Internal candidate only; no sale claim or unqualified default replacement.',
          'current': 'Pieces already exist and have separate tests; no single installed complete bilingual/speaker chain has passed.'},
         {'id': 'D2', 'deliverable': 'One ordinary-meeting Chinese/English quality candidate',
          'scope': 'Resolve source word omissions and whole-meeting speaker identity/short responses together. Reuse existing weights first; memory-bound any global processing. Full English meeting and natural code switching are separate checks.',
@@ -58,7 +58,7 @@ route = {
          'acceptance': 'Original overlap/per-person text gates remain. Facts>=95%; critical decisions/ownership/deadlines/amounts/negation correct, no unsupported critical conclusions. Uncertainty marking is useful behavior but not a substitute for the quality gates.',
          'current': 'Complex raw and attributed text still fail; no qualification by ordinary-case improvement.'},
         {'id': 'D4', 'deliverable': 'One installed Windows/Android/card product candidate',
-         'scope': 'Integrate the candidate model package into the existing normal app path. Record/transfer/transcribe/minutes/replay/edit/save/reopen/export, interruption and resume, offline operation, model installation and resource behavior.',
+         'scope': 'Complete actual two-client/card qualification of the model package already wired internally fromD1. Record/transfer/transcribe/minutes/replay/edit/save/reopen/export, interruption and resume, offline operation, model installation and resource behavior.',
          'acceptance': 'Actual intended devices and source versions tested; data preserved; responsibilities follow existing frontend/model/firmware ownership. Batch related changes before packaging. No extrapolation from developer6800XT to all customer PCs or phones.',
          'current': 'Installed148/164 UI delivery exists, but its receipt explicitly does not qualify the new model chain or phone AI generation.'},
         {'id': 'D5', 'deliverable': 'Frozen sales candidate and complete delivery bundle',
@@ -85,6 +85,7 @@ route = {
                   'modelWork': 'First unify candidate backend lifecycle and bilingual input/output; reuse completed Qwen/alignment inputs for integration. In the same batch address speaker finalization memory failure/identity persistence and source-word losses with bounded implementation checks.',
                   'frontendDependency': 'Existing frontend task integrates/reviews the versioned candidate via shared backlog; no unsolicited messages, parallel product task tree or takeover of its working files.',
                   'noPrematureShipping': 'Do not change the installed default to an unqualified research candidate. Internal executable checkpoint and sellable release have separate states.'},
+    'integrationTiming': 'Internal product wiring starts withD1 and continues throughout quality work; D4 is full actual device qualification, not the first time models meet the product.',
     'currentInstalledEvidence': {'receipt': str(delivery), 'sha256': sha(delivery),
                                  'versions': installed['versions'], 'saleQualified': False},
     'directFailureEvidence': {str(p): sha(p) for p in [comparison, cpu_failure]},
@@ -115,13 +116,13 @@ Owner要求：把整个东西收敛到合格、可售卖产品，尽快按合适
 
 处理架构：原音与逻辑会话可靠保存 → 录音中增量草稿 → 封口后全会文字/人物复核 → 独立时间对齐 → 有原话依据的纪要 → 双端保存/导出。有效缓存按音频/模型/规则哈希复用，不因会后复核无条件再转写一遍。实时人物可以修订，会后人物要利用整会信息复核。
 
-第1批：统一可执行候选后端。接好现有增量PCM和离线文件、自动中英识别、修订/封口、取消/恢复及产品输出契约；先形成一场完整会议能走完的内部候选。现有零散组件和JSON证据不能代替这个结果。
+第1批：统一可执行候选后端，并由原前端任务在同批开始已有产品入口的内测接入。接好现有增量PCM和离线文件、自动中英识别、修订/封口、取消/恢复及产品输出契约；形成一场完整会议能走到纪要、保存、重开和导出的内部候选。现有零散组件和JSON证据不能代替这个结果；不把未合格研究模型换成日用默认。
 
 第2批：中英文普通会议达到原质量门。Qwen为当前较好转写候选；文字漏错和人物身份同时是交付阻断。旧全会分人已在提取完3327份特征后bad allocation，不能原样重跑；先实现有界内存和可复用中间数据，再验证整会人物身份。中文、英文及自然混说分开，保护此前普通会，不靠删词或标准答案修分。
 
 第3批：复杂会议和事实合格。自然双人/三人重叠、短回应、长间隔回归和漏整人要分别计错；必要分离只针对已经测清的漏词。纪要对原音核事实、决定、负责人、期限、金额和否定，有原话定位，未知不补。标待确认是必要产品行为，但不能抵消未通过准确率。
 
-第4批：一整套真实产品候选。接入已有Windows/Android正常主链，集中核录音卡边录边传、离线转写、断链续传、取消恢复、回听编辑、纪要、保存重开和导出。实际版本以148/164收据和之后新交付为准；开发6800XT成功不外推为客户电脑或手机成功。模型安装、离线首次使用和资源等待也属于产品。
+第4批：完成一整套真实产品候选的双端及实卡资格。产品内测接入从第1批开始，不等模型研究全部结束；此处集中核录音卡边录边传、离线转写、断链续传、取消恢复、回听编辑、纪要、保存重开和导出。实际版本以148/164收据和之后新交付为准；开发6800XT成功不外推为客户电脑或手机成功。模型安装、离线首次使用和资源等待也属于产品。
 
 第5批：冻结后验收并交付可售卖版本。按原合同至少3场各>=30分钟、>=2房间、含独立未用于选型的会议、至少4人和真实重叠条件验证；保留最终留出，方案冻结后才用。真实双端/实卡和关键事实门全过，才交付匹配安装包、模型包、版本来源、使用及恢复说明。未过哪项就回到对应实现，不把阶段候选改名叫合格版。
 

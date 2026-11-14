@@ -18,8 +18,8 @@
     {
       "id": "D1",
       "deliverable": "One executable meeting-processing candidate backend",
-      "scope": "Unify incremental PCM and offline-file jobs, Chinese/English selection, revision/finalization states and preserved source output. Bind current ASR, independent alignment and replaceable speaker interface.",
-      "acceptance": "Actual local audio reaches final structured transcript through one supported entry, survives cancel/restart without audio/text loss, and remains compatible with current app data contracts. Internal candidate only; no sale claim.",
+      "scope": "Unify incremental PCM and offline-file jobs, Chinese/English selection, revision/finalization states and preserved source output. Bind current ASR, independent alignment and replaceable speaker interface. Start internal product wiring in this same batch through the original frontend task.",
+      "acceptance": "An internal candidate reaches transcript/minutes and save/reopen/export via the existing product entry, including cancellation/restart and preserved audio/text; no sale claim or unqualified default replacement.",
       "current": "Pieces already exist and have separate tests; no single installed complete bilingual/speaker chain has passed."
     },
     {
@@ -39,7 +39,7 @@
     {
       "id": "D4",
       "deliverable": "One installed Windows/Android/card product candidate",
-      "scope": "Integrate the candidate model package into the existing normal app path. Record/transfer/transcribe/minutes/replay/edit/save/reopen/export, interruption and resume, offline operation, model installation and resource behavior.",
+      "scope": "Complete actual two-client/card qualification of the candidate internally wired fromD1: recording/transfer/transcript/minutes/replay/edit/save/reopen/export, offline, resume, model installation and resource behavior.",
       "acceptance": "Actual intended devices and source versions tested; data preserved; responsibilities follow existing frontend/model/firmware ownership. Batch related changes before packaging. No extrapolation from developer6800XT to all customer PCs or phones.",
       "current": "Installed148/164 UI delivery exists, but its receipt explicitly does not qualify the new model chain or phone AI generation."
     },
@@ -137,5 +137,6 @@
   "newWeightUpdatesThisAction": 0,
   "installedDefaultChangedThisAction": false,
   "qualityQualified": false,
-  "saleQualified": false
+  "saleQualified": false,
+  "integrationTiming": "Internal product wiring starts withD1 and continues throughout quality work; D4 is full actual-device qualification, not the first product integration."
 }
