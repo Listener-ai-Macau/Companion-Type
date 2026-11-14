@@ -19,7 +19,10 @@ def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
  assert os.name=='nt' and os.environ.get('GITHUB_ACTIONS')!='true'
  cache=Path('E:/CodexData/Companion/.build-cache');target=cache/'shared-windows-target';out=args.output.resolve()
- assert out.is_relative_to(cache.resolve()) and not out.exists(),'Preserve earlier build attempts'
+ # Completed releases belong outside the reusable compiler cache.
+ delivery_root=(cache.parent/'deliveries').resolve()
+ assert out.is_relative_to(cache.resolve()) or out.is_relative_to(delivery_root),'Output must stay within Companion cache or deliveries'
+ assert not out.exists(),'Preserve earlier build attempts'
  out.mkdir(parents=True)
  record={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'LOCAL_WINDOWS_DELIVERY_BUILD_PREPARING','sourceCommit':capture(['git','rev-parse','HEAD']),'platformCommit':capture(['git','rev-parse','HEAD'],ROOT/'third_party/denzic-platform'),'version':json.loads((ROOT/'apps/windows/src-tauri/tauri.conf.json').read_bytes())['version'],'modelsRun':False,'boardAccessed':False,'installed':False,'hostedCiRun':None,'saleQualified':False,'steps':[]}
  def save():(out/'result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
