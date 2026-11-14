@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-14T17:46:26+08:00",
+  "windowsAuthoringSource": "354d3dcfceb4b06e6403068da09015368e31fca3",
+  "windowsOwnPaths": [
+    "packages/ui/src/MeetingReadingFrame.tsx",
+    "packages/ui/src/MeetingTopic.tsx",
+    "packages/ui/src/notebookTheme.css",
+    "packages/ui/src/meetingMap.ts",
+    "packages/ui/src/MeetingMapView.tsx",
+    "packages/ui/src/meetingMap.css",
+    "packages/ui/src/MeetingSpeakers.tsx",
+    "packages/ui/src/meetingVisual.css",
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/NotebookNavigation.tsx"
+  ],
+  "sharedPaths": [
+    "packages/ui/src/MeetingReadingFrame.tsx",
+    "packages/ui/src/MeetingTopic.tsx",
+    "packages/ui/src/notebookTheme.css",
+    "packages/ui/src/meetingMap.ts",
+    "packages/ui/src/MeetingMapView.tsx",
+    "packages/ui/src/meetingMap.css",
+    "packages/ui/src/MeetingSpeakers.tsx",
+    "packages/ui/src/meetingVisual.css"
+  ],
+  "android": {
+    "at": "2026-11-14T17:46:26+08:00",
+    "versionCode": 159,
+    "versionName": "0.1.159",
+    "frontendSourceCommit": "dc44c2052216785717db8b9f0e0228c6b6f57f53",
+    "frontendBranch": "work/core-acceptance-android-20261109",
+    "backendSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+    "aarSha256": "39acfbedb8cb4294be0455b3faa40d0033c25cc544aa6a2ae8c964f91a999a96",
+    "nativeLibrariesRebuilt": false,
+    "modelWorkAssignedOtherChat": true,
+    "modelsRun": false,
+    "installed": false
+  },
+  "windowsVersionReserved": "0.1.138",
+  "androidVersion": "0.1.159",
+  "modelsChanged": false,
+  "windowsBuildDeferredUntilShared137BuildCompletes": true,
+  "ownerUiAccepted": false
+}
