@@ -1,0 +1,42 @@
+{
+  "scope": "Actual production source components, explicit fictional service replies; no model or native qualification.",
+  "state": "PRODUCTION_ASSISTANT_TO_SAVED_MATERIAL_EXPORT_AND_DRAFT_PROTECTION_PASSED",
+  "modelsRun": false,
+  "checks": [
+    {
+      "platform": "windows",
+      "oneAskEntry": true,
+      "documentFirstPreviewAndEditing": true,
+      "saveFailureKeepsDraft": true,
+      "confirmedSavedIdentityExport": true,
+      "editedDraftCannotExportOldVersion": true,
+      "independentMaterialsRetained": true,
+      "sourceChangeDisablesWrongSave": true,
+      "twelveItemCap": true,
+      "reuseDoesNotGenerate": true,
+      "discardDeclineKeepsDraft": true,
+      "contextSwitchClearsOldDraft": true,
+      "savedMaterialsSurviveReopen": true,
+      "templatePreviewDoesNotGenerate": true,
+      "lightDarkAndNarrowFit": true
+    },
+    {
+      "platform": "mobile",
+      "oneAskEntry": true,
+      "documentFirstPreviewAndEditing": true,
+      "saveFailureKeepsDraft": true,
+      "confirmedSavedIdentityExport": true,
+      "editedDraftCannotExportOldVersion": true,
+      "independentMaterialsRetained": true,
+      "sourceChangeDisablesWrongSave": true,
+      "twelveItemCap": true,
+      "reuseDoesNotGenerate": true,
+      "discardDeclineKeepsDraft": true,
+      "contextSwitchClearsOldDraft": true,
+      "savedMaterialsSurviveReopen": true,
+      "templatePreviewDoesNotGenerate": true,
+      "lightDarkAndNarrowFit": true
+    }
+  ],
+  "errors": []
+}

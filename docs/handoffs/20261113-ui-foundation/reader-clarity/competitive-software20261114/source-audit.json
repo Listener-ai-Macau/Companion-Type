@@ -1,0 +1,116 @@
+[
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+    "sha256": "27d6f5da9282ecd1b1a453ec275cce7f43b19d7a811020a6ab8491fe738c575c"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/CompanionDashboard.tsx",
+    "sha256": "95a0265978cb6d28fd17ae2253c0eece1d3d05fa9ff8a7dc71d057186ee4c837"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/MeetingReadingFrame.tsx",
+    "sha256": "10e34b16919141cf1768d42367973fec10eaecbbaf9b290223ee3662d5aa1918"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/MeetingSpeakers.tsx",
+    "sha256": "85b26f72448516694e1eadbc1d1a6ba5ba71c531b5310ce2abb23a69605b50d6"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/minutesTemplateLibrary.ts",
+    "sha256": "1454e96aa13bbe3ef19649261bb8b75146a99565c77f6485a031a5bf7626a092"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/ContentExportPanel.tsx",
+    "sha256": "04e94d60676dc082386559fc0f42bd6773f22f4ad3e89ef38dfe31cf8ece551d"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/CompanionCalendarCopies.tsx",
+    "sha256": "762c01946f288c6e972286cd9727f272889816e9627bb401f12563513a52aa6d"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/ui/src/CompanionAudioPlayer.tsx",
+    "sha256": "ec4e9628c6f39d52d461959a9526aae8816bc27a77d001aed8f6c85becbe38a3"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/core/src/meetingQa.ts",
+    "sha256": "beb47394c9e15e6b9cc3d95a2ef1b198e532f6888ef97cd49f646a523df61bae"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/core/src/recordingBookmarks.ts",
+    "sha256": "1b47b92bf1aa44baf71e92dccfb239b6ab44dff592346f46be6664166841d30b"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "packages/core/src/libraryOrganization.ts",
+    "sha256": "40340a794cb513da1892e398ba9fc2711cfcecd757f197f8d12dfdee68bce465"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "apps/windows/src/App.tsx",
+    "sha256": "fc43b6a4961b7e3ba98f39e7ce394429ae94d38454c3df6f72943d2685e2ee53"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "apps/windows/src-tauri/src/backend/meeting_qa.rs",
+    "sha256": "04a4c08531b680e10ca8cff2b3842fc07ba4630ed6d4344f6737fa3823baf175"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "apps/windows/src-tauri/src/backend/document_context.rs",
+    "sha256": "4b58378d524cae55d437507abe016fc407c316bfad8f8269503ee729d22fa017"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "apps/windows/src-tauri/src/backend/volcengine.rs",
+    "sha256": "ed37a1734b15ddd25c9059ea317cddfb408d2a15b46a17b7cd6ee543a6ce74fc"
+  },
+  {
+    "platform": "Windows141",
+    "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "path": "apps/windows/src-tauri/src/backend/action_export.rs",
+    "sha256": "e25846f2e02263f400ed56ebdb8e4696b8d6f6bd72efc88ea9f03ab38684213c"
+  },
+  {
+    "platform": "Android161",
+    "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+    "path": "apps/mobile/src/App.tsx",
+    "sha256": "f191aa9ed4f5e60527ac6719a452f7bbf0a950544c63291e438874f3d85c526d"
+  },
+  {
+    "platform": "Android161",
+    "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+    "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+    "sha256": "27d6f5da9282ecd1b1a453ec275cce7f43b19d7a811020a6ab8491fe738c575c"
+  },
+  {
+    "platform": "Android161",
+    "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+    "path": "apps/android/app/libs/companion-android-backend.provenance.json",
+    "sha256": "df6cf6ab95b4d4149c991713a0a871d58dd9062d07008040bd4e87f466ae3443"
+  }
+]

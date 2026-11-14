@@ -1,0 +1,793 @@
+{
+  "at": "2026-11-14T19:58:42+08:00",
+  "state": "COMPETITOR_SOFTWARE_RESEARCH_AND_INSTALLED_BASELINE_GAP_AUDIT_COMPLETE_IMPLEMENTATION_OPEN",
+  "scope": "Five named products official public documentation and exact installed141/161 source; representative core capability classes, not an exhaustive account-by-account hands-on audit.",
+  "products": [
+    "Plaud",
+    "Notta",
+    "Otter",
+    "Granola",
+    "飞书妙记"
+  ],
+  "windowsBaseline": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+  "androidBaseline": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+  "ownerVisualFeedback": "看着比以前好很多了",
+  "ownerFullExperienceAccepted": false,
+  "style": "随身笔记；中性灰白/墨色/少量蓝，浅深色同层级",
+  "sources": [
+    {
+      "id": "plaud-work",
+      "vendor": "Plaud",
+      "title": "Ask Plaud Web v4",
+      "url": "https://support.plaud.ai/hc/en-us/articles/63431017883673-Ask-Plaud-on-the-Web-for-v4-0-x-or-later",
+      "version": "v4.0.x or later; updated2026-10-20",
+      "finding": "Chat回答问题；Work结合文件或文件夹完成任务，并把交付物放入画布。",
+      "scope": "官方文档，不是登录账户实测"
+    },
+    {
+      "id": "plaud-templates",
+      "vendor": "Plaud",
+      "title": "Templates v4",
+      "url": "https://support.plaud.ai/hc/en-us/articles/63431072621081-Summary-templates-on-Plaud-Web-for-v4-0-x-or-later",
+      "finding": "模板可分类预览、收藏、自建；当前结构与旧v3模板社区入口不同。"
+    },
+    {
+      "id": "plaud-multiple",
+      "vendor": "Plaud",
+      "title": "Multidimensional summaries v4",
+      "url": "https://support.plaud.ai/hc/en-us/articles/63431045569817-Multidimensional-summaries-on-Plaud-Web-for-v4-0-x-or-later",
+      "finding": "同一录音可新增独立摘要或保存问答结果，保留原摘要。"
+    },
+    {
+      "id": "granola-chat",
+      "vendor": "Granola",
+      "title": "Chatting with your meetings",
+      "url": "https://docs.granola.ai/help-center/getting-more-from-your-notes/chatting-with-your-meetings",
+      "finding": "按首页、单会议、文件夹或所选会议设上下文；可提取行动、跨会回顾和改写。移动端附件能力与桌面有差异。"
+    },
+    {
+      "id": "granola-recipes",
+      "vendor": "Granola",
+      "title": "Recipes",
+      "url": "https://docs.granola.ai/help-center/getting-more-from-your-notes/recipes",
+      "finding": "重复的整理要求保存为可复用指令，按需运行；与默认纪要模板分工不同。"
+    },
+    {
+      "id": "granola-brief",
+      "vendor": "Granola",
+      "title": "Pre-meeting briefs",
+      "url": "https://docs.granola.ai/help-center/taking-notes/pre-meeting-briefs",
+      "finding": "官方文档索引列有会前简报；具体自动化范围在本轮未逐项实测。",
+      "evidenceLevel": "official-index-only"
+    },
+    {
+      "id": "notta-brain",
+      "vendor": "Notta",
+      "title": "Notta Brain guide",
+      "url": "https://support.notta.ai/hc/en-us/articles/46063273145627-Notta-Brain-Beginner-s-Guide",
+      "finding": "可选会议/文件夹/PDF上下文；另导入Office资料，生成可下载的材料。"
+    },
+    {
+      "id": "notta-plans",
+      "vendor": "Notta",
+      "title": "Software feature index",
+      "url": "https://support.notta.ai/hc/en-us/articles/45649026891419-What-is-included-in-each-Notta-plan",
+      "finding": "功能索引涵盖词表、书签、图片、翻译、检索、外链、集成；团队与企业层另有成员、权限、SSO等服务。套餐可用性不同。"
+    },
+    {
+      "id": "notta-translation",
+      "vendor": "Notta",
+      "title": "Translation functions",
+      "url": "https://support.notta.ai/hc/en-us/articles/42935477263899-What-are-the-differences-between-the-various-translation-features",
+      "finding": "录后翻译与实时单/双语翻译分开，平台、用量和服务条件分别管理。"
+    },
+    {
+      "id": "otter-chat",
+      "vendor": "Otter",
+      "title": "AI Chat overview",
+      "url": "https://help.otter.ai/hc/en-us/articles/19682180167575-Otter-AI-Chat-Overview",
+      "version": "Updated2026-10-14, gradual rollout",
+      "finding": "当前Chat/Work区分内容问答和任务执行；选择上下文、显示来源，连接外部工具完成交付。旧Express/Advanced不是本轮采用的当前入口。"
+    },
+    {
+      "id": "feishu-minutes",
+      "vendor": "飞书妙记",
+      "title": "使用智能纪要",
+      "url": "https://www.feishu.cn/hc/zh-CN/articles/244959839578-在视频会议中使用智能纪要",
+      "finding": "同一会议以总结、待办和章节组织，纪要与逐字稿分开，具权限的使用者可编辑。"
+    },
+    {
+      "id": "feishu-view",
+      "vendor": "飞书妙记",
+      "title": "查看妙记",
+      "url": "https://www.feishu.cn/hc/zh-CN/articles/022111234449-查看妙记",
+      "finding": "回放与文字互相定位；可以编辑、翻译、核对说话人，入口围绕同一个会议内容。"
+    },
+    {
+      "id": "feishu-tasks",
+      "vendor": "飞书妙记",
+      "title": "智能会议纪要产品说明",
+      "url": "https://www.feishu.cn/content/article/7577317993749269689",
+      "finding": "章节与原话回溯、发言人观点和待办转任务；协作依赖飞书服务。供应商效果宣传未当作独立测量。"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "recording",
+      "group": "基础与阅读",
+      "capability": "现场/电脑会议/文件导入",
+      "current": "已有采集、导入与卡接收基础",
+      "gap": "真实场景与整卡可靠性沿原验收，不按竞品清单重录",
+      "priority": "保护原基线",
+      "sourceIds": [
+        "notta-plans",
+        "feishu-view"
+      ],
+      "companionEvidence": [
+        "CompanionDashboard",
+        "current141/161 delivery receipts"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "live-asr",
+      "group": "基础与阅读",
+      "capability": "实时与录后转写",
+      "current": "已有入口和处理链",
+      "gap": "通用中文、重叠与长会质量仍由模型专项完善",
+      "priority": "模型优先",
+      "sourceIds": [
+        "notta-plans",
+        "feishu-view"
+      ],
+      "companionEvidence": [
+        "companionV1.ts",
+        "transcription backend; quality gates remain open"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "speakers",
+      "group": "基础与阅读",
+      "capability": "说话人区分与各人观点",
+      "current": "按人视图、改名与保存要点基础已有",
+      "gap": "可靠分人/观点生成未合格，不能靠前端补造",
+      "priority": "模型优先",
+      "sourceIds": [
+        "feishu-tasks"
+      ],
+      "companionEvidence": [
+        "MeetingSpeakers.tsx",
+        "transcriptReview.ts"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "glossary",
+      "group": "基础与阅读",
+      "capability": "人名/产品术语词表",
+      "current": "云转写支持显式热词配置",
+      "gap": "工程环境变量不是顾客词表，缺可保存的友好入口；本地模型能力另核",
+      "priority": "下一组相关工作",
+      "sourceIds": [
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "backend/volcengine.rs:COMPANION_TYPE_ASR_HOTWORDS"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "playback",
+      "group": "基础与阅读",
+      "capability": "倍速/断点/静音跳过",
+      "current": "已有倍速与回听记忆",
+      "gap": "未确认用户可用的真实静音跳过；不能把无数据间隙当静音",
+      "priority": "后续对齐",
+      "sourceIds": [
+        "notta-plans",
+        "feishu-view"
+      ],
+      "companionEvidence": [
+        "CompanionAudioPlayer.tsx",
+        "CompanionSegmentedAudioPlayer.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "bookmarks",
+      "group": "基础与阅读",
+      "capability": "重点标记与图文笔记",
+      "current": "已有书签、笔记及图文材料基础",
+      "gap": "保持重点→原话→纪要引用路径清楚，图片识别质量另核",
+      "priority": "整合已有",
+      "sourceIds": [
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "recordingBookmarks.ts",
+        "CompanionMeetingNotes.tsx",
+        "ContentExportPanel.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "edit-transcript",
+      "group": "基础与阅读",
+      "capability": "文字修订与原始稿保留",
+      "current": "已有修订、核对与原始/流畅阅读",
+      "gap": "批量查找替换的顾客入口未确认为当前能力",
+      "priority": "后续对齐",
+      "sourceIds": [
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "transcriptReview.ts",
+        "CompanionDashboard.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "notes-map",
+      "group": "基础与阅读",
+      "capability": "结构纪要/思维导图/来源",
+      "current": "141/161已交付基础，自验通过",
+      "gap": "模型事实质量与用户整体认可分别继续",
+      "priority": "保护原基线",
+      "sourceIds": [
+        "feishu-minutes",
+        "plaud-multiple"
+      ],
+      "companionEvidence": [
+        "MeetingReadingFrame.tsx",
+        "meetingMap.ts",
+        "meeting141161-delivery.json"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "chapters",
+      "group": "基础与阅读",
+      "capability": "章节时间轴与按段回听",
+      "current": "有真实片段时间和主题导图",
+      "gap": "主题导图不等于已生成可靠的语义章节时间轴",
+      "priority": "模型与展示联动",
+      "sourceIds": [
+        "feishu-tasks",
+        "feishu-view"
+      ],
+      "companionEvidence": [
+        "minutesSources.ts",
+        "meetingMap.ts",
+        "meeting_audio_timeline.rs"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "ask-current",
+      "group": "问答与成稿",
+      "capability": "问这场会议并回查来源",
+      "current": "已装基础：带引用问答",
+      "gap": "入口较深；高质量回答需真实场景验证",
+      "priority": "第一批",
+      "sourceIds": [
+        "plaud-work",
+        "granola-chat",
+        "otter-chat"
+      ],
+      "companionEvidence": [
+        "MeetingAiWorkbench.tsx",
+        "backend/meeting_qa.rs",
+        "App.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "ask-many",
+      "group": "问答与成稿",
+      "capability": "多场会议一起提问",
+      "current": "已装基础：显式选多份资料",
+      "gap": "项目范围选择不够顺手；逐段答案不等于可靠跨会综合推理",
+      "priority": "第一批",
+      "sourceIds": [
+        "granola-chat",
+        "notta-brain",
+        "otter-chat"
+      ],
+      "companionEvidence": [
+        "MeetingAiWorkbench.tsx:AiScope",
+        "backend/meeting_qa.rs:Document"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "mixed-context",
+      "group": "问答与成稿",
+      "capability": "会议结合PDF/Office资料",
+      "current": "已有七类文档与来源边界基础",
+      "gap": "来源选择和材料引用需在同一工作区更清楚",
+      "priority": "第一批",
+      "sourceIds": [
+        "notta-brain",
+        "granola-chat"
+      ],
+      "companionEvidence": [
+        "backend/document_context.rs",
+        "MeetingReferenceWorkspace.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "templates",
+      "group": "问答与成稿",
+      "capability": "场景模板和模板预览",
+      "current": "会议/访谈/课堂、自定义与历史基础已有",
+      "gap": "缺成熟的场景预览、收藏/默认选择体验",
+      "priority": "第一批",
+      "sourceIds": [
+        "plaud-templates",
+        "granola-recipes"
+      ],
+      "companionEvidence": [
+        "minutesTemplateLibrary.ts",
+        "CompanionDashboard.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "multi-artifact",
+      "group": "问答与成稿",
+      "capability": "一份录音保存多份成果",
+      "current": "已有纪要历史、问答保存与材料",
+      "gap": "应明确区分不同用途的成稿，不让用户在长历史里找",
+      "priority": "第一批",
+      "sourceIds": [
+        "plaud-multiple"
+      ],
+      "companionEvidence": [
+        "MeetingAiWorkbench.tsx:onSave",
+        "minutesByMode.history"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "work-docs",
+      "group": "问答与成稿",
+      "capability": "跟进草稿/周报/客户简报",
+      "current": "双端共享工作区已有三个方向",
+      "gap": "成稿版式与入口需打磨；现有引用摘录不冒称完整综合报告",
+      "priority": "第一批",
+      "sourceIds": [
+        "plaud-work",
+        "notta-brain",
+        "granola-recipes"
+      ],
+      "companionEvidence": [
+        "MeetingAiWorkbench.tsx:suggestions/bodyFor"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "saved-recipes",
+      "group": "问答与成稿",
+      "capability": "保存常用工作流程",
+      "current": "有自定义纪要模板基础",
+      "gap": "用户自建可复用问答/成稿指令未形成完整入口",
+      "priority": "第一批后续",
+      "sourceIds": [
+        "granola-recipes",
+        "plaud-work"
+      ],
+      "companionEvidence": [
+        "minutesTemplateLibrary.ts",
+        "MeetingAiWorkbench.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "translation",
+      "group": "问答与成稿",
+      "capability": "译文和双语阅读",
+      "current": "手机已有译文入口与保存基础",
+      "gap": "电脑无对应明确入口；实时双语翻译未据此完成",
+      "priority": "双端补齐",
+      "sourceIds": [
+        "notta-translation"
+      ],
+      "companionEvidence": [
+        "Android App.tsx:translationLanguage/translation-panel",
+        "Windows141 audited UI"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "deliver-files",
+      "group": "问答与成稿",
+      "capability": "Word/PDF/PPT/Excel等成稿导出",
+      "current": "已有所选内容导出多格式基础",
+      "gap": "分页已有内容不等于AI编排的演示稿；后者单列质量目标",
+      "priority": "第一批整合",
+      "sourceIds": [
+        "notta-brain",
+        "plaud-work"
+      ],
+      "companionEvidence": [
+        "ContentExportPanel.tsx:formats",
+        "backend/meeting_document_presentation.rs"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "project-memory",
+      "group": "项目与跟进",
+      "capability": "项目资料与历史决策回顾",
+      "current": "有文件夹/标签和多会问答基础",
+      "gap": "缺项目范围直达与可引用的变化/决策脉络",
+      "priority": "第二批",
+      "sourceIds": [
+        "granola-chat",
+        "notta-brain"
+      ],
+      "companionEvidence": [
+        "libraryOrganization.ts",
+        "MeetingAiWorkbench.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "followups",
+      "group": "项目与跟进",
+      "capability": "负责人/截止时间/跟进事项",
+      "current": "已有清单核对、状态和日历交接基础",
+      "gap": "缺跨会议统一待办视图；不把建议或含糊安排自动变承诺",
+      "priority": "第二批",
+      "sourceIds": [
+        "feishu-tasks",
+        "otter-chat"
+      ],
+      "companionEvidence": [
+        "action_export.rs",
+        "CompanionCalendarCopies.tsx",
+        "calendarReminderCarryover.ts"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "pre-brief",
+      "group": "项目与跟进",
+      "capability": "下一次会前简报",
+      "current": "已有保存资料可作来源",
+      "gap": "日历事件与上次未结事项自动关联未形成可验能力",
+      "priority": "第二批/日历服务",
+      "sourceIds": [
+        "granola-brief",
+        "granola-chat"
+      ],
+      "companionEvidence": [
+        "existing saved meetings; no qualified pre-meeting automation receipt"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "calendar-connect",
+      "group": "项目与跟进",
+      "capability": "Google/Outlook日历连接",
+      "current": "已有ICS/系统日历交接",
+      "gap": "导出日历文件不等于日历账户双向连接",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "notta-plans",
+        "plaud-work"
+      ],
+      "companionEvidence": [
+        "CompanionCalendarCopies.tsx",
+        "action_export.rs"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "people-companies",
+      "group": "项目与跟进",
+      "capability": "人物/公司知识目录",
+      "current": "有单场发言标签和人工修订",
+      "gap": "缺跨会议人物/公司档案；姓名归并先需可靠来源",
+      "priority": "第二批后续",
+      "sourceIds": [
+        "granola-chat"
+      ],
+      "companionEvidence": [
+        "MeetingSpeakers.tsx",
+        "transcriptReview.ts"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "library",
+      "group": "项目与跟进",
+      "capability": "搜索/分类/收藏/回收站",
+      "current": "已有并有141/161交付基线",
+      "gap": "语义全库检索和当前文字筛选应区分，不借名称冒充",
+      "priority": "整合已有",
+      "sourceIds": [
+        "notta-plans",
+        "granola-chat"
+      ],
+      "companionEvidence": [
+        "libraryOrganization.ts",
+        "CompanionDashboard.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "share-link",
+      "group": "协作与服务",
+      "capability": "带权限/到期控制的分享链接",
+      "current": "当前以文件和系统分享交接为主",
+      "gap": "未形成受控托管链接服务，不能标成已支持",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "shareHandoff.ts",
+        "ContentExportPanel.tsx"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "cloud-sync",
+      "group": "协作与服务",
+      "capability": "手机/电脑账户云同步",
+      "current": "已有本机保留与备份/恢复基础",
+      "gap": "卡同步和资料备份不等于账户云同步，缺冲突与权限服务",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "feishu-tasks",
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "libraryOrganization.ts",
+        "existing backup/restore delivery receipts"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "team-collab",
+      "group": "协作与服务",
+      "capability": "多人编辑/评论/成员权限",
+      "current": "当前产品交付以个人资料为主",
+      "gap": "团队成员、并发编辑和审计服务未形成可验交付",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "notta-plans",
+        "feishu-tasks"
+      ],
+      "companionEvidence": [
+        "current local library/export architecture"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "integrations",
+      "group": "协作与服务",
+      "capability": "Notion/Slack/CRM等集成",
+      "current": "有导出和普通应用交接",
+      "gap": "未等同认证后的API连接；每类连接需账户/服务配置",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "otter-chat",
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "shareHandoff.ts",
+        "content_handoff.rs"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "automations",
+      "group": "协作与服务",
+      "capability": "定时/事件触发的工作流",
+      "current": "有接收后处理等本机基础",
+      "gap": "跨应用定时成果与队列/失败恢复/费用边界需独立服务实现",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "plaud-work",
+        "otter-chat"
+      ],
+      "companionEvidence": [
+        "existing ordinary processing flow; no qualified connector routine receipt"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    },
+    {
+      "id": "enterprise",
+      "group": "协作与服务",
+      "capability": "SSO/管理/使用额度/保留策略",
+      "current": "当前无同等企业服务交付证据",
+      "gap": "企业账户体系、认证与后台管理按独立服务范围保留",
+      "priority": "服务对齐",
+      "sourceIds": [
+        "notta-plans"
+      ],
+      "companionEvidence": [
+        "no current enterprise service qualification receipt"
+      ],
+      "statusIsNotFeatureQualityAcceptance": true
+    }
+  ],
+  "sourceAudit": [
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "sha256": "27d6f5da9282ecd1b1a453ec275cce7f43b19d7a811020a6ab8491fe738c575c"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/CompanionDashboard.tsx",
+      "sha256": "95a0265978cb6d28fd17ae2253c0eece1d3d05fa9ff8a7dc71d057186ee4c837"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/MeetingReadingFrame.tsx",
+      "sha256": "10e34b16919141cf1768d42367973fec10eaecbbaf9b290223ee3662d5aa1918"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/MeetingSpeakers.tsx",
+      "sha256": "85b26f72448516694e1eadbc1d1a6ba5ba71c531b5310ce2abb23a69605b50d6"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/minutesTemplateLibrary.ts",
+      "sha256": "1454e96aa13bbe3ef19649261bb8b75146a99565c77f6485a031a5bf7626a092"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/ContentExportPanel.tsx",
+      "sha256": "04e94d60676dc082386559fc0f42bd6773f22f4ad3e89ef38dfe31cf8ece551d"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/CompanionCalendarCopies.tsx",
+      "sha256": "762c01946f288c6e972286cd9727f272889816e9627bb401f12563513a52aa6d"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/ui/src/CompanionAudioPlayer.tsx",
+      "sha256": "ec4e9628c6f39d52d461959a9526aae8816bc27a77d001aed8f6c85becbe38a3"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/core/src/meetingQa.ts",
+      "sha256": "beb47394c9e15e6b9cc3d95a2ef1b198e532f6888ef97cd49f646a523df61bae"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/core/src/recordingBookmarks.ts",
+      "sha256": "1b47b92bf1aa44baf71e92dccfb239b6ab44dff592346f46be6664166841d30b"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "packages/core/src/libraryOrganization.ts",
+      "sha256": "40340a794cb513da1892e398ba9fc2711cfcecd757f197f8d12dfdee68bce465"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "apps/windows/src/App.tsx",
+      "sha256": "fc43b6a4961b7e3ba98f39e7ce394429ae94d38454c3df6f72943d2685e2ee53"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "apps/windows/src-tauri/src/backend/meeting_qa.rs",
+      "sha256": "04a4c08531b680e10ca8cff2b3842fc07ba4630ed6d4344f6737fa3823baf175"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "apps/windows/src-tauri/src/backend/document_context.rs",
+      "sha256": "4b58378d524cae55d437507abe016fc407c316bfad8f8269503ee729d22fa017"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "apps/windows/src-tauri/src/backend/volcengine.rs",
+      "sha256": "ed37a1734b15ddd25c9059ea317cddfb408d2a15b46a17b7cd6ee543a6ce74fc"
+    },
+    {
+      "platform": "Windows141",
+      "commit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+      "path": "apps/windows/src-tauri/src/backend/action_export.rs",
+      "sha256": "e25846f2e02263f400ed56ebdb8e4696b8d6f6bd72efc88ea9f03ab38684213c"
+    },
+    {
+      "platform": "Android161",
+      "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+      "path": "apps/mobile/src/App.tsx",
+      "sha256": "f191aa9ed4f5e60527ac6719a452f7bbf0a950544c63291e438874f3d85c526d"
+    },
+    {
+      "platform": "Android161",
+      "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+      "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "sha256": "27d6f5da9282ecd1b1a453ec275cce7f43b19d7a811020a6ab8491fe738c575c"
+    },
+    {
+      "platform": "Android161",
+      "commit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+      "path": "apps/android/app/libs/companion-android-backend.provenance.json",
+      "sha256": "df6cf6ab95b4d4149c991713a0a871d58dd9062d07008040bd4e87f466ae3443"
+    }
+  ],
+  "currentResearchLimitations": [
+    "Public software documentation and entry/flow descriptions were inspected; no competitor paid account, login or feature execution was performed.",
+    "Two Plaud attachment links were resolved; a Granola screenshot URL was unavailable to the web reader. Image access is not recorded as a visual or hands-on UI pass.",
+    "Vendor claims about accuracy, speed and purchase appeal were not independently measured.",
+    "Existing source presence is not a new quality/real-service acceptance; deployed141/161 advanced capabilities were not re-run with models in this research."
+  ],
+  "proposedFirstCompleteOutcome": "在同一场或所选几场会议中提问→核对来源→生成并保存可继续编辑的工作材料→带走结果。",
+  "orderedImplementationBatches": [
+    {
+      "id": "assistant-to-document",
+      "outcome": "问会议到可带走成稿",
+      "includes": [
+        "ask-current",
+        "ask-many",
+        "mixed-context",
+        "templates",
+        "multi-artifact",
+        "work-docs",
+        "deliver-files"
+      ],
+      "entry": "保留当前默认纪要阅读；高级能力集中到一个问会议入口，范围和来源在同一处可见。",
+      "status": "AUTHORIZED_SCOPE_RECORDED_NOT_IMPLEMENTED_THIS_RESEARCH"
+    },
+    {
+      "id": "project-followup",
+      "outcome": "跨会议项目记忆与事项跟进",
+      "includes": [
+        "project-memory",
+        "followups",
+        "pre-brief",
+        "people-companies"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "service-parity",
+      "outcome": "团队与跨应用服务",
+      "includes": [
+        "calendar-connect",
+        "share-link",
+        "cloud-sync",
+        "team-collab",
+        "integrations",
+        "automations",
+        "enterprise"
+      ],
+      "status": "OPEN_REQUIRES_SERVICE_ARCHITECTURE_AND_SCOPED_ACCOUNT_CONFIGURATION"
+    }
+  ],
+  "modelHandoffBoundary": "Reliable Chinese transcription, diarization, semantic chapters, glossary effectiveness and cross-meeting synthesis quality stay with the existing model chat; frontend consumes reliable saved results and retains exact citations. No message sent or priorities changed in another chat.",
+  "productChangesThisResearch": false,
+  "nativeBuilds": 0,
+  "modelsRun": false,
+  "boardAccessed": false,
+  "newPaidServices": false,
+  "ownerPopupStarted": false,
+  "competitiveParityCompleted": false,
+  "purchaseValueEstablished": false
+}
