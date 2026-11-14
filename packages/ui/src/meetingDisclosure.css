@@ -1,0 +1,19 @@
+/* The same disclosure hierarchy in both apps, with native details semantics. */
+body .ct-windows.ct-notebook .meeting-disclosure,.mobile-app .meeting-disclosure{display:block;margin:20px 0 0;padding:0;border:1px solid var(--notebook-line);border-radius:10px;background:var(--notebook-paper);color:var(--notebook-ink);overflow:visible}
+body .ct-windows.ct-notebook .meeting-disclosure>summary,.mobile-app .meeting-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;box-sizing:border-box;min-height:54px;margin:0;padding:14px 16px;list-style:none;color:var(--notebook-ink);background:transparent;cursor:pointer;line-height:1.6;text-align:left;border-radius:10px}
+.meeting-disclosure>summary::-webkit-details-marker{display:none}
+body .ct-windows.ct-notebook .meeting-disclosure>summary::after,.mobile-app .meeting-disclosure>summary::after{display:none!important;content:none!important}
+.meeting-disclosure-label{display:flex;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere}
+body .ct-windows.ct-notebook .meeting-disclosure-label>strong,.mobile-app .meeting-disclosure-label>strong{font-size:14px;font-weight:600;color:var(--notebook-ink)}
+body .ct-windows.ct-notebook .meeting-disclosure-label>small,.mobile-app .meeting-disclosure-label>small{font-size:11px;font-weight:400;line-height:1.7;color:var(--notebook-muted)}
+.meeting-disclosure-toggle{display:flex;align-items:center;gap:5px;flex:none;font-size:11px;font-weight:400;color:var(--notebook-accent)}
+.meeting-disclosure-open,.meeting-disclosure[open] .meeting-disclosure-closed{display:none}
+.meeting-disclosure[open] .meeting-disclosure-open{display:inline}
+.meeting-disclosure[open]>.meeting-disclosure-toggle svg,.meeting-disclosure[open]>summary>.meeting-disclosure-toggle svg{transform:rotate(180deg)}
+body .ct-windows.ct-notebook .meeting-disclosure[open]>summary,.mobile-app .meeting-disclosure[open]>summary{border-radius:10px 10px 0 0;background:var(--notebook-soft);border-bottom:1px solid var(--notebook-line)}
+body .ct-windows.ct-notebook .meeting-disclosure-content,.mobile-app .meeting-disclosure-content{padding:4px 20px 20px;color:var(--notebook-ink);font-weight:400;min-width:0;overflow-wrap:anywhere}
+.meeting-disclosure>summary:focus-visible{outline:2px solid var(--notebook-accent);outline-offset:3px}
+body .ct-windows.ct-notebook .meeting-disclosure-content>.ct-minutes-article,.mobile-app .meeting-disclosure-content>.minutes-reading{margin:0;background:transparent;border:0;box-shadow:none;padding:0;color:var(--notebook-ink)}
+body .ct-windows.ct-notebook .meeting-disclosure-content .ct-minutes-item,.mobile-app .meeting-disclosure-content .minutes-item{color:var(--notebook-ink);font-weight:400;line-height:1.9}
+body .ct-windows.ct-notebook .meeting-disclosure-content h4,.mobile-app .meeting-disclosure-content h3{margin-top:22px!important;margin-bottom:12px!important}
+@media(max-width:720px){body .ct-windows.ct-notebook .meeting-disclosure>summary,.mobile-app .meeting-disclosure>summary{padding:13px 14px;gap:10px}body .ct-windows.ct-notebook .meeting-disclosure-content,.mobile-app .meeting-disclosure-content{padding:2px 14px 16px}.mobile-app .meeting-disclosure-content .minutes-item{font-size:14px}}

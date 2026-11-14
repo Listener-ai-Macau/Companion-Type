@@ -5,7 +5,7 @@ No installer, app, microphone, model or recorder is started by this entry.
 """
 from pathlib import Path
 from datetime import datetime
-import argparse,hashlib,json,os,shutil,subprocess,sys,time,traceback
+import argparse,hashlib,json,os,re,shutil,subprocess,sys,time,traceback
 from check_type_build_target import inspect
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,'C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow/scripts')
@@ -15,8 +15,43 @@ from windows_build_limits import NativeBuildLimits
 def sha(path):
  with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 def capture(args,cwd=ROOT):return subprocess.check_output(list(map(str,args)),cwd=cwd,text=True,encoding='utf-8').strip()
+
+def verified_reuse(receipt,target,version):
+ """Estimate an app-only rebuild after verifying a completed matching native build.
+
+ The cold-build estimate remains8GiB. A matching warm build reserves2GiB;
+ the common80GiB cache and30GiB free-space limits still apply without deletion.
+ """
+ previous=json.loads(receipt.read_bytes())
+ assert previous['state']=='LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING'
+ assert Path(previous['sharedTarget']).resolve()==target.resolve()
+ assert previous['normalReleaseOptimization'] and previous['nativeAndWebUnchangedAfterBundle']
+ assert sha(Path(previous['msi']))==previous['msiSha256']
+ for item in previous['nativeFiles']:assert sha(receipt.parent/'windows-bin'/item['path'])==item['sha256']
+ assert capture(['rustc','+1.95.0','--version'])==previous['rustc']
+ assert capture(['git','rev-parse','HEAD'],ROOT/'third_party/denzic-platform')==previous['platformCommit']
+ suffixes={'.rs','.c','.h','.cpp','.hpp','.a','.lib','.s'}
+ native=lambda name:Path(name).suffix.lower() in suffixes
+ inputs={row['path']:row['sha256']for row in previous['sourceFiles']if native(row['path'])}
+ current=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party']).splitlines()
+ assert set(inputs)=={name for name in current if native(name)},'Native source inventory changed; use cold-build reserve'
+ for name,digest in inputs.items():assert sha(ROOT/name)==digest,'Native source changed: '+name
+ for name in ['apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock']:
+  before=subprocess.check_output(['git','show',previous['sourceCommit']+':'+name],cwd=ROOT).replace(b'\r\n',b'\n')
+  after=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+  if name.endswith('Cargo.lock'):
+   before,n=re.subn(rb'(name = "companion-type"\nversion = ")[^"]+("\n)',lambda m:m[1]+version.encode()+m[2],before)
+   assert n==1
+  else:
+   old=('version = "'+previous['version']+'"').encode();assert before.count(old)==1
+   before=before.replace(old,('version = "'+version+'"').encode())
+  assert before==after,'Cargo dependencies changed; use cold-build reserve'
+ assert (target/'release/deps').is_dir() and (target/'release/companion-type.exe').is_file()
+ return dict(receipt=str(receipt),receiptSha256=sha(receipt),sourceCommit=previous['sourceCommit'],unchangedNativeInputs=len(inputs),cargoDependenciesUnchanged=True,reservedGiB=2)
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
+ parser.add_argument('--reuse-build-receipt',type=Path,help='Completed same-target build with exact native inputs; reserve2GiB for an app-only rebuild')
+ args=parser.parse_args()
  assert os.name=='nt' and os.environ.get('GITHUB_ACTIONS')!='true'
  cache=Path('E:/CodexData/Companion/.build-cache');target=cache/'shared-windows-target';out=args.output.resolve()
  # Completed releases belong outside the reusable compiler cache.
@@ -39,7 +74,10 @@ def main():
   with exclusive_build(cache/'.shared-windows-build.lock'):
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
-   record['storageBefore']=preflight(cache,reserve_gib=8)
+   reserve=8
+   if args.reuse_build_receipt:
+    record['verifiedWarmBuildReuse']=verified_reuse(args.reuse_build_receipt,target,record['version']);reserve=2
+   record['storageBefore']=preflight(cache,reserve_gib=reserve)
    observed=inspect(target,ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    assert not capture(['git','status','--porcelain','--untracked-files=no']),'Commit the exact source before a normal delivery build'
    assert capture(['git','ls-tree','HEAD','third_party/denzic-platform']).split()[2]==record['platformCommit']

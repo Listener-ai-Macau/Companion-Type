@@ -8,6 +8,7 @@ import {savedActionReview} from './actionReview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import { cleanHesitations, transcriptParagraphs } from './transcriptReading';
 import { MeetingTopic } from './MeetingTopic';
+import { MeetingDisclosure } from './MeetingDisclosure';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {readRestoredCustomTemplates} from './customTemplateBackup';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
@@ -3864,10 +3865,10 @@ function MinutesReadingView(props:Parameters<typeof MinutesReadingBody>[0]) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
   return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
-    {reading.review.trim()?<details className="ct-full-minutes ct-source-review"><summary>原文依据与待核对内容</summary>
+    {reading.review.trim()?<MeetingDisclosure className="ct-full-minutes ct-source-review" title="原话与待核对内容" description="核对来源，不作为已确认结论">
       <p className="ct-step-meta">保留原始转写和先前整理中的核对材料；这里的片段不代表已确认的会议结论。</p>
       <MarkdownMinutes markdown={reading.review} sources={props.sources} blocked={props.blocked} onOpenSource={props.onOpenSource} onShowTranscript={props.onShowTranscript}/>
-    </details>:null}
+    </MeetingDisclosure>:null}
   </MeetingReadingFrame>;
 }
 function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, longEvidenceAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime,actionContextKey='', ...sourceProps }: {
@@ -3894,25 +3895,25 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
   if(longEvidence)return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={longEvidence.overview} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
-    {longEvidence.detailSummary?<details className="ct-full-minutes"><summary>{longEvidence.detailKeywords?'查看完整摘要和关键词':'查看完整会议摘要'}</summary>
+    {longEvidence.detailSummary?<MeetingDisclosure className="ct-full-minutes" title="完整会议摘要" description={longEvidence.detailKeywords?'按原文顺序查看摘要与关键词':'按原文顺序查看全部讨论内容'}>
       <MarkdownMinutes markdown={longEvidence.detailSummary} {...sourceProps}/>
       {longEvidence.detailKeywords?<MarkdownMinutes markdown={longEvidence.detailKeywords} {...sourceProps}/>:null}
-    </details>:null}
-    <details className="ct-full-minutes"><summary>查看各段原文依据</summary>
+    </MeetingDisclosure>:null}
+    <MeetingDisclosure className="ct-full-minutes" title="各段原话依据" description="逐段核对会议内容的来源">
       <MarkdownMinutes markdown={longEvidence.evidence} {...sourceProps}/>
-    </details>
+    </MeetingDisclosure>
   </div>;
   const shortEvidence=!noteContext?splitShortMinutesEvidence(reading,transcript):null;
   const shortReading=shortEvidence?.overview??reading;
-  const shortSource=shortEvidence?<details className="ct-full-minutes"><summary>查看原话依据</summary>
+  const shortSource=shortEvidence?<MeetingDisclosure className="ct-full-minutes" title="原话依据" description="核对整理内容与对应原话">
     <p>以下原话由 AI 整理时关联，仅供核对；关联和转写可能有误，编辑后请重新核对。</p><MarkdownMinutes markdown={shortEvidence.evidence} {...sourceProps}/>
-  </details>:null;
+  </MeetingDisclosure>:null;
   const shortOverview=compactAllowed&&!noteContext?splitShortMinutesOverview(shortReading):null;
   if(shortOverview)return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={shortOverview.overview} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
-    <details className="ct-full-minutes"><summary>{shortOverview.hasSources?'查看完整摘要和补充原文':'查看完整摘要'}</summary>
+    <MeetingDisclosure className="ct-full-minutes" title="完整会议摘要" description={shortOverview.hasSources?'包含完整摘要和补充原文':'查看全部整理内容'}>
       <MarkdownMinutes markdown={shortOverview.detail} {...sourceProps}/>
-    </details>
+    </MeetingDisclosure>
     {shortSource}
   </div>;
   const brief = compactAllowed ? briefMinutes(shortReading, transcript, durationMs, !!noteContext) : null;
@@ -3920,13 +3921,13 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
     
       <MarkdownMinutes markdown={shortReading} hideGeneratedNotices={hideGeneratedNotices} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
     {shortSource}
-    {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
+    {noteContext&&reading!==markdown?<MeetingDisclosure className="ct-full-minutes" title="本次补充与完整整理" description="补充内容和它的原始来源">
       
       <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
-      {noteContext?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
+      {noteContext?<MeetingDisclosure className="ct-full-minutes" title="本次补充来源">
         <MarkdownMinutes markdown={minutesSourceEnvelope(noteContext)} {...sourceProps}/>
-      </details>:null}
-    </details>:null}
+      </MeetingDisclosure>:null}
+    </MeetingDisclosure>:null}
   </div>;
   // Fold only the generated brief's summary section. Actual decisions,
   // questions and attribution remain visible; full saved text stays below.
@@ -3937,13 +3938,13 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   const hasSourceAttribution = /^## (?:讨论纪要\(按说话人\)|发言归属未确认的原话)\r?$/m.test(reading);
   return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={compactReading} actionChecklist={actionChecklist} {...sourceProps} />
-    <details className="ct-full-minutes"><summary>{hasSourceAttribution ? '查看完整整理与发言归属' : checklistOnly ? '查看重点和完整整理' : '查看完整整理'}</summary>
+    <MeetingDisclosure className="ct-full-minutes" title="完整会议纪要" description={hasSourceAttribution?'包含完整讨论与已有发言归属':checklistOnly?'包含会议重点与完整整理':'查看这场会议的全部整理内容'}>
       
       <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
-      {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
+      {noteContext&&reading!==markdown?<MeetingDisclosure className="ct-full-minutes" title="本次补充来源">
         <MarkdownMinutes markdown={minutesSourceEnvelope(noteContext)} {...sourceProps}/>
-      </details>:null}
-    </details>
+      </MeetingDisclosure>:null}
+    </MeetingDisclosure>
     {shortSource}
   </div>;
 }
