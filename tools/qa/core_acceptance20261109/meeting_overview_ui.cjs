@@ -1,4 +1,4 @@
-const assert=require('node:assert/strict'),path=require('path');
+const assert=require('node:assert/strict'),path=require('path'),fs=require('fs');
 module.exports=async(page,frame,out,tag,expected)=>{
  await frame.getByRole('button',{name:'会议一览',exact:true}).click();
  const overview=frame.locator('.meeting-overview');await overview.waitFor();
@@ -6,6 +6,7 @@ module.exports=async(page,frame,out,tag,expected)=>{
  for(let i=0;i<expected.length;i++){await nodes.nth(i).focus();await page.keyboard.press('Enter');assert.equal(await nodes.nth(i).getAttribute('aria-pressed'),'true');assert.equal(await overview.locator('.meeting-overview-detail>p').innerText(),expected[i]);}
  await nodes.first().click();await frame.locator('.meeting-reading-start').scrollIntoViewIfNeeded();
  const visibleResults=await overview.locator('.meeting-overview-outcomes').boundingBox();assert(visibleResults&&visibleResults.y+visibleResults.height<=await page.evaluate(()=>innerHeight),'Results must be visible in the first reading viewport.');
+ fs.writeFileSync(path.join(out,'actual-overview-first-viewport-'+tag+'.json'),JSON.stringify({results:visibleResults,viewportHeight:await page.evaluate(()=>innerHeight),resultsVisibleBeforeTopics:true},null,2));
  await page.screenshot({path:path.join(out,'actual-visual-overview-'+tag+'.png'),animations:'disabled'});
  const actions=overview.locator('.meeting-overview-outcome').filter({hasText:'行动事项'});assert((await actions.locator('summary').innerText()).includes('未列出'));await actions.locator('summary').click();assert.equal(await actions.locator('li').count(),0);await actions.locator('summary').click();
  const decisions=overview.locator('.meeting-overview-outcome').filter({hasText:'讨论结论'});await decisions.locator('summary').click();assert((await decisions.locator('li').innerText()).includes('增加促销后仍不见好转'));await decisions.locator('summary').click();
