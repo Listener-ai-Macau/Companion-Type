@@ -12,6 +12,7 @@ pub mod desktop;
 pub mod intent;
 pub mod contact;
 mod contact_dtw;
+mod tap_motion;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }
@@ -157,6 +158,7 @@ pub struct Pointer {
     fusion:fusion::Fusion,
     coarse:Option<intent::Intent>,
     contacts:contact::Contact,
+    tap_motion:tap_motion::TapMotion,
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
     laser_offset:Point,last_projected:Option<Point>,
     last_control:Option<u32>,
@@ -167,12 +169,12 @@ impl Pointer {
         let contacts=contact::Contact::new(settings.contact_profile.clone());
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
             relative:relative::Response::default(),last_emitted:position,
-            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,
+            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,tap_motion:tap_motion::TapMotion::default(),
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.metrics.regripping=false;self.pressed=None;self.wait_release=true;}
-    fn release(&mut self) {self.release_button();self.contacts.clear_stream();}
-    fn reset_motion(&mut self){self.smoother.reset();self.relative.reset();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
+    fn release(&mut self) {self.release_button();self.contacts.clear_stream();self.tap_motion.clear();}
+    fn reset_motion(&mut self){self.smoother.reset();self.relative.reset();self.tap_motion.clear_rates();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn drag_delay(&self)->f64{if self.settings.relative_direct{0.18}else{0.35}}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
@@ -191,6 +193,7 @@ impl Pointer {
         self.shown=position;
         self.last_emitted=position;
         self.relative.reset();self.smoother.reset();
+        self.tap_motion.clear_rates();
         self.contacts.reanchor(position);
         if self.settings.relative_direct{
             // A reliable click can be queued between two native frames. If
@@ -297,7 +300,11 @@ impl Pointer {
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
         // CIM6 shares the fused motion clock. Raw contact acceleration must
         // not run a second fusion, count a second sample, or enable planar.
-        if self.settings.contact_regions{self.contacts.sample(s);return;}
+        if self.settings.contact_regions{
+            self.contacts.sample(s);self.tap_motion.observe(s);
+            if self.tap_motion.blocked(){self.smoother.reset();self.relative.reset();}
+            return;
+        }
         if !self.settings.desktop_motion{return;}
         if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
         self.contacts.sample(s);
@@ -378,7 +385,11 @@ impl Pointer {
                         // CIM4 lacks roll: never substitute its yaw silently.
                         Point{x:-rate[1],y:pitch}
                     }else if s.aim.is_some(){Point{x:yaw,y:pitch}}else{relative::player_space(rate,up)};
-                    self.relative.sample(raw,dt)
+                    if self.settings.contact_regions{
+                        let value=self.tap_motion.angular(s.sensor_ms,raw,dt);
+                        if let Some((raw,dt))=value{self.relative.sample(raw,dt)}
+                        else{self.relative.reset();self.smoother.reset();Point::default()}
+                    }else{self.relative.sample(raw,dt)}
                 }else{Point{x:yaw,y:pitch}};
                 let dx=-axis_speed(r.x,&self.settings)*if self.settings.invert_horizontal{-1.}else{1.};
                 // Physical Type-C-front fixture binds lift to negative gyroX.
@@ -442,6 +453,7 @@ impl Pointer {
         }
         let mut f=Frame{position:None,buttons:std::mem::take(&mut self.queued)};
         if stale || self.metrics.paused || self.metrics.regripping || !self.metrics.calibrated {return f;}
+        if self.settings.contact_regions&&(self.tap_motion.blocked()||f.buttons.iter().any(|x|matches!(x,Button::Click(_)|Button::RightClick(_)))){return f;}
         if self.contacts.status.learning.is_some(){return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=self.drag_delay() {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         if self.settings.relative_direct&&self.pressed.is_some()&&!self.metrics.dragging{return f;}

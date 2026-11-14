@@ -161,3 +161,30 @@ fn ready()->Pointer{
     p.pause(false);p.control(Control{sequence:3,sensor_ms:30,events:DOWN}).unwrap();
     assert!(p.frame(0.5,bounds()).buttons.is_empty());assert!(!p.metrics.regripping);assert!(p.metrics.stream_stale);
 }
+
+#[test]
+#[ignore="Local Owner142 raw trace only; no private data is bundled"]
+fn owner142_recorded_taps_and_impact_motion_replay(){
+    let root=std::path::PathBuf::from(std::env::var("COMPANION_CONTACT_EVALUATION").expect("Owner trace"));
+    let receipt:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("result.json")).unwrap()).unwrap();
+    let settings:Settings=serde_json::from_value(receipt["sessions"][0]["finalPointer"]["settings"].clone()).unwrap();
+    let rows:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("offline-diagnosis/timeline.json")).unwrap()).unwrap();
+    let mut p=Pointer::new(settings,Point{x:960.,y:540.});
+    let rows=rows.as_array().unwrap();let zero=rows[0]["hostUs"].as_u64().unwrap();
+    let mut next_frame=0.;let mut clicks=vec![];let mut positions=vec![];
+    for row in rows{
+        let at=(row["hostUs"].as_u64().unwrap()-zero)as f64/1e6;
+        while next_frame<at{
+            let f=p.frame(next_frame,bounds());clicks.extend(f.buttons);positions.push((next_frame,p.shown));next_frame+=1./60.;
+        }
+        if row["kind"]=="motion"{
+            let h=row["packet"].as_str().unwrap();let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+            p.sample_raw(desktop::Raw::parse(&bytes).unwrap(),at);p.sample(Sample::parse(&bytes).unwrap(),at,bounds());
+        }else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
+    }
+    let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
+    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates"});
+    let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
+    println!("Owner142 actual14 taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
+    if std::env::var_os("COMPANION_EXPECT_CONTACT_REPAIR").is_some(){assert_eq!(clicks.len(),14,"reliable physical taps must reach the nearest GRT template, not all be rejected by a three-example radius");}
+}
