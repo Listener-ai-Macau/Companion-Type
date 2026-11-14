@@ -1,0 +1,150 @@
+{
+  "at": "2026-11-14T19:35:07+08:00",
+  "state": "UNCHANGED_OS_BACKEND_WITH_CHANGED_UI_ROUTE_RECHECKED",
+  "priorAppSourceCommit": "cdf2ea0ab1712f67b8c4bce5e7fe38b55a11afdb",
+  "priorRuntimeRun": 43144208633,
+  "priorRuntimeTestSource": "4b1b2a59bbf7d4045a4c64277486adec0563c042",
+  "currentAppSourceCommit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+  "exactCommittedFiles": [
+    {
+      "path": "packages/ui/src/shareHandoff.ts",
+      "committedBlobSha256": "2e1e101051e219371aa6a628ae3083ddda764da0c0a9a4144eab7eb6b57b98ea"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/file_clipboard.rs",
+      "committedBlobSha256": "501795d8a84f751d60456d226ba423e4928062e460a77f0b742c420d807ac106"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/content_export.rs",
+      "committedBlobSha256": "0fb51bb762636aa2982025037df8ef43b94413133084cdaa5c884a629dd0c06d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/export_text_layout.rs",
+      "committedBlobSha256": "93c0274806aec8fc3d3af730ee5ea8919a4c576f78e76d7e10214bb626dc97fc"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/content_handoff.rs",
+      "committedBlobSha256": "d364aae4419d01321ce3dd7bc370f94becd5002494987db6f1c0204363a83409"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/export.rs",
+      "committedBlobSha256": "0c39e2923688d882f8f657963b534e05c25a2547eea8c097ec6c10135aab31cb"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/meeting_document_export.rs",
+      "committedBlobSha256": "074a9882f8404412247b3b0a7b9fa4c321ae56a984e9ae5d34d9e49987550b27"
+    }
+  ],
+  "newOrdinaryRecipientTested": false,
+  "exactCommandBlocks": [
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "command": "preview_companion_meeting_export",
+      "normalizedLfBlockSha256": "db01af17fbaabd76d9a76641fb27d2a532bd64d9771165f178ee21ffa57df0e2"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "command": "copy_companion_meeting_content",
+      "normalizedLfBlockSha256": "73120ca9950dd5d48f850b5f6db6d090829dd20d059eacbff80746c278b35aca"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "command": "share_companion_meeting_content",
+      "normalizedLfBlockSha256": "89e0791bddf27be2c8f36fb25de6f42d7731d4e8208b1856b3f8892a03922c32"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/commands.rs",
+      "command": "export_companion_meeting",
+      "normalizedLfBlockSha256": "5cf3cd91fc0373fa3d87a69575705eb67c2ea0d006f74c4072ec1a02731763af"
+    }
+  ],
+  "unchangedOsDependencyPackages": [
+    {
+      "name": "clipboard-win",
+      "version": "5.4.3",
+      "checksum": "052af7878466feccda12ba7a6a67d019d712f296809559b47c12c8cc196d3a9a"
+    },
+    {
+      "name": "rfd",
+      "version": "0.16.0",
+      "checksum": "a15ad77d9e70a92437d8f74c35d99b4e4691128df018833e99f90bcd36152672"
+    },
+    {
+      "name": "tauri",
+      "version": "2.11.3",
+      "checksum": "c2616f96cb644bf2c5c456d9de4d5d5100e592d7424c74d8b55c5cb96e359e93"
+    },
+    {
+      "name": "tauri-runtime",
+      "version": "2.11.3",
+      "checksum": "b0b4bc95aed361b0019067d189a1174a603d460d0f6c72606512d59fc9c12ec8"
+    },
+    {
+      "name": "tauri-runtime-wry",
+      "version": "2.11.3",
+      "checksum": "fe41e015bf8fc4d6477ff4926a0ef769dc64ff34c7b0038b6f7cacae892acb5c"
+    },
+    {
+      "name": "windows",
+      "version": "0.54.0",
+      "checksum": "9252e5725dbed82865af151df558e754e4a3c2c30818359eb17465f1346a1b49"
+    },
+    {
+      "name": "windows",
+      "version": "0.56.0",
+      "checksum": "1de69df01bdf1ead2f4ac895dc77c9351aefff65b2f3db429a343f9cbf05e132"
+    },
+    {
+      "name": "windows",
+      "version": "0.58.0",
+      "checksum": "dd04d41d93c4992d421894c18c8b43496aa748dd4c081bac0dc93eb0489272b6"
+    },
+    {
+      "name": "windows",
+      "version": "0.61.3",
+      "checksum": "9babd3a767a4c1aef6900409f85f5d53ce2544ccdfaa86dad48c91782c6d6893"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.54.0",
+      "checksum": "12661b9c89351d684a50a8a643ce5f608e20243b9fb84687800163429f161d65"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.56.0",
+      "checksum": "4698e52ed2d08f8658ab0c39512a7c00ee5fe2688c65f8c0a4f06750d729f2a6"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.58.0",
+      "checksum": "6ba6d44ec8c2591c134257ce647b7ea6b20335bf6379a27dac5f1641fcf59f99"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.61.2",
+      "checksum": "c0fdd3ddb90610c7638aa2b3a3ab2904fb9e5cdbecc643ddb3647212781c4ae3"
+    },
+    {
+      "name": "windows-core",
+      "version": "0.62.2",
+      "checksum": "b8e83a14d34d0623b51dce9581199302a221863196a1dde71a7663a4c2be9deb"
+    },
+    {
+      "name": "wry",
+      "version": "0.55.1",
+      "checksum": "186f9871daa55fd9c016578b810d149de58367113db7fb72b462d2323ce19514"
+    }
+  ],
+  "uiExportStateAndOperations": {
+    "path": "packages/ui/src/ContentExportPanel.tsx",
+    "scope": "Entire component state, selection binding, request construction and operation implementation before JSX rendering",
+    "normalizedLfSha256": "29dd9e7ad7b7c0c343c7b55e3cd73f34aed1f11bfb9708bd3ce88693649c802d",
+    "priorNormalizedLfSha256": "29dd9e7ad7b7c0c343c7b55e3cd73f34aed1f11bfb9708bd3ce88693649c802d",
+    "bytes": 6064,
+    "uiRenderingChanged": true
+  },
+  "nativeSystemOperationsOn112Retested": false,
+  "currentNativeUiRouteRechecked": true,
+  "currentNativeUiEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\windows141\\native-reading-background-r1\\product\\docs\\handoffs\\20261109-core-acceptance\\632e643ebb774b20b67caa0934202d63\\result.json",
+  "nativeSystemOperationsOn111Retested": false
+}

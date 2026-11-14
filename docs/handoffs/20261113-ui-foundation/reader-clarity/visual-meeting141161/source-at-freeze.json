@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-14T19:21:56+08:00",
+  "windows": {
+    "at": "2026-11-14T19:21:56+08:00",
+    "version": "0.1.141",
+    "sourceCommit": "1c5b24dc9ae90f8d23caef7545b807e70da81d72",
+    "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+    "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+    "branch": "work/meeting-reading141-20261114",
+    "authoringSourceCommit": "98d78312b5d8917d880fcfa551899d8398a04fbc",
+    "relatedAuthoringFiles": [
+      "packages/ui/src/MeetingReadingFrame.tsx",
+      "packages/ui/src/MeetingDisclosure.tsx",
+      "packages/ui/src/meetingDisclosure.css",
+      "packages/ui/src/meetingVisual.css",
+      "packages/ui/src/notebookTheme.css",
+      "packages/ui/src/CompanionDashboard.tsx"
+    ],
+    "saved140SourcePreserved": "ef7aada4bb56cda8c83d761d44f73398c10975e7",
+    "saved140Receipt": "E:/CodexData/Companion/deliveries/20261114-companion-control140-fw66836/runtime-proof.json",
+    "backendAndInputUnchangedSinceSaved140": true,
+    "uncommittedOtherChangesIncluded": false,
+    "normalWindowsBuildPending": true,
+    "installed": false,
+    "ownerAccepted": false,
+    "modelChangesIncluded": false
+  },
+  "android": {
+    "at": "2026-11-14T19:21:56+08:00",
+    "versionCode": 161,
+    "versionName": "0.1.161",
+    "frontendSourceCommit": "fa2ff9ba42a880a3970d851189368d40adaab8df",
+    "frontendBranch": "work/core-acceptance-android-20261109",
+    "backendSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+    "aarSha256": "39acfbedb8cb4294be0455b3faa40d0033c25cc544aa6a2ae8c964f91a999a96",
+    "nativeLibrariesRebuilt": false,
+    "modelWorkAssignedOtherChat": true,
+    "modelsRun": false,
+    "installed": false
+  },
+  "sourceUiReview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\clarity-r6\\result.json",
+  "storageColdReserveAdmissionFailure": {
+    "logicalBytes": 77653988364,
+    "reservedJobBytes": 8589934592,
+    "limitBytes": 85899345920,
+    "deletedFiles": 0
+  },
+  "warmBuildDecision": "Native140 inputs and Cargo dependencies must match a completed build before the normal entry can estimate2GiB;80GiB/30GiB gates, fixed target and no deletion remain."
+}

@@ -1,0 +1,5 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 1\n",
+  "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 1\n\n    at module.exports (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\tools\\qa\\core_acceptance20261109\\meeting_clarity_ui.cjs:20:59)\n    at async C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\review_resumed_phone161.cjs:38:23",
+  "phase": "before-restart"
+}

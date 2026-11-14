@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-14T17:59:02+08:00",
+  "ownerSupplement": "然后还要简单写一下那个会议者，每个会议者说了什么东西。然后的话你看一下。怎么搞会好一点？",
+  "frontendBehavior": "Read saved per-speaker concise points first, show source excerpts when no concise points exist; reveal every exact utterance and existing revision-bound source links. Unknown fragments never form a person. No generic name mention becomes a participant.",
+  "existingSource": "CompanionTranscriptSource: speaker, speakerLabel, index, reviewRevision, startMs/endMs; existing native saved section 讨论纪要(按说话人) with - **label**: source words.",
+  "savedSummaryInterface": {
+    "section": "发言要点",
+    "itemSyntax": "- **existing exact speaker label**: concise point",
+    "requires": "Label must already exist in current explicit transcript attribution or saved native attributed-source section. Unknown labels stay in full notes but do not create participant cards. Summary extraction/quality and reliable diarization are model-chat responsibility."
+  },
+  "phoneBoundary": "Installed native AAR remains unchanged. Existing saved attributed-source and matching summary sections render without a new bridge. This phone local-ASR result has no speaker identity; do not claim model diarization implemented.",
+  "qualityQualified": false,
+  "modelsCalled": false
+}
