@@ -11,6 +11,7 @@ module.exports=async(page,spec,out)=>{
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();
  for(const theme of ['light','dark']){
   if(theme==='dark')await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();
+  if(spec.expectClearReading)await require('./meeting_clarity_ui.cjs')(page,frame,out,theme);
   await frame.getByRole('button',{name:'思维导图',exact:true}).click();
   const topics=frame.locator('.meeting-map-branches>li');assert.equal(await topics.count(),expected.length);
   const mapLayout=await frame.locator('.meeting-map-canvas').evaluate(e=>({width:e.closest('.meeting-reading-frame').getBoundingClientRect().width,columns:getComputedStyle(e).gridTemplateColumns.trim().split(/\s+/).length}));
