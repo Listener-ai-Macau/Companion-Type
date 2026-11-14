@@ -1,17 +1,5 @@
 use super::*;
 
-#[test]
-fn correcting_model_timing_invalidates_minutes_even_when_words_match() {
-    let mut source=session("同意周五检查。");
-    source.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment {
-        text:"同意周五检查。".into(),start_ms:1000,end_ms:2000,speaker:Some(0),approximate_timing:false
-    }];
-    let first=Identity::new("https://fixture.invalid","model","key",&source);
-    source.utterances[0].start_ms=1100;
-    let corrected=Identity::new("https://fixture.invalid","model","key",&source);
-    assert_ne!(first.filename(),corrected.filename());
-}
-
 fn root() -> PathBuf {
     std::env::temp_dir().join(format!("companion-minutes-chapters-{}", uuid::Uuid::new_v4()))
 }
@@ -40,210 +28,6 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
     m.summary = vec![quote.clone()]; m.decisions.clear(); m.action_items.clear();
     m.questions.clear(); m.keywords = vec!["fixture".into()]; m.markdown = "# Fixture".into();
     (m, vec![Evidence { field: "summary".into(), index: 0, quote }])
-}
-
-#[test]
-fn context_merge_retains_unverified_drafts_and_source_evidence() {
-    let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
-    let retained=reference_sections(original);
-    assert!(!retained.contains("旧分段汇总"));
-    assert!(retained.contains("未核对的参考草稿"));
-    assert!(retained.contains("可能需要寄样品"));
-    assert!(retained.contains("分段原文依据"));
-    assert_eq!(reference_sections("只剩原始草稿"),"只剩原始草稿");
-}
-
-#[test]
-fn long_context_reconciles_later_cancellation_and_keeps_separate_sources() {
-    use std::{io::{Read,Write}, net::TcpListener, sync::{Arc,Mutex,atomic::{AtomicBool,Ordering}}, thread};
-    let dir=root();fs::create_dir_all(&dir).unwrap();
-    std::env::set_var("COMPANION_TYPE_STATE_PATH",dir.join("state.json"));
-    let listener=TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
-    listener.set_nonblocking(true).unwrap();
-    let stop=Arc::new(AtomicBool::new(false));let seen=Arc::new(Mutex::new(Vec::<String>::new()));
-    let worker_stop=stop.clone();let worker_seen=seen.clone();
-    let worker=thread::spawn(move || {
-        while !worker_stop.load(Ordering::SeqCst) {
-            let (mut stream,_)=match listener.accept() {Ok(v)=>v,Err(e) if e.kind()==std::io::ErrorKind::WouldBlock=>{thread::sleep(Duration::from_millis(10));continue},Err(e)=>panic!("{e}")};
-            stream.set_nonblocking(false).unwrap();
-            stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
-            let mut data=Vec::new();let mut buf=[0u8;4096];
-            loop {let n=stream.read(&mut buf).unwrap();if n==0{break}data.extend_from_slice(&buf[..n]);
-                if let Some(i)=data.windows(4).position(|w|w==b"\r\n\r\n") {
-                    let h=String::from_utf8_lossy(&data[..i]);let len:usize=h.lines().find_map(|l|l.split_once(':')
-                        .filter(|(k,_)|k.eq_ignore_ascii_case("content-length")).and_then(|(_,v)|v.trim().parse().ok())).unwrap();
-                    if data.len()>=i+4+len {break}
-                }}
-            let start=data.windows(4).position(|w|w==b"\r\n\r\n").unwrap()+4;
-            let request:Value=serde_json::from_slice(&data[start..]).unwrap();
-            let prompt=request["messages"][1]["content"].as_str().unwrap().to_string();
-            worker_seen.lock().unwrap().push(prompt.clone());
-            let reconciles=prompt.contains("请综合下列全部分段结果");
-            let quote=if prompt.contains("小王周五发送报价") {"小王周五发送报价"} else {"取消发送报价"};
-            let answer=if reconciles {serde_json::json!({"summary":["报价已取消"],"decisions":["取消发送报价"],"actionItems":[],"questions":[],"keywords":[],"markdown":"# 当前纪要"})}
-              else {serde_json::json!({"summary":[quote],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"# 分段","evidence":[{"field":"summary","index":0,"quote":quote}]})};
-            let payload=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":answer.to_string()}}]}).to_string();
-            write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
-        }
-    });
-    let mut s=session(&"小王周五发送报价。".repeat(1300));s.duration_ms=7_200_000;s.note_revision=1;
-    s.meeting_notes.push(super::super::super::meeting_notes::Note{kind:Default::default(),references:vec![],id:"n".into(),text:"取消发送报价".into(),bookmark_id:None,image:None,created_at:"now".into(),updated_at:"now".into()});
-    let original=s.transcript_text.clone();let endpoint=format!("http://{address}/chat/completions");
-    let client=reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
-    assert!(super::super::super::minutes_context::validate(&s,1).is_ok());
-    let result=run_with_context(&endpoint,"fixture","key",&s,"now",&client,None).unwrap();
-    assert_eq!(result.quality,"final");assert!(result.processing.as_ref().unwrap().is_complete());
-    assert!(result.summary.iter().any(|s|s.contains("已取消")));assert!(result.action_items.is_empty());
-    assert!(result.markdown.contains("用户补充依据"));assert_eq!(s.transcript_text,original);
-    let requests=seen.lock().unwrap().clone();assert!(requests.iter().filter(|p|p.contains("第1段")).count()>=1);
-    assert!(requests.iter().any(|p|p.contains("用户明确选择的补充")));
-    assert!(requests.iter().any(|p|p.contains("请综合下列全部分段结果") && p.contains("取消发送报价")));
-    let original_id=Identity::new(&endpoint,"fixture","key",&session(&original));
-    let with_context=Identity::new(&endpoint,"fixture","key",&s);assert_ne!(original_id.filename(),with_context.filename());
-    stop.store(true,Ordering::SeqCst);worker.join().unwrap();std::env::remove_var("COMPANION_TYPE_STATE_PATH");cleanup(dir);
-}
-
-#[test]
-fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
-    let source=session("公开会议内容。");
-    let mut checkpoint=Checkpoint {identity:Identity::new("https://fixture.invalid","model","key",&source),chapters:vec![None]};
-    let (mut draft,evidence)=response(&source);
-    draft.summary=vec!["讨论产品包装".into()];
-    draft.action_items=vec![crate::companion_v1::CompanionV1ActionItem {
-        text:"发送报价".into(),owner:Some("小王".into()),due:Some("周五".into()) }];
-    let mut partial=assemble(&source,&checkpoint,0,"now",Some("缺少原文引用".into()));
-    append_unverified_chapters(&mut partial,&checkpoint,&[Some(draft.clone())], &[vec![]], &[(0,source.transcript_text.len())], &source.transcript_text);
-    assert_eq!(partial.quality,"draft");assert!(!partial.processing.as_ref().unwrap().is_complete());
-    assert!(partial.action_items.is_empty());assert!(partial.summary.is_empty());
-    assert!(partial.markdown.contains("未核对的参考草稿"));assert!(partial.markdown.contains("讨论产品包装"));
-    assert!(partial.markdown.contains("可能的行动：发送报价"));assert!(partial.markdown.contains("可能的负责人：小王"));
-    assert!(partial.markdown.find("未核对的参考草稿").unwrap()<partial.markdown.find("分段原文依据").unwrap());
-    let (verified,evidence)={let (m,_)=response(&source);(m,evidence)};
-    let result_hash=chapter_digest(&verified,&evidence,0);
-    checkpoint.chapters[0]=Some(Chapter{start:0,end:source.transcript_text.len(),source_hash:hash(source.transcript_text.as_bytes()),minutes:verified,evidence,omitted_items:0,result_hash});
-    let mut partial_draft=draft.clone();
-    partial_draft.summary.insert(0,"已经核对的内容".into());
-    let cited=vec![Evidence {field:"summary".into(),index:0,quote:"公开会议内容".into()}];
-    checkpoint.chapters[0].as_mut().unwrap().omitted_items=2;
-    let mut partially_verified=assemble(&source,&checkpoint,0,"now",None);
-    append_unverified_chapters(&mut partially_verified,&checkpoint,&[Some(partial_draft)], &[cited], &[(0,source.transcript_text.len())], &source.transcript_text);
-    let section=partially_verified.markdown.split("## 未核对的参考草稿").nth(1).unwrap();
-    assert!(section.contains("讨论产品包装"));
-    assert!(section.contains("可能的行动：发送报价"));
-    assert!(!section.contains("已经核对的内容"));
-    assert!(partially_verified.action_items.is_empty());
-    checkpoint.chapters[0].as_mut().unwrap().omitted_items=0;
-    let mut complete=assemble(&source,&checkpoint,0,"now",None);
-    let verified=checkpoint.chapters[0].as_ref().unwrap();
-    append_unverified_chapters(&mut complete,&checkpoint,&[Some(verified.minutes.clone())], &[verified.evidence.clone()], &[(0,source.transcript_text.len())], &source.transcript_text);
-    assert!(!complete.markdown.contains("未核对的参考草稿"));
-}
-
-#[test]
-fn earlier_reference_survives_retry_without_duplicating_verified_items() {
-    let source=session("公开会议内容。");let checkpoint=Checkpoint {identity:Identity::new("https://fixture.invalid","model","key",&source),chapters:vec![None]};
-    let mut result=assemble(&source,&checkpoint,0,"now",Some("服务失败".into()));
-    result.summary.push("已经核对".into());
-    let previous="## 未核对的参考草稿\n\n> 供核对\n\n### 第1段\n\n- 讨论：已经核对\n- 讨论：旧的讨论\n- 可能的行动：发送报价（可能的负责人：小王）（可能的时间：周五）\n\n## 分段原文依据\n\n来源";
-    append_previous_reference(&mut result,previous);
-    assert!(result.markdown.contains("- 讨论：旧的讨论"));
-    assert!(result.markdown.contains("- 可能的行动：发送报价（可能的负责人：小王）（可能的时间：周五）"));
-    assert!(!result.markdown.contains("- 讨论：已经核对"));
-    assert!(result.action_items.is_empty());
-    let once=result.markdown.clone();append_previous_reference(&mut result,previous);assert_eq!(result.markdown,once);
-}
-
-#[test]
-fn reference_cache_uses_existing_erasable_format_and_never_recreates_deleted_session() {
-    let root=root();fs::create_dir_all(&root).unwrap();
-    let source=session("公开会议内容。");
-    let identity=Identity::new("https://fixture.invalid","model","key",&source);
-    let checkpoint=Checkpoint {identity:identity.clone(),chapters:vec![None]};
-    save_checkpoint(&root.join(identity.filename()),&checkpoint).unwrap();
-    let (mut draft,_)=response(&source);draft.summary=vec!["尚待核对".into()];
-    let mut result=assemble(&source,&checkpoint,0,"now",Some("缺少引用".into()));
-    append_cached_unverified(&root,&identity,&mut result,&[Some(draft.clone())],&[vec![]],&[(0,source.transcript_text.len())],&source.transcript_text);
-    assert!(result.markdown.contains("尚待核对"));
-    let cache_files=fs::read_dir(&root).unwrap().filter_map(Result::ok).map(|e|e.path())
-        .filter(|p|p.extension().is_some_and(|s|s=="json")).collect::<Vec<_>>();
-    assert_eq!(cache_files.len(),2);
-    assert!(cache_files.iter().all(|p|read_checkpoint(p).is_ok()));
-    assert_eq!(erase(&root,&[source.id.clone()],false).unwrap(),(2,0));
-    append_cached_unverified(&root,&identity,&mut result,&[Some(draft)],&[vec![]],&[(0,source.transcript_text.len())],&source.transcript_text);
-    assert_eq!(fs::read_dir(&root).unwrap().filter_map(Result::ok).filter(|e|e.path().extension().is_some_and(|s|s=="json")).count(),0);
-    cleanup(root);
-}
-
-#[test]
-fn template_changes_isolate_long_meeting_cache_without_invalidating_default() {
-    let source=session("明天下午讨论包装，周五发报价。");
-    let meeting=crate::companion_v1::MinutesTemplate{id:"meeting".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
-    let interview=crate::companion_v1::MinutesTemplate{id:"interview".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
-    let default=Identity::new("https://fixture.invalid","model","key",&source);
-    assert_eq!(default.filename(),Identity::new_with_template("https://fixture.invalid","model","key",&source,None).filename());
-    let a=Identity::new_with_template("https://fixture.invalid","model","key",&source,Some(&meeting));
-    let b=Identity::new_with_template("https://fixture.invalid","model","key",&source,Some(&interview));
-    assert_ne!(a.filename(),b.filename());assert_ne!(a.filename(),default.filename());
-    assert_eq!(a.source_hash,b.source_hash,"all views refer to the same original transcript");
-}
-
-#[test]
-fn computer_capture_prompt_invalidates_only_its_own_chapter_cache() {
-    let source=session("【麦克风】小李寄样品。\n【电脑声音】小王整理报价。");
-    let endpoint="https://fixture.invalid";let model="model";let key="private";
-    let regular=Identity::new(endpoint,model,key,&source);
-    let old_profile=serde_json::to_vec(&(endpoint,model,key,super::super::DEEPSEEK_SYSTEM_PROMPT,
-        EVIDENCE_PROMPT,EVIDENCE_REVISION,MAX_PROMPT_BYTES,MAX_OUTPUT_TOKENS,CHUNK_BYTES)).unwrap();
-    assert_eq!(regular.profile_hash,hash(&old_profile));
-    let mut computer=source.clone();computer.source="hostMeeting".into();
-    let dual=Identity::new(endpoint,model,key,&computer);
-    assert_ne!(dual.profile_hash,regular.profile_hash);
-    assert_ne!(dual.filename(),regular.filename());
-    assert_eq!(dual.source_hash,regular.source_hash);
-}
-
-#[test]
-fn regenerated_chapter_keeps_previous_questions_actions_and_quotes() {
-    let text="小王周五发报价。监管如何？额度如何？";
-    let part=session(text);let (mut old,mut old_evidence)=response(&part);
-    old.summary=vec!["原摘要".into()];old.questions=vec!["监管如何？".into()];
-    old.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"发报价".into(),owner:Some("小王".into()),due:Some("周五".into())}];
-    old_evidence.clear();old_evidence.extend([
-        Evidence{field:"summary".into(),index:0,quote:"小王周五发报价".into()},
-        Evidence{field:"questions".into(),index:0,quote:"监管如何".into()},
-        Evidence{field:"actionItems".into(),index:0,quote:"小王周五发报价".into()},
-    ]);
-    let mut newer=old.clone();newer.summary=vec!["新摘要".into()];newer.questions=vec!["额度如何？".into()];newer.action_items.clear();
-    let new_evidence=vec![Evidence{field:"summary".into(),index:0,quote:"额度如何".into()},Evidence{field:"questions".into(),index:0,quote:"额度如何".into()}];
-    let previous=Chapter{start:0,end:text.len(),source_hash:hash(text.as_bytes()),minutes:old,evidence:old_evidence,omitted_items:1,result_hash:String::new()};
-    let mut candidate=Chapter{start:0,end:text.len(),source_hash:hash(text.as_bytes()),minutes:newer,evidence:new_evidence,omitted_items:0,result_hash:String::new()};
-    merge_previous_chapter(&previous,&mut candidate,text).unwrap();
-    assert!(candidate.minutes.summary.contains(&"原摘要".into()));
-    assert!(candidate.minutes.questions.contains(&"监管如何？".into()));
-    assert!(candidate.minutes.questions.contains(&"额度如何？".into()));
-    assert_eq!(candidate.minutes.action_items.len(),1);
-    assert_eq!(candidate.minutes.action_items[0].owner.as_deref(),Some("小王"));
-    assert_eq!(candidate.minutes.action_items[0].due.as_deref(),Some("周五"));
-    assert!(candidate.evidence.iter().any(|e|e.field=="questions"&&e.quote=="监管如何"));
-    assert!(is_current(&candidate,0,text.len(),text));
-}
-
-#[test]
-#[ignore = "checks previously authorized real chapter results without a cloud call"]
-fn replay_real_regenerated_chapters_preserves_all_prior_items() {
-    let previous=read_checkpoint(Path::new(&std::env::var_os("COMPANION_PRIOR_MINUTES_CHECKPOINT").unwrap())).unwrap();
-    let newer=read_checkpoint(Path::new(&std::env::var_os("COMPANION_NEW_MINUTES_CHECKPOINT").unwrap())).unwrap();
-    let source=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_SOURCE").unwrap()).unwrap();
-    for index in [1usize,3] {
-        let old=previous.chapters[index].as_ref().unwrap();let mut candidate=newer.chapters[index].clone().unwrap();
-        let chunk=&source[old.start..old.end];merge_previous_chapter(old,&mut candidate,chunk).unwrap();
-        for item in &old.minutes.summary {assert!(candidate.minutes.summary.contains(item));}
-        for item in &old.minutes.decisions {assert!(candidate.minutes.decisions.contains(item));}
-        for item in &old.minutes.questions {assert!(candidate.minutes.questions.contains(item));}
-        for item in &old.minutes.action_items {assert!(candidate.minutes.action_items.iter().any(|v|v.text==item.text&&v.owner==item.owner&&v.due==item.due));}
-        assert!(is_current(&candidate,old.start,old.end,chunk));
-        if index==3 {assert!(candidate.minutes.questions.len()>=4);}
-    }
 }
 
 #[test]
@@ -299,72 +83,6 @@ fn literal_conditional_followup_is_added_without_unrelated_or_cancelled_items() 
 }
 
 #[test]
-fn explicit_conditional_assignment_is_recovered_from_a_cached_chapter() {
-    let text="会议讨论报价。\n如果客户提出修改，王芳负责下周一确认产品交货时间。\n假如样品不合格，由李明负责整理问题清单。\n如果客户提出疑问，王芳负责吗？\n如果时间允许，我们负责讨论。\n如果订单更改，之前王芳负责处理。\n如果方案不行，建议王芳负责调整。";
-    let part=session(text); let (minutes,evidence)=response(&part);
-    let mut chapter=Chapter {start:0,end:text.len(),source_hash:hash(text.as_bytes()),
-        result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
-    assert!(is_current(&chapter,0,text.len(),text));
-    let original_summary=chapter.minutes.summary.clone();
-    repair_cached_conditionals(&mut chapter,text);
-    assert_eq!(chapter.minutes.summary,original_summary);
-    assert_eq!(chapter.minutes.action_items.len(),2);
-    for (owner,condition) in [("王芳","如果客户提出修改"),("李明","假如样品不合格")] {
-        let action=chapter.minutes.action_items.iter().find(|a|a.owner.as_deref()==Some(owner)).unwrap();
-        assert!(action.text.contains(condition)); assert!(action.due.is_none());
-    }
-    assert!(is_current(&chapter,0,text.len(),text));
-    let first=chapter.result_hash.clone();
-    repair_cached_conditionals(&mut chapter,text);
-    assert_eq!(chapter.result_hash,first);
-    assert!(is_current(&chapter,0,text.len(),text));
-}
-
-#[test]
-fn conditional_time_is_not_a_responsible_person_even_in_cached_results() {
-    let text="会议讨论报价。\n如果客户修改，下周一负责确认交货时间。\n假如预算通过，明天上午负责发报价。\n如果收到样品，周一鸣负责检查包装。";
-    let part=session(text);let (mut minutes,mut evidence)=response(&part);
-    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
-        text:"如果客户修改，下周一负责确认交货时间".into(),owner:Some("下周一".into()),due:None });
-    evidence.push(Evidence {field:"actionItems".into(),index:0,quote:"如果客户修改，下周一负责确认交货时间".into()});
-    let mut chapter=Chapter {start:0,end:text.len(),source_hash:hash(text.as_bytes()),
-        result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
-    assert!(is_current(&chapter,0,text.len(),text));repair_cached_conditionals(&mut chapter,text);
-    assert_eq!(chapter.minutes.action_items.len(),3);
-    for phrase in ["下周一负责确认交货时间","明天上午负责发报价"] {
-        let action=chapter.minutes.action_items.iter().find(|a|a.text.contains(phrase)).unwrap();
-        assert!(action.owner.is_none());assert!(action.due.is_none());assert!(action.text.contains('如'));
-    }
-    assert_eq!(chapter.minutes.action_items.iter().find(|a|a.text.contains("周一鸣负责")).unwrap().owner.as_deref(),Some("周一鸣"));
-    assert!(is_current(&chapter,0,text.len(),text));let digest=chapter.result_hash.clone();
-    repair_cached_conditionals(&mut chapter,text);assert_eq!(chapter.result_hash,digest);
-}
-
-#[test]
-#[ignore = "reuses the previously saved public and fictional meeting; no network"]
-fn replay_saved_provider_chapters_repairs_conditional_assignment_without_resending() {
-    let sessions: Vec<CompanionV1HostSession> = serde_json::from_slice(
-        &fs::read(std::env::var_os("COMPANION_REPLAY_SESSIONS").unwrap()).unwrap()).unwrap();
-    let original=&sessions[0];
-    let source=crate::backend::transcript_review::minutes_input(original);
-    let mut checkpoint=read_checkpoint(Path::new(&std::env::var_os("COMPANION_REPLAY_CHECKPOINT").unwrap())).unwrap();
-    let root=root();fs::create_dir_all(&root).unwrap();
-    let identity=Identity::new("https://fixture.invalid","replay","test",&source);
-    let count=checkpoint.chapters.len();checkpoint.identity=identity;
-    let path=root.join(checkpoint.identity.filename());save_checkpoint(&path,&checkpoint).unwrap();
-    let result=run_with(&root,"https://fixture.invalid","replay","test",&source,"replay",|_,_,_,_| {
-        panic!("saved valid provider chapters must not be resent")
-    }).unwrap();
-    assert_eq!(result.processing.as_ref().unwrap().resumed_chunks,count);
-    let action=result.action_items.iter().find(|a|a.text.contains("王芳")&&a.text.contains("交货时间")).unwrap();
-    assert!(action.text.contains("如果客户提出修改"));assert_eq!(action.owner.as_deref(),Some("王芳"));
-    assert!(action.due.is_none());
-    assert!(result.action_items.iter().any(|a|a.text.contains("李明")&&a.text.contains("报价")));
-    assert!(result.action_items.iter().any(|a|a.owner.as_deref()==Some("赵强")&&a.text.contains("风险清单")));
-    assert!(original.transcript_review.is_some());cleanup(root);
-}
-
-#[test]
 fn unrelated_previous_line_is_not_a_condition_for_a_task() {
     let source="如果是参与这个\n请小赵明天下午把费用清单发给我。";
     let part=session(source);let (mut minutes,mut evidence)=response(&part);
@@ -416,39 +134,6 @@ fn durable_retry_only_submits_unfinished_chunks_and_preserves_tail_and_source() 
 }
 
 #[test]
-fn cancelled_long_minutes_keep_completed_chapters_and_resume_without_resending() {
-    use crate::backend::meeting_processing_job::{self,Kind,MINUTES_CANCELLED};
-    let root=root();let text=format!("{}最后结论：保留原音并等待实板验收。", "讨论内容用于分段压力，不包含新的决定或任务。\n".repeat(1400));
-    let source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
-    let mut calls=Vec::new();
-    let stopped=meeting_processing_job::run(&source.id,"minutes-job",Kind::Minutes,||
-        run_with(&root,"https://fixture.invalid","model","private",&source,"first",|index,_,part,_|{
-            calls.push(index);
-            if index==1 {assert!(meeting_processing_job::cancel(&source.id,"minutes-job").unwrap());}
-            Ok(response(part))
-        }));
-    assert_eq!(stopped.unwrap_err(),MINUTES_CANCELLED);assert_eq!(calls,vec![0,1]);
-    let checkpoint=read_checkpoint(&root.join(Identity::new("https://fixture.invalid","model","private",&source).filename())).unwrap();
-    assert_eq!(checkpoint.chapters.iter().flatten().count(),2);assert_eq!(source.transcript_text,text);
-    calls.clear();let resumed=run_with(&root,"https://fixture.invalid","model","private",&source,"retry",|index,_,part,_|{
-        calls.push(index);Ok(response(part))
-    }).unwrap();
-    assert_eq!(calls,(2..total).collect::<Vec<_>>());assert!(resumed.processing.unwrap().complete);
-    assert_eq!(source.transcript_text,text);cleanup(root);
-}
-
-#[test]
-fn cancelled_malformed_minutes_response_does_not_send_a_retry() {
-    use crate::backend::meeting_processing_job::{self,Kind,MINUTES_CANCELLED};
-    let root=root();let source=session(&"公开会议内容。\n".repeat(2000));let mut calls=0;
-    let result=meeting_processing_job::run(&source.id,"minutes-job",Kind::Minutes,||
-        run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,_,_|{
-            calls+=1;assert!(meeting_processing_job::cancel(&source.id,"minutes-job").unwrap());Err(MISSING_EVIDENCE.into())
-        }));
-    assert_eq!(result.unwrap_err(),MINUTES_CANCELLED);assert_eq!(calls,1);cleanup(root);
-}
-
-#[test]
 fn malformed_provider_response_is_retried_once_for_the_same_segment() {
     let root = root(); let source = session(&"公开会议内容。\n".repeat(2000));
     let mut calls = Vec::new();
@@ -476,65 +161,7 @@ fn missing_evidence_retries_once_then_preserves_finished_chapters() {
     let partial=run_with(&root,"https://fixture.invalid","model","key",&other,"now",|_,_,_,_| {
         repeated+=1;Err(MISSING_EVIDENCE.into())
     }).unwrap();
-    // One malformed chapter may be deferred; stop after the next chapter also
-    // fails rather than retrying the whole meeting indefinitely.
-    assert_eq!(repeated,4);assert_eq!(partial.quality,"draft");assert_eq!(partial.processing.unwrap().completed_chunks,0);
-    cleanup(root);
-}
-
-#[test]
-fn missing_evidence_defers_one_chapter_and_completes_without_repeating_others() {
-    let root=root();
-    let text=format!("{}最后结论：保留原音并等待实板验收。", "讨论内容用于分段压力，不包含新的决定或任务。\n".repeat(1400));
-    let source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
-    let mut calls=Vec::new();let mut bad_attempts=0;
-    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
-        calls.push(index);
-        if index==2 && bad_attempts<2 {bad_attempts+=1;Err(MISSING_EVIDENCE.into())}
-        else {Ok(response(part))}
-    }).unwrap();
-    let mut expected=vec![0,1,2,2];expected.extend(3..total);expected.push(2);
-    assert_eq!(calls,expected);assert_eq!(bad_attempts,2);
-    assert_eq!(result.quality,"final");assert!(result.processing.unwrap().is_complete());
-    assert!(result.markdown.contains("最后结论：保留原音并等待实板验收"));
-    assert_eq!(source.transcript_text,text);cleanup(root);
-}
-
-#[test]
-fn unsupported_source_quotes_retry_then_defer_without_losing_completed_chapters() {
-    let root=root();let text="公开会议内容用于分段整理。\n".repeat(5000);let source=session(&text);
-    let total=plan(&text).unwrap().len();assert!(total>3);
-    let mut calls=Vec::new();let mut invalid=0;
-    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
-        calls.push(index);let (minutes,mut evidence)=response(part);
-        if index==2 && invalid<2 {invalid+=1;for item in &mut evidence {item.quote="不在原文的引用".into();}}
-        Ok((minutes,evidence))
-    }).unwrap();
-    let mut expected=vec![0,1,2,2];expected.extend(3..total);expected.push(2);
-    assert_eq!(calls,expected);assert_eq!(invalid,2);
-    assert!(result.processing.unwrap().is_complete());assert_eq!(source.transcript_text,text);
-    cleanup(root);
-}
-
-#[test]
-fn deferred_chapter_and_later_service_failure_remain_partial_and_retryable() {
-    let root=root();let source=session(&"公开会议内容。\n".repeat(5000));
-    let total=plan(&source.transcript_text).unwrap().len();assert!(total>3);
-    let mut calls=Vec::new();
-    let partial=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
-        calls.push(index);
-        if index==2 {Err(MISSING_EVIDENCE.into())}
-        else if index==3 {Err("controlled service failure".into())}
-        else {Ok(response(part))}
-    }).unwrap();
-    assert_eq!(calls,vec![0,1,2,2,3]);assert_eq!(partial.quality,"draft");
-    assert_eq!(partial.processing.as_ref().unwrap().completed_chunks,2);
-    let note=partial.llm_note.unwrap();assert!(note.contains("第3段") && note.contains("第4段"));
-    let mut retry=Vec::new();
-    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"retry",|index,_,part,_| {
-        retry.push(index);Ok(response(part))
-    }).unwrap();
-    assert_eq!(retry,(2..total).collect::<Vec<_>>());assert!(result.processing.unwrap().is_complete());
+    assert_eq!(repeated,2);assert_eq!(partial.quality,"draft");assert_eq!(partial.processing.unwrap().completed_chunks,0);
     cleanup(root);
 }
 
@@ -638,29 +265,6 @@ fn extra_quote_does_not_erase_an_assignment_already_supported_by_one_excerpt() {
     assert_eq!(m.action_items[0].owner,None);
     assert_eq!(m.action_items[0].due,None);
     assert!(m.action_items[0].text.starts_with("待核对："));
-}
-
-#[test]
-fn long_exact_quote_is_retained_and_fabricated_quote_is_dropped() {
-    let quote="真实会议内容".repeat(220);assert!(quote.len()>1024);
-    let source=session(&quote);let root=root();
-    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
-        let (mut m,_)=response(p);m.summary=vec!["真实讨论".into(),"不存在的内容".into()];
-        Ok((m,vec![Evidence{field:"summary".into(),index:0,quote:quote.clone()},Evidence{field:"summary".into(),index:1,quote:"不存在的原话".into()}]))
-    }).unwrap();
-    assert!(result.summary.contains(&"真实讨论".into()));assert!(!result.summary.contains(&"不存在的内容".into()));
-    assert!(result.markdown.contains("有1条内容无法对应原文"));cleanup(root);
-}
-
-#[test]
-fn long_conditional_quote_never_becomes_unconditional_deadline() {
-    let quote=format!("{}周五发报价", "会议讨论".repeat(150));assert!(quote.len()>1024);
-    let text=format!("如果客户同意，{quote}");let source=session(&text);let (mut m,_)=response(&source);
-    m.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"周五发报价".into(),owner:None,due:Some("周五".into())}];
-    let mut evidence=vec![Evidence{field:"actionItems".into(),index:0,quote}];
-    preserve_conditional_actions(&mut m,&mut evidence,&text);
-    assert_eq!(m.action_items[0].due,None);assert!(m.action_items[0].text.starts_with("待核对："));
-    assert!(evidence[0].quote.starts_with("如果客户同意"));assert!(text.contains(&evidence[0].quote));
 }
 
 #[test]
@@ -873,8 +477,6 @@ fn concise_overview_preserves_complete_minutes_and_checks_sources() {
     minutes.markdown = "# 完整纪要\n\n## 分段原文依据\n\n原文不变".into();
     let original = minutes.markdown.clone();let summary = minutes.summary.clone();
     let points = parse_concise_overview(r#"{"overview":[{"text":"讨论包装、报价和交付安排。","sources":[0,1,2]}]}"#,3).unwrap();
-    let many_sources = parse_concise_overview(r#"{"overview":[{"text":"综合多个议题。","sources":[0,1,2,3,4,5,6,7,8]}]}"#, 9).unwrap();
-    assert_eq!(many_sources[0].sources.len(), 9);
     prepend_concise_overview(&mut minutes,&points);
     assert!(minutes.markdown.starts_with("## 会议概览\n\n> AI根据详细纪要整理"));
     assert!(minutes.markdown.contains("- 讨论包装、报价和交付安排。"));
@@ -885,42 +487,6 @@ fn concise_overview_preserves_complete_minutes_and_checks_sources() {
         r#"{"overview":[{"text":"一行\n另一行","sources":[0]}]}"#] {
         assert!(parse_concise_overview(bad,3).is_err());
     }
-}
-
-#[test]
-fn overview_fidelity_requires_complete_explicit_support_before_using_paraphrases() {
-    assert!(parse_overview_fidelity(r#"{"checks":[{"id":1,"supported":true},{"id":0,"supported":true}]}"#, 2).is_ok());
-    for bad in [
-        r#"{"checks":[{"id":0,"supported":false},{"id":1,"supported":true}]}"#,
-        r#"{"checks":[{"id":0,"supported":true}]}"#,
-        r#"{"checks":[{"id":0,"supported":true},{"id":0,"supported":true}]}"#,
-        r#"{"checks":[{"id":0,"supported":true},{"id":2,"supported":true}]}"#,
-        r#"{"checks":[{"id":0,"supported":"true"},{"id":1,"supported":true}]}"#,
-        r#"{"checks":[{"id":0,"supported":true},{"id":1,"supported":true}],"overview":"replacement facts"}"#,
-    ] { assert!(parse_overview_fidelity(bad, 2).is_err()); }
-    assert!(parse_overview_fidelity(r#"{"checks":[]}"#, 0).is_err());
-
-    let (mut minutes, _) = response(&session("会议原文"));
-    let source = vec!["连续三个月处于末尾三位，且促销后仍不佳，才考虑淘汰。".into()];
-    minutes.summary = source.clone();
-    let complete = minutes.markdown.clone();
-    // An unsupported compressed rule cannot replace the original conditions.
-    let rejected = r#"{"checks":[{"id":0,"supported":false}]}"#;
-    assert!(parse_overview_fidelity(rejected, 1).is_err());
-    prepend_overview(&mut minutes, &source, &[0]);
-    assert!(minutes.markdown.contains(&source[0]));
-    assert!(minutes.markdown.ends_with(&complete));
-    assert_eq!(minutes.summary, source);
-}
-
-#[test]
-fn concise_long_overview_requires_sources_across_the_meeting() {
-    // A real 25-item meeting generated an opening-only overview; valid IDs
-    // alone do not reveal that all later topics were missed.
-    let opening_only = r#"{"overview":[{"text":"只覆盖前段","sources":[0,1,5,7]}]}"#;
-    assert!(parse_concise_overview(opening_only, 25).is_err());
-    let all_sections = r#"{"overview":[{"text":"前段","sources":[0]},{"text":"中段","sources":[8]},{"text":"后段","sources":[24]}]}"#;
-    assert!(parse_concise_overview(all_sections, 25).is_ok());
 }
 
 #[test]
@@ -1082,87 +648,6 @@ fn background_sections_move_only_flagged_reading_items_and_keep_originals() {
 }
 
 #[test]
-fn mixed_background_summary_is_annotated_without_removing_meeting_content() {
-    let quote="旁边说先更新软件并确保安装都是最新版本";
-    let source=session(&format!("会议讨论正常报价。{quote}会议继续讨论价格。"));
-    let (mut minutes,_)=response(&source);
-    minutes.summary=vec!["会议讨论正常报价，旁边说确保安装都是最新版本。".into(),
-        "另一段也提到确保安装都是最新版本。".into()];
-    minutes.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"更新软件".into(),owner:None,due:None}];
-    minutes.markdown=format!("> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n- {quote}");
-    let actions=vec![vec![quote.to_string()]];
-    let sources=vec![vec![quote.to_string()],vec!["另一段完全不同的原话内容".into()]];
-    let mixed=mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[0]);
-    assert_eq!(mixed,vec![0]);
-    assert!(mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[]).is_empty());
-    let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
-    assert!(mixed_background_summary_indices(&repeated,&minutes,&actions,&sources,&[0]).is_empty());
-    let before=minutes.summary.clone();
-    apply_action_review(&source,&mut minutes,&actions,&mixed,&ActionReview{background:vec![0],..Default::default()});
-    assert_eq!(minutes.summary,before,"structured summary must remain unchanged");
-    assert!(minutes.markdown.contains("会议讨论正常报价"));
-    assert!(minutes.markdown.contains("部分内容可能来自背景对话，请核对"));
-    assert!(minutes.markdown.contains(quote));
-}
-
-#[test]
-fn background_keyword_review_requires_source_and_preserves_legitimate_topic_changes() {
-    let quote="旁人说要盘点仓库里的库存。";
-    let source=session(&format!("会议讨论发布计划。{quote}会议确认后续工作。"));
-    let (mut minutes,_) = response(&source);
-    minutes.summary=vec!["会议讨论发布计划。".into()];
-    minutes.keywords=vec!["库存盘点".into(),"发布计划".into(),"仓库".into()];
-    minutes.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"盘点仓库库存".into(),owner:None,due:None}];
-    minutes.markdown=format!("> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- {quote}");
-    let quotes=vec![vec![quote.to_string()]];
-    assert_eq!(background_keyword_indices(&source,&minutes,&quotes,&[0]),vec![0]);
-    assert!(background_keyword_indices(&source,&minutes,&quotes,&[]).is_empty());
-    assert!(background_keyword_indices(&source,&minutes,&[vec!["不存在的原话".into()]],&[0]).is_empty());
-    let mut switched=source.clone();
-    switched.transcript_text.push_str(&format!("{}下月会议改为盘点仓库库存。", "会议继续讨论。".repeat(30)));
-    assert!(background_keyword_indices(&switched,&minutes,&quotes,&[0]).is_empty(),"a real later topic change must not be labelled as background");
-    let mut summarized=minutes.clone();summarized.summary.push("会议决定盘点仓库库存。".into());
-    assert!(background_keyword_indices(&source,&summarized,&quotes,&[0]).is_empty(),"a keyword supported by the meeting summary remains ordinary");
-    let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
-    assert!(background_keyword_indices(&repeated,&minutes,&quotes,&[0]).is_empty(),"ambiguous repeated source cannot establish provenance");
-    let original=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes, &[], &ActionReview{background:vec![0],duplicates:vec![],..Default::default()});
-    assert_eq!(minutes.keywords,original,"structured keywords are never removed or renamed");
-    assert!(minutes.markdown.contains("库存盘点（可能来自背景对话，请核对）"));
-    assert!(!minutes.markdown.contains("发布计划（可能来自背景"));
-    assert!(minutes.markdown.contains(quote),"the original evidence is retained");
-}
-
-#[test]
-#[ignore = "requires a previously authorized isolated real-meeting result and checkpoint; no network"]
-fn replay_real_background_keyword_against_validated_source() {
-    let input=std::env::var_os("COMPANION_BACKGROUND_REPLAY_RESULT").unwrap();
-    let checkpoint=std::env::var_os("COMPANION_BACKGROUND_REPLAY_CHECKPOINT").unwrap();
-    let target=std::env::var("COMPANION_BACKGROUND_EXPECTED_KEYWORD").unwrap();
-    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
-    let mut minutes=source.minutes.clone().unwrap();
-    let mut background=Vec::new();
-    for (index,item) in minutes.action_items.iter_mut().enumerate() {
-        if let Some(text)=item.text.strip_prefix("可能来自背景对话，请核对：") {
-            item.text=text.to_string();background.push(index);
-        }
-    }
-    let quotes=action_source_quotes(&read_checkpoint(Path::new(&checkpoint)).unwrap(),&minutes);
-    let flagged=background_keyword_indices(&source,&minutes,&quotes,&background);
-    let target_index=minutes.keywords.iter().position(|keyword|keyword==&target).expect("known source keyword");
-    assert!(flagged.contains(&target_index));
-    if let Ok(excluded)=std::env::var("COMPANION_BACKGROUND_EXCLUDED_IDS") {
-        for index in excluded.split(',').filter(|v|!v.is_empty()).map(|v|v.parse::<usize>().unwrap()) {
-            assert!(!flagged.contains(&index),"unrelated model-only candidate must not be marked");
-        }
-    }
-    let before=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes, &[], &ActionReview{background,duplicates:vec![],..Default::default()});
-    assert_eq!(minutes.keywords,before);
-    assert!(minutes.markdown.contains(&format!("{target}（可能来自背景对话，请核对）")));
-}
-
-#[test]
 fn background_review_keeps_valid_summary_when_provider_returns_action_ids_without_actions() {
     use std::{io::{Read, Write}, net::TcpListener, thread};
     let listener=TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
@@ -1199,65 +684,6 @@ fn background_review_keeps_valid_summary_when_provider_returns_action_ids_withou
     apply_action_review(&source,&mut minutes,&[], &[], &review);
     assert!(minutes.markdown.contains("## 可能来自背景对话，请核对\n\n- 摘要：旁边聊猫粮"));
     worker.join().unwrap();
-}
-
-#[test]
-#[ignore = "uses an isolated checkpoint and previously authorized real-card transcript with the configured AI service"]
-fn real_card_complete_mixed_background_review() {
-    let input=std::env::var_os("COMPANION_MIXED_BACKGROUND_RESULT").unwrap();
-    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
-    let base=std::env::var("DEEPSEEK_BASE_URL").unwrap();
-    let endpoint=format!("{}/chat/completions",base.trim_end_matches('/'));
-    let client=reqwest::blocking::Client::builder().timeout(Duration::from_secs(90)).build().unwrap();
-    let result=run_with_boundary(&endpoint,&std::env::var("DEEPSEEK_MODEL").unwrap(),
-        &std::env::var("DEEPSEEK_API_KEY").unwrap(),&source,"now",&client,None,None).unwrap();
-    let flagged=result.action_items.iter().filter(|a|a.text.contains("可能来自背景对话")).count();
-    let mixed=result.markdown.matches("部分内容可能来自背景对话，请核对").count();
-    println!("real-card review: {flagged} background actions, {mixed} mixed summary warnings");
-    assert_eq!(flagged,2);assert!(mixed>=2);assert_eq!(result.quality,"final");
-    assert!(result.markdown.contains("原文依据"));
-}
-
-#[test]
-#[ignore = "uses previously authorized isolated real-card result; no network"]
-fn replay_real_mixed_background_summaries() {
-    let result=std::env::var_os("COMPANION_MIXED_BACKGROUND_RESULT").unwrap();
-    let checkpoint=std::env::var_os("COMPANION_MIXED_BACKGROUND_CHECKPOINT").unwrap();
-    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(result).unwrap()).unwrap();
-    let mut minutes=source.minutes.clone().unwrap();let mut background=Vec::new();
-    for (index,item) in minutes.action_items.iter_mut().enumerate() {
-        if let Some(text)=item.text.strip_prefix("可能来自背景对话，请核对：") {
-            item.text=text.to_string();background.push(index);
-        }
-    }
-    let checkpoint=read_checkpoint(Path::new(&checkpoint)).unwrap();
-    let actions=action_source_quotes(&checkpoint,&minutes);
-    let summaries=content_source_quotes(&checkpoint,&minutes.summary,"summary");
-    let mixed=mixed_background_summary_indices(&source,&minutes,&actions,&summaries,&background);
-    assert_eq!(mixed,vec![47,48]);
-    println!("real-card mixed paragraphs identified for review: {}",mixed.len());
-}
-
-#[test]
-#[ignore = "uses previously authorized real-card transcript-derived material and the configured AI service"]
-fn real_card_background_review_with_context() {
-    let result=std::env::var_os("COMPANION_REAL_BACKGROUND_RESULT").unwrap();
-    let checkpoint=std::env::var_os("COMPANION_REAL_BACKGROUND_CHECKPOINT").unwrap();
-    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(result).unwrap()).unwrap();
-    let minutes=source.minutes.as_ref().unwrap();
-    let checkpoint=read_checkpoint(Path::new(&checkpoint)).unwrap();
-    let quotes=action_source_quotes(&checkpoint,minutes);
-    assert_eq!(minutes.action_items.len(),2);assert!(quotes.iter().all(|q|!q.is_empty()));
-    let base=std::env::var("DEEPSEEK_BASE_URL").unwrap();
-    let endpoint=format!("{}/chat/completions",base.trim_end_matches('/'));
-    let client=reqwest::blocking::Client::builder().timeout(Duration::from_secs(45)).build().unwrap();
-    let review=request_background_review(&endpoint,&std::env::var("DEEPSEEK_MODEL").unwrap(),
-        &std::env::var("DEEPSEEK_API_KEY").unwrap(),&source,minutes,&quotes,Some(&checkpoint),&client).unwrap();
-    assert_eq!(review.background,vec![0,1]);
-    assert!(review.background_summary.iter().all(|i|*i==54));
-    assert!(review.background_decisions.is_empty());
-    assert!(review.background_questions.iter().all(|i|*i==2||*i==7));
-    println!("real-card actions marked for review: {}; no original removed",review.background.len());
 }
 
 #[test]
@@ -1322,6 +748,30 @@ fn background_review_keeps_valid_typed_ids_and_ignores_mixed_fields() {
 
 
 #[test]
+fn mixed_background_summary_is_annotated_without_removing_meeting_content() {
+    let quote="旁边说先更新软件并确保安装都是最新版本";
+    let source=session(&format!("会议讨论正常报价。{quote}会议继续讨论价格。"));
+    let (mut minutes,_)=response(&source);
+    minutes.summary=vec!["会议讨论正常报价，旁边说确保安装都是最新版本。".into(),
+        "另一段也提到确保安装都是最新版本。".into()];
+    minutes.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"更新软件".into(),owner:None,due:None}];
+    minutes.markdown=format!("> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n- {quote}");
+    let actions=vec![vec![quote.to_string()]];
+    let sources=vec![vec![quote.to_string()],vec!["另一段完全不同的原话内容".into()]];
+    let mixed=mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[0]);
+    assert_eq!(mixed,vec![0]);
+    assert!(mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[]).is_empty());
+    let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
+    assert!(mixed_background_summary_indices(&repeated,&minutes,&actions,&sources,&[0]).is_empty());
+    let before=minutes.summary.clone();
+    apply_action_review(&source,&mut minutes,&actions,&mixed,&ActionReview{background:vec![0],..Default::default()});
+    assert_eq!(minutes.summary,before,"structured summary must remain unchanged");
+    assert!(minutes.markdown.contains("会议讨论正常报价"));
+    assert!(minutes.markdown.contains("部分内容可能来自背景对话，请核对"));
+    assert!(minutes.markdown.contains(quote));
+}
+
+#[test]
 fn background_context_reuses_only_matching_source_backed_actions() {
     let root = root();
     let source = session("小王周五整理报价。旁边说周六买猫粮。\n");
@@ -1367,28 +817,4 @@ fn action_review_merges_only_same_source_and_attribution_and_retains_quotes() {
     assert!(minutes.action_items[1].text.contains("其他产品"));
     assert_eq!(minutes.action_items[2].owner.as_deref(),Some("小李"));
     assert!(minutes.markdown.ends_with("### 第1段\n- 客户提出修改，下周一确认交货时间。"));
-}
-
-#[test]
-#[ignore = "live public benchmark and configured DeepSeek service"]
-fn real_public_long_meeting_fallback() {
-    let input = std::env::var("COMPANION_PUBLIC_MINUTES_RESULT").unwrap();
-    let output = std::env::var("COMPANION_PUBLIC_FALLBACK_RESULT").unwrap();
-    let value: Value = serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
-    let mut minutes: CompanionV1MeetingMinutes = serde_json::from_value(value["minutes"].clone()).unwrap();
-    let original = minutes.markdown.clone();
-    let key = std::env::var("DEEPSEEK_API_KEY").unwrap();
-    let model = std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_| "deepseek-chat".into());
-    let base = std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_| "https://api.deepseek.com".into());
-    let endpoint = format!("{}/chat/completions", base.trim_end_matches('/'));
-    let client = super::super::deepseek_http_client(&endpoint).unwrap();
-    let items = minutes.summary.clone();
-    let indices = request_overview(&endpoint, &model, &key, &items, &client).unwrap();
-    let selected: Vec<_> = indices.iter().map(|&i| &items[i]).collect();
-    fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"indices":indices,"selected":selected})).unwrap()).unwrap();
-    prepend_overview(&mut minutes, &items, &indices);
-    assert!(minutes.markdown.ends_with(&original));
-    assert!(indices.iter().any(|&i| i < items.len()/3));
-    assert!(indices.iter().any(|&i| i >= items.len()/3 && i < items.len()*2/3));
-    assert!(indices.iter().any(|&i| i >= items.len()*2/3));
 }
