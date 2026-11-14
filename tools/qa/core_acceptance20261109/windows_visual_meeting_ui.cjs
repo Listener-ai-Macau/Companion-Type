@@ -6,11 +6,15 @@ module.exports=async(page,spec,out)=>{
  const nav=page.getByRole('navigation',{name:'主要功能',exact:true});
  assert.equal(await nav.getByRole('button',{name:'全部录音',exact:true}).count(),1);
  assert.equal(await nav.getByRole('button',{name:'我的录音卡',exact:true}).count(),1);
+ const labels=await nav.locator('button>span').evaluateAll(nodes=>nodes.map(e=>({text:e.textContent,right:e.getBoundingClientRect().right,parentRight:e.closest('button').getBoundingClientRect().right,whiteSpace:getComputedStyle(e).whiteSpace})));
+ assert(labels.every(x=>x.whiteSpace==='nowrap'&&x.right<=x.parentRight-4));
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();
  for(const theme of ['light','dark']){
   if(theme==='dark')await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();
   await frame.getByRole('button',{name:'思维导图',exact:true}).click();
   const topics=frame.locator('.meeting-map-branches>li');assert.equal(await topics.count(),expected.length);
+  const mapLayout=await frame.locator('.meeting-map-canvas').evaluate(e=>({width:e.closest('.meeting-reading-frame').getBoundingClientRect().width,columns:getComputedStyle(e).gridTemplateColumns.trim().split(/\s+/).length}));
+  if(mapLayout.width<=640)assert.equal(mapLayout.columns,1);
   await frame.getByRole('button',{name:'展开全部',exact:true}).click();
   await page.waitForFunction(n=>document.querySelectorAll('.meeting-map-branches details[open]').length===n,expected.length);
   assert.deepEqual(await topics.locator('.meeting-map-topic-content>p').allTextContents(),expected);

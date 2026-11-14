@@ -62,7 +62,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
     <button type="button" aria-pressed={view==='map'} onClick={()=>setView('map')}><GitBranch size={14} aria-hidden="true"/>思维导图</button>
     <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={14} aria-hidden="true"/>按发言人</button>
    </div></div>
-   {view==='reading'&&<div className="meeting-reading-shortcuts"><span>{model.topics.length?model.topics.length+' 个讨论主题':'会议内容'}</span>{routes.map(route=><button type="button" key={route.kind} onClick={()=>navigate(route.title)}>{route.label}<small>{route.count}</small><ArrowUpRight size={12} aria-hidden="true"/></button>)}</div>}
+   {view==='reading'&&<div className="meeting-reading-shortcuts"><span>{model.topics.length?model.topics.length+' 个'+model.topicLabel:'会议内容'}</span>{routes.map(route=><button type="button" key={route.kind} onClick={()=>navigate(route.title)}>{route.label}<small>{route.count}</small><ArrowUpRight size={12} aria-hidden="true"/></button>)}</div>}
   </div>}
   {view==='map'&&<MeetingMapView markdown={markdown} title={title} onLocate={navigate}/>}
   {view==='speakers'&&<MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/>}

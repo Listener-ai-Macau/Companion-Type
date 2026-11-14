@@ -19,7 +19,7 @@ export function MeetingMapView({markdown,title='会议脉络',onLocate}:{markdow
   if(open)next.add(key);else next.delete(key);return {source:markdown,ids:next};
  });
  return <section className="meeting-map" aria-label="会议思维导图">
-  <div className="meeting-map-tools"><p><span className="meeting-map-live-dot" aria-hidden="true"/>{model.topics.length} 个主题 · 点开查看内容</p><div>
+  <div className="meeting-map-tools"><p><span className="meeting-map-live-dot" aria-hidden="true"/>{model.topics.length} 个{model.topicLabel} · 点开查看内容</p><div>
    <button type="button" disabled={!model.topics.length||expanded.size===model.topics.length} onClick={()=>setSelection({source:markdown,ids:new Set(model.topics.map(t=>t.id))})}>展开全部</button>
    <button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button>
   </div></div>

@@ -55,5 +55,6 @@ export function meetingMapModel(markdown:string){
   id:'section-'+index,label:section.title,text:section.items.join('\n\n'),section:section.title,
  }));
  const find=(titles:string[])=>titles.map(title=>sections.find(s=>s.title===title)).find(Boolean);
- return {topics,sections,decisions:find(['Decisions','讨论结论（需核对）','讨论结论','决策']),actions:find(['Action Items','行动事项','待办']),questions:find(['Questions','Open Questions','待解问题','待确认问题'])};
+ const topicLabel=overview?(['会议概览','全会重点','重点'].includes(overview.title)?'主题':'要点'):'分组';
+ return {topics,topicLabel,sections,decisions:find(['Decisions','讨论结论（需核对）','讨论结论','决策']),actions:find(['Action Items','行动事项','待办']),questions:find(['Questions','Open Questions','待解问题','待确认问题'])};
 }
