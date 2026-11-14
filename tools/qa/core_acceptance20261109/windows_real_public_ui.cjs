@@ -24,8 +24,11 @@ module.exports=async(page,plan,out,reopened)=>{
  }
 
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
- const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
+ const article=page.locator('#ct-meeting-result-pane');
+ if(spec.expectVisualOverview){await article.locator('.meeting-overview').waitFor();assert.equal(await article.locator('.meeting-reading-content').isVisible(),false);}
+ else for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectVisualMeeting)await require('./windows_visual_meeting_ui.cjs')(page,spec,out);
+ for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectVisualOverview){
   await nav().getByRole('button',{name:'笔记',exact:true}).click();
   const notes=page.locator('#ct-recording-notes');await notes.waitFor();
