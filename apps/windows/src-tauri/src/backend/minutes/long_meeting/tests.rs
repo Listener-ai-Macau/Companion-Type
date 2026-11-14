@@ -844,4 +844,3 @@ fn overview_fidelity_requires_complete_explicit_support_before_using_paraphrases
     assert!(minutes.markdown.ends_with(&complete));
     assert_eq!(minutes.summary, source);
 }
-
