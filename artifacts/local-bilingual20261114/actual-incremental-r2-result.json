@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-14T18:19:55.775340+08:00",
+  "state": "PASS_NATIVE_LOCAL_INCREMENTAL_TRANSPORT_COMPLETENESS_NOT_QUALITY",
+  "audioSeconds": 90,
+  "newPacedAudioSeconds": 85,
+  "pacedPackets": 850,
+  "byteIdenticalWithOfflineInput": true,
+  "allThreeFinalIntervalsContiguous": true,
+  "eventsBeforeAudioSeal": 7,
+  "nonemptyEventsBeforeAudioSeal": 6,
+  "chineseAndEnglishBeforeSeal": true,
+  "modelLoadedOnce": true,
+  "firstNonemptyAfterPacedProducerStartSeconds": 8.382431268692017,
+  "finalResultAfterSourceSealedSeconds": 18.110092163085938,
+  "coldModelLoadSeconds": 56.06524960001116,
+  "allFreshDecodeSecondsIncludingDraftsAndFailedParents": 87.4388239000109,
+  "actualNeuralCalls": 11,
+  "completedJobs": 9,
+  "peakPrivateBytes": 1261641728,
+  "chineseFinalSameAsOfflineR1": true,
+  "englishFinalSameAsOfflineR1": true,
+  "constructedSwitchFinalSameAsOfflineR2": true,
+  "finalBlocks": [
+    {
+      "block": 0,
+      "startFrame": 0,
+      "endFrame": 480000,
+      "pcmSha256": "ce1131d47fe7ef35953b5687b954147887804d605823ac9814ad5d48267911a7",
+      "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。呃，咱超市啊近期的销售啊。",
+      "reviewRequired": false
+    },
+    {
+      "block": 1,
+      "startFrame": 480000,
+      "endFrame": 960000,
+      "pcmSha256": "2b7cbd430f02a5be02fa72e69d7b6f793effa73667e9b13b8fb198ef27e4548c",
+      "text": "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Oh, I'm sorry. Yeah. Okay. Sounds like you've done something.",
+      "reviewRequired": false
+    },
+    {
+      "block": 2,
+      "startFrame": 960000,
+      "endFrame": 1440000,
+      "pcmSha256": "6d5e0b586e878ee3c5594f814f5a0cc38b147c4e555d33f92c49bfa25f4d1a7f",
+      "text": "零零一超市主管。零零六A。零零七\nI wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. So, what do we need to talk about?",
+      "reviewRequired": false
+    }
+  ],
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "limitations": [
+    "Public WAV packet replay, not physical recording-card/BLE verification.",
+    "Constructed15s Chinese+15s English is not naturally bilingual meeting evidence.",
+    "No diarization or word-level timing verified; source speakers remain unknown.",
+    "No CER/WER/DER or long-meeting qualification inferred from successful transport.",
+    "Warm producer timing excludes model cold-load time and primed first5s."
+  ],
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

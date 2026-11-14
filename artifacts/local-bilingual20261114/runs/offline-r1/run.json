@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-14T17:41:25+08:00",
+  "state": "LOCAL_MODEL_ATTEMPT_COMPLETE_REVIEW_PENDING",
+  "session": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\offline-session",
+  "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "automaticRetries": 0,
+  "localOnly": true,
+  "sourceAudioUploaded": false,
+  "qualityQualified": false,
+  "availableBytesAtStart": 2061029376,
+  "resources": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 3244343296,
+    "existingRecoveryRequirementExclusiveBytes": 3183419392,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  },
+  "lastResourceObservationAt": "2026-11-14T17:43:31+08:00",
+  "workerSourceSha256": "8fb2201026d478d188b105c2b2e84fbe9939c83b92cd427b1664d28a81ec96dd",
+  "currentGpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "inventorySha256": "35535c9d22d545fd53311141601723c8308f7aa9b2493be2a3d0769e9f62e572",
+  "modelWorkerStarted": true,
+  "exitCode": 0,
+  "privatePeakBytes": 1247854592,
+  "finishedAt": "2026-11-14T17:45:35+08:00",
+  "seconds": 124.7225185999996
+}

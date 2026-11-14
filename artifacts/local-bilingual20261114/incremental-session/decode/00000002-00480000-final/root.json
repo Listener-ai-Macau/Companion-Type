@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000002-00480000-final",
+    "pcmSha256": "6d5e0b586e878ee3c5594f814f5a0cc38b147c4e555d33f92c49bfa25f4d1a7f",
+    "configSha256": "4bf96187cfd04567ebfb82599294c890060e745f3e983b63f1b47d194350b41b"
+  },
+  "raw": {
+    "startSample": 960000,
+    "endSample": 1440000,
+    "text": "",
+    "language": null,
+    "languageHeaderPresent": true,
+    "generatedIds": [
+      11528,
+      2240,
+      151704,
+      151645
+    ],
+    "rawDecoded": "language None<asr_text><|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.0132998000190128
+  },
+  "rawSha256": "9edc3faa290c5c4e2431e85ad6e7eb13963d762b587f3015bc7588f592ece2a2"
+}

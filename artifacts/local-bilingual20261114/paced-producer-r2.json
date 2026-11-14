@@ -1,0 +1,12 @@
+{
+  "state": "PACED_PUBLIC_INTAKE_FINISHED_REVIEW_PENDING",
+  "startedAtUnix": 1794651300.4251688,
+  "endedAtUnix": 1794651385.5549924,
+  "at": "2026-11-14T18:16:25.554992+08:00",
+  "decoderWorkerPid": 26272,
+  "exitCode": 0,
+  "stdout": "{\"state\": \"LOCAL_PCM_SOURCE_SEALED\", \"sourceAudio\": \"E:\\\\CodexData\\\\Companion\\\\.model-cache\\\\local-bilingual-20261114\\\\public-probe90.wav\", \"sourceAudioSha256\": \"dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8\", \"startFrame\": 80000, \"endFrame\": 1440000, \"totalFrames\": 1440000, \"packets\": 850, \"paced\": true, \"seconds\": 85.02039350001724, \"inferencePerformedByProducer\": false, \"sourceUploaded\": false, \"realCardTransferVerified\": false}\n",
+  "stderr": "",
+  "realCardTransferVerified": false,
+  "sourceUploaded": false
+}

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-14T18:02:15+08:00",
+  "state": "FROZEN_ONE_GENERIC_NONZERO_AUTO_EMPTY_RECOVERY_CHANGE_BEFORE_CALL",
+  "originalInputPcmSha256": "6d5e0b586e878ee3c5594f814f5a0cc38b147c4e555d33f92c49bfa25f4d1a7f",
+  "priorParentRawSha256": "902ac908a3e89533a7a168228feec122d8e86cb7f650070b19c606242f5927db",
+  "originalFailure": "Auto language None with empty text despite a nonzero constructed Chinese/English switch block.",
+  "onlyFunctionalChange": "Re-examine such ambiguous empty spans via disjoint halves under original maxdepth2/minleaf7.5s. Preserve natural EOS, all parent/child raw tokens and original audio. At unresolved bounds retain review intervals, without inserting text or guessed language.",
+  "nativeInferenceFunctionAstUnchanged": true,
+  "modelWeightsGenerationAndLanguagePolicyChanged": false,
+  "normalActualChineseEnglishR1OutputsRemainSingleUnmodifiedLeaves": true,
+  "maximumSplitDepth": 2,
+  "minimumLeafFrames": 120000,
+  "session": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\empty-recovery-session-r2",
+  "referenceOrExpectedTextPassed": false,
+  "naturalBilingualMeeting": false,
+  "qualityQualified": false
+}

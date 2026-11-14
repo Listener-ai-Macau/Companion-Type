@@ -1,0 +1,81 @@
+{
+  "at": "2026-11-14T17:40:19+08:00",
+  "state": "FROZEN_EXISTING_PUBLIC_CHINESE_ENGLISH_LOCAL_PROBE_BEFORE_INFERENCE",
+  "sourceAudio": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\public-probe90.wav",
+  "audioSha256": "dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+  "pcmSha256": "46c1172d3b95d6d813c2d029c9bdc01f31be89ef031590b6d73665a33ad04790",
+  "audioSeconds": 90,
+  "segments": [
+    {
+      "id": "chinese-first30",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\chinese-first30.wav",
+      "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+      "pcmSha256": "ce1131d47fe7ef35953b5687b954147887804d605823ac9814ad5d48267911a7",
+      "frames": 480000,
+      "seconds": 30,
+      "originalPublicSources": [
+        {
+          "meeting": "S_R004S03C01",
+          "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+          "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+          "audioSeconds": 2327.119
+        }
+      ],
+      "constructedSwitchProbe": false,
+      "naturalBilingualMeetingQualification": false
+    },
+    {
+      "id": "english-first30",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\english-first30.wav",
+      "audioSha256": "c447ac6d39d1f106b1efac7f523ab0590eb15b754fbe5199f834ad090b692efa",
+      "pcmSha256": "2b7cbd430f02a5be02fa72e69d7b6f793effa73667e9b13b8fb198ef27e4548c",
+      "frames": 480000,
+      "seconds": 30,
+      "originalPublicSources": [
+        {
+          "meeting": "EN2002a",
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+          "audioSeconds": 2142.709375,
+          "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e"
+        }
+      ],
+      "constructedSwitchProbe": false,
+      "naturalBilingualMeetingQualification": false
+    },
+    {
+      "id": "constructed-language-switch30",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\constructed-language-switch30.wav",
+      "audioSha256": "cb61ae6cff8f1394c156d8a72ab71549c5283ceebe783a52a759768bfb30e9ed",
+      "pcmSha256": "6d5e0b586e878ee3c5594f814f5a0cc38b147c4e555d33f92c49bfa25f4d1a7f",
+      "frames": 480000,
+      "seconds": 30,
+      "originalPublicSources": [
+        {
+          "meeting": "S_R004S03C01",
+          "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+          "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+          "audioSeconds": 2327.119
+        },
+        {
+          "meeting": "EN2002a",
+          "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+          "audioSeconds": 2142.709375,
+          "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e"
+        }
+      ],
+      "constructedSwitchProbe": true,
+      "naturalBilingualMeetingQualification": false
+    }
+  ],
+  "languagePolicy": "auto",
+  "modelChanged": false,
+  "referencesPassedToWorker": false,
+  "expectedTranscriptInjected": false,
+  "sourceScope": "Two already exposed real public meetings. First30s each plus a technical concatenated15s+15s language-switch block, not a naturally bilingual meeting or holdout.",
+  "offlineSession": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\offline-session",
+  "incrementalSession": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session",
+  "streamPrimedFrames": 80000,
+  "incrementalTimingMeasured": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

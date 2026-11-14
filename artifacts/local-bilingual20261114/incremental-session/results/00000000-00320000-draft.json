@@ -1,0 +1,86 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00320000-draft",
+    "recordingId": "00000000-0000-4000-8000-000000202612",
+    "configSha256": "4bf96187cfd04567ebfb82599294c890060e745f3e983b63f1b47d194350b41b",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 320000,
+    "sourcePcm": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session\\audio.pcm",
+    "pcmSha256": "97f48e8ab3ff6e316975c8dc888983aa2e6633d657c1546afde62cc37d134cb7",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 168943.5032415,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。",
+    "rawGeneratedIds": [
+      [
+        11528,
+        8453,
+        151704,
+        99822,
+        99822,
+        14777,
+        104631,
+        102667,
+        3837,
+        99822,
+        99822,
+        99566,
+        32,
+        3837,
+        99822,
+        99822,
+        99612,
+        33,
+        3837,
+        99822,
+        99822,
+        99568,
+        34,
+        3837,
+        99822,
+        99822,
+        99609,
+        35,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 8.570503900002223,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 7.512728700006846,
+    "allKnownDecodeSecondsIncludingFailedParents": 7.512728700006846,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 320000
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

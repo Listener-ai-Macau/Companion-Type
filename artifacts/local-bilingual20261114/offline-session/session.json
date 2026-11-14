@@ -1,0 +1,19 @@
+{
+  "config": {
+    "schema": 1,
+    "recordingId": "00000000-0000-4000-8000-000000202611",
+    "sampleRate": 16000,
+    "channels": 1,
+    "sampleWidthBytes": 2,
+    "language": "auto",
+    "blockFrames": 480000,
+    "draftFrames": 80000
+  },
+  "configSha256": "68d3fa3edfc3f593bd8092c14c2958207f80988fdd94f8903b33eab01c2cfd98",
+  "confirmedFrames": 1440000,
+  "sealed": true,
+  "createdAt": "2026-11-14T09:40:17.900030+00:00",
+  "updatedAt": "2026-11-14T09:40:19.604400+00:00",
+  "publishedFinalBlocks": 3,
+  "sealedAt": "2026-11-14T09:40:19.627370+00:00"
+}

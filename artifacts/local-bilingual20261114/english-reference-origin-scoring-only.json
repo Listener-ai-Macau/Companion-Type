@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-14T18:25:35.016824+08:00",
+  "state": "OFFICIAL_AMI_WORD_REFERENCES_FETCHED_AFTER_INFERENCE_SCORING_ONLY",
+  "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusAnnotations/ami_public_manual_1.6.2.zip",
+  "zipSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+  "zipBytes": 22887865,
+  "selectedFiles": [
+    {
+      "archiveMember": "words/EN2002a.C.words.xml",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\scoring-only\\EN2002a.C.words.xml",
+      "sha256": "d15c35bac773b389763ded48df784133684806b5db37f9e3343fa29ec37ec6e0"
+    },
+    {
+      "archiveMember": "words/EN2002a.A.words.xml",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\scoring-only\\EN2002a.A.words.xml",
+      "sha256": "a85a5b87b81b93e4d424fd6c6c8ab5b90df93a515f6d83aa37f7c7eb9d9a9492"
+    },
+    {
+      "archiveMember": "words/EN2002a.B.words.xml",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\scoring-only\\EN2002a.B.words.xml",
+      "sha256": "b27dfc1d2854810bd5923ca3967b1df6167ef0eccce1b6308aa3e57725f9953a"
+    },
+    {
+      "archiveMember": "words/EN2002a.D.words.xml",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\scoring-only\\EN2002a.D.words.xml",
+      "sha256": "d5f610babf78b48dad6d98357ca8cf2ca6bcb396690c079570c2ebb45eea4d5f"
+    }
+  ],
+  "runtimeReferenceUsed": false,
+  "otherMeetingsUnopened": true
+}
