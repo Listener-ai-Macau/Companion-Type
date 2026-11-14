@@ -16,7 +16,7 @@ def sha(path):
  with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 def capture(args,cwd=ROOT):return subprocess.check_output(list(map(str,args)),cwd=cwd,text=True,encoding='utf-8').strip()
 
-def verified_reuse(receipt,target,version):
+def verified_reuse(receipt,target,version,local_crates=False):
  """Estimate an app-only rebuild after verifying a completed matching native build.
 
  The cold-build estimate remains8GiB. A matching warm build reserves2GiB;
@@ -34,8 +34,25 @@ def verified_reuse(receipt,target,version):
  native=lambda name:Path(name).suffix.lower() in suffixes
  inputs={row['path']:row['sha256']for row in previous['sourceFiles']if native(row['path'])}
  current=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party']).splitlines()
- assert set(inputs)=={name for name in current if native(name)},'Native source inventory changed; use cold-build reserve'
- for name,digest in inputs.items():assert sha(ROOT/name)==digest,'Native source changed: '+name
+ current_native={name for name in current if native(name)}
+ added=current_native-set(inputs);removed=set(inputs)-current_native
+ # Local app/core Rust edits reuse the already-built external dependency graph.
+ # This is an estimate for two warm crates, not an override of the80GiB budget.
+ # No changed build scripts, C/FFI sources, manifests, features or toolchain.
+ allowed=lambda name:name.endswith('.rs') and (name.startswith('apps/windows/src-tauri/src/') or name.startswith('packages/desktop-input/src/'))
+ reference={'third_party/imu-pointer/grt/DTW.cpp'} if local_crates else set()
+ assert not removed and added<=reference,'Native source inventory changed; use cold-build reserve'
+ changed=[name for name,digest in inputs.items()if sha(ROOT/name)!=digest]
+ assert all(local_crates and allowed(name)for name in changed),'External/native build inputs changed; use cold-build reserve'
+ for row in previous['sourceFiles']:
+  name=row['path']
+  if name.endswith(('Cargo.toml','Cargo.lock')) and name not in ['apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock']:
+   assert sha(ROOT/name)==row['sha256'],'Dependency configuration changed: '+name
+ for name in added:
+  # The pinned C++ reference is shipped as source/provenance; neither build
+  # script compiles it. The actual linked implementation is the local Rust port.
+  assert 'DTW.cpp' not in (ROOT/'packages/desktop-input/build.rs').read_text()
+  assert 'DTW.cpp' not in (ROOT/'apps/windows/src-tauri/build.rs').read_text()
  for name in ['apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock']:
   before=subprocess.check_output(['git','show',previous['sourceCommit']+':'+name],cwd=ROOT).replace(b'\r\n',b'\n')
   after=(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
@@ -47,10 +64,11 @@ def verified_reuse(receipt,target,version):
    before=before.replace(old,('version = "'+version+'"').encode())
   assert before==after,'Cargo dependencies changed; use cold-build reserve'
  assert (target/'release/deps').is_dir() and (target/'release/companion-type.exe').is_file()
- return dict(receipt=str(receipt),receiptSha256=sha(receipt),sourceCommit=previous['sourceCommit'],unchangedNativeInputs=len(inputs),cargoDependenciesUnchanged=True,reservedGiB=2)
+ return dict(receipt=str(receipt),receiptSha256=sha(receipt),sourceCommit=previous['sourceCommit'],unchangedNativeInputs=len(inputs)-len(changed),changedLocalRustInputs=changed,newUncompiledReferenceInputs=sorted(added),cargoDependenciesUnchanged=True,reuseScope='two-local-crates'if local_crates else'unchanged-native',reservedGiB=2)
 def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,required=True)
  parser.add_argument('--reuse-build-receipt',type=Path,help='Completed same-target build with exact native inputs; reserve2GiB for an app-only rebuild')
+ parser.add_argument('--reuse-dependency-build-receipt',type=Path,help='Verified same-toolchain/dependencies; only app/input Rust sources may differ; reserve2GiB for those warm crates')
  args=parser.parse_args()
  assert os.name=='nt' and os.environ.get('GITHUB_ACTIONS')!='true'
  cache=Path('E:/CodexData/Companion/.build-cache');target=cache/'shared-windows-target';out=args.output.resolve()
@@ -75,8 +93,10 @@ def main():
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
    reserve=8
-   if args.reuse_build_receipt:
-    record['verifiedWarmBuildReuse']=verified_reuse(args.reuse_build_receipt,target,record['version']);reserve=2
+   assert not(args.reuse_build_receipt and args.reuse_dependency_build_receipt),'Choose one reuse scope'
+   reuse=args.reuse_build_receipt or args.reuse_dependency_build_receipt
+   if reuse:
+    record['verifiedWarmBuildReuse']=verified_reuse(reuse,target,record['version'],bool(args.reuse_dependency_build_receipt));reserve=2
    record['storageBefore']=preflight(cache,reserve_gib=reserve)
    observed=inspect(target,ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    assert not capture(['git','status','--porcelain','--untracked-files=no']),'Commit the exact source before a normal delivery build'
