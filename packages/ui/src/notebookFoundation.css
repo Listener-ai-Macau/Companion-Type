@@ -17,12 +17,12 @@
 .ct-windows.ct-notebook .ct-app-navigation button{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:9px 12px;border:0;border-radius:6px;background:transparent;color:var(--nb-muted);box-shadow:none;text-align:left;font:inherit;font-size:13px}
 .ct-windows.ct-notebook .ct-app-navigation button[aria-current=page]{color:var(--nb-ink);background:var(--nb-selected);font-weight:600}
 .ct-windows.ct-notebook .ct-app-navigation button:hover{background:var(--nb-selected)}
-.ct-windows.ct-notebook .ct-notebook-content{display:grid;grid-template-columns:320px minmax(0,1fr);gap:0;align-items:start;min-height:calc(100dvh - 56px);margin:0}
+.ct-windows.ct-notebook .ct-notebook-content{display:grid;grid-template-columns:304px minmax(0,1fr);gap:0;align-items:start;min-height:calc(100dvh - 56px);margin:0}
 .ct-windows.ct-notebook .ct-notebook-content>.ct-recovery-compact,.ct-windows.ct-notebook .ct-notebook-content>.ct-recovery-center{grid-column:1/-1}
 .ct-windows.ct-notebook .ct-notebook-library-column{position:sticky;top:56px;min-width:0;max-height:calc(100dvh - 56px);overflow:auto;align-self:start;border-right:1px solid var(--nb-line);min-height:calc(100dvh - 56px);background:var(--nb-paper)}
 .ct-windows.ct-notebook .ct-library{margin:0;padding:24px 12px;border:0;border-radius:0;background:transparent;box-shadow:none}
 .ct-windows.ct-notebook .ct-library-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 8px}
-.ct-windows.ct-notebook .ct-library-head strong{font-size:19px;font-weight:600;letter-spacing:-.02em}
+.ct-windows.ct-notebook .ct-library-head strong{font-size:18px;font-weight:500;letter-spacing:-.02em}
 .ct-windows.ct-notebook .ct-library-head p{margin:4px 0 0;color:var(--nb-muted);font-size:12px}
 .ct-windows.ct-notebook .ct-library-head .ct-action{min-height:32px;padding:5px 9px;font-size:12px}
 .ct-windows.ct-notebook .ct-library-search{display:flex;align-items:center;gap:8px;margin:18px 5px 12px;padding:7px 10px;border:1px solid var(--nb-line);border-radius:6px;background:var(--nb-side);color:var(--nb-muted)}
@@ -37,7 +37,7 @@
 .ct-windows.ct-notebook .ct-library-card.selected,.ct-windows.ct-notebook .ct-library-card:hover{background:var(--nb-selected);border:0;box-shadow:none}
 .ct-windows.ct-notebook .ct-library-icon{display:none}
 .ct-windows.ct-notebook .ct-library-card-main{display:block;min-width:0}
-.ct-windows.ct-notebook .ct-library-card-main strong{display:block;font-size:14px;line-height:1.5;font-weight:600;color:var(--nb-ink);overflow-wrap:anywhere}
+.ct-windows.ct-notebook .ct-library-card-main strong{display:block;font-size:14px;line-height:1.65;font-weight:500;color:var(--nb-ink);overflow-wrap:anywhere}
 .ct-windows.ct-notebook .ct-library-card-main small{display:block;margin-top:5px;color:var(--nb-muted);font-size:11px;line-height:1.6}
 .ct-windows.ct-notebook .ct-library-text-preview{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;margin-top:9px;font-size:12px;line-height:1.7;color:var(--nb-muted)}
 .ct-windows.ct-notebook .ct-library-card-end{display:block;margin-top:7px}
@@ -49,10 +49,10 @@
 .ct-windows.ct-notebook .ct-notebook-placeholder p{margin:0;line-height:1.9}
 .ct-windows.ct-notebook .ct-meeting-workspace{min-width:0;width:100%;margin:0;border:0;border-radius:0;background:var(--nb-paper);box-shadow:none}
 .ct-windows.ct-notebook .ct-recording-back{display:none}
-.ct-windows.ct-notebook .ct-meeting-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin:0;padding:28px 32px 14px;border:0;background:transparent}
+.ct-windows.ct-notebook .ct-meeting-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin:0;padding:32px 36px 16px;border:0;background:transparent}
 .ct-windows.ct-notebook .ct-meeting-hero>div{flex:1;min-width:0}
 .ct-windows.ct-notebook .ct-title-editor{display:flex;gap:8px;align-items:center;color:var(--nb-muted)}
-.ct-windows.ct-notebook .ct-title-editor input{min-width:0;width:100%;margin:0;padding:0 0 4px;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:var(--nb-ink);font:600 23px/1.4 "Segoe UI","Microsoft YaHei UI",sans-serif;letter-spacing:-.02em}
+.ct-windows.ct-notebook .ct-title-editor input{min-width:0;width:100%;margin:0;padding:0 0 4px;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:var(--nb-ink);font:500 26px/1.45 var(--notebook-font);letter-spacing:-.02em}
 .ct-windows.ct-notebook .ct-title-editor input:focus{border-bottom-color:var(--nb-accent)}
 .ct-windows.ct-notebook .ct-meeting-hero p{margin:8px 0 0;color:var(--nb-muted);font-size:12px;line-height:1.7}
 .ct-windows.ct-notebook .ct-meeting-badges{display:flex;gap:10px;margin-top:8px}
