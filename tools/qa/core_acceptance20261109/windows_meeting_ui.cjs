@@ -19,7 +19,7 @@ const plan=JSON.parse(fs.readFileSync(path.join(out,'plan.json'),'utf8'));
    const result=await require('./windows_public_source_ui.cjs')(page,plan,out,stage==='product-reopen');
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(plan.realPublicReview){
-   const result=await require(plan.realPublicSpec?.retranscriptionOnly?'./windows_public_retranscribe_ui.cjs':'./windows_real_public_ui.cjs')(page,plan,out,stage==='product-reopen');
+   const result=await require(plan.realPublicSpec?.retranscriptionOnly?'./windows_public_retranscribe_ui.cjs':plan.realPublicSpec?.sourcePointerOnly?'./windows_public_source_pointer_ui.cjs':'./windows_real_public_ui.cjs')(page,plan,out,stage==='product-reopen');
    fs.writeFileSync(path.join(out,'ui-result.json'),JSON.stringify({...result,identity},null,2));
   }else if(stage==='product-reopen'){
    const result=await require('./windows_product_reopen_ui.cjs')(page,plan,out);
