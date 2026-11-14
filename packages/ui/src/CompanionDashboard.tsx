@@ -1,5 +1,6 @@
 import {meetingReadingSources} from './meetingReadingSources';
 import {LibraryPanel} from './LibraryPanel';
+import {LibraryScopeChips,type LibraryScopeChip} from './LibraryScopeChips';
 import {ContentExportPanel,type ContentExportTarget} from './ContentExportPanel';
 import {MeetingWorkspaceNav,meetingPaneForTarget,type MeetingPane} from './MeetingWorkspaceNav';
 import {ActionReviewTools,useActionReview} from './ActionReviewTools';
@@ -802,6 +803,14 @@ export function CompanionDashboard({
   }, [onlyPendingSessions, pendingLibrary, recordingLibrary, libraryQuery,libraryFilters]);
   // Search and bulk tools retain every matching recording; only card rendering is bounded.
   // A different query/filter starts at 50 immediately, while cache refresh retains this view.
+  const clearLibraryFilters=()=>setLibraryFilters({folder:'*',tag:'',favorites:false,trash:libraryFilters.trash});
+  const libraryActiveChips:LibraryScopeChip[]=[];
+  if(libraryFilters.folder!=='*')libraryActiveChips.push({id:'folder',label:`文件夹：${libraryFilters.folder||'未分类'}`,removeLabel:'取消文件夹筛选',onRemove:()=>setLibraryFilters({...libraryFilters,folder:'*'})});
+  if(libraryFilters.tag)libraryActiveChips.push({id:'tag',label:`标签：${libraryFilters.tag}`,removeLabel:'取消标签筛选',onRemove:()=>setLibraryFilters({...libraryFilters,tag:''})});
+  if(libraryFilters.from||libraryFilters.to)libraryActiveChips.push({id:'dates',label:`日期：${libraryFilters.from||'不限'} — ${libraryFilters.to||'不限'}`,removeLabel:'取消日期筛选',onRemove:()=>setLibraryFilters({...libraryFilters,from:undefined,to:undefined})});
+  if(libraryFilters.favorites)libraryActiveChips.push({id:'favorites',label:'只看收藏',removeLabel:'取消收藏筛选',onRemove:()=>setLibraryFilters({...libraryFilters,favorites:false})});
+  const chooseLibraryRecordings=()=>{setLibraryPanel(null);setLibraryToolsOpen(true);window.requestAnimationFrame(()=>{const first=recordingLibraryRegion.current?.querySelector<HTMLInputElement>('.ct-library-list .ct-library-entry>input');(first??recordingLibraryRegion.current)?.focus();});};
+  const cancelLibrarySelection=()=>{setLibrarySelection({});setLibraryToolsOpen(false);};
   const libraryWindowScope = JSON.stringify([onlyPendingSessions, libraryQuery.trim().toLocaleLowerCase(), libraryFilters]);
   if (libraryWindow.scope !== libraryWindowScope) {
     setLibraryWindow({ scope: libraryWindowScope, count: 50 });
@@ -2116,12 +2125,20 @@ export function CompanionDashboard({
             <button type="button" aria-pressed={!onlyPendingSessions} onClick={()=>setOnlyPendingSessions(false)}>全部</button>
             <button type="button" aria-pressed={onlyPendingSessions} onClick={()=>setOnlyPendingSessions(true)}>待整理</button>
           </div>
-          <button type="button" className="ct-action ct-library-icon" aria-label="筛选" title="筛选录音" data-active={libraryFilters.folder!=='*'||!!libraryFilters.tag||!!libraryFilters.from||!!libraryFilters.to} onClick={()=>setLibraryPanel('filter')}><ListFilter size={15}/></button>
-          <button type="button" className="ct-action ct-library-icon" aria-label={libraryToolsOpen?'取消选择':'选择'} title={libraryToolsOpen?'取消选择':'选择录音'} aria-pressed={libraryToolsOpen} onClick={()=>setLibraryToolsOpen(v=>!v)}><SquareCheck size={15}/></button>
+          <button type="button" id="ct-library-filter-button" className="ct-action ct-library-icon" aria-label="筛选" title="筛选录音" data-active={libraryActiveChips.length>0} onClick={()=>setLibraryPanel('filter')}><ListFilter size={15}/></button>
+          <button type="button" className="ct-action ct-library-icon" aria-label={libraryToolsOpen?'取消选择':'选择'} title={libraryToolsOpen?'取消选择':'选择录音'} aria-pressed={libraryToolsOpen} disabled={libraryBusy||libraryUnsaved} onClick={()=>libraryToolsOpen?cancelLibrarySelection():setLibraryToolsOpen(true)}><SquareCheck size={15}/></button>
           <button type="button" className="ct-action ct-library-icon" aria-label="管理" title={Object.keys(librarySelection).length?`管理已选的 ${Object.keys(librarySelection).length} 条录音`:'管理录音'} onClick={()=>setLibraryPanel('manage')}><Ellipsis size={15}/></button>
         </div>
+        <LibraryScopeChips className="ct-library-active-filters" chips={libraryActiveChips} onClear={clearLibraryFilters} onEmptyFocus={()=>document.getElementById('ct-library-filter-button')?.focus()}/>
+        {libraryFilters.from&&libraryFilters.to&&libraryFilters.from>libraryFilters.to?<p className="ct-library-scope-warning" role="alert">日期范围有误：开始日期晚于结束日期。</p>:null}
+        {libraryToolsOpen?<div className="ct-library-selection-context" role="group" aria-label="当前录音选择"><strong>{Object.keys(librarySelection).length?`已选 ${Object.keys(librarySelection).length} 条`:'勾选要整理的录音'}</strong>
+          {Object.keys(librarySelection).length>0?<button type="button" className="ct-text-button" onClick={()=>setLibraryPanel('manage')}>整理所选</button>:null}
+          <button type="button" className="ct-text-button" disabled={libraryBusy||libraryUnsaved} onClick={cancelLibrarySelection}>取消</button>
+        </div>:null}
+        {Object.keys(librarySelection).some(id=>!visibleLibrary.some(s=>s.id===id))?<p className="ct-library-scope-warning">已选录音中有 {Object.keys(librarySelection).filter(id=>!visibleLibrary.some(s=>s.id===id)).length} 条不在当前范围。</p>:null}
         <LibraryPanel open={libraryPanel!==null} title={libraryPanel==='filter'?'筛选录音':'管理录音'} blocked={libraryUnsaved||libraryBusy} onClose={()=>setLibraryPanel(null)}>
         <CompanionLibraryTools mode={libraryPanel==='filter'?'filter':'manage'} sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
+          onChoose={chooseLibraryRecordings}
           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
           restoreBlocked={controlsBusy||oobeBlockedByRecording||snapshot?.host.persistence?.status==='unsaved'}
           onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBackup={onBackupLibrary?()=>onBackupLibrary(customTemplate):undefined} onRestore={onRestoreLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
@@ -2129,7 +2146,7 @@ export function CompanionDashboard({
         {libraryCurrentMessage?<p role="status">{libraryCurrentMessage}</p>:null}
         {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to)?<div className="ct-library-empty">
           <strong>当前筛选没有录音</strong><p>文件夹、标签、收藏、日期与搜索会同时筛选。清除筛选后可查看已有录音。</p>
-          <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false,trash:libraryFilters.trash});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
+          <button type="button" className="ct-action" onClick={clearLibraryFilters}>清除分类筛选</button>
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关录音或补充' : libraryFilters.trash?'回收站为空':onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的录音' : '暂无录音'}</strong>
             <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '先连接录音卡。用卡片实体键录音，结束后会在这里接收；转文字可在接收后进行。'}</p>
