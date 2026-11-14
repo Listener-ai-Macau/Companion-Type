@@ -3,6 +3,18 @@ module.exports=async(page,plan,out,reopened)=>{
  const original=plan.expectedSnapshot;assert(original.length===1&&original[0].id===plan.sessionId);
  const row=original[0],nav=()=>page.getByRole('navigation',{name:'会议工作区',exact:true});
  const spec=plan.realPublicSpec||{},minutesTerms=spec.expectedMinutesTerms||['超市','四层','冷柜'],transcriptTerms=spec.expectedTranscriptTerms||['堆放'];
+ if(spec.expectLibraryScopeAndSelection){
+  await page.getByRole('button',{name:'管理',exact:true}).click();const manager=page.getByRole('dialog',{name:'管理录音',exact:true});await manager.waitFor();assert.equal(await manager.locator('input:visible,select:visible').count(),0);
+  await page.screenshot({path:path.join(out,'actual-library-choose-first.png')});
+  await manager.getByRole('button',{name:'返回列表选择',exact:true}).click();await manager.waitFor({state:'hidden'});const check=page.locator('.ct-library-list .ct-library-entry>input').first();await check.waitFor();assert(await check.evaluate(e=>e===document.activeElement));await check.check();
+  await page.getByRole('button',{name:'整理所选',exact:true}).click();await manager.waitFor();assert((await manager.locator('.ct-library-target-summary').innerText()).includes(row.title));
+  await manager.getByLabel('修改文件夹',{exact:true}).check();await manager.getByLabel('目标录音文件夹',{exact:true}).fill('未应用的公开界面草稿');assert(await manager.getByRole('button',{name:'清除整理选择',exact:true}).isDisabled());await manager.getByRole('button',{name:'关闭录音面板',exact:true}).click();assert(await manager.isVisible());
+  await manager.getByRole('button',{name:'撤销分类修改',exact:true}).click();await manager.getByRole('button',{name:'关闭录音面板',exact:true}).click();await page.getByRole('button',{name:'取消选择',exact:true}).click();
+  const query=page.getByRole('textbox',{name:'搜索标题、转写、补充或整理结果',exact:true});await query.fill('公开中文');await page.getByRole('button',{name:'筛选',exact:true}).click();await page.getByLabel('筛选录音文件夹',{exact:true}).selectOption('');await page.getByRole('button',{name:'关闭录音面板',exact:true}).click();await page.screenshot({path:path.join(out,'actual-library-current-scope.png')});
+  await page.getByRole('button',{name:'筛选',exact:true}).click();await page.getByLabel('筛选录音开始日期',{exact:true}).fill('2026-11-14');await page.getByLabel('筛选录音结束日期',{exact:true}).fill('2026-11-13');await page.getByRole('button',{name:'关闭录音面板',exact:true}).click();
+  const chips=page.getByRole('group',{name:'当前筛选',exact:true});assert((await chips.innerText()).includes('未分类'));assert((await page.locator('.ct-library-scope-warning').first().innerText()).includes('日期范围有误'));assert.equal(await page.locator('.ct-library-card').count(),0);await page.screenshot({path:path.join(out,'actual-library-active-scope.png')});
+  await chips.getByRole('button',{name:'清除筛选',exact:true}).click();assert.equal(await query.inputValue(),'公开中文');assert.equal(await page.locator('.ct-library-card').count(),1);await page.waitForFunction(()=>document.activeElement?.id==='ct-library-filter-button');await page.locator('.ct-library-search').getByRole('button',{name:'清除',exact:true}).click();
+ }
  await page.locator('.ct-library-card').first().click();await nav().waitFor();
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
