@@ -15,13 +15,18 @@ impl Default for Intent {
         smoother:Smoother::default(),at:None,last:None}}
 }
 impl Intent {
+    pub fn surface_mouse()->Self{Self{desktop:Desktop::surface_mouse(),..Self::default()}}
     pub fn clear_motion(&mut self){
         self.desktop.pause_translation();self.smoother.reset();self.source=Source::Rest;self.at=None;
     }
     pub fn tap(&mut self){
         self.clear_motion();self.desktop.tap();
     }
+    pub fn contact(&mut self,ms:u32){self.clear_motion();self.desktop.contact(ms);}
     pub fn sample(&mut self,s:Raw,now:f64){
+        self.sample_blocked(s,now,false);
+    }
+    pub fn sample_blocked(&mut self,s:Raw,now:f64,blocked:bool){
         if let Some((sequence,ms,arrival))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return;}
@@ -32,7 +37,7 @@ impl Intent {
             }
         }
         self.last=Some((s.sequence,s.sensor_ms,now));
-        self.desktop.sample(s);
+        self.desktop.sample_with_translation(s,!blocked);
         let state=&self.desktop.state;
         if !state.calibrated{self.smoother.reset();self.source=Source::Rest;return;}
         let (mut goal,source)=if state.moving&&!state.clutched {

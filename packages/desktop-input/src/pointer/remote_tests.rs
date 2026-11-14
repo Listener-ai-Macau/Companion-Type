@@ -185,6 +185,11 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
     let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
     let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates"});
     let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
-    println!("Owner142 actual14 taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
-    if std::env::var_os("COMPANION_EXPECT_CONTACT_REPAIR").is_some(){assert_eq!(clicks.len(),14,"reliable physical taps must reach the nearest GRT template, not all be rejected by a three-example radius");}
+    let expected=receipt["sessions"][0]["finalPointer"]["metrics"]["tapEvents"].as_u64().unwrap()as usize;
+    println!("Actual{expected} taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
+    if std::env::var_os("COMPANION_EXPECT_CONTACT_REPAIR").is_some(){assert_eq!(clicks.len(),expected,"reliable physical taps must reach the nearest GRT template, not all be rejected by a three-example radius");}
+    if let Ok(text)=std::fs::read_to_string(root.join("offline-diagnosis/native-baseline.json")){
+        let baseline:serde_json::Value=serde_json::from_str(&text).unwrap();
+        if baseline["acceptedBaseline"]==true{assert_eq!(left,baseline["left"].as_u64().unwrap()as usize);assert_eq!(right,baseline["right"].as_u64().unwrap()as usize);}
+    }
 }

@@ -13,6 +13,7 @@ pub mod intent;
 pub mod contact;
 mod contact_dtw;
 mod tap_motion;
+pub mod surface;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }
@@ -81,9 +82,9 @@ impl Settings {
     pub fn pointer_options(&self)->u8{if self.contact_regions{72}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
-        if self.relative_direct&&(self.desktop_motion||self.mapping!=Mapping::Relative){return Err("direct gyro requires relative angular mapping");}
+        if self.relative_direct&&self.mapping!=Mapping::Relative{return Err("direct relative input requires relative mapping");}
         if self.key_role==KeyRole::Regrip&&!self.relative_direct{return Err("按住换握姿需要相对遥控模式。");}
-        if self.contact_regions&&(!self.relative_direct||self.desktop_motion){return Err("左右前角敲击需要转动／倾斜鼠标模式。");}
+        if self.contact_regions&&!self.relative_direct{return Err("左右前角敲击需要相对鼠标模式。");}
         if let Some(profile)=&self.contact_profile{profile.validate()?;if !(self.desktop_motion||self.contact_regions){return Err("请启用左右前角敲击。");}}
         if !self.sensitivity.is_finite() || !(0.2..=3.).contains(&self.sensitivity) ||
            !self.smoothing.is_finite() || !(0.0..=0.97).contains(&self.smoothing) ||
@@ -148,7 +149,7 @@ pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const 
 pub struct Frame {pub position:Option<Point>,pub buttons:Vec<Button>}
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub tap_events:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool}
+pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub tap_events:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool,pub surface_paused:bool}
 
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
@@ -231,7 +232,10 @@ impl Pointer {
         // This is explicit intent, not a guessed reverse-motion classifier.
         if self.settings.key_role==KeyRole::Regrip&&event.events&(DOWN|UP)!=0{
             if event.events&DOWN!=0{self.release_button();self.metrics.regripping=true;}
-            if event.events&UP!=0{self.metrics.regripping=false;}
+            if event.events&UP!=0{
+                self.metrics.regripping=false;
+                if self.settings.desktop_motion{self.coarse=None;self.metrics.calibrated=false;self.metrics.surface_paused=false;}
+            }
             self.reset_motion();self.history.clear();return Ok(true);
         }
         // GYRO_OFF disengages motion only. A shell tap while the user holds
@@ -262,7 +266,7 @@ impl Pointer {
             if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}
         }
         if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
-            if let Some(c)=self.coarse.as_mut(){c.tap();}
+            if let Some(c)=self.coarse.as_mut(){c.contact(event.sensor_ms);}
             // A relative mouse clicks where its visible cursor is now. The
             // laser's historical tap compensation must not teleport it back
             // through100ms of relative movement (hundreds of pixels in131).
@@ -298,6 +302,18 @@ impl Pointer {
     /// CIM5 remains raw sensor data. Reuse the same physical control clock,
     /// history, pause, drag and native output instead of inventing a CIM4 pose.
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
+        if self.settings.desktop_motion{
+            if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
+            self.contacts.sample(s);
+            let surface=self.settings.relative_direct;
+            if surface||self.settings.contact_regions{self.tap_motion.observe(s);}
+            let c=self.coarse.get_or_insert_with(||if surface{intent::Intent::surface_mouse()}else{intent::Intent::default()});c.settings=self.settings.clone();
+            c.sample_blocked(s,now,surface&&self.tap_motion.blocked());
+            self.metrics.calibrated=c.desktop.state.calibrated;
+            self.metrics.surface_paused=c.desktop.state.surface.as_ref().is_some_and(|s|s.phase!=surface::Phase::Ready);
+            if self.metrics.paused||self.metrics.regripping{c.clear_motion();}
+            return;
+        }
         // CIM6 shares the fused motion clock. Raw contact acceleration must
         // not run a second fusion, count a second sample, or enable planar.
         if self.settings.contact_regions{
@@ -305,12 +321,6 @@ impl Pointer {
             if self.tap_motion.blocked(){self.smoother.reset();self.relative.reset();}
             return;
         }
-        if !self.settings.desktop_motion{return;}
-        if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
-        self.contacts.sample(s);
-        let c=self.coarse.get_or_insert_with(intent::Intent::default);c.settings=self.settings.clone();
-        c.sample(s,now);self.metrics.calibrated=c.desktop.state.calibrated;
-        if self.metrics.paused{c.clear_motion();}
     }
     pub fn contact_status(&self)->contact::Status{self.contacts.status.clone()}
     /// Experimental planar readiness differs from sensor calibration: after an
@@ -445,7 +455,7 @@ impl Pointer {
         if !stale&&!self.metrics.paused&&self.metrics.calibrated{
             let was_pending=self.contacts.pending();
             let clicks=self.contacts.poll(now);
-            if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){c.tap();}}
+            if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){if c.desktop.has_surface(){c.clear_motion();}else{c.tap();}}}
             for(side,point)in clicks{
                 let point=if self.settings.relative_direct{self.shown}else{point};
                 self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});
