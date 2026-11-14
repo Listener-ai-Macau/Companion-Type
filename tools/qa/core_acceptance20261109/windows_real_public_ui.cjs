@@ -26,6 +26,16 @@ module.exports=async(page,plan,out,reopened)=>{
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectVisualMeeting)await require('./windows_visual_meeting_ui.cjs')(page,spec,out);
+ if(spec.expectVisualOverview){
+  await nav().getByRole('button',{name:'笔记',exact:true}).click();
+  const notes=page.locator('#ct-recording-notes');await notes.waitFor();
+  const composer=notes.locator('.ct-note-composer');await composer.locator(':scope>summary').click();
+  const field=notes.getByRole('textbox',{name:'新录音备注',exact:true});await field.fill('仅用于公开界面检查的临时笔记，不保存。');
+  await page.screenshot({path:path.join(out,'actual-public-notes-entry.png')});await field.fill('');
+  await page.waitForFunction(()=>{const n=document.querySelector('#ct-recording-notes textarea[aria-label="新录音备注"]');return n&&n.value==='';});
+  await composer.locator(':scope>summary').click();await nav().getByRole('button',{name:'纪要',exact:true}).click();
+  const frame=article.locator('.meeting-reading-frame').first();await frame.getByRole('button',{name:'会议一览',exact:true}).click();await frame.getByRole('button',{name:'阅读完整纪要',exact:true}).click();
+ }
  if(spec.expectNotebookPolish){
   const header=page.locator('.ct-reader-header-actions');await header.getByRole('button',{name:'回听',exact:true}).waitFor();
   const layout=await page.evaluate(()=>{const point=document.querySelector('.ct-note-overview-point'),replay=document.querySelector('.ct-reader-replay'),exportButton=document.querySelector('.ct-reader-export');return{firstPointTop:point.getBoundingClientRect().top,readingWidth:point.getBoundingClientRect().width,replayTop:replay.getBoundingClientRect().top,exportTop:exportButton.getBoundingClientRect().top,bodyWidth:document.body.scrollWidth,viewportWidth:innerWidth};});
@@ -81,5 +91,5 @@ module.exports=async(page,plan,out,reopened)=>{
  const preview=panel.getByRole('region',{name:'所选正文预览',exact:true});await preview.waitFor();const text=await preview.innerText();for(const term of spec.expectedExportTerms||['超市','四层','设备录音'])assert(text.includes(term),term);assert(!text.includes('Minutes engine:')&&!text.includes('Generated:'));
  fs.writeFileSync(path.join(out,'actual019f-ui-readable-preview.txt'),text);await page.screenshot({path:path.join(out,'actual019f-export.png'),fullPage:true});
  assert.deepEqual(JSON.parse(fs.readFileSync(plan.statePath,'utf8')),original);
- return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:spec.sourceKind!=='importedAudio',actualPublicImportedAudioResultsRead:spec.sourceKind==='importedAudio',actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,actualReadableAndCompleteOriginalTranscriptSwitchChecked:!!spec.expectReadableTranscript,actualFallbackTopicListAndOrdinaryScrollChecked:!!spec.expectTopicDisclosures,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
+ return {state:reopened?'ACTUAL_PUBLIC_NATIVE_UI_PROCESS_REOPEN_RETAINED_RESULTS':'ACTUAL_PUBLIC_NATIVE_UI_READ_PLAYBACK_AND_SELECTED_EXPORT_CHECKED',actualPublicSessionId:plan.sessionId,actualPhysicalAudioResultsRead:spec.sourceKind!=='importedAudio',actualPublicImportedAudioResultsRead:spec.sourceKind==='importedAudio',actualDefaultOverviewAndFoldedCompleteDetailChecked:!!spec.expectFoldedOverview,actualVisualOverviewAndNotesEntryChecked:!!spec.expectVisualOverview,actualReadableAndCompleteOriginalTranscriptSwitchChecked:!!spec.expectReadableTranscript,actualFallbackTopicListAndOrdinaryScrollChecked:!!spec.expectTopicDisclosures,previousAppExited:reopened?plan.previousAppExited:undefined,allPublicLibraryRowsUnchanged:true,firstPid:plan.firstPid,reopenedPid:plan.reopenedPid,actualDeclaredAudioPreparedAndMutedPlaybackChecked:!reopened,actualThemeControlsChecked:true,newAsrOrCloudRequestedByUi:false,boardAccessed:false,ownerAppearanceAccepted:false,modelGeneralQualityQualified:false};
 };
