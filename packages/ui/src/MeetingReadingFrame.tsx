@@ -1,8 +1,9 @@
 import {useEffect,useMemo,useRef,useState,type ReactNode} from 'react';
 import {meetingSectionTitles} from './meetingOutline';
 import {meetingHeadingForDisplay} from './meetingReading';
-import {BookOpen,GitBranch,List,Users,ChevronDown} from 'lucide-react';
+import {ArrowLeft,BookOpen,GitBranch,List,Users,ChevronDown} from 'lucide-react';
 import {MeetingMapView} from './MeetingMapView';
+import {MeetingOverview} from './MeetingOverview';
 import {MeetingSpeakers} from './MeetingSpeakers';
 import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import './meetingReadingFrame.css';
@@ -15,7 +16,12 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
  const [active,setActive]=useState<string|null>(null);
- const [view,setView]=useState<'reading'|'map'|'speakers'>('reading');
+ const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'>('overview');
+ useEffect(()=>{setView('overview');},[markdown,title]);
+ function read(){
+  setView('reading');
+  window.requestAnimationFrame(()=>{const first=content.current?.querySelector<HTMLElement>('[data-meeting-heading]')??content.current;if(first){first.tabIndex=-1;first.focus({preventScroll:true});content.current?.parentElement?.querySelector('.meeting-reading-start')?.scrollIntoView({block:'start',behavior:'auto'});}});
+ }
  useEffect(()=>{
   const canvas=content.current;if(!canvas)return;
   let root:HTMLElement|Window=window;
@@ -55,7 +61,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
   {titles.length>0&&<div className="meeting-reading-start">
    <div className="meeting-reading-intro"><div className="meeting-reading-views" role="group" aria-label="纪要查看方式">
-    <button type="button" aria-pressed={view==='reading'} onClick={()=>setView('reading')}><BookOpen size={14} aria-hidden="true"/>阅读纪要</button>
+    <button type="button" aria-pressed={view==='overview'||view==='reading'} onClick={()=>setView('overview')}><BookOpen size={14} aria-hidden="true"/>会议一览</button>
     <button type="button" aria-pressed={view==='map'} onClick={()=>setView('map')}><GitBranch size={14} aria-hidden="true"/>思维导图</button>
     <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={14} aria-hidden="true"/>按发言人</button>
    </div>
@@ -65,8 +71,10 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
    </details>}
    </div>
   </div>}
+  {view==='overview'&&<MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/>}
   {view==='map'&&<MeetingMapView markdown={markdown} title={title} onLocate={navigate}/>}
   {view==='speakers'&&<MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/>}
+  {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={()=>{setView('overview');window.requestAnimationFrame(()=>content.current?.parentElement?.querySelector<HTMLElement>('.meeting-reading-views>button')?.focus());}}><ArrowLeft size={14} aria-hidden="true"/>返回会议一览</button>}
   <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;
 }

@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict'),path=require('path');
 module.exports=async(page,frame,out,tag,options={})=>{
- await frame.getByRole('button',{name:'阅读纪要',exact:true}).click();
+ if(await frame.getByRole('button',{name:'会议一览',exact:true}).count()){
+  await frame.getByRole('button',{name:'会议一览',exact:true}).click();await frame.getByRole('button',{name:'阅读完整纪要',exact:true}).click();
+ }else await frame.getByRole('button',{name:'阅读纪要',exact:true}).click();
  assert.equal(await frame.locator('.meeting-reading-views>button').count(),3);
  assert.equal(await frame.locator('.meeting-reading-shortcuts,.meeting-reading-sidebar,.meeting-reading-intro>div>strong').count(),0);
  const full=frame.locator('.meeting-disclosure').filter({has:page.getByText(options.summaryTitle||'完整会议摘要',{exact:true})}).first();

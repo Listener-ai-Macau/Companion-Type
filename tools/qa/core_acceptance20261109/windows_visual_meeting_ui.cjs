@@ -11,6 +11,7 @@ module.exports=async(page,spec,out)=>{
  const light=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await light.count())await light.click();
  for(const theme of ['light','dark']){
   if(theme==='dark')await page.getByRole('button',{name:'切换至深色模式',exact:true}).click();
+  if(spec.expectVisualOverview)await require('./meeting_overview_ui.cjs')(page,frame,out,theme,expected);
   if(spec.expectClearReading)await require('./meeting_clarity_ui.cjs')(page,frame,out,theme);
   await frame.getByRole('button',{name:'思维导图',exact:true}).click();
   const topics=frame.locator('.meeting-map-branches>li');assert.equal(await topics.count(),expected.length);
@@ -31,7 +32,9 @@ module.exports=async(page,spec,out)=>{
   assert((await frame.locator('.meeting-speakers').innerText()).includes('还没有区分发言人'));
   assert.equal(await frame.locator('.meeting-speaker-card').count(),0);
   await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({animations:'disabled',path:path.join(out,'actual-speakers-unavailable-'+theme+'.png')});
-  await frame.getByRole('button',{name:'阅读纪要',exact:true}).click();
+  if(await frame.getByRole('button',{name:'会议一览',exact:true}).count()){
+   await frame.getByRole('button',{name:'会议一览',exact:true}).click();await frame.getByRole('button',{name:'阅读完整纪要',exact:true}).click();
+  }else await frame.getByRole('button',{name:'阅读纪要',exact:true}).click();
  }
  await page.getByRole('button',{name:'切换至浅色模式',exact:true}).click();await page.evaluate(()=>window.scrollTo(0,0));
  return {actualPublicTopicCount:expected.length,allTopicWordsExact:true,mapExpandAndCollapse:true,lastTopicContextAndFocus:true,noInventedParticipants:true,neutralLightAndDarkPalettes:true,ownerAppearanceAccepted:false};
