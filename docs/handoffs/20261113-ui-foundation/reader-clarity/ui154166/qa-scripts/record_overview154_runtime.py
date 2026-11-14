@@ -1,0 +1,18 @@
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,subprocess,re,tomllib
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';B=R/'docs/handoffs/20261112-product-closure/windows154';Q=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/visual-meeting-native154')
+read=lambda p:json.loads(p.read_bytes())
+proof=read(B/'windows-verification.json');native=read(Q/'result.json');detail=read(Path(native['evidence']))
+assert native['sourceStateAndAudioUnchanged']and detail['processRestart']['allPublicLibraryRowsUnchanged']and detail['processRestart']['previousAppExited']and detail['ui']['actualVisualOverviewAndNotesEntryChecked']and detail['processRestart']['actualVisualOverviewAndNotesEntryChecked']
+new=proof['sourceCommit'];template=read(B.parent/'windows148/unchanged-os-handoff-evidence.json');old=template['priorAppSourceCommit']
+def blob(c,p):return subprocess.check_output(['git','show',c+':'+p],cwd=S)
+for item in template['exactCommittedFiles']:assert blob(old,item['path'])==blob(new,item['path'])and hashlib.sha256(blob(new,item['path'])).hexdigest()==item['committedBlobSha256']
+for item in template['exactCommandBlocks']:
+ chunks=blob(new,item['path']).decode().replace('\r\n','\n').split('#[tauri::command]');found=[x for x in chunks if re.match(r'\s*pub (?:async )?fn '+item['command']+r'\(',x)];assert len(found)==1 and hashlib.sha256(found[0].encode()).hexdigest()==item['normalizedLfBlockSha256']
+names={'rfd','tauri','tauri-runtime','tauri-runtime-wry','wry','clipboard-win','windows','windows-core'};locks=[tomllib.loads(blob(c,'apps/windows/src-tauri/Cargo.lock').decode())for c in[old,new]];assert[[x for x in value['package']if x['name']in names]for value in locks][0]==[[x for x in value['package']if x['name']in names]for value in locks][1]
+assert blob(template['currentAppSourceCommit'],template['uiExportStateAndOperations']['path'])==blob(new,template['uiExportStateAndOperations']['path'])
+at=datetime.now().astimezone().isoformat(timespec='seconds');reuse={**template,'at':at,'currentAppSourceCommit':new,'currentNativeUiEvidence':native['evidence'],'currentNativeUiRouteRechecked':True,'newOrdinaryRecipientTested':False,'nativeSystemOperationsOn154Retested':False}
+record=dict(at=at,state='WINDOWS154_COHERENT_BACKGROUND_JOURNEY_PASSED_WITH_UNCHANGED_OS_HANDOFF_EVIDENCE_REUSED',testSourceCommit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=S,text=True).strip(),appSourceCommit=new,appVersion='0.1.154',nativeRecompiled=False,nativeUiExitCode=0,nativeUiState=detail['state'],nativeUiEvidence=native['evidence'],currentNativePurpose='Actual saved public30m result: graphical overview → exact selected topic → source context and complete minutes → notes composer draft/clear/return → original/readable transcript → selected native export preview → real process exit/reopen with source state unchanged.',syntheticLocalServiceFixture=False,modelQualityQualified=False,newCloudCalls=0,processRestart=detail['processRestart'],desktopIsolation=detail['desktopIsolation'],ownerKeyboardMouseOrForegroundControlUsed=False,ownerClipboardSequenceUnchangedAtObservation=detail['ownerClipboardSequenceUnchangedAtObservation'],newNativeSaveCancelOrOrdinaryRecipientRetested=False,unchangedOsHandoffEvidence=reuse,unchangedMaterialSaveAndExportImplementationEvidence=str(B.parent/'windows148/runtime-result.json'),modelsRun=False,deviceOrPhoneAccess=False,saleQualified=False)
+for p,d in[(B/'runtime-result.json',record),(B/'unchanged-os-handoff-evidence.json',reuse)]:p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+print('NORMAL154_PUBLIC_VISUAL_OVERVIEW_JOURNEY_RECORDED_WITH_EXACT_OS_REUSE')

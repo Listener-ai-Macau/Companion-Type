@@ -1,0 +1,138 @@
+{
+  "at": "2026-11-14T22:48:12+08:00",
+  "state": "UI154166_ONE_KIT_INSTALLED_SELF_REVIEWED_FULL_PRIVATE_READBACK_VERIFIED",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-UI-154-166-20261114.zip",
+  "bytes": 43414997,
+  "sha256": "fa31fa5704193a272d955c01a2d906bb7466ab48f9e3ebd6a345877d756676ae",
+  "allArchiveMemberChecksumsMatched": true,
+  "manifest": {
+    "at": "2026-11-14T22:47:44+08:00",
+    "state": "UI154166_ONE_COHERENT_GRAPHICAL_OVERVIEW_DELIVERY",
+    "versions": {
+      "windows": "0.1.154",
+      "android": "0.1.166"
+    },
+    "windowsSource": "4b310e1d0d5bc4572ed77ece15166836863e6637",
+    "androidSource": "ce8af318fcdf11b47dc250df239d4412a499c008",
+    "windowsInstallerSha256": "1055130582c05c9a174015951a2135180b729f9fb318dd8afd724bacdbc3888e",
+    "androidApkSha256": "62aa6ca308582f4b03a2fccec956cfb24bfdbb0a42e7773d43be54437cdf8ecc",
+    "sourceFactsPreserved": true,
+    "ownerPromptStarted": false,
+    "ownerAccepted": false,
+    "modelsOrCloudNewlyRun": false,
+    "saleQualified": false,
+    "files": [
+      {
+        "path": "开始使用.txt",
+        "bytes": 1970,
+        "sha256": "3560180af0af21dc5ac44f9899d1a853b4dbfe3b509c18cc4102995a686d750a"
+      },
+      {
+        "path": "源码/本批冻结来源.json",
+        "bytes": 3653,
+        "sha256": "fd2a34b97bcf5b66c29d32476f9ab0dbb6c5f93ad5b4c058c65fc372e323a4dc"
+      },
+      {
+        "path": "界面/手机实际浅色会议一览.png",
+        "bytes": 282737,
+        "sha256": "655b539fff20de70b0284ac88a07e542460ab46e2bf1ba4362f1362d213b28d1"
+      },
+      {
+        "path": "界面/手机实际深色会议一览.png",
+        "bytes": 287486,
+        "sha256": "c6d1a06251a48bff529fd3391bef85efcddd2022fbfdcb27abf570b10fde2056"
+      },
+      {
+        "path": "界面/电脑实际完整纪要.png",
+        "bytes": 107048,
+        "sha256": "f5253e8a34daad4ccbcb1153ba9f3bdfc3c580d5d60785571f8dc301c122e7e5"
+      },
+      {
+        "path": "界面/电脑实际浅色会议一览.png",
+        "bytes": 104572,
+        "sha256": "35e0c2f988474c427a8838a366746f1d1fd55e79053e80cdb62b59c811403d63"
+      },
+      {
+        "path": "界面/电脑实际深色会议一览.png",
+        "bytes": 104203,
+        "sha256": "b3297c5ae679efa3c24a526d8d8cde58bb6840d5454590e777bcd1efab05fa8a"
+      },
+      {
+        "path": "界面/电脑实际笔记入口.png",
+        "bytes": 73730,
+        "sha256": "eb7258a5985c9abd33ca3bb5684ba9bb8e8acc7053a4d6281f80e661a180a386"
+      },
+      {
+        "path": "程序/Companion-Android-0.1.166.apk",
+        "bytes": 51205589,
+        "sha256": "62aa6ca308582f4b03a2fccec956cfb24bfdbb0a42e7773d43be54437cdf8ecc"
+      },
+      {
+        "path": "程序/Companion-Windows-0.1.154.msi",
+        "bytes": 16933432,
+        "sha256": "1055130582c05c9a174015951a2135180b729f9fb318dd8afd724bacdbc3888e"
+      },
+      {
+        "path": "自验/手机实际安装.json",
+        "bytes": 384,
+        "sha256": "84d5b3bc66181c2177c8a33e0921b97a19f8697f4fdf8bf825da6a94e86a387b"
+      },
+      {
+        "path": "自验/手机实际重开.json",
+        "bytes": 1667,
+        "sha256": "93a0c7c18cf0ce2848df3b5a8fe9df94faeeb20e97102cd8769c7bc4b4c9a2f4"
+      },
+      {
+        "path": "自验/手机正常包.json",
+        "bytes": 32422,
+        "sha256": "854bebc3317cb53a9d683ca3f7cf78532b8227f429f7745cc41bac6ed4dd7bff"
+      },
+      {
+        "path": "自验/手机浅深及原话.json",
+        "bytes": 1865,
+        "sha256": "e77a97e4778c31313dff502c93480dab5f7db2dce5c9ba25df91a1320a938cdf"
+      },
+      {
+        "path": "自验/手机结束与旧资料.json",
+        "bytes": 612,
+        "sha256": "e9c84941ae7a1641d818da8ff61b1625d466db24c3f3238457520f46db1c14b1"
+      },
+      {
+        "path": "自验/整套自验范围.json",
+        "bytes": 1819,
+        "sha256": "67256ffcc28b637175fd0ee8de8bda9dfa770d1cb1181b5dd0300074ece306ee"
+      },
+      {
+        "path": "自验/源组件宽窄与浅深.json",
+        "bytes": 4695,
+        "sha256": "2b21aa81df892fb6f77cd7968fdc991899a669462af1b8e200d01a4c8f763fb6"
+      },
+      {
+        "path": "自验/电脑公开会议.json",
+        "bytes": 495,
+        "sha256": "b6c9b408b7e5f7dcec61dee7d29b8376a2fe5517ae34d7193d824a6686c93a2b"
+      },
+      {
+        "path": "自验/电脑实际安装.json",
+        "bytes": 793,
+        "sha256": "0724bea2c9adc8d97f76de13f1a0407fc63e0cd8e7b550945dad3314e4a8cf85"
+      },
+      {
+        "path": "自验/电脑正常包.json",
+        "bytes": 5492,
+        "sha256": "30c13e5dec787358977cda62b4f2919782bf8540a31f513670d9a067ed36f8d1"
+      },
+      {
+        "path": "自验/电脑连续使用.json",
+        "bytes": 8947,
+        "sha256": "858140d2325cfdb948d2204cae142658d5f8a44f24f280c849e287745b69e113"
+      }
+    ]
+  },
+  "ownerEntryReady": true,
+  "ownerPromptStarted": false,
+  "privateRemoteReadbackVerified": true,
+  "saleQualified": false,
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "publishedPublicly": false
+}

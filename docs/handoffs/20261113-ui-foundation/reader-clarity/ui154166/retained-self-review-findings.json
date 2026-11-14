@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-14T22:40:55+08:00",
+  "state": "INTERMEDIATE152_UI_SELF_REVIEW_FINDINGS_RETAINED_FINAL154166_REQUIRED",
+  "intermediateWindowsSource": "93856cbc2ca7e5266e36e550e209c4fb2e994bb6",
+  "intermediateWindowsInstalled": false,
+  "intermediatePhone165InstalledAndPreserved": true,
+  "findings": [
+    "Native152 notes still used legacy green and long explanatory copy.",
+    "Native152 result entry followed the topics and selected excerpt; move it into the first viewport."
+  ],
+  "probeFailure": "Initial native check expected complete-note headings before opening the intended new overview. Scenario corrected, identical152 binary passed. Not reported as a product failure.",
+  "buildLockFailure": "Shared target held by existing150; exited without deletion or another target, then built152 in that same target after release.",
+  "finalCorrection": "Outcome entry precedes the topic graph; desktop notes use neutral theme colors, simpler copy and consistent controls.",
+  "evidence": [
+    {
+      "path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native152-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\5ebc412e557c47f0b7198f6997a98262\\actual-public-notes-entry.png",
+      "bytes": 77393,
+      "sha256": "232e2bd3cec562f2bd4bc5d04dbe412d2563dd0a2676d6284e2010a4de13b484"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native152-r2\\product\\docs\\handoffs\\20261109-core-acceptance\\5ebc412e557c47f0b7198f6997a98262\\actual-visual-overview-light.png",
+      "bytes": 100612,
+      "sha256": "fc3c2be1195523de46d5d1a0804f5e68a35da3211fa1b19b97d993ccf5328423"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native152\\runner.log",
+      "bytes": 1329,
+      "sha256": "bca52be72be32e88aa680328a7ebae87dba2ecf36ad2557fb225e88438cf29a9"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\deliveries\\20261114-ui152165\\windows152-local\\result.json",
+      "bytes": 831,
+      "sha256": "accc4d5d1959be6537d955674bc11f448576caefa366874913cfa1c978fade20"
+    }
+  ],
+  "ownerWholeExperienceAccepted": false
+}
