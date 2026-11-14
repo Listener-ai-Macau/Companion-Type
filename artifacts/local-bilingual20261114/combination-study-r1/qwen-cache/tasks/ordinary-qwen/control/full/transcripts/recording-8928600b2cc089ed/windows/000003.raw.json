@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 3,
+    "startSample": 1344410,
+    "endSample": 1818368,
+    "text": "因为我们的理念是不，嗯，不超过三十万的人，然后有理由的、有征信的就给批嘛。所以说我们嗯给到的额度是，呃，从五万到三十万之间，嗯，我们都会，证征信没有问题，我们都会放款的。然后这个因为这个市场嘛潜力巨大，因为他面临的呃面对的人群也广阔，对，有。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 1344410,
+        "endSample": 1818368,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "d3d762e7e2c2cd1cca88a201c634847cb39f51525a93faa37786236b2eb5f3ae"
+}

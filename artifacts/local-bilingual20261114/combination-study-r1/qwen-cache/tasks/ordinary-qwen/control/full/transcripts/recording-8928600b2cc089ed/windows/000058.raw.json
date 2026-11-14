@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 58,
+    "startSample": 28083898,
+    "endSample": 28554294,
+    "text": "啊，就诚信问题的一些顾虑，嗯，但是在别的方面，咱们公司还是做的很保密的。嗯。这方面，这个咱们到时候可以跟那个，嗯，业务部去说，信息方面的一些安全。还有，还有就是咱们的APP的问题，不是要搞网上，嗯，代考吗？嗯，这个的话，我们战略这儿，嗯，也也在研发。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 28083898,
+        "endSample": 28554294,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "8018f61d8fd427fd536bf22d45aa73cab1cf73c2e058b590c9d6a2d83e2ea560"
+}

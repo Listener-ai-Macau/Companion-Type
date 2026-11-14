@@ -1,0 +1,17 @@
+{
+  "committedFrames": 204937,
+  "secondsPerFrame": 0.009999999776482582,
+  "rawSpeechFrames": 179356,
+  "rawMultiVoiceFrames": 4257,
+  "exclusiveSpeechFrames": 179356,
+  "speechFramesUnassignedDueToExactPosteriorTie": 0,
+  "thresholdUnchanged": 0.5,
+  "smoothingOrGapFillApplied": false,
+  "speakerCountHintProvided": false,
+  "referenceUsed": false,
+  "newNeuralCalls": 0,
+  "cannotUseExclusiveViewAsOverlapDERProof": true,
+  "originalMultiVoiceJournalReproducedExactly": true,
+  "originalJournalSha256": "6366927fd674d3f2338bfb997c2cc7e0b8130875f3ddbebe2317411a57c120c1",
+  "posteriorManifestSha256": "beb403f62b0550f1fd5ab345541bacc45df5369c3ca70cb1eb706f0418a60f7d"
+}

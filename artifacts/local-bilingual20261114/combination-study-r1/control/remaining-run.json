@@ -1,0 +1,35 @@
+{
+  "state": "COMPLETE_FROZEN_COMBINATION_BATCH_REVIEW_PENDING",
+  "startedAt": "2026-11-14T21:55:37+08:00",
+  "stages": [
+    {
+      "stage": "paraformer",
+      "exitCode": 0,
+      "seconds": 232.54686300002504
+    },
+    {
+      "stage": "prepare-alignment",
+      "exitCode": 0,
+      "seconds": 0.19964840001193807
+    },
+    {
+      "stage": "fresh-aligner-inventory",
+      "exitCode": 0,
+      "seconds": 5.299406999984058
+    },
+    {
+      "stage": "shared-alignment",
+      "exitCode": 0,
+      "seconds": 259.25387889999547
+    },
+    {
+      "stage": "join-and-score",
+      "exitCode": 0,
+      "seconds": 8.303800900001079
+    }
+  ],
+  "automaticRetries": 0,
+  "newWeightUpdates": 0,
+  "qualityQualified": false,
+  "finishedAt": "2026-11-14T22:19:48+08:00"
+}

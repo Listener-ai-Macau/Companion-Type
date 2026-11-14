@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 5,
+    "startSample": 2364404,
+    "endSample": 2803653,
+    "text": "嗯，豆腐，嗯，很多客户都要找我们来进行一些小额、小额的贷款。嗯，目前在这个战略发展上面，你还有想要说什么？未来要推出哪款、哪种呢？呃，未来的话，我们要做一个APP的软件，然后呢更加的透明，然后让贷款的人呢，他的只要征信合适，我们就可以给他放额十万、二十万都是没有问题的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2364404,
+        "endSample": 2803653,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "0458bbacd255d11f52f6668f38c96ca2ba36db23d5a3434c9c679fdaad7865b3"
+}

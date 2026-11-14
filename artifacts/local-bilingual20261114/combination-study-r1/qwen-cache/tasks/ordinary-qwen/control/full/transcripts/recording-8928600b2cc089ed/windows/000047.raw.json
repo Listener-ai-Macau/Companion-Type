@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 47,
+    "startSample": 22836240,
+    "endSample": 23270692,
+    "text": "哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控制他这个车，所以提前都有告知，别到时候你开的车跑山里头了，垃圾，我们这儿给锁住了。到期了你不还贷款，完了你你你在无人区吗？你怎么办？对吧？",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 22836240,
+        "endSample": 23270692,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "257a73b7f66d4aace62a462688d37aaca581ac261cad5d33cb0334c4d3aae84c"
+}

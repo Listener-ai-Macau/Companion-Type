@@ -1,0 +1,18 @@
+{
+  "state": "COMPLETE_PARAFORMER_COMPARATOR",
+  "startedAt": "2026-11-14T22:11:23+08:00",
+  "automaticRetries": 0,
+  "workerSourceSha256": "5c404d074ff2b85031850dbebf16ee13ebfee7ef2f1cc53dfe80adcdaf9c5493",
+  "qualityQualified": false,
+  "resourcesBeforeStage": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 4405415936,
+    "existingRecoveryRequirementExclusiveBytes": null,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  },
+  "exitCode": 0,
+  "wholeOwnedProcessSeconds": 231.36601749999681,
+  "finishedAt": "2026-11-14T22:15:15+08:00",
+  "privatePeakBytes": 409169920
+}

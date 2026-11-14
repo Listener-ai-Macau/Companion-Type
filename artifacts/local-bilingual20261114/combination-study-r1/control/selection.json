@@ -1,0 +1,112 @@
+{
+  "at": "2026-11-14T21:44:26+08:00",
+  "state": "FROZEN_BEFORE_NEW_AUDIO_INFERENCE",
+  "candidateOrder": [
+    {
+      "meeting": "20200623_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S01C01.TextGrid",
+      "referenceSha256": "02751bb69425fa220cb9781189c839cbc2b7b881a7fb6e75c7bffbdbfde7655f",
+      "people": 4,
+      "utterances": 341,
+      "lastReferenceEnd": 1749.7275571999064,
+      "overlapSeconds": 38.80003890054057,
+      "overlapFractionOfAnnotatedExtent": 0.022174903024692813
+    },
+    {
+      "meeting": "20200623_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S02C01.TextGrid",
+      "referenceSha256": "1a3ac0897ae9c458a85c4597608a906418c7c8df166260fd13b2877af5e04f9b",
+      "people": 4,
+      "utterances": 792,
+      "lastReferenceEnd": 2065.67767,
+      "overlapSeconds": 74.55894071658344,
+      "overlapFractionOfAnnotatedExtent": 0.036094179551538375
+    },
+    {
+      "meeting": "20200623_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S03C01.TextGrid",
+      "referenceSha256": "795676db55c9a18112a851353b708f8555b511d81495c5b5e3309c7471f64715",
+      "people": 4,
+      "utterances": 696,
+      "lastReferenceEnd": 2035.9209375,
+      "overlapSeconds": 81.39114600516855,
+      "overlapFractionOfAnnotatedExtent": 0.039977557333396474
+    },
+    {
+      "meeting": "20200623_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S04C01.TextGrid",
+      "referenceSha256": "4e67dde0868d3eae076f6fc9fdea9d5df133d2c9937a7cd68bdfbb2308f58595",
+      "people": 4,
+      "utterances": 565,
+      "lastReferenceEnd": 1845.5692127414438,
+      "overlapSeconds": 97.83519788461254,
+      "overlapFractionOfAnnotatedExtent": 0.05301085280854152
+    },
+    {
+      "meeting": "20200623_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S05C01.TextGrid",
+      "referenceSha256": "55637e75c036759a979268aecba45d46df65211a8b2e65fd93fa3e1678f65214",
+      "people": 4,
+      "utterances": 463,
+      "lastReferenceEnd": 2081.48549,
+      "overlapSeconds": 112.81629198136812,
+      "overlapFractionOfAnnotatedExtent": 0.05419989354879823
+    },
+    {
+      "meeting": "20200623_S_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S06C01.TextGrid",
+      "referenceSha256": "9a9496919e3cbf5df9627848c07d0e336b5ae14e45bebe431da6bd4e75e56856",
+      "people": 4,
+      "utterances": 818,
+      "lastReferenceEnd": 2070.5717456428706,
+      "overlapSeconds": 112.27252185569559,
+      "overlapFractionOfAnnotatedExtent": 0.05422295657803311
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.TextGrid",
+      "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+      "people": 4,
+      "utterances": 795,
+      "lastReferenceEnd": 2022.6661201855693,
+      "overlapSeconds": 32.354801295880705,
+      "overlapFractionOfAnnotatedExtent": 0.015996115707377506
+    },
+    {
+      "meeting": "20200623_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S08C01.TextGrid",
+      "referenceSha256": "2ab768de141fe1593ad0e76bb5f6b0c9a29a3e5dd9d3f031fdec841f21742fb2",
+      "people": 4,
+      "utterances": 441,
+      "lastReferenceEnd": 1709.51329,
+      "overlapSeconds": 232.69881390063443,
+      "overlapFractionOfAnnotatedExtent": 0.136119920951673
+    }
+  ],
+  "selected": {
+    "meeting": "20200623_S_R001S07C01",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.TextGrid",
+    "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+    "people": 4,
+    "utterances": 795,
+    "lastReferenceEnd": 2022.6661201855693,
+    "overlapSeconds": 32.354801295880705,
+    "overlapFractionOfAnnotatedExtent": 0.015996115707377506
+  },
+  "rule": "First official first-day Train_S entry with annotated extent>=30min,>=4people,<=2%annotated overlap, excluding the old S01 adaptation session. Selection never uses model output.",
+  "sourceMetadata": {
+    "type": "file",
+    "oid": "b4027d8c1da64bfd5b14abe0bc5534a7b8fecf2c",
+    "size": 253372487,
+    "lfs": {
+      "oid": "760007eeacd478eaba71dc96c3eb30a35f6caad88873a8536c3a1b4506ecc769",
+      "size": 253372487,
+      "pointerSize": 134
+    },
+    "xetHash": "bca812ebadbca193d2e1f3fe6e808009a2c71e5ec55a09c99f2b9675675ea25a",
+    "path": "train_S/wav/20200623_S_R001S07C01.flac"
+  },
+  "fullAudioWillBeKept": true,
+  "finalHoldoutOpened": false,
+  "notPretrainingIndependentOrSaleHoldout": true
+}

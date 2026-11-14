@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 51,
+    "startSample": 24681598,
+    "endSample": 25175958,
+    "text": "呃，啊，就亲人这方面，呃，也应该进行催促吧。啊，不应该只联系本人，呃，啊，朋友啊，亲人啊，呃，应该都要，呃，都要通知到，呃，以防失信的名单也可能会给带给别人更大的危害。嗯，基本上，对吧？嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24681598,
+        "endSample": 25175958,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "92283bc4e47a058bda3160271dfd19f3223a81f93d9f5d721b26fc866bdae8d6"
+}

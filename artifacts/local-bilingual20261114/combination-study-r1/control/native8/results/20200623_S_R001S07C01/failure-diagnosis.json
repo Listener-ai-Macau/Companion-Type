@@ -1,0 +1,160 @@
+{
+  "at": "2026-11-14T21:57:13+08:00",
+  "state": "COMPLETE_EXITED_JOURNAL_ROOT_DIAGNOSIS_NO_NEW_INFERENCE",
+  "meeting": "20200623_S_R001S07C01",
+  "fixedFullMeetingMappingForEvaluationOnly": {
+    "speaker_3": "001-M",
+    "speaker_2": "003-M",
+    "speaker_1": "004-M",
+    "speaker_0": "006-M"
+  },
+  "wholeComponentsReproduced": true,
+  "componentsByFiveMinuteBlocks": [
+    {
+      "startSeconds": 0.0,
+      "endSeconds": 300.0,
+      "components": {
+        "false alarm": 13.41181926262701,
+        "correct": 253.20658616015018,
+        "missed detection": 10.229271537982518,
+        "total": 264.8374572753555,
+        "confusion": 1.4015995772228322,
+        "identification error rate": 0.09455871777153899
+      }
+    },
+    {
+      "startSeconds": 300.0,
+      "endSeconds": 600.0,
+      "components": {
+        "false alarm": 9.481304579620144,
+        "correct": 243.0612613430419,
+        "missed detection": 14.560360521217092,
+        "total": 260.78906194159623,
+        "confusion": 3.1674400773372327,
+        "identification error rate": 0.10433376682135524
+      }
+    },
+    {
+      "startSeconds": 600.0,
+      "endSeconds": 900.0,
+      "components": {
+        "false alarm": 10.401233037630163,
+        "correct": 266.91546844721404,
+        "missed detection": 13.505741804011791,
+        "total": 283.52451576638066,
+        "confusion": 3.1033055151548297,
+        "identification error rate": 0.09526611934698724
+      }
+    },
+    {
+      "startSeconds": 900.0,
+      "endSeconds": 1200.0,
+      "components": {
+        "false alarm": 15.64826534476515,
+        "correct": 234.46434076874164,
+        "missed detection": 8.392471863820674,
+        "total": 275.19421351905476,
+        "confusion": 32.337400886492446,
+        "identification error rate": 0.20486672802505923
+      }
+    },
+    {
+      "startSeconds": 1200.0,
+      "endSeconds": 1500.0,
+      "components": {
+        "false alarm": 14.309227293727417,
+        "correct": 241.37426803345807,
+        "missed detection": 8.083641661149386,
+        "total": 268.4344213674217,
+        "confusion": 18.97651167281424,
+        "identification error rate": 0.15411354630659077
+      }
+    },
+    {
+      "startSeconds": 1500.0,
+      "endSeconds": 1800.0,
+      "components": {
+        "false alarm": 11.196246222857553,
+        "correct": 188.85812578247737,
+        "missed detection": 15.047496348178584,
+        "total": 264.84125612532125,
+        "confusion": 60.935633994665295,
+        "identification error rate": 0.3291759669212892
+      }
+    },
+    {
+      "startSeconds": 1800.0,
+      "endSeconds": 2049.3615,
+      "components": {
+        "false alarm": 8.89586082505889,
+        "correct": 198.85532766445476,
+        "missed detection": 11.304745847774939,
+        "total": 216.28884502271558,
+        "confusion": 6.128771510485876,
+        "identification error rate": 0.12173248315489632
+      }
+    }
+  ],
+  "referenceSoloSeconds": {
+    "006-M": 501.52484501931787,
+    "004-M": 379.49324130888306,
+    "003-M": 156.19534628606255,
+    "001-M": 731.76162831822
+  },
+  "referenceSoloHypothesisSeconds": {
+    "006-M": {
+      "__no_predicted_speech__": 26.600386425797026,
+      "006-M": 464.2777981434946,
+      "004-M": 7.207110773126638,
+      "001-M": 15.178811033111785,
+      "003-M": 1.109865211720603
+    },
+    "004-M": {
+      "006-M": 8.954302372795825,
+      "004-M": 325.813910360609,
+      "__no_predicted_speech__": 10.851742466894967,
+      "001-M": 38.89480981093175
+    },
+    "003-M": {
+      "__no_predicted_speech__": 6.831109832702374,
+      "003-M": 84.46843497592619,
+      "004-M": 62.853958817384864,
+      "006-M": 1.4110313025985874,
+      "001-M": 1.0218172039731144
+    },
+    "001-M": {
+      "001-M": 707.7837155184508,
+      "__no_predicted_speech__": 17.80125704454101,
+      "006-M": 14.913054883536724,
+      "004-M": 0.6441006944928631
+    }
+  },
+  "matrixCanDoubleCountSimultaneousHypothesisLabels": true,
+  "shortSpanResult": {
+    "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+    "count": 433,
+    "referenceSeconds": 382.4652804200073,
+    "correctSeconds": 303.6549758197164,
+    "zeroCorrectSpans": 79
+  },
+  "newNeuralCalls": 0,
+  "thresholdOrMappingRetuned": false,
+  "truthReturnedToInference": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 2648,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 100581376,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

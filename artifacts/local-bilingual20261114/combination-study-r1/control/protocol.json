@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-14T21:44:26+08:00",
+  "state": "FROZEN_TWO_EXISTING_MODEL_COMBINATIONS_NO_TRAINING",
+  "source": {
+    "meeting": "20200623_S_R001S07C01",
+    "fileSize": 253372487,
+    "expectedWholeFileLfsSha256": "760007eeacd478eaba71dc96c3eb30a35f6caad88873a8536c3a1b4506ecc769",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200623_S_R001S07C01.flac"
+  },
+  "selectionSha256": "55e65798cd96943fce40811d0ace115622834de6a733c200415d63ac0decf5e9",
+  "arms": [
+    {
+      "id": "qwen",
+      "asr": "Qwen/Qwen3-ASR-1.7B-hf",
+      "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "runtime": "Existing native Transformers/HIP"
+    },
+    {
+      "id": "paraformer",
+      "asr": "Existing funasr-paraformer-large-zh-2024 int8 weights",
+      "weightsSha256": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+      "runtime": "Existing Python sherpa-onnx CPU; model-level comparator, not installed product benchmark"
+    }
+  ],
+  "shared": {
+    "diarization": "Existing FP16 native8 with original geometry/0.5 posterior threshold; no true speaker count input",
+    "alignment": "Existing Qwen3-ForcedAligner-0.6B-hf unchanged",
+    "fusion": "Fixed exclusive posterior view + original60ms onset rule, preserving raw multivoice journal",
+    "asrBoundaries": "Same existing audio-only low-energy30s target spans for both arms; no VAD deletion",
+    "normalizationSha256": "45859723659b91b7ae0750331dc86eba216c631d27d35ebc4979a3663eae971e"
+  },
+  "metrics": [
+    "Complete raw chronologicalCER, with overlap-order limitations",
+    "Complete anonymous cpCER and unknown-forced-unmatched diagnostic",
+    "Raw multivoice DER, zero collar/overlap included",
+    "Short reference spans and silence insertions",
+    "Whole input sample coverage, source text preservation, observed time/private memory"
+  ],
+  "rule": "Compare complete frozen arms. No per-word/per-meeting best-output picking, new checkpoints, thresholds or training. Retain failures and component-level scores. Exclusive labels do not recover overlapped voices.",
+  "cpuMaximumPercent": 5,
+  "privateModelLimitBytes": 2147483648,
+  "oneNeuralModelAtATime": true,
+  "qualification": {
+    "strictCerExclusiveMax": 0.05,
+    "derMax": 0.1,
+    "factsAndMultipleFullMeetingsAndRealCardRemainOpen": true
+  },
+  "newWeightUpdates": 0,
+  "realCardOrInstalledProductTested": false,
+  "qualityQualified": false,
+  "license": "Original AISHELL4 CC-BY-SA-4.0; retain source attribution, no mirror relicensing."
+}

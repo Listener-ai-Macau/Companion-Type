@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 66,
+    "startSample": 31825969,
+    "endSample": 32332728,
+    "text": "呃，这个经济实力，咱们公司因为这方面嗯不算太强，所以需要嗯咱们这个生存。对咱们公司这个定位的这个呃去执行下去，就十万到三十万。对我们这儿发现就是说，但凡需要借钱的人，他超过十万，他们才会找我们；小额的，他们一般不会找我们。嗯行，那咱今天这个会就先开到这儿。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 31825969,
+        "endSample": 32332728,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "eec55397b990411e42efb306f82ac45e183c8d814c888750dc2ac2f357813b0a"
+}

@@ -1,0 +1,20 @@
+{
+  "state": "FROZEN_TWO_ARMS_SAME_EXISTING_FUSION_BEFORE_ALIGNMENT",
+  "originalStudyProtocolSha256": "fab044b9935042e8957870d6fd1a8c01c327bddc3a43789ab2fee4ffa7baed8c",
+  "speakerJournal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\native8\\results\\20200623_S_R001S07C01\\speaker-journal.json",
+  "speakerJournalSha256": "6366927fd674d3f2338bfb997c2cc7e0b8130875f3ddbebe2317411a57c120c1",
+  "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\native8\\results\\20200623_S_R001S07C01\\completed-state.json",
+  "producerSha256": "7960b30653c2325009c99de9fbc57fb6c0c27c3a079207d23fd2fcd8146c181e",
+  "nativeProtocolFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\native8\\protocol.json",
+  "nativeProtocolSha256": "44f4c129f91a0e5594472a03716151c10cb08b6b03e3677fc9e7adb3681db851",
+  "sourceModuleSha256": {
+    "companion_local_speaker_document_20261114.py": "77fe80c965ed76ca5e9a32480e9c918c7718fb749276ce481c824689d97ce393",
+    "companion_exclusive_journal_20261114.py": "bc76d736d3f02cf8971af816f73cb0069c4b2e88f977420b1d28a15687177356",
+    "practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "uncertaintyMarginSeconds": 0.06,
+  "newWeightUpdates": 0,
+  "perWordBestOutputSelection": false,
+  "realCardTested": false,
+  "qualityQualified": false
+}

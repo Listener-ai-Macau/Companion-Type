@@ -1,0 +1,40 @@
+{
+  "state": "COMPLETE_PARAFORMER_MATCHED_SPANS_UNSCORED",
+  "startedAt": "2026-11-14T22:11:24+08:00",
+  "pid": 20116,
+  "binding": {
+    "protocolSha256": "26650b661cb1b7c586126e3afc66759e0c8ade16db93705cdfe462e2e737bd78",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "spansSha256": "b115b966a2963a0e96dc1fb8e281d380e77726f0f2c4e9ed9a6fc09ef759bc86"
+  },
+  "totalSpans": 68,
+  "completedSpans": 68,
+  "newNeuralCalls": 68,
+  "referenceInput": false,
+  "speakerInput": false,
+  "runtimeIsInstalledProduct": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 20116,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 409030656,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelLoadSeconds": 3.638667399995029,
+  "recognizerConfig": "OfflineRecognizerConfig(feat_config=FeatureExtractorConfig(sampling_rate=16000, feature_dim=80, low_freq=20, high_freq=-400, dither=0, normalize_samples=True, snip_edges=False), model_config=OfflineModelConfig(transducer=OfflineTransducerModelConfig(encoder_filename=\"\", decoder_filename=\"\", joiner_filename=\"\"), paraformer=OfflineParaformerModelConfig(model=\"C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx\"), nemo_ctc=OfflineNemoEncDecCtcModelConfig(model=\"\"), whisper=OfflineWhisperModelConfig(encoder=\"\", decoder=\"\", language=\"\", task=\"transcribe\", tail_paddings=-1, enable_token_timestamps=False, enable_segment_timestamps=False, ), fire_red_asr=OfflineFireRedAsrModelConfig(encoder=\"\", decoder=\"\"), tdnn=OfflineTdnnModelConfig(model=\"\"), zipformer_ctc=OfflineZipformerCtcModelConfig(model=\"\"), wenet_ctc=OfflineWenetCtcModelConfig(model=\"\"), sense_voice=OfflineSenseVoiceModelConfig(model=\"\", language=\"auto\", use_itn=False), moonshine=OfflineMoonshineModelConfig(preprocessor=\"\", encoder=\"\", uncached_decoder=\"\", cached_decoder=\"\", merged_decoder=\"\"), dolphin=OfflineDolphinModelConfig(model=\"\"), canary=OfflineCanaryModelConfig(encoder=\"\", decoder=\"\", src_lang=\"\", tgt_lang=\"\", use_pnc=True), cohere_transcribe=OfflineCohereTranscribeModelConfig(encoder=\"\", decoder=\"\", language=\"\", use_punct=True, use_itn=True), omnilingual=OfflineOmnilingualAsrCtcModelConfig(model=\"\"), funasr_nano=OfflineFunASRNanoModelConfig(encoder_adaptor=\"\", llm=\"\", embedding=\"\", tokenizer=\"\", system_prompt=\"You are a helpful assistant.\", user_prompt=\"语音转写：\", max_new_tokens=512, temperature=1e-06, top_p=0.8, seed=42, language=\"\", itn=True, hotwords=\"\"), medasr=OfflineMedAsrCtcModelConfig(model=\"\"), fire_red_asr_ctc=OfflineFireRedAsrCtcModelConfig(model=\"\"), qwen3_asr=OfflineQwen3ASRModelConfig(conv_frontend=\"\", encoder=\"\", decoder=\"\", tokenizer=\"\", hotwords=\"\", max_total_len=512, max_new_tokens=128, temperature=1e-06, top_p=0.8, seed=42), telespeech_ctc=\"\", tokens=\"C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt\", num_threads=2, debug=False, provider=\"cpu\", model_type=\"paraformer\", modeling_unit=\"cjkchar\", bpe_vocab=\"\"), lm_config=OfflineLMConfig(model=\"\", scale=0.5, lodr_scale=0.01, lodr_fst=\"\", lodr_backoff_id=-1), ctc_fst_decoder_config=OfflineCtcFstDecoderConfig(graph=\"\", max_active=3000), decoding_method=\"greedy_search\", max_active_paths=4, hotwords_file=\"\", hotwords_score=1.5, blank_penalty=0, rule_fsts=\"\", rule_fars=\"\", hr=HomophoneReplacerConfig(lexicon=\"\", rule_fsts=\"\"))",
+  "completedSample": 32789784,
+  "finishedAt": "2026-11-14T22:15:15+08:00",
+  "modelOutputSha256": "7dbc4d27062ce682da3fef04416e9f9c397d723df2d4dc5866c2232e5f6f8791",
+  "allOriginalAudioSamplesCoveredOnce": true,
+  "allAsrTextPreserved": true
+}

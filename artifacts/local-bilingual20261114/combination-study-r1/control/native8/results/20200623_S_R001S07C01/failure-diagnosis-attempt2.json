@@ -1,0 +1,6 @@
+{
+  "at": "2026-11-14T21:57:10.249329+08:00",
+  "state": "FROZEN_FULL_SCORE_PARITY_GATE_REJECTED_BEFORE_DIAGNOSIS",
+  "error": "Initial diagnostic script admitted markup-only nonlexical annotations, unlike original scorer; original whole score parity assertion correctly rejected it.",
+  "correction": "Use exact existing lexical-reference exclusion re.sub tags then strip; no changed original metrics or neural calls."
+}

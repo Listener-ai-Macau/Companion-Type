@@ -1,0 +1,179 @@
+{
+  "at": "2026-11-14T22:21:47+08:00",
+  "state": "COMPLETE_TWO_FROZEN_COMBINATIONS_QUALITY_NOT_QUALIFIED",
+  "meeting": "20200623_S_R001S07C01",
+  "seconds": 2049.3615,
+  "microphones": 1,
+  "referencePeople": 4,
+  "referenceOverlapSeconds": 32.354801295880705,
+  "rows": [
+    {
+      "arm": "qwen",
+      "referenceCharacters": 7153,
+      "rawCer": 0.1449741367258493,
+      "rawEditCounts": {
+        "replace": 421,
+        "delete": 511,
+        "insert": 105
+      },
+      "integratedCpCer": 0.27065566895009086,
+      "integratedEdits": 1936,
+      "unknownCharacters": 118,
+      "unknownForcedUnmatchedCer": 0.27065566895009086,
+      "sourceTextPreserved": true,
+      "conservativeControlCpCer": 0.3040682231231651,
+      "paragraphs": 409
+    },
+    {
+      "arm": "paraformer",
+      "referenceCharacters": 7153,
+      "rawCer": 0.1904096183419544,
+      "rawEditCounts": {
+        "replace": 561,
+        "delete": 701,
+        "insert": 100
+      },
+      "integratedCpCer": 0.30518663497833076,
+      "integratedEdits": 2183,
+      "unknownCharacters": 112,
+      "unknownForcedUnmatchedCer": 0.30518663497833076,
+      "sourceTextPreserved": true,
+      "conservativeControlCpCer": 0.33776038026003075,
+      "paragraphs": 383
+    }
+  ],
+  "rawSpeakerDer": 0.1584147453575932,
+  "nonOverlapIncludingSilenceDer": 0.15261671261661333,
+  "overlapDer": 0.31636686846371265,
+  "shortReferenceSpans": {
+    "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+    "count": 433,
+    "referenceSeconds": 382.4652804200073,
+    "correctSeconds": 303.6549758197164,
+    "zeroCorrectSpans": 79
+  },
+  "resourceAttempts": {
+    "diarization": [
+      {
+        "meeting": "20200623_S_R001S07C01",
+        "phase": "activity",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 74.80636539999978,
+        "privatePeakBytes": 1779019776,
+        "scoringExitCode": 0,
+        "qualityReview": {
+          "at": "2026-11-14T21:50:03+08:00",
+          "corpus": "AISHELL4-Train-development-only",
+          "meeting": "20200623_S_R001S07C01",
+          "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+          "audioSeconds": 2049.3615,
+          "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+          "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+          "referenceKind": "textgrid_lexical",
+          "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+          "referenceSpeakers": 4,
+          "predictedSpeakers": 4,
+          "components": {
+            "false alarm": 83.34395656628632,
+            "correct": 1626.735378199538,
+            "total": 1833.9097710178457,
+            "confusion": 126.05066323417276,
+            "missed detection": 81.12372958413499,
+            "diarization error rate": 0.1584147453575932
+          },
+          "perReferenceSpeakerForEvaluationOnly": {
+            "001-M": {
+              "referenceSeconds": 754.2531233501066,
+              "correctlyAttributedSeconds": 722.7468972208849,
+              "attributionRecall": 0.9582285771793917,
+              "matchedAnonymousGroup": "speaker_3"
+            },
+            "003-M": {
+              "referenceSeconds": 156.69216609686555,
+              "correctlyAttributedSeconds": 84.55675000402238,
+              "attributionRecall": 0.5396361037714561,
+              "matchedAnonymousGroup": "speaker_2"
+            },
+            "004-M": {
+              "referenceSeconds": 389.96259450110284,
+              "correctlyAttributedSeconds": 331.3305693208794,
+              "attributionRecall": 0.8496470533148593,
+              "matchedAnonymousGroup": "speaker_1"
+            },
+            "006-M": {
+              "referenceSeconds": 533.0018870697712,
+              "correctlyAttributedSeconds": 488.1011616537513,
+              "attributionRecall": 0.9157587871538956,
+              "matchedAnonymousGroup": "speaker_0"
+            }
+          },
+          "macroReferenceAttributionRecall": 0.8158176303549007,
+          "uncoveredReferenceSpeakers": [],
+          "shortReferenceSpans": {
+            "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+            "count": 433,
+            "referenceSeconds": 382.4652804200073,
+            "correctSeconds": 303.6549758197164,
+            "zeroCorrectSpans": 79
+          },
+          "rttmSha256": "d5ce96447e73f238cc60cf8687257441e953feedfea78d48dbc81403787e6b1c"
+        }
+      }
+    ],
+    "qwen": [
+      {
+        "startedAt": "2026-11-14T21:51:27+08:00",
+        "log": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\qwen\\tasks\\ordinary-qwen\\native-attempt-0001.log",
+        "wholeProcessFamilySeconds": 1193.0713213999989,
+        "privatePeakBytes": 1279856640,
+        "cacheOnlyExpected": false,
+        "exitCode": 0,
+        "finishedAt": "2026-11-14T22:11:20+08:00"
+      }
+    ],
+    "paraformer": {
+      "state": "COMPLETE_PARAFORMER_COMPARATOR",
+      "startedAt": "2026-11-14T22:11:23+08:00",
+      "automaticRetries": 0,
+      "workerSourceSha256": "5c404d074ff2b85031850dbebf16ee13ebfee7ef2f1cc53dfe80adcdaf9c5493",
+      "qualityQualified": false,
+      "resourcesBeforeStage": {
+        "ready": true,
+        "actualWindowsLowRam": false,
+        "availableBytes": 4405415936,
+        "existingRecoveryRequirementExclusiveBytes": null,
+        "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+      },
+      "exitCode": 0,
+      "wholeOwnedProcessSeconds": 231.36601749999681,
+      "finishedAt": "2026-11-14T22:15:15+08:00",
+      "privatePeakBytes": 409169920
+    },
+    "alignment": [
+      {
+        "stage": "pilot",
+        "exitCode": 0,
+        "privatePeakBytes": 1158533120,
+        "wholeOwnedProcessSeconds": 39.99271329998737
+      },
+      {
+        "stage": "full",
+        "exitCode": 0,
+        "privatePeakBytes": 1178640384,
+        "wholeOwnedProcessSeconds": 218.07392620001337
+      }
+    ]
+  },
+  "availableMemoryBytesAfter": 4157796352,
+  "trainedNewWeights": false,
+  "selectedPerWordBestOutputs": false,
+  "ownerLatestConstraint": "现在主要还是不要太多瞎尝试",
+  "furtherExperiments": "No new models, training or threshold trials launched after this frozen comparison. Next intervention requires a concrete cause, one fixed change and success/stop criteria.",
+  "sameFrozenAudioAndRootSpans": true,
+  "sameSharedSpeakerAlignerAndFusion": true,
+  "dataScope": "Newly used complete Train-split development meeting; not pretraining-independent, final holdout or real card.",
+  "completeEnglishMeetingOrRealCardQualified": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

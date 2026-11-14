@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_FROZEN_FULL_MONO_MEETING_AND_MATCHED_ASR_SPANS",
+  "startedAt": "2026-11-14T21:44:26+08:00",
+  "newModelInference": 0,
+  "newWeightUpdates": 0,
+  "case": {
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "audioSeconds": 2049.3615
+  },
+  "totalSpans": 68,
+  "allOriginalSamplesCoveredOnce": true,
+  "noOverlapAudioRemoved": true,
+  "sourceSamplesBitExactAtThreeLocations": true,
+  "finishedAt": "2026-11-14T21:44:42+08:00",
+  "limits": {
+    "pid": 21828,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 71458816,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

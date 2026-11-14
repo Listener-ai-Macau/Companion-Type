@@ -1,0 +1,33 @@
+{
+  "state": "FROZEN_EXISTING_PARAFORMER_MATCHED_SPANS_BEFORE_INFERENCE",
+  "workerSourceSha256": "5c404d074ff2b85031850dbebf16ee13ebfee7ef2f1cc53dfe80adcdaf9c5493",
+  "sherpaVersion": "1.13.4",
+  "modelFiles": {
+    "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+    "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6"
+  },
+  "runtimeFiles": {
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\__init__.py": "c9ddd0698086a7e74d11f744251a4c8c9d042a3bcbb2be169ec38413bd2a68f4",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\_sherpa_onnx.cp311-win_amd64.pyd": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699"
+  },
+  "inputFiles": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\paraformer\\audio-only.json": "554c19178457091a10305a17a94414ed9b074930d775c8e2a80815ebc7b238a5",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\paraformer\\audio-only-spans.json": "b115b966a2963a0e96dc1fb8e281d380e77726f0f2c4e9ed9a6fc09ef759bc86"
+  },
+  "recognizerArguments": {
+    "paraformer": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx",
+    "tokens": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt",
+    "num_threads": 2,
+    "sample_rate": 16000,
+    "feature_dim": 80,
+    "decoding_method": "greedy_search",
+    "provider": "cpu",
+    "rule_fsts": "",
+    "rule_fars": ""
+  },
+  "noReferenceOrSpeakerInput": true,
+  "installedProductBenchmark": false,
+  "cpuMaximumPercent": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "qualityQualified": false
+}

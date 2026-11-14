@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-07T19:22:03+08:00",
+  "state": "PINNED_NATIVE_ALIGNER_READY_NO_INFERENCE",
+  "modelId": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+  "revision": "c07281df297b9905d24a508279258cccf987a064",
+  "inferenceStarted": false,
+  "qualityQualified": false,
+  "ranges": [
+    {
+      "index": 0,
+      "start": 0,
+      "end": 458886489,
+      "bytes": 458886490,
+      "resumedPrefixBytes": 0,
+      "sha256": "cc99a659cb4c6f6b94c90ff4f660dadf51c60b0a9403da3975919dcb25836ca7",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-0.part"
+    },
+    {
+      "index": 2,
+      "start": 917772980,
+      "end": 1376659469,
+      "bytes": 458886490,
+      "resumedPrefixBytes": 0,
+      "sha256": "13b35f5534eb98a6deb484ccabfaa428540815d51dc49deea5e588938efe14a9",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-2.part"
+    },
+    {
+      "index": 1,
+      "start": 458886490,
+      "end": 917772979,
+      "bytes": 458886490,
+      "resumedPrefixBytes": 0,
+      "sha256": "78cf878c5043d6da8031da4cd7e95afe4a43aa49a1cfb50b83ea1482c2a5a294",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-1.part"
+    },
+    {
+      "index": 3,
+      "start": 1376659470,
+      "end": 1835545959,
+      "bytes": 458886490,
+      "resumedPrefixBytes": 0,
+      "sha256": "41ca06abc6f497caa723be1b344d64e6e6afbfea9fa8327a53a85d80aff1f2ae",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-3.part"
+    }
+  ],
+  "finishedAt": "2026-11-07T19:22:39+08:00",
+  "weightBytes": 1835545960,
+  "weightSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "limits": {
+    "pid": 20020,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 27668480,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "sourceSha256": "28f9dca05b3f4086081dbde1d2d61ee2d87563aeb279dfcccf3a12db6ac323c6",
+  "scope": "Download and source verification only. No true word timestamps, person attribution, overlap separation or lower CER established."
+}

@@ -92,3 +92,6 @@ src/companion_exclusive_journal_20261114.py -text
 # Preserve the unexecuted ASR adaptation draft and its data bindings.
 src/prepare_ordinary_asr_adaptation_20261114.py -text
 src/ordinary_asr_adapter_worker_20261114.py -text
+
+# Preserve frozen existing-Paraformer comparison worker byte binding.
+src/run_paraformer_matched_spans_20261114.py -text

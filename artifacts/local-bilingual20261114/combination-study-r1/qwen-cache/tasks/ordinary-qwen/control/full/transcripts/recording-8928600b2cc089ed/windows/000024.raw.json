@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 24,
+    "startSample": 11830562,
+    "endSample": 12270274,
+    "text": "都会告知他，如果你不还，就说你或者你，你现在就说你不能按月还，你按年还，两年还三年还，对，我们会给他，会会给他一个计划书，叫他选择一下，两年不行就三年，对吧？叫他自己选择，如果他再还不了，那就对不起了，那就只能我们上征信，然后吧走法律。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 11830562,
+        "endSample": 12270274,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a1e53ca08a15f0ad298e757578fc1b7e0657aadd4f4fbca0805132112fb6e8f8"
+}

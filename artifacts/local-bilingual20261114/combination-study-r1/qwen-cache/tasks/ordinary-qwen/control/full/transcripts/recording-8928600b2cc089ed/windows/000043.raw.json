@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 43,
+    "startSample": 21054525,
+    "endSample": 21456040,
+    "text": "这样的话，我们的呃利率也高，这样我们收益也好。嗯嗯，也是。那那个三十万以上？三十万以上，我们暂时还没有开拓。呃，如果如果我们呃短期的这个小额贷款回收的好的话，我们可以考虑一下三十万。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 21054525,
+        "endSample": 21456040,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "5bb867f04b2708373ac8cc749d4ca4568d28dd3d5049b4d1b455d2a79204d47c"
+}

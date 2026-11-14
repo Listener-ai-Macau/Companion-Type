@@ -1,0 +1,6 @@
+{
+  "at": "2026-11-14T21:56:54.314117+08:00",
+  "state": "CPU_IMPORT_MEMORY_ERROR_BEFORE_SCORING",
+  "error": "MemoryError during pandas/numpy.ma import under own512MiB job; no scoring, file writes, neural inference or metric changes",
+  "correction": "Set worker-local BLAS threads1 before numpy import and use own1GiB CPU job within original2GiB maximum."
+}

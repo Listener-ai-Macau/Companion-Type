@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 30,
+    "startSample": 14736824,
+    "endSample": 15145744,
+    "text": "这个业务咱们到时候，嗯，可以去这个。他是来咱们公司，嗯，还是怎么找到的？是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是通过推销、通过销售找到的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 14736824,
+        "endSample": 15145744,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "d2d1af03db1c2b11de459d05e767d934e95d3b1d070d1e5d0a0dd53714f26304"
+}

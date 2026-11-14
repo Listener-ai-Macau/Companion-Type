@@ -1,0 +1,93 @@
+{
+  "binding": {
+    "protocolSha256": "f3c8d5f92897181478a5095ac2e931241df0759cc4eda368a811d7e1f7bdc30c",
+    "planSha256": "3aa2c1dbd928214deb5858ce19b7964b793ec6175dd7cb24e6ebfcad114fc876",
+    "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+    "sourceNodeSha256": "a228819562f83c33b20da420027a9e826224f43e962afba28b58cb7684cb33d5",
+    "meeting": "qwen-20200623_S_R001S07C01"
+  },
+  "payload": {
+    "originalText": "好的，好的。",
+    "originalStartSample": 32332728,
+    "originalEndSample": 32789784,
+    "rawTimestampClassIds": [
+      2,
+      2,
+      3,
+      4,
+      14,
+      16,
+      16,
+      16
+    ],
+    "timestampClassMilliseconds": 80,
+    "authorMonotonicRepairChangedTimestamps": 0,
+    "units": [
+      {
+        "alignmentUnit": "好",
+        "textStartCodepoint": 0,
+        "textEndCodepoint": 1,
+        "text": "好",
+        "textStartUtf16": 0,
+        "textEndUtf16": 1,
+        "predictedStartSeconds": 0.16,
+        "predictedEndSeconds": 0.16,
+        "absoluteStartSeconds": null,
+        "absoluteEndSeconds": null,
+        "positiveAndInOriginalLeafBounds": false,
+        "timestampVerifiedAgainstTruth": false
+      },
+      {
+        "alignmentUnit": "的",
+        "textStartCodepoint": 1,
+        "textEndCodepoint": 3,
+        "text": "的，",
+        "textStartUtf16": 1,
+        "textEndUtf16": 3,
+        "predictedStartSeconds": 0.24,
+        "predictedEndSeconds": 0.32,
+        "absoluteStartSeconds": 2021.0355,
+        "absoluteEndSeconds": 2021.1154999999999,
+        "positiveAndInOriginalLeafBounds": true,
+        "timestampVerifiedAgainstTruth": false
+      },
+      {
+        "alignmentUnit": "好",
+        "textStartCodepoint": 3,
+        "textEndCodepoint": 4,
+        "text": "好",
+        "textStartUtf16": 3,
+        "textEndUtf16": 4,
+        "predictedStartSeconds": 1.12,
+        "predictedEndSeconds": 1.28,
+        "absoluteStartSeconds": 2021.9154999999998,
+        "absoluteEndSeconds": 2022.0755,
+        "positiveAndInOriginalLeafBounds": true,
+        "timestampVerifiedAgainstTruth": false
+      },
+      {
+        "alignmentUnit": "的",
+        "textStartCodepoint": 4,
+        "textEndCodepoint": 6,
+        "text": "的。",
+        "textStartUtf16": 4,
+        "textEndUtf16": 6,
+        "predictedStartSeconds": 1.28,
+        "predictedEndSeconds": 1.28,
+        "absoluteStartSeconds": null,
+        "absoluteEndSeconds": null,
+        "positiveAndInOriginalLeafBounds": false,
+        "timestampVerifiedAgainstTruth": false
+      }
+    ],
+    "allOriginalCharactersPreserved": true,
+    "inferenceSeconds": 0.20893600000999868,
+    "inputNotTruncated": true,
+    "validMelFrames": 2856,
+    "neuralInferencePerformed": true,
+    "unresolvedTimeUnits": 2,
+    "noAsrOrReferenceWordsSubstituted": true,
+    "wordTimeAccuracyQualified": false
+  },
+  "payloadSha256": "6d4987ae14f4424978fd5d37bf274ab40394b701a4f8761d9baada760cbe1a21"
+}

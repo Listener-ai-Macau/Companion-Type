@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_BOUND_NATIVE_CASES_UNSCORED",
+  "at": "2026-11-14T21:51:26+08:00",
+  "pid": 424,
+  "binding": {
+    "manifestSha256": "3b9e4eb4f518ab33093f676aec5b4fb6dad47cf05ce6cad26a6f15ad8f1f37a1",
+    "modelPackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941"
+  },
+  "currentDeviceCheck": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "completed": [
+    "ordinary-qwen"
+  ],
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "lastAttempt": {
+    "id": "ordinary-qwen",
+    "exitCode": 0,
+    "adapterSeconds": 1194.3516494000214,
+    "taskState": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+    "log": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\qwen\\console\\ordinary-qwen-1794664286393856100.log"
+  },
+  "finishedAt": "2026-11-14T22:11:20+08:00"
+}

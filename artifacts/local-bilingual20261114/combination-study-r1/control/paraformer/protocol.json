@@ -1,0 +1,46 @@
+{
+  "state": "FROZEN_EXISTING_PARAFORMER_MATCHED_SPANS_BEFORE_INFERENCE",
+  "workerSourceSha256": "5c404d074ff2b85031850dbebf16ee13ebfee7ef2f1cc53dfe80adcdaf9c5493",
+  "sherpaVersion": "1.13.4",
+  "modelFiles": {
+    "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx": "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+    "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt": "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6"
+  },
+  "runtimeFiles": {
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\__init__.py": "c9ddd0698086a7e74d11f744251a4c8c9d042a3bcbb2be169ec38413bd2a68f4",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\__main__.py": "5457c80fcf576709b69c6430394ecc2635636ecc703004af815e062fb4e045cc",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\_info.py": "56386fef3aec9ab3a7abf38c0266035d4dbdaa3e11214a992d707038d6cf1df6",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\cli.py": "20f6334fb83217f0c6771206600dcfbe38855d36e8d58266db24e355fd6354a0",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\display.py": "be8bd6bf4bc06f16350f5df172215dfb172881ea7ba6b15f7e8d4283b1a71495",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\keyword_spotter.py": "517e7142c8dda12394462c114a6e077b5d8f50b0e06b3428e8959665c457b121",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\_sherpa_onnx.cp311-win_amd64.pyd": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\onnxruntime.dll": "daa77083a45bf525da0dde9e87f85d8eb146f58f9c9aa7124ca84545e1c0f148",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\sherpa-onnx-c-api.dll": "614878147c05121aeb1514ec4fb3e48b89751591532eca9208235b9ab868306a",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\sherpa-onnx-cxx-api.dll": "0da42dfb964b5625c0f2cdd31cd831c0da4712a254e27edfe6eec4184f8c0cf7",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\offline_recognizer.py": "58102abf1eab493df88327ab1c65a2694d65974227533dccac261799929f0201",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\online_recognizer.py": "21d560bfd5849098aa92172db140a5979104b2352bc3f25d018e9efdf120ecf1",
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\utils.py": "251309d8b41fe8d2baa1dbf4ac6edf4fc6ac1fa65a9e3ab7638c41bf0951eae0"
+  },
+  "inputFiles": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\paraformer\\audio-only.json": "554c19178457091a10305a17a94414ed9b074930d775c8e2a80815ebc7b238a5",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\paraformer\\audio-only-spans.json": "b115b966a2963a0e96dc1fb8e281d380e77726f0f2c4e9ed9a6fc09ef759bc86"
+  },
+  "recognizerArguments": {
+    "paraformer": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx",
+    "tokens": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt",
+    "num_threads": 2,
+    "sample_rate": 16000,
+    "feature_dim": 80,
+    "decoding_method": "greedy_search",
+    "provider": "cpu",
+    "rule_fsts": "",
+    "rule_fars": ""
+  },
+  "noReferenceOrSpeakerInput": true,
+  "installedProductBenchmark": false,
+  "cpuMaximumPercent": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "qualityQualified": false,
+  "runtimeBindingCompletedAt": "2026-11-14T22:03:24.928534+08:00",
+  "runtimeBindingReason": "Before any Paraformer inference, bind wrapper Python sources plus all actual package native dependencies, not merely package init and extension."
+}

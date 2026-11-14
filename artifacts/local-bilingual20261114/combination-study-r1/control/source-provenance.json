@@ -1,0 +1,20 @@
+{
+  "source": {
+    "meeting": "20200623_S_R001S07C01",
+    "fileSize": 253372487,
+    "expectedWholeFileLfsSha256": "760007eeacd478eaba71dc96c3eb30a35f6caad88873a8536c3a1b4506ecc769",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200623_S_R001S07C01.flac"
+  },
+  "reference": {
+    "meeting": "20200623_S_R001S07C01",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.TextGrid",
+    "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+    "people": 4,
+    "utterances": 795,
+    "lastReferenceEnd": 2022.6661201855693,
+    "overlapSeconds": 32.354801295880705,
+    "overlapFractionOfAnnotatedExtent": 0.015996115707377506
+  },
+  "officialData": "https://www.openslr.org/111/",
+  "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf"
+}

@@ -1,0 +1,32 @@
+{
+  "binding": {
+    "protocolSha256": "26650b661cb1b7c586126e3afc66759e0c8ade16db93705cdfe462e2e737bd78",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "spansSha256": "b115b966a2963a0e96dc1fb8e281d380e77726f0f2c4e9ed9a6fc09ef759bc86"
+  },
+  "raw": {
+    "index": 67,
+    "startSample": 32332728,
+    "endSample": 32789784,
+    "paddingSamples": 0,
+    "text": "好的行好的好的",
+    "tokens": [
+      "好",
+      "的",
+      "行",
+      "好",
+      "的",
+      "好",
+      "的"
+    ],
+    "timestamps": [],
+    "durations": [],
+    "language": "",
+    "inferenceSeconds": 2.471351299987873,
+    "modelInputSamples": 457056,
+    "inputNotTruncated": true,
+    "neuralInferencePerformed": true,
+    "nonAutoregressiveRecognizerNoEosClaim": true
+  },
+  "rawSha256": "e7ad97691dba2d6062eb9688c7e318a6e69e65f115a201cc8ab43622fb03830f"
+}
