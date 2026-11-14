@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-14T17:16:02+08:00",
+  "version": "0.1.135",
+  "sourceCommit": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df",
+  "verification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows135\\windows-verification.json",
+  "engineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+  "profileRoot": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\profile",
+  "statePath": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\profile\\sessions.json",
+  "recordingDir": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\profile\\recordings",
+  "sessionId": "import-8faf432f8a2148ddbaa24443b2588f9f",
+  "originalLibrary": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-source-full30-127\\native-import-r4\\private\\524f351cac6e4646b2cc554da70fe512\\state",
+  "originalStatePath": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-source-full30-127\\native-import-r4\\private\\524f351cac6e4646b2cc554da70fe512\\state\\sessions.json",
+  "originalRecordingDir": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public-source-full30-127\\native-import-r4\\private\\524f351cac6e4646b2cc554da70fe512\\recordings",
+  "originalStateSha256": "edbcc855ff86a621c93c888db0873fedd9d055b344b292b0fb0e6695e8bc2f4c",
+  "originalAudioSha256": {
+    "import-8faf432f8a2148ddbaa24443b2588f9f.original.wav": "d6ab13a19fec81df257036b5cdc19eb47aea7c96fb140e3bd3f6977e84586347",
+    "import-8faf432f8a2148ddbaa24443b2588f9f.wav": "87490e10d71f500944972d10e6769835d2bba3993278ede23338bf74ab9a2827"
+  },
+  "backupReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\backup-result.json",
+  "restoreReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\restore-result.json",
+  "provenance": "AISHELL4 public Chinese30m actual127 import/local transcript and actual129 generated minutes. Normal installed135 backup and restore created this editable copy; no fabricated meeting facts or new model run.",
+  "scopeText": "Windows135 · 一段完整前端体验 · 独立公开会议副本",
+  "intro": "这次用3至5分钟，把一场已有会议变成自己看懂、能补充、能带走的记录。\n\n电脑135、手机158已正常安装，我已先做完整工程自验。点“开始”打开电脑端和独立的公开会议副本，同一个窗口会按你的进度带路，每条问题分别记录。\n\n不需要重新录音、重新转写或生成纪要，也不会自动播放声音。你的原资料保持不变；本轮主要看UI与用法，模型专项仍由另一个会话继续。",
+  "steps": [
+    {
+      "title": "先看这场会议",
+      "message": "点“开始”后，在“我的录音”打开《公开中文会议（30分钟）》。先看纪要，感受能不能一眼知道这场会谈了什么、主次是否清楚。\n\n不用听完30分钟。需要核对时可以切到“文字”，回听也由你自己点，不会自动播放。\n\n这轮先看清晰、精致和顺手程度；内容问题也可以照实记下。看过以后点“下一步”，我会接着带你完成同一件事。"
+    },
+    {
+      "title": "留下自己的记录",
+      "message": "继续用同一场会议：到“笔记”留一句自己的补充并保存，也可以把标题改成自己好找的名字。\n\n目的就是把这场会议变成以后还能找回的记录，不用遍历所有菜单。\n\n哪里找不到、看不懂或觉得难用，就在下方写一条并点“记录问题”。每条单独保存，然后可以继续这一轮。"
+    },
+    {
+      "title": "带走结果，再找回来",
+      "message": "点标题旁的“导出”，选需要的内容，先看预览，再保存为TXT；保存位置由你自己选。\n\n保存修改后正常关闭Companion，保留这个说明窗口。这里出现“开始”时，点它重开同一份副本，看看刚才的标题和笔记能否找回来。\n\n体验到这里即可。关闭Companion后，在本窗口补整体感受并选“完成体验”；你也可以继续自由使用，不需要逐项给功能打勾。"
+    }
+  ],
+  "disableCloudForReview": true,
+  "ownerAccepted": false,
+  "newMicOrBoardOperations": 0,
+  "newAsrOrCloudOperations": 0
+}

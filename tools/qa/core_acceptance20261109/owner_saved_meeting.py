@@ -43,14 +43,15 @@ def run(spec,specpath):
  if resultpath.exists():raise RuntimeError('An existing human round must not be overwritten.')
  events=out/'owner-events.jsonl';updates=out/'owner-updates.json';prompt_output=out/'owner-prompt-output.json'
  record=dict(at=now(),state='WAITING_OWNER_START',version=ready['version'],sourceCommit=ready['sourceCommit'],controllerPid=os.getpid(),reviewSpec=str(specpath),individualIssues=[],visitedSteps=[],boardLease=False,newMicrophoneCommands=0,newModelOperations=0,physicalTotalAcceptancePassed=False,saleQualified=False,softwareOwnerAccepted=False)
+ steps=tuple((str(step['title']),str(step['message']))for step in spec.get('steps',[]))or STEPS
  index=0;ack=None;seen=set();navigation_since=0;consumed=0;start_consumed=0;app=None;app_log=None;reopened=False
  def save():write_json(resultpath,record)
  def update(message=None):
   nonlocal navigation_since
   navigation_since=time.time()+.3
   started=bool(record.get('ownerStartedAt'));closed=bool(record.get('appClosedAt'))
-  actions=([START] if not started or closed else [])+(([BACK]if index else[])+[REPORT]+([NEXT]if index<len(STEPS)-1 and not closed else[]) if started else[])
-  v=dict(progressText=('准备好了，等你开始'if not started else STEPS[index][0]),message=native_multiline(message or STEPS[index][1]),enabledActions=actions,visibleActions=actions,visibleReviews=['完成体验','稍后']if closed else['稍后'],reviewAllowed=closed,observationLabel='遇到问题就写一条并点“记录问题”；最后再补整体感受',eventContext=dict(version=ready['version'],stepIndex=index,stepTitle=STEPS[index][0]))
+  actions=([START] if not started or closed else [])+(([BACK]if index else[])+[REPORT]+([NEXT]if index<len(steps)-1 and not closed else[]) if started else[])
+  v=dict(progressText=('准备好了，等你开始'if not started else steps[index][0]),message=native_multiline(message or steps[index][1]),enabledActions=actions,visibleActions=actions,visibleReviews=['完成体验','稍后']if closed else['稍后'],reviewAllowed=closed,observationLabel='遇到问题就写一条并点“记录问题”；最后再补整体感受',eventContext=dict(version=ready['version'],stepIndex=index,stepTitle=steps[index][0]))
   if ack:v['inputAcknowledgment']=ack
   write_json(updates,v)
  def launch():
@@ -60,15 +61,18 @@ def run(spec,specpath):
   e=dict(os.environ)
   for key in list(e):
    if key.startswith(('COMPANION_','WEBVIEW2_')):e.pop(key)
+  if spec.get('disableCloudForReview'):
+   for key in list(e):
+    if key.startswith('DEEPSEEK_'):e.pop(key)
   root=Path(spec['profileRoot'])
   e.update(APPDATA=str(root/'roaming'),LOCALAPPDATA=str(root/'local'),TEMP=str(root/'temp'),TMP=str(root/'temp'),COMPANION_TYPE_STATE_PATH=spec['statePath'],COMPANION_TYPE_RECORDING_DIR=spec['recordingDir'],COMPANION_TYPE_PRODUCT_SETTINGS_PATH=str(root/'product-settings.json'),COMPANION_TYPE_DISABLE_AUTO_RECOVERY='1',COMPANION_TYPE_DISABLE_AUTO_RECONNECT='1',COMPANION_TYPE_BLE_NATIVE_DISABLED='1',WEBVIEW2_USER_DATA_FOLDER=str(root/'webview'))
   app_log=(out/'owner-product.log').open('ab')
   return subprocess.Popen(['C:/Program Files/Companion Type/'+APP_NAME],env=e,stdout=app_log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
- intro='这一轮完整用一段：把一场会议变成自己能回听、看懂、补充和带走的记录。\n\n我已先完成工程检查，准备了今天实卡收录的公开中文会议副本，原音、转写、纪要都是真实结果。点“开始”打开已安装的Windows120；同一个窗口会按你的进度继续带路。\n\n这次不会开麦或连接实卡，不动你原来的录音。识别与纪要质量仍在修，已有问题会如实显示。每条问题单独记，最后给一次整体感受；不用做长录或复杂功能检查。'
+ intro=spec.get('intro')or('这一轮完整用一段：把一场会议变成自己能回听、看懂、补充和带走的记录。\n\n工程检查已完成。点“开始”打开已安装的Windows'+ready['version'].removeprefix('0.1.')+'和独立的已保存公开会议副本，同一个窗口会按你的进度继续带路。\n\n不需要重新录音或生成纪要。每条问题单独记录，最后补整体感受。')
  update(intro);save()
  shell='C:/Users/Billy/AppData/Local/Microsoft/WindowsApps/pwsh.exe'
  shared=ROOT.parent/'ai-collaboration-workflow/scripts/operator_prompt.ps1'
- command=[shell,'-NoLogo','-NoProfile','-File',str(shared),'-Title','Companion 整段使用体验','-ScopeText','Windows120 · 真实公开会议副本','-Message',native_multiline(intro),'-ActionButtons',','.join((START,BACK,REPORT,NEXT)),'-Buttons','完成体验,稍后','-RequireReviewAllowed','-LiveUpdates','-UpdatePath',str(updates),'-EventPath',str(events),'-TextInput','-ObservationLabel','一条问题单独记；最后补整体感受','-OutputPath',str(out/'owner-feedback.txt'),'-Json','-NoActivate','-NoTopMost','-Width','760','-Height','580','-MessageHeight','230']
+ command=[shell,'-NoLogo','-NoProfile','-File',str(shared),'-Title','Companion 整段使用体验','-ScopeText',spec.get('scopeText')or('Windows'+ready['version'].removeprefix('0.1.')+' · 已保存公开会议副本'),'-Message',native_multiline(intro),'-ActionButtons',','.join((START,BACK,REPORT,NEXT)),'-Buttons','完成体验,稍后','-RequireReviewAllowed','-LiveUpdates','-UpdatePath',str(updates),'-EventPath',str(events),'-TextInput','-ObservationLabel','一条问题单独记；最后补整体感受','-OutputPath',str(out/'owner-feedback.txt'),'-Json','-NoActivate','-NoTopMost','-Width','760','-Height','580','-MessageHeight','230']
  e=dict(os.environ);e.pop('PSModulePath',None)
  with prompt_output.open('wb')as log:
   prompt=subprocess.Popen(command,env=e,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
@@ -84,22 +88,22 @@ def run(spec,specpath):
        record.setdefault('priorAppClosures',[]).append(record.pop('appClosedAt'));reopened=True;record['actualProcessReopenObserved']=True
       app=launch();record.update(state='OWNER_USING_SAVED_PUBLIC_MEETING',appPid=app.pid);record.setdefault('ownerStartedAt',now());consumed=complete;save();update()
     if record.get('ownerStartedAt') and prompt.poll()is None:
-     for issue in reported_issues(text[:complete],prompt.pid,datetime.fromisoformat(record['ownerStartedAt']).timestamp(),ready['version'],STEPS,seen):
-      if not issue['ownerQuote'].strip():update(STEPS[index][1]+'\n\n请先写下这一条问题，再点“记录问题”。');continue
-      issue.update(id='ISSUE-%03d'%(len(record['individualIssues'])+1),ownerRound=str(out),sourceCommit=ready['sourceCommit']);issue_dir=out/'issues';issue_dir.mkdir(exist_ok=True);write_json(issue_dir/(issue['id']+'.json'),issue);record['individualIssues'].append(issue);write_json(issue_dir/'index.json',record['individualIssues']);ack=dict(id=issue['eventId'],text=issue['ownerQuote'],stepIndex=issue['stepIndex']);save();update(STEPS[index][1]+'\n\n已单独记下'+issue['id']+'，可以继续。')
+     for issue in reported_issues(text[:complete],prompt.pid,datetime.fromisoformat(record['ownerStartedAt']).timestamp(),ready['version'],steps,seen):
+      if not issue['ownerQuote'].strip():update(steps[index][1]+'\n\n请先写下这一条问题，再点“记录问题”。');continue
+      issue.update(id='ISSUE-%03d'%(len(record['individualIssues'])+1),ownerRound=str(out),sourceCommit=ready['sourceCommit']);issue_dir=out/'issues';issue_dir.mkdir(exist_ok=True);write_json(issue_dir/(issue['id']+'.json'),issue);record['individualIssues'].append(issue);write_json(issue_dir/'index.json',record['individualIssues']);ack=dict(id=issue['eventId'],text=issue['ownerQuote'],stepIndex=issue['stepIndex']);save();update(steps[index][1]+'\n\n已单独记下'+issue['id']+'，可以继续。')
      nav=navigation_event(text[consumed:complete],prompt.pid,navigation_since);consumed=complete
      if nav:
       draft=str(nav.get('text')or'').strip()
-      if draft and not(ack and ack['text']==nav['text']):update(STEPS[index][1]+'\n\n下方这条问题还没记下，请先点“记录问题”，或清空后继续。')
+      if draft and not(ack and ack['text']==nav['text']):update(steps[index][1]+'\n\n下方这条问题还没记下，请先点“记录问题”，或清空后继续。')
       elif nav['event']=='action_button|'+NEXT:
        # A missed step remains an honest issue rather than a forced PASS gate.
-       index=min(len(STEPS)-1,index+1);record['visitedSteps'].append(index);save();update()
+       index=min(len(steps)-1,index+1);record['visitedSteps'].append(index);save();update()
       elif nav['event']=='action_button|'+BACK:index=max(0,index-1);save();update()
     running=app is not None and app.poll()is None
     if app is not None and not running and not record.get('appClosedAt'):
      if app_log and not app_log.closed:app_log.close()
      record.update(appClosedAt=now(),state='PRODUCT_CLOSED_WAITING_OWNER_FEEDBACK');save()
-     update('软件已退出，已保存内容保留。点“开始”重开这一份公开会议副本继续；结束则直接补整体感受并选“完成体验”。\n\n'+STEPS[index][1])
+     update('软件已退出，已保存内容保留。点“开始”重开这一份公开会议副本继续；结束则直接补整体感受并选“完成体验”。\n\n'+steps[index][1])
     if prompt.poll()is not None:
      if running:record['promptClosedBeforeProductExit']=True;save()
      else:break
@@ -110,7 +114,7 @@ def run(spec,specpath):
    record.update(ownerResponse=response,state='OWNER_FEEDBACK_RECEIVED'if record.get('ownerStartedAt')else'OWNER_DEFERRED_WITHOUT_START',finishedAt=now())
    # Completion is participation, never a manufactured acceptance verdict.
    record['ownerCompletedExperience']=response.get('selected')=='完成体验'
-   originals=Path(spec['originalLibrary']);record['originalStateAndAudioUnchanged']=sha(originals/'sessions.json')==spec['originalStateSha256']and all(sha(originals/'recordings'/name)==digest for name,digest in spec['originalAudioSha256'].items())
+   originals=Path(spec['originalLibrary']);original_state=Path(spec.get('originalStatePath')or originals/'sessions.json');original_audio=Path(spec.get('originalRecordingDir')or originals/'recordings');record['originalStateAndAudioUnchanged']=sha(original_state)==spec['originalStateSha256']and all(sha(original_audio/name)==digest for name,digest in spec['originalAudioSha256'].items())
    save();print(json.dumps({k:record.get(k)for k in ['state','ownerStartedAt','appClosedAt','finishedAt','ownerCompletedExperience','actualProcessReopenObserved','originalStateAndAudioUnchanged']},ensure_ascii=False),flush=True)
   except BaseException as error:
    record.update(state='OWNER_REVIEW_NEEDS_ATTENTION',error=str(error));save();update('本轮遇到实际问题，已保留现场。请正常关闭Companion，再在这里记录感受并选“稍后”。不用重录或反复尝试。')
