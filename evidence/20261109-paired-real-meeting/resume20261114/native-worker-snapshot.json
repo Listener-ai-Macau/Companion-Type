@@ -1,0 +1,42 @@
+{
+  "state": "PREPARING_BOUNDED_NATIVE_ASR",
+  "pid": 17256,
+  "startedAt": "2026-11-14T12:10:48+08:00",
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58"
+  },
+  "phase": "full",
+  "modelLoaded": false,
+  "newNeuralCalls": 0,
+  "inheritedRootNodes": 0,
+  "reusedNodeFiles": 0,
+  "completedCacheOnly": false,
+  "referencePassedToWorker": false,
+  "speakerJournalPending": true,
+  "meeting": "recording-e62032e8d2a5e0eb",
+  "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+  "audioSeconds": 1551.82,
+  "limits": {
+    "pid": 17256,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 25178112,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "totalWindows": 53,
+  "completedWindows": 0,
+  "rootBoundaryPolicy": "author-low-energy-local30s-budget"
+}

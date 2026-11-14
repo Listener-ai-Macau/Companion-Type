@@ -6,7 +6,7 @@ Original model pack is immutable; fresh HIP identity is bound in a private copy.
 """
 from pathlib import Path
 from datetime import datetime
-import argparse,hashlib,json,os,shutil,subprocess,sys,time
+import argparse,hashlib,json,os,shutil,subprocess,sys,time,wave
 import psutil
 from practical_io_20261107 import atomic_json,stop_owned_family
 from moss_windows_resource_limits_20261104 import SystemRamPressure
@@ -18,8 +18,61 @@ read=lambda p:json.loads(Path(p).read_text(encoding='utf8'))
 now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 def sha(p):
     with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+
+def resume_resources(task):
+    """Observe the existing recovery rule without changing task/batch evidence."""
+    prior=read(task) if task.exists() else {}
+    last=prior['attempts'][-1] if prior.get('attempts') else {}
+    pressure=SystemRamPressure()
+    try:
+        available=psutil.virtual_memory().available;low=pressure.low()
+    finally:pressure.close()
+    minimum=last['systemAvailableBytesAtStop']+2*last['privatePeakBytes'] if last.get('actualWindowsLowRam') else None
+    ready=not low and (minimum is None or available>minimum)
+    return {'ready':ready,'actualWindowsLowRam':low,'availableBytes':available,
+            'existingRecoveryRequirementExclusiveBytes':minimum,
+            'rule':'No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak.'}
+
+def check_inputs():
+    """Read only public audio/control bindings; never import the neural runtime."""
+    original=C.parent/'20261107-model-generation-recovery/practical-qwen-author-boundaries-r6/model-pack.json'
+    pack=read(original);source=Path(pack['sourceControl'])
+    for name,digest in pack['pinnedFiles'].items():assert sha(source/name)==digest,'Pinned model control changed: '+name
+    for name,key in [(pack['workerModule'],'workerSourceSha256'),('practical_qwen_bounded_decode_20261107.py','recoverySourceSha256')]:
+        assert sha(Path(__file__).with_name(name))==pack[key],'Pinned native execution source changed'
+    assert Path(pack['pythonExecutable']).is_file(),'Pinned runtime is missing'
+    protocol=read(source/'native-protocol.json')
+    for entry in protocol['files']:
+        assert Path(entry['file']).is_file() and Path(entry['file']).stat().st_size==entry['bytes'],'Pinned model asset is missing or has changed size'
+    checked=[];next_task=None
+    runtime_pack=P/'fixed-native-runtime-r2/model-pack.json'
+    for case in read(C/'fixed-asr-audio-only.json'):
+        assert sha(case['audio'])==case['audioSha256'],'Original paired audio changed'
+        with wave.open(case['audio'],'rb') as f:
+            assert (f.getnchannels(),f.getsampwidth(),f.getframerate(),f.getcomptype())==(1,2,16000,'NONE')
+            assert f.getnframes()/16000==case['audioSeconds']
+        task=P/'fixed-native-r2-runs'/case['id']/'task.json'
+        prior=read(task) if task.exists() else {}
+        if prior:
+            assert prior['binding']=={'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'modelPackSha256':sha(runtime_pack)},'Saved task binding changed'
+        complete=prior.get('state')=='COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED'
+        if complete:assert sha(prior['output'])==prior['outputSha256'],'Saved native output changed'
+        elif next_task is None:next_task=task
+        checked.append({'id':case['id'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'complete':complete})
+    resources=resume_resources(next_task) if next_task is not None else None
+    return {'at':now(),'state':'READY_FOR_FRESH_HIP_CHECK' if resources and resources['ready'] else 'DEFERRED_EXISTING_RAM_RECOVERY' if resources else 'ALL_BOUND_TASKS_COMPLETE',
+            'inputs':checked,'originalPackSha256':sha(original),'modelAssetsSizeVerified':True,'modelWeightContentsRehashed':False,
+            'resources':resources,'inferenceStarted':False,'qualityQualified':False}
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--inventory',required=True);p.add_argument('--resume',action='store_true');p.add_argument('--prepare-only',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--inventory');p.add_argument('--resume',action='store_true');p.add_argument('--prepare-only',action='store_true');p.add_argument('--check-only',action='store_true',help='Read-only input/resume/RAM check; no HIP import, inference or task writes.');a=p.parse_args()
+    if a.check_only:
+        assert not a.prepare_only and not a.resume and a.inventory is None,'Use --check-only independently'
+        print(json.dumps(check_inputs(),ensure_ascii=False));return 0
+    assert a.inventory,'Fresh HIP inventory is required for preparation or inference'
+    if not a.prepare_only:
+        readiness=check_inputs()
+        assert readiness['resources'] is None or readiness['resources']['ready'],json.dumps(readiness,ensure_ascii=False)
     inventory=Path(a.inventory).resolve();fresh=read(inventory)
     assert fresh['state']=='PASS_CURRENT_HIP_DEVICE_INVENTORY_NO_MODEL'
     assert fresh['selected']['name']=='AMD Radeon RX 6800 XT' and fresh['selected']['architecture']=='gfx1030'
@@ -65,11 +118,11 @@ def main():
             assert a.resume,'Interrupted task requires explicit continuation after resource recovery'
             prior=read(task);last=prior['attempts'][-1] if prior.get('attempts') else {}
             if last.get('actualWindowsLowRam'):
-                pressure=SystemRamPressure()
-                try:
-                    available=psutil.virtual_memory().available
-                    assert not pressure.low() and available>last['systemAvailableBytesAtStop']+2*last['privatePeakBytes'],'No measured RAM recovery since actual low-memory stop; no blind retry'
-                finally:pressure.close()
+                resources=resume_resources(task)
+                if not resources['ready']:
+                    state.pop('activeCase',None)
+                    state.update(state='PAUSED_RESOURCES_BEFORE_NEXT_ADAPTER',finishedAt=now(),resources=resources)
+                    atomic_json(state_path,state);print(json.dumps(state,ensure_ascii=False));return 1
         task_dir.mkdir(parents=True,exist_ok=True);state.update(activeCase=case['id'],caseStartedAt=now());atomic_json(state_path,state)
         command=[sys.executable,str(Path(__file__).with_name('companion_native_asr_20261107.py')),'--audio',case['audio'],'--model-pack',str(private_pack),'--work-dir',str(task_dir)]+(['--resume'] if task.exists() else [])
         # Adapter requires its output directory initially empty; write console logs outside it.

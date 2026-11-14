@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-14T12:13:54+08:00",
+  "state": "PAUSED_ACTUAL_WINDOWS_LOW_RAM_BEFORE_MODEL_LOAD",
+  "ownerOriginal": "需要你现在做一下companbion的这个语音处理模型, 你先看看要干什么, 这个是一个很难得任务, 就交给你了",
+  "sourceTask": "owner_module_execution.frontendWindowsMobile20261102.ownerCoreDeliveryPriority20261104.ownerNightGpuModelPriority20261104.ownerPairedRealMeetingSource20261109",
+  "decisionBasis": {
+    "previousResult": "20261110 deployed-model matched source and known-activity diagnostics remain unqualified; the fixed Qwen arm stopped before loading on actual low RAM.",
+    "differenceThisAttempt": "20261114 original five PCM hashes/source bindings passed; fresh HIP identifies RX6800XT ordinal1, gfx1030; available1839198208B > unchanged1559891968B recovery requirement, Windows low-memory signal false before launch.",
+    "actualResult": "The resumed first input stopped on actual Windows low RAM after32.4744881s, with0neural calls and0new output; short-lived free memory did not establish sustained headroom.",
+    "decision": "Preserve failed attempt and original bindings; do not repeat under unchanged pressure or select another model as a workaround."
+  },
+  "readinessReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\resume20261114\\readiness.json",
+  "freshGpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "attempt": {
+    "startedAt": "2026-11-14T12:10:48+08:00",
+    "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8013\\native-attempt-0002.log",
+    "wholeProcessFamilySeconds": 32.47448809997877,
+    "privatePeakBytes": 361926656,
+    "cacheOnlyExpected": false,
+    "interrupted": true,
+    "interruptionReason": "actual_windows_low_ram",
+    "actualWindowsLowRam": true,
+    "explicitStopRequested": false,
+    "systemAvailableBytesAtStop": 764698624,
+    "exitCode": 15,
+    "finishedAt": "2026-11-14T12:11:21+08:00",
+    "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+  },
+  "workerTerminalObservation": {
+    "state": "PREPARING_BOUNDED_NATIVE_ASR",
+    "modelLoaded": false,
+    "newNeuralCalls": 0,
+    "completedWindows": 0,
+    "totalWindows": 53
+  },
+  "workerStateCaveat": "Killed native worker retained a PREPARING snapshot; actual terminal state is in parent task/batch receipts and confirmed process exit.",
+  "controllerRepair": {
+    "source": "src/run_paired_fixed_asr_20261109.py",
+    "sourceSha256": "07aece5747d6217496f2bfab56b879d3d5e57c3f05ca9e8b403219eeccfaaa4d",
+    "change": "Read-only --check-only validates all five PCM/source/task bindings without HIP/model import. Check existing memory recovery before publishing RUNNING; changed pressure before the next adapter publishes an explicit paused terminal state.",
+    "checks": [
+      "all5real input hashes/PCM metadata and pinned control/source hashes passed",
+      "preflight left previous batch/task bytes unchanged",
+      "exclusive memory boundary rejects; recovery permits; Windows low-memory overrides",
+      "resource refusal leaves previous batch bytes unchanged before inventory or task mutation",
+      "git diff --check passed"
+    ],
+    "neuralMathOrWeightsChanged": false
+  },
+  "currentResourceObservation": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 2331897856,
+    "existingRecoveryRequirementExclusiveBytes": 1488551936,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  },
+  "modelInferenceCalls": 0,
+  "trainingRuns": 0,
+  "newAccuracyResult": null,
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false,
+  "installedAppsOrBoardAccessed": false,
+  "ownedModelWorkerRunningAtRecord": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "next": "沿同一配对任务恢复固定Qwen1.7B的4份逐人近讲和1份远场原音对照。本次短暂满足原RAM恢复条件后又实际低内存中止，当前不重复重试；先有系统内存持续恢复的实质条件，再用--check-only检查、刷新HIP身份并--resume。原CPU5%/私有2GiB与Windows低内存保护不放宽，不关闭Owner程序。完成后按同人/同时间/同参考区分识别错误、分离丢字与归属错误，再只修证实的薄弱模块；原严格<5%、跨会/未见整会、纪要事实、双端实卡和售卖门继续开放。"
+}

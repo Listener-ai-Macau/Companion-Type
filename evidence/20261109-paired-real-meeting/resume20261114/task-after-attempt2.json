@@ -1,0 +1,54 @@
+{
+  "state": "INCOMPLETE_RETAINED_RESUMABLE",
+  "startedAt": "2026-11-09T23:56:22+08:00",
+  "binding": {
+    "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+    "audioSeconds": 1551.82,
+    "modelPackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941"
+  },
+  "privateAudioNeverUploaded": true,
+  "attempts": [
+    {
+      "startedAt": "2026-11-09T23:56:23+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8013\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 36.49606389999826,
+      "privatePeakBytes": 422416384,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "actual_windows_low_ram",
+      "actualWindowsLowRam": true,
+      "explicitStopRequested": false,
+      "systemAvailableBytesAtStop": 715059200,
+      "exitCode": 15,
+      "finishedAt": "2026-11-09T23:57:00+08:00",
+      "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+    },
+    {
+      "startedAt": "2026-11-14T12:10:48+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8013\\native-attempt-0002.log",
+      "wholeProcessFamilySeconds": 32.47448809997877,
+      "privatePeakBytes": 361926656,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "actual_windows_low_ram",
+      "actualWindowsLowRam": true,
+      "explicitStopRequested": false,
+      "systemAvailableBytesAtStop": 764698624,
+      "exitCode": 15,
+      "finishedAt": "2026-11-14T12:11:21+08:00",
+      "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+    }
+  ],
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "meeting": "recording-e62032e8d2a5e0eb",
+  "updatedAt": "2026-11-14T12:11:21+08:00",
+  "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_native_asr_20261107.py\", line 86, in main\n    raise InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。' if attempt['interruptionReason']=='actual_windows_low_ram' else '已停止本地转写，原音和已保存进度保留，可继续。')\nInterruptedError: 系统内存不足，已保存草稿和进度，资源恢复后可继续。\n"
+}
