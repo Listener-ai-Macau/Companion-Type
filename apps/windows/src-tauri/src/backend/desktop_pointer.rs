@@ -19,6 +19,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
     // shell clicks. The desktop core never steers from gyro in this mode.
     settings.validate().map_err(str::to_string)?;
     let pointer_options=settings.pointer_options();
+    let desktop_motion=settings.desktop_motion;
     let mut session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;
     if session.is_some(){return Err("空中鼠标已经开启。".into());}
     let (device,peer,lease)=coordinator.begin_desktop_pointer()?;
@@ -59,9 +60,9 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                         else if metrics.paused{"已暂停；换好握姿后，从当前位置继续。"}
                         else if metrics.regripping{"光标已稳住，可以轻敲点选或换握姿；松开按键继续。"}
                         else if !metrics.calibrated{if s.settings.desktop_motion{"请在桌面平放约1秒，正在确定使用平面…"}else if metrics.tap_events>0{"已收到轻敲；先稳住卡片约1秒，等就绪后再点选。"}else{"请把卡片放稳约1秒，正在校准…"}}
-                        else if metrics.surface_paused{"已暂停移动：请放回开始时的平面并放稳。若仍未恢复，可点“重新放稳”。"}
+                        else if metrics.surface_paused{"已暂停移动：请在桌面放稳片刻，再继续推动。若仍未恢复，可点“重新放稳”。"}
                         else if contacts.learning.is_some(){if contacts.learning==Some(companion_desktop_input::pointer::contact::Side::Left){"请在左侧自然轻敲三次；校准时不控制光标。"}else{"请在右侧自然轻敲三次；校准时不控制光标。"}}
-                        else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"桌面平移试用：前后左右推动移动；抬起回位时暂停。左前左键、右前右键，连续两下左前是双击。Esc退出。"}
+                        else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"桌面平移试用：前后左右推动移动；抬起回位暂停约2秒，放稳后继续。左前左键、右前右键，连续两下左前是双击。Esc退出。"}
                         else if controls_cursor&&s.settings.contact_regions&&contacts.calibrated{"Type-C朝前：敲左前是左键，敲右前是右键；连续敲左前两次是双击。按住实体键换握姿，Esc退出。"}
                         else if s.settings.contact_regions&&!contacts.calibrated{"动作已连接；请先校准左前和右前敲击，校准完成后才能用外壳点击。"}
                         else if controls_cursor&&s.settings.desktop_motion{"在桌面前后左右推动移动；抬起回位时暂停。轻敲左击，可校准左右前角。Esc退出。"}
@@ -81,10 +82,11 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                 use super::ble_bridge::DesktopInputUpdate;
                 match event {
                     DesktopInputUpdate::Motion(sample)=>{
+                        if desktop_motion{return;}
                         // Mapping needs monitor geometry; Win32 read only.
                         let b=desktop_bounds();p.lock().unwrap_or_else(|e|e.into_inner()).sample(sample,origin.elapsed().as_secs_f64(),b);
                     },
-                    DesktopInputUpdate::RawMotion(sample)=>{p.lock().unwrap_or_else(|e|e.into_inner()).sample_raw(sample,origin.elapsed().as_secs_f64());},
+                    DesktopInputUpdate::RawMotion(sample,gravity)=>{p.lock().unwrap_or_else(|e|e.into_inner()).sample_raw_gravity(sample,gravity,origin.elapsed().as_secs_f64());},
                     DesktopInputUpdate::Ready(_)=>{let mut p=p.lock().unwrap_or_else(|e|e.into_inner());p.begin_stream();p.pause(user_paused.load(Ordering::Acquire));change(|s|{s.ready=true;});},
                     DesktopInputUpdate::Physical(s) if s.mode==3&&s.options&8!=0=>{
                         if let Err(message)=p.lock().unwrap_or_else(|e|e.into_inner()).control(companion_desktop_input::pointer::Control{sequence:s.sequence,sensor_ms:s.event_ms,events:s.events}){

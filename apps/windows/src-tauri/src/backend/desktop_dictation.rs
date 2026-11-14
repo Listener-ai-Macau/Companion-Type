@@ -149,7 +149,7 @@ fn observe_update(
 ) {
     use super::ble_bridge::DesktopInputUpdate;
     match input {
-        DesktopInputUpdate::Motion(_) | DesktopInputUpdate::RawMotion(_) => {},
+        DesktopInputUpdate::Motion(_) | DesktopInputUpdate::RawMotion(_,_) => {},
         DesktopInputUpdate::Physical(input) => {
             observe_with_target(input, peer, captures, send, Target::capture)
         }

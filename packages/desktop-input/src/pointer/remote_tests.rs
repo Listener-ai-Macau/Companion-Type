@@ -171,7 +171,7 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
     let rows:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("offline-diagnosis/timeline.json")).unwrap()).unwrap();
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     let rows=rows.as_array().unwrap();let zero=rows[0]["hostUs"].as_u64().unwrap();
-    let mut next_frame=0.;let mut clicks=vec![];let mut positions=vec![];
+    let mut next_frame=0.;let mut clicks=vec![];let mut positions=vec![];let mut states=vec![];let mut sequence=None;let mut inferred_restarts=0;
     for row in rows{
         let at=(row["hostUs"].as_u64().unwrap()-zero)as f64/1e6;
         while next_frame<at{
@@ -179,11 +179,14 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
         }
         if row["kind"]=="motion"{
             let h=row["packet"].as_str().unwrap();let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
-            p.sample_raw(desktop::Raw::parse(&bytes).unwrap(),at);p.sample(Sample::parse(&bytes).unwrap(),at,bounds());
+            let raw=desktop::Raw::parse(&bytes).unwrap();
+            if p.settings.desktop_motion&&sequence.is_some_and(|old:u32|raw.sequence.wrapping_sub(old)>=0x8000_0000){p.begin_stream();inferred_restarts+=1;}
+            let fused=Sample::parse(&bytes).unwrap();sequence=Some(raw.sequence);p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());
+            if p.settings.desktop_motion{states.push(serde_json::json!({"at":at,"calibrated":p.metrics.calibrated,"surfacePaused":p.metrics.surface_paused,"tapBlocked":p.tap_motion.blocked(),"state":p.planar_state()}));}
         }else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
     }
     let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
-    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates"});
+    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence."});
     let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
     let expected=receipt["sessions"][0]["finalPointer"]["metrics"]["tapEvents"].as_u64().unwrap()as usize;
     println!("Actual{expected} taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
@@ -211,7 +214,7 @@ fn check_surface_stationary_trace(root:&std::path::Path){
         let h=line.split("packet=").nth(1).unwrap().split_whitespace().next().unwrap();
         let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
         let raw=desktop::Raw::parse(&bytes).unwrap();let zero=*first.get_or_insert(raw.sensor_ms);let at=raw.sensor_ms.wrapping_sub(zero)as f64/1000.;
-        p.sample_raw(raw,at);p.sample(Sample::parse(&bytes).unwrap(),at,bounds());p.frame(at,bounds());
+        let fused=Sample::parse(&bytes).unwrap();p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());p.frame(at,bounds());
         if at>5.{count+=1;if !p.metrics.surface_paused{ready+=1;}if let Some(c)=&p.coarse{if c.desktop.state.stationary{still+=1;}}
             path+=(p.shown.x-last.x).hypot(p.shown.y-last.y);
         }
