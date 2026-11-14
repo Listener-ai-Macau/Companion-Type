@@ -165,3 +165,16 @@ body:has(.ct-notebook){background:var(--nb-paper,#fff)}
 .ct-windows.ct-notebook .ct-library-choose-first p{margin:0 0 18px;color:var(--nb-muted);font-size:13px}
 .ct-windows.ct-notebook .ct-library-target-summary{margin:16px 0;padding:12px 14px;border:1px solid var(--nb-line);border-radius:6px;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
 .ct-windows.ct-notebook .ct-library-tools>[hidden]{display:none!important}
+
+/* Notes use the same neutral vocabulary as the reader, including native dark mode. */
+body .ct-windows.ct-notebook .ct-meeting-notes{border-color:var(--nb-line);background:var(--nb-paper);color:var(--nb-ink)}
+body .ct-windows.ct-notebook .ct-note-composer>summary{display:flex;align-items:center;gap:8px;min-height:40px;color:var(--nb-ink);font-size:13px;list-style:none}
+body .ct-windows.ct-notebook .ct-note-composer>summary::-webkit-details-marker{display:none}
+body .ct-windows.ct-notebook .ct-note-composer>summary:before{content:'+';display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--nb-line);border-radius:5px;background:var(--nb-soft);color:var(--nb-muted);font:400 16px/1 var(--notebook-font)}
+body .ct-windows.ct-notebook .ct-note-composer[open]>summary:before{content:'−'}
+body .ct-windows.ct-notebook .ct-note-composer>p,body .ct-windows.ct-notebook .ct-meeting-notes small,body .ct-windows.ct-notebook .ct-notes-heading>span{color:var(--nb-muted);font-size:11px;line-height:1.8}
+body .ct-windows.ct-notebook .ct-note-composer>p{margin:4px 0 15px}
+body .ct-windows.ct-notebook .ct-notes-controls{gap:8px;margin-top:12px;flex-wrap:wrap}
+body .ct-windows.ct-notebook .ct-notes-controls .ct-action{min-height:36px;padding:7px 11px;font-size:12px}
+body .ct-windows.ct-notebook .ct-meeting-notes textarea{padding:12px;min-height:110px;margin:7px 0 13px;line-height:1.85;font-size:13px;border-color:var(--nb-line);background:var(--nb-paper);color:var(--nb-ink)}
+body .ct-windows.ct-notebook .ct-meeting-notes :is(textarea,select):focus{outline:2px solid var(--nb-accent);outline-offset:2px}
