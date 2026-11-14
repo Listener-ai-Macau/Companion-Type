@@ -10,7 +10,7 @@ use std::sync::{
 pub(crate) enum Update {
     Ready(InputStatus),
     Motion(companion_desktop_input::pointer::Sample),
-    RawMotion(companion_desktop_input::pointer::desktop::Raw),
+    RawMotion(companion_desktop_input::pointer::desktop::Raw,Option<[f64;3]>),
     Physical(InputStatus),
     Reconcile(InputStatus),
     Reconnecting(String),

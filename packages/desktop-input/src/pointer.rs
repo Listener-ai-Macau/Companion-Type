@@ -302,15 +302,18 @@ impl Pointer {
     /// CIM5 remains raw sensor data. Reuse the same physical control clock,
     /// history, pause, drag and native output instead of inventing a CIM4 pose.
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
+        self.sample_raw_gravity(s,None,now);
+    }
+    pub fn sample_raw_gravity(&mut self,s:desktop::Raw,gravity:Option<[f64;3]>,now:f64){
         if self.settings.desktop_motion{
             if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
             self.contacts.sample(s);
             let surface=self.settings.relative_direct;
             if surface||self.settings.contact_regions{self.tap_motion.observe(s);}
             let c=self.coarse.get_or_insert_with(||if surface{intent::Intent::surface_mouse()}else{intent::Intent::default()});c.settings=self.settings.clone();
-            c.sample_blocked(s,now,surface&&self.tap_motion.blocked());
+            c.sample_blocked_gravity(s,now,surface&&self.tap_motion.blocked(),gravity);
             self.metrics.calibrated=c.desktop.state.calibrated;
-            self.metrics.surface_paused=c.desktop.state.surface.as_ref().is_some_and(|s|s.phase!=surface::Phase::Ready);
+            self.metrics.surface_paused=c.desktop.state.surface.as_ref().is_some_and(|s|s.phase!=surface::Phase::Ready)||c.desktop.state.clutched;
             if self.metrics.paused||self.metrics.regripping{c.clear_motion();}
             return;
         }

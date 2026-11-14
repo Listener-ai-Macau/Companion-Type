@@ -27,6 +27,9 @@ impl Intent {
         self.sample_blocked(s,now,false);
     }
     pub fn sample_blocked(&mut self,s:Raw,now:f64,blocked:bool){
+        self.sample_blocked_gravity(s,now,blocked,None);
+    }
+    pub fn sample_blocked_gravity(&mut self,s:Raw,now:f64,blocked:bool,gravity:Option<[f64;3]>){
         if let Some((sequence,ms,arrival))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return;}
@@ -37,7 +40,7 @@ impl Intent {
             }
         }
         self.last=Some((s.sequence,s.sensor_ms,now));
-        self.desktop.sample_with_translation(s,!blocked);
+        self.desktop.sample_with_gravity(s,!blocked,gravity);
         let state=&self.desktop.state;
         if !state.calibrated{self.smoother.reset();self.source=Source::Rest;return;}
         let (mut goal,source)=if state.moving&&!state.clutched {

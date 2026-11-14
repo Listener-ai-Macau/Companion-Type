@@ -1,5 +1,5 @@
 //! Existing-hardware desktop feasibility core. No OS input, disk or BLE.
-//! Reuses unchanged x-io Fusion for Earth-frame gravity removal.
+//! CIM6 reuses the board's fused gravity; CIM5 retains upstream x-io Fusion.
 //! Causal stroke integration/zero-velocity decisions are Companion adapters;
 //! the upstream Gait-Tracking end-of-stroke interpolation is NONCAUSAL and is
 //! deliberately not represented as a real-time mouse implementation.
@@ -22,16 +22,27 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
 pub struct Desktop {
     fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
-    surface:Option<surface::Surface>,
+    surface:Option<surface::Surface>,reacquire_plane:bool,
     pub state:State,
 }
 impl Default for Desktop {
-    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,surface:None,state:State::default()}}
+    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,surface:None,reacquire_plane:false,state:State::default()}}
+}
+fn board_acceleration(accel:[f64;3],gravity:[f64;3])->Option<([f64;3],[f64;3])>{
+    let dot=|a:[f64;3],b:[f64;3]|a.iter().zip(b).map(|(x,y)|x*y).sum::<f64>();
+    let norm=dot(gravity,gravity).sqrt();if !norm.is_finite()||norm<500.||norm>1500.{return None;}
+    let up=gravity.map(|x|x/norm);
+    // Project the card's X direction onto the horizontal plane. Type-C is
+    // the fixed forward direction; no unobserved gyro/yaw is integrated on
+    // the host. The board has already performed the actual AHRS calculation.
+    let x=[1.-up[0]*up[0],-up[0]*up[1],-up[0]*up[2]];let n=dot(x,x).sqrt();if n<0.1{return None;}
+    let x=x.map(|v|v/n);let y=[up[1]*x[2]-up[2]*x[1],up[2]*x[0]-up[0]*x[2],up[0]*x[1]-up[1]*x[0]];
+    Some(([dot(accel,x)*0.00980665,dot(accel,y)*0.00980665,dot(accel,up)*0.00980665-9.80665],up))
 }
 impl Desktop {
     /// Coarse short-stroke mouse candidate, rather than metric dead reckoning.
@@ -47,13 +58,26 @@ impl Desktop {
     pub fn pause_translation(&mut self){self.stop();}
     pub fn sample(&mut self,s:Raw)->Point {self.sample_with_translation(s,true)}
     pub fn sample_with_translation(&mut self,s:Raw,allow_translation:bool)->Point {
+        self.sample_with_gravity(s,allow_translation,None)
+    }
+    pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
+        let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
+        self.state.board_gravity=board.is_some();
+        if gravity.is_some()&&board.is_none(){self.clutch();return Point::default();}
         let dt=if let Some((sequence,ms))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return Point::default();}
             let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
             if n!=1||dt>0.05||dt<=0.{
                 if let Some(rest)=self.rest.as_mut(){*rest=rest::Rest::default();}self.state.stationary=false;
-                self.state.gaps+=1;self.clutch();self.last=Some((s.sequence,s.sensor_ms));
+                self.state.gaps+=1;self.stop();self.last=Some((s.sequence,s.sensor_ms));
+                if let Some((_,up))=board.filter(|_|self.state.calibrated){
+                    // The board's current absolute gravity remains usable
+                    // despite a missing BLE interval. Drop old XY velocity;
+                    // do not demand a new stationary calibration each time.
+                    self.state.clutched=false;self.reacquire_plane=false;
+                    if let Some(surface)=self.surface.as_mut(){surface.reanchor_if_ready(up);}
+                }else{self.clutch();if self.surface.is_some(){self.reacquire_plane=true;}}
                 // A gap invalidates displacement integration, not the CURRENT
                 // rate observation. The coarse angular path must never reuse
                 // the rate from before the gap as this sample's direction.
@@ -64,18 +88,27 @@ impl Desktop {
             dt
         }else{0.01};
         self.last=Some((s.sequence,s.sensor_ms));self.state.samples+=1;
-        self.state.stationary=self.rest.as_mut().is_some_and(|rest|rest.sample(s.gyro_dps,s.accel_mg));
+        // CIM6 supplies gravity independently of this receive stream. Its
+        // gyro offset can still be adapting at entry; do not make an
+        // accelerometer-only mouse wait for another gyro calibration.
+        let rest_gyro=if board.is_some(){[0.;3]}else{s.gyro_dps};
+        self.state.stationary=self.rest.as_mut().is_some_and(|rest|rest.sample(rest_gyro,s.accel_mg));
         let norm=s.accel_mg.iter().map(|x|x*x).sum::<f64>().sqrt();
         if !self.state.calibrated {
-            if !(850. ..=1150.).contains(&norm)||s.gyro_dps.iter().any(|x|x.abs()>3.){
+            if !(850. ..=1150.).contains(&norm)||(if board.is_some(){!self.state.stationary}else{s.gyro_dps.iter().any(|x|x.abs()>3.)}){
                 self.start_ms=None;self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];return Point::default();
             }
             let start=*self.start_ms.get_or_insert(s.sensor_ms);self.count+=1;
             for i in 0..3{self.accel_sum[i]+=s.accel_mg[i];self.gyro_sum[i]+=s.gyro_dps[i];}
-            if s.sensor_ms.wrapping_sub(start)<1000||self.count<80{return Point::default();}
-            let accel=self.accel_sum.map(|x|x/self.count as f64);self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
-            self.fusion.align(accel);
-            let (earth,_)=self.fusion.desktop_step([0.;3],accel,dt,true);self.earth_bias=earth;
+            let ready=if board.is_some(){s.sensor_ms.wrapping_sub(start)>=200&&self.count>=20}else{s.sensor_ms.wrapping_sub(start)>=1000&&self.count>=80};
+            if !ready{return Point::default();}
+            let accel=self.accel_sum.map(|x|x/self.count as f64);
+            if let Some(g)=gravity{
+                self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;
+            }else{
+                self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);
+                self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
+            }
             self.state.calibrated=true;self.stop();return Point::default();
         }
         let rates=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
@@ -85,17 +118,17 @@ impl Desktop {
         // Never learn that force as gravity during a lifted reposition.
         let small_force=self.state.linear_mps2.iter().map(|v|v*v).sum::<f64>()<0.055f64.powi(2);
         let correction=if self.surface.is_some(){small_force&&(self.state.stationary||(!self.state.moving&&on_plane))}else{self.state.stationary||!self.state.moving};
-        let (earth,up)=self.fusion.desktop_step(rates,s.accel_mg,dt,correction);
+        let (earth,up)=board.unwrap_or_else(||self.fusion.desktop_step(rates,s.accel_mg,dt,correction));
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
-        let surface_ready=if let Some(surface)=self.surface.as_mut(){
-            let allowed=surface.sample(s.sensor_ms,linear[2],up,self.state.stationary);
+        let surface_ready=if self.state.clutched{false}else if let Some(surface)=self.surface.as_mut(){
+            let allowed=surface.sample_with_planar(s.sensor_ms,linear[2],linear[0].hypot(linear[1]),up,self.state.stationary);
             self.state.surface=Some(surface.status.clone());allowed
         }else{true};
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
             // for the OLD gravity plane/residual to become quiet locks it out.
             // Re-arm from stable raw observations at the NEW resting pose.
-            let stable=(850. ..=1150.).contains(&norm)&&rates.iter().all(|x|x.abs()<2.)&&
+            let stable=(850. ..=1150.).contains(&norm)&&(board.is_some()||rates.iter().all(|x|x.abs()<2.))&&
                 (self.count==0||(0..3).all(|i|(s.accel_mg[i]-self.accel_sum[i]/self.count as f64).abs()<15.));
             if !stable{self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];self.quiet=0.;return Point::default();}
             self.count+=1;self.quiet+=dt;
@@ -103,8 +136,15 @@ impl Desktop {
             let settled=if self.surface.is_some(){self.quiet>=0.12&&self.count>=8}else{self.quiet>=0.3&&self.count>=20};
             if settled{
                 let accel=self.accel_sum.map(|x|x/self.count as f64);
-                self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
-                self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
+                if let Some(g)=gravity{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
+                else{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
+                if self.reacquire_plane{
+                    // A missing interval invalidates height, not the board's
+                    // current fused gravity. Reacquire from actual observed
+                    // rest instead of demanding a return to an invented1.4m.
+                    self.surface=self.surface.as_ref().map(|_|surface::Surface::default());
+                    self.state.surface=self.surface.as_ref().map(|s|s.status.clone());self.reacquire_plane=false;
+                }
                 self.state.clutched=false;self.stop();
             }
             return Point::default();
@@ -157,6 +197,45 @@ mod tests {
     use super::*;
     fn raw(n:u32,x:f64,y:f64)->Raw{Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
     fn ready()->Desktop{let mut d=Desktop::default();for n in 0..=120{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d}
+    #[test]fn board_gravity_is_used_directly_without_reintegrating_the_received_gyro(){
+        let mut d=Desktop::surface_mouse();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        assert!(d.state.calibrated&&d.state.board_gravity);
+        for n in 150..200{let mut s=raw(n,0.,0.);s.gyro_dps=[20.,10.,5.];assert_eq!(d.sample_with_gravity(s,true,up),Point::default());}
+        assert_eq!(d.state.position_m,[0.;2]);assert!(!d.state.moving);
+    }
+    #[test]fn board_gravity_entry_learns_rest_without_waiting_for_a_second_gyro_bias(){
+        let mut d=Desktop::surface_mouse();
+        for n in 0..60{let mut s=raw(n,0.,0.);s.gyro_dps=[4.,-4.,2.];d.sample_with_gravity(s,true,Some([0.,0.,1000.]));}
+        assert!(d.state.calibrated&&d.state.board_gravity);assert_eq!(d.state.position_m,[0.;2]);
+    }
+    #[test]fn fresh_fused_acceleration_after_a_gap_resumes_without_a_new_stationary_second(){
+        let mut d=Desktop::surface_mouse();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..160{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        let position=d.state.position_m;assert_eq!(d.sample_with_gravity(raw(300,80.,0.),true,up),Point::default());
+        assert!(d.state.calibrated&&!d.state.clutched);assert_eq!(d.state.velocity_mps,[0.;2]);
+        d.sample_with_gravity(raw(301,80.,0.),true,up);d.sample_with_gravity(raw(302,80.,0.),true,up);
+        assert!(d.state.position_m[0]>position[0]);
+    }
+    #[test]fn a_fused_planar_stroke_uses_acceleration_and_keeps_a_constant_velocity_section(){
+        let mut d=Desktop::surface_mouse();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        let(mut a,mut b)=(0.,0.);
+        for n in 150..195{let x=if n<165{100.}else if n<180{0.}else{-100.};d.sample_with_gravity(raw(n,x,0.),true,up);if n==165{a=d.state.position_m[0];}if n==179{b=d.state.position_m[0];}}
+        assert!(b-a>0.01);assert!(d.state.position_m[0]>0.02&&d.state.position_m[1].abs()<0.001);
+    }
+    #[test]fn a_gap_drops_old_velocity_but_keeps_current_board_pose_usable(){
+        let mut d=Desktop::surface_mouse();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..165{d.sample_with_gravity(raw(n,100.,0.),true,up);}
+        assert!(d.state.moving);
+        let mut s=raw(250,0.,0.);s.accel_mg=[260.,0.,965.];d.sample_with_gravity(s,true,Some([260.,0.,965.]));
+        assert!(!d.state.clutched);assert_eq!(d.state.velocity_mps,[0.;2]);let position=d.state.position_m;
+        for n in 251..351{let mut s=raw(n,0.,0.);s.accel_mg=[260.,0.,965.];d.sample_with_gravity(s,true,Some([260.,0.,965.]));}
+        assert!(!d.state.clutched);assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
+        assert_eq!(d.state.position_m,position);
+    }
     #[test]fn c_raw_fixture_and_crc(){let h="43494d310503020108000000f0ffffff0100feffe8036b03589eff7f252106ed";let p=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();let s=Raw::parse(&p).unwrap();assert_eq!(s.accel_mg,[1.,-2.,1000.]);assert_eq!(s.gyro_dps,[8.75,-250.,327.67]);}
     #[test]fn stationary_noise_does_not_accumulate_displacement(){let mut d=ready();for n in 121..6121{let noise=((n*7919)%5)as f64-2.;d.sample(raw(n,noise,-noise));}assert!(d.state.position_m[0].hypot(d.state.position_m[1])<0.0001);}
     #[test]fn physical_stroke_direction_and_constant_velocity_are_not_discarded(){
