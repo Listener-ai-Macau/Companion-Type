@@ -1,0 +1,6 @@
+{
+  "reason": "First owned accessibility dump raced picker window registration; later read-only activity evidence proves same17447 app, same63 display, resumed DocumentsUI on owned task. No product crash. Resume the already-open picker, no duplicate restore request.",
+  "originalSha256": "8eca7ad143f9d11bc1967f1da9b1f3ab168ad6462c724dbc4b74907219052c78",
+  "fixedSha256": "eb1b490e0fee30fa4b921c7eda67277bfb9e24ff5a4f701ffe6d7f9928385cdd",
+  "scope": "Only initial dump in existing bounded loop; no input replay, timeout increase, main-display fallback or application change."
+}

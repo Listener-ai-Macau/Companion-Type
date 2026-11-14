@@ -1,0 +1,5 @@
+{
+  "error": "TimeoutError: browserType.connectOverCDP: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:64266\u001b[22m\n",
+  "stack": "browserType.connectOverCDP: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - <ws preparing> retrieving websocket url from http://127.0.0.1:64266\u001b[22m\n\n    at connect (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\organization_ui.cjs:5:119)\n    at C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\review_ui_reading_phone164.cjs:6:46\n    at Object.<anonymous> (C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\work\\review_ui_reading_phone164.cjs:84:35)",
+  "phase": "before-restart"
+}

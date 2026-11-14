@@ -16,6 +16,13 @@ module.exports=async(page,plan,out,reopened)=>{
   await chips.getByRole('button',{name:'清除筛选',exact:true}).click();assert.equal(await query.inputValue(),'公开中文');assert.equal(await page.locator('.ct-library-card').count(),1);await page.waitForFunction(()=>document.activeElement?.id==='ct-library-filter-button');await page.locator('.ct-library-search').getByRole('button',{name:'清除',exact:true}).click();
  }
  await page.locator('.ct-library-card').first().click();await nav().waitFor();
+ if(spec.expectCompleteTitle){
+  const title=page.getByRole('textbox',{name:'记录标题',exact:true});assert.equal(await title.inputValue(),row.title);
+  await page.waitForFunction(()=>{const n=document.querySelector('.notebook-title-field');return n&&n.scrollWidth<=n.clientWidth&&n.scrollHeight<=n.clientHeight;});
+  const geometry=await title.evaluate(n=>({value:n.value,width:n.clientWidth,height:n.clientHeight,scrollWidth:n.scrollWidth,scrollHeight:n.scrollHeight,wrapsWithoutTruncating:n.scrollWidth<=n.clientWidth&&n.scrollHeight<=n.clientHeight}));
+  fs.writeFileSync(path.join(out,'actual-complete-title.json'),JSON.stringify(geometry,null,2));
+ }
+
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
  if(spec.expectVisualMeeting)await require('./windows_visual_meeting_ui.cjs')(page,spec,out);

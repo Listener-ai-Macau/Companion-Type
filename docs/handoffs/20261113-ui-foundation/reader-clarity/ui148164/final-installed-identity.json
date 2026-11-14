@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-14T21:58:06+08:00",
+  "state": "FINAL_INSTALLED148_EXE_DLL_AND164_APK_EXACT_IDENTITIES_MATCH",
+  "windowsVersion": "0.1.148",
+  "androidVersion": "0.1.164",
+  "windowsExeSha256": "b2ec2c35ed575616b19b322d9b1724a66e36c0958c8f0ee6fb8567a7c8d5f671",
+  "windowsDllSha256": "cc0b149afa93b9f076d9b121a2cb7800edc5ec0cde5ca7590219e234bac5bfae",
+  "androidApkSha256": "3c05ed2ca3109ea474ead0947ec525b5eccd4f42d97c3aca628467b1028a7778",
+  "scope": "Read-only exact installed app identities; no app launch, user content, keyboard, audio, model or BLE operation."
+}
