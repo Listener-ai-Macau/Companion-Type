@@ -3862,7 +3862,7 @@ function meetingSource(session: CompanionV1HostSession): string {
 
 function MinutesReadingView(props:Parameters<typeof MinutesReadingBody>[0]) {
   const reading=props.noteContext?{body:props.markdown,review:''}:meetingReadingSources(props.markdown);
-  return <MeetingReadingFrame markdown={props.markdown}>
+  return <MeetingReadingFrame markdown={props.markdown} title={props.recordingTitle} speakerSources={props.sources} onOpenSpeakerSource={props.onOpenSource} blocked={props.blocked}>
     <MinutesReadingBody {...props} markdown={reading.body} savedMarkdown={props.savedMarkdown??props.markdown}/>
     {reading.review.trim()?<details className="ct-full-minutes ct-source-review"><summary>原文依据与待核对内容</summary>
       <p className="ct-step-meta">保留原始转写和先前整理中的核对材料；这里的片段不代表已确认的会议结论。</p>
@@ -3997,7 +3997,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
   let overviewEnd=overviewStart+1;
   while(overviewEnd<visibleBlocks.length&&visibleBlocks[overviewEnd].type==='item'&&!visibleBlocks[overviewEnd].action)overviewEnd++;
   const overviewCount=overviewStart<0?0:overviewEnd-overviewStart-1;
-  const topicOverview=hideGeneratedNotices&&overviewStart>=0&&visibleBlocks[overviewStart].text==='全会重点'&&overviewCount>0;
+  const topicOverview=overviewStart>=0&&['全会重点','会议概览'].includes(visibleBlocks[overviewStart].text)&&overviewCount>0;
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   return (
     <article className="ct-minutes-article">

@@ -1,15 +1,24 @@
 import {useEffect,useMemo,useRef,useState,type ReactNode} from 'react';
-import {meetingSectionTitles} from './meetingOutline';
+import {meetingOutline,meetingSectionTitles} from './meetingOutline';
 import {meetingHeadingForDisplay} from './meetingReading';
+import {BookOpen,GitBranch,ArrowUpRight,Users} from 'lucide-react';
+import {MeetingMapView} from './MeetingMapView';
+import {meetingMapModel} from './meetingMap';
+import {MeetingSpeakers} from './MeetingSpeakers';
+import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import './meetingReadingFrame.css';
+import './meetingVisual.css';
 
-export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:string;sections?:readonly string[];children:ReactNode}){
+export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;blocked?:boolean;children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
  const outline=useRef<HTMLDetailsElement>(null);
  const sectionKey=sections.join('\n');
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
  const [active,setActive]=useState<string|null>(null);
+ const [view,setView]=useState<'reading'|'map'|'speakers'>('reading');
+ const model=useMemo(()=>meetingMapModel(markdown),[markdown]);
+ const routes=useMemo(()=>meetingOutline(markdown).filter(item=>item.kind!=='summary'),[markdown]);
  useEffect(()=>{
   const canvas=content.current;if(!canvas)return;
   let root:HTMLElement|Window=window;
@@ -28,22 +37,38 @@ export function MeetingReadingFrame({markdown,sections=[],children}:{markdown:st
   schedule();root.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);
   canvas.addEventListener('toggle',schedule,true);
   return()=>{root.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);canvas.removeEventListener('toggle',schedule,true);window.cancelAnimationFrame(frame);};
- },[markdown]);
- function navigate(title:string){
+ },[markdown,view]);
+ function navigate(title:string,text?:string){
+  setView('reading');
+  window.requestAnimationFrame(()=>{
   const target=Array.from(content.current?.querySelectorAll<HTMLElement>('[data-meeting-heading]')??[])
    .find(el=>el.getAttribute('data-meeting-heading')===title);
   if(!target)return;
   for(let ancestor=target.parentElement;ancestor&&ancestor!==content.current;ancestor=ancestor.parentElement)
    if(ancestor.tagName==='DETAILS')(ancestor as HTMLDetailsElement).open=true;
-  target.tabIndex=-1;target.focus({preventScroll:true});
+  const exactText=text?.replace(/\s+/g,' ').trim();
+  const item=exactText?Array.from(content.current?.querySelectorAll<HTMLElement>('.ct-overview-topic,.ct-minutes-item,.minutes-item')??[]).find(el=>el.getAttribute('data-meeting-topic')===text||el.textContent?.replace(/\s+/g,' ').trim()===exactText):null;
+  const destination=item??target;
+  destination.tabIndex=-1;destination.focus({preventScroll:true});
   if(outline.current)outline.current.open=false;
   setActive(title);
-  target.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  destination.scrollIntoView({block:'start',behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  });
  }
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
-  {indexed&&titles.length>=2&&<aside className="meeting-reading-sidebar"><details ref={outline} className="meeting-outline-collapse" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}><summary>目录</summary><nav className="meeting-outline" aria-label="会议速览">
+  {titles.length>0&&<div className="meeting-reading-start">
+   <div className="meeting-reading-intro"><div><span>会议纪要</span><strong>会议脉络</strong></div><div className="meeting-reading-views" role="group" aria-label="纪要查看方式">
+    <button type="button" aria-pressed={view==='reading'} onClick={()=>setView('reading')}><BookOpen size={14} aria-hidden="true"/>阅读纪要</button>
+    <button type="button" aria-pressed={view==='map'} onClick={()=>setView('map')}><GitBranch size={14} aria-hidden="true"/>思维导图</button>
+    <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={14} aria-hidden="true"/>按发言人</button>
+   </div></div>
+   {view==='reading'&&<div className="meeting-reading-shortcuts"><span>{model.topics.length?model.topics.length+' 个'+model.topicLabel:'会议内容'}</span>{routes.map(route=><button type="button" key={route.kind} onClick={()=>navigate(route.title)}>{route.label}<small>{route.count}</small><ArrowUpRight size={12} aria-hidden="true"/></button>)}</div>}
+  </div>}
+  {view==='map'&&<MeetingMapView markdown={markdown} title={title} onLocate={navigate}/>}
+  {view==='speakers'&&<MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/>}
+  {view==='reading'&&indexed&&titles.length>=2&&<aside className="meeting-reading-sidebar"><details ref={outline} className="meeting-outline-collapse" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}><summary>目录</summary><nav className="meeting-outline" aria-label="会议速览">
    {titles.map((title,i)=><button type="button" key={i} aria-current={active===title?'location':undefined} onClick={()=>navigate(title)}>{meetingHeadingForDisplay(title)}</button>)}
   </nav></details></aside>}
-  <div className="meeting-reading-content" ref={content}>{children}</div>
+  <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;
 }

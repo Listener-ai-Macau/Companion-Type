@@ -12,7 +12,7 @@ export function topicReadingParts(text:string):{title:string|null;body:string} {
 /** Granola/Notta document pattern: visible topic heading and its actual notes. */
 export function MeetingTopic({text,children}:{text:string;children?:ReactNode}) {
  const parts=topicReadingParts(text);
- return <section className="ct-overview-topic">
+ return <section className="ct-overview-topic" data-meeting-topic={text}>
   {parts.title&&<h5 className="ct-overview-topic-title">{parts.title}</h5>}
   <div className="ct-overview-topic-body"><p>{parts.body}{children}</p></div>
  </section>;
