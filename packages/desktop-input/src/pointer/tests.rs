@@ -427,3 +427,57 @@ fn actual_typec_front_lift_moves_up_in_the_existing_angular_mapper() {
     assert!(!p.settings.desktop_motion);
     assert!(highest<340.,"raising the physical Type-C front must move upward, got {highest}");
 }
+
+fn surface_pointer()->Pointer{
+    let settings=Settings{desktop_motion:true,contact_regions:true,contact_profile:Some(side_profile()),key_role:KeyRole::Regrip,..Settings::relative_remote()};
+    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),72);
+    let mut p=Pointer::new(settings,Point{x:960.,y:540.});
+    for n in 0..121{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
+    assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);p
+}
+fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
+    p.sample_raw(desktop::Raw{sequence:n+1,sensor_ms:n*10,accel_mg:a,gyro_dps:g},n as f64/100.);
+    // Real CIM6 also dispatches a fused packet. It must not double-count the
+    // clock or reactivate the angular mapper in surface mode.
+    p.sample(Sample{fused:true,device_ready:Some(true),gyro:g,..sample(n+1,n*10,false)},n as f64/100.,bounds());
+    p.frame(n as f64/100.,bounds())
+}
+#[test]fn surface_pointer_uses_acceleration_with_zero_gyro_and_keeps_a_coasting_stroke(){
+    let mut p=surface_pointer();let mut begin=0.;let mut end=0.;
+    for n in 121..281{
+        let a=if n<141{100.}else if n<211{0.}else if n<231{-100.}else{0.};
+        surface_frame(&mut p,n,[a,0.,1000.],[0.;3]);
+        if n==145{begin=p.shown.x;}if n==205{end=p.shown.x;}
+    }
+    assert!(end-begin>100.,"constant speed must not be discarded as rest: {begin}->{end}");
+    assert!(p.shown.x>1060.);assert!((p.shown.y-540.).abs()<2.);
+    assert_eq!(p.metrics.samples,281);assert!(p.coarse.as_ref().unwrap().desktop.has_surface());
+}
+#[test]fn surface_pointer_does_not_use_gyro_as_a_fallback_direction(){
+    let mut p=surface_pointer();let origin=p.shown;
+    for n in 121..221{let f=surface_frame(&mut p,n,[0.,0.,1000.],[0.,0.,30.]);assert!(f.position.is_none());}
+    assert_eq!(p.shown,origin);
+}
+#[test]fn surface_pointer_lift_and_air_reposition_do_not_move_then_landing_rearms(){
+    let mut p=surface_pointer();let origin=p.shown;let mut n=121;
+    for(count,z,x,rest)in[(15,100.,0.,false),(20,0.,50.,false),(15,-100.,0.,false),(100,0.,0.,true),(15,-100.,0.,false),(20,0.,-50.,false),(15,100.,0.,false),(100,0.,0.,true)]{
+        let _=rest;for _ in 0..count{surface_frame(&mut p,n,[x,0.,1000.+z],[0.;3]);n+=1;assert_eq!(p.shown,origin,"air reposition leaked at{n}: {:?}",p.planar_state());}
+    }
+    assert!(!p.metrics.surface_paused,"landing failed to rearm: {:?}",p.planar_state());
+    for _ in 0..20{surface_frame(&mut p,n,[100.,0.,1000.],[0.;3]);n+=1;}
+    assert!(p.shown.x>origin.x,"must still track after being put down");
+}
+#[test]fn surface_clicks_keep_the_target_and_key_regrip_reestablishes_the_plane(){
+    let mut p=surface_pointer();let origin=p.shown;let mut clicks=vec![];
+    for n in 121..205{
+        let shock=n==140||n==160;let a=if shock{[1000.,0.,1000.]}else{[0.,0.,1000.]};let g=if shock{[70.,0.,0.]}else{[0.;3]};
+        let f=surface_frame(&mut p,n,a,g);clicks.extend(f.buttons);
+        if n==141||n==161{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        assert_eq!(p.shown,origin);
+    }
+    assert_eq!(clicks,vec![Button::Click(origin),Button::Click(origin)]);
+    p.control(Control{sequence:205,sensor_ms:2040,events:DOWN}).unwrap();
+    p.control(Control{sequence:206,sensor_ms:2050,events:UP}).unwrap();assert!(!p.metrics.calibrated);
+    for n in 206..330{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
+    assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);assert_eq!(p.shown,origin);
+}

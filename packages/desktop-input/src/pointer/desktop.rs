@@ -3,7 +3,7 @@
 //! Causal stroke integration/zero-velocity decisions are Companion adapters;
 //! the upstream Gait-Tracking end-of-stroke interpolation is NONCAUSAL and is
 //! deliberately not represented as a real-time mouse implementation.
-use super::{fusion,rest,Point};
+use super::{fusion,rest,surface,Point};
 use serde::Serialize;
 
 #[derive(Clone,Copy,Debug)]
@@ -22,26 +22,31 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3]}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
 pub struct Desktop {
     fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
+    surface:Option<surface::Surface>,
     pub state:State,
 }
 impl Default for Desktop {
-    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,state:State::default()}}
+    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,surface:None,state:State::default()}}
 }
 impl Desktop {
     /// Coarse short-stroke mouse candidate, rather than metric dead reckoning.
     /// Rest confirmation deliberately discards sustained quiet coasting. Keep
     /// Default's reference integrator for explicit constant-velocity analysis.
     pub fn coarse_gestures()->Self{Self{rest:Some(rest::Rest::default()),..Self::default()}}
+    pub fn surface_mouse()->Self{Self{surface:Some(surface::Surface::default()),..Self::coarse_gestures()}}
+    pub fn has_surface(&self)->bool{self.surface.is_some()}
+    pub fn contact(&mut self,ms:u32){if let Some(surface)=self.surface.as_mut(){surface.contact(ms);self.clutch();}else{self.tap();}}
     fn stop(&mut self){self.state.moving=false;self.state.velocity_mps=[0.;2];self.filtered=[0.;2];self.quiet=0.;self.stroke=0.;self.braking=false;}
     fn clutch(&mut self){self.stop();self.state.clutched=true;self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];}
     pub fn tap(&mut self){self.clutch();}
     pub fn pause_translation(&mut self){self.stop();}
-    pub fn sample(&mut self,s:Raw)->Point {
+    pub fn sample(&mut self,s:Raw)->Point {self.sample_with_translation(s,true)}
+    pub fn sample_with_translation(&mut self,s:Raw,allow_translation:bool)->Point {
         let dt=if let Some((sequence,ms))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return Point::default();}
@@ -75,8 +80,17 @@ impl Desktop {
         }
         let rates=std::array::from_fn(|i|s.gyro_dps[i]-self.gyro_bias[i]);
         self.state.gyro_dps=rates;
-        let (earth,_)=self.fusion.desktop_step(rates,s.accel_mg,dt,self.state.stationary||!self.state.moving);
+        let on_plane=self.surface.as_ref().is_none_or(|s|s.status.phase==surface::Phase::Ready);
+        // Constant linear acceleration can pass a variance-only rest test.
+        // Never learn that force as gravity during a lifted reposition.
+        let small_force=self.state.linear_mps2.iter().map(|v|v*v).sum::<f64>()<0.055f64.powi(2);
+        let correction=if self.surface.is_some(){small_force&&(self.state.stationary||(!self.state.moving&&on_plane))}else{self.state.stationary||!self.state.moving};
+        let (earth,up)=self.fusion.desktop_step(rates,s.accel_mg,dt,correction);
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
+        let surface_ready=if let Some(surface)=self.surface.as_mut(){
+            let allowed=surface.sample(s.sensor_ms,linear[2],up,self.state.stationary);
+            self.state.surface=Some(surface.status.clone());allowed
+        }else{true};
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
             // for the OLD gravity plane/residual to become quiet locks it out.
@@ -86,7 +100,8 @@ impl Desktop {
             if !stable{self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];self.quiet=0.;return Point::default();}
             self.count+=1;self.quiet+=dt;
             for i in 0..3{self.accel_sum[i]+=s.accel_mg[i];self.gyro_sum[i]+=s.gyro_dps[i];}
-            if self.quiet>=0.3&&self.count>=20{
+            let settled=if self.surface.is_some(){self.quiet>=0.12&&self.count>=8}else{self.quiet>=0.3&&self.count>=20};
+            if settled{
                 let accel=self.accel_sum.map(|x|x/self.count as f64);
                 self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);
                 self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
@@ -94,7 +109,8 @@ impl Desktop {
             }
             return Point::default();
         }
-        if self.state.stationary{
+        if !allow_translation||!surface_ready{self.stop();return Point::default();}
+        if self.state.stationary&&(self.surface.is_none()||!self.state.moving||self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<0.005){
             // Residual gravity/offset is not evidence of continued motion.
             // Confirm rest from raw six-axis deviations independently of the
             // integrated velocity, then discard that residual and old tail.

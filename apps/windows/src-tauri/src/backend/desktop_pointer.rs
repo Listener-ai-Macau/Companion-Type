@@ -15,9 +15,8 @@ fn change(f:impl FnOnce(&mut Status)){f(&mut STATUS.lock().unwrap_or_else(|e|e.i
 pub fn status()->Status{STATUS.lock().unwrap_or_else(|e|e.into_inner()).clone()}
 pub fn request_stop(){if let Some(s)=SESSION.lock().unwrap_or_else(|e|e.into_inner()).as_ref(){s.stop.store(true,Ordering::Release);}}
 pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,controls_cursor:bool)->Result<Status,String>{
-    // Owner paused planar motion while the angular pointer is tuned. Old
-    // persisted clients must not reactivate the mixed experimental mapper.
-    if settings.desktop_motion {return Err("桌面平移已暂停，请使用转动／倾斜模式。".into());}
+    // Owner2026-11-14 resumed a separate surface mode after accepting143
+    // shell clicks. The desktop core never steers from gyro in this mode.
     settings.validate().map_err(str::to_string)?;
     let pointer_options=settings.pointer_options();
     let mut session=SESSION.lock().map_err(|_|"空中鼠标暂时不可用。")?;
@@ -59,12 +58,13 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                     change(|s|{s.metrics=metrics.clone();s.contacts=contacts.clone();if s.ready {s.message=if metrics.stream_stale{"正在等待动作数据，光标已停止。"}
                         else if metrics.paused{"已暂停；换好握姿后，从当前位置继续。"}
                         else if metrics.regripping{"光标已稳住，可以轻敲点选或换握姿；松开按键继续。"}
-                        else if !metrics.calibrated{if metrics.tap_events>0{"已收到轻敲；先稳住卡片约1秒，等就绪后再点选。"}else{"请把卡片放稳约1秒，正在校准…"}}
+                        else if !metrics.calibrated{if s.settings.desktop_motion{"请在桌面平放约1秒，正在确定使用平面…"}else if metrics.tap_events>0{"已收到轻敲；先稳住卡片约1秒，等就绪后再点选。"}else{"请把卡片放稳约1秒，正在校准…"}}
+                        else if metrics.surface_paused{"已暂停移动：请放回开始时的平面并放稳。若仍未恢复，可点“重新放稳”。"}
                         else if contacts.learning.is_some(){if contacts.learning==Some(companion_desktop_input::pointer::contact::Side::Left){"请在左侧自然轻敲三次；校准时不控制光标。"}else{"请在右侧自然轻敲三次；校准时不控制光标。"}}
+                        else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"桌面平移试用：前后左右推动移动；抬起回位时暂停。左前左键、右前右键，连续两下左前是双击。Esc退出。"}
                         else if controls_cursor&&s.settings.contact_regions&&contacts.calibrated{"Type-C朝前：敲左前是左键，敲右前是右键；连续敲左前两次是双击。按住实体键换握姿，Esc退出。"}
                         else if s.settings.contact_regions&&!contacts.calibrated{"动作已连接；请先校准左前和右前敲击，校准完成后才能用外壳点击。"}
-                        else if controls_cursor&&s.settings.desktop_motion&&contacts.calibrated{"平移或转动控制方向；左侧轻敲左击，右侧轻敲右击；连续轻敲两次即双击。按住按键拖拽，Esc退出。"}
-                        else if controls_cursor&&s.settings.desktop_motion{"平移或转动控制方向；轻敲或短按左击，按住拖拽。可校准左右轻敲。Esc退出。"}
+                        else if controls_cursor&&s.settings.desktop_motion{"在桌面前后左右推动移动；抬起回位时暂停。轻敲左击，可校准左右前角。Esc退出。"}
                         else if controls_cursor&&s.settings.relative_direct&&s.settings.key_role==companion_desktop_input::pointer::KeyRole::Regrip{"倾斜移动，轻敲外壳点击；按住实体键可稳住点选或换握姿，松开继续。Esc退出。"}
                         else if controls_cursor&&s.settings.relative_direct{"倾斜移动，轻敲或短按实体键点击，按住拖拽。暂停可换握姿，Esc退出。"}
                         else if controls_cursor{"左右转动移动光标；敲击机身或短按点击，按住拖拽。Esc退出。"}
