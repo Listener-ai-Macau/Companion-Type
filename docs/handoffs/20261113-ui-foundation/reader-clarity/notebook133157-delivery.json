@@ -1,0 +1,66 @@
+{
+  "at": "2026-11-14T12:29:08+08:00",
+  "state": "NOTEBOOK133157_UI_INSTALLED_CONTINUOUS_NATIVE_REVIEW_AND_DATA_PROTECTION_PASSED_OWNER_TASTE_OPEN",
+  "windowsVersion": "0.1.133",
+  "androidVersion": "0.1.157",
+  "windowsSource": "9675a2c88f5eba0d647cb68420822ff7a46d3eed",
+  "androidSource": "a3cde97ab3e8e4970f70c5e96d829c6a7efebe93",
+  "windowsOldDataFilesIdentical": 249,
+  "phoneOldContentFilesIdentical": 6162,
+  "phoneAllPreviousLibrariesRetained": true,
+  "phoneOriginalLibraryAndAppearanceRestored": true,
+  "ownPhoneDisplayClosed": true,
+  "scope": "Coherent frontend UI delivery. Windows uses prior real public30m saved results; phone uses declared public90s saved recording for the actual reading journey. No new model or physical capture qualification.",
+  "references": [
+    {
+      "name": "Granola official note layout and grouped reading",
+      "url": "https://www.granola.ai/"
+    },
+    {
+      "name": "Granola official source checking",
+      "url": "https://docs.granola.ai/help-center/taking-notes/ai-enhanced-notes"
+    }
+  ],
+  "engineering": {
+    "actualWindowsSaveSourceSelectedExportDateAndTrueProcessReopen": true,
+    "actualWindowsPublicMinutesThemesTranscriptSwitchMutedReplayAndSourceDataUnchanged": true,
+    "actualPhoneMoreMenuOrganizationMindmapExportThemesTranscriptSwitchAndTrueProcessReopen": true,
+    "actualPhoneFinalCssLayerVerified": true,
+    "phoneAiConfigured": false,
+    "newModelsRunAfterOwnerAssignment": false,
+    "modelLogicChangedInDelivery": false,
+    "modelWorkOwnerAssignedOtherChat": true,
+    "noSpeakerBoardMicrophoneThisBatch": true
+  },
+  "visualChanges": [
+    "Compact title/replay/export header and earlier reading content on desktop.",
+    "Shared paper, ink, type and spacing; dark theme no longer inherits older purple/blue palettes.",
+    "Phone idle replay occupies one row; inherited title padding removed; duplicate minutes/AI entry consolidated in More.",
+    "Existing overview supplies library snippet; literal raw-source search and complete originals remain available.",
+    "Outline closes after selection/Escape; retained keyboard focus and narrow-screen layouts."
+  ],
+  "internalAndroid156RejectedAndFixed": "Actual app exposed CSS import-order and specificity conflicts absent from a standalone reader preview. Final157 corrects the source order; original156 failure and artifacts retained.",
+  "remaining": [
+    "Owner对完整UI的清晰、精致和顺手感尚未最终签收。",
+    "模型/转写/纪要事实质量由Owner安排的另一个会话继续；本轮保留132/155模型逻辑。",
+    "手机AI配置与实体输入手感、硬件可靠性、整机售卖资格不由本UI批次关闭。"
+  ],
+  "frontendEngineeringAcceptancePassed": true,
+  "ownerAccepted": false,
+  "fullAcceptancePassed": false,
+  "saleQualified": false,
+  "privateOrMixedRoomAudioTextIncluded": false,
+  "rawAudioModelsKeysCredentialsIncluded": false,
+  "ownerPopupSent": false,
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-12\\companion-frontend-collaboration-20261112\\outputs\\Companion-Notebook-133-157-20261114.zip",
+  "archiveBytes": 43637299,
+  "sha256": "e50797f4f29e7562081db3109a0c30b112d20f6332ed25ea1ca2752f9f96b939",
+  "msiSha256": "87e2d62871b55d7dfee09b6ba8e837de5244c9f846dcdee29c59cb9dfa4b30d7",
+  "apkSha256": "e2541149f4bf8bc99cd0f1b8e9c19381ff4f62bdd961c7d14c5e7d56c9a55c78",
+  "privateRemoteReadbackVerified": true,
+  "publishedPublicly": false,
+  "report": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\whole-delivery133156\\complete-notebook133157\\交付说明.txt",
+  "privateDraft": "https://github.com/Listener-ai-Macau/Companion-Type/releases/tag/untagged-1f2d0e3bd5bba4d2aeab",
+  "privateReadbackSha256": "e50797f4f29e7562081db3109a0c30b112d20f6332ed25ea1ca2752f9f96b939",
+  "privateRemoteProtectedAt": "2026-11-14T12:29:35+08:00"
+}

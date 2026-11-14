@@ -1,0 +1,13 @@
+from pathlib import Path
+from datetime import datetime
+import json,subprocess,hashlib
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');A=R/'companion-core-android20261109';O=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113');Q=O/'whole-delivery133156';C=R/'docs/handoffs/20261110-android-media-import'
+assert json.loads((C/'android156/end-session.json').read_bytes())['ownedAppDisplayForwardJarClosed']
+p=A/'apps/android/app/build.gradle';raw=p.read_bytes();assert raw.count(b'versionCode 156')==1;p.write_bytes(raw.replace(b'versionCode 156',b'versionCode 157').replace(b"versionName '0.1.156'",b"versionName '0.1.157'"))
+G=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','pack.threads=1','-c','pack.windowMemory=64m','-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol'];paths=['apps/mobile/src/App.tsx','apps/mobile/src/notebookMobile.css','apps/android/app/build.gradle']
+subprocess.run(G+['add','--',*paths],cwd=A,check=True);subprocess.run(G+['diff','--cached','--check','--',*paths],cwd=A,check=True);subprocess.run(G+['commit','--only','-m','Make notebook theme the final mobile layer and remove inherited reader gaps','--',*paths],cwd=A,check=True)
+d=json.loads((C/'android156/source.json').read_bytes());d.update(at=datetime.now().astimezone().isoformat(timespec='seconds'),versionCode=157,versionName='0.1.157',frontendSourceCommit=subprocess.check_output(G+['rev-parse','HEAD'],cwd=A,text=True).strip(),frontendScope='One final notebook CSS foundation after feature imports; correct dark semantic variables and remove inherited title/player layout. Full actual-app menu retained.',nativeAarByteIdenticalToActual155=True,previousInternal156Rejected='Actual app exposed title padding, playback flex direction and conflicting dark palettes absent from the standalone component preview.',installed=False);h=C/'android157';h.mkdir(exist_ok=False);(h/'source.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+assert hashlib.sha256((A/'apps/android/app/libs/companion-android-backend.aar').read_bytes()).hexdigest()==d['aarSha256']
+import sys;sys.path.insert(0,str(Path(__file__).parent));from whole_delivery133156 import update_current
+update_current(at=d['at'],state='UI_ONLY133157_NORMAL_BUILD_AND_NATIVE_REVIEW',actualAndroidCandidate=157,rejectedInternalAndroid156=str(Q/'phone157-layout-discriminator.json'),modelWorkOtherChat=True,next='Finish normal133/157 actual app continuous review. Reject intermediate156 visual cascade, keep its normal-install/data-preservation evidence. Deliver one UI package after exact final native matching.')
+print(json.dumps(d,ensure_ascii=False))

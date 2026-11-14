@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-14T12:02:46+08:00",
+  "state": "WHOLE133156_UI_ONLY_FROZEN_MODEL_WORK_ASSIGNED_OTHER_CHAT",
+  "version": "0.1.133",
+  "sourceCommit": "9675a2c88f5eba0d647cb68420822ff7a46d3eed",
+  "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+  "branch": "work/whole133-product-20261114",
+  "authoringSourceCommit": "8ab57bb16b5128c1fcb17346dc5a0356fb335e73",
+  "relatedAuthoringFiles": [
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/MeetingReadingFrame.tsx",
+    "packages/ui/src/MeetingTopic.tsx",
+    "packages/ui/src/TranscriptFind.tsx",
+    "packages/ui/src/libraryPreview.ts",
+    "packages/ui/src/meetingNoteDocument.css",
+    "packages/ui/src/meetingReading.ts",
+    "packages/ui/src/notebookFoundation.css",
+    "packages/ui/src/notebookTheme.css",
+    "packages/ui/src/overviewTopics.css",
+    "packages/ui/src/transcriptReading.ts",
+    "tools/test_long_minutes_reading.tsx",
+    "tools/test_note_readability.tsx",
+    "tools/test_transcript_reading_20261103.tsx"
+  ],
+  "saved131SourcePreserved": "f18b332cecbb62d4384cafbbdc8f5a3f8e0d0181",
+  "saved131Receipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-clutch131-fw66832\\delivery.json",
+  "uncommittedOtherPointerChangesIncluded": false,
+  "backendSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+  "normalWindowsBuildPending": true,
+  "installed": false,
+  "ownerAccepted": false,
+  "modelChangesIncluded": false,
+  "modelsUnchangedSinceInstalled132155": true,
+  "modelSourceCandidateRetained": {
+    "windowsAuthoring": "8ab57bb16b5128c1fcb17346dc5a0356fb335e73",
+    "androidBackend": "b7991ffb0f252f5c62b6de77df2ec75bc652e109",
+    "notBuiltOrInstalled": true
+  },
+  "unchangedModelScope": [
+    "apps/windows/src-tauri/src/backend/minutes.rs",
+    "apps/windows/src-tauri/src/backend/minutes",
+    "apps/windows/src-tauri/src/backend/transcription.rs",
+    "apps/windows/src-tauri/src/backend/transcription",
+    "apps/windows/src-tauri/src/backend/import_audio.rs",
+    "third_party/denzic-platform"
+  ],
+  "backendSourceNote": "Unchanged actual155 Android AAR; b7991ffb is a separate model candidate, excluded by Owner assignment."
+}

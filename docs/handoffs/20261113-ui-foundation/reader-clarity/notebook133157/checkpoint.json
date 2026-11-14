@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-14T12:32:52+08:00",
+  "role": "Protection snapshots only; root Companion docs are the sole editable backlog/timeline.",
+  "inventory": [
+    {
+      "file": "docs/product_backlog.json",
+      "sha256": "4c2a1a3dca790a42f3a2bc8ead343b7c7fcffa3ba94e3d4a7665dce07f7e51a0"
+    },
+    {
+      "file": "docs/development_log.md",
+      "sha256": "f02739d3ce78f971d14854027cc139cc1878563156b1332ce309f39dd7b207f4"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/root-rules-snapshot.txt",
+      "sha256": "b57ad3e271869c78554709a2afef4a7e6983f70198be352d21c76fff35ed7eaf"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157-delivery.json",
+      "sha256": "af44106691e00858e95ee4b259bc9c66369fcbcb73aefe0848316136f75f3dbf"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/source-protection.json",
+      "sha256": "06e12648f578b3ad417ab54eef5156dab7c4f309adad49c78718532837efe6a3"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/frozen-source.json",
+      "sha256": "d6db8f122c2e4291404118b376e8d9990e7f822673166099196772cf12aa4ecc"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/cache-budget.json",
+      "sha256": "cf516c3f52512caac9cba2a1d45f07366586650c39f1e38c885ea95bd67d5cc7"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/model-candidate-separated.json",
+      "sha256": "49414858829f6f1e9e35688638339ad3c1847fb085724a6e0a8820676defcc78"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/model-check-stopped.json",
+      "sha256": "8ee6880098e1b4c6b0a020b60599c1faf4ac8bd86a0235e6e0c5f4524adfd171"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/native-reading.json",
+      "sha256": "97fb22b6c3491642cef6faa1e4fcb6811abacc590b5b2c9b00c920da14d4f075"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/phone-closed.json",
+      "sha256": "ee6571db826f391835bc80c7ed49ce7794a4475fbfa9ac8671493002bac51e9a"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/whole_delivery133156.py",
+      "sha256": "f5eb09a6b9c1bfdce70369eec7ebc015f0293e7c3fdaab3803e79f702b9d790b"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/refine_phone_notebook156.py",
+      "sha256": "15d30d728b08dc8de68371576acf57c9a820bf4848d6f53ea638f3076fe7a667"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/prepare_whole_phone156.py",
+      "sha256": "ebeb54701b755615aa192074f49182fa2e7c7cd6983ba995db885aa4e3804c1f"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/freeze_phone157.py",
+      "sha256": "a696faca0a13a2e05692d686f86327fa5c08c8c9f64e239af1532600674b835f"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/inspect_phone156_layout.cjs",
+      "sha256": "bbe34f7b8a1e96364ddda08b0d404a8eec9632a387a809bdb0d326d58986de2e"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/install_notebook133.py",
+      "sha256": "ef52238e850cda1b1f9e2c22685346b5afa691c19cae57ad7a78beaa8a5d3445"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/review_note_readability133.py",
+      "sha256": "2a8f7ccfd2b5a17c81a06f8ce460c75c3c7c9b997c3ae469f6820df466023e5b"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/review_resumed_phone157.cjs",
+      "sha256": "1a5a212f64b5f4f40049ce8954ac375246a0ec221512215a8639531e7ddc5df5"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/run_note_phone157.py",
+      "sha256": "bddcbd65a00ff0d660227435ed000964ab1c02f41b640511e734c5955eb98c5f"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/deliver_notebook133157.py",
+      "sha256": "a27d1b9f8a5a6c20820a149702cfc30c604d0e8c79671f60f42eba6412296ad9"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook133157/engineering/close_notebook133157.py",
+      "sha256": "ac24dbf8315c1c4824fea48d952fe4008cb7c312ee5c6e1a52ff52bca334aedd"
+    }
+  ],
+  "frontendEngineeringAcceptancePassed": true,
+  "ownerAccepted": false,
+  "saleQualified": false
+}

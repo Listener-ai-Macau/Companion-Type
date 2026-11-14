@@ -6,6 +6,14 @@ module.exports=async(page,plan,out,reopened)=>{
  await page.locator('.ct-library-card').first().click();await nav().waitFor();
  await nav().getByRole('button',{name:'纪要',exact:true}).click();await page.locator('#ct-recording-result[open]').waitFor();
  const article=page.locator('#ct-meeting-result-pane');for(const term of minutesTerms)assert((await article.innerText()).includes(term),term);
+ if(spec.expectNotebookPolish){
+  const header=page.locator('.ct-reader-header-actions');await header.getByRole('button',{name:'回听',exact:true}).waitFor();
+  const layout=await page.evaluate(()=>{const point=document.querySelector('.ct-note-overview-point'),replay=document.querySelector('.ct-reader-replay'),exportButton=document.querySelector('.ct-reader-export');return{firstPointTop:point.getBoundingClientRect().top,readingWidth:point.getBoundingClientRect().width,replayTop:replay.getBoundingClientRect().top,exportTop:exportButton.getBoundingClientRect().top,bodyWidth:document.body.scrollWidth,viewportWidth:innerWidth};});
+  fs.writeFileSync(path.join(out,'actual-notebook-polish-layout.json'),JSON.stringify(layout,null,2));
+  assert(Math.abs(layout.replayTop-layout.exportTop)<2);assert(layout.readingWidth<=681);assert(layout.bodyWidth<=layout.viewportWidth);
+  const outline=article.locator('.meeting-outline-collapse');await outline.locator(':scope>summary').click();await outline.locator('button').first().click();assert.equal(await outline.evaluate(e=>e.open),false);
+  await outline.locator(':scope>summary').click();await outline.locator(':scope>summary').focus();await page.keyboard.press('Escape');assert.equal(await outline.evaluate(e=>e.open),false);assert(await outline.locator(':scope>summary').evaluate(e=>e===document.activeElement));
+ }
  if(spec.expectFoldedOverview){
   const heading=spec.overviewHeading||'会议概览';assert(['会议概览','全会重点'].includes(heading));await article.locator('[data-meeting-heading="'+heading+'"]').waitFor();
   const summary=article.locator('summary').filter({hasText:/^查看完整(?:会议摘要|摘要和关键词)$/});assert.equal(await summary.count(),1);const full=summary.locator('..');assert.equal(await full.evaluate(el=>el.open),false);

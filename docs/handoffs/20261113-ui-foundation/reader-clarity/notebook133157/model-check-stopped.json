@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-14T12:02:09+08:00",
+  "state": "MODEL_WORK_STOPPED_AFTER_OWNER_ASSIGNED_OTHER_CHAT",
+  "ownedWrapperPid": 30216,
+  "childrenAtStop": [
+    {
+      "pid": 12424,
+      "name": "python.exe"
+    },
+    {
+      "pid": 17264,
+      "name": "rustup.exe"
+    },
+    {
+      "pid": 21300,
+      "name": "cargo.exe"
+    },
+    {
+      "pid": 3188,
+      "name": "rustc.exe"
+    }
+  ],
+  "resultQualified": false,
+  "sourceCandidateRetained": true
+}
