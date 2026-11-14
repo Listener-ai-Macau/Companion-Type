@@ -38,7 +38,9 @@ module.exports=async function productJourney(page,plan,out){
  await nav().getByRole('button',{name:'文字',exact:true}).click();await page.getByRole('button',{name:'引用转写到备注',exact:true}).click();
  const search=page.getByRole('searchbox',{name:'查找可引用的原文',exact:true});await search.fill(before.transcriptText.split('\n')[0].slice(0,12));
  const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(before.transcriptText.includes(quote));
- await page.getByRole('button',{name:'引用原文片段 1',exact:true}).click();await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
+ const quoteButton=page.getByRole('button',{name:'引用原文片段 1',exact:true});
+ await quoteButton.focus();await quoteButton.press('Enter');await page.locator('#ct-meeting-materials-pane').waitFor({state:'visible'});
+ fs.writeFileSync(path.join(out,'product-source-activation.json'),JSON.stringify({ordinaryInput:'Focused existing quote button and pressed Enter',sourceWords:quote,syntheticPublicFixture:true,priorPointerAttemptRetained:true},null,2));
  const notes=page.locator('#ct-recording-notes'),composer=notes.locator('.ct-note-composer');
  await composer.getByRole('textbox',{name:'新录音备注',exact:true}).fill('本次人工跟进\n- [ ] 核对采购清单\n- [ ] 确认追加费用，尚未批准');
  await composer.getByRole('combobox',{name:'补充类型',exact:true}).selectOption('followup');
