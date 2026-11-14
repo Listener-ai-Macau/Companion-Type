@@ -1,0 +1,31 @@
+{
+  "scope": "Actual production UI and styles with declared synthetic/public-only data. Browser adapter, not native/backend/model acceptance.",
+  "modelsRun": false,
+  "ownerDesktopUsed": false,
+  "stage": "baseline",
+  "checks": [
+    {
+      "platform": "windows",
+      "case": "empty management",
+      "visibleInputs": 6,
+      "text": "管理录音\n\n整理所选录音，或备份和恢复会议库。\n\n关闭\n备份与恢复会议库\n整理所选录音 · 已选 0 场\n\n文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。\n\n选择当前筛选结果（3 场）\n清除整理选择\n其中 0 场不在当前筛选中\n修改文件夹\n标签操作\n保持标签\n添加标签\n移除标签\n替换全部标签\n收藏\n保持收藏状态\n设为收藏\n取消收藏\n保存 0 场分类\n导出所选录音\n内容\n原音 WAV\n转写与笔记 TXT\n结构化记录 JSON\n已保存纪要 Markdown\n带真实时间轴的字幕 SRT\n\n选择保存目录后，每次建立新目录，附录音清单。同名文件不会互相覆盖；任一录音尚不具备所选内容时整批不导出，不调用云端补内容。\n\n导出 0 场录音"
+    },
+    {
+      "platform": "windows",
+      "case": "active filter",
+      "visibleActiveFilterLabels": 0,
+      "remainingRows": 2
+    },
+    {
+      "platform": "mobile",
+      "case": "one selected",
+      "layout": {
+        "firstRowTop": 849.984375,
+        "actionPanelHeight": 445.1875,
+        "viewport": 852
+      }
+    }
+  ],
+  "errors": [],
+  "state": "PRODUCTION_UI_BASELINE_CAPTURED"
+}

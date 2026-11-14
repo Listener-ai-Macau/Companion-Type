@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-14T13:20:10+08:00",
+  "steps": [
+    {
+      "name": "windows-types",
+      "exitCode": 0
+    },
+    {
+      "name": "mobile-types",
+      "exitCode": 0
+    },
+    {
+      "name": "mobile-web",
+      "exitCode": 0
+    }
+  ],
+  "resourceLimits": {
+    "pid": 5836,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1610612736,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 9781248,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "state": "AFFECTED_TYPES_AND_MOBILE_PRODUCTION_WEB_PASSED",
+  "finishedAt": "2026-11-14T13:21:06+08:00"
+}

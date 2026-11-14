@@ -1,0 +1,16 @@
+from pathlib import Path
+from types import SimpleNamespace
+from datetime import datetime
+import json,subprocess,sys
+sys.path.insert(0,str(Path(__file__).parent));from windows_candidate_delivery import install,sha
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';H=R/'docs/handoffs/20261112-product-closure/windows135';O=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/library-closure20261114')
+frozen=json.loads((H/'frozen-source.json').read_bytes());prior=H.parent/'windows133/installation.json';old=json.loads(prior.read_bytes());installed=Path('C:/Program Files/Companion Type');assert sha(installed/'companion-type.exe')==old['installedExeSha256'] and sha(installed/'companion_type_lib.dll')==old['installedDllSha256'],'A new installed predecessor must be reviewed, never overwritten'
+g=['git','-c','maintenance.auto=false','-c','gc.auto=0'];diff=lambda *args:subprocess.check_output(g+['diff','--name-only',*args],cwd=S,text=True).splitlines()
+versions=['package.json','package-lock.json','apps/windows/src-tauri/tauri.conf.json','apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock','apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json']
+pointer=['packages/desktop-input','apps/windows/src/DesktopPointer.tsx','apps/windows/src-tauri/src/backend/desktop_pointer.rs','apps/windows/src-tauri/src/backend/ble_bridge/desktop_input_stream.rs','third_party/imu-pointer']
+assert not diff(frozen['saved134SourcePreserved'],frozen['sourceCommit'],'--',*pointer)
+input_changes=diff(old['sourceCommit'],frozen['saved134SourcePreserved'],'--',*pointer);all_changes=diff(old['sourceCommit'],frozen['sourceCommit']);changes=diff(old['sourceCommit'],frozen['sourceCommit'],'--','apps/windows','packages','third_party','package.json','package-lock.json');assert set(changes)<=set(frozen['relatedAuthoringFiles']+versions+input_changes),changes;assert set(diff(frozen['saved134SourcePreserved'],frozen['sourceCommit']))<=set(frozen['relatedAuthoringFiles']+versions)
+assert not diff(old['sourceCommit'],frozen['sourceCommit'],'--',*['apps/windows/src-tauri/src/backend/minutes.rs', 'apps/windows/src-tauri/src/backend/minutes', 'apps/windows/src-tauri/src/backend/transcription.rs', 'apps/windows/src-tauri/src/backend/transcription', 'third_party/denzic-platform'])
+scope=dict(at=datetime.now().astimezone().isoformat(timespec='seconds'),oldSource=old['sourceCommit'],currentSource=frozen['sourceCommit'],savedInputBase=frozen['saved134SourcePreserved'],saved134InputPreservedExactly=True,installed133ModelLogicUnchanged=True,changedFiles=changes,allSourceDifferences=all_changes,saved134NonruntimeFilesCarriedUnchanged=[x for x in all_changes if x not in changes],knownInputChanges=input_changes,uncommittedOtherInputIncluded=False,reason='Exact own UI overlay on saved134. Source lineage branches from133; no ancestry claim, complete affected file set verified.')
+(O/'installed-source-composition.json').write_text(json.dumps(scope,ensure_ascii=False,indent=2),encoding='utf8')
+cache=O/'install-from133';cache.mkdir(exist_ok=False);print(json.dumps(install(SimpleNamespace(batch=H,cache=cache,previous_installation_receipt=prior),frozen,'WINDOWS135'),ensure_ascii=False))

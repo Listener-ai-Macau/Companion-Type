@@ -1,0 +1,130 @@
+{
+  "at": "2026-11-14T13:55:03+08:00",
+  "role": "Protection snapshots only; root Companion docs remain the sole editable backlog/timeline.",
+  "inventory": [
+    {
+      "file": "docs/product_backlog.json",
+      "sha256": "8c6bb17ffd778e109699ce57ec14f3ca737cec655197e2b51451c726be384b80"
+    },
+    {
+      "file": "docs/development_log.md",
+      "sha256": "b7ad464bd9e371896b7d499d8c0b2b5122a69c070062e83e02ec6655524e3a33"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/root-rules-snapshot.txt",
+      "sha256": "a6980cc6cce66b0bb27e27b0dcc170cb704c5aee299a0482ef6f3182bc59991b"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/notebook135158-delivery.json",
+      "sha256": "52b575927db21568e7dcb4b46f4f86d792a74ee73f31313999998ca5c8bd0735"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/source-protection.json",
+      "sha256": "d1e46b74bc04801c66c7bc387f5d283d5e497022e1ee61f760003361846397d2"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/frozen-source.json",
+      "sha256": "b6d0aa55cdcedc9b08ecf8acec042090bcde262b880a8f8f261aae28248ce099"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/cache-budget.json",
+      "sha256": "616b96d4ab94c1a1ca49eb9077da8c91a51d348938147eff948f249d906af246"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/source-checks.json",
+      "sha256": "3db1055191161f29268ca644be03057fbf1b6ac2a29766f58fce12b8d67a38e3"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/baseline.json",
+      "sha256": "f5bc442d6da26816c9116d517dcbd7d20813ec1ff43cd24793960c0791467027"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/source-ui-journey.json",
+      "sha256": "4f4132264030f45dd2aaf3d201bf1b8cbc65be21145c38e85a381e6b6ba83ebe"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/native-reading.json",
+      "sha256": "8ca47ca4fca72637028b037f8b2c29cb9caf10bea15d474449dcc32e26bc53e5"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/phone-library-before-restart.json",
+      "sha256": "71d798d32556a9cd463ea39cab0184e185d28def907b770506c04aa602178408"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/phone-library-after-restart.json",
+      "sha256": "8c69e502ad671aa61cd623da2222cdfe122b499796de7f1f1c1d8997e4570715"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/phone-closed.json",
+      "sha256": "122d144367288855eaeb63e8cd1c47c85fc016e353dd6793cedadfac33787538"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/initial-install-preparation-rejection.json",
+      "sha256": "5d476795ab52d52a3fb944b1aacf0f64265a0824a5a401ee0859a8cf8cdebd81"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/native-library-scope-result.json",
+      "sha256": "7df8982951e50b2cb39b6b0207e4b893925305785c73211a8c6b7206cd257a33"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/start_library_background.py",
+      "sha256": "2aa3607d883184ade8609eabbbee49baa6cee057dc0b00fbecd02c35ff641805"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/check_library_sources.py",
+      "sha256": "d5c38aa9296b388e0f910b1073df6348dfc4b2ee930ffcf44f1b43711a79dffe"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/review_library_closure.cjs",
+      "sha256": "f990ea9eb69e388d2caecf2bcba06715bec32762c055fd5589d66644deb81601"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/freeze_library135158.py",
+      "sha256": "aed7d2723ca9ba7b81eab6e0ff32acd6f84e54ac23e866166dc4d3f53e9f5347"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/prepare_library_phone158.py",
+      "sha256": "76aa2fa1de59384e525b2e832947d6c3ab80bd0cc06ebed98a0be94650ede6c8"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/review_library_phone158.cjs",
+      "sha256": "dc1b4d8af163dc22dd36d41948bb275932cbcb5d6ef1be7909de27793e051313"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/review_library_native135.py",
+      "sha256": "e36334e299838cdf5aaabe75fe2edcfd48ee1624f1b4c3c9a87dbe3aa366c55e"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/prepare_library_delivery.py",
+      "sha256": "faf097d37abef1a32e53dfa62ff417aaeb63f8e199bb30735d840905252ac7b7"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/deliver_library135158.py",
+      "sha256": "1cf0d921b7a37f349c269d48d402c862f71bcb626d7d59ba80971d7bd46d4497"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/prepare_install_library135.py",
+      "sha256": "049f6ca9632fc71f411879ef2af615059240205380214ae80af4bfa8ce865e47"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/install_library135.py",
+      "sha256": "13e22045b82ee1a6f6597ab8881fa435457812f7cbc933f23c1caa690bbe02f4"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/close_library135158.py",
+      "sha256": "9dd6be4f1935a4124da3f954c082a1679bc5932c6ae7026db788b9801a4f1611"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/timeline-ending-repair.json",
+      "sha256": "1525eb560d8f4ac6062b5c56915710c6ddf098e7f24900ba307b8dbfec73818e"
+    },
+    {
+      "file": "docs/handoffs/20261113-ui-foundation/reader-clarity/library135158/engineering/finish_library_protection.py",
+      "sha256": "dca4d90524cc714a70ae30199ba8a06c89e9ab9dbcba5ab45cc1659e4954a031"
+    }
+  ],
+  "frontendEngineeringAcceptancePassed": true,
+  "ownerAccepted": false,
+  "modelWorkAssignedOtherChat": true,
+  "timelineEndingRepair": "SOURCE_PROTECTION_CHECK_ONLY_REPEATED_CR_REPAIRED"
+}

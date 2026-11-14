@@ -1,0 +1,52 @@
+{
+  "scope": "Actual production UI and styles with declared synthetic/public-only data. Browser adapter, not native/backend/model acceptance.",
+  "modelsRun": false,
+  "ownerDesktopUsed": false,
+  "stage": "after-r1",
+  "checks": [
+    {
+      "platform": "windows",
+      "case": "empty management",
+      "visibleInputs": 0,
+      "text": "管理录音\n\n整理所选录音，或备份和恢复会议库。\n\n关闭\n备份与恢复会议库\n先选择要整理的录音\n\n选择后可统一分类、导出或移入回收站。\n\n返回列表选择\n选择当前结果（3 条）"
+    },
+    {
+      "platform": "windows",
+      "case": "choose one -> exact target/draft guard -> save",
+      "capturedRequest": {
+        "targets": [
+          {
+            "sessionId": "synthetic-ui-0",
+            "expectedRevision": 1
+          }
+        ],
+        "folder": "工作/验收"
+      },
+      "nativeBackendCalled": false
+    },
+    {
+      "platform": "windows",
+      "case": "active filter",
+      "visibleActiveFilterLabels": 1,
+      "remainingRows": 2
+    },
+    {
+      "platform": "mobile",
+      "case": "one selected",
+      "layout": {
+        "firstRowTop": 446.796875,
+        "actionPanelHeight": 46,
+        "viewport": 852
+      }
+    },
+    {
+      "platform": "mobile",
+      "case": "multi selection/hidden draft cancel and filter reset",
+      "selectionPreservedOnDismiss": true,
+      "draftDiscardExplicit": true,
+      "firstAndNextTargetsVisible": true
+    }
+  ],
+  "errors": [],
+  "state": "PRODUCTION_UI_SCOPE_SELECTION_AND_DRAFT_FLOW_PASSED"
+}
