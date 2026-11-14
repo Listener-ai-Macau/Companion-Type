@@ -888,6 +888,32 @@ fn concise_overview_preserves_complete_minutes_and_checks_sources() {
 }
 
 #[test]
+fn overview_fidelity_requires_complete_explicit_support_before_using_paraphrases() {
+    assert!(parse_overview_fidelity(r#"{"checks":[{"id":1,"supported":true},{"id":0,"supported":true}]}"#, 2).is_ok());
+    for bad in [
+        r#"{"checks":[{"id":0,"supported":false},{"id":1,"supported":true}]}"#,
+        r#"{"checks":[{"id":0,"supported":true}]}"#,
+        r#"{"checks":[{"id":0,"supported":true},{"id":0,"supported":true}]}"#,
+        r#"{"checks":[{"id":0,"supported":true},{"id":2,"supported":true}]}"#,
+        r#"{"checks":[{"id":0,"supported":"true"},{"id":1,"supported":true}]}"#,
+        r#"{"checks":[{"id":0,"supported":true},{"id":1,"supported":true}],"overview":"replacement facts"}"#,
+    ] { assert!(parse_overview_fidelity(bad, 2).is_err()); }
+    assert!(parse_overview_fidelity(r#"{"checks":[]}"#, 0).is_err());
+
+    let (mut minutes, _) = response(&session("会议原文"));
+    let source = vec!["连续三个月处于末尾三位，且促销后仍不佳，才考虑淘汰。".into()];
+    minutes.summary = source.clone();
+    let complete = minutes.markdown.clone();
+    // An unsupported compressed rule cannot replace the original conditions.
+    let rejected = r#"{"checks":[{"id":0,"supported":false}]}"#;
+    assert!(parse_overview_fidelity(rejected, 1).is_err());
+    prepend_overview(&mut minutes, &source, &[0]);
+    assert!(minutes.markdown.contains(&source[0]));
+    assert!(minutes.markdown.ends_with(&complete));
+    assert_eq!(minutes.summary, source);
+}
+
+#[test]
 fn concise_long_overview_requires_sources_across_the_meeting() {
     // A real 25-item meeting generated an opening-only overview; valid IDs
     // alone do not reveal that all later topics were missed.

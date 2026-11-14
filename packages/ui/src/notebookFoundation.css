@@ -1,6 +1,7 @@
+@import './notebookTheme.css';
 /* Application navigation, library, and document have separate, stable places. */
-.ct-shell.ct-windows.ct-notebook{--nb-paper:#fff;--nb-side:#fafafa;--nb-ink:#18181b;--nb-muted:#71717a;--nb-line:#e4e4e7;--nb-selected:#f4f4f5;--nb-accent:#18181b;--companion-surface:var(--nb-paper);--companion-ink:var(--nb-ink);--companion-muted:var(--nb-muted);--companion-border:var(--nb-line);--companion-accent:var(--nb-accent);width:100%;max-width:none;min-height:100dvh;margin:0;padding:0;background:var(--nb-paper);color:var(--nb-ink);font:14px/1.65 "Segoe UI","Microsoft YaHei UI",sans-serif}
-.ct-shell.ct-windows.ct-notebook.ct-theme-dark{--nb-paper:#09090b;--nb-side:#18181b;--nb-ink:#fafafa;--nb-muted:#a1a1aa;--nb-line:#27272a;--nb-selected:#27272a;--nb-accent:#fafafa;color-scheme:dark}
+.ct-shell.ct-windows.ct-notebook{--nb-paper:var(--notebook-paper);--nb-side:var(--notebook-chrome);--nb-ink:var(--notebook-ink);--nb-muted:var(--notebook-muted);--nb-line:var(--notebook-line);--nb-selected:var(--notebook-selection);--nb-accent:var(--notebook-accent);--companion-surface:var(--nb-paper);--companion-ink:var(--nb-ink);--companion-muted:var(--nb-muted);--companion-border:var(--nb-line);--companion-accent:var(--nb-accent);width:100%;max-width:none;min-height:100dvh;margin:0;padding:0;background:var(--nb-paper);color:var(--nb-ink);font:14px/1.65 var(--notebook-font)}
+.ct-shell.ct-windows.ct-notebook.ct-theme-dark{color-scheme:dark}
 .ct-windows.ct-notebook [hidden]{display:none!important}
 .ct-windows.ct-notebook .ct-notebook-chrome{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;min-height:56px;margin:0;padding:10px 22px;border-bottom:1px solid var(--nb-line);background:var(--nb-paper)}
 .ct-windows.ct-notebook .ct-notebook-brand{display:flex;align-items:center;gap:10px;font-size:15px;letter-spacing:-.02em}

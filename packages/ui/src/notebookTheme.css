@@ -1,0 +1,15 @@
+/* One shared visual vocabulary for the desktop and phone notebook. */
+.ct-notebook,.mobile-app{
+ --notebook-paper:#fbfbf8;--notebook-chrome:#f4f4f0;--notebook-ink:#292b27;
+ --notebook-muted:#686e63;--notebook-line:#e3e5dc;--notebook-selection:#e9ede5;
+ --notebook-accent:#385448;--notebook-soft:#f1f2ec;
+ --notebook-font:"Segoe UI","Microsoft YaHei UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+ --notebook-reading-width:680px;--notebook-control-radius:6px;
+ --notebook-space-1:4px;--notebook-space-2:8px;--notebook-space-3:12px;
+ --notebook-space-4:16px;--notebook-space-6:24px;--notebook-space-8:32px;
+}
+.ct-notebook.ct-theme-dark,.mobile-app[data-theme=dark]{
+ --notebook-paper:#1c1e1b;--notebook-chrome:#171916;--notebook-ink:#e6e9e1;
+ --notebook-muted:#a1a69b;--notebook-line:#34382f;--notebook-selection:#30382d;
+ --notebook-accent:#c2d2bd;--notebook-soft:#252822;color-scheme:dark;
+}
