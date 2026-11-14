@@ -17,7 +17,7 @@ type Edit = { kind:ManualNoteKind;references:ManualNoteEvidence[];originalKind:M
 type Draft = { kind?:ManualNoteKind;references?:ManualNoteEvidence[];text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; pendingImage?:CompanionMeetingImageNoteRequest; pendingAnchor?:CompanionBookmarkRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel,searchTerm=''}: {
+export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidence,session,blocked,persistenceReady,anyRecording,onSave,onAddImage,onPreviewImage,onSaveAnchor,playbackPosition,onSeek,onExport,onExportNote,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,searchTerm=''}: {
   incoming?:ManualEvidenceDraft;
   onIncomingConsumed?:()=>void;
   onOpenEvidence?:(noteId:string,reference:ManualNoteEvidence,revision:number)=>Promise<void>;
@@ -120,7 +120,7 @@ export function CompanionMeetingNotes({incoming,onIncomingConsumed,onOpenEvidenc
     return {...d,pending:undefined,pendingImage:undefined,pendingAnchor:undefined,edits};
   });
   const composer=<>
-    <p>{compact?`这里单独记背景，不改原话，也不自动加入整理。${resultEditLabel?`要修改整理内容，请在“整理结果”里选“${resultEditLabel}”。`:''}`:'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写，也不自动加入整理。'}</p>
+    <p>{compact?'备注单独保存，不会改动会议纪要或原话。':'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写，也不自动加入整理。'}</p>
     <ManualNoteEditor kind={draft.kind??'note'} label="新录音备注" placeholder="记下背景，或需要回头核对的事情…"
       text={draft.text??''} disabled={busy} onChange={text=>{message(session.id,'');change(session.id,d=>({...d,text,pending:undefined,pendingImage:undefined}));}}/>
     <ManualContextControls kind={draft.kind??'note'} references={draft.references??[]} disabled={busy} onKind={kind=>change(session.id,d=>({...d,kind,pending:undefined,pendingImage:undefined}))} onReferences={references=>change(session.id,d=>({...d,references,pending:undefined,pendingImage:undefined}))} onChecklist={()=>change(session.id,d=>({...d,text:(d.text??'')+(d.text&&!d.text.endsWith('\n')?'\n':'')+'- [ ] ',pending:undefined,pendingImage:undefined}))}/>
