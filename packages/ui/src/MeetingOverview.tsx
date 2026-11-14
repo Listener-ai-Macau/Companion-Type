@@ -17,6 +17,11 @@ export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLo
  const current=model.topics.find(topic=>topic.id===(selection.source===markdown?selection.id:undefined))??model.topics[0];
  const id=useId(),index=current?model.topics.indexOf(current):0;
  return <section className="meeting-overview" aria-label="会议一览">
+  <div className="meeting-overview-outcomes" aria-label="结论与后续安排">
+   <Outcome label="讨论结论" section={model.decisions} icon={<CheckCheck size={18} aria-hidden="true"/>} onLocate={onLocate}/>
+   <Outcome label="行动事项" section={model.actions} icon={<ListTodo size={18} aria-hidden="true"/>} onLocate={onLocate}/>
+   <Outcome label="待确认" section={model.questions} icon={<MessageCircleQuestion size={18} aria-hidden="true"/>} onLocate={onLocate}/>
+  </div>
   <div className="meeting-overview-heading"><h3><GitBranch size={17} aria-hidden="true"/>讨论脉络</h3><span>{model.topics.length?`${model.topics.length} 个${model.topicLabel}`:'暂无主题分组'}</span></div>
   {model.topics.length?<>
    <ol className="meeting-overview-topics" aria-label="选择讨论主题">{model.topics.map((topic,i)=><li key={topic.id}>
@@ -29,11 +34,6 @@ export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLo
     <p>{current.text}</p>
    </div>
   </>:<div className="meeting-overview-empty"><BookOpen size={24} aria-hidden="true"/><p>这份纪要还没有主题分组，先看完整内容。</p></div>}
-  <div className="meeting-overview-outcomes" aria-label="结论与后续安排">
-   <Outcome label="讨论结论" section={model.decisions} icon={<CheckCheck size={18} aria-hidden="true"/>} onLocate={onLocate}/>
-   <Outcome label="行动事项" section={model.actions} icon={<ListTodo size={18} aria-hidden="true"/>} onLocate={onLocate}/>
-   <Outcome label="待确认" section={model.questions} icon={<MessageCircleQuestion size={18} aria-hidden="true"/>} onLocate={onLocate}/>
-  </div>
   <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={16} aria-hidden="true"/><span>阅读完整纪要</span><ArrowUpRight size={15} aria-hidden="true"/></button>
  </section>;
 }

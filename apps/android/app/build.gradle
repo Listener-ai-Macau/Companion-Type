@@ -7,8 +7,8 @@ android {
         applicationId 'com.denzic.companion.app'
         minSdk 26
         targetSdk 35
-        versionCode 165
-        versionName '0.1.165'
+        versionCode 166
+        versionName '0.1.166'
         ndk { abiFilters 'arm64-v8a' }
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
