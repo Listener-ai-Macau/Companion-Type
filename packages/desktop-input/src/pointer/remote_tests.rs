@@ -193,3 +193,29 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
         if baseline["acceptedBaseline"]==true{assert_eq!(left,baseline["left"].as_u64().unwrap()as usize);assert_eq!(right,baseline["right"].as_u64().unwrap()as usize);}
     }
 }
+
+#[test]
+#[ignore="Local normal147 stationary CIM6 capture; never bundled"]
+fn actual_surface_stationary_readiness_does_not_become_a_false_lift(){
+    let root=std::path::PathBuf::from(std::env::var("COMPANION_SURFACE_EVALUATION").expect("explicit local surface capture"));
+    let proof:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("../../runtime-proof.json")).unwrap()).unwrap();
+    let settings:Settings=serde_json::from_value(proof["pointerSettings"].clone()).unwrap();
+    let mut p=Pointer::new(settings,Point{x:960.,y:540.});
+    let log=std::fs::read_to_string(root.join("native/app.log")).unwrap();
+    let(mut first,mut count,mut ready,mut still,mut path,mut last)=(None,0usize,0usize,0usize,0.,p.shown);
+    for line in log.lines().filter(|s|s.contains("desktop_input_motion_wire")){
+        let h=line.split("packet=").nth(1).unwrap().split_whitespace().next().unwrap();
+        let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+        let raw=desktop::Raw::parse(&bytes).unwrap();let zero=*first.get_or_insert(raw.sensor_ms);let at=raw.sensor_ms.wrapping_sub(zero)as f64/1000.;
+        p.sample_raw(raw,at);p.sample(Sample::parse(&bytes).unwrap(),at,bounds());p.frame(at,bounds());
+        if at>5.{count+=1;if !p.metrics.surface_paused{ready+=1;}if let Some(c)=&p.coarse{if c.desktop.state.stationary{still+=1;}}
+            path+=(p.shown.x-last.x).hypot(p.shown.y-last.y);
+        }
+        last=p.shown;
+        if count>0&&count%100==0{println!("surface captured at{at:.2} {:?}",p.coarse.as_ref().unwrap().desktop.state);}
+    }
+    println!("Actual stationary capture: samples{count},ready{ready},rest{still},path{path:.4}px");
+    assert!(count>2000&&still>count*9/10);
+    assert!(ready>count*9/10,"stationary hardware trace entered a false lift");
+    assert!(path<3.,"stationary raw data caused{path}px predicted cursor movement");
+}

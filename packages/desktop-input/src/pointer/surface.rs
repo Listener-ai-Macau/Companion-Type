@@ -60,9 +60,16 @@ impl Surface {
         self.peak=self.peak.max(self.status.height_m);
         if self.status.height_m<self.peak-0.004&&velocity< -0.01{self.returning=true;}
         if stationary&&(self.braking||velocity.abs()<0.01){self.status.vertical_velocity_mps=0.;self.braking=false;}
-        let near_plane=self.status.height_m.abs()<0.015&&(self.returning||self.tilt_only);
+        // A brief vertical desk impulse is not a completed lift. The actual
+        //147 trace settled at0.64mm with zero vertical velocity, but could
+        // never satisfy the4mm return-direction test and stayed suspended.
+        // Reuse that same4mm excursion boundary to rearm an unconfirmed
+        // impulse after observed rest. A confirmed lift retains its height
+        // and still requires a return; quiet airborne input alone is not it.
+        let transient=self.peak<0.004&&self.status.height_m.abs()<0.004&&!self.tilt_only;
+        let near_plane=self.status.height_m.abs()<0.015&&(self.returning||self.tilt_only||transient);
         let aligned=dot>8_f64.to_radians().cos();
-        let old_enough=self.lift_ms.is_some_and(|t|ms.wrapping_sub(t)>=600);
+        let old_enough=self.lift_ms.is_some_and(|t|ms.wrapping_sub(t)>=if transient{120}else{600});
         if old_enough&&near_plane&&aligned&&stationary{
             self.status.phase=Phase::Settling;self.quiet+=dt;
             if self.quiet>=0.20{self.reset_stroke();return true;}
@@ -97,5 +104,18 @@ impl Surface {
   let a=25_f64.to_radians();assert!(!s.sample(1000,0.,[a.sin(),0.,a.cos()],false));
   for n in 101..150{assert!(!s.sample(n*10,0.,[a.sin(),0.,a.cos()],true));}
   let mut ready=false;for n in 150..200{ready=s.sample(n*10,0.,[0.,0.,1.],true);}assert!(ready);
+ }
+ #[test]fn a_short_vertical_desk_impulse_rearms_without_a_hardware_tap(){
+  let mut s=Surface::default();let up=[0.,0.,1.];assert!(s.sample(0,0.,up,true));
+  assert!(!s.sample(10,-0.25,up,false));assert!(!s.sample(20,0.35,up,false));
+  let mut ready=false;for n in 3..80{ready=s.sample(n*10,0.,up,true);}
+  assert!(ready,"an unconfirmed impulse cannot wait forever for a4mm return: {:?}",s.status);
+ }
+ #[test]fn a_confirmed_small_lift_is_not_rearmed_by_holding_it_quietly_in_the_air(){
+  let mut s=Surface::default();let up=[0.,0.,1.];assert!(s.sample(0,0.,up,true));let mut n=1;
+  for (count,z,rest)in[(6,1.,false),(10,0.,false),(6,-1.,false),(100,0.,true)]{
+   for _ in 0..count{assert!(!s.sample(n*10,z,up,rest));n+=1;}
+  }
+  assert!(s.status.height_m>0.007&&s.status.height_m<0.015,"known9.6mm lift {:?}",s.status);
  }
 }
