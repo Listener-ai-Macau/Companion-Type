@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 29,
+    "startSample": 14174429,
+    "endSample": 14728021,
+    "text": "对对。像像找找一些这种。我我感觉可以找一些，就是大家比较欢，比较受大家欢欢迎的这种，嗯，做盲盒的公司嘛，像这种PopMart这种，这种挺受受欢迎的，对对。行。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 14174429,
+        "endSample": 14728021,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "370bd82cd2f3ccb38f472a9f9822bb85391533ff69aadcc30cfb5e3626d1430a"
+}

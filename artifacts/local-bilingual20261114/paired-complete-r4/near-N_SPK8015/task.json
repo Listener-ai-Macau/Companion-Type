@@ -1,0 +1,55 @@
+{
+  "state": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-14T19:32:11+08:00",
+  "binding": {
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+    "audioSeconds": 1551.82,
+    "modelPackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941"
+  },
+  "privateAudioNeverUploaded": true,
+  "attempts": [
+    {
+      "startedAt": "2026-11-14T19:32:13+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8015\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 244.26566140001523,
+      "privatePeakBytes": 1251074048,
+      "cacheOnlyExpected": false,
+      "interrupted": true,
+      "interruptionReason": "actual_windows_low_ram",
+      "actualWindowsLowRam": true,
+      "explicitStopRequested": false,
+      "systemAvailableBytesAtStop": 766144512,
+      "exitCode": 15,
+      "finishedAt": "2026-11-14T19:36:17+08:00",
+      "error": "InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。')"
+    },
+    {
+      "startedAt": "2026-11-14T19:45:42+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8015\\native-attempt-0002.log",
+      "wholeProcessFamilySeconds": 370.95633749998524,
+      "privatePeakBytes": 1256398848,
+      "cacheOnlyExpected": false,
+      "exitCode": 0,
+      "finishedAt": "2026-11-14T19:51:53+08:00"
+    }
+  ],
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "meeting": "recording-f0db8515421effab",
+  "updatedAt": "2026-11-14T19:45:42+08:00",
+  "textDraft": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\text-draft.json",
+  "finishedAt": "2026-11-14T19:51:53+08:00",
+  "output": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\model-output.json",
+  "outputSha256": "665ac6c58f076575cb9b24bad3c584f7e05cd420b3d3356c59e3e4bd7917dd50",
+  "originalAudioUnchanged": true,
+  "wordAlignmentPending": true,
+  "speakerAttributionPending": true,
+  "accumulatedKnownOwnedProcessSeconds": 615.2219989000005,
+  "attemptsWithUnknownDuration": []
+}

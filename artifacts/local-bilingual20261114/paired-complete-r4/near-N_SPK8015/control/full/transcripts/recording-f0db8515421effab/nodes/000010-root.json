@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 10,
+    "startSample": 4628175,
+    "endSample": 5148711,
+    "text": "地推，地推太太老套了，我觉得还是还是电商现在比较好一点。嗯。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      29490,
+      83751,
+      3837,
+      29490,
+      83751,
+      103338,
+      91777,
+      99619,
+      34187,
+      3837,
+      104288,
+      99998,
+      99998,
+      101215,
+      99601,
+      106784,
+      100380,
+      1773,
+      106287,
+      1773,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "地推，地推太太老套了，我觉得还是还是电商现在比较好一点。嗯。嗯。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.926840000000084,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 520536,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3253,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b83df55c778698704463d0e81874d2f842d84c05c3bb79e971a38c162a2274e4"
+}

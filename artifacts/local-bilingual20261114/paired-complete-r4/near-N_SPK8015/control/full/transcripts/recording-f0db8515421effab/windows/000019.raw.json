@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 19,
+    "startSample": 8830907,
+    "endSample": 9387096,
+    "text": "对，可以有那种，像每个人现在买手机的话，他也会有那种什么手机壳什么的，会是必买的。你可以呃，对，嗯，设计一款就是我们带有我们呃手机品牌logo的一些比较呃限量版的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 8830907,
+        "endSample": 9387096,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c5c48fd4685e466de6721b7bfa31ce5ec464c59b63f9e9e541f4802cb8b4c4d0"
+}

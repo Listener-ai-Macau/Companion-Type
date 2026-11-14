@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 11,
+    "startSample": 5391071,
+    "endSample": 5915214,
+    "text": "啊，你这种有的时候觉得分期很赖长，很多人就不会特别喜欢。啊，这个主要还是看手续费。咱觉得觉得多少最合适？呃，这分期还是看手续费的，因为有些银行它这个手续费比较高，所以对客户吸引力，对对对。啊。对对对。没有突破点啊？嗯，对。然后，然后有一些新的思路，这样咱们也能开拓一些新的那个方向。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5391071,
+        "endSample": 5915214,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "600d4abbbbc047340311aa839d0e4a386f1e23d5be172057bd0cafc042b6c729"
+}

@@ -1,0 +1,1995 @@
+{
+  "at": "2026-11-14T20:27:49+08:00",
+  "files": [
+    {
+      "path": "fixed-native-five-complete-r4-crosstalk.json",
+      "sha256": "a0372b4f0b492d87b2d950f0d89ef58c3d0c49f7cdcac68553f207a13bbaca9a",
+      "bytes": 13938
+    },
+    {
+      "path": "fixed-native-five-complete-r4-score.json",
+      "sha256": "a8277b90c1d730c0b947b5b6407d3cd614a6fc97e4bd5b77c5ab2697bff458f8",
+      "bytes": 69263
+    },
+    {
+      "path": "original-batch-terminal-before-scoring.json",
+      "sha256": "d0c5a732fb7fcf632f1acc7ae1141299fc1ccd74cb6e9feca6fa50e0c66f6827",
+      "bytes": 1661
+    },
+    {
+      "path": "result.json",
+      "sha256": "e161bee6b7f543cfc3103488325713b547c285422d1a2de58b3ff37c1da5ef88",
+      "bytes": 10978
+    },
+    {
+      "path": "说明.txt",
+      "sha256": "374d8322a78b14ba2b831bb01381382bcd8bd650837a04fe7ab8cc587f6763b1",
+      "bytes": 2389
+    },
+    {
+      "path": "far-mic0-common-span\\native-attempt-0001.log",
+      "sha256": "65007b5912742ff10acb587fb99552556b98e3427c7619e474bb4df431e76174",
+      "bytes": 2384
+    },
+    {
+      "path": "far-mic0-common-span\\resources.jsonl",
+      "sha256": "0ba2af76df45fdee83bd8e9b83fc4fb0de685a99f9879ce09f1aeb59b7ff0e1c",
+      "bytes": 121777
+    },
+    {
+      "path": "far-mic0-common-span\\task.json",
+      "sha256": "9ddb7c1da122b6b113d158679a3d385af5980238a0288cbd63fbf80e89d8d681",
+      "bytes": 1637
+    },
+    {
+      "path": "far-mic0-common-span\\control\\audio-only.json",
+      "sha256": "ab68796c10eb7409efa6f22222ce7e1fc23cc3b99e7a590b4418a3ce48020c9a",
+      "bytes": 316
+    },
+    {
+      "path": "far-mic0-common-span\\control\\model-ready.json",
+      "sha256": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
+      "bytes": 340
+    },
+    {
+      "path": "far-mic0-common-span\\control\\native-protocol.json",
+      "sha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "bytes": 4098
+    },
+    {
+      "path": "far-mic0-common-span\\control\\pilot-extra-audio-only.json",
+      "sha256": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
+      "bytes": 273
+    },
+    {
+      "path": "far-mic0-common-span\\control\\protocol.json",
+      "sha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+      "bytes": 2491
+    },
+    {
+      "path": "far-mic0-common-span\\control\\seed-manifest.json",
+      "sha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+      "bytes": 149
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\attribution-review.json",
+      "sha256": "1e3642451665bd809434682e6d1aa5098b554be0ab75013862807b6f3b7372d8",
+      "bytes": 56593
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\completed-state.json",
+      "sha256": "31e55cb7991b6f48841cc09c40227c6ebe1c2116197e3a64965ecc6a718cd8c5",
+      "bytes": 2248
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\model-output.json",
+      "sha256": "c4b7d8751164884120dbbe781239ef90ecdd32c716c788c47e500d379b0953a4",
+      "bytes": 55646
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\state.json",
+      "sha256": "31e55cb7991b6f48841cc09c40227c6ebe1c2116197e3a64965ecc6a718cd8c5",
+      "bytes": 2248
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\text-draft.json",
+      "sha256": "91ab32c642e27aaf9236bc33376ab3e2470a32feb3b55bddd8213739f979781d",
+      "bytes": 55647
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\weight-roundtrip.json",
+      "sha256": "1ef6c4b3fb2a8204d9cb70229f5597eda1e57206f342d3213222298ce9279e0f",
+      "bytes": 1594
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000000-root.json",
+      "sha256": "305ed87f6a089f2117707fd72e660462570075a8bbaba281dd910da2dc3c74ed",
+      "bytes": 2838
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000001-root.json",
+      "sha256": "144c546a3b2a6fb1b3b3f77cb398b0c7f336ba60d3207da04d1ef2ec6f950bfd",
+      "bytes": 3220
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000002-root.json",
+      "sha256": "6410d1cbfdaf99f544f5c1d89759022a7b489b6052a77c47ba1961ab20b7c99f",
+      "bytes": 3088
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000003-root.json",
+      "sha256": "96ccba2f34ad4e7ee3d8519861f2bfeefc28feafa1dd41f3daba85e70d8d49d3",
+      "bytes": 3918
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000004-root.json",
+      "sha256": "83d356d3ad9b2f58851d91dfe85835f104d0433cfdfd8d3b6408a9622feb3e5a",
+      "bytes": 3553
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000005-root.json",
+      "sha256": "36c840ead13c6b48fb91249ec0a6c1cbb7da9bf72f96421581a549025e9f9a77",
+      "bytes": 3514
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000006-root.json",
+      "sha256": "d65acdc11b2c59d892426ce3b25853b64319b3dc943457dc12b1c56df096aee9",
+      "bytes": 3792
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000007-root.json",
+      "sha256": "eb4c23ce04423bfdba404f6d8e674c7678e80857d2d5b79b59f1a74aa9993467",
+      "bytes": 3206
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000008-root.json",
+      "sha256": "bcc8cd3209979e398ec59b5046333a885f691a2e738e7d6706ca36173bd89847",
+      "bytes": 3419
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000009-root.json",
+      "sha256": "fb44e690df2714928b1c43447ad28f4b5cc9f7469aa7c1f6b32cfbecbf7090b2",
+      "bytes": 2679
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000010-root.json",
+      "sha256": "d6a2fc7d08fca1e84010e7efb6a07ead307070f745542ffc50ee4ac8ce71d67a",
+      "bytes": 3422
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000011-root.json",
+      "sha256": "20fd747acc1292b8521bccc1e1aefbc9a3a4c85f55934a14596734d6c49209a9",
+      "bytes": 3042
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000012-root.json",
+      "sha256": "7934388419012879223d40d52c40895fb3bb4abe81b01691b6f4c82605beb722",
+      "bytes": 2888
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000013-root.json",
+      "sha256": "66021823137a98e9d40c8b583e6fb809cb53676d2104dddc372008220c557bd4",
+      "bytes": 3079
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000014-root.json",
+      "sha256": "1cf4d925eb5dce9e27c1b25bdbd2808324b1725e8aa10b8fe56f247f21b0f9dc",
+      "bytes": 3293
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000015-root.json",
+      "sha256": "d150e39f5f021f39a4db53dfa7ce11cb87cf2bb5f3601e0ae8313d1b7fd06dad",
+      "bytes": 2989
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000016-root.json",
+      "sha256": "07c37e01d2ef1eccaa4f5b667fed88897af019fba202fb3f6cb95d4de4e5d0f7",
+      "bytes": 2836
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000017-root.json",
+      "sha256": "d0e30ddbf686fe5be346be39443a614d8c56d6c4a495e14a8fdca1a938899f0f",
+      "bytes": 2417
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000018-root.json",
+      "sha256": "392a28e5051b3b98a62e269519f455e380332fcf5d4bf100e7adba2959104571",
+      "bytes": 3604
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000019-root.json",
+      "sha256": "df55908774922862e1e9152af44b7ef75db73951aa94db18bd1f6381bcad5f6c",
+      "bytes": 2723
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000020-root.json",
+      "sha256": "80549d7f5c96b41daf131fe4783aeaac9f24ff9c81c1041c6d9e81cb9ba90a80",
+      "bytes": 3316
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000021-root.json",
+      "sha256": "814de6891724e0501304ccae42d52e70252d8af5a469f35f757055ab0e0a30d2",
+      "bytes": 2969
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000021-roota.json",
+      "sha256": "9cb17c3a76538a5ecc626d70bb948e21614785963a8d0d0211d63d7f7d21f8fe",
+      "bytes": 2446
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000021-rootb.json",
+      "sha256": "ccec584700a7008d7d38614e6a40cdbc04f6096870ac41ac957d761426a338e1",
+      "bytes": 2294
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000021-rootba.json",
+      "sha256": "0c4c499c523cd8a9063bbc925ed31848bbd89c48c3f22d355d16999cc3c37e4c",
+      "bytes": 1503
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000021-rootbb.json",
+      "sha256": "c9ae328a459587886cd3f0b3311affb2e9743976cae2075e8c9945c0f4286bd0",
+      "bytes": 1707
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000022-root.json",
+      "sha256": "e4d0790a0dfbe311a04b028672cfb31617cf5fe0d0d3e693d25108e3f741fca4",
+      "bytes": 2823
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000023-root.json",
+      "sha256": "07ace9f321599c41f85842e7990d8426f597c5bccac07ad80f18a16973383d49",
+      "bytes": 3328
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000024-root.json",
+      "sha256": "b7bd959747cc19a80e09c5c4acd8e50a7bf2e83178cbc03878e1dd3f290cfe58",
+      "bytes": 3136
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000025-root.json",
+      "sha256": "40a1ec286a0701cc4aa3d2750627e61d74d806b8306b1630a701e4316b6150cd",
+      "bytes": 3973
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000026-root.json",
+      "sha256": "0365bad7e2594e59a8d2f60b148d5bd32e28f138322d816986d8185760a4c8d8",
+      "bytes": 2246
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000027-root.json",
+      "sha256": "9d4c751fb8cb78082272a84b603e33632c21a8c9708b78b95f73e4678e48e0b9",
+      "bytes": 3602
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000028-root.json",
+      "sha256": "f8791669333dac23215eed82767c9fd691286f8eb2b8cb2edcdf441b24178c8a",
+      "bytes": 3597
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000029-root.json",
+      "sha256": "d2b37f0823875f097ada00eb5c3e194da355842744f922775c1088218e19059b",
+      "bytes": 2982
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000030-root.json",
+      "sha256": "ef6064169e0e12f708feb88afa9f667e6f86f827cdedb31053d76de6fb7aa188",
+      "bytes": 3648
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000031-root.json",
+      "sha256": "5ac1c83399634972ccd390dd11b4fae1f40b42d8f5834a72f297d5bf5c509edb",
+      "bytes": 3402
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000032-root.json",
+      "sha256": "88b045dc26d7fe4948cc6f3e115d07c0a8884e63b9581a2525cfe9ba72cd1a53",
+      "bytes": 2657
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000033-root.json",
+      "sha256": "50dc1de618325fb341d4db82af6ba5d6979348e6bcf51e4635984d565be053d8",
+      "bytes": 3243
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000034-root.json",
+      "sha256": "a1866daf5f640c9e09e38303e660a2a8117bcb0923196a42c75aee4d0dba4496",
+      "bytes": 3360
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000035-root.json",
+      "sha256": "343bee537713909b693d12e96ffa65e9ee7ebec520184d141e54982be1098d25",
+      "bytes": 3468
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000036-root.json",
+      "sha256": "5dd0c4f88240ba59151b4b4b2b64ee7c88beb724d6e41053303de0718c53a66c",
+      "bytes": 3807
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000037-root.json",
+      "sha256": "ea607cfa04038e401848d6debd5b03a0cdf5de819ed818f7bee6e083f55cb9f9",
+      "bytes": 2726
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000038-root.json",
+      "sha256": "3ff717054a37c83313a38379aca66c2af3fbf9f02d1721cd9f2564a497a04608",
+      "bytes": 3038
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000039-root.json",
+      "sha256": "1af94e8ab6d6002a69159889066c5e8ec73340c366b4346fd41e6909603c5534",
+      "bytes": 3233
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000040-root.json",
+      "sha256": "e00a613d053c8256497a846d174317585e90f83645f414ec215a46bbf77812ae",
+      "bytes": 3191
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000041-root.json",
+      "sha256": "49cf0cb5d5fce514f6a7a93da9580a75b77d203ce9d95d6688dd57e4f6e48b1c",
+      "bytes": 3276
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000042-root.json",
+      "sha256": "58d674ae51f9a2e7aade9dd9629ee13e09260f104901124feacdbfa1dbeb8d4a",
+      "bytes": 3583
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000043-root.json",
+      "sha256": "ecce21de7f7373ff526528526a32198ea99363fefafd5f1ca8b40a1dbe2dcd43",
+      "bytes": 2249
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000043-roota.json",
+      "sha256": "ae2387b2b13dc47264195b708f7c2caf3d4f674ce216b64ffa71dda27db8e80d",
+      "bytes": 2354
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000043-rootb.json",
+      "sha256": "f4f165b5f6122796ffae44e11f235abad567568914e867393330584a4b388564",
+      "bytes": 2380
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000044-root.json",
+      "sha256": "b6fe068aebcde82b121ac95044c0d96b1c54fa601fd46c866c1735c2cbe24fb5",
+      "bytes": 3900
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000045-root.json",
+      "sha256": "be65998d832394300e8633a26f8ff249026fab16a2857665384c4ab4d295e116",
+      "bytes": 3419
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000046-root.json",
+      "sha256": "048f4367cff56e491fbb22d46b153b8f6601220c12163e15d31d12ae7e5dd484",
+      "bytes": 4016
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000047-root.json",
+      "sha256": "b0c642c243fe28b99624f54dfe7c9856606207ddfff8e3f2d8144de908b43d23",
+      "bytes": 3655
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000048-root.json",
+      "sha256": "813c219600c40e0b119f6f8bda973606f51ee04dad410cc0e4cc985439f4f347",
+      "bytes": 3634
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000048-roota.json",
+      "sha256": "bf934813b41121af20c7ba6669375268ff766325a34360a1f789558ae4009c9b",
+      "bytes": 2644
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000048-rootb.json",
+      "sha256": "6bac36ccf1a4828043a45407cabaa74cfd5dbd2c8cb2b608ebdf3e742a5ebb77",
+      "bytes": 1773
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000049-root.json",
+      "sha256": "c1cc7b0278f40f1762054c9e34783109a4f4bb8561e6b209ab2da36eb250f7f0",
+      "bytes": 2682
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000050-root.json",
+      "sha256": "452a176d6d78a35a0377dfc7ab2182b4527a7ed591b7eeb27bc32664b233661b",
+      "bytes": 2794
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\nodes\\000051-root.json",
+      "sha256": "198fff73c9bdf675f5ffb0c89977714326a679015d1c84557addf2832cdf349d",
+      "bytes": 2068
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000000.raw.json",
+      "sha256": "5f173abaeae7514bd85f8c996d4cf1270a0ab041aa69e22f51397949859e9bd1",
+      "bytes": 1291
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000001.raw.json",
+      "sha256": "0e8b1c48191d6f9b493c0078941f2332071adc045a8e59056a8651103ddfdef7",
+      "bytes": 1394
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000002.raw.json",
+      "sha256": "3238b055128feed5e56ce593faf97b92a3d947e9b878c09469f2c5f3407bd7c1",
+      "bytes": 1357
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000003.raw.json",
+      "sha256": "f7ab8b42abe25edc1e6acfa228626f1f3a183e2bb6a4fba444dd67f1775d0e28",
+      "bytes": 1545
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000004.raw.json",
+      "sha256": "b622cc5537a67829fc806cf7b439522a3dbe029c3ba944498f8482fb7728c492",
+      "bytes": 1491
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000005.raw.json",
+      "sha256": "3db7bb96e476fca2cbe573ab3f42dde569e7587a45a069db0a336899d96a1aa4",
+      "bytes": 1461
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000006.raw.json",
+      "sha256": "4fb66cbccdcf7f0842953bcc6b974d3045477c41732f1f41f89c9274ebead582",
+      "bytes": 1491
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000007.raw.json",
+      "sha256": "d07aa5471a8bfc9f23cdf79dec7bf5f2ad0e55b489f4e2ea89dc0a2d7d3d7b0f",
+      "bytes": 1398
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000008.raw.json",
+      "sha256": "b5c86dd20ca19666bd8ae9abca82737db1d060422f359a6f33b970c0299b0366",
+      "bytes": 1419
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000009.raw.json",
+      "sha256": "f135fe432189ede500cefe59ec6067fee6f8fef397912a4a6f305d81be4b16a2",
+      "bytes": 1274
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000010.raw.json",
+      "sha256": "f78776528ec6e49aaa3d85aff34b18eb9395f6154eeac2fa6d1f1ebced6d1447",
+      "bytes": 1429
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000011.raw.json",
+      "sha256": "c7cdabaaa44c871748ac2b581081ecfc0124e8c4291f99cd0b2f5a7b79a105c7",
+      "bytes": 1351
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000012.raw.json",
+      "sha256": "8b7555a6cfdba27aa885a2c5e487c08e80dfedd232f60cc2ed9f236cf9d3e53a",
+      "bytes": 1318
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000013.raw.json",
+      "sha256": "8ab3b161ed999cc64992f26acaa1f5d3458fbe82d3858c19563337ff10622a27",
+      "bytes": 1369
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000014.raw.json",
+      "sha256": "83843a01675182d019734baaa163e6c6b03b7bf89b3396a5710627bd51983237",
+      "bytes": 1396
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000015.raw.json",
+      "sha256": "898cd66bf58959aa773154549d2ca6c99e444bf0cdab5d4305d2c5040f1a5029",
+      "bytes": 1330
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000016.raw.json",
+      "sha256": "045328be9a6eb8de1ad18d74fad3abde18d6fceb98143b3cb78b390d7841dac4",
+      "bytes": 1324
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000017.raw.json",
+      "sha256": "3837ed677fb5806e54ab4e697b2eb4099b501e78baaef37bb512ba784863c74e",
+      "bytes": 1198
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000018.raw.json",
+      "sha256": "3471166dfe9c3237c48cc173a80c2e49e4a74256ea04ec1c94aa3b5b6cd62857",
+      "bytes": 1471
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000019.raw.json",
+      "sha256": "bd13de63319a7675f15597a62f04ba6e81ffa177cb07aa4702176f28c2215b0d",
+      "bytes": 1267
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000020.raw.json",
+      "sha256": "6f588dfb790e91f335e7c3b091a29c35922e0a7dd4c8fcbc9373ab194176d1e3",
+      "bytes": 1413
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000021.raw.json",
+      "sha256": "d8775abf582beec5e694884d05228817785d9ea914d838fd5d44cf4857083dc6",
+      "bytes": 1750
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000022.raw.json",
+      "sha256": "99db9de40958d8e5e84f1c44c3d76132d6267f5ead83842ae250e8887c05b3a3",
+      "bytes": 1295
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000023.raw.json",
+      "sha256": "3eb830757cbb9ae926afa07a5a21f9cbe2605e218b0fa9f8a46e5b4c8c066f47",
+      "bytes": 1425
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000024.raw.json",
+      "sha256": "c9dfe9723233f27fc05d80bff0f9e2de2123151ccdafae1537f59c7427627de2",
+      "bytes": 1362
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000025.raw.json",
+      "sha256": "1aff843bc3bf980f772e1ee1b41ef2c934905657d585c80c1b2ae0228c2ce003",
+      "bytes": 1559
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000026.raw.json",
+      "sha256": "0fc536a3a3421d97541e5badfd4e6565844075d019d23122d429f3ea339d4e4e",
+      "bytes": 1178
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000027.raw.json",
+      "sha256": "e38ecb7544d7d5f731189c0d413ee8d884fce854d27c1d2537dc337412e11759",
+      "bytes": 1463
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000028.raw.json",
+      "sha256": "8c2d05a7c2f44bc1fa5e63d0ee901b97da66f8af19f70b3c0022a15761081f96",
+      "bytes": 1442
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000029.raw.json",
+      "sha256": "2d52979dc60380067d760610b581d7aee7395acaedf37524fc275dfc5bf694d2",
+      "bytes": 1319
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000030.raw.json",
+      "sha256": "30a851b0313188b7660b7a88680200bb435653b0832ffd441e1dbc277947e957",
+      "bytes": 1470
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000031.raw.json",
+      "sha256": "a3f1402acbb8a4a3a681097eea6932ce00be09dbd63f5a37b009a4f364dfa02e",
+      "bytes": 1430
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000032.raw.json",
+      "sha256": "b00ae1397ac4536a4eca0ae57bbbf6e9175a0ebfacd8c39b08fc7c0ef56741bf",
+      "bytes": 1277
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000033.raw.json",
+      "sha256": "f0323a5f42fb502b4e7511ea891017dc4019f3b51e6b72aef2bea84ff6f976fc",
+      "bytes": 1430
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000034.raw.json",
+      "sha256": "349aba109602f25b0fd4862222a2c9b1b0c947b3ce561894f6ea8fd797deb93c",
+      "bytes": 1424
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000035.raw.json",
+      "sha256": "bbc664250d9c3bc3bb9a0b45ba0f2a6eeecdebc164ae74ca9eccbdda9f665ed2",
+      "bytes": 1412
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000036.raw.json",
+      "sha256": "9933fc637f54db7531e5cdb9b5dc539269f9501a2ee551fbf2c717433b6faaba",
+      "bytes": 1502
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000037.raw.json",
+      "sha256": "e6f4830b0ef866bb52bb95961e9b98fdd9e193025cb4edc1beb5d5f1cd9c6652",
+      "bytes": 1262
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000038.raw.json",
+      "sha256": "1baa2112fb71a4b1733a7ea8121f3dc87f91e50bc3549436ec5780f2a35702aa",
+      "bytes": 1340
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000039.raw.json",
+      "sha256": "b1149ca659a4c2446ebe4c714f865ffa948db61d5d68919ae4bec1ebaa7ddf9e",
+      "bytes": 1391
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000040.raw.json",
+      "sha256": "183b4f1cc1c0f71fc3a6d4aa8d54e47d934b97dce65f7730570a34cd426fc576",
+      "bytes": 1379
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000041.raw.json",
+      "sha256": "419a56168b3c7017c5ae4c01159e51ac95509b927186facceef50d9a50d849d7",
+      "bytes": 1409
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000042.raw.json",
+      "sha256": "21bfb196ce0e48b588204f94701ef0330d945816c3e2fe87b7ef7028dd42a914",
+      "bytes": 1493
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000043.raw.json",
+      "sha256": "b9609da8a97b72cb5daec0e2dfa579a04db58f666efec9fe0def065f9caa5f7f",
+      "bytes": 1640
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000044.raw.json",
+      "sha256": "200e37a14e2d1558b1c569cf73611c0f8163d6743ceb0b99d79278c375528b14",
+      "bytes": 1535
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000045.raw.json",
+      "sha256": "8daaf657ee1085a29682403a589eab7ef1ca518ef7c66047db380a1606d0fa51",
+      "bytes": 1418
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000046.raw.json",
+      "sha256": "bfa802a6b02d06a2989643d685bb025bda1ec184c033dc6e05373152c68da4e4",
+      "bytes": 1562
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000047.raw.json",
+      "sha256": "648a014de79fd8c4784d698a3f332d2e0113b5c8b7d3315a2f32d2cbba6847ef",
+      "bytes": 1478
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000048.raw.json",
+      "sha256": "4f26b1fbd97b8a5864317147d7c73028b95fddfbd4ac4723fabaf6be80e2468f",
+      "bytes": 1541
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000049.raw.json",
+      "sha256": "464398bb51ff8922b8cf6f7d5612d4bea0326dc5a4f410bd00fdbcb0e06caccc",
+      "bytes": 1283
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000050.raw.json",
+      "sha256": "c8a403acde18b8da3c7160926c53d9fb4611551aabd75ad07272ce0afafd7f97",
+      "bytes": 1277
+    },
+    {
+      "path": "far-mic0-common-span\\control\\full\\transcripts\\recording-8d8f3734d7eb9a68\\windows\\000051.raw.json",
+      "sha256": "01d210dcd02b2aefe58ca495432ca0880b81e49923d35d6e6f32dbf72af4e21d",
+      "bytes": 1145
+    },
+    {
+      "path": "far-mic0-common-span\\control\\pilot\\state.json",
+      "sha256": "75bb0d9bb18bab3215dcd5fa33a2be425448e29783377a53588e331e31b8d4d7",
+      "bytes": 2325
+    },
+    {
+      "path": "hip-natural-ascend-r1\\hip-inventory.json",
+      "sha256": "f9dc6d84417cef137ce2784fec9036d7457644f11d13ed4c55db4c54891fb673",
+      "bytes": 1394
+    },
+    {
+      "path": "hip-natural-ascend-r1\\inventory-resources.jsonl",
+      "sha256": "6ea8c2afc873f278b1aeec75776f6eb4632c69b509c3425cdef2ec11fd1e9660",
+      "bytes": 978
+    },
+    {
+      "path": "hip-natural-ascend-r1\\inventory-run.json",
+      "sha256": "e54ce03abb94777fc30f82d43c73f58ca6219858e2cf8d3ba46a8f5118742d25",
+      "bytes": 610
+    },
+    {
+      "path": "hip-natural-ascend-r1\\inventory-worker.log",
+      "sha256": "0b73113f9be0dd19be2a578c98aba6589b8cab19a9bbbb184ca62c9324ae991d",
+      "bytes": 1213
+    },
+    {
+      "path": "hip-owner-model-resume-r4\\hip-inventory.json",
+      "sha256": "db0893831d4967de4016fd2b97c1232f6bceaefc7d5a84b2b22ceffffa0830ce",
+      "bytes": 1393
+    },
+    {
+      "path": "hip-owner-model-resume-r4\\inventory-resources.jsonl",
+      "sha256": "44595cd56b057c40d18e015d2bf9b199c9439c5b156fbd1ba80c718af6b0a91f",
+      "bytes": 1224
+    },
+    {
+      "path": "hip-owner-model-resume-r4\\inventory-run.json",
+      "sha256": "d40df1203fff7216ec0a674e4fa01edb38379acfac5fdeaccf29c1ea3983ad16",
+      "bytes": 610
+    },
+    {
+      "path": "hip-owner-model-resume-r4\\inventory-worker.log",
+      "sha256": "27237b22c870255c602c790d0cf9d2af0fbba499dc49991141e0488b954db77f",
+      "bytes": 1212
+    },
+    {
+      "path": "natural-ascend-first-mixed\\attribution.txt",
+      "sha256": "1f92e04dabc566be6ac9b69f1fe1a6f50568df830438e863a362f27bae61d5c8",
+      "bytes": 434
+    },
+    {
+      "path": "natural-ascend-first-mixed\\audio-only-protocol.json",
+      "sha256": "98f42c99ca8237b913a9c70d4b36b7332848dacef39c4455116881bb034e62e9",
+      "bytes": 2518
+    },
+    {
+      "path": "natural-ascend-first-mixed\\result-score.json",
+      "sha256": "675f45cb9e8851bb02499df8dfc885d2e1a75c7ecd3d58924293b892c5c16d26",
+      "bytes": 2980
+    },
+    {
+      "path": "natural-ascend-first-mixed\\scoring-only.json",
+      "sha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3",
+      "bytes": 240
+    },
+    {
+      "path": "natural-ascend-first-mixed\\selection-protocol.json",
+      "sha256": "d4cdb533fa4e03a545d7a933ca4400ffdaac91c60ba3cad65bfe6dbeaf2c2bb6",
+      "bytes": 1324
+    },
+    {
+      "path": "natural-ascend-first-mixed\\run\\events.jsonl",
+      "sha256": "65c7047c9763db08594e7aad6f84076293835648b45d6aff8b0ddaec2b0029cb",
+      "bytes": 231
+    },
+    {
+      "path": "natural-ascend-first-mixed\\run\\run.json",
+      "sha256": "d42ee5b3e450524a73e52d26f18a1fcbeeb1af54dbb5a534513378d9af6238ec",
+      "bytes": 1267
+    },
+    {
+      "path": "natural-ascend-first-mixed\\run\\weight-roundtrip.json",
+      "sha256": "bc8e549067990e514d91d221ee16baa5fc3b56e3b8a81f5a5338091c6b63df99",
+      "bytes": 1632
+    },
+    {
+      "path": "natural-ascend-first-mixed\\run\\worker-state.json",
+      "sha256": "7672637b151a222540c2a6f6dbefe5efc3aa14f0715a814d77072338dd61e49d",
+      "bytes": 1622
+    },
+    {
+      "path": "natural-ascend-first-mixed\\run\\worker.log",
+      "sha256": "44f11a3a8c132f7191cf165fc028d6fda605c4a1cb54b453e23eb826b140e339",
+      "bytes": 421
+    },
+    {
+      "path": "natural-ascend-first-mixed\\session\\document.json",
+      "sha256": "1920865a82b5361bfce750d7e5e476f1f0f45b76555418798da64881ea372894",
+      "bytes": 764
+    },
+    {
+      "path": "natural-ascend-first-mixed\\session\\session.json",
+      "sha256": "99a81ed62a3a5c7f31fba098f867fe474062cb4858cdd8601be7ef5ad7f3ee52",
+      "bytes": 547
+    },
+    {
+      "path": "natural-ascend-first-mixed\\session\\decode\\00000000-00064480-final\\root.json",
+      "sha256": "7796bdf9110c4c8cc0f3330c7d2281a5affabd3ba90c540b4c8662e9d9974835",
+      "bytes": 1698
+    },
+    {
+      "path": "natural-ascend-first-mixed\\session\\requests\\00000000-00064480-final.json",
+      "sha256": "2990636175d1340181455f2a99e59640523a9510cd006f156650e89b648cb284",
+      "bytes": 628
+    },
+    {
+      "path": "natural-ascend-first-mixed\\session\\results\\00000000-00064480-final.json",
+      "sha256": "60c57a240933b5dcb50f071069eb5c087044ba2bda944dd33c3fc51eb57f5629",
+      "bytes": 2295
+    },
+    {
+      "path": "near-N_SPK8015\\native-attempt-0001.log",
+      "sha256": "089e49f56d7170fe506ac57686f79ba269430f5ec7d62945bb27441aa1c1f1c5",
+      "bytes": 301
+    },
+    {
+      "path": "near-N_SPK8015\\native-attempt-0002.log",
+      "sha256": "1493fd038a8396a31961d7a72a8af2633c88143305ccbf435b840e0a73e96e1d",
+      "bytes": 2375
+    },
+    {
+      "path": "near-N_SPK8015\\resources.jsonl",
+      "sha256": "88f9164ce03dc72100667e69a74882f0933eb4bb8bebfe6fb10b6b410ce432f0",
+      "bytes": 61181
+    },
+    {
+      "path": "near-N_SPK8015\\task.json",
+      "sha256": "62148f64888fee62e86c36288e4d4911e6cfc5c619839e53e88411c85109c906",
+      "bytes": 2549
+    },
+    {
+      "path": "near-N_SPK8015\\control\\audio-only.json",
+      "sha256": "7dc12752c99f4174d80fb04426f052f50f6d15635b0c4c39aba48ab6e066f3a7",
+      "bytes": 322
+    },
+    {
+      "path": "near-N_SPK8015\\control\\model-ready.json",
+      "sha256": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
+      "bytes": 340
+    },
+    {
+      "path": "near-N_SPK8015\\control\\native-protocol.json",
+      "sha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "bytes": 4098
+    },
+    {
+      "path": "near-N_SPK8015\\control\\pilot-extra-audio-only.json",
+      "sha256": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
+      "bytes": 273
+    },
+    {
+      "path": "near-N_SPK8015\\control\\protocol.json",
+      "sha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+      "bytes": 2491
+    },
+    {
+      "path": "near-N_SPK8015\\control\\seed-manifest.json",
+      "sha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+      "bytes": 149
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\attribution-review.json",
+      "sha256": "d3f824fb66c9d928ef3c334f2545c535f5d027b0ae407f06614470c1e773e7a8",
+      "bytes": 26237
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\completed-state.json",
+      "sha256": "3bb4f5098ea9afa4ef7f590c96abb77955afcb66140175fccaaf9165169abd8c",
+      "bytes": 2223
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\model-output.json",
+      "sha256": "665ac6c58f076575cb9b24bad3c584f7e05cd420b3d3356c59e3e4bd7917dd50",
+      "bytes": 25290
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\prior-state-009ea742ac4d.json",
+      "sha256": "009ea742ac4d6b0210ad2ec21aa38da20f705e244309e03669fc1046e4993da0",
+      "bytes": 1730
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\state.json",
+      "sha256": "3bb4f5098ea9afa4ef7f590c96abb77955afcb66140175fccaaf9165169abd8c",
+      "bytes": 2223
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\text-draft.json",
+      "sha256": "dbe6a71cbf3d5a87fc5291d4c000aa6a94cd8994057bfdf9924a95bee6b41210",
+      "bytes": 25291
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\weight-roundtrip.json",
+      "sha256": "9b92ea4234eea44ab7cceba49ba143c74310f752888a56de7a51ccb03364f36e",
+      "bytes": 1596
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000000-root.json",
+      "sha256": "f97de86ab4151a4017b123003c7a69ead9b9d7745d0d46ff1b010e201b3ad8dd",
+      "bytes": 1788
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000001-root.json",
+      "sha256": "8ee12f240cf3327b38a79232dadf3d5ce2cf2aed883b0aedb7515a85358fa095",
+      "bytes": 1607
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000002-root.json",
+      "sha256": "e08071c82c715609c533d38af20775a997735a90dde71da5400f951431d651a5",
+      "bytes": 2568
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000003-root.json",
+      "sha256": "2a1eed29ea0e8044e6c70105818def97794b17a603a7a1ef8b695e78888d0ffe",
+      "bytes": 1070
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000004-root.json",
+      "sha256": "4362668774f76dd8785994155eb3378b54c24456704c4a5694a295551137ab9a",
+      "bytes": 2330
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000005-root.json",
+      "sha256": "a539a3b3978a5c9ef7c3b91b91431e911b09f76d9b5b5e2f9145612242c004a7",
+      "bytes": 2147
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000006-root.json",
+      "sha256": "6fed9eb3bd446769dbaa069f709794478ba95bfa6161a53f3a63edfb759e0e7b",
+      "bytes": 3334
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000007-root.json",
+      "sha256": "12dbac988178e1645f9a681111f8270b8d444d77eacf824b3619177246f5646f",
+      "bytes": 1490
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000008-root.json",
+      "sha256": "63d5cb7216be46ec132da7dffc20dccf7bd17a0653e804a28b9419ab313441c1",
+      "bytes": 1411
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000009-root.json",
+      "sha256": "e7750bb65c1dbb3009a95fca38816dd0dce6387a00ab84d1791caa1716532631",
+      "bytes": 1877
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000010-root.json",
+      "sha256": "4cf571ccdf44d9ec43bed6ab48bb46c2c1882fa46ed569f25d3952af9b35e97b",
+      "bytes": 1512
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000011-root.json",
+      "sha256": "8d89c024787c6d992abfbb52b81b4e5333315f21df27968e5f896f3ef700e830",
+      "bytes": 2613
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000012-root.json",
+      "sha256": "532faa90604a55a6c54ca2895916430699702bd288e6783a11d3a6acf620734c",
+      "bytes": 1637
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000013-root.json",
+      "sha256": "72d2f358b20d092e699db09fb0e746e5921fa61030483212dea5e8bf7a6db1b6",
+      "bytes": 1489
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000014-root.json",
+      "sha256": "183861c059ae7565ec33e79ff4b99a24bfc69f6c20b57e925d7aa2b91bd311f6",
+      "bytes": 2048
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000015-root.json",
+      "sha256": "fc9370cb5b2394e692ecc5b40ecf517f14bdc14349cf77d39a78787da73f4b24",
+      "bytes": 1703
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000016-root.json",
+      "sha256": "0fc127b4df9285d90476e3026739ff237f9488c4c3261f7d0d8b6ca256e10e8c",
+      "bytes": 1798
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000017-root.json",
+      "sha256": "c70f6071907993dc08b55f271db135db8ac0e161da8aa68b7aae23c723cfef5e",
+      "bytes": 2004
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000018-root.json",
+      "sha256": "aa850ecdb8db73ac3e5834cc2bb245ffb1af4eb31e576056429166f37da32284",
+      "bytes": 1843
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000019-root.json",
+      "sha256": "921c1609c5441f27e5c46daf0de9fc8b99367d1de2fd06a0210dc10b408e94a9",
+      "bytes": 2191
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000020-root.json",
+      "sha256": "a3c6bbdb1cf783f57ec4b50a2271b3f71c82fd8aabffa9fd35a94805bcc50845",
+      "bytes": 1474
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000021-root.json",
+      "sha256": "8648c3aa4b500916b887ede041b7a4fc00ea7183a1621eda6c91b36ec5419ae6",
+      "bytes": 1810
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000022-root.json",
+      "sha256": "d6713ca0e620eae6efc1459789a7c322144332d2032b6c445456ee6696c8ae24",
+      "bytes": 2240
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000023-root.json",
+      "sha256": "b0b7a383696b43dae6db2aa65a6b27eac99aa0f93957c6563613f594856d0b7b",
+      "bytes": 1733
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000024-root.json",
+      "sha256": "60d3f7c148322e933a3a73540a76d4f25c2ae9c40fea9bfea2a44189806df2e0",
+      "bytes": 2101
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000025-root.json",
+      "sha256": "bf0cfc1387d69ea8ad1d168e132b13b7e6adbd452c2d9abff642707f3d77cfda",
+      "bytes": 2641
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000026-root.json",
+      "sha256": "5ceb6e43cba8de6bfb87477cb719c23ac8a18166b5f314c31f44e21b53556590",
+      "bytes": 1148
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000027-root.json",
+      "sha256": "21881580b1260c9f9f2609f7e8ea28812da8166192ab9a2fd48fc2865444e7ba",
+      "bytes": 2357
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000028-root.json",
+      "sha256": "5e5d5f6e8682ccc92e2ddae7798d7d438d39c9c37066408bf446eabe765ebb15",
+      "bytes": 1222
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000029-root.json",
+      "sha256": "5668801b35e0783a182e7d817f61f5397d41ef698642c5d9dc22a4ec2525716e",
+      "bytes": 1821
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000030-root.json",
+      "sha256": "4e20dd01b9a9e11c8713a538aec109cb790467a20bef2b18c0985e80e6befeba",
+      "bytes": 1914
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000031-root.json",
+      "sha256": "15d8374356762621b18fc504d50760d24c9e2f42c696f153d6d09108f58f8c5c",
+      "bytes": 1187
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000032-root.json",
+      "sha256": "d7bd2f7e68f5ca8ca772fdd30170f58c68f217edee707ee64846e9305bbb2013",
+      "bytes": 1249
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000033-root.json",
+      "sha256": "800ad7f7264e7b8d39643860a9b90c403d58dc8707d22119b0c3cc74bc6086a3",
+      "bytes": 2034
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000034-root.json",
+      "sha256": "e46e1d4424781900046dc6b2b2db3ead70c463ba9fea55c258e65d1c8ef97e99",
+      "bytes": 1801
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000035-root.json",
+      "sha256": "dad341e044ae8b19414d73155153cd0b71139ae6f322104f49bc75b8424578c6",
+      "bytes": 1293
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000036-root.json",
+      "sha256": "b7bf0de73f9d5b956ac957843064ce05636416dc533f8cd51d8c33ea0317f6e9",
+      "bytes": 2765
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000037-root.json",
+      "sha256": "b740b3823aa3c19f19df3b7778250a11c7acc38cccb6530e3f1959c5017eec1a",
+      "bytes": 1822
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000038-root.json",
+      "sha256": "6a3d5802c39521265d78045ff63f43d2e4ab28cd90da5d0b7a5e4304a132a588",
+      "bytes": 2189
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000039-root.json",
+      "sha256": "c3c870eb477c5c99991034f0913abad842742999189c8fc9e0fcd356f3946926",
+      "bytes": 1377
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000040-root.json",
+      "sha256": "863c8b4c3cf425ee9c47e23f141f572404e1a8efbb01a76791f902f3d0aca0e0",
+      "bytes": 1553
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000041-root.json",
+      "sha256": "386412fd44534612ffe65e2406dadc4209ef1b8a9c5cfeffc9261c3c4b6f4e67",
+      "bytes": 2180
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000042-root.json",
+      "sha256": "d1e1534706f6a7572c6b145873a0721b7e41d2c39179a8357276e3f74cce3a12",
+      "bytes": 2134
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000043-root.json",
+      "sha256": "202bd63599a0abbd50c510fd79025850743656981cf1b03fdf3581aa03a1398e",
+      "bytes": 3071
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000044-root.json",
+      "sha256": "9e52f2663562689b7a9d9753b648805821365fa01bdacba528087dd6e7507a03",
+      "bytes": 2410
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000045-root.json",
+      "sha256": "00c4eea9a39847ec45c43ede060d92f1d016b961b8b17a76b0003c4c4bb2e031",
+      "bytes": 1667
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000046-root.json",
+      "sha256": "d515effe51f8fed3c1717387e974725ecdd5e815054cd23f897357702f1868a7",
+      "bytes": 1666
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000047-root.json",
+      "sha256": "4a10d2ead7d4bd83d6474e78aaf43178fcb1d331e4922ab55e3fafa9bf45dcd6",
+      "bytes": 1691
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000048-root.json",
+      "sha256": "640e40304f3995a877fb2096cf93216163606c73260bd4ec2b714c264eddda3c",
+      "bytes": 3171
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000049-root.json",
+      "sha256": "9432e19456f70a5b3198b9f408e9720292264c86b16dd327d556f11e9ff31e83",
+      "bytes": 1460
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000050-root.json",
+      "sha256": "296c5d7cc215a74c12e447b6d4b45d2ddd9658a3802e289a5d633fb2795d59b3",
+      "bytes": 1333
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000051-root.json",
+      "sha256": "9e9b9882af8b85334061cfe60f2bc085514d249fdccba66fa1f04a693d6cdd86",
+      "bytes": 1121
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\nodes\\000052-root.json",
+      "sha256": "62244fb5d61998ba9e74d1634212e846cd3e5baab0f4b51166d359a113b34464",
+      "bytes": 1078
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000000.raw.json",
+      "sha256": "4a70506c6baa1c2d632488049ddfee39f175bdc02a1d9d37f27a428009280eef",
+      "bytes": 1069
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000001.raw.json",
+      "sha256": "caeea96aad97ba4c8ff408f6420406d8efe37d202076a1aa283850f69948c7a7",
+      "bytes": 1052
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000002.raw.json",
+      "sha256": "060d7ea5bc78f5d0c5c9518638da591b6eacf75acb11dea14a6dcf7e320968f6",
+      "bytes": 1240
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000003.raw.json",
+      "sha256": "bc71ace154d26a7dcbf5fd5ded94f09cd84164a30bfdfaebc8895ea3c5ce2450",
+      "bytes": 933
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000004.raw.json",
+      "sha256": "c5b675bdde74a80d17c3ba3f6ac69a109b821fb833f704776098e145c0da47e5",
+      "bytes": 1212
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000005.raw.json",
+      "sha256": "7cecd11deedc2f50bb8b44159f85ed9acb1885cb44cd835a769fe95abf8d086e",
+      "bytes": 1179
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000006.raw.json",
+      "sha256": "0582cd7b22a75b20dbbec3e51e099d1bfefd26cc7b9eb530214aada760d7bce0",
+      "bytes": 1404
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000007.raw.json",
+      "sha256": "7e848dfc71717b4a1857a624e749018b7051bd1106907f3f23eda39e291e89ab",
+      "bytes": 1020
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000008.raw.json",
+      "sha256": "2e7fa6b5b33118128fde4133045d83ed40b649ce95d2ef74bad99f31377075ba",
+      "bytes": 1005
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000009.raw.json",
+      "sha256": "2740b85bbf01a5218c755969293b82c7473298451ad6ddf9c2f31b1c4c7c5777",
+      "bytes": 1104
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000010.raw.json",
+      "sha256": "8616d29df0b3dc2031d4a2b6538621e8cc074e2cc768ad5cd096a08c7a6873eb",
+      "bytes": 1024
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000011.raw.json",
+      "sha256": "3e8866b08ed4f9fa7697a2cb74fa714f9d49ebca5d5feab4c5298c1c77514141",
+      "bytes": 1252
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000012.raw.json",
+      "sha256": "46257b0e2035cbc3f1e61509a75de5b71e6ba90b4e3c491f313108cc26b7df84",
+      "bytes": 1045
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000013.raw.json",
+      "sha256": "9f90a6dfe635d756dd2138165a1ee1e60a8a7ac75b5308b0952ffb4895b95f42",
+      "bytes": 1018
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000014.raw.json",
+      "sha256": "e002d1ba51633415fabbf3a615580b2ef65dfd6ad6fd5614a8f9d35f2a8c0ec9",
+      "bytes": 1150
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000015.raw.json",
+      "sha256": "cceddf552c145f6c9415c76ebfd9222f488c1a08d54e19dfaf00a48e1f9901ef",
+      "bytes": 1061
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000016.raw.json",
+      "sha256": "e636d40e423b4aae4ff542611de96dc318404213e5c6b00f84a8af2fff75a413",
+      "bytes": 1093
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000017.raw.json",
+      "sha256": "3c52c433454edbe52d36c09552c1d310e49570584874a95bfe61b2ca88ca25e4",
+      "bytes": 1115
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000018.raw.json",
+      "sha256": "25e88d6443e2201b0cf3bdb0df60f9590b4f2f903d69d79c94920f437580aeed",
+      "bytes": 1082
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000019.raw.json",
+      "sha256": "04357a63a33281dacd2dffc3714927d9e5190a24ffdc61ace710d4fa83fd7023",
+      "bytes": 1166
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000020.raw.json",
+      "sha256": "6b83efb07a513123ab7cbf5ab6cf9fbec0d2a3c6974a100f57f2a8b75c20d8d3",
+      "bytes": 1000
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000021.raw.json",
+      "sha256": "d39f75d273ad2da77713c1aa4bbc8f1953d970882b3deb9510ae7a1912199ce3",
+      "bytes": 1071
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000022.raw.json",
+      "sha256": "05927e909972cb124b754af160db9d655a392875dc6fc5b25d72778a37b0eb37",
+      "bytes": 1172
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000023.raw.json",
+      "sha256": "960928ec7858c7a7c60336c20146308eb75fd9a0cee222176cce9b58494c5f68",
+      "bytes": 1064
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000024.raw.json",
+      "sha256": "b23b2eb48140fc654461f15b63fd0a0aa040a9aa147ef2b862e07cd50f0ec134",
+      "bytes": 1137
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000025.raw.json",
+      "sha256": "7afa78a9f50b35f3c2290fd5a647104d4c0c584f562ebecf9dddf3a46176b51c",
+      "bytes": 1239
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000026.raw.json",
+      "sha256": "977693a3e0555f544afd0749e3da9d024d5fb1c0d69cdfe6d313f9e5599f3b68",
+      "bytes": 950
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000027.raw.json",
+      "sha256": "646d2b12fd8d4543862826b330b1c6929395b2e2a1cada0f6524bf6adbc0e7f2",
+      "bytes": 1189
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000028.raw.json",
+      "sha256": "e19ddf53350d14c18067b95ca5092ae2a545104dd7cf8dbb55b6ad82a289248d",
+      "bytes": 962
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000029.raw.json",
+      "sha256": "e61f896beee73d639e702b4bbb1dc63cdec07d4496061c1f1039c9cb884fbc6a",
+      "bytes": 1094
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000030.raw.json",
+      "sha256": "62599746ef7e56c71d7a75f253cbbe6e31ea2c194a6488ec13c4db6f59ea75f9",
+      "bytes": 1112
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000031.raw.json",
+      "sha256": "510447d6d0d0436d5fb717b18b0d1b811e477da1c379c3d2626a2b342676dff3",
+      "bytes": 962
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000032.raw.json",
+      "sha256": "234a1d5055772060a95fbcd9594f65f64d9d702443c56174178f28caecb2ee7e",
+      "bytes": 968
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000033.raw.json",
+      "sha256": "10326bcd0fb1f92c6594b99c523342ec16c410d08708d6687af5ee2e5d9dc9dd",
+      "bytes": 1139
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000034.raw.json",
+      "sha256": "2e5865b2ba1dc5df5e285eb2491828d49177dc1ad1acd24adfc3dd71ec0b3faa",
+      "bytes": 1088
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000035.raw.json",
+      "sha256": "54059f9b6d53f09c0dbc31cc4fd7a2191895e199e56295939a8ed8f2eea232ea",
+      "bytes": 977
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000036.raw.json",
+      "sha256": "264b175c39ce92ba1c561af42dc320713ec691dde5d99f6b244c29923696498f",
+      "bytes": 1277
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000037.raw.json",
+      "sha256": "43dee01c5520d5fbbdbed42e842bddabb74e2e9d038308cdf35f67037ed890d6",
+      "bytes": 1098
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000038.raw.json",
+      "sha256": "c99ee7f4c52849b871ea2e9f62d5af9aa38ee4acbbb20051cfd0af3c08f52e69",
+      "bytes": 1167
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000039.raw.json",
+      "sha256": "be9631f1de5e4dabb1c354fff4899c6fad9cfa7e70009d01b44ed67c1d5e237d",
+      "bytes": 992
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000040.raw.json",
+      "sha256": "695b7dfe7dfb1435f61de62ad8d26b8f02bd23d082d119182a51ffbb7d1e4ba2",
+      "bytes": 1034
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000041.raw.json",
+      "sha256": "412eb36cd27a9ee43f1ba1d99dbe526d40cd8bfff4efcb687c6b886aa7cbeaef",
+      "bytes": 1169
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000042.raw.json",
+      "sha256": "9f205f9bbaed947b878294133d2e3f3e1f1ee05c70a0bd026b6558b31a407405",
+      "bytes": 1169
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000043.raw.json",
+      "sha256": "cc228f0ecb1b7c5b7cc020923e04698e64ef7835cecd01b9bcda0bd15ea0bd56",
+      "bytes": 1358
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000044.raw.json",
+      "sha256": "3902948cd69d42bd0b8dc873e11fc5885a93f69af87610b5bfc0f357889c3c2b",
+      "bytes": 1217
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000045.raw.json",
+      "sha256": "4854304c334d26cb1ad81b44978551eaad8adf2a5e2f0faae0bc2a15578e41d5",
+      "bytes": 1058
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000046.raw.json",
+      "sha256": "8aed5ebea8d5d8e027b3dc9096d3de09f97ce54860585aafab3ad8921406c5d5",
+      "bytes": 1065
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000047.raw.json",
+      "sha256": "0d64f81e1a97ff9012834932f2bbe9d1c38907c286883109e7aa5adf3453e6ad",
+      "bytes": 1065
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000048.raw.json",
+      "sha256": "f65345c909d44cce467a1b9bb73b324af23aa1d47a09dbeb2150b346e6168ed9",
+      "bytes": 1370
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000049.raw.json",
+      "sha256": "eb80bd3fa427a82559711725a2cca7dc3cb0e13bf247b242ef996a2b97f845cb",
+      "bytes": 1019
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000050.raw.json",
+      "sha256": "1ce1db41a35af8b5576d9f6b1e66a079f13e4bf108e28f81e94e1d5cc0ce9fe7",
+      "bytes": 983
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000051.raw.json",
+      "sha256": "89ba4fdbd77cf04f23f5f8b6a9c51b380878e3719a84cbeb0d4ef5cd1f08f85d",
+      "bytes": 950
+    },
+    {
+      "path": "near-N_SPK8015\\control\\full\\transcripts\\recording-f0db8515421effab\\windows\\000052.raw.json",
+      "sha256": "fc799c0912f6f254113b7d9b6d2b5afbbf812997a419eae360bc7b1fcd48618c",
+      "bytes": 941
+    },
+    {
+      "path": "near-N_SPK8015\\control\\pilot\\state.json",
+      "sha256": "75bb0d9bb18bab3215dcd5fa33a2be425448e29783377a53588e331e31b8d4d7",
+      "bytes": 2325
+    },
+    {
+      "path": "near-N_SPK8016\\native-attempt-0001.log",
+      "sha256": "ae22f11afe4364ae147c36baade8d9764cd15ef80e812560e5e14756069a6033",
+      "bytes": 2375
+    },
+    {
+      "path": "near-N_SPK8016\\resources.jsonl",
+      "sha256": "f504cdf18f30308d08ad4044ab26f4240348784eb623bc6956a0ae5ffb8263f2",
+      "bytes": 40043
+    },
+    {
+      "path": "near-N_SPK8016\\task.json",
+      "sha256": "eda83316a0be74101fde6f9baf431d9208f4d03228a84a204e0b993fdd4dadd1",
+      "bytes": 1623
+    },
+    {
+      "path": "near-N_SPK8016\\control\\audio-only.json",
+      "sha256": "88d0f864cc89504df82aa661b6848b1cb23d9d77ef916413a898b5cbdd379942",
+      "bytes": 322
+    },
+    {
+      "path": "near-N_SPK8016\\control\\model-ready.json",
+      "sha256": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
+      "bytes": 340
+    },
+    {
+      "path": "near-N_SPK8016\\control\\native-protocol.json",
+      "sha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "bytes": 4098
+    },
+    {
+      "path": "near-N_SPK8016\\control\\pilot-extra-audio-only.json",
+      "sha256": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
+      "bytes": 273
+    },
+    {
+      "path": "near-N_SPK8016\\control\\protocol.json",
+      "sha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+      "bytes": 2491
+    },
+    {
+      "path": "near-N_SPK8016\\control\\seed-manifest.json",
+      "sha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+      "bytes": 149
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\attribution-review.json",
+      "sha256": "2f3eab5ea9a0ab31cdfec4725d6d39f62558721ab12ea37fb6621259ee3cff4d",
+      "bytes": 20849
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\completed-state.json",
+      "sha256": "f9ac88ece52f2fb505bf9efce345b4fc45dbf7429b505bb70f72ef6d14777309",
+      "bytes": 2223
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\model-output.json",
+      "sha256": "913a6d6ece3f640cd886dd28678d6f921846319dabc5b98dd322c51f16c23fa4",
+      "bytes": 19902
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\state.json",
+      "sha256": "f9ac88ece52f2fb505bf9efce345b4fc45dbf7429b505bb70f72ef6d14777309",
+      "bytes": 2223
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\text-draft.json",
+      "sha256": "8885122a2e00feba01db5951c8262fe373be7b2f55ac0289e9bf1e4791683a1c",
+      "bytes": 19903
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\weight-roundtrip.json",
+      "sha256": "8a35020ea4454dc80245567cb43d09cf53a6cefdf1b1b2788fa8b33a25347e87",
+      "bytes": 1594
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000000-root.json",
+      "sha256": "ab057ae82c1fbaf97a8647b28ebf66254f99de2663e06127a1721c0733fbc200",
+      "bytes": 2521
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000001-root.json",
+      "sha256": "cac6f06f42ef8fd8372aefc920fd6c19edc23f7961416f2d64dfcc59084786e3",
+      "bytes": 2868
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000002-root.json",
+      "sha256": "1ff085e6c5a2cbcd876361e959f9b078be7bfec7b59ed15eac006acaa3ba72e1",
+      "bytes": 1658
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000003-root.json",
+      "sha256": "a6457ddc71e052aa2ce39a6c02e32f24fd83bba4a7b01cc78590fbe62a9b6d5c",
+      "bytes": 1314
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000004-root.json",
+      "sha256": "63b09547e329e22eef6b41d7a616e8e79d5500ae05a426a539433fb686ac6cd9",
+      "bytes": 1158
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000005-root.json",
+      "sha256": "dd70a67f5ffc65f2613e82e1abea6e41149432ce796681573b6fbcd03344d01c",
+      "bytes": 2296
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000006-root.json",
+      "sha256": "4f58d9ca23b7d79104f355e75ebf0f2a4f3e4eac629ece1d2bd65c4efb011ba2",
+      "bytes": 1088
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000007-root.json",
+      "sha256": "775085b3f4fe5c2b09e7cbddda7a9554cadad56918e8b061cf8c1dc596023afe",
+      "bytes": 2980
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000008-root.json",
+      "sha256": "3746049a6599228cd2f7ee5bea2d82220260944320b5c7b358d0109456e8e93d",
+      "bytes": 1070
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000009-root.json",
+      "sha256": "39845a09363d811d9a8b7834305235427d396246e92772be531ceadf3b39e6b5",
+      "bytes": 1756
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000010-root.json",
+      "sha256": "a6f615df76fdbb70c8e1581a69b630cc1786cd7eea8d020dc61b70a65d385d87",
+      "bytes": 2018
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000011-root.json",
+      "sha256": "d673200f031d7f7c676c4321907d380a33162466cc603abc5c08c0a0246cc5c7",
+      "bytes": 1626
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000012-root.json",
+      "sha256": "eeaa6f8d29bac6d17cf74120f3de3f13ffc66ef241e94d68344a35b21d833b68",
+      "bytes": 1559
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000013-root.json",
+      "sha256": "b08f7a31d9b86a8e2269de8c6805167117ddf7a13ff61a423f886c64ee5d5a1d",
+      "bytes": 1523
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000014-root.json",
+      "sha256": "a4ea6b234caaaa385452fca99de76a69d39af91c6dea6e77b79079c7cd4dbaac",
+      "bytes": 1184
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000015-root.json",
+      "sha256": "ee80c50f3112ba941a798ff4fa4b31eaa48b61a57c258e9f541fcfdc32cf0e5d",
+      "bytes": 2053
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000016-root.json",
+      "sha256": "835532b9d16dc3ba002956f4b8b7039b6683d42d28f84e62c46ee4392585dbaa",
+      "bytes": 1927
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000017-root.json",
+      "sha256": "b7ee0ececd0c2e1cddada5ce8281556be923737ad5a689357a4262d498f34116",
+      "bytes": 1736
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000018-root.json",
+      "sha256": "eb8bc3f4f33788ed4946e0967eedbca84b850d4029a0f6ce301b73924b7aec44",
+      "bytes": 1498
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000019-root.json",
+      "sha256": "062657a4d2859c36e253d1a7a1e8582e2aa505d9d7ed72f8395a35d26bdbe126",
+      "bytes": 2020
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000020-root.json",
+      "sha256": "bc9ab8c42ef94d506f6a7febf840b6d54c679f3bbeb73df1e3336d1dec79f915",
+      "bytes": 1694
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000021-root.json",
+      "sha256": "7dd7eab915f2903abf09587f124c56a8656fcaec70eb6665e84f877556e617a8",
+      "bytes": 1321
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000022-root.json",
+      "sha256": "56e91b2e40bccdb13dfcbae4dcd790e595b6286a79dc3885b912956d9a91739e",
+      "bytes": 1073
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000023-root.json",
+      "sha256": "37694f0eb99adad708aecf33f202413eabdcb93570607068b5396b4be735a787",
+      "bytes": 1562
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000024-root.json",
+      "sha256": "6fcb4c1581be6916cafc1845f34aa46d258be05b104d6f3540f129d6d20fd225",
+      "bytes": 1820
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000025-root.json",
+      "sha256": "20a718cb510c022f52c2ab03933af113cdc8ec357e2cf507f93c65a4c37016c4",
+      "bytes": 1392
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000026-root.json",
+      "sha256": "0c3a938af561c46c721502407aaf3230d534c7bce7b9cbfdad65fe21e223aff1",
+      "bytes": 1563
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000027-root.json",
+      "sha256": "47b9f24bea1e2e429addedff9a6cac80e927b121e4e904dc3fa07a2e092b529d",
+      "bytes": 1199
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000028-root.json",
+      "sha256": "8d015d138bef3df87ac4d3f02a19c5dce892355358b4e90eb98d9bc749c6453a",
+      "bytes": 1286
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000029-root.json",
+      "sha256": "b85be6ab8507bb51626bea46717106e2acff30a3e1ace4b50cf2bd53cfe4dcbf",
+      "bytes": 2209
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000030-root.json",
+      "sha256": "9ac6104a37dc4d6c143f30a00fcb54e835f2b67343531aadf479e353e4ed9bc1",
+      "bytes": 2983
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000031-root.json",
+      "sha256": "4785e3a8747820ab1d1ee1fe177fd45c84a106531289f4a3cbc5e8fd41b519ed",
+      "bytes": 2598
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000032-root.json",
+      "sha256": "864878a1740bfbe0f6d4282a7cf8e98392d4747a2ad245966ab5531016f1d478",
+      "bytes": 1906
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000033-root.json",
+      "sha256": "faf4d0f2d9491365a490d1d36426c8158b0b93c3cf17dd9e996fac4d009a0cfe",
+      "bytes": 2115
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000034-root.json",
+      "sha256": "79f99a51e43705c8f3676ea7ae7b4a1a330e37c5681caf0eea63fd1b762e1005",
+      "bytes": 1189
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000035-root.json",
+      "sha256": "46f204ede6651a7e3cd1191a09221c261e949d8883c1bedca6a6df625833520d",
+      "bytes": 1511
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000036-root.json",
+      "sha256": "7243ae57fcfbce7e43740c542acff46d30c10039938b7e49a245c0d01dd8b889",
+      "bytes": 1844
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000037-root.json",
+      "sha256": "bf1ffddf5a7c4a7ac81f729c9760f2e94ea5c4a050d6ee4ea6122663eae801da",
+      "bytes": 1091
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000038-root.json",
+      "sha256": "72f17481db7e319cd5a54d3dd97c60c3776f818599888e64ee4672b9749508b3",
+      "bytes": 1362
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000039-root.json",
+      "sha256": "1bddcf74a1b0d381eae148d2c782eb514083d257957cadbedf52a65c54d1fde1",
+      "bytes": 1413
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000040-root.json",
+      "sha256": "c880711491299d44c888120228e441ba6a0a7b989bc17c0834c18a0841681ded",
+      "bytes": 1549
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000041-root.json",
+      "sha256": "31e26e416acb01ae95a7290cf02292e3bf89f8c539ef671a792c6444a60e3782",
+      "bytes": 1593
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000042-root.json",
+      "sha256": "7944c53d9bd04e1d90cb080250e2391ff15c140c61003ea2c9973065fdeedf8a",
+      "bytes": 1203
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000043-root.json",
+      "sha256": "b18f319470fd115047adc325b0a236cddba7b31de4d4c25c269e993e7e7ae1a4",
+      "bytes": 1440
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000044-root.json",
+      "sha256": "9b2764ca8c7e96578abb8d4f936742c570c04c27f1d386c7055895fd770c02e2",
+      "bytes": 1540
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000045-root.json",
+      "sha256": "6b81f8ab7379b32f811e471101edba7998d7eb49ceac131132c981b94396650f",
+      "bytes": 1301
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000046-root.json",
+      "sha256": "10d25161f86177bf29497f7d11a4672a5f6bd42ca12d1279ce1a8927db04e4dd",
+      "bytes": 1073
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000047-root.json",
+      "sha256": "b2a4dd6f5d2f52bdfd0b639205d5374c4fe8cad28302e1d90c4bfee2f5dd3c33",
+      "bytes": 1148
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000048-root.json",
+      "sha256": "428d9ae7224d0f8df96ae6ab06fe497666025dc55ec50a546fcf3ffdc4a58aca",
+      "bytes": 1530
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000049-root.json",
+      "sha256": "cb592050301ec6ca802f2b5a2fdcd01f2e512153b1c05091a91de83979d212bf",
+      "bytes": 1147
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\nodes\\000050-root.json",
+      "sha256": "e899b13b071469d7247ebaaa505dea485ae8e7c807591a1cdda341f313a90a46",
+      "bytes": 1154
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000000.raw.json",
+      "sha256": "ca979806e749e8c54f94cf8894770f56215674b2bef9f04d6983ee2156c83c03",
+      "bytes": 1234
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000001.raw.json",
+      "sha256": "aaa9f92fdb603c438884a0333e2df1301338d109e3220144d7a5d19f1d561ce1",
+      "bytes": 1325
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000002.raw.json",
+      "sha256": "e56c5e2cc4e544cde39be1df68a20f5e44e872bed7bfdf9735c21738a57fd550",
+      "bytes": 1060
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000003.raw.json",
+      "sha256": "a6798a7e606d74b3cf0d258f8da9d8795ccb157bd0d89d17991443d89a71e14d",
+      "bytes": 981
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000004.raw.json",
+      "sha256": "6384b8a1939774d8847bacd8cbecb2abdca9a734a034c0bb513573dc417eae13",
+      "bytes": 951
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000005.raw.json",
+      "sha256": "6df73e5b370aa06758f08c89d07ae1888261548c157181780bb9d81619e2ba73",
+      "bytes": 1200
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000006.raw.json",
+      "sha256": "0ac8768dbbac0139285baf66e872001a2c7b90bb6b65bd8cab82ed097301f395",
+      "bytes": 936
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000007.raw.json",
+      "sha256": "4e52da6a339367470fdeffd5fad2b52b78899a5a948c71d4bcd8b4ca6bb871ff",
+      "bytes": 1347
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000008.raw.json",
+      "sha256": "046325335f5303c39e4c26f647c2774e321ea9f628c6929e8798c66cf08901f2",
+      "bytes": 933
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000009.raw.json",
+      "sha256": "de060700f5304251b78b8a5b6950b7a2b50626c834b67d7663d037249cfb73b9",
+      "bytes": 1083
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000010.raw.json",
+      "sha256": "bcb31bcefc760a6e1897a7098158f97934c54089f7b7235fb9cc85d331a1b5b7",
+      "bytes": 1132
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000011.raw.json",
+      "sha256": "b85581d76535bc62b36e66774f3639c98826ffce6f27e7487b014d6c8b8cf73c",
+      "bytes": 1054
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000012.raw.json",
+      "sha256": "d43029151569ff9fb8ee071a0b3825856e977a6323086f19045877afe4edd791",
+      "bytes": 1036
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000013.raw.json",
+      "sha256": "3d23c5214264106a0ce43baa37b2c22f6e4a702c648cadb7f5711efe440a0ed7",
+      "bytes": 1033
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000014.raw.json",
+      "sha256": "3c3522b6d50cc1368bde2ede7cc7c9a7c5e2710e072057983bf3ce8fcbf94141",
+      "bytes": 952
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000015.raw.json",
+      "sha256": "d0be6102ad6b056e5b82d300fc6fcf4b7c023969d68bcc03db91b648fd8e8df0",
+      "bytes": 1129
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000016.raw.json",
+      "sha256": "2fc6169bd6c2fc79d53f45300a25198149c316223576f4f7184c579f22b0a10d",
+      "bytes": 1123
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000017.raw.json",
+      "sha256": "3c273ea10f7dc54ed7d75969cc68b7ddce54c426e062d82adc7528c35f1b28fe",
+      "bytes": 1075
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000018.raw.json",
+      "sha256": "cea89c484720a6d2425bac57cb4b2be6eead5fb33be8ac0497fe73b94ab14cfe",
+      "bytes": 1018
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000019.raw.json",
+      "sha256": "a2a0005982cf1125921f094707f42e6e5791c2c13a4d44794a11570d7fb9929d",
+      "bytes": 1132
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000020.raw.json",
+      "sha256": "7972a5889d3cfcd107f5d54e10e504a27273c52684328f5b754598d20e34a889",
+      "bytes": 1071
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000021.raw.json",
+      "sha256": "07c026cb077c6cee19439b2d7cd37ba066e6ce5794417a7be34120d594e4b8cb",
+      "bytes": 986
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000022.raw.json",
+      "sha256": "e9ffffcc82326548ebbdd11ed91c372ac035891754dde82c3aab23097826f97c",
+      "bytes": 938
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000023.raw.json",
+      "sha256": "d668a30dcb66f561a1f36aea8a31e8f903100ff2c2ebddfe03ddacb8f349024a",
+      "bytes": 1040
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000024.raw.json",
+      "sha256": "d4636e105f29e6c93045e5888c7c6969088dfeb39c842e16e3909f80ece96319",
+      "bytes": 1100
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000025.raw.json",
+      "sha256": "18f692756dc70b61f3f6289f7b860124e35eb2369b0019bfcdd6bc3a60a3bdda",
+      "bytes": 1007
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000026.raw.json",
+      "sha256": "dadc9b9ec126d5476e7820a77771f562bc591da3511e90f52b8a835d9a6cf95c",
+      "bytes": 1049
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000027.raw.json",
+      "sha256": "932bd76a2af59b92d3aded1f8ffef4e3edd7678bf08616f279a9b61486bee229",
+      "bytes": 968
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000028.raw.json",
+      "sha256": "8d4faf62b9fe613432694180146ac127543eb14b50e6fbbdd8da98bc334ab4a7",
+      "bytes": 980
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000029.raw.json",
+      "sha256": "e394360207664dd6dc179ab943198689c85e21d8ff74cff14a66b6a1e7c86443",
+      "bytes": 1155
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000030.raw.json",
+      "sha256": "f89b8a5a28871f73374a6314597afa8741557a88172a945573957db067792db0",
+      "bytes": 1331
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000031.raw.json",
+      "sha256": "1c01316a73f0e4543afec6f408c68fb5d8d51571ac468f5188169cccbd58a5e9",
+      "bytes": 1268
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000032.raw.json",
+      "sha256": "b329e55957622e920a203bc3a8524457dd010a568c86627c065066e1d4170a66",
+      "bytes": 1130
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000033.raw.json",
+      "sha256": "563596bac43f22c3ded9fa367d23610cf8adf338a1d1ff7ad658d33d33b1bafd",
+      "bytes": 1151
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000034.raw.json",
+      "sha256": "4573e642b5c3410df732315e6ea6ebf3f3c5a1a09efdeb9992b9c199e4e8f5e3",
+      "bytes": 959
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000035.raw.json",
+      "sha256": "cff0260fe0a95e475252c087fdef91e093d425589a8ced0e9442ebbd4eeaa300",
+      "bytes": 1031
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000036.raw.json",
+      "sha256": "7d76fe27d3733c062ed2098818dc1768bdf83aee21456442021770dcf83b148a",
+      "bytes": 1097
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000037.raw.json",
+      "sha256": "907f5e0a42d405032463824379bd9a49febce5616200222c200dc14c1f5923ef",
+      "bytes": 941
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000038.raw.json",
+      "sha256": "b602a8c59f9a2ded06155fcd147c1d6d0d62c771d98d7abdba992855f765aa9a",
+      "bytes": 998
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000039.raw.json",
+      "sha256": "25fafc8a5551fe5ed2fca221fe6af55db53e55db410c0c704a91c3dc8bf355cd",
+      "bytes": 1010
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000040.raw.json",
+      "sha256": "44e1333f6176b8677e9d43b2bde134d4d84bcfb2313d9b0b227a5fc4e68c8534",
+      "bytes": 1040
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000041.raw.json",
+      "sha256": "23b6a53be8ac2de55f426b2bf54c9a268a4b5f868d30cb768d5e716a82a574b5",
+      "bytes": 1058
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000042.raw.json",
+      "sha256": "7583e85d08092e2268a7e47b7fa396814abbeada1b7813374ef45cbc17bafbdc",
+      "bytes": 959
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000043.raw.json",
+      "sha256": "615604cafb4a283307f913c6bc487769257fc50bcbb3f10ae62cee912fd28950",
+      "bytes": 1022
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000044.raw.json",
+      "sha256": "91e839b0556fefeb986d39eac598c99c6baecd625e61d30cf0ed02440efb9d92",
+      "bytes": 1028
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000045.raw.json",
+      "sha256": "00a3e00ec7138b56de179bc5f5a716fdbc284db16ea4a6b97ec1bac2435d0a5a",
+      "bytes": 992
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000046.raw.json",
+      "sha256": "20bb880dd747075f1cf770499d05fa833d8af629eb52f0d5eee8309d26f9e114",
+      "bytes": 938
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000047.raw.json",
+      "sha256": "35cb8f99b6f40dd0bdba330a839d394475df44cf6979a0fd63c541b47c035253",
+      "bytes": 950
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000048.raw.json",
+      "sha256": "54d665dbc13d311afc9b86a6f632af61823f42aee37fcaacf4e71b0ab87d6c88",
+      "bytes": 1028
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000049.raw.json",
+      "sha256": "3f47aec13688b3a0f58bb94aca8f5b941dafd39e6e7dbfe8aaeeb29cc1bba496",
+      "bytes": 950
+    },
+    {
+      "path": "near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\windows\\000050.raw.json",
+      "sha256": "ed72d832af16db0945254dd0e9d0619da59ec7fd3870828a5da40b75d8c933a1",
+      "bytes": 953
+    },
+    {
+      "path": "near-N_SPK8016\\control\\pilot\\state.json",
+      "sha256": "75bb0d9bb18bab3215dcd5fa33a2be425448e29783377a53588e331e31b8d4d7",
+      "bytes": 2325
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 32,
+    "startSample": 15690298,
+    "endSample": 16167389,
+    "text": "现在好，好像他们都找专业人士设计的。不是因为现在颜色手机外观很重要，你知道吗？因为很多人买手机第一眼就是看这种外观，尤其是颜色这种。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 15690298,
+        "endSample": 16167389,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c5e4e311d60da6a86d796eb790bb528130cf1f4df0e786ce2483819d51891708"
+}

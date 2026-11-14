@@ -1,0 +1,39 @@
+{
+  "state": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-14T19:51:53+08:00",
+  "binding": {
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+    "audioSeconds": 1551.82,
+    "modelPackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941"
+  },
+  "privateAudioNeverUploaded": true,
+  "attempts": [
+    {
+      "startedAt": "2026-11-14T19:51:54+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8016\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 400.5124477999925,
+      "privatePeakBytes": 1259286528,
+      "cacheOnlyExpected": false,
+      "exitCode": 0,
+      "finishedAt": "2026-11-14T19:58:35+08:00"
+    }
+  ],
+  "capabilities": {
+    "localAsr": true,
+    "wordTimestamps": false,
+    "speakerAttribution": false,
+    "overlapVoiceSeparation": false,
+    "minutes": false
+  },
+  "qualityQualified": false,
+  "meeting": "recording-66faeda7d8a5c408",
+  "updatedAt": "2026-11-14T19:51:54+08:00",
+  "finishedAt": "2026-11-14T19:58:35+08:00",
+  "output": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-r2-runs\\near-N_SPK8016\\control\\full\\transcripts\\recording-66faeda7d8a5c408\\model-output.json",
+  "outputSha256": "913a6d6ece3f640cd886dd28678d6f921846319dabc5b98dd322c51f16c23fa4",
+  "originalAudioUnchanged": true,
+  "wordAlignmentPending": true,
+  "speakerAttributionPending": true,
+  "accumulatedKnownOwnedProcessSeconds": 400.5124477999925,
+  "attemptsWithUnknownDuration": []
+}

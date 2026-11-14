@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 44,
+    "startSample": 20858593,
+    "endSample": 21389367,
+    "text": "嗯，嗯，嗯，嗯，不是，咱们这个只是说要把这个产品的这个呃新的产品推出去，只是对，不是说这个这个时候能挣多少钱，而是把咱们这个东西这个产品的亮点，对，把广告打出去，往后去宣传我们线下，嗯。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 20858593,
+        "endSample": 21389367,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "e2183234dd47ac2dc30d72d9a6a36ef75fb3a67d5e9994cb0a99be794a48ef7d"
+}

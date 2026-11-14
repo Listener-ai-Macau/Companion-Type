@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 51,
+    "startSample": 24431139,
+    "endSample": 24829120,
+    "text": "然后呢，咱们那个就这样，然后现在接下来就赶紧出个方案，好吧？然后下周二的时候我们再再具体上确定一下，好吧？好，行，那那就那就先这样，那先这样。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24431139,
+        "endSample": 24829120,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "fae951ab70c5f4d84665eadbf63da4433b874c9de8e38665fd19834e1e6b179d"
+}

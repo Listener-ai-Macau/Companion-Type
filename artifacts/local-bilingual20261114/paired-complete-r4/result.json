@@ -1,0 +1,261 @@
+{
+  "at": "2026-11-14T20:27:49+08:00",
+  "state": "FIVE_FIXED_INPUTS_AND_ONE_NATURAL_MIXED_PROBE_COMPLETE_QUALITY_OPEN",
+  "memoryResult": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\VSCode以外-长期常驻内存检查-20261114.json",
+  "fixedBatch": {
+    "meeting": "R8001_M8004",
+    "secondsPerInput": 1551.82,
+    "completedAt": "2026-11-14T20:18:54+08:00",
+    "completedInputs": 5,
+    "pendingInputs": [],
+    "strictResults": [
+      {
+        "id": "near-N_SPK8013",
+        "metric": "known-headset-source-CER",
+        "referenceCharacters": 4049,
+        "hypothesisCharacters": 4052,
+        "edits": {
+          "replace": 285,
+          "delete": 110,
+          "insert": 113
+        },
+        "totalEdits": 508,
+        "cer": 0.1254630773030378,
+        "strictBelowFivePercent": false,
+        "audioSha256": "e62032e8d2a5e0eb99db0443551fd4bbe5134f600c853219e4e7e4210dd0df58",
+        "outputSha256": "24753b4b35566169b6555ce1b7a8a59dd4931b8f7795239a98257e8a207afab9",
+        "taskReceiptSha256": "7b764ac4aba45290092c365d945a20843d0248da46d5e885c5ec5d520a65cd6f",
+        "accumulatedKnownOwnedProcessSeconds": 906.3692061999973,
+        "attemptsWithUnknownDuration": [],
+        "includesRetainedFailedAttemptTime": true,
+        "modelLoadedSeconds": 39.23673589999089,
+        "sameInputProductParaformer": {
+          "cer": 0.5366757224005927,
+          "edits": {
+            "replace": 332,
+            "delete": 94,
+            "insert": 1747
+          }
+        },
+        "knownSourceIdentityNotAutomaticDiarization": true
+      },
+      {
+        "id": "near-N_SPK8014",
+        "metric": "known-headset-source-CER",
+        "referenceCharacters": 2944,
+        "hypothesisCharacters": 4150,
+        "edits": {
+          "replace": 43,
+          "delete": 31,
+          "insert": 1237
+        },
+        "totalEdits": 1311,
+        "cer": 0.4453125,
+        "strictBelowFivePercent": false,
+        "audioSha256": "779591983f618f404a2e9bea90ff29a21de522e6086a3f687bde80b5dd8c8d63",
+        "outputSha256": "92763f59fafe9a37fba97d92d54999031e87266a820349ef39c3bddeca02da66",
+        "taskReceiptSha256": "c8871a29070c283cb387e1e667f5cb92ad9acf8287ae687e05b2cf60d3bdb70a",
+        "accumulatedKnownOwnedProcessSeconds": 367.33712500002,
+        "attemptsWithUnknownDuration": [
+          3
+        ],
+        "includesRetainedFailedAttemptTime": true,
+        "modelLoadedSeconds": null,
+        "sameInputProductParaformer": {
+          "cer": 1.421195652173913,
+          "edits": {
+            "replace": 56,
+            "delete": 26,
+            "insert": 4102
+          }
+        },
+        "knownSourceIdentityNotAutomaticDiarization": true
+      },
+      {
+        "id": "near-N_SPK8015",
+        "metric": "known-headset-source-CER",
+        "referenceCharacters": 2195,
+        "hypothesisCharacters": 2589,
+        "edits": {
+          "replace": 65,
+          "delete": 38,
+          "insert": 432
+        },
+        "totalEdits": 535,
+        "cer": 0.2437357630979499,
+        "strictBelowFivePercent": false,
+        "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31",
+        "outputSha256": "665ac6c58f076575cb9b24bad3c584f7e05cd420b3d3356c59e3e4bd7917dd50",
+        "taskReceiptSha256": "62148f64888fee62e86c36288e4d4911e6cfc5c619839e53e88411c85109c906",
+        "accumulatedKnownOwnedProcessSeconds": 615.2219989000005,
+        "attemptsWithUnknownDuration": [],
+        "includesRetainedFailedAttemptTime": true,
+        "modelLoadedSeconds": 41.35341480001807,
+        "sameInputProductParaformer": {
+          "cer": 2.00501138952164,
+          "edits": {
+            "replace": 121,
+            "delete": 20,
+            "insert": 4260
+          }
+        },
+        "knownSourceIdentityNotAutomaticDiarization": true
+      },
+      {
+        "id": "near-N_SPK8016",
+        "metric": "known-headset-source-CER",
+        "referenceCharacters": 1527,
+        "hypothesisCharacters": 1864,
+        "edits": {
+          "replace": 46,
+          "delete": 35,
+          "insert": 372
+        },
+        "totalEdits": 453,
+        "cer": 0.2966601178781925,
+        "strictBelowFivePercent": false,
+        "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348",
+        "outputSha256": "913a6d6ece3f640cd886dd28678d6f921846319dabc5b98dd322c51f16c23fa4",
+        "taskReceiptSha256": "eda83316a0be74101fde6f9baf431d9208f4d03228a84a204e0b993fdd4dadd1",
+        "accumulatedKnownOwnedProcessSeconds": 400.5124477999925,
+        "attemptsWithUnknownDuration": [],
+        "includesRetainedFailedAttemptTime": false,
+        "modelLoadedSeconds": 34.23692559998017,
+        "sameInputProductParaformer": {
+          "cer": 2.834970530451866,
+          "edits": {
+            "replace": 97,
+            "delete": 21,
+            "insert": 4211
+          }
+        },
+        "knownSourceIdentityNotAutomaticDiarization": true
+      },
+      {
+        "id": "far-mic0-common-span",
+        "metric": "raw-mixed-chronological-CER",
+        "referenceCharacters": 10715,
+        "hypothesisCharacters": 7125,
+        "edits": {
+          "replace": 692,
+          "delete": 3675,
+          "insert": 85
+        },
+        "totalEdits": 4452,
+        "cer": 0.4154923005132991,
+        "strictBelowFivePercent": false,
+        "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769",
+        "outputSha256": "c4b7d8751164884120dbbe781239ef90ecdd32c716c788c47e500d379b0953a4",
+        "taskReceiptSha256": "9ddb7c1da122b6b113d158679a3d385af5980238a0288cbd63fbf80e89d8d681",
+        "accumulatedKnownOwnedProcessSeconds": 1217.8763869999966,
+        "attemptsWithUnknownDuration": [],
+        "includesRetainedFailedAttemptTime": false,
+        "modelLoadedSeconds": 33.12366780001321,
+        "sameInputProductParaformer": {
+          "cer": 0.40755949603359776,
+          "edits": {
+            "replace": 971,
+            "delete": 3263,
+            "insert": 133
+          }
+        },
+        "knownSourceIdentityNotAutomaticDiarization": false
+      }
+    ],
+    "knownHeadsetAggregate": {
+      "metric": "known-headset-source-aggregate-CER-not-diarization",
+      "referenceCharacters": 10715,
+      "edits": {
+        "replace": 439,
+        "delete": 214,
+        "insert": 2154
+      },
+      "totalEdits": 2807,
+      "cer": 0.26196920205319646
+    }
+  },
+  "naturalMixed": {
+    "at": "2026-11-14T20:25:37+08:00",
+    "state": "NATURAL_MIXED_UTTERANCE_LOCAL_RESULT_SCORED_NOT_MEETING_QUALIFICATION",
+    "dataset": "CAiRE/ASCEND",
+    "metadataRevision": "737e9800ae31be9932ba8464c80366559bd28424",
+    "license": "CC-BY-SA-4.0",
+    "rowId": "00009",
+    "seconds": 4.03,
+    "audioSha256": "7317a4752e95039e6f6c345ef5b15fdd18fc7f48353cc893e6f99218a682c9a3",
+    "pcmSha256": "437d74ada660e3812d05d83be40720ace521bdf35e093334127315a71b32696e",
+    "reference": "no我专业是那个i s m information systems management",
+    "hypothesis": "那我专业是那个ISM，Information Systems Management。",
+    "referenceCharacters": 39,
+    "hypothesisCharacters": 38,
+    "totalEdits": 2,
+    "edits": {
+      "replace": 1,
+      "delete": 1,
+      "insert": 0
+    },
+    "strictCharacterErrorRate": 0.05128205128205128,
+    "diagnosticBelowFivePercent": false,
+    "bothScriptsProduced": true,
+    "modelLanguageHeader": "Chinese",
+    "reviewRequired": false,
+    "actualNeuralCalls": 1,
+    "coldModelLoadSeconds": 49.43862570001511,
+    "freshInferenceSeconds": 4.605451599985827,
+    "privatePeakBytes": 1256198144,
+    "binding": {
+      "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+      "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+      "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+      "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "languagePolicy": "auto",
+      "generation": {
+        "maxNewTokens": 512,
+        "doSample": false
+      },
+      "inference": "pinned-native-transformers-incremental-window-adapter"
+    },
+    "referenceReceiptSha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3",
+    "normalizerSourceSha256": "45859723659b91b7ae0750331dc86eba216c631d27d35ebc4979a3663eae971e",
+    "inferenceReferenceUsed": false,
+    "limitations": [
+      "One4.03second utterance, not a complete bilingual meeting or a generalization claim.",
+      "Character metric preserves lexical fillers and numbers; this is not the official ASCEND mixed-word MER benchmark.",
+      "No verified diarization or word timing; all audio words and raw decoder nodes retained."
+    ],
+    "qualityQualified": false,
+    "saleQualified": false,
+    "limits": {
+      "pid": 24144,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 100663296,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 13287424,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "incrementalActualResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\actual-incremental-r2-result.json",
+  "weightsChanged": false,
+  "cloudInferenceUsed": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limitations": [
+    "The five inputs belong to one exposed 25min51.82s meeting, not five independent meetings.",
+    "Known headset file assignments are not automatic speaker identification.",
+    "Headsets contain real crosstalk. Posthoc other-reference examples do not alter strict CER.",
+    "Far chronological CER has overlap-ordering ambiguity; it is not directly comparable to headset aggregate CER.",
+    "Natural mixed probe is one4.03s utterance. Its strict character score is not official ASCEND MER or meeting qualification.",
+    "Near8014 attempt3 whole-controller duration remains unknown after the app update; cache finalization did not rerun the model.",
+    "Real recording card transport and installed Windows/Android integration remain unverified."
+  ],
+  "next": "Prioritize far-field omissions and real overlap/crosstalk handling; preserve full English-meeting ASR and multi-meeting/room qualification as open work."
+}

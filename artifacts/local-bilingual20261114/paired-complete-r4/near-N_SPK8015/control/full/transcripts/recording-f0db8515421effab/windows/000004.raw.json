@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 4,
+    "startSample": 1848183,
+    "endSample": 2275474,
+    "text": "但是现在的呃这个版本的话，它是不适合老年人的。你有一些功能，你像老年人的话，他需要很多的，大字体或者是呃一些呃网络上的东西，老年人根本就看不懂，他操作不了。对他呃那个，规格还是不一样的。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 1848183,
+        "endSample": 2275474,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6b020d31efa2df720f26947205c176600b82650144d30111af5708b2b6989287"
+}

@@ -1,0 +1,45 @@
+{
+  "state": "COMPLETE_FIVE_FROZEN_NATIVE_INPUTS_UNSCORED",
+  "at": "2026-11-14T19:45:41+08:00",
+  "pid": 5516,
+  "binding": {
+    "originalPackSha256": "281186b7cbddbf522f9578b477d59cbe3aa401de66bb3ebd203e27cdeb5572f0",
+    "runtimePackSha256": "9a42e3737230979512cf28cb98977f697b232ba9e6a4385856019e219f6c9941",
+    "freshInventorySha256": "17b5935263801ecccea8893e406a698714a5476d40026c23b04383e81eff1bf1",
+    "manifestSha256": "c07bd6ffbfbc069932d00f30abfff211c6c2a1ad3fc61596646ef5d9f1559ea2",
+    "sourceControlOnlyChangedToPrivateCapsule": true,
+    "onlyPinnedFileChanged": "hip-inventory.json",
+    "referencePassedToInference": false,
+    "newModelSelected": false
+  },
+  "currentDeviceCheck": {
+    "at": "2026-11-14T19:45:41+08:00",
+    "currentInventorySha256": "db0893831d4967de4016fd2b97c1232f6bceaefc7d5a84b2b22ceffffa0830ce",
+    "immutableBoundInventorySha256": "17b5935263801ecccea8893e406a698714a5476d40026c23b04383e81eff1bf1",
+    "selected": {
+      "ordinal": 1,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "totalMemory": 17163091968
+    },
+    "sameDeviceOrdinalVerified": true
+  },
+  "completed": [
+    "near-N_SPK8013",
+    "near-N_SPK8014",
+    "near-N_SPK8015",
+    "near-N_SPK8016",
+    "far-mic0-common-span"
+  ],
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "caseStartedAt": "2026-11-14T19:58:35+08:00",
+  "lastAttempt": {
+    "id": "far-mic0-common-span",
+    "exitCode": 0,
+    "adapterSeconds": 1219.154780300014,
+    "taskState": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
+    "at": "2026-11-14T20:18:54+08:00"
+  },
+  "finishedAt": "2026-11-14T20:18:54+08:00"
+}

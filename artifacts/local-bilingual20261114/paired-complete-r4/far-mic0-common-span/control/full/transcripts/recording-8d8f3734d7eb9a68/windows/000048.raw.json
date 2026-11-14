@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 48,
+    "startSample": 23066312,
+    "endSample": 23614677,
+    "text": "然后几种形式同时上，然后这样的话，咱们也能看看呢，全部赠品，然后是哪一类人群比较喜欢什么样的呀？然后将来也能为下一个产品做铺垫。那你说会有压力，这么短时间能做好，是吧？然后不能做好，做它做不出来，实在不行，那有这。特统一。\n多大的折扣？嗯，啊，嗯，对前前期我们就是制掉制作至少三炒饭嘛，就不同平台就尝试一下。嗯。啊。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": null,
+    "isAggregatedRecovery": true,
+    "acceptedLeaves": [
+      {
+        "startSample": 23066312,
+        "endSample": 23340494,
+        "naturalEos": true,
+        "nodeKey": "roota"
+      },
+      {
+        "startSample": 23340494,
+        "endSample": 23614677,
+        "naturalEos": true,
+        "nodeKey": "rootb"
+      }
+    ]
+  },
+  "rawSha256": "39b3480d23283809aa2cd94e8cb9d5203ae8b33d9b4c990c596f8c64cd154ea4"
+}

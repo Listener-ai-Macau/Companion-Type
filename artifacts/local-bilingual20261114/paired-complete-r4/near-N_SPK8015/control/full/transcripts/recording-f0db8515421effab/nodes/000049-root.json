@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 49,
+    "startSample": 23065835,
+    "endSample": 23471481,
+    "text": "不能做好做不他做不出来，实在不行就有折扣。嗯，多大的折扣？",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      53153,
+      101906,
+      99190,
+      16530,
+      42411,
+      99190,
+      110421,
+      3837,
+      100538,
+      104810,
+      104435,
+      110785,
+      1773,
+      106287,
+      3837,
+      42140,
+      99750,
+      110785,
+      11319,
+      151645
+    ],
+    "rawDecoded": "不能做好做不他做不出来，实在不行就有折扣。嗯，多大的折扣？<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.086879999988014,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 405646,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 2535,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b8f0c34f2cac1e21449bb7e7eb6202a228ecc9a802d82d4c2e346140029d634a"
+}

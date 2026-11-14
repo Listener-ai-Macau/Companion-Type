@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 9,
+    "startSample": 4545674,
+    "endSample": 4954033,
+    "text": "我感我感觉 D J 这个不太适合手机吧，好像手机好像一般就是有门店这种，或者就是。啊啊。嗯。对电商好一点，然后我觉得可以就是那个，然后捆绑一些，比如说，然后他还带带着一些手机配件之类的，什么手机壳。呃，明星代言这是另外一方面，然后我觉得。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 4545674,
+        "endSample": 4954033,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "72e2ee8bcc84e49ba40c282b3de9a42284d0ab50f8f7413207d60eb73c91d2ec"
+}

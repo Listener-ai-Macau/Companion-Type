@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 5,
+    "startSample": 2542492,
+    "endSample": 3076383,
+    "text": "你现在买买手机的话，它不一定都是说老年人自己去买，老年人根本就不会看，一般都是子女给家长去买，他会观察里面的一些功能什么的，会会会去选择。我感觉我们可以根据就是不同的人群稍微做一下差别设计。你像如果老年人用的话，可以就是配置稍微低点儿，就是字体或者声音稍微大一点。年轻人用的话，就可能颜色选择性多点儿，配置高点儿这种。啊，好，哎，反正这个就是怕的，反正就。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2542492,
+        "endSample": 3076383,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6a6c5509c89589343cdb8c802890f519e0febb55e083df4c791ab8bd222f2908"
+}

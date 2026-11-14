@@ -1,0 +1,71 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00064480-final",
+    "recordingId": "2006d94c-e986-5504-ad68-52c9728b753f",
+    "configSha256": "c0828e8fbaf4c7dc3f0dd06f2419a7704171571d48abe7a9f99f2017a9f5830f",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 64480,
+    "sourcePcm": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\natural-ascend-first-mixed\\offline-session\\audio.pcm",
+    "pcmSha256": "437d74ada660e3812d05d83be40720ace521bdf35e093334127315a71b32696e",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 174145.9720585,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "那我专业是那个ISM，Information Systems Management。",
+    "rawGeneratedIds": [
+      [
+        11528,
+        8453,
+        151704,
+        99212,
+        35946,
+        99878,
+        20412,
+        101095,
+        46805,
+        3837,
+        14873,
+        14917,
+        9551,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 58.61687590001384,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 4.605451599985827,
+    "allKnownDecodeSecondsIncludingFailedParents": 4.605451599985827,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 64480
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

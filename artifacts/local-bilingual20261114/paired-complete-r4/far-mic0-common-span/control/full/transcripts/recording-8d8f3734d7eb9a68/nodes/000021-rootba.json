@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 21,
+    "startSample": 10322302,
+    "endSample": 10448133,
+    "text": "对，我觉得这样的话，可以弄一盲盒类型的，就就是盲盒类型的，然后。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      32664,
+      3837,
+      104288,
+      101893,
+      57443,
+      3837,
+      73670,
+      102115,
+      14777,
+      102928,
+      102307,
+      109963,
+      3837,
+      80158,
+      99486,
+      102928,
+      102307,
+      109963,
+      3837,
+      101889,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对，我觉得这样的话，可以弄一盲盒类型的，就就是盲盒类型的，然后。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.332090000010794,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 125831,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 786,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "60b9a7bba592668493ea1a6079b7a0491850c9863653ee01723126eecd8ae93f"
+}

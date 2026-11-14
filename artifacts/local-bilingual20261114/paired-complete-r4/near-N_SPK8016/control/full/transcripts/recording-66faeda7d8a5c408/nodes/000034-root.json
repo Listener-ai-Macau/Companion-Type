@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 34,
+    "startSample": 16696591,
+    "endSample": 17176662,
+    "text": "对对对。行，好的。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      32664,
+      32664,
+      32664,
+      1773,
+      22243,
+      3837,
+      99692,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对对对。行，好的。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.958553700009361,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 480071,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3000,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "37c2d145f554a8820693d8ce4e9ba0cb7ff1693dc34051bf31e1f8ddc5137fda"
+}

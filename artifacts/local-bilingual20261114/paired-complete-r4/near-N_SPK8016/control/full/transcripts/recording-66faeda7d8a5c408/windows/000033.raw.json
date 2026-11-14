@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 33,
+    "startSample": 16167389,
+    "endSample": 16696591,
+    "text": "一，一，一，颜色我感觉一款手机至少得有五种以上颜色，要不然选择选择面太窄了。你看，你看其他厂商的手机，基本上都是这种，至少有五六种颜色可以选。也。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 16167389,
+        "endSample": 16696591,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "f65ae1c45235f95d9323ad624dbbb7749b65e23676e8e5e0b030ff0a7bf028c2"
+}

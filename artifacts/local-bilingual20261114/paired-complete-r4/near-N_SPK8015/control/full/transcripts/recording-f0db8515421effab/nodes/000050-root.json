@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 50,
+    "startSample": 23471481,
+    "endSample": 24002884,
+    "text": "那白弄剩的呗，那不不挣钱了，那就。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99212,
+      99243,
+      102115,
+      100124,
+      9370,
+      111382,
+      3837,
+      99212,
+      16530,
+      16530,
+      110825,
+      34187,
+      3837,
+      104971,
+      1773,
+      151645
+    ],
+    "rawDecoded": "那白弄剩的呗，那不不挣钱了，那就。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.3709308999823406,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 531403,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3321,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "4e8ac12f7f04c7405d62e26ae5a8aa1a05543d56d881016409ebafa64cd135b4"
+}

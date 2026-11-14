@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 0,
+    "startSample": 0,
+    "endSample": 497569,
+    "text": "好，嗯，咱们今天针对公司新出上新出了一款这个手机啊产品啊，进行一下这个研讨会。首先，咱们确定一下咱们这个产品的目标这个人群、客户群这一块儿。呃，首先谈大家伙儿一个看法。呃，那那谈一下吧。我觉得咱们这个这个目标人群可以不不用定的那么确定，然后基本上就是。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 0,
+        "endSample": 497569,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "50dfedab6203912f47d520536be3604f61fc06fd70d645e47b92e64f286428fb"
+}

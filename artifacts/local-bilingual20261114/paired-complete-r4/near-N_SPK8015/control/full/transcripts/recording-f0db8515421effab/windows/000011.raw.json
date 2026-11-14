@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 11,
+    "startSample": 5148711,
+    "endSample": 5610542,
+    "text": "不是也可以，可以有一些什么和一些什么银行啊，呃，合作一点儿那个，不是礼品，就是那种什么分期购啊，呃，对对对对对，就是同时获手机。对。那可以做短一点儿嘛？因为手机本身也没多少钱，每个月的话还还个什么一一两百块的话，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5148711,
+        "endSample": 5610542,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4e3a877003db3cd726ec5c2858f9d2d91c1f913b54979050d27a48d5ff411f34"
+}

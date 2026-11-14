@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 3,
+    "startSample": 1482111,
+    "endSample": 2016988,
+    "text": "嗯，十八到四十五之岁的中青年人群吧。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      106287,
+      3837,
+      101526,
+      26939,
+      63703,
+      101510,
+      53930,
+      104252,
+      15946,
+      103970,
+      102248,
+      100003,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，十八到四十五之岁的中青年人群吧。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.1366816999798175,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 534877,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3342,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "9587d51f98997841f0a770b7dca986fe83204cb2d1f49690e95fe380a89510a4"
+}

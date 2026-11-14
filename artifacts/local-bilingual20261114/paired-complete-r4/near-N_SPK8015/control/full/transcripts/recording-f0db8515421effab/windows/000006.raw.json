@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 6,
+    "startSample": 2757924,
+    "endSample": 3214963,
+    "text": "我感觉我们可以根据就是不同人群稍微做一下差别设计，像如果老年人的话，可以就是背景稍微低一点，比如是字体或者声音稍微大点；年轻的话，就可能颜色、颜色更多点，配置高点这种。啊，好。哎，反正这个就是，跨度反正就不用特别大。从年轻的人来说，咱们主干就是年年轻化这块儿，年轻人一块儿，是吧？十八到三到三十五岁之间，大家觉得可以。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2757924,
+        "endSample": 3214963,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "09e290f88d9e82822918c8e28fb98c4e46be14978b83aafcb06ea78435723eb4"
+}

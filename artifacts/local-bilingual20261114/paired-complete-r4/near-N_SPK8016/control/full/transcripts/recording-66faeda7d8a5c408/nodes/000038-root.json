@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "66faeda7d8a5c408967aa33f8e6212c6f89ee630710e79a9fc9047ca7dcb9348"
+  },
+  "raw": {
+    "index": 38,
+    "startSample": 18667643,
+    "endSample": 19137718,
+    "text": "嗯。对对，对，我们要制定一套完整的方案，对。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      106287,
+      1773,
+      32664,
+      32664,
+      3837,
+      32664,
+      3837,
+      105332,
+      104016,
+      104551,
+      105896,
+      100389,
+      3837,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯。对对，对，我们要制定一套完整的方案，对。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.321643100003712,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 470075,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 2937,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "9808476ea0dc2b16864fced27583bf3ce81a883c94843926ec43a143e2b59429"
+}

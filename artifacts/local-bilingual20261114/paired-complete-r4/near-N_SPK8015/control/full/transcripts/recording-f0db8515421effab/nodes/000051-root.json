@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 51,
+    "startSample": 24002884,
+    "endSample": 24505088,
+    "text": "他比较辛苦。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      42411,
+      99792,
+      105762,
+      1773,
+      151645
+    ],
+    "rawDecoded": "他比较辛苦。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.20167430001311,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 502204,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 3138,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "ba8e0e6c480d2edb1ac1d0aec4c295a51943d567256ee0cca68ce6a15e2ca7d2"
+}

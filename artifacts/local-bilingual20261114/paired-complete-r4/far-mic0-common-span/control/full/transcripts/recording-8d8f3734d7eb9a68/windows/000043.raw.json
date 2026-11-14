@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 43,
+    "startSample": 20501096,
+    "endSample": 21014619,
+    "text": "这一个时间点，这一个小时，一个小时之内，我们就是最低的。那这个时候买的人群是最值量的，可以推出一些促销活动。那这个高销量的产品在电商什么时间段？呃，往后可以，呃，你那天抢有秒杀，那一天。\n嗯，你就可以以多少多少钱的呃折扣往后买到，所以我觉得咱们外部还得确定一个时间，然后比如说啊，咱们今天就用那个直播，然后去做那个促销的话，那今天直播最低了，那不可能在京东上你还做最低，那这样的话。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": null,
+    "isAggregatedRecovery": true,
+    "acceptedLeaves": [
+      {
+        "startSample": 20501096,
+        "endSample": 20757857,
+        "naturalEos": true,
+        "nodeKey": "roota"
+      },
+      {
+        "startSample": 20757857,
+        "endSample": 21014619,
+        "naturalEos": true,
+        "nodeKey": "rootb"
+      }
+    ]
+  },
+  "rawSha256": "a43328e655905bb65e42f368f81565f4aa11675eec3eea7151332008eb5012cb"
+}

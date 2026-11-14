@@ -1,0 +1,69 @@
+{
+  "at": "2026-11-14T20:25:37+08:00",
+  "state": "NATURAL_MIXED_UTTERANCE_LOCAL_RESULT_SCORED_NOT_MEETING_QUALIFICATION",
+  "dataset": "CAiRE/ASCEND",
+  "metadataRevision": "737e9800ae31be9932ba8464c80366559bd28424",
+  "license": "CC-BY-SA-4.0",
+  "rowId": "00009",
+  "seconds": 4.03,
+  "audioSha256": "7317a4752e95039e6f6c345ef5b15fdd18fc7f48353cc893e6f99218a682c9a3",
+  "pcmSha256": "437d74ada660e3812d05d83be40720ace521bdf35e093334127315a71b32696e",
+  "reference": "no我专业是那个i s m information systems management",
+  "hypothesis": "那我专业是那个ISM，Information Systems Management。",
+  "referenceCharacters": 39,
+  "hypothesisCharacters": 38,
+  "totalEdits": 2,
+  "edits": {
+    "replace": 1,
+    "delete": 1,
+    "insert": 0
+  },
+  "strictCharacterErrorRate": 0.05128205128205128,
+  "diagnosticBelowFivePercent": false,
+  "bothScriptsProduced": true,
+  "modelLanguageHeader": "Chinese",
+  "reviewRequired": false,
+  "actualNeuralCalls": 1,
+  "coldModelLoadSeconds": 49.43862570001511,
+  "freshInferenceSeconds": 4.605451599985827,
+  "privatePeakBytes": 1256198144,
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "referenceReceiptSha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3",
+  "normalizerSourceSha256": "45859723659b91b7ae0750331dc86eba216c631d27d35ebc4979a3663eae971e",
+  "inferenceReferenceUsed": false,
+  "limitations": [
+    "One4.03second utterance, not a complete bilingual meeting or a generalization claim.",
+    "Character metric preserves lexical fillers and numbers; this is not the official ASCEND mixed-word MER benchmark.",
+    "No verified diarization or word timing; all audio words and raw decoder nodes retained."
+  ],
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 24144,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 100663296,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 13287424,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

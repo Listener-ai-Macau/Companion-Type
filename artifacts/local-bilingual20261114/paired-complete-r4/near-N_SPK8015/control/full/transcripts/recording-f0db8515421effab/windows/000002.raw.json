@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "f0db8515421effab55ffc3ecfa9938d7ef2cd730a3c4a39a891ad6bebbfdeb31"
+  },
+  "raw": {
+    "index": 2,
+    "startSample": 988431,
+    "endSample": 1403402,
+    "text": "比较适合的年龄段儿啊，比方说，因为它是有彩色的呀，有蓝色的、黄色的，你像老年人他不可能用这种颜色，对吧？对，而且你现在设计的产品，主要推出的是它有照相的功能，功能的话是很，很很好，所以是还是适适合年轻的人人群。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 988431,
+        "endSample": 1403402,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "649d2e408222482694facaa736ee50a03cd7b229ca1b9efcb8999e68e99f9775"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8d8f3734d7eb9a68315668f835d597379ca6cdef347b24662186f6a4c4723769"
+  },
+  "raw": {
+    "index": 50,
+    "startSample": 24023849,
+    "endSample": 24431139,
+    "text": "各自部门儿啊，回去之后把这个方案都给我赶紧。嗯嗯。啊。你。所以你们要你们各部门要要互相的去配合嘛，然后要要配合一下，好吧？对。然后咱们经理再那个。因为这段时间咱们肯定是几条路都一块儿走，然后前这个前边儿打的，然后后边儿回。嗯。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24023849,
+        "endSample": 24431139,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "ce0ffb0adf6e857f6838327369f82ffe5f811b684704539fc1707cf53ee43aaf"
+}
