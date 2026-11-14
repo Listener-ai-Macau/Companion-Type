@@ -32,7 +32,6 @@ jobs:
       CARGO_INCREMENTAL: '0'
       CARGO_PROFILE_DEV_DEBUG: '0'
       CARGO_PROFILE_TEST_DEBUG: '0'
-      CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -61,6 +60,8 @@ jobs:
           npm run build:windows
           exit $LASTEXITCODE
       - name: Check overview source preservation and strict fidelity rejection
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/companion-windows-target
         run: |
           New-Item -ItemType Directory -Force model-fidelity-output | Out-Null
           cargo +1.95.0 test --locked --manifest-path apps/windows/src-tauri/Cargo.toml --lib overview -- --nocapture 2>&1 | Tee-Object model-fidelity-output/native-tests.log
