@@ -38,10 +38,52 @@ fn coarse_ready()->Pointer{
     assert!(p.shown.x>960.);
 }
 fn bounds()->Bounds {Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
-fn side_profile()->contact::Profile{contact::Profile{left:[0.,0.,0.,1.,0.,0.],right:[0.,0.,0.,-1.,0.,0.]}}
+fn side_profile()->contact::Profile{
+    let mut left=vec![[0.;6];19];left[3][3]=0.7;
+    let mut right=vec![[0.;6];19];right[3][3]=-0.7;
+    contact::Profile{schema:2,left:contact_dtw::normalize(left),right:contact_dtw::normalize(right),left_threshold:1e-6,right_threshold:1e-6}
+}
 fn side_ready()->Pointer{
     let mut p=Pointer::new(Settings{mapping:Mapping::Relative,desktop_motion:true,contact_profile:Some(side_profile()),..Settings::default()},Point{x:960.,y:540.});
     for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}p
+}
+#[test]fn contact_stream_keeps_fused_motion_and_raw_acceleration_separate_without_counting_twice(){
+    // Independent C packer fixture: gravity +Z, gyro90deg/s around Z, raw
+    // acceleration[1,-2,1000]. Both projections share one sequence and clock.
+    let hex="43494d310603030209000000000000000000000000400000000028230100feffe8030000adc11945";
+    let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let motion=Sample::parse(&bytes).unwrap();let raw=desktop::Raw::parse(&bytes).unwrap();
+    assert_eq!(motion.accel,[0.,0.,1000.]);assert_eq!(raw.accel_mg,[1.,-2.,1000.]);assert_eq!(motion.gyro,raw.gyro_dps);
+    let settings=Settings{contact_regions:true,..Settings::relative_remote()};assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),72);
+    let mut p=Pointer::new(settings,Point::default());p.sample_raw(raw,0.);p.sample(motion,0.,bounds());
+    assert_eq!(p.metrics.samples,1);assert!(p.coarse.is_none());assert!(p.metrics.calibrated);
+    let mut bad=bytes;bad[28]^=1;assert!(Sample::parse(&bad).is_err());assert!(desktop::Raw::parse(&bad).is_err());
+}
+#[test]fn regional_clicks_do_not_freeze_movement_or_rewind_the_ordinary_mouse(){
+    let mut p=Pointer::new(Settings{contact_regions:true,contact_profile:Some(side_profile()),..Settings::relative_remote()},Point{x:960.,y:540.});
+    let mut clicks=vec![];let mut moved_while_pending=false;
+    for n in 0..80{
+        let mut raw=raw_sample(n);if n==40{raw.gyro_dps[0]=70.;}
+        let motion=Sample{fused:true,device_ready:Some(true),gyro:[5.,0.,0.],..sample(n+1,n*10,false)};
+        p.sample_raw(raw,n as f64/100.);p.sample(motion,n as f64/100.,bounds());
+        if n==41{p.control(Control{sequence:1,sensor_ms:400,events:CLICK}).unwrap();}
+        if n==50{p.external_position(Point{x:1500.,y:800.});}
+        let pending=p.contacts.pending();let f=p.frame(n as f64/100.,bounds());
+        moved_while_pending|=pending&&f.position.is_some();
+        clicks.extend(f.buttons);
+    }
+    assert!(moved_while_pending,"contact recognition cannot reintroduce the rejected150ms movement freeze");
+    assert_eq!(clicks.len(),1);assert!(matches!(clicks[0],Button::Click(point)if point.x==1500.&&point.y>=800.));
+}
+#[test]fn distinct190ms_taps_are_two_clicks_while_a25ms_ring_event_is_suppressed(){
+    let mut p=side_ready();let mut clicks=vec![];
+    for n in 121..200{
+        let mut s=raw_sample(n);if n==150||n==169{s.gyro_dps[0]=70.;}
+        p.sample_raw(s,n as f64/100.);
+        if n==151||n==153||n==170{p.control(Control{sequence:n,sensor_ms:if n==153{1525}else{(n-1)*10},events:CLICK}).unwrap();}
+        clicks.extend(p.frame(n as f64/100.,bounds()).buttons);
+    }
+    assert_eq!(clicks.len(),2);assert_eq!(p.contact_status().suppressed_rebounds,1);
 }
 #[test]fn learned_right_and_left_contacts_reach_distinct_system_buttons_once_each(){
     let mut p=side_ready();let mut clicks=vec![];
@@ -76,7 +118,7 @@ fn side_ready()->Pointer{
 #[test]fn profile_roundtrip_keeps_the_model_and_invalid_model_cannot_enable_input(){
     let p=Settings{mapping:Mapping::Relative,desktop_motion:true,contact_profile:Some(side_profile()),contact_device:Some("card-a".into()),..Settings::default()};
     let round:Settings=serde_json::from_str(&serde_json::to_string(&p).unwrap()).unwrap();assert!(round.validate().is_ok());assert_eq!(round.contact_device.as_deref(),Some("card-a"));
-    let mut bad=round;bad.contact_profile.as_mut().unwrap().right=bad.contact_profile.as_ref().unwrap().left;assert!(bad.validate().is_err());
+    let mut bad=round;bad.contact_profile.as_mut().unwrap().right=bad.contact_profile.as_ref().unwrap().left.clone();assert!(bad.validate().is_err());
 }
 #[test]fn full_pointer_calibration_collects_two_sides_without_any_cursor_or_click_output(){
     let mut p=coarse_ready();p.learn_contact(contact::Side::Left).unwrap();

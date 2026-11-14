@@ -4,7 +4,8 @@
   "lockedInputs": {
     "apps/windows/src-tauri/Cargo.lock": "d5302fec9bbf33b7f23b0e8deb11cfb779800a9f1f6c3089e6e30f038a00795e",
     "package-lock.json": "5deeee47d806e214408016e384ae07d754b9893d68aa8420967b6b24788d8291",
-    "third_party/imu-pointer/gamepad/GamepadMotion.hpp": "f070bb1327cf5b1fbc336d570382d4c088e5ffae9f031dd0af8f81153581e690"
+    "third_party/imu-pointer/gamepad/GamepadMotion.hpp": "f070bb1327cf5b1fbc336d570382d4c088e5ffae9f031dd0af8f81153581e690",
+    "third_party/imu-pointer/grt/DTW.cpp": "46b23f180c683382fec55a03f43841862f4c9a373c8584ad9d9b3d6d74813a49"
   },
   "components": [
     {
@@ -9276,6 +9277,22 @@
           "origin": "Pinned upstream copyright and permission text"
         }
       ]
+    },
+    {
+      "name": "GRT-DTW",
+      "version": "4d4cab1999a349b00d8924da769ff3f0c29d3176",
+      "license": "MIT",
+      "ecosystem": "vendored-native",
+      "role": "Six-axis host temporal contact matcher Rust port; MCU retains Fusion and compact signal transport.",
+      "source": "https://github.com/nickgillian/grt/tree/4d4cab1999a349b00d8924da769ff3f0c29d3176",
+      "texts": [
+        {
+          "path": "grt/LICENSE",
+          "sha256": "e10d953d24483fbd008742a4a99a4e8ad79a32f3e4cb92d5586398abd811b8e2",
+          "file": "texts/e10d953d24483fbd008742a4a99a4e8ad79a32f3e4cb92d5586398abd811b8e2.txt",
+          "origin": "Pinned DTW.cpp MIT notice"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [
@@ -9307,5 +9324,5 @@
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 293
+  "licenseTextCount": 294
 }

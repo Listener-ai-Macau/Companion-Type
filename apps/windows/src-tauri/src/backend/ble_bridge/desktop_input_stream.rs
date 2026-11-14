@@ -69,15 +69,15 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                 for index in 0..64 {
                     if value.uuid==SETTINGS_UUID {
                         if mode==3 {
+                            if options==24||options==72 {
+                                if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){
+                                    sequence=Some(sample.sequence);notify(Update::RawMotion(sample));
+                                }
+                            }
                             if let Ok(sample)=companion_desktop_input::pointer::Sample::parse(&value.value){
                                 trace_motion_wire(&value.value);
                                 sequence=Some(sample.sequence);
                                 if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
-                            }
-                            if options==24 {
-                                if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){
-                                    sequence=Some(sample.sequence);notify(Update::RawMotion(sample));
-                                }
                             }
                         }
                         if let Ok(status)=InputStatus::parse(&value.value,peer){
@@ -142,6 +142,20 @@ mod tests {
         let mut values:Notifications=Box::pin(futures::stream::pending());let stop=AtomicBool::new(false);
         let result=tokio::time::timeout(Duration::from_secs(2),receive(&mut values,3,8,&peer(),&stop,&|_|{},|_|async{Ok(())})).await;
         assert_eq!(result.unwrap(),Err(ReceiveError::MotionStopped));
+    }
+    #[tokio::test(start_paused=true)]
+    async fn contact_packet_delivers_raw_then_exact_fused_motion_before_control(){
+        let hex="43494d310603030209000000000000000000000000400000000028230100feffe8030000adc11945";
+        let packet=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect();
+        let stop=Arc::new(AtomicBool::new(false));let signal=stop.clone();
+        let mut values:Notifications=Box::pin(futures::stream::iter(vec![Ok(ValueNotification{uuid:SETTINGS_UUID,value:packet}),Ok(click(1))]).chain(futures::stream::pending()));
+        let events=Mutex::new(vec![]);
+        assert_eq!(receive(&mut values,3,72,&peer(),&stop,&|e|match e{
+            Update::RawMotion(s)=>{assert_eq!(s.accel_mg,[1.,-2.,1000.]);events.lock().unwrap().push("raw");},
+            Update::Motion(s)=>{assert_eq!(s.accel,[0.,0.,1000.]);events.lock().unwrap().push("motion");},
+            Update::Physical(_)=>{events.lock().unwrap().push("control");signal.store(true,Ordering::Release);},_=>{},
+        },|_|async{Ok(())}).await,Ok(()));
+        assert_eq!(*events.lock().unwrap(),vec!["raw","motion","control"]);
     }
     #[tokio::test(start_paused=true)]
     async fn control_order_and_ack_prefix_survive_until_missing_motion_ends_the_owner(){

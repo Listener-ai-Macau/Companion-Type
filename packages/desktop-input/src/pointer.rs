@@ -11,6 +11,7 @@ mod relative;
 pub mod desktop;
 pub mod intent;
 pub mod contact;
+mod contact_dtw;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
 pub struct Point { pub x: f64, pub y: f64 }
@@ -27,12 +28,13 @@ pub struct Sample {
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()!=32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4) || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 {
+        if p.len()<32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4|6) || p.len()!=if p[4]==6{40}else{32} || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 || (p[4]==6&&p[34..36]!=[0,0]) {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
-        for byte in &p[..28] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
-        if !crc!=u32::from_le_bytes(p[28..32].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
+        let crc_at=p.len()-4;
+        for byte in &p[..crc_at] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
+        if !crc!=u32::from_le_bytes(p[crc_at..].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
         let mut s=Self {sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),
             sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]>=2,device_ready:if p[4]>=3{Some(p[6]&2!=0)}else{None},accel:[0.;3],gyro:[0.;3],aim:None};
         if p[4]==4 {
@@ -42,7 +44,7 @@ impl Sample {
             return Ok(s);
         }
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
-            if p[4]==3{s.accel[i]*=1000./16384.;}
+            if p[4]==3||p[4]==6{s.accel[i]*=1000./16384.;}
             s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64/100.;}
         Ok(s)
     }
@@ -65,21 +67,23 @@ pub struct Settings {
     pub relative_direct:bool,pub tap_click:bool,
     pub relative_horizontal:RelativeHorizontal,
     pub key_role:KeyRole,
+    pub contact_regions:bool,
     pub contact_profile:Option<contact::Profile>,
     pub contact_device:Option<String>,
 }
 impl Default for Settings {
     fn default()->Self {Self {mapping:Mapping::Laser,sensitivity:1.,smoothing:0.55,
-            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,relative_horizontal:RelativeHorizontal::Turn,key_role:KeyRole::ClickDrag,contact_profile:None,contact_device:None}}
+            deadzone:3.,acceleration:0.6,invert_horizontal:false,invert_vertical:false,desktop_motion:false,relative_direct:false,tap_click:true,relative_horizontal:RelativeHorizontal::Turn,key_role:KeyRole::ClickDrag,contact_regions:false,contact_profile:None,contact_device:None}}
 }
 impl Settings {
     pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,relative_horizontal:RelativeHorizontal::Tilt,tap_click:true,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
-    pub fn pointer_options(&self)->u8{if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
+    pub fn pointer_options(&self)->u8{if self.contact_regions{72}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
         if self.relative_direct&&(self.desktop_motion||self.mapping!=Mapping::Relative){return Err("direct gyro requires relative angular mapping");}
         if self.key_role==KeyRole::Regrip&&!self.relative_direct{return Err("按住换握姿需要相对遥控模式。");}
-        if let Some(profile)=&self.contact_profile{profile.validate()?;if !self.desktop_motion{return Err("左右轻敲需要原始动作模式。");}}
+        if self.contact_regions&&(!self.relative_direct||self.desktop_motion){return Err("左右前角敲击需要转动／倾斜鼠标模式。");}
+        if let Some(profile)=&self.contact_profile{profile.validate()?;if !(self.desktop_motion||self.contact_regions){return Err("请启用左右前角敲击。");}}
         if !self.sensitivity.is_finite() || !(0.2..=3.).contains(&self.sensitivity) ||
            !self.smoothing.is_finite() || !(0.0..=0.97).contains(&self.smoothing) ||
            !self.deadzone.is_finite() || !(0.0..=5.).contains(&self.deadzone) ||
@@ -236,6 +240,9 @@ impl Pointer {
             if event.events&CLICK!=0{self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),self.shown);}
             return Ok(true);
         }
+        // A regional mode without a calibrated model must never pretend every
+        // front corner is the left button. The UI offers calibration explicitly.
+        if self.settings.contact_regions&&event.events&CLICK!=0&&!self.contacts.is_active(){return Ok(true);}
         // A new reliable DOWN is an intentional edge, unlike an unknown held
         // level in a recovered motion packet. UP without a matching DOWN is
         // consumed without clicking after pause/calibration/stale release.
@@ -288,6 +295,9 @@ impl Pointer {
     /// CIM5 remains raw sensor data. Reuse the same physical control clock,
     /// history, pause, drag and native output instead of inventing a CIM4 pose.
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
+        // CIM6 shares the fused motion clock. Raw contact acceleration must
+        // not run a second fusion, count a second sample, or enable planar.
+        if self.settings.contact_regions{self.contacts.sample(s);return;}
         if !self.settings.desktop_motion{return;}
         if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
         self.contacts.sample(s);
@@ -300,7 +310,7 @@ impl Pointer {
     /// impact/gap the user may need to rest before displacement can resume.
     pub fn planar_state(&self)->Option<&desktop::State>{self.coarse.as_ref().map(|c|&c.desktop.state)}
     pub fn learn_contact(&mut self,side:contact::Side)->Result<(),&'static str>{
-        if !self.settings.desktop_motion{return Err("先启用桌面平移和转动，再校准左右轻敲。");}
+        if !(self.settings.desktop_motion||self.settings.contact_regions){return Err("先启用左右前角敲击，再校准。");}
         if !self.metrics.calibrated||self.metrics.paused{return Err("先放稳卡片完成动作校准，再校准左右轻敲。");}
         self.release_button();self.reset_motion();self.contacts.learn(side);Ok(())
     }
@@ -421,15 +431,18 @@ impl Pointer {
         let stale=self.arrival.is_none_or(|at|now-at>0.3);
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
-        if !stale&&!self.metrics.paused&&!self.metrics.regripping&&self.metrics.calibrated{
+        if !stale&&!self.metrics.paused&&self.metrics.calibrated{
             let was_pending=self.contacts.pending();
             let clicks=self.contacts.poll(now);
             if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){c.tap();}}
-            for(side,point)in clicks{self.shown=point;self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});}
+            for(side,point)in clicks{
+                let point=if self.settings.relative_direct{self.shown}else{point};
+                self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});
+            }
         }
         let mut f=Frame{position:None,buttons:std::mem::take(&mut self.queued)};
         if stale || self.metrics.paused || self.metrics.regripping || !self.metrics.calibrated {return f;}
-        if self.contacts.status.learning.is_some()||self.contacts.pending(){return f;}
+        if self.contacts.status.learning.is_some(){return f;}
         if let Some((at,point))=self.pressed {if !self.metrics.dragging && now-at>=self.drag_delay() {self.metrics.dragging=true;f.buttons.push(Button::Down(point));}}
         if self.settings.relative_direct&&self.pressed.is_some()&&!self.metrics.dragging{return f;}
         let next=match self.settings.mapping {

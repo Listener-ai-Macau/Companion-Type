@@ -131,3 +131,29 @@ provides a causal trapezoid/bias/stationarity estimator but has MPU-specific
 fitted bands and can classify constant velocity as rest; it is reviewed, not
 represented as a drop-in mouse or copied into the product. No new upstream
 translation implementation has been claimed from these searches.
+
+
+2026-11-14 front-corner contact adaptation (source candidate, not physical acceptance):
+Owner requires Type-C forward, left-front shell contact=left, right-front=right.
+The old angular profile routed all contacts to left; planar-only calibration
+and clearing its saved profile made regional clicking unreachable. The new
+explicit contactRegions option uses CIM6/72: unchanged MCU-fused gravity/rates
+plus6B raw acceleration (40B including reserved/CRC), same100Hz and one fusion.
+Legacy8/24/40 still use their existing32B packets. Planar stays paused.
+
+GRT DTW (MIT, commit in upstream.json) is ported as a bounded6-axis,32-row host
+subset with its original cumulative-path cost, radius.2, constrained Z norm,
+medoid training and mean+3sigma rejection. The platform segments raw bursts
+around reliable hardware TAP; a delayed recoil event is not treated as a new
+contact if its physical onset matches. There is no added cursor freeze or
+fixed120ms click lockout. Calibration keeps up to8 examples per side; stored
+templates stay board-bound in local user settings, not universal defaults.
+
+The original C++ functions and Rust port match36 distances on actual personal
+data. After aligning the raw shock rather than its delayed interrupt, six
+inferred independent groups pass held-out nearest-medoid replay; the previous
+unaligned3/6 and old peak7/10 failure remain in original evidence. Causal product
+replay gives6 corner clicks and4 suppressed echo events from10 hardware events.
+This tiny personal set is not a general accuracy, real feel or sale claim.
+The reference capture and personal templates are not included in Git/product.
+MCU DTW compute, final right-menu selection and uncontrolled taps remain unqualified.

@@ -2,7 +2,8 @@
   "shas": {
     "air": "b1ac85182a27b1d766ac487df22a6a908a4188f7",
     "watch": "504137a1a8748e3560f1c203d06fbd4e0832d582",
-    "fusion": "a8d7224f36a0ec82345ef49a3db50e65f8d3bab8"
+    "fusion": "a8d7224f36a0ec82345ef49a3db50e65f8d3bab8",
+    "grt": "4d4cab1999a349b00d8924da769ff3f0c29d3176"
   },
   "files": [
     {
@@ -110,6 +111,16 @@
       "path": "Sources/AirCursorCore/Settings.swift",
       "url": "https://github.com/m-afham/AirCursor/blob/b1ac85182a27b1d766ac487df22a6a908a4188f7/Sources/AirCursorCore/Settings.swift",
       "sha256": "20a46c27ce4d538a079489a2be4bae07f8214400cb56e208f2e7b36de85b31c8"
+    },
+    {
+      "project": "grt",
+      "path": "GRT/ClassificationModules/DTW/DTW.cpp",
+      "url": "https://github.com/nickgillian/grt/blob/4d4cab1999a349b00d8924da769ff3f0c29d3176/GRT/ClassificationModules/DTW/DTW.cpp",
+      "sha256": "46b23f180c683382fec55a03f43841862f4c9a373c8584ad9d9b3d6d74813a49",
+      "localPath": "grt/DTW.cpp",
+      "normalization": "LF",
+      "license": "MIT header preserved",
+      "scope": "Six-axis host DTW subset, not a new MCU inference framework"
     }
   ]
 }
