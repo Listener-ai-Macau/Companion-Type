@@ -43,10 +43,16 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
             let mut cursor=Cursor::open()?;let mut update=Instant::now();let mut next=Instant::now();
             while !frame_stop.load(Ordering::Acquire) {
                 if controls_cursor && Cursor::escape(){frame_stop.store(true,Ordering::Release);break;}
+                // Win32 cursor/monitor reads may wait on the input desktop.
+                // Do them before taking the core lock so the BLE receiver can
+                // still deliver samples and button edges during that wait.
+                let external=if controls_cursor{cursor.external_position()?}else{None};
+                let center=if recenter.swap(false,Ordering::AcqRel){Some(cursor.position()?)}else{None};
+                let bounds=cursor.bounds();
                 let (frame,metrics,contacts,period)={let mut p=frame_pointer.lock().unwrap_or_else(|e|e.into_inner());
-                    if controls_cursor{if let Some(position)=cursor.external_position()?{p.external_position(position);}}
-                    if recenter.swap(false,Ordering::AcqRel){p.recenter(cursor.position()?);}
-                    let frame=p.frame(origin.elapsed().as_secs_f64(),cursor.bounds());
+                    if let Some(position)=external{p.external_position(position);}
+                    if let Some(position)=center{p.recenter(position);}
+                    let frame=p.frame(origin.elapsed().as_secs_f64(),bounds);
                     (frame,p.metrics.clone(),p.contact_status(),if p.settings.mapping==companion_desktop_input::pointer::Mapping::Laser{4_166_667}else{8_333_333})};
                 if controls_cursor {if let Err(e)=cursor.apply(frame){frame_stop.store(true,Ordering::Release);return Err(e);}}
                 if update.elapsed()>=Duration::from_millis(200){
