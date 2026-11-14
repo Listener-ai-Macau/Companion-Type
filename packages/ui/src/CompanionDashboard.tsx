@@ -8,6 +8,7 @@ import {savedActionReview} from './actionReview';
 import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import { cleanHesitations, transcriptParagraphs } from './transcriptReading';
 import { MeetingTopic } from './MeetingTopic';
+import { MeetingSectionHeading } from './MeetingSectionHeading';
 import { MeetingDisclosure } from './MeetingDisclosure';
 import { MinutesTemplatePreview } from './MinutesTemplatePreview';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
@@ -4010,7 +4011,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
-        if (block.type === 'heading') return <h4 key={index} className={block.text==='会议概览'?'ct-note-overview-heading':undefined} data-meeting-heading={block.text}>{translateMinutesHeading(block.text)}</h4>;
+        if (block.type === 'heading') return <MeetingSectionHeading key={index} sourceTitle={block.text} className={block.text==='会议概览'?'ct-note-overview-heading':undefined}>{translateMinutesHeading(block.text)}</MeetingSectionHeading>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
         const bodyReferences = companionMinutesReferencedSources(sources, sourceParts?.body??block.text);
         const references = bodyReferences.filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
