@@ -23,18 +23,15 @@ module.exports=async(page,plan,out,reopened)=>{
   const expected=plan.expectedSnapshot[0].transcriptText;
   await page.getByRole('searchbox',{name:'查找可引用的原文',exact:true}).fill(expected.slice(0,12));
   const quote=await page.locator('.manual-quote-options blockquote').first().textContent();assert(expected.includes(quote));
-  await page.evaluate(()=>{
-   window.__quotePointerEvents=[];
-   document.addEventListener('click',event=>{const e=event.target instanceof Element?event.target:null;window.__quotePointerEvents.push({tag:e?.tagName,aria:e?.closest('button')?.getAttribute('aria-label'),text:e?.textContent?.slice(0,60),trusted:event.isTrusted,scrollY});},{capture:true});
-  });
   const button=page.getByRole('button',{name:'引用原文片段 1',exact:true});
   await settledClick(button,'capture-quote');
   const notes=page.locator('#ct-meeting-materials-pane');
   try{await notes.waitFor({state:'visible',timeout:10000});}
   finally{const buttonPresent=await button.count();fs.writeFileSync(path.join(out,'source-pointer-input.json'),JSON.stringify({events:await page.evaluate(()=>window.__quotePointerEvents),buttonPresent,buttonDisabled:buttonPresent?await button.isDisabled():null,materialsVisible:await notes.isVisible(),ordinaryInput:'Playwright pointer click after observed geometry settled',quoteExactInOriginal:expected.includes(quote)},null,2));}
   const composer=page.locator('#ct-recording-notes .ct-note-composer');await composer.waitFor();
-  assert((await composer.innerText()).includes(quote));
-  await composer.getByRole('button',{name:'移除此引用',exact:true}).click();
+  await settledClick(composer.locator('.manual-evidence-excerpt>summary'),'expand-source');
+  assert.equal(await composer.locator('.manual-evidence-excerpt blockquote').textContent(),quote);
+  await settledClick(composer.getByRole('button',{name:'移除此引用',exact:true}),'discard-source');
   assert.equal(await composer.getByRole('button',{name:'移除此引用',exact:true}).count(),0);
   await page.screenshot({path:path.join(out,'source-pointer-note-draft-discarded.png')});
  }
