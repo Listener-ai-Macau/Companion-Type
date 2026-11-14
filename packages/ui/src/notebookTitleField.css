@@ -1,0 +1,3 @@
+body .ct-windows.ct-notebook .ct-title-editor .notebook-title-field{display:block;box-sizing:border-box;min-width:0;min-height:1.5em;width:100%;max-width:100%;margin:0;padding:0 0 4px;resize:none;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:var(--notebook-ink);font:500 26px/1.5 var(--notebook-font);letter-spacing:-.35px;box-shadow:none}
+body .ct-windows.ct-notebook .ct-title-editor .notebook-title-field:focus{border-bottom-color:var(--notebook-accent)}
+@media(max-width:720px){body .ct-windows.ct-notebook .ct-title-editor .notebook-title-field{font-size:23px}}

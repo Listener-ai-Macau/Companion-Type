@@ -9,6 +9,7 @@ import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from 
 import { cleanHesitations, transcriptParagraphs } from './transcriptReading';
 import { MeetingTopic } from './MeetingTopic';
 import { MeetingSectionHeading } from './MeetingSectionHeading';
+import { NotebookTitleField } from './NotebookTitleField';
 import { MeetingDisclosure } from './MeetingDisclosure';
 import { MinutesTemplatePreview } from './MinutesTemplatePreview';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
@@ -2266,9 +2267,9 @@ export function CompanionDashboard({
             <div>
 
               <label className="ct-title-editor"><span className="ct-sr-only">记录标题</span><Pencil size={15} />
-                <input value={titleDirty?titleDraft:meetingTitle(selectedSession)} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
+                <NotebookTitleField value={titleDirty?titleDraft:meetingTitle(selectedSession)} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
                   readOnly={!onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured} title={!onSaveMeeting ? '请在桌面版编辑标题' : '点击名称可改名'}
-                  onChange={(event) => updateTitleDraft(event.target.value)} /></label>
+                  onValueChange={updateTitleDraft} /></label>
               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
               <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
               {titleDirty ? <div className="ct-inline-edit-actions">
