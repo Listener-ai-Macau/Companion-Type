@@ -3,7 +3,6 @@ import { ArrowLeft, Bluetooth, ChevronDown, ChevronRight, CircleAlert, Download,
 import './mobile.css';
 import {DeviceRecordingList,type DeviceSession} from './DeviceRecordingList';
 import './mobilePremium.css';
-import './notebookMobile.css';
 import {RecordingContentNavigation} from './RecordingContentNavigation';
 import { MobileMindMap } from './MindMapView';
 import { TranscriptReader } from './TranscriptReader';
@@ -40,6 +39,8 @@ import {TranscriptReplace} from './TranscriptReplace';
 import {CommonSettings,type AppPreferences} from './CommonSettings';
 import {readAppearance,resolvedAppearance,type Appearance} from './appearance';
 import {splitMobileEvidence,uniqueMobileEvidenceWindow,uniqueMobileQuote} from './mobileSourceReview';
+// The notebook foundation owns the final shell/theme, after feature styles.
+import './notebookMobile.css';
 
 type Device={index:number;name:string;address:string;bonded?:boolean}; type Segment=DeviceSession;
 type Row={organization?:RecordingOrganization;source?:'recorder'|'importedAudio'|'derivedAudio';lifecycle?:RecordingLife;libraryToken?:string;key:string;title:string;session:string;state:string;segments:number;recordedAtUnixSeconds?:number|null;durationMs?:number;matchSource?:'title'|'transcript'|'minutes'|'notes';matchSnippet?:string;matchStart?:number;matchEnd?:number;matchStale?:boolean}; type Sync={state:string;detail:string;running:boolean;hasSavedTask:boolean;completedDeviceRecording?:{address:string;identity:string}};

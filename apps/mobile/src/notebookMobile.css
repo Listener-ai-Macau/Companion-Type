@@ -1,5 +1,5 @@
 /* Notebook mobile shell: the same recordings -> reader hierarchy as the desktop app. */
-.mobile-app{--accent:var(--notebook-accent);--accent-soft:var(--notebook-selection);--line:var(--notebook-line);--ink:var(--notebook-ink);--muted:var(--notebook-muted);--bg:var(--notebook-paper);--surface:var(--notebook-paper);--surface-soft:var(--notebook-soft);font-family:var(--notebook-font);height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.mobile-app,.mobile-app[data-theme=dark]{--accent:var(--notebook-accent);--accent-soft:var(--notebook-selection);--line:var(--notebook-line);--ink:var(--notebook-ink);--muted:var(--notebook-muted);--bg:var(--notebook-paper);--surface:var(--notebook-paper);--surface-soft:var(--notebook-soft);font-family:var(--notebook-font);height:100vh;height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .mobile-app[data-theme=dark]{color-scheme:dark}
 .mobile-app main{padding:20px 22px 32px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior-y:contain}
 .mobile-app .mobile-header{height:57px;min-height:57px;padding:0 20px;gap:10px;flex:none;border-bottom:1px solid var(--line);background:var(--surface);box-shadow:none}
@@ -98,20 +98,23 @@
 
 /* Keep the recording itself above its secondary tools, including on short phones. */
 .mobile-app .detail-page{padding-top:20px}
-.mobile-app .detail-title{gap:8px;margin-bottom:12px}
+.mobile-app .detail-title{gap:8px;margin-bottom:12px;padding:0}
 .mobile-app .detail-title>div{min-width:0;flex:1}
-.mobile-app .detail-title h1{font-size:21px;font-weight:600;line-height:1.45;overflow-wrap:anywhere}
+.mobile-app .detail-title h1{margin:0;font-size:21px;font-weight:600;line-height:1.45;overflow-wrap:anywhere}
 .mobile-app .detail-title>.text-button{flex:none;min-width:44px;min-height:44px;margin-top:-6px;padding:10px 5px;font-size:11px}
 .mobile-app .detail-meta{margin-top:7px;margin-bottom:0;line-height:1.6}
-.mobile-app .player-card-idle{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;margin-bottom:10px;border-top:0;min-height:44px}
-.mobile-app .player-card-idle .player-control{min-height:44px;min-width:0;flex:1}
+.mobile-app .player-card.player-card-idle{display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:8px;padding:6px 0;margin-bottom:10px;border-top:0;min-height:44px}
+.mobile-app .player-card-idle .player-control{min-height:44px;min-width:0;flex:1;width:auto}
 .mobile-app .player-card-idle .player-button{width:30px;height:30px}
-.mobile-app .player-card-idle .player-copy{display:flex;align-items:center;gap:10px;min-width:0}
+.mobile-app .player-card-idle .player-copy{display:flex;flex-direction:row;flex:initial;align-items:center;gap:10px;min-width:0}
 .mobile-app .player-card-idle .player-copy>strong{font-size:12px;white-space:nowrap}
 .mobile-app .player-card-idle .player-copy>span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mobile-app .player-card-idle .playback-tools-idle{margin:0;flex:none}
 .mobile-app .player-card-idle .playback-restart{font-size:11px;min-height:44px}
 .mobile-app .recording-content-navigation{margin-bottom:16px}
+.mobile-app .minutes-origin{margin:0 0 18px;font-size:12px;line-height:1.7}
+.mobile-app .minutes-document>.minutes-section:first-of-type>h3{margin-top:0}
+.mobile-app[data-theme=dark] .brand-dot{background:var(--ink);color:var(--surface)}
 .mobile-app #detail-panel-minutes>.minutes-panel-heading{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .mobile-app .recording-content-more>div{min-width:172px;padding:6px;box-shadow:0 4px 16px #00000012}
 .mobile-app .recording-content-more button:hover,.mobile-app .recording-content-more button:focus-visible{background:var(--accent-soft)}
