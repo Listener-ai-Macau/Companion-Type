@@ -24,7 +24,7 @@ function excerpt(body:string):{first:string;remaining:string;count:number;next:s
  if(starts.length<=5)return null;
  const split=starts[4],next=lines[split].replace(/^[-*]\s+/,'').slice(0,36);return {first:lines.slice(0,split).join('\n'),remaining:lines.slice(split).join('\n'),count:starts.length-4,next};
 }
-export function MinutesDocument({markdown,renderText,renderSource,generationNote,manualReview=false}:{markdown:string;renderText:(text:string,section?:string,position?:{sectionOccurrence:number;itemOffset:number})=>React.ReactNode;renderSource?:(text:string)=>React.ReactNode;generationNote?:string;manualReview?:boolean}) {
+export function MinutesDocument({markdown,title,renderText,renderSource,generationNote,manualReview=false}:{markdown:string;title?:string;renderText:(text:string,section?:string,position?:{sectionOccurrence:number;itemOffset:number})=>React.ReactNode;renderSource?:(text:string)=>React.ReactNode;generationNote?:string;manualReview?:boolean}) {
  const manualNotice='> 人工修订：此版本包含使用者的核对或修改，不代表重新生成的 AI 结果；新增负责人和时间请按实际安排确认。\n\n';
  const display=splitGeneratedMeetingMetadata(manualReview&&markdown.startsWith(manualNotice)?markdown.slice(manualNotice.length):markdown);
  const notices:string[]=[];let noticeFence:string|null=null;
@@ -37,12 +37,12 @@ export function MinutesDocument({markdown,renderText,renderSource,generationNote
  const sections=splitMinutesSections(reading);
  const headings=sections.map((s,i)=>({s,i})).filter(({s})=>s.title!==null);
  if(!headings.length)return <>{renderText(display.body)}</>;
- return <MeetingReadingFrame markdown={markdown} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{manualReview?<p className="manual-minutes-note">含人工修订 · 负责人和时间请按实际安排确认</p>:display.metadata?<p className="hint minutes-origin">AI 整理 · 请结合原话核对</p>:null}{sections.map((section,index)=>{
+ return <MeetingReadingFrame markdown={markdown} title={title} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{manualReview?<p className="manual-minutes-note">含人工修订 · 负责人和时间请按实际安排确认</p>:display.metadata?<p className="hint minutes-origin">AI 整理 · 请结合原话核对</p>:null}{sections.map((section,index)=>{
   const title=section.title?meetingHeadingForDisplay(section.title):null;
   if(!title)return <div key={index} className={/^>\s*整理视角：[^\r\n]+$/.test(section.body.trim())?'minutes-preamble minutes-preamble-generated':'minutes-preamble'}>{renderText(section.body)}</div>;
   if(/^(分段原文依据|原文依据|补充原文（供核对）|原话核对|待核对片段|Keywords)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
   if(['Summary','摘要'].includes(section.title!)&&notices.some(line=>line.startsWith('> 长会议已按原文顺序处理全部'))&&headings.some(({s})=>['全会重点','会议概览'].includes(s.title!)))return <details key={index} className="minutes-source-section minutes-full-summary"><summary data-meeting-heading={section.title}><span>完整会议摘要</span><span>展开查看</span></summary>{renderText(section.body)}</details>;
-  const fallback=display.metadata&&section.title==='全会重点'&&section.body.split('\n').every(line=>!line.trim()||/^[-*]\s+\S/.test(line));
+  const fallback=['全会重点','会议概览'].includes(section.title!)&&section.body.split('\n').every(line=>!line.trim()||/^[-*]\s+\S/.test(line));
   if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{points.map((point,i)=><MeetingTopic text={point} key={`${i}:${point}`}/>)}</section>;}
   // Action cards own their one shared filter and their folding. Splitting the
   // source into two render calls would produce two incomplete action scopes.
