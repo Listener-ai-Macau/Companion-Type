@@ -55,11 +55,15 @@ impl Surface {
         let old=self.status.vertical_velocity_mps;
         if old*self.filtered_z<0.&&self.filtered_z.abs()>0.10{self.braking=true;}
         let velocity=old+self.filtered_z*dt;
-        self.status.height_m+=(old+velocity)*0.5*dt;
-        self.status.vertical_velocity_mps=velocity;
+        // Zero-velocity updates also stop position integration. Previously
+        // resetting only velocity integrated half a bias impulse EVERY rest
+        // sample; a settling rest with residual>0.01m/s escaped that reset
+        // and the real149 trace invented5.6m while physically quiet.
+        let zero_velocity=stationary&&(self.braking||velocity.abs()<0.01||self.status.phase==Phase::Settling);
+        if zero_velocity{self.status.vertical_velocity_mps=0.;self.filtered_z=0.;self.braking=false;}
+        else{self.status.height_m+=(old+velocity)*0.5*dt;self.status.vertical_velocity_mps=velocity;}
         self.peak=self.peak.max(self.status.height_m);
         if self.status.height_m<self.peak-0.004&&velocity< -0.01{self.returning=true;}
-        if stationary&&(self.braking||velocity.abs()<0.01){self.status.vertical_velocity_mps=0.;self.braking=false;}
         // A brief vertical desk impulse is not a completed lift. The actual
         //147 trace settled at0.64mm with zero vertical velocity, but could
         // never satisfy the4mm return-direction test and stayed suspended.
@@ -117,5 +121,12 @@ impl Surface {
    for _ in 0..count{assert!(!s.sample(n*10,z,up,rest));n+=1;}
   }
   assert!(s.status.height_m>0.007&&s.status.height_m<0.015,"known9.6mm lift {:?}",s.status);
+ }
+ #[test]fn a_quiet_airborne_hold_with_accelerometer_bias_cannot_invent_more_height(){
+  let mut s=Surface::default();let up=[0.,0.,1.];assert!(s.sample(0,0.,up,true));let mut n=1;
+  for (count,z)in[(15,1.),(20,0.),(15,-1.)]{for _ in 0..count{assert!(!s.sample(n*10,z,up,false));n+=1;}}
+  for _ in 0..2000{assert!(!s.sample(n*10,0.06,up,true));n+=1;}
+  assert!((s.status.height_m-0.0525).abs()<0.002,"quiet20s hold with0.06m/s2 bias changed height: {:?}",s.status);
+  assert_eq!(s.status.vertical_velocity_mps,0.);
  }
 }

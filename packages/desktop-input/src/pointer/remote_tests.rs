@@ -197,7 +197,11 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
 #[test]
 #[ignore="Local normal147 stationary CIM6 capture; never bundled"]
 fn actual_surface_stationary_readiness_does_not_become_a_false_lift(){
-    let root=std::path::PathBuf::from(std::env::var("COMPANION_SURFACE_EVALUATION").expect("explicit local surface capture"));
+    for root in std::env::var("COMPANION_SURFACE_EVALUATION").expect("explicit local surface capture").split(';'){
+        check_surface_stationary_trace(std::path::Path::new(root));
+    }
+}
+fn check_surface_stationary_trace(root:&std::path::Path){
     let proof:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("../../runtime-proof.json")).unwrap()).unwrap();
     let settings:Settings=serde_json::from_value(proof["pointerSettings"].clone()).unwrap();
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
