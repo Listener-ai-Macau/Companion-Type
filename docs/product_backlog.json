@@ -56244,12 +56244,12 @@
         "phoneReturn": "Owner changed back to authorized6LCAP; exact priorKT report pulled without new transfer. Current700 joint CPU/HCI comparison next if normally ready.",
         "ownerPhoneHold": {
           "active": false,
-          "reservedFor": "Companion158 public software acceptance",
+          "reservedFor": "Companion160 public software acceptance",
           "serial": "d6bd213d",
-          "requestedAt": "2026-11-14T13:31:03+08:00",
+          "requestedAt": "2026-11-14T18:15:15+08:00",
           "ownerInstruction": "所有非模型达到售卖标准；沿已授权插线手机继续，USB保持唤醒已开启",
           "scope": "Only new libraries restored through ordinary UI from the known public136 backup; engineering reading/detail/notes/source navigation on owned non-main display. No listening, microphone, BLE/device, ASR/model/cloud, contacts or Owner/private libraries.",
-          "releasedAt": "2026-11-14T13:35:11+08:00",
+          "releasedAt": "2026-11-14T18:22:29+08:00",
           "releaseReason": "Public software acceptance ended; original library restored and exact own display/app/forward/jar closed. Real sales/hardware/models not claimed.",
           "publicLibraries": [
             "d53f8f50-75ff-4d46-b66d-595e49acdef5"
@@ -133816,37 +133816,37 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-14T13:57:00+08:00",
+      "updatedAt": "2026-11-14T18:52:22+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-08",
       "baseline": {
-        "firmwareVersion": 66835,
+        "firmwareVersion": 66836,
         "uiGeneration": 85,
         "sourceRoot": "C:/Users/Billy/Desktop/Denzic/Companion/firmware-input-lifecycle",
-        "sourceCommit": "3e7f0a48acd0ae7dd37fa2fc3b655cab0c849a56",
-        "buildReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\firmware\\build\\result.json",
-        "installationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\evidence\\pointer1200s-to-ota83520261114\\result.json",
+        "sourceCommit": "556cc0e8387f31eaf91187ec5e7605f50549f3c2",
+        "buildReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\firmware\\build\\result.json",
+        "installationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\normal136-ota836\\result.json",
         "idleReceipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-relative128-fw66832\\evidence\\normal128-live-preview-fw832\\result.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "Actual835/UI85 protected identity and exact signed running package verified; both normal default834 and835 full transfer receipts preserved.",
-        "evidenceAvailability": "Normal136 full source/MSI/native matched, exact already-installed835 recovery exercised via actual public UI; actual134/8341200s stream/mode0 then default835 install passed. Owner physical acceptance remains open.",
+        "sourceRootAvailability": "Actual836 signed running App+UI85 payload confirmed after normal136 OTA; FW556cc0e8 source remotely protected.",
+        "evidenceAvailability": "Exact836 running payload/layout/UI85 and workspace reclaim plus fresh protected connection confirmed. Same-source stale-ACK probe10writes0echoes, no missing motion, actualmode0; no physical taps exercised.",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
         "historicalCompileProfile": "product=companion, screen disabled independently",
-        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\evidence\\normal136-actual-reconfirmation\\result.json",
-        "appBytes": 406448,
+        "latestNormalObservationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\normal140-pointer\\result.json",
+        "appBytes": 406464,
         "staticRamBytes": 66632,
         "stackReservedBytes": 21504,
-        "physicalQualification": "17unsynced entries,9203712freeBytes,6492160protectedBytes unchanged; no original audio read/consume. Old intermittent root cause unclosed;835 speed47.17 not qualified and deferred.",
+        "physicalQualification": "17unsynced entries,9203712freeBytes,6492160protectedBytes unchanged. No old audio read/consume. Old137 intermittent stream/physical-click feel unclosed.",
         "ordinaryWirelessOtaQualified": false,
         "engineeringCaptureOnly": false,
         "normalRestorationRequired": false,
-        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\delivery.json",
+        "preservedDeliverable": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\delivery.json",
         "latestOrdinaryWirelessOtaExamplesPassed": true
       },
       "packages": [
@@ -134037,17 +134037,17 @@
         {
           "id": "CP09-02",
           "title": "当前手机配对与正常加密连接",
-          "category": "当前App崩溃修复已实际使用；冷5秒单样本过，自动恢复10秒仍待改善",
+          "category": "当前普通连接样本过；旧偶发首次连接/动作流停顿根因开放",
           "owner": "本侧",
           "tasks": [
             "CP09-02"
           ],
-          "current": "当前829与正常117新进程普通连接4242.9804ms<=5s样本通过；同原件断开重接35.430秒与暂停继续15.420秒完整保存，偶发RF根因没有新的失败证据不能全部关闭。",
+          "current": "正常140/实际836本次普通连接2935.066ms<=5s；836升级后新保护连接2097.068ms。原117/829恢复与手机样本保留，不外推本次手机已验或全部RF条件通过。",
           "remaining": [
-            "早期0x3E/首次连接偶发原失败保留；只在新现场触发时取对应证据定位，不重复无变化试验。",
-            "手机正常入口和完整链由前端当前匹配交付验收。"
+            "140/836普通连接2935ms，836升级后的新连接2097ms；均仅当次样本。旧首次连接/137399缺样14停顿及积压根因未关闭，新现场失败保留并定位；无新证据不盲调参数/循环重连。",
+            "手机普通入口与完整链由前端当前匹配交付承接。"
           ],
-          "next": "新失败修板端源头；无失败复用已验样本，主线继续IMU。",
+          "next": "遇当前新失败取同场ACK/通知证据定位；否则沿现有IMU主线，不重复无变化连接测试。",
           "doneWhen": "新手机在正常有限配对窗口内完成配对和加密目录访问，失败可恢复；不清其它绑定，不读取原录音。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\phone069\\actual-phone-pairing.json"
@@ -134062,18 +134062,18 @@
         {
           "id": "CP23-10",
           "title": "当前普通升级与传输指标",
-          "category": "正常OTA达体验门；完整录音成立，动态停录可用等待待优化",
+          "category": "836普通签名OTA与回收已验；旧间歇故障及Owner后置速度保留",
           "owner": "本侧",
           "tasks": [
             "CP23-10"
           ],
-          "current": "当前829普通OTA104.898s/postFinish74.881s，版本/布局/UI85共同确认、临时空间释放；资源App406424B/static66632B在预算内。短019f285.520秒完整保存回收；019e按Owner停止1840.340秒保存，未给本轮新2h结论。",
+          "current": "836正常联合OTA总102087ms、安装100768ms、FINISH后72259ms；运行App/UI85/签名payload/布局/临时回收确认，原17条目录与容量不变。App406464B/static66632B/栈21504B，旧长录证据按范围复用。",
           "remaining": [
-            "原任何长度含回收>=50KiB/s旧失败按Owner后置，OTA payload73.643KiB/s不替代此门。",
-            "旧耐久/恢复/满盘证据按范围复用；新增板端故障或实质改动再补对应检查，本轮不重跑2h。",
-            "原电源/声学/生产/屏幕及未来Capture硬件条件保持。"
+            "原任何长度含回收>=50KiB/s旧失败沿Owner后置；本次不恢复测速冲刺。",
+            "现有按键录音/离线标记、保存恢复、校时、按场同步删除回收与联合OTA沿原证据；IMU修改收稳后，只核受影响模式退出/录音标记与当前交付绑定。实体首句话听感Owner此前选稍后，继续保留待人体验；不自行追加2小时重复录音。",
+            "旧间歇OTA失败不因本次正常升级关闭；有新故障才按同场证据修复。"
           ],
-          "next": "沿当前priorityDecision；不恢复747/399旧正在运行状态。",
+          "next": "沿当前embedded.next及priorityDecision，不恢复旧在途作业或新增无影响2h测试。",
           "doneWhen": "实际完整签名升级、正确版本/资源/哈希/临时区释放与旧目录核对通过，并达到当前正常传输/资源指标。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\ota-measurements.json",
@@ -134097,15 +134097,14 @@
             "CP27-17"
           ],
           "owner": "本侧",
-          "title": "Companion录音卡IMU交互：敲击重点",
+          "title": "Companion录音卡IMU：敲击重点与鼠标交互",
           "status": "open",
-          "category": "Owner最新优先插入；原编号复用，屏幕/宠物仍暂停",
-          "current": "当前普通829/UI85、61.44MHz；118保留117鼠标实现与首敲基线修复、43算法用例，994raw帧约98.08Hz零缺序；自然实物方向/点击拖拽/误触仍未全通过。",
-          "next": "沿当前priorityDecision第1、2项。",
+          "category": "当前主线：140/836确认链已修，实体轻敲/落点仍开放",
+          "current": "当前836/UI85、61.44MHz；140完整匹配包已保存，原136指针逐字保留，137150ms稳点已回退。实际30.219s/2758样本0缺样停顿、mode0通过；静置结果不代替敲击手感。",
+          "next": "沿airPointer20261112.activeJob承接同一原版窗口真实反馈，不重新构建或分方向采样。",
           "remaining": [
-            "成熟上游对照及完整实物鼠标体验，现有contact/intent扩展仍实验。",
-            "当前允许组合的CPU/栈按受影响范围确认；全负载不能由历史各服务相加。",
-            "新RGB灯已记录方案，等新板到；原明确硬件block保留。"
+            "录中双敲标记已有一次耐久实物证据；拿起/放下/携带的自然误触与最终外壳手感仍未完整通过。当前不新增翻面/摇动自动开停。",
+            "136移动基线保留；137150ms稳点失败已回退，140修ACK确定缺陷并完成后台实板。当前原窗口自然移动、单/双敲、普通鼠标共用仍待实际反馈；桌面平移保持Owner暂停，左右分区识别保持实验，不作为已完成或新增本轮门槛。"
           ],
           "doneWhen": "录中敲两下只产生一个可同步重点，采音不中断，原音位置/持久数据正确；无屏常用动作不误触。",
           "evidence": [
@@ -134603,7 +134602,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Owner awake: one original-style concentrated136/835 physical shell single/double click, held steady/regrip and ordinary-mouse coexistence experience. No popup before available. Preserve failed first-connect/197missing9gaps/automatic OTA evidence; quiet1200s and two default successes do not close their root cause. Speed and other explicit hardware deferrals stay deferred.",
+      "next": "Read this same Owner140 result and bounded actual ACK timings; no second popup, no parameter retuning until actual cause is distinguished. Current result still waits explicitStart; popup alone is not physical acceptance.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -135099,7 +135098,7 @@
         }
       },
       "priorityDecision": {
-        "at": "2026-11-13T09:47:22+08:00",
+        "at": "2026-11-14T18:52:22+08:00",
         "ownerRaw": "你就把接下来的优先级修一下，block的东西就block；除了block以外的东西都已经做了吗，可以交付、售卖吗？",
         "correction": "现行优先级字段仍停在11月5/6日的日期/维护入口旧顺序，与embedded.next不一致，已纠正。原结果和已过范围保留，不把规则/文档/验收工具数量算产品进展。上一轮较多时间用于验收适配，未产生新固件修复，明确保留这一投入事实。",
         "ordered": [
@@ -135114,22 +135113,22 @@
             "order": 2,
             "task": "CP21-03",
             "scope": "固件底层与CPU/SRAM/内部外部Flash资源",
-            "status": "829_FLASH_SRAM_WITHIN_BUDGET_CONCURRENT_CPU_NOT_NEWLY_MEASURED",
-            "next": "沿现有模块账本与服务成本表，按组件变动核资源与可同时开启组合；不盲减栈/协议缓冲或把老数据称新测。"
+            "status": "836_ACTUAL_LEDGER_IN_BUDGET_NO_NEW_IMU_COMPUTE",
+            "next": "836实际App406464B/静态SRAM66632B/预留栈21504B；较835Flash+16B、RAM/栈0。原136指针与835IMU算法未变；CPU19.005%/32.884%仍是819历史范围。新增组件按实际允许组合确认，不把互斥录音与鼠标负载相加，不为只改确认回包再装观察固件。"
           },
           {
             "order": 3,
             "task": "CP09-02",
             "scope": "连接和同一原件恢复可靠性",
-            "status": "LATEST_NORMAL_CONNECT4243MS_AND_ORIGINAL_RECOVERY_SCOPED_PASS_INTERMITTENT_RF_OPEN",
-            "next": "复用当日正常117恢复/暂停与连接样本。间歇根因只在新失败现场定位，不循环盲调正常连接参数。"
+            "status": "LATEST140_836_CONNECT2935MS_OLD_INTERMITTENT_ROOT_OPEN",
+            "next": "140/836普通连接2935ms，836升级后的新连接2097ms；均仅当次样本。旧首次连接/137399缺样14停顿及积压根因未关闭，新现场失败保留并定位；无新证据不盲调参数/循环重连。"
           },
           {
             "order": 4,
             "task": "CP23-10",
             "scope": "录音存储同步OTA与既有用户功能回归",
-            "status": "CURRENT829_TARGETED_AND_OTA_PASS_PRIOR_ENDURANCE_REUSED_BY_OWNER_DIRECTION",
-            "next": "当前短019f已285.520秒完整保存回收；前端接全链。旧2h/失败原证保留，Owner本轮不要求新跑2h；新增固件改动只取受影响检查。"
+            "status": "836_ACTUAL_OTA_CONFIRMED_PRIOR_ENDURANCE_REUSED",
+            "next": "现有按键录音/离线标记、保存恢复、校时、按场同步删除回收与联合OTA沿原证据；IMU修改收稳后，只核受影响模式退出/录音标记与当前交付绑定。实体首句话听感Owner此前选稍后，继续保留待人体验；不自行追加2小时重复录音。"
           }
         ],
         "doNotReopen": [
@@ -135137,7 +135136,7 @@
           "Owner明确后置的OTA和录音收取速度；保留旧失败及原50门，不再抢主线。",
           "原硬件/电源/生产等block、Owner延后的实体体验及暂停的屏幕，依原恢复条件接续。"
         ],
-        "currentExecutable": "沿airPointer20261112.activeJob先完成正常124及间歇链路后台核验，再一次原版IMU实体验收；无Owner微步骤。",
+        "currentExecutable": "沿embedded.next使用已匹配140/实际836；当前原版窗口待Owner点击开始，无第二构建/IO/光标控制。完成IMU后收既有连接恢复及受影响录音模式，不扩新卖点。",
         "lastUpdatedAt": "2026-11-13T14:40:11+08:00",
         "lastOwnerRaw": "RGB灯先按多颜色记录，先继续理顺嵌软，基础固件是不是差不多。",
         "previousCompletedReliability": [
@@ -135223,12 +135222,12 @@
         "previousCurrentSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\readiness-before-current-scope.json"
       },
       "releaseReadiness": {
-        "at": "2026-11-14T13:57:00+08:00",
-        "firmware": 66835,
-        "coreDelivery": "MATCHED136_835_BACKGROUND_BATCH_COMPLETE_OWNER_PHYSICAL_AND_INTERMITTENT_LINK_OPEN",
+        "at": "2026-11-14T18:46:06+08:00",
+        "firmware": 66836,
+        "coreDelivery": "MATCHED140_836_ACK_REPAIR_BACKGROUND_VERIFIED_PHYSICAL_TAP_AND_OLD_INTERMITTENT_ROOT_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "Matched136/835 ready; exact installed-package recovery fixed and actual public UI verified. Owner shell-click/clutch feel and old intermittent first-connect/stream/OTA fault remain open; frontend/model scopes retain their owners.",
+        "openSoftware": "Physical tap usability and old intermittent control/stream/first-connection root remain open.140/836 source/MSI/normal app and one-way ACK background results retained; no wholesale sale qualification.",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -135330,7 +135329,7 @@
           "maximumMs": 5000,
           "scope": "Same frozen native ordinary full identity/catalogue probe, all attempts/cleanup included; extracted from existing actual log, no repeated board operation. One sample, not intermittent root closure."
         },
-        "firmwareVersion": 66833,
+        "firmwareVersion": 66836,
         "saleQualified": false,
         "imuPhysicalSample": true,
         "windowsNormalColdCurrentCasesPass": true,
@@ -135347,9 +135346,9 @@
               "CP04-08",
               "CP27-17"
             ],
-            "status": "IMPLEMENTED_BASE_GESTURES_NATURAL_FALSE_TRIGGER_USE_PENDING",
-            "remaining": "旧单击开停与一次耐久双敲标记实物证据保留；拿起/放下/携带误触和当前实物体验未完整通过。",
-            "type": "Firmware IMU reliability and usability"
+            "status": "BASIC_GESTURES_IMPLEMENTED_PHYSICAL_FALSE_TRIGGER_SCOPE_OPEN",
+            "remaining": "录中双敲标记已有一次耐久实物证据；拿起/放下/携带的自然误触与最终外壳手感仍未完整通过。当前不新增翻面/摇动自动开停。",
+            "type": "Current embedded IMU acceptance"
           },
           {
             "id": "imu-advanced-pointer",
@@ -135357,9 +135356,19 @@
               "CP04-08",
               "CP15-09"
             ],
-            "status": "AIR_WATCH_FUSION_PORT_PRESENT_CUSTOM_CONTACT_INTENT_EXPERIMENTAL",
-            "remaining": "移动/点击/拖拽与普通鼠标共用需整体验证；空间左右敲击与桌面平移未有已验成熟上游实现，不把算法用例当实物准确率。",
-            "type": "Advanced feature development plus physical experience"
+            "status": "MATCHED140_836_AVAILABLE_OWNER_PHYSICAL_CLICK_OPEN",
+            "remaining": "136移动基线保留；137150ms稳点失败已回退，140修ACK确定缺陷并完成后台实板。当前原窗口自然移动、单/双敲、普通鼠标共用仍待实际反馈；桌面平移保持Owner暂停，左右分区识别保持实验，不作为已完成或新增本轮门槛。",
+            "type": "Current primary firmware/input usability"
+          },
+          {
+            "id": "connection-control-recovery",
+            "tasks": [
+              "CP09-02",
+              "CP23-10"
+            ],
+            "status": "LATEST_NORMAL_SAMPLES_PASS_OLD_INTERMITTENT_ROOT_OPEN",
+            "remaining": "140/836普通连接2935ms，836升级后的新连接2097ms；均仅当次样本。旧首次连接/137399缺样14停顿及积压根因未关闭，新现场失败保留并定位；无新证据不盲调参数/循环重连。",
+            "type": "Existing embedded reliability work"
           },
           {
             "id": "current-resource-concurrency",
@@ -135367,9 +135376,20 @@
               "CP21-03",
               "CP24-08"
             ],
-            "status": "829_FLASH_SRAM_IN_BUDGET_HISTORICAL_CPU_SCOPED",
-            "remaining": "829 App406424B/静态SRAM66632B在原预算内；历史819空闲19.005%/鼠标32.884%不作当前并发实测。必要新增组件按受影响组合核CPU/栈，不能把互斥录音+鼠标或各模式峰值相加。",
-            "type": "Firmware resource budget and affected validation"
+            "status": "836_ACTUAL_FLASH_SRAM_LEDGER_VERIFIED_AFFECTED_SCOPE_ONLY",
+            "remaining": "836实际App406464B/静态SRAM66632B/预留栈21504B；较835Flash+16B、RAM/栈0。原136指针与835IMU算法未变；CPU19.005%/32.884%仍是819历史范围。新增组件按实际允许组合确认，不把互斥录音与鼠标负载相加，不为只改确认回包再装观察固件。",
+            "type": "Resource maintenance; no independent feature expansion"
+          },
+          {
+            "id": "affected-final-recording-mode-closeout",
+            "tasks": [
+              "CP04-01",
+              "CP23-10",
+              "CP27-18"
+            ],
+            "status": "CORE_FEATURES_IMPLEMENTED_PRIOR_EVIDENCE_REUSE_AFFECTED_CONFIRMATION_ONLY",
+            "remaining": "现有按键录音/离线标记、保存恢复、校时、按场同步删除回收与联合OTA沿原证据；IMU修改收稳后，只核受影响模式退出/录音标记与当前交付绑定。实体首句话听感Owner此前选稍后，继续保留待人体验；不自行追加2小时重复录音。",
+            "type": "Final affected embedded integration"
           },
           {
             "id": "frontend-full-chain",
@@ -135379,12 +135399,12 @@
               "CP23-10",
               "CP15-09"
             ],
-            "status": "HANDED_TO_FRONTEND_019F_SHORT_ORIGINAL_SAVED",
-            "remaining": "前端承接公开中文短会音量/真实转写/纪要/导出/重开和主机/Mac实际输入；嵌软只处理暴露的具体板端缺陷。",
-            "type": "External owner handoff, not duplicated embedded work"
+            "status": "EXTERNAL_FRONTEND_OWNER_NOT_DUPLICATED_EMBEDDED_WORK",
+            "remaining": "客户端负责手机入口、中文会议播放与转写/纪要/导出/重开、Mac接收/光标输入及MCP等应用链；嵌软保留所需设备接口并修实际暴露的板端故障。应用/模型未验范围不能被嵌软签为完成。",
+            "type": "Existing external owner handoff"
           }
         ],
-        "currentAssessmentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\concentrated20261113\\batch-result.json",
+        "currentAssessmentReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\delivery.json",
         "completionMeaning": {
           "at": "2026-11-10T16:30:56+08:00",
           "ownerQuestion": "这几组收尾都跑完后，是不是整个Companion或Capture都完成？",
@@ -135444,9 +135464,10 @@
           "fullTransferSpeedQualified": false
         },
         "currentPointerCandidate": "Normal830+119; actual lifecycle passed; Owner natural use active; experimental planar/contact still open",
-        "currentBackgroundBatch": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\delivery.json",
+        "currentBackgroundBatch": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\delivery.json",
         "sameInstalledPackageRecoveryQualified": true,
-        "ordinaryConcurrentOtaIntermittentRootClosed": false
+        "ordinaryConcurrentOtaIntermittentRootClosed": false,
+        "currentRemainingScopeUpdatedAt": "2026-11-14T18:52:22+08:00"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -143466,7 +143487,7 @@
             "https://github.com/umarz317/WatchPointer"
           ],
           "previousWorkpoint": "Same CP04-08: Owner has received current107 zero-entry instructions; card403 physical-to-local-text is complete, actual held-input insertion remains unqualified after untouched/canceled window. Continue the preserved meaningful-result/export simplification batch; prepare another physical voice-use window only when Owner is ready, without redoing403.",
-          "state": "MATCHED136_835_BACKGROUND_BATCH_COMPLETE_OWNER_PHYSICAL_AND_INTERMITTENT_LINK_OPEN",
+          "state": "MATCHED140_836_ACK_REPAIR_BACKGROUND_VERIFIED_PHYSICAL_TAP_AND_OLD_INTERMITTENT_ROOT_OPEN",
           "scope": "One shared pointer stream, AirCursor relative and WatchPointer laser mapping, physical click/hold drag, calibration/pause/recenter/exit; optional dwell not implemented or qualified.",
           "sourceBaseline": {
             "firmware": "f43f548db7b07b1dab0dafd268ca848de40c5aea",
@@ -143474,7 +143495,7 @@
           },
           "actualDeviceQualified": false,
           "saleQualified": false,
-          "updatedAt": "2026-11-14T13:57:00+08:00",
+          "updatedAt": "2026-11-14T18:46:06+08:00",
           "sourceCommit": "cd7244cee280cd5d974861e09732086f31a7e804",
           "sourceProtectedRemotely": true,
           "receipt": "E:\\CodexData\\Companion\\deliveries\\20261113-companion-fw66830-imu-pointer\\windows124-link-recovery-candidate\\delivery.json",
@@ -143505,7 +143526,7 @@
             "ownerRequirement": "MCU一定跑六十多，为WBA25准备；不得靠升频通过",
             "fullFrequencyWorkaround": false
           },
-          "executionPoint": "Normal136 matching MSI/source/native preserved with actual835/UI85; source c4e456cc exact installed-package read-only recovery, full134 pointer/current135 UI retained.20min118303samples0missing/gaps plus pause/resume/mode0 and two complete default OTAs.47.17KiB/s failed/deferred; no Owner input or broad sale closure.",
+          "executionPoint": "One-way firmware ACK and actual receiver duplicate/stale-head fixes delivered as matched140/836; no150ms guard;136portable pointer unchanged. Physical usability and old intermittent stream failure remain open.",
           "developmentKeyRecovery": {
             "ownerApprovedAt": "2026-11-12T10:09:29+08:00",
             "installed": true,
@@ -144196,14 +144217,13 @@
           },
           "repairReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-imu-pointer\\aim-control-repair.json",
           "activeJob": {
-            "state": "BACKGROUND_BATCH_COMPLETE_NO_ACTIVE_BOARD_OR_OWNER_WINDOW",
-            "session": null,
+            "state": "OWNER140_WINDOW_WAITING_EXPLICIT_START",
+            "session": 16241,
             "boardHeld": false,
-            "ownerPopupLaunched": false,
+            "ownerPopupLaunched": true,
             "ownerStarted": false,
-            "result": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\delivery.json",
-            "ownerResult": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-click134-fw66833\\owner-experience\\result.json",
-            "next": "Owner awake: one original-style concentrated136/835 physical shell single/double click, held steady/regrip and ordinary-mouse coexistence experience. No popup before available. Preserve failed first-connect/197missing9gaps/automatic OTA evidence; quiet1200s and two default successes do not close their root cause. Speed and other explicit hardware deferrals stay deferred."
+            "result": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\owner-experience\\result.json",
+            "next": "Read this same Owner140 result and bounded actual ACK timings; no second popup, no parameter retuning until actual cause is distinguished. Current result still waits explicitStart; popup alone is not physical acceptance."
           },
           "latestOwnerMouseFeedback": {
             "id": "IMU-OWNER124-ANGULAR-FEEL",
@@ -145689,6 +145709,136 @@
             "ownerPopup": false,
             "priorFailureEvidence": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-click134-fw66833\\delivery.json",
             "snifferHostDependency": "Nordic4.1.1 host archive403 at13:53; no firmware programming, no repeated download"
+          },
+          "ownerAwakeExperience13620261114": {
+            "raw": "可以了，现在睡好了，还有什么交付给我验收？",
+            "version": "0.1.136",
+            "firmware": 66835,
+            "state": "OWNER_PHYSICAL_TAP_EXPERIENCE_FAILED",
+            "output": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\owner-experience-awake20261114",
+            "session": 63445,
+            "ownerStarted": true,
+            "scope": "Physical shell single/double clicks, held steady/regrip and ordinary-mouse coexistence. No direction sampling, microphone, repeated OTA or daily installation.",
+            "ownerFinished": true,
+            "result": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\owner-experience-awake20261114\\result.json",
+            "analysis": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-complete136-fw66835\\owner-experience-awake20261114\\tap-analysis.json",
+            "rawFeedback": "敲击还是很难用，你看看怎么搞好",
+            "physicalFeelAccepted": false,
+            "finalMetrics": {
+              "samples": 4433,
+              "missing": 0,
+              "duplicates": 0,
+              "gaps": 0,
+              "tapEvents": 4,
+              "sensorHz": 99.99997785147188,
+              "calibrated": true,
+              "calibrationSamples": 0,
+              "dragging": false,
+              "paused": false,
+              "regripping": false,
+              "streamStale": false
+            },
+            "latestOwnerQuestion": "这个有点复杂呀，你看这个敲击到底要怎么搞会好一点？理论上是能搞的吧？",
+            "decision": "Keep natural single/double shell tap; no required key-assisted combination. Repair actual delayed control path; no claim surface-location recognition or physical usability based on source/tests."
+          },
+          "tapReboundRepair13720261114": {
+            "state": "OWNER137_REJECTED_WORSE_SMOOTHNESS_STREAM_FAILURE_RETAINED",
+            "source": "f5a320e614b919b5e90fd1ce12d14c55e1770297",
+            "frozenSource": "f13be091b38dd93e26088a492ca23f9fb75b77c0",
+            "firmwareChanged": false,
+            "relatedChecks": 76,
+            "evidence": "E:/CodexData/Companion/deliveries/20261114-companion-complete136-fw66835/owner-experience-awake20261114/tap-analysis.json",
+            "changed": "Confirmed shell tap150ms sensor-clock settling, no same-frame click+movement, discard rebound without future catch-up; no new gesture detector or MCU thresholds.",
+            "qualification": "Physical recall/target and pre-event jolt remain unqualified; no new Owner popup until matched normal candidate is available.",
+            "buildToolCommit": "bf19541c2d6b94cf6e3886a0e4e289bf5f535219",
+            "ownerLatestRaw": "这个有点复杂，敲击到底怎么搞会更好？理论上能搞吧？",
+            "output": "E:/CodexData/Companion/deliveries/20261114-companion-tap137-fw66835",
+            "preparationFailure": "80GiB cache admission and output-root assertion retained; completed136 artifacts143125876B archived with all hashes preserved; no deletes or raised cache budget.",
+            "delivery": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\delivery.json",
+            "runtimeProof": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\runtime-proof.json",
+            "normalInstalled": false,
+            "ownerResult": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\owner-experience\\result.json",
+            "sourceProtectedRemotely": true,
+            "ownerRaw": "目前这版感觉好像没有上版顺滑了，所以你做了什么东西？",
+            "actualOwnerResult": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\owner-experience\\result.json",
+            "analysis": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\owner-experience\\outcome-analysis.json",
+            "physicalFeelAccepted": false,
+            "sourceRevert": "5ecd992f",
+            "finalMetrics": {
+              "samples": 1863,
+              "missing": 399,
+              "duplicates": 0,
+              "gaps": 14,
+              "tapEvents": 7,
+              "sensorHz": 99.83485508717158,
+              "calibrated": true,
+              "calibrationSamples": 0,
+              "dragging": false,
+              "paused": false,
+              "regripping": false,
+              "streamStale": false
+            }
+          },
+          "controlAckRepair20261114": {
+            "at": "2026-11-14T18:46:06+08:00",
+            "state": "MATCHED140_836_ACK_REPAIR_BACKGROUND_VERIFIED_PHYSICAL_TAP_AND_OLD_INTERMITTENT_ROOT_OPEN",
+            "clientGreen": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\evidence\\ack-backpressure-green\\test.log",
+            "clientRed": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\evidence\\ack-backpressure-red\\test.log",
+            "firmwareGreen": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\evidence\\firmware-ack-echo-green",
+            "firmwareRed": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\evidence\\firmware-ack-echo-red",
+            "clientTests": 9,
+            "firmwareBuilt": true,
+            "actualTapUsabilityQualified": false,
+            "ownerPopup": false,
+            "firmwareSource": "556cc0e8387f31eaf91187ec5e7605f50549f3c2",
+            "firmwareRemoteVerified": true,
+            "firmwareCandidate": 66836,
+            "firmwareInstalled": true,
+            "firmwarePackage": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\firmware\\package\\ota_manifest.json",
+            "firmwareResourceLedger": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\module-ledger836\\module-resources-summary.json",
+            "flashBytes": 406464,
+            "staticRamBytes": 66632,
+            "stackReservedBytes": 21504,
+            "flashDeltaBytes": 16,
+            "ramDeltaBytes": 0,
+            "stackDeltaBytes": 0,
+            "clientSource": "1841c933762a2d6464ed81b00ee6a5ead9797f0d",
+            "clientRemoteVerified": true,
+            "frozenSource": "ef7aada4bb56cda8c83d761d44f73398c10975e7",
+            "frozenSourceReceipt": "E:/CodexData/Companion/deliveries/20261114-companion-control140-fw66836/frozen-source.json",
+            "installationReceipt": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\normal136-ota836\\result.json",
+            "actualProbe": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\control-traffic836\\result.json",
+            "normal140BuildSession": null,
+            "normal140Built": true,
+            "physicalClickAcceptance": false,
+            "intermittentRootCauseClosed": false,
+            "actualComparison": "83510ACK writes10echoes,83610ACK writes0echoes; both0missing across3phases, writes~10-16ms/~15ms. Old1373.6s backlog not reproduced; no full root closure.",
+            "harnessFailureRetained": "835real probe failed only arbitrary>=100sample burst assertion after valid64samples; raw result/log preserved, source1841c933 corrects actual0.65s phase admission;835 not repeated.",
+            "normalInstalled": false,
+            "delivery": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\delivery.json",
+            "runtimeProof": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\runtime-proof.json",
+            "source": "ef7aada4bb56cda8c83d761d44f73398c10975e7",
+            "normalApplication": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\evidence\\normal140-pointer\\result.json",
+            "normalMetrics": {
+              "samples": 2758,
+              "missing": 0,
+              "duplicates": 0,
+              "gaps": 0,
+              "tapEvents": 0,
+              "sensorHz": 99.99743764121934,
+              "calibrated": true,
+              "calibrationSamples": 0,
+              "dragging": false,
+              "paused": false,
+              "regripping": false,
+              "streamStale": false
+            }
+          },
+          "lastOwnerContinuation20261114": {
+            "at": "2026-11-14T18:52:22+08:00",
+            "raw": "那你看怎么搞呗，然后的话需要把这个imu搞搞通，然后搞通以后，imu搞通了还有什么东西要搞的吗？",
+            "decision": "Continue the same IMU repair; reuse matched140/actual836 without another build. One original Owner window, no IO/cursor until explicitStart. After IMU, close actual intermittent connection/control/OTA defects and affected mode/recording verification; do not reopen unchanged endurance or add proposed gestures before delivery.",
+            "result": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\owner-experience\\result.json"
           }
         }
       },
@@ -147037,13 +147187,13 @@
         "ordinaryWirelessOtaQualified": false
       },
       "memoryLayoutCurrent": {
-        "at": "2026-11-14T13:57:00+08:00",
+        "at": "2026-11-14T18:32:15+08:00",
         "entry": "docs/handoffs/20261111-owner-ai-handoff/HANDOFF.md",
         "machineReadable": "docs/handoffs/20261111-owner-ai-handoff/memory-layout.json",
-        "sourceFirmware": 66835,
-        "latestVerifiedFirmware": 66835,
+        "sourceFirmware": 66836,
+        "latestVerifiedFirmware": 66836,
         "growthBudgetRef": "config/companion-memory-growth-budget.json",
-        "firmware": 66835
+        "firmware": 66836
       },
       "baselineBeforeShared82920261113": {
         "firmwareVersion": 66828,
@@ -154105,11 +154255,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "那你看看验证一下咯  开始看看怎么继续推进吧；然后你看看是不是音频压缩了比较难分析要解压了好分析一点",
-          "status": "COMPLEX_SHORT_CONTROLS_RUNNING_LONG_PAIR_RETAINED",
+          "status": "RESIDENT_MEMORY_AI_ONLY_EXTENSION_DEFAULTS_APPLIED_ORIGINAL_MODEL_CHECKPOINT_PRESERVED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "先完成原六段8s同Qwen原音/分离对照并保留每路全部输出；当前不重复长录低内存条件，短对照结束后按实际资源接续本地原生概览核对候选的受影响检查。继续原严格质量门，不把局部改善当复杂会议通过。",
+          "next": "Owner最新焦点仅日常长期常驻：VSCode Pylance默认关闭与三项AI/桥接扩展启用范围已持久化，18个闲置开发扩展保留安装但阻止后续启用；当前AI主窗/会话与宿主不重启，新增基线节省等正常重开后实测。临时Git/编译不干预，五项临时Git限制已逐键恢复，停止请求撤销。原语音源码/公开90s增量输出6aacfd69已私有保护，四固定输入和自然中英混说质量仍未完成；接续先做既有输出/英文官方参考的低内存独立评估，重计算按原资源保护安排，勿把临时任务峰值算常驻。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -269325,7 +269475,7 @@
             "finalHoldoutOpened": false,
             "formalQualityTargetsChanged": false,
             "saleQualified": false,
-            "next": "先完成原六段8s同Qwen原音/分离对照并保留每路全部输出；当前不重复长录低内存条件，短对照结束后按实际资源接续本地原生概览核对候选的受影响检查。继续原严格质量门，不把局部改善当复杂会议通过。",
+            "next": "Owner最新焦点仅日常长期常驻：VSCode Pylance默认关闭与三项AI/桥接扩展启用范围已持久化，18个闲置开发扩展保留安装但阻止后续启用；当前AI主窗/会话与宿主不重启，新增基线节省等正常重开后实测。临时Git/编译不干预，五项临时Git限制已逐键恢复，停止请求撤销。原语音源码/公开90s增量输出6aacfd69已私有保护，四固定输入和自然中英混说质量仍未完成；接续先做既有输出/英文官方参考的低内存独立评估，重计算按原资源保护安排，勿把临时任务峰值算常驻。",
             "modelEvidenceCommit": "de182dd93a1946fe9597fcf67f6eb2b51400449c",
             "remoteModelReadbackConfirmed": true,
             "previousStatus": "FIXED_STACK_MATCHED_REAL_SOURCE_DIAGNOSTICS_PRIORITY_NO_NEW_MODEL_SEARCH",
@@ -270462,7 +270612,7 @@
               "sourceAndEvidenceCommit": "f7a3158d9a90496362b3d803bfe808ceaa755a8e",
               "remoteReadbackConfirmed": true
             },
-            "status": "COMPLEX_SHORT_CONTROLS_RUNNING_LONG_PAIR_RETAINED",
+            "status": "RESIDENT_MEMORY_AI_ONLY_EXTENSION_DEFAULTS_APPLIED_ORIGINAL_MODEL_CHECKPOINT_PRESERVED",
             "execution20261114": {
               "at": "2026-11-14T12:13:54+08:00",
               "state": "PAUSED_ACTUAL_WINDOWS_LOW_RAM_BEFORE_MODEL_LOAD",
@@ -270536,61 +270686,198 @@
               "next": "沿同一配对任务恢复固定Qwen1.7B的4份逐人近讲和1份远场原音对照。本次短暂满足原RAM恢复条件后又实际低内存中止，当前不重复重试；先有系统内存持续恢复的实质条件，再用--check-only检查、刷新HIP身份并--resume。原CPU5%/私有2GiB与Windows低内存保护不放宽，不关闭Owner程序。完成后按同人/同时间/同参考区分识别错误、分离丢字与归属错误，再只修证实的薄弱模块；原严格<5%、跨会/未见整会、纪要事实、双端实卡和售卖门继续开放。",
               "sourceAndEvidenceCommit": "70d2ee5ed6635a03853506ecc9eeaa3bbe412af0",
               "sleepContinuation": {
-                "at": "2026-11-14T13:56:38+08:00",
+                "at": "2026-11-14T17:15:24+08:00",
                 "ownerOriginal": "先继续把后台能做的给做了，然后。现在来看，我现在要去睡一会觉，你先把继续把后台能做的东西做了就是现在大概，要在我睡醒以后再完整交给我交付。然后要看看复杂会议场景才行了",
                 "scope": "复杂真实会议多人/短回应/重叠内容；后台完成可执行工作并集中交付。无需Owner临场操作，不播放/录音/抢日用桌面。",
-                "state": "COMPLEX_SHORT_CONTROLS_RUNNING_LONG_PAIR_RETAINED",
-                "batchReceipt": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\run\\batch.json",
+                "state": "BACKGROUND_COMPLEX_RESULTS_DELIVERED_MODEL_QUALIFICATION_OPEN",
+                "batchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\sleep-continuation20261114\\configured-full-complex\\state.json",
                 "currentBatchSnapshot": {
-                  "state": "RUNNING_BOUND_NATIVE_CASES",
-                  "at": "2026-11-14T13:52:50+08:00",
-                  "pid": 12692,
-                  "binding": {
-                    "manifestSha256": "6fa26b04173d8312060a721d9251b6bc1affbed19f26444385fd352714071a3c",
-                    "modelPackSha256": "c28046e5c8f67d4da5f6ca66227a2ebda5a3c227d15e21ac4c68d5f867be39cb"
-                  },
-                  "currentDeviceCheck": {
-                    "ordinal": 1,
-                    "name": "AMD Radeon RX 6800 XT",
-                    "architecture": "gfx1030",
-                    "totalMemory": 17163091968
-                  },
-                  "completed": [
-                    "overlap-00-mixture",
-                    "overlap-00-native-1",
-                    "overlap-00-native-2"
-                  ],
-                  "automaticRetries": 0,
-                  "qualityQualified": false,
-                  "activeCase": "overlap-01-mixture",
-                  "lastAttempt": {
-                    "id": "overlap-00-native-2",
-                    "exitCode": 0,
-                    "adapterSeconds": 60.954162300011376,
-                    "taskState": "COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED",
-                    "log": "E:\\CodexData\\Companion\\.model-cache\\competitive-sale-standard-20261108\\same-qwen-six20261114\\run\\console\\overlap-00-native-2-1794635721654676200.log"
-                  },
-                  "activeAdapterPid": 26024
+                  "newLocalFirstSourceCer": 0.1254630773030378,
+                  "sameQwenShortCasesCompleted": 6,
+                  "configuredCloudState": "CONFIGURED_COMPLETE_COMPLEX_STREAM_STOPPED_RETAINED",
+                  "configuredCloudAudioSentSeconds": 1553.9,
+                  "sealedPrefixEvaluationSeconds": 1546.192,
+                  "sealedPrefixCer": 0.21573781983876622,
+                  "sealedPrefixCpCer": 0.23957237995092884,
+                  "sealedPrefixDer": 0.2463104993258206,
+                  "sixPersonWholeMinutesBothModesComplete": true,
+                  "wholeMinutesSource": "Reused completed Nov7 Qwen 39m22.945s, strictCER23.1558%, no known speaker identities; not the interrupted cloud prefix.",
+                  "remainingPairedInputs": 4,
+                  "localRecoveryExclusiveAvailableBytes": 3183419392
                 },
                 "fixedInputs": "4个逐人近讲 + 原始远场同覆盖1551.82秒；4人、原标注重叠456.28秒；已暴露Eval诊断，不作最终留出/30分钟资格。",
-                "executionBasis": "13:08系统可用约5.1GB、旧恢复公式通过，新的同卡HIP身份通过；与12:10短暂1.84GB恢复后中止条件不同。固定模型/参数/原音与私有胶囊不变。",
-                "next": "先完成原六段8s同Qwen原音/分离对照并保留每路全部输出；当前不重复长录低内存条件，短对照结束后按实际资源接续本地原生概览核对候选的受影响检查。继续原严格质量门，不把局部改善当复杂会议通过。",
+                "executionBasis": "原五输入因真实Windows低内存暂停；不重放、不降资源保护。后台改做原已配置公共六人39分22秒整会连续ASR，原账号/1.0资源/默认识别请求不变，无本地神经推理；最终EOS后才取全量。",
+                "next": "本会话沿原固定模型任务继续：先按原内存恢复条件续near-N_SPK8014的17/52窗口断点及其余固定输入，完成同识别器逐源诊断；根据原音内容保真、各人/短回应/重叠证据定位并修已证实模块，保留未过方向与停止条件。专用录后会议服务只作外部对照，不替代本模型任务；既有事实核对候选待资源完成原生验证后交相关集成批次。前端产品落地保持另一会话负责，不擅自重分工、改默认或开新付费服务。",
                 "qualityQualified": false,
                 "saleQualified": false,
-                "longPairedRetainedCompleted": [
-                  "near-N_SPK8013"
-                ],
-                "longPairedSecondRetainedWindows": 17,
-                "firstFullNativeResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\sleep-continuation20261114\\native-paired-first-complete.json",
-                "offlineMinutesReceipt": "E:/CodexData/Companion/.model-cache/complex-minutes20261114/product133-paraformer-baseline/offlineStore-session.json",
-                "onlineMinutesState": "Stopped on actual low RAM, no automatic retry",
-                "measurementFidelityControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\sleep-continuation20261114\\measurement-fidelity\\result.json",
-                "nativeCi": {
-                  "runId": 43562776758,
-                  "state": "NOT_STARTED_ACCOUNT_BILLING_OR_SPENDING_LIMIT",
-                  "source": "1e4b2248cf2224d8ee605602cb81d406df929295"
+                "logResult": "Owner睡眠后台复杂会议续作。完整近讲一路53窗口Qwen CER508/4049=12.5463%，原同源Paraformer53.6676%；第二路17/52窗口低内存停，剩余4输入未完成，原恢复公式要求可用内存>3183419392字节。六8秒同Qwen控制全完成，第一段关键短语可识别但第二目标仍丢失，拒绝扩展提取方向。新整会云端14:15至14:43在1553.9/2362.945秒真实Windows低内存停止，自身峰值37.13MiB，无自动重放。仅封口1546.192秒前缀独立评分：CER21.5738%、cpCER23.9572%、零collar含重叠DER24.6310%，6人拆11匿名流，103个<2秒参考段有70个零正确归属；不当整会质量。随后复用Nov7已完整且SHA一致的39m22.945s Qwen实际输出（旧CER23.1558%、未确认身份），冻结Windows133隔离状态真实离线35.03s/在线56.04s均保存28590/28590源字节两段纪要，原转写不变。17项原先冻结语义诊断发现成活率→死亡率80%继承ASR错误、一车一位→一户一车位压缩、巡逻建议/现规定混入行动项；不声称95%事实覆盖。另R8001实际纪要赠品价值→成本误改已补独立概览核对、通用数值指标核验与原句回退，8限定对照通过但原生验证未过；最小82行候选前移至当前135158源d42e后提交b12c2a7a，Android共享候选b85ddaaf，均私有推送且未装日用版。先前前端构建过、native因低内存止、CI因计费0步骤未启动，失败均保留。当前整理集中交付，模型与复杂会议/最终留出/整卡/售卖资格继续开放。 本轮交付目录C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/Companion-复杂会议-20261114；整会原始转写、双模式实际纪要、17约束核对、六段重叠试听、源码补丁及失败收据已集中保存。模型源码与本轮实际原始证据提交c0ca41ba71bc6804ee12b6835728113fcc75ad27已推原私有研究分支并成功回执；Windows与共享后端候选远端SHA已独立核对一致。最后只读恢复检查仍DEFERRED，无在途自有推理/构建/云端流；未关闭原模型/复杂会议/最终留出/售卖待办，也不宣称后台在回复后自行运行。 Owner随后询问“那所以要怎么搞吗, 大家都是怎么弄得”。已核官方来源并纠偏优先级：Zoom可取逐参会人独立轨；PLAUD明确重叠/弱声/噪声影响人物标签且可人工命名；火山把录后AUC与实时SAUC分开，推荐AUC ssd300用于会议/录音卡。当前源码只有SAUC，不把已测旧流式结果概括成所有云会议服务无效。下一步优先专用录后整会基线、实时预览与最终稿分离；保留原本地断点和全部未过门，不自动启用新付费能力/改默认/传私人录音。本轮为路线澄清，没有触发新推理、构建或设备动作。准备更新时内联命令引号错误在任何文件修改前失败，随后改为脚本文件执行；原记录未损失。 Owner随后提醒已分两个会话，一个完整产品落地、一个打磨模型。只读核对当前Companion 前端/Companion 模型及前端原话记录后，纠正上一轮表达和优先级：当前会话继续承担模型处理质量，成熟服务仅为外部对照/产品能力建议，不能用接API关闭模型打磨；产品界面与整套交付沿前端原分工。没有给其它会话发消息或新增其任务，没有新推理/构建/设备动作。原云端建议、失败和全部未完成项保留。",
+                "activeOwnedProcesses": [],
+                "deliveryDirectory": "C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/Companion-复杂会议-20261114",
+                "researchSourceCommit": "c0ca41ba71bc6804ee12b6835728113fcc75ad27",
+                "sourceRemoteProtected": true,
+                "sourceCandidates": {
+                  "windows": "b12c2a7ade1f4a3375c6b4295e8228a089ef95b8",
+                  "sharedAndroid": "b85ddaaf26ac4929167c46a3cae0c4f07ce376f9"
                 },
-                "logResult": "沿Owner睡眠期间后台完成并集中交付的要求，复杂会议优先。13:09–13:22第一路1551.82秒近讲完整识别保存，508/4049=12.5463077%，同音同参考产品Paraformer2173/4049=53.6675722%；主要减少额外插入，但仍未过5%，其它人物和自动分人不据此通过。13:27第二路在17/52窗后真实低RAM停止，保留节点，不重放已完成节点。实际产品133隔离库用同场已保存远场Paraformer转写完成offlineStore纪要，原转写不变；onlineLive另遇Windows低内存停止。纪要短概览将赠品价值50元压成成本50元，原事实核对未可靠拒绝；既有源候选8ab的条件/范围检查加强数值对象、指标与单位，一个预先固定的八项两场公开来源控制全部符合预期，仍非通用事实合格。源候选保留在私有work/model-complex-fidelity-20261114，不覆盖已装133或另一聊天源码。GitHub CI43562776758因付款/额度限制在runner启动前被拒绝，0原生测试，不改账单或换公开项目规避。13:52系统可用约4.5GB后原六8s同Qwen短对照按原保护恢复；原准备缺pilot/绑定已用原r5协议和真实通过pilot的字节一致胶囊修复，未伪造PASS。所有当前状态/剩余见本批workpoint.json；未接板/外放/录音/安装/占Owner桌面，原最终留出未打开。"
+                "nativeCandidateInstalled": false,
+                "resourceDependency": "原固定第二路最后低内存恢复要求available>3183419392字节且实际Windows低内存通知关闭；14:58前终检仍不满足，禁止自动重放。",
+                "industryRouteReview20261114": {
+                  "ownerQuote": "那所以要怎么搞吗, 大家都是怎么弄得",
+                  "kind": "原模型事项的技术路线澄清；保留原交付与全部未完成项，不新建待办",
+                  "evidence": [
+                    "https://docs.volcengine.com/docs/doubao-voice/speaker-separation?lang=zh",
+                    "https://docs.volcengine.com/docs/doubao-voice/large-model-recording-file-recognition-standard-version-api?lang=en",
+                    "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0064676",
+                    "https://support.plaud.ai/hc/en-us/articles/53793130069657-Transcribe-and-summarize",
+                    "https://www.chimechallenge.org/workshops/chime2024/papers/Abstract_UWB_NOTSOFAR.pdf"
+                  ],
+                  "engineeringDecision": "允许上云的公开会议优先建立专用录后整会识别/全场人物处理基线，先核同供应商AUC会议版ssd300及账户已有能力；实时预览和录后最终稿分开。普通段保持原音，重叠段检测与局部重处理，保留跨段人物衔接；现内容保护未过的提取候选不复活。纪要保持原句可追溯和数值指标核对。本地纯离线和隐私承诺维持独立边界，暂不自训练整套系统。",
+                  "localCurrentCapability": "现有产品Volcengine只实现SAUC流式，未发现AUC任务接口；未验证AUC质量，未确认账号AUC权限。",
+                  "newServiceActivated": false,
+                  "privateDataUploaded": false,
+                  "productDefaultsChanged": false,
+                  "qualityThresholdsChanged": false,
+                  "newInferenceOrBuildTriggeredByThisClarification": false,
+                  "finalHoldoutOpened": false,
+                  "scopeAfterOwnerClarification": "成熟录后服务是可比较的产品能力/外部基线建议；本模型会话不因此整体转向仅接入服务或关闭原模型打磨。"
+                },
+                "ownerTwoChatsClarification20261114": {
+                  "ownerQuote": "那不是搞了两个那个啥吗？搞了两个那个。搞了两个那个，一个是处理那个。就是完整，就是你说的一个就是像你这样打磨模型的，你是搞了两个绘画呀。",
+                  "interpretation": "Owner提醒既有产品落地会话和模型专项会话分工；末句绘画按上下文理解为会话，不另建任务或会话。",
+                  "verifiedChats": [
+                    "Companion 前端",
+                    "Companion 模型"
+                  ],
+                  "source": "只读核对当前会话列表及Companion 前端用户/助手已有分工记录；未向其它会话发送消息或变更其任务。",
+                  "decision": "本会话继续负责语音模型/处理方案本身的质量、多人重叠、短回应和人物稳定性；成熟服务可作外部质量基线，不以接API替代原模型目标。前端会话负责产品界面、保存阅读导出及整套可用交付；具体集成按既有边界衔接，不擅自给对方新增任务。",
+                  "previousIndustryAdviceRetainedAsComparison": true,
+                  "newServiceActivated": false,
+                  "productDefaultsChanged": false,
+                  "newInferenceOrBuildTriggeredByClarification": false
+                }
+              },
+              "localBilingualContinuation": {
+                "state": "RESIDENT_MEMORY_AI_ONLY_EXTENSION_DEFAULTS_APPLIED_ORIGINAL_MODEL_CHECKPOINT_PRESERVED",
+                "requirements": [
+                  "本地优先，复用原Qwen1.7B pin与6800XT",
+                  "中文/英文/自然中英混说分开验",
+                  "录音卡传入PCM时增量转写，断点/重传/封口完整性",
+                  "已录文件本地离线转写",
+                  "复杂真实会议逐人/重叠/短回应质量"
+                ],
+                "currentGpu": {
+                  "ordinal": 1,
+                  "name": "AMD Radeon RX 6800 XT",
+                  "architecture": "gfx1030",
+                  "totalMemory": 17163091968
+                },
+                "newImplementation": [
+                  "统一有界PCM接收；重复/冲突/缺包检查与OS崩溃释放锁",
+                  "草稿按块修订，完整结果按原30s独立覆盖；不删词不做文本去重",
+                  "原词/token保留的自动语言协议解析，避免上游重复折叠",
+                  "原固定模型常驻单进程消费，接收与推理解耦；单份原音按片段哈希，无反复复制草稿音频"
+                ],
+                "transportVerification": "9项实际本机测试通过；输入为固定字节/模拟解码，不是神经准确性或实卡验证。",
+                "nativeInferencePerformedThisBatch": true,
+                "modelWeightsChanged": false,
+                "cloudInferenceUsed": false,
+                "qualityQualified": false,
+                "saleQualified": false,
+                "next": "Owner最新焦点仅日常长期常驻：VSCode Pylance默认关闭与三项AI/桥接扩展启用范围已持久化，18个闲置开发扩展保留安装但阻止后续启用；当前AI主窗/会话与宿主不重启，新增基线节省等正常重开后实测。临时Git/编译不干预，五项临时Git限制已逐键恢复，停止请求撤销。原语音源码/公开90s增量输出6aacfd69已私有保护，四固定输入和自然中英混说质量仍未完成；接续先做既有输出/英文官方参考的低内存独立评估，重计算按原资源保护安排，勿把临时任务峰值算常驻。",
+                "logResult": "Owner明确本模型会话继续优化已有方向，重点中英文、复杂会议、本地优先、录音卡边传边转与离线。17:27按原资源保护实际核RX6800XT ordinal1/gfx1030通过，未加载模型。现完整文件适配固定Chinese，官方流式依赖vLLM；本批在原native Transformers/HIP边界新增增量窗口适配，不冒充官方vLLM流式已跑通。已实现有界PCM持久化、逐样本重传一致性/缺包/EOS、草稿修订与全段完整性、崩溃锁恢复；9项本机测试过，模拟解码不作质量成绩。自动语言解析只提取结构标记，保留重复词与原token，避免现上游高层解析隐性折叠。新native worker复用原权重/loader/有界失败恢复，未运行新神经探针；中文S、英文AMI各开头30秒及15+15拼接切换已冻结，第三段只是技术构造，不冒充自然混说会议。系统空闲内存仍低于原3183419392B恢复条件，先完成本地接口与冻结输入，不降低CPU5%/私有2GiB/实际低RAM停止，不改其它应用、默认模型或隐私范围。 本批17:43:31内存实质恢复到3244343296B，原门槛通过；实际6800XT载入原权重，17:45:35完成90秒3块本地解码，中文与英文有实际输出，构造15+15秒切换块返回language None空白，保留失败未称混说合格；载入81.80s、纯新解码33.21s、峰值约1.194GiB。此后Owner明确先查VS Code高内存并优化，当前无自有神经worker；保留完整PCM/请求/原token/模型绑定与增量待验证点，先转内存依赖处理，完成后恢复原模型任务。 VS Code内存插队已完成：整Desktop Pylance反复遍历96979源文件，17:47:04发生V8堆OOM；仅在Desktop/.vscode/settings.json关闭整树Python预索引并exclude**、保留openFilesOnly，用户全局配置哈希未变。设置生效后旧Pylance仍持有约3GiB，仅重启PID20964语言服务，主程序/两个renderer/扩展host PID均保留；新服务正常启动并日志No source files found，独占物理工作集从2929.1MiB降到215.8MiB，释放约2.65GiB。未关编辑器、终端或其中AI/构建/推送任务，原桌面设置已备份；单独打开具体项目仍按其原配置索引。依原待办继续模型。 Owner进一步澄清VS Code仅主要用于Grok/Claude，第二轮只改Desktop工作区python.languageServer=None及Git自动发现/刷新/拉取关闭；18:11:17Pylance自动正常退出，此后未重生，无整窗/AI扩展重启。8个原主窗/renderer/扩展host/AI进程PID和创建时间一致；全局配置哈希未变。剩余主要为界面renderer及AI本身，保留图形会话，不以清工作集冒充释放。18:04:02同Qwen的R2构造切换30s实际完成，空父和两半3次解码16.20s，实际包含中文与英文，未改权重/生成数学，不据此关闭自然混说或复杂会议质量。 18:13:44—18:16:46同原Qwen完成实际并行接收/增量，公开90s源先5s预置后85s按100ms发送850包；封口前已有中文及英文替换块事件，封口后实际退出0，资源保护不变。原Owner追加MsMpEng内存疑问并入同内存事项；18:17只读实测约443—456MiB RSS、最高历史1.24GiB，当前实时/行为防护正常，尚无设置变更。 18:19官方Defender30s记录及签名确认：微软有效签名，RSS436—451MiB，整机CPU约0.98%，主要实际扫描Grok会话JSONL写入；未证明常驻内存归因具体文件。Owner随后明确要求停防护，18:21:16使用受支持Set-MpPreference DisableRealtimeMonitoring=True，18:21:19状态RealTimeProtection=False/BehaviorMonitor=False，服务仍True且常驻RSS约358MiB；没有改服务/驱动/注册表/防火墙/网络或新增排除。保留原设置及恢复命令，明确Windows可能自动恢复、并非零内存。实际本地90s增量校验已完成：850个100ms后续包字节同离线、3完整连续区间，封口前7事件/6非空且含中英文；新发送开始8.38s见首非空（不含56.07s冷载及预置5s），封口18.11s后最终文本，单载模型11次调用87.44s含草稿/空父；中文英文最终文本同R1离线、构造切换同R2离线。未冒充实卡或质量验收。 18:25 Owner再次反馈整体内存吃紧及VSCode复发，并明确只当Grok/Claude界面；全机观察定位新PylancePID27412独占1950.8MiB。Desktop/.vscode/settings.json于18:23被重写仅git.ignoreLimitWarning，原限制全部消失（写入者未确定，不归咎用户或某AI）。原本18:24:49恢复的固定ASR在18:26:26经自有stop.request停止，非低RAM、原文原音17窗和95.92s尝试保留，不自动重试。18:28将Python语言服务None/索引关/轻量兜底与Git自动发现刷新拉取及npm/tsc任务探测关写入用户设置与Desktop两层，只改列明键、其它设置保留、完整原件备份。旧Pylance停止超时后18:28:24退出，后续未见新Pylance，8个主窗/AI进程保留。其余真实占用主要GTNH测试服约3.1GiB、两个界面renderer约1.2GiB及OS池，未关闭用户程序或清工作集伪造释放。 当前内存项收口：用户/工作区两层配置哈希均仍匹配，未见Pylance重生，8个主窗/扩展host/AI进程创建时间不变。全Code独占物理占用从本次复发实测3885MiB到1448MiB，实际差值2437MiB；系统空闲随其他编译/测试服变化，不全部归因本设置。保留图形Claude、Grok和原命令执行，默认禁代码分析的取舍已记录，未用清工作集或停止别人的任务凑数。 18:34整机再次只剩约0.42GiB可用，追踪发现GTNH git pack-objects RSS9978MiB/private11529MiB，父链为git maintenance run --auto --detach→repack（由Claude提交后触发，不是上传）。已先完成备份和本仓库maintenance.auto=false/gc.auto=0/pack线程1/window64m/deltaCache64m；前后HEAD一致且commit/tree可读，源码/index/refs/上传未动。GTNH index明确只杀自己启动且核命令PID，故对他方启动的5228自动维护异步请求Owner例外，目前未获回复不终止。其余低内存原任务已推进：115个模型源码/实际证据文件在6aacfd6989af50aaefd7bb77fe6127a325fd89fc提交并私有push、独立ls-remote匹配；121917B包ZIP逐项校验完成，模型权重/云/实卡与质量边界不扩大。 Owner明确让Git维护继续完成并纠正焦点为长期常驻，已撤销待停止例外（从未执行kill），只恢复本轮五项临时Git设置，逐键原值/当前值核对保留他人更改，前后HEAD一致；GTNH原index和唯一追加日志同步。常驻重新按Code/Claude/Grok/Codex本体计，排除这些应用启动的编译/Git等工作子进程，避免把整个进程树都算基础占用。启动日志确认Python环境及Cortex/MCU组件常驻自动加载；在当前VSCode用户配置使用官方extensions.allowed，仅保留Claude、Grok完成提示和AIW终端桥接以及基础内置组件，其余18个第三方开发扩展不卸载而持久停用；不重启8个原主窗/AI宿主/会话，原创建时间均一致。新增停用对已加载堆的释放未实测，不提前记节省，正常重开基线待核；Defender/网络/其它日用程序不再调整。",
+                "checkpoint": {
+                  "run": "E:/CodexData/Companion/.model-cache/local-bilingual-20261114/runs/offline-r1/run.json",
+                  "result": "E:/CodexData/Companion/.model-cache/local-bilingual-20261114/offline-session/document.json",
+                  "actualNewNeuralCalls": 3,
+                  "chineseTextProduced": true,
+                  "englishTextProduced": true,
+                  "constructedSwitchReturnedEmptyLanguageNone": true,
+                  "modelLoadSeconds": 81.79917050001677,
+                  "freshDecodeSeconds": 33.21273749996908,
+                  "privatePeakBytes": 1281859584,
+                  "modelWorkerRunning": false,
+                  "qualityQualified": false
+                },
+                "ownerPriority": {
+                  "ownerQuote": "你先帮我看下为什么 Vscode 那边会吃这么多内存，然后优化一下 Vscode 那边的内存占用。那你帮我优化下内存占用。",
+                  "state": "LONG_LIVED_MEMORY_SCOPE_APPLIED_NORMAL_RESTART_BASELINE_PENDING",
+                  "result": {
+                    "at": "2026-11-14T17:59:33+08:00",
+                    "state": "VSCODE_DESKTOP_PYLANCE_MEMORY_SCOPE_FIXED_AND_NEW_SERVER_OBSERVED",
+                    "cause": "Pylance FG(Desktop) Found96979source files, repeated >10s enumeration, fatal heap exhaustion17:47:04 then service restart17:47:05.",
+                    "scope": "Only Desktop workspace; no blanket scan/index of its entire tree. Open Python files/imports retain analysis. Concrete project windows keep their prior settings.",
+                    "appliedSettings": {
+                      "python.analysis.indexing": false,
+                      "python.analysis.diagnosticMode": "openFilesOnly",
+                      "python.analysis.exclude": [
+                        "**"
+                      ]
+                    },
+                    "beforePylanceUniqueMiB": 2929.12890625,
+                    "afterPylanceUniqueMiB": 215.828125,
+                    "reductionGiB": 2.649707794189453,
+                    "availableGiB": 3.3268890380859375,
+                    "editorsAndTerminalsKept": true,
+                    "globalSettingsKept": true,
+                    "tradeoff": "No pre-indexed unopened Python workspace symbols while browsing the whole Desktop; open a concrete project to use its normal project-wide discovery.",
+                    "backup": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\vscode-memory20261114\\desktop-settings-before.json",
+                    "documentation": [
+                      "https://github.com/microsoft/pylance-release/blob/main/docs/howto/performance-tuning.md",
+                      "https://code.visualstudio.com/docs/python/settings-reference"
+                    ]
+                  },
+                  "latestClarification": "我觉得就算是这样子，它的 VSCO 占用的内存也是太高，现在 VSCO 没怎么用，只是在用 VSCO 里面的 Grok 和 Cloud 而已。",
+                  "secondPassResult": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\VSCode-内存优化-20261114.json",
+                  "latestDefenderQuestion": "C:/ProgramData/Microsoft/Windows Defender/Platform/4.18.26100.4-0/MsMpEng.exe 不好看，这个东西为什么也在占我的内存？把这个东西内存占用取消了，可以吗",
+                  "defenderResult": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Defender-内存检查与实时防护关闭-20261114.json",
+                  "latestDefenderInstruction": "我觉得这个东西我们需要防护吗？帮我把那个防护看怎么停掉它吧，我好像已经停掉了，但是不知道为什么还是在浪费我的内存。",
+                  "latestVsCodeInstruction": "你帮我看一下那个 VS Code 的那个东西。就是让它不要占用这么多内存，只充当 grok 和 cloud 的那个打开那个画面就可以了，你看怎么做？",
+                  "memoryRecurrenceQuote": "那就先不管了，你再查一下有什么可以优化的内存吗？我们现在这个内存太吃紧。然后 Vscode 那个内存占用又起来了。",
+                  "latestResult": "C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/VSCode-内存优化-20261114.json",
+                  "memoryCombinedResult": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\整机与VSCode内存优化-20261114.json",
+                  "heavyMaintenance": {
+                    "pid": 5228,
+                    "stillRunning": true,
+                    "rssMiB": 7850.828125,
+                    "privateCommitMiB": 11645.78515625
+                  },
+                  "gitMemorySettingsApplied": true,
+                  "maintenanceStopPermissionPending": false,
+                  "latestResidentClarification": "我的意思是让你抓那些常用的耐神占用，不是让你抓那些短期的，短期那些它自己会跑完就释放掉了。主要是那些长期的内存占用。",
+                  "maintenanceStopDecision": "Owner says let it finish; do not terminate.",
+                  "temporaryGitSettingsRestored": true,
+                  "residentResult": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\长期常驻内存优化-20261114.json"
+                },
+                "r2EmptyRecovery": {
+                  "run": "E:/CodexData/Companion/.model-cache/local-bilingual-20261114/runs/empty-recovery-r2/run.json",
+                  "sourceSameAsFailedR1": true,
+                  "actualNeuralCalls": 3,
+                  "freshInferenceSeconds": 16.1982844,
+                  "producedLanguages": [
+                    "Chinese",
+                    "English"
+                  ],
+                  "naturalCodeSwitchVerified": false,
+                  "qualityQualified": false
+                },
+                "incrementalCheckpoint": {
+                  "run": "E:/CodexData/Companion/.model-cache/local-bilingual-20261114/runs/incremental-r2/run.json",
+                  "sourceIntakeFinishedAt": "2026-11-14T18:16:25.554992+08:00",
+                  "decoderFinishedAt": "2026-11-14T18:16:46+08:00",
+                  "modelWorkerRunning": false,
+                  "reviewPending": false,
+                  "result": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/actual-incremental-r2-result.json",
+                  "qualityQualified": false
+                },
+                "sourceProtection": {
+                  "commit": "6aacfd6989af50aaefd7bb77fe6127a325fd89fc",
+                  "privateRemoteBranch": "research/moss-resume-20261105",
+                  "remoteIndependentlyVerified": true,
+                  "archive": "C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/Companion-本地中英文增量-20261114.zip",
+                  "archiveSha256": "f79dd82ef80dd484ab7c3445be01707ff099163c47272c62a1a559d2b918d2ed"
+                },
+                "at": "2026-11-14T19:00:30+08:00",
+                "ownerOriginal": "是的是的然后你的这边继续把这个语音识别的这些字量还有尤其是复杂会议场景虽然说那些场景呢看一下怎么在已经有的看对于我们这个东西做一下专门的优化之类的然后主要是把这个中英文给搞通，然后类似的方向，之前你不是说已经有方向了，然后呢有显卡，现在也，然后你看看怎么做。最好是用本地去转。写，然后因为录音卡，你就要同时做到这个边边上传边转写和这个离线转写，然后大概就是这样子。"
               }
             }
           }
@@ -272484,8 +272771,8 @@
           },
           "activeNonmodelCompletion20261110": {
             "at": "2026-11-11T16:24:51+08:00",
-            "updatedAt": "2026-11-14T13:55:03+08:00",
-            "state": "NOTEBOOK135158_COMPLETE_FRONTEND_BACKGROUND_CLOSURE_INSTALLED_SELF_REVIEWED_OWNER_TASTE_OPEN",
+            "updatedAt": "2026-11-14T19:02:41+08:00",
+            "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
             "ownerRequestedHandoff": false,
             "originalItems": [
               "CP27-01/notes_images",
@@ -272493,29 +272780,30 @@
               "CP27-03/export"
             ],
             "userResult": "产品界面与带验方式作为同一批修复：Windows112正常release已装，原247份资料逐字节不变；实际原生程序的纪要/来源、跟进、保存重开、选中范围导出与仅日期确认通过。连接入口与次要设置分层，纪要直接展示，原版带验窗缩短到当前动作/预期结果并修复实际换行。Android142原已验整链继续保留，本次不重建、不再操作手机。一个112/142包已生成并全成员回读。",
-            "next": "本轮后台可执行前端工作已收口。醒后从一条熟悉录音自然完成查找、整理、阅读和带走，整体反馈集中原UI116；模型继续由Owner安排的另一会话处理。无新已定位UI故障时，不逐间距/按钮重复构建或派验。",
+            "next": "139/160正常包及一份交付已工程自验并私有全量回读。桌面Companion139整段体验沿原单窗等待Owner主动打开，集中体验读会→补充→带走/重开，问题分别记、整体评价一次。可靠分人和每人要点由模型会话按现有接口继续；不重跑麦克风/云/板，不将UI自验当售卖签收。",
             "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-core-android20261109",
             "windowsSourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
-            "currentInstalledWindows": "0.1.135",
-            "currentInstalledAndroid": "0.1.158",
-            "plannedWindowsVersion": "0.1.135",
-            "plannedAndroidVersion": "0.1.158",
+            "currentInstalledWindows": "0.1.139",
+            "currentInstalledAndroid": "0.1.160",
+            "plannedWindowsVersion": "0.1.139",
+            "plannedAndroidVersion": "0.1.160",
             "plannedVersionsBuilt": true,
             "sourceCheckpoint": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df",
             "sourceState": "One complete135/158 UI background delivery installed, saved134 input retained, model logic unchanged from133/157. Actual scope/selection/organization/reading/export/reopen checked.",
             "sourceChecks": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\frontend-result.json",
-            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
-            "lastCompletePackageSha256": "8e76cc48250cee55fc9f890ed68f6133118461f93a1f6c4f80bbc6f210b8497d",
+            "lastCompleteDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
+            "lastCompletePackageSha256": "5e88354c13907f63549ecf45768839869fdf2859b463999aa457e794419c903c",
             "lastCustomerRaw": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\customer-edit141\\customer-afteruse.md",
             "lastCustomerReadSha256": "d384514d826176037283647aba21d653428b7e6e7a76ee7f09ed4431232c0d85",
             "lastCustomerReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\followup-108141\\customer-result.json",
             "deliveryExecution": {
-              "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
-              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
-              "windowsSource": "3151a46c76b310443fc95b9e2e531a5e53893d62",
-              "androidSource": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+              "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
+              "windowsSource": "57cac7a1f19345462147c54b1027693e0636cad3",
+              "androidSource": "9440df58247753d2a36640b91a6136685711d5bf",
               "softwareSelfAcceptancePassed": true,
-              "ownerExperienceAccepted": false
+              "ownerExperienceAccepted": false,
+              "privateRemoteReadbackVerified": true
             },
             "singleNoteHandoffScope": {
               "existingItems": [
@@ -272540,7 +272828,7 @@
             "nativeModelsRun": true,
             "saleQualified": false,
             "allNonmodelComplete": false,
-            "knownJobState": "休息期间后台UI收口已整体交付电脑135/手机158：筛选条件留在列表并可直接移除；电脑先选择再整理、显示实际目标，取消清掉旧选择；手机选择仅显示一行整理入口，分类与保护/删除按需展开。双端正常安装及真实连续使用、文字/纪要阅读、所选导出/真实预览、真正重开已自验；电脑249旧资料一致，手机6217旧内容一致，旧库保留、原库外观恢复、自有56关闭。一份完整包私有全量回读。继承已保存134输入修复，模型与原133/157相同，Owner观感、模型、硬件/售卖资格沿原任务开放。",
+            "knownJobState": "139/160会议可视化与中性主题同批完整交付：阅读/导图/按人、精确回找上下文、已保存要点及原话层次；正常安装、实际公开30分钟旧结果阅读/导图/来源/保存/所选导出/真正重开已自验。电脑249份旧资料一致；手机6328旧文件保留、6327内容一致，仅既有索引新增公开库，旧库与原外观恢复，自有58关闭。无在途自有构建/推理/设备会话；原单窗139入口准备未启动。模型分人/每人摘要和Owner观感、硬件/售卖资格仍开放。",
             "ownerAlignmentBeforeContinuation20261112": {
               "at": "2026-11-12T09:10:20+08:00",
               "requestRef": "owner_module_execution.handoff20261111.ownerRequestedNewThread20261112",
@@ -273236,12 +273524,12 @@
                 "ownerQuote": "感觉这个UI太混乱了, 完全看不懂怎么用AI味道太重了",
                 "clarificationQuestion": "你说“UI太混乱、AI味太重”，主要指哪一边？",
                 "ownerClarification": "两边都有",
-                "state": "NOTEBOOK135158_COMPLETE_FRONTEND_BACKGROUND_CLOSURE_INSTALLED_SELF_REVIEWED_OWNER_TASTE_OPEN",
+                "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
                 "previousWindowsVersion": "0.1.111",
                 "previousAndroidVersion": "0.1.142",
                 "previousSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\windows-delivery.json",
                 "installedAndEngineeringReviewed": true,
-                "candidateVersion": "0.1.120",
+                "candidateVersion": "0.1.139",
                 "actualPreviousAttemptReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows111\\owner-guided-attempt-20261112.json",
                 "guidedStepsReached": [
                   0,
@@ -273252,7 +273540,7 @@
                 "decision": "Stop repeating Owner walkthroughs on unchanged111. Simplify the actual product information hierarchy/actions/copy and shorten the shared-original guidance to one clear current task. Preserve all capabilities/data and verified source/native delivery. Implement related changes together, engineering-review real entry/recording/result/export screens, then one coherent matching delivery and guided review. Do not treat extra instructions or a visual-only mock as the repair.",
                 "noMoreOwnerPromptUntilSubstantiveRepair": true,
                 "nativeDeliveryChangesNotStarted": false,
-                "updatedAt": "2026-11-14T13:55:03+08:00",
+                "updatedAt": "2026-11-14T19:02:41+08:00",
                 "implementation": {
                   "firstScreen": "Explicit recording-card link state and one connect action, also visible with an existing library",
                   "devicePage": "Connection state independent of storage/service advice, primary action leads to saved recordings",
@@ -273275,24 +273563,25 @@
                 "newReceivedCardRows": 0,
                 "actualCardRecordingCountNotDirectlyQueried": true,
                 "currentWindowsBuild": {
-                  "state": "NORMAL126_INSTALLED_ACTUAL_REAL_MEETING_READING_EXPORT_REOPEN_VERIFIED_CONTENT_GATE_OPEN",
-                  "version": "0.1.126",
+                  "state": "NORMAL139_INSTALLED_ACTUAL_PUBLIC_MAP_SOURCE_SAVE_EXPORT_AND_PROCESS_REOPEN_CHECKED",
+                  "version": "0.1.139",
                   "completed": true,
                   "installed": true,
-                  "sourceCommit": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f",
-                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\windows-verification.json",
-                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\runtime-result.json",
-                  "actualRealPublicRuntime": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/public30-final126-native-review-r2/result.json",
-                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\installation.json",
+                  "sourceCommit": "57cac7a1f19345462147c54b1027693e0636cad3",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\windows-verification.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\runtime-result.json",
+                  "actualRealPublicRuntime": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native139\\result.json",
+                  "actualPointerQuoteRuntime": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\source-pointer-native139-r3\\result.json",
+                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\installation.json",
                   "worker": null
                 },
                 "retainedBuildPreparationFailures": [
                   "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261112-product-closure/ui-usability/frozen-preparation-failure.json",
                   "E:/CodexData/Companion/.build-cache/product-closure20261112/windows112-local-r1/result.json"
                 ],
-                "engineeringReviewReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\engineering-review.json",
-                "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\installation.json",
-                "wholeSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend115142\\software-delivery.json",
+                "engineeringReviewReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\runtime-result.json",
+                "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\installation.json",
+                "wholeSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
                 "privateRemoteReadbackVerified": true,
                 "ownerActuallyUsedThisCandidate": false,
                 "ownerExperienceAccepted": false,
@@ -273306,102 +273595,30 @@
                 "sourceProtectionObservedRemoteHead": "26c9ef9e721ce489e638e7282c9db5b2261a97de",
                 "sourceProtectionVerifiedAt": "2026-11-12T18:08:39+08:00",
                 "preOwnerEngineeringAcceptance20261112": {
-                  "windowsVersion": "0.1.120",
-                  "androidVersion": "0.1.146",
+                  "windowsVersion": "0.1.139",
+                  "androidVersion": "0.1.160",
                   "softwareSelfAcceptancePassed": true,
                   "actualNativeProcessRestartPassed": true,
                   "actualPhoneReviewed": true,
-                  "currentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\engineering-self-acceptance.json",
+                  "currentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
                   "privateRemoteReadbackVerified": true,
                   "ownerPromptStarted": false,
-                  "ownerExpectedExperience": "Short natural aesthetic/clarity/use feedback, no technical checklist."
+                  "ownerExpectedExperience": "One coherent meeting-reading purpose in the original single guide, individual issues recorded separately; no technical checklist."
                 },
                 "currentOwnerAttempt": {
-                  "at": "2026-11-13T13:48:06.475+08:00",
-                  "state": "OWNER_FEEDBACK_RECEIVED",
-                  "version": "0.1.120",
-                  "androidVersion": "0.1.146",
-                  "ownerQuote": "可以啊，没问题没问题，然后的话，你现在看下能不能带我完整验收一下。现在基本上那个全录音闭环是做完了对吧？然后前端那些也是基本上搞得差不多了，然后就只剩下模型端要修。",
-                  "scope": "Short coherent human use of real saved public recording: find, replay, read/edit, export and reopen. Prior physical recording chain engineering evidence reused; this is not a fresh physical or model qualification.",
-                  "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\review-spec.json",
-                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
-                  "controllerPid": 20840,
-                  "boardLease": false,
-                  "newMicrophoneCommands": 0,
-                  "newModelOperations": 0,
-                  "softwareOwnerAccepted": false,
-                  "physicalTotalAcceptancePassed": false,
-                  "saleQualified": false,
-                  "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
-                  "visitedSteps": [
-                    1,
-                    2,
-                    3
-                  ],
-                  "promptPid": 18596,
-                  "appPid": 12440,
-                  "ownerStartedAt": "2026-11-13T13:48:51.452+08:00",
-                  "toolSessionId": null,
-                  "observedAt": "2026-11-13T13:51:59+08:00",
-                  "individualIssues": [
-                    {
-                      "eventId": "11856be07f5ede9e5135e894c8d4b5680c41cf580ab3e351794939e5361d2dc6",
-                      "reportedAt": "2026-11-13T05:49:15.6601245Z",
-                      "version": "0.1.120",
-                      "stepIndex": 0,
-                      "stepTitle": "找到并听这场会议",
-                      "ownerQuote": "感觉这个绿色不太好看这个UI",
-                      "id": "ISSUE-001",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
-                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
-                    },
-                    {
-                      "eventId": "a51efa61c452c900e89b091f7db496d09ba3cef528d620f1384cc16cb45aeb2d",
-                      "reportedAt": "2026-11-13T05:49:44.2823602Z",
-                      "version": "0.1.120",
-                      "stepIndex": 0,
-                      "stepTitle": "找到并听这场会议",
-                      "ownerQuote": "因为你看你这个摘要，太多那些什么语气词之类的。然后啊对呀，不太好不太好。然后你看这个多点功能，AI增强模式，这个你看一下大概不知道这个会在开什么。有点乱。",
-                      "id": "ISSUE-002",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
-                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
-                    },
-                    {
-                      "eventId": "aaa49c80cf24414d3fa3dd5a11efe7266e84cec31fb2daa8fdad28886167068e",
-                      "reportedAt": "2026-11-13T05:50:04.9901522Z",
-                      "version": "0.1.120",
-                      "stepIndex": 0,
-                      "stepTitle": "找到并听这场会议",
-                      "ownerQuote": "哦，转录那里也是比较奇怪。这个会你看可以搞个半个小时的会议，然后用那个啥吧。这个不太行不太行，然后另外这个东西它。录音卡为什么没有自动连接？",
-                      "id": "ISSUE-003",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
-                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
-                    },
-                    {
-                      "eventId": "38b280a5412fb0142bec9cb137d9f64ba5f7c1033598cc4a044dfdee5ac1896e",
-                      "reportedAt": "2026-11-13T05:50:25.7985698Z",
-                      "version": "0.1.120",
-                      "stepIndex": 0,
-                      "stepTitle": "找到并听这场会议",
-                      "ownerQuote": "然后那个筛选整理有点太乱了，这个 ui 还是不太行，这个 ui 不太行。还是很乱的感觉。",
-                      "id": "ISSUE-004",
-                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
-                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
-                    }
-                  ],
-                  "promptClosedBeforeProductExit": true,
-                  "appClosedAt": "2026-11-13T13:50:43.017+08:00",
-                  "finishedAt": "2026-11-13T13:50:43.030+08:00",
+                  "at": "2026-11-14T19:02:41+08:00",
+                  "state": "OWNER139_ENTRY_PREPARED_NOT_STARTED",
+                  "version": "0.1.139",
+                  "androidVersion": "0.1.160",
+                  "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided139-20261114\\review-spec.json",
+                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided139-20261114",
+                  "entry": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided139-20261114\\entry.json",
+                  "scope": "Existing real public30m saved result, UI reading only; no new recording or model/hardware qualification.",
+                  "ownerAccepted": false,
                   "ownerCompletedExperience": false,
-                  "originalStateAndAudioUnchanged": true,
-                  "ownerResponse": {
-                    "selected": "稍后",
-                    "text": "",
-                    "spoken_text": null,
-                    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\owner-feedback.txt"
-                  },
-                  "actualProcessReopenObserved": false,
-                  "fullGuidedAcceptanceCompleted": false
+                  "ownerPromptStarted": false,
+                  "boardLease": false,
+                  "newMicOrModelCommands": 0
                 },
                 "quietSyncFeedback": {
                   "id": "owner-sync-display20261112",
@@ -273613,7 +273830,7 @@
                     "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\owner-guided-windows114-fw66828-20261112"
                   }
                 ],
-                "currentPurpose": "把一段口头安排变成可回听的记录和能继续使用的整理结果。",
+                "currentPurpose": "看懂同一场会议的主题与各人发言，核对原话，留下自己的记录并带走结果。",
                 "ownerPerceivedClarityResolved": false,
                 "ownerAttractionEstablished": false,
                 "previousOwner113DeferredAttempt": {
@@ -274478,15 +274695,15 @@
                 },
                 "engineeringComputerVoiceEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows116\\computer-voice-backend-evidence.json",
                 "currentAndroidBuild": {
-                  "state": "NORMAL150_INSTALLED_PUBLIC_UI_SAVE_THEMES_REOPEN_CHECKED_ASR149_UNCHANGED_SOURCE_REUSED",
-                  "version": "0.1.150",
+                  "state": "NORMAL160_INSTALLED_ACTUAL_MAP_SOURCE_THEMES_AND_PROCESS_REOPEN_CHECKED",
+                  "version": "0.1.160",
                   "completed": true,
                   "installed": true,
-                  "sourceCommit": "d59d51fc16a755697a536a8558e13b3f6c37bfe6",
-                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\installation.json",
-                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\library-review-result.json",
-                  "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\end-session.json",
-                  "asrRuntimeReuse": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\unchanged-asr-runtime-reuse.json",
+                  "sourceCommit": "9440df58247753d2a36640b91a6136685711d5bf",
+                  "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\installation.json",
+                  "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\reading-notice-before-restart.json",
+                  "restart": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\reading-notice-after-restart.json",
+                  "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\end-session.json",
                   "worker": null
                 },
                 "previousDelivered115142BeforeRecordingWorkspace116144": {
@@ -274497,13 +274714,13 @@
                     "state": "RECORDING_WORKSPACE116_SOURCE_CHECKED_NORMAL_PACKAGE_PENDING"
                   }
                 },
-                "candidateAndroidVersion": "0.1.146",
+                "candidateAndroidVersion": "0.1.160",
                 "softwareSelfAcceptancePassed": true,
-                "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\engineering-self-acceptance.json",
-                "currentSoftwareDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
+                "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
+                "currentSoftwareDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
                 "deliveredVersions": {
-                  "windows": "0.1.120",
-                  "android": "0.1.146"
+                  "windows": "0.1.139",
+                  "android": "0.1.160"
                 },
                 "engineeringDiscoveredSameBatchIssues": [
                   {
@@ -274834,11 +275051,11 @@
                   "actualDualClientReviewCompleted": true,
                   "privateCompletePackageReadback": true
                 },
-                "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+                "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
                 "lastHandledOwnerFeedbackId": "UI116-DESIGN-FOUNDATION",
                 "lastHandledOwnerRaw": "先继续把后台能做的给做了，然后。现在来看，我现在要去睡一会觉，你先把继续把后台能做的东西做了就是现在大概，要在我睡醒以后再完整交给我交付。",
                 "completeProductRework20261113": {
-                  "state": "NOTEBOOK135158_COMPLETE_FRONTEND_BACKGROUND_CLOSURE_INSTALLED_SELF_REVIEWED_OWNER_TASTE_OPEN",
+                  "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
                   "decision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\complete-product-rework.json",
                   "templateAdoption": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\template-adoption.json",
                   "receivedAt": "2026-11-13T13:58:46+08:00",
@@ -274864,7 +275081,7 @@
                   "androidFrontendSource": "4666bbde9df9792c7571b3018a618a6024e5163b",
                   "androidVersion": "0.1.158",
                   "androidNativeReceipt": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\android-native-actual-r3\\result.json",
-                  "updatedAt": "2026-11-14T13:55:03+08:00",
+                  "updatedAt": "2026-11-14T19:02:41+08:00",
                   "androidBackendSource": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
                   "realPublicCapture": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\public30-unattended-r2\\result.json",
                   "physicalRecordingDurationMs": 1808210,
@@ -275024,7 +275241,7 @@
                   },
                   "noteReadabilityFollowup": {
                     "at": "2026-11-13T21:25:01+08:00",
-                    "state": "NOTEBOOK135158_COMPLETE_FRONTEND_BACKGROUND_CLOSURE_INSTALLED_SELF_REVIEWED_OWNER_TASTE_OPEN",
+                    "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
                     "feedbackId": "UI116-DESIGN-FOUNDATION",
                     "ownerRaw": "看着还是不是很行，你这个 UI。还有您的转写太多奇怪的语气词，还有他。这个看着没有很一目了然的样子，就是感觉很素啊，这个会议纪要。看下大家都是怎么做的。不要自己编，自己编就很容易编的那种很有 AI 感，不要现在 AI 感太重。",
                     "selectedDirection": "随身笔记",
@@ -275039,10 +275256,10 @@
                     "priorResultExcluded": "129/154 engineering workflow pass is not Owner UI acceptance; prior simplification did not solve at-a-glance comprehension.",
                     "modelsOrPhysicalCaptureRepeated": false,
                     "ownerAccepted": false,
-                    "updatedAt": "2026-11-14T13:55:03+08:00",
-                    "windowsSource": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df",
+                    "updatedAt": "2026-11-14T19:02:41+08:00",
+                    "windowsSource": "57cac7a1f19345462147c54b1027693e0636cad3",
                     "windowsFrozenSource": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df",
-                    "androidSource": "4666bbde9df9792c7571b3018a618a6024e5163b",
+                    "androidSource": "9440df58247753d2a36640b91a6136685711d5bf",
                     "sourceChecks": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\note-readability-followup-r4\\result.json",
                     "componentPreview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\note-readability-component-preview-r4\\result.json",
                     "actualPublicNoteRegeneration": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\note-readability-public-native129\\result.json",
@@ -275054,10 +275271,10 @@
                     "windowsInstallation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows132\\installation.json",
                     "phoneNativeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android155\\reading-notice-after-restart.json",
                     "phoneClosed": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android155\\end-session.json",
-                    "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+                    "delivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
                     "privateRemoteReadbackVerified": true,
                     "sourceProtection": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\source-protection132155.json",
-                    "currentPoint": "休息期间后台UI收口已整体交付电脑135/手机158：筛选条件留在列表并可直接移除；电脑先选择再整理、显示实际目标，取消清掉旧选择；手机选择仅显示一行整理入口，分类与保护/删除按需展开。双端正常安装及真实连续使用、文字/纪要阅读、所选导出/真实预览、真正重开已自验；电脑249旧资料一致，手机6217旧内容一致，旧库保留、原库外观恢复、自有56关闭。一份完整包私有全量回读。继承已保存134输入修复，模型与原133/157相同，Owner观感、模型、硬件/售卖资格沿原任务开放。",
+                    "currentPoint": "139/160正常包及一份交付已工程自验并私有全量回读。桌面Companion139整段体验沿原单窗等待Owner主动打开，集中体验读会→补充→带走/重开，问题分别记、整体评价一次。可靠分人和每人要点由模型会话按现有接口继续；不重跑麦克风/云/板，不将UI自验当售卖签收。",
                     "visualPolishReview": {
                       "at": "2026-11-13T22:19:54+08:00",
                       "feedbackId": "UI116-DESIGN-FOUNDATION",
@@ -275184,10 +275401,281 @@
                       "jobs": [],
                       "phoneLiveWorker": false,
                       "currentPoint": "休息期间后台UI收口已整体交付电脑135/手机158：筛选条件留在列表并可直接移除；电脑先选择再整理、显示实际目标，取消清掉旧选择；手机选择仅显示一行整理入口，分类与保护/删除按需展开。双端正常安装及真实连续使用、文字/纪要阅读、所选导出/真实预览、真正重开已自验；电脑249旧资料一致，手机6217旧内容一致，旧库保留、原库外观恢复、自有56关闭。一份完整包私有全量回读。继承已保存134输入修复，模型与原133/157相同，Owner观感、模型、硬件/售卖资格沿原任务开放。"
+                    },
+                    "visualMeeting20261114": {
+                      "at": "2026-11-14T17:27:52+08:00",
+                      "state": "VISUAL139160_NORMAL_INSTALLED_ENGINEERING_REVIEWED_OWNER_UX_AND_SPEAKER_MODEL_OPEN",
+                      "feedbackId": "UI116-DESIGN-FOUNDATION",
+                      "ownerRaw": "还是老问题啊，现在就是这个 aui 问题，ui 问题还是很一般的，你把这个 ui 疏通了，现在这个 ui 太一般了，没有一些高级的那些精致感啊，或者是其他的一些，就是感觉就很一般，这个会议纪要。没有什么亮点，你看看高级的东西是怎么弄，像什么思维导图啊，或者是什么类似的，可以让人家很轻松的看清会议在干什么，这样人家才会买我们的产品，这样看着很枯燥，你懂吧？还有那个绿色的 UI 也太丑了，你看能不能换那个 UI 好看点。没有高级感。",
+                      "originalGuideIssue": [
+                        {
+                          "eventId": "d9ccd247c8d07ae49e36296702f92fb5b4f125a5f13dcc8e8cc60974f9f5442d",
+                          "reportedAt": "2026-11-14T09:22:21.9878321Z",
+                          "version": "0.1.135",
+                          "stepIndex": 0,
+                          "stepTitle": "先看这场会议",
+                          "ownerQuote": "然后的话，看一下那个。有啥问题之类的。然后纪要的话，感觉现在这个纪要弄太一般了，有没有什么思维导图啊，或者是更加好的，可以点醒人家。之类的东西，这个。对，这个太一般了，现在这个 AI 增强功能一般般，然后收藏和录音卡，这些都是什么鬼东西？这个，我觉得你这个 ui 虽然说比之前好，但是还是要整个完全再重新设计一遍，有没有那些高级特效之类的？然后呢，看的也不是很清晰。",
+                          "id": "ISSUE-001",
+                          "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114",
+                          "sourceCommit": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df"
+                        }
+                      ],
+                      "sourceBaselineWindows": "0.1.135",
+                      "sourceBaselineAndroid": "0.1.158",
+                      "priorOutcome": "135/158 engineering flow passed but Owner still finds notes ordinary, hierarchy unclear, green ugly, favorites/device purpose confusing. Owner stopped at first reading and chose later, not acceptance.",
+                      "decision": "Stop another spacing-only/document-only iteration. Put an interactive source-preserving topic map directly in meeting reading, expose the saved section hierarchy and conclusion/action/question routes, restyle both shells in neutral ink and restrained blue. Reuse the existing phone outline behavior and export, do not fabricate or regenerate meeting facts. Model work stays in the other chat.",
+                      "references": [
+                        "https://support.plaud.ai/hc/en-us/articles/57430809095833-Mind-Map",
+                        "https://docs.granola.ai/help-center/getting-started/granola-101"
+                      ],
+                      "evidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114",
+                      "modelsOrPhysicalCaptureRepeated": false,
+                      "ownerAccepted": false,
+                      "next": "139/160正常包及一份交付已工程自验并私有全量回读。桌面Companion139整段体验沿原单窗等待Owner主动打开，集中体验读会→补充→带走/重开，问题分别记、整体评价一次。可靠分人和每人要点由模型会话按现有接口继续；不重跑麦克风/云/板，不将UI自验当售卖签收。",
+                      "updatedAt": "2026-11-14T19:02:41+08:00",
+                      "ownerSupplement": "然后还要简单写一下那个会议者，每个会议者说了什么东西。然后的话你看一下。怎么搞会好一点？",
+                      "sourceCommit": "354d3dcfceb4b06e6403068da09015368e31fca3",
+                      "frozenWindowsSource": "57cac7a1f19345462147c54b1027693e0636cad3",
+                      "androidSource": "9440df58247753d2a36640b91a6136685711d5bf",
+                      "candidateVersions": {
+                        "windows": "0.1.139",
+                        "android": "0.1.160"
+                      },
+                      "savedInput137Preserved": true,
+                      "sourceUiReview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\r4\\result.json",
+                      "speakerUiContractReview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\speakers\\result.json",
+                      "speakerModelHandoff": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\visual-meeting138159\\speaker-summary-contract.json",
+                      "windowsBuild": {
+                        "toolSessionId": 26187,
+                        "receipt": "E:/CodexData/Companion/deliveries/20261114-visual-meeting139160/windows139-local/result.json"
+                      },
+                      "androidBuild": "E:/CodexData/Companion/deliveries/20261114-visual-meeting139160/android160/result.json",
+                      "modelsRun": false,
+                      "internal138159Result": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\source139160.json",
+                      "internal138159Rejected": true,
+                      "actualNarrowNativeCause": "Actual native logical narrow viewport wrapped expanded navigation labels and left map branches cramped. Actual phone inherited summary::after duplicated the explicit chevron. Source fixed by labels that fit and container-relative map layout, scoped marker override; Summary list items labelled as points rather than inferred topics.",
+                      "priorBackgroundAdmissionFailure": "138 generic review was stopped on actual Windows low-memory signal before launching the app. Initial historical110 evidence preflight used an outdated whole UI file; current135 split backend/UI evidence and exact unchanged component are now used. No false runtime pass.",
+                      "windowsVersion": "0.1.139",
+                      "androidVersion": "0.1.160",
+                      "softwareSelfAcceptancePassed": true,
+                      "installedAndEngineeringReviewed": true,
+                      "ownerExperienceAccepted": false,
+                      "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\meeting139160-delivery.json",
+                      "privateRemoteReadbackVerified": true,
+                      "currentPackageSha256": "5e88354c13907f63549ecf45768839869fdf2859b463999aa457e794419c903c",
+                      "actualWindowsRuntime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\runtime-result.json",
+                      "actualPublicRuntime": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native139\\result.json",
+                      "actualPointerRuntime": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\source-pointer-native139-r3\\result.json",
+                      "actualPhoneEnd": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\end-session.json",
+                      "speakerSummaryFrontendReady": true,
+                      "speakerSummaryModelAndDiarizationQualified": false,
+                      "ownerEntry": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided139-20261114\\entry.json",
+                      "ownerPromptStarted": false,
+                      "retainedBackgroundFailures": [
+                        "138/159 internal narrow native navigation/map and inherited phone summary arrow were rejected, source-fixed and rebuilt together as139/160.",
+                        "138 and139-r2 generic native checks stopped at actual Windows low-memory admission; no app acceptance claimed.",
+                        "139-r1 source quote pointer check raced scrolling; keyboard flow passed; targeted139-r3 trusted pointer after observed settled geometry and expanded source passed.",
+                        "Pointer-r2 trusted quote click succeeded, but probe compared folded innerText; corrected probe expands full source before exact comparison.",
+                        "Owner139 preparation inherited135 textual labels; corrected metadata only, actual139 backup/restore and original-source receipts unchanged."
+                      ]
                     }
                   }
                 },
-                "currentDesignPreview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\visual-polish-review.json"
+                "currentDesignPreview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\visual-polish-review.json",
+                "previousOwnerAttemptBefore135": {
+                  "at": "2026-11-13T13:48:06.475+08:00",
+                  "state": "OWNER_FEEDBACK_RECEIVED",
+                  "version": "0.1.120",
+                  "androidVersion": "0.1.146",
+                  "ownerQuote": "可以啊，没问题没问题，然后的话，你现在看下能不能带我完整验收一下。现在基本上那个全录音闭环是做完了对吧？然后前端那些也是基本上搞得差不多了，然后就只剩下模型端要修。",
+                  "scope": "Short coherent human use of real saved public recording: find, replay, read/edit, export and reopen. Prior physical recording chain engineering evidence reused; this is not a fresh physical or model qualification.",
+                  "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\review-spec.json",
+                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                  "controllerPid": 20840,
+                  "boardLease": false,
+                  "newMicrophoneCommands": 0,
+                  "newModelOperations": 0,
+                  "softwareOwnerAccepted": false,
+                  "physicalTotalAcceptancePassed": false,
+                  "saleQualified": false,
+                  "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe",
+                  "visitedSteps": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "promptPid": 18596,
+                  "appPid": 12440,
+                  "ownerStartedAt": "2026-11-13T13:48:51.452+08:00",
+                  "toolSessionId": null,
+                  "observedAt": "2026-11-13T13:51:59+08:00",
+                  "individualIssues": [
+                    {
+                      "eventId": "11856be07f5ede9e5135e894c8d4b5680c41cf580ab3e351794939e5361d2dc6",
+                      "reportedAt": "2026-11-13T05:49:15.6601245Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "感觉这个绿色不太好看这个UI",
+                      "id": "ISSUE-001",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "a51efa61c452c900e89b091f7db496d09ba3cef528d620f1384cc16cb45aeb2d",
+                      "reportedAt": "2026-11-13T05:49:44.2823602Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "因为你看你这个摘要，太多那些什么语气词之类的。然后啊对呀，不太好不太好。然后你看这个多点功能，AI增强模式，这个你看一下大概不知道这个会在开什么。有点乱。",
+                      "id": "ISSUE-002",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "aaa49c80cf24414d3fa3dd5a11efe7266e84cec31fb2daa8fdad28886167068e",
+                      "reportedAt": "2026-11-13T05:50:04.9901522Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "哦，转录那里也是比较奇怪。这个会你看可以搞个半个小时的会议，然后用那个啥吧。这个不太行不太行，然后另外这个东西它。录音卡为什么没有自动连接？",
+                      "id": "ISSUE-003",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    },
+                    {
+                      "eventId": "38b280a5412fb0142bec9cb137d9f64ba5f7c1033598cc4a044dfdee5ac1896e",
+                      "reportedAt": "2026-11-13T05:50:25.7985698Z",
+                      "version": "0.1.120",
+                      "stepIndex": 0,
+                      "stepTitle": "找到并听这场会议",
+                      "ownerQuote": "然后那个筛选整理有点太乱了，这个 ui 还是不太行，这个 ui 不太行。还是很乱的感觉。",
+                      "id": "ISSUE-004",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1",
+                      "sourceCommit": "bc31db12672226fd7c27a98e6a35fc2c1e96b1fe"
+                    }
+                  ],
+                  "promptClosedBeforeProductExit": true,
+                  "appClosedAt": "2026-11-13T13:50:43.017+08:00",
+                  "finishedAt": "2026-11-13T13:50:43.030+08:00",
+                  "ownerCompletedExperience": false,
+                  "originalStateAndAudioUnchanged": true,
+                  "ownerResponse": {
+                    "selected": "稍后",
+                    "text": "",
+                    "spoken_text": null,
+                    "output_path": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\reader-clarity20261113\\owner-complete-use-r1\\owner-feedback.txt"
+                  },
+                  "actualProcessReopenObserved": false,
+                  "fullGuidedAcceptanceCompleted": false
+                },
+                "previousDelivered135158BeforeVisual139160": {
+                  "currentDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+                  "currentSoftwareDelivery": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
+                  "currentEngineeringReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+                  "engineeringReviewReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\engineering-review.json",
+                  "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows115\\installation.json",
+                  "wholeSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend115142\\software-delivery.json",
+                  "currentWindowsBuild": {
+                    "state": "NORMAL126_INSTALLED_ACTUAL_REAL_MEETING_READING_EXPORT_REOPEN_VERIFIED_CONTENT_GATE_OPEN",
+                    "version": "0.1.126",
+                    "completed": true,
+                    "installed": true,
+                    "sourceCommit": "cbfcb4b81b40dffdf0ee7220c46e696c068c713f",
+                    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\windows-verification.json",
+                    "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\runtime-result.json",
+                    "actualRealPublicRuntime": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/public30-final126-native-review-r2/result.json",
+                    "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows126\\installation.json",
+                    "worker": null
+                  },
+                  "currentAndroidBuild": {
+                    "state": "NORMAL150_INSTALLED_PUBLIC_UI_SAVE_THEMES_REOPEN_CHECKED_ASR149_UNCHANGED_SOURCE_REUSED",
+                    "version": "0.1.150",
+                    "completed": true,
+                    "installed": true,
+                    "sourceCommit": "d59d51fc16a755697a536a8558e13b3f6c37bfe6",
+                    "installation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\installation.json",
+                    "runtime": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\library-review-result.json",
+                    "endSession": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\end-session.json",
+                    "asrRuntimeReuse": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android150\\unchanged-asr-runtime-reuse.json",
+                    "worker": null
+                  },
+                  "deliveredVersions": {
+                    "windows": "0.1.135",
+                    "android": "0.1.158"
+                  },
+                  "preOwnerEngineeringAcceptance20261112": {
+                    "windowsVersion": "0.1.135",
+                    "androidVersion": "0.1.158",
+                    "softwareSelfAcceptancePassed": true,
+                    "actualNativeProcessRestartPassed": true,
+                    "actualPhoneReviewed": true,
+                    "currentReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\reader-clarity\\notebook135158-delivery.json",
+                    "privateRemoteReadbackVerified": true,
+                    "ownerPromptStarted": true,
+                    "ownerExpectedExperience": "Short natural aesthetic/clarity/use feedback, no technical checklist."
+                  },
+                  "currentOwnerAttempt": {
+                    "at": "2026-11-14T17:16:02+08:00",
+                    "state": "OWNER_FEEDBACK_RECEIVED",
+                    "version": "0.1.135",
+                    "androidVersion": "0.1.158",
+                    "ownerQuote": "可以了，然后我现在是睡好了，你看还有什么东西交付给我验收？",
+                    "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\review-spec.json",
+                    "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114",
+                    "scope": "One short coherent frontend purpose on actual public30m saved result. Engineering self-acceptance reused; no fresh recording/model/hardware qualification.",
+                    "ownerAccepted": false,
+                    "boardLease": false,
+                    "newMicOrModelCommands": 0,
+                    "ownerStartedAt": "2026-11-14T17:21:25.004+08:00",
+                    "finishedAt": "2026-11-14T17:22:27.246+08:00",
+                    "ownerCompletedExperience": false,
+                    "individualIssues": [
+                      {
+                        "eventId": "d9ccd247c8d07ae49e36296702f92fb5b4f125a5f13dcc8e8cc60974f9f5442d",
+                        "reportedAt": "2026-11-14T09:22:21.9878321Z",
+                        "version": "0.1.135",
+                        "stepIndex": 0,
+                        "stepTitle": "先看这场会议",
+                        "ownerQuote": "然后的话，看一下那个。有啥问题之类的。然后纪要的话，感觉现在这个纪要弄太一般了，有没有什么思维导图啊，或者是更加好的，可以点醒人家。之类的东西，这个。对，这个太一般了，现在这个 AI 增强功能一般般，然后收藏和录音卡，这些都是什么鬼东西？这个，我觉得你这个 ui 虽然说比之前好，但是还是要整个完全再重新设计一遍，有没有那些高级特效之类的？然后呢，看的也不是很清晰。",
+                        "id": "ISSUE-001",
+                        "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114",
+                        "sourceCommit": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df"
+                      }
+                    ],
+                    "originalStateAndAudioUnchanged": true
+                  }
+                },
+                "previousOwner135FeedbackBeforeVisual139": {
+                  "at": "2026-11-14T17:16:02+08:00",
+                  "state": "OWNER_FEEDBACK_RECEIVED",
+                  "version": "0.1.135",
+                  "androidVersion": "0.1.158",
+                  "ownerQuote": "可以了，然后我现在是睡好了，你看还有什么东西交付给我验收？",
+                  "reviewSpec": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114\\review-spec.json",
+                  "privateEvidenceDirectory": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114",
+                  "scope": "One short coherent frontend purpose on actual public30m saved result. Engineering self-acceptance reused; no fresh recording/model/hardware qualification.",
+                  "ownerAccepted": false,
+                  "boardLease": false,
+                  "newMicOrModelCommands": 0,
+                  "ownerStartedAt": "2026-11-14T17:21:25.004+08:00",
+                  "finishedAt": "2026-11-14T17:22:27.246+08:00",
+                  "ownerCompletedExperience": false,
+                  "individualIssues": [
+                    {
+                      "eventId": "d9ccd247c8d07ae49e36296702f92fb5b4f125a5f13dcc8e8cc60974f9f5442d",
+                      "reportedAt": "2026-11-14T09:22:21.9878321Z",
+                      "version": "0.1.135",
+                      "stepIndex": 0,
+                      "stepTitle": "先看这场会议",
+                      "ownerQuote": "然后的话，看一下那个。有啥问题之类的。然后纪要的话，感觉现在这个纪要弄太一般了，有没有什么思维导图啊，或者是更加好的，可以点醒人家。之类的东西，这个。对，这个太一般了，现在这个 AI 增强功能一般般，然后收藏和录音卡，这些都是什么鬼东西？这个，我觉得你这个 ui 虽然说比之前好，但是还是要整个完全再重新设计一遍，有没有那些高级特效之类的？然后呢，看的也不是很清晰。",
+                      "id": "ISSUE-001",
+                      "ownerRound": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\owner-guided135-20261114",
+                      "sourceCommit": "af7f75cca4b1b57c3e485e5c760bff2c3ef0a0df"
+                    }
+                  ],
+                  "originalStateAndAudioUnchanged": true
+                }
               },
               "frontendAcceptedPurposePriorClosureReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\frontend111142\\software-delivery.json",
               "previousVerifiedWindows111": {
@@ -275314,8 +275802,8 @@
               },
               "engineeringCoherentSoftwarePurposePassed": true
             },
-            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows135\\windows-verification.json",
-            "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android158\\end-session.json",
+            "lastWindowsSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261112-product-closure\\windows139\\windows-verification.json",
+            "lastAndroidSoftwareDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android160\\end-session.json",
             "previousSelectedSourceCheckpoint": {
               "windows": "673fcb7a9cae9331d62ed2241a626afd30094721",
               "android": "cbe1d0e2fa801d6b221103c39294ab411884003f"
@@ -275350,7 +275838,15 @@
               },
               "previousCompletedSourcePreparation": "docs/handoffs/20261110-android-media-import/selected-note-handoff/source-result.json"
             },
-            "modelRunScope": "Only23.2245-second public computer-speech sample: real local ASR and configured DeepSeek on installed115, exact whole production source trees retained in116; actual116 readable selected export. No private audio uploaded or general model qualification."
+            "modelRunScope": "Only23.2245-second public computer-speech sample: real local ASR and configured DeepSeek on installed115, exact whole production source trees retained in116; actual116 readable selected export. No private audio uploaded or general model qualification.",
+            "previousDeliveryExecutionBefore139160": {
+              "state": "NOTEBOOK118145_INSTALLED_ENGINEERING_CHECKED_ONE_KIT_PRIVATE_READBACK_VERIFIED_OWNER_UX_OPEN",
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261113-ui-foundation\\application-foundation\\software-delivery.json",
+              "windowsSource": "3151a46c76b310443fc95b9e2e531a5e53893d62",
+              "androidSource": "fbb10d1ee34c241d96829c8307e0cbb5441957b0",
+              "softwareSelfAcceptancePassed": true,
+              "ownerExperienceAccepted": false
+            }
           },
           "latestSharedFirmwareWorkpoint20261110": {
             "observedAt": "2026-11-10T09:49:20+08:00",
@@ -283107,7 +283603,7 @@
       },
       "embeddedPointerCurrent20261113": {
         "at": "2026-11-13T16:44:16+08:00",
-        "reservedWindowsVersion": "0.1.136",
+        "reservedWindowsVersion": "0.1.140",
         "source": "fc964ab7d89a8d788b513d99978c359332c60322",
         "baseFrontend123": "d36222d74182cfe244040aa6026efbaf539c76eb",
         "fixOnly": "db327ed09ee1dc6aefa462f97fa2701d9cb95ab0",
@@ -283212,7 +283708,37 @@
           "ownerPhysicalAccepted": false
         },
         "dailyWindowsObserved": "0.1.135",
-        "dailyObservationAt": "2026-11-14T13:57:00+08:00"
+        "dailyObservationAt": "2026-11-14T13:57:00+08:00",
+        "updatedAt": "2026-11-14T18:13:25+08:00",
+        "tap137Rejected20261114": {
+          "state": "OWNER_REJECTED_REVERTED",
+          "source": "f5a320e614b919b5e90fd1ce12d14c55e1770297",
+          "revert": "5ecd992f",
+          "feedback": "目前这版感觉好像没有上版顺滑了，所以你做了什么东西？",
+          "result": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-tap137-fw66835\\owner-experience\\outcome-analysis.json",
+          "mustPreserveRevert": true
+        },
+        "controlAck140Pending20261114": {
+          "state": "MATCHED140_836_ACK_REPAIR_BACKGROUND_VERIFIED_PHYSICAL_TAP_AND_OLD_INTERMITTENT_ROOT_OPEN",
+          "reservedVersion": "0.1.140",
+          "authoringSourcePending": false,
+          "firmwareCandidate": 66836,
+          "ownerTrial": false,
+          "nextWorkpoint": "owner_module_execution.embedded.next",
+          "frontend139FrozenGuardRevertedVerifiedAt": "2026-11-14T18:13:25+08:00",
+          "frontend139DoesNotYetIncludeAckChanges": true,
+          "authoringSource": "1841c933762a2d6464ed81b00ee6a5ead9797f0d",
+          "frozenSource": "ef7aada4bb56cda8c83d761d44f73398c10975e7",
+          "firmwareSource": "556cc0e8387f31eaf91187ec5e7605f50549f3c2",
+          "firmwareActuallyInstalled": 66836,
+          "buildSession": null,
+          "ownerPopup": false,
+          "source": "ef7aada4bb56cda8c83d761d44f73398c10975e7",
+          "delivery": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\delivery.json",
+          "runtimeProof": "E:\\CodexData\\Companion\\deliveries\\20261114-companion-control140-fw66836\\runtime-proof.json",
+          "dailyInstalled": false,
+          "ownerPhysicalAccepted": false
+        }
       }
     },
     "retiredBatchAliases20261111": {

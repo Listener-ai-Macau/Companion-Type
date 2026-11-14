@@ -1,0 +1,27 @@
+{
+  "scope": "Explicit fictional source/summary UI contract only. No inference, no real participant identity claim.",
+  "checks": [
+    {
+      "width": 1100,
+      "shortSavedPointsShown": true,
+      "noSummaryOnlyInventedPerson": true,
+      "unknownSourceNotAssigned": true,
+      "sameSpeakerIdWithReviewedDifferentNamesKeptSeparate": true,
+      "exactSourceCallbackPreserved": true,
+      "changedDocumentClearsPeople": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "shortSavedPointsShown": true,
+      "noSummaryOnlyInventedPerson": true,
+      "unknownSourceNotAssigned": true,
+      "sameSpeakerIdWithReviewedDifferentNamesKeptSeparate": true,
+      "exactSourceCallbackPreserved": true,
+      "changedDocumentClearsPeople": true,
+      "noHorizontalOverflow": true
+    }
+  ],
+  "pageErrors": [],
+  "state": "SPEAKER_SUMMARY_SOURCE_AND_CONTEXT_SWITCH_UI_PASSED"
+}

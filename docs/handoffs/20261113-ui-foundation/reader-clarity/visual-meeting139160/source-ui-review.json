@@ -1,0 +1,78 @@
+{
+  "stage": "r4",
+  "scope": "Production source component rendering on actual saved public30m output; browser preview, not native installation or model qualification.",
+  "modelsRun": false,
+  "boardAccessed": false,
+  "desktopControlled": false,
+  "checks": [
+    {
+      "case": "source data and attribution",
+      "publicTopicCount": 5,
+      "missingActionsNotInvented": true,
+      "conditionalDecisionPreserved": true,
+      "fencedPseudoTopicsExcluded": true,
+      "unknownSpeakersNotMerged": true,
+      "reviewedNamesRespectPerUtteranceOverrides": true,
+      "sourceIndexPreserved": true,
+      "ordinaryProseDoesNotInventPeople": true
+    },
+    {
+      "case": "native narrow reader width",
+      "viewport": 980,
+      "labelsFit": [
+        {
+          "text": "全部录音",
+          "right": 87,
+          "parentRight": 123,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "已收藏",
+          "right": 75,
+          "parentRight": 123,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "我的录音卡",
+          "right": 99,
+          "parentRight": 123,
+          "whiteSpace": "nowrap"
+        },
+        {
+          "text": "设置",
+          "right": 63,
+          "parentRight": 123,
+          "whiteSpace": "nowrap"
+        }
+      ],
+      "oneMapColumnByContainer": true
+    },
+    {
+      "platform": "windows",
+      "mapFiveExactTopics": true,
+      "fullTopicText": true,
+      "sourceContextNavigationAndFocus": true,
+      "noFakeSpeakers": true,
+      "darkPalette": {
+        "paper": "#1c1f26",
+        "accent": "#9cb8ff"
+      },
+      "noHorizontalOverflow": true
+    },
+    {
+      "platform": "mobile",
+      "mapFiveExactTopics": true,
+      "fullTopicText": true,
+      "sourceContextNavigationAndFocus": true,
+      "noFakeSpeakers": true,
+      "darkPalette": {
+        "paper": "#1c1f26",
+        "accent": "#9cb8ff"
+      },
+      "noHorizontalOverflow": true
+    }
+  ],
+  "pageErrors": [],
+  "ownerAccepted": false,
+  "state": "PRODUCTION_VISUAL_MEETING_AND_SOURCE_ATTRIBUTION_PASSED"
+}

@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-14T18:12:00+08:00",
+  "windowsAuthoringSource": "e317ce2c9ed1beaa1947755e7279ffd892a184ae",
+  "windows": {
+    "at": "2026-11-14T18:12:00+08:00",
+    "version": "0.1.139",
+    "sourceCommit": "57cac7a1f19345462147c54b1027693e0636cad3",
+    "sourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+    "frozenSourceRoot": "E:\\CodexData\\Companion\\.build-cache\\frozen-windows-delivery-source",
+    "branch": "work/visual-meeting139-20261114",
+    "authoringSourceCommit": "e317ce2c9ed1beaa1947755e7279ffd892a184ae",
+    "relatedAuthoringFiles": [
+      "packages/ui/src/MeetingReadingFrame.tsx",
+      "packages/ui/src/MeetingTopic.tsx",
+      "packages/ui/src/notebookTheme.css",
+      "packages/ui/src/meetingMap.ts",
+      "packages/ui/src/MeetingMapView.tsx",
+      "packages/ui/src/meetingMap.css",
+      "packages/ui/src/MeetingSpeakers.tsx",
+      "packages/ui/src/meetingVisual.css",
+      "packages/ui/src/CompanionDashboard.tsx",
+      "packages/ui/src/NotebookNavigation.tsx"
+    ],
+    "saved137SourcePreserved": "f13be091b38dd93e26088a492ca23f9fb75b77c0",
+    "saved137Receipt": "E:/CodexData/Companion/deliveries/20261114-companion-tap137-fw66835/runtime-proof.json",
+    "backendAndInputUnchangedSinceSaved137": true,
+    "uncommittedOtherChangesIncluded": false,
+    "normalWindowsBuildPending": true,
+    "installed": false,
+    "ownerAccepted": false,
+    "modelChangesIncluded": false
+  },
+  "android": {
+    "at": "2026-11-14T18:12:00+08:00",
+    "versionCode": 160,
+    "versionName": "0.1.160",
+    "frontendSourceCommit": "9440df58247753d2a36640b91a6136685711d5bf",
+    "frontendBranch": "work/core-acceptance-android-20261109",
+    "backendSourceCommit": "92f53ef78a8cfd78caa60b98767dddbdf4c37583",
+    "aarSha256": "39acfbedb8cb4294be0455b3faa40d0033c25cc544aa6a2ae8c964f91a999a96",
+    "nativeLibrariesRebuilt": false,
+    "modelWorkAssignedOtherChat": true,
+    "modelsRun": false,
+    "installed": false
+  },
+  "windowsVersion": "0.1.139",
+  "androidVersion": "0.1.160",
+  "sameBatchInternal138159Rejected": true,
+  "internalRejection": "Actual native logical narrow viewport wrapped expanded navigation labels and left map branches cramped. Actual phone inherited summary::after duplicated the explicit chevron. Source fixed by labels that fit and container-relative map layout, scoped marker override; Summary list items labelled as points rather than inferred topics.",
+  "priorResultsRetained": {
+    "windows138": "E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/visual-meeting-native138/result.json",
+    "phone159": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android159\\end-session.json"
+  },
+  "sourceReview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\r4\\result.json",
+  "newModelsOrBoardOperations": 0,
+  "ownerAccepted": false
+}
