@@ -1,14 +1,16 @@
 const assert=require('node:assert/strict'),path=require('path');
-module.exports=async(page,frame,out,tag)=>{
+module.exports=async(page,frame,out,tag,options={})=>{
  await frame.getByRole('button',{name:'阅读纪要',exact:true}).click();
  assert.equal(await frame.locator('.meeting-reading-views>button').count(),3);
  assert.equal(await frame.locator('.meeting-reading-shortcuts,.meeting-reading-sidebar,.meeting-reading-intro>div>strong').count(),0);
- const full=frame.locator('.meeting-disclosure').filter({has:page.getByText('完整会议摘要',{exact:true})}).first();
+ const full=frame.locator('.meeting-disclosure').filter({has:page.getByText(options.summaryTitle||'完整会议摘要',{exact:true})}).first();
  const summary=full.locator(':scope>summary');
  assert(!await full.evaluate(e=>e.open));
  await summary.focus();await page.keyboard.press('Enter');assert(await full.evaluate(e=>e.open));
  assert(await full.locator('.meeting-disclosure-open').isVisible());assert(!await full.locator('.meeting-disclosure-closed').isVisible());
- const text=await full.locator(':scope>.meeting-disclosure-content').innerText();assert(text.length>1000);
+ const text=await full.locator(':scope>.meeting-disclosure-content').innerText();assert(text.length>(options.minimumTextLength??1000));
+ const squash=value=>value.replace(/[*_`]/g,'').replace(/\s+/g,' ').trim();
+ for(const term of options.expectedText||[])assert(squash(text).includes(squash(term)));
  assert.equal(await summary.evaluate(e=>getComputedStyle(e,'::after').display),'none');
  const layout=await summary.evaluate(e=>({header:e.getBoundingClientRect().width,panel:e.parentElement.getBoundingClientRect().width}));
  assert(layout.header>=layout.panel-3);
@@ -19,12 +21,13 @@ module.exports=async(page,frame,out,tag)=>{
  await contents.locator('summary').focus();await page.keyboard.press('Enter');assert(await contents.evaluate(e=>e.open));
  await page.keyboard.press('Escape');assert(!await contents.evaluate(e=>e.open));
  await contents.locator('summary').focus();await page.keyboard.press('Enter');
- await contents.getByRole('button',{name:'会议摘要',exact:true}).focus();await page.keyboard.press('Enter');
+ await contents.getByRole('button',{name:options.directoryTitle||'会议摘要',exact:true}).focus();await page.keyboard.press('Enter');
  await page.waitForFunction(()=>!document.querySelector('.meeting-contents').open);
- assert(await full.evaluate(e=>e.open));
- await summary.focus();await page.keyboard.press('Enter');
+ const target=options.directoryDisclosureTitle?frame.locator('.meeting-disclosure').filter({has:page.getByText(options.directoryDisclosureTitle,{exact:true})}).first():full;
+ assert(await target.evaluate(e=>e.open));
+ await target.locator(':scope>summary').focus();await page.keyboard.press('Enter');
  await frame.locator('.meeting-reading-start').scrollIntoViewIfNeeded();
  await page.screenshot({animations:'disabled',path:path.join(out,'actual-clear-reader-'+tag+'.png')});
  assert(await page.evaluate(()=>document.body.scrollWidth<=innerWidth));
- return {singleViewSwitch:true,oneOptionalDirectory:true,explicitExpandedAndCollapsedState:true,completeSummaryTextLength:text.length,fullWidthDisclosure:layout,keyboardDirectoryRevealsFoldedSummary:true,noHorizontalOverflow:true};
+ return {singleViewSwitch:true,oneOptionalDirectory:true,explicitExpandedAndCollapsedState:true,expandedSavedTextLength:text.length,expandedSourceItemsExact:options.expectedText?.length||null,fullWidthDisclosure:layout,keyboardDirectoryRevealsFoldedContent:true,noHorizontalOverflow:true};
 };
