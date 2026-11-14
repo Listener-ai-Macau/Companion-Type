@@ -15,7 +15,7 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  const connectionTop=await devicePage.locator('.ct-readiness').boundingBox();const recordingBelow=await devicePage.getByRole('region',{name:'在卡片上录音',exact:true}).boundingBox();
  assert(connectionTop&&recordingBelow&&connectionTop.y<recordingBelow.y,'Connection must appear before recording tools');
  await page.screenshot({path:out+'/device-light.png',fullPage:true});
- await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
+ await page.getByRole('button',{name:/^(?:全部录音|录音)$/,exact:true}).click();await page.locator('.ct-library-card').filter({hasText:'产品周会'}).click();
  const nav=page.getByRole('navigation',{name:'会议工作区',exact:true});await nav.waitFor();
  assert.equal(await nav.locator('button').count(),3);
  assert(await page.locator('#ct-meeting-result-pane').isVisible());assert(!await page.locator('#ct-recording-text').isVisible());
@@ -84,7 +84,7 @@ let server,browser,page;const result={at:new Date().toISOString(),state:'CHECKIN
  await page.locator('#fixture-sync-controls').getByRole('button',{name:'reclaiming',exact:true}).click();assert.equal(await syncRegion().count(),0);
  await page.locator('#fixture-sync-controls').getByRole('button',{name:'blocked',exact:true}).click();
  await page.getByRole('button',{name:'查看同步详情',exact:true}).click();await syncRegion().getByText('自动同步已暂停',{exact:true}).waitFor();
- await page.getByRole('button',{name:'录音',exact:true}).click();assert.equal(await syncRegion().count(),0);
+ await page.getByRole('button',{name:/^(?:全部录音|录音)$/,exact:true}).click();assert.equal(await syncRegion().count(),0);
  assert.deepEqual(errors,[]);result.state=result.fullWorkspaceJourneyCompleted?'COMPLETE_WORKSPACE_SOURCE_JOURNEY_PASSED':'QUIET_BACKGROUND_SYNC_SOURCE_JOURNEY_PASSED';result.covered=[...(result.fullWorkspaceJourneyCompleted?['connection before recording tools','saved minutes visible immediately','without minutes opens source','three reading panes and fixed header export','draft retained between panes','failed save retains draft','retry saves same draft','single-note handoff reveals pane','preview excludes other notes','cancel retains content','both themes and narrow windows']:[]),'all background sync phases quiet by default','explicit detail query only','record changes do not reset an open query','closing details stays quiet','real failure remains actionable without unsolicited progress'];
 }catch(error){result.error=String(error);if(page){fs.writeFileSync(out+'/failure-body.txt',await page.locator('body').innerText());await page.screenshot({path:out+'/failure.png',fullPage:true});}throw error;
 }finally{if(browser)await browser.close();if(server)await new Promise(r=>server.close(r));fs.writeFileSync(out+'/result.json',JSON.stringify(result,null,2));}})().catch(e=>{console.error(e);process.exitCode=1});

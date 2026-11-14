@@ -25,7 +25,7 @@ module.exports=async function productJourney(page,plan,out){
   assert((await readiness.boundingBox()).y<(await secondary.boundingBox()).y);
   await page.screenshot({path:path.join(out,'self-acceptance-device-entry.png'),fullPage:true});
  }
- async function open(){await page.getByRole('button',{name:'录音',exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
+ async function open(){await page.getByRole('button',{name:/^(?:全部录音|录音)$/,exact:true}).click();await page.locator('.ct-library-card').filter({hasText:plan.title}).click();await nav().waitFor();}
  if(!plan.backgroundOnly)await page.bringToFront();await open();await page.locator('#ct-meeting-result-pane').waitFor({state:'visible'});await page.locator('#ct-recording-text').waitFor({state:'hidden'});
  await page.locator('#ct-recording-result[open]').waitFor();
  const lightSwitch=page.getByRole('button',{name:'切换至浅色模式',exact:true});if(await lightSwitch.count())await lightSwitch.click();assert(!(await page.locator('.ct-shell').getAttribute('class')).includes('ct-theme-dark'));
