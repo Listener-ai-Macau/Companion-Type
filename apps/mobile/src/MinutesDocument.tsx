@@ -4,6 +4,7 @@ import { isGeneratedReadingNotice, meetingHeadingForDisplay, splitGeneratedMeeti
 import '../../../packages/ui/src/overviewTopics.css';
 import '../../../packages/ui/src/meetingNoteDocument.css';
 import {MeetingTopic} from '../../../packages/ui/src/MeetingTopic';
+import {MeetingSectionHeading} from '../../../packages/ui/src/MeetingSectionHeading';
 
 type Section={title:string|null;body:string};
 /** Split only level-two headings outside code fences; all other source text stays intact. */
@@ -44,13 +45,13 @@ export function MinutesDocument({markdown,title,renderText,renderSource,generati
   if(/^(分段原文依据|原文依据|补充原文（供核对）|原话核对|待核对片段|Keywords)$/.test(section.title!))return <MeetingDisclosure key={index} className="minutes-source-section" title={title} heading={section.title!} description="展开核对保存的原始内容">{renderSource?renderSource(section.body):renderText(section.body)}</MeetingDisclosure>;
   if(['Summary','摘要'].includes(section.title!)&&notices.some(line=>line.startsWith('> 长会议已按原文顺序处理全部'))&&headings.some(({s})=>['全会重点','会议概览'].includes(s.title!)))return <MeetingDisclosure key={index} className="minutes-source-section minutes-full-summary" title="完整会议摘要" heading={section.title!} description="按原文顺序查看全部讨论内容">{renderText(section.body)}</MeetingDisclosure>;
   const fallback=['全会重点','会议概览'].includes(section.title!)&&section.body.split('\n').every(line=>!line.trim()||/^[-*]\s+\S/.test(line));
-  if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{points.map((point,i)=><MeetingTopic text={point} key={`${i}:${point}`}/>)}</section>;}
+  if(fallback){const points=section.body.split('\n').filter(line=>line.trim()).map(line=>line.replace(/^[-*]\s+/,''));return <section className="minutes-section" key={index}><MeetingSectionHeading as='h3' sourceTitle={section.title!}>{title}</MeetingSectionHeading>{points.map((point,i)=><MeetingTopic text={point} key={`${i}:${point}`}/>)}</section>;}
   // Action cards own their one shared filter and their folding. Splitting the
   // source into two render calls would produce two incomplete action scopes.
   const remaining=['Action Items','行动事项'].includes(section.title!)?null:excerpt(section.body);
   const sectionOccurrence=sections.slice(0,index).filter(previous=>previous.title===section.title).length;
   const emptyCopy:Record<string,string>={Decisions:'这份纪要未记录明确结论。','Action Items':'这份纪要尚未提取到明确的行动事项。',Questions:'这份纪要未记录会中问题。',Keywords:'这份纪要未提取关键词。'};
   const empty=/^(?:[-*]\s+)?None captured[.。]?$/i.test(section.body.trim())?emptyCopy[section.title!]:undefined;
-  return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&!empty&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&!empty&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{empty?<p className="hint">{empty}</p>:renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<MeetingDisclosure className="minutes-more" title={`其余 ${remaining.count} 项`} description={remaining.next?remaining.next+(remaining.next.length>=36?'…':''):undefined}>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</MeetingDisclosure>}</section>;
+  return <section className="minutes-section" key={index}><MeetingSectionHeading as='h3' sourceTitle={section.title!}>{title}</MeetingSectionHeading>{section.title==='Decisions'&&!empty&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&!empty&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{empty?<p className="hint">{empty}</p>:renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<MeetingDisclosure className="minutes-more" title={`其余 ${remaining.count} 项`} description={remaining.next?remaining.next+(remaining.next.length>=36?'…':''):undefined}>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</MeetingDisclosure>}</section>;
  })}{display.metadata&&<details className="minutes-more minutes-generation"><summary>查看生成说明</summary><p>{generationNote||'这是已保存的整理结果，内容请结合转写核对。人工修改会单独标示；生成说明不代表转写或事实准确性已经验证。'}</p>{notices.length?renderText(notices.join('\n\n')):null}</details>}</div></MeetingReadingFrame>;
 }

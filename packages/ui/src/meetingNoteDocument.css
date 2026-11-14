@@ -9,23 +9,23 @@ body .ct-windows.ct-notebook .ct-library-card.selected{box-shadow:none;backgroun
 body .ct-windows.ct-notebook .ct-title-editor{position:relative;gap:0}
 body .ct-windows.ct-notebook .ct-title-editor>svg{position:absolute;left:-21px;opacity:0;transition:opacity .12s ease}
 body .ct-windows.ct-notebook .ct-title-editor:is(:hover,:focus-within)>svg{opacity:1}
-body .ct-windows.ct-notebook .ct-title-editor input{font-family:var(--notebook-font);font-size:24px;font-weight:500;line-height:1.35;letter-spacing:-.3px}
+body .ct-windows.ct-notebook .ct-title-editor input{font-family:var(--notebook-font);font-size:26px;font-weight:500;line-height:1.5;letter-spacing:-.35px}
 body .ct-windows.ct-notebook .ct-meeting-workspace{background:var(--nb-paper)}
-body .ct-windows.ct-notebook .ct-meeting-hero{padding-top:20px;padding-bottom:12px;align-items:flex-start}
+body .ct-windows.ct-notebook .ct-meeting-hero{padding-top:30px;padding-bottom:16px;align-items:flex-start}
 body .ct-windows.ct-notebook .ct-meeting-hero>div:first-child>p{margin-top:4px;line-height:18px}
 body .ct-windows.ct-notebook .ct-reader-header-actions{display:flex;align-items:center;justify-content:flex-end;flex:none;gap:8px;padding-top:2px}
 body .ct-windows.ct-notebook .ct-reader-header-actions .ct-reader-export{margin:0;background:var(--nb-ink);border-color:var(--nb-ink);color:var(--nb-paper)}
 body .ct-windows.ct-notebook .ct-reader-header-actions .ct-reader-replay{background:transparent}
 body .ct-windows.ct-notebook .ct-recording-primary-actions{margin-bottom:12px}
-body .ct-windows.ct-notebook .ct-meeting-navigation{gap:25px}
+body .ct-windows.ct-notebook .ct-meeting-navigation{gap:26px}
 body .ct-windows.ct-notebook .ct-meeting-navigation button{min-height:40px;padding-block:8px}
 body .ct-windows.ct-notebook .ct-meeting-navigation button[aria-current=page]{color:var(--nb-accent)}
-body .ct-windows.ct-notebook .ct-result-reading-toolbar{min-height:32px;padding:7px 0 0}
+body .ct-windows.ct-notebook .ct-result-reading-toolbar{min-height:38px;padding:10px 0 0}
 body .ct-windows.ct-notebook .ct-minutes-article{max-width:var(--notebook-reading-width);margin-top:8px;font-family:inherit;line-height:1.85}
-body .ct-windows.ct-notebook .ct-minutes-article h4{margin:30px 0 17px;font-size:18px;line-height:1.5;font-weight:650;letter-spacing:0}
+body .ct-windows.ct-notebook .ct-minutes-article h4{margin:30px 0 17px;font-size:18px;line-height:1.5;font-weight:500;letter-spacing:0}
 body .ct-windows.ct-notebook .ct-minutes-article h4:first-child{margin-top:14px}
 body .ct-windows.ct-notebook .ct-minutes-article :is(h4[data-meeting-heading="Decisions"],h4[data-meeting-heading="Action Items"],h4[data-meeting-heading="Questions"]){padding:0;border:0;border-radius:0;background:transparent;font-size:16px}
-body .ct-windows.ct-notebook .ct-minutes-article .ct-overview-topic-title{font-size:15px;font-weight:650;line-height:1.7}
+body .ct-windows.ct-notebook .ct-minutes-article .ct-overview-topic-title{font-size:15px;font-weight:500;line-height:1.7}
 body .ct-windows.ct-notebook .ct-minutes-article .ct-overview-topic-body p{font-size:14px;line-height:1.9;color:var(--nb-ink)}
 body .ct-windows.ct-notebook .ct-full-minutes{margin-top:22px;border-top:1px solid var(--nb-line);padding-top:12px;color:var(--nb-muted)}
 .ct-transcript-paragraph{display:block;margin-bottom:1.15em}
@@ -47,7 +47,7 @@ body .ct-windows.ct-notebook .ct-transcript-reading-tools>details{margin-left:au
 .mobile-app .minutes-document .minutes-section:has(>h3[data-meeting-heading="会议概览"]){padding:0 0 18px;border-radius:0;border-bottom:1px solid var(--line);background:transparent}
 .mobile-app .minutes-document .minutes-section:has(>h3[data-meeting-heading="会议概览"])>h3{margin-top:0}
 .mobile-app .ct-overview-topic{margin-bottom:22px}
-.mobile-app .ct-overview-topic-title{font-size:15px;line-height:1.7;font-weight:650}
+.mobile-app .ct-overview-topic-title{font-size:15px;line-height:1.7;font-weight:500}
 .mobile-app .ct-overview-topic-body>p{font-size:14px;line-height:1.9}
 .mobile-app .transcript-reader-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px}
 .mobile-app .transcript-reader-switch{display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:7px;background:var(--surface-soft)}
@@ -72,3 +72,5 @@ body .ct-windows.ct-notebook :is(button,a):focus-visible{outline:2px solid var(-
 .mobile-app .minutes-document .minutes-section .minutes-reading{font-size:15px;line-height:1.85}
 @media(prefers-reduced-motion:reduce){body .ct-windows.ct-notebook :is(button,a),body .ct-windows.ct-notebook .ct-library-card,body .ct-windows.ct-notebook .ct-title-editor>svg{transition:none}}
 @media(max-width:650px){.ct-windows.ct-notebook .ct-minutes-article{max-width:100%}.ct-windows.ct-notebook .ct-minutes-article h4{font-size:17px}}
+
+body .ct-windows.ct-notebook :is(button,input,textarea,select){font-family:var(--notebook-font)}
