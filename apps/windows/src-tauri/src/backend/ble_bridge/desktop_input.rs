@@ -347,7 +347,10 @@ mod hardware_test {
                 eprintln!("ACK_TRAFFIC_PROBE firmware={firmware} samples={samples:?} missing={missing:?} max_host_gap_us={max_gap:?} write_us={writes:?} echoes={} receive={received:?} mode0={restored:?} microphone_commands=0 cursor_output=false synthetic_physical_events=0",echoes.load(Ordering::Relaxed));
                 received.map_err(|e|e.message())?;writes?;
                 let restored=restored?;if restored.result!=0||restored.mode!=0{return Err("Actual mode0 not confirmed".into());}
-                if samples.iter().any(|n|*n<100){return Err("Insufficient real motion during a probe phase".into());}
+                // Quiet phases last2s each. Ten writes spaced50ms may finish
+                // in about0.65s, so requiring100 samples there was impossible
+                // for a healthy100Hz stream (835 actually delivered64).
+                if samples[0]<100||samples[1]<25||samples[2]<100{return Err("Insufficient real motion for the actual probe phase duration".into());}
                 Ok(())
             }).await;
             close_native_device(&device).await;run
