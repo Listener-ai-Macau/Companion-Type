@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-14T14:59:36+08:00",
+  "ownerOriginal": "先继续把后台能做的给做了，然后。现在来看，我现在要去睡一会觉，你先把继续把后台能做的东西做了就是现在大概，要在我睡醒以后再完整交给我交付。然后要看看复杂会议场景才行了",
+  "scope": "复杂真实会议多人/短回应/重叠内容；后台完成可执行工作并集中交付。无需Owner临场操作，不播放/录音/抢日用桌面。",
+  "state": "BACKGROUND_COMPLEX_RESULTS_DELIVERED_MODEL_QUALIFICATION_OPEN",
+  "batchReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\sleep-continuation20261114\\configured-full-complex\\state.json",
+  "currentBatchSnapshot": {
+    "newLocalFirstSourceCer": 0.1254630773030378,
+    "sameQwenShortCasesCompleted": 6,
+    "configuredCloudState": "CONFIGURED_COMPLETE_COMPLEX_STREAM_STOPPED_RETAINED",
+    "configuredCloudAudioSentSeconds": 1553.9,
+    "sealedPrefixEvaluationSeconds": 1546.192,
+    "sealedPrefixCer": 0.21573781983876622,
+    "sealedPrefixCpCer": 0.23957237995092884,
+    "sealedPrefixDer": 0.2463104993258206,
+    "sixPersonWholeMinutesBothModesComplete": true,
+    "wholeMinutesSource": "Reused completed Nov7 Qwen 39m22.945s, strictCER23.1558%, no known speaker identities; not the interrupted cloud prefix.",
+    "remainingPairedInputs": 4,
+    "localRecoveryExclusiveAvailableBytes": 3183419392
+  },
+  "fixedInputs": "4个逐人近讲 + 原始远场同覆盖1551.82秒；4人、原标注重叠456.28秒；已暴露Eval诊断，不作最终留出/30分钟资格。",
+  "executionBasis": "原五输入因真实Windows低内存暂停；不重放、不降资源保护。后台改做原已配置公共六人39分22秒整会连续ASR，原账号/1.0资源/默认识别请求不变，无本地神经推理；最终EOS后才取全量。",
+  "next": "后台本轮交付已保存；模型任务继续开放。资源实质恢复后从原near-N_SPK8014的17/52窗口断点续固定剩余4输入并独立逐人评分；当前135158最小事实核对候选尚须原生验证后才能进入相关正式交付批次。现有云端1.0路径停止原样长跑，优先原固定来源上查清文本漏词/数值指标与短回应、全人物重叠，不新增名单或用摘要掩盖识别错。",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "logResult": "Owner睡眠后台复杂会议续作。完整近讲一路53窗口Qwen CER508/4049=12.5463%，原同源Paraformer53.6676%；第二路17/52窗口低内存停，剩余4输入未完成，原恢复公式要求可用内存>3183419392字节。六8秒同Qwen控制全完成，第一段关键短语可识别但第二目标仍丢失，拒绝扩展提取方向。新整会云端14:15至14:43在1553.9/2362.945秒真实Windows低内存停止，自身峰值37.13MiB，无自动重放。仅封口1546.192秒前缀独立评分：CER21.5738%、cpCER23.9572%、零collar含重叠DER24.6310%，6人拆11匿名流，103个<2秒参考段有70个零正确归属；不当整会质量。随后复用Nov7已完整且SHA一致的39m22.945s Qwen实际输出（旧CER23.1558%、未确认身份），冻结Windows133隔离状态真实离线35.03s/在线56.04s均保存28590/28590源字节两段纪要，原转写不变。17项原先冻结语义诊断发现成活率→死亡率80%继承ASR错误、一车一位→一户一车位压缩、巡逻建议/现规定混入行动项；不声称95%事实覆盖。另R8001实际纪要赠品价值→成本误改已补独立概览核对、通用数值指标核验与原句回退，8限定对照通过但原生验证未过；最小82行候选前移至当前135158源d42e后提交b12c2a7a，Android共享候选b85ddaaf，均私有推送且未装日用版。先前前端构建过、native因低内存止、CI因计费0步骤未启动，失败均保留。当前整理集中交付，模型与复杂会议/最终留出/整卡/售卖资格继续开放。 本轮交付目录C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/Companion-复杂会议-20261114；整会原始转写、双模式实际纪要、17约束核对、六段重叠试听、源码补丁及失败收据已集中保存。模型源码与本轮实际原始证据提交c0ca41ba71bc6804ee12b6835728113fcc75ad27已推原私有研究分支并成功回执；Windows与共享后端候选远端SHA已独立核对一致。最后只读恢复检查仍DEFERRED，无在途自有推理/构建/云端流；未关闭原模型/复杂会议/最终留出/售卖待办，也不宣称后台在回复后自行运行。",
+  "activeOwnedProcesses": [],
+  "deliveryDirectory": "C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/outputs/Companion-复杂会议-20261114",
+  "researchSourceCommit": "c0ca41ba71bc6804ee12b6835728113fcc75ad27",
+  "sourceRemoteProtected": true,
+  "sourceCandidates": {
+    "windows": "b12c2a7ade1f4a3375c6b4295e8228a089ef95b8",
+    "sharedAndroid": "b85ddaaf26ac4929167c46a3cae0c4f07ce376f9"
+  },
+  "nativeCandidateInstalled": false,
+  "resourceDependency": "原固定第二路最后低内存恢复要求available>3183419392字节且实际Windows低内存通知关闭；14:58前终检仍不满足，禁止自动重放。"
+}

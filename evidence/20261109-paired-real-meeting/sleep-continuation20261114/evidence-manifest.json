@@ -99,6 +99,16 @@
       "sha256": "6246f15e1893985a7f0947603203d9d4b52149414d71e354a618d53555821cb4"
     },
     {
+      "path": "delivery-summary.json",
+      "bytes": 3267,
+      "sha256": "151b6d81aa54524bd5310e89ea2c939d3e1316aaafd3c9c9bbfeb428f2a87e0e"
+    },
+    {
+      "path": "final-workpoint-snapshot.json",
+      "bytes": 5239,
+      "sha256": "e78feae9a31c1dbae5e35e00d4f6e4c2c18aa4f2a033ef7a4328913fe8b551ee"
+    },
+    {
       "path": "measurement-fidelity/input.json",
       "bytes": 3564,
       "sha256": "b905e83c4469f066fc46e98e6b536b70253bef929eecb3e1ef564cb8f7455188"
@@ -237,6 +247,11 @@
       "path": "overview-fidelity/result.json",
       "bytes": 1643,
       "sha256": "2849a51fa71772e8db53e2e6731484d3a04a583e6dfea206ec26ed9175574430"
+    },
+    {
+      "path": "recovery-before-delivery.json",
+      "bytes": 1353,
+      "sha256": "c3fd50a2f4d5a2bd7541ef7157f16f188cf8a03561bc7a523dd50a602740512b"
     },
     {
       "path": "same-qwen-overlap-review.json",
