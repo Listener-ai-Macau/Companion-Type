@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 32,
+    "startSample": 15335518,
+    "endSample": 15807725,
+    "text": "嗯，还有就是这个，嗯，嗯，这个蛋糕店的这个人群分类就是，呃，一方面就是这个学校的在学在校学生，嗯，就是年级吧，就是十八到二十六左右，嗯，嗯，嗯，主要就是他们的就是经济来源来自于父母嘛，嗯，就是销售肯定就是不会太贵的这种商品。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 15335518,
+        "endSample": 15807725,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "d696ab3f4aaa1d289bf334f9030b1f4ce8ef06eafdcd8b979fb1274db2ab44d2"
+}

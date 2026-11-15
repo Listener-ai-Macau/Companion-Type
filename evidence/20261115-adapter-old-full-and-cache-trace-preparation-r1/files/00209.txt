@@ -1,0 +1,62 @@
+Companion 社区可行性与实际进度｜2026-11-15
+
+判断
+有机会做成有明确适用条件的本地会议产品。普通轮流发言、文字转写、匿名人物、时间定位、纪要保存和导出的开源路径已经存在；目前没有证据可以承诺单麦远场、中英混说、多人抢话、任意房间都能稳定达到原质量门槛。当前本地产品链路已通，模型跨会议质量仍未收口。之前用单份较好会议的结果推断很快能完成普通会议质量收敛，判断过于乐观，需要纠正。
+
+训练与最难问题
+已有成熟预训练ASR、对齐器和分人模型，不需要我们从零训练基座。现在难在四件事同时成立：每个人的内容确实听全；长会中同一个人不换号；短回应和弱音不漏；重叠时第二个人的内容也能被识别。给混音标两个人不等于恢复了两路文字。官方NVIDIA集成也区分专门重叠训练的multitalker ASR和普通单人ASR；其Multitalker Parakeet路线仅支持英语，不能据此承诺中文同样可用。
+
+社区和开源常见做法
+1. 组合预训练组件。FunASR把ASR、VAD、CAM++声纹聚类等组合；WhisperX把识别、对齐、人物日志分开。可以本地部署，但WhisperX官方明确承认重叠和人物归属仍有局限。
+2. 一体化“谁在何时说什么”。MOSS-Transcribe-Diarize和VibeVoice-ASR已开源，能减少模块拼接，但不代表天然符合我们的精度、AMD运行环境和长会可靠性要求。MOSS官方AISHELL4公布CER14.84%；VibeVoice官方AMI-SDM公布WER24.65%。这是各自评测的完整数据集结果，不能直接与我们单场分数作胜负比较；它们说明5%绝不是复杂会议开箱保证。
+3. 产品围绕原音、回听、人物确认、术语和复核收口。TranscrIA这类自托管项目公开了整条产品流水线和真实会议失败案例，可借鉴其产品和工程方法；其法语私有会议评测不能替代我们的中文、英文、实卡验收。
+
+看社区数字时需要区分的事
+Omi公开评测同时保存零容差与±250毫秒容差。相同Precision-3 API自动人数一行，带容差DER2.891%，零容差11.597%。不能把宽松边界的漂亮数字当作我们零容差门槛已可达。该数据是15场模拟医患对话，与我们的多人会议不同，不直接排名。
+B站检索到了FunASR+3d-speaker会议纪要接口、单声道分人接口和Qwen3-ASR多人整合包。三个视频详情页均返回412，只核实到搜索索引的标题/简介，没有观看完整视频或复验其准确率。整合包“支持多人”不能作为完整长会、重叠、身份稳定性的质量证据。
+
+目前实际进度
+工程：实际Windows候选已用完整35分9.813秒英语会议跑通导入、本地转写、两种实际纪要、保存、新进程重开、Markdown/JSON/原音导出，图形界面已后台验证。未听清范围保留，纪要以待核对草稿显示；纪要事实准确率尚未正式验收。90秒公开中英技术控制在本地增量引擎中已按实际时间送音并产出录中草稿，实际冷启动首个预览约73秒，不能称流畅实时体验已达标；原生LiveAsrHub新缓存归属实现的实际90秒链路尚未运行，不能冒充实卡已验。
+产品可靠性：修了PCM导入改值导致缓存失配；修了来源音频未听清时纪要仍显示最终稿；新组合模型缓存改为按会议预记归属和写前登记，原生归属测试/真实父子写登记已过，新原生buildr7成功。实际模型缓存隐私清理和停止续转核验仍待做，D1未宣布完成。
+质量：旧中文完整38分47秒5人会，原字CER5.5375%、分人DER3.8556%、逐人cpCER5.8018%；新增中文完整34分9秒4人会，原字14.4974%、DER15.8415%、逐人27.0656%；完整35分9秒4人英文会，WER23.9405%、DER26.0181%、逐人cpWER38.7130%。中文按字、英文按词，数字不能直接互相比。单份旧会接近目标，不能代表跨会议合格；D2未完成。
+已停止无效方向：同一新中文会，预测换人切分把原字错误率变为15.6438%，旧中文保护会也未改善；固定声纹全局重分组把新DER变为20.4187%。两项都拒绝，不继续调阈值或变体。
+固定小适配实际完成：128训练句、32独立验证句，rank8、单轮、32次优化更新；全部冻结基座参数字节保持一致，初始适配无操作对照和禁用适配后的英文ID逐项一致；族私有峰1641164800B，CPU5%和模型2GiB上限保持。32句989参考字的错误30→27，CER3.0334%→2.7300%，两份验证来源各减2/1错；30秒英文归一原文保持、4.03秒中英混说仍2错。只有3字小收益、不是完整会议或统计显著性证明，不足以判断14.5%/23.9%的长会问题已解决。候选保留供原完整门评估，尚未进产品默认。
+
+建议接续
+保留原D1/D2目标和门槛。先把已通工程的实际录中、停止续转、隐私清理和可用候选交付收完；质量工作先核同一失败录音的官方实现与本地实现，区分部署掉精度与模型本身声学能力，再只修一个确证原因。小适配最多按原固定规则核完整会议，不能因训练能跑就扩epoch/扫参。真实产品录音数据需要能覆盖短回应、弱音、距离、人物长时间不说话后回来、中英文；复杂重叠另需相应多说话人监督和原音证据。可售适用范围如需调整，应由Owner决定，不能把工程完成或降低评分口径当作原质量达标。
+
+本轮核对来源（来源主张不等于本机复现成功）
+FunASR 官方：https://github.com/modelscope/FunASR
+WhisperX 官方限制：https://github.com/m-bain/whisperX#limitations-
+Qwen 官方原生模型：https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf
+pyannote 官方模型与完整评分条件：https://huggingface.co/pyannote/speaker-diarization-community-1
+NVIDIA 官方分人和ASR集成：https://huggingface.co/nvidia/Nemotron-3-Diarization/blob/main/ASR_INTEGRATION_GUIDE.md
+NVIDIA 官方评分定义：https://huggingface.co/nvidia/Nemotron-3-Diarization/blob/main/diarization_evaluation.md
+MOSS 官方结果：https://github.com/OpenMOSS/MOSS-Transcribe-Diarize#objective-evaluation
+VibeVoice 官方结果：https://github.com/microsoft/VibeVoice/blob/main/docs/vibevoice-asr.md
+TranscrIA 产品源码：https://github.com/Martossien/transcria
+TranscrIA 真实会议及失败记录：https://github.com/Martossien/transcria/blob/main/docs/STT_BENCHMARK_REAL_MEETINGS.md
+Omi 完整评分：https://github.com/Omi-Health/clinical-diarization-benchmark/blob/main/results/RESULTS.md
+B站索引，详情412：https://www.bilibili.com/video/BV1bT5gzbE7S/
+B站索引，详情412：https://www.bilibili.com/video/BV1xxw6zyE4C/
+B站索引，详情412：https://www.bilibili.com/video/BV17DMi6WESP/
+
+
+2026-11-15 11:50 完整官方参考对照补充
+同一份原始Nemotron-3权重，完整2049.3615秒中文会议，既有原生FP16和上游Transformers FP32均保留同样分块/缓存/0.5门限。官方参考DER15.8414424%，原生约15.84147%，均未达到10%门槛；先前group2在长时间未发言后返回仍被丢掉，两个实现最后活动分别1040.94/1040.99秒。没有证据支持靠替换运行实现修好该场。没有改默认或继续扫缓存/阈值。
+资源方面，ROCm独立BLAS池从16线程限定到本进程1线程，完整前端分块与原公式在61秒及非整帧尾/边界脉冲条件特征逐值相等；最终完整模型峰约1.67GiB，原2GiB上限保留。此前0NN前端分配失败及版本也保留。
+第一项D1现已实际交付本机内部候选，入口与限制见同目录Companion-D1本机候选使用说明-20261115.txt；第二项D2质量仍未完成。固定128句小适配仅少3个验证字符，目前正在做整场评估，不追加训练参数。
+额外核验的官方材料：NVIDIA自己的语音代理文档明确提醒噪声会漏人/混淆，相近声音可能合并；其现成代理服务一条转写只附一个人物标签，重叠会合并标签。这是该服务的边界，不是所有底层模型只能单人。
+https://docs.nvidia.com/nemo/labs-voice-agent/about/core-concepts/speech-pipeline/speaker-diarization/
+NVIDIA 2026-11-09论文说明Nemotron3使用大规模模拟混合语音和额外活动/虚假说话人损失训练，训练代码和权重开放；从现有基础模型做针对性适配有路径，但本机128句试验不能代表已完成这类能力训练。
+https://arxiv.org/abs/2611.12246
+
+论文细读补充（基础训练规模与指标边界）
+官方基础模型训练使用64张A100 80GB；真人标注/伪标注各约5000小时、模拟混合约82600小时。这不是我们做小适配必须拥有的配置，但不宜把从头复刻当成交付捷径。论文在AMI、AliMeeting、NOTSOFAR使用强制对齐参考，并明确不与原始标注榜分直接比较；我们原评分继续保留，不能换参考后宣布过门。此差别只解释指标可比性，并未证明它解释本机全部错误或人物返回丢失。
+https://arxiv.org/html/2611.12246v1
+当前128句LoRA适配的是文字识别；其收益不能自动计作说话人日志改善。
+
+英文人物时间轴专项诊断补充（不更改原验收）
+对同一完整35分钟ES2003b、同一预测SHA bf816968…，独立强制对齐参考的DER为6.68703%，原手工词区间参考仍为26.0181%；两者零容差、包含重叠、全场和A-D全局映射相同，0新增模型调用。原未正确归属的495.941942说话人秒中443.330188秒（89.39%）位于外部MFA未标注区间。此为参考边界分歧，不证明这些音频真是静音；外部MFA也有错误。此前将英文高分直接归因为大量实际活动漏检不充分。英文原始WER23.9405%、原验收失败及中文返回人物丢失均保持，D2不判合格。
+标注作者及许可：https://github.com/nttcslab-sp/diar-forced-alignment
+本机诊断收据：C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261109-paired-real-meeting\bilingual-local20261114\d1d2-execution\reference-annotation-audit-r1\comparison.json

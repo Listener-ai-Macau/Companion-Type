@@ -1,0 +1,1486 @@
+{
+  "state": "OLD_ADAPTER_FULL_ONLY_SMALL_GAIN_STILL_FAILS_NEW_FULL_ACTIVE_CACHE_TRACE_NOT_INFERRED",
+  "at": "2026-11-15T12:29:45.257731+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\adapter-roundtrip.json",
+      "logicalPath": "old-whole-transcript/adapter-roundtrip.json",
+      "file": "files/00000.json",
+      "bytes": 328,
+      "sha256": "8139a6df6c12f34838e00a57c4cc16f78838c33994ff45e3672233c6fca883fa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\attribution-review.json",
+      "logicalPath": "old-whole-transcript/attribution-review.json",
+      "file": "files/00001.json",
+      "bytes": 65461,
+      "sha256": "c7632a4b0c042e28be53471a104f41a46f3c82183d839a3f51272053f7474eca"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\completed-state.json",
+      "logicalPath": "old-whole-transcript/completed-state.json",
+      "file": "files/00002.json",
+      "bytes": 2208,
+      "sha256": "aa957426f3ae39fb4c763876556b90209e797f3ed01761a40672b56b47551d1a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\model-output.json",
+      "logicalPath": "old-whole-transcript/model-output.json",
+      "file": "files/00003.json",
+      "bytes": 64527,
+      "sha256": "6472e47a4c879934117abb515105933ab70e2750157fbda8af09c86f62b6ab67"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\state.json",
+      "logicalPath": "old-whole-transcript/state.json",
+      "file": "files/00004.json",
+      "bytes": 2208,
+      "sha256": "aa957426f3ae39fb4c763876556b90209e797f3ed01761a40672b56b47551d1a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\text-draft.json",
+      "logicalPath": "old-whole-transcript/text-draft.json",
+      "file": "files/00005.json",
+      "bytes": 64528,
+      "sha256": "818951c5ef1cee9170f65c220df1411ce665c90e9aaf97d82c59ebb9f04c978d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\weight-roundtrip.json",
+      "logicalPath": "old-whole-transcript/weight-roundtrip.json",
+      "file": "files/00006.json",
+      "bytes": 1595,
+      "sha256": "1de6d2220d2e6fa53669cf43b0edca2aa2aaadf5d2996946e0d65ad36a6945a5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000000-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000000-root.json",
+      "file": "files/00007.json",
+      "bytes": 2291,
+      "sha256": "f284cdfb6681d08da74a2d3e63fbdd0af7ae0d65dee1aacc288213df82ac0a24"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000001-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000001-root.json",
+      "file": "files/00008.json",
+      "bytes": 3047,
+      "sha256": "c621b1cae19e32c8f2d11caf5d65ad5c2f58c967fa03584a196649187c730931"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000002-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000002-root.json",
+      "file": "files/00009.json",
+      "bytes": 2547,
+      "sha256": "0e3f282c67d770deb95de6ab7f2897b8012c93d2642e737fe3bfa9a6241611b6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000003-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000003-root.json",
+      "file": "files/00010.json",
+      "bytes": 2257,
+      "sha256": "33b04e2de77d721c74ae37292be2266e41a865417952dc1af0d17cf119e05d2a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000004-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000004-root.json",
+      "file": "files/00011.json",
+      "bytes": 2611,
+      "sha256": "cdeab79b27d0852b1d07439cd75a46608430f02a430a4f6e0d41c691d733541c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000005-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000005-root.json",
+      "file": "files/00012.json",
+      "bytes": 2622,
+      "sha256": "96540e2668554b74b313e1d5fc30884a17f051ca928825c414540a239c2f19ae"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000006-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000006-root.json",
+      "file": "files/00013.json",
+      "bytes": 2381,
+      "sha256": "e2b31347b6210d17e6296dfa027c7caa3f6f00cf6d28eca4507dda0b0bf78b43"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000007-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000007-root.json",
+      "file": "files/00014.json",
+      "bytes": 2569,
+      "sha256": "e606b05be89ac51a82b0188c04e9be692a7baa91aab14f812dddf75ec6c00edd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000008-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000008-root.json",
+      "file": "files/00015.json",
+      "bytes": 2907,
+      "sha256": "b86f4ff18d9b99f9e58f8a451da7a7f66c2e2ff6280816515c4401ec8517f7a7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000009-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000009-root.json",
+      "file": "files/00016.json",
+      "bytes": 2795,
+      "sha256": "7c95769b614f58e6ac895d76328b1ebd036c15c3073a5b2a8bfb25c5bbb7211c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000010-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000010-root.json",
+      "file": "files/00017.json",
+      "bytes": 3387,
+      "sha256": "9b8fa5280e47d9b348e61453804364a173e1ff8442f166413306cc204d3afa1c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000011-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000011-root.json",
+      "file": "files/00018.json",
+      "bytes": 2689,
+      "sha256": "d8b54f6541028ad461ed0f9bb3c839f0a964fa8b136727139358b19aab11ebff"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000012-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000012-root.json",
+      "file": "files/00019.json",
+      "bytes": 3333,
+      "sha256": "925bc411f0322efaf9af0d463b60ae68961d40ac2f8dca6f84c97ea541b6fc7d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000013-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000013-root.json",
+      "file": "files/00020.json",
+      "bytes": 3172,
+      "sha256": "c96d1e0db14d0c19d59afdc227209becc6cb1b9fc3ccdae87ca50d035c3bd0fc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000014-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000014-root.json",
+      "file": "files/00021.json",
+      "bytes": 3680,
+      "sha256": "8d7e632415abe5b3bdf661f641c9bcbbd8d533020b1dcd394f6c2783998a40fe"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000015-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000015-root.json",
+      "file": "files/00022.json",
+      "bytes": 3412,
+      "sha256": "0c5dd3df1d21b8f421bbddc11d86abf4198f5fc541cda166392d177bbc546880"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000016-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000016-root.json",
+      "file": "files/00023.json",
+      "bytes": 3097,
+      "sha256": "56b9d562cb192994486fb262eea55e6ca5bff72342896e4d4f32d8f43a2deffd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000017-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000017-root.json",
+      "file": "files/00024.json",
+      "bytes": 3153,
+      "sha256": "eb583c9f2f77322941c2a2c1f4003c4d02e660b39ac70b9f3bbb428cc4be8a90"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000018-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000018-root.json",
+      "file": "files/00025.json",
+      "bytes": 3150,
+      "sha256": "5b7c021fc27317d83fdfb402698f883492707db38aae8203e891b32da716f039"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000019-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000019-root.json",
+      "file": "files/00026.json",
+      "bytes": 3358,
+      "sha256": "df9ed0dc11f1ebc4785c1c32a64fb440f6ce623b3254174361e785d958f6bad9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000020-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000020-root.json",
+      "file": "files/00027.json",
+      "bytes": 2859,
+      "sha256": "ab36eae351b39a08186ceb79c9e5851ecd0f6584c9b51c8bef4a5093cf5685ab"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000021-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000021-root.json",
+      "file": "files/00028.json",
+      "bytes": 2822,
+      "sha256": "eeb69843c5b60d858f9e4677d0bf99b97cc53962c1cf07cf16872e8068d4781d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000022-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000022-root.json",
+      "file": "files/00029.json",
+      "bytes": 3466,
+      "sha256": "b9057893890454dd227cab054216427c36a01e713a8f112b1215bb8776a457e2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000023-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000023-root.json",
+      "file": "files/00030.json",
+      "bytes": 2897,
+      "sha256": "58dbe4f33832a2fe945f41ff43e281c0e646017dfb0ee2a0c252091e5d9c47d1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000024-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000024-root.json",
+      "file": "files/00031.json",
+      "bytes": 3164,
+      "sha256": "d855f96155b88f5e1f459624f9cffffe6e17cd2b657409a36a65bc510a94a057"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000025-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000025-root.json",
+      "file": "files/00032.json",
+      "bytes": 3268,
+      "sha256": "c0a0b3916eee69bba3bc45dbd4266b322163e259abfc8b9046d6cfcfdb0240ea"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000026-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000026-root.json",
+      "file": "files/00033.json",
+      "bytes": 3174,
+      "sha256": "79873a9369d6b8e2fccf5f2c235aa4b5b4efe4a96522ed8a091a9bd95ab6c423"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000027-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000027-root.json",
+      "file": "files/00034.json",
+      "bytes": 2683,
+      "sha256": "33eb09e7e788a7532baea4c47d6866c06e59221f5e2c77b448d0611087ac56b5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000028-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000028-root.json",
+      "file": "files/00035.json",
+      "bytes": 2670,
+      "sha256": "59d7e099622d32439958e74c2f13f4f26f11ef729d17d8146e3cb18c17e03504"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000029-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000029-root.json",
+      "file": "files/00036.json",
+      "bytes": 2551,
+      "sha256": "860b7d187777c423e879f8427c03e53f972905d8b2981542c9411b344005619c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000030-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000030-root.json",
+      "file": "files/00037.json",
+      "bytes": 2463,
+      "sha256": "7051dec53afe26a41b5bccdfb6f774dfc0d40edcb0f5cbfa68b28d260b123b70"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000031-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000031-root.json",
+      "file": "files/00038.json",
+      "bytes": 2600,
+      "sha256": "4112ef43b789ee5889325ae938fdcf6bb3160f712561fa4bbd9ee56504c054fe"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000032-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000032-root.json",
+      "file": "files/00039.json",
+      "bytes": 2652,
+      "sha256": "c05b4e23d45464754e4a032ff4b28112455283747375ec79949d0cd39ca8da26"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000033-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000033-root.json",
+      "file": "files/00040.json",
+      "bytes": 879,
+      "sha256": "f8f50b7451dbde82c41a9522641731f582c4e8318c13790cfcc6f159c6cc22ca"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000034-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000034-root.json",
+      "file": "files/00041.json",
+      "bytes": 879,
+      "sha256": "31874d1957c94ac636f8804afe4c937061aedfb6441905d56e1b942fdd4bb072"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000035-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000035-root.json",
+      "file": "files/00042.json",
+      "bytes": 879,
+      "sha256": "3336d42249173229ec952701044130fdbd685e838877413620f4f18ab74ab4ed"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000036-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000036-root.json",
+      "file": "files/00043.json",
+      "bytes": 2332,
+      "sha256": "8dd1d77da621eafe745a60fa0468b62137670bc5ecb6c9284f80816cf03666bc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000037-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000037-root.json",
+      "file": "files/00044.json",
+      "bytes": 2826,
+      "sha256": "16745a30985bf44d10048703871ecf6f4a2d7f88bbac2504639d2b39a4713001"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000038-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000038-root.json",
+      "file": "files/00045.json",
+      "bytes": 2324,
+      "sha256": "8efb4088729ac8d1b9da1f9544a75b84d150372d0841bbacf9afc5f9598b80ef"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000039-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000039-root.json",
+      "file": "files/00046.json",
+      "bytes": 2166,
+      "sha256": "418f453933712d7bd0620decfc26ba670021fdd5569edf04f35ab0404c1a2e03"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000040-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000040-root.json",
+      "file": "files/00047.json",
+      "bytes": 2548,
+      "sha256": "5b6e83f28e49e7e77a5548acfcf1ddf877e5392796296c422a8df55ccc92e52e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000041-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000041-root.json",
+      "file": "files/00048.json",
+      "bytes": 2595,
+      "sha256": "ba5d3b02fc704289d6ccc147c1e76176bdb4d427f770c21e561a7454245dc7e3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000042-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000042-root.json",
+      "file": "files/00049.json",
+      "bytes": 3223,
+      "sha256": "a90aa585753e3828889ac941ab13d6ed28967cdecce0d719ba0d6ab15597e9b9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000043-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000043-root.json",
+      "file": "files/00050.json",
+      "bytes": 2640,
+      "sha256": "91db82ca568ca836f6f3cddd2848a8298104912e4503e26dc3a84d024ead4a0d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000044-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000044-root.json",
+      "file": "files/00051.json",
+      "bytes": 2495,
+      "sha256": "905d03d6261d85171c4b1c7cb6e40fba41915e850a6047d1b7805dda0dc03b17"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000045-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000045-root.json",
+      "file": "files/00052.json",
+      "bytes": 3073,
+      "sha256": "fb281e6d21d67f3d8f22fdcfa8e43c1dcfa61a96ddebf095920fa1b9421838a4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000046-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000046-root.json",
+      "file": "files/00053.json",
+      "bytes": 3157,
+      "sha256": "b19556bef17777eeeb481b211fb9b916151f818f64b67b0ce66774a29c1cb488"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000047-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000047-root.json",
+      "file": "files/00054.json",
+      "bytes": 2322,
+      "sha256": "42aa7b32b8c9795c12ce55ddb92e78de5278472103d8a23ad562806c019d1f87"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000048-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000048-root.json",
+      "file": "files/00055.json",
+      "bytes": 3027,
+      "sha256": "09d556aeb727353a0cad08da5a4745ef4bfd5ff3dfa2daf098c586f345ea21d6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000049-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000049-root.json",
+      "file": "files/00056.json",
+      "bytes": 3349,
+      "sha256": "37ae492949c85fef877b5aef57576a28bd1f61f246484487eae99b7958054657"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000050-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000050-root.json",
+      "file": "files/00057.json",
+      "bytes": 2403,
+      "sha256": "5d4136c406cc3cc6bb74d4e4b21fc3a4ef35111fcc27cf8a06f4a4daaf7caa98"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000051-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000051-root.json",
+      "file": "files/00058.json",
+      "bytes": 2491,
+      "sha256": "dbcce3d72226c4adf2ae26e996cdf0367e2d5c60dfeb525c4f7af043adaf5cee"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000052-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000052-root.json",
+      "file": "files/00059.json",
+      "bytes": 2663,
+      "sha256": "377861bc2668315920fcad49fc8745d05d30b16476d6ce50480d889a86d9a8d9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000053-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000053-root.json",
+      "file": "files/00060.json",
+      "bytes": 3085,
+      "sha256": "da8478d48294cbe64b4ba7b61286295b20b92fa1b6b046b3fbb962159acd52ac"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000054-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000054-root.json",
+      "file": "files/00061.json",
+      "bytes": 3184,
+      "sha256": "4a5aa3baad52d630fc04f8002021430c1ee027426543a89107770414f9fd5dcc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000055-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000055-root.json",
+      "file": "files/00062.json",
+      "bytes": 2636,
+      "sha256": "3ba22548dff999061588d65940493669f518e603276a1b1ab187a3b633e0ce59"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000056-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000056-root.json",
+      "file": "files/00063.json",
+      "bytes": 2278,
+      "sha256": "1660bba5e6ca8c881550c730549b738708289f9074a4ede9de61068aa0e2a25a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000057-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000057-root.json",
+      "file": "files/00064.json",
+      "bytes": 2825,
+      "sha256": "e542a28a4c005892c65b800bd9815811e5117d370cc51fd05b2536d3f114234f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000058-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000058-root.json",
+      "file": "files/00065.json",
+      "bytes": 2669,
+      "sha256": "67b7ddd0762138572168a7052e5cc2565ae7a5f5556dba8450446e5ceecdeb9e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000059-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000059-root.json",
+      "file": "files/00066.json",
+      "bytes": 2832,
+      "sha256": "fb120e510726e32b0b36a4b87ca3c9e30a9291655d5fed8af35846e2e9629dcc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000060-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000060-root.json",
+      "file": "files/00067.json",
+      "bytes": 2656,
+      "sha256": "1ad9647df830f5add077b9b71596ef576cb57b6c3cdcfbff67fb145999272251"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000061-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000061-root.json",
+      "file": "files/00068.json",
+      "bytes": 2490,
+      "sha256": "900755078f69c8ed37e02d19f4002278181e4fb222323f15a616b1d0a8f93d90"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000062-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000062-root.json",
+      "file": "files/00069.json",
+      "bytes": 3162,
+      "sha256": "6bf2234e735723858a5b88b72ec36ead26895a45c2ecd141df9061abdc2e1269"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000063-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000063-root.json",
+      "file": "files/00070.json",
+      "bytes": 2464,
+      "sha256": "53072843f84c7de0b3c7eadc22cb47a9e186550e97def5ff6b1e994d6dc2fb40"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000064-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000064-root.json",
+      "file": "files/00071.json",
+      "bytes": 2960,
+      "sha256": "f0eaffade1883ff890185bbcfab8f3ccc76fd44786f269993a2bb719468671d7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000065-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000065-root.json",
+      "file": "files/00072.json",
+      "bytes": 2747,
+      "sha256": "f384d82c5cb47e32ca1fc9dece13c8ebe6c9b4fbc8eebe0f58124028048b007b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000066-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000066-root.json",
+      "file": "files/00073.json",
+      "bytes": 2322,
+      "sha256": "e8afa6cd53cd1f7088914a664917f7dd7a710cd5a66d14bb2d266a4694b44a43"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000067-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000067-root.json",
+      "file": "files/00074.json",
+      "bytes": 2175,
+      "sha256": "610d197b8bba3905fc4328d4d11b5caffbde307946d9c8622af0161b0b4578ef"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000068-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000068-root.json",
+      "file": "files/00075.json",
+      "bytes": 2379,
+      "sha256": "feb1dc21b9cb2af292608b1c1ce9f621ddd970ae14fb8d699009bd2009b4a1cd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000069-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000069-root.json",
+      "file": "files/00076.json",
+      "bytes": 2697,
+      "sha256": "79c11d659fe7fcea6da15b0c78e85ac8f7ed42c4493050d99a0f57188322eaa4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000070-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000070-root.json",
+      "file": "files/00077.json",
+      "bytes": 2261,
+      "sha256": "cd98586f73615fb694705670b2394fcf8bc9646a6e7a77c41776386a38b2e9f1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000071-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000071-root.json",
+      "file": "files/00078.json",
+      "bytes": 2938,
+      "sha256": "bdedc1ac79be37a45822e2c02cab9fe1b5eb0bfa877a852110f569f7ce3bdff3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000072-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000072-root.json",
+      "file": "files/00079.json",
+      "bytes": 2745,
+      "sha256": "882abce18d5480503e4eb0594efd8023c7670bb82017ae6cdad8e8a3c018266c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000073-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000073-root.json",
+      "file": "files/00080.json",
+      "bytes": 2949,
+      "sha256": "81bd49510d4c1afce731bb5f524ceaf17f9b97044b2d55e034be0ca6d42b366f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000074-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000074-root.json",
+      "file": "files/00081.json",
+      "bytes": 2703,
+      "sha256": "e48cdebed5407ef0f9bbc771b286a0b97ca2cee56cf819c4ee344e30be9958c7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000075-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000075-root.json",
+      "file": "files/00082.json",
+      "bytes": 3129,
+      "sha256": "ccaef260c58a372704bc5040ce1d77ee5561242d0dcd2783c39727aeee497d68"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000076-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000076-root.json",
+      "file": "files/00083.json",
+      "bytes": 2779,
+      "sha256": "a50dae93d4f195dd90d8cf524ae516962b6cc5b36384f6a23a797c8d1a86fc59"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000077-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000077-root.json",
+      "file": "files/00084.json",
+      "bytes": 1686,
+      "sha256": "b167868d111defdd1e4bed7de905cb58d926b5c59805c720b495624664b8294f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000078-root.json",
+      "logicalPath": "old-whole-transcript/nodes/000078-root.json",
+      "file": "files/00085.json",
+      "bytes": 1071,
+      "sha256": "22ad900a1c51597b441d3db629644fc931c7d465f436010b986b536f1b03e07d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000000.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000000.raw.json",
+      "file": "files/00086.json",
+      "bytes": 1139,
+      "sha256": "0aac67673548fef80677252698ae631cb0ae4bcfb5bf2326f694ace8e8c99f6c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000001.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000001.raw.json",
+      "file": "files/00087.json",
+      "bytes": 1339,
+      "sha256": "99073fe4baa7580c337177c6ccd517fa5b03f9d8eec898c5a6b9b71ac31a0293"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000002.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000002.raw.json",
+      "file": "files/00088.json",
+      "bytes": 1239,
+      "sha256": "aae30a2b9043ba8cc118c3b5a3e430c7943419d5541e4926d36bfa51c031b7ce"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000003.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000003.raw.json",
+      "file": "files/00089.json",
+      "bytes": 1170,
+      "sha256": "d90af5309c970500d0175d137176e13eb7a6bf66e4b75b682590db986653ef98"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000004.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000004.raw.json",
+      "file": "files/00090.json",
+      "bytes": 1257,
+      "sha256": "f952edd082b8427f9291871195d6f08adb74f13a68dc5beeb38a7be0ed419cbe"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000005.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000005.raw.json",
+      "file": "files/00091.json",
+      "bytes": 1242,
+      "sha256": "83b7007fda722b5603a4ca1963ce07e453623aa5d4a658387bf5d7986df98ff8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000006.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000006.raw.json",
+      "file": "files/00092.json",
+      "bytes": 1215,
+      "sha256": "e0845e5e2c80edc7645bd6ebd4332ae39ca24515f52096000ea8caca31d2b055"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000007.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000007.raw.json",
+      "file": "files/00093.json",
+      "bytes": 1254,
+      "sha256": "28809a14c635b9ee3e26714c01c5737ed03ef55be0bc4e048436525f94a0c6b8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000008.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000008.raw.json",
+      "file": "files/00094.json",
+      "bytes": 1338,
+      "sha256": "ad4259508bd0d19423ef41f1b0145820efec09d8ff3c7438b13640324df03959"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000009.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000009.raw.json",
+      "file": "files/00095.json",
+      "bytes": 1269,
+      "sha256": "d3ca2851cf21d458dd5dbf65f8c30e2ecdc65ccc4375518d8c311168d860dd96"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000010.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000010.raw.json",
+      "file": "files/00096.json",
+      "bytes": 1405,
+      "sha256": "937e37a822e7c86ef4c7f15fbbc0af7bcca17d55771153bb54eb7fbae55f6c8e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000011.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000011.raw.json",
+      "file": "files/00097.json",
+      "bytes": 1270,
+      "sha256": "00f985ba8ba1d1f89fbe266d3574d4b29434e8dc7f1b820fd67e261f50b5d3d1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000012.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000012.raw.json",
+      "file": "files/00098.json",
+      "bytes": 1396,
+      "sha256": "d1594f6ced7284f0f5d9c138594d6249f7d1257a554c0b51a52f8680b06f6d5b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000013.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000013.raw.json",
+      "file": "files/00099.json",
+      "bytes": 1363,
+      "sha256": "3af1cdd2cf702b2055d72b6c7c79d5133244e6d495149f507ff62ff0ba7f0247"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000014.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000014.raw.json",
+      "file": "files/00100.json",
+      "bytes": 1459,
+      "sha256": "ce3800dffc353acfc6115f8226752cdd8f598badc9d1ed1b529a61e4bccad7d2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000015.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000015.raw.json",
+      "file": "files/00101.json",
+      "bytes": 1402,
+      "sha256": "5634d58c8cbe5b088d885a94992a4fcdf78f289c6b8b128282441b82cc2fa1ae"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000016.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000016.raw.json",
+      "file": "files/00102.json",
+      "bytes": 1345,
+      "sha256": "04f52d48240713925917b46c6522463b8bdc89f33caf310e61eb59464e46f040"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000017.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000017.raw.json",
+      "file": "files/00103.json",
+      "bytes": 1360,
+      "sha256": "3e8781f50bc38b8eeacfc6caa4a91a39b245b34404d0ecb47c602e8a6ebd9c6f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000018.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000018.raw.json",
+      "file": "files/00104.json",
+      "bytes": 1348,
+      "sha256": "7fdc57545d85a5fafd19c2a0ba3754f2c8a50b9047a0ed25b7fb07cb26265a6f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000019.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000019.raw.json",
+      "file": "files/00105.json",
+      "bytes": 1396,
+      "sha256": "65e05d38a4a5dd12d28c9b530dd1de8762174cb782a47653bd066dc25ea69e5a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000020.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000020.raw.json",
+      "file": "files/00106.json",
+      "bytes": 1291,
+      "sha256": "59e6e02268cc335f9a0fc150e3b02dd1a92db6c12f2d0ffd33b3ceb0c6c7ccc0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000021.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000021.raw.json",
+      "file": "files/00107.json",
+      "bytes": 1305,
+      "sha256": "7534676a25b0fb0ca31bd29741290cea87bd00d705587e0a1d142ac14d3fb4c6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000022.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000022.raw.json",
+      "file": "files/00108.json",
+      "bytes": 1442,
+      "sha256": "bc8c509a75c4f4a755d7a056dec47c0cb398ec2f63f9155149e6272e3370b4f8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000023.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000023.raw.json",
+      "file": "files/00109.json",
+      "bytes": 1337,
+      "sha256": "5d68887863fd2841db2f79ef21cc75b330fc55bbc41152b8582be488620d0d1d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000024.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000024.raw.json",
+      "file": "files/00110.json",
+      "bytes": 1391,
+      "sha256": "c6c0368b5c7d5c717c120a439c3398c0110cc9fc849fe9138d087e5303c25767"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000025.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000025.raw.json",
+      "file": "files/00111.json",
+      "bytes": 1403,
+      "sha256": "723b564b57918d4c65412cdcd33d679c1b3638494fc28b0838088f8d65dbcdaa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000026.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000026.raw.json",
+      "file": "files/00112.json",
+      "bytes": 1403,
+      "sha256": "03fdcd109b3c3a1aa866ab23d0c3895b97f824aeef4b01ec0c34a12c3a14cb85"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000027.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000027.raw.json",
+      "file": "files/00113.json",
+      "bytes": 1262,
+      "sha256": "3e01de19a301fe0476c91fcd65c95e56f488bc50c8587ecf312701203d2ecff9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000028.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000028.raw.json",
+      "file": "files/00114.json",
+      "bytes": 1262,
+      "sha256": "83f2c4a48337258d1c8217163f242cda42a330d753b71357b49a6649c6035136"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000029.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000029.raw.json",
+      "file": "files/00115.json",
+      "bytes": 1244,
+      "sha256": "9ca461e6060255600d78f46fa8bd333b8118aad9761c436ec9330cc009a2bde7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000030.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000030.raw.json",
+      "file": "files/00116.json",
+      "bytes": 1232,
+      "sha256": "27f22041201f3abe6bfcc25fc0d6c2fdefcddf6ae34f044165f1fbcfb20db771"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000031.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000031.raw.json",
+      "file": "files/00117.json",
+      "bytes": 1256,
+      "sha256": "4944c7ee55ce21354c7074a6ae6168f23a3dda1e5cef548d604d9a366410384e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000032.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000032.raw.json",
+      "file": "files/00118.json",
+      "bytes": 1268,
+      "sha256": "da27a1258cb7e0c9ff8fc7b8a878226c503503b8f28cd73b04e5081674c598ce"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000033.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000033.raw.json",
+      "file": "files/00119.json",
+      "bytes": 932,
+      "sha256": "1493b8366aeadd2cff2c37f150eb57bbdc7771d6094afe31c0c7ec8f3878d360"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000034.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000034.raw.json",
+      "file": "files/00120.json",
+      "bytes": 932,
+      "sha256": "6ba3022ff9b4c2d4d31d26541b9c717c7c131ff5eca058894c5e2fef0942e5e8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000035.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000035.raw.json",
+      "file": "files/00121.json",
+      "bytes": 932,
+      "sha256": "2bb280987a96c26dc7f1b132708aae329fd6d9adc1029308e5d381a7b72a81b3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000036.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000036.raw.json",
+      "file": "files/00122.json",
+      "bytes": 1207,
+      "sha256": "ea2bdc3dc37381686f064042c79973de8d7b70bfc8efec06147ca0eab9341ad6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000037.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000037.raw.json",
+      "file": "files/00123.json",
+      "bytes": 1298,
+      "sha256": "f5c55779f42b68cd92e4c71f0acb541aa556134e39fc985b3ec8b108be5ad776"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000038.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000038.raw.json",
+      "file": "files/00124.json",
+      "bytes": 1211,
+      "sha256": "4b1675a77b2160d180a8f35d936b39763154272501d2e3aaffb82a8e391f4524"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000039.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000039.raw.json",
+      "file": "files/00125.json",
+      "bytes": 1157,
+      "sha256": "05bbc69629082499196804823a065821c329337696cb878ebe758d26427dc909"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000040.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000040.raw.json",
+      "file": "files/00126.json",
+      "bytes": 1256,
+      "sha256": "45e0fe97ad41746c7f87140434570f75369a4ae9bf7475eb21df1cb2cde74ee0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000041.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000041.raw.json",
+      "file": "files/00127.json",
+      "bytes": 1235,
+      "sha256": "2e74297672a52f672d89b21863dec407ef677eed6252f4678ee7f9bf6d46d019"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000042.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000042.raw.json",
+      "file": "files/00128.json",
+      "bytes": 1376,
+      "sha256": "9273631320ed3ba348e32ce4303264938a69d3963df65be3eff848011d859fae"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000043.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000043.raw.json",
+      "file": "files/00129.json",
+      "bytes": 1268,
+      "sha256": "ccb88cb4fabfa285a499893feff7382c693f197b07e5518796b8782f867a47e0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000044.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000044.raw.json",
+      "file": "files/00130.json",
+      "bytes": 1238,
+      "sha256": "40e218fa08c7136e6a4d7c3e825314e8a21332b791b757ea9fec66c11f224acb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000045.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000045.raw.json",
+      "file": "files/00131.json",
+      "bytes": 1340,
+      "sha256": "a56b335527ca00f79d2f2944a87bfd48cc00c08f573bb24f7b4ca0a4a89855ac"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000046.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000046.raw.json",
+      "file": "files/00132.json",
+      "bytes": 1355,
+      "sha256": "cbc33d38ce3f8a1a2fa51faedf4fb7d58d7e685ab44f467cdc70e0e192b6e626"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000047.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000047.raw.json",
+      "file": "files/00133.json",
+      "bytes": 1205,
+      "sha256": "9728d679f57f226a839cb989960c5d3ed0b99adc6f7da241262d21e8a5da14c1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000048.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000048.raw.json",
+      "file": "files/00134.json",
+      "bytes": 1358,
+      "sha256": "9917ca909dd7d775af676d826692148f606966834e45e2d1aa01026d9abac5c3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000049.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000049.raw.json",
+      "file": "files/00135.json",
+      "bytes": 1418,
+      "sha256": "61ddf1604b43b85b5fddf0777f1378c06dc4382686acea6095f1ad60da87a335"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000050.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000050.raw.json",
+      "file": "files/00136.json",
+      "bytes": 1217,
+      "sha256": "5c4a2097d76b161f7cbc747f67f4d45feafcbf0f429821d552e7929199bbda0f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000051.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000051.raw.json",
+      "file": "files/00137.json",
+      "bytes": 1241,
+      "sha256": "63ec78d7c87efa4110453564547236bc88e95c1bef2c3128774e3bf66d50845d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000052.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000052.raw.json",
+      "file": "files/00138.json",
+      "bytes": 1265,
+      "sha256": "b7a18f246510f4055ea1676215ce26c25a82b15b902d81d04301f26d719f91dd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000053.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000053.raw.json",
+      "file": "files/00139.json",
+      "bytes": 1364,
+      "sha256": "c3b491292e1a104c3bca1e8df49bd9a52c634732a3580fdcc9b65bdeeac8128d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000054.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000054.raw.json",
+      "file": "files/00140.json",
+      "bytes": 1358,
+      "sha256": "8d33c33b6a314c9a35cadfd94fa0794e742f009ffeee63a1c6aca40198216b76"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000055.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000055.raw.json",
+      "file": "files/00141.json",
+      "bytes": 1268,
+      "sha256": "322a3cbfbbf44f3356efc450bd25b2bd46708de4e4cccc0bf11dad0a6712f7fb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000056.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000056.raw.json",
+      "file": "files/00142.json",
+      "bytes": 1202,
+      "sha256": "c002e32a029beb9d2717a307a814379c5cbfaabaf9f3280d58204d06b04c240f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000057.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000057.raw.json",
+      "file": "files/00143.json",
+      "bytes": 1310,
+      "sha256": "cbd2d44eef89ddf9292455a59245f956d441bffd2f5256d48f5d047a189ef60c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000058.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000058.raw.json",
+      "file": "files/00144.json",
+      "bytes": 1283,
+      "sha256": "82ada63d6b1d0c97d6c52a63a18cdcd2920833fa9229dd4bdd443e34a8e12109"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000059.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000059.raw.json",
+      "file": "files/00145.json",
+      "bytes": 1301,
+      "sha256": "ca052e50bd0b1204a4423f51e0765e09c8b664191a07356c32745d3cb8c137f4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000060.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000060.raw.json",
+      "file": "files/00146.json",
+      "bytes": 1280,
+      "sha256": "29594440788d4cb9a17a9bc54bf535de08bc90f6dda53f50bb6c3d5559ab3327"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000061.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000061.raw.json",
+      "file": "files/00147.json",
+      "bytes": 1226,
+      "sha256": "852f4a1cfabdb321e948578542c09fdf9821a6f2abc1e0f1073230e65c31d844"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000062.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000062.raw.json",
+      "file": "files/00148.json",
+      "bytes": 1364,
+      "sha256": "8ca5e523428af0cb019fc4a6f29c8a3e109ede665d283e4c9a447e4332aa48fa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000063.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000063.raw.json",
+      "file": "files/00149.json",
+      "bytes": 1238,
+      "sha256": "17333d8c5fdc99b995577ccbd14cab1b83ab353e4d030f90eb586ae7ba26c98c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000064.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000064.raw.json",
+      "file": "files/00150.json",
+      "bytes": 1343,
+      "sha256": "aa997e204c6d7dcb687ce6a9e5b0c173cf31e18eccc4b6eddd0451255f4cc164"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000065.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000065.raw.json",
+      "file": "files/00151.json",
+      "bytes": 1289,
+      "sha256": "fa67e962e2d735311940958760808917e5f6c6c4ace693aaeaab8a56618d0016"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000066.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000066.raw.json",
+      "file": "files/00152.json",
+      "bytes": 1226,
+      "sha256": "a0b10bf25ac594f3e030d2e75b28217be48704bde660410cbcecf0eb96c0aed3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000067.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000067.raw.json",
+      "file": "files/00153.json",
+      "bytes": 1181,
+      "sha256": "c81ad660050e2ceb05d04bec51e804fc391a2376d4ee852a5203773e68c68198"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000068.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000068.raw.json",
+      "file": "files/00154.json",
+      "bytes": 1217,
+      "sha256": "aa2bbb78fb78814ee4f493640f4d070ec7686c61c6a0f80100d5dabaf6321a2c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000069.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000069.raw.json",
+      "file": "files/00155.json",
+      "bytes": 1277,
+      "sha256": "d7186a20c4b17f85baab5120e9d2e62384ebc0bd4c5aa49d7ada857e8033b8c6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000070.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000070.raw.json",
+      "file": "files/00156.json",
+      "bytes": 1193,
+      "sha256": "55c2ac041d639af259f694e95f505384a6ec458959c6c10750c0738ea417066d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000071.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000071.raw.json",
+      "file": "files/00157.json",
+      "bytes": 1337,
+      "sha256": "255357f803929f336fed71f539a0968f19955fb295c9df43ea8329e4139027f1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000072.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000072.raw.json",
+      "file": "files/00158.json",
+      "bytes": 1292,
+      "sha256": "f9c2ba36715085d60bcf23079472dadba72267bf3612d5d112b3b2f135427da2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000073.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000073.raw.json",
+      "file": "files/00159.json",
+      "bytes": 1313,
+      "sha256": "c2c3301ce7afeb60da0ee22da17a0aece61aa2984f1449157d2427ee97e77e63"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000074.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000074.raw.json",
+      "file": "files/00160.json",
+      "bytes": 1271,
+      "sha256": "49f87ceb78c24d6a66bfc1749661ee71240a23e44938a09f29d3bc427abb616d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000075.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000075.raw.json",
+      "file": "files/00161.json",
+      "bytes": 1364,
+      "sha256": "e57a176d0a9b0c0024dc60971311006f6a15ee602ad023ccb6488e5a17ed2fcd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000076.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000076.raw.json",
+      "file": "files/00162.json",
+      "bytes": 1304,
+      "sha256": "db895f61672be4fb5daaa465642d9a0ec76a43a82388287f746e1f492387f52e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000077.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000077.raw.json",
+      "file": "files/00163.json",
+      "bytes": 1061,
+      "sha256": "9870bcc38bd8e177eb6d3b53fc1d7fff981bec41fd2c862f8d776d567e435eb4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\full\\transcripts\\S_R004S03C01\\windows\\000078.raw.json",
+      "logicalPath": "old-whole-transcript/windows/000078.raw.json",
+      "file": "files/00164.json",
+      "bytes": 938,
+      "sha256": "afb05dad56786906511fb8adc4ba386fdf937b59be10d7226c8ac1fb7ae84b71"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\inventory.log",
+      "logicalPath": "old-whole-process/inventory.log",
+      "file": "files/00165.log",
+      "bytes": 581,
+      "sha256": "290ab640af4c3f6a6eb4349928c4b024362b4ea68f33268ab38164635d847488"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\run.json",
+      "logicalPath": "old-whole-process/run.json",
+      "file": "files/00166.json",
+      "bytes": 643,
+      "sha256": "3396501525b9b08e68f04bcb9cec060eca4010af7fe3608f0c4b0d8978b7cf36"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\worker.log",
+      "logicalPath": "old-whole-process/worker.log",
+      "file": "files/00167.log",
+      "bytes": 2359,
+      "sha256": "162525ce28ae8d97fb2372212edf6cc5d795f55cd89caaa353749296d4793ac7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "old-whole-process/inventory/hip-inventory.json",
+      "file": "files/00168.json",
+      "bytes": 1394,
+      "sha256": "4404a17260d0b1abd53ca29ff29b67724bb259e84cc069068a46c4d3d7c2f6a7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "old-whole-process/inventory/inventory-resources.jsonl",
+      "file": "files/00169.jsonl",
+      "bytes": 611,
+      "sha256": "293aba9348761f87b70accb8de65fccd7744bcc38e3a787fdafcea4238426c90"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\inventory\\inventory-run.json",
+      "logicalPath": "old-whole-process/inventory/inventory-run.json",
+      "file": "files/00170.json",
+      "bytes": 612,
+      "sha256": "6ea4f9dac79f8353b1d3e06f83fc96f5bc10f633c3cdf2730939a00e478cc8be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\old-ordinary-run-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "old-whole-process/inventory/inventory-worker.log",
+      "file": "files/00171.log",
+      "bytes": 1213,
+      "sha256": "3864cb4de91034d9a818c7d0fe64c0be2e4a9bf5fac9df43c6ca8804c0f8d385"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\audio-only.json",
+      "logicalPath": "frozen-neutral-cache-trace-control/audio-only.json",
+      "file": "files/00172.json",
+      "bytes": 824,
+      "sha256": "a40a406da3a0662517e64e2b303db150148df90e7ddb1abb67604a8de1b509c7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\preparation.json",
+      "logicalPath": "frozen-neutral-cache-trace-control/preparation.json",
+      "file": "files/00173.json",
+      "bytes": 340,
+      "sha256": "2038b47e8a06441ddb2bd230b082b306d227cad4240853a5f78974f4128531c6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\protocol.json",
+      "logicalPath": "frozen-neutral-cache-trace-control/protocol.json",
+      "file": "files/00174.json",
+      "bytes": 4687,
+      "sha256": "3b5ce622205c2022b89647179ce63e7ef2e31c281f0d5914fd98170fdb81b4b3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\scoring-only.json",
+      "logicalPath": "frozen-neutral-cache-trace-control/scoring-only.json",
+      "file": "files/00175.json",
+      "bytes": 1155,
+      "sha256": "0a8a0dc2b583c71a680794bbb048d9e64a60b0a40f05b85c36e4e38594cb9a7d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\preparation-source\\protocol-before-fingerprints.json",
+      "logicalPath": "frozen-neutral-cache-trace-control/preparation-source/protocol-before-fingerprints.json",
+      "file": "files/00176.json",
+      "bytes": 4450,
+      "sha256": "2cc36e40473020b9c1fdcb7f7ac5bba167ffed6fc10ad4505930263e0f3790bd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\nemotron-cache-trace-r1\\preparation-source\\trace-before-fingerprints.py",
+      "logicalPath": "frozen-neutral-cache-trace-control/preparation-source/trace-before-fingerprints.py",
+      "file": "files/00177.py",
+      "bytes": 3267,
+      "sha256": "6a1fd572c730bee43942caa1c65aee83964372432e3d648c25aee94b7b76a6b1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\result.json",
+      "logicalPath": "cpu-cache-observer-r1/result.json",
+      "file": "files/00178.json",
+      "bytes": 945,
+      "sha256": "46b64c369f00826efe52153fd698b550e90e4138b9bfbaa0a4766b5152adaf09"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\cache-0001.npy",
+      "logicalPath": "cpu-cache-observer-r1/trace/cache-0001.npy",
+      "file": "files/00179.npy",
+      "bytes": 8576,
+      "sha256": "77c3b80dade1772023187efc1b11d885b13c5d2665d14eec512f602be3363f1e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\cache-0002.npy",
+      "logicalPath": "cpu-cache-observer-r1/trace/cache-0002.npy",
+      "file": "files/00180.npy",
+      "bytes": 8576,
+      "sha256": "dc124f0e06172985c564d3bbfe2a8e43b94b66ab31a35fa601a1af00de32bae1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\cache-0003.npy",
+      "logicalPath": "cpu-cache-observer-r1/trace/cache-0003.npy",
+      "file": "files/00181.npy",
+      "bytes": 8576,
+      "sha256": "2480797c555faaff4f278cee3bd551c10b1dd2e82035344863e54106ea3749f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\cache-0004.npy",
+      "logicalPath": "cpu-cache-observer-r1/trace/cache-0004.npy",
+      "file": "files/00182.npy",
+      "bytes": 8576,
+      "sha256": "3c0a31314acf5ae0576239e951eb4b15832a1d5c90210225cdd718cf5201f22b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\cache-0005.npy",
+      "logicalPath": "cpu-cache-observer-r1/trace/cache-0005.npy",
+      "file": "files/00183.npy",
+      "bytes": 8576,
+      "sha256": "8f70700a5de1da21285f4309145152d80b0a1d4852b3aae5d2ce49332e0a8867"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\summary.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/summary.json",
+      "file": "files/00184.json",
+      "bytes": 291,
+      "sha256": "edb6c4302e4612b23370316906b85a4be6e778af2f21ce1e18b83bb9e0e5a051"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\update-0001.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/update-0001.json",
+      "file": "files/00185.json",
+      "bytes": 1204,
+      "sha256": "e84fcdbb649d65e8ca769b1d88121d7fd3e09b6b3c087851ba56e2671baeaeb2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\update-0002.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/update-0002.json",
+      "file": "files/00186.json",
+      "bytes": 1334,
+      "sha256": "f0d99bea31dbbfd345962f34ed93d680d56fee07046cfe792379a1bb29cd36cb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\update-0003.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/update-0003.json",
+      "file": "files/00187.json",
+      "bytes": 1347,
+      "sha256": "7aead9a497779a6ed8bd7510698c449487e1c481b913e36afea6c2c0dfe3db7a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\update-0004.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/update-0004.json",
+      "file": "files/00188.json",
+      "bytes": 1336,
+      "sha256": "f984a7a420ea4a552be5ae257b32cc725a3aa5ed0ce82ca51ea57bca2d696af5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r1\\trace\\update-0005.json",
+      "logicalPath": "cpu-cache-observer-r1/trace/update-0005.json",
+      "file": "files/00189.json",
+      "bytes": 1337,
+      "sha256": "5ef2de0ebbdf8bafa31c7392962286fc1720a1767fe957997914e2ef2108e5a0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\result.json",
+      "logicalPath": "cpu-cache-observer-r2/result.json",
+      "file": "files/00190.json",
+      "bytes": 945,
+      "sha256": "aac052040e36b955be2e57a679b7e4bcd98654b69f63a2954c3edafc13c698eb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\cache-0001.npy",
+      "logicalPath": "cpu-cache-observer-r2/trace/cache-0001.npy",
+      "file": "files/00191.npy",
+      "bytes": 8576,
+      "sha256": "77c3b80dade1772023187efc1b11d885b13c5d2665d14eec512f602be3363f1e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\cache-0002.npy",
+      "logicalPath": "cpu-cache-observer-r2/trace/cache-0002.npy",
+      "file": "files/00192.npy",
+      "bytes": 8576,
+      "sha256": "dc124f0e06172985c564d3bbfe2a8e43b94b66ab31a35fa601a1af00de32bae1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\cache-0003.npy",
+      "logicalPath": "cpu-cache-observer-r2/trace/cache-0003.npy",
+      "file": "files/00193.npy",
+      "bytes": 8576,
+      "sha256": "2480797c555faaff4f278cee3bd551c10b1dd2e82035344863e54106ea3749f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\cache-0004.npy",
+      "logicalPath": "cpu-cache-observer-r2/trace/cache-0004.npy",
+      "file": "files/00194.npy",
+      "bytes": 8576,
+      "sha256": "3c0a31314acf5ae0576239e951eb4b15832a1d5c90210225cdd718cf5201f22b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\cache-0005.npy",
+      "logicalPath": "cpu-cache-observer-r2/trace/cache-0005.npy",
+      "file": "files/00195.npy",
+      "bytes": 8576,
+      "sha256": "8f70700a5de1da21285f4309145152d80b0a1d4852b3aae5d2ce49332e0a8867"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\summary.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/summary.json",
+      "file": "files/00196.json",
+      "bytes": 291,
+      "sha256": "edb6c4302e4612b23370316906b85a4be6e778af2f21ce1e18b83bb9e0e5a051"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\update-0001.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/update-0001.json",
+      "file": "files/00197.json",
+      "bytes": 21079,
+      "sha256": "a49772512b3c0463cb53d24639436e163f9f16a9a80b92b415b21d1d30b421f1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\update-0002.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/update-0002.json",
+      "file": "files/00198.json",
+      "bytes": 41014,
+      "sha256": "1bcaec1f4810b067121316f749dbb8f53175bfad4db2efa8fcaa1244732ddf97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\update-0003.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/update-0003.json",
+      "file": "files/00199.json",
+      "bytes": 41027,
+      "sha256": "f1a7f1a2302ea8e1fe4bc77e5df220f0bb9242e47542f67f09de30314864267d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\update-0004.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/update-0004.json",
+      "file": "files/00200.json",
+      "bytes": 41016,
+      "sha256": "7982a3159a0b724645cedb71be98b577b92539db677874af6ecc4526a4665ec1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\nemotron-cache-trace-r1\\cpu-control-r2\\trace\\update-0005.json",
+      "logicalPath": "cpu-cache-observer-r2/trace/update-0005.json",
+      "file": "files/00201.json",
+      "bytes": 41017,
+      "sha256": "25e42af079bc1fdbe52f1fb23bf9e1d4da5bfc4159a6bd99410ec657867cd83c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\baseline-score-control.json",
+      "logicalPath": "frozen-adapter-full/baseline-score-control.json",
+      "file": "files/00202.json",
+      "bytes": 1827,
+      "sha256": "9dca50b7615d76f3688fa85e8825bc8df6bd07af1ef6f8da004312ede05d0fcb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\raw-score-S_R004S03C01.json",
+      "logicalPath": "frozen-adapter-full/raw-score-S_R004S03C01.json",
+      "file": "files/00203.json",
+      "bytes": 2468,
+      "sha256": "a150607473c6a84109eb683f04e1220faebaecc938de4f6284fd87891529b319"
+    },
+    {
+      "source": "work\\prepare_nemotron_cache_trace_20261115.py",
+      "logicalPath": "continuation-tools/prepare_nemotron_cache_trace_20261115.py",
+      "file": "files/00204.py",
+      "bytes": 4222,
+      "sha256": "1514eecae72c03f594f983a3b5ff13f2d9864ce1ec0f7f9df7f64d1c1b1f6843"
+    },
+    {
+      "source": "work\\probe_nemotron_cache_trace_cpu_20261115.py",
+      "logicalPath": "continuation-tools/probe_nemotron_cache_trace_cpu_20261115.py",
+      "file": "files/00205.py",
+      "bytes": 3698,
+      "sha256": "03c081a828e93d2c6a3111ae786e3ecf36075402f694a20ca93d6c89166ceabc"
+    },
+    {
+      "source": "work\\probe_nemotron_cache_trace_cpu_r2_20261115.py",
+      "logicalPath": "continuation-tools/probe_nemotron_cache_trace_cpu_r2_20261115.py",
+      "file": "files/00206.py",
+      "bytes": 3752,
+      "sha256": "5f64e3f4ebd9f0a5b922b5332490331baebf1279b150f70ed9ff3188cc0242aa"
+    },
+    {
+      "source": "work\\review_nemotron_cache_trace_20261115.py",
+      "logicalPath": "continuation-tools/review_nemotron_cache_trace_20261115.py",
+      "file": "files/00207.py",
+      "bytes": 5213,
+      "sha256": "f46643ad002157fd868772825dbf47684b6fcbfbe66418c5cccc39c96f869a58"
+    },
+    {
+      "source": "work\\verify_adapter_full_baseline_scores_20261115.py",
+      "logicalPath": "continuation-tools/verify_adapter_full_baseline_scores_20261115.py",
+      "file": "files/00208.py",
+      "bytes": 2339,
+      "sha256": "27c078ebb6b476a9dfa48361932d2706f2d2a0e97230e8265363dc0b7539ae3a"
+    },
+    {
+      "source": "outputs\\Companion-社区可行性与实际进度-20261115.txt",
+      "logicalPath": "owner-latest-research-note.txt",
+      "file": "files/00209.txt",
+      "bytes": 10214,
+      "sha256": "ccdd9ba5e8f655b70909415fefc62a758695abbe2fe7898b0f1c27a6e930d539"
+    }
+  ],
+  "oldOriginalErrors": 461,
+  "oldCandidateErrors": 456,
+  "referenceCharacters": 8325,
+  "newCompleteMeetingActiveNotSnapshotted": true,
+  "cacheTraceNeuralCalls": 0,
+  "cacheObserverCpuControlsPassed": true,
+  "newTrainingUpdates": 0,
+  "d2Complete": false,
+  "qualityQualified": false,
+  "originalFailuresAndReferencesRetained": true
+}

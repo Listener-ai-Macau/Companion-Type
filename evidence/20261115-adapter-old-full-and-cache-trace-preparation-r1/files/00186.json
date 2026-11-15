@@ -1,0 +1,76 @@
+{
+  "update": 2,
+  "sourceEndSeconds": 54.4,
+  "encoderFrameCursor": 680,
+  "chunkEncoderFrames": 340,
+  "before": {
+    "frames": 264,
+    "activeFramesByChannel": [
+      256,
+      93,
+      100,
+      79,
+      91,
+      110,
+      89,
+      82
+    ],
+    "positiveScoreFramesByChannel": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "maximumProbabilityByChannel": [
+      0.9759193658828735,
+      0.6653038859367371,
+      0.6840683817863464,
+      0.7109506726264954,
+      0.6672350764274597,
+      0.6623490452766418,
+      0.711317241191864,
+      0.6231939792633057
+    ]
+  },
+  "after": {
+    "frames": 264,
+    "activeFramesByChannel": [
+      256,
+      69,
+      61,
+      76,
+      78,
+      72,
+      56,
+      74
+    ],
+    "positiveScoreFramesByChannel": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "maximumProbabilityByChannel": [
+      0.9730146527290344,
+      0.7117356061935425,
+      0.7261257767677307,
+      0.6865465044975281,
+      0.669838547706604,
+      0.6612148284912109,
+      0.6691370010375977,
+      0.6503543257713318
+    ]
+  },
+  "fifoFramesAfter": 40,
+  "isCompressedAfter": true,
+  "minPositiveScores": 16,
+  "cacheCapacityFrames": 264
+}

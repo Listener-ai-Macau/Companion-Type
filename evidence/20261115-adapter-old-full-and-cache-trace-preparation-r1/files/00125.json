@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 39,
+    "startSample": 18380210,
+    "endSample": 18851845,
+    "text": "嗯，可以养生的，嗯，而且也不长肉的那种，嗯，还有就是，嗯，嗯，还有就是那个，嗯，就是咱这个呃活动嘛，尤其是这个周六日，呃，可以搞一些这种促销活动，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 18380210,
+        "endSample": 18851845,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a6f2550aabbd0477fb270c4c2d0cf6b84f8c4bd9920209532031ff65ffdef7fb"
+}

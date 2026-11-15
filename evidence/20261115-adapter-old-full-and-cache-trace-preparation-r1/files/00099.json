@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 13,
+    "startSample": 6146414,
+    "endSample": 6581659,
+    "text": "嗯，然后那个，比如说我们上的菜里面有腐烂的那个菜叶子，我们也是要去掉的。然后同一分类的商品呢，应该摆放到一起，然后有层次的，包括颜色上呢，我们也是需要搭配的，这样看起来呢，这个商品比较的丰满，而且呢，看着呢比较的养眼。呃，最起码你买不买，走到这儿以后，你感觉这，哎呀，这个菜怎么这么新鲜呀？",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 6146414,
+        "endSample": 6581659,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6566948c194c4cb958c20e01c05be93aab470eda5b68039fe9567ba7b63d1021"
+}

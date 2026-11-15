@@ -1,0 +1,22 @@
+[
+  {
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "audioSeconds": 2049.3615,
+    "corpus": "AISHELL4-Train-development-only",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.TextGrid",
+    "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+    "referenceKind": "textgrid_lexical"
+  },
+  {
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "audioSeconds": 2327.119,
+    "reference": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.TextGrid",
+    "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+    "corpus": "AISHELL-4",
+    "referenceKind": "textgrid_lexical"
+  }
+]

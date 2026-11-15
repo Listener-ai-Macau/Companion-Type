@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 0,
+    "startSample": 0,
+    "endSample": 516292,
+    "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。把各个区的这个咱那个负责人啊叫过来，咱简单呃做一个交流。呃，咱超市啊近期的销售啊，嗯，比往期的要好。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 0,
+        "endSample": 516292,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "28b6b1714a2b938ee21363e65b95cc04bf9a8ce1916373c59ac4a2f113efcc9f"
+}

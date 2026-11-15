@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 73,
+    "startSample": 34768446,
+    "endSample": 35294122,
+    "text": "你们各个部门儿这个下边儿员工一定要培训一下。呃，马上这个这一搞个大活动嘛，就是把下边儿员工这个呃意识这个安全也要提升一下。呃，你看像一些老人，一些小孩儿，尤其这个临时区的呃小孩儿比较多，呃，让他们呃尽量的要跟在大人后边儿。我见还有的小孩儿就是他那小推车。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 34768446,
+        "endSample": 35294122,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6db243939e0ea4c4bfb0ec3485987365e7d8c822f8f106adfe6de20ebbe1bec2"
+}
