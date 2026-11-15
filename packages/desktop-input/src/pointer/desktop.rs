@@ -186,14 +186,15 @@ impl Desktop {
         }
         if !allow_translation{self.stop();return Point::default();}
         if !surface_ready{
-            // Actual159:109/124 moving-to-stop edges were unconfirmed Z
-            // shocks while the lift phase was still Ready. Suppress that
-            // sample's output, but retain the stroke velocity so ordinary
-            // table vibration cannot force a slow restart every other tick.
-            // Confirmed lift, contact and gaps still discard old motion.
-            if self.state.surface.as_ref().is_none_or(|s|s.phase!=surface::Phase::Ready)||
-                self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<NEGLIGIBLE_SPEED_MPS{self.stop();}
-            return Point::default();
+            // A brief Z quarantine suppresses DISPLAY, not the IMU observer.
+            // Skipping XY integration here loses the acceleration onset; a
+            // known forward push then starts only at its backwards braking
+            // phase. Continue the same causal estimator through an unconfirmed
+            // shock. Confirmed lift/contact, explicit tap/regrip and gaps still
+            // discard velocity; no held displacement is replayed afterwards.
+            if self.state.surface.as_ref().is_none_or(|s|s.phase!=surface::Phase::Ready){
+                self.stop();return Point::default();
+            }
         }
         if self.reanchor_after_contact&&self.state.pose_prediction{
             // Use the fresh board pose AFTER the shock/target-freeze window,
@@ -224,11 +225,17 @@ impl Desktop {
             self.clutch();return Point::default();
         }
         let planar=linear[0].hypot(linear[1]);let quiet=planar<0.055&&rates.iter().all(|x|x.abs()<2.);
+        // Use the existing20ms observer for the onset decision as well as
+        // velocity propagation. Starting on a single raw XY excursion during
+        // table vibration latched the retained stationary147 trace moving.
+        // A real0.5m/s2 onset crosses the same0.10 threshold on its first
+        // update; incoherent sensor noise must not create an inertial stroke.
+        for i in 0..2{self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));}
         if !self.state.moving {
             // Adapt residual bias only while classified at rest, never from
             // the middle of a constant-velocity stroke.
             if quiet{for i in 0..3{self.earth_bias[i]+=(earth[i]-self.earth_bias[i])*(dt/2.).min(1.);}}
-            if planar<0.10{return Point::default();}
+            if self.filtered[0].hypot(self.filtered[1])<0.10{return Point::default();}
             self.state.moving=true;self.stroke=0.;self.braking=false;
         }
         // A table user may keep moving for more than two seconds. The old
@@ -239,10 +246,6 @@ impl Desktop {
         if self.stroke>2.0{if self.surface.is_some(){self.stop();}else{self.clutch();}return Point::default();}
         let old=self.state.velocity_mps;
         for i in 0..2 {
-            // Retain20ms noise filtering: removing it made the retained real
-            // stationary147/149 trace drift5.08px. Sensor-time output below
-            // avoids a second HOST-clock integration without that regression.
-            self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));
             if old[i]*self.filtered[i]<0.&&self.filtered[i].abs()>0.10{self.braking=true;}
             self.state.velocity_mps[i]=(old[i]+self.filtered[i]*dt).clamp(-0.6,0.6);
         }
@@ -253,6 +256,7 @@ impl Desktop {
             self.stop();return Point::default();
         }
         let delta=Point{x:(old[0]+self.state.velocity_mps[0])*0.5*dt,y:(old[1]+self.state.velocity_mps[1])*0.5*dt};
+        if !surface_ready{return Point::default();}
         self.state.position_m[0]+=delta.x;self.state.position_m[1]+=delta.y;delta
     }
 }
@@ -321,16 +325,45 @@ mod tests {
         assert!(!d.state.clutched);assert!(d.state.position_m[0]>origin[0]+0.001,"click left an unbounded rest clutch: {:?}",d.state);
     }
     #[test]fn an_unconfirmed_table_z_bump_holds_output_without_erasing_the_stroke_velocity(){
-        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
-        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
-        for n in 150..170{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();
+        let mut clean=Desktop::surface_mouse();clean.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);clean.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..170{d.sample_with_gravity(raw(n,80.,0.),true,up);clean.sample_with_gravity(raw(n,80.,0.),true,up);}
         let velocity=d.state.velocity_mps;assert!(velocity[0]>0.01);
         let mut shock=raw(170,0.,0.);shock.accel_mg[2]+=40.;
         assert_eq!(d.sample_with_gravity(shock,true,up),Point::default());
         assert!(d.state.translation_inhibited);assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
-        assert_eq!(d.state.velocity_mps,velocity,"an unconfirmed desk bump erased the ongoing stroke");
+        clean.sample_with_gravity(raw(170,0.,0.),true,up);
+        // Different Z specific force has a tiny cross-axis numerical effect
+        // in upstream quaternion normalisation; compare at10um/s tolerance.
+        assert!((d.state.velocity_mps[0]-clean.state.velocity_mps[0]).hypot(d.state.velocity_mps[1]-clean.state.velocity_mps[1])<0.00001,
+            "the output hold also paused the IMU observer");
         let delta=d.sample_with_gravity(raw(171,0.,0.),true,up);
         assert!(delta.x>0.,"coasting after the bump must not require another acceleration onset");
+    }
+    #[test]fn a_short_slide_retains_its_acceleration_onset_during_small_vertical_vibration(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        // Known rigid-body trajectory:0.5m/s2 for0.2s,0.3s coasting,0.2s
+        // braking -> about5cm forward. During the initial push,25Hz vertical
+        // vibration has only about0.1mm displacement and no net lift. Its
+        // sample-to-sample step stays below the separate raw tap threshold.
+        // A held screen output must not lose the acceleration that establishes
+        // forward velocity and then interpret braking as a backwards start.
+        let mut shown=0.;let mut held=0;
+        for n in 150..260{
+            let a=if n<170{51.}else if (200..220).contains(&n){-51.}else{0.};
+            let mut s=raw(n,a,0.);
+            if n<170{s.accel_mg[2]+=match(n-150)%4{0=>200.,2=>-200.,_=>0.};}
+            let delta=d.sample_with_gravity(s,true,up);shown+=delta.x;
+            held+=u32::from(d.state.translation_inhibited);
+            assert!(!d.state.clutched);
+            assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
+        }
+        eprintln!("Known5cm push with small vertical vibration: shown{shown:.6}m,held{held}samples");
+        assert!(held>0,"the model did not exercise the output hold");
+        assert!(shown>0.035&&shown<0.06,"lost the positive acceleration onset; forward slide became{shown}m");
+        assert!(d.state.velocity_mps[0].abs()<0.005,"braking failed to stop the model");
     }
     #[test]fn an_active_table_stroke_does_not_force_recalibration_after_two_seconds(){
         let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
