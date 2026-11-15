@@ -115,7 +115,7 @@ fn probe(service: Service) -> Result<(), Failure> {
             http_probe(service, &format!("{}/chat/completions", public.deepseek_base_url.trim_end_matches('/')), &key, &public.deepseek_model)
         }
         Service::Asr => match public.asr_provider.as_str() {
-            "local-paraformer" => super::transcription::check_local_asr().map_err(|_| Failure::Missing),
+            "local-paraformer" | "local-meeting" => super::transcription::check_local_asr().map_err(|_| Failure::Missing),
             "volcengine" => {
                 if !public.volc_app_key_set || !public.volc_access_key_set { return Err(Failure::Missing); }
                 let app_id = required(env("COMPANION_TYPE_VOLC_APP_KEY").or_else(|| (!settings.volc_app_key.trim().is_empty()).then_some(settings.volc_app_key)))?;
@@ -145,6 +145,7 @@ fn probe(service: Service) -> Result<(), Failure> {
 pub fn check(service: Service) -> CheckResult {
     let start = Instant::now();
     let (status, message) = match probe(service) {
+        Ok(()) if matches!(service, Service::Asr) && super::transcription::local_meeting_live_selected() => ("available", "本地中英文模型包已校验；首次识别需要加载，录音留在本机处理。识别质量仍需实际验证。"),
         Ok(()) if matches!(service, Service::Asr) && super::transcription::local_provider_selected() => ("available", "本地转写模型已校验并加载；未上传录音，识别质量仍需实际使用验证。"),
         Ok(()) => ("available", "本次测试请求成功。只验证服务调用，不代表录音、识别或纪要准确率已通过。"),
         Err(Failure::Missing) => ("notConfigured", "缺少服务凭据或模型，请先保存配置。"),

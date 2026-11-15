@@ -123,19 +123,32 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
     manager.observe_link("startConfirmed",&started,session,0,0,None);
     eprintln!("segmented_online phase=recording host={} anchor={} logical={:016x}",session,anchor,key.session_id);
     let started_at=Instant::now();
+    let local_requested=crate::backend::transcription::local_meeting_live_selected();
+    let local_hub=local_requested.then(||Arc::new(crate::backend::LiveAsrHub::new()));
+    let local_start_error=local_hub.as_ref().and_then(|hub|hub.try_start_for_online_live(session).err());
     let capture_result=(|| ->Result<(),String> {
     let mut cursor=LiveCursor::new(key.clone())?;
+    if let Some(hub)=local_hub.as_ref(){cursor.attach_local_stream(Arc::clone(hub));}
     let mut next_follow=Instant::now();
     let interval=Duration::from_millis(options.partial_interval_ms.unwrap_or(8000).max(2000));
     let mut next_partial=started_at+interval;
     let mut pending:Option<mpsc::Receiver<Result<String,String>>>=None;
-    let mut live_error:Option<String>=None;let mut link_error:Option<String>=None;
+    let mut live_error:Option<String>=local_start_error;let mut link_error:Option<String>=None;
+    let mut local_partial=String::new();
     let mut last_window_ms=0;
     let schedule=recovery_schedule(options,seconds)?;
     let mut planned_drop_done=false;let mut planned_offline=false;
     let mut reconnect_at:Option<Instant>=None;let mut reconnect_attempts=0u32;
     let mut awaiting_prefix:Option<u64>=None;
     while capture_continues(seconds,started_at.elapsed(),stop.load(Ordering::Acquire)) {
+        if let Some(hub)=local_hub.as_ref(){let value=hub.snapshot();
+            if !value.text.trim().is_empty()&&value.text!=local_partial{
+                coordinator.set_board_online_live_partial(session,&value.text)?;
+                local_partial=value.text;
+                if let Ok(mut status)=manager.status.lock(){status.partial_count+=1;}
+            }
+            if value.error.is_some(){live_error=value.error;}
+        }
         let elapsed=||started_at.elapsed().as_millis().min(u128::from(u64::MAX)) as u64;
         if !planned_drop_done && schedule.is_some_and(|(drop,_)|started_at.elapsed().as_secs()>=u64::from(drop)) {
             planned_drop_done=true;
@@ -221,7 +234,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
             }
         }
         if cursor.error().is_some() && live_error.is_none() {live_error=cursor.error().map(str::to_string);}
-        if Instant::now()>=next_partial && pending.is_none() && live_error.is_none()
+        if !local_requested && Instant::now()>=next_partial && pending.is_none() && live_error.is_none()
             && cursor.duration_ms()>last_window_ms && link_error.is_none() {
             next_partial=Instant::now()+interval;
             let current=coordinator.snapshot()?;let row=owned_row(&current,session,Some(&key))?;
@@ -245,6 +258,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
     }
     Ok(())
     })();
+    if let Some(hub)=local_hub.as_ref(){let _=hub.stop_and_take_text();}
     bookmarks.close();
     if let Ok(mut s)=manager.status.lock() {s.state="stopping".into();}
     // Do not wait for cloud partials. STOP, sealed receive, source validation

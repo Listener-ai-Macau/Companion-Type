@@ -12,6 +12,7 @@ mod context_plan;
 mod question_sources;
 mod template;
 mod short_evidence;
+mod source_review_notice;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -34,6 +35,7 @@ impl CompanionMinutesManager {
         let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let input = super::transcript_review::minutes_input(session);
         let mut minutes = self.generate_inner(&input, generated_at, None);
+        source_review_notice::mark(&mut minutes,&session.transcript_unrecognized);
         minutes.source_review_revision = super::transcript_review::active_revision(session);
         span.finish(minutes.llm_note.as_deref().or_else(|| (minutes.quality != "final").then_some("provider did not produce final minutes")));
         minutes
@@ -47,6 +49,7 @@ impl CompanionMinutesManager {
         let mut input = super::transcript_review::minutes_input(session);
         input.meeting_notes = session.meeting_notes.clone();
         let mut result = self.generate_inner(&input, generated_at, None);
+        source_review_notice::mark(&mut result,&session.transcript_unrecognized);
         result.source_review_revision = super::transcript_review::active_revision(session);
         result.source_note_context = Some(super::minutes_context::source(session));
         result.markdown = format!("{}\n\n{}", super::minutes_context::notice(result.source_note_context.as_ref().unwrap()), result.markdown);
@@ -61,6 +64,7 @@ impl CompanionMinutesManager {
         let mut input=super::transcript_review::minutes_input(session);
         if include_context {input.meeting_notes=session.meeting_notes.clone();}
         let mut result=self.generate_inner(&input,generated_at,Some(template));
+        source_review_notice::mark(&mut result,&session.transcript_unrecognized);
         result.source_review_revision=super::transcript_review::active_revision(session);
         if include_context {
             result.source_note_context=Some(super::minutes_context::source(session));

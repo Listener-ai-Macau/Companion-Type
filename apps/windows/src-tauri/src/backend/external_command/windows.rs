@@ -346,7 +346,8 @@ pub(super) fn run_with_completion(
         {
             break Err(*error);
         }
-        if cancel.is_some_and(|flag| flag.load(Ordering::SeqCst)) {
+        if cancel.is_some_and(|flag| flag.load(Ordering::SeqCst))
+            || super::super::meeting_processing_job::check_current().is_err() {
             break Err(Failure::Cancelled);
         }
         if started.elapsed() >= limits.timeout {

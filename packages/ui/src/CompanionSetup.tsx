@@ -1,3 +1,4 @@
+import { isLocalAsrProvider } from './localAsr';
 import { useEffect, useState } from 'react';
 import { AlertTriangle, Bluetooth, Check, ChevronDown, ChevronUp, CircleDashed, Link2, ListChecks, Search, Settings2, Unlink, Volume2, XCircle } from 'lucide-react';
 import type { CompanionV1ControlRequest, CompanionV1Snapshot } from '@companion-type/core';
@@ -42,7 +43,7 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
   const keyGuide = recorderKeyGuide(device);
   const known = Boolean(snapshot?.connected || device?.connected);
   const preview = snapshot?.source === 'fixture' || device?.mode === 'fixture';
-  const asrReady = settings?.asrProvider === 'local-paraformer' ? settings.localAsrAvailable : settings?.asrProvider === 'volcengine'
+  const asrReady = isLocalAsrProvider(settings?.asrProvider) ? settings?.localAsrAvailable : settings?.asrProvider === 'volcengine'
     ? settings.volcAppKeySet && settings.volcAccessKeySet
     : settings?.openaiAsrApiKeySet;
   const speaker = snapshot?.speaker;
@@ -128,7 +129,7 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
       <div className="ct-setup-grid">
         <div><span className="ct-setup-index">01</span><strong>连接与时间</strong><p>{checking ? '正在读取设备，请稍候' : issueCount ? '检查发现问题，请展开详情' : checked ? '检查已结束，详情保留在下方' : known ? '已识别设备，可检查模块与时间' : '连接后自动同步设备时间'}</p></div>
         <div><span className="ct-setup-index">02</span><strong>互动与声音</strong><p>{!known ? '连接后读取动作传感器与扬声器' : snapshot?.imu.online ? '动作传感器已响应；实际灵敏度需体验' : '动作传感器尚未就绪'}</p><button type="button" className="ct-text-button" disabled={blocked || !known || !speaker?.supported || !speaker.online || speaker.muted} onClick={() => onControl({ action: 'speakerPrompt' })}><Volume2 size={14} />{speaker?.muted ? '设备已静音' : '听一声回应'}</button></div>
-        <div><span className="ct-setup-index">03</span><strong>会议整理</strong><p>{!settings ? '服务设置尚未读取，可刷新后重试' : settings.storageSaveBlocked ? '服务设置暂不可用，请查看上方提示' : !asrReady ? '准备转写方式后，可把录音转为文字' : settings.asrProvider === 'local-paraformer' ? '本地转写已准备；智能纪要可另配置云端服务' : settings.deepseekMinutesEnabled && settings.deepseekApiKeySet ? '服务凭据已保存，实际调用待验证' : '转写凭据已保存，可配置智能纪要'}</p><button type="button" className="ct-text-button" onClick={onSettings}><Settings2 size={14} />服务设置</button></div>
+        <div><span className="ct-setup-index">03</span><strong>会议整理</strong><p>{!settings ? '服务设置尚未读取，可刷新后重试' : settings.storageSaveBlocked ? '服务设置暂不可用，请查看上方提示' : !asrReady ? '准备转写方式后，可把录音转为文字' : isLocalAsrProvider(settings.asrProvider) ? '本地转写已准备；智能纪要可另配置云端服务' : settings.deepseekMinutesEnabled && settings.deepseekApiKeySet ? '服务凭据已保存，实际调用待验证' : '转写凭据已保存，可配置智能纪要'}</p><button type="button" className="ct-text-button" onClick={onSettings}><Settings2 size={14} />服务设置</button></div>
       </div>
       <details className="ct-setup-details" open={checked && issueCount > 0}>
         <summary>设备与检查详情{checked ? ` · ${issueCount ? `${issueCount} 项需处理` : '查看各项结果'}` : ' · 尚未检查'}</summary>

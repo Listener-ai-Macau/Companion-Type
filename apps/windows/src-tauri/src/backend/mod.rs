@@ -156,6 +156,7 @@ pub mod product_settings;
 pub mod recording_ring;
 pub(crate) mod transcription;
 pub(crate) mod meeting_processing_job;
+mod processing_power;
 pub(crate) use transcription::prepare_local_asr;
 #[cfg(test)]
 mod meeting_processing_tests;
@@ -613,7 +614,7 @@ pub use firmware_ota::{
     CompanionFirmwareOtaReport, CompanionFirmwareOtaRequest, CompanionOtaPackageValidation,
 };
 use host_recording::HostRecordingManager;
-use live_asr::LiveAsrHub;
+pub(crate) use live_asr::LiveAsrHub;
 use minutes::CompanionMinutesManager;
 use privacy::{PrivacyEraseReport, PrivacyManager};
 pub(crate) use transcription::CompanionTranscriptionManager;
@@ -1368,7 +1369,7 @@ impl FixtureCompanionBackend {
     // response may complete transcription and unlock meeting generation.
     fn finish_live_nonempty(session: &mut CompanionV1HostSession, live: &live_asr::LiveAsrSnapshot) -> bool {
         Self::merge_live_asr_into_session(session, live);
-        if live.error.is_some() {
+        if live.error.is_some() || live.mode == "local-bilingual-incremental" {
             session.status = "captured".to_string();
             session.transcript_final = false;
             arm_meeting_recovery(session);
@@ -1388,6 +1389,16 @@ impl FixtureCompanionBackend {
 mod live_stop_contract_tests {
     use super::*;
     use crate::companion_v1::{apply_fixture_control, fixture_snapshot};
+    #[test]
+    fn local_incremental_text_never_finishes_the_meeting_before_whole_audio_review(){
+        let mut session=sample();
+        let live=live_asr::LiveAsrSnapshot{text:"已保存的录中草稿".into(),mode:"local-bilingual-incremental".into(),
+            error:None,partial_count:2,active:false};
+        assert!(!FixtureCompanionBackend::finish_live_nonempty(&mut session,&live));
+        assert!(!session.transcript_final);assert_eq!(session.status,"captured");
+        assert_eq!(session.transcript_text,live.text);
+        assert_eq!(session.pending_reason.as_deref(),Some("needs_transcription"));
+    }
     fn sample() -> CompanionV1HostSession {
         let request=serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();
         let mut session=apply_fixture_control(fixture_snapshot(),request).unwrap().host.sessions.remove(0);
@@ -3508,7 +3519,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                         let online = session.meeting_mode == "onlineLive";
                         let mut live_mode = "idle".to_string();
                         if online {
-                            match self.live_asr.try_start_for_online_live() {
+                            match self.live_asr.try_start_for_online_live(&session.id) {
                                 Ok(true) => {
                                     let hub = Arc::clone(&self.live_asr);
                                     self.host_recording.set_pcm_sink(Some(Arc::new(move |pcm| {

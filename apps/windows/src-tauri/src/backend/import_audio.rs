@@ -2,7 +2,7 @@
 //! The selected original is never modified; the caller owns its preserved copy.
 use std::{fs::{self,File,OpenOptions}, io::{ErrorKind,Read,Seek,SeekFrom,Write}, path::{Path,PathBuf}, sync::atomic::{AtomicBool,Ordering}};
 use sha2::{Digest,Sha256};
-use symphonia::core::{audio::SampleBuffer, codecs::DecoderOptions, errors::Error,
+use symphonia::core::{audio::{AudioBufferRef,Signal,SampleBuffer}, codecs::DecoderOptions, errors::Error,
     formats::FormatOptions, io::MediaSourceStream, meta::MetadataOptions, probe::Hint};
 use super::{audio_artifacts::{self, Purpose, WriteLease}, host_recording::RatioResampler,
     host_segmented_capture::{HostAudioPart, RollingHostWav}};
@@ -118,8 +118,13 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
             if converter.is_none() { converter=Some(SpeechConverter::new(spec.rate,channels)?); }
             let c=converter.as_mut().expect("converter initialized");
             if c.rate!=spec.rate||c.channels!=channels {return Err("音频中途改变采样格式，暂无法完整导入。原文件未改变。".into());}
-            let mut buf=SampleBuffer::<f32>::new(audio.capacity() as u64,spec);buf.copy_interleaved_ref(audio);
-            let pcm=c.process(buf.samples());samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
+            // The speech format already matches. Keep every PCM16 value,
+            // including -32768, instead of quantizing it through f32 again.
+            let pcm=if spec.rate==16000&&channels==1 {
+                if let AudioBufferRef::S16(ref pcm)=audio {pcm.chan(0).to_vec()}
+                else {let mut buf=SampleBuffer::<f32>::new(audio.capacity() as u64,spec);buf.copy_interleaved_ref(audio);c.process(buf.samples())}
+            } else {let mut buf=SampleBuffer::<f32>::new(audio.capacity() as u64,spec);buf.copy_interleaved_ref(audio);c.process(buf.samples())};
+            samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
             writer.append_bulk(&pcm,|next| {
                 let lease=WriteLease::begin(next,next,Purpose::Recording).map_err(std::io::Error::other)?;
                 audio_artifacts::attach_group(next,anchor).map_err(std::io::Error::other)?;

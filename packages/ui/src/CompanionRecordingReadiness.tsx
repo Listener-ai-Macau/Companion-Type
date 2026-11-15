@@ -1,3 +1,4 @@
+import { isLocalAsrProvider } from './localAsr';
 import type { ReactNode } from 'react';
 import { recordingCapacityAvailableSeconds, recordingCapacityCanFit, recordingCapacityRequiredBytes, type CompanionV1RecordingCapacity, type CompanionV1Snapshot } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
@@ -54,7 +55,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const saveProblem = save !== undefined && save !== 'ready';
   const recordingCheck = snapshot?.oobe.checks.find(check => check.id === 'boardMicrophone');
   const interfaceProblem = connected && recordingCheck?.status === 'fail';
-  const asrConfigured = settings?.asrProvider === 'local-paraformer' ? Boolean(settings.localAsrAvailable) : settings?.asrProvider === 'volcengine'
+  const asrConfigured = isLocalAsrProvider(settings?.asrProvider) ? Boolean(settings?.localAsrAvailable) : settings?.asrProvider === 'volcengine'
     ? Boolean(settings.volcAppKeySet && settings.volcAccessKeySet && settings.volcResourceId.trim())
     : Boolean(settings?.openaiAsrApiKeySet && settings.openaiAsrEndpoint.trim() && settings.openaiAsrModel.trim());
   const minutesConfigured = Boolean(settings?.deepseekMinutesEnabled && settings.deepseekApiKeySet
@@ -114,7 +115,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
         <p className="ct-readiness-note">这里未准备好，也可以先录音并保存原音。</p>
         <dl>
           <div><dt>转文字</dt><dd>{!settings ? '服务设置尚未读取。' : settings.storageSaveBlocked ? '服务设置暂不可用，请到服务设置处理保存提示。'
-            : asrConfigured ? settings?.asrProvider === 'local-paraformer' ? '本地转写模型已准备，实际识别效果以使用结果为准。' : '转写配置已保存；是否可调用仍以实际服务结果为准。'
+            : asrConfigured ? isLocalAsrProvider(settings?.asrProvider) ? '本地转写模型已准备，实际识别效果以使用结果为准。' : '转写配置已保存；是否可调用仍以实际服务结果为准。'
               : '转写配置尚不完整，需要时再到服务设置补齐。'}</dd></div>
           <div><dt>智能纪要</dt><dd>{!settings ? '服务设置尚未读取。' : settings.storageSaveBlocked ? '服务设置暂不可用。'
             : minutesConfigured ? '纪要配置已保存；是否可调用仍以实际服务结果为准。'
@@ -122,7 +123,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
                 : '智能纪要未启用；仍可查看文字或手写清单。'}</dd></div>
         </dl>
         <button type="button" className="ct-text-button" onClick={onSettings}>查看服务设置</button>
-        <p className="ct-readiness-note">{settings?.asrProvider === 'local-paraformer'
+        <p className="ct-readiness-note">{isLocalAsrProvider(settings?.asrProvider)
           ? '电脑本地转写不会上传录音。'
           : settings?.asrProvider === 'volcengine' || settings?.asrProvider === 'openai-compatible'
             ? '云端转写会把录音发送给所选服务。' : '电脑本地转写不上传录音；选择云端转写时会发送录音。'}

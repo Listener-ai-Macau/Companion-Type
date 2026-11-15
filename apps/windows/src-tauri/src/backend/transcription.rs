@@ -16,19 +16,31 @@ pub(super) const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保�
 mod chunk_cache;
 mod gap;
 #[cfg(windows)]
+pub(super) mod local_meeting;
+#[cfg(windows)]
+mod local_meeting_cache;
+#[cfg(windows)]
 mod local_paraformer;
 
 pub(crate) fn local_asr_assets_present() -> bool {
+    #[cfg(windows)] if local_meeting::selected() { return local_meeting::check().is_ok(); }
     #[cfg(windows)] { local_paraformer::assets_present() }
     #[cfg(not(windows))] { false }
 }
 pub(crate) fn prepare_local_asr() -> Result<(),String> {
+    #[cfg(windows)] if local_meeting::selected() { return local_meeting::check(); }
     #[cfg(windows)] { local_paraformer::prepare() }
     #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
 }
 pub(crate) fn check_local_asr() -> Result<(),String> {
+    #[cfg(windows)] if local_meeting::selected() { return local_meeting::check(); }
     #[cfg(windows)] { local_paraformer::check() }
     #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
+}
+
+pub(crate) fn local_meeting_live_selected()->bool{
+    #[cfg(windows)] {local_meeting::selected()}
+    #[cfg(not(windows))] {false}
 }
 
 use super::diarization::{self, EmbeddingSegment};
@@ -96,14 +108,14 @@ pub(super) fn push_unrecognized(
 }
 
 #[derive(Clone, Debug)]
-pub struct CompanionTranscriptionManager { local_only: bool }
+pub struct CompanionTranscriptionManager { local_only: bool, owner_session: Option<String> }
 
 impl CompanionTranscriptionManager {
     pub fn new() -> Self {
-        Self { local_only: false }
+        Self { local_only: false, owner_session: None }
     }
 
-    pub(crate) fn local_card() -> Self { Self { local_only: true } }
+    pub(crate) fn local_card() -> Self { Self { local_only: true, owner_session: None } }
     fn local_selected(&self) -> bool { self.local_only || local_provider_selected() }
 
     /// Explicit pet utterance, using the configured real provider only. Meeting
@@ -128,7 +140,8 @@ impl CompanionTranscriptionManager {
 
     pub fn transcribe_session_owned(&self, session: &str, primary: Option<&str>, chunks: &[String]) -> Result<CompanionTranscript, String> {
         let _diagnostic_scope=super::diagnostics::RecordingScope::enter(session);
-        let result = self.transcribe_session(primary, chunks);
+        let mut owned=self.clone();owned.owner_session=Some(session.into());
+        let result = owned.transcribe_session(primary, chunks);
         let paths: Vec<String> = primary.iter().map(|p| p.to_string()).chain(chunks.iter().cloned()).collect();
         // Bind successful chunks even when a later request failed. Recovery and
         // transcript deletion must find them after scratch cleanup or restart.
@@ -219,6 +232,13 @@ impl CompanionTranscriptionManager {
         let _usage = real_paths.iter().map(|p| super::audio_artifacts::usage(p)).collect::<Result<Vec<_>, _>>()?;
         if real_paths.len() == 1 {
             return self.transcribe_single_path(&real_paths[0]);
+        }
+
+        // One complete local meeting, including physical file boundaries,
+        // must share its final speaker identity timeline.
+        #[cfg(windows)]
+        if self.local_selected() && local_meeting::selected() {
+            return local_meeting::transcribe(&real_paths,self.owner_session.as_deref());
         }
 
         // Long meeting (multiple chunks): when Volcengine is the provider,
@@ -340,6 +360,8 @@ impl CompanionTranscriptionManager {
     fn transcribe_existing_path(&self, audio: &Path) -> Result<CompanionTranscript, String> {
         if self.local_selected() {
             #[cfg(windows)]
+            if local_meeting::selected() { return local_meeting::transcribe(&[audio.to_path_buf()],self.owner_session.as_deref()); }
+            #[cfg(windows)]
             { return local_paraformer::transcribe(audio); }
             #[cfg(not(windows))]
             { return Err("此平台暂不支持本地转写；原录音保留。".into()); }
@@ -398,7 +420,8 @@ impl CompanionTranscriptionManager {
 }
 
 pub(super) fn local_provider_selected() -> bool {
-    std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().eq_ignore_ascii_case("local-paraformer")
+    matches!(std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().to_ascii_lowercase().as_str(),
+        "local-paraformer" | "local-meeting")
 }
 
 impl Default for CompanionTranscriptionManager {
@@ -896,7 +919,15 @@ pub(super) fn bind_cache_session(session: &str, paths: &[String]) -> Result<(), 
 pub(super) fn attach_cache_sources(sources: &std::collections::BTreeSet<String>, owner: &str) -> Result<(), String> {
     chunk_cache::ownership::attach(&asr_chunk_cache_root(), sources, owner)
 }
-pub(super) use chunk_cache::ownership::erase as erase_cache;
+pub(super) fn erase_cache(root:&Path,sessions:&std::collections::BTreeSet<String>,sources:&[String],
+    retained_sessions:&std::collections::BTreeSet<String>,retained:&[String],all:bool)
+    ->Result<chunk_cache::ownership::Erase,String> {
+    #[cfg(windows)]
+    let meeting=local_meeting_cache::erase(root,sessions,retained_sessions,all)?;
+    let mut result=chunk_cache::ownership::erase(root,sessions,sources,retained_sessions,retained,all)?;
+    #[cfg(windows)] {result.deleted+=meeting.deleted;result.shared+=meeting.shared;result.unknown+=meeting.unknown;}
+    Ok(result)
+}
 pub(crate) use chunk_cache::ownership::verify as verify_cache_privacy;
 
 /// Recognize only a completely zero-valued PCM file. No amplitude threshold

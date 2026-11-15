@@ -43,6 +43,7 @@ pub(crate) fn run<T>(session: &str, id: &str, kind: Kind, work: impl FnOnce() ->
     }
     let previous = CURRENT.with(|slot| slot.replace(Some(job.clone())));
     let _scope = Scope { previous, job: job.clone() };
+    let _power = super::processing_power::hold();
     let result = if job.cancelled.load(Ordering::Acquire) { Err(kind.message().into()) } else { work() };
     // A stop is accepted only until this exact job retires. Checking and
     // retiring under the same lock prevents a late click from reporting

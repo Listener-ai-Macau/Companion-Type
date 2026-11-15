@@ -24,3 +24,45 @@ docs/handoffs/core-acceptance-20261109/** -text -whitespace
 /packages/document-context/ThirdPartyNotices.txt text eol=lf -whitespace
 
 /tools/qa/core_acceptance20261109/fixtures/document-context/*.pdf binary
+
+apps/windows/src-tauri/src/backend/external_command.rs -text
+
+apps/windows/src-tauri/src/backend/external_command/windows.rs -text
+
+apps/windows/src-tauri/src/backend/import_audio.rs -text
+
+apps/windows/src-tauri/src/backend/live_asr.rs -text
+
+apps/windows/src-tauri/src/backend/meeting_processing_job.rs -text
+
+apps/windows/src-tauri/src/backend/minutes.rs -text
+
+apps/windows/src-tauri/src/backend/mod.rs -text
+
+apps/windows/src-tauri/src/backend/recording_wire/receiver/live.rs -text
+
+apps/windows/src-tauri/src/backend/service_check.rs -text
+
+apps/windows/src-tauri/src/backend/transcription.rs -text
+
+apps/windows/src-tauri/src/commands/segmented_online_live.rs -text
+
+apps/windows/src-tauri/src/lib.rs -text
+
+packages/ui/src/CompanionDashboard.tsx -text
+
+packages/ui/src/CompanionRecordingReadiness.tsx -text
+
+packages/ui/src/CompanionSetup.tsx -text
+
+apps/windows/src-tauri/src/backend/minutes/source_review_notice.rs -text
+
+apps/windows/src-tauri/src/backend/processing_power.rs -text
+
+apps/windows/src-tauri/src/backend/transcription/local_meeting.rs -text
+
+apps/windows/src-tauri/src/backend/transcription/local_meeting_cache.rs -text
+
+packages/ui/src/localAsr.ts -text
+
+.gitattributes -text

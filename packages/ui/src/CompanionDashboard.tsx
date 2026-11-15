@@ -1,3 +1,4 @@
+import { isLocalAsrProvider } from './localAsr';
 import {meetingReadingSources} from './meetingReadingSources';
 import {LibraryPanel} from './LibraryPanel';
 import {LibraryScopeChips,type LibraryScopeChip} from './LibraryScopeChips';
@@ -1135,15 +1136,16 @@ export function CompanionDashboard({
   const cloudAsrConfigured = productSettings?.asrProvider === 'volcengine'
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
-  const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
-    ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
+  const asrConfigured = isLocalAsrProvider(productSettings?.asrProvider)
+    ? Boolean(productSettings?.localAsrAvailable) : cloudAsrConfigured;
+  const liveAsrConfigured = productSettings?.asrProvider === 'local-meeting' ? asrConfigured : !isLocalAsrProvider(productSettings?.asrProvider) && cloudAsrConfigured;
   useEffect(() => {
     onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||audioEditUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
   }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,audioEditUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
-      : formAsrProvider === 'local-paraformer' ? [!productSettings?.localAsrAvailable ? '本地转写模型' : '']
+      : isLocalAsrProvider(formAsrProvider) ? [!productSettings?.localAsrAvailable ? '本地转写模型' : '']
       : [!formOpenAiEndpoint.trim() ? '兼容服务 Endpoint' : '', !formOpenAiModel.trim() ? '兼容服务模型' : '', clearCredentials.includes('openaiAsrApiKey') || !(formOpenAiKey.trim() || productSettings?.openaiAsrApiKeySet) ? '兼容服务 Key' : '']),
     ...(formDeepseekEnabled
       ? [!formDeepseekBase.trim() ? 'DeepSeek Base URL' : '', !formDeepseekModel.trim() ? 'DeepSeek 模型' : '', clearCredentials.includes('deepseekApiKey') || !(formDeepseekKey.trim() || productSettings?.deepseekApiKeySet) ? 'DeepSeek Key' : ''] : []),
@@ -2376,7 +2378,7 @@ export function CompanionDashboard({
                     setGapPreview({sessionId,startMs,endMs,text:result.text,partial:result.unrecognized.length>0,sourceText,sourceReview});}
                   catch(error){setGapMessage({sessionId,text:`单段转写未完成：${operationErrorText(error,'general')}`});}
                 }}>转写当前位置起最多 15 秒</button>
-              <p className="ct-step-meta">{productSettings?.asrProvider==='local-paraformer'
+              <p className="ct-step-meta">{isLocalAsrProvider(productSettings?.asrProvider)
                 ? '使用当前本地模型，不上传录音。相同音频可能得到相同结果。'
                 : '使用当前转写服务，仅发送所选片段，可能产生费用。'}结果供回听核对，不覆盖原文字。</p>
               {gapMessage?.sessionId===selectedSession.id?<p role="status">{gapMessage.text}</p>:null}
@@ -2621,7 +2623,7 @@ export function CompanionDashboard({
                   </span>)}
                 </div>
                 {onPreviewGap && selectedSession.source!=='hostMeeting' ? <p className="ct-step-meta">
-                  {productSettings?.asrProvider==='local-paraformer'?'重试使用当前本地模型，只处理所选时段，不上传录音。相同模型和音频可能得到相同结果；可在设置中切换已配置的转写方式。':'重试使用当前转写服务，仅发送所选音频时段，可能产生费用。'}结果供核对，不会自动覆盖原文字。
+                  {isLocalAsrProvider(productSettings?.asrProvider)?'重试使用当前本地模型，只处理所选时段，不上传录音。相同模型和音频可能得到相同结果；可在设置中切换已配置的转写方式。':'重试使用当前转写服务，仅发送所选音频时段，可能产生费用。'}结果供核对，不会自动覆盖原文字。
                 </p>:null}
               </details>
             </div> : null}
@@ -2708,7 +2710,7 @@ export function CompanionDashboard({
                   runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,minutesTemplate:template});
                 }}>按这个视角整理</button>
             </details> : null}
-            {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
+            {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{isLocalAsrProvider(productSettings?.asrProvider) ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
             {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
               <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
               {retranscriptionPreview.unrecognized.length ? <p className="ct-step-warn">{retranscriptionPreview.unrecognized.some(part=>part.source?.includes('转写失败'))
@@ -3037,14 +3039,14 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected || !cloudAsrConfigured || productSettings?.asrProvider === 'local-paraformer' || !onStartBoardOnlineLive || !onlineDurationValid}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected || !liveAsrConfigured || !onStartBoardOnlineLive || !onlineDurationValid}
                 onClick={() => onStartBoardOnlineLive?.({
                   title: newMeetingTitle.trim() || 'Companion 会议',
                   deviceId: device?.deviceId,
                   maxDurationSeconds: unlimitedDeviceRecording ? 0 : boardMaxDurationSeconds,
                   partialIntervalMs: 8_000,
                 })}
-                title={!connected ? '请先连接 Companion' : productSettings?.asrProvider === 'local-paraformer' ? '本地转写在录音结束后处理' : !cloudAsrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
+                title={!connected ? '请先连接 Companion' : productSettings?.asrProvider === 'local-paraformer' ? '此本地中文模型在录音结束后处理' : !liveAsrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
               >
                 <Mic size={16} />
                 <span>开始在线会议</span>
@@ -3059,7 +3061,7 @@ export function CompanionDashboard({
                 <span>停止并生成纪要</span>
               </button>
             </div>
-            {productSettings?.asrProvider === 'local-paraformer' ? <p className="ct-step-meta">本地转写在录音结束后处理。你可以先在设备上录音，稍后同步。</p>
+            {productSettings?.asrProvider === 'local-meeting' ? <p className="ct-step-meta">录音保存在本机，文字会逐步更新；结束后按完整原音复核人物并生成纪要。</p> : productSettings?.asrProvider === 'local-paraformer' ? <p className="ct-step-meta">此本地中文模型在录音结束后处理。你可以先在设备上录音，稍后同步。</p>
               : !cloudAsrConfigured ? <p className="ct-step-meta">在线转写需要服务配置。你也可以先在设备上录音，稍后同步。<button type="button" className="ct-text-button" onClick={openSettings}>配置转写服务</button></p> : null}
             {boardOnlineLive && boardOnlineLive.state !== 'idle' ? (
               <div className="ct-live-box" aria-label="板端在线会议状态">
@@ -3306,19 +3308,20 @@ export function CompanionDashboard({
                   <option value="volcengine">火山 Volcengine</option>
                   <option value="openai-compatible">OpenAI 兼容</option>
                   <option value="local-paraformer">电脑本地转写（中文）</option>
+                  {productSettings?.asrProvider === 'local-meeting' ? <option value="local-meeting">电脑本地转写（中英文）</option> : null}
                 </select>
               </label>
-              {formAsrProvider === 'local-paraformer' || (surface==='windows' && formAutoLocalCard) ? <div className="ct-field">
+              {isLocalAsrProvider(formAsrProvider) || (surface==='windows' && formAutoLocalCard) ? <div className="ct-field">
                 <span>{productSettings?.localAsrAvailable ? '本地模型已准备' : '需要准备本地模型'}</span>
                 <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !onPrepareLocalAsr}
                   onClick={() => { if (!onPrepareLocalAsr) return; setSettingsBusy(true); setSettingsMsg(null);
-                    void onPrepareLocalAsr().then(() => setSettingsMsg('本地中文转写模型已准备。'))
+                    void onPrepareLocalAsr().then(() => setSettingsMsg(formAsrProvider === 'local-meeting' ? '本地中英文模型包已准备。' : '本地中文转写模型已准备。'))
                       .catch(() => setSettingsMsg('本地模型准备未完成，请检查网络和存储空间后重试；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
                   {settingsBusy ? '正在准备，请稍候…' : '准备本地转写模型'}
                 </button>
-                <p className="ct-step-meta">准备时下载约 240 MB 的 FunASR 中文模型；官方站点不可用时会尝试镜像，下载文件均会校验。录音不会上传；如果下载失败，已有可用的本地模型仍可继续使用。<a href="https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00" target="_blank" rel="noreferrer">模型来源与许可</a></p>
+                <p className="ct-step-meta">{formAsrProvider === 'local-meeting' ? '使用已安装的本地中英文会议模型包，录音留在本机处理。准备检查不代表识别质量已验证。' : <>准备时下载约 240 MB 的 FunASR 中文模型；官方站点不可用时会尝试镜像，下载文件均会校验。录音不会上传；如果下载失败，已有可用的本地模型仍可继续使用。<a href="https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00" target="_blank" rel="noreferrer">模型来源与许可</a></>}</p>
               </div> : null}
-              {formAsrProvider === 'local-paraformer' ? null : formAsrProvider === 'volcengine' ? <>
+              {isLocalAsrProvider(formAsrProvider) ? null : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
                 {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
@@ -3451,7 +3454,7 @@ export function CompanionDashboard({
                 className="ct-action ct-action-primary"
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked
                   || (!(unlimitedOffline || unlimitedOnline) && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
-                  || (connected && meetingMode === 'onlineLive' && (!cloudAsrConfigured || productSettings?.asrProvider === 'local-paraformer' || !onStartBoardOnlineLive))}
+                  || (connected && meetingMode === 'onlineLive' && (!liveAsrConfigured || !onStartBoardOnlineLive))}
                 onClick={() => {
                   if (connected && meetingMode === 'onlineLive') {
                     void onStartBoardOnlineLive?.({

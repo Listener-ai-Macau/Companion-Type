@@ -80,6 +80,22 @@ pub(super) fn run(
     }
 }
 
+/// A local meeting may legitimately take longer than a short external ASR
+/// request. Only the installed local-model boundary uses this audio-derived
+/// deadline; the ordinary external command limits are unchanged.
+pub(super) fn run_local_meeting(program:&str,args:&[String],audio_seconds:u64)->Result<String,Failure>{
+    if audio_seconds==0||audio_seconds>8*60*60 {return Err(Failure::Configuration);}
+    let timeout=Duration::from_secs(audio_seconds.saturating_mul(2).saturating_add(300).min(12*60*60));
+    let limits=Limits::for_timeout(timeout);
+    #[cfg(windows)] {windows::run(program,args,limits,None)}
+    #[cfg(not(windows))] {let _=(program,args,limits);Err(Failure::Unsupported)}
+}
+
+#[cfg(windows)]
+pub(super) fn run_local_meeting_stream(program:&str,args:&[String],stop:&AtomicBool)->Result<String,Failure>{
+    windows::run(program,args,Limits::for_timeout(Duration::from_secs(8*60*60)),Some(stop))
+}
+
 fn validate(limits:Limits,cancel:Option<&AtomicBool>)->Result<(),Failure>{
     if limits.timeout.is_zero()
         || limits.timeout > Duration::from_secs(300)

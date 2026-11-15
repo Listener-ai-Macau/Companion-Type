@@ -19,13 +19,15 @@ pub(crate) struct LiveCursor {
     pcm: VecDeque<i16>,
     error: Option<String>,
     verified_recorder_state: Option<u8>,
+    local_live:Option<std::sync::Arc<crate::backend::LiveAsrHub>>,
 }
 impl LiveCursor {
     pub(crate) fn new(key: SessionKey) -> Result<Self,String> {
         Ok(Self { key, decoder:MonoDecoder::new(16000)?,segment:0,frames:0,
             segment_frames:0,prefix:Vec::new(),schema:None,audio_profile:None,window:None,pcm:VecDeque::new(),error:None,
-            verified_recorder_state:None })
+            verified_recorder_state:None,local_live:None })
     }
+    pub(crate) fn attach_local_stream(&mut self,hub:std::sync::Arc<crate::backend::LiveAsrHub>){self.local_live=Some(hub);}
     pub(crate) fn key(&self)->&SessionKey { &self.key }
     pub(crate) fn duration_ms(&self)->u64 {
         self.window.as_ref().and_then(|w|w.finish(true).ok()).map_or(0,|b|b.written_samples/16)
@@ -109,6 +111,7 @@ impl LiveCursor {
             if pcm.len()!=320 {return Err(fail());}
             let range=self.window.as_mut().ok_or_else(fail)?.packet(pcm.len())?;
             self.frames+=1;
+            if let Some(hub)=self.local_live.as_ref(){hub.push_pcm_i16(&pcm[range.clone()]);}
             self.pcm.extend(pcm[range].iter().copied());
             while self.pcm.len()>30*16000 {self.pcm.pop_front();}
         }
