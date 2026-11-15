@@ -42,7 +42,12 @@ impl Intent {
             }
         }
         self.last=Some((s.sequence,s.sensor_ms,now));
-        let displacement=self.desktop.sample_with_gravity(s,!blocked,gravity);
+        // A raw impact suspicion is an output quarantine, not a confirmed
+        // click or a measured stop. Preserve the causal motion observer so
+        // unconfirmed surface bumps cannot erase onset/braking information.
+        // Confirmed contact and user pause still clear motion explicitly.
+        let displacement=if self.desktop.has_surface(){self.desktop.sample_with_output_hold(s,blocked,gravity)}
+            else{self.desktop.sample_with_gravity(s,!blocked,gravity)};
         let state=&self.desktop.state;
         if !state.calibrated{self.smoother.reset();self.pending=Point::default();self.source=Source::Rest;return;}
         if self.desktop.has_surface(){
@@ -88,6 +93,22 @@ impl Intent {
         let mut p=Intent::surface_mouse();p.desktop.enable_board_pose_prediction();
         for n in 0..150{p.sample_blocked_gravity(raw(n),n as f64/100.,false,Some([0.,0.,1000.]));p.frame(n as f64/100.);}
         assert!(p.desktop.state.calibrated);p
+    }
+    #[test]fn a_provisional_impact_hold_keeps_observing_but_never_replays_hidden_cursor_travel(){
+        let mut p=table_ready();let up=Some([0.,0.,1000.]);
+        for n in 150..170{let mut s=raw(n);s.accel_mg[0]=80.;p.sample_blocked_gravity(s,n as f64/100.,false,up);p.frame(n as f64/100.);}
+        assert!(p.desktop.state.velocity_mps[0]>0.01);
+        for n in 170..180{
+            p.sample_blocked_gravity(raw(n),n as f64/100.,true,up);
+            assert_eq!(p.frame(n as f64/100.),Point::default());
+            assert!(!p.desktop.state.clutched);
+            assert!(p.desktop.state.velocity_mps[0]>0.01,"raw impact suspicion erased ongoing motion");
+        }
+        p.sample_blocked_gravity(raw(180),1.8,false,up);let resumed=p.frame(1.8);
+        assert!(resumed.x>0.&&resumed.x<=10.,"held cursor increments were replayed as a jump: {resumed:?}");
+        p.contact(1800);
+        assert_eq!(p.desktop.state.velocity_mps,[0.;2],"a confirmed click must discard the provisional stroke");
+        assert_eq!(p.frame(1.81),Point::default());
     }
     #[test]fn table_displacement_is_conserved_when_identical_packets_arrive_in_batches(){
         let(mut immediate,mut batched)=(table_ready(),table_ready());let(mut a,mut b)=(Point::default(),Point::default());

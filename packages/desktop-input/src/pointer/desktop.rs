@@ -78,6 +78,14 @@ impl Desktop {
         self.sample_with_gravity(s,allow_translation,None)
     }
     pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
+        self.update(s,allow_translation,gravity,false)
+    }
+    /// Raw impact suspicion holds the cursor, while confirmed contact/regrip
+    /// and explicit pause retain their separate velocity-reset semantics.
+    pub fn sample_with_output_hold(&mut self,s:Raw,hold_output:bool,gravity:Option<[f64;3]>)->Point {
+        self.update(s,true,gravity,hold_output)
+    }
+    fn update(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>,hold_output:bool)->Point {
         self.state.translation_inhibited=true;
         let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
         self.state.board_gravity=board.is_some();
@@ -155,7 +163,7 @@ impl Desktop {
             let allowed=surface.sample_with_planar(s.sensor_ms,linear[2],linear[0].hypot(linear[1]),up,self.state.stationary);
             self.state.surface=Some(surface.status.clone());allowed
         }else{true};
-        self.state.translation_inhibited=!allow_translation||!surface_ready;
+        self.state.translation_inhibited=!allow_translation||!surface_ready||hold_output;
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
             // for the OLD gravity plane/residual to become quiet locks it out.
@@ -222,6 +230,12 @@ impl Desktop {
         // exactly that failure at9.714s. Retain the existing gross-impact
         // boundary; neither norm nor orientation proves physical table contact.
         if norm<650.||norm>1350. {
+            // Preserve the old handling for an already-quarantined vertical
+            // impulse: its XY observation is unusable, but one unconfirmed
+            // shock must not turn into a fresh static-calibration latch.
+            // True lift/contact, explicit tap quarantine and gaps were handled
+            // above. Gross shocks outside that hold retain the normal clutch.
+            if (!surface_ready||hold_output)&&self.state.surface.as_ref().is_some_and(|s|s.phase==surface::Phase::Ready){return Point::default();}
             self.clutch();return Point::default();
         }
         let planar=linear[0].hypot(linear[1]);let quiet=planar<0.055&&rates.iter().all(|x|x.abs()<2.);
@@ -256,7 +270,7 @@ impl Desktop {
             self.stop();return Point::default();
         }
         let delta=Point{x:(old[0]+self.state.velocity_mps[0])*0.5*dt,y:(old[1]+self.state.velocity_mps[1])*0.5*dt};
-        if !surface_ready{return Point::default();}
+        if !surface_ready||hold_output{return Point::default();}
         self.state.position_m[0]+=delta.x;self.state.position_m[1]+=delta.y;delta
     }
 }
@@ -364,6 +378,26 @@ mod tests {
         assert!(held>0,"the model did not exercise the output hold");
         assert!(shown>0.035&&shown<0.06,"lost the positive acceleration onset; forward slide became{shown}m");
         assert!(d.state.velocity_mps[0].abs()<0.005,"braking failed to stop the model");
+    }
+    #[test]fn a_quarantined_large_vertical_impulse_does_not_latch_recalibration(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..170{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        let velocity=d.state.velocity_mps;
+        let mut shock=raw(170,0.,0.);shock.accel_mg[2]+=900.;
+        assert_eq!(d.sample_with_gravity(shock,true,up),Point::default());
+        assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
+        assert!(!d.state.clutched,"a quarantined impulse forced another static calibration");
+        assert_eq!(d.state.velocity_mps,velocity,"untrusted gross shock changed the motion estimate");
+        // The existing20ms vertical filter still needs to release its short
+        // impulse tail; that bounded hold is distinct from static calibration.
+        let mut resumed=None;
+        for n in 171..=185{
+            let delta=d.sample_with_gravity(raw(n,0.,0.),true,up);
+            assert!(!d.state.clutched);
+            if resumed.is_none()&&delta.x>0.{resumed=Some(n);}
+        }
+        assert!(resumed.is_some_and(|n|n<=180),"motion did not resume within100ms of the quarantined impulse");
     }
     #[test]fn an_active_table_stroke_does_not_force_recalibration_after_two_seconds(){
         let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
