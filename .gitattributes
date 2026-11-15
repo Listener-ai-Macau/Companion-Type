@@ -159,3 +159,13 @@ evidence/20261115-independent-voice-return-probe-r1/** -text -whitespace
 evidence/20261115-blind-separation-component-r1/** -text -whitespace
 
 evidence/20261115-blind-separation-composition-result-r1/** -text -whitespace
+
+evidence/20261115-supervised-blind-separation-prepared-r1/** -text -whitespace
+
+src/blind_separator_supervision_20261115.py -text -whitespace
+
+src/blind_separator_training_worker_20261115.py -text -whitespace
+
+src/run_supervised_blind_separator_20261115.py -text -whitespace
+
+src/score_supervised_blind_separator_20261115.py -text -whitespace

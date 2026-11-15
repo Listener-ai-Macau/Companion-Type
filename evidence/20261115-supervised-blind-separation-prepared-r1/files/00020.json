@@ -1,0 +1,22 @@
+{
+  "state": "COMPLETE_BLIND_COMPOSITION_PHASE_COMPLETE",
+  "startedAt": "2026-11-15T17:57:32+08:00",
+  "phase": "baseline",
+  "index": 0,
+  "workerSha256": "f4cf965e60df8b1504ba23f80395a0603b5e3addf14a615caa8b7adef11680d5",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1145532416,
+  "pid": 4696,
+  "pidCreatedAt": 1794736656.8966177,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T17:58:42+08:00",
+  "seconds": 69.875
+}

@@ -1,0 +1,833 @@
+{
+  "state": "SUPERVISED_BLIND_SEPARATOR_SOURCE_CONTROL_AND_BASELINE_PROTECTED",
+  "at": "2026-11-15T18:00:28.884950+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\baseline-source-score.json",
+      "logicalPath": "supervised-blind-separation-r1/baseline-source-score.json",
+      "file": "files/00000.json",
+      "bytes": 56268,
+      "sha256": "13eff7567bfe07e9bd73d5b4b482081a1702bd0ab2e44badb833fa933d14ca0c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\data-ready.json",
+      "logicalPath": "supervised-blind-separation-r1/data-ready.json",
+      "file": "files/00001.json",
+      "bytes": 3296,
+      "sha256": "6d2a27bafc9429e17a08db1a4b56335406e108dc4c4d47bb772ea49ed38fbe47"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/protocol.json",
+      "file": "files/00002.json",
+      "bytes": 25135,
+      "sha256": "87084b2aefd9dbccafebc32822e0a881ae6119ac0190b5dd5a8d76c6d042acc7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/train-audio-only.json",
+      "file": "files/00003.json",
+      "bytes": 140733,
+      "sha256": "7baaea3a26b96038fc5c5c3feb744ab240697bee8dab3e160f5c568313622216"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-examples.json",
+      "logicalPath": "supervised-blind-separation-r1/train-examples.json",
+      "file": "files/00004.json",
+      "bytes": 166413,
+      "sha256": "0ad038f6991322e38a89757697a037b5fd18254230ac0147076ec3c0e6e1568c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-units.json",
+      "logicalPath": "supervised-blind-separation-r1/train-units.json",
+      "file": "files/00005.json",
+      "bytes": 84050,
+      "sha256": "08210310596d39c88836c1bd18359a15e91d838ef7e31801ee98be4619760857"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-audio-only.json",
+      "file": "files/00006.json",
+      "bytes": 40072,
+      "sha256": "9b31798c988e058d6a39ac3115d88594240e183354089d043d7cfdf0995a8dc8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-before-input-file-split.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-before-input-file-split.json",
+      "file": "files/00007.json",
+      "bytes": 39148,
+      "sha256": "479b573e2f7ce87d0cfc606ad674e24c633cdf478fcc34d476486d3873212057"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-examples.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-examples.json",
+      "file": "files/00008.json",
+      "bytes": 45918,
+      "sha256": "89447a0bbb8e9d48205aa451eba3e65a80a522231ef028a76bd64a0f2629faed"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-units.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-units.json",
+      "file": "files/00009.json",
+      "bytes": 23079,
+      "sha256": "4ea78735ad55ea44f61e911ea1269708cefdffcc7d697fc00929fe853fe9034a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/worker-binding.json",
+      "file": "files/00010.json",
+      "bytes": 1389,
+      "sha256": "d216251ba88ac5b922ad6eeed5eac44acda380629983d1e87d066e2e28fcde41"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\inventory.log",
+      "logicalPath": "control-r1/inventory.log",
+      "file": "files/00011.log",
+      "bytes": 579,
+      "sha256": "53562f9d30cf50ff538b534a01fc9d2297d0f282ca4acf668308a70bcc0d55a1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\run.json",
+      "logicalPath": "control-r1/run.json",
+      "file": "files/00012.json",
+      "bytes": 640,
+      "sha256": "45821499bc20c0112f23969cc47a3a440ef9938d7d4bad2247cb94cae9ac7ed4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\state.json",
+      "logicalPath": "control-r1/state.json",
+      "file": "files/00013.json",
+      "bytes": 83903,
+      "sha256": "b4c0b91c0a3f224396dcc33ea96cb9ade64052ce58d08a90b91a161cbd6f6b92"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\worker.log",
+      "logicalPath": "control-r1/worker.log",
+      "file": "files/00014.log",
+      "bytes": 347,
+      "sha256": "0101f3901bb5d20b2287bab12e302c76773dce043dac65166c8964e541ea2d2e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "control-r1/inventory/hip-inventory.json",
+      "file": "files/00015.json",
+      "bytes": 1393,
+      "sha256": "d5e61f416cfa0330e9607f49314346426d15e414980244f87a383ec8c68767f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "control-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00016.jsonl",
+      "bytes": 1224,
+      "sha256": "e8cef6e951d40a9ced467e9a8b0c99c77589e366135c658b4b12bdaa44ca3c73"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\inventory\\inventory-run.json",
+      "logicalPath": "control-r1/inventory/inventory-run.json",
+      "file": "files/00017.json",
+      "bytes": 610,
+      "sha256": "9541cf5a39a95da5c8ae67e586561c2e8e0fc4d8034d0942058f12277b5f202a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\control-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "control-r1/inventory/inventory-worker.log",
+      "file": "files/00018.log",
+      "bytes": 1212,
+      "sha256": "c1c5edfd28073bc54030396528c531df844e41242b21ebef6312204be5b0fe7d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\inventory.log",
+      "logicalPath": "baseline-r1/inventory.log",
+      "file": "files/00019.log",
+      "bytes": 577,
+      "sha256": "0a2983ddabde12277f7961c70b140f9af7fc84f91bfd17f5c2a411118f3bda11"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\run.json",
+      "logicalPath": "baseline-r1/run.json",
+      "file": "files/00020.json",
+      "bytes": 629,
+      "sha256": "73beb1e88275e4c9c9fa3f90431a4f74d707da392f92cad205133efbda4343ae"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\state.json",
+      "logicalPath": "baseline-r1/state.json",
+      "file": "files/00021.json",
+      "bytes": 110591,
+      "sha256": "ae3b98b24370ba8e3784da3c6bf9a5ab1a13e89cb9ec5ddef3f2f456468e4694"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-000-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-000-window-00.npy",
+      "file": "files/00022.npy",
+      "bytes": 256128,
+      "sha256": "4c11db8f68702d9ff43794dd19d425f59271290090a65d481f7e8db93fcbe5ab"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-000-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-000-window-01.npy",
+      "file": "files/00023.npy",
+      "bytes": 256128,
+      "sha256": "29840ddae9e12572cc3a93acd34b9deaba4a7551398e72364086ec4f0a2b73c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-000-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-000-window-02.npy",
+      "file": "files/00024.npy",
+      "bytes": 256128,
+      "sha256": "1859d03caaf193ef0615ae939a60788d82df39675e4ca300cc7225455a4d6b97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-000-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-000-window-03.npy",
+      "file": "files/00025.npy",
+      "bytes": 256128,
+      "sha256": "61ffb4ad4a57fccb1f34c5699fd855abb5d6abb95b732f2d5a26ee96487364d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-001-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-001-window-00.npy",
+      "file": "files/00026.npy",
+      "bytes": 256128,
+      "sha256": "a233b190a16fb3b0fed58a85354c028aa764414849f36205bcf2b509f94f5f0c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-001-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-001-window-01.npy",
+      "file": "files/00027.npy",
+      "bytes": 256128,
+      "sha256": "79bcaf567adc93bd0d5a3a0957a451c3aaf46caff5063a8629b0e4050e48e0d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-002-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-002-window-00.npy",
+      "file": "files/00028.npy",
+      "bytes": 256128,
+      "sha256": "daeba6b252bc35e56da9efbc3ca470eba9074cbe3adec0a6e05b2c4f812a0642"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-002-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-002-window-01.npy",
+      "file": "files/00029.npy",
+      "bytes": 256128,
+      "sha256": "1fdaca36c68ed73c6bb7695d2105ebfa26bc595d9173618229534172184f60b5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-002-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-002-window-02.npy",
+      "file": "files/00030.npy",
+      "bytes": 256128,
+      "sha256": "0bce00c1cedfa097c287490e179af127e55f9e3061a4eff942ed5616736b08a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-003-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-003-window-00.npy",
+      "file": "files/00031.npy",
+      "bytes": 256128,
+      "sha256": "56fdae584cf6c38ea5a9648308f1b970e950fe5c7d1b6f914805a51c34cde131"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-003-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-003-window-01.npy",
+      "file": "files/00032.npy",
+      "bytes": 256128,
+      "sha256": "82bd326f3313fdefb50d42787e2dbf14c74a8dc7f4c3ea0fd480d8af24b6a6a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-003-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-003-window-02.npy",
+      "file": "files/00033.npy",
+      "bytes": 256128,
+      "sha256": "d1867559d8b81229fed1f1c1a64ff1c66f9f6f08d9eb1caa494145d3a51566cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-004-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-004-window-00.npy",
+      "file": "files/00034.npy",
+      "bytes": 256128,
+      "sha256": "8b6837038572c34c69b6931f088c1353f70785fdeb67618aaab0f04bc473ab08"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-004-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-004-window-01.npy",
+      "file": "files/00035.npy",
+      "bytes": 256128,
+      "sha256": "fd855bbe57ea1c1ba608f10c59e15324030f11d2510af7bf798cc299920ed465"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-004-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-004-window-02.npy",
+      "file": "files/00036.npy",
+      "bytes": 256128,
+      "sha256": "49e4d227ae892f1d1031935530b139a9ba21e39dacf6633fb70f0608a493962c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-004-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-004-window-03.npy",
+      "file": "files/00037.npy",
+      "bytes": 256128,
+      "sha256": "6ccb5c571b5baceba8dfcfe218c085b395f4341c2ede4cbdac0280d939770ea2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-005-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-005-window-00.npy",
+      "file": "files/00038.npy",
+      "bytes": 256128,
+      "sha256": "4d39c14c90964fe42c06f94783172e675bf3f625bd4117aa6b4d9dfbeb84c592"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-005-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-005-window-01.npy",
+      "file": "files/00039.npy",
+      "bytes": 256128,
+      "sha256": "96538f4070e3fd6960b1c32e29119d733c3800e11b44402f76ffabf861e8827d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-005-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-005-window-02.npy",
+      "file": "files/00040.npy",
+      "bytes": 256128,
+      "sha256": "e145c35d7aa606eeb9a7c86b912a3fb98f9b26ab2408fe92b44564a3a6aa8f6a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-006-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-006-window-00.npy",
+      "file": "files/00041.npy",
+      "bytes": 256128,
+      "sha256": "d74a5f025df1a99d37183f89cd31c805e570b2ebf8bca79730a2cfaa343aca97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-006-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-006-window-01.npy",
+      "file": "files/00042.npy",
+      "bytes": 256128,
+      "sha256": "e3cfd4312e62b10ed69c56eb33eb9d56400fdfbb6e86103a2eeaef1fb75eabb1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-006-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-006-window-02.npy",
+      "file": "files/00043.npy",
+      "bytes": 256128,
+      "sha256": "59feece70f471cb9c5b8b77a601043473ee37483d056a0cc7f2d9dffcdbc1165"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-006-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-006-window-03.npy",
+      "file": "files/00044.npy",
+      "bytes": 256128,
+      "sha256": "586e21fef64922ccd1bb39972e637f1c3058a96b59cd24197131d7454cf884d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-007-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-007-window-00.npy",
+      "file": "files/00045.npy",
+      "bytes": 256128,
+      "sha256": "247b4d4c0af060582393c426d03e3427c523f9f6c63add121f016d391f7fe7e7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-007-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-007-window-01.npy",
+      "file": "files/00046.npy",
+      "bytes": 256128,
+      "sha256": "9faf1218f3245c2f0cc58370bca2ba8dd0d649af3eae01d9dca422301272c4a0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-007-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-007-window-02.npy",
+      "file": "files/00047.npy",
+      "bytes": 256128,
+      "sha256": "09540b7cfa514da1e0f30a44c36259fa9e51366ffe309093598b79a45d617a4c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-007-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-007-window-03.npy",
+      "file": "files/00048.npy",
+      "bytes": 256128,
+      "sha256": "21016c34ee3c887c81d14d13fe46425135e3d51aa099b75cf07f6d7a1e0498be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-007-window-04.npy",
+      "logicalPath": "baseline-r1/validation--mixed-007-window-04.npy",
+      "file": "files/00049.npy",
+      "bytes": 256128,
+      "sha256": "f4196c55fd91ad672dc18dbe8d69681f8918de1b84f0ce9a1b3b28b54992b2ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-00.npy",
+      "file": "files/00050.npy",
+      "bytes": 256128,
+      "sha256": "c41505dc65a51676e1b363c4504644622c6e339203da18fda98c22599e1b4f98"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-01.npy",
+      "file": "files/00051.npy",
+      "bytes": 256128,
+      "sha256": "054e2d461e250f3bff95ec78c1814bd447f827c795d3c418bac3c3057428bc29"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-02.npy",
+      "file": "files/00052.npy",
+      "bytes": 256128,
+      "sha256": "cc8f25dbf3be2acf96f8f7e41f201c05bb7f36a7715afcc6bfdc8c63e759d99f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-03.npy",
+      "file": "files/00053.npy",
+      "bytes": 256128,
+      "sha256": "d0e0b06d2ba28a0465cc0e3deaf103abf3d895aa7c7960c396e1aab62e89d66d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-04.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-04.npy",
+      "file": "files/00054.npy",
+      "bytes": 256128,
+      "sha256": "999d9b5bedaaa54ece8ab81b569084574c57664c3d27e6a9e04b486bf403a7bb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-008-window-05.npy",
+      "logicalPath": "baseline-r1/validation--mixed-008-window-05.npy",
+      "file": "files/00055.npy",
+      "bytes": 256128,
+      "sha256": "d58cdbc3116858cb1a529750c19da6ad5042a019f7a12b09643642bce7d8ca3c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-009-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-009-window-00.npy",
+      "file": "files/00056.npy",
+      "bytes": 256128,
+      "sha256": "bc383c646290c57a8176d81db46b29bad5eaa45b6e7449cc30a2b93401fb7974"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-009-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-009-window-01.npy",
+      "file": "files/00057.npy",
+      "bytes": 256128,
+      "sha256": "601a04f8548386c99eefaac616b68d39a01476d3e69178c8e960b3328c9fb64c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-009-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-009-window-02.npy",
+      "file": "files/00058.npy",
+      "bytes": 256128,
+      "sha256": "17ad8af1fdc45db959aa5a0b188c4b037dc638b655711764502d0d81ebddad3b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-010-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-010-window-00.npy",
+      "file": "files/00059.npy",
+      "bytes": 256128,
+      "sha256": "1ad1477597bd6dce8d4dd472a2408e5a7f194bdb454683937af4ae7587f28996"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-010-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-010-window-01.npy",
+      "file": "files/00060.npy",
+      "bytes": 256128,
+      "sha256": "d15a9c5d1e6a5ec381493feeef45958713efc217ab2a035a551ea24f8e99f8c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-010-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-010-window-02.npy",
+      "file": "files/00061.npy",
+      "bytes": 256128,
+      "sha256": "2c8e899e3da4b8cfc89d2c7917c7321b22321dcd6c3adeafdfa2b0cf6fde7b8d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-010-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-010-window-03.npy",
+      "file": "files/00062.npy",
+      "bytes": 256128,
+      "sha256": "a2ce2a6252ab3c0cc0ce08b09157ab433a70d8ea87d142152d12d3f36ac28017"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-011-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-011-window-00.npy",
+      "file": "files/00063.npy",
+      "bytes": 256128,
+      "sha256": "44c2afa0fbe5ac504ee1dad0babafdba1074417073915bfe74e9b0e082020b8e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-011-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-011-window-01.npy",
+      "file": "files/00064.npy",
+      "bytes": 256128,
+      "sha256": "50e1618e0a6921e335f844af6c7b3b4e97227e862393f3b3fb055e16bc04acab"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-012-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-012-window-00.npy",
+      "file": "files/00065.npy",
+      "bytes": 256128,
+      "sha256": "b7fcabb124ad29bded8f22c052f9749afcaae34c87a2d6260123540d5425c757"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-012-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-012-window-01.npy",
+      "file": "files/00066.npy",
+      "bytes": 256128,
+      "sha256": "dc43e5c11c0e2ec732579fd78c0d332d097c7a85701ba5b14f78c4ed7093374d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-012-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-012-window-02.npy",
+      "file": "files/00067.npy",
+      "bytes": 256128,
+      "sha256": "2948fcc866f40ed3796fa21fe5f9c01bca35979cb533cf28e6369b16d7d0559c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-012-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-012-window-03.npy",
+      "file": "files/00068.npy",
+      "bytes": 256128,
+      "sha256": "f82276ec63823001ecb5beb451323d32d4b0da3087927d388bbfcc9acf08bc13"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-013-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-013-window-00.npy",
+      "file": "files/00069.npy",
+      "bytes": 256128,
+      "sha256": "d2bb398cd44ec6e565523d42ce00cbcc917f7604a24c92c73b524146b6d2f740"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-013-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-013-window-01.npy",
+      "file": "files/00070.npy",
+      "bytes": 256128,
+      "sha256": "91f60cfe13bbc0727f745d8bbadf9c579229d82710d4db79a5eae476f7ac20aa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-013-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-013-window-02.npy",
+      "file": "files/00071.npy",
+      "bytes": 256128,
+      "sha256": "0188552ffb5eb90a1f00dd27a98a921f43cd9f0ba8cc63e0fcb8472271aeba4c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-013-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-013-window-03.npy",
+      "file": "files/00072.npy",
+      "bytes": 256128,
+      "sha256": "7993bbd7c42c27e54f7681e4932acd7b873b0700deb4595f46144d11e774063f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-014-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-014-window-00.npy",
+      "file": "files/00073.npy",
+      "bytes": 256128,
+      "sha256": "92bb3cf0f2ea075ddcfa311992e7daacd76ee3abf602e6c552596bcc23c6b61a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-014-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-014-window-01.npy",
+      "file": "files/00074.npy",
+      "bytes": 256128,
+      "sha256": "8ef7b3c0e559562a39270329c84ef692358dd7125f1e24b7e4a21e28a66d4241"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-014-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-014-window-02.npy",
+      "file": "files/00075.npy",
+      "bytes": 256128,
+      "sha256": "0206cf8afd48c30d20c8ec6af9736e187ec3f288fe243a5098b07fd410eb1f07"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-014-window-03.npy",
+      "logicalPath": "baseline-r1/validation--mixed-014-window-03.npy",
+      "file": "files/00076.npy",
+      "bytes": 256128,
+      "sha256": "d205cacbf35f5fe1e03e7845a283b866b37516acb0ba1e4632a17107564359f4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-014-window-04.npy",
+      "logicalPath": "baseline-r1/validation--mixed-014-window-04.npy",
+      "file": "files/00077.npy",
+      "bytes": 256128,
+      "sha256": "e221796955c2ab09ba0a63ab1160cb8e5b52d2e1c1a44dec4aeb2a8fc27257a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-015-window-00.npy",
+      "logicalPath": "baseline-r1/validation--mixed-015-window-00.npy",
+      "file": "files/00078.npy",
+      "bytes": 256128,
+      "sha256": "2cd9b26e9cfe14e4d5b1c8cb612fe1be9657b4d760a4496a8a0023f2f5437d93"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-015-window-01.npy",
+      "logicalPath": "baseline-r1/validation--mixed-015-window-01.npy",
+      "file": "files/00079.npy",
+      "bytes": 256128,
+      "sha256": "1d9d42ed8aec1dbc1b095a11c504aea157f6aa4c075822d0083e939fc988f458"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--mixed-015-window-02.npy",
+      "logicalPath": "baseline-r1/validation--mixed-015-window-02.npy",
+      "file": "files/00080.npy",
+      "bytes": 256128,
+      "sha256": "403d4ba7bcbcbc29db318b76f8e6d3ca3d4c590ddd10247ac5c77f93794c491f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-000-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-000-window-00.npy",
+      "file": "files/00081.npy",
+      "bytes": 256128,
+      "sha256": "e793109d1a2fb1e3b88e2d6011a0a5147ecc612bb271e0347004b6acde2802b1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-000-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-000-window-01.npy",
+      "file": "files/00082.npy",
+      "bytes": 256128,
+      "sha256": "9972abbc28b1e89d787aac89df75c7bc7dda94de2437a862fba4007204482f18"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-001-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-001-window-00.npy",
+      "file": "files/00083.npy",
+      "bytes": 256128,
+      "sha256": "726216fa208f78e34b91d65666aeb095b2805080f02511c65515a9f2eb1d02b8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-001-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-001-window-01.npy",
+      "file": "files/00084.npy",
+      "bytes": 256128,
+      "sha256": "64f1e95a9be697fbe9999e20aaa3b4ac8c9dd5d9a72f8d61c0008768db4daee9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-002-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-002-window-00.npy",
+      "file": "files/00085.npy",
+      "bytes": 256128,
+      "sha256": "2b8130cecb86c688b9eaa51163422e5ac28d115cb9b09c9f409569c5f50de89d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-002-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-002-window-01.npy",
+      "file": "files/00086.npy",
+      "bytes": 256128,
+      "sha256": "4529183ff5e32c32652922ed503b0c4a5214b114eee168734da6b8d6884e2c95"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-002-window-02.npy",
+      "logicalPath": "baseline-r1/validation--solo-002-window-02.npy",
+      "file": "files/00087.npy",
+      "bytes": 256128,
+      "sha256": "efc1d19886c197cac70a634732087b723a6f40ee7c7308a36dd5617ed9e9a4fa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-003-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-003-window-00.npy",
+      "file": "files/00088.npy",
+      "bytes": 256128,
+      "sha256": "5c347612ac8322982d65d4105a000dc902f8d7dc2b542348fcd1deb4f9b96c77"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-003-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-003-window-01.npy",
+      "file": "files/00089.npy",
+      "bytes": 256128,
+      "sha256": "e4d1b0c6611cf599e2804e2e184edf51f87bbe4c0461d2991392f42478dda5f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-003-window-02.npy",
+      "logicalPath": "baseline-r1/validation--solo-003-window-02.npy",
+      "file": "files/00090.npy",
+      "bytes": 256128,
+      "sha256": "00876e001c875b1bf86cad1bc484fdd01613d2576a40641ee6a387294c98232e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-003-window-03.npy",
+      "logicalPath": "baseline-r1/validation--solo-003-window-03.npy",
+      "file": "files/00091.npy",
+      "bytes": 256128,
+      "sha256": "e34a531b347bbdd4198024b5037958e0e3fb4b2fc1b5969d837071eb3f040072"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-004-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-004-window-00.npy",
+      "file": "files/00092.npy",
+      "bytes": 256128,
+      "sha256": "333448b55885d58a91196758f35d9d9ed03264bca83a5946e9aff9ade93d3602"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-004-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-004-window-01.npy",
+      "file": "files/00093.npy",
+      "bytes": 256128,
+      "sha256": "13b163d7d5ed696973830b070dd7e04a890cd479acfad2cfcecfe138d4a1f2ea"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-004-window-02.npy",
+      "logicalPath": "baseline-r1/validation--solo-004-window-02.npy",
+      "file": "files/00094.npy",
+      "bytes": 256128,
+      "sha256": "96fce7e35d7eafcb278732e076e884171f82cf48e9d1d6d360f6699d5a79c60c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-004-window-03.npy",
+      "logicalPath": "baseline-r1/validation--solo-004-window-03.npy",
+      "file": "files/00095.npy",
+      "bytes": 256128,
+      "sha256": "274759f7646ed48385330e1473aa4ab835d25667aef6bcb0a26635f23e53c7ad"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-005-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-005-window-00.npy",
+      "file": "files/00096.npy",
+      "bytes": 256128,
+      "sha256": "ca57489b460b00c811484add16d1c5285a445fdd59539c78776094e6d0bfd4f4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-005-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-005-window-01.npy",
+      "file": "files/00097.npy",
+      "bytes": 256128,
+      "sha256": "f3d5f16b35318da6c88c1012ce4dfe9411391bfc46c9c567af6bb5fa2abea2c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-005-window-02.npy",
+      "logicalPath": "baseline-r1/validation--solo-005-window-02.npy",
+      "file": "files/00098.npy",
+      "bytes": 256128,
+      "sha256": "d794488a5bc6e2641e744a628b308c855d571b3df919bdafee90d576bb9f7300"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-005-window-03.npy",
+      "logicalPath": "baseline-r1/validation--solo-005-window-03.npy",
+      "file": "files/00099.npy",
+      "bytes": 256128,
+      "sha256": "9c53d5b0e26225e09f8926047076888264d8c00d590c00993021e698d0ee69d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-006-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-006-window-00.npy",
+      "file": "files/00100.npy",
+      "bytes": 256128,
+      "sha256": "ccd73cda4e7f8646ce3f0e954493688bd1710e4ab687f523848d4ea8aea42feb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-006-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-006-window-01.npy",
+      "file": "files/00101.npy",
+      "bytes": 256128,
+      "sha256": "14d71e98daa68daa05263956c33735c0d9b5931d3f19469af6bf17eb0fc3d450"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-007-window-00.npy",
+      "logicalPath": "baseline-r1/validation--solo-007-window-00.npy",
+      "file": "files/00102.npy",
+      "bytes": 256128,
+      "sha256": "58cf8e32f709ae211a4a2ff9b5779e663c4a8fa6f34360c90e17c7f3e3999747"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-007-window-01.npy",
+      "logicalPath": "baseline-r1/validation--solo-007-window-01.npy",
+      "file": "files/00103.npy",
+      "bytes": 256128,
+      "sha256": "f7afe088a6f0bddd72f4b0eaa60437693703d6e83d298f558fb8bb95257205fd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-007-window-02.npy",
+      "logicalPath": "baseline-r1/validation--solo-007-window-02.npy",
+      "file": "files/00104.npy",
+      "bytes": 256128,
+      "sha256": "54099e6358983db3f4f3660880d419614eba880f5f2ce0a40008a7097409d4c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\validation--solo-007-window-03.npy",
+      "logicalPath": "baseline-r1/validation--solo-007-window-03.npy",
+      "file": "files/00105.npy",
+      "bytes": 256128,
+      "sha256": "51c07ad1ca95dfb95f1d5b144f61d75923bd17463a575559186bb55f260c51d7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\worker.log",
+      "logicalPath": "baseline-r1/worker.log",
+      "file": "files/00106.log",
+      "bytes": 342,
+      "sha256": "a85c26c82a6ff281266e70f0273614f11dfea6c6a0af5d4d9d2aac19ace1f8ea"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "baseline-r1/inventory/hip-inventory.json",
+      "file": "files/00107.json",
+      "bytes": 1394,
+      "sha256": "ae004c370bcd1cde8a64feb571f9b6ad955730fed303141fc521668ce596d1a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "baseline-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00108.jsonl",
+      "bytes": 733,
+      "sha256": "4b3aabdd44c5654d5ea6411f2a6a9a5089e1bbbfc54cf09074c112b93373ad75"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\inventory\\inventory-run.json",
+      "logicalPath": "baseline-r1/inventory/inventory-run.json",
+      "file": "files/00109.json",
+      "bytes": 608,
+      "sha256": "fef437a29df9deead35fc8be45840531fd08b5c060913cb01ce7c88b940baf51"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\baseline-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "baseline-r1/inventory/inventory-worker.log",
+      "file": "files/00110.log",
+      "bytes": 1213,
+      "sha256": "58a09e5b97200f96c6498ef1cd1bfb637c893760a3f0cdbf3b4cc2d5b2739159"
+    },
+    {
+      "source": "work\\prepare_blind_separator_supervision_20261115.py",
+      "logicalPath": "continuation-tools/prepare_blind_separator_supervision_20261115.py",
+      "file": "files/00111.py",
+      "bytes": 6966,
+      "sha256": "dca7338f9b87d89d50f277f09998b7355f74e5d4e7e95b1c9f20ca1e0dd6bb37"
+    },
+    {
+      "source": "work\\split_blind_separator_validation_inputs_20261115.py",
+      "logicalPath": "continuation-tools/split_blind_separator_validation_inputs_20261115.py",
+      "file": "files/00112.py",
+      "bytes": 1458,
+      "sha256": "48ec6b548e5732e7c23bf65e84f06a16fd82c6630299f2e08a9925b53f24448b"
+    },
+    {
+      "source": "work\\freeze_supervised_blind_separator_20261115.py",
+      "logicalPath": "continuation-tools/freeze_supervised_blind_separator_20261115.py",
+      "file": "files/00113.py",
+      "bytes": 8349,
+      "sha256": "382c00efda5880e0917027d2e5b26aac8e2b288540c927462c3aa9b9680569cf"
+    },
+    {
+      "source": "work\\protect_supervised_blind_separator_20261115.py",
+      "logicalPath": "continuation-tools/protect_supervised_blind_separator_20261115.py",
+      "file": "files/00114.py",
+      "bytes": 6931,
+      "sha256": "58884db9bfd073a7953a0f4c0e7d1761dbfaa2d863c4978ec36b1d1f73f54525"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00115.json",
+      "bytes": 145148,
+      "sha256": "f0349688a599196fa8635650c51aad6864ea20fb04f90dce676892d6072a27c2"
+    },
+    {
+      "source": "outputs\\Companion-分离组合模型进度-20261115.txt",
+      "logicalPath": "owner-separation-composition-note.txt",
+      "file": "files/00116.txt",
+      "bytes": 2084,
+      "sha256": "94718b98eec5b6216820b700553ce7ccf1bbd4b3d7ab5e73f4560412b41e9a1f"
+    }
+  ],
+  "parentCommit": "b0cf711732b86294b021f2aa57bca4fe4aab48c8",
+  "originalAudioOrBaseWeightsCopied": false,
+  "optimizerCopied": false,
+  "fullFinalSeparatorWeightsCopied": false,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false,
+  "ownerParticipationRequired": false
+}
