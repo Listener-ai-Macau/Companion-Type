@@ -1,0 +1,171 @@
+未完成转写，仅供查看已保存的模型输出，不构成整会结果或质量验收。
+公开会议：AMI ES2003b，原音35分09.813秒，单麦Array1-01。
+保存4064个原生成token；无自然结束标记；未读取参考文本纠正。
+说话人编号与时间是模型预测，未经核对；末尾可能中断在一句话或时间标签内。
+本文件只添加换行便于阅读；原始字符全文另存，禁止把这部分当完整会议评分。
+
+[4.31][S01]Just put it on the desk. All I see is desktop.
+[6.61]
+[7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.
+[11.53]
+[15.26][S02]Uh oh, actually just uh yeah, that's it. If you dump it in there.
+[19.47]
+[16.38][S01]Project documents, yeah.
+[17.47]
+[19.54][S01]What's the username?
+[20.31]
+[21.54][S02]The username?
+[22.11]
+[22.56][S01]What's the username in there as well?
+[23.83]
+[24.66][S03]I don't know. You can connect to it with any username actually, there's no restriction.
+[28.53]
+[29.11][S01]Mm.
+[29.34]
+[34.40][S03]Oh sorry.
+[34.89]
+[34.51][S01]So.
+[34.74]
+[39.42][S02]Alright, okay.
+[40.26]
+[41.81][S01]Here we go.
+[42.18]
+[42.86][S02]Excellent, right.
+[43.62]
+[45.51][S02]Hopefully that's us ready to uh to go. So, functional design meeting. We'll flesh out some of the uh stuff. Um
+[54.91]
+[56.81][S02]we'll start with the minutes of the last meeting. Not a lot, thankfully the same. We introduced ourselves, discussed the possibility of a macro facility, interac interacting with the T_V_ a bit more, um mentioning of barcode, joystick for user manipulation, um and ergonomics of the remote control as well.
+[76.00]
+[78.63][S02]Um it's come to my attention the following. Teletext has become outdated due to the popular popularity of the internet. Remote controls should only be used for the T_V_, um
+[91.41]
+[92.83][S02]due for a time to market and possibly also cost issues. Um also key is the corporate image should stay recognisable. Um
+[101.13]
+[102.64][S02]uh your colour and slogan of course is down at the bottom there. Um now, just to say quickly, uh I would have thought that only being used for the television, the macro facility may now not be required.
+[121.01]
+[121.20][S03]Mm.
+[121.61]
+[122.04][S02]Um or it's functionality would have been of limited use, so to the point in my opinion anyway that it might not be worth pursuing. Um if anybody disagrees we can uh definitely say so. Um
+[135.86]
+[136.88][S02]and hopefully we'll just crack on and we'll get everything going. Um I'd like to if possible hear from our marketing expert first to help us gain an idea of where we're going to go. So um I'll just load up your presentation from here if you want.
+[151.03]
+[151.22][S01]Sure.
+[151.63]
+[155.13][S01]Um would you like to start from here? Yep, sure.
+[160.88]
+[161.66][S02]Uh is yours the
+[164.13]
+[166.34][S01]Um try a second one.
+[168.31]
+[174.98][S01]Try? Yeah, yeah. Yeah, okay. I'll put it in my last name, I guess not.
+[179.93]
+[176.26][S02]Sure.
+[176.66]
+[177.41][S02]Okay, right.
+[178.06]
+[180.38][S02]But it depends.
+[181.51]
+[182.05][S02]That's alright.
+[182.63]
+[183.03][S01]Okay.
+[183.41]
+[183.26][S04]Do you do you want me to just cycle through it for you or?
+[186.13]
+[186.44][S01]Oh yeah, that'd be fine, that'd be great. Okay. Function requirement by me, Ebenezer.
+[190.81]
+[187.58][S04]Yeah.
+[187.86]
+[192.71][S04]Okay.
+[193.16]
+[194.68][S01]Okay, so um we did some research. We asked one hundred people the opinions on remote controls. We had some uh open idea questions. Just what are your opinions on the remote control? Got a lot of responses. And we asked some very specific questions and we got a lot of good feedback. Please bear in mind this is only a hundred people. So even when the groups are divided into fifteen to twenty five, twenty five to thirty five, there's only maybe ten people, fifteen people in each group. Okay.
+[227.73]
+[229.48][S01]So, we got some of the best stuff we got. Remotes are often lost. I often lose my remote control at the back of the couch someplace. And even if it's not lost permanently, it takes me a few minutes to find it.
+[242.36]
+[243.63][S01]Most buttons are not used anymore. Like you said, teletext is outdated now. I remember trying to load a D_V_D_ player recently and there were so many buttons. It took me, I don't know, maybe ten minutes to to go through each button 'cause you have to press the shift button to access the yo buttons. You know, it's just a lot of stuff that no one really uses. And if they do, not very often.
+[265.13]
+[266.88][S01]Takes too long to manage a remote control. I've seen some remote controls that are big, they have a lot of buttons. You have to hold down more than one key at one time to do something. They're just not great to use. We've just got a lot of bad complaints about remote controls. People do not like remote controls. Some of the good stuff we got.
+[285.26]
+[286.54][S01]Between the age of fifteen and twenty five, most people will be willing to pay extra for voice recognition software. I don't get excited here, I've got more to say on it. Most people will be willing to pay for that. And most people want remote controls to be pretty. They want it to be fancy.
+[304.13]
+[305.31][S01]They they want it to be different. Everybody has a white remote control with black buttons and a red button and a green button. Not everybody wants that. Finally, my opinion.
+[316.36]
+[316.88][S02]Yeah.
+[317.06]
+[318.28][S01]The voice recognition thing is cool. And uh voice recognition, the software, open source software exists already. It's a bit sketchy at sometimes uh. You're not gonna get get always accurate results, but for a very fixed number of words, you know, you have how many different words can you have for a remote control? Up, down, left, right, channel five, channel seven. You know, how many you can't have that many words. For a fixed vocabulary it works quite well.
+[344.46]
+[345.53][S01]I'm pretty sure people will buy it. But after a while people may wanna return it. Because if you have to to say s I mean most people use a remote control for switching to channels. And they say they do that about ninety eight percent of the time. Use the remote control ninety eight percent of the time for changing channels. And that's for flickering through channels. So if you have to say up, up, up, up, if you have to do that all the time, I think people might get a bit fed up with that and they may return it.
+[373.63]
+[374.86][S01]However, oh, because the voice recognition software exists already, there's no need to spend money on research and development. But this doesn't mean the need for microphones in the in the remote control, which is an unusual feature in my opinion. But if we do have the voice recognition thing, there's a lot of stuff that you can uh get rid of.
+[396.63]
+[397.61][S01]See, you could there are two options. Either you have voice recognition by itself, which I think is a bit impractical for like night time if you wanna be watching television, you wanna be quiet. Or I don't know, you have a visitor come round and the remote's only trained for you. It's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote.
+[416.93]
+[418.01][S01]But imagine you got rid of the regular remote, right? Then you can design the remote to look any way you want it to look. Because there are no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.
+[438.56]
+[438.86][S02]Okay.
+[439.31]
+[439.31][S04]Yep.
+[439.63]
+[439.81][S01]So we have the free birds, we have the design bit, we have the the fancy bit, right? The voice recognition is fancy, it's cool, it's different, it's radical. So and then we have an extra bit, I don't know.
+[453.03]
+[454.93][S01]So I'm pretty sure people will buy the remote. But is it practical to have a voice recognition system in the remote control? I think it's a big question. Um will people
+[464.16]
+[465.46][S01]will people be willing to wait for the the period that it'll take to train the remote? 'Cause I think it will the remote will uh get better over time with the same user the user. But for the first week or for the first two weeks are you willing to wait? Are you willing to have a bad remote control?
+[481.33]
+[482.63][S01]And uh what if you have visitors come round? They stay the night, they wanna use the T_V_, they can't use the remote because they speak differently to you. Um how do you account for regional accents and stuff like that? Uh will people return the remote control? 'Cause I think a lot of young people will buy the remote control if they have the money, you know, so well, or at least have the money. But will they return it after a while? Because it's not as fast as pressing a button, it's not practical. So these are things I think we should consider. I think it's cool.
+[513.43]
+[513.53][S02]If you could specifically, yeah. If you could uh speed it up a bit please.
+[517.26]
+[515.21][S01]I'm sorry.
+[515.56]
+[517.28][S01]Sure, I'm about there. Yeah. I think it's cool. But there are definitely some considerations. Do you think?
+[524.43]
+[524.86][S02]Excellent, right. Um
+[526.86]
+[529.21][S02]hear from the user interface designer, I think, from there. Um you've got your presentation now. Is it on the is it okay?
+[539.86]
+[533.36][S04]Okay.
+[533.76]
+[537.71][S04]Yeah, that's the it's in the hall.
+[538.96]
+[539.13][S02]Is it? Okay.
+[539.86]
+[541.23][S01]There was a oops. Oh. Right here.
+[545.23]
+[542.66][S02]Oh.
+[542.93]
+[546.06][S02]Technical functions? Yep.
+[548.43]
+[548.53][S01]I started making stuff up. You're not going to email me. Um.
+[551.13]
+[556.28][S04]Okay. Okay, so a brief run through of the um of the technical functions of the remote. I don't it's uh the the the presentation is uh already slightly obsolete because I had uh had in mind something that would uh be be able to controlling multiple devices. But uh there's still stuff of relevance, so press on.
+[577.63]
+[575.63][S02]Okay.
+[576.03]
+[577.96][S04]Yeah, we looked at uh looked at a a couple of our uh remote control models just for an idea of basic design principles. Um
+[588.13]
+[589.56][S04]and wasn't really satisfied about what I saw, I have to say. So this is more sort of springboard for uh how these could be improved on.
+[598.03]
+[600.01][S04]Um I basically the job of the device is to send commands to an appliance, in this case the television set, um to say you're getting off your backside. Um and there's two main trends in in the for design practice. On the one hand, and this uh this particularly relates to the sort of earliest models where it was, you know, it so so many buttons on it's about the size of the television set. Um and you every possible function that the the device has the remote control controls. And most of these functions are not going to be used. It creates a rather user unfriendly interface.
+[642.03]
+[642.41][S04]On the other hand, there's a user focused approach that pairs things down to just what what is most likely to get used. Um
+[650.33]
+[651.76][S04]with uh uh and the uh and of course there is a certain amount of some loss of function here obviously. But mostly that's relatively peripheral functions. And so you go for something that's fairly intuitive to use. And um well for the for the most part for a T_V_ remote it's uh that that would be channel control and volume. Uh and if you i i if if you all wanted to incorporate uh control with D_V_ uh D_V_D_ or uh V_C_R_ then into that, then as well play, pause, stop, rewind, fast forward, forward and so forth. Um
+[688.33]
+[690.31][S04]my only use that we should definitely be going for a user focused design. Um but uh the pro I think the problem with a lot of sort of user focused designs that are about is that they make assumptions and attacks about what uh what's given users going to uh want mo want to do from wanted to do most. So something that's uh
+[716.93]
+[718.13][S04]uh something that is more programmable, that uh pro perhaps has the full range of functions available to it. But you can then specify yourself what you're most likely to want. Um so that those are then immediately accessible through a fairly minimal number of controls. Um I liked Ebenezer's idea of including a joystick in that. And uh possibly a sort of fairly minimal number of sort of function buttons. That are just you then have some sort of basic display on it. So if you're um
+[750.03]
+[750.96][S04]sort of cha changing between different modes for the device. It'll tell you just exactly what uh in each direction of the uh
+[757.73]
+[760.33][S04]of the um joystick's going to do or what what each function button's going to do. Um this is actually I s I guess like taking inspiration up with uh games controllers and the PlayStation controller, you have four basic function buttons that are just marked with uh distinctive uh geometrical shapes. Uh and then dependent on what you're doing with it, what game it's in. Um those those functions are then sort of specified. So it's taken taken the lead from that.
+[791.03]
+[792.31][S02]Okay.
+[792.73]
+[792.68][S02]Yep.
+[792.93]
+[795.01][S02]Right. Um if we could hear from our industrial engineer, the designer.
+[801.23]
+[795.33][S04]That's it.
+[795.73]
+[800.33][S05]Yeah. Uh I was still working on stuff, I haven't got finished. Um alright. What to save on? Where do I have to save it?
+[809.93]
+[810.11][S02]If you look on

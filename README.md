@@ -205,3 +205,6 @@ A reference-protocol audit corrects the physical interpretation of earlier Engli
 
 
 2026-11-16T00:01:50.608903+08:00 ES2003b完整native27924token缓存已逐值落盘恢复，staged-r2实际2294token后HIP C++ abort在GPU停止检查同步呈现，族私有约1.2GB，原失败/前缀/完整缓存保留。staged-r3未设置generation字段None被前向前检查阻止，已按标准默认修复；不放宽数值门。staged-r4将相同batch1 argmax/EOS改为CPU持有，原公开61s回放8续8严格复现16token，原ES2294生成ID全部回放保留继续，无重新编码原音、无换模型/训练/删词。当前整会尚无最终分数，07:20停止推理/07:30汇总；这是在途源检查点，不是D2或售卖完成。
+
+
+2026-11-16T07:19:49.597915+08:00 整夜作业在00:16系统0x101异常重启中断。最后00:14保留4064原token，完整27924token原上下文KV仍在；完整四会0/4、候选质量分数0/4，无新训练或默认替换。原RUNNING文件保留，独立reconciliation纠正当前状态；重启后未再启动GPU推理。原始部分文本、CPU导出、系统事件和恢复绑定已归档，未将未完成输出算验收或售卖进展。下一关先稳定部署，再同四完整会议冻结对比。

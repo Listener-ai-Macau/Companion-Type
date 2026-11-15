@@ -1,0 +1,225 @@
+{
+  "at": "2026-11-16T07:19:49.597915+08:00",
+  "state": "OVERNIGHT_SYSTEM_REBOOT_INTERRUPTION_AND_PARTIAL_OUTPUT_PROTECTED",
+  "parentCommit": "e279b880d27548fd005fcdff978b8e69211a1099",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-system-interruption-r1\\interruption.json",
+      "logicalPath": "system-interruption/interruption.json",
+      "file": "files/00000.json",
+      "bytes": 812,
+      "sha256": "157df47e4695e972d8dd94e19184bf084b1a4c36549d5fa4d534ff4e92f17d5a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-system-interruption-r1\\reconciliation.json",
+      "logicalPath": "system-interruption/reconciliation.json",
+      "file": "files/00001.json",
+      "bytes": 3111,
+      "sha256": "a26b5628a9e3796d60ed6e13d37bb8ca3b3c14e26f7de685509acc67613592dc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-system-interruption-r1\\system-events.xml.txt",
+      "logicalPath": "system-interruption/system-events.xml.txt",
+      "file": "files/00002.txt",
+      "bytes": 2042,
+      "sha256": "00e28fe485cad4b9f6e077da433a0dd028749604a45b9fe692e55fd4fa9b0f35"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r4\\staged-binding.json",
+      "logicalPath": "frozen-contract/staged-binding.json",
+      "file": "files/00003.json",
+      "bytes": 10148,
+      "sha256": "9ae7127ab13d469c4b08d170a1eb7e91c4963735151854a5bbecd87d0b95f2ed"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\ES2003b-decode-state.json",
+      "logicalPath": "reboot-interrupted-run/ES2003b-decode-state.json",
+      "file": "files/00004.json",
+      "bytes": 1238,
+      "sha256": "0f1b896f29b11c4a8fc231611c326054dedabd26086839a6bea84bccd393b893"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\ES2003b-decode-weights.json",
+      "logicalPath": "reboot-interrupted-run/ES2003b-decode-weights.json",
+      "file": "files/00005.json",
+      "bytes": 1411,
+      "sha256": "7d209802b5107884d27b92f154f9fd211b4013422860d289a75fe044e4325712"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\ES2003b-decode-worker.log",
+      "logicalPath": "reboot-interrupted-run/ES2003b-decode-worker.log",
+      "file": "files/00006.log",
+      "bytes": 171,
+      "sha256": "5c79ba7d0196cce17472187e1449a355fe0a367834bbfb07469125955d0a2a5e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\ES2003b-partial-ids.json",
+      "logicalPath": "reboot-interrupted-run/ES2003b-partial-ids.json",
+      "file": "files/00007.json",
+      "bytes": 37122,
+      "sha256": "82fcb87ed31c83b22b3dc1682f5d5a5a505ce479c56db9025ba753b2f4551708"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\inventory-0\\hip-inventory.json",
+      "logicalPath": "reboot-interrupted-run/inventory-0/hip-inventory.json",
+      "file": "files/00008.json",
+      "bytes": 1394,
+      "sha256": "e29e54ce53446bd984863a5cf40dcae12ea782fc91d90651570f208618ec148d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\inventory-0\\inventory-resources.jsonl",
+      "logicalPath": "reboot-interrupted-run/inventory-0/inventory-resources.jsonl",
+      "file": "files/00009.jsonl",
+      "bytes": 611,
+      "sha256": "cd93d1505637b62fe9df2fd1b99a211d3f419d6ab97510bc8528941426ff755a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\inventory-0\\inventory-run.json",
+      "logicalPath": "reboot-interrupted-run/inventory-0/inventory-run.json",
+      "file": "files/00010.json",
+      "bytes": 611,
+      "sha256": "a289df48cbdeb0251d3273ee9362718959848e06e630cdb6d0649403703c50a8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\inventory-0\\inventory-worker.log",
+      "logicalPath": "reboot-interrupted-run/inventory-0/inventory-worker.log",
+      "file": "files/00011.log",
+      "bytes": 1213,
+      "sha256": "b974e7e44683c5b6119fd026b349780e897f3375267e874afd558f4206ec2d8b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\inventory-0.log",
+      "logicalPath": "reboot-interrupted-run/inventory-0.log",
+      "file": "files/00012.log",
+      "bytes": 580,
+      "sha256": "989d553abef189d50a15feefffd9f92bf9e82625aed479983d6de2f5eb37b9a1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\run.json",
+      "logicalPath": "reboot-interrupted-run/run.json",
+      "file": "files/00013.json",
+      "bytes": 1778,
+      "sha256": "a92e031fde90dea44f86b0fcbf02ef186741ca7139f9859691cbaefbd17fabda"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-decode-state.json",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-decode-state.json",
+      "file": "files/00014.json",
+      "bytes": 1396,
+      "sha256": "0aef97bed5286bb1c7a120b6b6225724343cc3d1fa8fe4de0df8f0e742ad392a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-decode-weights.json",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-decode-weights.json",
+      "file": "files/00015.json",
+      "bytes": 1411,
+      "sha256": "c5fe45c4f1a8a3c4c98a2d38cc053e0f2fd638d255d18023a20567a012041c0f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-decode-worker.log",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-decode-worker.log",
+      "file": "files/00016.log",
+      "bytes": 1450,
+      "sha256": "1a2be42987dd8683ba35757efd03c0a004f3aaa88080758e627a17067ebd7872"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-generated-ids.json",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-generated-ids.json",
+      "file": "files/00017.json",
+      "bytes": 353,
+      "sha256": "958e368de372106ca7d1e0c94816de4fb089fa86f7a7672ce8091b45094c9068"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-partial-ids.json",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-partial-ids.json",
+      "file": "files/00018.json",
+      "bytes": 236,
+      "sha256": "88429556b958cd8c7b8838e25d66fcb992a1619ee3fcd93abab27e7d89d9391b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4\\runtime-control61-raw.json",
+      "logicalPath": "reboot-interrupted-run/runtime-control61-raw.json",
+      "file": "files/00019.json",
+      "bytes": 4264,
+      "sha256": "780f452856925d695d03a8139fd41e181818f29f4947d63fb2ea6ff0b502afe1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\07点30交付说明.txt",
+      "logicalPath": "owner-delivery/07点30交付说明.txt",
+      "file": "files/00020.txt",
+      "bytes": 3697,
+      "sha256": "d6c6e1cb90011c93763945554acfe5b66309db18904ded6e0344ba84523ac985"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\ES2003b-部分转写-可阅读.txt",
+      "logicalPath": "owner-delivery/ES2003b-部分转写-可阅读.txt",
+      "file": "files/00021.txt",
+      "bytes": 13818,
+      "sha256": "8cca770ef113ea16bc1b5b5c75119a6ffa1154dfaa6086c99d3851c6fcf44435"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\ES2003b-部分输出-原始文本.txt",
+      "logicalPath": "owner-delivery/ES2003b-部分输出-原始文本.txt",
+      "file": "files/00022.txt",
+      "bytes": 13012,
+      "sha256": "ee1629adc54d319141b9e0dbbcdc0cb120c5497b008510fe2b1ab1ac347e242e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\恢复输入与中断核对.json",
+      "logicalPath": "owner-delivery/恢复输入与中断核对.json",
+      "file": "files/00023.json",
+      "bytes": 3111,
+      "sha256": "a26b5628a9e3796d60ed6e13d37bb8ca3b3c14e26f7de685509acc67613592dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\manifest.json",
+      "logicalPath": "retained-complete-context/cache-manifest.json",
+      "file": "files/00024.json",
+      "bytes": 24524,
+      "sha256": "69025adb998e37fc17c826c3906baa20ccd5b1ee93bf938bddf5f8801541a067"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-prefill-state.json",
+      "logicalPath": "retained-complete-context/prefill-producer-state.json",
+      "file": "files/00025.json",
+      "bytes": 1652,
+      "sha256": "418fe8263a27b7e070cb39116c79678987ba3b3e888c7bc7e24c10c135a28c39"
+    },
+    {
+      "source": "work\\finalize_overnight_20261116.py",
+      "logicalPath": "continuation-tools/finalize_overnight_20261116.py",
+      "file": "files/00026.py",
+      "bytes": 9983,
+      "sha256": "8892bd44817f5263352f0efe3689fb7811afeb4b7b4d30256c9c43e99ab3969f"
+    },
+    {
+      "source": "work\\protect_overnight_interruption_20261116.py",
+      "logicalPath": "continuation-tools/protect_overnight_interruption_20261116.py",
+      "file": "files/00027.py",
+      "bytes": 5762,
+      "sha256": "05aaabdd1208cf8ccef0fb1b00d94d74d826c89ed0b6390fd4d23f5c096990cb"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "continuation-tools/bilingual_progress.json",
+      "file": "files/00028.json",
+      "bytes": 211291,
+      "sha256": "9e7805d3e4d60eb1b202561766b4080ab7438376411910b126ac2cf465b8bff8"
+    }
+  ],
+  "fullPromptTokens": 27924,
+  "retainedGeneratedTokens": 4064,
+  "wholeMeetingTranscriptsCompleted": 0,
+  "wholeMeetingQualityScores": 0,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "D2Complete": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "originalRunJsonPreserved": true,
+  "noNewNeuralInferenceAfterReboot": true,
+  "crashCauseNotAttributedToComponent": true,
+  "privateMemoryDumpContentsExcluded": true,
+  "bulkCacheHashManifestOnly": true,
+  "deadline": "2026-11-16T07:30:00+08:00"
+}

@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-11-16T07:13:55.606269+08:00",
+  "state": "SYSTEM_REBOOT_INTERRUPTED_OVERNIGHT_NOT_COMPLETED",
+  "bootAt": "2026-11-16T00:16:45.215631+08:00",
+  "kernelPowerEventId": 41,
+  "bugcheckDecimal": 257,
+  "bugcheckHex": "0x101",
+  "sleepInProgress": 0,
+  "runPidStillExists": false,
+  "workerPidStillExists": false,
+  "lastGeneratedTokens": 4064,
+  "lastDecodeSeconds": 948.4124671000027,
+  "lastStateModifiedAt": "2026-11-16T00:14:43.481571+08:00",
+  "runStateStaleBecauseNoFinally": true,
+  "wholeMeetingOutputs": 0,
+  "qualityQualified": false,
+  "systemCrashCauseNotProven": "The workload was active; event code alone does not establish the faulty hardware/driver/software.",
+  "gpuLongInferenceStoppedPendingRootCause": true,
+  "noNewNeuralInferenceAfterReboot": true
+}
