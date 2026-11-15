@@ -12,6 +12,7 @@ mod context_plan;
 mod question_sources;
 mod template;
 mod short_evidence;
+mod topic_outline;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -1961,3 +1962,6 @@ mod tests {
         }
     }
 }
+
+
+pub(super) fn attach_topic_outline(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,minutes:&mut CompanionV1MeetingMinutes,client:&reqwest::blocking::Client,template:Option<&crate::companion_v1::MinutesTemplate>){topic_outline::attach(endpoint,model,key,session,minutes,client,template);}

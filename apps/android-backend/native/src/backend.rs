@@ -94,7 +94,9 @@ fn generate_template(session:&CompanionV1HostSession,endpoint:&str,model:&str,ke
     let _restore=Restore(old);
     let draft=minutes::rules_l0_minutes(session,&chrono::Utc::now().to_rfc3339());
     let result=minutes::run_deepseek_request_with_evidence(endpoint,model,key,session,&draft,&client,template);
-    Ok(minutes::finalize_native_result(result,draft,session))
+    let mut minutes=minutes::finalize_native_result(result,draft,session);
+    minutes::attach_topic_outline(endpoint,model,key,session,&mut minutes,&client,template);
+    Ok(minutes)
 }
 pub fn generate_observed(session:&CompanionV1HostSession,endpoint:&str,model:&str,key:&str,root:&Path,
     progress:impl FnMut(u64,u64)->Result<(),String>+'static)->Result<crate::companion_v1::CompanionV1MeetingMinutes,String> {
@@ -120,3 +122,6 @@ fn http_policy_endpoint(endpoint:&str)->Result<reqwest::Url,String>{
     if url.scheme()!="https"&&!loopback{return Err("纪要服务需要 HTTPS 连接。".into());}
     Ok(url)
 }
+
+
+pub(super) mod meeting_processing_job {pub fn check_current()->Result<(),String>{super::mobile_minutes_progress::check()}}
