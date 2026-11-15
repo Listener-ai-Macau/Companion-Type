@@ -186,6 +186,9 @@ fn ready()->Pointer{
 #[test]
 #[ignore="Local Owner142 raw trace only; no private data is bundled"]
 fn owner142_recorded_taps_and_impact_motion_replay(){
+    // Diagnostic ablation only: reuse actual board Fusion gravity without
+    // enabling the second host pose predictor. No production setting changes.
+    let board_direct=std::env::var_os("COMPANION_BOARD_DIRECT_REPLAY").is_some();
     let root=std::path::PathBuf::from(std::env::var("COMPANION_CONTACT_EVALUATION").expect("Owner trace"));
     let receipt:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("result.json")).unwrap()).unwrap();
     // A failed native mode-exit can omit finalPointer. Preserve that failure;
@@ -210,13 +213,15 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
             let h=row["packet"].as_str().unwrap();let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
             let raw=desktop::Raw::parse(&bytes).unwrap();
             if p.settings.desktop_motion&&sequence.is_some_and(|old:u32|raw.sequence.wrapping_sub(old)>=0x8000_0000){p.begin_stream();inferred_restarts+=1;}
-            let fused=Sample::parse(&bytes).unwrap();sequence=Some(raw.sequence);p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());
+            let fused=Sample::parse(&bytes).unwrap();sequence=Some(raw.sequence);
+            if board_direct&&fused.device_ready==Some(true){p.desktop_device_ready=None;}
+            p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());
             if p.settings.desktop_motion{states.push(serde_json::json!({"at":at,"calibrated":p.metrics.calibrated,"surfacePaused":p.metrics.surface_paused,"tapBlocked":p.tap_motion.blocked(),"state":p.planar_state()}));}
         }else if row["kind"]=="calibrate"{p.calibrate();}
         else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
     }
     let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
-    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence."});
+    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"boardDirectDiagnostic":board_direct,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence. Board-direct, when explicitly enabled, is diagnostic, not shipped runtime."});
     let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
     if std::env::var_os("COMPANION_EXPECT_DESK_REPAIR").is_some(){
         // Explicit Owner155 clarification: this capture was pushed on the

@@ -170,6 +170,13 @@ impl Contact {
             if feature.is_none()&&now-p.at<0.4{break;}
             let p=self.pending.pop_front().unwrap();
             let Some(feature)=feature else{self.status.missed_windows+=1;continue;};
+            #[cfg(test)]
+            if std::env::var_os("COMPANION_CONTACT_SCORE_REPLAY").is_some(){
+                if let Some(profile)=&self.profile{
+                    eprintln!("CONTACT_SCORE event_ms={} onset_ms={} left={:.9} right={:.9}",p.ms,feature.onset,
+                        dtw::distance(&profile.left,&feature.series),dtw::distance(&profile.right,&feature.series));
+                }
+            }
             // Physical onset, not event spacing: suppress25/93/99ms echoes
             // without a120ms click lockout or freezing pointer movement.
             if self.last_impact.is_some_and(|t|(feature.onset.wrapping_sub(t)as i32).unsigned_abs()<=35){self.status.suppressed_rebounds+=1;continue;}
