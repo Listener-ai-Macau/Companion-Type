@@ -1,18 +1,18 @@
 /* One shared visual vocabulary for the desktop and phone notebook. */
 .ct-notebook,.mobile-app{
  color-scheme:light;
- --notebook-canvas:#eaf0f6;--notebook-shadow:#2436520a;
- --notebook-paper:#ffffff;--notebook-chrome:#f4f7fb;--notebook-ink:#253044;
- --notebook-muted:#647286;--notebook-line:#dfe6ef;--notebook-selection:#edf2fa;
- --notebook-accent:#48618d;--notebook-accent-foreground:#ffffff;--notebook-soft:#f5f7fb;
+ --notebook-canvas:#eae9e5;--notebook-shadow:#30291c08;
+ --notebook-paper:#fffefa;--notebook-chrome:#f2f1ee;--notebook-ink:#292a2b;
+ --notebook-muted:#716f6b;--notebook-line:#e6e3dc;--notebook-selection:#f2eae1;
+ --notebook-accent:#975638;--notebook-soft:#f8f6f1;
  --notebook-font:"Microsoft YaHei UI","PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
  --notebook-reading-width:800px;--notebook-control-radius:8px;
  --notebook-space-1:4px;--notebook-space-2:8px;--notebook-space-3:12px;
  --notebook-space-4:16px;--notebook-space-6:24px;--notebook-space-8:32px;
 }
 .ct-notebook.ct-theme-dark,.mobile-app[data-theme=dark]{
- --notebook-canvas:#151b25;--notebook-shadow:#00000030;
- --notebook-paper:#202836;--notebook-chrome:#19212d;--notebook-ink:#e8eef7;
- --notebook-muted:#a7b5c8;--notebook-line:#374456;--notebook-selection:#2b3b55;
- --notebook-accent:#a9bee8;--notebook-accent-foreground:#18243a;--notebook-soft:#263142;color-scheme:dark;
+ --notebook-canvas:#151718;--notebook-shadow:#00000025;
+ --notebook-paper:#202224;--notebook-chrome:#191b1d;--notebook-ink:#e8e6e1;
+ --notebook-muted:#aaa7a2;--notebook-line:#383a3c;--notebook-selection:#3b302a;
+ --notebook-accent:#e0a17c;--notebook-soft:#27292b;color-scheme:dark;
 }
