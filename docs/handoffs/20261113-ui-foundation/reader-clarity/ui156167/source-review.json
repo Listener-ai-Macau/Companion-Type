@@ -1,0 +1,205 @@
+{
+  "stage": "glance-r4",
+  "scope": "Actual production shared UI components; public saved30m output plus explicit fictional edge cases. Source browser check, not native installation or new model evaluation.",
+  "modelsRun": false,
+  "checks": [
+    {
+      "platform": "windows",
+      "width": 1440,
+      "theme": "light",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 484,
+        "right": 1284,
+        "scrollWidth": 800,
+        "width": 800,
+        "documentWidth": 1440,
+        "viewport": 1440
+      },
+      "colors": {
+        "ink": "rgb(32, 36, 45)",
+        "paper": "#ffffff"
+      }
+    },
+    {
+      "platform": "windows",
+      "width": 1440,
+      "theme": "dark",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 484,
+        "right": 1284,
+        "scrollWidth": 800,
+        "width": 800,
+        "documentWidth": 1440,
+        "viewport": 1440
+      },
+      "colors": {
+        "ink": "rgb(232, 236, 244)",
+        "paper": "#1c1f26"
+      }
+    },
+    {
+      "platform": "windows",
+      "width": 980,
+      "theme": "light",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 404,
+        "right": 956,
+        "scrollWidth": 552,
+        "width": 552,
+        "documentWidth": 980,
+        "viewport": 980
+      },
+      "colors": {
+        "ink": "rgb(32, 36, 45)",
+        "paper": "#ffffff"
+      }
+    },
+    {
+      "platform": "windows",
+      "width": 980,
+      "theme": "dark",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 404,
+        "right": 956,
+        "scrollWidth": 552,
+        "width": 552,
+        "documentWidth": 980,
+        "viewport": 980
+      },
+      "colors": {
+        "ink": "rgb(232, 236, 244)",
+        "paper": "#1c1f26"
+      }
+    },
+    {
+      "platform": "mobile",
+      "width": 390,
+      "theme": "light",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 22,
+        "right": 368,
+        "scrollWidth": 346,
+        "width": 346,
+        "documentWidth": 390,
+        "viewport": 390
+      },
+      "colors": {
+        "ink": "rgb(32, 36, 45)",
+        "paper": "#ffffff"
+      }
+    },
+    {
+      "platform": "mobile",
+      "width": 390,
+      "theme": "dark",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 22,
+        "right": 368,
+        "scrollWidth": 346,
+        "width": 346,
+        "documentWidth": 390,
+        "viewport": 390
+      },
+      "colors": {
+        "ink": "rgb(232, 236, 244)",
+        "paper": "#1c1f26"
+      }
+    },
+    {
+      "platform": "mobile",
+      "width": 320,
+      "theme": "light",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 18,
+        "right": 302,
+        "scrollWidth": 284,
+        "width": 284,
+        "documentWidth": 320,
+        "viewport": 320
+      },
+      "colors": {
+        "ink": "rgb(32, 36, 45)",
+        "paper": "#ffffff"
+      }
+    },
+    {
+      "platform": "mobile",
+      "width": 320,
+      "theme": "dark",
+      "exactAllTopics": true,
+      "missingActionHonest": true,
+      "conditionalDecisionIntact": true,
+      "contextAndReturn": true,
+      "mapTitleCorrect": true,
+      "geometry": {
+        "left": 18,
+        "right": 302,
+        "scrollWidth": 284,
+        "width": 284,
+        "documentWidth": 320,
+        "viewport": 320
+      },
+      "colors": {
+        "ink": "rgb(232, 236, 244)",
+        "paper": "#1c1f26"
+      }
+    },
+    {
+      "case": "no-list and source change",
+      "emptyHonest": true,
+      "readOriginalAvailable": true,
+      "previousSelectionCleared": true
+    }
+  ],
+  "pageErrors": [],
+  "ownerAccepted": false,
+  "beforeAfter": {
+    "scope": "Same source Dashboard, same saved public30m note, same980px viewport. No model rerun.",
+    "before": {
+      "height": 553.375,
+      "characters": 211
+    },
+    "after": {
+      "height": 399.453125,
+      "characters": 110
+    },
+    "directConclusionAndQuestionPreviews": true,
+    "noDefaultLongParagraph": true
+  },
+  "state": "GLANCE_DIRECT_RESULTS_REDUCED_DEFAULT_DENSITY_AND_EXACT_SOURCE_PASSED"
+}

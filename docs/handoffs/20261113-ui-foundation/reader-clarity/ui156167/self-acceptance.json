@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-15T08:36:21+08:00",
+  "state": "UI156167_NORMAL_INSTALLED_GRAPHICAL_OVERVIEW_SELF_ACCEPTANCE_PASSED",
+  "softwareSelfAcceptancePassed": true,
+  "windowsVersion": "0.1.156",
+  "androidVersion": "0.1.167",
+  "windowsSource": "9493685ac7fb62b73a51adaf25def66f4f859bf7",
+  "androidSource": "0613d7c1a8c574156069e5fa204ac2e31e7c4dbd",
+  "scope": "Concise source result excerpts and keyword index, no default long paragraph, exact source expansion and return, notes/transcript/export navigation, both themes and actual process reopen.",
+  "publicWindowsScope": "Existing saved public30m real output; no regeneration.",
+  "publicPhoneScope": "Existing saved public90s real output; no regeneration.",
+  "nativePublicEvidence": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting-native156\\product\\docs\\handoffs\\20261109-core-acceptance\\06b1cdd0869c4f3f878b26f961a385a3\\result.json",
+  "sourceReview": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\glance-r4\\result.json",
+  "sourceBeforeAfter": {
+    "scope": "Same source Dashboard, same saved public30m note, same980px viewport. No model rerun.",
+    "before": {
+      "height": 553.375,
+      "characters": 211
+    },
+    "after": {
+      "height": 399.453125,
+      "characters": 110
+    },
+    "directConclusionAndQuestionPreviews": true,
+    "noDefaultLongParagraph": true
+  },
+  "sourceKeywordProvenance": "E:\\CodexData\\Companion\\.build-cache\\product-closure20261112\\template-full20261113\\visual-meeting20261114\\glance-model\\result.json",
+  "phoneReading": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android167\\reading-notice-before-restart.json",
+  "phoneReopen": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261110-android-media-import\\android167\\reading-notice-after-restart.json",
+  "oldWindowsFilesByteIdentical": 249,
+  "oldPhoneFilesRetained": 6713,
+  "oldPhoneFilesByteIdentical": 6712,
+  "phoneOriginalLibraryAppearanceRestored": true,
+  "phoneHoldReleased": true,
+  "actualPhoneAiGenerationSaveExportTested": false,
+  "modelsOrCloudNewlyRun": false,
+  "modelQualityQualified": false,
+  "ownerPromptStarted": false,
+  "ownerAccepted": false,
+  "saleQualified": false
+}

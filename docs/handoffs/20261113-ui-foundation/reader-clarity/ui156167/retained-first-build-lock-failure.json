@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-14T23:14:14+08:00",
+  "state": "LOCAL_WINDOWS_DELIVERY_BUILD_FAILED_RETAINED",
+  "sourceCommit": "9493685ac7fb62b73a51adaf25def66f4f859bf7",
+  "platformCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "version": "0.1.156",
+  "modelsRun": false,
+  "boardAccessed": false,
+  "installed": false,
+  "hostedCiRun": null,
+  "saleQualified": false,
+  "steps": [],
+  "cpuHardCapPercent": 10,
+  "jobPrivateCommitLimitBytes": 6442450944,
+  "resourceLimits": {
+    "jobPrivateCommitLimitBytes": 6442450944,
+    "jobPeakPrivateCommitBytes": 12898304,
+    "cpuRate": 1000,
+    "cpuControlFlags": 5,
+    "scope": "This native compiler family only; model limits and Owner processes unchanged"
+  },
+  "error": "StorageLimit('Shared build workspace is busy; reuse it after the current job ends.')"
+}

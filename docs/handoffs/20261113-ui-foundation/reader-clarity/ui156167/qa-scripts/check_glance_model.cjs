@@ -1,0 +1,12 @@
+const fs=require('fs'),assert=require('node:assert/strict');
+const R='C:/Users/Billy/Desktop/Denzic/Companion',S=R+'/companion-device-closure055',Q='E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/visual-meeting20261114/glance-model';fs.mkdirSync(Q,{recursive:false});
+(async()=>{const{build}=require(S+'/node_modules/esbuild');await build({stdin:{contents:"export{meetingGlanceLabels,meetingGlanceExcerpt,meetingGlanceQualifier}from'./packages/ui/src/meetingGlance';export{meetingMapModel}from'./packages/ui/src/meetingMap';",resolveDir:S,loader:'ts'},outfile:Q+'/model.cjs',bundle:true,platform:'node',format:'cjs',jsx:'automatic',loader:{'.css':'empty'}});
+const{meetingGlanceLabels:labels,meetingGlanceExcerpt:excerpt,meetingGlanceQualifier:qualifier,meetingMapModel:model}=require(Q+'/model.cjs');
+const row=JSON.parse(fs.readFileSync('E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/note-readability-public-native129/minutes.json','utf8')),markdown=row.minutesByMode.offlineStore.markdown,topics=model(markdown).topics;
+const publicLabels=[...labels(markdown,topics).values()];assert.deepEqual(publicLabels,['果蔬区','免费配送','蛋糕店','日化区','奶制品']);for(const topic of topics){const label=labels(markdown,topics).get(topic.id);assert(topic.text.includes(label));assert(markdown.includes(label));}
+const conditional='如果审批没有通过，不得提前发布；只有审批通过后才能执行。';assert.equal(excerpt(conditional,45,true).text,conditional);assert.equal(qualifier(conditional).qualifier,'');assert.equal(qualifier('待核对：'+conditional).body,conditional);assert.equal(qualifier('不建议：立即执行。').qualifier,'');
+const topic=(text)=>[{id:'topic-0',label:text,text,section:'Summary'}],fence=String.fromCharCode(96).repeat(4),short=String.fromCharCode(96).repeat(3);
+assert.equal(labels('## Keywords\n'+fence+'\n示例关键词\n'+short+'\n仍在代码中\n'+fence,topic('示例关键词仍在代码中')).size,0);
+assert.equal(labels('## Keywords\nart',topic('partial results')).size,0);assert.equal(labels('## Keywords\nart',topic('Art review')).get('topic-0'),'art');
+assert.equal(labels('## Summary\n- 不能从普通段落中编造关键词。',topic('普通段落')).size,0);
+const result={state:'GLANCE_SOURCE_KEYWORDS_QUALIFIERS_AND_CONDITIONS_PRESERVED',publicLabels,keywordLabelsAreSourceSubstrings:true,fencedKeywordsExcluded:true,latinWordBoundariesRespected:true,conditionalAndNegativeTextNotPromotedToCommitment:true,sourceChanged:false,newModels:false};fs.writeFileSync(Q+'/result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));})().catch(e=>{console.error(e);process.exitCode=1;});

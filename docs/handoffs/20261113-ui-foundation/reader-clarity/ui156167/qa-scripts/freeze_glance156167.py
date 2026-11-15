@@ -1,0 +1,33 @@
+from pathlib import Path
+from datetime import datetime
+import copy,hashlib,json,re,subprocess
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';A=R/'companion-core-android20261109';E=Path('E:/CodexData/Companion/.build-cache/frozen-windows-delivery-source');Q=Path('E:/CodexData/Companion/.build-cache/product-closure20261112/template-full20261113/visual-meeting20261114')
+G=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','pack.threads=1','-c','pack.windowMemory=64m','-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol']
+def git(root,*args):return subprocess.check_output(G+list(args),cwd=root,text=True,encoding='utf8').strip()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def save(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n','utf8')
+assert json.loads((Q/'glance-r4/result.json').read_bytes())['state']=='GLANCE_DIRECT_RESULTS_REDUCED_DEFAULT_DENSITY_AND_EXACT_SOURCE_PASSED'
+assert json.loads((Q/'glance-model/result.json').read_bytes())['state']=='GLANCE_SOURCE_KEYWORDS_QUALIFIERS_AND_CONDITIONS_PRESERVED'
+shared=['packages/ui/src/'+n for n in ['MeetingOverview.tsx','meetingOverview.css','meetingGlance.ts']]
+for rel in shared:assert(S/rel).read_bytes()==(A/rel).read_bytes()
+qa=['tools/qa/core_acceptance20261109/'+n for n in ['meeting_overview_ui.cjs','windows_visual_meeting_ui.cjs']]
+git(S,'add','--',*(shared+qa));git(S,'diff','--cached','--check','--',*(shared+qa));git(S,'commit','--only','-m','Show concise source results and keyword index before expanding full meeting content','--',*(shared+qa));author=git(S,'rev-parse','HEAD')
+base='4b310e1d0d5bc4572ed77ece15166836863e6637';assert git(E,'rev-parse','HEAD')==base and not git(E,'status','--porcelain');git(E,'fetch',str(S),author);git(E,'switch','-c','work/notebook-glance156-20261114',base);git(E,'restore','--source='+author,'--',*shared)
+versions=['package.json','package-lock.json','apps/windows/src-tauri/tauri.conf.json','apps/windows/src-tauri/Cargo.toml','apps/windows/src-tauri/Cargo.lock','apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json']
+for name,count in [('package.json',1),('package-lock.json',2),('apps/windows/src-tauri/tauri.conf.json',1)]:
+ p=E/name;raw=p.read_bytes();assert raw.count(b'"version": "0.1.154"')==count;p.write_bytes(raw.replace(b'"version": "0.1.154"',b'"version": "0.1.156"'))
+p=E/'apps/windows/src-tauri/Cargo.toml';raw=p.read_bytes();assert raw.count(b'version = "0.1.154"')==1;p.write_bytes(raw.replace(b'version = "0.1.154"',b'version = "0.1.156"'))
+p=E/'apps/windows/src-tauri/Cargo.lock';raw,n=re.subn(rb'(name = "companion-type"\r?\nversion = ")0\.1\.154(")',rb'\g<1>0.1.156\2',p.read_bytes());assert n==1;p.write_bytes(raw)
+p=E/'apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json';raw=p.read_bytes()
+for rel,old in json.loads(raw)['lockedInputs'].items():
+ digest=sha(E/rel)
+ if digest!=old:assert raw.count(old.encode())==1;raw=raw.replace(old.encode(),digest.encode())
+p.write_bytes(raw);git(E,'add','--',*(shared+versions));git(E,'diff','--cached','--check');git(E,'commit','-m','Freeze156 concise meeting first layer over verified154 native baseline');assert not git(E,'diff',base,'HEAD','--','packages/desktop-input','apps/windows/src','apps/windows/src-tauri/src','packages/core','third_party')
+at=datetime.now().astimezone().isoformat(timespec='seconds');old=json.loads((R/'docs/handoffs/20261112-product-closure/windows154/frozen-source.json').read_bytes());proof={**old,'at':at,'version':'0.1.156','sourceCommit':git(E,'rev-parse','HEAD'),'branch':git(E,'branch','--show-current'),'authoringSourceCommit':author,'relatedAuthoringFiles':list(dict.fromkeys(old['relatedAuthoringFiles']+shared)),'saved154UiSourcePreserved':base,'installed':False,'sourceGlanceReview':str(Q/'glance-r4/result.json'),'normalWindowsBuildPending':True};proof.pop('buildReceipt',None);H=R/'docs/handoffs/20261112-product-closure/windows156';H.mkdir(exist_ok=False);save(H/'frozen-source.json',proof)
+p=A/'apps/android/app/build.gradle';raw=p.read_bytes();assert raw.count(b'versionCode 166')==1;p.write_bytes(raw.replace(b'versionCode 166',b'versionCode 167').replace(b"versionName '0.1.166'",b"versionName '0.1.167'"));git(A,'add','--',*(shared+['apps/android/app/build.gradle']));git(A,'diff','--cached','--check','--',*(shared+['apps/android/app/build.gradle']));git(A,'commit','--only','-m','Use concise source excerpts and keyword navigation in phone meeting overview','--',*(shared+['apps/android/app/build.gradle']));assert sha(A/'apps/android/app/libs/companion-android-backend.aar')=='39acfbedb8cb4294be0455b3faa40d0033c25cc544aa6a2ae8c964f91a999a96'
+old=json.loads((R/'docs/handoffs/20261110-android-media-import/android166/source.json').read_bytes());android={**old,'at':at,'versionCode':167,'versionName':'0.1.167','frontendSourceCommit':git(A,'rev-parse','HEAD'),'installed':False};H=R/'docs/handoffs/20261110-android-media-import/android167';H.mkdir(exist_ok=False);save(H/'source.json',android);save(Q/'source156167.json',dict(at=at,windows=proof,android=android,sourceReview=str(Q/'glance-r4/result.json'),scope='First-layer information hierarchy only. Source keyword labels and bounded quoted previews, complete original text on demand. No models/native/input changes.'))
+p=R/'docs/product_backlog.json';raw=p.read_bytes();text=raw.decode('utf8');d=json.loads(text);a=d['owner_module_execution']['frontendWindowsMobile20261102']['ownerCoreDeliveryPriority20261104']['ownerCoreAcceptanceCandidate20261109']['activeNonmodelCompletion20261110'];before=copy.deepcopy(a);v=a['ownerProductClosure20261112']['ownerUiUsabilityRework20261112']['completeProductRework20261113']['noteReadabilityFollowup']['visualMeeting20261114']['uiCraftFollowup20261114']['simpleExperienceFollowup20261114'];v.update(updatedAt=at,state='GLANCE_STRUCTURE_SOURCE_PASSED_NORMAL156167_PENDING',source156167=str(Q/'source156167.json'),sourceGlanceReview=str(Q/'glance-r4/result.json'),next='正常构建156/167，实际确认短关键词、直接结果摘录、默认不展开长文、原文/返回/原话/导出和进程重开，再集中安装交付；不弹Owner中间窗。');a.update(updatedAt=at,next=v['next']);hits=[]
+for m in re.finditer(r'(?m)^([ \t]*)"activeNonmodelCompletion20261110":\s*',text):
+ value,n=json.JSONDecoder().raw_decode(text[m.end():])
+ if value==before:hits.append((m,n))
+assert len(hits)==1;m,n=hits[0];updated=text[:m.end()]+json.dumps(a,ensure_ascii=False,indent=2).replace('\n','\r\n'+m.group(1))+text[m.end()+n:];assert p.read_bytes()==raw;p.write_bytes(updated.encode('utf8'));print(json.dumps(dict(state='GLANCE156167_FROZEN',windows=proof['sourceCommit'],android=android['frontendSourceCommit']),ensure_ascii=False))
