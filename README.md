@@ -202,3 +202,6 @@ A reference-protocol audit corrects the physical interpretation of earlier Engli
 
 
 2026-11-15T23:24:01.125469+08:00 Owner授权推进至11月16早07:30。全decoder因果块+固定BF16存储/已填前缀视图原61s logits/KV逐值全等/16token一致，27924token整会prefill已完成/私有峰1.45GB；动态KV2GiB失败/原全宽Static数值失败均保留。真实解码21token太慢主动停，微基准排除单纯attention/适配/生成包装；冷解码阶段逐值恢复完整KV/首logits并退役已完成声学模块正在验证。4完整原字基线及两英语原DER已CPU复现；没有新整会质量成绩/新训练/默认变化。此提交为在途源码检查点，非交付或D2完成。
+
+
+2026-11-16T00:01:50.608903+08:00 ES2003b完整native27924token缓存已逐值落盘恢复，staged-r2实际2294token后HIP C++ abort在GPU停止检查同步呈现，族私有约1.2GB，原失败/前缀/完整缓存保留。staged-r3未设置generation字段None被前向前检查阻止，已按标准默认修复；不放宽数值门。staged-r4将相同batch1 argmax/EOS改为CPU持有，原公开61s回放8续8严格复现16token，原ES2294生成ID全部回放保留继续，无重新编码原音、无换模型/训练/删词。当前整会尚无最终分数，07:20停止推理/07:30汇总；这是在途源检查点，不是D2或售卖完成。

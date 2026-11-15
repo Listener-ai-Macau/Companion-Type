@@ -1,0 +1,170 @@
+{
+  "meeting": "runtime-control61",
+  "audioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+  "audioSeconds": 61.003,
+  "generatedIds": [
+    58,
+    19,
+    19,
+    13,
+    16,
+    16,
+    60,
+    42474,
+    15,
+    16,
+    60,
+    56568,
+    104241,
+    99212,
+    99544,
+    100316
+  ],
+  "rawDecoded": "[44.11][S01]你还在那吸氧",
+  "parsedSegments": [],
+  "naturalEos": false,
+  "seconds": 3.839860200001567,
+  "inputTokens": 872,
+  "completeOriginalRecordingInput": false,
+  "noSpeakerResetOrContextTruncation": true,
+  "referenceUsed": false,
+  "speakerCountsUsed": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "stagedCacheRestoredBitExact": true,
+  "cacheManifestSha256": "81b78e2e766ba37337846fb847f5df61674e726d98b777c0f587c6164d14c670",
+  "cachedPrefillLogitsReplayedOnce": true,
+  "completedAcousticModulesRemovedBeforeRestore": true,
+  "prefixMatched": 16,
+  "first64TokenTiming": [
+    {
+      "tokens": 1,
+      "seconds": 0.10874409999814816
+    },
+    {
+      "tokens": 2,
+      "seconds": 1.2921911000012187
+    },
+    {
+      "tokens": 3,
+      "seconds": 1.5029619000015373
+    },
+    {
+      "tokens": 4,
+      "seconds": 1.6204290999994555
+    },
+    {
+      "tokens": 5,
+      "seconds": 1.7385075999991386
+    },
+    {
+      "tokens": 6,
+      "seconds": 2.047251200001483
+    },
+    {
+      "tokens": 7,
+      "seconds": 2.1654522999997425
+    },
+    {
+      "tokens": 8,
+      "seconds": 2.28548740000042
+    },
+    {
+      "tokens": 9,
+      "seconds": 2.408418899998651
+    },
+    {
+      "tokens": 10,
+      "seconds": 2.7182729999985895
+    },
+    {
+      "tokens": 11,
+      "seconds": 2.8393500999991375
+    },
+    {
+      "tokens": 12,
+      "seconds": 2.958728500001598
+    },
+    {
+      "tokens": 13,
+      "seconds": 3.280783900001552
+    },
+    {
+      "tokens": 14,
+      "seconds": 3.402535099998204
+    },
+    {
+      "tokens": 15,
+      "seconds": 3.5223537999991095
+    },
+    {
+      "tokens": 16,
+      "seconds": 3.839474299998983
+    }
+  ],
+  "producer": {
+    "meeting": "runtime-control61",
+    "audioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+    "frames": 976048,
+    "audioSeconds": 61.003,
+    "prefillSeconds": 3.0465523999992,
+    "allOriginalWindows": 3,
+    "executionStats": {
+      "sdpaCalls": 196,
+      "blockedCalls": 0,
+      "maxQueryTokens": 128,
+      "maxKeyTokens": 872,
+      "keyStreamedCalls": 0,
+      "keyTiles": 0,
+      "maximumScoreTileElements": 0,
+      "encoderCalls": 1,
+      "encoderChunks": 3,
+      "queryBlock": 128,
+      "keyBlock": 1024,
+      "encoderBatch": 2
+    },
+    "prefillStats": {
+      "prefillCalls": 1,
+      "blocks": 7,
+      "maximumBlockTokens": 128,
+      "maximumRetainedTokens": 872,
+      "tokenBlock": 128,
+      "allKeysRetained": true,
+      "speakerOrAudioResets": 0
+    },
+    "nativeWeightProof": {
+      "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+      "tensorCount": 683,
+      "dataBytesCopied": 1817026560,
+      "maximumTransferChunkBytes": 8388608,
+      "scratchBytes": 8388608,
+      "roundtripBufferBytes": 8388608,
+      "roundtripCpuBufferReused": true,
+      "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "deviceRoundtripSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "selectedSourceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedDeviceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedPrefixes": null,
+      "sourceTensorCount": 683,
+      "skippedTensorCount": 0,
+      "targetDevice": "cuda:0",
+      "mmapUsed": false,
+      "wholeCpuStateDictCreated": false,
+      "seconds": 14.299881999999343,
+      "nativeClass": "MossTranscribeDiarizeForConditionalGeneration",
+      "nativePublishedCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+      "tensorReuseProofSha256": "df0788957882b55fb0c9025ab72a721c0e99740ae7589845c2d5f87eaf289e8d",
+      "allNativeKeysLoadedExceptTiedHead": [
+        "lm_head.weight"
+      ],
+      "deterministicBuffersPreserved": [
+        "model.language_model.rotary_emb.inv_freq",
+        "model.language_model.rotary_emb.original_inv_freq"
+      ],
+      "weightsChanged": false,
+      "remoteCodeUsed": false,
+      "loadSeconds": 14.550680500000453
+    }
+  },
+  "timestampOutOfBoundsSegments": []
+}

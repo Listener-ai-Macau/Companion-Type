@@ -75,10 +75,12 @@ def main():
    cache,logits,ids,mask,manifest=restore(cache_dir,model,torch=torch,checkpoint=checkpoint)
    assert manifest['metadata']['audioSha256']==case['audioSha256'] and manifest['metadata']['frames']==case['frames']
    assert int(cache.get_seq_length())==ids.shape[1]==manifest['tokens']
-   model.set_attn_implementation('sdpa')
+   model.model.language_model.set_attn_implementation('sdpa')
    torch.backends.cuda.enable_flash_sdp(False);torch.backends.cuda.enable_mem_efficient_sdp(False)
    torch.backends.cuda.enable_math_sdp(True);torch.backends.cuda.enable_cudnn_sdp(False)
-   restored=provide_prefill_once(model,cache,logits,ids,torch=torch);length=ids.shape[1];tick=time.perf_counter();token_times=[]
+   manual=B.get('cpuEosGreedy',False)
+   restored=None if manual else provide_prefill_once(model,cache,logits,ids,torch=torch)
+   length=ids.shape[1];tick=time.perf_counter();token_times=[]
    expected=case.get('expectedPrefixIds',[])
    class StopOwned(StoppingCriteria):
     def __call__(self,input_ids,scores,**kwargs):
@@ -91,21 +93,47 @@ def main():
       atomic_json(a.run/(a.meeting+'-partial-ids.json'),{'generatedIds':generated,'audioSha256':case['audioSha256'],
        'notFinal':True,'qualityQualified':False});last[0]=time.monotonic()
      return False
-   with torch.inference_mode():output=model.generate(input_ids=ids,attention_mask=mask,past_key_values=cache,disable_compile=True,
-    do_sample=False,max_new_tokens=case.get('maxNewTokens',32768),logits_to_keep=1,stopping_criteria=StoppingCriteriaList([StopOwned()]))
-   torch.cuda.synchronize();elapsed=time.perf_counter()-tick;generated=output[0,length:].cpu().tolist()
-   assert restored['served'] and generated[:len(expected)]==expected
+   if manual:
+    from moss_native_greedy_20261115 import greedy,install_prefix_replay_attention
+    install_prefix_replay_attention(torch=torch)
+    resume=case.get('resumeGeneratedIds',[])
+    if case.get('resumeGeneratedPrefix'):
+     bound=case['resumeGeneratedPrefix'];assert sha(bound['file'])==bound['sha256']
+     source=read(bound['file']);assert source['audioSha256']==case['audioSha256'];resume=source['generatedIds']
+    def advance(generated):
+     n=len(generated)
+     if len(token_times)<64:token_times.append({'tokens':n,'seconds':time.perf_counter()-tick})
+     if n==1 or time.monotonic()-last[0]>15:
+      state.update(state='DECODING_COMPLETE_CONTEXT_CPU_EOS',generatedTokens=n,retainedPrefixTokens=len(resume),
+       decodeSeconds=time.perf_counter()-tick,tokensPerSecond=(n-len(resume))/(time.perf_counter()-tick));save()
+      atomic_json(a.run/(a.meeting+'-partial-ids.json'),{'generatedIds':generated,'audioSha256':case['audioSha256'],
+       'notFinal':True,'qualityQualified':False});last[0]=time.monotonic()
+    with torch.inference_mode():generated,restored=greedy(model,cache,logits,torch=torch,
+     max_tokens=case.get('maxNewTokens',32768),expected_prefix=expected,resume_prefix=resume,checkpoint=checkpoint,progress=advance)
+    output=torch.tensor([generated],dtype=torch.long)
+   else:
+    with torch.inference_mode():output=model.generate(input_ids=ids,attention_mask=mask,past_key_values=cache,disable_compile=True,
+     do_sample=False,max_new_tokens=case.get('maxNewTokens',32768),logits_to_keep=1,stopping_criteria=StoppingCriteriaList([StopOwned()]))
+    generated=output[0,length:].cpu().tolist()
+   torch.cuda.synchronize();elapsed=time.perf_counter()-tick
+   assert (restored.get('savedFirstLogitsUsedOrVerified') if manual else restored['served']) and generated[:len(expected)]==expected
    atomic_json(a.run/(a.meeting+'-generated-ids.json'),{'generatedIds':generated,'audioSha256':case['audioSha256'],
     'seconds':elapsed,'expectedPrefixMatched':len(expected),'qualityQualified':False})
    raw=processor.tokenizer.decode(generated,skip_special_tokens=False,clean_up_tokenization_spaces=False)
-   parsed=[] if case.get('runtimeControl') else processor.decode(output[:,length:],return_format='parsed')[0]
+   decoded_ids=output if manual else output[:,length:]
+   parsed=[] if case.get('runtimeControl') else processor.decode(decoded_ids,return_format='parsed')[0]
+   native_parse_error=None
+   if not isinstance(parsed,list) or not all(isinstance(row,dict) for row in parsed):
+    native_parse_error={'type':type(parsed).__name__,'value':parsed};parsed=[]
    eos=model.generation_config.eos_token_id;eos=[eos] if isinstance(eos,int) else eos
    packet={'meeting':a.meeting,'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],
     'generatedIds':generated,'rawDecoded':raw,'parsedSegments':parsed,'naturalEos':bool(generated and generated[-1] in eos),
     'seconds':elapsed,'inputTokens':length,'completeOriginalRecordingInput':not case.get('runtimeControl',False),
     'noSpeakerResetOrContextTruncation':True,'referenceUsed':False,'speakerCountsUsed':False,'newWeightTraining':False,
     'qualityQualified':False,'stagedCacheRestoredBitExact':True,'cacheManifestSha256':prefill['cacheManifestSha256'],
-    'cachedPrefillLogitsReplayedOnce':True,'completedAcousticModulesRemovedBeforeRestore':True,'prefixMatched':len(expected),
+    'cachedPrefillLogitsReplayedOnce':not manual,'completedAcousticModulesRemovedBeforeRestore':True,'prefixMatched':len(expected),
+    'generationLoop':'batch1-native-argmax-cpu-eos' if manual else 'native-GenerationMixin',
+    'resumeProof':restored,'nativeParseError':native_parse_error,
     'first64TokenTiming':token_times,'producer':manifest['metadata'],
     'timestampOutOfBoundsSegments':[i for i,r in enumerate(parsed) if not 0<=r['Start']<r['End']<=case['audioSeconds']]}
    atomic_json(a.run/(a.meeting+'-raw.json'),packet)

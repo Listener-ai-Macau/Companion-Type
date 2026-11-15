@@ -1,0 +1,711 @@
+{
+  "at": "2026-11-16T00:01:50.608903+08:00",
+  "state": "NATIVE_GREEDY_RESUME_CONTROL_AND_HIP_FAILURE_PROTECTED_WHOLE_QUALITY_PENDING",
+  "parentCommit": "c20ec632da20f8ad015492c776c011b72648b3c8",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r2\\frozen-moss_native_cache_store_20261115.py",
+      "logicalPath": "staged-r2/control/frozen-moss_native_cache_store_20261115.py",
+      "file": "files/00000.py",
+      "bytes": 4341,
+      "sha256": "6d5d8fcfd10e32da7e8695d202d8a71af3cb80aa09e45ce3cff110ceb8f92795"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r2\\frozen-moss_staged_meeting_worker_20261115.py",
+      "logicalPath": "staged-r2/control/frozen-moss_staged_meeting_worker_20261115.py",
+      "file": "files/00001.py",
+      "bytes": 9535,
+      "sha256": "d4fe579c9b42ee5c591cc035e57b78ea7778e6529391d40e49b90ab23669cce3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r2\\frozen-run_moss_staged_meetings_20261115.py",
+      "logicalPath": "staged-r2/control/frozen-run_moss_staged_meetings_20261115.py",
+      "file": "files/00002.py",
+      "bytes": 6889,
+      "sha256": "5ef6e165a40f690ba8f4c7f06e88d707cf4aebb55d3c3cad013dfcc29490db2e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r2\\staged-binding.json",
+      "logicalPath": "staged-r2/control/staged-binding.json",
+      "file": "files/00003.json",
+      "bytes": 9100,
+      "sha256": "7fb263f82cf2509224071c342f816062e31e927f5697a2b76098191d736aaf5c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-decode-state.json",
+      "logicalPath": "staged-r2/execution/ES2003b-decode-state.json",
+      "file": "files/00004.json",
+      "bytes": 1213,
+      "sha256": "f7643a8fe9fa480352720fd1c685c232c01e016084cbe93d56b9993791dacb03"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-decode-weights.json",
+      "logicalPath": "staged-r2/execution/ES2003b-decode-weights.json",
+      "file": "files/00005.json",
+      "bytes": 1412,
+      "sha256": "93882fd36c4a6cf44363f4b8a8505489b71ac3ba95eaffcfa6af8624ede1e9eb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-decode-worker.log",
+      "logicalPath": "staged-r2/execution/ES2003b-decode-worker.log",
+      "file": "files/00006.log",
+      "bytes": 10531,
+      "sha256": "038f348bfb3ce66b5562a63ae9a6579a13875dcba1e3884a0f7382e9923160ac"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-input.json",
+      "logicalPath": "staged-r2/execution/ES2003b-input.json",
+      "file": "files/00007.json",
+      "bytes": 947,
+      "sha256": "c2e6d0cae711634f5f73bf54687573b21a4ee354a9ce3cba2d401500c1754aa4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-partial-ids.json",
+      "logicalPath": "staged-r2/execution/ES2003b-partial-ids.json",
+      "file": "files/00008.json",
+      "bytes": 20969,
+      "sha256": "ba9db378b6d9126f53dc2d1cd19badded75170ed9f0a21a829505869f1620d83"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-prefill-state.json",
+      "logicalPath": "staged-r2/execution/ES2003b-prefill-state.json",
+      "file": "files/00009.json",
+      "bytes": 1652,
+      "sha256": "418fe8263a27b7e070cb39116c79678987ba3b3e888c7bc7e24c10c135a28c39"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-prefill-weights.json",
+      "logicalPath": "staged-r2/execution/ES2003b-prefill-weights.json",
+      "file": "files/00010.json",
+      "bytes": 1411,
+      "sha256": "b87461f3469602fceca3fe3597f95a8c0354609214f5c1dc18982b5e9051910c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-prefill-worker.log",
+      "logicalPath": "staged-r2/execution/ES2003b-prefill-worker.log",
+      "file": "files/00011.log",
+      "bytes": 1800,
+      "sha256": "ac90910f44e9bcf4c53898a0bed1f8d63d9cd27eb66ab3f9456216a3a37577e1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inventory-0.log",
+      "logicalPath": "staged-r2/execution/inventory-0.log",
+      "file": "files/00012.log",
+      "bytes": 579,
+      "sha256": "0177ac34cc3167da71f7fc569e912e24408f5ba585820c6e2884f1c445b54516"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\run.json",
+      "logicalPath": "staged-r2/execution/run.json",
+      "file": "files/00013.json",
+      "bytes": 1947,
+      "sha256": "ea716ea1a2c170c15677d051304aa4a5c8f673bf94663db1185135d1e251524b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-decode-state.json",
+      "logicalPath": "staged-r2/execution/runtime-control61-decode-state.json",
+      "file": "files/00014.json",
+      "bytes": 1363,
+      "sha256": "3ec2fa3e2edaf800939fb72ca3040d9d4caa234419c42817d69bc199fe418b8f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-decode-weights.json",
+      "logicalPath": "staged-r2/execution/runtime-control61-decode-weights.json",
+      "file": "files/00015.json",
+      "bytes": 1412,
+      "sha256": "be97a350e27338a3790eacf08d10d0fba574bd4add9b968414a8fa7bbed42268"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-decode-worker.log",
+      "logicalPath": "staged-r2/execution/runtime-control61-decode-worker.log",
+      "file": "files/00016.log",
+      "bytes": 1656,
+      "sha256": "3e2ced48b1070381144fc0f9298d417b7fd914d80c310323db615f1a188810bb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-generated-ids.json",
+      "logicalPath": "staged-r2/execution/runtime-control61-generated-ids.json",
+      "file": "files/00017.json",
+      "bytes": 352,
+      "sha256": "73b572fbb52931609031453677cb377b6db5c2bb5ab388887cecf06164f2c274"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-partial-ids.json",
+      "logicalPath": "staged-r2/execution/runtime-control61-partial-ids.json",
+      "file": "files/00018.json",
+      "bytes": 169,
+      "sha256": "f1a902df84cb8a55fec2322becb173fb08482b3337f1e1d8bcd94bd0ac5c79cc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\runtime-control61-raw.json",
+      "logicalPath": "staged-r2/execution/runtime-control61-raw.json",
+      "file": "files/00019.json",
+      "bytes": 4488,
+      "sha256": "e9d204811f35ac7514bfcde73768530d48bc34f3ab18b423d68ac44d2e26a299"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\manifest.json",
+      "logicalPath": "staged-r2/execution/cache/ES2003b/manifest.json",
+      "file": "files/00020.json",
+      "bytes": 24524,
+      "sha256": "69025adb998e37fc17c826c3906baa20ccd5b1ee93bf938bddf5f8801541a067"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inventory-0\\hip-inventory.json",
+      "logicalPath": "staged-r2/execution/inventory-0/hip-inventory.json",
+      "file": "files/00021.json",
+      "bytes": 1394,
+      "sha256": "f39030ef0738a5121228a604c00da53de80f5cac5cd354f31e2a5642e82cc02d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inventory-0\\inventory-resources.jsonl",
+      "logicalPath": "staged-r2/execution/inventory-0/inventory-resources.jsonl",
+      "file": "files/00022.jsonl",
+      "bytes": 616,
+      "sha256": "c370efb8f8e77a990242482694347da234f55f3f15de0e6c49249ef90884072e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inventory-0\\inventory-run.json",
+      "logicalPath": "staged-r2/execution/inventory-0/inventory-run.json",
+      "file": "files/00023.json",
+      "bytes": 610,
+      "sha256": "c65e11b286abdab291470204d8826942566cbb03eca913a63c3ff61e704c19c8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inventory-0\\inventory-worker.log",
+      "logicalPath": "staged-r2/execution/inventory-0/inventory-worker.log",
+      "file": "files/00024.log",
+      "bytes": 1213,
+      "sha256": "03432afb273cac70c2735ad1857883286804ede9798c23ab69d19ccffdb632c8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r3\\frozen-moss_native_greedy_20261115.py",
+      "logicalPath": "staged-r3/control/frozen-moss_native_greedy_20261115.py",
+      "file": "files/00025.py",
+      "bytes": 2774,
+      "sha256": "5591a28342c8f4fea40c45b44639c59bede613cf3db09832a123c66f5f0849a5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r3\\frozen-moss_staged_meeting_worker_20261115.py",
+      "logicalPath": "staged-r3/control/frozen-moss_staged_meeting_worker_20261115.py",
+      "file": "files/00026.py",
+      "bytes": 11417,
+      "sha256": "308b12c0c49e25e1757957d6897fc9d0e5e4a18dd818f8b535fbca0d2e6ae013"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r3\\frozen-run_moss_staged_meetings_20261115.py",
+      "logicalPath": "staged-r3/control/frozen-run_moss_staged_meetings_20261115.py",
+      "file": "files/00027.py",
+      "bytes": 6889,
+      "sha256": "5ef6e165a40f690ba8f4c7f06e88d707cf4aebb55d3c3cad013dfcc29490db2e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r3\\staged-binding.json",
+      "logicalPath": "staged-r3/control/staged-binding.json",
+      "file": "files/00028.json",
+      "bytes": 10148,
+      "sha256": "b1f32171782dfeba72f1c1e6838f843423c4228d16cdc5f380cc52ba10d6fe23"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\inventory-0.log",
+      "logicalPath": "staged-r3/execution/inventory-0.log",
+      "file": "files/00029.log",
+      "bytes": 580,
+      "sha256": "6c7f280f890a6a8e27ab592cc6184664c64895f64133a3e58bba55d8dc5e70bc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\run.json",
+      "logicalPath": "staged-r3/execution/run.json",
+      "file": "files/00030.json",
+      "bytes": 1433,
+      "sha256": "3240e53e7661c23db6055a8535ac31d943c301b895eba420ceb9f8b88f7450eb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\runtime-control61-decode-state.json",
+      "logicalPath": "staged-r3/execution/runtime-control61-decode-state.json",
+      "file": "files/00031.json",
+      "bytes": 1242,
+      "sha256": "3e2860c5a9e0d50932dbfda85242e98a280dfec064ace8c41f6f00c79a42043d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\runtime-control61-decode-weights.json",
+      "logicalPath": "staged-r3/execution/runtime-control61-decode-weights.json",
+      "file": "files/00032.json",
+      "bytes": 1411,
+      "sha256": "2077cedc2c0218e2385f1d403c55716d1285ec2b5eb68fede07d22c315311302"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\runtime-control61-decode-worker.log",
+      "logicalPath": "staged-r3/execution/runtime-control61-decode-worker.log",
+      "file": "files/00033.log",
+      "bytes": 1116,
+      "sha256": "37ba30687291f04820e0f256e80bb56c8b7e0bf2fdff5297890994f5f3435f10"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\inventory-0\\hip-inventory.json",
+      "logicalPath": "staged-r3/execution/inventory-0/hip-inventory.json",
+      "file": "files/00034.json",
+      "bytes": 1392,
+      "sha256": "d13953773609fb5c33019fb74a16a5786b050b1b69668107cef68ca50c8e7cc3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\inventory-0\\inventory-resources.jsonl",
+      "logicalPath": "staged-r3/execution/inventory-0/inventory-resources.jsonl",
+      "file": "files/00035.jsonl",
+      "bytes": 611,
+      "sha256": "844bf3f40c6e080045a249d7d50c32a50265c49c81ca7f2d2e1652936f38bc5f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\inventory-0\\inventory-run.json",
+      "logicalPath": "staged-r3/execution/inventory-0/inventory-run.json",
+      "file": "files/00036.json",
+      "bytes": 611,
+      "sha256": "43006cb804a5cd6bde8f9c03c6854d783e1b20b5596a56eac9a0d4f2cfe4dc3f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r3\\inventory-0\\inventory-worker.log",
+      "logicalPath": "staged-r3/execution/inventory-0/inventory-worker.log",
+      "file": "files/00037.log",
+      "bytes": 1211,
+      "sha256": "4f245670cdcbf6b20aaee17bfb84f38be026d273c5fea2f44cc71ff1c89eef0a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r4\\staged-binding.json",
+      "logicalPath": "active-staged-r4/frozen-binding-only.json",
+      "file": "files/00038.json",
+      "bytes": 10148,
+      "sha256": "9ae7127ab13d469c4b08d170a1eb7e91c4963735151854a5bbecd87d0b95f2ed"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\whole-scoring-only.json",
+      "logicalPath": "unchanged-quality-contract/whole-scoring-only.json",
+      "file": "files/00039.json",
+      "bytes": 9998,
+      "sha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\whole-scoring-only-before-evidence-path-fix.json",
+      "logicalPath": "unchanged-quality-contract/whole-scoring-only-before-evidence-path-fix.json",
+      "file": "files/00040.json",
+      "bytes": 10004,
+      "sha256": "7a6a4ceb9070338373abd0d688e10ac50f4e9f75afab48124a2d932924be4a53"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\baseline-evidence-link-correction.json",
+      "logicalPath": "unchanged-quality-contract/baseline-evidence-link-correction.json",
+      "file": "files/00041.json",
+      "bytes": 713,
+      "sha256": "6f87310a520e9db06ff7f6c1f2ec12293c8d3a1bdcdec19861c5745e4d008278"
+    },
+    {
+      "source": "work\\prepare_moss_overnight_20261115.py",
+      "logicalPath": "continuation-tools/prepare_moss_overnight_20261115.py",
+      "file": "files/00042.py",
+      "bytes": 6037,
+      "sha256": "fcab965eaf3f5c2a75965aaac80df7e484c1e74ba93183a8c29f3e6571f00b6e"
+    },
+    {
+      "source": "work\\prepare_joint_whole_scoring_20261115.py",
+      "logicalPath": "continuation-tools/prepare_joint_whole_scoring_20261115.py",
+      "file": "files/00043.py",
+      "bytes": 6734,
+      "sha256": "2b6413f413ab6a47d32372171b79432f38d8020aa2e9837c9c32e80a490f5324"
+    },
+    {
+      "source": "work\\prepare_staged_moss_20261115.py",
+      "logicalPath": "continuation-tools/prepare_staged_moss_20261115.py",
+      "file": "files/00044.py",
+      "bytes": 7330,
+      "sha256": "d3cb5a1ac7df8c1b7e3c295bb6f2e5097c5bba99f0936006a2023cc96579bfbe"
+    },
+    {
+      "source": "work\\protect_native_greedy_checkpoint_20261116.py",
+      "logicalPath": "continuation-tools/protect_native_greedy_checkpoint_20261116.py",
+      "file": "files/00045.py",
+      "bytes": 6703,
+      "sha256": "51294e18413824839a3a72a4eb590ca36a747330546f4f7ae7ae01f6d41873e7"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00046.json",
+      "bytes": 208339,
+      "sha256": "025e580445c0fc7efe7df08861e7718d78f08ff8d15183a7aabe953341bd6fb3"
+    }
+  ],
+  "bulkHashOnly": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\0-keys.npy",
+      "bytes": 57188480,
+      "sha256": "58854345cbec808c70906e6473ed7f1af968a7b444afebac1bd8d03b95c3c140",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\0-values.npy",
+      "bytes": 57188480,
+      "sha256": "386e2239677769dbc5749d31dcd8ef30fd182a73c945bcc9b2832c5c3504a146",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\1-keys.npy",
+      "bytes": 57188480,
+      "sha256": "cdf989cb64fb59309b513eab8c650351495a676a40c02916f3e98890ca04bd42",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\1-values.npy",
+      "bytes": 57188480,
+      "sha256": "f1f2cdf5af0ac1dddc8f702c5d65da780c4b370db8c12922f562391f504a5298",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\10-keys.npy",
+      "bytes": 57188480,
+      "sha256": "fe8fde95e7e0f621752b87d0ed23da735dac5792745afa759f3307d27e05a608",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\10-values.npy",
+      "bytes": 57188480,
+      "sha256": "f37c0a22ad0eff73b57072d051d0301ec267e1608ec2af4ddcdd177b4e707704",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\11-keys.npy",
+      "bytes": 57188480,
+      "sha256": "d43a660a6820df775e1aa2f1743f6dededac499325dc48896c36ea85a8d5dc63",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\11-values.npy",
+      "bytes": 57188480,
+      "sha256": "0b5af941f584243ab7613ded17a65f4f8b9233ea7932289bd0d93fd5464b35e0",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\12-keys.npy",
+      "bytes": 57188480,
+      "sha256": "9d661cb6bc2328cdb7d8d86138c429d97c6a2b407adba2e227c7f17b4bf82410",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\12-values.npy",
+      "bytes": 57188480,
+      "sha256": "c1947866f4b04a4104bce3892e1965b552065a150561b1dcc1451f793c1d7fdc",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\13-keys.npy",
+      "bytes": 57188480,
+      "sha256": "4efdc8a2a09dc6af69e69da96e16b08121128280d259d8643f7bcfbca5aab424",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\13-values.npy",
+      "bytes": 57188480,
+      "sha256": "76fbc91d53e631b835d4d83222d1230b9cb4ad1c44e2ba150c33dcfcd70cc262",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\14-keys.npy",
+      "bytes": 57188480,
+      "sha256": "74c9562ba6e71c285f61d679972c27d92450ee8af7e750f1b82402263611ff8b",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\14-values.npy",
+      "bytes": 57188480,
+      "sha256": "9d0b6722ee238c684298a4b708c9af8b7e84b0d2189b5ba48548efd2aef660f3",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\15-keys.npy",
+      "bytes": 57188480,
+      "sha256": "8d94053d38db1580f3dd21515b840401d23be2c44069b2aba363784828ff3f29",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\15-values.npy",
+      "bytes": 57188480,
+      "sha256": "f31e9b22b95546ef10185cbdae55502c5d6ea4dc72a1680b89578526b5c34aff",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\16-keys.npy",
+      "bytes": 57188480,
+      "sha256": "657e5362b13243eb2da8c87ea470fefca80c8e93c1b41465159fbfc1a72fc16d",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\16-values.npy",
+      "bytes": 57188480,
+      "sha256": "1e86f1cea1f50faef05a49e221f2484792c38aa9fdd128dee44e68602b363dde",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\17-keys.npy",
+      "bytes": 57188480,
+      "sha256": "30d67a0f998c8e41c26e40f97d8fb2d275efa6a6f9d4051f1c967143363d121f",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\17-values.npy",
+      "bytes": 57188480,
+      "sha256": "021c4c87b5f49d958e73d6c973b0589271937ae85f0fec5af51598d005023437",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\18-keys.npy",
+      "bytes": 57188480,
+      "sha256": "aaf38beb1082243ab5270a8dafaed728577e083ff24ba58ae9eaced4f60bc65c",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\18-values.npy",
+      "bytes": 57188480,
+      "sha256": "cb21b5983c1ee468f7e2e284bb91a00d4f78ac114faf4d9a9bfa2f91f258face",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\19-keys.npy",
+      "bytes": 57188480,
+      "sha256": "072dd8419884a389ae8d7f626099720cf6c2fa8f7ea1482781b5fe8ffb653aa1",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\19-values.npy",
+      "bytes": 57188480,
+      "sha256": "9d5224448026afb9390b5ede0a9a9eab3e12b7af312cf446f32bebb73edbed91",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\2-keys.npy",
+      "bytes": 57188480,
+      "sha256": "f0a2026e7f9858b8ecd7445e871de09d79574e5aceb197cd0e9696ee6adc1690",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\2-values.npy",
+      "bytes": 57188480,
+      "sha256": "41ce329d05fdaffc7c16f00bc87baecc5804a74b25a21915c5edc421051ef522",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\20-keys.npy",
+      "bytes": 57188480,
+      "sha256": "25a6b4572e7dfb50069bf9ea55833037158bbb3ae4454d03aedf6a4dc5510350",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\20-values.npy",
+      "bytes": 57188480,
+      "sha256": "527f1d98a33153a68362effe4fe6029f5780047f32347ef3f70cc0b4f1c6f540",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\21-keys.npy",
+      "bytes": 57188480,
+      "sha256": "f5c2b2baa94496656a2708d5141bdfc1f652c97d04270d5019777a3bdc3e3407",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\21-values.npy",
+      "bytes": 57188480,
+      "sha256": "fbfdea75a77eb88119dfe55ad74d69cce30b14fef4e25de07dc644cb87f20a99",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\22-keys.npy",
+      "bytes": 57188480,
+      "sha256": "e81cb9046b84e08a4b989c813e460be71c844d7a1c4ca30aa22771990ede3962",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\22-values.npy",
+      "bytes": 57188480,
+      "sha256": "a22447b8e86148d0c7350e8bdc41a55bb323d1b4c39452e99fafac9a65f86cfd",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\23-keys.npy",
+      "bytes": 57188480,
+      "sha256": "8cc8651c70bb6873954b503336a01457ee21dd619724b04cdadaacd4ad18e9ed",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\23-values.npy",
+      "bytes": 57188480,
+      "sha256": "98f62044f6a698a998d439392e160c9f7aad9f050b0efdab723493e2c2970179",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\24-keys.npy",
+      "bytes": 57188480,
+      "sha256": "fe9a990c729c0894a9828216d234af75c50a517fe17cbef85a2dc3d2ee06db48",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\24-values.npy",
+      "bytes": 57188480,
+      "sha256": "48cd3ee477f23a91d6762bc60bcfcc85d7bf860cec7354ce675b9b9670a99c78",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\25-keys.npy",
+      "bytes": 57188480,
+      "sha256": "3d0ee0fa2818fe14ac4ecda7e1e27f2f52fbcf608daad7ac5184984b7a3f11b7",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\25-values.npy",
+      "bytes": 57188480,
+      "sha256": "b6ccd7cde7364018fb01e8fc923c8594fc118c1158af469777b540a10f666999",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\26-keys.npy",
+      "bytes": 57188480,
+      "sha256": "1e74a6a152b25851ba315576b1df4c556432a537a8dc29f3bbd90390d78df1ba",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\26-values.npy",
+      "bytes": 57188480,
+      "sha256": "6cc3677c38a764bd7c525db8bd333acc41c1ab6533a4a7c49d690cd360f255ca",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\27-keys.npy",
+      "bytes": 57188480,
+      "sha256": "2bbadb3c4672905816d80a1369998c7a081e656eaad3c399da594aee005e47f5",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\27-values.npy",
+      "bytes": 57188480,
+      "sha256": "adb8ad91c90b8a5ecd30e8b3d98f691a18cd2e4f14bbc33357dd98f210579c37",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\3-keys.npy",
+      "bytes": 57188480,
+      "sha256": "113addb51cd808208960b32aa902cd50ee132c93610b08b606762a5b5d6fc85b",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\3-values.npy",
+      "bytes": 57188480,
+      "sha256": "c6f16364ad7bd2da8b91de6b561bd6fafc600fc6c4382f0f1db88b1cc8644126",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\4-keys.npy",
+      "bytes": 57188480,
+      "sha256": "0afdd047a41e61089d1e861e2a30655af16af3822661344dcf96e3ebc7f43f0c",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\4-values.npy",
+      "bytes": 57188480,
+      "sha256": "0ba914a0fe58fe7ff442430a23be4ae3986a31d05e10211fbdff84fdb7c8d197",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\5-keys.npy",
+      "bytes": 57188480,
+      "sha256": "1ca51ed160685b64ed5d3e49f5f64c42ead52d581078b72496abfa6284598967",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\5-values.npy",
+      "bytes": 57188480,
+      "sha256": "92f24a881c84798069be315298a48ba9515cffe11739de9a6b868d22074c0305",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\6-keys.npy",
+      "bytes": 57188480,
+      "sha256": "5bd5cf25333e2ec90e9e6e6e2bd65bbb032b3c5f2bccf2cbc3366813eb1baf06",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\6-values.npy",
+      "bytes": 57188480,
+      "sha256": "4c5e59de8821e1742744982b42f3cf84877c41bff0d4c3a5efcf97599f598170",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\7-keys.npy",
+      "bytes": 57188480,
+      "sha256": "077811a3fea9513763272e158108eace57977c442c6ca31439969cbd6241a506",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\7-values.npy",
+      "bytes": 57188480,
+      "sha256": "efa81f172202732ee4a293710cb5cb3c2a9f682a48b46134704468ba627b43ad",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\8-keys.npy",
+      "bytes": 57188480,
+      "sha256": "77f52ed49ca4be83c6a599cdbdfe85563211fe62a82b4213b376a9d1be0b61ec",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\8-values.npy",
+      "bytes": 57188480,
+      "sha256": "b89c8382a8ece3765ef737bbf10b2e4b3dc78dd4c9c07b6cef491588edbc735f",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\9-keys.npy",
+      "bytes": 57188480,
+      "sha256": "b4a0a61a1dfd45ad533fbd84f1ac4fa199d32266cb72562b7bc328a1fdd2b18c",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\9-values.npy",
+      "bytes": 57188480,
+      "sha256": "f1da0d8a88abd3cdce17e35f8d863f04da4ba2036d2a82bff4c9604c383e4d83",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\attention_mask.npy",
+      "bytes": 223520,
+      "sha256": "3d21907cda39299d066ac6db3d659ab7a78547437d4fd04f9c563521a1c63e4a",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\input_ids.npy",
+      "bytes": 223520,
+      "sha256": "a4d94a89efb93c7ba5209bb4dde0e544156cb434317380efd3f181a0ecf3e9f0",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b\\logits.npy",
+      "bytes": 304000,
+      "sha256": "1afd7299d48f8065c9d2547580fc45f60ecd3eacde6070dd9962f8871a56bea7",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\inputs\\ES2003b\\original.f32",
+      "bytes": 135028056,
+      "sha256": "0e6cb3bc135981e61cc40e46182e0ac37506ba64ab31c1993b2a321c5685b4c4",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    }
+  ],
+  "sourceFiles": {
+    "moss_native_greedy_20261115.py": "996e1b2d116f172f3930803539647458e6fe41157b3b423b5aa91a854e4806cb",
+    "moss_staged_meeting_worker_20261115.py": "308b12c0c49e25e1757957d6897fc9d0e5e4a18dd818f8b535fbca0d2e6ae013"
+  },
+  "fullPrefillTokensPassed": 27924,
+  "wholeMeetingTranscriptsCompletedAtCheckpoint": 0,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "D2Complete": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "activeRunExcludedFromSnapshot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r4",
+  "deadline": "2026-11-16T07:30:00+08:00"
+}

@@ -1,0 +1,12 @@
+W1115 23:55:52.945000 8772 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 147, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 111, in main
+    with torch.inference_mode():generated,restored=greedy(model,cache,logits,torch=torch,
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_native_greedy_20261115.py", line 18, in greedy
+    'begin_suppress_tokens':None,'sequence_bias':None}.items():assert getattr(config,name,None)==value,(name,getattr(config,name,None))
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('num_beams', None)

@@ -1,0 +1,38 @@
+{
+  "state": "INCOMPLETE_NATIVE_STAGED_FAILURE_OR_DEADLINE_RETAINED",
+  "startedAt": "2026-11-15T23:55:42.567005+08:00",
+  "phases": [
+    {
+      "meeting": "runtime-control61",
+      "phase": "prefill",
+      "state": "REUSED_COMPLETE_PREFILL_UNCHANGED",
+      "source": {
+        "state": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-state.json",
+        "stateSha256": "9ecc5dd43cd11cdc42297b64d82c325745512bfec58d92968138ee3128faa5bb",
+        "cache": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61"
+      },
+      "newNeuralCalls": 0
+    },
+    {
+      "meeting": "runtime-control61",
+      "phase": "decode",
+      "exitCode": 1,
+      "state": "FAILED_OR_STOPPED_STAGED_DECODE",
+      "seconds": 32.625,
+      "privatePeakBytes": 825032704
+    }
+  ],
+  "completed": [],
+  "privatePeakBytes": 825032704,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "activeMeeting": "runtime-control61",
+  "pid": 22440,
+  "pidCreatedAt": 1794758146.2795744,
+  "error": "AssertionError('Preserve failure and inspect source before changed continuation')",
+  "finishedAt": "2026-11-15T23:56:18.899549+08:00",
+  "seconds": 36.3279999999977
+}
