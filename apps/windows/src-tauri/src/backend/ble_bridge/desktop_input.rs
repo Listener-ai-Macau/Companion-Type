@@ -313,6 +313,12 @@ mod hardware_test {
         let expected:u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("actual firmware").parse().unwrap();
         let expected_options:usize=std::env::var("COMPANION_IMU_EXPECT_OPTIONS").expect("explicit native or fallback").parse().unwrap();
         assert!(matches!(expected_options,72|200));
+        // The same production receiver can retain an Owner-labelled paired
+        // capture until the original prompt requests Stop. No mapper/MIC.
+        let capture_stop=std::env::var_os("COMPANION_IMU_NATIVE_CAPTURE_STOP").map(std::path::PathBuf::from);
+        if let Some(path)=&capture_stop{assert!(path.is_absolute()&&!path.exists());}
+        let sample_limit=if capture_stop.is_some(){30000}else{500};
+        let watchdog_ticks=if capture_stop.is_some(){4500}else{200};
         let peer=run_native_blocking(async{
             let mut device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
             let run=async{
@@ -328,8 +334,9 @@ mod hardware_test {
             }
         }).expect("fixed native precision preparation");
         let stop=Arc::new(AtomicBool::new(false));let ending_stop=stop.clone();
-        let ending=std::thread::spawn(move||{for _ in 0..200{
+        let ending=std::thread::spawn(move||{for _ in 0..watchdog_ticks{
             if ending_stop.load(Ordering::Acquire){return;}
+            if capture_stop.as_ref().is_some_and(|p|p.exists()){ending_stop.store(true,Ordering::Release);return;}
             std::thread::sleep(StdDuration::from_millis(100));
         }ending_stop.store(true,Ordering::Release);});
         let rows=Arc::new(Mutex::new(Vec::<serde_json::Value>::new()));let observed=rows.clone();
@@ -337,8 +344,8 @@ mod hardware_test {
         let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,200,move|event|match event{
             Update::Ready(status)=>{options.store(status.options as usize,Ordering::Release);},
             Update::RawMotion(raw,gravity)=>{
-                let mut rows=observed.lock().unwrap();if rows.len()<500{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
-                if rows.len()>=500{completed.store(true,Ordering::Release);}
+                let mut rows=observed.lock().unwrap();if rows.len()<sample_limit{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
+                if rows.len()>=sample_limit{completed.store(true,Ordering::Release);}
             },_=>{},
         });
         stop.store(true,Ordering::Release);ending.join().unwrap();
