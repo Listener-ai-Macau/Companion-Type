@@ -1,10 +1,11 @@
 import {useEffect,useLayoutEffect,useMemo,useRef,useState,type ReactNode} from 'react';
 import {meetingSectionTitles} from './meetingOutline';
 import {meetingHeadingForDisplay} from './meetingReading';
-import {ArrowLeft,BookOpen,GitBranch,List,Users,ChevronDown} from 'lucide-react';
+import {ArrowLeft,BookOpen,GitBranch,List,ListTodo,Users,ChevronDown} from 'lucide-react';
 import {MeetingMapView} from './MeetingMapView';
 import {MeetingOverview} from './MeetingOverview';
 import {MeetingSpeakers} from './MeetingSpeakers';
+import {MeetingActions} from './MeetingActions';
 import type {CompanionTranscriptSource} from '../../core/src/minutesSources';
 import './meetingReadingFrame.css';
 import './meetingVisual.css';
@@ -12,20 +13,22 @@ import './meetingVisual.css';
 export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;blocked?:boolean;children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
  const outline=useRef<HTMLDetailsElement>(null);
- const viewMenu=useRef<HTMLDetailsElement>(null);
+ const viewControls=useRef<HTMLDivElement>(null);
  const sectionKey=sections.join('\n');
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
  const [active,setActive]=useState<string|null>(null);
- const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'>('map');
- const returnView=useRef<'overview'|'map'>('map');
+ const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'|'actions'>('map');
+ const [keypointView,setKeypointView]=useState<'overview'|'map'>('map');
+ const returnView=useRef<Exclude<typeof view,'reading'>>('map');
  const sourceButton=useRef<HTMLElement|null>(null),restoreFocus=useRef(false);
- const viewLabel={overview:'会议重点',reading:'完整纪要',map:'会议图解',speakers:'发言人'}[view];
- function changeView(next:typeof view){setView(next);if(viewMenu.current){viewMenu.current.open=false;viewMenu.current.querySelector('summary')?.focus();}}
- useEffect(()=>{returnView.current='map';sourceButton.current=null;restoreFocus.current=false;setView('map');},[markdown,title]);
- useLayoutEffect(()=>{if(!restoreFocus.current||view==='reading')return;restoreFocus.current=false;const target=sourceButton.current?.isConnected?sourceButton.current:viewMenu.current?.querySelector('summary');target?.focus({preventScroll:true});target?.scrollIntoView({block:'nearest',behavior:'auto'});},[view]);
- function enterReading(){if(view!=='reading'){returnView.current=view==='map'?'map':'overview';sourceButton.current=document.activeElement instanceof HTMLElement?document.activeElement:null;}setView('reading');}
- function returnToNotes(){restoreFocus.current=true;if(viewMenu.current)viewMenu.current.open=false;setView(returnView.current);}
+ const keypoints=view==='map'||view==='overview';
+ const viewLabels={overview:'重点大纲',map:'重点图解',speakers:'发言人',actions:'待办'};
+ function changeFormat(next:typeof keypointView){setKeypointView(next);setView(next);}
+ useEffect(()=>{returnView.current='map';sourceButton.current=null;restoreFocus.current=false;setKeypointView('map');setView('map');},[markdown,title]);
+ useLayoutEffect(()=>{if(!restoreFocus.current||view==='reading')return;restoreFocus.current=false;const target=sourceButton.current?.isConnected?sourceButton.current:viewControls.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');target?.focus({preventScroll:true});target?.scrollIntoView({block:'nearest',behavior:'auto'});},[view]);
+ function enterReading(){if(view!=='reading'){returnView.current=view;sourceButton.current=document.activeElement instanceof HTMLElement?document.activeElement:null;}setView('reading');}
+ function returnToNotes(){restoreFocus.current=true;setView(returnView.current);}
  function read(){
   enterReading();
   window.requestAnimationFrame(()=>{const first=content.current?.querySelector<HTMLElement>('[data-meeting-heading]')??content.current;if(first){first.tabIndex=-1;first.focus({preventScroll:true});content.current?.parentElement?.querySelector('.meeting-reading-start')?.scrollIntoView({block:'start',behavior:'auto'});}});
@@ -67,26 +70,28 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
   });
  }
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
-  {titles.length>0&&<div className="meeting-reading-start">
-   <div className="meeting-reading-intro"><details ref={viewMenu} className="meeting-view-menu" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}>
-    <summary>{view==='map'?<GitBranch size={16} aria-hidden="true"/>:<BookOpen size={16} aria-hidden="true"/>}<span>{viewLabel}</span><ChevronDown size={13} aria-hidden="true"/></summary>
-    <nav aria-label="纪要查看方式">
-     <button type="button" aria-current={view==='overview'?'page':undefined} onClick={()=>changeView('overview')}><BookOpen size={15} aria-hidden="true"/>会议重点</button>
-     <button type="button" aria-current={view==='map'?'page':undefined} onClick={()=>changeView('map')}><GitBranch size={15} aria-hidden="true"/>会议图解</button>
-     <button type="button" aria-current={view==='speakers'?'page':undefined} onClick={()=>changeView('speakers')}><Users size={15} aria-hidden="true"/>发言人</button>
-    </nav>
-   </details>
-   {(view==='map'||view==='overview')&&<button type="button" className="meeting-reading-switch" onClick={()=>changeView(view==='map'?'overview':'map')}>{view==='map'?<BookOpen size={13} aria-hidden="true"/>:<GitBranch size={13} aria-hidden="true"/>}{view==='map'?'文字要点':'查看图解'}</button>}
+  <div className="meeting-reading-start">
+   <div className="meeting-reading-intro">
+   {view!=='reading'?<div ref={viewControls} className="meeting-reading-views" role="group" aria-label="纪要视角">
+    <button type="button" aria-pressed={keypoints} onClick={()=>setView(keypointView)}><BookOpen size={15} aria-hidden="true"/>重点</button>
+    <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={15} aria-hidden="true"/>发言人</button>
+    <button type="button" aria-pressed={view==='actions'} onClick={()=>setView('actions')}><ListTodo size={15} aria-hidden="true"/>待办</button>
+   </div>:<span className="meeting-reading-label">完整纪要</span>}
+   {keypoints&&<div className="meeting-reading-formats" role="group" aria-label="重点展示">
+    <button type="button" aria-pressed={view==='map'} onClick={()=>changeFormat('map')}><GitBranch size={13} aria-hidden="true"/>图解</button>
+    <button type="button" aria-pressed={view==='overview'} onClick={()=>changeFormat('overview')}><List size={13} aria-hidden="true"/>大纲</button>
+   </div>}
    {view==='reading'&&indexed&&titles.length>=2&&<details ref={outline} className="meeting-contents" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}>
     <summary><List size={14} aria-hidden="true"/>目录<ChevronDown size={12} aria-hidden="true"/></summary>
     <nav className="meeting-outline" aria-label="会议目录">{titles.map((title,i)=><button type="button" key={i} aria-current={active===title?'location':undefined} onClick={()=>navigate(title)}>{meetingHeadingForDisplay(title)}</button>)}</nav>
    </details>}
    </div>
-  </div>}
-  {view==='overview'&&<MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/>}
+  </div>
+  <div hidden={view!=='overview'}><MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/></div>
   <div className="meeting-graphic-surface" hidden={view!=='map'}><MeetingMapView markdown={markdown} title={title} onLocate={navigate} onRead={read}/></div>
-  {view==='speakers'&&<MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/>}
-  {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={returnToNotes}><ArrowLeft size={14} aria-hidden="true"/>{returnView.current==='map'?'返回会议图解':'返回会议重点'}</button>}
+  <div hidden={view!=='speakers'}><MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/></div>
+  <div hidden={view!=='actions'}><MeetingActions markdown={markdown} onLocate={navigate}/></div>
+  {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={returnToNotes}><ArrowLeft size={14} aria-hidden="true"/>返回{viewLabels[returnView.current]}</button>}
   <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;
 }

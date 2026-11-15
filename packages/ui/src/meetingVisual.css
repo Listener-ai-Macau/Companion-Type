@@ -65,15 +65,25 @@ body .ct-windows.ct-notebook .ct-minutes-article .meeting-section-heading:first-
 @media(max-width:720px){.meeting-speaker-list{grid-template-columns:minmax(0,1fr)}.meeting-speakers-heading{align-items:flex-start}.mobile-app .ct-overview-topic{padding:16px 0 19px 30px}.mobile-app .ct-overview-topic:before{top:20px;width:20px}.mobile-app .meeting-reading-views>button{min-height:40px;padding-inline:10px}.mobile-app .meeting-section-heading{gap:9px}.meeting-section-icon{width:26px;height:26px}}
 
 body .ct-windows.ct-notebook .meeting-reading-start,.mobile-app .meeting-reading-start{margin:0 0 23px;padding:8px 0 16px;border-bottom:1px solid var(--notebook-line)}
-.meeting-view-menu{position:relative;min-width:0;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
-body .ct-windows.ct-notebook .meeting-view-menu>summary,.mobile-app .meeting-view-menu>summary{display:flex;align-items:center;gap:8px;list-style:none;margin:0;padding:3px 0;min-height:36px;border:0;background:transparent;color:var(--notebook-ink);font:600 15px/1.6 var(--notebook-font);cursor:pointer}
-.meeting-view-menu>summary::-webkit-details-marker{display:none}
-body .ct-windows.ct-notebook .meeting-view-menu>summary:after,.mobile-app .meeting-view-menu>summary:after{content:none!important;display:none!important}
-.meeting-view-menu>summary>svg:first-child{color:var(--notebook-accent)}
-.meeting-view-menu>summary>svg:last-child{color:var(--notebook-muted);margin-left:3px}
-.meeting-view-menu>nav{position:absolute;z-index:12;top:calc(100% + 7px);left:0;display:grid;gap:3px;min-width:168px;padding:6px;border:1px solid var(--notebook-line);border-radius:10px;background:var(--notebook-paper);box-shadow:0 8px 28px #10182814}
-body .ct-windows.ct-notebook .meeting-view-menu>nav>button,.mobile-app .meeting-view-menu>nav>button{display:flex;align-items:center;gap:9px;min-height:38px;margin:0;padding:8px 12px;border:0;border-radius:6px;background:transparent;color:var(--notebook-ink);font:400 13px/1.6 var(--notebook-font);text-align:left;cursor:pointer}
-.meeting-view-menu>nav>button[aria-current=page],.meeting-view-menu>nav>button:hover{background:var(--notebook-soft)!important}
-.meeting-view-menu :is(button,summary):focus-visible{outline:2px solid var(--notebook-accent);outline-offset:3px}
-.meeting-view-caption{color:var(--notebook-muted);font:400 11px/1.6 var(--notebook-font)}
-@media(pointer:coarse){.meeting-view-menu>summary,.meeting-view-menu>nav>button{min-height:44px!important}}
+.meeting-reading-frame>[hidden]{display:none!important}
+.meeting-reading-label{color:var(--notebook-ink);font:500 14px/1.6 var(--notebook-font)}
+.meeting-reading-formats{display:flex;align-items:center;gap:2px;margin-left:auto}
+body .ct-windows.ct-notebook .meeting-reading-formats>button,.mobile-app .meeting-reading-formats>button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:6px 9px;border:0;border-radius:6px;background:transparent;color:var(--notebook-muted);font:400 11px/1.5 var(--notebook-font);cursor:pointer}
+body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],.mobile-app .meeting-reading-formats>button[aria-pressed=true]{background:var(--notebook-selection);color:var(--notebook-accent)}
+.meeting-reading-views>button:focus-visible,.meeting-reading-formats>button:focus-visible,.meeting-action-source:focus-visible{outline:2px solid var(--notebook-accent);outline-offset:3px}
+.meeting-actions{min-width:0;color:var(--notebook-ink)}
+.meeting-actions-empty{display:flex;align-items:center;gap:9px;margin:0 0 24px!important;color:var(--notebook-muted);font:400 13px/1.8 var(--notebook-font)!important}
+.meeting-actions-empty>svg{flex:none}
+.meeting-action-group{min-width:0;margin:0 0 28px}
+.meeting-action-group>h3{display:flex;align-items:center;gap:8px;margin:0 0 12px!important;color:var(--notebook-ink);font:500 15px/1.7 var(--notebook-font)!important}
+.meeting-action-group>h3>svg{color:var(--notebook-accent);flex:none}
+.meeting-action-group>h3>span{margin-left:3px;color:var(--notebook-muted);font:400 11px/1.5 var(--notebook-font)}
+.meeting-action-group>ul{margin:0!important;padding:0!important;list-style:none!important}
+.meeting-action-group>ul>li{display:flex;align-items:flex-start;gap:16px;min-width:0;padding:14px 0;border-top:1px solid var(--notebook-line)}
+.meeting-action-group li>div{flex:1;min-width:0}
+.meeting-action-group li p{margin:0!important;color:var(--notebook-ink);font:400 13px/1.85 var(--notebook-font)!important;overflow-wrap:anywhere;white-space:pre-wrap}
+.meeting-action-qualifier{display:inline-block;margin-bottom:4px;color:var(--notebook-muted);font:500 11px/1.6 var(--notebook-font)}
+body .ct-windows.ct-notebook .meeting-action-source,.mobile-app .meeting-action-source{display:inline-flex;align-items:center;gap:3px;flex:none;min-height:32px;margin:0;padding:4px 0;border:0;background:transparent;color:var(--notebook-accent);font:400 11px/1.5 var(--notebook-font);cursor:pointer}
+@container(max-width:420px){.meeting-reading-formats{margin-top:5px}}
+@media(pointer:coarse){.meeting-reading-views>button,.meeting-reading-formats>button,.meeting-action-source{min-height:44px!important}}
+.mobile-app .meeting-reading-views>button,.mobile-app .meeting-reading-formats>button,.mobile-app .meeting-action-source{min-height:44px}

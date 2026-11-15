@@ -11,8 +11,8 @@ export function meetingGlanceExcerpt(source:string,limit:number,preferClause=fal
  return {text:points.slice(0,limit).join(''),clipped:points.length>limit};
 }
 export function meetingGlanceQualifier(source:string):{qualifier:string;body:string}{
- const found=/^(待核对|待确认|建议|提议)[:：]\s*/.exec(source);
- return found?{qualifier:found[1],body:source.slice(found[0].length)}:{qualifier:'',body:source};
+ const found=/^(?:(待核对|待确认|建议|提议)[:：]\s*|【(待核对|待确认|建议|提议)】\s*[:：]?\s*)/.exec(source);
+ return found?{qualifier:found[1]??found[2],body:source.slice(found[0].length)}:{qualifier:'',body:source};
 }
 /** Short navigation labels reuse authored keywords present in that exact topic. */
 export function meetingGlanceLabels(markdown:string,topics:readonly MeetingMapTopic[]):Map<string,string>{
