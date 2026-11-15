@@ -7,6 +7,9 @@
 //! deliberately not represented as a real-time mouse implementation.
 use super::{fusion,rest,surface,Point};
 use serde::Serialize;
+// Existing rest/braking tolerance, also used when deciding whether there is
+// an established stroke worth preserving through an unconfirmed Z bump.
+const NEGLIGIBLE_SPEED_MPS:f64=0.005;
 
 #[derive(Clone,Copy,Debug)]
 pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub accel_mg:[f64;3],pub gyro_dps:[f64;3]}
@@ -185,7 +188,8 @@ impl Desktop {
             // sample's output, but retain the stroke velocity so ordinary
             // table vibration cannot force a slow restart every other tick.
             // Confirmed lift, contact and gaps still discard old motion.
-            if self.state.surface.as_ref().is_none_or(|s|s.phase!=surface::Phase::Ready){self.stop();}
+            if self.state.surface.as_ref().is_none_or(|s|s.phase!=surface::Phase::Ready)||
+                self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<NEGLIGIBLE_SPEED_MPS{self.stop();}
             return Point::default();
         }
         if self.reanchor_after_contact&&self.state.pose_prediction{
@@ -197,7 +201,7 @@ impl Desktop {
                 self.stop();self.state.linear_mps2=[0.;3];return Point::default();
             }
         }
-        if self.state.stationary&&(self.surface.is_none()||!self.state.moving||self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<0.005){
+        if self.state.stationary&&(self.surface.is_none()||!self.state.moving||self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<NEGLIGIBLE_SPEED_MPS){
             // Residual gravity/offset is not evidence of continued motion.
             // Confirm rest from raw six-axis deviations independently of the
             // integrated velocity, then discard that residual and old tail.
@@ -224,21 +228,25 @@ impl Desktop {
             if planar<0.10{return Point::default();}
             self.state.moving=true;self.stroke=0.;self.braking=false;
         }
-        self.stroke+=dt;
-        if self.stroke>2.0{self.clutch();return Point::default();}
+        // A table user may keep moving for more than two seconds. The old
+        // total-stroke deadline then demanded fresh rest/calibration (466
+        // clutched frames on the repaired159 replay). Bound only a completely
+        // unobserved quiet coast; never latch an active stroke out by duration.
+        self.stroke=if self.surface.is_some(){if quiet{self.stroke+dt}else{0.}}else{self.stroke+dt};
+        if self.stroke>2.0{if self.surface.is_some(){self.stop();}else{self.clutch();}return Point::default();}
         let old=self.state.velocity_mps;
         for i in 0..2 {
-            // Ready CIM6 already has attitude compensation. Like PX4's
-            // current-time output predictor, integrate its current inertial
-            // increment directly; do not add a second20ms acceleration LPF.
-            self.filtered[i]=if self.state.pose_prediction{linear[i]}else{self.filtered[i]+(linear[i]-self.filtered[i])*(dt/(0.02+dt))};
+            // Retain20ms noise filtering: removing it made the retained real
+            // stationary147/149 trace drift5.08px. Sensor-time output below
+            // avoids a second HOST-clock integration without that regression.
+            self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));
             if old[i]*self.filtered[i]<0.&&self.filtered[i].abs()>0.10{self.braking=true;}
             self.state.velocity_mps[i]=(old[i]+self.filtered[i]*dt).clamp(-0.6,0.6);
         }
         self.quiet=if quiet{self.quiet+dt}else{0.};
         // Rest must follow braking, or have a negligible residual velocity.
         // Quiet acceleration alone cannot distinguish constant speed from rest.
-        if self.quiet>=0.12&&(self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<0.005){
+        if self.quiet>=0.12&&(self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<NEGLIGIBLE_SPEED_MPS){
             self.stop();return Point::default();
         }
         let delta=Point{x:(old[0]+self.state.velocity_mps[0])*0.5*dt,y:(old[1]+self.state.velocity_mps[1])*0.5*dt};
@@ -301,6 +309,22 @@ mod tests {
         assert_eq!(d.state.velocity_mps,velocity,"an unconfirmed desk bump erased the ongoing stroke");
         let delta=d.sample_with_gravity(raw(171,0.,0.),true,up);
         assert!(delta.x>0.,"coasting after the bump must not require another acceleration onset");
+    }
+    #[test]fn an_active_table_stroke_does_not_force_recalibration_after_two_seconds(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..500{
+            let x=if (n-150)%40<20{80.}else{-80.};d.sample_with_gravity(raw(n,x,0.),true,up);
+            assert!(!d.state.clutched,"an active table stroke was latched out at{n}");
+        }
+    }
+    #[test]fn an_unobservable_long_table_coast_can_end_without_latching_the_next_stroke(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..170{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        for n in 170..400{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        assert!(!d.state.moving&&!d.state.clutched);
+        assert!(d.sample_with_gravity(raw(400,80.,0.),true,up).x>0.);
     }
     #[test]fn board_gravity_entry_learns_rest_without_waiting_for_a_second_gyro_bias(){
         let mut d=Desktop::surface_mouse();
