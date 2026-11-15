@@ -1,0 +1,26 @@
+{
+  "state": "EXACT_UPSTREAM_PUBLIC_ANNOTATION_FILES_VERIFIED_DIAGNOSTIC_ONLY",
+  "source": "https://github.com/nttcslab-sp/diar-forced-alignment",
+  "files": [
+    {
+      "file": "ES2003b.rttm",
+      "blob": "2f75de8947c294ff98727b8132de9a951646eef0",
+      "sha256": "840cbf2b5bf240719f43cae13f7bf607b612404dbc506bbb7f281bc433646a0e",
+      "bytes": 64076
+    },
+    {
+      "file": "README.md",
+      "blob": "c942276b78907793a861295cc37c4f54ca0e1752",
+      "sha256": "e5789507cbf40438109cdc52e6a4c3203f9ccfcc90376b865ae967a96a9bf176",
+      "bytes": 3006
+    },
+    {
+      "file": "LICENSE",
+      "blob": "4cefdd470ae21c0d1ed1adf52f9c8d8828a43985",
+      "sha256": "41c689784902f8341b8e8766bf43167d748218d336012e4582575e67502a9619",
+      "bytes": 781
+    }
+  ],
+  "originalQualificationReferenceChanged": false,
+  "newNeuralCalls": 0
+}

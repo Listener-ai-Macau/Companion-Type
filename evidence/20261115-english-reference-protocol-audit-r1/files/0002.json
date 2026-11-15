@@ -1,0 +1,8 @@
+{
+  "initialConsistencyCheckFailureSeconds": 1.0000004e-06,
+  "cause": "pyannote default1us precision and metric cropping",
+  "consistencyCheckNowMatchesOriginalScorerSeconds": 0.0001,
+  "scoringCollarSeconds": 0,
+  "qualificationReferenceChanged": false,
+  "sourceWarnings": "MFA references also contain alignment/ambiguity/OOV errors; annotation-only regions not verified silence."
+}

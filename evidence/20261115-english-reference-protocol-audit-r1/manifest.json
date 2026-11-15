@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-15T12:13:46.194180+08:00",
+  "state": "SAME_PREDICTION_REFERENCE_PROTOCOL_AUDIT_NOT_NEW_ACCEPTANCE",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\alternate-case.json",
+      "logicalPath": "alternate-case.json",
+      "file": "files/0000.json",
+      "sha256": "47f1d7966ad622d9d445320f3a59036d2b007fbf00af2cb860719066f874c319"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\alternate-score-diagnostic-only.json",
+      "logicalPath": "alternate-score-diagnostic-only.json",
+      "file": "files/0001.json",
+      "sha256": "b9c3b23753837467755dbde45bd1b2fcefdb910d1c3d812ea91975b4a1f7083a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\audit-notes.json",
+      "logicalPath": "audit-notes.json",
+      "file": "files/0002.json",
+      "sha256": "42898ef74b5661c32c06733beffe90b178ec39442fd855298a2cf3771f94b701"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\comparison.json",
+      "logicalPath": "comparison.json",
+      "file": "files/0003.json",
+      "sha256": "e343cbdcbf50023dfc5b58de4f433a6fec4fc15ca0e740b4f3acbb8df7b180e7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\ES2003b.rttm",
+      "logicalPath": "ES2003b.rttm",
+      "file": "files/0004.rttm",
+      "sha256": "840cbf2b5bf240719f43cae13f7bf607b612404dbc506bbb7f281bc433646a0e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\hypothesis-binding.json",
+      "logicalPath": "hypothesis-binding.json",
+      "file": "files/0005.json",
+      "sha256": "4fefc65d7a82c62c1f5883d577e8137d162eb3f1659114af9a72144da951c8d3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\LICENSE",
+      "logicalPath": "LICENSE",
+      "file": "files/0006",
+      "sha256": "41c689784902f8341b8e8766bf43167d748218d336012e4582575e67502a9619"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\README.md",
+      "logicalPath": "README.md",
+      "file": "files/0007.md",
+      "sha256": "e5789507cbf40438109cdc52e6a4c3203f9ccfcc90376b865ae967a96a9bf176"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\source-binding.json",
+      "logicalPath": "source-binding.json",
+      "file": "files/0008.json",
+      "sha256": "190f939ee97bd25f44cf9ee22946a22586b3348ee720c4676c3ba8fd74d2d4df"
+    }
+  ],
+  "originalReferenceChanged": false,
+  "newNeuralCalls": 0,
+  "d2Complete": false,
+  "license": "External annotations CC BY4.0; attribution README and LICENSE preserved.",
+  "diagnosisCorrection": "Most original English non-attributed reference time falls outside the external MFA reference. Annotation disagreements are not independently proved silence; raw word errors and original failure remain."
+}
