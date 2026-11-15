@@ -1,0 +1,23 @@
+{
+  "audio_bos_token": "<|audio_start|>",
+  "audio_eos_token": "<|audio_end|>",
+  "audio_merge_size": 4,
+  "audio_token": "<|audio_pad|>",
+  "audio_tokens_per_second": 12.5,
+  "feature_extractor": {
+    "chunk_length": 30,
+    "dither": 0.0,
+    "feature_extractor_type": "MossTranscribeDiarizeFeatureExtractor",
+    "feature_size": 80,
+    "hop_length": 160,
+    "n_fft": 400,
+    "n_samples": 480000,
+    "nb_max_frames": 3000,
+    "padding_side": "right",
+    "padding_value": 0.0,
+    "return_attention_mask": true,
+    "sampling_rate": 16000
+  },
+  "processor_class": "MossTranscribeDiarizeProcessor",
+  "time_marker_every_seconds": 5
+}

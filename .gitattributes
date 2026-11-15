@@ -239,3 +239,21 @@ src/score_sequential_speakers_20261115.py -text -whitespace
 src/sequential_meeting_asr_worker_20261115.py -text -whitespace
 
 src/sequential_meeting_speaker_worker_20261115.py -text -whitespace
+
+evidence/20261115-joint-architecture-r1/** -text -whitespace
+
+src/moss_native_architecture_20261115.py -text -whitespace
+
+src/moss_native_pilot_worker_20261115.py -text -whitespace
+
+src/run_moss_native_architecture_20261115.py -text -whitespace
+
+src/moss_native_full_execution_20261115.py -text -whitespace
+
+src/moss_native_full_worker_20261115.py -text -whitespace
+
+src/run_moss_native_full_20261115.py -text -whitespace
+
+src/cpp_joint_meeting_worker_20261115.py -text -whitespace
+
+src/run_cpp_joint_meetings_20261115.py -text -whitespace

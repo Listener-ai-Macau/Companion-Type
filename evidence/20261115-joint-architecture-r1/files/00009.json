@@ -1,0 +1,18 @@
+{
+  "workerSha256": "ef8493d5039aca1522237b73fe34ad8494a42fa6d25014ce630382292708cb08",
+  "runnerSha256": "21f2cbd894c161c3049431fb0aed5acbe65458c358ff448e6a3c5bbc834164cd",
+  "audioManifestSha256": "48f7c7d4e4e5f4c8893ac4733eedc8c91b0b718e1761bb51b48568a4a058828a",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_native_architecture_20261115.py": "7e5e1e74cd5aac11c9663986c5803dd6a57f1310de6d37397712e6c213af705f",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\configuration_moss_transcribe_diarize.py": "05aa72ba47f9875066e4676246b310c060550bba973ad2a4fa318e6666f31862",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\modeling_moss_transcribe_diarize.py": "9bfd01d758669c639b10e010a35f2b805ef7a73892916318e760b618032d74d9",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\processing_moss_transcribe_diarize.py": "1534e35adbd8af7a02d963655b7273b2b6657096ee921bec044533593dc92e70",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\feature_extraction_moss_transcribe_diarize.py": "1ee417f78f9d1a16fe22bfc4dcab1d25373a01cd0ddbb9fe6745796c2c38a4ab"
+  },
+  "blas": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "blasSha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+}

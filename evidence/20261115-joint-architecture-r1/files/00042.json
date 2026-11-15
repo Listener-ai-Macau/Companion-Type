@@ -1,0 +1,27 @@
+{
+  "state": "INCOMPLETE_CPP_JOINT_FAILURE_RETAINED",
+  "startedAt": "2026-11-15T22:24:28.808952+08:00",
+  "phases": [
+    {
+      "phase": "inventory",
+      "exitCode": 0,
+      "privatePeakBytes": 38236160,
+      "seconds": 1.0159999999996217
+    },
+    {
+      "phase": "full",
+      "exitCode": 1,
+      "privatePeakBytes": 1967464448,
+      "seconds": 6.609000000000378
+    }
+  ],
+  "privatePeakBytes": 1967464448,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "noCpuFallback": true,
+  "pid": 12864,
+  "pidCreatedAt": 1794752669.8456807,
+  "error": "AssertionError('Native phase failed; inspect once before changed continuation')",
+  "finishedAt": "2026-11-15T22:24:36.464957+08:00",
+  "seconds": 7.656000000000859
+}

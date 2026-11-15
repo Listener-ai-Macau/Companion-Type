@@ -1,0 +1,10 @@
+{
+  "state": "PASS_NATIVE_STANDARD_AND_BOUNDED_EMPTY_LOADER_EXACT_LOGITS",
+  "maxAbsDifference": 0.0,
+  "tensors": 67,
+  "deterministicBuffersPreserved": [
+    "model.language_model.rotary_emb.inv_freq",
+    "model.language_model.rotary_emb.original_inv_freq"
+  ],
+  "loaderSourceSha256": "7e5e1e74cd5aac11c9663986c5803dd6a57f1310de6d37397712e6c213af705f"
+}

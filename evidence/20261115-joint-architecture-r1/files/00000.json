@@ -1,0 +1,19 @@
+{
+  "state": "PRIOR_ENGLISH_ACTIVITY_DIAGNOSIS_CORRECTED_PRESERVE_GATES",
+  "priorEvidence": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\comparison.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-en2002a-r1\\comparison.json"
+  ],
+  "findings": [
+    "Large English missed-activity seconds do not prove equal lost real speech. Existing same-output original-word-vs-external-MFA reference audits already show substantial annotation disagreement.",
+    "Do not repeat local threshold/gap/VAD tweaking justified solely by raw missed-activity totals.",
+    "English raw textWER and unknown word-attribution problems remain real measured failures; separate text errors from timing/reference disagreement.",
+    "Compare baseline and joint model on the exact same whole recordings, per reference protocol, without changing original acceptance scores. ExternalMFA remains diagnostic, not human ground truth or a replacement gate."
+  ],
+  "ES2003bOriginalDER": 0.26018102941320864,
+  "ES2003bMfaDiagnosticDER": 0.06687032223716617,
+  "EN2002aOriginalDER": 0.310766316505023,
+  "EN2002aMfaDiagnosticDER": 0.1597189127114486,
+  "oldScoresChanged": false,
+  "qualityQualified": false
+}

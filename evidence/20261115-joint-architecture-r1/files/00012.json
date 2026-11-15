@@ -1,0 +1,5826 @@
+{
+  "state": "PASS_EXACT_PUBLISHED_NATIVE_CHECKPOINT_SHA_FROM_EXISTING_AUTHOR_TENSORS",
+  "authorCheckpoint": "E:\\CodexData\\Companion\\asr-accuracy-latency-20261103\\multispeaker-ai\\joint-moss-architecture-20261104\\model\\model-00000-of-00001.safetensors",
+  "authorCheckpointSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "nativeRepository": "hf-audio/MOSS-Transcribe-Diarize-HF",
+  "nativeRevision": "22dbe8f8849882d285aa5c668ea0e3b46418e827",
+  "nativeCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+  "nativeBytes": 1817111760,
+  "tensorCount": 683,
+  "mapping": [
+    {
+      "native": "model.audio_tower.conv1.bias",
+      "author": "model.whisper_encoder.conv1.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.conv1.weight",
+      "author": "model.whisper_encoder.conv1.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        80,
+        3
+      ]
+    },
+    {
+      "native": "model.audio_tower.conv2.bias",
+      "author": "model.whisper_encoder.conv2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.conv2.weight",
+      "author": "model.whisper_encoder.conv2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024,
+        3
+      ]
+    },
+    {
+      "native": "model.audio_tower.embed_positions.weight",
+      "author": "model.whisper_encoder.embed_positions.weight",
+      "dtype": "BF16",
+      "shape": [
+        1500,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layer_norm.bias",
+      "author": "model.whisper_encoder.layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layer_norm.weight",
+      "author": "model.whisper_encoder.layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.fc1.bias",
+      "author": "model.whisper_encoder.layers.0.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.fc1.weight",
+      "author": "model.whisper_encoder.layers.0.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.fc2.bias",
+      "author": "model.whisper_encoder.layers.0.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.fc2.weight",
+      "author": "model.whisper_encoder.layers.0.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.0.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.0.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.0.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.0.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.0.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.0.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.0.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.0.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.0.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.0.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.0.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.0.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.fc1.bias",
+      "author": "model.whisper_encoder.layers.1.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.fc1.weight",
+      "author": "model.whisper_encoder.layers.1.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.fc2.bias",
+      "author": "model.whisper_encoder.layers.1.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.fc2.weight",
+      "author": "model.whisper_encoder.layers.1.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.1.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.1.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.1.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.1.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.1.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.1.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.1.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.1.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.1.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.1.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.1.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.1.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.fc1.bias",
+      "author": "model.whisper_encoder.layers.10.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.fc1.weight",
+      "author": "model.whisper_encoder.layers.10.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.fc2.bias",
+      "author": "model.whisper_encoder.layers.10.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.fc2.weight",
+      "author": "model.whisper_encoder.layers.10.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.10.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.10.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.10.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.10.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.10.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.10.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.10.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.10.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.10.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.10.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.10.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.10.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.fc1.bias",
+      "author": "model.whisper_encoder.layers.11.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.fc1.weight",
+      "author": "model.whisper_encoder.layers.11.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.fc2.bias",
+      "author": "model.whisper_encoder.layers.11.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.fc2.weight",
+      "author": "model.whisper_encoder.layers.11.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.11.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.11.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.11.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.11.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.11.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.11.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.11.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.11.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.11.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.11.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.11.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.11.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.fc1.bias",
+      "author": "model.whisper_encoder.layers.12.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.fc1.weight",
+      "author": "model.whisper_encoder.layers.12.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.fc2.bias",
+      "author": "model.whisper_encoder.layers.12.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.fc2.weight",
+      "author": "model.whisper_encoder.layers.12.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.12.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.12.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.12.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.12.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.12.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.12.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.12.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.12.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.12.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.12.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.12.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.12.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.fc1.bias",
+      "author": "model.whisper_encoder.layers.13.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.fc1.weight",
+      "author": "model.whisper_encoder.layers.13.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.fc2.bias",
+      "author": "model.whisper_encoder.layers.13.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.fc2.weight",
+      "author": "model.whisper_encoder.layers.13.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.13.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.13.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.13.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.13.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.13.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.13.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.13.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.13.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.13.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.13.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.13.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.13.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.fc1.bias",
+      "author": "model.whisper_encoder.layers.14.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.fc1.weight",
+      "author": "model.whisper_encoder.layers.14.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.fc2.bias",
+      "author": "model.whisper_encoder.layers.14.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.fc2.weight",
+      "author": "model.whisper_encoder.layers.14.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.14.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.14.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.14.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.14.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.14.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.14.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.14.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.14.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.14.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.14.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.14.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.14.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.fc1.bias",
+      "author": "model.whisper_encoder.layers.15.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.fc1.weight",
+      "author": "model.whisper_encoder.layers.15.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.fc2.bias",
+      "author": "model.whisper_encoder.layers.15.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.fc2.weight",
+      "author": "model.whisper_encoder.layers.15.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.15.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.15.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.15.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.15.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.15.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.15.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.15.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.15.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.15.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.15.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.15.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.15.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.fc1.bias",
+      "author": "model.whisper_encoder.layers.16.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.fc1.weight",
+      "author": "model.whisper_encoder.layers.16.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.fc2.bias",
+      "author": "model.whisper_encoder.layers.16.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.fc2.weight",
+      "author": "model.whisper_encoder.layers.16.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.16.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.16.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.16.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.16.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.16.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.16.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.16.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.16.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.16.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.16.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.16.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.16.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.fc1.bias",
+      "author": "model.whisper_encoder.layers.17.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.fc1.weight",
+      "author": "model.whisper_encoder.layers.17.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.fc2.bias",
+      "author": "model.whisper_encoder.layers.17.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.fc2.weight",
+      "author": "model.whisper_encoder.layers.17.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.17.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.17.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.17.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.17.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.17.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.17.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.17.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.17.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.17.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.17.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.17.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.17.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.fc1.bias",
+      "author": "model.whisper_encoder.layers.18.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.fc1.weight",
+      "author": "model.whisper_encoder.layers.18.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.fc2.bias",
+      "author": "model.whisper_encoder.layers.18.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.fc2.weight",
+      "author": "model.whisper_encoder.layers.18.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.18.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.18.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.18.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.18.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.18.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.18.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.18.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.18.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.18.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.18.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.18.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.18.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.fc1.bias",
+      "author": "model.whisper_encoder.layers.19.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.fc1.weight",
+      "author": "model.whisper_encoder.layers.19.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.fc2.bias",
+      "author": "model.whisper_encoder.layers.19.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.fc2.weight",
+      "author": "model.whisper_encoder.layers.19.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.19.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.19.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.19.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.19.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.19.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.19.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.19.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.19.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.19.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.19.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.19.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.19.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.fc1.bias",
+      "author": "model.whisper_encoder.layers.2.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.fc1.weight",
+      "author": "model.whisper_encoder.layers.2.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.fc2.bias",
+      "author": "model.whisper_encoder.layers.2.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.fc2.weight",
+      "author": "model.whisper_encoder.layers.2.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.2.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.2.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.2.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.2.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.2.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.2.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.2.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.2.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.2.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.2.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.2.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.2.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.fc1.bias",
+      "author": "model.whisper_encoder.layers.20.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.fc1.weight",
+      "author": "model.whisper_encoder.layers.20.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.fc2.bias",
+      "author": "model.whisper_encoder.layers.20.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.fc2.weight",
+      "author": "model.whisper_encoder.layers.20.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.20.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.20.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.20.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.20.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.20.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.20.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.20.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.20.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.20.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.20.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.20.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.20.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.fc1.bias",
+      "author": "model.whisper_encoder.layers.21.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.fc1.weight",
+      "author": "model.whisper_encoder.layers.21.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.fc2.bias",
+      "author": "model.whisper_encoder.layers.21.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.fc2.weight",
+      "author": "model.whisper_encoder.layers.21.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.21.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.21.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.21.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.21.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.21.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.21.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.21.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.21.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.21.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.21.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.21.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.21.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.fc1.bias",
+      "author": "model.whisper_encoder.layers.22.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.fc1.weight",
+      "author": "model.whisper_encoder.layers.22.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.fc2.bias",
+      "author": "model.whisper_encoder.layers.22.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.fc2.weight",
+      "author": "model.whisper_encoder.layers.22.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.22.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.22.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.22.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.22.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.22.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.22.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.22.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.22.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.22.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.22.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.22.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.22.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.fc1.bias",
+      "author": "model.whisper_encoder.layers.23.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.fc1.weight",
+      "author": "model.whisper_encoder.layers.23.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.fc2.bias",
+      "author": "model.whisper_encoder.layers.23.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.fc2.weight",
+      "author": "model.whisper_encoder.layers.23.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.23.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.23.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.23.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.23.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.23.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.23.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.23.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.23.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.23.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.23.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.23.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.23.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.fc1.bias",
+      "author": "model.whisper_encoder.layers.3.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.fc1.weight",
+      "author": "model.whisper_encoder.layers.3.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.fc2.bias",
+      "author": "model.whisper_encoder.layers.3.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.fc2.weight",
+      "author": "model.whisper_encoder.layers.3.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.3.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.3.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.3.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.3.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.3.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.3.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.3.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.3.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.3.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.3.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.3.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.3.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.fc1.bias",
+      "author": "model.whisper_encoder.layers.4.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.fc1.weight",
+      "author": "model.whisper_encoder.layers.4.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.fc2.bias",
+      "author": "model.whisper_encoder.layers.4.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.fc2.weight",
+      "author": "model.whisper_encoder.layers.4.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.4.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.4.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.4.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.4.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.4.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.4.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.4.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.4.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.4.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.4.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.4.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.4.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.fc1.bias",
+      "author": "model.whisper_encoder.layers.5.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.fc1.weight",
+      "author": "model.whisper_encoder.layers.5.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.fc2.bias",
+      "author": "model.whisper_encoder.layers.5.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.fc2.weight",
+      "author": "model.whisper_encoder.layers.5.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.5.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.5.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.5.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.5.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.5.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.5.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.5.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.5.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.5.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.5.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.5.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.5.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.fc1.bias",
+      "author": "model.whisper_encoder.layers.6.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.fc1.weight",
+      "author": "model.whisper_encoder.layers.6.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.fc2.bias",
+      "author": "model.whisper_encoder.layers.6.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.fc2.weight",
+      "author": "model.whisper_encoder.layers.6.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.6.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.6.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.6.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.6.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.6.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.6.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.6.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.6.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.6.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.6.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.6.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.6.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.fc1.bias",
+      "author": "model.whisper_encoder.layers.7.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.fc1.weight",
+      "author": "model.whisper_encoder.layers.7.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.fc2.bias",
+      "author": "model.whisper_encoder.layers.7.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.fc2.weight",
+      "author": "model.whisper_encoder.layers.7.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.7.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.7.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.7.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.7.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.7.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.7.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.7.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.7.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.7.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.7.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.7.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.7.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.fc1.bias",
+      "author": "model.whisper_encoder.layers.8.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.fc1.weight",
+      "author": "model.whisper_encoder.layers.8.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.fc2.bias",
+      "author": "model.whisper_encoder.layers.8.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.fc2.weight",
+      "author": "model.whisper_encoder.layers.8.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.8.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.8.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.8.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.8.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.8.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.8.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.8.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.8.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.8.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.8.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.8.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.8.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.fc1.bias",
+      "author": "model.whisper_encoder.layers.9.fc1.bias",
+      "dtype": "BF16",
+      "shape": [
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.fc1.weight",
+      "author": "model.whisper_encoder.layers.9.fc1.weight",
+      "dtype": "BF16",
+      "shape": [
+        4096,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.fc2.bias",
+      "author": "model.whisper_encoder.layers.9.fc2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.fc2.weight",
+      "author": "model.whisper_encoder.layers.9.fc2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.final_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.9.final_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.final_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.9.final_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.k_proj.weight",
+      "author": "model.whisper_encoder.layers.9.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.out_proj.bias",
+      "author": "model.whisper_encoder.layers.9.self_attn.out_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.out_proj.weight",
+      "author": "model.whisper_encoder.layers.9.self_attn.out_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.q_proj.bias",
+      "author": "model.whisper_encoder.layers.9.self_attn.q_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.q_proj.weight",
+      "author": "model.whisper_encoder.layers.9.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.v_proj.bias",
+      "author": "model.whisper_encoder.layers.9.self_attn.v_proj.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn.v_proj.weight",
+      "author": "model.whisper_encoder.layers.9.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn_layer_norm.bias",
+      "author": "model.whisper_encoder.layers.9.self_attn_layer_norm.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.audio_tower.layers.9.self_attn_layer_norm.weight",
+      "author": "model.whisper_encoder.layers.9.self_attn_layer_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.embed_tokens.weight",
+      "author": "model.language_model.embed_tokens.weight",
+      "dtype": "BF16",
+      "shape": [
+        151936,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.input_layernorm.weight",
+      "author": "model.language_model.layers.0.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.mlp.down_proj.weight",
+      "author": "model.language_model.layers.0.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.0.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.mlp.up_proj.weight",
+      "author": "model.language_model.layers.0.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.0.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.0.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.0.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.0.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.0.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.0.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.0.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.0.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.input_layernorm.weight",
+      "author": "model.language_model.layers.1.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.mlp.down_proj.weight",
+      "author": "model.language_model.layers.1.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.1.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.mlp.up_proj.weight",
+      "author": "model.language_model.layers.1.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.1.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.1.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.1.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.1.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.1.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.1.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.1.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.1.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.input_layernorm.weight",
+      "author": "model.language_model.layers.10.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.mlp.down_proj.weight",
+      "author": "model.language_model.layers.10.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.10.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.mlp.up_proj.weight",
+      "author": "model.language_model.layers.10.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.10.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.10.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.10.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.10.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.10.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.10.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.10.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.10.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.input_layernorm.weight",
+      "author": "model.language_model.layers.11.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.mlp.down_proj.weight",
+      "author": "model.language_model.layers.11.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.11.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.mlp.up_proj.weight",
+      "author": "model.language_model.layers.11.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.11.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.11.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.11.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.11.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.11.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.11.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.11.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.11.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.input_layernorm.weight",
+      "author": "model.language_model.layers.12.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.mlp.down_proj.weight",
+      "author": "model.language_model.layers.12.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.12.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.mlp.up_proj.weight",
+      "author": "model.language_model.layers.12.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.12.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.12.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.12.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.12.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.12.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.12.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.12.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.12.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.input_layernorm.weight",
+      "author": "model.language_model.layers.13.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.mlp.down_proj.weight",
+      "author": "model.language_model.layers.13.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.13.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.mlp.up_proj.weight",
+      "author": "model.language_model.layers.13.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.13.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.13.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.13.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.13.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.13.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.13.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.13.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.13.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.input_layernorm.weight",
+      "author": "model.language_model.layers.14.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.mlp.down_proj.weight",
+      "author": "model.language_model.layers.14.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.14.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.mlp.up_proj.weight",
+      "author": "model.language_model.layers.14.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.14.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.14.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.14.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.14.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.14.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.14.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.14.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.14.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.input_layernorm.weight",
+      "author": "model.language_model.layers.15.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.mlp.down_proj.weight",
+      "author": "model.language_model.layers.15.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.15.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.mlp.up_proj.weight",
+      "author": "model.language_model.layers.15.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.15.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.15.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.15.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.15.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.15.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.15.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.15.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.15.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.input_layernorm.weight",
+      "author": "model.language_model.layers.16.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.mlp.down_proj.weight",
+      "author": "model.language_model.layers.16.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.16.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.mlp.up_proj.weight",
+      "author": "model.language_model.layers.16.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.16.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.16.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.16.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.16.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.16.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.16.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.16.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.16.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.input_layernorm.weight",
+      "author": "model.language_model.layers.17.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.mlp.down_proj.weight",
+      "author": "model.language_model.layers.17.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.17.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.mlp.up_proj.weight",
+      "author": "model.language_model.layers.17.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.17.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.17.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.17.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.17.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.17.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.17.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.17.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.17.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.input_layernorm.weight",
+      "author": "model.language_model.layers.18.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.mlp.down_proj.weight",
+      "author": "model.language_model.layers.18.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.18.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.mlp.up_proj.weight",
+      "author": "model.language_model.layers.18.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.18.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.18.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.18.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.18.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.18.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.18.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.18.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.18.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.input_layernorm.weight",
+      "author": "model.language_model.layers.19.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.mlp.down_proj.weight",
+      "author": "model.language_model.layers.19.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.19.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.mlp.up_proj.weight",
+      "author": "model.language_model.layers.19.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.19.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.19.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.19.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.19.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.19.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.19.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.19.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.19.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.input_layernorm.weight",
+      "author": "model.language_model.layers.2.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.mlp.down_proj.weight",
+      "author": "model.language_model.layers.2.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.2.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.mlp.up_proj.weight",
+      "author": "model.language_model.layers.2.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.2.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.2.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.2.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.2.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.2.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.2.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.2.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.2.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.input_layernorm.weight",
+      "author": "model.language_model.layers.20.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.mlp.down_proj.weight",
+      "author": "model.language_model.layers.20.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.20.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.mlp.up_proj.weight",
+      "author": "model.language_model.layers.20.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.20.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.20.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.20.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.20.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.20.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.20.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.20.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.20.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.input_layernorm.weight",
+      "author": "model.language_model.layers.21.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.mlp.down_proj.weight",
+      "author": "model.language_model.layers.21.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.21.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.mlp.up_proj.weight",
+      "author": "model.language_model.layers.21.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.21.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.21.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.21.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.21.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.21.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.21.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.21.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.21.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.input_layernorm.weight",
+      "author": "model.language_model.layers.22.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.mlp.down_proj.weight",
+      "author": "model.language_model.layers.22.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.22.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.mlp.up_proj.weight",
+      "author": "model.language_model.layers.22.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.22.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.22.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.22.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.22.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.22.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.22.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.22.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.22.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.input_layernorm.weight",
+      "author": "model.language_model.layers.23.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.mlp.down_proj.weight",
+      "author": "model.language_model.layers.23.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.23.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.mlp.up_proj.weight",
+      "author": "model.language_model.layers.23.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.23.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.23.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.23.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.23.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.23.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.23.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.23.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.23.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.input_layernorm.weight",
+      "author": "model.language_model.layers.24.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.mlp.down_proj.weight",
+      "author": "model.language_model.layers.24.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.24.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.mlp.up_proj.weight",
+      "author": "model.language_model.layers.24.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.24.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.24.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.24.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.24.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.24.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.24.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.24.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.24.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.input_layernorm.weight",
+      "author": "model.language_model.layers.25.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.mlp.down_proj.weight",
+      "author": "model.language_model.layers.25.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.25.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.mlp.up_proj.weight",
+      "author": "model.language_model.layers.25.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.25.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.25.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.25.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.25.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.25.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.25.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.25.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.25.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.input_layernorm.weight",
+      "author": "model.language_model.layers.26.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.mlp.down_proj.weight",
+      "author": "model.language_model.layers.26.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.26.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.mlp.up_proj.weight",
+      "author": "model.language_model.layers.26.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.26.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.26.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.26.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.26.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.26.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.26.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.26.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.26.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.input_layernorm.weight",
+      "author": "model.language_model.layers.27.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.mlp.down_proj.weight",
+      "author": "model.language_model.layers.27.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.27.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.mlp.up_proj.weight",
+      "author": "model.language_model.layers.27.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.27.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.27.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.27.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.27.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.27.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.27.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.27.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.27.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.input_layernorm.weight",
+      "author": "model.language_model.layers.3.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.mlp.down_proj.weight",
+      "author": "model.language_model.layers.3.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.3.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.mlp.up_proj.weight",
+      "author": "model.language_model.layers.3.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.3.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.3.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.3.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.3.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.3.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.3.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.3.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.3.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.input_layernorm.weight",
+      "author": "model.language_model.layers.4.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.mlp.down_proj.weight",
+      "author": "model.language_model.layers.4.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.4.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.mlp.up_proj.weight",
+      "author": "model.language_model.layers.4.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.4.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.4.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.4.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.4.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.4.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.4.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.4.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.4.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.input_layernorm.weight",
+      "author": "model.language_model.layers.5.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.mlp.down_proj.weight",
+      "author": "model.language_model.layers.5.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.5.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.mlp.up_proj.weight",
+      "author": "model.language_model.layers.5.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.5.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.5.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.5.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.5.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.5.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.5.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.5.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.5.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.input_layernorm.weight",
+      "author": "model.language_model.layers.6.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.mlp.down_proj.weight",
+      "author": "model.language_model.layers.6.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.6.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.mlp.up_proj.weight",
+      "author": "model.language_model.layers.6.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.6.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.6.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.6.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.6.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.6.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.6.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.6.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.6.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.input_layernorm.weight",
+      "author": "model.language_model.layers.7.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.mlp.down_proj.weight",
+      "author": "model.language_model.layers.7.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.7.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.mlp.up_proj.weight",
+      "author": "model.language_model.layers.7.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.7.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.7.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.7.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.7.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.7.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.7.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.7.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.7.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.input_layernorm.weight",
+      "author": "model.language_model.layers.8.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.mlp.down_proj.weight",
+      "author": "model.language_model.layers.8.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.8.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.mlp.up_proj.weight",
+      "author": "model.language_model.layers.8.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.8.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.8.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.8.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.8.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.8.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.8.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.8.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.8.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.input_layernorm.weight",
+      "author": "model.language_model.layers.9.input_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.mlp.down_proj.weight",
+      "author": "model.language_model.layers.9.mlp.down_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        3072
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.mlp.gate_proj.weight",
+      "author": "model.language_model.layers.9.mlp.gate_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.mlp.up_proj.weight",
+      "author": "model.language_model.layers.9.mlp.up_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        3072,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.post_attention_layernorm.weight",
+      "author": "model.language_model.layers.9.post_attention_layernorm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.k_norm.weight",
+      "author": "model.language_model.layers.9.self_attn.k_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.k_proj.weight",
+      "author": "model.language_model.layers.9.self_attn.k_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.o_proj.weight",
+      "author": "model.language_model.layers.9.self_attn.o_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.q_norm.weight",
+      "author": "model.language_model.layers.9.self_attn.q_norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        128
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.q_proj.weight",
+      "author": "model.language_model.layers.9.self_attn.q_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        2048,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.layers.9.self_attn.v_proj.weight",
+      "author": "model.language_model.layers.9.self_attn.v_proj.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.language_model.norm.weight",
+      "author": "model.language_model.norm.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.linear_1.bias",
+      "author": "model.vq_adaptor.layers.0.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.linear_1.weight",
+      "author": "model.vq_adaptor.layers.0.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        4096
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.linear_2.bias",
+      "author": "model.vq_adaptor.layers.2.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.linear_2.weight",
+      "author": "model.vq_adaptor.layers.2.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.norm.bias",
+      "author": "model.vq_adaptor.layers.3.bias",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "native": "model.multi_modal_projector.norm.weight",
+      "author": "model.vq_adaptor.layers.3.weight",
+      "dtype": "BF16",
+      "shape": [
+        1024
+      ]
+    }
+  ],
+  "weightsQuantizedOrAltered": false,
+  "largeCheckpointDownloadedOrDuplicated": false
+}

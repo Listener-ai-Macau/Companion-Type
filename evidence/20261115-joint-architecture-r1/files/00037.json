@@ -1,0 +1,63 @@
+{
+  "state": "FAILED_CPP_JOINT_FULL_RETAINED_NO_RETRY",
+  "startedAt": "2026-11-15T22:24:29.965356+08:00",
+  "completed": [],
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "goldRead": false,
+  "speakerCountHintUsed": false,
+  "automaticRetries": 0,
+  "runtimeSha256": "6094102cf57b404b050707ceb258b12ce647b92e801b5d46077214e5b030c8aa",
+  "limits": {
+    "pid": 12864,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 2172166144,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "selectedDevice": {
+    "name": "Vulkan0",
+    "description": "AMD Radeon RX 6800 XT",
+    "kind": "vulkan",
+    "device_type": "gpu",
+    "device_id": null,
+    "memory_total": 17163091968,
+    "memory_free": 16325505024,
+    "index": 0
+  },
+  "lastNativeMessage": "moss: using selected vulkan device: Vulkan0",
+  "modelArch": "moss",
+  "modelVariant": "moss-transcribe-diarize",
+  "actualBackend": "Vulkan0",
+  "capabilities": {
+    "native_sample_rate": 16000,
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "max_timestamp_kind": "segment",
+    "supports_language_detect": true,
+    "supports_translate": false,
+    "supports_streaming": false,
+    "supports_spec_decode": false,
+    "max_audio_ms": 0,
+    "translate_target_languages": []
+  },
+  "modelLoadSeconds": 6.218095299998822,
+  "meeting": "runtime-smoke61",
+  "audioSeconds": 61.003,
+  "error": "OutOfMemory('opening session: out of memory (status 7)')",
+  "finishedAt": "2026-11-15T22:24:36.327027+08:00",
+  "seconds": 6.36170729999867
+}

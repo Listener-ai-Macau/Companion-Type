@@ -1,0 +1,21 @@
+{
+  "state": "INCOMPLETE_NATIVE_JOINT_ARCHITECTURE_FAILURE_RETAINED",
+  "startedAt": "2026-11-15T22:08:57.114728+08:00",
+  "phases": [
+    {
+      "phase": "execution-control",
+      "exitCode": 0,
+      "seconds": 11.140999999999622,
+      "privatePeakBytes": 1263284224
+    }
+  ],
+  "privatePeakBytes": 2506100736,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "pid": 3992,
+  "pidCreatedAt": 1794751751.9737065,
+  "error": "MemoryError('Owned native family reached2GiB')",
+  "finishedAt": "2026-11-15T22:10:07.983399+08:00",
+  "seconds": 70.875
+}

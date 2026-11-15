@@ -1,0 +1,26 @@
+{
+  "state": "COMPLETE_NATIVE_JOINT_PORTABILITY_NOT_WHOLE_MEETING_QUALITY",
+  "startedAt": "2026-11-15T21:51:21.327485+08:00",
+  "phases": [
+    {
+      "phase": "control",
+      "exitCode": 0,
+      "seconds": 9.656000000000859,
+      "privatePeakBytes": 646127616
+    },
+    {
+      "phase": "pilot",
+      "exitCode": 0,
+      "seconds": 288.0159999999996,
+      "privatePeakBytes": 1370107904
+    }
+  ],
+  "privatePeakBytes": 1370107904,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "pid": 22372,
+  "pidCreatedAt": 1794750694.7060153,
+  "finishedAt": "2026-11-15T21:56:22.729997+08:00",
+  "seconds": 301.3909999999996
+}

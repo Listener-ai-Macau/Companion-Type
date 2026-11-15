@@ -1,0 +1,744 @@
+{
+  "state": "JOINT_ARCHITECTURE_NATIVE_PILOT_AND_WHOLE_RUNTIME_FAILURES_PROTECTED_NO_QUALITY_GAIN",
+  "at": "2026-11-15T22:34:30.558764+08:00",
+  "parentCommit": "d81d15b58b5cf93cf205dbaec7af02402f466795",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\activity-diagnosis-correction.json",
+      "logicalPath": "joint-architecture-r1/activity-diagnosis-correction.json",
+      "file": "files/00000.json",
+      "sha256": "af8762cca1b3af092e922f4b3f8977ae602b528aac7fdabc72c430dc79f0217d",
+      "bytes": 1444
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decision.json",
+      "logicalPath": "joint-architecture-r1/decision.json",
+      "file": "files/00001.json",
+      "sha256": "b09d22422c3d5893c587dca86e7333c9c09af067a438c2f19732bdb98b349d5e",
+      "bytes": 5863
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\direction.json",
+      "logicalPath": "joint-architecture-r1/direction.json",
+      "file": "files/00002.json",
+      "sha256": "41ccf262d5563f1d27eb640dec7f3b80ce5a8fd3a09b9c532e2e5a197835ba55",
+      "bytes": 3182
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+      "logicalPath": "joint-architecture-r1/full-audio-only.json",
+      "file": "files/00003.json",
+      "sha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938",
+      "bytes": 1197
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-binding.json",
+      "logicalPath": "joint-architecture-r1/full-binding.json",
+      "file": "files/00004.json",
+      "sha256": "a32a56c2a953a9e5ae48a56d897d4fa13671bdcfcf063db09651f7bd15d55a0f",
+      "bytes": 3532
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-gap-diagnosis.json",
+      "logicalPath": "joint-architecture-r1/language-gap-diagnosis.json",
+      "file": "files/00005.json",
+      "sha256": "43b8d783f71d46c8687722b200d0492e15ee74951dbbbbb236a103c591951196",
+      "bytes": 4254
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-weight-header.bin",
+      "logicalPath": "joint-architecture-r1/native-weight-header.bin",
+      "file": "files/00006.bin",
+      "sha256": "aa8cebdd26a2d7d2fc011952b647aa22459d82471f9d1d0fed54d2d3d2c0d464",
+      "bytes": 85200
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-weight-metadata.json",
+      "logicalPath": "joint-architecture-r1/native-weight-metadata.json",
+      "file": "files/00007.json",
+      "sha256": "156658e414b939687c9e29531d1f10b5c0de29a44ff01880d90e106fd0e31c6e",
+      "bytes": 362
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\pilot-audio-only.json",
+      "logicalPath": "joint-architecture-r1/pilot-audio-only.json",
+      "file": "files/00008.json",
+      "sha256": "48f7c7d4e4e5f4c8893ac4733eedc8c91b0b718e1761bb51b48568a4a058828a",
+      "bytes": 909
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\pilot-binding.json",
+      "logicalPath": "joint-architecture-r1/pilot-binding.json",
+      "file": "files/00009.json",
+      "sha256": "e295016f2c320feb002a82f108f6d0f1a852e262dae865d81831f10f4cf0f82e",
+      "bytes": 2563
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\preparation-script-r1.py",
+      "logicalPath": "joint-architecture-r1/preparation-script-r1.py",
+      "file": "files/00010.py",
+      "sha256": "1918a31be8823912bb5cec0e5b32d0a6783a6d1dd4d809acdb0ed939cf1b0575",
+      "bytes": 9109
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\preparation.json",
+      "logicalPath": "joint-architecture-r1/preparation.json",
+      "file": "files/00011.json",
+      "sha256": "abcaa1f87c94db0143f4a79cc1ffd6aac3fd79fcb9cd4202b67b404f2916d247",
+      "bytes": 2614
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\tensor-reuse-proof.json",
+      "logicalPath": "joint-architecture-r1/tensor-reuse-proof.json",
+      "file": "files/00012.json",
+      "sha256": "df0788957882b55fb0c9025ab72a721c0e99740ae7589845c2d5f87eaf289e8d",
+      "bytes": 158373
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\allocation-source-proof.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/allocation-source-proof.json",
+      "file": "files/00013.json",
+      "sha256": "9f1959d640b06e0a6321c92c7fdad59bdcea5887f810c3347e345d9a991270a1",
+      "bytes": 1664
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\audit-source-0.txt",
+      "logicalPath": "joint-architecture-r1/cpp-r1/audit-source-0.txt",
+      "file": "files/00014.txt",
+      "sha256": "0ea1d8d32493793afe2664de5fbdd4e6e53b9f8115f2da08690946266379fd8f",
+      "bytes": 42416
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\audit-source-1.txt",
+      "logicalPath": "joint-architecture-r1/cpp-r1/audit-source-1.txt",
+      "file": "files/00015.txt",
+      "sha256": "1abd3b965198774f918051114598dd444cf9602b4ae1a7e8440dd1f37c22e5f0",
+      "bytes": 14877
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\audit-source-2.txt",
+      "logicalPath": "joint-architecture-r1/cpp-r1/audit-source-2.txt",
+      "file": "files/00016.txt",
+      "sha256": "9f878a831cc323922caf82529e9a9159e920a60961c2521ea568af6a61a247f0",
+      "bytes": 65375
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\cpp-binding.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/cpp-binding.json",
+      "file": "files/00017.json",
+      "sha256": "93ca39ac5f90f4972f2b8c5019fdd319024e81e7fc4434111c922002099f3137",
+      "bytes": 1037
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\model-ready.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/model-ready.json",
+      "file": "files/00018.json",
+      "sha256": "0f8ba7ad4ac2b5345c3ccea07af24a3abea58cb09adf35031f3d132db6915df6",
+      "bytes": 421
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\protocol.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/protocol.json",
+      "file": "files/00019.json",
+      "sha256": "451c07a37ef0da4f180669367f9a968954dfd1d2c7fc66168434cc1fbcebdd12",
+      "bytes": 1636
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\python-source.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python-source.json",
+      "file": "files/00020.json",
+      "sha256": "285f1c3c67d2ce7258da9b4475a59c1f14658d7fef9265d0fa430ef921a50b61",
+      "bytes": 1651
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\runtime-ready.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime-ready.json",
+      "file": "files/00021.json",
+      "sha256": "1c2ddd390992d3bef4f54fbbdb0cfa3bd6c0e36c9cce7cfc3eab00b503fb42e3",
+      "bytes": 5868
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\source-tree-paths.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/source-tree-paths.json",
+      "file": "files/00022.json",
+      "sha256": "547cd458d4967af5893d598447840e85eb25f0607a66eb71ecb47e8a8a96c1d4",
+      "bytes": 351
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\transcribe.h",
+      "logicalPath": "joint-architecture-r1/cpp-r1/transcribe.h",
+      "file": "files/00023.h",
+      "sha256": "5c8267936370f40d911866df8617cb320dda6dba951e5ba89287645988105dbf",
+      "bytes": 146584
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\20200708_L_R002S01C01-first180s.wav",
+      "logicalPath": "joint-architecture-r1/20200708_L_R002S01C01-first180s.wav",
+      "file": "files/00024.wav",
+      "sha256": "220fc5638592ce6c7fb90a189b0569bc39ed1e3b72256b078454dd5d60aa52bd",
+      "bytes": 5760044
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\IS1000a-first180s.wav",
+      "logicalPath": "joint-architecture-r1/IS1000a-first180s.wav",
+      "file": "files/00025.wav",
+      "sha256": "8dc226d41d972be03ac52b37375e0336c1a23d4693c99ee6ffff17041c2c90c0",
+      "bytes": 5760044
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime.tar.gz",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime.tar.gz",
+      "file": "files/00026.gz",
+      "sha256": "6094102cf57b404b050707ceb258b12ce647b92e801b5d46077214e5b030c8aa",
+      "bytes": 18052817
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\__init__.py",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python/transcribe_cpp/__init__.py",
+      "file": "files/00027.py",
+      "sha256": "4317cf8d93b52ce3addab6644b07347e86d1cb82453c900f983633574490246e",
+      "bytes": 98497
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_abi.py",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python/transcribe_cpp/_abi.py",
+      "file": "files/00028.py",
+      "sha256": "8f98f6015353b6851d5b6003fe3a57925ee9b1a393ca488552d945254d03c8b0",
+      "bytes": 3236
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_generated.py",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python/transcribe_cpp/_generated.py",
+      "file": "files/00029.py",
+      "sha256": "7f2ebbff71b644f4ee4e0186ff93ae3594764643c96f206b47874068333dbf6e",
+      "bytes": 41977
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_library.py",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python/transcribe_cpp/_library.py",
+      "file": "files/00030.py",
+      "sha256": "cce7021c4cd3c2a27fdf9625646d2e0db9ac2f6442a8ac5722f97a94d1d3e7b1",
+      "bytes": 15629
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\errors.py",
+      "logicalPath": "joint-architecture-r1/cpp-r1/python/transcribe_cpp/errors.py",
+      "file": "files/00031.py",
+      "sha256": "32d11b3e9b5846bd8c108aff09edc4ac64018d89e62d326a939fe229a87358fc",
+      "bytes": 6594
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\contract.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime/transcribe-native-windows-x86_64-cpu-vulkan/contract.json",
+      "file": "files/00032.json",
+      "sha256": "f80a767bbff1f9e79916e0d874bf91e97ab4abfe8fc050f97c2191a243064b5c",
+      "bytes": 125
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\licenses\\LICENSE",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime/transcribe-native-windows-x86_64-cpu-vulkan/licenses/LICENSE",
+      "file": "files/00033",
+      "sha256": "acef7d1711847656cdeb0007784dbe19bd7fd069767b0b38bd62714c6a8f3159",
+      "bytes": 1104
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\licenses\\ggml\\LICENSE",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime/transcribe-native-windows-x86_64-cpu-vulkan/licenses/ggml/LICENSE",
+      "file": "files/00034",
+      "sha256": "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+      "bytes": 1099
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\licenses\\src\\third_party\\miniz\\LICENSE",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime/transcribe-native-windows-x86_64-cpu-vulkan/licenses/src/third_party/miniz/LICENSE",
+      "file": "files/00035",
+      "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
+      "bytes": 1184
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\licenses\\src\\third_party\\silero_vad\\LICENSE",
+      "logicalPath": "joint-architecture-r1/cpp-r1/runtime/transcribe-native-windows-x86_64-cpu-vulkan/licenses/src/third_party/silero_vad/LICENSE",
+      "file": "files/00036",
+      "sha256": "9cb98d261a9f2dfd347ee43b314343c68fe063ecc7f31514e24b248b1be727c6",
+      "bytes": 1095
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\full-state.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/full-state.json",
+      "file": "files/00037.json",
+      "sha256": "1b95c845602e79762e951b3f7e046d6182c5b8f43c7a8089e7d46981c799e4d8",
+      "bytes": 1945
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\full-worker.log",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/full-worker.log",
+      "file": "files/00038.log",
+      "sha256": "1e9e061997dfa4466da1db7b3bdb97df8c88dbbacac939bb2795d1cc042d53d9",
+      "bytes": 2363
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\inventory-state.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/inventory-state.json",
+      "file": "files/00039.json",
+      "sha256": "691b5310235590827f0ded2f84bb4bcea37e9026dadbd0ff84b39ca6e1abd92a",
+      "bytes": 2057
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\inventory-worker.log",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/inventory-worker.log",
+      "file": "files/00040.log",
+      "sha256": "d6e16167c81d553dbcb5eb34e536a3383a564c9f2b13faaa0abaf4e54f39c4b6",
+      "bytes": 2519
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\native.log",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/native.log",
+      "file": "files/00041.log",
+      "sha256": "abd9592dd2c17750d68f1841884c31cc4dd09b410fa5e74ea021d4bc35374c0a",
+      "bytes": 377
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\run.json",
+      "logicalPath": "joint-architecture-r1/cpp-r1/whole-r1/run.json",
+      "file": "files/00042.json",
+      "sha256": "468742b710a76919ca535d48b00dd5dbc450cbdf434ab1436fa8953bafdd70ac",
+      "bytes": 760
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\config.json",
+      "logicalPath": "joint-architecture-r1/native-model/config.json",
+      "file": "files/00043.json",
+      "sha256": "e9b3e00dc76fad4cd9f42eb20ae4a389141e230efe6901dcbfd5f43f871585a9",
+      "bytes": 2611
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\generation_config.json",
+      "logicalPath": "joint-architecture-r1/native-model/generation_config.json",
+      "file": "files/00044.json",
+      "sha256": "0881917061134ccc8d4f0f6aeab2692f6bab2358ecc493625889fccad3e2c42d",
+      "bytes": 148
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\processor_config.json",
+      "logicalPath": "joint-architecture-r1/native-model/processor_config.json",
+      "file": "files/00045.json",
+      "sha256": "a971ba57d7a0297899ae49b839e893f1e48bbcd967f426c7672c8bb744a7c7b5",
+      "bytes": 642
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\tokenizer.json",
+      "logicalPath": "joint-architecture-r1/native-model/tokenizer.json",
+      "file": "files/00046.json",
+      "sha256": "eb21895752d2380b32ae2e2c40905c7aa6c8e55c5e6ba33cd065bf77d4d53f74",
+      "bytes": 11423344
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\tokenizer_config.json",
+      "logicalPath": "joint-architecture-r1/native-model/tokenizer_config.json",
+      "file": "files/00047.json",
+      "sha256": "c2b1d2044d9e24981d007980c849508ff61943ad84b9ec67fae6832ba1bf6e1b",
+      "bytes": 629
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-model\\upstream-config.json",
+      "logicalPath": "joint-architecture-r1/native-model/upstream-config.json",
+      "file": "files/00048.json",
+      "sha256": "e9b3e00dc76fad4cd9f42eb20ae4a389141e230efe6901dcbfd5f43f871585a9",
+      "bytes": 2611
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\20200708_L_R002S01C01-raw.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/20200708_L_R002S01C01-raw.json",
+      "file": "files/00049.json",
+      "sha256": "6e78425f5907cc326d6729b26125527009233a864f7ae751eec2b57dc0987937",
+      "bytes": 13569
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\IS1000a-raw.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/IS1000a-raw.json",
+      "file": "files/00050.json",
+      "sha256": "b432acc81c547d834351fde10a4566523bd4622c2f978fb8254ec3621b63a6ba",
+      "bytes": 14827
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\control-state.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/control-state.json",
+      "file": "files/00051.json",
+      "sha256": "1d8b0166c8ffd8a2634468bd5ae7fd7b6dd379092ef2a7fddb0d826c5c3cd0f6",
+      "bytes": 887
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\control-worker.log",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/control-worker.log",
+      "file": "files/00052.log",
+      "sha256": "14f3e026698d9ff2336c6bd91eec656448fc7b53b2704b1c3a0d4a5c4a667252",
+      "bytes": 975
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\inventory.log",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/inventory.log",
+      "file": "files/00053.log",
+      "sha256": "2ba11ae47918124f805469a299191f7dbb33c62e40315b7d91791da73fc6cc07",
+      "bytes": 581
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\pilot-state.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/pilot-state.json",
+      "file": "files/00054.json",
+      "sha256": "ae3582f9689767d3d9855a4ecbedf155594bef4d572c03b38fa96712229bba6c",
+      "bytes": 1538
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\pilot-worker.log",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/pilot-worker.log",
+      "file": "files/00055.log",
+      "sha256": "b522d83a14d5f8f88708ef009afdf67ba14cd5f24f6aa9bde1b9a7b5a9a78b32",
+      "bytes": 1650
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\run.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/run.json",
+      "file": "files/00056.json",
+      "sha256": "0401f623476490f6871d578d1c82d2c880d95e6910c15920e82bde7d1146600f",
+      "bytes": 691
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\tiny-native-control.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/tiny-native-control.json",
+      "file": "files/00057.json",
+      "sha256": "4a6d7e3a3a8314bdc069d6338ba2377e91fe070f22b06f719cab611f3659f9ef",
+      "bytes": 358
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\weight-roundtrip.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/weight-roundtrip.json",
+      "file": "files/00058.json",
+      "sha256": "1f2e20ae772a11eb187c6b1841f62653de8bfeed4bfa7e316b867a8a4de2d6ec",
+      "bytes": 1412
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/inventory/hip-inventory.json",
+      "file": "files/00059.json",
+      "sha256": "05413e083e7a90e7be134778b498671274c6b23c807168aaa33b4870f240f800",
+      "bytes": 1393
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00060.jsonl",
+      "sha256": "3542f9a67ccd2f5341c940e446b0c36cb2d9ef14d1b769e2618d86a62f0f6f41",
+      "bytes": 611
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\inventory\\inventory-run.json",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/inventory/inventory-run.json",
+      "file": "files/00061.json",
+      "sha256": "2c8ad223a0b177ff2baedc5d4c4d5f4f3fb4f8179bb0f66274a9add11d0285f9",
+      "bytes": 612
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-runtime-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "joint-architecture-r1/native-runtime-r1/inventory/inventory-worker.log",
+      "file": "files/00062.log",
+      "sha256": "2789bdc958f5782b2e1c5a7ef4b137db691c3f2b476f62a3cc8bbd1293eb56ab",
+      "bytes": 1212
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\ES2003b-input.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/ES2003b-input.json",
+      "file": "files/00063.json",
+      "sha256": "c2e6d0cae711634f5f73bf54687573b21a4ee354a9ce3cba2d401500c1754aa4",
+      "bytes": 947
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\attention-control.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/attention-control.json",
+      "file": "files/00064.json",
+      "sha256": "6946cdc28b10638ee743b93438bd7df1c818519304607e2b775683b9bbe299f0",
+      "bytes": 271
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\execution-control-state.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/execution-control-state.json",
+      "file": "files/00065.json",
+      "sha256": "ad7f71320b20d5fd7bee2f611f1e10ae3d4e71740b463f9a6bd5007d5eb14fda",
+      "bytes": 1190
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\execution-control-worker.log",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/execution-control-worker.log",
+      "file": "files/00066.log",
+      "sha256": "8faa6b751cf7cbe76dfc86555a4b91ed65aea91afe15e8205794a559c4327803",
+      "bytes": 1255
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\frontend-control.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/frontend-control.json",
+      "file": "files/00067.json",
+      "sha256": "4206451000cd2b668f5f9d8db7c1663d176a9643990d35bfc89d0a43e76045c2",
+      "bytes": 1373
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\frontend-control.wav",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/frontend-control.wav",
+      "file": "files/00068.wav",
+      "sha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+      "bytes": 1952140
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\full-state.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/full-state.json",
+      "file": "files/00069.json",
+      "sha256": "f6d710ff603f9cf9bfb2b7365719c0a9a282fe4256b8595417d510581093212d",
+      "bytes": 1527
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\full-worker.log",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/full-worker.log",
+      "file": "files/00070.log",
+      "sha256": "2efb94f16f2612344ac97cad255b900915e38393d4911d6c0f957958bc6f71ae",
+      "bytes": 372
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inventory.log",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/inventory.log",
+      "file": "files/00071.log",
+      "sha256": "7933e516d8f90248a3a84119a8b33c634b5271ae736623bb2c87052a8823992d",
+      "bytes": 578
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\run.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/run.json",
+      "file": "files/00072.json",
+      "sha256": "d4a770ce8f1438ba2bfc1c62166af756c61ab9f321e10d20603530d47222ae01",
+      "bytes": 610
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\weight-roundtrip.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/weight-roundtrip.json",
+      "file": "files/00073.json",
+      "sha256": "4e1f361bfffe9f909843a5f8113e9b10a581824c9aa4222463e8beea47521d55",
+      "bytes": 1412
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/inventory/hip-inventory.json",
+      "file": "files/00074.json",
+      "sha256": "cd59af9428b77601e94c9b61bc12882b50c2d9f186db46d501677f97d3d09b40",
+      "bytes": 1394
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00075.jsonl",
+      "sha256": "283db0e481649659d3c1f12b96db3ada9e0da6ce289227ae0fd3dcb871699ca6",
+      "bytes": 610
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inventory\\inventory-run.json",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/inventory/inventory-run.json",
+      "file": "files/00076.json",
+      "sha256": "a776097a41036017ee93dfc06a07f66bcd55187debc52ac1072d3922309e0dd4",
+      "bytes": 609
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "joint-architecture-r1/whole-run-r1/inventory/inventory-worker.log",
+      "file": "files/00077.log",
+      "sha256": "fa2af26940b4585dd7790a3195a340cb82363980d6abccaa10f1337bd4d5ba5b",
+      "bytes": 1213
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\comparison.json",
+      "logicalPath": "recovered-historical-evidence/reference-annotation-audit-r1/comparison.json",
+      "file": "files/00078.json",
+      "sha256": "e343cbdcbf50023dfc5b58de4f433a6fec4fc15ca0e740b4f3acbb8df7b180e7",
+      "bytes": 5052
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-en2002a-r1\\comparison.json",
+      "logicalPath": "recovered-historical-evidence/reference-annotation-audit-en2002a-r1/comparison.json",
+      "file": "files/00079.json",
+      "sha256": "3cb024cb305e40abd676424dd4f32f3111db189d21913d7ca6759869ab1bd477",
+      "bytes": 5051
+    },
+    {
+      "source": "work\\diagnose_language_gap_20261115.py",
+      "logicalPath": "continuation-tools/diagnose_language_gap_20261115.py",
+      "file": "files/00080.py",
+      "sha256": "a79bff890a496f339bb120644449dba26627a78c5a8a0dfaacc4ed5bdccbeda9",
+      "bytes": 3999
+    },
+    {
+      "source": "work\\prepare_joint_architecture_20261115.py",
+      "logicalPath": "continuation-tools/prepare_joint_architecture_20261115.py",
+      "file": "files/00081.py",
+      "sha256": "74d7f4d21b57a1e1544e72e3c403eb401d96d4b907b31b6ff36cd2d8baec8193",
+      "bytes": 9113
+    },
+    {
+      "source": "work\\prepare_joint_pilot_20261115.py",
+      "logicalPath": "continuation-tools/prepare_joint_pilot_20261115.py",
+      "file": "files/00082.py",
+      "sha256": "2a42e5272e10fa9093c310fb2432e53cf92cfc884b7776d15bc7277406afff26",
+      "bytes": 2853
+    },
+    {
+      "source": "work\\prepare_joint_full_20261115.py",
+      "logicalPath": "continuation-tools/prepare_joint_full_20261115.py",
+      "file": "files/00083.py",
+      "sha256": "c5c121bab7cba19d785f908d7884bb725dc3e0ce229b814b592c553e0024a147",
+      "bytes": 2469
+    },
+    {
+      "source": "work\\prepare_cpp_joint_backend_20261115.py",
+      "logicalPath": "continuation-tools/prepare_cpp_joint_backend_20261115.py",
+      "file": "files/00084.py",
+      "sha256": "d65b0d59088ac38e7d23691ce3140c11886f7f4805e0e3442a21b224957ba385",
+      "bytes": 4533
+    },
+    {
+      "source": "work\\record_joint_architecture_20261115.py",
+      "logicalPath": "continuation-tools/record_joint_architecture_20261115.py",
+      "file": "files/00085.py",
+      "sha256": "2067add9323c6347894692da7f70d4bfa775d714237d1eabde3293a822aa6fd3",
+      "bytes": 8929
+    },
+    {
+      "source": "work\\protect_joint_architecture_20261115.py",
+      "logicalPath": "continuation-tools/protect_joint_architecture_20261115.py",
+      "file": "files/00086.py",
+      "sha256": "fdddd049f18f2e7bc64f38f7cb99d3b27da8e252638a161c3eb3cde6c9b018fa",
+      "bytes": 7122
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00087.json",
+      "sha256": "88b38121e4278a62d813438b3e7795630b9a861b4c3e0f9ceb713fce8d03016b",
+      "bytes": 190349
+    },
+    {
+      "source": "outputs\\Companion-会议模型架构收敛-20261115.txt",
+      "logicalPath": "owner-architecture-report.txt",
+      "file": "files/00088.txt",
+      "sha256": "779eba7760546907c777032aa1fdae064be0c247b13db2c5219faf93c87a84b7",
+      "bytes": 4481
+    }
+  ],
+  "bulkHashOnly": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\MOSS-BF16.gguf",
+      "bytes": 1826883264,
+      "sha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-base.dll",
+      "bytes": 675328,
+      "sha256": "ed3596197098edf9a6b6d4eac8b85362cbec0ee2a5e338006e4864781807dd4a",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-alderlake.dll",
+      "bytes": 1103360,
+      "sha256": "2ed1df33efbb3800c34797dd5f5fffaca513266aff451470394bea42d5bd0129",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-cannonlake.dll",
+      "bytes": 1205760,
+      "sha256": "b9113914f4b74add4d25e09474ad0157c2919858df02029e03bfc4cad9191b94",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-cascadelake.dll",
+      "bytes": 1205760,
+      "sha256": "dbaf116b5963fb06c419a15c4ce06d7eaa56f3e075e58bac1db758d8679426bb",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-haswell.dll",
+      "bytes": 1104896,
+      "sha256": "7284dd19351f3b0130a9deb2d4bbc965c9feffa72fe6ebefa77c73ef2f137dc2",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-icelake.dll",
+      "bytes": 1205760,
+      "sha256": "8fb7c4bffd30e6ca3da237116e3b5a68dbf317b720d865f8891005bde620ac66",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-sandybridge.dll",
+      "bytes": 1075712,
+      "sha256": "08ad3710832d62e019fbfd91aae54eda9a8841c51547ac42b45a538de4050f3a",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-skylakex.dll",
+      "bytes": 1205760,
+      "sha256": "d6cc2ae65ac2b4d6b947f6d1a5a0c5e0071e0c675ef301b6e7e47707840fb658",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-sse42.dll",
+      "bytes": 842240,
+      "sha256": "26b15b35b444fca28025f2723b47788c621fb421c4734eec795b69d9133b1197",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-cpu-x64.dll",
+      "bytes": 842752,
+      "sha256": "7da17a52d8c483408f90ecffa1a0c550675a83210deec2a59cfc2c029730e5b2",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml-vulkan.dll",
+      "bytes": 43652608,
+      "sha256": "6f7a0725260c9c5ec0026b9c6426e54e42cb77ccccbccce126d023ca969423d8",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\ggml.dll",
+      "bytes": 61952,
+      "sha256": "ff02f87dad8e389e750f00863af60825d8cbb35854b28074728e6d8cba676752",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\runtime\\transcribe-native-windows-x86_64-cpu-vulkan\\transcribe.dll",
+      "bytes": 2052608,
+      "sha256": "bfe89e1ad7c126c51f0774133f3744f75c1b79829bd8cc2527ffbd172f4cf3b3",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\frontend-proof\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\inputs\\ES2003b\\original.f32",
+      "bytes": 135028056,
+      "sha256": "0e6cb3bc135981e61cc40e46182e0ac37506ba64ab31c1993b2a321c5685b4c4",
+      "reason": "Pinned model/runtime artifact or reproducible complete-wave memmap; source and hashes retained, avoid duplicating bulk into Git."
+    }
+  ],
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "D2Complete": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "sourceFiles": {
+    "moss_native_architecture_20261115.py": "7e5e1e74cd5aac11c9663986c5803dd6a57f1310de6d37397712e6c213af705f",
+    "moss_native_pilot_worker_20261115.py": "ef8493d5039aca1522237b73fe34ad8494a42fa6d25014ce630382292708cb08",
+    "run_moss_native_architecture_20261115.py": "21f2cbd894c161c3049431fb0aed5acbe65458c358ff448e6a3c5bbc834164cd",
+    "moss_native_full_execution_20261115.py": "d4194254d44d61ae6d74b9ed67168b70ea2d98556be17effe46e58fba5007988",
+    "moss_native_full_worker_20261115.py": "0357dbf1691b3697f369dc5707b5b98a0cfda231ffbaa56bf43849b1b218a027",
+    "run_moss_native_full_20261115.py": "2ab22a8025fb0f770c0f1f5fb7ab726e49a45b14fb09a16925179ed178e0a070",
+    "cpp_joint_meeting_worker_20261115.py": "4d7e93e3baeab14bf59506534bab3f9d5c42932f2917adc7bca4e43671ffa72f",
+    "run_cpp_joint_meetings_20261115.py": "916b4abdcaecc6df14e36fa45140bab5b1e1e783fdc93b2b41852db51a9471ea"
+  },
+  "decision": "Deployment feasibility before whole-meeting model selection before meaningful domain adaptation; rejected tiny variants remain stopped."
+}

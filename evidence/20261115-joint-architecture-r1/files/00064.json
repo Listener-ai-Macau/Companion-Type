@@ -1,0 +1,14 @@
+{
+  "state": "PASS_GPU_BOUNDED_ALL_CONTEXT_CAUSAL_GQA_MATH_SDPA_CONTROL",
+  "maxAbsDifference": 0.00048828125,
+  "shape": [
+    1,
+    4,
+    2053,
+    32
+  ],
+  "queryBlock": 128,
+  "keyBlock": 1024,
+  "allAllowedKeysRetained": true,
+  "bitwiseEqualityClaimed": false
+}

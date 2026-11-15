@@ -1,0 +1,50 @@
+{
+  "frames": 976048,
+  "audioSeconds": 61.003,
+  "allOriginalAudioWindows": 3,
+  "paddingRepresentation": "Boolean0/1, native sum unchanged; no sample/context truncation",
+  "inputShapes": {
+    "input_ids": [
+      1,
+      872
+    ],
+    "attention_mask": [
+      1,
+      872
+    ],
+    "input_features": [
+      3,
+      80,
+      3000
+    ],
+    "input_features_mask": [
+      3,
+      3000
+    ],
+    "padding_mask": [
+      1,
+      976048
+    ]
+  },
+  "inputSha256": {
+    "input_ids": "580253eac9c73a157c9728545cff168e1012ddc4ecd17d78530d50845edc4b67",
+    "attention_mask": "d60d802cff6c49bddaa2b03c6019c77303a85fd7765a9b618df03e54b79b7682",
+    "input_features": "5c4d6c91bbebfbc8ba0fad411e16904afd764eb77fce9043726f1e6c3e7c0247",
+    "input_features_mask": "2d24d0f5fc82826f4f74da26371b88d87610706028e9e03efef5bda4bb105472",
+    "padding_mask": "8d48d4fbe4098ad3c44cc4783c52db01256e2d726ed15566f71efdb97990dbec"
+  },
+  "state": "PASS_NATIVE_WHOLE_REQUEST_CHUNK_FEATURE_AND_TOKEN_LAYOUT",
+  "maxAbsDifferences": {
+    "input_features": 0.0
+  },
+  "elementwiseEqualIgnoringMaskStorageDtype": {
+    "input_ids": true,
+    "attention_mask": true,
+    "input_features": true,
+    "input_features_mask": true,
+    "padding_mask": true
+  },
+  "partialLastWindowIncluded": true,
+  "originalPaddingMaskDtype": "torch.int64",
+  "boundedPaddingMaskDtype": "torch.bool"
+}

@@ -1,0 +1,102 @@
+{
+  "state": "DIAGNOSED_METRIC_DOMAIN_AND_ASSOCIATION_GAPS_NOT_INTRINSIC_LANGUAGE_CAUSALITY",
+  "groups": {
+    "Chinese": {
+      "sameUnitCharacterErrors": 73,
+      "sameUnitReferenceCharacters": 1258,
+      "nativeMetricErrors": 73,
+      "nativeReferenceUnits": 1258,
+      "cases": 12,
+      "referenceSpeakerSeconds": 271.8154751222007,
+      "missSeconds": 2.6582134471255543,
+      "falseAlarmSeconds": 2.7605508249244792,
+      "confusionSeconds": 0.9244603620286398,
+      "errorSeconds": 6.343224634078673,
+      "attributed_errors": 75,
+      "attributed_referenceUnits": 1258,
+      "attributed_unknownHypothesisUnits": 2,
+      "sameUnitCharacterErrorRate": 0.05802861685214626,
+      "nativeTextErrorRate": 0.05802861685214626,
+      "missFractionOfDiarizationErrors": 0.41906342601276153
+    },
+    "English": {
+      "sameUnitCharacterErrors": 328,
+      "sameUnitReferenceCharacters": 2794,
+      "nativeMetricErrors": 141,
+      "nativeReferenceUnits": 709,
+      "cases": 12,
+      "referenceSpeakerSeconds": 209.12006250000172,
+      "missSeconds": 37.94999999999992,
+      "falseAlarmSeconds": 4.799999999996928,
+      "confusionSeconds": 0.9600625000002765,
+      "errorSeconds": 43.71006249999713,
+      "attributed_errors": 244,
+      "attributed_referenceUnits": 709,
+      "attributed_unknownHypothesisUnits": 51,
+      "sameUnitCharacterErrorRate": 0.11739441660701504,
+      "nativeTextErrorRate": 0.19887165021156558,
+      "missFractionOfDiarizationErrors": 0.8682211332917315
+    }
+  },
+  "meetings": {
+    "20200709_L_R002S01C01": {
+      "sameUnitCharacterErrors": 35,
+      "sameUnitReferenceCharacters": 736,
+      "nativeMetricErrors": 35,
+      "nativeReferenceUnits": 736,
+      "cases": 6,
+      "sameUnitCharacterErrorRate": 0.04755434782608696,
+      "nativeTextErrorRate": 0.04755434782608696
+    },
+    "20200805_S_R001S01C01": {
+      "sameUnitCharacterErrors": 38,
+      "sameUnitReferenceCharacters": 522,
+      "nativeMetricErrors": 38,
+      "nativeReferenceUnits": 522,
+      "cases": 6,
+      "sameUnitCharacterErrorRate": 0.07279693486590039,
+      "nativeTextErrorRate": 0.07279693486590039
+    },
+    "ES2003b": {
+      "sameUnitCharacterErrors": 158,
+      "sameUnitReferenceCharacters": 1168,
+      "nativeMetricErrors": 60,
+      "nativeReferenceUnits": 290,
+      "cases": 6,
+      "sameUnitCharacterErrorRate": 0.13527397260273974,
+      "nativeTextErrorRate": 0.20689655172413793
+    },
+    "EN2001a": {
+      "sameUnitCharacterErrors": 170,
+      "sameUnitReferenceCharacters": 1626,
+      "nativeMetricErrors": 81,
+      "nativeReferenceUnits": 419,
+      "cases": 6,
+      "sameUnitCharacterErrorRate": 0.1045510455104551,
+      "nativeTextErrorRate": 0.19331742243436753
+    }
+  },
+  "deletionDiagnostics": {
+    "Chinese": {
+      "allDeletions": 24,
+      "erhuaCharacterDeletions": 14
+    },
+    "English": {
+      "allDeletions": 72,
+      "fillerWordDeletions": 12,
+      "adjacentRepeatedUnitDeletions": 5
+    }
+  },
+  "rawScoreSha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4",
+  "speakerScoreSha256": "c885213117bc0f1ba344f98f08321232d1aef5b27ca24c6d4aeb17a97acacce8",
+  "findings": [
+    "Chinese native CER and English native WER have different units;5.80% vs19.89% is not a3.4x model-language capability ratio.",
+    "Using identical lexical-character normalization yields Chinese73/1258=5.80% and English328/2794=11.74%; retain original EnglishWER19.89% gate unchanged.",
+    "Different meetings, speakers, word structure and acoustic/reference conventions remain confounders, so even same-character figures are descriptive, not a controlled causal language comparison.",
+    "English raw speaker-DER errors mostly comprise missed speech, with little confusion; many recognized words therefore receive UNKNOWN and amplify person-attributed error.",
+    "Do not remove fillers/erhua/repetitions or alter reference text to improve gates. Prior small calibration/training failures justify an architecture-level comparison."
+  ],
+  "modelWeightsTrainedInThisDiagnostic": false,
+  "originalAcceptanceMetricsChanged": false,
+  "qualityQualified": false
+}

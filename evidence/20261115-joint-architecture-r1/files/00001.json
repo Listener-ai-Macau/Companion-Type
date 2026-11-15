@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-15T22:32:27.308585+08:00",
+  "state": "ARCHITECTURE_GATE_OPEN_JOINT_CANDIDATE_NOT_DEPLOYABLE_UNDER_CURRENT_RUNS",
+  "ownerQuote": "我觉得你这些小条小配很难达成我们的目标吧？是不是要考虑更加大幅度或者大跨越的一个开发方式？不然一直在这里感觉尝试也没什么特别大的意义。",
+  "decision": "Stop threshold/gap/auxiliary-head variants and tiny rejected adaptation loops. Compare complete meeting architectures before further meeting-domain training.",
+  "baseline": "Retain validated local Qwen/Nemotron/aligner combination and raw original scores; do not adopt failed candidates.",
+  "candidate": "MOSS-Transcribe-Diarize0.9B joint words/speaker/timestamps, reused pretrained weights, not training from scratch.",
+  "candidateHistory": "Same family previously failed author custom long-context runtime. This batch changed to official native Transformers, then a pinned C++/Vulkan port; not a newly discovered larger model.",
+  "nativeTensorIdentityProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\tensor-reuse-proof.json",
+  "portPrecision": "Pinned upstream BF16 GGUF, not locally claimed tensor-identical to native HF payload.",
+  "completedInference": "Native Transformer runtime emitted natural-EOS outputs for two180-second public training recordings. This is compatibility evidence, not complete-meeting quality.",
+  "nativeWholeFailure": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\whole-run-r1\\run.json",
+    "state": "INCOMPLETE_NATIVE_JOINT_ARCHITECTURE_FAILURE_RETAINED",
+    "observed": "First35-minute ES2003b input encoded; full context prefill hit LLVM out-of-memory/access violation and owned-family memory protection before any complete transcript.",
+    "rootCauseLimit": "Compiler/runtime allocation failure. No evidence that this measures recognition ability; exact failing operator not established."
+  },
+  "cppFailure": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\whole-r1\\run.json",
+    "state": "INCOMPLETE_CPP_JOINT_FAILURE_RETAINED",
+    "observed": "Actual6800XT Vulkan selected and BF16 model loaded; initial2048-token KV allocation234881024B failed while opening session, with job peak2172166144B under2GiB protection. No smoke or full transcript.",
+    "sourceAudit": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1\\allocation-source-proof.json",
+    "rootCauseLimit": "Native allocation failed at the memory boundary; do not claim all16GiB VRAM was physically exhausted. Lowering65536 context cannot fix initial2048-token allocation. No same-run retry, quantization grid, or guard increase."
+  },
+  "qualityConclusion": "No complete candidate transcript exists; no architecture superiority, new accuracy, sale readiness, or D2 completion claimed.",
+  "retainedPriority": [
+    "A: original single-mic sequential speakers, no overlap first",
+    "B: overlapping speakers after A",
+    "C: noise/room robustness after B"
+  ],
+  "nextExecutableGate": "Before any further full inference or adaptation, establish a source-level change that bounds full-context compute and compiler allocations under existing resource guards and passes native numerical controls. The failed unchanged paths remain stopped. Stop this candidate if deployment feasibility cannot be established; do not feed more training into it.",
+  "qualityComparisonGate": {
+    "developmentMeetings": [
+      "ES2003b",
+      "S_R004S03C01",
+      "EN2002a",
+      "20200623_S_R001S07C01"
+    ],
+    "minutes": 143.81672083333333,
+    "allOriginalAudio": true,
+    "splitDisclosure": "These four complete recordings are previously seen development/regression cases, not a blind final test. They cannot establish unseen-room generalization alone.",
+    "preserve": "Original raw text/person error<5%, zero-collar DER<=10%, facts>=95% and critical errors0 unchanged. No reference prompts, true speaker counts, per-meeting rules, or filler/number cleanup.",
+    "finalHoldoutOpened": false,
+    "originalBaselineInferenceRerun": false
+  },
+  "trainingGate": "Only after deployment and cross-meeting quality gates pass: a coherent public-meeting domain adaptation of the selected pretrained task, with meeting/person/room-disjoint train/dev/test manifests and no reference-driven sampling. No new weights trained in this batch.",
+  "productDirection": "Incremental local draft during upload, then whole-session final words and stable persons; offline file imports use the same final engine. This is the architecture direction, not an already shipped joint default.",
+  "assessmentCorrection": {
+    "englishOriginalTimingDerNotProofOfLostSpeech": true,
+    "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\activity-diagnosis-correction.json",
+    "originalEnglishWerStillFailing": true,
+    "originalScoresUnchanged": true,
+    "languageMetricCaution": "Chinese CER5.80% and English WER19.89% are different units. Same lexical-character diagnostic gives English328/2794=11.74%, Chinese73/1258=5.80%; recordings and linguistic structure still differ."
+  },
+  "resourceContract": {
+    "cpuPercent": 5,
+    "ownedFamilyPrivateBytes": 2147483648,
+    "actualWindowsLowMemoryStop": true,
+    "oneNeuralFamily": true,
+    "unchanged": true
+  },
+  "newWeightTraining": false,
+  "shippedDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "D2Complete": false
+}

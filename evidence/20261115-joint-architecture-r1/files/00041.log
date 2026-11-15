@@ -1,0 +1,1 @@
+1 moss: using selected vulkan device: Vulkan01 moss: weights copied: 0.0 MiB in Vulkan0 (device keeps weights in its own memory)1 moss: gate+up aliased for 28/28 blocks (336.0 MiB not duplicated)3 ggml_backend_buft_alloc_buffer_n_default: failed to allocate Vulkan0 buffer of size 2348810243 causal_lm kv_init: buffer alloc failed3 moss init_context: KV cache allocation failed

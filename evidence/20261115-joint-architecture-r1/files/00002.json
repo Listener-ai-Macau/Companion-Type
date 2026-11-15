@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-15T21:44:52.018118+08:00",
+  "state": "FROZEN_ARCHITECTURE_CHANGE_BEFORE_COMPATIBILITY_OR_INFERENCE",
+  "ownerDirection": "Stop local threshold/gap tweaking. Pursue a generally useful meeting engine verified across multiple complete meetings, not a single-recording solution.",
+  "baseline": "Existing Qwen3-ASR1.7B + native Nemotron3 + forced alignment and speaker association, unchanged.",
+  "onePrimaryAlternative": "Joint ASR/diarization/timestamps using official native Transformers MOSS-Transcribe-Diarize0.9B.",
+  "priorRelatedFailure": "The same0.9B family was already tried via author custom runtime and did not produce a stable qualified complete long meeting on Windows AMD. This is not a newly discovered larger model. Only proceed if official native tensor/frontend/loader and bounded execution are verified; never repeat the old failed custom run unchanged.",
+  "whyMateriallyDifferent": "Train/task architecture jointly predicts words and speaker IDs rather than assigning independent word onsets to a separate diarization journal. Native Transformers implementation differs from previously failed custom author runtime.",
+  "dualPassProductDirection": "Keep local incremental draft during upload/recording; evaluate complete-session joint inference for final transcript and stable persons. Offline import uses the same final path. Existing live and offline contracts remain required.",
+  "sourceModel": "hf-audio/MOSS-Transcribe-Diarize-HF",
+  "sourceRevision": "22dbe8f8849882d285aa5c668ea0e3b46418e827",
+  "officialAuthor": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize",
+  "nativeDocs": "https://huggingface.co/docs/transformers/v5.21.0/en/model_doc/moss_transcribe_diarize",
+  "scope": "Sequential multi-speaker first, overlap second, noise third. No language-specific conference hacks, gold hotwords, person counts, or manual word corrections.",
+  "wholeMeetingDevelopmentCases": [
+    "S_R004S03C01",
+    "20200623_S_R001S07C01",
+    "ES2003b",
+    "EN2002a"
+  ],
+  "sequentialDiagnostic": "Existing32 frozen stageA-r2 cases, with training/validation and languages separate.",
+  "qualityContract": "Existing raw text and person-attributed error<5%, zero-collar DER<=10%, facts and critical gates unchanged. Native joint outputs do not imply any gate passed.",
+  "modelSelectionMilestone": "Require substantial improvement across held-out meetings and languages, examine every meeting and worst cases, preserve Chinese and existing whole-meeting controls. One successful recording cannot select a model.",
+  "trainingDirection": "First establish which whole architecture improves held-out meetings. Then supervised meeting-domain adaptation of that pretrained joint task using speaker/meeting-disjoint public training and validation, not training from scratch or another tiny sample fit.",
+  "resourceContract": {
+    "oneNeuralFamily": true,
+    "workerCPUPercent": 5,
+    "workerPrivateMemoryGiB": 2,
+    "actualWindowsLowMemoryStop": true,
+    "raiseLimits": false
+  },
+  "noProductDefaultChange": true,
+  "noNewWeightTraining": true,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false
+}

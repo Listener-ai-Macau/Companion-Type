@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-15T22:15:48.402670+08:00",
+  "reason": "Native Transformers whole35min entered all71 acoustic windows and full27924-token prefill, then Windows LLVM reported out-of-memory/0xC0000005 and family exceeded2GiB. Retain that failure; do not repeat HIP or raise its budget. Use a prebuilt native C++/Vulkan execution stack for the same0.9B joint task.",
+  "runtime": "https://github.com/handy-computer/transcribe.cpp/releases/download/v0.4.2/transcribe-native-0.4.2-windows-x86_64-cpu-vulkan.tar.gz",
+  "runtimeSha256": "6094102cf57b404b050707ceb258b12ce647b92e801b5d46077214e5b030c8aa",
+  "sourceCommit": "275cd50d2c4104c204009a197ac091b9687668e5",
+  "release": "v0.4.2",
+  "releasePublishedAt": "2026-11-12T11:35:42Z",
+  "model": "https://huggingface.co/handy-computer/MOSS-Transcribe-Diarize-gguf/resolve/5780e665a3eb60694e0402ed25b6775ee587681b/MOSS-Transcribe-Diarize-BF16.gguf",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "modelRevision": "5780e665a3eb60694e0402ed25b6775ee587681b",
+  "precision": "BF16; do not try a quantization grid",
+  "publicRuntimeDocs": "https://github.com/handy-computer/transcribe.cpp/blob/main/docs/models/moss-transcribe-diarize.md",
+  "wholeMeetingSelection": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+  "newWeightsTrained": false,
+  "memoryBudgetGiB": 2,
+  "cpuPercent": 5,
+  "actualWindowsLowMemoryStop": true,
+  "existingProductDefaultChanged": false,
+  "qualityQualified": false
+}
