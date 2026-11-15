@@ -9,6 +9,7 @@ const idle:Status={enabled:false,ready:false,controlsCursor:false,message:'',met
 // Keep the old laser/planar settings intact under their original key. This
 // profile has deliberately different motion and physical-key semantics.
 const savedKey='companion-pointer-relative-v4';
+const surfaceAxesKey=savedKey+'-surface-axes-v2';
 function savedSettings():Settings{try{
  const saved=JSON.parse(localStorage.getItem(savedKey)||'null') as Settings|null;
  if((saved?.desktopMotion&&!saved.relativeDirect)||(saved?.contactProfile&&saved.contactProfile.schema!==2)){
@@ -17,7 +18,20 @@ function savedSettings():Settings{try{
   if(!localStorage.getItem(savedKey+'-planar-paused'))localStorage.setItem(savedKey+'-planar-paused',JSON.stringify(saved));
  }
  const valid=saved?.contactProfile?.schema===2;
- return {...defaults,...saved,desktopMotion:!!(saved?.desktopMotion&&saved.relativeDirect),contactProfile:valid?saved.contactProfile:null,contactDevice:valid?saved.contactDevice:null};
+ let restored={...defaults,...saved,desktopMotion:!!(saved?.desktopMotion&&saved.relativeDirect),contactProfile:valid?saved.contactProfile:null,contactDevice:valid?saved.contactDevice:null};
+ // The old surface preset enabled BOTH inversions. Independent bound-mouse
+ // acceleration signs agree on +X -> right, +Y -> screen-up (Type-C front).
+ // Repair that old automatic pair once; retain the original and intentional
+ // one-axis overrides. A later manual inversion is still respected.
+ if(restored.desktopMotion&&!localStorage.getItem(surfaceAxesKey)){
+  if(restored.invertHorizontal&&restored.invertVertical){
+   if(!localStorage.getItem(surfaceAxesKey+'-before'))localStorage.setItem(surfaceAxesKey+'-before',JSON.stringify(restored));
+   restored={...restored,invertHorizontal:false,invertVertical:false};
+   localStorage.setItem(savedKey,JSON.stringify(restored));
+  }
+  localStorage.setItem(surfaceAxesKey,'1');
+ }
+ return restored;
 }catch{return defaults;}}
 export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:boolean}){
  const [settings,setSettings]=useState(savedSettings),[status,setStatus]=useState(idle),[busy,setBusy]=useState(false),[error,setError]=useState('');
@@ -31,7 +45,7 @@ export function DesktopPointer({connected,blocked}:{connected:boolean;blocked:bo
   <p>{settings.desktopMotion?'Type-C端朝前，先在桌面放稳约1秒。前后左右推动来移动光标；抬起回位暂停约2秒，放稳后继续。若未恢复，点“重新放稳”。':'Type-C端朝前，先稳住约1秒。像小跷跷板一样侧倾：右边压低向右、左边压低向左；抬高Type-C端向上，放低向下。转动才移动，停手光标停在当前位置。'}</p>
   <p>{settings.contactRegions?'Type-C朝前，敲左前是左键、敲右前是右键，连敲左前两下是双击。首次先校准两个前角。':'轻敲外壳一下是左键，连敲两下是双击。'}{settings.keyRole==='regrip'?'需要点得更稳时，可以按住实体键稳住光标，再轻敲外壳。要拿回舒服的握姿时，按住实体键再把卡片拿回来，松开继续。':'短按实体键也能点击，按住片刻并转动可拖拽；换握姿时点“暂停换握姿”，调整好再继续。'}退出后恢复录音和双敲标记；电脑 Esc 随时退出。</p>
   <div className="ct-button-row">
-   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.desktopMotion?'surface':settings.mapping==='laser'?'laser':settings.relativeHorizontal} disabled={busy||status.enabled} onChange={e=>{const relative=e.target.value!=='laser',surface=e.target.value==='surface';setSettings({...defaults,mapping:relative?'relative':'laser',relativeDirect:relative,desktopMotion:surface,invertHorizontal:surface,invertVertical:surface,relativeHorizontal:e.target.value==='turn'?'turn':'tilt',sensitivity:settings.sensitivity,contactRegions:relative&&(surface||settings.contactRegions),contactProfile:relative?settings.contactProfile:null,contactDevice:relative?settings.contactDevice:null,...(!relative?{smoothing:0.55,deadzone:3,acceleration:0.6,keyRole:'clickDrag' as const}:{})});}}><option value="surface">桌面平移 · 试用</option><option value="tilt">左右侧倾</option><option value="turn">左右转向</option><option value="laser">激光指向 · 进阶</option></select></label>
+   <label>移动方式 <select aria-label="空中鼠标移动方式" value={settings.desktopMotion?'surface':settings.mapping==='laser'?'laser':settings.relativeHorizontal} disabled={busy||status.enabled} onChange={e=>{const relative=e.target.value!=='laser',surface=e.target.value==='surface';setSettings({...defaults,mapping:relative?'relative':'laser',relativeDirect:relative,desktopMotion:surface,relativeHorizontal:e.target.value==='turn'?'turn':'tilt',sensitivity:settings.sensitivity,contactRegions:relative&&(surface||settings.contactRegions),contactProfile:relative?settings.contactProfile:null,contactDevice:relative?settings.contactDevice:null,...(!relative?{smoothing:0.55,deadzone:3,acceleration:0.6,keyRole:'clickDrag' as const}:{})});}}><option value="surface">桌面平移 · 试用</option><option value="tilt">左右侧倾</option><option value="turn">左右转向</option><option value="laser">激光指向 · 进阶</option></select></label>
    {settings.relativeDirect&&<label>实体键用途 <select aria-label="空中鼠标实体键用途" value={settings.keyRole} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,keyRole:e.target.value as Settings['keyRole']})}><option value="regrip">按住换握姿 · 推荐</option><option value="clickDrag">短按点击／按住拖拽</option></select></label>}
    <label>灵敏度 <input aria-label="空中鼠标灵敏度" type="range" min="0.2" max="3" step="0.1" value={settings.sensitivity} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,sensitivity:Number(e.target.value)})}/>{settings.sensitivity.toFixed(1)}</label>
    <label><input type="checkbox" checked={settings.invertHorizontal} disabled={busy||status.enabled} onChange={e=>setSettings({...settings,invertHorizontal:e.target.checked})}/>反转左右</label>
