@@ -1,0 +1,1574 @@
+{
+  "state": "PUBLIC_ACOUSTIC_CONTEXT_TRIAL_TRAINED_AND_INDEPENDENTLY_EVALUATED",
+  "at": "2026-11-15T16:21:16.783102+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\capability-control-rule.json",
+      "logicalPath": "control/capability-control-rule.json",
+      "file": "files/00000.json",
+      "bytes": 570,
+      "sha256": "2fcacfb798d74233b15927cdcb176c4263ddae55035f23971937f6c58e011afe"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\capability-controls-audio-only.json",
+      "logicalPath": "control/capability-controls-audio-only.json",
+      "file": "files/00001.json",
+      "bytes": 635,
+      "sha256": "b45bab5f5adcef6ca16737977dbc6d1b8e7d80e65acfd7f75befcc9466bfd89b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\decision.json",
+      "logicalPath": "control/decision.json",
+      "file": "files/00002.json",
+      "bytes": 36656,
+      "sha256": "8aa18bec59daedd6537d7cedfadaa778da301057ee0aed7a417f4c77811945b4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\exact-official-reference-proof.json",
+      "logicalPath": "control/exact-official-reference-proof.json",
+      "file": "files/00003.json",
+      "bytes": 2403,
+      "sha256": "8fec7b535874291b5ee56db6f45d2f7045b61eb034eb7aa0b97c0cc9f286abf8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\isolated-peft.json",
+      "logicalPath": "control/isolated-peft.json",
+      "file": "files/00004.json",
+      "bytes": 564,
+      "sha256": "bae4b00b9894eae4632a606efad04879b0e643621ae5b8859e0258d3f4d1cbd4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\mixed-control-scoring-only.json",
+      "logicalPath": "control/mixed-control-scoring-only.json",
+      "file": "files/00005.json",
+      "bytes": 240,
+      "sha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\new-source-download-r2.json",
+      "logicalPath": "control/new-source-download-r2.json",
+      "file": "files/00006.json",
+      "bytes": 829,
+      "sha256": "c91c9abae42790d7055c1ff392b5f6acd4494639c8e059abce8baec860220ed2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\new-source-download.json",
+      "logicalPath": "control/new-source-download.json",
+      "file": "files/00007.json",
+      "bytes": 829,
+      "sha256": "4bc607cd2065fb3873372d50b5c6c31871eab0c17f31a5e8570b092adcae3191"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\preparation-before-insufficient-data-stop.py",
+      "logicalPath": "control/preparation-before-insufficient-data-stop.py",
+      "file": "files/00008.py",
+      "bytes": 9346,
+      "sha256": "c2d3ccae3c4fd554c6c651f6b310030a56ff31741dba21948b69aec018d4373d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\preparation.json",
+      "logicalPath": "control/preparation.json",
+      "file": "files/00009.json",
+      "bytes": 2697,
+      "sha256": "b1713547bdd4d85b13f72736b6b6c9c45e6c426c1f820cf78615c6a24e05ca1b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\protocol.json",
+      "logicalPath": "control/protocol.json",
+      "file": "files/00010.json",
+      "bytes": 4787,
+      "sha256": "bfd0ae9aaaaca5f76f03cc52d64207ae65fa7aadd9ce7e29b8f61f82f9584ed6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\source-coverage-audit.json",
+      "logicalPath": "control/source-coverage-audit.json",
+      "file": "files/00011.json",
+      "bytes": 30098,
+      "sha256": "d93f51aa02aaa9e433c11654f201d0276ea3eaf019ccbe87ea5b81c43ecb4483"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\sources.json",
+      "logicalPath": "control/sources.json",
+      "file": "files/00012.json",
+      "bytes": 3248,
+      "sha256": "331e8462c1907d838729e808ba2db2385fbeacec4c6b29fe94ae225fd60c91b1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\train.json",
+      "logicalPath": "control/train.json",
+      "file": "files/00013.json",
+      "bytes": 88434,
+      "sha256": "883089d8acfa555dd1584575d66a16e32e6c0b83cee0a2c31061ab19e1174365"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\validation-audio-only.json",
+      "logicalPath": "control/validation-audio-only.json",
+      "file": "files/00014.json",
+      "bytes": 14363,
+      "sha256": "dfc14b95b3ec86da20052906779731f26bf628716b841fee40256df805bd4cc3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\worker-binding.json",
+      "logicalPath": "control/worker-binding.json",
+      "file": "files/00015.json",
+      "bytes": 9307,
+      "sha256": "1b6c55fe0fcf250e75bfcb1cf911388a3d42d76e40041a8bdbc28ef493f3edc0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\pre-model-helper-argument-failure-r1\\failure.json",
+      "logicalPath": "control/pre-model-helper-argument-failure-r1/failure.json",
+      "file": "files/00016.json",
+      "bytes": 10881,
+      "sha256": "494bf96960d7dc3083747db857eaaa269044a4c9c7f8652a315b0d8a977cd6ab"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\pre-model-helper-argument-failure-r1\\protocol.json",
+      "logicalPath": "control/pre-model-helper-argument-failure-r1/protocol.json",
+      "file": "files/00017.json",
+      "bytes": 4470,
+      "sha256": "f3958ff4fd83b1f70874ac1962355b4b008eef29c39b915f148bd59d948a0a1b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\pre-model-helper-argument-failure-r1\\public_acoustic_context_worker_20261115.py",
+      "logicalPath": "control/pre-model-helper-argument-failure-r1/public_acoustic_context_worker_20261115.py",
+      "file": "files/00018.py",
+      "bytes": 20637,
+      "sha256": "0c13e7cd6694dfab86a49640596a58ad461c5f4d58d11bb4387f656876c4656c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-acoustic-context-r1\\pre-model-helper-argument-failure-r1\\worker-binding.json",
+      "logicalPath": "control/pre-model-helper-argument-failure-r1/worker-binding.json",
+      "file": "files/00019.json",
+      "bytes": 9307,
+      "sha256": "6546e1c89c3f225a7edc49327ef173eafac2fc4482833866ecd01e1a8e03b721"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\inventory.log",
+      "logicalPath": "runs/trial-r1/inventory.log",
+      "file": "files/00020.log",
+      "bytes": 577,
+      "sha256": "195ff70844297fa78e2cee728689a9e73bd097b2ff072f8d1541d3ef949ecdc1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\run.json",
+      "logicalPath": "runs/trial-r1/run.json",
+      "file": "files/00021.json",
+      "bytes": 709,
+      "sha256": "00109f14794956ac5f62643f60cbf5191f6bee7cf33c5a3d3e37a8b56e3da20d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\trial-state.json",
+      "logicalPath": "runs/trial-r1/trial-state.json",
+      "file": "files/00022.json",
+      "bytes": 10881,
+      "sha256": "494bf96960d7dc3083747db857eaaa269044a4c9c7f8652a315b0d8a977cd6ab"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\worker.log",
+      "logicalPath": "runs/trial-r1/worker.log",
+      "file": "files/00023.log",
+      "bytes": 750,
+      "sha256": "c641049df89d3843da31bc4a78cba5fe77ccf568af1996378f0eed84f92ddc10"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "runs/trial-r1/inventory/hip-inventory.json",
+      "file": "files/00024.json",
+      "bytes": 1394,
+      "sha256": "4d29406f67acaf3d99359a4945a287ab260ee7abe5902d1d6a9628f96387e28f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "runs/trial-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00025.jsonl",
+      "bytes": 1101,
+      "sha256": "04afcb52816984c3daeba65f8ffc0730efab51bfefbc20a6532b8c2cf07a4fb1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\inventory\\inventory-run.json",
+      "logicalPath": "runs/trial-r1/inventory/inventory-run.json",
+      "file": "files/00026.json",
+      "bytes": 608,
+      "sha256": "7853e0604b54916ad10ddb6d9e41794c8a6b91eb64f16a876cc80729747fcc7d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "runs/trial-r1/inventory/inventory-worker.log",
+      "file": "files/00027.log",
+      "bytes": 1213,
+      "sha256": "553cb0296c54fa9c5fec2e2b5589de32f2ee45de11e9b6feaf38477b7d6c6b57"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\after-training-disabled-English-control.json",
+      "logicalPath": "runs/trial-r2/after-training-disabled-English-control.json",
+      "file": "files/00028.json",
+      "bytes": 2037,
+      "sha256": "fadbcdf6ad36a17397d3355fc187ad963b730d233caea21cae0e3ce6407b1219"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\before-adapter-control.json",
+      "logicalPath": "runs/trial-r2/before-adapter-control.json",
+      "file": "files/00029.json",
+      "bytes": 2445,
+      "sha256": "6af62098a35f2a623133341a6aed61f785f1ea992d40b8c63e5caf81bd7409da"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\frozen-after.json",
+      "logicalPath": "runs/trial-r2/frozen-after.json",
+      "file": "files/00030.json",
+      "bytes": 110,
+      "sha256": "86c335896e80668a548f1d6d95a5e4621c3197b2acc53638caa4794b84cd683d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\frozen-before.json",
+      "logicalPath": "runs/trial-r2/frozen-before.json",
+      "file": "files/00031.json",
+      "bytes": 110,
+      "sha256": "86c335896e80668a548f1d6d95a5e4621c3197b2acc53638caa4794b84cd683d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\gradient-proof.json",
+      "logicalPath": "runs/trial-r2/gradient-proof.json",
+      "file": "files/00032.json",
+      "bytes": 441,
+      "sha256": "6ca86846434e7fe9d1acca0c54845fe57f6228685feeb464aa6ad6f0c09c6279"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\initial-adapter-control.json",
+      "logicalPath": "runs/trial-r2/initial-adapter-control.json",
+      "file": "files/00033.json",
+      "bytes": 2446,
+      "sha256": "70823ba9886bd75b73663c9ea40a140e37e5f10c6ac5829c138d74ee1669d1ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\inventory.log",
+      "logicalPath": "runs/trial-r2/inventory.log",
+      "file": "files/00034.log",
+      "bytes": 579,
+      "sha256": "d92d708e25d0de0b372b06d471fbb8d17a60cf59b59b3c51bf39a96daecbfcb6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\run.json",
+      "logicalPath": "runs/trial-r2/run.json",
+      "file": "files/00035.json",
+      "bytes": 639,
+      "sha256": "0663d144bc3d40a6bac6746337ca3c4090394323a3f3797ebc5680aa8e8ca5f3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\training-history.jsonl",
+      "logicalPath": "runs/trial-r2/training-history.jsonl",
+      "file": "files/00036.jsonl",
+      "bytes": 8631,
+      "sha256": "ba3bc8500577dada53ae4737a1142edcbf8a6d9b4d33d21e11b4c06ad118ec6f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\trial-state.json",
+      "logicalPath": "runs/trial-r2/trial-state.json",
+      "file": "files/00037.json",
+      "bytes": 12051,
+      "sha256": "b98084139a5830070f899ec73f2dd8df58ffb7ce115c4a99d7c694c7319a5bd7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\weight-roundtrip.json",
+      "logicalPath": "runs/trial-r2/weight-roundtrip.json",
+      "file": "files/00038.json",
+      "bytes": 1632,
+      "sha256": "4212adbb14fd954704ace909d58aa6571f50383fc35b6f2fbc27d780a802a9c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\worker-state.json",
+      "logicalPath": "runs/trial-r2/worker-state.json",
+      "file": "files/00039.json",
+      "bytes": 1059,
+      "sha256": "51e4f61d69a9ed1f5db4dced072451ea319e2c1e35c79ce96c9281d38044ad4d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\worker.log",
+      "logicalPath": "runs/trial-r2/worker.log",
+      "file": "files/00040.log",
+      "bytes": 482,
+      "sha256": "58eee305a0154be03fc1392fa5dffd3754b508cef826cdd25e7176308a26b960"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-controls\\existing-English-first30.json",
+      "logicalPath": "runs/trial-r2/baseline-controls/existing-English-first30.json",
+      "file": "files/00041.json",
+      "bytes": 2036,
+      "sha256": "a2ef32853f10edb31b28b936a74141e7126a37ad6adb545949f202ceeba980db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-controls\\existing-natural-mixed-00009.json",
+      "logicalPath": "runs/trial-r2/baseline-controls/existing-natural-mixed-00009.json",
+      "file": "files/00042.json",
+      "bytes": 720,
+      "sha256": "60eab03412b947c96ef29e5868218004ecb16f43f3e23c93c2cf73d08827ceee"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-clean-short-response-01.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-clean-short-response-01.json",
+      "file": "files/00043.json",
+      "bytes": 241,
+      "sha256": "4d39c8eebe8f737eb6d67f800edc728977853b67890afe0877e6843b1b8a47e0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-clean-short-response-02.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-clean-short-response-02.json",
+      "file": "files/00044.json",
+      "bytes": 241,
+      "sha256": "51bd5dd98e9daf163a7e0cf7941d082d93e77a601ea166df75ca8abcf93d72be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-clean-short-response-03.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-clean-short-response-03.json",
+      "file": "files/00045.json",
+      "bytes": 241,
+      "sha256": "5144e01590fb9d7bdacb2fb1dbf70c3f4acee123cd623a8900fcd8c1bd476466"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-clean-short-response-04.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-clean-short-response-04.json",
+      "file": "files/00046.json",
+      "bytes": 232,
+      "sha256": "bca0a49ab0626634fb77dd25157d7bb8beb79e3a7184c22652eb8b679ba0416a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-clean-short-response-05.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-clean-short-response-05.json",
+      "file": "files/00047.json",
+      "bytes": 235,
+      "sha256": "6bd2d14e7efc580c90a79f3ca12b816fa7b7f8a5b2304be520bddd98ae7303e9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-01.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-01.json",
+      "file": "files/00048.json",
+      "bytes": 680,
+      "sha256": "7b7aaef011bd02ef06d761e5ebe497595a4cf62c9393493e39f14ba4a9e858ba"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-02.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-02.json",
+      "file": "files/00049.json",
+      "bytes": 629,
+      "sha256": "e82cc4495aa9742dfcd25ba37b9680245516fafba6a378febb7e466192b2972c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-03.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-03.json",
+      "file": "files/00050.json",
+      "bytes": 593,
+      "sha256": "a35190bd674214ba07799005a9abbbb6ae4590342167c2a1e285df1c9adc208c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-04.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-04.json",
+      "file": "files/00051.json",
+      "bytes": 566,
+      "sha256": "c3e042f63de9119e62fdef5a6a99b93871301ee4cd0a31e1804927d1dd70554e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-05.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-05.json",
+      "file": "files/00052.json",
+      "bytes": 566,
+      "sha256": "64ec53053df0d1e71a2c1afcd1bba9ecf6e256bdb68bef4bfbd9eab26c98af70"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200709_L_R002S01C01-multi-turn-context-06.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200709_L_R002S01C01-multi-turn-context-06.json",
+      "file": "files/00053.json",
+      "bytes": 569,
+      "sha256": "87e39278b173d46fb75b1f65df977b475226f212525b4085557bd2d0d57a82e5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-01.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-01.json",
+      "file": "files/00054.json",
+      "bytes": 232,
+      "sha256": "7701d2a9b6d695d7b9bb88aaff3dfa6548d5c26e914ebadd5ecee9c792a87fef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-02.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-02.json",
+      "file": "files/00055.json",
+      "bytes": 229,
+      "sha256": "5c4c7f743f04d7cc9411442313ee0783f52dedf240e395233eb6a592783c4e98"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-03.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-03.json",
+      "file": "files/00056.json",
+      "bytes": 229,
+      "sha256": "74b8239bb30612ff7070b80200d3c466e45d32b5487c8aef0d524e4ef8386095"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-04.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-04.json",
+      "file": "files/00057.json",
+      "bytes": 226,
+      "sha256": "0ec626a1d723500ab3df5dc420d0e99a2d5ff81b346d69a94056aaaa1ae8a4ff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-05.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-05.json",
+      "file": "files/00058.json",
+      "bytes": 217,
+      "sha256": "05c2bea9eba4d1228db0a0b8a2014e4f7af65793ef98366b56b430511d8fc485"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-06.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-06.json",
+      "file": "files/00059.json",
+      "bytes": 220,
+      "sha256": "b159dee37237049dc279899bf6a25f3f300e0b31958e634a0a84a1d8c0d0654b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-07.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-07.json",
+      "file": "files/00060.json",
+      "bytes": 217,
+      "sha256": "ce767df181620bf46abd7e33f6b2125e190c5f2d8098698e31ee758e9346b5e1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-08.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-08.json",
+      "file": "files/00061.json",
+      "bytes": 235,
+      "sha256": "e93d76d91d6ddf54b60499bfde9d24a7a129f47d19c25f36bb0b56f89f3da925"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-09.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-09.json",
+      "file": "files/00062.json",
+      "bytes": 217,
+      "sha256": "74c5db055d0bb4b0059a57c3e027c17ea04bf70eac898a89e68a43f838102801"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-10.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-10.json",
+      "file": "files/00063.json",
+      "bytes": 223,
+      "sha256": "9caef058848a9b4a50ea48d77f2e93cdbf1a5bdd2a98d459bf1bc090845e98ed"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-11.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-11.json",
+      "file": "files/00064.json",
+      "bytes": 217,
+      "sha256": "d7316c5d6c66ee64352bcd950501104c921e33a27a3dbe9c88d7c5467101ead4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-12.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-12.json",
+      "file": "files/00065.json",
+      "bytes": 226,
+      "sha256": "0a212c0da1fd8382720ba854ea5e45af2757b2872e8f37e7a25a1404346985ae"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-13.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-13.json",
+      "file": "files/00066.json",
+      "bytes": 217,
+      "sha256": "b9f914120741a2cb6a96e295c2c232850defa9a106422a1931e34acbb7b10d9c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-14.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-14.json",
+      "file": "files/00067.json",
+      "bytes": 220,
+      "sha256": "ebb1e01b8da838870990a5c532e6ff1f559e79dfb975fca1b9ad3011a0ef8810"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-clean-short-response-15.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-clean-short-response-15.json",
+      "file": "files/00068.json",
+      "bytes": 220,
+      "sha256": "6cc30d7df458eb1f4e2e1940c087c89aae516e00241a62be2ba495977fbecf95"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-01.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-01.json",
+      "file": "files/00069.json",
+      "bytes": 617,
+      "sha256": "b00e6288181cc61420efc8449b6b1968bd16594ffd8bfe4784b1cacfdad7664e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-02.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-02.json",
+      "file": "files/00070.json",
+      "bytes": 662,
+      "sha256": "f726d27df66ab5eba52985a44740b44c9535df82f06edff4729ffd9fab9b4912"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-03.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-03.json",
+      "file": "files/00071.json",
+      "bytes": 584,
+      "sha256": "903cba040d97a7d2c717f8523c718ec1ce73645fccdfa5b9c2674a7b70813dd5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-04.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-04.json",
+      "file": "files/00072.json",
+      "bytes": 662,
+      "sha256": "f0cbfc1d993d0972e32c2e0f783339c35a6039d16122266c4847c7a6429d15b3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-05.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-05.json",
+      "file": "files/00073.json",
+      "bytes": 566,
+      "sha256": "880a0b91ff486b6febc6915bbb1f52d0560f7079c8eb9c5c40926a0ec632dc42"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\baseline-validation\\20200805_S_R001S01C01-multi-turn-context-06.json",
+      "logicalPath": "runs/trial-r2/baseline-validation/20200805_S_R001S01C01-multi-turn-context-06.json",
+      "file": "files/00074.json",
+      "bytes": 557,
+      "sha256": "badaa7f98f5c17191d54e33ce42d94036284b8e44919440e7b00012aae189043"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-controls\\existing-English-first30.json",
+      "logicalPath": "runs/trial-r2/candidate-controls/existing-English-first30.json",
+      "file": "files/00075.json",
+      "bytes": 1953,
+      "sha256": "efa9ed683ff1fc138e65c304e26b4d114df48be55be2c79434c2a2fc57adc30b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-controls\\existing-natural-mixed-00009.json",
+      "logicalPath": "runs/trial-r2/candidate-controls/existing-natural-mixed-00009.json",
+      "file": "files/00076.json",
+      "bytes": 719,
+      "sha256": "6d94704d24c62104719e9d9fc612116cff9120e825ee9b584d52b8c297fab890"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-clean-short-response-01.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-clean-short-response-01.json",
+      "file": "files/00077.json",
+      "bytes": 578,
+      "sha256": "ddeee90393f8e64d6579bc7702eb8809a27251b912740acde3f229d5b34ddd4b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-clean-short-response-02.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-clean-short-response-02.json",
+      "file": "files/00078.json",
+      "bytes": 589,
+      "sha256": "9190888551f89e8e7aeb3613639073173303ccd78a0bb6a756eb0be9dde2ede7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-clean-short-response-03.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-clean-short-response-03.json",
+      "file": "files/00079.json",
+      "bytes": 590,
+      "sha256": "89856b4ee026d2b0b8ffc11d5e68288cac787ef9493b0b410b8dde908689e886"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-clean-short-response-04.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-clean-short-response-04.json",
+      "file": "files/00080.json",
+      "bytes": 550,
+      "sha256": "d067208ef72451f297229467b5afb18f6e3fa471ead5effdd575f3a576d34717"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-clean-short-response-05.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-clean-short-response-05.json",
+      "file": "files/00081.json",
+      "bytes": 557,
+      "sha256": "2b2ab323d1da9eedd5dc46022d1bfdd352c8260340909b44615eb2847e843e73"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-01.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-01.json",
+      "file": "files/00082.json",
+      "bytes": 2445,
+      "sha256": "e1eb51331bc2d0ad016f5431c007c797e31694fe5e76f91e7f31daee4843b8bf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-02.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-02.json",
+      "file": "files/00083.json",
+      "bytes": 2192,
+      "sha256": "f5fe72d04aaabb6b783d3a58e431a13d9188cafe9b7753eeeba21414f88c249a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-03.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-03.json",
+      "file": "files/00084.json",
+      "bytes": 2025,
+      "sha256": "0cd598266711241e92a8cfeb9fac0cd15eba9b6a3120c00a71116818d5e7eb6a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-04.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-04.json",
+      "file": "files/00085.json",
+      "bytes": 1986,
+      "sha256": "cc11b95477a6e4f66b910cc0a8e00e6d0edf7491f60326966f593bc39dabf612"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-05.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-05.json",
+      "file": "files/00086.json",
+      "bytes": 2043,
+      "sha256": "e09fcfb674bee9a2011c6bb695acaf784a788ef724c68327f380d46994b44746"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200709_L_R002S01C01-multi-turn-context-06.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200709_L_R002S01C01-multi-turn-context-06.json",
+      "file": "files/00087.json",
+      "bytes": 1905,
+      "sha256": "27cda0f1ebd1a77dc7325636e0095d1becd6fd069ab35d05ce8fb8b292b7dca7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-01.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-01.json",
+      "file": "files/00088.json",
+      "bytes": 538,
+      "sha256": "8084dc159b0aebeb00c51d176b9e083db97c6d10df793d3682499b239f7d7895"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-02.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-02.json",
+      "file": "files/00089.json",
+      "bytes": 533,
+      "sha256": "04c0f6634b0521be4fe57d6c03022f48eb903628245780a41bf30a6ca8a069f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-03.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-03.json",
+      "file": "files/00090.json",
+      "bytes": 533,
+      "sha256": "7a8828a5dad042ea02274c98ff3754c5e60295e157e461f3170abf65c900acbb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-04.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-04.json",
+      "file": "files/00091.json",
+      "bytes": 504,
+      "sha256": "27d304852effd0a782a40bc6de3c53bb4b6d76fbf507a65dc9592ebe0ed3a27e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-05.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-05.json",
+      "file": "files/00092.json",
+      "bytes": 476,
+      "sha256": "14febe45ab1362a47992bff9892f35607f94f210b817eb102880b3b36d16ca1f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-06.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-06.json",
+      "file": "files/00093.json",
+      "bytes": 482,
+      "sha256": "5632512c08f9048c4074c4ea3c59f152c185c840eaf0286594270167a32df1c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-07.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-07.json",
+      "file": "files/00094.json",
+      "bytes": 475,
+      "sha256": "89352df06c1cb928f8ed6a88e16c7a33c35385ed8d0d195c1e728cb765c3a932"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-08.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-08.json",
+      "file": "files/00095.json",
+      "bytes": 547,
+      "sha256": "800999d54bb637d3675fca62792c063fb5accfc49341bf4b72431b7d0bf31a80"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-09.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-09.json",
+      "file": "files/00096.json",
+      "bytes": 476,
+      "sha256": "8348b3b8f6b95372919bb251a41939f3026430636e2e6f0c2397ea9a67dae58f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-10.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-10.json",
+      "file": "files/00097.json",
+      "bytes": 497,
+      "sha256": "899022f11e01384e3cf4522403fc3395a41ab987ab917e4ceac7642b59cb7ea7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-11.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-11.json",
+      "file": "files/00098.json",
+      "bytes": 476,
+      "sha256": "1668fee7395e5ed8fdc195360168095a286e2aac474ce9329823961e5aa92418"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-12.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-12.json",
+      "file": "files/00099.json",
+      "bytes": 506,
+      "sha256": "67d5ad33ff8ec4304b01c06be5f3ba032e4a089a166e9624be58ce004a338374"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-13.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-13.json",
+      "file": "files/00100.json",
+      "bytes": 475,
+      "sha256": "62588392b52dbade6d42efecd972956b3c0bd48b158991f0640c727304628faa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-14.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-14.json",
+      "file": "files/00101.json",
+      "bytes": 481,
+      "sha256": "c1d4bf36700053124b3eacb85210f79012fb2d809e6a6cddc8659591232ec616"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-clean-short-response-15.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-clean-short-response-15.json",
+      "file": "files/00102.json",
+      "bytes": 482,
+      "sha256": "93d289ddafbf2407e9f9bacf09c5390f4a56f1c766b8abcfa9c2cf026fe32eb1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-01.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-01.json",
+      "file": "files/00103.json",
+      "bytes": 2182,
+      "sha256": "5418d21acecf4dd31eb02d304d3a357a493466ef704fc983962cf5fa53043e20"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-02.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-02.json",
+      "file": "files/00104.json",
+      "bytes": 2351,
+      "sha256": "cd6c0da1f897ab74775aea43f1065e7895f6e8a3b98de1589f22ed411a539155"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-03.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-03.json",
+      "file": "files/00105.json",
+      "bytes": 2000,
+      "sha256": "a84d4bb58235b406afd147cbf1af065ef6706c3b49eccbc5582cfebfc766275f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-04.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-04.json",
+      "file": "files/00106.json",
+      "bytes": 2396,
+      "sha256": "d50fc986807d5c37b4f976b3499c36a224679f3d8f06702b718a9b27144f6289"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-05.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-05.json",
+      "file": "files/00107.json",
+      "bytes": 1950,
+      "sha256": "0e0707b960d93f408360e4c111cbab8f5e8f253d44eae371e5a1ad6eeac87d9c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\candidate-validation\\20200805_S_R001S01C01-multi-turn-context-06.json",
+      "logicalPath": "runs/trial-r2/candidate-validation/20200805_S_R001S01C01-multi-turn-context-06.json",
+      "file": "files/00108.json",
+      "bytes": 1963,
+      "sha256": "ae53e1682d35cca9d667ae46c710b4c4384e83636111594d7057cdbc2eefb752"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\final-adapter\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/final-adapter/adapter_config.json",
+      "file": "files/00109.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\final-adapter\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/final-adapter/adapter_model.safetensors",
+      "file": "files/00110.safetensors",
+      "bytes": 1053152,
+      "sha256": "73b97f50240ff41dee727f638c4661af0362501c20f8c7f8dbe4000d2449470b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\inventory\\hip-inventory.json",
+      "logicalPath": "runs/trial-r2/inventory/hip-inventory.json",
+      "file": "files/00111.json",
+      "bytes": 1393,
+      "sha256": "224d37edbeb3fb573b7f96a42f81e5893878e1240dd0f4be58cf97fcceaae3ff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "runs/trial-r2/inventory/inventory-resources.jsonl",
+      "file": "files/00112.jsonl",
+      "bytes": 611,
+      "sha256": "e5185ad868b740ecc707d8c304f059c9c746c582d8a390bb24c59a8f8d6690f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\inventory\\inventory-run.json",
+      "logicalPath": "runs/trial-r2/inventory/inventory-run.json",
+      "file": "files/00113.json",
+      "bytes": 610,
+      "sha256": "8ba7fec64ac6ac6d65af50d30b2a1299933345efbe17f87bf75df91d6957dcd5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\inventory\\inventory-worker.log",
+      "logicalPath": "runs/trial-r2/inventory/inventory-worker.log",
+      "file": "files/00114.log",
+      "bytes": 1212,
+      "sha256": "f44328da44acb9da29a45ed1df347b3d9b0ce89d8cbe176b96c6ca5d324af0d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-01\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-01/adapter_config.json",
+      "file": "files/00115.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-01\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-01/adapter_model.safetensors",
+      "file": "files/00116.safetensors",
+      "bytes": 1053152,
+      "sha256": "f9bbb9f9130267cc9cfe9839e159c64b72373813ab477b73bfe9e379bb4c8bcb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-01\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-01/receipt.json",
+      "file": "files/00117.json",
+      "bytes": 180,
+      "sha256": "2395a78bb7c65f91768b270d410590d82897f0abfecb2f719d700f9e1d79e223"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-01\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-01/training-state.pt",
+      "file": "files/00118.pt",
+      "bytes": 2139029,
+      "sha256": "b64950dfe7cbcde0480454d6f721e4e64b4fc2006634ecac3498442f2632e837"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-02\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-02/adapter_config.json",
+      "file": "files/00119.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-02\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-02/adapter_model.safetensors",
+      "file": "files/00120.safetensors",
+      "bytes": 1053152,
+      "sha256": "7db279708e8dd3112cf62339c33c7f0cbcbe1934d4ac1822b167337c2eeda9e3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-02\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-02/receipt.json",
+      "file": "files/00121.json",
+      "bytes": 180,
+      "sha256": "8ee022747c5e3250653a55ce19c44619c4b0d3ce264e508263dd52b2480c7c32"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-02\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-02/training-state.pt",
+      "file": "files/00122.pt",
+      "bytes": 2139029,
+      "sha256": "63ef69ca72738fea70aa9e666fecd6582bf3c5d2bf705810dcb7647009908830"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-03\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-03/adapter_config.json",
+      "file": "files/00123.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-03\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-03/adapter_model.safetensors",
+      "file": "files/00124.safetensors",
+      "bytes": 1053152,
+      "sha256": "abc6927020ba673682bc1e0c7bfa67b557f71d32dd02e3f20251c36a035d7414"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-03\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-03/receipt.json",
+      "file": "files/00125.json",
+      "bytes": 180,
+      "sha256": "5326010caa1bb78fe00aba3a15d66470d7035e154f67b58b125426236e5e6d24"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-03\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-03/training-state.pt",
+      "file": "files/00126.pt",
+      "bytes": 2139029,
+      "sha256": "172a33e97c78dfbc98ddb99a02a2bdc9f8760ba77aa9d0590c3722c889ad796b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-04\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-04/adapter_config.json",
+      "file": "files/00127.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-04\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-04/adapter_model.safetensors",
+      "file": "files/00128.safetensors",
+      "bytes": 1053152,
+      "sha256": "67b8b8fcfff5cd06c12f5cbb6861370f342ee6df5f50dcd9ba020779cb89993a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-04\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-04/receipt.json",
+      "file": "files/00129.json",
+      "bytes": 180,
+      "sha256": "1b69e80bca91c27bc5830a6a749b5a20a83a32757eb4cddf4b41e1bd5491bcef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-04\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-04/training-state.pt",
+      "file": "files/00130.pt",
+      "bytes": 2139029,
+      "sha256": "bda5ed5e8d6798520137b32fca7d56dd7aeb6ef8d64d6822cb893d2b371eea47"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-05\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-05/adapter_config.json",
+      "file": "files/00131.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-05\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-05/adapter_model.safetensors",
+      "file": "files/00132.safetensors",
+      "bytes": 1053152,
+      "sha256": "efc6d8fae2f8d3fc27649ed96ae2e8892af7c822c094ec06bd69f2089448900a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-05\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-05/receipt.json",
+      "file": "files/00133.json",
+      "bytes": 181,
+      "sha256": "819a88251bbc57e6a3044d4ce3b1a03f0d749808405d32619f9709318dc04819"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-05\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-05/training-state.pt",
+      "file": "files/00134.pt",
+      "bytes": 2139029,
+      "sha256": "88974e5de8f2785b9e097e8b60019fec84790b38b43f4a67a5ac20b685f8fd08"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-06\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-06/adapter_config.json",
+      "file": "files/00135.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-06\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-06/adapter_model.safetensors",
+      "file": "files/00136.safetensors",
+      "bytes": 1053152,
+      "sha256": "5805c8d0f4380995bfec5c3581b25e195e3fba0ea6529abd42716a5c4bb663f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-06\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-06/receipt.json",
+      "file": "files/00137.json",
+      "bytes": 181,
+      "sha256": "611d59163d0ab64580c4f9d45b3f177e3d72b360f5a54210ca1f057607d79a91"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-06\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-06/training-state.pt",
+      "file": "files/00138.pt",
+      "bytes": 2139029,
+      "sha256": "db528ce7fe5b0dbd90d9bd443484a7aeaab867dfd0823e8df0b5d60b232a6346"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-07\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-07/adapter_config.json",
+      "file": "files/00139.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-07\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-07/adapter_model.safetensors",
+      "file": "files/00140.safetensors",
+      "bytes": 1053152,
+      "sha256": "67e9a4a239b31dc2990e36a4808c1e6eb7aef6d8c8fa73f7575df93384903829"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-07\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-07/receipt.json",
+      "file": "files/00141.json",
+      "bytes": 181,
+      "sha256": "7e4d82668f1a4b3d97b29efa0f205e09d99c114c5d7f8a5ce97255b3be8e0902"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-07\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-07/training-state.pt",
+      "file": "files/00142.pt",
+      "bytes": 2139029,
+      "sha256": "0ca2fd40b7cc6602a1c3308ecb22a5f2b3a948490993bcf7496531247290d08f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-08\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-08/adapter_config.json",
+      "file": "files/00143.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-08\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-08/adapter_model.safetensors",
+      "file": "files/00144.safetensors",
+      "bytes": 1053152,
+      "sha256": "3f4f2757e030b59a8adcc5c05db59d1ae2d32a2c69aa95bd0432d715367777c2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-08\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-08/receipt.json",
+      "file": "files/00145.json",
+      "bytes": 181,
+      "sha256": "a1b69a9ea1bf0cdcbf6ee545f8af43f654456b841a7585c62522716b27498baf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-08\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-08/training-state.pt",
+      "file": "files/00146.pt",
+      "bytes": 2139029,
+      "sha256": "c288440e47b636ca63a45453867255ee0dbee1664a3f9d6f0fb43ce957f38510"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-09\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-09/adapter_config.json",
+      "file": "files/00147.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-09\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-09/adapter_model.safetensors",
+      "file": "files/00148.safetensors",
+      "bytes": 1053152,
+      "sha256": "2b4da87455ec45a6aaf3d305b0e915e06b0493bd242dff699a8237d6780b775f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-09\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-09/receipt.json",
+      "file": "files/00149.json",
+      "bytes": 181,
+      "sha256": "3401a7207eed197c0add5dd70c566eb8377fdcdb395af59714402b3510543ffd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-09\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-09/training-state.pt",
+      "file": "files/00150.pt",
+      "bytes": 2139029,
+      "sha256": "281eb759b7dd5fd8497bd9376aae27997540bcb34f1ef673fada922b34a4abe0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-10\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-10/adapter_config.json",
+      "file": "files/00151.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-10\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-10/adapter_model.safetensors",
+      "file": "files/00152.safetensors",
+      "bytes": 1053152,
+      "sha256": "03e032fa8a129d443720ffd9ec1577739c5e75d96a772f22ea343a46c332d0b0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-10\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-10/receipt.json",
+      "file": "files/00153.json",
+      "bytes": 182,
+      "sha256": "7ac134e2031f1fe05734894b486322702a9ecd862760767accdaef366f4f5d9a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-10\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-10/training-state.pt",
+      "file": "files/00154.pt",
+      "bytes": 2139029,
+      "sha256": "926e67e97e2ca417f93d9c7eb7f6d714e24a61a0ecbda2dc88538b06d468d452"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-11\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-11/adapter_config.json",
+      "file": "files/00155.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-11\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-11/adapter_model.safetensors",
+      "file": "files/00156.safetensors",
+      "bytes": 1053152,
+      "sha256": "3a0bf11c4e07687d7a45688e822193bde17beced98b494f111c1d109e28f67d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-11\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-11/receipt.json",
+      "file": "files/00157.json",
+      "bytes": 182,
+      "sha256": "aa3460a355036753fdf4d93ae80301860a6466be3d2c49310c5b80f2e12ef350"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-11\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-11/training-state.pt",
+      "file": "files/00158.pt",
+      "bytes": 2139029,
+      "sha256": "32ae2ae4ba74791b5bdee70c78239497c4eb39a9a9df5e2a6f3ff447aadc7295"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-12\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-12/adapter_config.json",
+      "file": "files/00159.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-12\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-12/adapter_model.safetensors",
+      "file": "files/00160.safetensors",
+      "bytes": 1053152,
+      "sha256": "84df759ee8e5deee91be94114f75e923f62ee803d6ab5ccf4bbf321c00de8c69"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-12\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-12/receipt.json",
+      "file": "files/00161.json",
+      "bytes": 182,
+      "sha256": "1c309a1993896fa8cffe5e2b05d5e3b62af39ee269c4c2219058b0f2258acbf8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-12\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-12/training-state.pt",
+      "file": "files/00162.pt",
+      "bytes": 2139029,
+      "sha256": "8e03178d741263e87ec3689c186d791071ed82aeeb0d9db9ebd7ea8f9f2c6528"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-13\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-13/adapter_config.json",
+      "file": "files/00163.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-13\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-13/adapter_model.safetensors",
+      "file": "files/00164.safetensors",
+      "bytes": 1053152,
+      "sha256": "298b61327a3ed3e549cbf49d6e83412f7977a57c89a23700d441fe0097295b07"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-13\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-13/receipt.json",
+      "file": "files/00165.json",
+      "bytes": 182,
+      "sha256": "30199232136effbf8a16c15212d1b023e524b0f9acdaab1d16e492bf9834494d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-13\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-13/training-state.pt",
+      "file": "files/00166.pt",
+      "bytes": 2139029,
+      "sha256": "30d735b0cfa077cf771dfd15c6eed908aac1064c52ff5b2cadf3ddc5e3f88554"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-14\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-14/adapter_config.json",
+      "file": "files/00167.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-14\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-14/adapter_model.safetensors",
+      "file": "files/00168.safetensors",
+      "bytes": 1053152,
+      "sha256": "1bd30368771b6a18d3a0110ef7069d1f3254738da2e95e9ceecd1dfc8553fc38"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-14\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-14/receipt.json",
+      "file": "files/00169.json",
+      "bytes": 182,
+      "sha256": "3ea1f26fccc21e0cc638e2ff5156f495943b401478de385b0b7173f69281c80a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-14\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-14/training-state.pt",
+      "file": "files/00170.pt",
+      "bytes": 2139029,
+      "sha256": "63d4f73174d061559f935042f956d7d415a355990f6e2078ffc2779f34f4f656"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-15\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-15/adapter_config.json",
+      "file": "files/00171.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-15\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-15/adapter_model.safetensors",
+      "file": "files/00172.safetensors",
+      "bytes": 1053152,
+      "sha256": "e2903ce99e0697f6e89c58f6b361f450e77cc07611dd16111c6dc66db110f845"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-15\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-15/receipt.json",
+      "file": "files/00173.json",
+      "bytes": 182,
+      "sha256": "598f0fe46dfcf00be88cf319697f5acf4b278f86545f0ba383063d22c671c3df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-15\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-15/training-state.pt",
+      "file": "files/00174.pt",
+      "bytes": 2139029,
+      "sha256": "2f0b25d72bfdb30be9bfb60bb9bce166a2fdc9cae1142cdc174ea448b4ba97f8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-16\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-16/adapter_config.json",
+      "file": "files/00175.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-16\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-16/adapter_model.safetensors",
+      "file": "files/00176.safetensors",
+      "bytes": 1053152,
+      "sha256": "be46e153b754ced3af56e3bb5978b825ebd4eb3b9224738837797101eb2ca4d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-16\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-16/receipt.json",
+      "file": "files/00177.json",
+      "bytes": 182,
+      "sha256": "ede724118ebdb8951a044ecda3e68dfa15af2138d07530c62070e0e2c837cd9a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-16\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-16/training-state.pt",
+      "file": "files/00178.pt",
+      "bytes": 2139029,
+      "sha256": "bfdd5242b15008f781e426ed2fa7c8ff0e5bdd0c52ac24be4a5ff7fb8d906533"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-17\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-17/adapter_config.json",
+      "file": "files/00179.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-17\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-17/adapter_model.safetensors",
+      "file": "files/00180.safetensors",
+      "bytes": 1053152,
+      "sha256": "5006e399ee390c58c0b7d8eb5b01bf9e33d77d62feae29e7c86d949e8b0fa4dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-17\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-17/receipt.json",
+      "file": "files/00181.json",
+      "bytes": 182,
+      "sha256": "9cdc15d287c3785290bfad82d429b61964f86368fc4c489de1c9afa6274950af"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-17\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-17/training-state.pt",
+      "file": "files/00182.pt",
+      "bytes": 2139029,
+      "sha256": "889aa2a6035902836e5525ca3ba7676179c204bc63639413f23bb2b6e0da3421"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-18\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-18/adapter_config.json",
+      "file": "files/00183.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-18\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-18/adapter_model.safetensors",
+      "file": "files/00184.safetensors",
+      "bytes": 1053152,
+      "sha256": "afbb9b00c95b95de8ec8fd90640b83934c00d5c82a1c32b3290bd2db17a77e47"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-18\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-18/receipt.json",
+      "file": "files/00185.json",
+      "bytes": 182,
+      "sha256": "c0c802dae648728fa991d60f7055d0c763a348f05e33fa65088482bf83742705"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-18\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-18/training-state.pt",
+      "file": "files/00186.pt",
+      "bytes": 2139029,
+      "sha256": "8b96ac058b80e22f7d5680351a45020f3e8c8a6928228cc2f7c31011927f4463"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-19\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-19/adapter_config.json",
+      "file": "files/00187.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-19\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-19/adapter_model.safetensors",
+      "file": "files/00188.safetensors",
+      "bytes": 1053152,
+      "sha256": "8c553c188bc32c1cee4f8901ebe867fb952f52759a0c7ce72231e3bf40ef2d69"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-19\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-19/receipt.json",
+      "file": "files/00189.json",
+      "bytes": 182,
+      "sha256": "5509a0d364ada73149a966921f05b792987f041f630434a9a78286f2156a9b8b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-19\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-19/training-state.pt",
+      "file": "files/00190.pt",
+      "bytes": 2139029,
+      "sha256": "1f688b71735c3d1d727522787a6e6ee168118050274f6a40c1faee180ff04db2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-20\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-20/adapter_config.json",
+      "file": "files/00191.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-20\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-20/adapter_model.safetensors",
+      "file": "files/00192.safetensors",
+      "bytes": 1053152,
+      "sha256": "1314cb91a880ef336627ada116607a1602ba1b6982e3b8b367cabdffaf9349f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-20\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-20/receipt.json",
+      "file": "files/00193.json",
+      "bytes": 182,
+      "sha256": "94d935077dcc9563afbfe4c9f5be5ef7494ac78b25594d2a5162a49fb41dc88a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-20\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-20/training-state.pt",
+      "file": "files/00194.pt",
+      "bytes": 2139029,
+      "sha256": "e96b33b81d7dad36df923e20ce2387272c8c63a0c8e17eea164fb1489c6d7d1a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-21\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-21/adapter_config.json",
+      "file": "files/00195.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-21\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-21/adapter_model.safetensors",
+      "file": "files/00196.safetensors",
+      "bytes": 1053152,
+      "sha256": "0093feae56dde1eb9a26fa10bc923a14766cfc17bd13e5f97884745e290bf0ed"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-21\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-21/receipt.json",
+      "file": "files/00197.json",
+      "bytes": 182,
+      "sha256": "07dd374f41ec2bc22c5c05f02fbd847923b4203986066df1e19ab17cdff8edf7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-21\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-21/training-state.pt",
+      "file": "files/00198.pt",
+      "bytes": 2139029,
+      "sha256": "26fe141b2b84b02c73a58e47949cb20cb0e4caf8aff7ead13d9744b1f2465f9d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-22\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-22/adapter_config.json",
+      "file": "files/00199.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-22\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-22/adapter_model.safetensors",
+      "file": "files/00200.safetensors",
+      "bytes": 1053152,
+      "sha256": "fc009e636e49a1afe1f0652c235322345680e47e7c6a72ba6320940541a597dd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-22\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-22/receipt.json",
+      "file": "files/00201.json",
+      "bytes": 182,
+      "sha256": "a8303aa7dd57ba5e321e45e4cc3bc7c916039621803f2612259ef8643bb71001"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-22\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-22/training-state.pt",
+      "file": "files/00202.pt",
+      "bytes": 2139029,
+      "sha256": "3670beede3e23b3385217fb629767e791963d39aaf8127bf19e05ce8408e4b57"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-23\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-23/adapter_config.json",
+      "file": "files/00203.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-23\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-23/adapter_model.safetensors",
+      "file": "files/00204.safetensors",
+      "bytes": 1053152,
+      "sha256": "f8333bc8c7f43b70773d02cce22cdd60366a009ecaeeec0dd2fe07d60c577175"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-23\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-23/receipt.json",
+      "file": "files/00205.json",
+      "bytes": 182,
+      "sha256": "61fcb6f64cc89bc95d302009da18da9e5ea74b213a68571c9bd737762bff0c28"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-23\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-23/training-state.pt",
+      "file": "files/00206.pt",
+      "bytes": 2139029,
+      "sha256": "4b4849ced14cbbd53da5aa994e10be23ba7a56edb12e1b555c406bdad4097735"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-24\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-24/adapter_config.json",
+      "file": "files/00207.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-24\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-24/adapter_model.safetensors",
+      "file": "files/00208.safetensors",
+      "bytes": 1053152,
+      "sha256": "1e647089b87a337159d255f015c5f9b707089d5faf4907ef3f093030ef062f88"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-24\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-24/receipt.json",
+      "file": "files/00209.json",
+      "bytes": 182,
+      "sha256": "9a2cc28776e5b05e7585480043fe8a7371bf8327f90f8dec9b90a0cd76f95acf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-24\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-24/training-state.pt",
+      "file": "files/00210.pt",
+      "bytes": 2139029,
+      "sha256": "46afee275c583b70ac09255b9e1f3f2b435353c3940d772e9ef443686ac48597"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-25\\adapter_config.json",
+      "logicalPath": "runs/trial-r2/recovery/update-25/adapter_config.json",
+      "file": "files/00211.json",
+      "bytes": 2143,
+      "sha256": "8b3b61e7bc14936399710e56b3b5beefa8506ef65fc8122c76ef48db7a6b00fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-25\\adapter_model.safetensors",
+      "logicalPath": "runs/trial-r2/recovery/update-25/adapter_model.safetensors",
+      "file": "files/00212.safetensors",
+      "bytes": 1053152,
+      "sha256": "73b97f50240ff41dee727f638c4661af0362501c20f8c7f8dbe4000d2449470b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-25\\receipt.json",
+      "logicalPath": "runs/trial-r2/recovery/update-25/receipt.json",
+      "file": "files/00213.json",
+      "bytes": 182,
+      "sha256": "b117a836c40145355b09b9fa696d3b3b702995279b632097c27df926368cb3f4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2\\recovery\\update-25\\training-state.pt",
+      "logicalPath": "runs/trial-r2/recovery/update-25/training-state.pt",
+      "file": "files/00214.pt",
+      "bytes": 2139029,
+      "sha256": "500c6b2119c9c13f4d06bb81c8db9c7790bea05ec7bfd7392cefcccdad00ffef"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\context-matched-baseline-r3\\overlap-order-diagnosis.json",
+      "logicalPath": "frozen-context-overlap-order-diagnosis.json",
+      "file": "files/00215.json",
+      "bytes": 22710,
+      "sha256": "296113e39551c051bf9dd0f22901ab27f6aa9546161d9119a4045958a89e205e"
+    },
+    {
+      "source": "work\\prepare_public_acoustic_context_20261115.py",
+      "logicalPath": "continuation-tools/prepare_public_acoustic_context_20261115.py",
+      "file": "files/00216.py",
+      "bytes": 9381,
+      "sha256": "a36f0ee88b0b4e9eeff0c6124851de1c8ebf26bacdaa34dbe76427dc0ccd5ceb"
+    },
+    {
+      "source": "work\\audit_public_acoustic_context_coverage_20261115.py",
+      "logicalPath": "continuation-tools/audit_public_acoustic_context_coverage_20261115.py",
+      "file": "files/00217.py",
+      "bytes": 4006,
+      "sha256": "0e50367e9e88bedbc55d0c67d694cb3081eaa5d33c722a2ed0462c3808970a99"
+    },
+    {
+      "source": "work\\verify_public_acoustic_official_labels_20261115.py",
+      "logicalPath": "continuation-tools/verify_public_acoustic_official_labels_20261115.py",
+      "file": "files/00218.py",
+      "bytes": 2608,
+      "sha256": "e53077b03d2892290012bcbb44d0fb81984e332cf73e1c064b10fd4f1f7ca79d"
+    },
+    {
+      "source": "work\\freeze_public_acoustic_context_trial_20261115.py",
+      "logicalPath": "continuation-tools/freeze_public_acoustic_context_trial_20261115.py",
+      "file": "files/00219.py",
+      "bytes": 7541,
+      "sha256": "556a7a06cad1b2f679fab4aa1da5834cbe541123c9dcb068824b38180f8d5089"
+    },
+    {
+      "source": "work\\record_public_acoustic_context_result_20261115.py",
+      "logicalPath": "continuation-tools/record_public_acoustic_context_result_20261115.py",
+      "file": "files/00220.py",
+      "bytes": 4232,
+      "sha256": "6bdb3559b2e7af47150091df013ebc05e99c641336d2adba96b2682b6d58e382"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00221.json",
+      "bytes": 130059,
+      "sha256": "029ef5611e78ce310bc4c1131c6e2a6c25730f7899860fb64f9471eadeab9566"
+    },
+    {
+      "source": "outputs\\Companion-公开会议训练实际结果-20261115.txt",
+      "logicalPath": "owner-public-training-result.txt",
+      "file": "files/00222.txt",
+      "bytes": 3061,
+      "sha256": "1eadd38bbfe4aee01bc8de199ab4878e0ece07af3202db6dba945d9cbc0d71e6"
+    }
+  ],
+  "d1Complete": true,
+  "d2Complete": false,
+  "sourceAudioOrBaseWeightsCopied": false,
+  "newAcousticAdapterAndRecoveryWeightsCopied": true,
+  "shippedDefaultChanged": false,
+  "sourceParentCommit": "69481b7f807e7bc36a6bb573f709eb38aff22a74",
+  "ownerParticipationRequired": false
+}

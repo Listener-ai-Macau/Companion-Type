@@ -1,0 +1,22 @@
+{
+  "state": "INCOMPLETE_FIXED_ASR_PHASE_RETAINED_NO_AUTO_RETRY",
+  "startedAt": "2026-11-15T16:10:34+08:00",
+  "phase": "trial",
+  "index": 0,
+  "workerSha256": "0c13e7cd6694dfab86a49640596a58ad461c5f4d58d11bb4387f656876c4656c",
+  "newTraining": true,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1839104,
+  "pid": 31264,
+  "pidCreatedAt": 1794730240.79373,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "error": "AssertionError('Fixed ASR phase failed; no automatic variant or retry')",
+  "finishedAt": "2026-11-15T16:10:41+08:00",
+  "seconds": 6.328000000008615
+}

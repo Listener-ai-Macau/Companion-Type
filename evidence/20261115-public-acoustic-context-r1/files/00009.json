@@ -1,0 +1,56 @@
+{
+  "state": "COMPLETE_PUBLIC_NONOVERLAP_MULTITURN_ACOUSTIC_TRAINING_DATA",
+  "at": "2026-11-15T16:08:13.688226+08:00",
+  "trainingCases": 50,
+  "sources": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "eligiblePlans": 9,
+      "selectedPlans": 3,
+      "seconds": 78.78581249999999
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "eligiblePlans": 13,
+      "selectedPlans": 6,
+      "seconds": 118.3293125
+    },
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "eligiblePlans": 121,
+      "selectedPlans": 41,
+      "seconds": 593.4420625000001
+    }
+  ],
+  "totalSeconds": 790.5571874999999,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "selection": "All chronological greedy disjoint maximal4–29.84s windows within singleton overlap-components, >=2speakers, >=1complete<2s utterance, no annotation markup;80ms original padding capped by neighboring midpoint. Not chosen by model error.",
+  "nativeAudio": "Original16k PCM16 first microphone, no gain/denoising/separation/resampling/synthetic mixing.",
+  "labels": "Original official words, fillers, erhua, number forms retained, newline between nonoverlapping utterances. No ambiguous overlap target; not SOT training.",
+  "validation": "Reuse exact32 previously frozen clips plus existing English and natural mixed controls. Never load validation labels in neural worker.",
+  "oldTrialDifference": "Only audio-encoder last8 q/v LoRA; language-model/base weights frozen. Natural multi-turn contexts with short responses, unlike rejected isolated2–12s language-model-only trial.",
+  "limitations": [
+    "Small Chinese acoustic-adaptation pilot, no proof of generalization or source-model pretraining independence.",
+    "The two prior train_L sources were used in older ASR/TSE trials; the coverage-audited added train_L source is not an original development/final case. Physical room/speaker independence not proven.",
+    "Validation includes genuine overlaps although training does not; this cannot on its own establish overlap or full-meeting quality."
+  ],
+  "limits": {
+    "pid": 19976,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 38580224,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "qualityQualified": false,
+  "finalHoldoutOpened": false
+}

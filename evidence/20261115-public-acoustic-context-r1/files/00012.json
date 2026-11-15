@@ -1,0 +1,47 @@
+[
+  {
+    "role": "train",
+    "meeting": "20200707_L_R001S08C01",
+    "sourcePath": "train_L/wav/20200707_L_R001S08C01.flac",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S08C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "fileSize": 240679407,
+    "expectedWholeFileLfsSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S08C01.TextGrid",
+    "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+    "mirrorReferenceRawSha256": "f8fca6b81557206bf3f8941f64b26abe809cab01693f28a6120cdcd6ca1b0efd",
+    "referenceBytesEqualOfficialArchivePrefix": false,
+    "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+    "sourceSubset": "train_L",
+    "roomTagForBookkeepingOnly": "R001",
+    "localFlac": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200707_L_R001S08C01.flac"
+  },
+  {
+    "role": "train",
+    "meeting": "20200708_L_R002S01C01",
+    "sourcePath": "train_L/wav/20200708_L_R002S01C01.flac",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200708_L_R002S01C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "fileSize": 226430788,
+    "expectedWholeFileLfsSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S01C01.TextGrid",
+    "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+    "mirrorReferenceRawSha256": "b03f7b4e83b6e5f91735b86f2e2aa344a2357b0604b7a3b4839b529e53815fd3",
+    "referenceBytesEqualOfficialArchivePrefix": false,
+    "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+    "sourceSubset": "train_L",
+    "roomTagForBookkeepingOnly": "R002",
+    "localFlac": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200708_L_R002S01C01.flac"
+  },
+  {
+    "role": "train",
+    "meeting": "20200707_L_R001S01C01",
+    "localFlac": "E:\\CodexData\\Companion\\.model-cache\\public-acoustic-context-20261115\\data-r2\\sources\\20200707_L_R001S01C01.flac",
+    "expectedWholeFileLfsSha256": "999497f076f795caa07e60c5bad0d8ef220f0eb13f338bb0270e85a38184ae87",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S01C01.TextGrid",
+    "referenceSha256": "94824c9e3264377038f2776de0d0a840dc774f1b1fb29fdd17eed4dcc58380f5",
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S01C01.flac",
+    "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+    "referenceSource": "Existing official AISHELL4 annotation archive extraction; raw file retained."
+  }
+]

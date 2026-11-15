@@ -1,0 +1,49 @@
+{
+  "startedAt": "2026-11-15T16:11:18+08:00",
+  "state": "PASS_CURRENT_HIP_DEVICE_INVENTORY_NO_MODEL",
+  "pid": 26640,
+  "sourceSha256": "c7bdf59e86e26833450cf36ee7c8a3135d7ec0529eb93fb35001fb84f7e2b402",
+  "referenceOpened": false,
+  "trainingPerformed": false,
+  "modelLoaded": false,
+  "results": [],
+  "limits": {
+    "pid": 26640,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 342618112,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "devices": [
+    {
+      "ordinal": 0,
+      "name": "AMD Radeon 780M Graphics",
+      "architecture": "gfx1103",
+      "totalMemory": 9875259392
+    },
+    {
+      "ordinal": 1,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "totalMemory": 17163091968
+    }
+  ],
+  "selected": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "finishedAt": "2026-11-15T16:11:19+08:00",
+  "wholeWorkerSeconds": 1.641266499995254
+}

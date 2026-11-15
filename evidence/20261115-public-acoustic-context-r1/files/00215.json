@@ -1,0 +1,300 @@
+{
+  "state": "COMPLETE_FROZEN_OUTPUT_OVERLAP_ORDER_DIAGNOSIS_NOT_QUALIFICATION",
+  "at": "2026-11-15T15:59:24.436647+08:00",
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 153,
+      "chronologicalEdits": 6,
+      "allowedReferenceSerializations": 6,
+      "componentAlternativeCounts": [
+        1,
+        1,
+        3,
+        2,
+        1
+      ],
+      "minimumOrderEdits": 4,
+      "editsRemovableByOracleReferenceOrder": 2,
+      "remainingEditTypes": {
+        "replace": 1,
+        "delete": 3
+      },
+      "originalReference": "这一块儿我们这个教练是不分顾客如果会有vip待遇和普通顾客他们觉得会有差异的话会让顾客心里产生不平衡你这个都是一样的是吧没有什么vip之类的吗对有vipvip就可能是运动区域比较广阔就像有什么游泳健身教练之类的会有vip会员儿专门儿指定一个教练给他服务嗯这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的",
+      "rawAsrText": "这一块儿，我们这个教练是不分顾客。如果会有VIP待遇和普通顾客，他们觉得会有差异的话，会让顾客心里产生不平衡。那这个都是一样的，是吧？对。没有什么VIP之类的吗？有VIP，VIP就可能是运动区域比较广阔，就像有什么游泳、健身教练之类的，会有VIP会员专门指定一个教练给他服务。这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的。",
+      "oracleReferenceForDiagnosisOnly": "这一块儿我们这个教练是不分顾客如果会有vip待遇和普通顾客他们觉得会有差异的话会让顾客心里产生不平衡你这个都是一样的是吧对没有什么vip之类的吗有vipvip就可能是运动区域比较广阔就像有什么嗯游泳健身教练之类的会有vip会员儿专门儿指定一个教练给他服务这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的"
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 130,
+      "chronologicalEdits": 4,
+      "allowedReferenceSerializations": 2,
+      "componentAlternativeCounts": [
+        2,
+        1,
+        1
+      ],
+      "minimumOrderEdits": 4,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 3,
+        "replace": 1
+      },
+      "originalReference": "行而且我们这边儿教练也要了解顾客的心理嘛像一些顾客会有一些憧憬他会不会再一个星期或者一个月之内瘦掉几斤会不会有明显的变化嗯这方面也要让顾客就是了解自己会有哪些运动方面的不足让教练可以更改一些动作嗯好那咱们这个保安部这边儿呢上一个季度的情况怎么样就是安全情况各种",
+      "rawAsrText": "行，而且我们这边教练也要了解顾客的心理嘛。像一些顾客会有一些憧憬，他会不会在一个星期或者一个月之内瘦掉几斤，会不会有明显的变化？这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。嗯，好。那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+      "oracleReferenceForDiagnosisOnly": "嗯行而且我们这边儿教练也要了解顾客的心理嘛像一些顾客会有一些憧憬他会不会再一个星期或者一个月之内瘦掉几斤会不会有明显的变化这方面也要让顾客就是了解自己会有哪些运动方面的不足让教练可以更改一些动作嗯好那咱们这个保安部这边儿呢上一个季度的情况怎么样就是安全情况各种"
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 125,
+      "chronologicalEdits": 21,
+      "allowedReferenceSerializations": 3,
+      "componentAlternativeCounts": [
+        3,
+        1
+      ],
+      "minimumOrderEdits": 21,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "insert": 3,
+        "delete": 12,
+        "replace": 6
+      },
+      "originalReference": "嗯因为现在夏天高温然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施那咱们后勤维修部呢就是下半年什么计划对对对对嗯嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少但是呢工作量并没有减少因为我们对这个消毒的严格的要求其实是增大了他们",
+      "rawAsrText": "嗯，因为现在夏天的高温，然后可能会发生什么东西易燃，然后这边要做好这个安全的措施。那咱们这个后勤维修部呢，就是下半年什么？嗯，因为上半年的受疫情影响，然后我们中心的接机的人相对的比较少，但是呢，工作量并没有减少，因为我们对这个消毒的严格的要求其实是很大的。",
+      "oracleReferenceForDiagnosisOnly": "嗯因为现在夏天高温然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施那咱们后勤维修部呢就是下半年什么计划对对对对嗯嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少但是呢工作量并没有减少因为我们对这个消毒的严格的要求其实是增大了他们"
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 109,
+      "chronologicalEdits": 4,
+      "allowedReferenceSerializations": 2,
+      "componentAlternativeCounts": [
+        2,
+        1,
+        1
+      ],
+      "minimumOrderEdits": 4,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 4
+      },
+      "originalReference": "这样摸一米没有明显的污渍这是我对他们的要求所以呃就是嗯包括抹布我们都要定期的更换洗不出来了我们就扔了它因为本身我们就是一个非常清洁的呃让人看着就是愿意停留在这儿的如果让呃顾客来到我们这里之后他一摸这个健身器材竟然有灰尘",
+      "rawAsrText": "这样摸一米没有明显污渍，这是我对他们的要求。所以，呃，就是包括抹布，我们都要定期的更换。洗不出来了，我们就扔了。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意停留在这儿。如果让呃顾客来到我们这里之后，他一摸这个健身器材，竟然有灰尘。",
+      "oracleReferenceForDiagnosisOnly": "嗯这样摸一米没有明显的污渍这是我对他们的要求所以呃就是包括抹布我们都要定期的更换洗不出来了我们就扔了它因为本身我们就是一个非常清洁的呃让人看着就是愿意停留在这儿的如果让呃顾客来到我们这里之后他一摸这个健身器材竟然有灰尘"
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 114,
+      "chronologicalEdits": 10,
+      "allowedReferenceSerializations": 4,
+      "componentAlternativeCounts": [
+        2,
+        1,
+        2
+      ],
+      "minimumOrderEdits": 10,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 8,
+        "replace": 2
+      },
+      "originalReference": "那他可能就心里面儿膈应不愿意来了所以对健身器材的这个清洁要每天对不想锻炼了呃甚至这个人用完了之后他们要立刻上去因为有一些汗渍啊水渍啊那下一个人再用的话所以要求他们及时的去做一些清洁工作呃除了常规的之外呃楼道呢是要求没有没有脚印嗯",
+      "rawAsrText": "那他可能就心里面各种不愿意来了，所以对健身器材的这个清洁要每天，呃，甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊、水渍啊，那下一个人再用的话，所以要求他们及时的去做一些清洁工作。呃，除了常规的之外，呃，楼道呢是要求没有没有脚印。",
+      "oracleReferenceForDiagnosisOnly": "对不想锻炼了那他可能就心里面儿膈应不愿意来了所以对健身器材的这个清洁要每天呃甚至这个人用完了之后他们要立刻上去因为有一些汗渍啊水渍啊那下一个人再用的话所以要求他们及时的去做一些清洁工作呃除了常规的之外呃楼道呢是要求没有没有脚印嗯"
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 109,
+      "chronologicalEdits": 3,
+      "allowedReferenceSerializations": 3,
+      "componentAlternativeCounts": [
+        3,
+        1,
+        1
+      ],
+      "minimumOrderEdits": 3,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "replace": 1,
+        "delete": 1,
+        "insert": 1
+      },
+      "originalReference": "嗯制定什么样的计划活动然后我首先觉得呃我们现在健身还有来询问我们这个情况的这个人员比较少是因为有一个很重要的一点就是有很多人对我们这个健身嗯有一些误解他可能缺少这方面的一些了解或者他觉得做就像网上一些推出了一些什么动作",
+      "rawAsrText": "嗯，有什么样的计划活动？然后我首先觉得，呃，我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身，嗯，有一些误解，他可能缺少这方面的一些了解，或者他觉得做一就像网上一些推出了一些什么动作。",
+      "oracleReferenceForDiagnosisOnly": "嗯制定什么样的计划活动然后我首先觉得呃我们现在健身还有来询问我们这个情况的这个人员比较少是因为有一个很重要的一点就是有很多人对我们这个健身嗯有一些误解他可能缺少这方面的一些了解或者他觉得做就像网上一些推出了一些什么动作"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 126,
+      "chronologicalEdits": 3,
+      "allowedReferenceSerializations": 2,
+      "componentAlternativeCounts": [
+        1,
+        2
+      ],
+      "minimumOrderEdits": 3,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 3
+      },
+      "originalReference": "会有这个小区虽然有地下停车场汽车肯定不会乱停但是会有一些就有人会不自觉会停一些自行车儿这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置然后再提醒毕竟咱们这个是属于上门儿服务嘛有一些就比方说就会提醒一些小区的住户告诉他们是谁的车通知一下嗯",
+      "rawAsrText": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些，就有人会不自觉，会停一些自行车。这方面我们都会让后勤部还有保安部配合，把这些车给他们挪放到哪个位置，然后再提醒。毕竟咱们这个是属于上门服务嘛，有一些，就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下。",
+      "oracleReferenceForDiagnosisOnly": "会有这个小区虽然有地下停车场汽车肯定不会乱停但是会有一些就有人会不自觉会停一些自行车儿这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置嗯然后再提醒毕竟咱们这个是属于上门儿服务嘛有一些就比方说就会提醒一些小区的住户告诉他们是谁的车通知一下"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 137,
+      "chronologicalEdits": 6,
+      "allowedReferenceSerializations": 4,
+      "componentAlternativeCounts": [
+        2,
+        1,
+        2
+      ],
+      "minimumOrderEdits": 6,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 3,
+        "insert": 2,
+        "replace": 1
+      },
+      "originalReference": "对不对一定要有人来投诉或者说有人来上门儿感谢我们这样太被动了我们要知道业主对我们的工作是满意还是不满意还是认可还是不认可我们就要去走出去对去每一个业主家里去听听他们的声音对有时候也会对他们进行一些代收服务还有那个钥匙不好的话钥匙坏的话就是我们也尽快给他们配上就送上楼去楼去嗯",
+      "rawAsrText": "对不对？一定要有人来投诉，或者说有人来上门感谢我们，这样太被动了。我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去，去每一个业主家里去听一听他们的声音。对，有时候也会对他们进行一些代收服务。嗯。还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼是楼去。",
+      "oracleReferenceForDiagnosisOnly": "对不对一定要有人来投诉或者说有人来上门儿感谢我们这样太被动了我们要知道业主对我们的工作是满意还是不满意还是认可还是不认可我们就要去走出去对去每一个业主家里去听听他们的声音嗯对有时候也会对他们进行一些代收服务还有那个钥匙不好的话钥匙坏的话就是我们也尽快给他们配上就送上楼去楼去"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 115,
+      "chronologicalEdits": 9,
+      "allowedReferenceSerializations": 2,
+      "componentAlternativeCounts": [
+        1,
+        1,
+        2
+      ],
+      "minimumOrderEdits": 9,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "replace": 8,
+        "delete": 1
+      },
+      "originalReference": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方下半年就是效率再提高吧然后这个问卷每次也会做一个报告然后就会也在问嗯努力的改善对跟他们交流结果进行分析嗯我们小区是有这个呃社区的门诊的要定期的给六十岁以上的老人做一些简单的体检嗯",
+      "rawAsrText": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。呃，我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检。",
+      "oracleReferenceForDiagnosisOnly": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方下半年就是效率再提高吧然后这个问卷每次也会做一个报告然后就会也在问嗯努力的改善对跟他们交流结果进行分析嗯嗯我们小区是有这个呃社区的门诊的要定期的给六十岁以上的老人做一些简单的体检"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 138,
+      "chronologicalEdits": 30,
+      "allowedReferenceSerializations": 12,
+      "componentAlternativeCounts": [
+        4,
+        3
+      ],
+      "minimumOrderEdits": 30,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "delete": 16,
+        "insert": 11,
+        "replace": 3
+      },
+      "originalReference": "嗯就会属于闪屏的那种模式让这些字进行滚动让业主看到消息如果不看公式而那些文字的话他能注意到这些对比较显眼的就会告诉他们就是停电以后备用电源嗯嗯比较显眼最好不要用什么大功率的东西就不要又开空调又用电脑儿又又看电视的因为社区人太多他这样对照明然后开一个空调就可以了嗯照明就可以了嗯",
+      "rawAsrText": "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息。如果不看公示栏儿那些文字的话，他能注意到那些。比较显眼。对，比较显眼的，就会告诉他们，就是停电以后备用电源，最好不要用什么大功率的东西，就不要又开空调又用电脑又又看电视的，因为社区人太多，他这样。照明就可以了。对，照明，然后开一个空调就可以了。",
+      "oracleReferenceForDiagnosisOnly": "嗯嗯嗯就会属于闪屏的那种模式让这些字进行滚动让业主看到消息如果不看公式而那些文字的话他能注意到这些对比较显眼的就会告诉他们就是停电以后备用电源比较显眼嗯最好不要用什么大功率的东西就不要又开空调又用电脑儿又又看电视的因为社区人太多他这样对照明然后开一个空调就可以了照明就可以了嗯"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 111,
+      "chronologicalEdits": 10,
+      "allowedReferenceSerializations": 2,
+      "componentAlternativeCounts": [
+        1,
+        1,
+        2
+      ],
+      "minimumOrderEdits": 10,
+      "editsRemovableByOracleReferenceOrder": 0,
+      "remainingEditTypes": {
+        "replace": 6,
+        "delete": 3,
+        "insert": 1
+      },
+      "originalReference": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的还有什么值得需要改进的要让我们工作更进一步更上一层楼那这个门口儿是不是保安不应该设立一些比方说像一些检查车牌号儿向一些车主肯定都是车比较多吗咱们小区毕竟汽车较多嗯",
+      "rawAsrText": "大家在回去下半年的工作要总结一下，我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼。那那个门口是不是保安部应该设立一些，比方说像一些检查车牌号，像一些车主肯定都是车主较多嘛。嗯。咱们小区毕竟汽车较多。",
+      "oracleReferenceForDiagnosisOnly": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的还有什么值得需要改进的要让我们工作更进一步更上一层楼嗯那这个门口儿是不是保安不应该设立一些比方说像一些检查车牌号儿向一些车主肯定都是车比较多吗咱们小区毕竟汽车较多"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 109,
+      "chronologicalEdits": 55,
+      "allowedReferenceSerializations": 6,
+      "componentAlternativeCounts": [
+        3,
+        2
+      ],
+      "minimumOrderEdits": 17,
+      "editsRemovableByOracleReferenceOrder": 38,
+      "remainingEditTypes": {
+        "replace": 4,
+        "insert": 4,
+        "delete": 9
+      },
+      "originalReference": "嗯嗯对所以就是说那些螺丝啊那那那些东西一定要检查好嗯因为秋天这方面他如果在荡的时候螺丝会松的话他就会甩甩出去嗯这方面这这这些地方不容忽视我们这属于是半年就会定期更换一次螺丝然后每个星期都会检查两到三次就是这种安全问题嗯",
+      "rawAsrText": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。对，就是说那些螺丝啊，那那那些东西一定要检查好。嗯，这方面。这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。",
+      "oracleReferenceForDiagnosisOnly": "因为秋天这方面他如果在荡的时候螺丝会松的话他就会甩甩出去嗯这方面嗯嗯对所以就是说那些螺丝啊那那那些东西一定要检查好嗯这这这些地方不容忽视嗯我们这属于是半年就会定期更换一次螺丝然后每个星期都会检查两到三次就是这种安全问题"
+    }
+  ],
+  "referenceCharacters": 1476,
+  "originalChronologicalEdits": 161,
+  "originalChronologicalCer": 0.10907859078590786,
+  "minimumPermittedOrderEdits": 121,
+  "minimumPermittedOrderCer": 0.08197831978319783,
+  "oracleOrderRemovableEdits": 40,
+  "oldScoresOrReferencesChanged": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "ownerParticipationRequired": false,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "finalHoldoutOpened": false,
+  "sources": {
+    "scoringOnlySha256": "74b1a03202cd4646db29c078f5adb5befdba6b0492f3550b81d3852b327a860b",
+    "baselineScoreSha256": "2eb2b4b68ad557c44e3ac1e03587a05245b967d6682ef9082954739967a18320",
+    "normalizationSourceSha256": "05dffe59c59266b9f62de319ea3ec7b8ab7ae5fca982b6becfe3f0bf9098c72f"
+  },
+  "limits": {
+    "pid": 17368,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12808192,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "interpretation": "Oracle label ordering diagnoses a confound only. Remaining edits still mix recognition, spelling/transcription and possible within-utterance ordering errors; do not call them proven acoustic failures. No hypothesis word is changed and no original acceptance score is replaced.",
+  "literature": [
+    "https://arxiv.org/html/2003.12687v2",
+    "https://arxiv.org/html/2305.18747v1"
+  ],
+  "sotBoundary": "Speaker-wise FIFO SOT groups all words of each speaker and uses a speaker-change token. Plain chronological utterance concatenation/newlines is not a faithful reproduction of that method or its timestamped extension."
+}

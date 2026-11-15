@@ -1,0 +1,619 @@
+{
+  "state": "COMPLETE_ANNOTATION_ONLY_TRAINING_COVERAGE_AUDIT_BEFORE_ACOUSTIC_MODEL_RUN",
+  "at": "2026-11-15T16:06:37.376587+08:00",
+  "sources": [
+    {
+      "meeting": "20200624_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S01C01.TextGrid",
+      "referenceSha256": "52134c508748c65bf2221b542692a4df6251ee6f23b6f3674badfae63d33afaf",
+      "eligiblePlans": 47,
+      "disjointGreedyPlans": 21,
+      "selectedSeconds": 215.11990726655495,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S02C01.TextGrid",
+      "referenceSha256": "0b194e6e2b836883f6f0f8bdecbfd543c5bce6ab4e0bba5c03aa9a74c10cee3f",
+      "eligiblePlans": 15,
+      "disjointGreedyPlans": 10,
+      "selectedSeconds": 154.96349224293868,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S03C01.TextGrid",
+      "referenceSha256": "5ef313472301873c9c1b8218dfc5ade04e448216e80e5eb7b1eced57884c5f03",
+      "eligiblePlans": 1,
+      "disjointGreedyPlans": 1,
+      "selectedSeconds": 5.420291246053921,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S04C01.TextGrid",
+      "referenceSha256": "54cddb2fc8fda9acd055b594a6111d4cef2b2462f6e660ea105e6db58aba924f",
+      "eligiblePlans": 19,
+      "disjointGreedyPlans": 13,
+      "selectedSeconds": 122.87972548327929,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S05C01.TextGrid",
+      "referenceSha256": "78fb7ee836f61817e8be8529345113face76dcbd6d6b95d31560f79ddeed7a00",
+      "eligiblePlans": 62,
+      "disjointGreedyPlans": 21,
+      "selectedSeconds": 332.9203581564408,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S06C01.TextGrid",
+      "referenceSha256": "3caaaf54c0338099a753e139369df5b3ee9d0ec8710b2c6407061d228aad587f",
+      "eligiblePlans": 100,
+      "disjointGreedyPlans": 30,
+      "selectedSeconds": 462.20221443004164,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S07C01.TextGrid",
+      "referenceSha256": "70020f57cd69213bece126c5caef19444fd71353118b2ec134888064c2121cf6",
+      "eligiblePlans": 17,
+      "disjointGreedyPlans": 7,
+      "selectedSeconds": 127.83672446983513,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200624_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200624_S_R001S08C01.TextGrid",
+      "referenceSha256": "c913afad0c497b97060447deb863b8c68dd63bbb5dc7701aae908eab037a79ea",
+      "eligiblePlans": 17,
+      "disjointGreedyPlans": 7,
+      "selectedSeconds": 127.71022816860557,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S01C01.TextGrid",
+      "referenceSha256": "3438687637e680a0b0bdea9abb87665cbead4ab7a7438c77ff264c100c77d151",
+      "eligiblePlans": 4,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 13.243787456572136,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S02C01.TextGrid",
+      "referenceSha256": "6fda988eb899a5b90563af0c454f57662b3fadfd674ecfe300777562be80ec2b",
+      "eligiblePlans": 2,
+      "disjointGreedyPlans": 1,
+      "selectedSeconds": 6.74249,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S03C01.TextGrid",
+      "referenceSha256": "8f4894b54dbebb459d76df473914d02238a18dab405f16a78c3ae298b010cad6",
+      "eligiblePlans": 4,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 19.275010000000066,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S04C01.TextGrid",
+      "referenceSha256": "5755e5fc4e4790c60e59a4b9a3b0b68433c433631bc4d4d24ac9ae916bf4f4f2",
+      "eligiblePlans": 23,
+      "disjointGreedyPlans": 12,
+      "selectedSeconds": 128.51541892604018,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S05C01.TextGrid",
+      "referenceSha256": "33d3183acd4ddf6ec4abb754590830f31c3a4020c61a8991de20ce17b7681964",
+      "eligiblePlans": 8,
+      "disjointGreedyPlans": 3,
+      "selectedSeconds": 45.11602817602774,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S06C01.TextGrid",
+      "referenceSha256": "c63a7398a41755bef2658f2d915b6b526c6095df9546667f8d3be27c59ee3093",
+      "eligiblePlans": 6,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 34.75823209445588,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S07C01.TextGrid",
+      "referenceSha256": "f8dfa985a586ff394fc94a06d309787491309ac12e9ab3d1f9850bfa97074fb4",
+      "eligiblePlans": 11,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 67.67351743975166,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200630_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200630_S_R001S08C01.TextGrid",
+      "referenceSha256": "7e2459b6cc0402b8bb9f46c8550b02ced94f44aaacd4686dc31dbf9df589bcde",
+      "eligiblePlans": 0,
+      "disjointGreedyPlans": 0,
+      "selectedSeconds": 0,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S01C01.TextGrid",
+      "referenceSha256": "fedb8e565b049acd3d81d8c74b0d20cd4ae5b49c0c6db38e8f419bd57cf95be7",
+      "eligiblePlans": 4,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 60.14306977794786,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S02C01.TextGrid",
+      "referenceSha256": "014a65cb6704d2bb6d241022c3a94d28482c99a1196c8b3e309e6842b1766177",
+      "eligiblePlans": 8,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 59.29027533345567,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S03C01.TextGrid",
+      "referenceSha256": "ce74c7ecaf25f6d1df01863f7356c42fb22ac76cfd62cf24ec634f4298081540",
+      "eligiblePlans": 8,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 53.74441737780778,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S04C01.TextGrid",
+      "referenceSha256": "466224efd8093aaf0256905fa62fae33113e6a299bb12f9a29a29bcfa10d545f",
+      "eligiblePlans": 7,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 69.42626414157505,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S05C01.TextGrid",
+      "referenceSha256": "ede3b90667d739580106fd1ffc331a42938810b0eb72996f564e9aa1dfa73a2f",
+      "eligiblePlans": 7,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 55.470259445584205,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S06C01.TextGrid",
+      "referenceSha256": "af084248de542ac28e24aea45733465980b7069c47dc3d165f214547d17fcab8",
+      "eligiblePlans": 10,
+      "disjointGreedyPlans": 7,
+      "selectedSeconds": 96.94286889711701,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S07C01.TextGrid",
+      "referenceSha256": "514dc6ffd44c4549239e9cf6ad6b50ef561a5bdb19de7b16cfc079016c45653e",
+      "eligiblePlans": 5,
+      "disjointGreedyPlans": 3,
+      "selectedSeconds": 37.882680000000164,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200701_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200701_S_R001S08C01.TextGrid",
+      "referenceSha256": "df963bd3cfbfaa60140ddc9f079b968be687ee264c7dfa37c0dd28afa4fe94f6",
+      "eligiblePlans": 37,
+      "disjointGreedyPlans": 11,
+      "selectedSeconds": 197.07592918735935,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S01C01.TextGrid",
+      "referenceSha256": "aaa2999065458ab90ccd38274ff7ec1295bb6cb2483cbe22c6cdb5716996fcb5",
+      "eligiblePlans": 17,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 97.89465771458424,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S02C01.TextGrid",
+      "referenceSha256": "c43e6c1b5b6eda3aba17fb996a8f69af2276dc74beebf90e86d8101fa902ee67",
+      "eligiblePlans": 8,
+      "disjointGreedyPlans": 7,
+      "selectedSeconds": 67.35420076518744,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S03C01.TextGrid",
+      "referenceSha256": "ccc65e052108a9198bda91ae8bacab91abff1e4d7b89aa3ab0b00541114a35a3",
+      "eligiblePlans": 10,
+      "disjointGreedyPlans": 8,
+      "selectedSeconds": 72.56149659692869,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S04C01.TextGrid",
+      "referenceSha256": "c2f83020edddb2f4bee866e0521222a6aac99147bcc9d4ebbce003c419843e48",
+      "eligiblePlans": 7,
+      "disjointGreedyPlans": 5,
+      "selectedSeconds": 54.75284336878724,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S05C01.TextGrid",
+      "referenceSha256": "bebd0cbfee90caec7e93022ec54019f4a66bebb31f40c863e30c690d3dc49544",
+      "eligiblePlans": 43,
+      "disjointGreedyPlans": 19,
+      "selectedSeconds": 247.10180640188003,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S07C01.TextGrid",
+      "referenceSha256": "ea5739de9547622ba5fc42738895c5ac0762a0bc7976f3221fac6dace5dca853",
+      "eligiblePlans": 5,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 66.45907972965699,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200702_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200702_S_R001S08C01.TextGrid",
+      "referenceSha256": "53d5dd16ea667690a3d6770d5fb45f0f7d0e60a4b80b6ad3eec8a378a1f954ac",
+      "eligiblePlans": 2,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 32.94647332441457,
+      "referenceSpeakers": 4
+    },
+    {
+      "meeting": "20200706_L_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S01C01.TextGrid",
+      "referenceSha256": "ae124e30b9443c9b782ba78b5c3bff67fbac5861b8c3a75f8f86dbfd7af1f41f",
+      "eligiblePlans": 60,
+      "disjointGreedyPlans": 20,
+      "selectedSeconds": 364.57437202551847,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S02C01.TextGrid",
+      "referenceSha256": "d9fcdc9f540af038905004a5e11a73515415321ec10bc3ef4334efa966373ab0",
+      "eligiblePlans": 11,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 98.22886256948473,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S03C01.TextGrid",
+      "referenceSha256": "833f0cd1dfc29104f64c0fe1948d627f01376923a7d0a37f975ee830efe895c1",
+      "eligiblePlans": 34,
+      "disjointGreedyPlans": 10,
+      "selectedSeconds": 204.907626819019,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S04C01.TextGrid",
+      "referenceSha256": "29daef105149484ae4f689c4f0c8bfedce4cbf03cf0cda80ba7bbc07d3183423",
+      "eligiblePlans": 36,
+      "disjointGreedyPlans": 17,
+      "selectedSeconds": 274.7167649032578,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S05C01.TextGrid",
+      "referenceSha256": "bc17cdb7007a72bad8cccde5979fd3ac8d34d83ac505d5121bc1432015757a02",
+      "eligiblePlans": 9,
+      "disjointGreedyPlans": 5,
+      "selectedSeconds": 80.38250163112039,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S06C01.TextGrid",
+      "referenceSha256": "3564d70229c3545fdacc9eea81fc0cddf9464cd88509832beb6b2c6ae4391a0b",
+      "eligiblePlans": 24,
+      "disjointGreedyPlans": 12,
+      "selectedSeconds": 216.18496661556864,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S07C01.TextGrid",
+      "referenceSha256": "05b5f74fd08f8c6d7953ad947a5ad8337323a293733e991f7078ad179159b719",
+      "eligiblePlans": 19,
+      "disjointGreedyPlans": 12,
+      "selectedSeconds": 179.0626109047217,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200706_L_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200706_L_R001S08C01.TextGrid",
+      "referenceSha256": "747d3dd6795118c3c60bcbbb342c3df5b921610999f3b37380b7805aa575ec97",
+      "eligiblePlans": 18,
+      "disjointGreedyPlans": 8,
+      "selectedSeconds": 121.93933999999996,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S01C01.TextGrid",
+      "referenceSha256": "94824c9e3264377038f2776de0d0a840dc774f1b1fb29fdd17eed4dcc58380f5",
+      "eligiblePlans": 121,
+      "disjointGreedyPlans": 41,
+      "selectedSeconds": 589.0765324492324,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S02C01.TextGrid",
+      "referenceSha256": "9048becaa3352708ebd006498fca2600364045fdd034fd7e682319c474d1668a",
+      "eligiblePlans": 6,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 33.31422562101443,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S03C01.TextGrid",
+      "referenceSha256": "9220bd93ac5cbf3f2523962e73b481baf3993a8ca4126bbbfd914e289ae9f607",
+      "eligiblePlans": 34,
+      "disjointGreedyPlans": 15,
+      "selectedSeconds": 295.68526518578966,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S04C01.TextGrid",
+      "referenceSha256": "4742fb37617fc2770c833b395db35cb49284f95d69b32ec603a8875f329c872e",
+      "eligiblePlans": 34,
+      "disjointGreedyPlans": 11,
+      "selectedSeconds": 198.45110047872586,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S05C01.TextGrid",
+      "referenceSha256": "fa82c0f52f1094bcd8199b0b98e42a7001d654b3361f10373f92c1f4728201d9",
+      "eligiblePlans": 70,
+      "disjointGreedyPlans": 23,
+      "selectedSeconds": 461.2062104862513,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S06C01.TextGrid",
+      "referenceSha256": "485b302605c2851cdec0dccdbf8ed9e2cc0dc180b64f2ae15ec7c7ca20be23d2",
+      "eligiblePlans": 29,
+      "disjointGreedyPlans": 11,
+      "selectedSeconds": 196.17652723722966,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S07C01.TextGrid",
+      "referenceSha256": "1232f84f857e791025bb0a2063a3f8ca1dac183fad49551e33450c285e172ebf",
+      "eligiblePlans": 16,
+      "disjointGreedyPlans": 11,
+      "selectedSeconds": 134.69726211466104,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S08C01.TextGrid",
+      "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+      "eligiblePlans": 9,
+      "disjointGreedyPlans": 3,
+      "selectedSeconds": 78.49473243578569,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S01C01.TextGrid",
+      "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+      "eligiblePlans": 13,
+      "disjointGreedyPlans": 6,
+      "selectedSeconds": 117.6376540635896,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S02C01.TextGrid",
+      "referenceSha256": "004961714d17ededf7915b412bf6e2aead461e2ad2c9b0a1eaae57199d7e6b4b",
+      "eligiblePlans": 18,
+      "disjointGreedyPlans": 10,
+      "selectedSeconds": 189.42887100047344,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S03C01.TextGrid",
+      "referenceSha256": "832de0620ccb941feb54e3e00b8c74c8b7568f000e735cc066e008e99bdae6e6",
+      "eligiblePlans": 132,
+      "disjointGreedyPlans": 34,
+      "selectedSeconds": 705.434788337249,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S04C01.TextGrid",
+      "referenceSha256": "da56487ee04566065e7dd355cc43a0456889f3f276071f375d7f7dfe0bac1d60",
+      "eligiblePlans": 28,
+      "disjointGreedyPlans": 12,
+      "selectedSeconds": 221.21770383700795,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S05C01.TextGrid",
+      "referenceSha256": "aaea52a11d85e67bc0f0e2513d8fd63ab48cd3da5371b2095b6fd0e24d0dfefe",
+      "eligiblePlans": 0,
+      "disjointGreedyPlans": 0,
+      "selectedSeconds": 0,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S07C01.TextGrid",
+      "referenceSha256": "7c2670e35ef54a1b5aec779fa93dfc4962ddc4fd8673109536756ed83b167dea",
+      "eligiblePlans": 7,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 80.95424999999997,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200708_L_R002S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S08C01.TextGrid",
+      "referenceSha256": "261b986386160a6771b23d743f33b29e8562f286b6d1e275ec6071b3bcb38fbf",
+      "eligiblePlans": 27,
+      "disjointGreedyPlans": 10,
+      "selectedSeconds": 234.64883999999975,
+      "referenceSpeakers": 7
+    },
+    {
+      "meeting": "20200806_S_R001S01C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200806_S_R001S01C01.TextGrid",
+      "referenceSha256": "9589a446771b45d88706904866268df3b1096018efe8425f096d351ff2c070b2",
+      "eligiblePlans": 40,
+      "disjointGreedyPlans": 16,
+      "selectedSeconds": 247.2831454834975,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200806_S_R001S05C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200806_S_R001S05C01.TextGrid",
+      "referenceSha256": "7732596809ab4d99ff806c31c0d881bc5e9dd806070aa7cbbce9999c9077b530",
+      "eligiblePlans": 48,
+      "disjointGreedyPlans": 16,
+      "selectedSeconds": 230.9610415357963,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200806_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200806_S_R001S07C01.TextGrid",
+      "referenceSha256": "ac47fc15f61d7667c7a126051a85583291a72b5f95f5c27b1f42ef9ebd19dae6",
+      "eligiblePlans": 26,
+      "disjointGreedyPlans": 9,
+      "selectedSeconds": 132.97296942079515,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S02C01.TextGrid",
+      "referenceSha256": "bf93c3fdbb7f039659d5402f462395c372f4ece9a9c4fd993bc3dcef4d5daa8f",
+      "eligiblePlans": 6,
+      "disjointGreedyPlans": 4,
+      "selectedSeconds": 88.03123382020846,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S03C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S03C01.TextGrid",
+      "referenceSha256": "996f4a54dd467265efa1956c6d0f40bbab498a54f5c81f0fb1d38e1d85587425",
+      "eligiblePlans": 2,
+      "disjointGreedyPlans": 1,
+      "selectedSeconds": 28.9849999999999,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S04C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S04C01.TextGrid",
+      "referenceSha256": "c4cd1b80bd5e9a01324edf3a614acc58794e9dc4b26ac5105205eac1616c91a9",
+      "eligiblePlans": 8,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 48.27992000000009,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S06C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S06C01.TextGrid",
+      "referenceSha256": "580a7da489a3abdcbde9d4399a2a094f8fd202beaa1228d196281db6ab170b8e",
+      "eligiblePlans": 2,
+      "disjointGreedyPlans": 2,
+      "selectedSeconds": 39.38496999999984,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S07C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S07C01.TextGrid",
+      "referenceSha256": "77802c7191ae96d6baf4c490f27c34fccbef22375bfd642799d135adc5f709e9",
+      "eligiblePlans": 7,
+      "disjointGreedyPlans": 5,
+      "selectedSeconds": 67.04497666912926,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200807_S_R001S08C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200807_S_R001S08C01.TextGrid",
+      "referenceSha256": "8a91f0a7131673cabfc4b35317621526ab0cdade945be486b22c597bc3d79efe",
+      "eligiblePlans": 2,
+      "disjointGreedyPlans": 1,
+      "selectedSeconds": 28.349979999999995,
+      "referenceSpeakers": 5
+    },
+    {
+      "meeting": "20200808_S_R001S02C01",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200808_S_R001S02C01.TextGrid",
+      "referenceSha256": "9a911014bc2980e7c90e9beb1ff3fed05c35d69e7632ce839fd5eb07fded9882",
+      "eligiblePlans": 20,
+      "disjointGreedyPlans": 7,
+      "selectedSeconds": 108.1469399999998,
+      "referenceSpeakers": 5
+    }
+  ],
+  "selectedAddition": {
+    "meeting": "20200707_L_R001S01C01",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S01C01.TextGrid",
+    "referenceSha256": "94824c9e3264377038f2776de0d0a840dc774f1b1fb29fdd17eed4dcc58380f5",
+    "eligiblePlans": 121,
+    "disjointGreedyPlans": 41,
+    "selectedSeconds": 589.0765324492324,
+    "referenceSpeakers": 7
+  },
+  "selection": "Single highest count of disjoint eligible natural nonoverlap multi-turn contexts; lexical timestamp/source order tie-break. No neural output, recognition error or validation score consulted. Preserve original data rules, not a model/parameter trial.",
+  "previousPreparation": "STOP_INSUFFICIENT_DATA: only11 valid WAVs exported; no train manifest, neural call or parameter update. System-Python initial invocation also lacked soundfile; existing AMD interpreter used without package edits.",
+  "excludedFullDays": [
+    "20200623",
+    "20200709",
+    "20200805"
+  ],
+  "ownerParticipationRequired": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "scoringRulesChanged": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 25152,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 18288640,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

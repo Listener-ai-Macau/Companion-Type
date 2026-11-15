@@ -1,0 +1,52 @@
+{
+  "state": "PASS_ALL_THREE_TRAIN_REFERENCE_FILES_BYTE_EXACT_OFFICIAL_ARCHIVE",
+  "at": "2026-11-15T16:18:23.169244+08:00",
+  "originalSource": "https://openslr.magicdatatech.com/resources/111/train_L.tar.gz",
+  "retainedOfficialPrefix": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\train_L-prefix-2MiB.gz",
+  "retainedPrefixSha256": "d16d3fe2b7b72d873b0df76bd59442415fc6135f0f2b2c90abbe3a05b1d57e51",
+  "priorDownloadReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-target-activity-adaptation\\official-train-archive-probe.json",
+  "sources": [
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "archiveMember": "train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+      "bytes": 187392,
+      "referenceSha256": "94824c9e3264377038f2776de0d0a840dc774f1b1fb29fdd17eed4dcc58380f5",
+      "exactBytesEqualOfficialArchive": true
+    },
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "archiveMember": "train_L/TextGrid/20200707_L_R001S08C01.TextGrid",
+      "bytes": 97367,
+      "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+      "exactBytesEqualOfficialArchive": true
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "archiveMember": "train_L/TextGrid/20200708_L_R002S01C01.TextGrid",
+      "bytes": 101616,
+      "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+      "exactBytesEqualOfficialArchive": true
+    }
+  ],
+  "sourceOrLabelsChanged": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "ownerListeningRequired": false,
+  "scope": "Confirms transcript/speaker/timestamps originate byte-for-byte from the public official archive. It does not independently certify every word against the waveform; annotation uncertainty remains disclosed.",
+  "limits": {
+    "pid": 31104,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12558336,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

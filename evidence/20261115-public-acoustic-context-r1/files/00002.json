@@ -1,0 +1,612 @@
+{
+  "state": "REJECT_FIXED_ACOUSTIC_CONTEXT_ADAPTER",
+  "at": "2026-11-15T16:20:52.516276+08:00",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-acoustic-context-r1\\trial-r2",
+  "protocolSha256": "bfd0ae9aaaaca5f76f03cc52d64207ae65fa7aadd9ce7e29b8f61f82f9584ed6",
+  "adapterSha256": "73b97f50240ff41dee727f638c4661af0362501c20f8c7f8dbe4000d2449470b",
+  "checks": {
+    "contextTotalImproved": false,
+    "neitherContextSourceRegressed": true,
+    "cleanShortTotalNotRegressed": true,
+    "oracleOrderDiagnosticNotRegressed": true,
+    "englishNormalizedPreserved": false,
+    "naturalMixedNotRegressed": true,
+    "originalCapabilityBaselinesExact": true
+  },
+  "keepForFullMeetingEvaluation": false,
+  "byCondition": {
+    "multi-turn-context": {
+      "cases": 12,
+      "referenceCharacters": 1476,
+      "baselineEdits": 161,
+      "candidateEdits": 161,
+      "baselineCer": 0.10907859078590786,
+      "candidateCer": 0.10907859078590786,
+      "baselineOracleOrderEdits": 121,
+      "candidateOracleOrderEdits": 121
+    },
+    "clean-short-response": {
+      "cases": 20,
+      "referenceCharacters": 87,
+      "baselineEdits": 13,
+      "candidateEdits": 13,
+      "baselineCer": 0.14942528735632185,
+      "candidateCer": 0.14942528735632185
+    }
+  },
+  "byMeetingAndCondition": {
+    "20200709_L_R002S01C01": {
+      "multi-turn-context": {
+        "cases": 6,
+        "referenceCharacters": 740,
+        "baselineEdits": 48,
+        "candidateEdits": 48,
+        "baselineCer": 0.06486486486486487,
+        "candidateCer": 0.06486486486486487,
+        "baselineOracleOrderEdits": 46,
+        "candidateOracleOrderEdits": 46
+      },
+      "clean-short-response": {
+        "cases": 5,
+        "referenceCharacters": 37,
+        "baselineEdits": 0,
+        "candidateEdits": 0,
+        "baselineCer": 0.0,
+        "candidateCer": 0.0
+      }
+    },
+    "20200805_S_R001S01C01": {
+      "multi-turn-context": {
+        "cases": 6,
+        "referenceCharacters": 736,
+        "baselineEdits": 113,
+        "candidateEdits": 113,
+        "baselineCer": 0.15353260869565216,
+        "candidateCer": 0.15353260869565216,
+        "baselineOracleOrderEdits": 75,
+        "candidateOracleOrderEdits": 75
+      },
+      "clean-short-response": {
+        "cases": 15,
+        "referenceCharacters": 50,
+        "baselineEdits": 13,
+        "candidateEdits": 13,
+        "baselineCer": 0.26,
+        "candidateCer": 0.26
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 153,
+      "baselineEdits": 6,
+      "candidateEdits": 6,
+      "candidateEditTypes": {
+        "replace": 1,
+        "insert": 1,
+        "delete": 4
+      },
+      "rawReferenceText": "这一块儿我们这个教练是不分顾客，如果会有V I P待遇和普通顾客他们觉得会有差异的话，会让顾客心里产生不平衡你这个都是一样的是吧？没有什么V I P之类的吗对，有V I P V I P就可能是运动区域比较广阔，就像有什么游泳健身教练之类的，会有V I P会员儿专门儿指定一个教练给他服务。嗯这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的",
+      "rawBaselineText": "这一块儿，我们这个教练是不分顾客。如果会有VIP待遇和普通顾客，他们觉得会有差异的话，会让顾客心里产生不平衡。那这个都是一样的，是吧？对。没有什么VIP之类的吗？有VIP，VIP就可能是运动区域比较广阔，就像有什么游泳、健身教练之类的，会有VIP会员专门指定一个教练给他服务。这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的。",
+      "rawCandidateText": "这一块儿，我们这个教练是不分顾客。如果会有VIP待遇和普通顾客，他们觉得会有差异的话，会让顾客心里产生不平衡。那这个都是一样的，是吧？对。没有什么VIP之类的吗？有VIP，VIP就可能是运动区域比较广阔，就像有什么游泳、健身教练之类的，会有VIP会员专门指定一个教练给他服务。这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的。",
+      "candidateSha256": "e1eb51331bc2d0ad016f5431c007c797e31694fe5e76f91e7f31daee4843b8bf",
+      "baselineOracleOrderEdits": 4,
+      "candidateOracleOrderEdits": 4
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 130,
+      "baselineEdits": 4,
+      "candidateEdits": 4,
+      "candidateEditTypes": {
+        "delete": 3,
+        "replace": 1
+      },
+      "rawReferenceText": "行。而且我们这边儿教练也要了解顾客的心理嘛？像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？会不会有明显的变化？嗯这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种",
+      "rawBaselineText": "行，而且我们这边教练也要了解顾客的心理嘛。像一些顾客会有一些憧憬，他会不会在一个星期或者一个月之内瘦掉几斤，会不会有明显的变化？这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。嗯，好。那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+      "rawCandidateText": "行，而且我们这边教练也要了解顾客的心理嘛。像一些顾客会有一些憧憬，他会不会在一个星期或者一个月之内瘦掉几斤，会不会有明显的变化？这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。嗯，好。那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+      "candidateSha256": "f5fe72d04aaabb6b783d3a58e431a13d9188cafe9b7753eeeba21414f88c249a",
+      "baselineOracleOrderEdits": 4,
+      "candidateOracleOrderEdits": 4
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 125,
+      "baselineEdits": 21,
+      "candidateEdits": 21,
+      "candidateEditTypes": {
+        "insert": 3,
+        "delete": 12,
+        "replace": 6
+      },
+      "rawReferenceText": "嗯因为现在夏天高温，然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施。那咱们后勤维修部呢就是下半年什么计划对对对对嗯嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少，但是呢工作量并没有减少，因为我们对这个消毒的严格的要求其实是增大了他们",
+      "rawBaselineText": "嗯，因为现在夏天的高温，然后可能会发生什么东西易燃，然后这边要做好这个安全的措施。那咱们这个后勤维修部呢，就是下半年什么？嗯，因为上半年的受疫情影响，然后我们中心的接机的人相对的比较少，但是呢，工作量并没有减少，因为我们对这个消毒的严格的要求其实是很大的。",
+      "rawCandidateText": "嗯，因为现在夏天的高温，然后可能会发生什么东西易燃，然后这边要做好这个安全的措施。那咱们这个后勤维修部呢，就是下半年什么？嗯，因为上半年的受疫情影响，然后我们中心的接机的人相对的比较少，但是呢，工作量并没有减少，因为我们对这个消毒的严格的要求其实是很大的。",
+      "candidateSha256": "0cd598266711241e92a8cfeb9fac0cd15eba9b6a3120c00a71116818d5e7eb6a",
+      "baselineOracleOrderEdits": 21,
+      "candidateOracleOrderEdits": 21
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baselineEdits": 4,
+      "candidateEdits": 4,
+      "candidateEditTypes": {
+        "delete": 4
+      },
+      "rawReferenceText": "这样摸一米没有明显的污渍，这是我对他们的要求。所以呃就是嗯包括抹布我们都要定期的更换，洗不出来了我们就扔了它，因为本身我们就是一个非常清洁的，呃让人看着就是愿意停留在这儿的，如果让呃顾客来到我们这里之后，他一摸这个健身器材竟然有灰尘",
+      "rawBaselineText": "这样摸一米没有明显污渍，这是我对他们的要求。所以，呃，就是包括抹布，我们都要定期的更换。洗不出来了，我们就扔了。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意停留在这儿。如果让呃顾客来到我们这里之后，他一摸这个健身器材，竟然有灰尘。",
+      "rawCandidateText": "这样摸一米没有明显污渍，这是我对他们的要求。所以，呃，就是包括抹布，我们都要定期的更换。洗不出来了，我们就扔了。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意停留在这儿。如果让呃顾客来到我们这里之后，他一摸这个健身器材，竟然有灰尘。",
+      "candidateSha256": "cc11b95477a6e4f66b910cc0a8e00e6d0edf7491f60326966f593bc39dabf612",
+      "baselineOracleOrderEdits": 4,
+      "candidateOracleOrderEdits": 4
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 114,
+      "baselineEdits": 10,
+      "candidateEdits": 10,
+      "candidateEditTypes": {
+        "replace": 2,
+        "delete": 8
+      },
+      "rawReferenceText": "那他可能就心里面儿膈应不愿意来了，所以对健身器材的这个清洁要每天对不想锻炼了呃甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊水渍啊那下一个人再用的话，所以要求他们及时的去做一些清洁工作。 呃除了常规的之外，呃楼道呢是要求没有没有脚印嗯",
+      "rawBaselineText": "那他可能就心里面各种不愿意来了，所以对健身器材的这个清洁要每天，呃，甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊、水渍啊，那下一个人再用的话，所以要求他们及时的去做一些清洁工作。呃，除了常规的之外，呃，楼道呢是要求没有没有脚印。",
+      "rawCandidateText": "那他可能就心里面各种不愿意来了，所以对健身器材的这个清洁要每天，呃，甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊、水渍啊，那下一个人再用的话，所以要求他们及时的去做一些清洁工作。呃，除了常规的之外，呃，楼道呢是要求没有没有脚印。",
+      "candidateSha256": "e09fcfb674bee9a2011c6bb695acaf784a788ef724c68327f380d46994b44746",
+      "baselineOracleOrderEdits": 10,
+      "candidateOracleOrderEdits": 10
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baselineEdits": 3,
+      "candidateEdits": 3,
+      "candidateEditTypes": {
+        "replace": 1,
+        "delete": 1,
+        "insert": 1
+      },
+      "rawReferenceText": "嗯制定什么样的计划活动，然后我首先觉得呃我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身嗯有一些误解他可能缺少这方面的一些了解，或者他觉得做就像网上一些推出了一些什么动作",
+      "rawBaselineText": "嗯，有什么样的计划活动？然后我首先觉得，呃，我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身，嗯，有一些误解，他可能缺少这方面的一些了解，或者他觉得做一就像网上一些推出了一些什么动作。",
+      "rawCandidateText": "嗯，有什么样的计划活动？然后我首先觉得，呃，我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身，嗯，有一些误解，他可能缺少这方面的一些了解，或者他觉得做一就像网上一些推出了一些什么动作。",
+      "candidateSha256": "27cda0f1ebd1a77dc7325636e0095d1becd6fd069ab35d05ce8fb8b292b7dca7",
+      "baselineOracleOrderEdits": 3,
+      "candidateOracleOrderEdits": 3
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零零二我是总经理",
+      "rawBaselineText": "零零二，我是总经理。",
+      "rawCandidateText": "零零二，我是总经理。",
+      "candidateSha256": "ddeee90393f8e64d6579bc7702eb8809a27251b912740acde3f229d5b34ddd4b"
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零二六我是教练部",
+      "rawBaselineText": "零二六，我是教练部。",
+      "rawCandidateText": "零二六，我是教练部。",
+      "candidateSha256": "9190888551f89e8e7aeb3613639073173303ccd78a0bb6a756eb0be9dde2ede7"
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零二八我是保安部",
+      "rawBaselineText": "零二八，我是保安部。",
+      "rawCandidateText": "零二八，我是保安部。",
+      "candidateSha256": "89856b4ee026d2b0b8ffc11d5e68288cac787ef9493b0b410b8dde908689e886"
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 6,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零幺九后勤部",
+      "rawBaselineText": "零幺九后勤部。",
+      "rawCandidateText": "零幺九后勤部。",
+      "candidateSha256": "d067208ef72451f297229467b5afb18f6e3fa471ead5effdd575f3a576d34717"
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 7,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零二三运营主管",
+      "rawBaselineText": "零二三运营主管。",
+      "rawCandidateText": "零二三运营主管。",
+      "candidateSha256": "2b2ab323d1da9eedd5dc46022d1bfdd352c8260340909b44615eb2847e843e73"
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 126,
+      "baselineEdits": 3,
+      "candidateEdits": 3,
+      "candidateEditTypes": {
+        "delete": 3
+      },
+      "rawReferenceText": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些就有人会不自觉会停一些自行车儿，这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置，然后再提醒，毕竟咱们这个是属于上门儿服务嘛，有一些就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下，嗯",
+      "rawBaselineText": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些，就有人会不自觉，会停一些自行车。这方面我们都会让后勤部还有保安部配合，把这些车给他们挪放到哪个位置，然后再提醒。毕竟咱们这个是属于上门服务嘛，有一些，就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下。",
+      "rawCandidateText": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些，就有人会不自觉，会停一些自行车。这方面我们都会让后勤部还有保安部配合，把这些车给他们挪放到哪个位置，然后再提醒。毕竟咱们这个是属于上门服务嘛，有一些，就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下。",
+      "candidateSha256": "5418d21acecf4dd31eb02d304d3a357a493466ef704fc983962cf5fa53043e20",
+      "baselineOracleOrderEdits": 3,
+      "candidateOracleOrderEdits": 3
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 137,
+      "baselineEdits": 6,
+      "candidateEdits": 6,
+      "candidateEditTypes": {
+        "delete": 3,
+        "insert": 2,
+        "replace": 1
+      },
+      "rawReferenceText": "对不对？ 一定要有人来投诉，或者说有人来上门儿感谢我们，这样太被动了，我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去对去每一个业主家里去听听他们的声音。对，有时候也会对他们进行一些代收服务，还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼去楼去。嗯",
+      "rawBaselineText": "对不对？一定要有人来投诉，或者说有人来上门感谢我们，这样太被动了。我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去，去每一个业主家里去听一听他们的声音。对，有时候也会对他们进行一些代收服务。嗯。还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼是楼去。",
+      "rawCandidateText": "对不对？一定要有人来投诉，或者说有人来上门感谢我们，这样太被动了。我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去，去每一个业主家里去听一听他们的声音。对，有时候也会对他们进行一些代收服务。嗯。还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼是楼去。",
+      "candidateSha256": "cd6c0da1f897ab74775aea43f1065e7895f6e8a3b98de1589f22ed411a539155",
+      "baselineOracleOrderEdits": 6,
+      "candidateOracleOrderEdits": 6
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 115,
+      "baselineEdits": 9,
+      "candidateEdits": 9,
+      "candidateEditTypes": {
+        "replace": 8,
+        "delete": 1
+      },
+      "rawReferenceText": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。嗯我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检，嗯",
+      "rawBaselineText": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。呃，我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检。",
+      "rawCandidateText": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。呃，我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检。",
+      "candidateSha256": "a84d4bb58235b406afd147cbf1af065ef6706c3b49eccbc5582cfebfc766275f",
+      "baselineOracleOrderEdits": 9,
+      "candidateOracleOrderEdits": 9
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 138,
+      "baselineEdits": 30,
+      "candidateEdits": 30,
+      "candidateEditTypes": {
+        "delete": 16,
+        "insert": 11,
+        "replace": 3
+      },
+      "rawReferenceText": "嗯就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息，如果不看公式，而那些文字的话，他能注意到这些对比较显眼的，就会告诉他们就是停电以后备用电源，嗯嗯比较显眼最好不要用什么大功率的东西，就不要又开空调，又用电脑儿又又看电视的，因为社区人太多，他这样对照明，然后开一个空调就可以了嗯照明就可以了嗯",
+      "rawBaselineText": "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息。如果不看公示栏儿那些文字的话，他能注意到那些。比较显眼。对，比较显眼的，就会告诉他们，就是停电以后备用电源，最好不要用什么大功率的东西，就不要又开空调又用电脑又又看电视的，因为社区人太多，他这样。照明就可以了。对，照明，然后开一个空调就可以了。",
+      "rawCandidateText": "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息。如果不看公示栏儿那些文字的话，他能注意到那些。比较显眼。对，比较显眼的，就会告诉他们，就是停电以后备用电源，最好不要用什么大功率的东西，就不要又开空调又用电脑又又看电视的，因为社区人太多，他这样。照明就可以了。对，照明，然后开一个空调就可以了。",
+      "candidateSha256": "d50fc986807d5c37b4f976b3499c36a224679f3d8f06702b718a9b27144f6289",
+      "baselineOracleOrderEdits": 30,
+      "candidateOracleOrderEdits": 30
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 111,
+      "baselineEdits": 10,
+      "candidateEdits": 10,
+      "candidateEditTypes": {
+        "replace": 6,
+        "delete": 3,
+        "insert": 1
+      },
+      "rawReferenceText": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼，那这个门口儿是不是保安不应该设立一些，比方说像一些检查车牌号儿，向一些车主肯定都是车比较多吗，咱们小区毕竟汽车较多，嗯",
+      "rawBaselineText": "大家在回去下半年的工作要总结一下，我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼。那那个门口是不是保安部应该设立一些，比方说像一些检查车牌号，像一些车主肯定都是车主较多嘛。嗯。咱们小区毕竟汽车较多。",
+      "rawCandidateText": "大家在回去下半年的工作要总结一下，我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼。那那个门口是不是保安部应该设立一些，比方说像一些检查车牌号，像一些车主肯定都是车主较多嘛。嗯。咱们小区毕竟汽车较多。",
+      "candidateSha256": "0e0707b960d93f408360e4c111cbab8f5e8f253d44eae371e5a1ad6eeac87d9c",
+      "baselineOracleOrderEdits": 10,
+      "candidateOracleOrderEdits": 10
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baselineEdits": 55,
+      "candidateEdits": 55,
+      "candidateEditTypes": {
+        "delete": 28,
+        "replace": 4,
+        "insert": 23
+      },
+      "rawReferenceText": "嗯嗯，对所以就是说那些螺丝啊那那那些东西一定要检查好嗯因为秋天这方面他如果在荡的时候螺丝会松的话，他就会甩甩出去嗯这方面这这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。嗯",
+      "rawBaselineText": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。对，就是说那些螺丝啊，那那那些东西一定要检查好。嗯，这方面。这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。",
+      "rawCandidateText": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。对，就是说那些螺丝啊，那那那些东西一定要检查好。嗯，这方面。这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。",
+      "candidateSha256": "ae53e1682d35cca9d667ae46c710b4c4384e83636111594d7057cdbc2eefb752",
+      "baselineOracleOrderEdits": 17,
+      "candidateOracleOrderEdits": 17
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 6,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零零三总经理",
+      "rawBaselineText": "零零三总经理。",
+      "rawCandidateText": "零零三总经理。",
+      "candidateSha256": "8084dc159b0aebeb00c51d176b9e083db97c6d10df793d3682499b239f7d7895"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零零五安保",
+      "rawBaselineText": "零零五安保。",
+      "rawCandidateText": "零零五安保。",
+      "candidateSha256": "04c0f6634b0521be4fe57d6c03022f48eb903628245780a41bf30a6ca8a069f6"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "零零六客服",
+      "rawBaselineText": "零零六客服。",
+      "rawCandidateText": "零零六客服。",
+      "candidateSha256": "7a8828a5dad042ea02274c98ff3754c5e60295e157e461f3170abf65c900acbb"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baselineEdits": 3,
+      "candidateEdits": 3,
+      "candidateEditTypes": {
+        "replace": 2,
+        "delete": 1
+      },
+      "rawReferenceText": "零零七主管",
+      "rawBaselineText": "民企主管。",
+      "rawCandidateText": "民企主管。",
+      "candidateSha256": "27d304852effd0a782a40bc6de3c53bb4b6d76fbf507a65dc9592ebe0ed3a27e"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "嗯",
+      "rawBaselineText": "嗯。",
+      "rawCandidateText": "嗯。",
+      "candidateSha256": "14febe45ab1362a47992bff9892f35607f94f210b817eb102880b3b36d16ca1f"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "客服",
+      "rawBaselineText": "客服。",
+      "rawCandidateText": "客服。",
+      "candidateSha256": "5632512c08f9048c4074c4ea3c59f152c185c840eaf0286594270167a32df1c6"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "对",
+      "rawBaselineText": "对。",
+      "rawCandidateText": "对。",
+      "candidateSha256": "89352df06c1cb928f8ed6a88e16c7a33c35385ed8d0d195c1e728cb765c3a932"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baselineEdits": 3,
+      "candidateEdits": 3,
+      "candidateEditTypes": {
+        "replace": 2,
+        "delete": 1
+      },
+      "rawReferenceText": "绿化那边儿怎么样？",
+      "rawBaselineText": "六号那边怎么样？",
+      "rawCandidateText": "六号那边怎么样？",
+      "candidateSha256": "800999d54bb637d3675fca62792c063fb5accfc49341bf4b72431b7d0bf31a80"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "哎",
+      "rawBaselineText": "哎。",
+      "rawCandidateText": "哎。",
+      "candidateSha256": "8348b3b8f6b95372919bb251a41939f3026430636e2e6f0c2397ea9a67dae58f"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baselineEdits": 5,
+      "candidateEdits": 5,
+      "candidateEditTypes": {
+        "replace": 3,
+        "delete": 2
+      },
+      "rawReferenceText": "保安这边儿",
+      "rawBaselineText": "我们是。",
+      "rawCandidateText": "我们是。",
+      "candidateSha256": "899022f11e01384e3cf4522403fc3395a41ab987ab917e4ceac7642b59cb7ea7"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "嗯",
+      "rawBaselineText": "嗯。",
+      "rawCandidateText": "嗯。",
+      "candidateSha256": "1668fee7395e5ed8fdc195360168095a286e2aac474ce9329823961e5aa92418"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baselineEdits": 2,
+      "candidateEdits": 2,
+      "candidateEditTypes": {
+        "replace": 1,
+        "delete": 1
+      },
+      "rawReferenceText": "属于阴面儿，",
+      "rawBaselineText": "属于一面。",
+      "rawCandidateText": "属于一面。",
+      "candidateSha256": "67d5ad33ff8ec4304b01c06be5f3ba032e4a089a166e9624be58ce004a338374"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "对",
+      "rawBaselineText": "对。",
+      "rawCandidateText": "对。",
+      "candidateSha256": "62588392b52dbade6d42efecd972956b3c0bd48b158991f0640c727304628faa"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "没了",
+      "rawBaselineText": "没了。",
+      "rawCandidateText": "没了。",
+      "candidateSha256": "c1d4bf36700053124b3eacb85210f79012fb2d809e6a6cddc8659591232ec616"
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baselineEdits": 0,
+      "candidateEdits": 0,
+      "candidateEditTypes": {},
+      "rawReferenceText": "没了",
+      "rawBaselineText": "没了。",
+      "rawCandidateText": "没了。",
+      "candidateSha256": "93d289ddafbf2407e9f9bacf09c5390f4a56f1c766b8abcfa9c2cf026fe32eb1"
+    }
+  ],
+  "englishRawOutputs": [
+    "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Oh, I'm sorry. Yeah. Okay. Sounds like you've done something.",
+    "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome to start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Why? Okay. Sounds like you've done something."
+  ],
+  "mixedReferenceCharacters": 39,
+  "mixedEdits": [
+    2,
+    2
+  ],
+  "frozenOriginalWeightsByteExact": true,
+  "adapterSavedReloadedTensors": 32,
+  "newTrainingUpdates": 0,
+  "newNeuralCalls": 0,
+  "ownerParticipationRequired": false,
+  "d1Complete": true,
+  "d2Complete": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "adoptedInProduct": false,
+  "parameterVariantsPlanned": false,
+  "originalAcceptanceScoresUnchanged": true,
+  "limitations": "50natural multi-turn nonoverlap training examples,32frozen condition diagnostics and two short capability controls. No claim of independent rooms/speakers, large training, whole meetings, certified overlap handling, device or sale qualification. Oracle reference order only diagnoses a confound and never replaces original acceptance.",
+  "limits": {
+    "pid": 11600,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 13389824,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

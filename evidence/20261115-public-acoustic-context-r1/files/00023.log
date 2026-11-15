@@ -1,0 +1,8 @@
+{"state": "FAILED_BOUNDED_ADAPTER_TRIAL_RETAINED", "error": "TypeError(\"pin_rocm_blas() missing 2 required positional arguments: 'path' and 'expected_sha256'\")", "trainingSteps": 0, "optimizerUpdates": 0, "generationCalls": 0, "seconds": 0.0051426000136416405}
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\public_acoustic_context_worker_20261115.py", line 339, in <module>
+    main()
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\public_acoustic_context_worker_20261115.py", line 100, in main
+    state['blas'] = pin_rocm_blas()
+                    ^^^^^^^^^^^^^^^
+TypeError: pin_rocm_blas() missing 2 required positional arguments: 'path' and 'expected_sha256'

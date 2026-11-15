@@ -1,0 +1,18 @@
+{
+  "api": "https://huggingface.co/api/datasets/AISHELL/AISHELL-4/tree/aada72727856313b19d4a030383c426364931dbf/train_L/wav?limit=100",
+  "metadata": {
+    "type": "file",
+    "oid": "a5cad6cd7594b3eabc9654575bcde33d94748f8e",
+    "size": 240382134,
+    "lfs": {
+      "oid": "999497f076f795caa07e60c5bad0d8ef220f0eb13f338bb0270e85a38184ae87",
+      "size": 240382134,
+      "pointerSize": 134
+    },
+    "xetHash": "a89e76ec34f42b65a177f946d4ce4e9a4c8a2ca236ee7458080a6490d54f2583",
+    "path": "train_L/wav/20200707_L_R001S01C01.flac"
+  },
+  "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S01C01.flac",
+  "startedAt": "2026-11-15T16:07:30.407051+08:00",
+  "license": "AISHELL4 CC-BY-SA-4.0 https://www.openslr.org/111/"
+}
