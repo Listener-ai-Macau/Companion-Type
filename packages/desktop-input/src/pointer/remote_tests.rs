@@ -183,11 +183,17 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
             if p.settings.desktop_motion&&sequence.is_some_and(|old:u32|raw.sequence.wrapping_sub(old)>=0x8000_0000){p.begin_stream();inferred_restarts+=1;}
             let fused=Sample::parse(&bytes).unwrap();sequence=Some(raw.sequence);p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());
             if p.settings.desktop_motion{states.push(serde_json::json!({"at":at,"calibrated":p.metrics.calibrated,"surfacePaused":p.metrics.surface_paused,"tapBlocked":p.tap_motion.blocked(),"state":p.planar_state()}));}
-        }else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
+        }else if row["kind"]=="calibrate"{p.calibrate();}
+        else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
     }
     let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
     let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence."});
     let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
+    if std::env::var_os("COMPANION_EXPECT_DESK_REPAIR").is_some(){
+        // Explicit Owner155 clarification: this capture was pushed on the
+        // desk. Do not infer intended motion labels for other Owner captures.
+        assert!(states.iter().filter(|s|s["calibrated"]==true).all(|s|s["state"]["surface"].is_null()||s["state"]["surface"]["phase"]=="ready"),"reported desk sliding must not latch the lift-return timer");
+    }
     let expected=receipt["sessions"][0]["finalPointer"]["metrics"]["tapEvents"].as_u64().unwrap()as usize;
     println!("Actual{expected} taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
     if std::env::var_os("COMPANION_EXPECT_CONTACT_REPAIR").is_some(){assert_eq!(clicks.len(),expected,"reliable physical taps must reach the nearest GRT template, not all be rejected by a three-example radius");}
